@@ -346,7 +346,7 @@ function AgentsEmployee(props) {
             //   : props.heading === "Dashboard"
             //   ? ""
             //   :
-            "container"
+            "container-fluid p-0 m-0"
           }
         >
           {/* <div
@@ -456,7 +456,7 @@ function AgentsEmployee(props) {
             //   <small className="text-danger">{searchError}</small>
             // </div>
         */}
-          <div className="mb-8">
+          <div className="mb-0">
             <div
               className={
                 // props.heading === "Response" ||
@@ -472,18 +472,18 @@ function AgentsEmployee(props) {
                 {isLoading ? (
                   <Loader />
                 ) : (
-                  <table className="table table-striped main_data_table_inn">
+                  <table className="table table-striped main_data_table_inn mb-0">
                     <thead>
                       <tr className="">
                         <th
                           scope="col"
-                          className=" pl-0 border-0 font-size-4 font-weight-normal"
+                          className=" border-0 font-size-4 font-weight-normal py-2"
                         >
                           EID
                         </th>
                         <th
                           scope="col"
-                          className=" pl-0 border-0 font-size-4 font-weight-normal"
+                          className=" border-0 font-size-4 font-weight-normal py-2"
                         >
                           <Link
                             to={""}
@@ -498,7 +498,7 @@ function AgentsEmployee(props) {
                         </th>
                         <th
                           scope="col"
-                          className="pl-0 border-0 font-size-4 font-weight-normal"
+                          className="border-0 font-size-4 font-weight-normal py-2"
                         >
                           <Link
                             to={""}
@@ -516,7 +516,7 @@ function AgentsEmployee(props) {
                         ) : (
                           <th
                             scope="col"
-                            className="pl-0 border-0 font-size-4 font-weight-normal"
+                            className="border-0 font-size-4 font-weight-normal py-2"
                           >
                             <Link
                               to={""}
@@ -535,7 +535,7 @@ function AgentsEmployee(props) {
                         ) : (
                           <th
                             scope="col"
-                            className="pl-0 border-0 font-size-4 font-weight-normal"
+                            className="border-0 font-size-4 font-weight-normal py-2"
                           >
                             <Link
                               to={""}
@@ -554,7 +554,7 @@ function AgentsEmployee(props) {
                         ) : (
                           <th
                             scope="col"
-                            className="pl-0 border-0 font-size-4 font-weight-normal"
+                            className="border-0 font-size-4 font-weight-normal py-2"
                           >
                             <Link
                               to={""}
@@ -573,7 +573,7 @@ function AgentsEmployee(props) {
                         ) : (
                           <th
                             scope="col"
-                            className="pl-0 border-0 font-size-4 font-weight-normal"
+                            className="border-0 font-size-4 font-weight-normal py-2"
                           >
                             <Link
                               to={""}
@@ -589,14 +589,14 @@ function AgentsEmployee(props) {
                         )}
                         <th
                           scope="col"
-                          className="pl-0 border-0 font-size-4 font-weight-normal"
+                          className="border-0 font-size-4 font-weight-normal py-2"
                         >
                           Profile
                         </th>
                         {props.visa === "yes" ? null : (
                           <th
                             scope="col"
-                            className="pl-0 border-0 font-size-4 font-weight-normal"
+                            className="border-0 font-size-4 font-weight-normal py-2"
                           >
                             Status
                           </th>
@@ -606,7 +606,7 @@ function AgentsEmployee(props) {
                         ) : (
                           <th
                             scope="col"
-                            className="pl-0 border-0 font-size-4 font-weight-normal"
+                            className="border-0 font-size-4 font-weight-normal py-2"
                           >
                             Action
                           </th>
@@ -625,12 +625,8 @@ function AgentsEmployee(props) {
                             className="text-capitalize applicant_row"
                             key={empdata.employee_id}
                           >
-                            <td className=" py-5">
-                              <p className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                {empdata.employee_id}
-                              </p>
-                            </td>
-                            <td className=" py-5">
+                            <td className=" py-2">{empdata.employee_id}</td>
+                            <td className=" py-2">
                               <Link
                                 to={`/${empdata.employee_id}`}
                                 // onClick={
@@ -708,7 +704,7 @@ function AgentsEmployee(props) {
                                 </div>
                               </Link>
                             </td>
-                            <td className="py-5 ">
+                            <td className="py-2 ">
                               {empdata.contact_no === null ? null : (
                                 <p className="m-0">
                                   +
@@ -735,7 +731,7 @@ function AgentsEmployee(props) {
                             {props.heading === "Dashboard" ? (
                               ""
                             ) : (
-                              <td className=" py-5">
+                              <td className=" py-2">
                                 {empdata.language === null ? (
                                   <p className="font-size-3  mb-0">N/A</p>
                                 ) : (
@@ -755,7 +751,7 @@ function AgentsEmployee(props) {
                             {props.heading === "Dashboard" ? (
                               ""
                             ) : (
-                              <td className=" py-5">
+                              <td className=" py-2">
                                 {empdata.education === null ? (
                                   <p className="font-size-3  mb-0">N/A</p>
                                 ) : (
@@ -768,7 +764,7 @@ function AgentsEmployee(props) {
                             {props.heading === "Dashboard" ? (
                               ""
                             ) : (
-                              <td className=" py-5">
+                              <td className=" py-2">
                                 {empdata.skill === null ? (
                                   <p className="font-size-3  mb-0">N/A</p>
                                 ) : (
@@ -781,7 +777,7 @@ function AgentsEmployee(props) {
                             {props.heading === "Dashboard" ? (
                               ""
                             ) : (
-                              <td className=" py-5">
+                              <td className=" py-2">
                                 {empdata.experience === null ? (
                                   <p className="font-size-3 mb-0">N/A</p>
                                 ) : (
@@ -791,7 +787,7 @@ function AgentsEmployee(props) {
                                 )}
                               </td>
                             )}
-                            <td className=" py-5">
+                            <td className=" py-2">
                               <p className="font-size-2 font-weight-normal text-black-2 mb-0">
                                 {empdata.profile_complete === "100.00" ? (
                                   <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
@@ -805,7 +801,7 @@ function AgentsEmployee(props) {
                               </p>
                             </td>
                             {props.visa === "yes" ? null : (
-                              <td className="">
+                              <td className="py-2">
                                 <p className="font-size-2 font-weight-normal text-black-2 mb-0">
                                   {empdata.status === "1" ? (
                                     <span
@@ -850,12 +846,12 @@ function AgentsEmployee(props) {
                               </td>
                             )}
                             {/* Calulation to get user is new or retained */}
-                            {/* <td className=" py-5">
+                            {/* <td className=" py-2">
                               <p className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {(new Date(empdata.created_at) >= oneMonthAgo && new Date(empdata.created_at) <= currentDate) === true ? "New" : "Retained"}                        
                                 </p>
                             </td> */}
-                            {/* <td className=" py-5 min-width-px-100">
+                            {/* <td className=" py-2 min-width-px-100">
                               <div
                                 className="btn-group button_group"
                                 role="group"

@@ -1372,6 +1372,11 @@ input::-webkit-inner-spin-button {
 
 }
 
+.table th,
+.table td {
+  vertical-align: middle;
+}
+
 .admin_login_page {
   min-height: 350px;
   height: 100vh;

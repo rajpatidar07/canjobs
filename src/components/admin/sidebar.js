@@ -283,11 +283,9 @@ const AdminSidebar = (props) => {
           </li>
           <li
             className={
-              (
-                user_type === "agent"
-                  ? props.heading === "Partner Dashboard"
-                  : props.heading === "Manage Partner"
-              )
+              ((user_type === "agent" || user_type === "admin") &&
+                props.heading === "Partner Dashboard") ||
+              props.heading === "Manage Partner"
                 ? "active"
                 : ""
             }

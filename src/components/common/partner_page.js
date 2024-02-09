@@ -17,17 +17,8 @@ export default function PartnerPage(props) {
   const [AgentId, setAgentId] = useState(
     props.user === "agent" ? localStorage.getItem("agent_id") : ""
   );
-  //   let [showAddEmployeeModal, setShowEmployeeMOdal] = useState(false);
-  //   let [showVisaModal, setVisaModal] = useState(false);
-  //   let [showChangeJobModal, setShowChangeJobModal] = useState(false);
-  //   let [showEducationModal, setShowEducationModal] = useState(false);
-  //   let [showSkillsModal, setShowSkillsModal] = useState(false);
-  //   // let [documentModal, setDocumentModal] = useState(false);
-  //   let [showStatusChangeModal, setShowStatusChange] = useState(false);
   /*data and id states */
   const [agenteData, setAgentData] = useState([]);
-  //   const [alredyApplied, setAlredyApplied] = useState(false);
-  //   let [employeeId, setemployeeId] = useState();
   /*delete state */
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
@@ -70,28 +61,6 @@ export default function PartnerPage(props) {
           setAgentId(filteredItems[0].id);
         }
         setIsLoading(false);
-        // if (
-        //   props.heading === "Dashboard" ||
-        //   location.pathname === "/employee" ||
-        //   props.lima === "no" ||
-        //   props.user === "user"
-        // ) {
-        //   setresponseId();
-        // } else {
-        //   //condition to get the response from job id
-        //   const filteredItems = userData.data.filter(
-        //     (item) =>
-        //       (props.selfJob === "yes"
-        //         ? item.applied_by_self
-        //         : item.applied_by_admin) > 0
-        //   );
-        //   if (filteredItems.length === 0) {
-        //     setresponseId();
-        //   } else {
-        //     // Step 4: Get the First Item
-        //     setresponseId(filteredItems[0].job_id);
-        //   }
-        // }
       }
     } catch (err) {
       console.log(err);
@@ -111,9 +80,6 @@ export default function PartnerPage(props) {
         setAgentId("");
       }
     }
-    // if (alredyApplied === true) {
-    //   setAlredyApplied(false);
-    // }
   }, [
     props.search,
     props.pageNo,
@@ -123,12 +89,6 @@ export default function PartnerPage(props) {
     props.apiCall,
     apiCall,
   ]);
-
-  /* Function to show the single data to update Employee*/
-  // const employeeDetails = (e) => {
-  //   props.employeeDetails(e);
-  // };
-
   /*To Show the delete alert box */
   const ShowDeleteAlert = (e) => {
     setDeleteID(e.id);
@@ -176,380 +136,107 @@ export default function PartnerPage(props) {
 
   return (
     <>
-      <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
+      <div className="bg-white rounded p-4">
         <div className="table-responsive main_table_div">
           {isLoading ? (
             <Loader />
           ) : (
-            <table className="table table-striped main_data_table">
-              <thead>
-                <tr className="">
-                  <th
-                    scope="col"
-                    className=" border-0 font-size-4 font-weight-normal"
+            <>
+              {(agenteData || []).map((data) => (
+                <div className="rounded bg-light p-4 mb-1">
+                  <div
+                    className="d-flex align-items-center position-relative"
+                    key={data.id}
                   >
-                    <Link
-                      to={""}
-                      onClick={() => {
-                        handleSort("u_id");
-                        props.setpageNo(1);
-                      }}
-                      className="text-gray"
-                      title="Sort by Name"
-                    >
-                      DN
-                    </Link>
-                  </th>
-                  <th
-                    scope="col"
-                    className=" border-0 font-size-4 font-weight-normal"
-                  >
-                    <Link
-                      to={""}
-                      onClick={() => {
-                        handleSort("name");
-                        props.setpageNo(1);
-                      }}
-                      className="text-gray"
-                      title="Sort by Name"
-                    >
-                      Name
-                    </Link>
-                  </th>
-                  <th
-                    scope="col"
-                    className="border-0 font-size-4 font-weight-normal"
-                  >
-                    <Link
-                      to={""}
-                      onClick={() => {
-                        handleSort("contact_no");
-                        props.setpageNo(1);
-                      }}
-                      className="text-gray"
-                      title="Sort by Contact"
-                    >
-                      Contact
-                    </Link>
-                  </th>
-                  {/* {props.heading === "Dashboard" ? (
-                    ""
-                  ) : (
-                    <th
-                      scope="col"
-                      className="border-0 font-size-4 font-weight-normal"
-                    >
-                      <Link
-                        to={""}
+                    {data.profile_image === null ? (
+                      <img
+                        src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                        alt="UserName"
+                        className="rounded"
+                        width="90px"
+                        height="90px"
+                      />
+                    ) : (
+                      <img
+                        src={data.profile_image}
+                        className="rounded"
+                        alt={data.name}
+                        width="90px"
+                        height="90px"
+                      />
+                    )}
+                    <div className="ml-5 w-100">
+                      <h5 className="mb-0 text-capitalize line-height-1 text-break">
+                        {data.name === null ||
+                        data.name === undefined ||
+                        data.name === "undefined" ||
+                        data.name === ""
+                          ? "N/A"
+                          : data.name}
+                      </h5>
+                      <hr className="my-3" />
+                      <div className="m-0 age_gender d-flex align-items-center">
+                        <span className="bg-secondary rounded-pill font-size-3 px-3 py-2 text-white mr-2">
+                          {data.u_id}
+                        </span>
+                        <span className="bg-info rounded-pill font-size-3 px-3 py-2 text-white mr-2">
+                          {data.contact_no}
+                        </span>
+                        <span className="bg-warning rounded-pill font-size-3 px-3 py-2 text-white mr-2">
+                          {data.email}
+                        </span>
+                        <span className="bg-primary rounded-pill font-size-3 px-3 py-2 text-white mr-2">
+                          {` ${data.city},${data.state},${data.country}`}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="partner_action_div ml-5 ">
+                      <button
+                        className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4 action_btn m-1"
                         onClick={() => {
-                          handleSort("type");
-                          props.setpageNo(1);
+                          setAgentId(data.id);
                         }}
-                        className="text-gray"
-                        title="Sort by Type"
+                        title="View Employees"
+                        disabled={data.agent_employee_count === "0" || 0}
                       >
-                        Type
-                      </Link>
-                    </th>
-                  )} */}
-                  {props.heading === "Dashboard" ? (
-                    ""
-                  ) : (
-                    <th
-                      scope="col"
-                      className="border-0 font-size-4 font-weight-normal"
-                    >
-                      <Link
-                        to={""}
-                        onClick={() => {
-                          handleSort("address");
-                          props.setpageNo(1);
-                        }}
-                        className="text-gray"
-                        title="Sort by Address"
+                        <MdFormatListBulletedAdd /> {"View Employees"}
+                        {/* <i className="fa fa-list"></i> */}
+                      </button>
+                      <button
+                        className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4 action_btn m-1"
+                        onClick={() => props.EditAgent(data.id)}
+                        title="Edit Partner"
                       >
-                        Address
-                      </Link>
-                    </th>
-                  )}
-                  {props.heading === "Dashboard" ? (
-                    ""
-                  ) : (
-                    <th
-                      scope="col"
-                      className="border-0 font-size-4 font-weight-normal"
-                    >
-                      <Link
-                        to={""}
-                        onClick={() => {
-                          handleSort("country");
-                          props.setpageNo(1);
-                        }}
-                        className="text-gray"
-                        title="Sort by Country"
+                        <LiaUserEditSolid /> {"Edit Partner"}
+                      </button>
+                      <button
+                        className={
+                          props.user === "agent"
+                            ? "d-none"
+                            : "font-size-3 text-break btn btn-outline-secondary btn-rounded px-4 action_btn m-1"
+                        }
+                        onClick={() => ShowDeleteAlert(data)}
+                        title="Delete Partner"
                       >
-                        Country
-                      </Link>
-                    </th>
-                  )}
-                  {props.heading === "Dashboard" ? (
-                    ""
-                  ) : (
-                    <th
-                      scope="col"
-                      className="border-0 font-size-4 font-weight-normal"
-                    >
-                      Action
-                    </th>
-                  )}
-                </tr>
-              </thead>
-              <tbody>
-                {/* Map function to show the data in the list*/}
-                {totalData === 0 || agenteData.length === 0 ? (
-                  <tr>
-                    <th colSpan={6} className="bg-white text-center">
-                      No Data Found
-                    </th>
-                  </tr>
-                ) : (
-                  (agenteData || []).map((data) => (
-                    <React.Fragment key={data.id}>
-                      <tr className="text-capitalize applicant_row">
-                        <td className=" py-5">
-                          <p className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            {data.u_id}
-                          </p>
-                        </td>
-                        <td className=" py-5">
-                          {/* <Link
-                        //   to={`/${data.employee_id}`}
-                          // onClick={
-                          //   data.name !== null
-                          //     ? () => employeeDetails(data.employee_id)
-                          //     : null
-                          // }
-                          title="Employee Details"
-                        > */}
-                          <div className="d-flex profile_box gx-2">
-                            <div className="media  align-items-center">
-                              <div className="circle-30 mx-auto overflow-hidden">
-                                {data.profile_image === null ? (
-                                  <img
-                                    src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                                    alt=""
-                                    className="w-100"
-                                  />
-                                ) : (
-                                  <img
-                                    src={data.profile_image}
-                                    alt=""
-                                    className="w-100"
-                                  />
-                                )}
-                              </div>
-                            </div>
-
-                            <div className=" mb-0">
-                              {data.name === null ||
-                              data.name === undefined ||
-                              data.name === "undefined" ||
-                              data.name === "" ? (
-                                <p className="font-size-3  mb-0">N/A</p>
-                              ) : (
-                                <p
-                                  className="m-0 text-black-2 font-weight-bold text-capitalize text-truncate"
-                                  title={data.name}
-                                >
-                                  {data.name}
-                                </p>
-                              )}
-                              {/* {data.gender || data.marital_status ? (
-                                <p className="text-gray font-size-2 m-0 text-capitalize">
-                                  {data.gender === "female"
-                                    ? "F"
-                                    : data.gender === "male"
-                                    ? "M"
-                                    : "O"}
-                                  //Calculation of age from date of birth
-                                  (
-                                  {data.marital_status ||
-                                  data.date_of_birth
-                                    ? `${
-                                        data.marital_status
-                                      },${moment().diff(
-                                        data.date_of_birth,
-                                        "years"
-                                      )} Y`
-                                    : null}
-                                  )
-                                </p>
-                              ) : null} */}
-                            </div>
-                          </div>
-                          {/* </Link> */}
-                        </td>
-                        <td className="py-5 ">
-                          {(data.contact_no === null ||
-                            data.contact_no === undefined ||
-                            data.contact_no === "undefined" ||
-                            data.contact_no === "" ||
-                            data.contact_no === "0") &&
-                          (data.email === null ||
-                            data.email === undefined ||
-                            data.email === "undefined" ||
-                            data.email === "") ? (
-                            <p className="font-size-3  mb-0">N/A</p>
-                          ) : (
-                            <p className="m-0">
-                              <Link
-                                className="text-dark"
-                                to={`tel:${data.contact_no}`}
-                              >
-                                {data.contact_no === "0"
-                                  ? ""
-                                  : `+${data.contact_no}`}
-                              </Link>
-                              <p className="text-gray font-size-2 m-0">
-                                <Link
-                                  className="text-dark"
-                                  to={`mailto:${data.email}`}
-                                >
-                                  {data.email}
-                                </Link>
-                              </p>
-                            </p>
-                          )}
-                        </td>
-
-                        {/* {props.heading === "Dashboard" ? (
-                        ""
-                      ) : (
-                        <td className=" py-5">
-                          {data.type === null ? (
-                            <p className="font-size-3  mb-0">N/A</p>
-                          ) : (
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              <p className="text-gray font-size-2 m-0">
-                                {data.type}
-                              </p>
-                            </h3>
-                          )}
-                        </td>
-                      )} */}
-                        {props.heading === "Dashboard" ? (
-                          ""
-                        ) : (
-                          <td className=" py-5">
-                            {data.address === null ||
-                            data.address === undefined ||
-                            data.address === "undefined" ||
-                            data.address === "" ? (
-                              <p className="font-size-3  mb-0">N/A</p>
-                            ) : (
-                              <p
-                                className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
-                                title={data.address}
-                              >
-                                {data.address}
-                              </p>
-                            )}
-                          </td>
-                        )}
-                        {props.heading === "Dashboard" ? (
-                          ""
-                        ) : (
-                          <td className=" py-5">
-                            {(data.city === null ||
-                              data.city === undefined ||
-                              data.city === "undefined" ||
-                              data.city === "") &&
-                            (data.state === null ||
-                              data.state === undefined ||
-                              data.state === "undefined" ||
-                              data.state === "") &&
-                            (data.country === null ||
-                              data.country === undefined ||
-                              data.country === "undefined" ||
-                              data.country === "") ? (
-                              <p className="font-size-3  mb-0">N/A</p>
-                            ) : (
-                              <p
-                                className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
-                                title={` ${data.city},${data.state},${data.country}`}
-                              >
-                                {` ${data.city},${data.state},${data.country}`}
-                              </p>
-                            )}
-                          </td>
-                        )}
-                        <td className=" py-5 min-width-px-100">
-                          <div
-                            className="btn-group button_group"
-                            role="group"
-                            aria-label="Basic example"
-                          >
-                            <button
-                              className="btn btn-outline-info action_btn"
-                              onClick={() => {
-                                setAgentId(data.id);
-                              }}
-                              title="Employee's"
-                              disabled={data.agent_employee_count === "0" || 0}
-                            >
-                              <span className="text-gray px-2">
-                                <MdFormatListBulletedAdd />
-                              </span>
-                              {/* <i className="fa fa-list"></i> */}
-                            </button>
-                            <button
-                              className="btn btn-outline-info action_btn"
-                              onClick={() => props.EditAgent(data.id)}
-                              title="Edit Partner"
-                            >
-                              <span className="text-gray px-2">
-                                <LiaUserEditSolid />
-                              </span>
-                            </button>
-                            <button
-                              className={
-                                props.user === "agent"
-                                  ? "d-none"
-                                  : "btn btn-outline-info action_btn"
-                              }
-                              onClick={() => ShowDeleteAlert(data)}
-                              title="Delete Partner"
-                            >
-                              <span className="px-2 text-danger">
-                                <RiDeleteBin5Line />
-                              </span>
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                      {data.id === AgentId &&
-                      data.agent_employee_count !== (0 || "0") ? (
-                        <tr>
-                          <td colSpan={11}>
-                            {
-                              <>
-                                {/* <!-- Agent by emmployee --> */}
-                                <AgentsEmployee
-                                  Agentid={AgentId}
-                                  apiCall={apiCall}
-                                  setApiCall={setApiCall}
-                                  heading={"Manage Partner"}
-                                />
-                              </>
-                            }
-                          </td>
-                        </tr>
-                      ) : null}
-                    </React.Fragment>
-                  ))
-                )}
-              </tbody>
-            </table>
+                        <RiDeleteBin5Line /> {"Delete Partner"}
+                      </button>
+                    </div>
+                  </div>
+                  {data.id === AgentId &&
+                  data.agent_employee_count !== (0 || "0") ? (
+                    <>
+                      {/* <!-- Agent by emmployee --> */}
+                      <AgentsEmployee
+                        Agentid={AgentId}
+                        apiCall={apiCall}
+                        setApiCall={setApiCall}
+                        heading={"Manage Partner"}
+                      />
+                    </>
+                  ) : null}
+                </div>
+              ))}
+            </>
           )}
         </div>
         <div className="pt-2">

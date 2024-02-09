@@ -7,6 +7,7 @@ import AddAgent from "../forms/admin/addAgent";
 import AgentTable from "../common/agentTable";
 import AdminSidebar from "../admin/sidebar";
 import AdminHeader from "../admin/header";
+import PartnerPage from "./partner_page";
 // import FilterJson from "../json/filterjson";
 function PartnerDashboard() {
   /*Show modal states */
@@ -54,11 +55,15 @@ function PartnerDashboard() {
       <div className={"site-wrapper overflow-hidden bg-default-2"}>
         {/* <!-- Header Area --> */}
         <AdminHeader
-          heading={user_type === "agent" ? "Profile" : "Manage Partner"}
+          heading={
+            user_type === "agent" ? "Partner Dashboard" : "Manage Partner"
+          }
         />
         {/* <!-- navbar- --> */}
         <AdminSidebar
-          heading={user_type === "agent" ? "Profile" : "Manage Partner"}
+          heading={
+            user_type === "agent" ? "Partner Dashboard" : "Manage Partner"
+          }
         />
         <ToastContainer />
         {/* <!--Add Adgent Details Modal --> */}
@@ -101,7 +106,7 @@ function PartnerDashboard() {
                 <small className="text-danger">{searcherror}</small>
               </div>
               {/* <!-- Agent List Table- --> */}
-              <AgentTable
+              <PartnerPage
                 // showEmployeeProfile={showEmployeeProfile}
                 // employeeDetails={employeeDetails}
                 search={search}
