@@ -9257,21 +9257,22 @@ html .ui-button.ui-state-disabled:active {
 .message {
   margin-bottom: 15px;
   padding: 10px;
-  border-radius: 8px;
+  border-radius: 10px;
   max-width: 70%;
+  word-wrap: break-word;
 }
 
 /* Sent message */
 .message.sent {
-  background-color: #DCF8C6;
-  color: #000;
+  background-color: #007bff;
+  color: white;
   align-self: flex-end;
 }
 
 /* Received message */
 .message.received {
-  background-color: #ECE5DD;
-  color: #000;
+  background-color: #f0f0f0;
+  color: #333;
   align-self: flex-start;
 }
 
@@ -9297,37 +9298,4 @@ html .ui-button.ui-state-disabled:active {
 .message-time {
   margin: 0;
   color: #666;
-}
-
-/* Chat input form */
-.chat-input {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  background-color: #f4f4f4;
-}
-
-/* Chat input field */
-.message-input {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  outline: none;
-}
-
-/* Send button */
-.send-button {
-  background-color: #075E54;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  padding: 10px;
-  margin-left: 10px;
-  cursor: pointer;
-}
-
-/* Send button hover */
-.send-button:hover {
-  background-color: #004640;
 }

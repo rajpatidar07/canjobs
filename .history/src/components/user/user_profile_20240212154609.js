@@ -1845,7 +1845,6 @@ const NewUserProfile = (props) => {
                         userId={eid}
                         userEmail={PersonalDetail.email}
                         userName={PersonalDetail.name}
-                        assignusertype={"user"}
                       />
                     ) : null}
                   </div>

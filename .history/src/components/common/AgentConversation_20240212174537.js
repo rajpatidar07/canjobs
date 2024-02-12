@@ -2,22 +2,14 @@ import React, { useState, useEffect } from "react";
 import MessageList from "./MessageList";
 import { GetCommentsAndAssign, ADocAnnotation } from "../../api/api";
 import AddNotesConversation from "../forms/admin/AddNotesConversation";
-import useValidation from "./useValidation";
-import { toast } from "react-toastify";
-export default function AgentConversation({
-  userId,
-  userEmail,
-  userName,
-  assignusertype,
-}) {
+import useValidation from "../common";
+export default function AgentConversation({ userId, userEmail, userName }) {
   const [allData, setAllData] = useState([]);
-  const [apicall, setApiCall] = useState([]);
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     name: "",
     status: "",
     nxtfollowupdate: "",
-    subject: "",
   };
   // VALIDATION CONDITIONS
   const validators = {
@@ -35,17 +27,7 @@ export default function AgentConversation({
     ],
     status: [
       (value) =>
-        value === "" || value.trim() === "" ? "status is required" : null,
-    ],
-    subject: [
-      (value) =>
-        value === "" || value.trim() === "" ? "subject is required" : null,
-    ],
-    nxtfollowupdate: [
-      (value) =>
-        value === "" || value.trim() === ""
-          ? "Next follow Up Date is required"
-          : null,
+        value === "" || value.trim() === "" ? "message is required" : null,
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
@@ -64,14 +46,11 @@ export default function AgentConversation({
   //   Render data
   useEffect(() => {
     GetNotesData();
-    if (apicall === true) {
-      setApiCall(false);
-    }
-  }, [apicall]);
+  }, []);
   //   Get the notes list
   const GetNotesData = async () => {
     try {
-      let res = await GetCommentsAndAssign("", "", "", "notes");
+      let res = await GetCommentsAndAssign();
       if (res.data.status === (1 || "1")) {
         setAllData(res.data.data.reverse());
       } else if (res.data.message === "Task data not found") {
@@ -90,7 +69,7 @@ export default function AgentConversation({
         "", //doc id
         userId, //assigne dUserId
         userEmail,
-        state.subject, //subject
+        "subject", //subject
         state.message, //Comment
         0, //x_axis
         0, //y_axis
@@ -99,27 +78,12 @@ export default function AgentConversation({
         user_type === "admin" ? admin_name : user_name, //sender,
         userName, //assigned Admin or user Name,
         state.status, //follow up status
-        state.nxtfollowupdate, //Next follow up sattus
-        assignusertype //Assign user type
+        state.nxtfollowupdate //Next follow up sattus
+        // assignusertype,//Assign user type
       );
-      if (res.data.message === "task inserted successfully!") {
-        toast.success("Message sent Successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        setApiCall(true);
-        setState(initialFormState);
-      }
-      //   console.log(res, "This is the response");
+      console.log(res, "This is the response");
     } catch (err) {
       console.log(err);
-      if (err.response.data.message === "required fields cannot be blank") {
-        toast.error(" Please try again later.", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        setState(initialFormState);
-      }
     }
   };
   return (
@@ -130,7 +94,6 @@ export default function AgentConversation({
           handleMessageSubmit={handleMessageSubmit}
           onInputChange={onInputChange}
           state={state}
-          errors={errors}
         />
       </div>
     </div>
