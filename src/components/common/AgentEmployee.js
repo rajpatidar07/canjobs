@@ -477,13 +477,13 @@ function AgentsEmployee(props) {
                       <tr className="">
                         <th
                           scope="col"
-                          className=" border-0 font-size-4 font-weight-normal py-2"
+                          className=" border-0 font-size-3 font-weight-normal py-2"
                         >
                           EID
                         </th>
                         <th
                           scope="col"
-                          className=" border-0 font-size-4 font-weight-normal py-2"
+                          className=" border-0 font-size-3 font-weight-normal py-2"
                         >
                           <Link
                             to={""}
@@ -498,7 +498,7 @@ function AgentsEmployee(props) {
                         </th>
                         <th
                           scope="col"
-                          className="border-0 font-size-4 font-weight-normal py-2"
+                          className="border-0 font-size-3 font-weight-normal py-2"
                         >
                           <Link
                             to={""}
@@ -516,7 +516,7 @@ function AgentsEmployee(props) {
                         ) : (
                           <th
                             scope="col"
-                            className="border-0 font-size-4 font-weight-normal py-2"
+                            className="border-0 font-size-3 font-weight-normal py-2"
                           >
                             <Link
                               to={""}
@@ -535,7 +535,7 @@ function AgentsEmployee(props) {
                         ) : (
                           <th
                             scope="col"
-                            className="border-0 font-size-4 font-weight-normal py-2"
+                            className="border-0 font-size-3 font-weight-normal py-2"
                           >
                             <Link
                               to={""}
@@ -554,7 +554,7 @@ function AgentsEmployee(props) {
                         ) : (
                           <th
                             scope="col"
-                            className="border-0 font-size-4 font-weight-normal py-2"
+                            className="border-0 font-size-3 font-weight-normal py-2"
                           >
                             <Link
                               to={""}
@@ -573,7 +573,7 @@ function AgentsEmployee(props) {
                         ) : (
                           <th
                             scope="col"
-                            className="border-0 font-size-4 font-weight-normal py-2"
+                            className="border-0 font-size-3 font-weight-normal py-2"
                           >
                             <Link
                               to={""}
@@ -589,24 +589,24 @@ function AgentsEmployee(props) {
                         )}
                         <th
                           scope="col"
-                          className="border-0 font-size-4 font-weight-normal py-2"
+                          className="border-0 font-size-3 font-weight-normal py-2"
                         >
                           Profile
                         </th>
                         {props.visa === "yes" ? null : (
                           <th
                             scope="col"
-                            className="border-0 font-size-4 font-weight-normal py-2"
+                            className="border-0 font-size-3 font-weight-normal py-2"
                           >
                             Status
                           </th>
                         )}
-                        {/* {props.heading === "Dashboard" ? (
+                        {/* {props.heading === ("Dashboard") ? (
                           ""
                         ) : (
                           <th
                             scope="col"
-                            className="border-0 font-size-4 font-weight-normal py-2"
+                            className="border-0 font-size-3 font-weight-normal py-2"
                           >
                             Action
                           </th>
@@ -617,7 +617,10 @@ function AgentsEmployee(props) {
                       {/* Map function to show the data in the list*/}
                       {totalData === 0 || agentByEmployeeData.length === 0 ? (
                         <tr>
-                          <th colSpan={9} className="bg-white text-center"></th>
+                          <th
+                            colSpan={9}
+                            className="bg-white text-center font-size-3"
+                          ></th>
                         </tr>
                       ) : (
                         (agentByEmployeeData || []).map((empdata) => (
@@ -625,7 +628,9 @@ function AgentsEmployee(props) {
                             className="text-capitalize applicant_row"
                             key={empdata.employee_id}
                           >
-                            <td className=" py-2">{empdata.employee_id}</td>
+                            <td className="font-size-3 py-2">
+                              {empdata.employee_id}
+                            </td>
                             <td className=" py-2">
                               <Link
                                 to={`/${empdata.employee_id}`}
@@ -709,7 +714,7 @@ function AgentsEmployee(props) {
                                 <p className="m-0">
                                   +
                                   <Link
-                                    className="text-dark"
+                                    className="text-dark font-size-3"
                                     to={`tel:${empdata.contact_no}`}
                                   >
                                     {empdata.contact_no}

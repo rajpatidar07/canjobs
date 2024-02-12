@@ -2601,3 +2601,32 @@ export const GlobalSearchResult = async (search) => {
   );
   return response;
 };
+/*Global Search API */
+export const getActivityLog = async (
+  page,
+  user_id,
+  user_type,
+  action_id,
+  action_type
+) => {
+  // console.log("Props" + props.user_id + props.user_type);
+  const response = await axios.post(
+    `${API_URL}getActivityLog`,
+    {
+      page: page,
+      user_id: user_id,
+      user_type: user_type,
+      action_id: action_id,
+      action_type: action_type,
+      column_name: "created_at",
+      sort_order: "DESC",
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+};

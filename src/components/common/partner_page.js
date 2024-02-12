@@ -10,6 +10,7 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import { GetAgent, DeleteAgent } from "../../api/api";
 import { MdFormatListBulletedAdd } from "react-icons/md";
 import AgentsEmployee from "./AgentEmployee";
+import ActivityTable from "./activity_table";
 export default function PartnerPage(props) {
   /*Show modal states */
   let [apiCall, setApiCall] = useState(false);
@@ -224,15 +225,24 @@ export default function PartnerPage(props) {
                   </div>
                   {data.id === AgentId &&
                   data.agent_employee_count !== (0 || "0") ? (
-                    <>
+                    <div className="row">
                       {/* <!-- Agent by emmployee --> */}
-                      <AgentsEmployee
-                        Agentid={AgentId}
-                        apiCall={apiCall}
-                        setApiCall={setApiCall}
-                        heading={"Manage Partner"}
-                      />
-                    </>
+                      <div className="col-md-6">
+                        <AgentsEmployee
+                          Agentid={AgentId}
+                          apiCall={apiCall}
+                          setApiCall={setApiCall}
+                          heading={"Dashboard"}
+                        />
+                      </div>
+                      <div className="col-md-6">
+                        <ActivityTable
+                          user_id={AgentId}
+                          user_type={"agent"}
+                          hide={true}
+                        />
+                      </div>
+                    </div>
                   ) : null}
                 </div>
               ))}

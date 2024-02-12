@@ -304,7 +304,7 @@ const AdminSidebar = (props) => {
               ) : (
                 <>
                   <MdRealEstateAgent className="sidebar_icon" />
-                  Manage Partner
+                  Partner Dashboard
                 </>
               )}
             </Link>
