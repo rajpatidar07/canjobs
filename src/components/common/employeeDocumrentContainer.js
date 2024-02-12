@@ -241,8 +241,26 @@ export default function DocumrentContainer(props) {
         setDocData([]);
         setLoading(false);
       } else {
-        setDocData(response.data.data.allData);
-        setDocAllTypes(response.data.data.all_types);
+        if (
+          response.data.data.allData.length === 0 ||
+          response.data.data.allData === undefined ||
+          response.data.data.allData === "" ||
+          response.data.data.allData === null
+        ) {
+          setDocData([]);
+        } else {
+          setDocData(response.data.data.allData);
+        }
+        if (
+          response.data.data.all_types.length === 0 ||
+          response.data.data.all_types === undefined ||
+          response.data.data.all_types === "" ||
+          response.data.data.all_types === null
+        ) {
+          setDocAllTypes([]);
+        } else {
+          setDocAllTypes(response.data.data.all_types);
+        }
         setLoading(false);
         if (
           docTypData === undefined ||
@@ -503,9 +521,6 @@ export default function DocumrentContainer(props) {
           docUrl: DocFile,
         });
       }
-      console.log(
-        docData[0] === docTypData ? docTypData.type + "8" : docTypeName + "!"
-      );
       // Store the object of files
       setDocFileBase(fileList);
       bulkUpload === "no" ? setDocName(DocRealName) : setDocName("");
@@ -809,6 +824,20 @@ export default function DocumrentContainer(props) {
       let res = await DeleteDocument(id, props.emp_user_type);
       if (res.data.message === "document deleted successfully!") {
         toast.success("Document deleted Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setDocFile("");
+        setDocId("");
+        setDocData("");
+        setDocTypData("");
+        setDocName("");
+        setApiCall(true);
+        setOtherDoc(false);
+        GetDocument(true);
+      }
+      if (res.data.message === "Error deleting document") {
+        toast.success("Error deleting document ! Try again later", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
@@ -1266,7 +1295,7 @@ export default function DocumrentContainer(props) {
         {/* Annotation  */}
         <div className="col-md-3 px-2 py-2 comments_and_replies">
           {/* Add Annotation form */}
-
+          {console.log(hide)}
           {!hide &&
           docFile &&
           docName &&
@@ -1376,6 +1405,8 @@ export default function DocumrentContainer(props) {
               getCommentsReplyList={getCommentsReplyList}
               setAddCommentFlag={setAddCommentFlag}
               setFilteredEmails={setFilteredEmails}
+              docTypData={docTypData}
+              setHide={setHide}
             />
           ) : null}
         </div>
