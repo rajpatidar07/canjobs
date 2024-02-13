@@ -60,7 +60,22 @@ export default function AgentConversation({
   // User details
   let user_type = localStorage.getItem("userType");
   let user_name = localStorage.getItem("name");
-
+  // task_creator_user_id: id,
+  // task_creator_user_name: senderName,
+  // doc_id: docId,
+  // assined_to_user_id: assineduserid,
+  // assigned_to: email,
+  // assigned_to_type: adminType,
+  // assigned_to_name: assignName,
+  // assigned_user_type: AssignUserType,
+  // document_url: "",
+  // next_followup_date: nextFollowupDate,
+  // followup_status: satus,
+  // subject: subject,
+  // subject_description: comment,
+  // x_axis: x,
+  // y_axis: y,
+  // type: type,
   //   Render data
   useEffect(() => {
     GetNotesData();
@@ -73,7 +88,7 @@ export default function AgentConversation({
     try {
       let res = await GetCommentsAndAssign("", "", "", "notes");
       if (res.data.status === (1 || "1")) {
-        setAllData(res.data.data.reverse());
+        setAllData(res.data.data);
       } else if (res.data.message === "Task data not found") {
         setAllData([]);
       }
@@ -96,10 +111,10 @@ export default function AgentConversation({
         0, //y_axis
         "notes",
         user_type === "admin" ? admin_type : user_type,
-        user_type === "admin" ? admin_name : user_name, //sender,
+        user_name === "admin" ? admin_name : user_name, //sender,
         userName, //assigned Admin or user Name,
         state.status, //follow up status
-        state.nxtfollowupdate, //Next follow up sattus
+        state.nxtfollowupdate, //Next follow up date
         assignusertype //Assign user type
       );
       if (res.data.message === "task inserted successfully!") {
@@ -123,8 +138,8 @@ export default function AgentConversation({
     }
   };
   return (
-    <div>
-      <div className="chat-container">
+    <div className="chat_box_container bg-white row m-0">
+      <div className="chat-container col-md-6">
         <MessageList data={allData} />
         <AddNotesConversation
           handleMessageSubmit={handleMessageSubmit}

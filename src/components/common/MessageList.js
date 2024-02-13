@@ -1,12 +1,26 @@
 import moment from "moment";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 const MessageList = ({ data }) => {
+  // Create a ref for the div element
+  const divRef = useRef(null);
+
+  // Function to scroll to the end of the div
+  const scrollToBottom = () => {
+    if (divRef.current) {
+      // Set scrollTop to the scrollHeight to scroll to the end
+      divRef.current.scrollTop = divRef.current.scrollHeight;
+    }
+  };
+  //   Render data
+  useEffect(() => {
+    scrollToBottom();
+  }, [data]);
   return (
-    <div className="chat-messages">
+    <div className="chat-messages bg-light" ref={divRef}>
       {data.length === 0 ? (
         <div className="message">
-          <p>No Data Found</p>
+          <div>No Data Found</div>
         </div>
       ) : (
         data.map((message) => (
@@ -14,13 +28,13 @@ const MessageList = ({ data }) => {
             key={message.id}
             className={`message ${message.assigned_to ? "received" : "sent"}`}
           >
-            <div className="message-content">
-              <p className="message-text text-capitalize">
-                {message.subject_description}
-              </p>
+            <div className="message-content font-size-3">
+              <div className="message-text">{message.subject_description}</div>
               <div className="message-info">
                 {message.assigned_to && (
-                  <p className="message-sender">{message.assigned_to}</p>
+                  <span className="message-sender font-size-3">
+                    {message.assigned_to}
+                  </span>
                 )}
                 <small className="text-muted">
                   {moment(message.created_on).format("LLL")}

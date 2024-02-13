@@ -558,6 +558,25 @@ export const ADocAnnotation = async (
 ) => {
   const response = await axios.post(
     `${API_URL}admin/docTaskAdd`,
+
+    {
+      task_creator_user_id: id,
+      task_creator_user_name: senderName,
+      doc_id: docId,
+      assined_to_user_id: assineduserid,
+      assigned_to: email,
+      assigned_to_type: adminType,
+      assigned_to_name: assignName,
+      assigned_user_type: AssignUserType,
+      document_url: "",
+      next_followup_date: nextFollowupDate,
+      followup_status: satus,
+      subject: subject,
+      subject_description: comment,
+      x_axis: x,
+      y_axis: y,
+      type: type,
+    },
     // {
     //   task_creator_user_id: id,
     //   doc_id: docId,
@@ -597,25 +616,6 @@ export const ADocAnnotation = async (
     //   type: type,
     // }
     // Latest json
-    {
-      task_creator_user_id: id,
-      task_creator_user_name: senderName,
-      doc_id: docId,
-      assined_to_user_id: assineduserid,
-      assigned_to: email,
-      assigned_to_type: adminType,
-      assigned_to_name: assignName,
-      assigned_user_type: AssignUserType,
-      document_url: "",
-      next_followup_date: nextFollowupDate,
-      followup_status: satus,
-      subject: subject,
-      subject_description: comment,
-      x_axis: x,
-      y_axis: y,
-      type: type,
-    },
-
     {
       headers: {
         "Content-Type": "application/json",

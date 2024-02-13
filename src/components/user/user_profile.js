@@ -295,7 +295,7 @@ const NewUserProfile = (props) => {
               <Loader />
             </div>
           ) : (
-            <div className="row text-left mt-5 pt-0 flex-wrap">
+            <div className="row text-left mt-3 pt-0 flex-wrap">
               <div className="col-12 mb-1 d-none">
                 <div className="bg-white shadow-9 d-flex">
                   <div className="col-md-3 col-sm-6 px-5 pt-5 pb-5 d-flex align-items-center border-right">
@@ -687,8 +687,8 @@ const NewUserProfile = (props) => {
                       <Link
                         className={
                           TabActive === "profile"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
                         }
                         id="home-tab"
                         data-toggle="tab"
@@ -710,8 +710,8 @@ const NewUserProfile = (props) => {
                       <Link
                         className={
                           TabActive === "jobs"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
                         }
                         id="appliedJobs"
                         data-toggle="tab"
@@ -733,8 +733,8 @@ const NewUserProfile = (props) => {
                       <Link
                         className={
                           TabActive === "documents"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
                         }
                         id="docTab"
                         data-toggle="tab"
@@ -756,8 +756,8 @@ const NewUserProfile = (props) => {
                       <Link
                         className={
                           TabActive === "visa"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
                         }
                         id="visaTab"
                         data-toggle="tab"
@@ -779,8 +779,8 @@ const NewUserProfile = (props) => {
                       <Link
                         className={
                           TabActive === "notes"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
                         }
                         id="notesTab"
                         data-toggle="tab"
@@ -797,8 +797,8 @@ const NewUserProfile = (props) => {
                       <Link
                         className={
                           TabActive === "activity"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
                         }
                         id="activityTab"
                         data-toggle="tab"
@@ -818,8 +818,8 @@ const NewUserProfile = (props) => {
                       <Link
                         className={
                           TabActive === "payment"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
                         }
                         id="activityTab"
                         data-toggle="tab"
@@ -849,8 +849,8 @@ const NewUserProfile = (props) => {
                       <Link
                         className={
                           TabActive === "contact"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
                         }
                         id="docTab"
                         data-toggle="tab"
@@ -866,8 +866,8 @@ const NewUserProfile = (props) => {
                       <Link
                         className={
                           TabActive === "email"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
                         }
                         id="docTab"
                         data-toggle="tab"
@@ -883,8 +883,8 @@ const NewUserProfile = (props) => {
                       <Link
                         className={
                           TabActive === "agent conversation"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
                         }
                         id="docTab"
                         data-toggle="tab"
@@ -893,7 +893,7 @@ const NewUserProfile = (props) => {
                         aria-selected="true"
                         onClick={() => setTabActive("agent conversation")}
                       >
-                        Partner's Conversation
+                        Partner
                       </Link>
                     </li>
                   </ul>
