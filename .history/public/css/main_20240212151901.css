@@ -9244,6 +9244,7 @@ html .ui-button.ui-state-disabled:active {
   display: flex;
   flex-direction: column;
   height: 100%;
+  background-color: #fafafa;
 }
 
 /* Chat messages container */
@@ -9255,79 +9256,76 @@ html .ui-button.ui-state-disabled:active {
 
 /* Individual message */
 .message {
-  margin-bottom: 15px;
-  padding: 10px;
-  border-radius: 8px;
+  margin-bottom: 20px;
   max-width: 70%;
 }
 
 /* Sent message */
 .message.sent {
-  background-color: #DCF8C6;
-  color: #000;
+  background-color: #0088cc;
+  color: white;
   align-self: flex-end;
+  border-radius: 15px 15px 0 15px;
 }
 
 /* Received message */
 .message.received {
-  background-color: #ECE5DD;
-  color: #000;
+  background-color: #fff;
+  color: #333;
   align-self: flex-start;
+  border-radius: 15px 15px 15px 0;
 }
 
 /* Message text */
 .message-text {
-  margin: 0;
+  padding: 10px;
 }
 
 /* Message info (sender and time) */
 .message-info {
   display: flex;
-  justify-content: space-between;
-  font-size: 12px;
+  justify-content: flex-end;
+  margin-top: 5px;
 }
 
 /* Message sender */
 .message-sender {
-  margin: 0;
+  margin-right: 10px;
   font-weight: bold;
 }
 
 /* Message time */
 .message-time {
-  margin: 0;
-  color: #666;
+  color: #999;
 }
 
 /* Chat input form */
 .chat-input {
   display: flex;
-  align-items: center;
   padding: 10px;
-  background-color: #f4f4f4;
 }
 
 /* Chat input field */
-.message-input {
+.chat-input input {
   flex: 1;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   border-radius: 20px;
   outline: none;
 }
 
 /* Send button */
 .send-button {
-  background-color: #075E54;
+  background-color: #0088cc;
   color: white;
   border: none;
-  border-radius: 50%;
-  padding: 10px;
+  border-radius: 20px;
+  padding: 10px 20px;
   margin-left: 10px;
   cursor: pointer;
 }
 
 /* Send button hover */
 .send-button:hover {
-  background-color: #004640;
+  background-color: #005580;
 }

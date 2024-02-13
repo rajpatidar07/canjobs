@@ -71,7 +71,7 @@ export default function AgentConversation({
   //   Get the notes list
   const GetNotesData = async () => {
     try {
-      let res = await GetCommentsAndAssign("", "", "", "notes");
+      let res = await GetCommentsAndAssign("", "", "notes");
       if (res.data.status === (1 || "1")) {
         setAllData(res.data.data.reverse());
       } else if (res.data.message === "Task data not found") {

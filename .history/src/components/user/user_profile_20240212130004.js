@@ -893,7 +893,7 @@ const NewUserProfile = (props) => {
                         aria-selected="true"
                         onClick={() => setTabActive("agent conversation")}
                       >
-                        Partner's Conversation
+                        Agent Conversation
                       </Link>
                     </li>
                   </ul>
@@ -1841,12 +1841,7 @@ const NewUserProfile = (props) => {
                     }
                   >
                     {TabActive === "agent conversation" ? (
-                      <AgentConversation
-                        userId={eid}
-                        userEmail={PersonalDetail.email}
-                        userName={PersonalDetail.name}
-                        assignusertype={"user"}
-                      />
+                      <AgentConversation />
                     ) : null}
                   </div>
                 </div>

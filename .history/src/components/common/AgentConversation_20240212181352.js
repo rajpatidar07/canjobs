@@ -11,7 +11,6 @@ export default function AgentConversation({
   assignusertype,
 }) {
   const [allData, setAllData] = useState([]);
-  const [apicall, setApiCall] = useState([]);
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     name: "",
@@ -64,14 +63,11 @@ export default function AgentConversation({
   //   Render data
   useEffect(() => {
     GetNotesData();
-    if (apicall === true) {
-      setApiCall(false);
-    }
-  }, [apicall]);
+  }, []);
   //   Get the notes list
   const GetNotesData = async () => {
     try {
-      let res = await GetCommentsAndAssign("", "", "", "notes");
+      let res = await GetCommentsAndAssign();
       if (res.data.status === (1 || "1")) {
         setAllData(res.data.data.reverse());
       } else if (res.data.message === "Task data not found") {
@@ -107,8 +103,6 @@ export default function AgentConversation({
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        setApiCall(true);
-        setState(initialFormState);
       }
       //   console.log(res, "This is the response");
     } catch (err) {
@@ -118,7 +112,6 @@ export default function AgentConversation({
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        setState(initialFormState);
       }
     }
   };

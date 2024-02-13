@@ -1841,12 +1841,7 @@ const NewUserProfile = (props) => {
                     }
                   >
                     {TabActive === "agent conversation" ? (
-                      <AgentConversation
-                        userId={eid}
-                        userEmail={PersonalDetail.email}
-                        userName={PersonalDetail.name}
-                        assignusertype={"user"}
-                      />
+                      <AgentConversation />
                     ) : null}
                   </div>
                 </div>

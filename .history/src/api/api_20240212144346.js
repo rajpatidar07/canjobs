@@ -551,10 +551,7 @@ export const ADocAnnotation = async (
   type,
   adminType,
   senderName,
-  assignName,
-  satus,
-  nextFollowupDate,
-  AssignUserType
+  assignName
 ) => {
   const response = await axios.post(
     `${API_URL}admin/docTaskAdd`,
@@ -605,11 +602,11 @@ export const ADocAnnotation = async (
       assigned_to: email,
       assigned_to_type: adminType,
       assigned_to_name: assignName,
-      assigned_user_type: AssignUserType,
+      assigned_user_type: "",
       document_url: "",
-      next_followup_date: nextFollowupDate,
-      followup_status: satus,
-      subject: subject,
+      next_followup_date: "",
+      followup_status: "",
+      subject: "",
       subject_description: comment,
       x_axis: x,
       y_axis: y,

@@ -3,7 +3,6 @@ import MessageList from "./MessageList";
 import { GetCommentsAndAssign, ADocAnnotation } from "../../api/api";
 import AddNotesConversation from "../forms/admin/AddNotesConversation";
 import useValidation from "./useValidation";
-import { toast } from "react-toastify";
 export default function AgentConversation({
   userId,
   userEmail,
@@ -11,7 +10,6 @@ export default function AgentConversation({
   assignusertype,
 }) {
   const [allData, setAllData] = useState([]);
-  const [apicall, setApiCall] = useState([]);
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     name: "",
@@ -64,14 +62,11 @@ export default function AgentConversation({
   //   Render data
   useEffect(() => {
     GetNotesData();
-    if (apicall === true) {
-      setApiCall(false);
-    }
-  }, [apicall]);
+  }, []);
   //   Get the notes list
   const GetNotesData = async () => {
     try {
-      let res = await GetCommentsAndAssign("", "", "", "notes");
+      let res = await GetCommentsAndAssign();
       if (res.data.status === (1 || "1")) {
         setAllData(res.data.data.reverse());
       } else if (res.data.message === "Task data not found") {
@@ -107,10 +102,8 @@ export default function AgentConversation({
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        setApiCall(true);
-        setState(initialFormState);
       }
-      //   console.log(res, "This is the response");
+      console.log(res, "This is the response");
     } catch (err) {
       console.log(err);
       if (err.response.data.message === "required fields cannot be blank") {
@@ -118,7 +111,6 @@ export default function AgentConversation({
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        setState(initialFormState);
       }
     }
   };
