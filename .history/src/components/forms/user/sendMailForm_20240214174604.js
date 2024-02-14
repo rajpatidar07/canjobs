@@ -6,7 +6,7 @@ import { AiOutlineCloudUpload } from "react-icons/ai";
 function SendMailForm({ email, setApiCall }) {
   const [loading, setLoading] = useState(false);
   const [fileBase, setFileBase] = useState();
-  const [fileNames, setFileNames] = useState([]);
+  const [fileName, setFileName] = useState([]);
   let AdminEmail = localStorage.getItem("admin_email");
   /*Render function to get the Response*/
   // useEffect(() => {
@@ -51,7 +51,90 @@ function SendMailForm({ email, setApiCall }) {
   const { state, setState, onInputChange, errors, setErrors, validate } =
     useValidation(initialFormState, validators);
 
+  /*Function to convert file to base64 */
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.addEventListener("load", () => {
+        resolve({ base64: fileReader.result });
+      });
+      fileReader.readAsDataURL(file);
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
   /*On change fnction to upload bulk document in 1 array*/
+  // const handleBulkFileChange = async (event, id) => {
+  //   const files = event.target.files;
+
+  //   // Check the number of files selected
+  //   if (files.length > 10) {
+  //     toast.error("You can only upload a maximum of 15 files at a time", {
+  //       position: toast.POSITION.TOP_RIGHT,
+  //       autoClose: 1000,
+  //     });
+  //     return;
+  //   }
+
+  //   // Continue with file validation and processing
+  //   const allowedTypes = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
+  //   const maxSize = 1024 * 10000; // 10 MB
+
+  //   const fileList = {};
+  //   let DocRealName;
+  //   for (let i = 0; i < files.length; i++) {
+  //     const file = files[i];
+
+  //     // Check file type
+  //     const fileType = `.${file.name.split(".").pop()}`;
+  //     if (!allowedTypes.includes(fileType.toLowerCase())) {
+  //       toast.error(
+  //         `Invalid document type for file '${file.name}'. Allowed types: PDF, DOC, DOCX, JPG, JPEG, PNG`,
+  //         {
+  //           position: toast.POSITION.TOP_RIGHT,
+  //           autoClose: 1000,
+  //         }
+  //       );
+  //       return;
+  //     }
+
+  //     // Check file size
+  //     if (file.size > maxSize) {
+  //       toast.error(
+  //         `Document size can't be more than 8 MB for file '${file.name}'`,
+  //         {
+  //           position: toast.POSITION.TOP_RIGHT,
+  //           autoClose: 1000,
+  //         }
+  //       );
+  //       return;
+  //     }
+
+  //     // Read file as data URL
+  //     const reader = new FileReader();
+  //     reader.readAsDataURL(file);
+  //     const encoded = await convertToBase64(file);
+  //     const base64Name = encoded.base64;
+
+  //     // Construct file object with base64 data
+  //     const DocFile = `data:/${base64Name.split(";")[0].split("/")[1]};${
+  //       base64Name.split(";")[1]
+  //     }`;
+
+  //     // Use DocRealName as the key for DocFile
+  //     DocRealName =
+  //       file.name.split(".")[0].replace(/ /g, "_") +
+  //       "." +
+  //       base64Name.split(";")[0].split("/")[1];
+  //     fileList[DocRealName] = DocFile;
+  //   }
+
+  //   // Store the object of files
+  //   setFileBase(fileList);
+  //   setFileName(DocRealName);
+  // };
+  // console.log(fileName);
   const handleBulkFileChange = async (event) => {
     const files = event.target.files;
 
@@ -69,7 +152,7 @@ function SendMailForm({ email, setApiCall }) {
     const maxSize = 1024 * 10000; // 10 MB
 
     const newFileBase = { ...fileBase };
-    const newFileNames = [];
+    const newFileNames = [...fileName];
 
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
@@ -107,19 +190,18 @@ function SendMailForm({ email, setApiCall }) {
         newFileBase[base64Name] = base64Data;
         newFileNames.push(base64Name);
         setFileBase(newFileBase);
-        setFileNames(newFileNames);
+        setFileName(newFileNames);
       };
       reader.readAsDataURL(file);
     }
   };
 
-  //Function to Remove any attechment
   const handleRemoveFile = (fileName) => {
     const newFileBase = { ...fileBase };
-    const newFileNames = fileNames.filter((name) => name !== fileName);
+    const newFileNames = fileName.filter((name) => name !== fileName);
     delete newFileBase[fileName];
     setFileBase(newFileBase);
-    setFileNames(newFileNames);
+    setFileName(newFileNames);
   };
 
   /*Function to sent email*/
@@ -136,8 +218,6 @@ function SendMailForm({ email, setApiCall }) {
           });
           setLoading(false);
           setState(initialFormState);
-          setFileBase();
-          setFileNames([]);
           setErrors("");
           setApiCall(true);
         }
@@ -149,8 +229,6 @@ function SendMailForm({ email, setApiCall }) {
           setLoading(false);
           setState(initialFormState);
           setErrors("");
-          setFileBase();
-          setFileNames([]);
         }
         if (Response.message === "Fields must not be empty!") {
           toast.error("Something went wrong", {
@@ -160,16 +238,10 @@ function SendMailForm({ email, setApiCall }) {
           setLoading(false);
           setState(initialFormState);
           setErrors("");
-          setFileBase();
-          setFileNames([]);
         }
       } catch (err) {
         console.log(err);
         setLoading(false);
-        setFileBase();
-        setFileNames([]);
-        setErrors("");
-        setState(initialFormState);
       }
     }
   };
@@ -248,20 +320,6 @@ function SendMailForm({ email, setApiCall }) {
               )}
             </div>
           </div>
-          <div className="mail-file-attachments">
-            {fileNames.map((fileName) => (
-              <div key={fileName} className="mail-file-attachment">
-                <p>{fileName}</p>
-                <button
-                  type="button"
-                  className="mail-remove-file"
-                  onClick={() => handleRemoveFile(fileName)}
-                >
-                  X
-                </button>
-              </div>
-            ))}
-          </div>
           <div className="mb-2 col-12">
             <label className="btn btn-secondary ">
               <AiOutlineCloudUpload className="font-size-3 mr-2" />
@@ -277,6 +335,20 @@ function SendMailForm({ email, setApiCall }) {
               />
               Attach Files
             </label>
+          </div>
+          <div className="file-attachments">
+            {fileName.map((fileName) => (
+              <div key={fileName} className="file-attachment">
+                <p>{fileName}</p>
+                <button
+                  type="button"
+                  className="remove-file"
+                  onClick={() => handleRemoveFile(fileName)}
+                >
+                  X
+                </button>
+              </div>
+            ))}
           </div>
           <div className="mb-2 col-12 text-center">
             {loading === true ? (

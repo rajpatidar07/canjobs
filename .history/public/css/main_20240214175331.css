@@ -9259,7 +9259,7 @@ html .ui-button.ui-state-disabled:active {
   padding-right: 10px;
 }
 
-.mail-remove-file {
+.remove-file {
   background-color: #dc3545; /* Red background for remove button */
   color: white;
   border: none;
@@ -9268,6 +9268,6 @@ html .ui-button.ui-state-disabled:active {
   cursor: pointer;
 }
 
-.mail-remove-file:hover {
+.remove-file:hover {
   background-color: #c82333; /* Darker red on hover */
 }

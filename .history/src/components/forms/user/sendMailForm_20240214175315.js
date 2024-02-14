@@ -136,8 +136,6 @@ function SendMailForm({ email, setApiCall }) {
           });
           setLoading(false);
           setState(initialFormState);
-          setFileBase();
-          setFileNames([]);
           setErrors("");
           setApiCall(true);
         }
@@ -149,8 +147,6 @@ function SendMailForm({ email, setApiCall }) {
           setLoading(false);
           setState(initialFormState);
           setErrors("");
-          setFileBase();
-          setFileNames([]);
         }
         if (Response.message === "Fields must not be empty!") {
           toast.error("Something went wrong", {
@@ -160,16 +156,10 @@ function SendMailForm({ email, setApiCall }) {
           setLoading(false);
           setState(initialFormState);
           setErrors("");
-          setFileBase();
-          setFileNames([]);
         }
       } catch (err) {
         console.log(err);
         setLoading(false);
-        setFileBase();
-        setFileNames([]);
-        setErrors("");
-        setState(initialFormState);
       }
     }
   };
@@ -254,7 +244,7 @@ function SendMailForm({ email, setApiCall }) {
                 <p>{fileName}</p>
                 <button
                   type="button"
-                  className="mail-remove-file"
+                  className="remove-file"
                   onClick={() => handleRemoveFile(fileName)}
                 >
                   X

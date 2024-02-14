@@ -9238,36 +9238,3 @@ html .ui-button.ui-state-disabled:active {
   /* Use a color that fits your design */
   color: #fff;
 }
-/* Mail file attechment css */
-.mail-file-attachments {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.mail-file-attachment {
-  display: flex;
-  align-items: center;
-  background-color: #f0f0f0; /* Light gray background */
-  border-radius: 5px;
-  padding: 5px 10px;
-  margin-right: 10px;
-  margin-bottom: 10px;
-}
-
-.mail-file-attachment p {
-  margin: 0;
-  padding-right: 10px;
-}
-
-.mail-remove-file {
-  background-color: #dc3545; /* Red background for remove button */
-  color: white;
-  border: none;
-  border-radius: 50%; /* Rounded shape */
-  padding: 5px;
-  cursor: pointer;
-}
-
-.mail-remove-file:hover {
-  background-color: #c82333; /* Darker red on hover */
-}
