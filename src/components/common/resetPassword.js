@@ -109,6 +109,28 @@ export default function ResetPassword() {
           setLoading(false);
         }
       }
+      if (userType === "agent") {
+        console.log("Agent Reset");
+        // try {
+        //   let updatedTodo = await AdminResetPasswordApi(state);
+        //   if (
+        //     updatedTodo.status === true ||
+        //     updatedTodo.message === "Password updated successfully"
+        //   ) {
+        //     toast.success("Password updated successfully", {
+        //       position: toast.POSITION.TOP_RIGHT,
+        //       autoClose: 1000,
+        //     });
+        //     setLoading(false);
+        //     setState(initialFormState);
+        //     navigate("/");
+        //     window.location.reload();
+        //   }
+        // } catch (err) {
+        //   console.log(err);
+        //   setLoading(false);
+        // }
+      }
     }
   };
 
