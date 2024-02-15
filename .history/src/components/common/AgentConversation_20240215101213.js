@@ -3,7 +3,6 @@ import MessageList from "./MessageList";
 import { GetCommentsAndAssign, ADocAnnotation } from "../../api/api";
 import AddNotesConversation from "../forms/admin/AddNotesConversation";
 import useValidation from "./useValidation";
-import moment from "moment";
 import { toast } from "react-toastify";
 export default function AgentConversation({
   userId,
@@ -16,8 +15,8 @@ export default function AgentConversation({
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     name: "",
-    status: "normal",
-    nxtfollowupdate: moment().add(1, "week").format("YYYY-MM-DD"),
+    status: "",
+    nxtfollowupdate: "",
     subject: "",
     message: "",
     DocUrl: "",

@@ -30,7 +30,7 @@ export default function AddNotesConversation({
             placeholder="Subject"
             value={state.subject}
             onChange={onInputChange}
-            className={`message_input d-none ${
+            className={`message_input ${
               errors.Subject && "border border-danger"
             }`}
             name="subject"
@@ -43,7 +43,7 @@ export default function AddNotesConversation({
             onChange={onInputChange}
             min={moment().format("DD-MM-YYYY")}
             onKeyDownCapture={(e) => e.preventDefault()}
-            className={`message_input d-none coustam_datepicker ${
+            className={`message_input coustam_datepicker ${
               errors.nxtfollowupdate && "border border-danger"
             }`}
             title="Next Followup Date"
