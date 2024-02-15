@@ -150,11 +150,20 @@ function EmployeeFooter() {
                     </li>
                     <li className="mb-3">
                       <Link
-                        to={""}
+                        to={"/client_login"}
                         onClick={() => setShowSingUp(true)}
                         className="heading-default-color font-size-4 font-weight-normal"
                       >
                         Client Login
+                      </Link>
+                    </li>
+                    <li className="mb-3">
+                      <Link
+                        className="heading-default-color font-size-4 font-weight-normal"
+                        to={"/partnerlogin"}
+                        // onClick={() => setShowCompanyLogin(true)}
+                      >
+                        Partner Login
                       </Link>
                     </li>
                   </ul>
