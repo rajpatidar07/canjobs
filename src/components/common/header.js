@@ -152,10 +152,14 @@ function EmployeeHeader() {
                       to={"/client_login"}
                       // onClick={() => setShowCompanyLogin(true)}
                     >
-                      Client Login
+                      Client
                     </Link>
                   </li>
-
+                  <li className="drop-menu-item">
+                    <Link to={"/partnerlogin"} className="nav-link">
+                      Partner
+                    </Link>
+                  </li>
                   <li className="nav-item">
                     <Link className="nav-link" to="/adminlogin">
                       Admin

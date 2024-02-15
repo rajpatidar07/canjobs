@@ -311,7 +311,7 @@ export default function AgentLogin() {
                   >
                     Create a free account
                   </Link>
-                  <p className="font-size-4 text-center heading-default-color m-0">
+                  {/* <p className="font-size-4 text-center heading-default-color m-0">
                     Are you an admin?
                   </p>
                   <Link
@@ -319,7 +319,7 @@ export default function AgentLogin() {
                     className="text-primary w-100 text-center"
                   >
                     Admin Login
-                  </Link>
+                  </Link> */}
                 </form>
               )}
               <ForgotPasswordForm

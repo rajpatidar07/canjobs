@@ -277,7 +277,7 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
                       Log in
                     </button>
                   )}
-                  <p className="text-center mt-7 font-size-4 mb-1">
+                  {/* <p className="text-center mt-7 font-size-4 mb-1">
                     Are you a partner?
                   </p>
                   <Link
@@ -285,7 +285,7 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
                     className="font-size-4 text-anger line-height-reset mb-3 text-center w-100"
                   >
                     Partner Login
-                  </Link>
+                  </Link> */}
                 </div>
               </form>
               <ForgotPasswordForm
