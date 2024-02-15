@@ -262,6 +262,12 @@ export default function DocumrentContainer(props) {
           setDocAllTypes(response.data.data.all_types);
         }
         setLoading(false);
+        // console.log(
+        //   showMoreDocType === false &&
+        //     response.data.data.allData.find(
+        //       (item) => item.document_name === docName
+        //     )
+        // );
         if (
           docTypData === undefined ||
           docTypData === "undefined" ||
@@ -971,6 +977,10 @@ export default function DocumrentContainer(props) {
     let sender = allAdmin.find((item) => item.admin_id === admin_id)
       ? allAdmin.find((item) => item.admin_id === admin_id).name
       : "";
+    let senderEmail = allAdmin.find((item) => item.admin_id === admin_id)
+      ? allAdmin.find((item) => item.admin_id === admin_id).email
+      : "";
+    const AdminType = localStorage.getItem("admin_type");
     // Variables for mentionaing admins
     const email = selectedAdmin || ""; ///\S+@\S+\.\S+/.test(comments) ? comments : "";
     let assignedAdminName = allAdmin.filter((item) =>
@@ -989,7 +999,7 @@ export default function DocumrentContainer(props) {
           .map((admin) => admin.admin_id)
           .join(",")
       : "";
-    const AdminType = allAdmin.filter((item) =>
+    const assignedUserType = allAdmin.filter((item) =>
       selectedAdmin.includes(item.email)
     )
       ? allAdmin
@@ -997,6 +1007,7 @@ export default function DocumrentContainer(props) {
           .map((admin) => admin.admin_type)
           .join(",")
       : "";
+
     // Send data to the API
     if (comment === "" && email === "") {
       toast.error("Comment or email cannot be empty!", {
@@ -1015,9 +1026,14 @@ export default function DocumrentContainer(props) {
           annotation.x_axis,
           annotation.y_axis,
           "document",
-          AdminType,
-          sender,
-          assignedAdminName
+          AdminType, //sender type
+          sender, //sender name,
+          assignedAdminName, //assigned Admin or user Name,
+          "", //follow up status(for notes only)
+          "", //Next follow up date(for notes only)
+          assignedUserType, //Assign user type,
+          "", //Document url(for notes only)
+          senderEmail //Sender email
         );
         if (res.data.message === "task inserted successfully!") {
           toast.success("Comment uploaded Successfully", {
@@ -1139,6 +1155,12 @@ export default function DocumrentContainer(props) {
     let senderId = allAdmin.find((item) => item.admin_id === admin_id)
       ? allAdmin.find((item) => item.admin_id === admin_id).admin_id
       : "";
+    let senderEmail = allAdmin.find((item) => item.admin_id === admin_id)
+      ? allAdmin.find((item) => item.admin_id === admin_id).email
+      : "";
+    let senderType = allAdmin.find((item) => item.admin_id === admin_id)
+      ? allAdmin.find((item) => item.admin_id === admin_id).admin_type
+      : "";
     // let assignedAdminName = allAdmin.find(
     //   (item) => item.email === selectedAdminReply
     // )
@@ -1162,14 +1184,13 @@ export default function DocumrentContainer(props) {
           .map((admin) => admin.admin_id)
           .join(",")
       : "";
-    const AdminType = allAdmin.filter((item) =>
-      selectedAdminReply.includes(item.email)
-    )
-      ? allAdmin
-          .filter((item) => selectedAdminReply.includes(item.email))
-          .map((admin) => admin.admin_type)
-          .join(",")
-      : "";
+    const AdminType = //localStorage.getItem("admin_type");
+      allAdmin.filter((item) => selectedAdminReply.includes(item.email))
+        ? allAdmin
+            .filter((item) => selectedAdminReply.includes(item.email))
+            .map((admin) => admin.admin_type)
+            .join(",")
+        : "";
     if (replyComment === "" && email === "") {
       toast.error("Comment or email cannot be empty!", {
         position: toast.POSITION.TOP_RIGHT,
@@ -1186,7 +1207,9 @@ export default function DocumrentContainer(props) {
           sender,
           assignedAdminName,
           "document",
-          senderId
+          senderId,
+          senderEmail,
+          senderType
         );
         if (res.data.message === "message sent successfully!") {
           toast.success("Replied Successfully", {
@@ -1244,6 +1267,7 @@ export default function DocumrentContainer(props) {
           setSelecttDocTypeName={setSelecttDocTypeName}
           docAllTypes={docAllTypes}
           setDocTypeName={setDocTypeName}
+          userId={props.employee_id}
         />
         {/* Document view */}
         <ViewDocument
@@ -1295,7 +1319,6 @@ export default function DocumrentContainer(props) {
         {/* Annotation  */}
         <div className="col-md-3 px-2 py-2 comments_and_replies">
           {/* Add Annotation form */}
-          {console.log(hide)}
           {!hide &&
           docFile &&
           docName &&
