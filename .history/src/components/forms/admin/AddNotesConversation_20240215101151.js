@@ -77,7 +77,7 @@ export default function AddNotesConversation({
                 handleBulkFileChange(e);
               }}
             />
-            Send files or images
+            Update Current Document
           </label>
         </div>
         {errors.general && <p className="error-message">{errors.general}</p>}
