@@ -113,7 +113,6 @@ export default function ResetPassword() {
       if (userType === "agent") {
         try {
           let updatedTodo = await ResetAgentPasswordApi(state);
-          console.log(updatedTodo);
           if (
             updatedTodo.status === true ||
             updatedTodo.message === "Password updated successfully"

@@ -43,6 +43,9 @@ export default function DocumrentContainer(props) {
   const [hide, setHide] = useState(false);
   const [bulkUpload, setBulkUpload] = useState("");
   const [loading, setLoading] = useState(true);
+  // Notification states to send in notificaion component
+  const [notificationDoc, setNotificationDoc] = useState(0);
+  const [notificationApiCall, setNotificationApiCall] = useState(false);
   // let encoded;
   let user_type = localStorage.getItem("userType");
   let admin_id = localStorage.getItem("admin_id");
@@ -241,113 +244,150 @@ export default function DocumrentContainer(props) {
         setDocData([]);
         setLoading(false);
       } else {
-        if (
-          response.data.data.allData.length === 0 ||
-          response.data.data.allData === undefined ||
-          response.data.data.allData === "" ||
-          response.data.data.allData === null
-        ) {
-          setDocData([]);
-        } else {
-          setDocData(response.data.data.allData);
-        }
-        if (
-          response.data.data.all_types.length === 0 ||
-          response.data.data.all_types === undefined ||
-          response.data.data.all_types === "" ||
-          response.data.data.all_types === null
-        ) {
-          setDocAllTypes([]);
-        } else {
-          setDocAllTypes(response.data.data.all_types);
-        }
-        setLoading(false);
-        // console.log(
-        //   showMoreDocType === false &&
-        //     response.data.data.allData.find(
-        //       (item) => item.document_name === docName
-        //     )
-        // );
-        if (
-          docTypData === undefined ||
-          docTypData === "undefined" ||
-          (docTypData === "" && docName === "" && otherDoc === false) ||
-          del === true
-        ) {
-          // eslint-disable-next-line
-          setDocTypData(response.data.data.allData[0]);
-          setDocFile(
-            response.data.data.allData[0].document_url +
-              `?v=${new Date().getMinutes() + new Date().getSeconds()}`
-          );
-          setDocName(response.data.data.allData[0].document_name);
-          setDocId(response.data.data.allData[0].id);
-          setDocTypeName(response.data.data.allData[0].type);
-        } else if (
-          showMoreDocType === false &&
-          response.data.data.allData.find(
-            (item) => item.document_name === docName
-          )
-        ) {
+        {
           if (
-            response.data.data.allData.find(
-              (item) => item.document_name === docName
-            ).document_name === docName
+            response.data.data.allData.length === 0 ||
+            response.data.data.allData === undefined ||
+            response.data.data.allData === "" ||
+            response.data.data.allData === null
           ) {
-            setDocTypData(
+            setDocData([]);
+          } else {
+            setDocData(response.data.data.allData);
+          }
+          if (
+            response.data.data.all_types.length === 0 ||
+            response.data.data.all_types === undefined ||
+            response.data.data.all_types === "" ||
+            response.data.data.all_types === null
+          ) {
+            setDocAllTypes([]);
+          } else {
+            setDocAllTypes(response.data.data.all_types);
+          }
+          setLoading(false);
+          if (notificationDoc === 1) {
+            // Condition for Open document fromnotification
+            if (response.data.data.allData.find((item) => item.id === docId)) {
+              setDocTypData(
+                response.data.data.allData.find((item) => item.id === docId)
+              );
+              setDocName(
+                response.data.data.allData.find((item) => item.id === docId)
+                  .document_name
+              );
+              setDocId(
+                response.data.data.allData.find((item) => item.id === docId).id
+              );
+              setDocFile(
+                response.data.data.allData.find((item) => item.id === docId)
+                  .document_url +
+                  `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+              );
+              setDocTypeName(
+                response.data.data.allData.find((item) => item.id === docId)
+                  .type
+              );
+              setSelecttDocTypeName(
+                response.data.data.allData.find((item) => item.id === docId)
+                  .type
+              );
+            } else {
+              toast.error("Document not found", {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 1000,
+              });
+            }
+            setNotificationDoc(0);
+          } else {
+            setNotificationDoc(0);
+
+            if (
+              docTypData === undefined ||
+              docTypData === "undefined" ||
+              (docTypData === "" && docName === "" && otherDoc === false) ||
+              del === true
+            ) {
+              // eslint-disable-next-line
+              setDocTypData(response.data.data.allData[0]);
+              setDocFile(
+                response.data.data.allData[0].document_url +
+                  `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+              );
+              setDocName(response.data.data.allData[0].document_name);
+              setDocId(response.data.data.allData[0].id);
+              setDocTypeName(response.data.data.allData[0].type);
+            } else if (
+              showMoreDocType === false &&
               response.data.data.allData.find(
                 (item) => item.document_name === docName
               )
-            );
-            setDocName(
-              response.data.data.allData.find(
-                (item) => item.document_name === docName
-              ).document_name
-            );
-            setDocId(
-              response.data.data.allData.find(
-                (item) => item.document_name === docName
-              ).id
-            );
-            setDocFile(
-              response.data.data.allData.find(
-                (item) => item.document_name === docName
-              ).document_url +
-                `?v=${new Date().getMinutes() + new Date().getSeconds()}`
-            );
-            setDocTypeName(
-              response.data.data.allData.find(
-                (item) => item.document_name === docName
-              ).type
-            );
-          }
-        } else {
-          //Condition for update
-          if (response.data.data.allData.find((item) => item.id === docId)) {
-            setDocTypData(
-              response.data.data.allData.find((item) => item.id === docId)
-            );
-            setDocFile(
-              response.data.data.allData.find((item) => item.id === docId)
-                .document_url +
-                `?v=${new Date().getMinutes() + new Date().getSeconds()}`
-            );
-            setDocName(
-              response.data.data.allData.find((item) => item.id === docId)
-                .document_name
-            );
-            setDocId(
-              response.data.data.allData.find((item) => item.id === docId).id
-            );
-            setDocTypeName(
-              response.data.data.allData.find((item) => item.id === docId).type
-            );
-          } else {
-            setDocTypData("");
-            setDocFile("");
-            setDocName("");
-            setDocId("");
-            setDocTypeName("");
+            ) {
+              if (
+                response.data.data.allData.find(
+                  (item) => item.document_name === docName
+                ).document_name === docName
+              ) {
+                setDocTypData(
+                  response.data.data.allData.find(
+                    (item) => item.document_name === docName
+                  )
+                );
+                setDocName(
+                  response.data.data.allData.find(
+                    (item) => item.document_name === docName
+                  ).document_name
+                );
+                setDocId(
+                  response.data.data.allData.find(
+                    (item) => item.document_name === docName
+                  ).id
+                );
+                setDocFile(
+                  response.data.data.allData.find(
+                    (item) => item.document_name === docName
+                  ).document_url +
+                    `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+                );
+                setDocTypeName(
+                  response.data.data.allData.find(
+                    (item) => item.document_name === docName
+                  ).type
+                );
+              }
+            } else {
+              //Condition for update
+              if (
+                response.data.data.allData.find((item) => item.id === docId)
+              ) {
+                setDocTypData(
+                  response.data.data.allData.find((item) => item.id === docId)
+                );
+                setDocFile(
+                  response.data.data.allData.find((item) => item.id === docId)
+                    .document_url +
+                    `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+                );
+                setDocName(
+                  response.data.data.allData.find((item) => item.id === docId)
+                    .document_name
+                );
+                setDocId(
+                  response.data.data.allData.find((item) => item.id === docId)
+                    .id
+                );
+                setDocTypeName(
+                  response.data.data.allData.find((item) => item.id === docId)
+                    .type
+                );
+              } else {
+                setDocTypData("");
+                setDocFile("");
+                setDocName("");
+                setDocId("");
+                setDocTypeName("");
+              }
+            }
           }
         }
       }
@@ -1033,7 +1073,8 @@ export default function DocumrentContainer(props) {
           "", //Next follow up date(for notes only)
           assignedUserType, //Assign user type,
           "", //Document url(for notes only)
-          senderEmail //Sender email
+          senderEmail, //Sender email
+          props.employee_id //Userid
         );
         if (res.data.message === "task inserted successfully!") {
           toast.success("Comment uploaded Successfully", {
@@ -1046,6 +1087,7 @@ export default function DocumrentContainer(props) {
           setSelectedAdmin("");
           setAnnotationMode(!isAnnotationMode);
           setFilteredEmails([]);
+          setNotificationApiCall(true);
         }
       } catch (err) {
         console.log(err);
@@ -1209,13 +1251,15 @@ export default function DocumrentContainer(props) {
           "document",
           senderId,
           senderEmail,
-          senderType
+          senderType,
+          props.employee_id //Userid
         );
         if (res.data.message === "message sent successfully!") {
           toast.success("Replied Successfully", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
+          setNotificationApiCall(true);
           setReplyComment("");
           getCommentsReplyList();
           setSelectedAdminReplye("");
@@ -1240,6 +1284,7 @@ export default function DocumrentContainer(props) {
       <div className="row m-0 bg-white">
         {/* Document list */}
         <DocumentList
+          selectDocTypeName={selectDocTypeName}
           user_type={user_type}
           docData={docData}
           setShowMoreDocType={setShowMoreDocType}
@@ -1268,6 +1313,9 @@ export default function DocumrentContainer(props) {
           docAllTypes={docAllTypes}
           setDocTypeName={setDocTypeName}
           userId={props.employee_id}
+          setNotificationDoc={setNotificationDoc}
+          notificationApiCall={notificationApiCall}
+          setNotificationApiCall={setNotificationApiCall}
         />
         {/* Document view */}
         <ViewDocument
