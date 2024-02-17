@@ -168,8 +168,7 @@ export default function ViewDocument({
             className={
               user_type === "user" ||
               user_type === "admin" ||
-              user_type === "agent" ||
-              user_type === "company"
+              user_type === "agent"
                 ? "btn btn-secondary btn-sm text-white mr-0 doc_btn"
                 : "d-none"
             }

@@ -317,6 +317,7 @@ export default function DocumrentContainer(props) {
               setDocName(response.data.data.allData[0].document_name);
               setDocId(response.data.data.allData[0].id);
               setDocTypeName(response.data.data.allData[0].type);
+              setSelecttDocTypeName(response.data.data.allData[0].type);
             } else if (
               showMoreDocType === false &&
               response.data.data.allData.find(

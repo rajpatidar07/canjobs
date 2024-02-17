@@ -50,9 +50,7 @@ const CheckoutForm = ({
                 elements,
                 clientSecret,
                 confirmParams: {
-                  // save_payment_method: true,
-                  //Aws: https://canpathwaysjobs.com
-                  //Vercel: https://canjobs.vercel.app
+                  // save_payment_method: true,https://canpathwaysjobs.comhttps://canjobs.vercel.app
                   return_url: `https://canjobs.vercel.app${window.location.pathname}`,
                 },
                 // amount: amount,
