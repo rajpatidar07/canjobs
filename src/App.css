@@ -1440,6 +1440,7 @@ input::-webkit-inner-spin-button {
   justify-content: space-between;
   font-size: 12px;
   padding: 0 8px;
+  flex-direction: row-reverse;
 }
 
 /* Message sender */

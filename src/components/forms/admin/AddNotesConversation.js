@@ -68,7 +68,7 @@ export default function AddNotesConversation({
             name="nxtfollowupdate"
           />
 
-          <select
+          {/* <select
             name="status"
             value={state.status || ""}
             onChange={onInputChange}
@@ -83,7 +83,7 @@ export default function AddNotesConversation({
           >
             <option value={"normal"}>Normal</option>
             <option value={"private"}>Private</option>
-          </select>
+          </select> */}
         </div>
         <div className="">
           <label className="btn btn-light doc_btn">

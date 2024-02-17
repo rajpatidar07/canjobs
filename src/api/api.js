@@ -1499,12 +1499,11 @@ export const getAllAdminNotification = async () => {
   });
   return response.data;
 };
-export const getAllMentionNotification = async (/*loginuserid,*/ id) => {
-  console.log(id);
+export const getAllMentionNotification = async (loginuserid, id) => {
   const response = await axios.post(
     `${API_URL}common/getMentionNotifications`,
     {
-      // from_id: loginuserid,
+      from_id: loginuserid,
       employee_id: id,
       type: "mention_document",
     },

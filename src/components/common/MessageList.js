@@ -72,9 +72,15 @@ const MessageList = ({ data, loginuser, loginusertype }) => {
                   message.subject_description === "null" ? (
                     ""
                   ) : (
-                    <div className="message-text">
-                      {" "}
-                      {message.subject_description}
+                    <div className=" mr-3 mb-3  ">
+                      <div className="message-text">
+                        {message.task_creator_user_name && (
+                          <span className="message-sender font-size-3 text-capitalize">
+                            {message.task_creator_user_name}
+                          </span>
+                        )}
+                        <br /> {message.subject_description}
+                      </div>
                     </div>
                   )
                 ) : (
@@ -82,6 +88,13 @@ const MessageList = ({ data, loginuser, loginusertype }) => {
                     className="align-items-center mr-3 mb-3 rounded border bg-white position-relative htmlFileCls p-2 message-text"
                     title={title}
                   >
+                    {" "}
+                    {message.task_creator_user_name && (
+                      <span className="message-sender font-size-3 text-capitalize">
+                        {message.task_creator_user_name}
+                      </span>
+                    )}
+                    <br />
                     <div className="text-center">
                       <Link>
                         <img
@@ -120,17 +133,14 @@ const MessageList = ({ data, loginuser, loginusertype }) => {
                     message.subject_description === "null" ? (
                       ""
                     ) : (
-                      <div className=""> {message.subject_description}</div>
+                      <div className="text-start">
+                        {message.subject_description}
+                      </div>
                     )}
                   </div>
                 )}
 
                 <div className="message-info">
-                  {message.task_creator_user_name && (
-                    <span className="message-sender font-size-3 text-capitalize">
-                      {message.task_creator_user_name}
-                    </span>
-                  )}
                   <small className="text-muted">
                     {moment(message.created_on).format("LLL")}
                   </small>

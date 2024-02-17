@@ -268,7 +268,7 @@ export default function AgentConversation({
           fileNames={fileNames}
         />
       </div>
-      <div className="chat-container col-md-6">
+      {/*  <div className="chat-container col-md-6">
         <MessageList
           data={allData.filter((item) => item.followup_status === "private")}
           loginuser={
@@ -280,7 +280,7 @@ export default function AgentConversation({
           }
           loginusertype={user_type === "admin" ? admin_type : user_type}
         />
-      </div>
+        </div>*/}
     </div>
   );
 }
