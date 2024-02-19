@@ -116,13 +116,19 @@ export default function DocumrentContainer(props) {
       setComments(inputValue);
     }
 
-    const lastChar = inputValue.slice(-1);
-    if (lastChar === "@") {
+    let lastChar = inputValue.slice(-1);
+    const atIndex = inputValue.indexOf("@");
+
+    if (lastChar === "@" || inputValue.includes("@")) {
       AdminData();
       if (allAdmin) {
         // Filter admin emails based on input
-        let filteredAdminEmails = allAdmin.filter(
-          (admin) => admin.email.toLowerCase().includes
+        let filteredAdminEmails = allAdmin.filter((admin) =>
+          admin.email.toLowerCase().includes(
+            String(inputValue)
+              .substring(atIndex + 1)
+              .toLowerCase()
+          )
         );
 
         // Update the filtered emails
@@ -148,9 +154,9 @@ export default function DocumrentContainer(props) {
   const handleEmailMouseOver = (email, type) => {
     // Highlight the email on mouseover
     if (type === "reply") {
-      // setReplyComment(email);
+      setSelectedAdminReplye(email);
     } else {
-      // setComments(email);
+      setSelectedAdmin(email);
     }
   };
   // Handle click event on the FileViewer to capture annotations
@@ -187,9 +193,10 @@ export default function DocumrentContainer(props) {
           annotationStatus,
           "document"
         );
+        console.log(res.data.data.data);
         if (res.data.status === (1 || "1")) {
-          setCommentsList(res.data.data.reverse());
-          setImageAnnotations(res.data.data);
+          setCommentsList(res.data.data.data);
+          setImageAnnotations(res.data.data.data);
         } else if (res.data.message === "Task data not found") {
           setCommentsList([]);
           setImageAnnotations([]);

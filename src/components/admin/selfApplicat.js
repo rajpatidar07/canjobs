@@ -7,7 +7,7 @@ import PersonalDetails from "../forms/user/personal";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserProfile from "../user/profile";
-import { GetFilter } from "../../api/api";
+import { GetFilter, GetAgentJson } from "../../api/api";
 import EmployeeTable from "../common/employeeTable";
 import FilterJson from "../json/filterjson";
 import CustomButton from "../common/button";
@@ -16,6 +16,8 @@ function SelfApplicat(props) {
   let [apiCall, setApiCall] = useState(false);
   let [showAddEmployeeModal, setShowEmployeeMOdal] = useState(false);
   let [showEmployeeProfile, setShowEmployeeProfile] = useState(false);
+  let [AgentList, setAgentList] = useState([]);
+
   /*data and id states */
   let [employeeId, setemployeeId] = useState();
   /*Filter and search state */
@@ -23,6 +25,7 @@ function SelfApplicat(props) {
   const [skillFilterValue, setSkillFilterValue] = useState(
     props ? props.skill : ""
   );
+  const [agentFilterValue, setAgentFilterValue] = useState("");
   const [educationFilterValue, setEducationFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
@@ -34,12 +37,19 @@ function SelfApplicat(props) {
   const JsonData = async () => {
     try {
       let Json = await GetFilter();
+      let agentjson = await GetAgentJson();
+
       if (Json.data.message === "No data found") {
         setSkillList([]);
         setEducationList([]);
       } else {
         setSkillList(Json.data.data.Skill);
         setEducationList(Json.data.data.Education);
+      }
+      if (agentjson.length === 0) {
+        setAgentList([]);
+      } else {
+        setAgentList(agentjson);
       }
     } catch (err) {
       console.log(err);
@@ -238,6 +248,38 @@ function SelfApplicat(props) {
                       </select>
                     </div>
                   </div>
+                  <div
+                    className={
+                      props.skill === null || props.skill === undefined
+                        ? "col p-1 form_group mb-3"
+                        : "col p-1 form_group"
+                    }
+                  >
+                    <p className="input_label">Filter by Agent:</p>
+                    <div className="select_div">
+                      <select
+                        name="agent"
+                        value={agentFilterValue}
+                        id="agent"
+                        onChange={(e) => {
+                          setAgentFilterValue(e.target.value);
+                          setpageNo(1);
+                        }}
+                        className="text-capitalize form-control"
+                      >
+                        <option value="" data-display="Product Designer">
+                          Select Agent
+                        </option>
+                        {(AgentList || []).map((data) => {
+                          return (
+                            <option value={data.id} key={data.id}>
+                              {data.name}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+                  </div>
                   {props.skill === null ||
                   props.skill === undefined ||
                   Object.keys(props.skill).length === 0 ? (
@@ -270,6 +312,7 @@ function SelfApplicat(props) {
                 status={"0"}
                 pageNo={pageNo}
                 setpageNo={setpageNo}
+                agentFilterValue={agentFilterValue}
               />
             </div>
           </div>
