@@ -35,7 +35,7 @@ export default function DocumrentContainer(props) {
   const [docFile, setDocFile] = useState("");
   const [docFileBase, setDocFileBase] = useState("");
   const [docFileExt, setDocFileExt] = useState("");
-  const [docId, setDocId] = useState("");
+  const [docId, setDocId] = useState(window.location.search ? props.docId : "");
   const [docTypeName, setDocTypeName] = useState("");
   const [selectDocTypeName, setSelecttDocTypeName] = useState("");
   const [showMoreDocType, setShowMoreDocType] = useState(false);
@@ -193,7 +193,6 @@ export default function DocumrentContainer(props) {
           annotationStatus,
           "document"
         );
-        console.log(res.data.data.data);
         if (res.data.status === (1 || "1")) {
           setCommentsList(res.data.data.data);
           setImageAnnotations(res.data.data.data);
@@ -232,6 +231,7 @@ export default function DocumrentContainer(props) {
       setCommentsReplyList([]);
     }
   };
+  console.log(notificationDoc, "outside of funtion");
   /*Annotaton functionalites close */
   /*Functo get Applicants Document */
   const GetDocument = async (del) => {
@@ -239,8 +239,9 @@ export default function DocumrentContainer(props) {
       let response = await GetEmployeeDocumentList(
         props.employee_id,
         props.emp_user_type,
-        selectDocTypeName ? selectDocTypeName : ""
+        window.location.search ? "" : selectDocTypeName ? selectDocTypeName : ""
       );
+
       if (
         response.data.data === undefined ||
         response.data.data === "" ||
@@ -273,9 +274,20 @@ export default function DocumrentContainer(props) {
             setDocAllTypes(response.data.data.all_types);
           }
           setLoading(false);
+          console.log("in the function", notificationDoc);
           if (notificationDoc === 1) {
+            console.log(
+              response.data.data.allData.find((item) => item.id === docId)
+            );
+
             // Condition for Open document fromnotification
+            // setNotificationDoc(0);
+
             if (response.data.data.allData.find((item) => item.id === docId)) {
+              setSelecttDocTypeName(
+                response.data.data.allData.find((item) => item.id === docId)
+                  .type
+              );
               setDocTypData(
                 response.data.data.allData.find((item) => item.id === docId)
               );
@@ -295,20 +307,18 @@ export default function DocumrentContainer(props) {
                 response.data.data.allData.find((item) => item.id === docId)
                   .type
               );
-              setSelecttDocTypeName(
-                response.data.data.allData.find((item) => item.id === docId)
-                  .type
-              );
+              setAnnotationMode(false);
+              setNotificationDoc(0);
+              //Condition to clear docid from url after navigation from notification
+              const newUrl = window.location.pathname;
+              window.history.replaceState({}, document.title, newUrl);
             } else {
               toast.error("Document not found", {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 1000,
               });
             }
-            setNotificationDoc(0);
           } else {
-            setNotificationDoc(0);
-
             if (
               docTypData === undefined ||
               docTypData === "undefined" ||
@@ -325,6 +335,7 @@ export default function DocumrentContainer(props) {
               setDocId(response.data.data.allData[0].id);
               setDocTypeName(response.data.data.allData[0].type);
               setSelecttDocTypeName(response.data.data.allData[0].type);
+              // setNotificationDoc(0);
             } else if (
               showMoreDocType === false &&
               response.data.data.allData.find(
@@ -336,6 +347,8 @@ export default function DocumrentContainer(props) {
                   (item) => item.document_name === docName
                 ).document_name === docName
               ) {
+                // setNotificationDoc(0);
+
                 setDocTypData(
                   response.data.data.allData.find(
                     (item) => item.document_name === docName
@@ -368,6 +381,8 @@ export default function DocumrentContainer(props) {
               if (
                 response.data.data.allData.find((item) => item.id === docId)
               ) {
+                // setNotificationDoc(0);
+
                 setDocTypData(
                   response.data.data.allData.find((item) => item.id === docId)
                 );
@@ -394,6 +409,7 @@ export default function DocumrentContainer(props) {
                 setDocName("");
                 setDocId("");
                 setDocTypeName("");
+                // setNotificationDoc(0);
               }
             }
           }
@@ -942,8 +958,10 @@ export default function DocumrentContainer(props) {
     if (apiCall === true) {
       setApiCall(false);
     }
-    setAnnotationMode(false);
-  }, [docId, apiCall, selectDocTypeName]);
+    if (window.location.search) {
+      setNotificationDoc(1);
+    }
+  }, [docId, apiCall, selectDocTypeName, props.employee_id, props.docId]);
   //USeEffect foe commet replies list
   useEffect(() => {
     // getCommentsReplyList();
@@ -1095,7 +1113,8 @@ export default function DocumrentContainer(props) {
           setSelectedAdmin("");
           setAnnotationMode(!isAnnotationMode);
           setFilteredEmails([]);
-          setNotificationApiCall(true);
+          // setNotificationApiCall(true);
+          localStorage.setItem("callNotification", true);
         }
       } catch (err) {
         console.log(err);
@@ -1267,7 +1286,8 @@ export default function DocumrentContainer(props) {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
-          setNotificationApiCall(true);
+          // setNotificationApiCall(true);
+          localStorage.setItem("callNotification", true);
           setReplyComment("");
           getCommentsReplyList();
           setSelectedAdminReplye("");
@@ -1321,9 +1341,9 @@ export default function DocumrentContainer(props) {
           docAllTypes={docAllTypes}
           setDocTypeName={setDocTypeName}
           userId={props.employee_id}
-          setNotificationDoc={setNotificationDoc}
-          notificationApiCall={notificationApiCall}
-          setNotificationApiCall={setNotificationApiCall}
+          // setNotificationDoc={setNotificationDoc}
+          // notificationApiCall={notificationApiCall}
+          // setNotificationApiCall={setNotificationApiCall}
         />
         {/* Document view */}
         <ViewDocument
