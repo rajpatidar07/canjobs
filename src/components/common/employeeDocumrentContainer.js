@@ -35,7 +35,7 @@ export default function DocumrentContainer(props) {
   const [docFile, setDocFile] = useState("");
   const [docFileBase, setDocFileBase] = useState("");
   const [docFileExt, setDocFileExt] = useState("");
-  const [docId, setDocId] = useState(window.location.search ? props.docId : "");
+  const [docId, setDocId] = useState(props.docId ? props.docId : "");
   const [docTypeName, setDocTypeName] = useState("");
   const [selectDocTypeName, setSelecttDocTypeName] = useState("");
   const [showMoreDocType, setShowMoreDocType] = useState(false);
@@ -44,7 +44,7 @@ export default function DocumrentContainer(props) {
   const [bulkUpload, setBulkUpload] = useState("");
   const [loading, setLoading] = useState(true);
   // Notification states to send in notificaion component
-  const [notificationDoc, setNotificationDoc] = useState(0);
+  const [notificationDoc, setNotificationDoc] = useState(props.docId ? 1 : 0);
   const [notificationApiCall, setNotificationApiCall] = useState(false);
   // let encoded;
   let user_type = localStorage.getItem("userType");
@@ -231,7 +231,6 @@ export default function DocumrentContainer(props) {
       setCommentsReplyList([]);
     }
   };
-  console.log(notificationDoc, "outside of funtion");
   /*Annotaton functionalites close */
   /*Functo get Applicants Document */
   const GetDocument = async (del) => {
@@ -239,7 +238,12 @@ export default function DocumrentContainer(props) {
       let response = await GetEmployeeDocumentList(
         props.employee_id,
         props.emp_user_type,
-        window.location.search ? "" : selectDocTypeName ? selectDocTypeName : ""
+        props.docId &&
+          localStorage.getItem("notificationUser") === props.employee_id
+          ? ""
+          : selectDocTypeName
+          ? selectDocTypeName
+          : ""
       );
 
       if (
@@ -274,14 +278,9 @@ export default function DocumrentContainer(props) {
             setDocAllTypes(response.data.data.all_types);
           }
           setLoading(false);
-          console.log("in the function", notificationDoc);
           if (notificationDoc === 1) {
-            console.log(
-              response.data.data.allData.find((item) => item.id === docId)
-            );
-
             // Condition for Open document fromnotification
-            // setNotificationDoc(0);
+            setNotificationDoc(0);
 
             if (response.data.data.allData.find((item) => item.id === docId)) {
               setSelecttDocTypeName(
@@ -307,17 +306,13 @@ export default function DocumrentContainer(props) {
                 response.data.data.allData.find((item) => item.id === docId)
                   .type
               );
-              setAnnotationMode(false);
-              setNotificationDoc(0);
-              //Condition to clear docid from url after navigation from notification
-              const newUrl = window.location.pathname;
-              window.history.replaceState({}, document.title, newUrl);
             } else {
               toast.error("Document not found", {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 1000,
               });
             }
+            setNotificationDoc(0);
           } else {
             if (
               docTypData === undefined ||
@@ -335,7 +330,7 @@ export default function DocumrentContainer(props) {
               setDocId(response.data.data.allData[0].id);
               setDocTypeName(response.data.data.allData[0].type);
               setSelecttDocTypeName(response.data.data.allData[0].type);
-              // setNotificationDoc(0);
+              setNotificationDoc(0);
             } else if (
               showMoreDocType === false &&
               response.data.data.allData.find(
@@ -347,7 +342,7 @@ export default function DocumrentContainer(props) {
                   (item) => item.document_name === docName
                 ).document_name === docName
               ) {
-                // setNotificationDoc(0);
+                setNotificationDoc(0);
 
                 setDocTypData(
                   response.data.data.allData.find(
@@ -381,7 +376,7 @@ export default function DocumrentContainer(props) {
               if (
                 response.data.data.allData.find((item) => item.id === docId)
               ) {
-                // setNotificationDoc(0);
+                setNotificationDoc(0);
 
                 setDocTypData(
                   response.data.data.allData.find((item) => item.id === docId)
@@ -409,7 +404,7 @@ export default function DocumrentContainer(props) {
                 setDocName("");
                 setDocId("");
                 setDocTypeName("");
-                // setNotificationDoc(0);
+                setNotificationDoc(0);
               }
             }
           }
@@ -958,8 +953,11 @@ export default function DocumrentContainer(props) {
     if (apiCall === true) {
       setApiCall(false);
     }
-    if (window.location.search) {
-      setNotificationDoc(1);
+    setAnnotationMode(false);
+    //Condition to clear docid from url after navigation from notification
+    if (props.docId) {
+      const newUrl = window.location.pathname;
+      window.history.replaceState({}, document.title, newUrl);
     }
   }, [docId, apiCall, selectDocTypeName, props.employee_id, props.docId]);
   //USeEffect foe commet replies list

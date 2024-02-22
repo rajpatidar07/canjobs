@@ -39,6 +39,7 @@ import VisaArrowProfile from "../common/visaArrowProfile";
 import PayentForm from "../forms/admin/payentForm";
 import MainEmailPage from "../email/mainemailPage";
 import AgentConversation from "../common/AgentConversation";
+import UserTimline from "../common/UserTimline";
 const NewUserProfile = (props) => {
   const { eid } = useParams();
   const location = useLocation();
@@ -865,6 +866,29 @@ const NewUserProfile = (props) => {
                         onClick={() => setTabActive("contact")}
                       >
                         Contact Us
+                      </Link>
+                    </li>
+                    <li
+                      className={
+                        user_type === "user" || user_type === "company"
+                          ? "d-none"
+                          : "tab-menu-items nav-item "
+                      }
+                    >
+                      <Link
+                        className={
+                          TabActive === "timline"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
+                        }
+                        id="docTab"
+                        data-toggle="tab"
+                        role="tab"
+                        aria-controls="docTab"
+                        aria-selected="true"
+                        onClick={() => setTabActive("timline")}
+                      >
+                        TimeLine
                       </Link>
                     </li>
                     <li className={"tab-menu-items nav-item"}>
@@ -1731,7 +1755,7 @@ const NewUserProfile = (props) => {
                       <DocumrentContainer
                         employee_id={eid}
                         emp_user_type={"employee"}
-                        docId={docId}
+                        docId={docId ? docId : ""}
                       />
                     ) : null}
                   </div>
@@ -1864,6 +1888,13 @@ const NewUserProfile = (props) => {
                         userEmail={PersonalDetail.email}
                         userName={PersonalDetail.name}
                         assignusertype={"user"}
+                      />
+                    ) : null}
+                    {TabActive === "timline" ? (
+                      <UserTimline
+                        userId={eid}
+                        userEmail={PersonalDetail.email}
+                        userName={PersonalDetail.name}
                       />
                     ) : null}
                   </div>
