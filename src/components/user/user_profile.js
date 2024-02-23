@@ -1890,14 +1890,14 @@ const NewUserProfile = (props) => {
                         assignusertype={"user"}
                       />
                     ) : null}
-                    {TabActive === "timline" ? (
-                      <UserTimline
-                        userId={eid}
-                        userEmail={PersonalDetail.email}
-                        userName={PersonalDetail.name}
-                      />
-                    ) : null}
                   </div>
+                  {TabActive === "timline" ? (
+                    <UserTimline
+                      userId={eid}
+                      userEmail={PersonalDetail.email}
+                      userName={PersonalDetail.name}
+                    />
+                  ) : null}
                 </div>
               </div>
             </div>

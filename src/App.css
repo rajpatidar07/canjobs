@@ -1495,6 +1495,89 @@ input::-webkit-inner-spin-button {
   font-size: 30px;
 }
 
+/* USER TIMELINE CSS*/
+.timeline_box {
+  height: calc(100vh - 150px);
+  overflow: auto;
+}
+
+.timeline {
+  width: 85%;
+
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 32px 0 32px 32px;
+  border-left: 2px solid #ff9294;
+}
+
+.timeline-item {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.timeline-item+* {
+  margin-top: 15px;
+}
+
+.timeline-item+.extra-space {
+  margin-top: 48px;
+}
+
+
+.timeline-item-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-left: -39px;
+  flex-shrink: 0;
+  overflow: hidden;
+  box-shadow: 0 0 0 4px #fa474a;
+}
+
+.timeline-item-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.timeline-item-icon.faded-icon {
+  background-color: #fff;
+  color: #aaa;
+}
+
+.timeline-item-icon.filled-icon {
+  background-color: blue;
+  color: #fff;
+}
+
+.timeline-item-description {
+  display: flex;
+  gap: 8px;
+  color: #aaa;
+}
+
+.timeline-item-description img {
+  flex-shrink: 0;
+}
+
+.timeline-item-description a {
+  color: #ccc;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.timeline-item-description a:hover,
+.timeline-item-description a:focus {
+  outline: 0;
+  color: blue;
+}
+
 /* Chat input form */
 /* .chat-input {
   display: flex;
