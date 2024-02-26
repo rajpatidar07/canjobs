@@ -525,8 +525,8 @@ export default function DocumrentContainer(props) {
       });
     } else {
       // Check the number of files selected
-      if (files.length > 15) {
-        toast.error("You can only upload a maximum of 15 files at a time", {
+      if (files.length > 30) {
+        toast.error("You can only upload a maximum of 30 files at a time", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });

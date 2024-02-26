@@ -1,7 +1,7 @@
 import moment from "moment";
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { GetAllJobs, ApplyJob } from "../../api/api";
 import AddJobModal from "../forms/employer/job";
 import EmployeeLoginModal from "../user/login";
@@ -24,7 +24,7 @@ function JobBox({
 }) {
   /*States */
   let [ApiCall, setApiCall] = useState(false);
-  const [showLogin, setShowLogin] = useState(false);
+  // const [showLogin, setShowLogin] = useState(false);
   const [showDataForm, setShowDataForm] = useState(false);
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
   let [jobData, setjobData] = useState([]);
@@ -36,7 +36,7 @@ function JobBox({
   const user_type = localStorage.getItem("userType");
   const user_id = localStorage.getItem("employee_id");
   const skill = localStorage.getItem("skill");
-
+let navigate =useNavigate()
   /*Functionality to get the data to search the jobs */
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -188,7 +188,7 @@ function JobBox({
                           OnApplyClick(1, job.job_id);
                         }
                       : // : null
-                        () => setShowLogin(true)
+                        () => navigate("/candidate_login")//setShowLogin(true)
                   }
                 >
                   {job.job_type === "swap" ? (
@@ -355,7 +355,7 @@ function JobBox({
                                 name === "undefined"
                                 ? setShowDataForm(true)
                                 : OnApplyClick(0, job.job_id)
-                              : setShowLogin(true)
+                              : navigate("/candidate_login")//setShowLogin(true)
                         }
                         disabled={job.is_applied === "0" ? false : true}
                       >
@@ -370,12 +370,12 @@ function JobBox({
         )}
         {/* <!-- End Maped Job --> */}
       </div>
-      {showLogin ? (
+      {/* {showLogin ? (
         <EmployeeLoginModal
           show={showLogin}
           close={() => setShowLogin(false)}
         />
-      ) : null}
+      ) : null} */}
       {showDataForm ? (
         <ApplyBeforeform
           show={showDataForm}

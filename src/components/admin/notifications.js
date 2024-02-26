@@ -3,12 +3,14 @@ import React, { useEffect, useState } from "react";
 // import NotificationsCard from "./notificationsCard";
 import {
   ReadNotification,
-  /*getAllMentionNotification */ getAllAdminNotification,
+  getAllMentionNotification /* getAllAdminNotification,*/
 } from "../../api/api";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import { HiDocumentSearch } from "react-icons/hi";
+import { FaUserClock } from "react-icons/fa";
 function Notifications(
-  {
+  { type
     // userId,
     // setDocId,
     // setNotificationDoc,
@@ -23,20 +25,28 @@ function Notifications(
   let [notification, setNotiication] = useState([]);
   const [apicall, setApicall] = useState(false);
   let user_type = localStorage.getItem("userType");
-  // let loginuserId =
-  //   user_type === "admin"
-  //     ? localStorage.getItem("admin_id")
-  //     : user_type === "user"
-  //     ? localStorage.getItem("employee_id")
-  //     : user_type === "agent"
-  //     ? localStorage.getItem("agent_id")
-  //     : "";
+  let admin_type = localStorage.getItem("admin_type");
+  let loginuserId =
+    user_type === "admin"
+      ? localStorage.getItem("admin_id")
+      : user_type === "user"
+        ? localStorage.getItem("employee_id")
+        : user_type === "agent"
+          ? localStorage.getItem("agent_id")
+          : "";
   /*notification API Call*/
   const Notiication = async () => {
     try {
-      let Response = await getAllAdminNotification(); //(new) getAllMentionNotification(loginuserId); //getAllAdminNotification();
-      setNotiication(Response.Data.data);
-      setTotalNotif(Response.Data.total_rows);
+      let Response = await getAllMentionNotification(type, loginuserId, user_type === "admin" ? admin_type : user_type);//getAllAdminNotification(); //(new) getAllMentionNotification(loginuserId); //getAllAdminNotification();
+
+      console.log(Response)
+      if (Response.Data.data.length === 0) {
+        setNotiication([]);
+        setTotalNotif();
+      } else {
+        setNotiication(Response.Data.data);
+        setTotalNotif(Response.Data.total_rows);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -94,11 +104,22 @@ function Notifications(
   };
   return (
     <div className="global_search_box  position-relative">
-      <i
+      {/* <i
         style={{ cursor: "pointer" }}
         className="fas fa-regular fa-bell text-dark mx-5"
         onClick={() => setshow(true)}
-      ></i>
+      ></i> */}
+      {type === "mention_partner" ?
+        <FaUserClock style={{ cursor: "pointer" }} className="text-dark mx-5"
+          onClick={() => {
+            setshow(true)
+            setApicall(true)
+          }} /> :
+        <HiDocumentSearch style={{ cursor: "pointer" }} className="text-dark mx-5"
+          onClick={() => {
+            setshow(true)
+            setApicall(true)
+          }} />}
       {totalNotif > 0 ? (
         <div className="bg-primary text-white notification_count">
           {totalNotif}
@@ -143,22 +164,22 @@ function Notifications(
                         data.subject === "added_new_job"
                           ? "/job"
                           : data.subject === "applied_on_job"
-                          ? "/responses"
-                          : data.subject === "interview_scheduled"
-                          ? "/interview"
-                          : data.subject === "mention_document"
-                          ? `/${data.employee_id}?docId=${data.mention_id}`
-                          : ""
+                            ? "/responses"
+                            : data.subject === "interview_scheduled"
+                              ? "/interview"
+                              : data.subject === "mention_document"  ?`/${data.employee_id}?docId=${data.mention_id}` : type === "mention_partner" 
+                                ? `/${data.from_id}?partner=${data.from_id}`
+                                : ""
                       }
                       onClick={() => {
                         try {
                           // setDocId(data.mention_id);
                           setshow(false);
                           ReadNotification(data.id);
-                          localStorage.setItem(
-                            "notificationUser",
-                            data.employee_id
-                          );
+                          // localStorage.setItem(
+                          //   type === "mention_document" ? "notificationUser" : type === "mention_partner" ? "notificationPartnerUser" : "",
+                          //   data.employee_id
+                          // );
                           // setNotificationDoc(1);
                           // setSelecttDocTypeName("");
                         } catch (err) {

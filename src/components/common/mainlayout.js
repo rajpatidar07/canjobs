@@ -68,10 +68,10 @@ import Credentional from "../admin/Credentional";
 //   // Use the path variable in your component
 //   return path;
 // }
-
 function MainLayout() {
   const token = localStorage.getItem("token");
   const userType = localStorage.getItem("userType");
+
   return (
     <BrowserRouter>
       {/* <CurrentRoute /> */}
@@ -88,7 +88,8 @@ function MainLayout() {
         <Route path="/jobdetail" element={<JobDetail />} />
         <Route path="/resetpassword/:id" element={<ResetPassword />} />
         <Route exact path="/linkedin" component={LinkedInCallback} />
-        {userType === "user" && token !== ("" || null || undefined) ? (
+        <Route path="*" element={<NotFound />} />
+        {userType === "user" && token !== "" || token !== null || token !== undefined ? (
           <>
             <Route path="/" element={<EmployeeHomePage />} />
             <Route path="/jobs" element={<JobSearch />} />
@@ -105,7 +106,7 @@ function MainLayout() {
           </>
         )}
         {/* Employer */}
-        {userType === "company" && token !== ("" || null || undefined) ? (
+        {userType === "company" && token !== "" || token !== null || token !== undefined ? (
           <>
             <Route path="/client" element={<EmployerHome />} />
             <Route path="/clientprofile" element={<CompanyProfile />} />
@@ -125,8 +126,8 @@ function MainLayout() {
         )}
         {/* Admin */}
         <Route path="/adminlogin" element={<AdminLoginFrom />} />
-        {userType === ("company" || "user" || "") &&
-        token === ("" || null || undefined) ? (
+        {userType === "company" || userType === "user" || userType === "" || userType === null || userType === "null" &&
+          token === "" || token === null || token === undefined || token === "null" ? (
           <>
             <Route path="/" element={<EmployeeHomePage />} />
             <Route path="*" element={<NotFound />} />

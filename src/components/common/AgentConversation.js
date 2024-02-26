@@ -9,7 +9,7 @@ export default function AgentConversation({
   userId,
   userEmail,
   userName,
-  assignusertype,
+  assignusertype,partnerChat
 }) {
   const [allData, setAllData] = useState([]);
   const [apicall, setApiCall] = useState([]);
@@ -77,11 +77,16 @@ export default function AgentConversation({
     if (apicall === true) {
       setApiCall(false);
     }
+    //Condition to clear docid from url after navigation from notification
+    if (partnerChat) {
+      const newUrl = window.location.pathname;
+      window.history.replaceState({}, document.title, newUrl);
+    }
   }, [apicall]);
   //   Get the notes list
   const GetNotesData = async () => {
     try {
-      let res = await GetCommentsAndAssign("", userId, "", "notes");
+      let res = await GetCommentsAndAssign("", userId, "", "partner");
       if (res.data.status === (1 || "1")) {
         setAllData(res.data.data.data.reverse());
       } else if (res.data.message === "Task data not found") {
@@ -109,7 +114,7 @@ export default function AgentConversation({
         state.message, //Comment
         0, //x_axis
         0, //y_axis
-        "notes", // Type for the api
+        "partner", // Type for the api
         user_type === "admin" ? admin_type : user_type, //sender type
         user_type === "admin" || user_type === "agent" ? admin_name : user_name, //sender name,
         userName, //assigned Admin or user Name,

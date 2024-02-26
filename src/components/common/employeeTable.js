@@ -23,6 +23,9 @@ import { AiOutlineFilePdf } from "react-icons/ai";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { PiBriefcaseLight } from "react-icons/pi";
 export default function EmployeeTable(props) {
+  let agentId = localStorage.getItem("agent_id");
+  let user_type = localStorage.getItem("userType");
+  let StatusTab = localStorage.getItem("StatusTab")
   /*Show modal states */
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
@@ -43,7 +46,7 @@ export default function EmployeeTable(props) {
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
   /*Pagination states */
-  const [status, setStatus] = useState(props.self === "yes" ? -1 : 4);
+  const [status, setStatus] = useState(StatusTab ? StatusTab : props.self === "yes" ? -1 : 4);
   const [totalData, setTotalData] = useState("");
   const [recordsPerPage] = useState(10);
   /*Shorting states */
@@ -51,8 +54,6 @@ export default function EmployeeTable(props) {
     props.heading === "Dashboard" ? "created_at" : "employee_id"
   );
   const [sortOrder, setSortOrder] = useState("DESC");
-  let agentId = localStorage.getItem("agent_id");
-  let user_type = localStorage.getItem("userType");
   /* Function to get Employee data*/
   const EmpData = async () => {
     // const params = useParams();
@@ -69,12 +70,13 @@ export default function EmployeeTable(props) {
         sortOrder,
         props.filter_by_time,
         "",
-        props.skill || props.heading === "Dashboard" ? "" : status,
+        props.skill || props.heading === "Dashboard" || status === "00" ? "" : status,
         props.job_id ? props.job_id : "",
         "",
         "",
         "",
-        user_type === "agent" ? agentId : props.agentFilterValue
+        user_type === "agent" ? agentId : props.agentFilterValue,
+        props.adminFilterValue
       );
       if (userData.data.length === 0) {
         setemployeeData([]);
@@ -84,6 +86,8 @@ export default function EmployeeTable(props) {
         setemployeeData(userData.data);
         setTotalData(userData.total_rows);
         setIsLoading(false);
+        localStorage.setItem("StatusTab", "")
+
       }
     } catch (err) {
       console.log(err);
@@ -116,7 +120,7 @@ export default function EmployeeTable(props) {
     props.showEmployeeProfile,
     status,
     props.heading,
-    props.agentFilterValue,
+    props.agentFilterValue, props.adminFilterValue
   ]);
 
   /* Function to show the single data to update Employee*/
@@ -336,7 +340,7 @@ export default function EmployeeTable(props) {
                 <button
                   type="button"
                   className={
-                    status === -1
+                    status === -1 || status === "-1"
                       ? "btn btn-primary"
                       : "btn btn-outline-primary"
                   }
@@ -347,7 +351,7 @@ export default function EmployeeTable(props) {
                 <button
                   type="button"
                   className={
-                    status === 2 ? "btn btn-primary" : "btn btn-outline-primary"
+                    status === 2 || status === "2" ? "btn btn-primary" : "btn btn-outline-primary"
                   }
                   onClick={() => setStatus(2)}
                 >
@@ -356,7 +360,7 @@ export default function EmployeeTable(props) {
                 <button
                   type="button"
                   className={
-                    status === 3 ? "btn btn-primary" : "btn btn-outline-primary"
+                    status === 3 || status === "3" ? "btn btn-primary" : "btn btn-outline-primary"
                   }
                   onClick={() => setStatus(3)}
                 >
@@ -365,7 +369,7 @@ export default function EmployeeTable(props) {
                 <button
                   type="button"
                   className={
-                    status === 5 ? "btn btn-primary" : "btn btn-outline-primary"
+                    status === "5" || status === 5 ? "btn btn-primary" : "btn btn-outline-primary"
                   }
                   onClick={() => setStatus(5)}
                 >
@@ -374,7 +378,7 @@ export default function EmployeeTable(props) {
                 <button
                   type="button"
                   className={
-                    status === 6 ? "btn btn-primary" : "btn btn-outline-primary"
+                    status === "6" || status === 6 ? "btn btn-primary" : "btn btn-outline-primary"
                   }
                   onClick={() => setStatus(6)}
                 >
@@ -386,7 +390,7 @@ export default function EmployeeTable(props) {
                 <button
                   type="button"
                   className={
-                    status === 4 ? "btn btn-primary" : "btn btn-outline-primary"
+                    status === "4" || status === 4 ? "btn btn-primary" : "btn btn-outline-primary"
                   }
                   onClick={() => setStatus(4)}
                 >
@@ -395,7 +399,7 @@ export default function EmployeeTable(props) {
                 <button
                   type="button"
                   className={
-                    status === 7 ? "btn btn-primary" : "btn btn-outline-primary"
+                    status === "7" || status === 7 ? "btn btn-primary" : "btn btn-outline-primary"
                   }
                   onClick={() => setStatus(7)}
                 >
@@ -404,7 +408,7 @@ export default function EmployeeTable(props) {
                 <button
                   type="button"
                   className={
-                    status === 8 ? "btn btn-primary" : "btn btn-outline-primary"
+                    status === "8" || status === 8 ? "btn btn-primary" : "btn btn-outline-primary"
                   }
                   onClick={() => setStatus(8)}
                 >
@@ -415,7 +419,7 @@ export default function EmployeeTable(props) {
             <button
               type="button"
               className={
-                status === "" ? "btn btn-primary" : "btn btn-outline-primary"
+                status === "" || status === "00" ? "bn btn-primary" : "btn btn-outline-primary"
               }
               onClick={() => setStatus("")}
             >
@@ -568,12 +572,7 @@ export default function EmployeeTable(props) {
                       </Link>
                     </th>
                   )}
-                  <th
-                    scope="col"
-                    className="border-0 font-size-4 font-weight-normal"
-                  >
-                    Profile
-                  </th>
+
                   {props.visa === "yes" ? null : (
                     <th
                       scope="col"
@@ -581,7 +580,12 @@ export default function EmployeeTable(props) {
                     >
                       Status
                     </th>
-                  )}
+                  )} <th
+                    scope="col"
+                    className="border-0 font-size-4 font-weight-normal"
+                  >
+                    Profile
+                  </th>
                   {props.heading === "Dashboard" ? (
                     ""
                   ) : (
@@ -613,11 +617,12 @@ export default function EmployeeTable(props) {
                       <td className=" py-5">
                         <Link
                           to={`/${empdata.employee_id}`}
-                          // onClick={
-                          //   empdata.name !== null
-                          //     ? () => employeeDetails(empdata.employee_id)
-                          //     : null
-                          // }
+                          onClick={() =>
+                            localStorage.setItem("StatusTab", status === "" ? "00" : status)
+                            //   empdata.name !== null
+                            //     ? () => employeeDetails(empdata.employee_id)
+                            //     : null
+                          }
                           title="Employee Details"
                         >
                           <div className="d-flex profile_box gx-2">
@@ -641,9 +646,9 @@ export default function EmployeeTable(props) {
 
                             <div className=" mb-0">
                               {empdata.name === null ||
-                              empdata.name === undefined ||
-                              empdata.name === "undefined" ||
-                              empdata.name === "" ? (
+                                empdata.name === undefined ||
+                                empdata.name === "undefined" ||
+                                empdata.name === "" ? (
                                 <p className="font-size-3  mb-0">N/A</p>
                               ) : (
                                 <p
@@ -658,29 +663,28 @@ export default function EmployeeTable(props) {
                                   {empdata.gender === "female"
                                     ? "F"
                                     : empdata.gender === "male"
-                                    ? "M"
-                                    : "O"}
+                                      ? "M"
+                                      : "O"}
                                   {/*Calculation of age from date of birth*/}(
                                   {empdata.marital_status ||
-                                  empdata.date_of_birth
-                                    ? `${
-                                        empdata.marital_status
-                                      },${moment().diff(
-                                        empdata.date_of_birth,
-                                        "years"
-                                      )} Y`
+                                    empdata.date_of_birth
+                                    ? `${empdata.marital_status
+                                    },${moment().diff(
+                                      empdata.date_of_birth,
+                                      "years"
+                                    )} Y`
                                     : null}
                                   )
                                 </p>
                               ) : null}
                               {empdata.is_featured === "1" ||
-                              empdata.is_featured === 1 ? (
+                                empdata.is_featured === 1 ? (
                                 <span className="bg-orange text-white featured_tag">
                                   Featured
                                 </span>
                               ) : null}
                               {empdata.created_by_admin === "0" ||
-                              empdata.created_by_admin === 0 ? (
+                                empdata.created_by_admin === 0 ? (
                                 <span className="bg-info text-white web_tag">
                                   Web
                                 </span>
@@ -689,7 +693,7 @@ export default function EmployeeTable(props) {
                           </div>
                         </Link>
                         {empdata.is_featured === "1" ||
-                        empdata.is_featured === 1 ? (
+                          empdata.is_featured === 1 ? (
                           <span className="bg-orange text-white featured_tag">
                             Featured
                           </span>
@@ -791,29 +795,17 @@ export default function EmployeeTable(props) {
                           ) : (
                             <p className="font-size-3 font-weight-normal text-black-2 mb-0">
                               {empdata.experience === "1-3 " ||
-                              empdata.experience === "1-2 " ||
-                              empdata.experience === "3-5 " ||
-                              empdata.experience === "5-7 " ||
-                              empdata.experience === "7+ "
+                                empdata.experience === "1-2 " ||
+                                empdata.experience === "3-5 " ||
+                                empdata.experience === "5-7 " ||
+                                empdata.experience === "7+ "
                                 ? empdata.experience + "years"
                                 : empdata.experience}
                             </p>
                           )}
                         </td>
                       )}
-                      <td className=" py-5">
-                        <p className="font-size-2 font-weight-normal text-black-2 mb-0">
-                          {empdata.profile_complete === "100.00" ? (
-                            <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
-                              Complete
-                            </span>
-                          ) : (
-                            <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
-                              Incomplete
-                            </span>
-                          )}
-                        </p>
-                      </td>
+
                       {props.visa === "yes" ? null : (
                         <td className="">
                           <p className="font-size-2 font-weight-normal text-black-2 mb-0">
@@ -863,6 +855,19 @@ export default function EmployeeTable(props) {
                           </p>
                         </td>
                       )}
+                      <td className=" py-5">
+                        <p className="font-size-2 font-weight-normal text-black-2 mb-0">
+                          {empdata.profile_complete === "100.00" ? (
+                            <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
+                              Complete
+                            </span>
+                          ) : (
+                            <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
+                              Incomplete
+                            </span>
+                          )}
+                        </p>
+                      </td>
                       {/* Calulation to get user is new or retained */}
                       {/* <td className=" py-5">
           <p className="font-size-3 font-weight-normal text-black-2 mb-0">
@@ -879,7 +884,7 @@ export default function EmployeeTable(props) {
                             aria-label="Basic example"
                           >
                             {props.skill === null ||
-                            props.skill === undefined ? (
+                              props.skill === undefined ? (
                               <>
                                 {/* <button
       className="btn btn-outline-info action_btn"
@@ -923,6 +928,7 @@ export default function EmployeeTable(props) {
                                     className="btn btn-sm btn-outline-info action_btn text-center"
                                     to={`/${empdata.employee_id}`}
                                     title="Employee Details"
+                                    onClick={() => localStorage.setItem("StatusTab", status === "" ? "00" : status)}
                                   >
                                     Update
                                   </Link>
@@ -986,7 +992,7 @@ export default function EmployeeTable(props) {
                                     className="btn btn-outline-info action_btn text-gray"
                                     onClick={() => editJob(empdata)}
                                     title="All jobs "
-                                    // disabled={empdata.skill ? false : true}
+                                  // disabled={empdata.skill ? false : true}
                                   >
                                     <span className="text-gray px-2">
                                       <PiBriefcaseLight />

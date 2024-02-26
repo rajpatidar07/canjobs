@@ -11,6 +11,7 @@ import {
   AddEmployeeDetails,
   EmployeeDetails,
   GetAgentJson,
+  getallAdminData,
   // GetFilter,
   // AddEmployeePermission,
 } from "../../../api/api";
@@ -28,13 +29,16 @@ function PersonalDetails(props) {
   const [imgError, setImgError] = useState("");
   const [loading, setLoading] = useState(false);
   const [agentList, setAgentList] = useState([]);
+  const [admiinList, setAdminList] = useState([]);
   // const [jsonList, setJsonList] = useState([]);
   let [apiCall, setApiCall] = useState(false);
   let [showAddEAgentModal, setShowAgentMOdal] = useState(false);
+  let [showAddEAdminModal, setShowAdminMOdal] = useState(false);
   /*data and id states */
   let [agentId /*, setAgentId*/] = useState();
 
   let user_type = localStorage.getItem("userType");
+  let admin_id = localStorage.getItem("admin_id");
   // USER PERSONAL DETAIL VALIDATION
   // INITIAL STATE ASSIGNMENT
   const initialFormStateuser = {
@@ -60,6 +64,7 @@ function PersonalDetails(props) {
     status: props.employeeId === "0" ? "1" : "",
     reffer_by: user_type === "agent" ? localStorage.getItem("agent_id") : "",
     permission: props.employeeId === "0" ? JSON.stringify(Permissions) : null,
+    assigned_by: ""
   };
 
   /* Functionality to close the modal */
@@ -78,30 +83,30 @@ function PersonalDetails(props) {
         value === "" || value === null || value.trim() === ""
           ? "Name is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : value.length < 2
-          ? "Name should have 2 or more letter"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Name can not have a number."
-          : "",
+            ? "Cannot use special character "
+            : value.length < 2
+              ? "Name should have 2 or more letter"
+              : /[-]?\d+(\.\d+)?/.test(value)
+                ? "Name can not have a number."
+                : "",
     ],
     email: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? null
+            : "Email is invalid",
     ],
     contact_no: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Mobile number is required"
           : value.length < 10
-          ? "Mobile number should be more than 10 digits"
-          : value.length > 13
-          ? "Mobile no should be of 13 digits"
-          : "",
+            ? "Mobile number should be more than 10 digits"
+            : value.length > 13
+              ? "Mobile no should be of 13 digits"
+              : "",
     ],
     // description: [
     //   (value) =>
@@ -137,12 +142,12 @@ function PersonalDetails(props) {
         value === "" || value === null || value.trim() === ""
           ? "Location is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : value.length < 3
-          ? "Location should have 3 or more letter"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Location can not have a number."
-          : "",
+            ? "Cannot use special character "
+            : value.length < 3
+              ? "Location should have 3 or more letter"
+              : /[-]?\d+(\.\d+)?/.test(value)
+                ? "Location can not have a number."
+                : "",
     ],
     // currently_located_country: [
     //   (value) =>
@@ -202,9 +207,15 @@ function PersonalDetails(props) {
       props.employeeId !== "0" || user_type === "user"
         ? null
         : [
-            (value) =>
-              value === "" || value === null ? "Refferer is required" : null,
-          ],
+          (value) =>
+            value === "" || value === null ? "Refferer is required" : null,
+        ],
+    assigned_by: props.employeeId !== "0" || user_type === "user" || user_type === "agent"
+      ? null
+      : [
+        (value) =>
+          value === "" || value === null ? "Assigned by is required" : null,
+      ],
   };
 
   // CUSTOM VALIDATIONS IMPORT
@@ -224,8 +235,31 @@ function PersonalDetails(props) {
       setLoading(false);
     }
   };
+  /*Function to get admin json list */
+  const AdminJson = async () => {
+    let response = await getallAdminData();
+    try {
+      // let json = await GetFilter();
+      // console.log(json);
+      let newAdminJson = response.data.filter((item) => admin_id !== item.admin_id)
+      if (Array.isArray(newAdminJson)) {
+        const options = newAdminJson.map((option) => ({
+          value: option.admin_id,
+          label: option.name,
+        }));
+        setAdminList(options);
+      }
+      // setJsonList(json.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  /*Function to set data to the search agent  */
+  const onAdminSelectChange = (option) => {
+    setState({ ...state, assigned_by: option.value });
+  };
+  /*Function to get agent json list */
   const AgentJson = async () => {
-    /*Function to get agent json list */
     let response = await GetAgentJson();
     try {
       // let json = await GetFilter();
@@ -242,12 +276,13 @@ function PersonalDetails(props) {
       console.log(err);
     }
   };
-  /*Function to set data to the search job by country */
+  /*Function to set data to the search agent  */
   const onSelectChange = (option) => {
     setState({ ...state, reffer_by: option.value });
   };
   useEffect(() => {
     AgentJson();
+    AdminJson()
     if (props.employeeId === "0" || props.employeeId === undefined) {
       setState(initialFormStateuser);
     } else {
@@ -259,6 +294,7 @@ function PersonalDetails(props) {
 
   // USER PERSONAL DETAIL SUBMIT BUTTON
   async function onUserPersonalDetailClick(event) {
+    console.log(errors)
     event.preventDefault();
     if (validate() && imgError === "") {
       setLoading(true);
@@ -488,7 +524,7 @@ function PersonalDetails(props) {
                       }
                       id="email"
                       placeholder="email"
-                      // disabled={props.employeeId === "0" ? false : true}
+                    // disabled={props.employeeId === "0" ? false : true}
                     />
                     {/*----ERROR MESSAGE FOR EMAIL----*/}
                     {errors.email && (
@@ -662,6 +698,8 @@ function PersonalDetails(props) {
                       <option value={""}>Marital Status</option>
                       <option value={"single"}>Single</option>
                       <option value={"married"}>Married</option>
+                      <option value={"separated"}>Separated</option>
+                      <option value={"divorced"}>Divorced</option>
                     </select>
                     {/*----ERROR MESSAGE FOR MARITAL STATUS----*/}
                     {errors.marital_status && (
@@ -953,11 +991,10 @@ function PersonalDetails(props) {
                     )}
                   </div>
                   <div
-                    className={`${
-                      state.work_permit_canada === "yes"
-                        ? "form-group col-md-4"
-                        : "d-none"
-                    }`}
+                    className={`${state.work_permit_canada === "yes"
+                      ? "form-group col-md-4"
+                      : "d-none"
+                      }`}
                   >
                     <label
                       htmlFor="otherpermit"
@@ -1047,6 +1084,55 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
+                  <div
+                    className={
+                      user_type === "agent" || user_type === "user"
+                        ? "d-none"
+                        : "form-group col-md-4 d-flex"
+                    }
+                    style={{ position: "relative" }}
+                  >
+                    <label
+                      htmlFor="assigned_by"
+                      className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                    >
+                      Assigned By:<span className="text-danger">*</span>
+                    </label>
+                    <Select
+                      options={"" || admiinList}
+                      name="assigned_by"
+                      value={state.assigned_by}
+                      id="assigned_by"
+                      onChange={onAdminSelectChange}
+                      className={
+                        errors.assigned_by
+                          ? "form-control border border-danger px-0 pt-4 "
+                          : "form-control px-0 pt-4 border-0"
+                      }
+                    />
+                    {/* <span
+                      className="btn btn-sm btn-secondary"
+                      onClick={() => setShowAdminMOdal(true)}
+                      style={{
+                        width: "auto",
+                        minWidth: "auto",
+                        height: "44px",
+                      }}
+                      title="Add New Admin"
+                    >
+                      +
+                    </span> */}
+
+                    {/* ERROR MSG FOR REFFER BY */}
+                    {errors.assigned_by && (
+                      <span
+                        key={errors.assigned_by}
+                        className="text-danger font-size-3"
+                      >
+                        {errors.assigned_by}
+                      </span>
+                    )}
+                  </div>
 
                   <div className="form-group col-md-4">
                     <label
@@ -1096,7 +1182,7 @@ function PersonalDetails(props) {
                               ...state,
                               is_featured:
                                 state.is_featured === "" ||
-                                state.is_featured === "0"
+                                  state.is_featured === "0"
                                   ? "1"
                                   : "0",
                             })

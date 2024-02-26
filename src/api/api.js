@@ -208,7 +208,7 @@ export const getallEmployeeData = async (
   categorye,
   inserted,
   candian,
-  agentId
+  agentId, assignedadminId
   // agent_u_id
 ) => {
   const response = await axios.post(
@@ -230,6 +230,7 @@ export const getallEmployeeData = async (
       work_permit_canada: candian,
       interested_in: inserted,
       agent_id: agentId,
+      assigned_by: assignedadminId
     },
     {
       headers: {
@@ -571,7 +572,7 @@ export const ADocAnnotation = async (
       assigned_to: email,
       assigned_to_name: assignName,
       assigned_user_type: AssignUserType,
-      document_url: type === "notes" ? DocUrl : "",
+      document_url: type === "partner" ? DocUrl : "",
       next_followup_date: nextFollowupDate,
       followup_status: satus,
       subject: subject,
@@ -614,6 +615,7 @@ export const GetCommentsAndAssign = async (
       assined_to_user_id: userid,
       status: status,
       type: type,
+      // id:"",task_creator_user_id:""
     },
     {
       headers: {
@@ -1514,14 +1516,20 @@ export const getAllAdminNotification = async () => {
   });
   return response.data;
 };
-export const getAllMentionNotification = async (loginuserid, id) => {
-  console.log(loginuserid, id);
+export const getAllMentionNotification = async (type, loginuserid, userType, id) => {
   const response = await axios.post(
     `${API_URL}common/getMentionNotifications`,
     {
-      from_id: loginuserid,
-      employee_id: id,
-      type: "mention_document",
+      // from_id: loginuserid,
+      // employee_id: id,
+      // type: type,
+      "from_id": "",
+      "type": "",
+      "subject": type,
+      "action_id": loginuserid,
+      "mention_id": "",
+      "employee_id": "",
+      "sender_type": userType
     },
     {
       headers: {

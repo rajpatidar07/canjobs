@@ -6,7 +6,7 @@ import PersonalDetails from "../forms/user/personal";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserProfile from "../user/profile";
-import { GetFilter, GetAgentJson } from "../../api/api";
+import { GetFilter, GetAgentJson, getallAdminData } from "../../api/api";
 import EmployeeTable from "../common/employeeTable";
 import FilterJson from "../json/filterjson";
 function Employee(props) {
@@ -24,17 +24,20 @@ function Employee(props) {
   const [pageNo, setpageNo] = useState(1);
   const [educationFilterValue, setEducationFilterValue] = useState("");
   const [agentFilterValue, setAgentFilterValue] = useState("");
+  const [adminFilterValue, setAdminFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
   let [SkillList, setSkillList] = useState([]);
   let [EducationList, setEducationList] = useState([]);
   let [AgentList, setAgentList] = useState([]);
+  let [AdminList, setAdmintList] = useState([]);
 
   /*Function to get thejSon */
   const JsonData = async () => {
     try {
       let Json = await GetFilter();
       let agentjson = await GetAgentJson();
+      let adminJson =await getallAdminData()
       // console.log(agentjson);
       if (Json.data.message === "No data found") {
         setSkillList([]);
@@ -47,6 +50,11 @@ function Employee(props) {
         setAgentList([]);
       } else {
         setAgentList(agentjson);
+      }
+      if (adminJson.data.length === 0) {
+        setAdmintList([]);
+      } else {
+        setAdmintList(adminJson.data);
       }
     } catch (err) {
       console.log(err);
@@ -277,6 +285,38 @@ function Employee(props) {
                       </select>
                     </div>
                   </div>
+                  <div
+                    className={
+                      props.skill === null || props.skill === undefined
+                        ? "col p-1 form_group mb-3 d-none"
+                        : "col p-1 form_group d-none"
+                    }
+                  >
+                    <p className="input_label">Filter by Admin:</p>
+                    <div className="select_div">
+                      <select
+                        name="admin"
+                        value={adminFilterValue}
+                        id="admin"
+                        onChange={(e) => {
+                          setAdminFilterValue(e.target.value);
+                          setpageNo(1);
+                        }}
+                        className="text-capitalize form-control"
+                      >
+                        <option value="" data-display="Product Designer">
+                          Select Admin
+                        </option>
+                        {(AdminList || []).map((data) => {
+                          return (
+                            <option value={data.admin_id} key={data.admin_id}>
+                              {data.name}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+                  </div>
                   {props.skill === null ||
                   props.skill === undefined ||
                   Object.keys(props.skill).length === 0 ? (
@@ -311,6 +351,7 @@ function Employee(props) {
                 setpageNo={setpageNo}
                 EmployeeCall={props.EmployeeCall}
                 agentFilterValue={agentFilterValue}
+                adminFilterValue={adminFilterValue}
               />
             </div>
           </div>
