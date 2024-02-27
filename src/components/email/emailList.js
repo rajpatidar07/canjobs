@@ -53,16 +53,14 @@ const EmailList = ({
               aria-label="Basic example"
             >
               <div
-                className={` ${
-                  user_type === "user" || user_type === "company"
+                className={` ${user_type === "user" || user_type === "company"
                     ? ""
                     : "row m-0"
-                }`}
+                  }`}
               >
                 <div
-                  className={` ${
-                    user_type === "user" || user_type === "company" ? "" : ""
-                  }`}
+                  className={` ${user_type === "user" || user_type === "company" ? "" : ""
+                    }`}
                 >
                   <div
                     className="btn-group w-100"
@@ -99,13 +97,25 @@ const EmailList = ({
                     </button>
                     <button
                       type="button"
-                      className={`${
-                        user_type === "user" ||
-                        user_type === "company" ||
-                        user_type === "agent"
+                      className={`btn btn-sm ${emailType === "ALL"
+                          ? " btn-primary"
+                          : " btn-outline-primary"}`
+                      }
+                      onClick={() => {
+                        setEmailType("ALL");
+                        setEmailId();
+                      }}
+                    >
+                      All
+                    </button>
+                    <button
+                      type="button"
+                      className={`${user_type === "user" ||
+                          user_type === "company" ||
+                          user_type === "agent"
                           ? "d-none btn btn-outline-primary"
                           : "btn btn-sm btn-outline-primary"
-                      }`}
+                        }`}
                       onClick={() => {
                         sentEmail === "yes"
                           ? setSentEmail("no")
@@ -219,7 +229,7 @@ const EmailList = ({
                                   : null
                               }
                               onClick={() => {
-                                setEmailId(email.Id);
+                                setEmailId(email.id);
                                 setSingleEmailData(email);
                                 // setApiCall(true);
                                 setSentEmail("no");
@@ -235,34 +245,34 @@ const EmailList = ({
                                   ) : (
                                     <p
                                       className="text-dark font-size-4 m-0"
-                                      // to={`mailto:${email.Sender.EmailAddress.Address}`}
+                                    // to={`mailto:${email.Sender.EmailAddress.Address}`}
                                     >
                                       {email.IsRead === true ? (
-                                        email.Sender.EmailAddress.Name
+                                        email.sender.emailAddress.name
                                       ) : (
-                                        <b>{email.Sender.EmailAddress.Name}</b>
+                                        <b>{email.sender.emailAddress.name}</b>
                                       )}
                                     </p>
                                   )}
                                 </td>
                               }
                               <td className="py-5 text-capitalize">
-                                {email.Subject === null ||
-                                email.Subject === "" ||
-                                email.Subject === undefined ||
-                                email.Subject === "undefined" ? (
+                                {email.subject === null ||
+                                  email.subject === "" ||
+                                  email.subject === undefined ||
+                                  email.subject === "undefined" ? (
                                   <p className="font-size-4 mb-0">N/A</p>
                                 ) : (
                                   <div title="Emil Preview">
                                     {email.IsRead === true ? (
-                                      email.Subject.includes("=?UTF-8?Q?") ? (
-                                        decodeEmailSubject(email.Subject)
+                                      email.subject.includes("=?UTF-8?Q?") ? (
+                                        decodeEmailSubject(email.subject)
                                       ) : (
                                         <p
                                           className="m-0 text-truncate font-size-4"
                                           style={{ width: "200px" }}
                                         >
-                                          {email.Subject}
+                                          {email.subject}
                                         </p>
                                       )
                                     ) : (
@@ -270,9 +280,9 @@ const EmailList = ({
                                         className="m-0 text-truncate font-weight-bold font-size-4"
                                         style={{ width: "200px" }}
                                       >
-                                        {email.Subject.includes("=?UTF-8?Q?")
-                                          ? decodeEmailSubject(email.Subject)
-                                          : email.Subject}
+                                        {email.subject.includes("=?UTF-8?Q?")
+                                          ? decodeEmailSubject(email.subject)
+                                          : email.subject}
                                       </p>
                                     )}
                                   </div>
@@ -284,17 +294,17 @@ const EmailList = ({
                                 //   ""
                                 // ) :
                                 <td className=" py-5 ">
-                                  {email.date === null || email.date === "" ? (
+                                  {email.createdDateTime === null || email.createdDateTime === "" ? (
                                     <p className="font-size-2  mb-0">N/A</p>
                                   ) : (
                                     <p className=" font-weight-normal text-black-2 font-size-2 mb-0 ">
                                       {email.IsRead === true ? (
-                                        moment(email.SentDateTime).format(
+                                        moment(email.sentDateTime).format(
                                           "DD MMMM, YYYY"
                                         )
                                       ) : (
                                         <b>
-                                          {moment(email.SentDateTime).format(
+                                          {moment(email.sentDateTime).format(
                                             "DD MMMM, YYYY"
                                           )}
                                         </b>

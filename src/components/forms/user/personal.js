@@ -11,7 +11,7 @@ import {
   AddEmployeeDetails,
   EmployeeDetails,
   GetAgentJson,
-  getallAdminData,
+  // getallAdminData,
   // GetFilter,
   // AddEmployeePermission,
 } from "../../../api/api";
@@ -29,11 +29,11 @@ function PersonalDetails(props) {
   const [imgError, setImgError] = useState("");
   const [loading, setLoading] = useState(false);
   const [agentList, setAgentList] = useState([]);
-  const [admiinList, setAdminList] = useState([]);
+  // const [admiinList, setAdminList] = useState([]);
   // const [jsonList, setJsonList] = useState([]);
   let [apiCall, setApiCall] = useState(false);
   let [showAddEAgentModal, setShowAgentMOdal] = useState(false);
-  let [showAddEAdminModal, setShowAdminMOdal] = useState(false);
+  // let [showAddEAdminModal, setShowAdminMOdal] = useState(false);
   /*data and id states */
   let [agentId /*, setAgentId*/] = useState();
 
@@ -64,7 +64,7 @@ function PersonalDetails(props) {
     status: props.employeeId === "0" ? "1" : "",
     reffer_by: user_type === "agent" ? localStorage.getItem("agent_id") : "",
     permission: props.employeeId === "0" ? JSON.stringify(Permissions) : null,
-    assigned_by: ""
+    // assigned_by: ""
   };
 
   /* Functionality to close the modal */
@@ -210,12 +210,12 @@ function PersonalDetails(props) {
           (value) =>
             value === "" || value === null ? "Refferer is required" : null,
         ],
-    assigned_by: props.employeeId !== "0" || user_type === "user" || user_type === "agent"
-      ? null
-      : [
-        (value) =>
-          value === "" || value === null ? "Assigned by is required" : null,
-      ],
+    // assigned_by: props.employeeId !== "0" || user_type === "user" || user_type === "agent"
+    //   ? null
+    //   : [
+    //     (value) =>
+    //       value === "" || value === null ? "Assigned by is required" : null,
+    //   ],
   };
 
   // CUSTOM VALIDATIONS IMPORT
@@ -236,28 +236,28 @@ function PersonalDetails(props) {
     }
   };
   /*Function to get admin json list */
-  const AdminJson = async () => {
-    let response = await getallAdminData();
-    try {
-      // let json = await GetFilter();
-      // console.log(json);
-      let newAdminJson = response.data.filter((item) => admin_id !== item.admin_id)
-      if (Array.isArray(newAdminJson)) {
-        const options = newAdminJson.map((option) => ({
-          value: option.admin_id,
-          label: option.name,
-        }));
-        setAdminList(options);
-      }
-      // setJsonList(json.data.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const AdminJson = async () => {
+  //   let response = await getallAdminData();
+  //   try {
+  //     // let json = await GetFilter();
+  //     // console.log(json);
+  //     let newAdminJson = response.data.filter((item) => admin_id !== item.admin_id)
+  //     if (Array.isArray(newAdminJson)) {
+  //       const options = newAdminJson.map((option) => ({
+  //         value: option.admin_id,
+  //         label: option.name,
+  //       }));
+  //       setAdminList(options);
+  //     }
+  //     // setJsonList(json.data.data);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
   /*Function to set data to the search agent  */
-  const onAdminSelectChange = (option) => {
-    setState({ ...state, assigned_by: option.value });
-  };
+  // const onAdminSelectChange = (option) => {
+  //   setState({ ...state, assigned_by: option.value });
+  // };
   /*Function to get agent json list */
   const AgentJson = async () => {
     let response = await GetAgentJson();
@@ -282,7 +282,7 @@ function PersonalDetails(props) {
   };
   useEffect(() => {
     AgentJson();
-    AdminJson()
+    // AdminJson()
     if (props.employeeId === "0" || props.employeeId === undefined) {
       setState(initialFormStateuser);
     } else {
@@ -1084,7 +1084,7 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
-                  <div
+                  {/*<div
                     className={
                       user_type === "agent" || user_type === "user"
                         ? "d-none"
@@ -1110,7 +1110,7 @@ function PersonalDetails(props) {
                           : "form-control px-0 pt-4 border-0"
                       }
                     />
-                    {/* <span
+                  <span
                       className="btn btn-sm btn-secondary"
                       onClick={() => setShowAdminMOdal(true)}
                       style={{
@@ -1121,9 +1121,9 @@ function PersonalDetails(props) {
                       title="Add New Admin"
                     >
                       +
-                    </span> */}
+                    </span> 
 
-                    {/* ERROR MSG FOR REFFER BY */}
+                    ERROR MSG FOR REFFER BY 
                     {errors.assigned_by && (
                       <span
                         key={errors.assigned_by}
@@ -1132,7 +1132,7 @@ function PersonalDetails(props) {
                         {errors.assigned_by}
                       </span>
                     )}
-                  </div>
+                  </div>*/}
 
                   <div className="form-group col-md-4">
                     <label

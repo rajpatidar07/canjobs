@@ -96,22 +96,22 @@ const PreviewEmail = ({ id, emailType, singleEmailData }) => {
             <div className="email-header">
               <p className="px-5 py-3 border-bottom">
                 <b className="font-size-2">FROM:</b>{" "}
-                {singleEmailData.Sender.EmailAddress.Address}
+                {singleEmailData.sender.emailAddress.address}
               </p>
               <p className="px-5 py-3 border-bottom">
                 <b className="font-size-2">TO:</b>{" "}
-                {singleEmailData.ToRecipients[0].EmailAddress.Address}
+                {singleEmailData.toRecipients[0].emailAddress.address}
               </p>
               <p className="font-size-3 font-weight-bold px-5 py-3 border-bottom">
                 <b className="font-size-2">SUBJECT:</b>{" "}
-                {decodeEmailSubject(singleEmailData.Subject)}
+                {decodeEmailSubject(singleEmailData.subject)}
               </p>
             </div>
             <div className="email-body text-break px-5 py-3">
-              {singleEmailData.Body.Content && (
+              {singleEmailData.body.content && (
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: singleEmailData.Body.Content,
+                    __html: singleEmailData.body.content,
                   }}
                 />
               )}
@@ -122,10 +122,10 @@ const PreviewEmail = ({ id, emailType, singleEmailData }) => {
                     key={index}
                     className="col align-items-center p-3 m-3 rounded shadow bg-white position-relative htmlFileCls"
                   >
-                    {item.Name && (
+                    {item.name && (
                       <FileViewer
-                        fileType={item.Name.split(".")[1]}
-                        filePath={`data:${item.ContentType};base64,${item.ContentBytes}`}
+                        fileType={item.name.split(".")[1]}
+                        filePath={`data:${item.contentType};base64,${item.contentBytes}`}
                         errorComponent={() => <div>Error loading document</div>}
                         onError={(e) => console.error("Error occurred:", e)}
                       />
@@ -137,52 +137,52 @@ const PreviewEmail = ({ id, emailType, singleEmailData }) => {
                   : (emailData || []).map((item, index) => {
                       let iconSrc = "";
                       let title = "";
-
                       if (
-                        item.ContentType === "APPLICATION/PDF" ||
-                        item.ContentType === "application/pdf"
+                        item.contentType === "APPLICATION/PDF" ||
+                        item.contentType === "application/pdf"
                       ) {
                         iconSrc =
                           "https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_3_pdf_x16.png";
-                        title = item.Name;
+                        title = item.name;
                       } else if (
-                        item.ContentType === "TEXT/HTML" ||
-                        item.ContentType === "text/plain" ||
-                        item.ContentType === "text/html"
+                        item.contentType === "TEXT/HTML" ||
+                        item.contentType === "text/plain" ||
+                        item.contentType === "text/html"
                       ) {
                         iconSrc =
                           "//ssl.gstatic.com/docs/doclist/images/mediatype/icon_1_text_x16.png";
-                        title = item.Name;
+                        title = item.name;
                       } else if (
-                        item.ContentType.startsWith("IMAGE/") ||
-                        item.ContentType.startsWith("image/")
+                        item.contentType.startsWith("IMAGE/") ||
+                        item.contentType.startsWith("image/")
                       ) {
-                        iconSrc = `data:${item.ContentType};base64,${item.ContentBytes}`;
-                        title = item.Name;
+                        
+                        iconSrc = `data:${item.contentType};base64,${item.contentBytes}`;
+                        title = item.name;
                       } else if (
-                        item.ContentType ===
+                        item.contentType ===
                           "APPLICATION/VND.OPENXMLFORMATS-OFFICEDOCUMENT.WORDPROCESSINGML.DOCUMENT" ||
-                        item.ContentType ===
+                        item.contentType ===
                           "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                       ) {
                         iconSrc =
                           "https://e7.pngegg.com/pngimages/18/655/png-clipart-computer-icons-microsoft-word-document-file-format-word-icon-blue-angle.png";
-                        title = item.Name;
+                        title = item.name;
                       } else {
                         iconSrc =
                           "https://icons.iconarchive.com/icons/thehoth/seo/256/seo-web-code-icon.png";
-                        title = item.Name;
+                        title = item.name;
                       }
 
                       return (
                         <div
                           key={index}
                           className="align-items-center mr-3 mb-3 rounded border bg-white position-relative htmlFileCls text-center p-2"
-                          title={item.Name}
+                          title={item.name}
                         >
                           <Link
                           // onClick={() =>
-                          //   openBase64FileInNewWindow(item.data, item.ContentType)
+                          //   openBase64FileInNewWindow(item.data, item.contentType)
                           // }
                           >
                             <img
@@ -198,14 +198,14 @@ const PreviewEmail = ({ id, emailType, singleEmailData }) => {
                                 className="d-inline-block text-truncate text-decoration-none text-dark"
                                 style={{ maxWidth: "100%" }}
                               >
-                                {item.Name}
+                                {item.name}
                               </small>
                             </div>
                           </Link>
                           <div className="download-icon">
                             <Link
-                              to={`data:${item.ContentType};base64,${item.ContentBytes}`}
-                              download={item.Name}
+                              to={`data:${item.contentType};base64,${item.contentBytes}`}
+                              download={item.name}
                               className="text-dark"
                             >
                               <AiOutlineDownload />

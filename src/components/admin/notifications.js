@@ -38,14 +38,14 @@ function Notifications(
   const Notiication = async () => {
     try {
       let Response = await getAllMentionNotification(type, loginuserId, user_type === "admin" ? admin_type : user_type);//getAllAdminNotification(); //(new) getAllMentionNotification(loginuserId); //getAllAdminNotification();
-
-      console.log(Response)
       if (Response.Data.data.length === 0) {
         setNotiication([]);
         setTotalNotif();
       } else {
         setNotiication(Response.Data.data);
-        setTotalNotif(Response.Data.total_rows);
+        setTotalNotif(Response.Data.data.filter((item) =>
+          item.is_read === 0 || item.is_read === "0"
+        ).length);
       }
     } catch (err) {
       console.log(err);
@@ -167,7 +167,7 @@ function Notifications(
                             ? "/responses"
                             : data.subject === "interview_scheduled"
                               ? "/interview"
-                              : data.subject === "mention_document"  ?`/${data.employee_id}?docId=${data.mention_id}` : type === "mention_partner" 
+                              : data.subject === "mention_document" ? `/${data.employee_id}?docId=${data.mention_id}` : type === "mention_partner"
                                 ? `/${data.from_id}?partner=${data.from_id}`
                                 : ""
                       }

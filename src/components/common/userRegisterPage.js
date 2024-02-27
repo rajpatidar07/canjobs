@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FilterJson from "../json/filterjson";
 // import AddAgent from "../admin/addAgent";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Permissions from "../json/emailPermisionJson";
 function UserRegisterPage() {
   let encoded;
@@ -58,30 +58,30 @@ function UserRegisterPage() {
         value === "" || value === null || value.trim() === ""
           ? "Name is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : value.length < 2
-          ? "Name should have 2 or more letter"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Name can not have a number."
-          : "",
+            ? "Cannot use special character "
+            : value.length < 2
+              ? "Name should have 2 or more letter"
+              : /[-]?\d+(\.\d+)?/.test(value)
+                ? "Name can not have a number."
+                : "",
     ],
     email: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? null
+            : "Email is invalid",
     ],
     contact_no: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Mobile number is required"
           : value.length < 10
-          ? "Mobile number should be more than 10 digits"
-          : value.length > 13
-          ? "Mobile no should be of 13 digits"
-          : "",
+            ? "Mobile number should be more than 10 digits"
+            : value.length > 13
+              ? "Mobile no should be of 13 digits"
+              : "",
     ],
     // description: [
     //   (value) =>
@@ -117,12 +117,12 @@ function UserRegisterPage() {
         value === "" || value === null || value.trim() === ""
           ? "Location is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : value.length < 3
-          ? "Location should have 3 or more letter"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Location can not have a number."
-          : "",
+            ? "Cannot use special character "
+            : value.length < 3
+              ? "Location should have 3 or more letter"
+              : /[-]?\d+(\.\d+)?/.test(value)
+                ? "Location can not have a number."
+                : "",
     ],
     // currently_located_country: [
     //   (value) =>
@@ -147,12 +147,12 @@ function UserRegisterPage() {
         value === "" || value === null || value.trim() === ""
           ? "Religion is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : value.length < 3
-          ? "Religion should have 3 or more letter"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Religion can not have a number."
-          : "",
+            ? "Cannot use special character "
+            : value.length < 3
+              ? "Religion should have 3 or more letter"
+              : /[-]?\d+(\.\d+)?/.test(value)
+                ? "Religion can not have a number."
+                : "",
     ],
     interested_in: [
       (value) => (value === "" ? "Interested in is required" : null),
@@ -182,9 +182,9 @@ function UserRegisterPage() {
       user_type === "user"
         ? null
         : [
-            (value) =>
-              value === "" || value === null ? "Refferer is required" : null,
-          ],
+          (value) =>
+            value === "" || value === null ? "Refferer is required" : null,
+        ],
   };
 
   // CUSTOM VALIDATIONS IMPORT
@@ -285,16 +285,17 @@ function UserRegisterPage() {
             You have successfully registered your account. Please wait! We will
             contact you soon...
             <br />
-            {/* <Link
-              to="/"
+            <Link
+              // to="/"
               className="btn btn-primary mt-12"
-            //   onClick={() => {
-            //     props.CompanyLoginClick();
-            //     setErrors("");
-            //   }}
+              onClick={() => {
+                SingUpSuccess("")
+                // props.CompanyLoginClick();
+                // setErrors("");
+              }}
             >
-              Home
-            </Link> */}
+              Go back
+            </Link>
           </div>
         ) : (
           <div className="col-lg-8 col-md-8 border ">
@@ -547,6 +548,8 @@ function UserRegisterPage() {
                     <option value={""}>Marital Status</option>
                     <option value={"single"}>Single</option>
                     <option value={"married"}>Married</option>
+                    <option value={"separated"}>Separated</option>
+                    <option value={"divorced"}>Divorced</option>
                   </select>
                   {/*----ERROR MESSAGE FOR MARITAL STATUS----*/}
                   {errors.marital_status && (

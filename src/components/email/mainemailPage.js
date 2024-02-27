@@ -4,7 +4,7 @@ import { ToastContainer } from "react-toastify";
 // import AdminHeader from "../admin/header";
 // import AdminSidebar from "../admin/sidebar";
 import {
-  ReadEmail,
+  ReadEmail,ReadAllEmail,
   ReadSentEmail /*, GetAllEmailPagination*/,
 } from "../../api/api";
 const MainEmailPage = ({ email }) => {
@@ -31,7 +31,14 @@ const MainEmailPage = ({ email }) => {
     setIsLoading(true);
     try {
       let userData;
-      if (emailType === "SENT") {
+     if(emailType === "ALL"){
+      userData = await ReadAllEmail(
+        currentPage,
+        recordsPerPage,
+        search,
+        email
+      );
+     }else if (emailType === "SENT") {
         userData = await ReadSentEmail(
           currentPage,
           recordsPerPage,

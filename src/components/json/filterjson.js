@@ -586,6 +586,7 @@ const filterjson = {
     "submitted",
   ],
   interested: [
+    "workpermit application",
     "visitor visa",
     "super visa",
     "spousal open work permit",

@@ -33,6 +33,18 @@ export const GetAllDataCount = async () => {
   const response = await axios.get(`${API_URL}common/getSummaryCounts`);
   return response.data;
 };
+
+//Api to get the graph data count of all data
+export const GetAllChartData = async () => {
+  const response = await axios.get(`${API_URL}admin/getEmployeeStatusCount`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    });
+  return response.data;
+};
 /*Chanage password Api */
 export const ChangePasswordApi = async (props) => {
   const response = await axios.put(
@@ -186,7 +198,7 @@ export const AddEmployeeDetails = async (props) => {
       "Content-Type": "application/json",
       Authorization: Token
         ? Token
-        : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbl9pZCI6IjM0IiwiZW1haWwiOiJ0b2tlbkBnbWFpbC5jb20iLCJ1c2VyX3R5cGUiOiJzdXBlci1hZG1pbiIsIkFQSV9USU1FIjoxNjk3ODE5MjU3fQ.KMcaHwbumy5SQSOlhgTE5v7qsDD30NDeXjcl2LE6dKM",
+        : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbl9pZCI6IjIiLCJlbWFpbCI6InJhai53ZTJjb2RlQGdtYWlsLmNvbSIsInVzZXJfdHlwZSI6InN1cGVyLWFkbWluIiwiQVBJX1RJTUUiOjE3MDkwMzA1ODJ9._gFba5UnBxnVwzdeX_BHBAjd-Dno_fDzCNBJuoiv0Q8",//Vercel token
     },
   });
   return response.data;
@@ -2028,7 +2040,6 @@ export const GetPreviewAttchmentEmail = async (emailType, id) => {
 /*Api to read email */
 
 export const ReadEmail = async (page, limit, search, email) => {
-  console.log(page, limit, search, email);
   const response = await axios.post(
     // `http://192.168.29.92/canjobs_latest/common/readEmail`,
     // `${API_URL}canjobs_latest/common/readEmail`,
@@ -2062,6 +2073,27 @@ export const ReadSentEmail = async (page, limit, search, email) => {
       count: limit,
       filter_by_email_id: email,
       search: search,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
+/*Api to All Sent email */
+export const ReadAllEmail = async (page, limit, search, email) => {
+  const response = await axios.post(
+    `${API_URL}common/getSentAndInboxMails`,
+    {
+      // email_id: id,
+      // page: page,
+      count: limit,
+      // filter_by_email_id: email,
+      search: search,
+
     },
     {
       headers: {

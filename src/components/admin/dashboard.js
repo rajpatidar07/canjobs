@@ -10,12 +10,13 @@ import LimiaStatusTable from "../common/limiaStatusTable";
 import JobTable from "../common/jobTable";
 import EmployeeTable from "../common/employeeTable";
 import EmployerTable from "../common/employerTable";
-// import { getSummaryCount } from "../../api/api";
+import { /*getSummaryCount*/ GetAllChartData } from "../../api/api";
 // import FollowUpDashBoard from "../common/followUpTableDashboard";
 import Addfollowup from "../forms/admin/addfollowup";
 import { FaWindowMaximize } from "react-icons/fa";
 import { BsUsbMiniFill } from "react-icons/bs";
 import AdminTaskTable from "../common/AdminTaskTable";
+import DataChart from "../common/DataChart";
 const AdminDashboard = () => {
   // eslint-disable-next-line
   /*States */
@@ -37,6 +38,7 @@ const AdminDashboard = () => {
   const [interviewPageNo, setInterviewPageNo] = useState(1);
   const [taskPageNo, setTaskPageNo] = useState(1);
   const [openTable, setOpenTable] = useState(null);
+  const [chartData, setChartData] = useState([]);
 
   /*Function to maximixe and minimize the tables*/
   const toggleTable = (tableNumber) => {
@@ -55,8 +57,21 @@ const AdminDashboard = () => {
   const getIcon = (tableNumber) => {
     return openTable === tableNumber ? <BsUsbMiniFill /> : <FaWindowMaximize />;
   };
-
+  /*Function to Get Graph data */
+  const GetChartData = async () => {
+    try {
+      let res = await GetAllChartData()
+      if (res.status === 1) {
+        setChartData(res.data)
+      } else {
+        setChartData([])
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
   useEffect(() => {
+    GetChartData()
     if (apiCall === true) {
       setApiCall(false);
     }
@@ -313,7 +328,17 @@ const AdminDashboard = () => {
               {/* <!-- End Single Category --> */}
             </div>
           </div>
+
           <div className="row">
+            {/* Applicant's status */}
+            <div
+              id="table0"
+              className={"col-md-6"}
+            >
+              <div className="bg-white dashboard_card mb-7">
+                <DataChart data={chartData} />
+              </div>
+            </div>
             {/* <!-- Recent Jobs- --> */}
             <div
               id="table1"
@@ -352,9 +377,8 @@ const AdminDashboard = () => {
                       </Link>
                     </div>
                     <Link
-                      className={`text-dark mx-5 ${
-                        openTable === 1 ? "open" : ""
-                      }`}
+                      className={`text-dark mx-5 ${openTable === 1 ? "open" : ""
+                        }`}
                       to=""
                       onClick={() => toggleTable(1)}
                       title={openTable === 1 ? "Minimize" : "Maximize"}
@@ -416,9 +440,8 @@ const AdminDashboard = () => {
                       </Link>
                     </div>
                     <Link
-                      className={`text-dark mx-5 ${
-                        openTable === 4 ? "open" : ""
-                      }`}
+                      className={`text-dark mx-5 ${openTable === 4 ? "open" : ""
+                        }`}
                       to=""
                       onClick={() => toggleTable(4)}
                       title={openTable === 4 ? "Minimize" : "Maximize"}
@@ -478,9 +501,8 @@ const AdminDashboard = () => {
                       </Link>
                     </div>
                     <Link
-                      className={`text-dark mx-5 ${
-                        openTable === 2 ? "open" : ""
-                      }`}
+                      className={`text-dark mx-5 ${openTable === 2 ? "open" : ""
+                        }`}
                       to=""
                       onClick={() => toggleTable(2)}
                       title={openTable === 2 ? "Minimize" : "Maximize"}
@@ -575,9 +597,8 @@ const AdminDashboard = () => {
                       </Link>
                     </div>
                     <Link
-                      className={`text-dark mx-5 ${
-                        openTable === 5 ? "open" : ""
-                      }`}
+                      className={`text-dark mx-5 ${openTable === 5 ? "open" : ""
+                        }`}
                       to=""
                       onClick={() => toggleTable(5)}
                       title={openTable === 5 ? "Minimize" : "Maximize"}
@@ -638,9 +659,8 @@ const AdminDashboard = () => {
                       </Link>
                     </div>
                     <Link
-                      className={`text-dark mx-5 ${
-                        openTable === 3 ? "open" : ""
-                      }`}
+                      className={`text-dark mx-5 ${openTable === 3 ? "open" : ""
+                        }`}
                       to=""
                       onClick={() => toggleTable(3)}
                       title={openTable === 3 ? "Minimize" : "Maximize"}
@@ -669,9 +689,8 @@ const AdminDashboard = () => {
                 <div className="d-flex justify-content-between p-5 align-items-center">
                   <h3 className="font-size-5 px-3 m-0">Employee Alerts</h3>
                   <Link
-                    className={`text-dark mx-5 ${
-                      openTable === 6 ? "open" : ""
-                    }`}
+                    className={`text-dark mx-5 ${openTable === 6 ? "open" : ""
+                      }`}
                     to=""
                     onClick={() => toggleTable(6)}
                     title={openTable === 6 ? "Minimize" : "Maximize"}
@@ -752,9 +771,8 @@ const AdminDashboard = () => {
                       </Link>
                     </div> */}
                     <Link
-                      className={`text-dark mx-5 ${
-                        openTable === 7 ? "open" : ""
-                      }`}
+                      className={`text-dark mx-5 ${openTable === 7 ? "open" : ""
+                        }`}
                       to=""
                       onClick={() => toggleTable(7)}
                       title={openTable === 7 ? "Minimize" : "Maximize"}
