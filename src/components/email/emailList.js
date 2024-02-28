@@ -97,7 +97,7 @@ const EmailList = ({
                     </button>
                     <button
                       type="button"
-                      className={`btn btn-sm ${emailType === "ALL"
+                      className={`btn btn-sm d-none ${emailType === "ALL"
                           ? " btn-primary"
                           : " btn-outline-primary"}`
                       }

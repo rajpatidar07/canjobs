@@ -220,7 +220,8 @@ export const getallEmployeeData = async (
   categorye,
   inserted,
   candian,
-  agentId, assignedadminId
+  agentId,
+  assignedadminId
   // agent_u_id
 ) => {
   const response = await axios.post(
@@ -2095,6 +2096,24 @@ export const ReadAllEmail = async (page, limit, search, email) => {
       search: search,
 
     },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
+/*Api to reply email */
+export const ReplyToMail = async (msgId, type, msg) => {
+  const response = await axios.post(
+    `${API_URL}common/replyToOutlookEmail`,
+    {
+      "msg_id": msgId,
+      "inbox_type": type,
+      "replyMsg":msg
+  },
     {
       headers: {
         "Content-Type": "application/json",

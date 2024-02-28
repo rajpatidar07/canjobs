@@ -419,7 +419,7 @@ export default function EmployeeTable(props) {
             <button
               type="button"
               className={
-                status === "" || status === "00" ? "bn btn-primary" : "btn btn-outline-primary"
+                status === "" || status === "00" ? "btn btn-primary" : "btn btn-outline-primary"
               }
               onClick={() => setStatus("")}
             >

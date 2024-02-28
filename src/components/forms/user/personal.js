@@ -264,13 +264,14 @@ function PersonalDetails(props) {
     try {
       // let json = await GetFilter();
       // console.log(json);
-      if (Array.isArray(response)) {
-        const options = response.map((option) => ({
-          value: option.id,
-          label: option.u_id + "  " + option.name,
-        }));
-        setAgentList(options);
-      }
+      // if (Array.isArray(response)) {
+      //   const options = response.map((option) => ({
+      //     value: option.id,
+      //     label: option.u_id + "  " + option.name,
+      //     name: option.name
+      //   }));
+      // }
+      setAgentList(response);
       // setJsonList(json.data.data);
     } catch (err) {
       console.log(err);
@@ -1049,18 +1050,28 @@ function PersonalDetails(props) {
                     >
                       Referred By:<span className="text-danger">*</span>
                     </label>
-                    <Select
-                      options={"" || agentList}
+                    {/* <Select
+                      options={agentList || []} 
                       name="reffer_by"
-                      value={state.reffer_by}
+                      defaultValue={agentList && agentList.find(item => item.value === state.reffer_by) ? agentList.find(item => item.value === state.reffer_by).label : ""}
                       id="reffer_by"
                       onChange={onSelectChange}
+                      className={errors.reffer_by ? "form-control border border-danger px-0 pt-4" : "form-control px-0 pt-4 border-0"}
+                    /> */}
+                    <select
+                      name="reffer_by"
+                      value={state.reffer_by || ""}
+                      onChange={onInputChange}
                       className={
                         errors.reffer_by
-                          ? "form-control border border-danger px-0 pt-4 "
-                          : "form-control px-0 pt-4 border-0"
+                          ? "form-control text-capitalize border border-danger"
+                          : "form-control text-capitalize"
                       }
-                    />
+                      id="reffer_by"
+                    >
+                      <option value={""}>Selct partner </option>
+                      {agentList.map((item) => <option value={item.id}>{item.u_id + " " + item.name} </option>)}
+                    </select>
                     <span
                       className="btn btn-sm btn-secondary"
                       onClick={() => setShowAgentMOdal(true)}

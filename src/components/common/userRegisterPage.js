@@ -300,7 +300,7 @@ function UserRegisterPage() {
         ) : (
           <div className="col-lg-8 col-md-8 border ">
             <form onSubmit={onUserPersonalDetailClick} className="p-2">
-              <h5 className="text-center pt-2 mb-7"> Register Employee</h5>
+              <h5 className="text-center pt-2 mb-7"> Register Applicant</h5>
               {/* FIRST LINE */}
               <div className="form-group mx-auto text-center">
                 <div className="mb-4 position-relative">

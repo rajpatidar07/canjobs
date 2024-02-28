@@ -336,7 +336,12 @@ const AdminDashboard = () => {
               className={"col-md-6"}
             >
               <div className="bg-white dashboard_card mb-7">
-                <DataChart data={chartData} />
+                <div className="d-flex justify-content-between p-5 align-items-center">
+                  <h3 className="font-size-5 px-3 m-0 ">Applicant's status</h3>
+                </div>
+                <div className="bg-white dashboard_card mb-7">
+                  <DataChart data={chartData} />
+                </div>
               </div>
             </div>
             {/* <!-- Recent Jobs- --> */}

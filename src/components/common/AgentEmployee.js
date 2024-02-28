@@ -108,7 +108,8 @@ function AgentsEmployee(props) {
         "", // props.response === "lmia" ? "1" : ""
         "",
         "",
-        props.Agentid
+        props.Agentid,
+        props.AdminId
       );
       if (userData.data.length === 0) {
         // setResData([]);

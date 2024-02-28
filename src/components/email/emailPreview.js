@@ -8,11 +8,17 @@ import Loader from "../common/loader";
 // import AdminHeader from "../admin/header";
 import { /*useNavigate,*/ Link } from "react-router-dom";
 import { AiOutlineDownload } from "react-icons/ai";
+import ReplyEmailForm from "./ReplyEmailForm";
 const PreviewEmail = ({ id, emailType, singleEmailData }) => {
   /* states */
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
   const [emailData, setemailData] = useState([]);
+  const [showReplyForm, setShowReplyForm] = useState(false);
+
+  const toggleReplyFormClick = () => {
+    setShowReplyForm(!showReplyForm);
+  };
   /* Function to get Employee visa data */
   const EmailData = async () => {
     setIsLoading(true);
@@ -135,86 +141,105 @@ const PreviewEmail = ({ id, emailType, singleEmailData }) => {
                 {emailData.length === 0
                   ? null
                   : (emailData || []).map((item, index) => {
-                      let iconSrc = "";
-                      let title = "";
-                      if (
-                        item.contentType === "APPLICATION/PDF" ||
-                        item.contentType === "application/pdf"
-                      ) {
-                        iconSrc =
-                          "https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_3_pdf_x16.png";
-                        title = item.name;
-                      } else if (
-                        item.contentType === "TEXT/HTML" ||
-                        item.contentType === "text/plain" ||
-                        item.contentType === "text/html"
-                      ) {
-                        iconSrc =
-                          "//ssl.gstatic.com/docs/doclist/images/mediatype/icon_1_text_x16.png";
-                        title = item.name;
-                      } else if (
-                        item.contentType.startsWith("IMAGE/") ||
-                        item.contentType.startsWith("image/")
-                      ) {
-                        
-                        iconSrc = `data:${item.contentType};base64,${item.contentBytes}`;
-                        title = item.name;
-                      } else if (
-                        item.contentType ===
-                          "APPLICATION/VND.OPENXMLFORMATS-OFFICEDOCUMENT.WORDPROCESSINGML.DOCUMENT" ||
-                        item.contentType ===
-                          "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-                      ) {
-                        iconSrc =
-                          "https://e7.pngegg.com/pngimages/18/655/png-clipart-computer-icons-microsoft-word-document-file-format-word-icon-blue-angle.png";
-                        title = item.name;
-                      } else {
-                        iconSrc =
-                          "https://icons.iconarchive.com/icons/thehoth/seo/256/seo-web-code-icon.png";
-                        title = item.name;
-                      }
+                    let iconSrc = "";
+                    let title = "";
+                    if (
+                      item.contentType === "APPLICATION/PDF" ||
+                      item.contentType === "application/pdf"
+                    ) {
+                      iconSrc =
+                        "https://ssl.gstatic.com/docs/doclist/images/mediatype/icon_3_pdf_x16.png";
+                      title = item.name;
+                    } else if (
+                      item.contentType === "TEXT/HTML" ||
+                      item.contentType === "text/plain" ||
+                      item.contentType === "text/html"
+                    ) {
+                      iconSrc =
+                        "//ssl.gstatic.com/docs/doclist/images/mediatype/icon_1_text_x16.png";
+                      title = item.name;
+                    } else if (
+                      item.contentType.startsWith("IMAGE/") ||
+                      item.contentType.startsWith("image/")
+                    ) {
 
-                      return (
-                        <div
-                          key={index}
-                          className="align-items-center mr-3 mb-3 rounded border bg-white position-relative htmlFileCls text-center p-2"
-                          title={item.name}
+                      iconSrc = `data:${item.contentType};base64,${item.contentBytes}`;
+                      title = item.name;
+                    } else if (
+                      item.contentType ===
+                      "APPLICATION/VND.OPENXMLFORMATS-OFFICEDOCUMENT.WORDPROCESSINGML.DOCUMENT" ||
+                      item.contentType ===
+                      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                    ) {
+                      iconSrc =
+                        "https://e7.pngegg.com/pngimages/18/655/png-clipart-computer-icons-microsoft-word-document-file-format-word-icon-blue-angle.png";
+                      title = item.name;
+                    } else {
+                      iconSrc =
+                        "https://icons.iconarchive.com/icons/thehoth/seo/256/seo-web-code-icon.png";
+                      title = item.name;
+                    }
+
+                    return (
+                      <div
+                        key={index}
+                        className="align-items-center mr-3 mb-3 rounded border bg-white position-relative htmlFileCls text-center p-2"
+                        title={item.name}
+                      >
+                        <Link
+                        // onClick={() =>
+                        //   openBase64FileInNewWindow(item.data, item.contentType)
+                        // }
                         >
-                          <Link
-                          // onClick={() =>
-                          //   openBase64FileInNewWindow(item.data, item.contentType)
-                          // }
-                          >
-                            <img
-                              src={iconSrc}
-                              alt={title}
-                              title={title}
-                              width={45}
-                              height={45}
-                              style={{ zIndex: "1" }}
-                            />
-                            <div>
-                              <small
-                                className="d-inline-block text-truncate text-decoration-none text-dark"
-                                style={{ maxWidth: "100%" }}
-                              >
-                                {item.name}
-                              </small>
-                            </div>
-                          </Link>
-                          <div className="download-icon">
-                            <Link
-                              to={`data:${item.contentType};base64,${item.contentBytes}`}
-                              download={item.name}
-                              className="text-dark"
+                          <img
+                            src={iconSrc}
+                            alt={title}
+                            title={title}
+                            width={45}
+                            height={45}
+                            style={{ zIndex: "1" }}
+                          />
+                          <div>
+                            <small
+                              className="d-inline-block text-truncate text-decoration-none text-dark"
+                              style={{ maxWidth: "100%" }}
                             >
-                              <AiOutlineDownload />
-                            </Link>
+                              {item.name}
+                            </small>
                           </div>
+                        </Link>
+                        <div className="download-icon">
+                          <Link
+                            to={`data:${item.contentType};base64,${item.contentBytes}`}
+                            download={item.name}
+                            className="text-dark"
+                          >
+                            <AiOutlineDownload />
+                          </Link>
                         </div>
-                      );
-                    })}
+                      </div>
+                    );
+                  })}
               </div>
+
+
+              {/* Render form conditionally */}
+              {showReplyForm ? (
+                <>
+                  <ReplyEmailForm
+                    mesId={id}
+                    emailType={emailType}
+                    setShowReplyForm={setShowReplyForm}
+                    setApiCall={setApiCall}
+                    toggleReplyFormClick={toggleReplyFormClick}
+                  />
+                </>
+              ) : <>
+                {/* Add button to toggle form */}
+                <button className="btn btn-primary" onClick={toggleReplyFormClick}>
+                  Add Reply
+                </button>
+              </>}
             </div>
           </div>
         </div>

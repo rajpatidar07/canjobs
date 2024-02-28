@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 15,
+            "activePatchIndex": 20,
             "patches": [
                 {
                     "date": 1708928415510,
@@ -68,6 +68,26 @@
                 {
                     "date": 1709010414079,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n import {\n   AddEmployeeDetails,\n   EmployeeDetails,\n   GetAgentJson,\n-  getallAdminData,\n+  // getallAdminData,\n   // GetFilter,\n   // AddEmployeePermission,\n } from \"../../../api/api\";\n import { toast } from \"react-toastify\";\n@@ -281,9 +281,9 @@\n     setState({ ...state, reffer_by: option.value });\n   };\n   useEffect(() => {\n     AgentJson();\n-    AdminJson()\n+    // AdminJson()\n     if (props.employeeId === \"0\" || props.employeeId === undefined) {\n       setState(initialFormStateuser);\n     } else {\n       UserData();\n"
+                },
+                {
+                    "date": 1709109229339,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1051,9 +1051,9 @@\n                     </label>\n                     <Select\n                       options={\"\" || agentList}\n                       name=\"reffer_by\"\n-                      value={state.reffer_by}\n+                      inputValue={state.reffer_by}\n                       id=\"reffer_by\"\n                       onChange={onSelectChange}\n                       className={\n                         errors.reffer_by\n"
+                },
+                {
+                    "date": 1709109652171,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1051,9 +1051,9 @@\n                     </label>\n                     <Select\n                       options={\"\" || agentList}\n                       name=\"reffer_by\"\n-                      inputValue={state.reffer_by}\n+                      inputValue={state.reffer_by||\"\"}\n                       id=\"reffer_by\"\n                       onChange={onSelectChange}\n                       className={\n                         errors.reffer_by\n"
+                },
+                {
+                    "date": 1709109659427,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1051,9 +1051,9 @@\n                     </label>\n                     <Select\n                       options={\"\" || agentList}\n                       name=\"reffer_by\"\n-                      inputValue={state.reffer_by||\"\"}\n+                      inputValue={state.reffer_by||\" \"}\n                       id=\"reffer_by\"\n                       onChange={onSelectChange}\n                       className={\n                         errors.reffer_by\n"
+                },
+                {
+                    "date": 1709109789309,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1051,9 +1051,9 @@\n                     </label>\n                     <Select\n                       options={\"\" || agentList}\n                       name=\"reffer_by\"\n-                      inputValue={state.reffer_by||\"\"}\n+                      inputValue={agentListstate.filter((item)=>item.id ===state.reffer_by)||\"\"}\n                       id=\"reffer_by\"\n                       onChange={onSelectChange}\n                       className={\n                         errors.reffer_by\n"
+                },
+                {
+                    "date": 1709109820719,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1051,9 +1051,9 @@\n                     </label>\n                     <Select\n                       options={\"\" || agentList}\n                       name=\"reffer_by\"\n-                      inputValue={agentListstate.filter((item)=>item.id ===state.reffer_by)||\"\"}\n+                      inputValue={agentList.filter((item)=>item.id ===state.reffer_by)name||\"\"}\n                       id=\"reffer_by\"\n                       onChange={onSelectChange}\n                       className={\n                         errors.reffer_by\n"
                 }
             ],
             "date": 1708928415510,
