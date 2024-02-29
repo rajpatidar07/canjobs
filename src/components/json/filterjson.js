@@ -1,4 +1,11 @@
 const filterjson = {
+  Applicantscategories: [
+    { value: "1", label: "pno" },
+    { value: "2", label: "visitors sisa" },
+    { value: "3", label: "working visa" },
+    { value: "4", label: "express entry" },
+    { value: "5", label: "business visa" },
+  ],
   location: [
     "afghanistan",
     "aland islands",
@@ -589,9 +596,13 @@ const filterjson = {
     "workpermit application",
     "visitor visa",
     "super visa",
+    "pnp",
     "spousal open work permit",
     "work permit extension",
     "visitor record",
+    "working visa",
+    "express entry",
+    "business visa",
     // "swep",
     // "internship",
     // "co-op",
@@ -674,7 +685,7 @@ const filterjson = {
       // "approved",
       // "rejected",
       //New Json given by client
-      "new",  
+      "new",
       "submitted",
       "approved",
       "refused",

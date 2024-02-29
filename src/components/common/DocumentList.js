@@ -51,9 +51,8 @@ export default function DocumentList({
 
   return (
     <div
-      className={`${
-        user_type === "admin" ? "col-md-2" : "col-md-4"
-      } p-0 border-right pb-7`}
+      className={`${user_type === "admin" ? "col-md-2" : "col-md-4"
+        } p-0 border-right pb-7`}
     >
       <h5 className="pl-5 pt-5 d-flex justify-content-between align-items-center">
         Document List
@@ -119,19 +118,21 @@ export default function DocumentList({
                               setHide(false);
                               setShowSaveDoc(false);
                               setFilteredEmails([]);
-                              setAnnotationMode(!isAnnotationMode);
+                              setAnnotationMode(false);
                               setReplyCommentClick();
                               setDocFile(
                                 item.document_url +
-                                  `?v=${
-                                    new Date().getMinutes() +
-                                    new Date().getSeconds()
-                                  }`
+                                `?v=${new Date().getMinutes() +
+                                new Date().getSeconds()
+                                }`
                               );
+                              if (editName === true) {
+                                setEditName(false)
+                              }
                             }}
                             className={
                               item.document_name === docName ||
-                              docId === item.id
+                                docId === item.id
                                 ? "text-capitalize bg-primary text-white position-relative"
                                 : "text-capitalize position-relative"
                             }

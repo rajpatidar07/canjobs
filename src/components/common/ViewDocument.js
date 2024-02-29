@@ -264,7 +264,9 @@ export default function ViewDocument({
           </div>
         ) : null}
       </div>
-      <div className="doc_preview_box p-0 bg-light rounded position-relative">
+      <div className={`doc_preview_box p-0 bg-light rounded position-relative 
+      ${showSaveDoc||showMoreDocType
+      ?"d-none":""}`}>
         {/* {docTypData ? ( */}
         <div className="doc_action_div">
           {/* {docFile ? (

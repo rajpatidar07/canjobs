@@ -50,13 +50,32 @@ const AdminSidebar = (props) => {
           </Link>
         </div>
         <ul className="list-unstyled dashboard-layout-sidebar">
-          <li
+          {user_type === "agent" ? <li
+            className={
+              (user_type === "agent") &&
+                props.heading === "Partner Dashboard"
+                ? "active"
+                : ""
+            }
+          >
+            <Link
+              to="/partner_dashboard"
+              className={
+                "px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+              }
+            >
+
+              <FaRegUser className="sidebar_icon" />
+              Partner Dashboard
+
+            </Link>
+          </li> : <li
             className={
               user_type === "agent"
                 ? "d-none"
                 : props.heading === "Dashboard"
-                ? "active"
-                : ""
+                  ? "active"
+                  : ""
             }
           >
             <Link
@@ -67,11 +86,10 @@ const AdminSidebar = (props) => {
               Dashboard
               {/* <i className="fab fa-blackberry mr-5"></i>Dashboard */}
             </Link>
-          </li>
+          </li>}
           <li
-            className={`${
-              props.heading === "Manage Applicants" ? "active" : ""
-            }`}
+            className={`${props.heading === "Manage Applicants" ? "active" : ""
+              }`}
           >
             <Link
               to="/employee"
@@ -115,8 +133,8 @@ const AdminSidebar = (props) => {
               user_type === "agent"
                 ? "d-none"
                 : props.heading === "Manage Jobs"
-                ? "active"
-                : ""
+                  ? "active"
+                  : ""
             }
           >
             <Link
@@ -133,8 +151,8 @@ const AdminSidebar = (props) => {
               user_type === "agent"
                 ? "d-none"
                 : props.heading === "Manage Self Jobs"
-                ? "active"
-                : ""
+                  ? "active"
+                  : ""
             }
           >
             <Link
@@ -151,8 +169,8 @@ const AdminSidebar = (props) => {
               user_type === "agent"
                 ? "d-none"
                 : props.heading === "Visa status"
-                ? "active"
-                : ""
+                  ? "active"
+                  : ""
             }
           >
             <Link
@@ -177,8 +195,8 @@ const AdminSidebar = (props) => {
               user_type === "agent"
                 ? "d-none"
                 : props.heading === "LIMIA status"
-                ? "active"
-                : ""
+                  ? "active"
+                  : ""
             }
           >
             <Link
@@ -211,8 +229,8 @@ const AdminSidebar = (props) => {
               user_type === "agent"
                 ? "d-none"
                 : props.heading === "Interview"
-                ? "active"
-                : ""
+                  ? "active"
+                  : ""
             }
           >
             <Link
@@ -229,8 +247,8 @@ const AdminSidebar = (props) => {
               user_type === "agent"
                 ? "d-none"
                 : props.heading === "Manage Notes"
-                ? "active"
-                : ""
+                  ? "active"
+                  : ""
             }
           >
             <Link
@@ -247,8 +265,8 @@ const AdminSidebar = (props) => {
               user_type === "agent"
                 ? "d-none"
                 : props.heading === "Assigned Job's"
-                ? "active"
-                : ""
+                  ? "active"
+                  : ""
             }
           >
             <Link
@@ -267,8 +285,8 @@ const AdminSidebar = (props) => {
               user_type === "agent"
                 ? "d-none"
                 : props.heading === "Manage Admin"
-                ? "active"
-                : ""
+                  ? "active"
+                  : ""
             }
           >
             <Link
@@ -284,11 +302,10 @@ const AdminSidebar = (props) => {
           </li>
           <li
             className={
-              ((user_type === "agent" || user_type === "admin") &&
-                props.heading === "Partner Dashboard") ||
-              props.heading === "Manage Partner"
+              (user_type === "admin") &&
+                props.heading === "Manage Partner"
                 ? "active"
-                : ""
+                : "d-none"
             }
           >
             <Link
@@ -327,8 +344,8 @@ const AdminSidebar = (props) => {
               user_type === "agent"
                 ? "d-none"
                 : props.heading === "Manage Job Category"
-                ? "active"
-                : ""
+                  ? "active"
+                  : ""
             }
           >
             <Link
@@ -345,8 +362,8 @@ const AdminSidebar = (props) => {
               user_type === "agent"
                 ? "d-none"
                 : props.heading === "Filter List"
-                ? "active"
-                : ""
+                  ? "active"
+                  : ""
             }
           >
             <Link
@@ -380,8 +397,8 @@ const AdminSidebar = (props) => {
               user_type === "agent"
                 ? "d-none"
                 : props.heading === "Credentional"
-                ? "active"
-                : ""
+                  ? "active"
+                  : ""
             }
           >
             <Link
@@ -398,8 +415,8 @@ const AdminSidebar = (props) => {
               user_type === "agent"
                 ? "d-none"
                 : props.heading === "Visitors Visa"
-                ? "active"
-                : ""
+                  ? "active"
+                  : ""
             }
           >
             <Link
@@ -416,8 +433,8 @@ const AdminSidebar = (props) => {
               user_type === "agent"
                 ? "d-none"
                 : props.heading === "Express Entry"
-                ? "active"
-                : ""
+                  ? "active"
+                  : ""
             }
           >
             <Link
@@ -434,8 +451,8 @@ const AdminSidebar = (props) => {
               user_type === "agent"
                 ? "d-none"
                 : props.heading === "Business VIsa"
-                ? "active"
-                : ""
+                  ? "active"
+                  : ""
             }
           >
             <Link
@@ -445,7 +462,7 @@ const AdminSidebar = (props) => {
             >
               {/* <i className="fas fa-filter mr-5"></i> */}
               <TiBusinessCard className="sidebar_icon" />
-              Business VIsa
+              Business Visa
             </Link>
           </li>
         </ul>

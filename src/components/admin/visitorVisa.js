@@ -1,7 +1,12 @@
-import React from "react";
+
+import React, { useState } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
+import EmployeeTable from "../common/employeeTable";
+
 export default function VisitorVisa() {
+  const [pageNo, setpageNo] = useState(1);
+  let [apiCall, setApiCall] = useState(false);
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -52,6 +57,26 @@ export default function VisitorVisa() {
                 {/* <small className="text-danger">{searcherror}</small> */}
               </div>
               {/*<-- visitor visa Table -->*/}
+              <EmployeeTable
+                // showEmployeeProfile={showEmployeeProfile}
+                // employeeDetails={employeeDetails}
+                // search={search}
+                // experienceFilterValue={experienceFilterValue}
+                // educationFilterValue={educationFilterValue}
+                // skillFilterValue={skillFilterValue}
+                apiCall={apiCall}
+                setApiCall={setApiCall}
+                // skill={props.skill}
+                // job_id={props.job_id}
+                // self={"no"}
+                status={"-1"}
+                pageNo={pageNo}
+                setpageNo={setpageNo}
+                ApplicantType={"visitor visa"}
+              // EmployeeCall={props.EmployeeCall}
+              // agentFilterValue={agentFilterValue}
+              // adminFilterValue={adminFilterValue}
+              />
             </div>
           </div>
         </div>

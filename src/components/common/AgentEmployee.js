@@ -21,6 +21,7 @@ import Pagination from "../common/pagination";
 // import { toast, ToastContainer } from "react-toastify";
 // import ChangeJob from "../forms/admin/changeJobs";
 import Loader from "../common/loader";
+import PersonalDetails from "../forms/user/personal";
 // import VisaStatus from "../forms/user/visaStatus";
 // import DocumentModal from "../forms/admin/EmployeeDocumentModal";
 // import { BsArrow90DegRight } from "react-icons/bs";
@@ -30,10 +31,10 @@ import Loader from "../common/loader";
 // import { ImCalendar } from "react-icons/im";
 // import { GrDocumentUser } from "react-icons/gr";
 function AgentsEmployee(props) {
-  /*show modal and data states */
+  /*show modal and data states assignedUser*/
   //   let [documentModal, setDocumentModal] = useState(false);
   //   let [showVisaModal, setVisaModal] = useState(false);
-  //   let [showChangeJobModal, setShowChangeJobModal] = useState(false);
+  let [showChangeAssignedAdminModal, setShowChangeAssignedAdminModal] = useState(false);
   let [apiCall, setApiCall] = useState(props.apiCall);
   // let [followup, setFollowUp] = useState(false);
   //   let [interview, setInterview] = useState(false);
@@ -42,7 +43,7 @@ function AgentsEmployee(props) {
   //   let [resData, setResData] = useState("");
   //   let [searchError, setSearchError] = useState("");
   let [isLoading, setIsLoading] = useState(true);
-  //   let [employeeId, setemployeeId] = useState();
+  let [employeeId, setemployeeId] = useState();
   //   let [lmiaStatus, setLmiaStatus] = useState();
 
   /*Filter and search state */
@@ -327,7 +328,14 @@ function AgentsEmployee(props) {
           <ToastContainer />
         </>
       ) : null} */}
-
+      {showChangeAssignedAdminModal &&
+        <PersonalDetails
+          user_of_page={props.user_of_page}
+          employeeId={employeeId}
+          show={showChangeAssignedAdminModal}
+          apiCall={apiCall}
+          setApiCall={setApiCall}
+          close={() => setShowChangeAssignedAdminModal(false)} />}
       <div
         className={
           //   props.heading === "Response" ||
@@ -602,16 +610,14 @@ function AgentsEmployee(props) {
                             Status
                           </th>
                         )}
-                        {/* {props.heading === ("Dashboard") ? (
-                          ""
-                        ) : (
+                        {props.user_of_page === "assignedUser" && (
                           <th
                             scope="col"
                             className="border-0 font-size-3 font-weight-normal py-2"
                           >
                             Action
                           </th>
-                        )} */}
+                        )}
                       </tr>
                     </thead>
                     <tbody>
@@ -663,9 +669,9 @@ function AgentsEmployee(props) {
 
                                   <div className=" mb-0">
                                     {empdata.name === null ||
-                                    empdata.name === undefined ||
-                                    empdata.name === "undefined" ||
-                                    empdata.name === "" ? (
+                                      empdata.name === undefined ||
+                                      empdata.name === "undefined" ||
+                                      empdata.name === "" ? (
                                       <p className="font-size-3  mb-0">N/A</p>
                                     ) : (
                                       <p className="m-0 text-black-2 font-weight-bold text-capitalize">
@@ -673,35 +679,34 @@ function AgentsEmployee(props) {
                                       </p>
                                     )}
                                     {empdata.gender ||
-                                    empdata.marital_status ? (
+                                      empdata.marital_status ? (
                                       <p className="text-gray font-size-2 m-0 text-capitalize">
                                         {empdata.gender === "female"
                                           ? "F"
                                           : empdata.gender === "male"
-                                          ? "M"
-                                          : "O"}
+                                            ? "M"
+                                            : "O"}
                                         {/*Calculation of age from date of birth*/}
                                         (
                                         {empdata.marital_status ||
-                                        empdata.date_of_birth
-                                          ? `${
-                                              empdata.marital_status
-                                            },${moment().diff(
-                                              empdata.date_of_birth,
-                                              "years"
-                                            )} Y`
+                                          empdata.date_of_birth
+                                          ? `${empdata.marital_status
+                                          },${moment().diff(
+                                            empdata.date_of_birth,
+                                            "years"
+                                          )} Y`
                                           : null}
                                         )
                                       </p>
                                     ) : null}
                                     {empdata.is_featured === "1" ||
-                                    empdata.is_featured === 1 ? (
+                                      empdata.is_featured === 1 ? (
                                       <span className="bg-orange text-white featured_tag">
                                         Featured
                                       </span>
                                     ) : null}
                                     {empdata.created_by_admin === "0" ||
-                                    empdata.created_by_admin === 0 ? (
+                                      empdata.created_by_admin === 0 ? (
                                       <span className="bg-info text-white web_tag">
                                         Web
                                       </span>
@@ -851,6 +856,22 @@ function AgentsEmployee(props) {
                                 </p>
                               </td>
                             )}
+                            <Link
+                              style={{
+                                padding: "0 5px",
+                                minWidth: "auto",
+                                height: "auto",
+                              }}
+                              className="btn btn-sm btn-outline-info action_btn text-center"
+                              // to={`/${empdata.employee_id}`}
+                              title="Employee Details"
+                              onClick={() => {
+                                setShowChangeAssignedAdminModal(true)
+                                setemployeeId(empdata.employee_id)
+                              }}
+                            >
+                              Update
+                            </Link>
                             {/* Calulation to get user is new or retained */}
                             {/* <td className=" py-2">
                               <p className="font-size-3 font-weight-normal text-black-2 mb-0">

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 2,
             "patches": [
                 {
                     "date": 1708929026448,
@@ -12,6 +12,10 @@
                 {
                     "date": 1708929032662,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -525,9 +525,9 @@\n       });\r\n     } else {\r\n       // Check the number of files selected\r\n       if (files.length > 30) {\r\n-        toast.error(\"You can only upload a maximum of 15 files at a time\", {\r\n+        toast.error(\"You can only upload a maximum of 30 files at a time\", {\r\n           position: toast.POSITION.TOP_RIGHT,\r\n           autoClose: 1000,\r\n         });\r\n         return;\r\n"
+                },
+                {
+                    "date": 1709200794718,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -807,8 +807,10 @@\n       setShowSaveDoc(false);\r\n       setHide(false);\r\n       setBulkUpload(\"\");\r\n       setShowMoreDocType(false);\r\n+      setEditName(false)\r\n+\r\n     }\r\n   };\r\n   /*Fuinction to render image */\r\n   const RenderNewDocFile = () => {\r\n"
                 }
             ],
             "date": 1708929026448,

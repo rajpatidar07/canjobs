@@ -808,6 +808,8 @@ export default function DocumrentContainer(props) {
       setHide(false);
       setBulkUpload("");
       setShowMoreDocType(false);
+      setEditName(false)
+
     }
   };
   /*Fuinction to render image */

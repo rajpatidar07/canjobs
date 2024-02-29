@@ -11,14 +11,14 @@ import {
   AddEmployeeDetails,
   EmployeeDetails,
   GetAgentJson,
-  // getallAdminData,
+  getallAdminData,
   // GetFilter,
   // AddEmployeePermission,
 } from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FilterJson from "../../json/filterjson";
-import Select from "react-select";
+// import Select from "react-select";
 // import AddAgent from "../admin/addAgent";
 // import { Link } from "react-router-dom";
 import AddNewAgent from "../admin/add_agent";
@@ -29,7 +29,7 @@ function PersonalDetails(props) {
   const [imgError, setImgError] = useState("");
   const [loading, setLoading] = useState(false);
   const [agentList, setAgentList] = useState([]);
-  // const [admiinList, setAdminList] = useState([]);
+  const [admiinList, setAdminList] = useState([]);
   // const [jsonList, setJsonList] = useState([]);
   let [apiCall, setApiCall] = useState(false);
   let [showAddEAgentModal, setShowAgentMOdal] = useState(false);
@@ -64,7 +64,7 @@ function PersonalDetails(props) {
     status: props.employeeId === "0" ? "1" : "",
     reffer_by: user_type === "agent" ? localStorage.getItem("agent_id") : "",
     permission: props.employeeId === "0" ? JSON.stringify(Permissions) : null,
-    // assigned_by: ""
+    assigned_by: ""
   };
 
   /* Functionality to close the modal */
@@ -236,24 +236,25 @@ function PersonalDetails(props) {
     }
   };
   /*Function to get admin json list */
-  // const AdminJson = async () => {
-  //   let response = await getallAdminData();
-  //   try {
-  //     // let json = await GetFilter();
-  //     // console.log(json);
-  //     let newAdminJson = response.data.filter((item) => admin_id !== item.admin_id)
-  //     if (Array.isArray(newAdminJson)) {
-  //       const options = newAdminJson.map((option) => ({
-  //         value: option.admin_id,
-  //         label: option.name,
-  //       }));
-  //       setAdminList(options);
-  //     }
-  //     // setJsonList(json.data.data);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  const AdminJson = async () => {
+    let response = await getallAdminData();
+    try {
+      // let json = await GetFilter();
+      // console.log(json);
+      // let newAdminJson = response.data.filter((item) => admin_id !== item.admin_id)
+      // if (Array.isArray(newAdminJson)) {
+      //   const options = newAdminJson.map((option) => ({
+      //     value: option.admin_id,
+      //     label: option.name,
+      //   }));
+      //   setAdminList(options);
+      // }
+      // setJsonList(json.data.data);
+      setAdminList(response.data)
+    } catch (err) {
+      console.log(err);
+    }
+  };
   /*Function to set data to the search agent  */
   // const onAdminSelectChange = (option) => {
   //   setState({ ...state, assigned_by: option.value });
@@ -278,12 +279,12 @@ function PersonalDetails(props) {
     }
   };
   /*Function to set data to the search agent  */
-  const onSelectChange = (option) => {
-    setState({ ...state, reffer_by: option.value });
-  };
+  // const onSelectChange = (option) => {
+  //   setState({ ...state, reffer_by: option.value });
+  // };
   useEffect(() => {
     AgentJson();
-    // AdminJson()
+    AdminJson()
     if (props.employeeId === "0" || props.employeeId === undefined) {
       setState(initialFormStateuser);
     } else {
@@ -437,7 +438,7 @@ function PersonalDetails(props) {
                   </h5>
                 )}
                 {/* FIRST LINE */}
-                <div className="form-group mx-auto text-center">
+                <div className={`form-group mx-auto text-center ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
                   <div className="mb-4 position-relative">
                     <input
                       type={"file"}
@@ -474,7 +475,7 @@ function PersonalDetails(props) {
                     type="hidden"
                     id="employee_id"
                   />
-                  <div className="form-group col-md-4">
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
                     <label
                       htmlFor="name"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -505,7 +506,7 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
-                  <div className="form-group col-md-4">
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
                     <label
                       htmlFor="email"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -537,7 +538,7 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
-                  <div className="form-group col-md-4">
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
                     <label
                       htmlFor="contact_no"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -570,7 +571,7 @@ function PersonalDetails(props) {
                     )}
                   </div>
 
-                  <div className="form-group col-md-12">
+                  <div className={`form-group col-md-12 ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
                     <label
                       htmlFor="description"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -613,7 +614,7 @@ function PersonalDetails(props) {
                   </div>
 
                   {/* SECOND LINE */}
-                  <div className="form-group col-md-4">
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
                     <label
                       htmlFor="date_of_birth"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -645,7 +646,42 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
-                  <div className="form-group col-md-4">
+                  {/* <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
+                    <label
+                      htmlFor="category"
+                      className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                    >
+                      Category: 
+                    </label>
+                    <select
+                      name="category"
+                      value={state.category || ""}
+                      onChange={onInputChange}
+                      className={
+                        errors.category
+                          ? "form-control border border-danger"
+                          : "form-control"
+                      }
+                      id="category"
+                    >
+                      <option value={""}>User category</option>
+                      <option value={"1"}>PNP</option>
+                      <option value={"2"}>Visitors visa</option>
+                      <option value={"3"}>Working Visa</option>
+                      <option value={"4"}>Express Entry</option>
+                      <option value={"5"}>Business Visa</option>
+                    </select>
+                    ----ERROR MESSAGE FOR category----
+                    {errors.category && (
+                      <span
+                        key={errors.category}
+                        className="text-danger font-size-3"
+                      >
+                        {errors.category}
+                      </span>
+                    )}
+                  </div> */}
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
                     <label
                       htmlFor="gender"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -678,7 +714,7 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
-                  <div className="form-group col-md-4">
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
                     <label
                       htmlFor="marital_status"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -745,7 +781,7 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div> */}
-                  <div className="form-group col-md-4">
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
                     <label
                       htmlFor="current_location"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -776,7 +812,7 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
-                  <div className="form-group col-md-4">
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
                     <label
                       htmlFor="currently_located_country"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -816,7 +852,7 @@ function PersonalDetails(props) {
                   </div>
 
                   {/* FOURTH LINE */}
-                  <div className="form-group col-md-4">
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
                     <label
                       htmlFor="language"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -887,9 +923,9 @@ function PersonalDetails(props) {
                   </span>
                 )}
               </div> */}
-                  <div className="form-group col-md-4">
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
                     <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
-                      Interested In: <span className="text-danger">*</span>
+                      Applicant's Type : <span className="text-danger">*</span>
                     </label>
                     <select
                       className={
@@ -922,7 +958,7 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
-                  <div className="form-group col-md-4">
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
                     <label
                       htmlFor="experience"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -958,7 +994,7 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
-                  <div className="form-group col-md-4">
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
                     <label
                       htmlFor="work_permit_canada"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -992,7 +1028,8 @@ function PersonalDetails(props) {
                     )}
                   </div>
                   <div
-                    className={`${state.work_permit_canada === "yes"
+                    className={`${state.work_permit_canada === "yes" &&
+                      props.user_of_page === ""
                       ? "form-group col-md-4"
                       : "d-none"
                       }`}
@@ -1038,7 +1075,7 @@ function PersonalDetails(props) {
                   </div>
                   <div
                     className={
-                      user_type === "agent" || user_type === "user"
+                      user_type === "agent" || user_type === "user" || props.user_of_page === "assignedUser"
                         ? "d-none"
                         : "form-group col-md-4 d-flex"
                     }
@@ -1095,11 +1132,13 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
-                  {/*<div
-                    className={
-                      user_type === "agent" || user_type === "user"
+                  <div
+                    className={`form-group  d-flex 
+                    ${user_type === "agent" || user_type === "user"
                         ? "d-none"
-                        : "form-group col-md-4 d-flex"
+                        : props.user_of_page === "assignedUser" ?
+                          " col-md-12" :
+                          "col-md-4"}`
                     }
                     style={{ position: "relative" }}
                   >
@@ -1109,7 +1148,7 @@ function PersonalDetails(props) {
                     >
                       Assigned By:<span className="text-danger">*</span>
                     </label>
-                    <Select
+                    {/* <Select
                       options={"" || admiinList}
                       name="assigned_by"
                       value={state.assigned_by}
@@ -1120,8 +1159,22 @@ function PersonalDetails(props) {
                           ? "form-control border border-danger px-0 pt-4 "
                           : "form-control px-0 pt-4 border-0"
                       }
-                    />
-                  <span
+                    /> */}
+                    <select
+                      name="assigned_by"
+                      value={state.assigned_by || ""}
+                      onChange={onInputChange}
+                      className={
+                        errors.assigned_by
+                          ? "form-control text-capitalize border border-danger"
+                          : "form-control text-capitalize"
+                      }
+                      id="assigned_by"
+                    >
+                      <option value={""}>Selct Admin </option>
+                      {admiinList.map((item) => <option value={item.admin_id}>{item.name} </option>)}
+                    </select>
+                    {/* <span
                       className="btn btn-sm btn-secondary"
                       onClick={() => setShowAdminMOdal(true)}
                       style={{
@@ -1132,9 +1185,9 @@ function PersonalDetails(props) {
                       title="Add New Admin"
                     >
                       +
-                    </span> 
+                    </span>  */}
 
-                    ERROR MSG FOR REFFER BY 
+                    {/* ERROR MSG FOR REFFER BY  */}
                     {errors.assigned_by && (
                       <span
                         key={errors.assigned_by}
@@ -1143,9 +1196,9 @@ function PersonalDetails(props) {
                         {errors.assigned_by}
                       </span>
                     )}
-                  </div>*/}
+                  </div>
 
-                  <div className="form-group col-md-4">
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
                     <label
                       htmlFor="resume"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -1176,7 +1229,7 @@ function PersonalDetails(props) {
                     )}
                   </div>
                   {user_type === "admin" ? (
-                    <div className="form-group col-md-4">
+                    <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
                       <label
                         htmlFor="fetured"
                         className="font-size-4 text-black-2 font-weight-semibold line-height-reset"

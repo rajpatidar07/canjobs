@@ -231,6 +231,7 @@ export default function Admin_assigned_list(props) {
                                                         apiCall={apiCall}
                                                         setApiCall={setApiCall}
                                                         heading={"Dashboard"}
+                                                        user_of_page={"assignedUser"}
                                                     />
                                                 </div>
                                                 {/* <div className="col-md-6">

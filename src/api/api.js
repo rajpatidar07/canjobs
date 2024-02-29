@@ -11,8 +11,9 @@ const view_as_token = localStorage.getItem("view_as_token");
 const user_id = localStorage.getItem("employee_id");
 const employer_id = localStorage.getItem("company_id");
 const admin_id = localStorage.getItem("admin_id");
+const agent_id = localStorage.getItem("agent_id");
 const user_type = localStorage.getItem("userType");
-
+const admin_type =localStorage.getItem("admin_type");
 if (view_as_token) {
   Token = view_as_token;
 }
@@ -36,7 +37,10 @@ export const GetAllDataCount = async () => {
 
 //Api to get the graph data count of all data
 export const GetAllChartData = async () => {
-  const response = await axios.get(`${API_URL}admin/getEmployeeStatusCount`,
+  const response = await axios.post(`${API_URL}admin/getEmployeeStatusCount`,{
+    "id":user_type === "admin"?admin_id:agent_id,
+    "type":user_type === "admin"?admin_type:user_type
+  },
     {
       headers: {
         "Content-Type": "application/json",

@@ -5,6 +5,7 @@ import Education from "../forms/user/education";
 import Skills from "../forms/user/skills";
 import { getallEmployeeData, DeleteJobEmployee, ApplyJob } from "../../api/api";
 import moment from "moment";
+import { BiSolidCategory } from "react-icons/bi";
 import SAlert from "../common/sweetAlert";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -22,6 +23,7 @@ import { GoTasklist } from "react-icons/go";
 import { AiOutlineFilePdf } from "react-icons/ai";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { PiBriefcaseLight } from "react-icons/pi";
+import ApplicantCategory from "../forms/user/ApplicantCategory";
 export default function EmployeeTable(props) {
   let agentId = localStorage.getItem("agent_id");
   let user_type = localStorage.getItem("userType");
@@ -35,6 +37,7 @@ export default function EmployeeTable(props) {
   let [showChangeJobModal, setShowChangeJobModal] = useState(false);
   let [showEducationModal, setShowEducationModal] = useState(false);
   let [showSkillsModal, setShowSkillsModal] = useState(false);
+  let [showCategoryModal, setShowCategoryModal] = useState(false);
   // let [documentModal, setDocumentModal] = useState(false);
   let [showStatusChangeModal, setShowStatusChange] = useState(false);
   /*data and id states */
@@ -73,10 +76,10 @@ export default function EmployeeTable(props) {
         props.skill || props.heading === "Dashboard" || status === "00" ? "" : status,
         props.job_id ? props.job_id : "",
         "",
-        "",
+        props.ApplicantType,
         "",
         user_type === "agent" ? agentId : props.agentFilterValue,
-        props.adminFilterValue
+        props.adminFilterValue,
       );
       if (userData.data.length === 0) {
         setemployeeData([]);
@@ -247,6 +250,12 @@ export default function EmployeeTable(props) {
     setemployeeId(e);
     setShowStatusChange(true);
   };
+  /*function to Open  change applicants status Modal */
+  const ChangeApplicantsCategory = (e) => {
+    setemployeeId(e);
+    setShowCategoryModal(true);
+  };
+
   /*Function to get the new user */
   // const currentDate = new Date(); // Get current date
   // const oneMonthAgo = new Date(); // Create a new date object for one month ago
@@ -328,6 +337,12 @@ export default function EmployeeTable(props) {
           employee_id={employeeId}
         />
       ) : null} */}
+      {showCategoryModal ?
+        <ApplicantCategory
+          show={showCategoryModal}
+          close={() => setShowCategoryModal(false)}
+          data={employeeId} />
+        : null}
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5 ">
         {props.heading === "Dashboard" ? null : (
           <div
@@ -907,6 +922,20 @@ export default function EmployeeTable(props) {
     ) :
      ( */}
                                 <>
+                                  <button
+                                    className={props.ApplicantType === "pnp"
+                                      ? "btn btn-outline-info action_btn" :
+                                      "d-none"}
+                                    onClick={() =>
+                                      ChangeApplicantsCategory(empdata)
+                                    }
+                                    title="Change Applicant's Category"
+                                  >
+                                    <span className="text-gray px-2">
+                                      <BiSolidCategory />
+                                    </span>
+                                    {/* <i className="fas fa-stream text-gray"></i> */}
+                                  </button>
                                   <button
                                     className="btn btn-outline-info action_btn"
                                     onClick={() =>
