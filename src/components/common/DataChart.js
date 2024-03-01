@@ -54,7 +54,7 @@ const DataChart = ({ data }) => {
 
 
   return (
-    <div className='d=flex justify-content-center'>
+    <div className='d-flex justify-content-center'>
       <div id="chart" className='w-100'>
         <ReactApexChart options={options} series={counts} type="pie" width={"100%"} />
       </div>

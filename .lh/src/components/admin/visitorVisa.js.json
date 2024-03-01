@@ -3,11 +3,15 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 1,
             "patches": [
                 {
                     "date": 1709207523944,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1709268135039,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,9 +56,9 @@\n             </div> */}\n                 {/* <small className=\"text-danger\">{searcherror}</small> */}\n               </div>\n               {/*<-- visitor visa Table -->*/}\n-              <EmployeeTable\n+              {/* <EmployeeTable\n                 // showEmployeeProfile={showEmployeeProfile}\n                 // employeeDetails={employeeDetails}\n                 // search={search}\n                 // experienceFilterValue={experienceFilterValue}\n@@ -75,9 +75,9 @@\n                 ApplicantType={\"visitor visa\"}\n               // EmployeeCall={props.EmployeeCall}\n               // agentFilterValue={agentFilterValue}\n               // adminFilterValue={adminFilterValue}\n-              />\n+              /> */}\n             </div>\n           </div>\n         </div>\n       </div>\n"
                 }
             ],
             "date": 1709207523944,
