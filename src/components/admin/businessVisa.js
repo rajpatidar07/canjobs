@@ -10,7 +10,7 @@ export default function BusinessVIsa() {
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
         {/* <!-- Header Area --> */}
-        <AdminHeader heading={"Business VIsa"} />
+        <AdminHeader heading={"Business Visa"} />
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Business VIsa"} />
         <div className="dashboard-main-container mt-16" id="dashboard-body">
@@ -56,7 +56,7 @@ export default function BusinessVIsa() {
                 {/* <small className="text-danger">{searcherror}</small> */}
               </div>
               {/*<-- Business visa Table -->*/}
-              <EmployeeTable
+              {/* <EmployeeTable
                 // showEmployeeProfile={showEmployeeProfile}
                 // employeeDetails={employeeDetails}
                 // search={search}
@@ -75,7 +75,7 @@ export default function BusinessVIsa() {
               // EmployeeCall={props.EmployeeCall}
               // agentFilterValue={agentFilterValue}
               // adminFilterValue={adminFilterValue}
-              />
+              /> */}
             </div>
           </div>
         </div>

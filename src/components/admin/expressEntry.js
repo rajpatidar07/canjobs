@@ -55,7 +55,7 @@ export default function ExpressEntry() {
                 {/* <small className="text-danger">{searcherror}</small> */}
               </div>
               {/*<-- Express entry Table -->*/}
-              <EmployeeTable
+              {/* <EmployeeTable
                 // showEmployeeProfile={showEmployeeProfile}
                 // employeeDetails={employeeDetails}
                 // search={search}
@@ -74,7 +74,7 @@ export default function ExpressEntry() {
               // EmployeeCall={props.EmployeeCall}
               // agentFilterValue={agentFilterValue}
               // adminFilterValue={adminFilterValue}
-              />
+              /> */}
             </div>
           </div>
         </div>

@@ -55,8 +55,8 @@ export default function Pnp() {
               </div> */}
                 {/* <small className="text-danger">{searcherror}</small> */}
               </div>
-              {/*<-- PMP Table -->*/}
-              <EmployeeTable
+              {/*<-- PNP Table -->*/}
+              {/* <EmployeeTable
                 // showEmployeeProfile={showEmployeeProfile}
                 // employeeDetails={employeeDetails}
                 // search={search}
@@ -75,7 +75,7 @@ export default function Pnp() {
                 // EmployeeCall={props.EmployeeCall}
                 // agentFilterValue={agentFilterValue}
                 // adminFilterValue={adminFilterValue}
-              />
+              /> */}
             </div>
           </div>
         </div>

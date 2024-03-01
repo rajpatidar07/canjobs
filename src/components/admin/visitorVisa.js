@@ -57,7 +57,7 @@ export default function VisitorVisa() {
                 {/* <small className="text-danger">{searcherror}</small> */}
               </div>
               {/*<-- visitor visa Table -->*/}
-              <EmployeeTable
+              {/* <EmployeeTable
                 // showEmployeeProfile={showEmployeeProfile}
                 // employeeDetails={employeeDetails}
                 // search={search}
@@ -76,7 +76,7 @@ export default function VisitorVisa() {
               // EmployeeCall={props.EmployeeCall}
               // agentFilterValue={agentFilterValue}
               // adminFilterValue={adminFilterValue}
-              />
+              /> */}
             </div>
           </div>
         </div>
