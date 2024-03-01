@@ -519,7 +519,7 @@ function CompanyDetails(props) {
                   htmlFor="website_url"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Website URL:
+                  Website URL (https://www.domain.com/):
                 </label>
                 <input
                   type="text"

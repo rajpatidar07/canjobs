@@ -308,7 +308,7 @@ export default function EmployerTable(props) {
                                 )}{" "}
                               </div>
                             </div>
-                            {empdata.company_name === null ? (
+                            {empdata.franchise === null ? (
                               <p className="m-0 text-black-2 font-weight-bold text-capitalize">
                                 N/A
                               </p>
@@ -316,9 +316,9 @@ export default function EmployerTable(props) {
                               <div className="company_profile">
                                 <p
                                   className="m-0 text-black-2 font-weight-bold text-capitalize text-truncate"
-                                  title={empdata.company_name}
+                                  title={empdata.franchise}
                                 >
-                                  {empdata.company_name}{" "}
+                                  {empdata.franchise}{" "}
                                 </p>
                                 <p className="font-size-3 font-weight-normal mb-0">
                                   {empdata.industry}{" "}
@@ -338,7 +338,7 @@ export default function EmployerTable(props) {
                             onClick={() => EmployerDetail(empdata.company_id)}
                           >
                             <p
-                              className="m-0 font-weight-normal text-capitalize text-truncate"
+                              className="m-0 font-weight-normal text-capitalize text-truncate font-size-3"
                               title={empdata.contact_person_name}
                             >
                               {empdata.contact_person_name === null
@@ -357,11 +357,30 @@ export default function EmployerTable(props) {
                               N/A
                             </p>
                           ) : (
-                            <p className="font-size-3 font-weight-normal mb-0">
-                              {empdata.address}
-                              {empdata.city}( {empdata.pin_code}){" "}
-                              {empdata.state}
-                              {empdata.country}{" "}
+                            <p
+                              className="font-size-3 font-weight-normal mb-0 text-truncate"
+                              style={{ maxWidth: 150 }}
+                              title={
+                                empdata.address +
+                                ", " +
+                                empdata.city +
+                                " " +
+                                empdata.pin_code +
+                                ", " +
+                                empdata.state +
+                                " " +
+                                empdata.country
+                              }
+                            >
+                              {empdata.address +
+                                ", " +
+                                empdata.city +
+                                " " +
+                                empdata.pin_code +
+                                ", " +
+                                empdata.state +
+                                " " +
+                                empdata.country}
                             </p>
                           )}{" "}
                         </th>

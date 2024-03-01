@@ -134,9 +134,9 @@ function CompanyProfileDetail(props) {
                       className="company_logo"
                       src={
                         employerData.logo === null ||
-                          employerData.logo === null ||
-                          employerData.logo === undefined ||
-                          employerData.logo === "undefined"
+                        employerData.logo === null ||
+                        employerData.logo === undefined ||
+                        employerData.logo === "undefined"
                           ? "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
                           : employerData.logo
                       }
@@ -184,7 +184,7 @@ function CompanyProfileDetail(props) {
                         <CustomButton
                           title={"Send Custom Email"}
                           className="font-size-4 rounded-3 btn-primary py-0 d-none"
-                        /*Functionalities have to be done. */
+                          /*Functionalities have to be done. */
                         >
                           {/*Take off "d-none" when you Send Custom Email API or when you're told to remove it*/}
                           <RiMailSendLine />
@@ -465,14 +465,11 @@ function CompanyProfileDetail(props) {
                               <div className="text_box text-left w-100">
                                 <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center text-break text-capitalize">
                                   <span>
-                                    <b title="Operating Name">{employerData.franchise ?
-                                      employerData.franchise
-                                      : "Unknown Client"}
+                                    <b title="Operating Name">
+                                      {employerData.franchise
+                                        ? employerData.franchise
+                                        : "Unknown Client"}
                                     </b>
-                                    <small className="font-size-2 mx-3"
-                                      title="Legal Name">
-                                      {employerData.company_name}
-                                    </small>
                                   </span>
                                 </h3>
                                 <CustomButton
@@ -486,7 +483,12 @@ function CompanyProfileDetail(props) {
                                   <PiPencilDuotone />
                                 </CustomButton>
                                 <p className="font-size-3 text-default-color line-height-2 m-0 text-break">
-                                  {employerData.industry}
+                                  <span className="mr-3" title="Legal Name">
+                                    {employerData.company_name}
+                                  </span>
+                                  {employerData.industry === ""
+                                    ? null
+                                    : "(" + employerData.industry + ")"}
                                 </p>
                                 <hr className="my-3" />
                                 <div className="position-relative">
@@ -500,14 +502,14 @@ function CompanyProfileDetail(props) {
                                 <hr className="my-3" />
                                 <div className="position-relative">
                                   {!employerData.industry &&
-                                    !employerData.corporation &&
-                                    !employerData.company_size &&
-                                    !employerData.company_start_date &&
-                                    !employerData.website_url &&
-                                    !employerData.vacancy_for_post &&
-                                    !employerKycData.pan_no &&
-                                    !employerKycData.tan_number &&
-                                    !employerKycData.gstin ? (
+                                  !employerData.corporation &&
+                                  !employerData.company_size &&
+                                  !employerData.company_start_date &&
+                                  !employerData.website_url &&
+                                  !employerData.vacancy_for_post &&
+                                  !employerKycData.pan_no &&
+                                  !employerKycData.tan_number &&
+                                  !employerKycData.gstin ? (
                                     <div className="text-left row m-0">
                                       <div className="font-size-4 mb-8 text-center mr-10">
                                         No Data Found
@@ -559,9 +561,13 @@ function CompanyProfileDetail(props) {
                                           title="Website URL"
                                         >
                                           <i className="fas fa-globe mr-2"></i>
-                                          <Link className="text-dark" to={""}>
+                                          <a
+                                            className="text-dark"
+                                            href={employerData.website_url}
+                                            target="_blank"
+                                          >
                                             {employerData.website_url}
-                                          </Link>
+                                          </a>
                                         </div>
                                       ) : null}
                                       {employerData.vacancy_for_post ? (
@@ -574,7 +580,7 @@ function CompanyProfileDetail(props) {
                                         </div>
                                       ) : null}
                                       {employerKycData === "" ||
-                                        user_type === "user" ? null : (
+                                      user_type === "user" ? null : (
                                         <div className="d-none">
                                           {employerKycData.pan_no ? (
                                             <div
@@ -588,7 +594,7 @@ function CompanyProfileDetail(props) {
                                             </div>
                                           ) : null}
                                           {!employerKycData.tan_number ||
-                                            user_type === "user" ? null : (
+                                          user_type === "user" ? null : (
                                             <div
                                               className="font-size-3 mb-1 mr-10"
                                               title="TAN"
@@ -600,7 +606,7 @@ function CompanyProfileDetail(props) {
                                             </div>
                                           )}
                                           {!employerKycData.gstin ||
-                                            user_type === "user" ? null : (
+                                          user_type === "user" ? null : (
                                             <div
                                               className="font-size-3 mb-1 mr-10"
                                               title="GSTIN"
@@ -645,11 +651,11 @@ function CompanyProfileDetail(props) {
                                         {employerData.email}
                                       </Link>
                                       {user_type === "admin" ||
-                                        props.self === "no" ? (
+                                      props.self === "no" ? (
                                         <CustomButton
                                           title={"Send Custom Email"}
                                           className="font-size-4 rounded-3 btn-primary py-0 d-none"
-                                        /*Functionalities have to be done. */
+                                          /*Functionalities have to be done. */
                                         >
                                           {/*Take off "d-none" when you Send Custom Email API or when you're told to remove it*/}
                                           <RiMailSendLine />
@@ -734,7 +740,7 @@ function CompanyProfileDetail(props) {
                       setApiCall={setApiCall}
                       pageNo={jobPageNo}
                       setpageNo={setJobPageNO}
-                    // setLmiaStatusRejectComment={setLmiaStatusRejectComment}
+                      // setLmiaStatusRejectComment={setLmiaStatusRejectComment}
                     />
                   </div>
                   {/* <!-- Top Start --> */}
@@ -796,26 +802,26 @@ function CompanyProfileDetail(props) {
                       setApiCall={setApiCall}
                     />
                   ) : //  <div className="p-10 notes_container">
-                    //         <div className="single_note mb-5">
-                    //           <small>Created on: 2023-08-03 17:10:53</small>
-                    //           <div className="card p-5">
-                    //             This is some text within a card body.
-                    //           </div>
-                    //         </div>
-                    //         <div className="single_note mb-5">
-                    //           <small>Created on: 2023-08-03 17:10:53</small>
-                    //           <div className="card p-5">
-                    //             This is some text within a card body.
-                    //           </div>
-                    //         </div>
-                    //         <div className="single_note mb-5">
-                    //           <small>Created on: 2023-08-03 17:10:53</small>
-                    //           <div className="card p-5">
-                    //             This is some text within a card body.
-                    //           </div>
-                    //         </div>
-                    //       </div>
-                    null}
+                  //         <div className="single_note mb-5">
+                  //           <small>Created on: 2023-08-03 17:10:53</small>
+                  //           <div className="card p-5">
+                  //             This is some text within a card body.
+                  //           </div>
+                  //         </div>
+                  //         <div className="single_note mb-5">
+                  //           <small>Created on: 2023-08-03 17:10:53</small>
+                  //           <div className="card p-5">
+                  //             This is some text within a card body.
+                  //           </div>
+                  //         </div>
+                  //         <div className="single_note mb-5">
+                  //           <small>Created on: 2023-08-03 17:10:53</small>
+                  //           <div className="card p-5">
+                  //             This is some text within a card body.
+                  //           </div>
+                  //         </div>
+                  //       </div>
+                  null}
                 </div>
                 <div
                   className={

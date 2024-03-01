@@ -90,7 +90,9 @@ function MainLayout() {
         <Route path="/resetpassword/:id" element={<ResetPassword />} />
         <Route exact path="/linkedin" component={LinkedInCallback} />
         <Route path="*" element={<NotFound />} />
-        {userType === "user" && token !== "" || token !== null || token !== undefined ? (
+        {(userType === "user" && token !== "") ||
+        token !== null ||
+        token !== undefined ? (
           <>
             <Route path="/" element={<EmployeeHomePage />} />
             <Route path="/jobs" element={<JobSearch />} />
@@ -107,7 +109,9 @@ function MainLayout() {
           </>
         )}
         {/* Employer */}
-        {userType === "company" && token !== "" || token !== null || token !== undefined ? (
+        {(userType === "company" && token !== "") ||
+        token !== null ||
+        token !== undefined ? (
           <>
             <Route path="/client" element={<EmployerHome />} />
             <Route path="/clientprofile" element={<CompanyProfile />} />
@@ -127,8 +131,14 @@ function MainLayout() {
         )}
         {/* Admin */}
         <Route path="/adminlogin" element={<AdminLoginFrom />} />
-        {userType === "company" || userType === "user" || userType === "" || userType === null || userType === "null" &&
-          token === "" || token === null || token === undefined || token === "null" ? (
+        {userType === "company" ||
+        userType === "user" ||
+        userType === "" ||
+        userType === null ||
+        (userType === "null" && token === "") ||
+        token === null ||
+        token === undefined ||
+        token === "null" ? (
           <>
             <Route path="/" element={<EmployeeHomePage />} />
             <Route path="*" element={<NotFound />} />

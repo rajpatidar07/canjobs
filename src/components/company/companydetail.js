@@ -118,6 +118,13 @@ function CompanyDetailPage(props) {
               >
                 <i className="fas fa-map-marker-alt mr-2"></i>
                 {employerData.address}
+                {", "} {employerData.city}
+                {"  "}
+                {employerData.pin_code}
+                {", "}
+                {employerData.state}
+                {", "}
+                {employerData.country}
               </div>
             ) : null}{" "}
             {props.page === "company_profile" ? null : (

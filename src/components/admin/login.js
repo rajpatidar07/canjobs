@@ -52,6 +52,7 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
 
     if (validate()) {
       setLoading(true);
+      setIsLoading(true);
       // handle form submission
       try {
         const updatedTodo = await AdminLogin(state);
@@ -59,7 +60,6 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
           updatedTodo.status === true ||
           updatedTodo.message === "Successfully Logged "
         ) {
-          setIsLoading(true);
           localStorage.setItem("token", updatedTodo.token);
           localStorage.setItem("userType", "admin");
           localStorage.setItem("admin", updatedTodo.name);
