@@ -1,9 +1,7 @@
 import axios from "axios";
-// const API_URL = "https://192.168.29.92/canjobs/";
-// const API_URL = "http://65.0.20.158/canjobs/";
 const API_URL = "https://apnaorganicstore.in/canjobs/";
-// const API_URL = "http://51.20.6.80/canjobs/";
-// const API_URL = "http://192.168.29.92/canjobs_october/";
+//Local 
+// const API_URL ="http://192.168.29.51/canjobs/"
 // New AWS backend
 // const API_URL = "https://api.canpathwaysjobs.com/canjobs/";
 let Token = localStorage.getItem("token");

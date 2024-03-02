@@ -2,10 +2,37 @@ import React,{useState} from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import EmployeeTable from "../common/employeeTable";
+import ApplicantsFilter from "../common/applicantsFilter";
 export default function Pnp() {
+  /*Filter and search state */
+  const [experienceFilterValue, setExperienceFilterValue] = useState("");
+  const [skillFilterValue, setSkillFilterValue] = useState("");
   const [pageNo, setpageNo] = useState(1);
+  const [educationFilterValue, setEducationFilterValue] = useState("");
+  const [agentFilterValue, setAgentFilterValue] = useState("");
+  const [adminFilterValue, setAdminFilterValue] = useState("");
+  const [interestFilterValue, setinterestFilterValue] = useState("");
+  const [search, setSearch] = useState("");
+  const [searcherror, setSearchError] = useState("");
+  let user_type = localStorage.getItem("userType")
   let [apiCall, setApiCall] = useState(false);
-
+/*Function to search the employee */
+const onSearch = (e) => {
+  const inputValue = e.target.value;
+  setSearch(inputValue);
+  setpageNo(1);
+  if (inputValue.length > 0) {
+    if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
+      setSearchError("Client Name cannot start with a number.");
+    } else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
+      setSearchError("Cannot use special characters.");
+    } else {
+      setSearchError("");
+    }
+  } else {
+    setSearchError("");
+  }
+};
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -21,48 +48,43 @@ export default function Pnp() {
                   <h3 className="font-size-6 mb-0">PNP</h3>
                 </div>
                 {/*<-- Search pnp -->*/}
-                {/* <div className="row m-0 align-items-center">
-                <div className="col p-1 form_group mb-3">
-                  <p className="input_label">Search by Applicant's Name:</p>
-                  <input
-                    required
-                    type="text"
-                    className="form-control "
-                    placeholder={"Search Applicant"}
-                    value={search}
-                    name={"Interview"}
-                    onChange={(e) => onSearch(e)}
-                    maxLength={30}
+                <div className="row m-0 align-items-center">
+                  {/* Employees filter's */}
+                  <ApplicantsFilter
+                    user_type={user_type}
+                    search={search}
+                    onSearch={onSearch}
+                    experienceFilterValue={experienceFilterValue}
+                    setExperienceFilterValue={setExperienceFilterValue}
+                    skillFilterValue={skillFilterValue}
+                    setSkillFilterValue={setSkillFilterValue}
+                    educationFilterValue={educationFilterValue}
+                    setEducationFilterValue={setEducationFilterValue}
+                    setpageNo={setpageNo}
+                    agentFilterValue={agentFilterValue}
+                    setAgentFilterValue={setAgentFilterValue}
+                    adminFilterValue={adminFilterValue}
+                    setAdminFilterValue={setAdminFilterValue}
+                    interestFilterValue={interestFilterValue}
+                    setinterestFilterValue={setinterestFilterValue}
+                    setSearchError={setSearchError}
+                    // skill={props.skill}
+                    pageName={"pnp"}
                   />
-                </div>
-                <div className="col p-1 form_group mb-3">
-                  <p className="input_label">Filter by Status:</p>
-                  <div className="select_div">
-                    <select
-                      name="type"
-                      value={statusFilterValue}
-                      id="type"
-                      onChange={(e) => {setStatusFilterValue(e.target.value)
-                        setpageNo(1)}}
-                      className=" form-control"
-                    >
-                      <option value="">Select Interview Status</option>
-                      <option value="pending">Schedule</option>
-                      <option value="complete">Complete</option>
-                    </select>
-                  </div>
-                </div>
-              </div> */}
-                {/* <small className="text-danger">{searcherror}</small> */}
+              </div>
+              <small className="text-danger">{searcherror}</small>
               </div>
               {/*<-- PNP Table -->*/}
-              {/* <EmployeeTable
+              <EmployeeTable
                 // showEmployeeProfile={showEmployeeProfile}
                 // employeeDetails={employeeDetails}
-                // search={search}
-                // experienceFilterValue={experienceFilterValue}
-                // educationFilterValue={educationFilterValue}
-                // skillFilterValue={skillFilterValue}
+                search={search}
+                experienceFilterValue={experienceFilterValue}
+                educationFilterValue={educationFilterValue}
+                skillFilterValue={skillFilterValue}
+                agentFilterValue={agentFilterValue}
+                adminFilterValue={adminFilterValue}
+                interestFilterValue={interestFilterValue}
                 apiCall={apiCall}
                 setApiCall={setApiCall}
                 // skill={props.skill}
@@ -72,10 +94,7 @@ export default function Pnp() {
                 pageNo={pageNo}
                 setpageNo={setpageNo}
                 ApplicantType={"pnp"}
-                // EmployeeCall={props.EmployeeCall}
-                // agentFilterValue={agentFilterValue}
-                // adminFilterValue={adminFilterValue}
-              /> */}
+              />
             </div>
           </div>
         </div>

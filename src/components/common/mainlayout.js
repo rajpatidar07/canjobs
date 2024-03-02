@@ -179,7 +179,7 @@ function MainLayout() {
             {/* <Route path="*" element={<NotFound />} /> */}
             <Route path="/googledrive" element={<GoogleDrive />} />
             <Route path="/anotation" element={<Anotation />} />
-            <Route path="/businessvIsa" element={<BusinessVIsa />} />
+            <Route path="/businessvisa" element={<BusinessVIsa />} />
             <Route path="/expressentry" element={<ExpressEntry />} />
             <Route path="/visitorsvisa" element={<VisitorVisa />} />
             <Route path="/pnp" element={<Pnp />} />

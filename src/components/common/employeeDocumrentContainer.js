@@ -45,7 +45,7 @@ export default function DocumrentContainer(props) {
   const [loading, setLoading] = useState(true);
   // Notification states to send in notificaion component
   const [notificationDoc, setNotificationDoc] = useState(props.docId ? 1 : 0);
-  const [notificationApiCall, setNotificationApiCall] = useState(false);
+  // const [notificationApiCall, setNotificationApiCall] = useState(false);
   // let encoded;
   let user_type = localStorage.getItem("userType");
   let admin_id = localStorage.getItem("admin_id");
@@ -242,8 +242,8 @@ export default function DocumrentContainer(props) {
           localStorage.getItem("notificationUser") === props.employee_id
           ? ""
           : selectDocTypeName
-          ? selectDocTypeName
-          : ""
+            ? selectDocTypeName
+            : ""
       );
 
       if (
@@ -300,7 +300,7 @@ export default function DocumrentContainer(props) {
               setDocFile(
                 response.data.data.allData.find((item) => item.id === docId)
                   .document_url +
-                  `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+                `?v=${new Date().getMinutes() + new Date().getSeconds()}`
               );
               setDocTypeName(
                 response.data.data.allData.find((item) => item.id === docId)
@@ -324,7 +324,7 @@ export default function DocumrentContainer(props) {
               setDocTypData(response.data.data.allData[0]);
               setDocFile(
                 response.data.data.allData[0].document_url +
-                  `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+                `?v=${new Date().getMinutes() + new Date().getSeconds()}`
               );
               setDocName(response.data.data.allData[0].document_name);
               setDocId(response.data.data.allData[0].id);
@@ -363,7 +363,7 @@ export default function DocumrentContainer(props) {
                   response.data.data.allData.find(
                     (item) => item.document_name === docName
                   ).document_url +
-                    `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+                  `?v=${new Date().getMinutes() + new Date().getSeconds()}`
                 );
                 setDocTypeName(
                   response.data.data.allData.find(
@@ -384,7 +384,7 @@ export default function DocumrentContainer(props) {
                 setDocFile(
                   response.data.data.allData.find((item) => item.id === docId)
                     .document_url +
-                    `?v=${new Date().getMinutes() + new Date().getSeconds()}`
+                  `?v=${new Date().getMinutes() + new Date().getSeconds()}`
                 );
                 setDocName(
                   response.data.data.allData.find((item) => item.id === docId)
@@ -574,9 +574,8 @@ export default function DocumrentContainer(props) {
         const base64Name = encoded.base64;
 
         // Construct file object with base64 data
-        const DocFile = `data:/${base64Name.split(";")[0].split("/")[1]};${
-          base64Name.split(";")[1]
-        }`;
+        const DocFile = `data:/${base64Name.split(";")[0].split("/")[1]};${base64Name.split(";")[1]
+          }`;
 
         // Use DocRealName as the key for DocFile
         DocRealName = file.name.split(".")[0].replace(/ /g, "_");
@@ -830,7 +829,7 @@ export default function DocumrentContainer(props) {
               >
                 {docTypData &&
                   (docTypData.document_name &&
-                  docTypData.document_name.toLowerCase().includes("imm") ? (
+                    docTypData.document_name.toLowerCase().includes("imm") ? (
                     <iframe
                       src={docFile}
                       style={{ height: "calc(100vh - 200px)" }}
@@ -845,8 +844,8 @@ export default function DocumrentContainer(props) {
                           ? docFileExt
                           : docTypData.extension_type ===
                             "vnd.openxmlformats-officedocument.wordprocessingml.document"
-                          ? "docx"
-                          : docTypData.extension_type
+                            ? "docx"
+                            : docTypData.extension_type
                       }
                       filePath={docFile}
                       errorComponent={() => <div>Error loading document</div>}
@@ -922,32 +921,47 @@ export default function DocumrentContainer(props) {
     }
   };
   /*Type array */
-  let DocTypeData = [
-    "passport",
-    "drivers_license",
-    "photograph",
-    "immigration_status",
-    "lmia",
-    "job_offer_letter",
-    "provincial_nominee_letter",
-    "proof_of_funds",
-    "proof_of_employment",
-    "marriage_certificate",
-    "education_metric",
-    "education_higher_secondary",
-    "education_graduation",
-    "education_post_graduation",
-    "resume_or_cv",
-    "ielts",
-    "medical",
-    "police_clearance",
-    "refusal_letter",
-    "Employment Contract",
-    "Reference Letters",
-    "Client Info",
-    "Representative Submission Letter",
-    "Bank Statement",
-  ];
+  let DocTypeData = props.emp_user_type === "employer" ?
+    ["Business T2",
+      "Recent PD7A",
+      "Business T4",
+      "Business Incorporation Certificate",
+      "Employment Contract",
+      "Schedule A",
+      "Signed Job Offer",
+      "PD7A of year",
+      "T2 Schedule 100 and 125",
+      "Certificate of incorporation, ",
+      "Business license",
+      "T4 summary of year",
+      "Request for Exception from English Language Requirement for LMIA Application",
+      "CPA Attestation Letter",
+      "Representative Submission Letter",] : [
+      "passport",
+      "drivers_license",
+      "photograph",
+      "immigration_status",
+      "lmia",
+      "job_offer_letter",
+      "provincial_nominee_letter",
+      "proof_of_funds",
+      "proof_of_employment",
+      "marriage_certificate",
+      "education_metric",
+      "education_higher_secondary",
+      "education_graduation",
+      "education_post_graduation",
+      "resume_or_cv",
+      "ielts",
+      "medical",
+      "police_clearance",
+      "refusal_letter",
+      "Employment Contract",
+      "Reference Letters",
+      "Client Info",
+      "Representative Submission Letter",
+      "Bank Statement",
+    ];
   //UseEfect for document
   useEffect(() => {
     GetDocument();
@@ -1053,25 +1067,25 @@ export default function DocumrentContainer(props) {
       selectedAdmin.includes(item.email)
     )
       ? allAdmin
-          .filter((item) => selectedAdmin.includes(item.email))
-          .map((admin) => admin.name)
-          .join(",")
+        .filter((item) => selectedAdmin.includes(item.email))
+        .map((admin) => admin.name)
+        .join(",")
       : "";
     const assignedUserId = allAdmin.filter((item) =>
       selectedAdmin.includes(item.email)
     )
       ? allAdmin
-          .filter((item) => selectedAdmin.includes(item.email))
-          .map((admin) => admin.admin_id)
-          .join(",")
+        .filter((item) => selectedAdmin.includes(item.email))
+        .map((admin) => admin.admin_id)
+        .join(",")
       : "";
     const assignedUserType = allAdmin.filter((item) =>
       selectedAdmin.includes(item.email)
     )
       ? allAdmin
-          .filter((item) => selectedAdmin.includes(item.email))
-          .map((admin) => admin.admin_type)
-          .join(",")
+        .filter((item) => selectedAdmin.includes(item.email))
+        .map((admin) => admin.admin_type)
+        .join(",")
       : "";
 
     // Send data to the API
@@ -1241,24 +1255,24 @@ export default function DocumrentContainer(props) {
       selectedAdminReply.includes(item.email)
     )
       ? allAdmin
-          .filter((item) => selectedAdminReply.includes(item.email))
-          .map((admin) => admin.name)
-          .join(",")
+        .filter((item) => selectedAdminReply.includes(item.email))
+        .map((admin) => admin.name)
+        .join(",")
       : "";
     const assignedUserId = allAdmin.filter((item) =>
       selectedAdminReply.includes(item.email)
     )
       ? allAdmin
-          .filter((item) => selectedAdminReply.includes(item.email))
-          .map((admin) => admin.admin_id)
-          .join(",")
+        .filter((item) => selectedAdminReply.includes(item.email))
+        .map((admin) => admin.admin_id)
+        .join(",")
       : "";
     const AdminType = //localStorage.getItem("admin_type");
       allAdmin.filter((item) => selectedAdminReply.includes(item.email))
         ? allAdmin
-            .filter((item) => selectedAdminReply.includes(item.email))
-            .map((admin) => admin.admin_type)
-            .join(",")
+          .filter((item) => selectedAdminReply.includes(item.email))
+          .map((admin) => admin.admin_type)
+          .join(",")
         : "";
     if (replyComment === "" && email === "") {
       toast.error("Comment or email cannot be empty!", {
@@ -1341,9 +1355,9 @@ export default function DocumrentContainer(props) {
           docAllTypes={docAllTypes}
           setDocTypeName={setDocTypeName}
           userId={props.employee_id}
-          // setNotificationDoc={setNotificationDoc}
-          // notificationApiCall={notificationApiCall}
-          // setNotificationApiCall={setNotificationApiCall}
+        // setNotificationDoc={setNotificationDoc}
+        // notificationApiCall={notificationApiCall}
+        // setNotificationApiCall={setNotificationApiCall}
         />
         {/* Document view */}
         <ViewDocument
@@ -1396,16 +1410,16 @@ export default function DocumrentContainer(props) {
         <div className="col-md-3 px-2 py-2 comments_and_replies">
           {/* Add Annotation form */}
           {!hide &&
-          docFile &&
-          docName &&
-          user_type === "admin" &&
-          selectedAnnotation && //condition for imm pdf
-          (docTypData.document_name &&
-          docTypData.document_name.toLowerCase().includes("imm")
-            ? replyCommentClick === undefined ||
+            docFile &&
+            docName &&
+            user_type === "admin" &&
+            selectedAnnotation && //condition for imm pdf
+            (docTypData.document_name &&
+              docTypData.document_name.toLowerCase().includes("imm")
+              ? replyCommentClick === undefined ||
               replyCommentClick === "" ||
               replyCommentClick === null
-            : addCommentFlag === true) ? (
+              : addCommentFlag === true) ? (
             <div
               style={
                 {

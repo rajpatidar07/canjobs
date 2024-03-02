@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import CustomButton from "../common/button";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AddAgent from "../forms/admin/addAgent";
-// import { GetFilter } from "../../api/api";
+import { GetAllChartData/*GetFilter*/ } from "../../api/api";
 // import AgentTable from "../common/agentTable";
 import AdminSidebar from "../admin/sidebar";
 import AdminHeader from "../admin/header";
 import PartnerPage from "./partner_page";
+import DataChart from "../common/DataChart";
+
 // import FilterJson from "../json/filterjson";
 function PartnerDashboard() {
   /*Show modal states */
@@ -15,6 +17,8 @@ function PartnerDashboard() {
   let [showAddEAgentModal, setShowAgentMOdal] = useState(false);
   /*data and id states */
   let [agentId, setAgentId] = useState();
+  const [chartData, setChartData] = useState([]);
+
   /*Filter and search state */
   //   const [experienceFilterValue, setExperienceFilterValue] = useState("");
   //   const [skillFilterValue, setSkillFilterValue] = useState(
@@ -27,6 +31,23 @@ function PartnerDashboard() {
   //   let [SkillList, setSkillList] = useState([]);
   //   let [EducationList, setEducationList] = useState([]);
   let user_type = localStorage.getItem("userType");
+
+  /*Function to Get Graph data */
+  const GetChartData = async () => {
+    try {
+      let res = await GetAllChartData()
+      if (res.status === 1) {
+        setChartData(res.data)
+      } else {
+        setChartData([])
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  useEffect(() => {
+    GetChartData()
+  }, [])
 
   /* Function to show the single data to update Employee*/
   const EditAgent = (e) => {
@@ -105,21 +126,39 @@ function PartnerDashboard() {
                 </div>
                 <small className="text-danger">{searcherror}</small>
               </div>
-              {/* <!-- Agent List Table- --> */}
-              <PartnerPage
-                // showEmployeeProfile={showEmployeeProfile}
-                // employeeDetails={employeeDetails}
-                search={search}
-                // experienceFilterValue={experienceFilterValue}
-                // educationFilterValue={educationFilterValue}
-                // skillFilterValue={skillFilterValue}
-                apiCall={apiCall}
-                setApiCall={setApiCall}
-                pageNo={pageNo}
-                setpageNo={setpageNo}
-                EditAgent={EditAgent}
-                user={user_type}
-              />
+              <div className="row">
+                <div
+                  id="table0"
+                  className={user_type === "admin" ? "d-none" : "col-md-6"}
+                >
+                  <div className="bg-white dashboard_card mb-7">
+                    <div className="d-flex justify-content-between p-5 align-items-center">
+                      <h3 className="font-size-5 px-3 m-0 ">Applicant's status</h3>
+                    </div>
+                    <div className="bg-white dashboard_card mb-7">
+                      <DataChart data={chartData} />
+                    </div>
+                  </div>
+                </div>
+                {/* <!-- Agent List Table- --> */}
+                <div className={user_type === "admin" ? "col-md-12" : "col-md-6"}>
+
+                  <PartnerPage
+                    // showEmployeeProfile={showEmployeeProfile}
+                    // employeeDetails={employeeDetails}
+                    search={search}
+                    // experienceFilterValue={experienceFilterValue}
+                    // educationFilterValue={educationFilterValue}
+                    // skillFilterValue={skillFilterValue}
+                    apiCall={apiCall}
+                    setApiCall={setApiCall}
+                    pageNo={pageNo}
+                    setpageNo={setpageNo}
+                    EditAgent={EditAgent}
+                    user={user_type}
+                  />
+                </div>
+              </div>
               {showAddEAgentModal ? (
                 <AddAgent
                   show={showAddEAgentModal}

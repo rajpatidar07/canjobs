@@ -120,14 +120,16 @@ export default function DocumentList({
                               setFilteredEmails([]);
                               setAnnotationMode(false);
                               setReplyCommentClick();
+
                               setDocFile(
                                 item.document_url +
                                 `?v=${new Date().getMinutes() +
                                 new Date().getSeconds()
                                 }`
                               );
-                              if (editName === true) {
+                              if (editName === true && docId !== item.id) {
                                 setEditName(false)
+                                
                               }
                             }}
                             className={
@@ -143,6 +145,7 @@ export default function DocumentList({
                                   onSubmit={(e) => {
                                     e.preventDefault();
                                     SaveBulkDocument();
+                                    setEditDocName("")
                                   }}
                                   className="reply_box position-relative d-flex w-100"
                                 >

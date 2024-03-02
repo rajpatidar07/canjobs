@@ -7,6 +7,7 @@ import useValidation from "../../common/useValidation";
 // import "froala-editor/css/froala_editor.pkgd.min.css";
 // import "froala-editor/css/froala_style.min.css";
 // import "froala-editor/js/plugins.pkgd.min.js";
+import { Editor } from '@tinymce/tinymce-react';
 import {
   AddEmployeeDetails,
   EmployeeDetails,
@@ -221,6 +222,10 @@ function PersonalDetails(props) {
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, onInputChange, errors, validate, setErrors } =
     useValidation(initialFormStateuser, validators);
+  const handleEditorChange = (content, editor) => {
+    setState({ ...state, description: content });
+  };
+
   // API CALL
   const UserData = async () => {
     try {
@@ -250,7 +255,10 @@ function PersonalDetails(props) {
       //   setAdminList(options);
       // }
       // setJsonList(json.data.data);
-      setAdminList(response.data)
+      setAdminList(response.data.filter(
+        (item) =>
+          item.admin_id !== localStorage.getItem("admin_id")
+      ))
     } catch (err) {
       console.log(err);
     }
@@ -579,7 +587,34 @@ function PersonalDetails(props) {
                     >
                       About:
                     </label>
-                    <textarea
+                    {/*<Editor
+                      apiKey='es4174gd5g7xb21tuhng2ypmxlqumljrd9lifkgqz05bt4g3'
+                      init={{
+                        selector: '#basic-conf',
+                        width: 600,
+                        height: 300,
+                        plugins: [
+                          'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak',
+                          'searchreplace', 'wordcount', 'visualblocks', 'code', 'fullscreen', 'insertdatetime', 'media',
+                          'table', 'emoticons', 'template', 'help'
+                        ],
+                        toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | ' +
+                          'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
+                          'forecolor backcolor emoticons | help',
+                        menu: {
+                          favs: { title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons' }
+                        },
+                        menubar: 'favs file edit view insert format tools table help',
+                        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
+                      }
+                      }
+
+                      initialValue={state.description}
+                      onEditorChange={handleEditorChange}
+                      name="description"
+                    />*/}
+
+                     <textarea
                       name="description"
                       value={state.description || ""}
                       onChange={onInputChange}
@@ -1133,12 +1168,12 @@ function PersonalDetails(props) {
                     )}
                   </div>
                   <div
-                    className={`form-group  d-flex 
+                    className={`form-group
                     ${user_type === "agent" || user_type === "user"
                         ? "d-none"
                         : props.user_of_page === "assignedUser" ?
-                          " col-md-12" :
-                          "col-md-4"}`
+                          "d-flex col-md-12" :
+                          "d-flex col-md-4"}`
                     }
                     style={{ position: "relative" }}
                   >

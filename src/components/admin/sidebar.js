@@ -322,10 +322,11 @@ const AdminSidebar = (props) => {
             </Link>
           </li>
           <li
-            className={
-              user_type === "admin" && props.heading === "Manage Partner"
+            className={user_type === "admin" ? `
+               ${props.heading === "Manage Partner"
                 ? "active"
-                : "d-none"
+                : ""}` :
+              "d-none"
             }
           >
             <Link
@@ -334,17 +335,9 @@ const AdminSidebar = (props) => {
                 "px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
               }
             >
-              {user_type === "agent" ? (
-                <>
-                  <FaRegUser className="sidebar_icon" />
-                  Partner Dashboard
-                </>
-              ) : (
-                <>
-                  <MdRealEstateAgent className="sidebar_icon" />
-                  Manage Partner
-                </>
-              )}
+
+              <MdRealEstateAgent className="sidebar_icon" />
+              Manage Partner
             </Link>
           </li>
           {/* <li className={user_type === "agent"?"d-none":props.heading === "Email" ? "active" : ""}>
@@ -416,7 +409,7 @@ const AdminSidebar = (props) => {
             className={
               user_type === "agent"
                 ? "d-none"
-                : props.heading === "Credentional"
+                : props.heading === "PNP"
                 ? "active"
                 : ""
             }
@@ -476,7 +469,7 @@ const AdminSidebar = (props) => {
             }
           >
             <Link
-              to="/businessvIsa
+              to="/businessvisa
               "
               className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
             >

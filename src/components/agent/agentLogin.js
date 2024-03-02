@@ -75,7 +75,7 @@ export default function AgentLogin() {
           });
           setLoading(false);
           setIsLoading(false);
-          navigate("/partner");
+          navigate("/partner_dashboard");
           window.location.reload();
         } else if (
           updatedTodo.message === "Invalid Credentials" ||

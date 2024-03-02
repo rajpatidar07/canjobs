@@ -76,7 +76,7 @@ export default function EmployeeTable(props) {
         props.skill || props.heading === "Dashboard" || status === "00" ? "" : status,
         props.job_id ? props.job_id : "",
         "",
-        props.ApplicantType,
+        props.ApplicantType ? props.ApplicantType : props.interestFilterValue,
         "",
         user_type === "agent" ? agentId : props.agentFilterValue,
         props.adminFilterValue,
@@ -123,7 +123,9 @@ export default function EmployeeTable(props) {
     props.showEmployeeProfile,
     status,
     props.heading,
-    props.agentFilterValue, props.adminFilterValue
+    props.agentFilterValue,
+    props.adminFilterValue,
+    props.interestFilterValue
   ]);
 
   /* Function to show the single data to update Employee*/

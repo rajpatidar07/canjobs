@@ -9,15 +9,14 @@ import "react-toastify/dist/ReactToastify.css";
 import UserProfile from "../user/profile";
 import { GetFilter, GetAgentJson,getallAdminData } from "../../api/api";
 import EmployeeTable from "../common/employeeTable";
-import FilterJson from "../json/filterjson";
 import CustomButton from "../common/button";
+import ApplicantsFilter from "../common/applicantsFilter";
+
 function SelfApplicat(props) {
   /*Show modal states */
   let [apiCall, setApiCall] = useState(false);
   let [showAddEmployeeModal, setShowEmployeeMOdal] = useState(false);
   let [showEmployeeProfile, setShowEmployeeProfile] = useState(false);
-  let [AgentList, setAgentList] = useState([]);
-  let [AdminList, setAdmintList] = useState([]);
   /*data and id states */
   let [employeeId, setemployeeId] = useState();
   /*Filter and search state */
@@ -28,46 +27,12 @@ function SelfApplicat(props) {
   const [agentFilterValue, setAgentFilterValue] = useState("");
   const [adminFilterValue, setAdminFilterValue] = useState("");
   const [educationFilterValue, setEducationFilterValue] = useState("");
+  const [interestFilterValue, setinterestFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
-  let [SkillList, setSkillList] = useState([]);
-  let [EducationList, setEducationList] = useState([]);
   let [pageNo, setpageNo] = useState(1);
+let user_type = localStorage.getItem("userType")
 
-  /*Function to get thejSon */
-  const JsonData = async () => {
-    try {
-      let Json = await GetFilter();
-      let agentjson = await GetAgentJson();
-      let adminJson =await getallAdminData()
-      if (Json.data.message === "No data found") {
-        setSkillList([]);
-        setEducationList([]);
-      } else {
-        setSkillList(Json.data.data.Skill);
-        setEducationList(Json.data.data.Education);
-      }
-      if (agentjson.length === 0) {
-        setAgentList([]);
-      } else {
-        setAgentList(agentjson);
-      }
-       if (adminJson.data.length === 0) {
-        setAdmintList([]);
-      } else {
-        setAdmintList(adminJson.data);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  /*Render method to get the json*/
-  useEffect(() => {
-    JsonData();
-    if ((search === "") === true) {
-      setSearchError("");
-    }
-  }, [skillFilterValue, educationFilterValue]);
   /* Function to show the single data to update Employee*/
   const employeeDetails = (e) => {
     setShowEmployeeProfile(true);
@@ -145,179 +110,28 @@ function SelfApplicat(props) {
                 </div>
                 {/* <!-- Employee Search and Filter- --> */}
                 <div className="row m-0 align-items-center">
-                  <div
-                    className={
-                      props.skill === null || props.skill === undefined
-                        ? "col p-1 form_group mb-3"
-                        : "col p-1 form_group"
-                    }
-                  >
-                    <p className="input_label">Search Employee:</p>
-                    <input
-                      required
-                      type="text"
-                      className="form-control"
-                      placeholder={"Search Employee"}
-                      value={search}
-                      name={"Employee_name"}
-                      onChange={(e) => onSearch(e)}
-                    />
-                  </div>
-                  <div
-                    className={
-                      props.skill === null || props.skill === undefined
-                        ? "col p-1 form_group mb-3"
-                        : "col p-1 form_group"
-                    }
-                  >
-                    <p className="input_label">Filter by Experience:</p>
-                    <div className="select_div">
-                      <select
-                        name="experience"
-                        value={experienceFilterValue}
-                        id="experience"
-                        onChange={(e) => {
-                          setExperienceFilterValue(e.target.value);
-                          setpageNo(1);
-                        }}
-                        className="text-capitalize form-control"
-                      >
-                        <option value={""}>Select Experience</option>
-                        {(FilterJson.experience || []).map((ex, i) => (
-                          <option value={ex} key={i}>
-                            {ex}
-                            {ex === "fresher" || ex === "Other" ? "" : "Years"}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  </div>
-                  <div
-                    className={
-                      props.skill === null || props.skill === undefined
-                        ? "col p-1 form_group mb-3"
-                        : "col p-1 form_group"
-                    }
-                  >
-                    <p className="input_label">Filter by Skill:</p>
-                    <div className="select_div">
-                      <select
-                        name="skill"
-                        value={skillFilterValue}
-                        id="Skill"
-                        onChange={(e) => {
-                          setSkillFilterValue(e.target.value);
-                          setpageNo(1);
-                        }}
-                        className="text-capitalize form-control"
-                      >
-                        <option value={""}>Select Skill</option>
-                        {(SkillList || []).map((data) => {
-                          return (
-                            <option value={data.value} key={data.id}>
-                              {data.value}
-                            </option>
-                          );
-                        })}
-                      </select>
-                    </div>
-                  </div>
-                  <div
-                    className={
-                      props.skill === null || props.skill === undefined
-                        ? "col p-1 form_group mb-3"
-                        : "col p-1 form_group"
-                    }
-                  >
-                    <p className="input_label">Filter by Education:</p>
-                    <div className="select_div">
-                      <select
-                        name="education"
-                        value={educationFilterValue}
-                        id="education"
-                        onChange={(e) => {
-                          setEducationFilterValue(e.target.value);
-                          setpageNo(1);
-                        }}
-                        className="text-capitalize form-control"
-                      >
-                        <option value="" data-display="Product Designer">
-                          Select Education
-                        </option>
-                        {(EducationList || []).map((data) => {
-                          return (
-                            <option value={data.value} key={data.id}>
-                              {data.value}
-                            </option>
-                          );
-                        })}
-                      </select>
-                    </div>
-                  </div>
-                  <div
-                    className={
-                      props.skill === null || props.skill === undefined
-                        ? "col p-1 form_group mb-3"
-                        : "col p-1 form_group"
-                    }
-                  >
-                    <p className="input_label">Filter by Agent:</p>
-                    <div className="select_div">
-                      <select
-                        name="agent"
-                        value={agentFilterValue}
-                        id="agent"
-                        onChange={(e) => {
-                          setAgentFilterValue(e.target.value);
-                          setpageNo(1);
-                        }}
-                        className="text-capitalize form-control"
-                      >
-                        <option value="" data-display="Product Designer">
-                          Select Agent
-                        </option>
-                        {(AgentList || []).map((data) => {
-                          return (
-                            <option value={data.id} key={data.id}>
-                              {data.name}
-                            </option>
-                          );
-                        })}
-                      </select>
-                    </div>
-                  </div>
-                  <div
-                    className={
-                      props.skill === null || props.skill === undefined
-                        ? "col p-1 form_group mb-3 d-none"
-                        : "col p-1 form_group d-none"
-                    }
-                  >
-                    <p className="input_label">Filter by Admin:</p>
-                    <div className="select_div">
-                      <select
-                        name="admin"
-                        value={adminFilterValue}
-                        id="admin"
-                        onChange={(e) => {
-                          setAdminFilterValue(e.target.value);
-                          setpageNo(1);
-                        }}
-                        className="text-capitalize form-control"
-                      >
-                        <option value="" data-display="Product Designer">
-                          Select Admin
-                        </option>
-                        {(AdminList || []).map((data) => {
-                          return (
-                            <option value={data.admin_id} key={data.admin_id}>
-                              {data.name}
-                            </option>
-                          );
-                        })}
-                      </select>
-                    </div>
-                  </div>
+                 {/* Employees filter's */}
+                 <ApplicantsFilter
+                    user_type={user_type}
+                    search={search}
+                    onSearch={onSearch}
+                    experienceFilterValue={experienceFilterValue}
+                    setExperienceFilterValue={setExperienceFilterValue}
+                    skillFilterValue={skillFilterValue}
+                    setSkillFilterValue={setSkillFilterValue}
+                    educationFilterValue={educationFilterValue}
+                    setEducationFilterValue={setEducationFilterValue}
+                    setpageNo={setpageNo}
+                    agentFilterValue={agentFilterValue}
+                    setAgentFilterValue={setAgentFilterValue}
+                    adminFilterValue={adminFilterValue}
+                    setAdminFilterValue={setAdminFilterValue}
+                    interestFilterValue={interestFilterValue}
+                    setinterestFilterValue={setinterestFilterValue}
+                    setSearchError={setSearchError}
+                    skill={props.skill}
+                    pageName={"employee"}
+                  />
                   {props.skill === null ||
                   props.skill === undefined ||
                   Object.keys(props.skill).length === 0 ? (
@@ -352,6 +166,7 @@ function SelfApplicat(props) {
                 setpageNo={setpageNo}
                 agentFilterValue={agentFilterValue}
                 adminFilterValue={adminFilterValue}
+                interestFilterValue={interestFilterValue}
               />
             </div>
           </div>
