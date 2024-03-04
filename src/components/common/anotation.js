@@ -481,97 +481,138 @@
 
 // export default Annotation;
 //latest
-import React, { useState } from "react";
+// import React, { useState } from "react";
+
+// const Annotation = () => {
+//   const [text, setText] = useState("");
+//   const [emails, setEmails] = useState([]);
+//   const [comments, setComments] = useState([]);
+//   const [selectedEmailIndex, setSelectedEmailIndex] = useState(null);
+
+//   const handleInputChange = (e) => {
+//     setText(e.target.value);
+//     const words = e.target.value.split(/\s/);
+//     const lastWord = words[words.length - 1];
+//     if (lastWord.includes("@")) {
+//       const email = lastWord.slice(1); // Exclude "@"
+//       // You can fetch the list of emails based on the entered characters
+//       // For simplicity, I'm just providing a static list of emails
+//       setEmails([
+//         "example1@example.com",
+//         "example2@example.com",
+//         "example3@example.com",
+//       ]);
+//     } else {
+//       setEmails([]);
+//     }
+//   };
+
+//   const handleEmailSelect = (email) => {
+//     setText(text.replace(/@\S*$/, `@${email} `));
+//     setSelectedEmailIndex(null);
+//   };
+
+//   const handleCommentChange = (e, index) => {
+//     const newComments = [...comments];
+//     newComments[index] = e.target.value;
+//     setComments(newComments);
+//   };
+
+//   const handleAddComment = () => {
+//     setComments([...comments, ""]);
+//   };
+
+//   const handleAnnotationSubmit = () => {
+//     // Implement logic to handle annotation submission
+//     const newAnnotation = {
+//       emails,
+//       comments,
+//     };
+//     console.log(newAnnotation);
+//     // Reset states
+//     setText("");
+//     setEmails([]);
+//     setComments([]);
+//   };
+
+//   const renderEmailList = () => {
+//     return (
+//       <ul className="email-list">
+//         {emails.map((email, index) => (
+//           <li key={index} onClick={() => handleEmailSelect(email)}>
+//             {email}
+//           </li>
+//         ))}
+//       </ul>
+//     );
+//   };
+
+//   const renderComments = () => {
+//     return comments.map((comment, index) => (
+//       <div key={index}>
+//         <input
+//           value={comment || ""}
+//           onChange={(e) => handleCommentChange(e, index)}
+//           placeholder="Add comment..."
+//         />
+//       </div>
+//     ));
+//   };
+
+//   return (
+//     <div>
+//       <textarea
+//         value={text}
+//         onChange={handleInputChange}
+//         placeholder="Add annotation here..."
+//       />
+//       {emails.length > 0 && renderEmailList()}
+//       {renderComments()}
+//       <button onClick={handleAddComment}>Add Comment</button>
+//       <button onClick={handleAnnotationSubmit}>Submit Annotation</button>
+//     </div>
+//   );
+// };
+
+// export default Annotation;
+
+import React, { useState } from 'react';
+import { EditorState, convertToRaw } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
+import { stateToHTML } from 'draft-js-export-html';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 const Annotation = () => {
-  const [text, setText] = useState("");
-  const [emails, setEmails] = useState([]);
-  const [comments, setComments] = useState([]);
-  const [selectedEmailIndex, setSelectedEmailIndex] = useState(null);
+  const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
 
-  const handleInputChange = (e) => {
-    setText(e.target.value);
-    const words = e.target.value.split(/\s/);
-    const lastWord = words[words.length - 1];
-    if (lastWord.includes("@")) {
-      const email = lastWord.slice(1); // Exclude "@"
-      // You can fetch the list of emails based on the entered characters
-      // For simplicity, I'm just providing a static list of emails
-      setEmails([
-        "example1@example.com",
-        "example2@example.com",
-        "example3@example.com",
-      ]);
-    } else {
-      setEmails([]);
-    }
+  const handleEditorChange = (newEditorState) => {
+    setEditorState(newEditorState);
   };
 
-  const handleEmailSelect = (email) => {
-    setText(text.replace(/@\S*$/, `@${email} `));
-    setSelectedEmailIndex(null);
+  const handleClearEditor = () => {
+    handleEditorChange(EditorState.createEmpty());
   };
 
-  const handleCommentChange = (e, index) => {
-    const newComments = [...comments];
-    newComments[index] = e.target.value;
-    setComments(newComments);
-  };
-
-  const handleAddComment = () => {
-    setComments([...comments, ""]);
-  };
-
-  const handleAnnotationSubmit = () => {
-    // Implement logic to handle annotation submission
-    const newAnnotation = {
-      emails,
-      comments,
-    };
-    console.log(newAnnotation);
-    // Reset states
-    setText("");
-    setEmails([]);
-    setComments([]);
-  };
-
-  const renderEmailList = () => {
-    return (
-      <ul className="email-list">
-        {emails.map((email, index) => (
-          <li key={index} onClick={() => handleEmailSelect(email)}>
-            {email}
-          </li>
-        ))}
-      </ul>
-    );
-  };
-
-  const renderComments = () => {
-    return comments.map((comment, index) => (
-      <div key={index}>
-        <input
-          value={comment || ""}
-          onChange={(e) => handleCommentChange(e, index)}
-          placeholder="Add comment..."
-        />
-      </div>
-    ));
+  const getContentAsHTML = () => {
+    const contentState = editorState.getCurrentContent();
+    return stateToHTML(contentState);
   };
 
   return (
-    <div>
-      <textarea
-        value={text}
-        onChange={handleInputChange}
-        placeholder="Add annotation here..."
-      />
-      {emails.length > 0 && renderEmailList()}
-      {renderComments()}
-      <button onClick={handleAddComment}>Add Comment</button>
-      <button onClick={handleAnnotationSubmit}>Submit Annotation</button>
+    <div style={{ margin: '20px' }}>
+      <div style={{ border: '1px solid #ccc', minHeight: '200px', padding: '10px' }}>
+        <Editor
+          editorState={editorState}
+          onEditorStateChange={handleEditorChange}
+        />
+      </div>
+      <div style={{ marginTop: '10px' }}>
+        <button onClick={handleClearEditor}>Clear Editor</button>
+      </div>
+      <div style={{ marginTop: '10px' }} dangerouslySetInnerHTML={{ __html: getContentAsHTML() }} />
     </div>
   );
 };
 
 export default Annotation;
+  

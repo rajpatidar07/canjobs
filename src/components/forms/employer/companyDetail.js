@@ -16,6 +16,7 @@ import {
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Permissions from "../../json/emailPermisionJson";
+import TextEditor from "../../common/TextEditor";
 function CompanyDetails(props) {
   const [loading, setLoading] = useState(false);
   const [imgError, setImgError] = useState("");
@@ -61,19 +62,20 @@ function CompanyDetails(props) {
     franchise: "",
     logo: "",
     permission: props.employerId === "0" ? JSON.stringify(Permissions) : null,
+    company_size_partTime:""
   };
   // VALIDATION CONDITIONS
   const validators = {
     company_name: [
       (value) =>
         value === "" ||
-        value === null ||
-        value === undefined ||
-        value.trim() === ""
+          value === null ||
+          value === undefined ||
+          value.trim() === ""
           ? "Client's name is required"
           : value.length < 2
-          ? "Client's Name should have 2 or more letters"
-          : // : /[^A-Za-z 0-9]/g.test(value)
+            ? "Client's Name should have 2 or more letters"
+            : // : /[^A-Za-z 0-9]/g.test(value)
             // ? "Cannot use special character "
             "",
     ],
@@ -86,26 +88,26 @@ function CompanyDetails(props) {
     company_size: [
       (value) =>
         value === "" ||
-        value === null ||
-        value === undefined ||
-        value.trim() === ""
+          value === null ||
+          value === undefined ||
+          value.trim() === ""
           ? "Client's team Size is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : value === "0" || value === 0
-          ? "Client's team Size can not be zero"
-          : "",
+            ? "Cannot use special character "
+            : value === "0" || value === 0
+              ? "Client's team Size can not be zero"
+              : "",
     ],
     vacancy_for_post: [
       (value) =>
         value === "" ||
-        value === null ||
-        value === undefined ||
-        value.trim() === ""
+          value === null ||
+          value === undefined ||
+          value.trim() === ""
           ? "Vacancy is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : "",
+            ? "Cannot use special character "
+            : "",
     ],
 
     // franchise: [
@@ -226,9 +228,9 @@ function CompanyDetails(props) {
   /*Industry Json for not having same data */
   const Industry = Json.Industry
     ? Json.Industry.filter(
-        (thing, index, self) =>
-          index === self.findIndex((t) => t.value === thing.value)
-      )
+      (thing, index, self) =>
+        index === self.findIndex((t) => t.value === thing.value)
+    )
     : [];
   /*Corporation Json for not having same data */
   // const Corporation = Json.Corporation
@@ -484,7 +486,7 @@ function CompanyDetails(props) {
                   htmlFor="company_size"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  No. of working official's
+                  No. of working official's(Full time)
                   <span className="text-danger">*</span>:
                 </label>
                 <div className="position-relative">
@@ -499,8 +501,42 @@ function CompanyDetails(props) {
                         ? "form-control border border-danger"
                         : "form-control"
                     }
-                    placeholder="No. of working official's"
+                    placeholder="No. of working official's(full time)"
                     id="company_size"
+                    min={0}
+                  />
+                  {/*----ERROR MESSAGE FOR COMPANY SIZE----*/}
+                  {errors.company_size && (
+                    <span
+                      key={errors.company_size}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.company_size}
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="form-group col-md-6">
+                <label
+                  htmlFor="company_size_partTime"
+                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                >
+                  No. of working official's(Part time):
+                </label>
+                <div className="position-relative">
+                  <input
+                    maxLength={60}
+                    name="company_size_partTime"
+                    value={state.company_size_partTime || ""}
+                    onChange={onInputChange}
+                    type="number"
+                    className={
+                      errors.company_size_partTime
+                        ? "form-control border border-danger"
+                        : "form-control"
+                    }
+                    placeholder="No. of working official's(Part time)"
+                    id="company_size_partTime"
                     min={0}
                   />
                   {/*----ERROR MESSAGE FOR COMPANY SIZE----*/}
@@ -609,11 +645,11 @@ function CompanyDetails(props) {
                 <div>
                   <div
                     sm="12"
-                    // className={
-                    //   errors.about
-                    //     ? "border border-danger rounded overflow-hidden"
-                    //     : "border rounded overflow-hidden"
-                    // }
+                  // className={
+                  //   errors.about
+                  //     ? "border border-danger rounded overflow-hidden"
+                  //     : "border rounded overflow-hidden"
+                  // }
                   >
                     {/* <CKEditor
                       type={"classic"}
@@ -624,7 +660,7 @@ function CompanyDetails(props) {
                       onChange={onInputChange}
                       initData="About Company"
                     /> */}
-                    <textarea
+                    {/* <textarea
                       name="about"
                       value={state.about || ""}
                       onChange={onInputChange}
@@ -635,7 +671,12 @@ function CompanyDetails(props) {
                       }
                       id="about"
                       placeholder="Client's Description"
-                    ></textarea>
+                    ></textarea> */}
+                    <TextEditor
+                      setState={setState}
+                      state={state}
+                      page={"companyDetails"}
+                    />
                     {/* <FroalaEditor
                       model={state.about}
                       onModelChange={(newContent) =>

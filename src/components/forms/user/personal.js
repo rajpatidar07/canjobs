@@ -7,7 +7,7 @@ import useValidation from "../../common/useValidation";
 // import "froala-editor/css/froala_editor.pkgd.min.css";
 // import "froala-editor/css/froala_style.min.css";
 // import "froala-editor/js/plugins.pkgd.min.js";
-import { Editor } from '@tinymce/tinymce-react';
+
 import {
   AddEmployeeDetails,
   EmployeeDetails,
@@ -24,6 +24,7 @@ import FilterJson from "../../json/filterjson";
 // import { Link } from "react-router-dom";
 import AddNewAgent from "../admin/add_agent";
 import Permissions from "../../json/emailPermisionJson";
+import TextEditor from "../../common/TextEditor";
 
 function PersonalDetails(props) {
   let encoded;
@@ -222,9 +223,9 @@ function PersonalDetails(props) {
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, onInputChange, errors, validate, setErrors } =
     useValidation(initialFormStateuser, validators);
-  const handleEditorChange = (content, editor) => {
-    setState({ ...state, description: content });
-  };
+  // const handleEditorChange = (content, editor) => {
+  //   setState({ ...state, description: content });
+  // };
 
   // API CALL
   const UserData = async () => {
@@ -401,6 +402,7 @@ function PersonalDetails(props) {
     let base64Name = encoded.base64;
     setState({ ...state, profile_photo: base64Name });
   };
+
   return (
     <>
       <Modal
@@ -446,7 +448,8 @@ function PersonalDetails(props) {
                   </h5>
                 )}
                 {/* FIRST LINE */}
-                <div className={`form-group mx-auto text-center ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
+                <div className={`form-group mx-auto text-center ${props.user_of_page === "assignedUser" || props.user_of_page === "agentAssigned" ?
+                  "d-none" : ""}`}>
                   <div className="mb-4 position-relative">
                     <input
                       type={"file"}
@@ -483,7 +486,7 @@ function PersonalDetails(props) {
                     type="hidden"
                     id="employee_id"
                   />
-                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.user_of_page === "agentAssigned" ? "d-none" : ""}`}>
                     <label
                       htmlFor="name"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -514,7 +517,7 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
-                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.user_of_page === "agentAssigned" ? "d-none" : ""}`}>
                     <label
                       htmlFor="email"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -546,7 +549,7 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
-                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.user_of_page === "agentAssigned" ? "d-none" : ""}`}>
                     <label
                       htmlFor="contact_no"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -579,7 +582,7 @@ function PersonalDetails(props) {
                     )}
                   </div>
 
-                  <div className={`form-group col-md-12 ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
+                  <div className={`form-group col-md-12 ${props.user_of_page === "assignedUser" || props.user_of_page === "agentAssigned" ? "d-none" : ""}`}>
                     <label
                       htmlFor="description"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -587,34 +590,13 @@ function PersonalDetails(props) {
                     >
                       About:
                     </label>
-                    {/*<Editor
-                      apiKey='es4174gd5g7xb21tuhng2ypmxlqumljrd9lifkgqz05bt4g3'
-                      init={{
-                        selector: '#basic-conf',
-                        width: 600,
-                        height: 300,
-                        plugins: [
-                          'advlist', 'autolink', 'link', 'image', 'lists', 'charmap', 'preview', 'anchor', 'pagebreak',
-                          'searchreplace', 'wordcount', 'visualblocks', 'code', 'fullscreen', 'insertdatetime', 'media',
-                          'table', 'emoticons', 'template', 'help'
-                        ],
-                        toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | ' +
-                          'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
-                          'forecolor backcolor emoticons | help',
-                        menu: {
-                          favs: { title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons' }
-                        },
-                        menubar: 'favs file edit view insert format tools table help',
-                        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:16px }'
-                      }
-                      }
+                    <TextEditor
+                      state={state}
+                      setState={setState}
+                      page={"description"}
+                    />
 
-                      initialValue={state.description}
-                      onEditorChange={handleEditorChange}
-                      name="description"
-                    />*/}
-
-                     <textarea
+                    {/* <textarea
                       name="description"
                       value={state.description || ""}
                       onChange={onInputChange}
@@ -625,7 +607,7 @@ function PersonalDetails(props) {
                       }
                       id="description"
                       placeholder="Description"
-                    ></textarea>
+                    ></textarea> */}
                     {/* <FroalaEditor
                       model={state.description}
                       onModelChange={(newContent) =>
@@ -649,7 +631,7 @@ function PersonalDetails(props) {
                   </div>
 
                   {/* SECOND LINE */}
-                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.user_of_page === "agentAssigned" ? "d-none" : ""}`}>
                     <label
                       htmlFor="date_of_birth"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -716,7 +698,7 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div> */}
-                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.user_of_page === "agentAssigned" ? "d-none" : ""}`}>
                     <label
                       htmlFor="gender"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -749,7 +731,7 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
-                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.user_of_page === "agentAssigned" ? "d-none" : ""}`}>
                     <label
                       htmlFor="marital_status"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -816,7 +798,7 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div> */}
-                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.user_of_page === "agentAssigned" ? "d-none" : ""}`}>
                     <label
                       htmlFor="current_location"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -847,7 +829,7 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
-                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.user_of_page === "agentAssigned" ? "d-none" : ""}`}>
                     <label
                       htmlFor="currently_located_country"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -887,7 +869,7 @@ function PersonalDetails(props) {
                   </div>
 
                   {/* FOURTH LINE */}
-                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.user_of_page === "agentAssigned" ? "d-none" : ""}`}>
                     <label
                       htmlFor="language"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -958,7 +940,7 @@ function PersonalDetails(props) {
                   </span>
                 )}
               </div> */}
-                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.user_of_page === "agentAssigned" ? "d-none" : ""}`}>
                     <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
                       Applicant's Type : <span className="text-danger">*</span>
                     </label>
@@ -993,7 +975,7 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
-                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.user_of_page === "agentAssigned" ? "d-none" : ""}`}>
                     <label
                       htmlFor="experience"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -1029,7 +1011,7 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
-                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.user_of_page === "agentAssigned" ? "d-none" : ""}`}>
                     <label
                       htmlFor="work_permit_canada"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -1110,10 +1092,10 @@ function PersonalDetails(props) {
                   </div>
                   <div
                     className={
-                      user_type === "agent" || user_type === "user" || props.user_of_page === "assignedUser"
-                        ? "d-none"
-                        : "form-group col-md-4 d-flex"
-                    }
+                      `form-group col-md-4 d-flex ${user_type === "agent" || user_type === "user" || props.user_of_page === "assignedUser"
+                        ? " d-none"
+                        : props.user_of_page === "agentAssigned" ? " col-md-12" : " col-md-4 "}
+                    `}
                     style={{ position: "relative" }}
                   >
                     <label
@@ -1169,7 +1151,7 @@ function PersonalDetails(props) {
                   </div>
                   <div
                     className={`form-group
-                    ${user_type === "agent" || user_type === "user"
+                    ${user_type === "agent" || user_type === "user" || props.user_of_page === "agentAssigned"
                         ? "d-none"
                         : props.user_of_page === "assignedUser" ?
                           "d-flex col-md-12" :
@@ -1233,7 +1215,7 @@ function PersonalDetails(props) {
                     )}
                   </div>
 
-                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.user_of_page === "agentAssigned" ? "d-none" : ""}`}>
                     <label
                       htmlFor="resume"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -1264,7 +1246,7 @@ function PersonalDetails(props) {
                     )}
                   </div>
                   {user_type === "admin" ? (
-                    <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" ? "d-none" : ""}`}>
+                    <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.user_of_page === "agentAssigned" ? "d-none" : ""}`}>
                       <label
                         htmlFor="fetured"
                         className="font-size-4 text-black-2 font-weight-semibold line-height-reset"

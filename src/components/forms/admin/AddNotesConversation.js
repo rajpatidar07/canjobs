@@ -1,6 +1,7 @@
 import React from "react";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import moment from "moment";
+import TextEditor from "../../common/TextEditor";
 export default function AddNotesConversation({
   handleMessageSubmit,
   state,
@@ -9,6 +10,7 @@ export default function AddNotesConversation({
   handleBulkFileChange,
   handleRemoveFile,
   fileNames,
+  setState
 }) {
   return (
     <div>
@@ -16,21 +18,21 @@ export default function AddNotesConversation({
         {fileNames.length === 0
           ? null
           : fileNames.map((fileName) => (
-              <div key={fileName} className="mail-file-attachment">
-                <p>{fileName}</p>
-                <button
-                  type="button"
-                  className="mail-remove-file"
-                  onClick={() => handleRemoveFile(fileName)}
-                >
-                  X
-                </button>
-              </div>
-            ))}
+            <div key={fileName} className="mail-file-attachment">
+              <p>{fileName}</p>
+              <button
+                type="button"
+                className="mail-remove-file"
+                onClick={() => handleRemoveFile(fileName)}
+              >
+                X
+              </button>
+            </div>
+          ))}
       </div>
       <form onSubmit={handleMessageSubmit} className="chat-input px-3 py-3">
         <div className="text_msg_box w-100">
-          <textarea
+          {/* <textarea
             placeholder="Type your message..."
             value={state.message}
             onChange={onInputChange}
@@ -39,7 +41,11 @@ export default function AddNotesConversation({
               errors.message && "border border-danger"
             }`}
             disabled={state.DocUrl}
-          ></textarea>
+          ></textarea> */}
+          <TextEditor
+            setState={setState}
+            state={state}
+            page={"addAgentConversation"} />
         </div>
 
         <div className="text_msg_control">
@@ -48,9 +54,8 @@ export default function AddNotesConversation({
             placeholder="Subject"
             value={state.subject}
             onChange={onInputChange}
-            className={`message_input d-none ${
-              errors.Subject && "border border-danger"
-            }`}
+            className={`message_input d-none ${errors.Subject && "border border-danger"
+              }`}
             name="subject"
             title="Add Subject in Message"
           />
@@ -61,9 +66,8 @@ export default function AddNotesConversation({
             onChange={onInputChange}
             min={moment().format("DD-MM-YYYY")}
             onKeyDownCapture={(e) => e.preventDefault()}
-            className={`message_input d-none coustam_datepicker ${
-              errors.nxtfollowupdate && "border border-danger"
-            }`}
+            className={`message_input d-none coustam_datepicker ${errors.nxtfollowupdate && "border border-danger"
+              }`}
             title="Next Followup Date"
             name="nxtfollowupdate"
           />

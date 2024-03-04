@@ -5,6 +5,7 @@ import { getSingleFollowup, AddFollowup } from "../../../api/api";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
+import TextEditor from "../../common/TextEditor";
 
 function Addfollowup(props) {
   let [response, setResponseData] = useState([]);
@@ -75,16 +76,16 @@ function Addfollowup(props) {
         value === "" || value === null || value.trim() === ""
           ? "subject required"
           : value.length < 2
-          ? "subjectz should have 2 or more letters."
-          : "",
+            ? "subjectz should have 2 or more letters."
+            : "",
     ],
     remark: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Discription required"
           : value.length < 2
-          ? "Discription should have 2 or more letters."
-          : "",
+            ? "Discription should have 2 or more letters."
+            : "",
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
@@ -145,9 +146,8 @@ function Addfollowup(props) {
         <div className="bg-white rounded h-100vh px-11 py-7 overflow-y-hidden">
           <div className="row">
             <div
-              className={`activity_container pr-10 ${
-                user_type === "admin" ? "col-md-8 border-right" : "col-nd-12"
-              }`}
+              className={`activity_container pr-10 ${user_type === "admin" ? "col-md-8 border-right" : "col-nd-12"
+                }`}
             >
               {response.length === 0 ? (
                 <div className="single_note mb-5">
@@ -280,7 +280,11 @@ function Addfollowup(props) {
                           : "border rounded overflow-hidden"
                       }
                     >
-                      <textarea
+                      <TextEditor
+                        setState={setState}
+                        state={state}
+                        page={"FollowUp"} />
+                      {/* <textarea
                         name="remark"
                         value={state.remark}
                         onChange={onInputChange}
@@ -293,7 +297,7 @@ function Addfollowup(props) {
                         }
                         id="remark"
                         placeholder="Add Note here"
-                      ></textarea>
+                      ></textarea> */}
                     </div>
                     {/*----ERROR MESSAGE FOR DESRIPTION----*/}
                     {errors.remark && (
@@ -481,8 +485,8 @@ function Addfollowup(props) {
                                 <img
                                   src={
                                     res.employee_profile_image === "" ||
-                                    res.employee_profile_image === null ||
-                                    res.employee_profile_image === undefined
+                                      res.employee_profile_image === null ||
+                                      res.employee_profile_image === undefined
                                       ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                       : res.employee_profile_image
                                   }
@@ -493,9 +497,9 @@ function Addfollowup(props) {
                             </div>
                             <div className=" mb-0">
                               {res.name === "" ||
-                              res.name === "null" ||
-                              res.name === null ||
-                              res.name === undefined ? (
+                                res.name === "null" ||
+                                res.name === null ||
+                                res.name === undefined ? (
                                 <p className="font-size-3 mb-0">N/A</p>
                               ) : (
                                 <p
@@ -511,9 +515,9 @@ function Addfollowup(props) {
                       </td>
                       <td>
                         {res.subject === "" ||
-                        res.subject === "null" ||
-                        res.subject === null ||
-                        res.subject === undefined ? (
+                          res.subject === "null" ||
+                          res.subject === null ||
+                          res.subject === undefined ? (
                           <p className="font-size-3 mb-0">N/A</p>
                         ) : (
                           <p
@@ -526,9 +530,9 @@ function Addfollowup(props) {
                       </td>
                       <td>
                         {res.remark === "" ||
-                        res.remark === "null" ||
-                        res.remark === null ||
-                        res.remark === undefined ? (
+                          res.remark === "null" ||
+                          res.remark === null ||
+                          res.remark === undefined ? (
                           <p className="font-size-3 mb-0">N/A</p>
                         ) : (
                           <p className="m-0 text-black-2 font-weight-bold text-capitalize  text-truncate">
@@ -538,9 +542,9 @@ function Addfollowup(props) {
                       </td>
                       <td>
                         {res.created_at === "" ||
-                        res.created_at === "null" ||
-                        res.created_at === null ||
-                        res.created_at === undefined ? (
+                          res.created_at === "null" ||
+                          res.created_at === null ||
+                          res.created_at === undefined ? (
                           <p className="font-size-3 mb-0">N/A</p>
                         ) : (
                           <small>{moment(res.created_at).calendar()}</small>
@@ -548,9 +552,9 @@ function Addfollowup(props) {
                       </td>
                       <td>
                         {res.next_followup_date === "" ||
-                        res.next_followup_date === "null" ||
-                        res.next_followup_date === null ||
-                        res.next_followup_date === undefined ? (
+                          res.next_followup_date === "null" ||
+                          res.next_followup_date === null ||
+                          res.next_followup_date === undefined ? (
                           <p className="font-size-3 mb-0">N/A</p>
                         ) : (
                           <small>
@@ -560,9 +564,9 @@ function Addfollowup(props) {
                       </td>
                       <td>
                         {res.status === "" ||
-                        res.status === "null" ||
-                        res.status === null ||
-                        res.status === undefined ? (
+                          res.status === "null" ||
+                          res.status === null ||
+                          res.status === undefined ? (
                           <p className="font-size-3 mb-0"></p>
                         ) : (
                           <small>{res.status === "1" ? "Private" : ""}</small>

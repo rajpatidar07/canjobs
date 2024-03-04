@@ -3,6 +3,7 @@ import useValidation from "../../common/useValidation";
 import { SendEmail } from "../../../api/api";
 import { toast } from "react-toastify";
 import { AiOutlineCloudUpload } from "react-icons/ai";
+import TextEditor from "../../common/TextEditor";
 function SendMailForm({ email, setApiCall }) {
   const [loading, setLoading] = useState(false);
   const [fileBase, setFileBase] = useState("");
@@ -27,12 +28,12 @@ function SendMailForm({ email, setApiCall }) {
         value === "" || value.trim() === ""
           ? "Subject is required"
           : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Subject can not have a number."
-          : value.length < 2
-          ? "Subject should have 2 or more letters"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : "",
+            ? "Subject can not have a number."
+            : value.length < 2
+              ? "Subject should have 2 or more letters"
+              : /[^A-Za-z 0-9]/g.test(value)
+                ? "Cannot use special character "
+                : "",
     ],
     description: [
       (value) =>
@@ -41,8 +42,8 @@ function SendMailForm({ email, setApiCall }) {
           : // : /[-]?\d+(\.\d+)?/.test(value)
           // ? "Description can not have a number."
           value.length < 5
-          ? "Description should have 2 or more letters"
-          : // : /[^A-Za-z 0-9]/g.test(value)
+            ? "Description should have 2 or more letters"
+            : // : /[^A-Za-z 0-9]/g.test(value)
             // ? "Cannot use special character "
             "",
     ],
@@ -179,9 +180,8 @@ function SendMailForm({ email, setApiCall }) {
         const base64Name = encoded.base64;
 
         // Construct file object with base64 data
-        const DocFile = `data:/${base64Name.split(";")[0].split("/")[1]};${
-          base64Name.split(";")[1]
-        }`;
+        const DocFile = `data:/${base64Name.split(";")[0].split("/")[1]};${base64Name.split(";")[1]
+          }`;
 
         // Use DocRealName as the key for DocFile
         DocRealName = file.name;
@@ -304,7 +304,7 @@ function SendMailForm({ email, setApiCall }) {
                     : "border rounded overflow-hidden"
                 }
               >
-                <textarea
+                {/* <textarea
                   name="description"
                   value={state.description}
                   onChange={onInputChange}
@@ -317,7 +317,12 @@ function SendMailForm({ email, setApiCall }) {
                   }
                   id="description"
                   placeholder="Add Note here"
-                ></textarea>
+                ></textarea> */}
+                <TextEditor
+                  state={state}
+                  setState={setState}
+                  page={"description"}// has same variable as description
+                />
               </div>
               {/*----ERROR MESSAGE FOR DESRIPTION----*/}
               {errors.description && (

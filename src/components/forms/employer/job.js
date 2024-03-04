@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { GetJob, AddJob, getAllEmployer, GetFilter } from "../../../api/api";
 import { useLocation } from "react-router-dom";
 import states from "../../json/states";
+import TextEditor from "../../common/TextEditor";
 // import FroalaEditor from "react-froala-wysiwyg";
 // import "froala-editor/css/froala_editor.pkgd.min.css";
 // import "froala-editor/css/froala_style.min.css";
@@ -21,8 +22,8 @@ function AddJobModal(props) {
     props.jobdata === "0"
       ? ""
       : props.company_id
-      ? props.company_id
-      : localStorage.getItem("company_id");
+        ? props.company_id
+        : localStorage.getItem("company_id");
   let location = useLocation();
   const user_type = localStorage.getItem("userType");
   let [Json, setJson] = useState([]);
@@ -102,10 +103,10 @@ function AddJobModal(props) {
         value === "" || value.trim() === ""
           ? "Job Title is required"
           : value.length < 2
-          ? "Job Title should have 2 or more letters"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Job Title can not have a number."
-          : "",
+            ? "Job Title should have 2 or more letters"
+            : /[-]?\d+(\.\d+)?/.test(value)
+              ? "Job Title can not have a number."
+              : "",
     ],
     experience_required: [
       (value) => (value === "" ? "Experienceis required" : null),
@@ -119,12 +120,12 @@ function AddJobModal(props) {
         value === "" || value.trim() === ""
           ? "Apply link is required"
           : !/(^|\s)((https?:\/\/)?[\w-]+(\.[\w-]+)+\.?(:\d+)?(\/\S*)?)|([^\s@]+@[^\s@]+\.[^\s@]+)/gi.test(
-              value
-            )
-          ? "Write the correct link or email"
-          : value.length < 3
-          ? "Apply link should have 3 or more letters"
-          : null,
+            value
+          )
+            ? "Write the correct link or email"
+            : value.length < 3
+              ? "Apply link should have 3 or more letters"
+              : null,
     ],
     job_type: [
       (value) =>
@@ -321,8 +322,8 @@ function AddJobModal(props) {
                 )}
               </div>
               {user_type !== "admin" ||
-              location.pathname === "/adminclient" ||
-              location.pathname === "/dashboard" ? null : (
+                location.pathname === "/adminclient" ||
+                location.pathname === "/dashboard" ? null : (
                 <div className="form-group col-md-4 px-0 pr-3">
                   <label
                     htmlFor="job_category_id"
@@ -674,11 +675,11 @@ function AddJobModal(props) {
                 <div>
                   <div
                     sm="12"
-                    // className={
-                    //   errors.job_description
-                    //     ? "border border-danger rounded overflow-hidden"
-                    //     : "border rounded overflow-hidden"
-                    // }
+                  // className={
+                  //   errors.job_description
+                  //     ? "border border-danger rounded overflow-hidden"
+                  //     : "border rounded overflow-hidden"
+                  // }
                   >
                     {/* <CKEditor
                       type={"classic"}
@@ -690,7 +691,7 @@ function AddJobModal(props) {
                    onChange={onInputChange}
                       initData="Job Description"
                     /> */}
-                    <textarea
+                    {/* <textarea
                       maxLength={5000}
                       placeholder="Job Description"
                       name="job_description"
@@ -702,7 +703,13 @@ function AddJobModal(props) {
                           : "form-control"
                       }
                       id="job_description"
-                    ></textarea>
+                    ></textarea> */}
+                    <TextEditor
+                      setState={setState}
+                      state={state}
+                      page={"jobDescription"}
+                    //variable name at the place of page becoz it has 2 text area feilds
+                    />
                     {/* <FroalaEditor
                       model={state.job_description}
                       onModelChange={(newContent) =>
@@ -737,11 +744,11 @@ function AddJobModal(props) {
                 <div>
                   <div
                     sm="6"
-                    // className={
-                    //   errors.your_duties
-                    //     ? "border border-danger rounded overflow-hidden"
-                    //     : "border rounded overflow-hidden"
-                    // }
+                  // className={
+                  //   errors.your_duties
+                  //     ? "border border-danger rounded overflow-hidden"
+                  //     : "border rounded overflow-hidden"
+                  // }
                   >
                     {/* //    <CKEditor
                   //     type={"classic"}
@@ -752,7 +759,7 @@ function AddJobModal(props) {
                   //  onChange={onInputChange}
                   //     initData="your duties"
                   //   />  */}
-                    <textarea
+                    {/* <textarea
                       maxLength={5000}
                       placeholder="Full Address"
                       name="your_duties"
@@ -764,7 +771,13 @@ function AddJobModal(props) {
                           : "form-control"
                       }
                       id="your_duties"
-                    ></textarea>
+                    ></textarea> */}
+                    <TextEditor
+                      setState={setState}
+                      state={state}
+                      page={"yourDuties"}
+                    //variable name at the place of page becoz it has 2 text area feilds
+                    />
                     {/* <FroalaEditor
                       model={state.your_duties}
                       onModelChange={(newContent) =>
@@ -799,11 +812,11 @@ function AddJobModal(props) {
                 <div>
                   <div
                     sm="6"
-                    // className={
-                    //   errors.requirement
-                    //     ? "border border-danger rounded overflow-hidden"
-                    //     : "border rounded overflow-hidden"
-                    // }
+                  // className={
+                  //   errors.requirement
+                  //     ? "border border-danger rounded overflow-hidden"
+                  //     : "border rounded overflow-hidden"
+                  // }
                   >
                     {/* <CKEditor
                       type={"classic"}
@@ -825,7 +838,7 @@ function AddJobModal(props) {
                           : "form-control"
                       }
                     /> */}
-                    <textarea
+                    {/* <textarea
                       maxLength={5000}
                       placeholder="Requirements"
                       name="requirement"
@@ -837,7 +850,13 @@ function AddJobModal(props) {
                           : "form-control"
                       }
                       id="requirement"
-                    ></textarea>
+                    ></textarea> */}
+                    <TextEditor
+                      setState={setState}
+                      state={state}
+                      page={"requirement"}
+                    //variable name at the place of page becoz it has 2 text area feilds
+                    />
                   </div>
                   {/*----ERROR MESSAGE FOR DESRIPTION----*/}
                   {errors.requirement && (
@@ -1089,7 +1108,7 @@ function AddJobModal(props) {
                           ...state,
                           is_featured:
                             state.is_featured === "" ||
-                            state.is_featured === "0"
+                              state.is_featured === "0"
                               ? "1"
                               : "0",
                         })

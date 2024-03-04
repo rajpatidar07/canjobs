@@ -34,10 +34,10 @@ export const GetAllDataCount = async () => {
 };
 
 //Api to get the graph data count of all data
-export const GetAllChartData = async () => {
+export const GetAllChartData = async (id,type) => {
   const response = await axios.post(`${API_URL}admin/getEmployeeStatusCount`,{
-    "id":user_type === "admin"?admin_id:agent_id,
-    "type":user_type === "admin"?admin_type:user_type
+    "id":id,
+    "type":type
   },
     {
       headers: {

@@ -4,6 +4,7 @@ import useValidation from "../../common/useValidation";
 import { AddUpdateEmailTemplate } from "../../../api//api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import TextEditor from "../../common/TextEditor";
 
 function ManageEmail(props) {
   let [loading, setLoading] = useState(false);
@@ -173,7 +174,7 @@ function ManageEmail(props) {
                   Template: <span className="text-danger">*</span>
                 </label>
                 <div className="position-relative">
-                  <textarea
+                  {/* <textarea
                     type={"text"}
                     className={
                       errors.message
@@ -185,7 +186,12 @@ function ManageEmail(props) {
                     id="message"
                     name="message"
                     placeholder="Meaasge"
-                  ></textarea>
+                  ></textarea> */}
+                  <TextEditor
+                    setState={setState}
+                    state={state}
+                    page={"addAgentConversation"}//both page having same setstate variable to updtes in 
+                  />
                 </div>
                 {/*----ERROR MESSAGE FOR ADMIN message----*/}
                 {errors.message && (

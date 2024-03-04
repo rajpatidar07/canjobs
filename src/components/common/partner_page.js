@@ -7,10 +7,11 @@ import Pagination from "../common/pagination";
 import Loader from "../common/loader";
 import { LiaUserEditSolid } from "react-icons/lia";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import { GetAgent, DeleteAgent } from "../../api/api";
+import { GetAgent,GetAllChartData, DeleteAgent } from "../../api/api";
 import { MdFormatListBulletedAdd } from "react-icons/md";
 import AgentsEmployee from "./AgentEmployee";
 import ActivityTable from "./activity_table";
+import DataChart from "./DataChart";
 export default function PartnerPage(props) {
   /*Show modal states */
   let [apiCall, setApiCall] = useState(false);
@@ -20,6 +21,8 @@ export default function PartnerPage(props) {
   );
   /*data and id states */
   const [agenteData, setAgentData] = useState([]);
+  const [chartData, setChartData] = useState([]);
+
   /*delete state */
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
@@ -69,9 +72,23 @@ export default function PartnerPage(props) {
     }
   };
 
+  /*Function to Get Graph data */
+  const GetChartData = async () => {
+    try {
+      let res = await GetAllChartData(AgentId,"agent")
+      if (res.status === 1) {
+        setChartData(res.data)
+      } else {
+        setChartData([])
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
   /*Render function to get the employer*/
   useEffect(() => {
     AgentData();
+    GetChartData()
     if (props.apiCall === true || apiCall === true) {
       props.setApiCall(false);
       setApiCall(false);
@@ -169,9 +186,9 @@ export default function PartnerPage(props) {
                     <div className="ml-5 w-100">
                       <h5 className="mb-0 text-capitalize line-height-1 text-break">
                         {data.name === null ||
-                        data.name === undefined ||
-                        data.name === "undefined" ||
-                        data.name === ""
+                          data.name === undefined ||
+                          data.name === "undefined" ||
+                          data.name === ""
                           ? "N/A"
                           : data.name}
                       </h5>
@@ -224,23 +241,40 @@ export default function PartnerPage(props) {
                     </div>
                   </div>
                   {data.id === AgentId &&
-                  data.agent_employee_count !== (0 || "0") ? (
+                    data.agent_employee_count !== (0 || "0") ? (
                     <div className="row">
                       {/* <!-- Agent by emmployee --> */}
-                      <div className="col-md-6">
+                      <div className="col-md-4">
                         <AgentsEmployee
                           Agentid={AgentId}
                           apiCall={apiCall}
                           setApiCall={setApiCall}
                           heading={"Dashboard"}
+                          user_of_page={"agentAssigned"}
                         />
                       </div>
-                      <div className="col-md-6">
+                      {/* Activity log */}
+                      <div className="col-md-4">
                         <ActivityTable
                           user_id={AgentId}
                           user_type={"agent"}
                           hide={true}
                         />
+                      </div>
+                      {/* Pie chart */}
+
+                      <div
+                        id="table0"
+                        className={"col-md-4"}
+                      >
+                        <div className="bg-white dashboard_card mb-7">
+                          <div className="d-flex justify-content-between p-5 align-items-center">
+                            <h3 className="font-size-5 px-3 m-0 ">Applicant's status</h3>
+                          </div>
+                          <div className="bg-white dashboard_card mb-7">
+                            <DataChart data={chartData} />
+                          </div>
+                        </div>
                       </div>
                     </div>
                   ) : null}

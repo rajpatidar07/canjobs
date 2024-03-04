@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 55,
+            "activePatchIndex": 56,
             "patches": [
                 {
                     "date": 1708938099260,
@@ -228,6 +228,10 @@
                 {
                     "date": 1709379541645,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,8 +1,8 @@\n import axios from \"axios\";\n-// const API_URL = \"https://apnaorganicstore.in/canjobs/\";\n+const API_URL = \"https://apnaorganicstore.in/canjobs/\";\n //Local \n-const API_URL =\"http://192.168.29.51/canjobs/\"\n+// const API_URL =\"http://192.168.29.51/canjobs/\"\n // New AWS backend\n // const API_URL = \"https://api.canpathwaysjobs.com/canjobs/\";\n let Token = localStorage.getItem(\"token\");\n const view_as_token = localStorage.getItem(\"view_as_token\");\n"
+                },
+                {
+                    "date": 1709551121043,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,12 +33,12 @@\n   return response.data;\n };\n \n //Api to get the graph data count of all data\n-export const GetAllChartData = async () => {\n+export const GetAllChartData = async (id,type) => {\n   const response = await axios.post(`${API_URL}admin/getEmployeeStatusCount`,{\n-    \"id\":user_type === \"admin\"?admin_id:agent_id,\n-    \"type\":user_type === \"admin\"?admin_type:user_type\n+    \"id\":id,\n+    \"type\":type\n   },\n     {\n       headers: {\n         \"Content-Type\": \"application/json\",\n"
                 }
             ],
             "date": 1708938099260,

@@ -4,6 +4,7 @@ import useValidation from "./useValidation";
 import { getSingleCompanyFollowup, AddCompanyFollowup } from "../../api/api";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import TextEditor from "./TextEditor";
 
 function AddCompanyfollowup(props) {
   let [response, setResponseData] = useState([]);
@@ -64,16 +65,16 @@ function AddCompanyfollowup(props) {
         value === "" || value === null || value.trim() === ""
           ? "Discription required"
           : value.length < 2
-          ? "Discription should have 2 or more letters."
-          : "",
+            ? "Discription should have 2 or more letters."
+            : "",
     ],
     subject: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Subject required"
           : value.length < 2
-          ? "Subject should have 2 or more letters."
-          : "",
+            ? "Subject should have 2 or more letters."
+            : "",
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
@@ -127,9 +128,8 @@ function AddCompanyfollowup(props) {
         {/* <h5 className="text-center pt-2 mb-7">Follow Ups</h5> */}
         <div className="row">
           <div
-            className={`activity_container ${
-              user_type === "company" ? "col-md-12" : "col-md-8 border-right"
-            } p-10`}
+            className={`activity_container ${user_type === "company" ? "col-md-12" : "col-md-8 border-right"
+              } p-10`}
           >
             {response.length === (0 || "0") ? (
               <div className="single_note mb-5">
@@ -249,7 +249,11 @@ function AddCompanyfollowup(props) {
                       : "border rounded overflow-hidden"
                   }
                 >
-                  <textarea
+                  <TextEditor
+                    setState={setState}
+                    state={state}
+                    page={"FollowUp"} />
+                  {/* <textarea
                     name="remark"
                     value={state.remark}
                     onChange={onInputChange}
@@ -262,7 +266,7 @@ function AddCompanyfollowup(props) {
                     }
                     id="remark"
                     placeholder="Add Note here"
-                  ></textarea>
+                  ></textarea> */}
                 </div>
                 {/*----ERROR MESSAGE FOR DESRIPTION----*/}
                 {errors.remark && (

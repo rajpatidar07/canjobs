@@ -270,6 +270,42 @@ function FilterList() {
                       </div>
                     </div>
                   </div>
+                  {/* <!-- Experience  Filter List --> */}
+                  <div className="col-xl-12 p-0 col-lg-12 col-md-12 col-sm-12 mt-3">
+                    <div className="card job_filter_card">
+                      <div className="card-body  m-0">
+                        <h4 className="card-title text-dark text-left mb-7 w-100">
+                        Experience 
+                        </h4>
+                        <AddFilter setApiCall={() => setApiCall(true)} id={10} />
+                        <ul className="row m-0 p-0">
+                          {filterData.length === 0 ? (
+                            <p> No Data Found</p>
+                          ) : (
+                            (filterData.Experience  || []).map((data) => (
+                              <React.Fragment key={data.id}>
+                                <li
+                                  className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                                  key={data.id}
+                                >
+                                  {data.value}
+                                  <Link
+                                    onClick={() => ShowDeleteAlert(data, 10)}
+                                    title="Delete"
+                                  >
+                                    <i
+                                      className="px-3 fa fa-times-circle"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </Link>
+                                </li>
+                              </React.Fragment>
+                            ))
+                          )}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

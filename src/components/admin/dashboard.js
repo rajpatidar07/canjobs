@@ -60,7 +60,7 @@ const AdminDashboard = () => {
   /*Function to Get Graph data */
   const GetChartData = async () => {
     try {
-      let res = await GetAllChartData()
+      let res = await GetAllChartData(localStorage.getItem("admin_id"),localStorage.getItem("admin_type"))
       if (res.status === 1) {
         setChartData(res.data)
       } else {

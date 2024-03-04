@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { ReplyToMail } from "../../api/api"
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const ReplyEmailForm = ({ mesId, emailType, setShowReplyForm, setApiCall,toggleReplyFormClick }) => {
+import TextEditor from "../common/TextEditor";
+const ReplyEmailForm = ({ mesId, emailType, setShowReplyForm, setApiCall, toggleReplyFormClick }) => {
     const [message, setMessage] = useState('');
     console.log(mesId, emailType)
     const handleMessageChange = (e) => {
@@ -31,11 +32,15 @@ const ReplyEmailForm = ({ mesId, emailType, setShowReplyForm, setApiCall,toggleR
         <form onSubmit={onReplyClick}>
             <div className="form-group">
                 <label>Message:</label>
-                <textarea
+                {/* <textarea
                     className="form-control"
                     value={message}
                     onChange={handleMessageChange}
-                ></textarea>
+                ></textarea> */}
+                <TextEditor
+                    setState={setMessage}
+                    state={message}
+                    page={"emailReplyPage"} />
             </div>
             <div className="d-flex">
                 <button type="submit" className="btn btn-primary">

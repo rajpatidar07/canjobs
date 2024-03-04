@@ -610,7 +610,7 @@ function AgentsEmployee(props) {
                             Status
                           </th>
                         )}
-                        {props.user_of_page === "assignedUser" && (
+                        {(
                           <th
                             scope="col"
                             className="border-0 font-size-3 font-weight-normal py-2"
