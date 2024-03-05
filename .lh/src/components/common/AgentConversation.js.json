@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 11,
+            "activePatchIndex": 13,
             "patches": [
                 {
                     "date": 1708937504046,
@@ -52,6 +52,14 @@
                 {
                     "date": 1708945026581,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n export default function AgentConversation({\n   userId,\n   userEmail,\n   userName,\n-  assignusertype,\n+  assignusertype,partnerChat\n }) {\n   const [allData, setAllData] = useState([]);\n   const [apicall, setApiCall] = useState([]);\n   const [fileNames, setFileNames] = useState([]);\n@@ -77,9 +77,9 @@\n     if (apicall === true) {\n       setApiCall(false);\n     }\n     //Condition to clear docid from url after navigation from notification\n-    if (props.partnerChat) {\n+    if (partnerChat) {\n       const newUrl = window.location.pathname;\n       window.history.replaceState({}, document.title, newUrl);\n     }\n   }, [apicall]);\n"
+                },
+                {
+                    "date": 1709619488864,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,10 @@\n export default function AgentConversation({\n   userId,\n   userEmail,\n   userName,\n-  assignusertype,partnerChat\n+  assignusertype,\n+  partnerChat\n }) {\n   const [allData, setAllData] = useState([]);\n   const [apicall, setApiCall] = useState([]);\n   const [fileNames, setFileNames] = useState([]);\n@@ -30,14 +31,14 @@\n       (value) =>\n         (value === \"\" || value.trim() === \"\") && state.DocUrl === \"\"\n           ? \"Message is required\"\n           : /[-]?\\d+(\\.\\d+)?/.test(value)\n-          ? \"Message can not have a number.\"\n-          : value.length < 2\n-          ? \"Message should have 2 or more letters\"\n-          : /[^A-Za-z 0-9]/g.test(value)\n-          ? \"Cannot use special character \"\n-          : \"\",\n+            ? \"Message can not have a number.\"\n+            : value.length < 2\n+              ? \"Message should have 2 or more letters\"\n+              : /[^A-Za-z 0-9]/g.test(value)\n+                ? \"Cannot use special character \"\n+                : \"\",\n     ],\n     // status: [\n     //   (value) =>\n     //     value === \"\" || value.trim() === \"\" ? \"status is required\" : null,\n@@ -104,10 +105,10 @@\n       let res = await ADocAnnotation(\n         user_type === \"admin\"\n           ? admin_id\n           : user_type === \"agent\"\n-          ? agent_id\n-          : employee_id, //Sender id\n+            ? agent_id\n+            : employee_id, //Sender id\n         \"\", //doc id\n         userId, //assigne dUserId\n         userEmail, //assigne email\n         state.subject, //subject\n@@ -214,11 +215,10 @@\n         const encoded = await convertToBase64(file);\n         const base64Name = encoded.base64;\n \n         // Construct file object with base64 data\n-        const DocFile = `data:/${base64Name.split(\";\")[0].split(\"/\")[1]};${\n-          base64Name.split(\";\")[1]\n-        }`;\n+        const DocFile = `data:/${base64Name.split(\";\")[0].split(\"/\")[1]};${base64Name.split(\";\")[1]\n+          }`;\n \n         // Use DocRealName as the key for DocFile\n         DocRealName = file.name.split(\".\")[0].replace(/ /g, \"_\");\n         fileList.push({\n@@ -257,10 +257,10 @@\n           loginuser={\n             user_type === \"admin\"\n               ? admin_id\n               : user_type === \"agent\"\n-              ? agent_id\n-              : employee_id\n+                ? agent_id\n+                : employee_id\n           }\n           loginusertype={user_type === \"admin\" ? admin_type : user_type}\n         />\n         <AddNotesConversation\n"
+                },
+                {
+                    "date": 1709619549465,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -270,8 +270,9 @@\n           errors={errors}\n           handleBulkFileChange={handleBulkFileChange}\n           handleRemoveFile={handleRemoveFile}\n           fileNames={fileNames}\n+          setState={setState}\n         />\n       </div>\n       {/*  <div className=\"chat-container col-md-6\">\n         <MessageList\n"
                 }
             ],
             "date": 1708937504046,

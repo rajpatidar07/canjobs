@@ -63,20 +63,19 @@ const MessageList = ({ data, loginuser, loginusertype }) => {
           return (
             <div
               key={message.id}
-              className={`message ${
-                message.task_creator_user_id === loginuser &&
-                message.task_creator_user_type === loginusertype
+              className={`message ${message.task_creator_user_id === loginuser &&
+                  message.task_creator_user_type === loginusertype
                   ? "received"
                   : "sent"
-              }`}
+                }`}
             >
               <div className="message-content font-size-3">
                 {title === "" || iconSrc === "" ? (
                   message.subject_description === "" ||
-                  message.subject_description === undefined ||
-                  message.subject_description === null ||
-                  message.subject_description === "undefined" ||
-                  message.subject_description === "null" ? (
+                    message.subject_description === undefined ||
+                    message.subject_description === null ||
+                    message.subject_description === "undefined" ||
+                    message.subject_description === "null" ? (
                     ""
                   ) : (
                     <div className=" mr-3 mb-3  ">
@@ -86,7 +85,12 @@ const MessageList = ({ data, loginuser, loginusertype }) => {
                             {message.task_creator_user_name}
                           </span>
                         )}
-                        <br /> {message.subject_description}
+                        <br />
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: message.subject_description,
+                          }}
+                        />
                       </div>
                     </div>
                   )
@@ -134,14 +138,18 @@ const MessageList = ({ data, loginuser, loginusertype }) => {
                       </div>
                     </div>
                     {message.subject_description === "" ||
-                    message.subject_description === undefined ||
-                    message.subject_description === null ||
-                    message.subject_description === "undefined" ||
-                    message.subject_description === "null" ? (
+                      message.subject_description === undefined ||
+                      message.subject_description === null ||
+                      message.subject_description === "undefined" ||
+                      message.subject_description === "null" ? (
                       ""
                     ) : (
                       <div className="text-start">
-                        {message.subject_description}
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: message.subject_description,
+                          }}
+                        /> { }
                       </div>
                     )}
                   </div>

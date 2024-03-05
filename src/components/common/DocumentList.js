@@ -88,9 +88,12 @@ export default function DocumentList({
               >
                 <Accordion.Header
                   className="w-100 m-0 border-0 bg-info accordian_btn_design font-size-4 text-dark text-left"
-                  onClick={() => handleAccordionToggle(typeitem.type)}
+                  onClick={() => {
+                    handleAccordionToggle(typeitem.type)
+                    setEditName(false);
+                  }}
                 >
-                  {typeitem.type}
+                  {textReplaceFunction(typeitem.type)}
                 </Accordion.Header>
                 <Accordion.Body>
                   <table className="table font-size-3">
@@ -129,7 +132,7 @@ export default function DocumentList({
                               );
                               if (editName === true && docId !== item.id) {
                                 setEditName(false)
-                                
+
                               }
                             }}
                             className={

@@ -15,6 +15,7 @@ import {
 } from "../../api/api";
 import moment from "moment";
 import Pagination from "../common/pagination";
+import { LiaUserEditSolid } from "react-icons/lia";
 // import FilterJson from "../json/filterjson";
 // import AddInterview from "../forms/admin/addInterview.js";
 // import LmiaStatus from "../forms/admin/lmiastatus";
@@ -486,7 +487,7 @@ function AgentsEmployee(props) {
                       <tr className="">
                         <th
                           scope="col"
-                          className=" border-0 font-size-3 font-weight-normal py-2"
+                          className=" border-0 font-size-2 font-weight-normal py-2"
                         >
                           EID
                         </th>
@@ -505,7 +506,7 @@ function AgentsEmployee(props) {
                             Name
                           </Link>
                         </th>
-                        <th
+                        {props.user_of_page === "agentAssigned" ? null : <th
                           scope="col"
                           className="border-0 font-size-3 font-weight-normal py-2"
                         >
@@ -519,7 +520,7 @@ function AgentsEmployee(props) {
                           >
                             Contact
                           </Link>
-                        </th>
+                        </th>}
                         {props.heading === "Dashboard" ? (
                           ""
                         ) : (
@@ -596,12 +597,12 @@ function AgentsEmployee(props) {
                             </Link>
                           </th>
                         )}
-                        <th
+                        {<th
                           scope="col"
                           className="border-0 font-size-3 font-weight-normal py-2"
                         >
                           Profile
-                        </th>
+                        </th>}
                         {props.visa === "yes" ? null : (
                           <th
                             scope="col"
@@ -635,7 +636,7 @@ function AgentsEmployee(props) {
                             className="text-capitalize applicant_row"
                             key={empdata.employee_id}
                           >
-                            <td className="font-size-3 py-2">
+                            <td className="font-size-2 py-2">
                               {empdata.employee_id}
                             </td>
                             <td className=" py-2">
@@ -715,7 +716,7 @@ function AgentsEmployee(props) {
                                 </div>
                               </Link>
                             </td>
-                            <td className="py-2 ">
+                            {props.user_of_page === "agentAssigned" ? null : <td className="py-2 ">
                               {empdata.contact_no === null ? null : (
                                 <p className="m-0">
                                   +
@@ -737,7 +738,7 @@ function AgentsEmployee(props) {
                                   </Link>
                                 </p>
                               </h3>
-                            </td>
+                            </td>}
 
                             {props.heading === "Dashboard" ? (
                               ""
@@ -798,22 +799,23 @@ function AgentsEmployee(props) {
                                 )}
                               </td>
                             )}
-                            <td className=" py-2">
-                              <p className="font-size-2 font-weight-normal text-black-2 mb-0">
-                                {empdata.profile_complete === "100.00" ? (
-                                  <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
-                                    Complete
-                                  </span>
-                                ) : (
-                                  <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
-                                    Incomplete
-                                  </span>
-                                )}
-                              </p>
-                            </td>
+                            {
+                              <td className=" py-2">
+                                <p className="font-size-2 font-weight-normal text-black-2 mb-0">
+                                  {empdata.profile_complete === "100.00" ? (
+                                    <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
+                                      Complete
+                                    </span>
+                                  ) : (
+                                    <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
+                                      Incomplete
+                                    </span>
+                                  )}
+                                </p>
+                              </td>}
                             {props.visa === "yes" ? null : (
                               <td className="py-2">
-                                <p className="font-size-2 font-weight-normal text-black-2 mb-0">
+                                <p className="font-size-2  text-black-2 mb-0">
                                   {empdata.status === "1" ? (
                                     <span
                                       className={
@@ -856,22 +858,24 @@ function AgentsEmployee(props) {
                                 </p>
                               </td>
                             )}
-                            <Link
-                              style={{
-                                padding: "0 5px",
-                                minWidth: "auto",
-                                height: "auto",
-                              }}
-                              className="btn btn-sm btn-outline-info action_btn text-center"
-                              // to={`/${empdata.employee_id}`}
-                              title="Employee Details"
-                              onClick={() => {
-                                setShowChangeAssignedAdminModal(true)
-                                setemployeeId(empdata.employee_id)
-                              }}
-                            >
-                              Update
-                            </Link>
+                            <td>
+                              <Link
+                                style={{
+                                  padding: "0 5px",
+                                  minWidth: "auto",
+                                  height: "auto",
+                                }}
+                                className="btn btn-sm btn-outline-info action_btn text-center"
+                                // to={`/${empdata.employee_id}`}
+                                title="Update Applicant"
+                                onClick={() => {
+                                  setShowChangeAssignedAdminModal(true)
+                                  setemployeeId(empdata.employee_id)
+                                }}
+                              >
+                                <LiaUserEditSolid />
+                              </Link>
+                            </td>
                             {/* Calulation to get user is new or retained */}
                             {/* <td className=" py-2">
                               <p className="font-size-3 font-weight-normal text-black-2 mb-0">

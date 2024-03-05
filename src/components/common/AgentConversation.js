@@ -9,7 +9,8 @@ export default function AgentConversation({
   userId,
   userEmail,
   userName,
-  assignusertype,partnerChat
+  assignusertype,
+  partnerChat
 }) {
   const [allData, setAllData] = useState([]);
   const [apicall, setApiCall] = useState([]);
@@ -31,12 +32,12 @@ export default function AgentConversation({
         (value === "" || value.trim() === "") && state.DocUrl === ""
           ? "Message is required"
           : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Message can not have a number."
-          : value.length < 2
-          ? "Message should have 2 or more letters"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : "",
+            ? "Message can not have a number."
+            : value.length < 2
+              ? "Message should have 2 or more letters"
+              : /[^A-Za-z 0-9]/g.test(value)
+                ? "Cannot use special character "
+                : "",
     ],
     // status: [
     //   (value) =>
@@ -105,8 +106,8 @@ export default function AgentConversation({
         user_type === "admin"
           ? admin_id
           : user_type === "agent"
-          ? agent_id
-          : employee_id, //Sender id
+            ? agent_id
+            : employee_id, //Sender id
         "", //doc id
         userId, //assigne dUserId
         userEmail, //assigne email
@@ -215,9 +216,8 @@ export default function AgentConversation({
         const base64Name = encoded.base64;
 
         // Construct file object with base64 data
-        const DocFile = `data:/${base64Name.split(";")[0].split("/")[1]};${
-          base64Name.split(";")[1]
-        }`;
+        const DocFile = `data:/${base64Name.split(";")[0].split("/")[1]};${base64Name.split(";")[1]
+          }`;
 
         // Use DocRealName as the key for DocFile
         DocRealName = file.name.split(".")[0].replace(/ /g, "_");
@@ -258,8 +258,8 @@ export default function AgentConversation({
             user_type === "admin"
               ? admin_id
               : user_type === "agent"
-              ? agent_id
-              : employee_id
+                ? agent_id
+                : employee_id
           }
           loginusertype={user_type === "admin" ? admin_type : user_type}
         />
@@ -271,6 +271,7 @@ export default function AgentConversation({
           handleBulkFileChange={handleBulkFileChange}
           handleRemoveFile={handleRemoveFile}
           fileNames={fileNames}
+          setState={setState}
         />
       </div>
       {/*  <div className="chat-container col-md-6">

@@ -150,7 +150,12 @@ function AddCompanyfollowup(props) {
                     <p className="fw-bold m-0">
                       <b>{res.subject}</b>
                     </p>
-                    <p className="m-0">{res.remark}</p>
+                    <p className="m-0">
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: res.remark,
+                        }}
+                      /></p>
                   </div>
                 </div>
                 // <div className="card mt-5 mb-5" key={res.id}>

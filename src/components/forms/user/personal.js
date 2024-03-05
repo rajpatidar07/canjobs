@@ -256,10 +256,7 @@ function PersonalDetails(props) {
       //   setAdminList(options);
       // }
       // setJsonList(json.data.data);
-      setAdminList(response.data.filter(
-        (item) =>
-          item.admin_id !== localStorage.getItem("admin_id")
-      ))
+      setAdminList(response.data)
     } catch (err) {
       console.log(err);
     }
@@ -957,7 +954,10 @@ function PersonalDetails(props) {
                     >
                       <option value={""}>Select</option>
                       {(FilterJson.interested || []).map((interest) => (
-                        <option key={interest} value={interest}>
+                        <option key={interest} value={interest}
+                          className={interest === "pnp" ?
+                            `text-uppercase` :
+                            "text-capitalize"}>
                           {interest}
                         </option>
                       ))}
@@ -1092,7 +1092,7 @@ function PersonalDetails(props) {
                   </div>
                   <div
                     className={
-                      `form-group col-md-4 d-flex ${user_type === "agent" || user_type === "user" || props.user_of_page === "assignedUser"
+                      `form-group col-md-4 d-flex ${user_type === "user" || props.user_of_page === "assignedUser"
                         ? " d-none"
                         : props.user_of_page === "agentAssigned" ? " col-md-12" : " col-md-4 "}
                     `}

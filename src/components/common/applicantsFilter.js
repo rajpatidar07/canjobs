@@ -21,7 +21,7 @@ export default function ApplicantsFilter({ search,
     setSearchError,
     skill,
     pageName,
- }) {
+}) {
     let [SkillList, setSkillList] = useState([]);
     let [EducationList, setEducationList] = useState([]);
     let [AgentList, setAgentList] = useState([]);
@@ -116,7 +116,7 @@ export default function ApplicantsFilter({ search,
                     </select>
                 </div>
             </div>
-            <div
+            {/* <div
                 className={
                     skill === null || skill === undefined
                         ? "col p-1 form_group mb-3"
@@ -145,8 +145,8 @@ export default function ApplicantsFilter({ search,
                         })}
                     </select>
                 </div>
-            </div>
-            <div
+            </div> */}
+            {/* <div
                 className={
                     skill === null || skill === undefined
                         ? "col p-1 form_group mb-3"
@@ -177,7 +177,7 @@ export default function ApplicantsFilter({ search,
                         })}
                     </select>
                 </div>
-            </div>
+            </div> */}
 
             <div
                 className={
@@ -250,7 +250,7 @@ export default function ApplicantsFilter({ search,
                         : "d-none"
                 }
             >
-                <p className="input_label">Filter by interest:</p>
+                <p className="input_label">Filter by Appication type:</p>
                 <div className="select_div">
                     <select
                         name="interest"
@@ -263,11 +263,14 @@ export default function ApplicantsFilter({ search,
                         className="text-capitalize form-control"
                     >
                         <option value="" data-display="Product Designer">
-                            Select interest
+                            Select Appication type
                         </option>
                         {(FilterJson.Applicantscategories || []).map((data) => {
                             return (
-                                <option value={data.label} key={data.value}>
+                                <option value={data.label} key={data.value}
+                                    className={data.label === "pnp" ?
+                                        `text-uppercase` :
+                                        "text-capitalize"}>
                                     {data.label}
                                 </option>
                             );

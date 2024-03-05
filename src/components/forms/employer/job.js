@@ -708,6 +708,7 @@ function AddJobModal(props) {
                       setState={setState}
                       state={state}
                       page={"jobDescription"}
+                      identifier={"unique_identifier_1"}
                     //variable name at the place of page becoz it has 2 text area feilds
                     />
                     {/* <FroalaEditor
@@ -775,6 +776,7 @@ function AddJobModal(props) {
                     <TextEditor
                       setState={setState}
                       state={state}
+                      identifier={"unique_identifier_2"}
                       page={"yourDuties"}
                     //variable name at the place of page becoz it has 2 text area feilds
                     />
@@ -854,6 +856,7 @@ function AddJobModal(props) {
                     <TextEditor
                       setState={setState}
                       state={state}
+                      identifier={"unique_identifier_3"}
                       page={"requirement"}
                     //variable name at the place of page becoz it has 2 text area feilds
                     />

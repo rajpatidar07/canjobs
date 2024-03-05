@@ -170,7 +170,12 @@ function Addfollowup(props) {
                           )}
                         </i>
                       </div>
-                      <p className="font-size-4 m-0">{res.remark}</p>
+                      <p className="font-size-4 m-0">
+                        <div
+                        dangerouslySetInnerHTML={{
+                          __html: res.remark,
+                        }}
+                      />{ }</p>
                     </div>
                   </div>
                   // <div className="card mt-5 mb-5" key={res.id}>

@@ -3,11 +3,15 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 1,
             "patches": [
                 {
                     "date": 1709536584319,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1709641346877,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -169,9 +169,13 @@\n                             \"Do MMM YYYY, h:mm:ss a\"\n                           )}\n                         </i>\n                       </div>\n-                      <p className=\"font-size-4 m-0\">{res.remark}</p>\n+                      <p className=\"font-size-4 m-0\"><div\n+                        dangerouslySetInnerHTML={{\n+                          __html: res.remark,\n+                        }}\n+                      />{ }</p>\n                     </div>\n                   </div>\n                   // <div className=\"card mt-5 mb-5\" key={res.id}>\n                   //   <div className=\"card-header d-flex justify-content-space-between px-3 py-1\">\n"
                 }
             ],
             "date": 1709536584319,

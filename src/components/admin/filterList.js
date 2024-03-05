@@ -271,7 +271,7 @@ function FilterList() {
                     </div>
                   </div>
                   {/* <!-- Experience  Filter List --> */}
-                  <div className="col-xl-12 p-0 col-lg-12 col-md-12 col-sm-12 mt-3">
+                  {/* <div className="col-xl-12 p-0 col-lg-12 col-md-12 col-sm-12 mt-3">
                     <div className="card job_filter_card">
                       <div className="card-body  m-0">
                         <h4 className="card-title text-dark text-left mb-7 w-100">
@@ -305,7 +305,7 @@ function FilterList() {
                         </ul>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

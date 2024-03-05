@@ -1,7 +1,7 @@
 const filterjson = {
   Applicantscategories: [
     { value: "1", label: "pnp" },
-    { value: "2", label: "visitors sisa" },
+    { value: "2", label: "visitor visa" },
     { value: "3", label: "working visa" },
     { value: "4", label: "express entry" },
     { value: "5", label: "business visa" },

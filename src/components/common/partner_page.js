@@ -7,7 +7,7 @@ import Pagination from "../common/pagination";
 import Loader from "../common/loader";
 import { LiaUserEditSolid } from "react-icons/lia";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import { GetAgent,GetAllChartData, DeleteAgent } from "../../api/api";
+import { GetAgent, GetAllChartData, DeleteAgent } from "../../api/api";
 import { MdFormatListBulletedAdd } from "react-icons/md";
 import AgentsEmployee from "./AgentEmployee";
 import ActivityTable from "./activity_table";
@@ -75,7 +75,7 @@ export default function PartnerPage(props) {
   /*Function to Get Graph data */
   const GetChartData = async () => {
     try {
-      let res = await GetAllChartData(AgentId,"agent")
+      let res = await GetAllChartData(AgentId, "agent")
       if (res.status === 1) {
         setChartData(res.data)
       } else {
@@ -85,10 +85,15 @@ export default function PartnerPage(props) {
       console.log(err)
     }
   }
+  /*Render function to get the Chart Data*/
+  useEffect(() => {
+    GetChartData()
+
+  }, [AgentId])
+
   /*Render function to get the employer*/
   useEffect(() => {
     AgentData();
-    GetChartData()
     if (props.apiCall === true || apiCall === true) {
       props.setApiCall(false);
       setApiCall(false);
@@ -105,7 +110,7 @@ export default function PartnerPage(props) {
     columnName,
     sortOrder,
     props.apiCall,
-    apiCall,
+    apiCall, 
   ]);
   /*To Show the delete alert box */
   const ShowDeleteAlert = (e) => {
@@ -243,6 +248,20 @@ export default function PartnerPage(props) {
                   {data.id === AgentId &&
                     data.agent_employee_count !== (0 || "0") ? (
                     <div className="row">
+                      {/* Pie chart */}
+                      <div
+                        id="table0"
+                        className={"col-md-4"}
+                      >
+                        <div className="bg-white dashboard_card mb-7">
+                          <div className="d-flex justify-content-between p-5 align-items-center">
+                            <h3 className="font-size-5 px-3 m-0 ">Applicant's status</h3>
+                          </div>
+                          <div className=" mb-7">
+                            <DataChart data={chartData} />
+                          </div>
+                        </div>
+                      </div>
                       {/* <!-- Agent by emmployee --> */}
                       <div className="col-md-4">
                         <AgentsEmployee
@@ -261,21 +280,7 @@ export default function PartnerPage(props) {
                           hide={true}
                         />
                       </div>
-                      {/* Pie chart */}
 
-                      <div
-                        id="table0"
-                        className={"col-md-4"}
-                      >
-                        <div className="bg-white dashboard_card mb-7">
-                          <div className="d-flex justify-content-between p-5 align-items-center">
-                            <h3 className="font-size-5 px-3 m-0 ">Applicant's status</h3>
-                          </div>
-                          <div className="bg-white dashboard_card mb-7">
-                            <DataChart data={chartData} />
-                          </div>
-                        </div>
-                      </div>
                     </div>
                   ) : null}
                 </div>

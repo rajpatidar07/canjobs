@@ -529,7 +529,7 @@ export default function EmployeeTable(props) {
                       </Link>
                     </th>
                   )}
-                  {props.heading === "Dashboard" ? (
+                  {/* {props.heading === "Dashboard" ? (
                     ""
                   ) : (
                     <th
@@ -548,8 +548,8 @@ export default function EmployeeTable(props) {
                         Education
                       </Link>
                     </th>
-                  )}
-                  {props.heading === "Dashboard" ? (
+                  )} */}
+                  {/* {props.heading === "Dashboard" ? (
                     ""
                   ) : (
                     <th
@@ -568,7 +568,7 @@ export default function EmployeeTable(props) {
                         Skills
                       </Link>
                     </th>
-                  )}
+                  )} */}
                   {props.heading === "Dashboard" ? (
                     ""
                   ) : (
@@ -774,7 +774,7 @@ export default function EmployeeTable(props) {
                           )}
                         </td>
                       )}
-                      {props.heading === "Dashboard" ? (
+                      {/* {props.heading === "Dashboard" ? (
                         ""
                       ) : (
                         <td className=" py-5">
@@ -789,8 +789,8 @@ export default function EmployeeTable(props) {
                             </p>
                           )}
                         </td>
-                      )}
-                      {props.heading === "Dashboard" ? (
+                      )} */}
+                      {/* {props.heading === "Dashboard" ? (
                         ""
                       ) : (
                         <td className=" py-5">
@@ -802,7 +802,7 @@ export default function EmployeeTable(props) {
                             </p>
                           )}
                         </td>
-                      )}
+                      )} */}
                       {props.heading === "Dashboard" ? (
                         ""
                       ) : (
@@ -925,9 +925,12 @@ export default function EmployeeTable(props) {
      ( */}
                                 <>
                                   <button
-                                    className={props.ApplicantType === "pnp"
-                                      ? "btn btn-outline-info action_btn" :
-                                      "d-none"}
+                                    className={
+                                      // props.ApplicantType === "pnp"
+                                      // ? 
+                                      "btn btn-outline-info action_btn"
+                                      //: "d-none"
+                                    }
                                     onClick={() =>
                                       ChangeApplicantsCategory(empdata)
                                     }

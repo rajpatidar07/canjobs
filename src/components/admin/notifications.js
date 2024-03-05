@@ -110,12 +110,12 @@ function Notifications(
         onClick={() => setshow(true)}
       ></i> */}
       {type === "mention_partner" ?
-        <FaUserClock style={{ cursor: "pointer" }} className="text-dark mx-5"
+        <FaUserClock style={{ cursor: "pointer" }} className="text-white  mx-5"
           onClick={() => {
             setshow(true)
             setApicall(true)
           }} /> :
-        <HiDocumentSearch style={{ cursor: "pointer" }} className="text-dark mx-5"
+        <HiDocumentSearch style={{ cursor: "pointer" }} className="text-white  mx-5"
           onClick={() => {
             setshow(true)
             setApicall(true)
