@@ -1,9 +1,9 @@
 import axios from "axios";
-// const API_URL = "https://apnaorganicstore.in/canjobs/";
+const API_URL = "https://apnaorganicstore.in/canjobs/";
 //Local 
 // const API_URL ="http://192.168.29.51/canjobs/"
 // New AWS backend
-const API_URL = "https://api.canpathwaysjobs.com/canjobs/";
+// const API_URL = "https://api.canpathwaysjobs.com/canjobs/";
 let Token = localStorage.getItem("token");
 const view_as_token = localStorage.getItem("view_as_token");
 const user_id = localStorage.getItem("employee_id");
@@ -11,7 +11,7 @@ const employer_id = localStorage.getItem("company_id");
 const admin_id = localStorage.getItem("admin_id");
 const agent_id = localStorage.getItem("agent_id");
 const user_type = localStorage.getItem("userType");
-const admin_type =localStorage.getItem("admin_type");
+const admin_type = localStorage.getItem("admin_type");
 if (view_as_token) {
   Token = view_as_token;
 }
@@ -34,10 +34,10 @@ export const GetAllDataCount = async () => {
 };
 
 //Api to get the graph data count of all data
-export const GetAllChartData = async (id,type) => {
-  const response = await axios.post(`${API_URL}admin/getEmployeeStatusCount`,{
-    "id":id,
-    "type":type
+export const GetAllChartData = async (id, type) => {
+  const response = await axios.post(`${API_URL}admin/getEmployeeStatusCount`, {
+    "id": id,
+    "type": type
   },
     {
       headers: {
@@ -2114,8 +2114,8 @@ export const ReplyToMail = async (msgId, type, msg) => {
     {
       "msg_id": msgId,
       "inbox_type": type,
-      "replyMsg":msg
-  },
+      "replyMsg": msg
+    },
     {
       headers: {
         "Content-Type": "application/json",
@@ -2684,7 +2684,9 @@ export const getActivityLog = async (
   action_type,
   limit,
   stackHolder_id,
-  stackHolder_type
+  stackHolder_type,
+  pagetype,
+  sort, columnName
 ) => {
   // console.log("Props" + props.user_id + props.user_type);
   const response = await axios.post(
@@ -2695,11 +2697,14 @@ export const getActivityLog = async (
       user_type: user_type,
       action_id: action_id,
       action_type: action_type,
-      column_name: "created_at",
-      sort_order: "DESC",
+      column_name: 
+        "created_at",
+      sort_order: sort ? sort : "sort",
       limit: limit,
       stackHolder_id: stackHolder_id,
       stackHolder_type: stackHolder_type,
+      status: pagetype === "interviewHistory" ?
+        "21,36" : ""
     },
     {
       headers: {

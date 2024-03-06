@@ -6,9 +6,9 @@ import TextEditor from "../common/TextEditor";
 const ReplyEmailForm = ({ mesId, emailType, setShowReplyForm, setApiCall, toggleReplyFormClick }) => {
     const [message, setMessage] = useState('');
     console.log(mesId, emailType)
-    const handleMessageChange = (e) => {
-        setMessage(e.target.value);
-    };
+    // const handleMessageChange = (e) => {
+    //     setMessage(e.target.value);
+    // };
 
     const onReplyClick = async (e) => {
         e.preventDefault();

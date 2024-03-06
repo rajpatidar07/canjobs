@@ -96,7 +96,7 @@ const MainEmailPage = ({ email }) => {
     if ((recordsPerPage === 10 || recordsPerPage + 10) <= emailData.length) {
       setRecordsPerPage(recordsPerPage + 10);
     } else {
-      setRecordsPerPage(emailData.length);
+      // setRecordsPerPage(emailData.length);
     }
   };
   /*Render function to get the email data*/

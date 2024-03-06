@@ -3,7 +3,7 @@ import { CiTrash, CiEdit } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import { Accordion } from "react-bootstrap";
-import Notifications from "../admin/notifications";
+// import Notifications from "../admin/notifications";
 
 export default function DocumentList({
   user_type,

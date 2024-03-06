@@ -6,7 +6,7 @@ import Pagination from "./pagination";
 export default function AdminTaskTable(props) {
   const [taskData, setTaskData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [taskStatus, setTaskStatus] = useState("");
+  const [taskStatus/*, setTaskStatus*/] = useState("");
   const [columnName, setcolumnName] = useState("");
   const [sortOrder, setSortOrder] = useState("ASC");
 

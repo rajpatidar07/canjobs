@@ -570,13 +570,13 @@ function CompanyProfileDetail(props) {
                                           title="Website URL"
                                         >
                                           <i className="fas fa-globe mr-2"></i>
-                                          <a
+                                          <Link
                                             className="text-dark"
-                                            href={employerData.website_url}
+                                            to={employerData.website_url}
                                             target="_blank"
                                           >
                                             {employerData.website_url}
-                                          </a>
+                                          </Link>
                                         </div>
                                       ) : null}
                                       {employerData.vacancy_for_post ? (

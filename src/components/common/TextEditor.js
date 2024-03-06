@@ -64,15 +64,6 @@ export default function TextEditor({ state, setState, page, identifier }) {
     }
   };
 
-  const toolbarOptions = {
-    options: ['inline', 'list'],
-    inline: {
-      options: ['bold', 'italic', 'underline', 'strikethrough', 'code'],
-    },
-    list: {
-      options: ['unordered', 'ordered'],
-    },
-  };
   const wrapperStyle = {
     display: "block",
     width: " 100%",

@@ -314,7 +314,7 @@ const EmailList = ({
                                 </td>
                               }
                               <td>
-                                {email.IsRead === true ? (
+                                {email.hasAttachments === true ? (
                                   <TiAttachment />
                                 ) : (
                                   `No Attchment's`

@@ -55,7 +55,7 @@ export default function AgentConversation({
     // ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState /*, setErrors*/, onInputChange, errors, validate } =
+  const { state, setState /*, setErrors*/, onInputChange, errors,/* validate*/ } =
     useValidation(initialFormState, validators);
 
   // Admin details

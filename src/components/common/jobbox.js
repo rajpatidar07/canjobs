@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { GetAllJobs, ApplyJob } from "../../api/api";
 import AddJobModal from "../forms/employer/job";
-import EmployeeLoginModal from "../user/login";
+// import EmployeeLoginModal from "../user/login";
 import { toast } from "react-toastify";
 import {
   LiaIndustrySolid,

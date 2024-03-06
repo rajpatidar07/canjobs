@@ -2,18 +2,18 @@ import React, { useEffect, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import Pagination from "../common/pagination";
 import Loader from "../common/loader";
-import { GetAgent, getActivityLog } from "../../api/api";
+import { /*GetAgent,*/ getActivityLog } from "../../api/api";
 import { Link } from "react-router-dom";
 import moment from "moment";
 export default function ActivityTable(props) {
   /*Show modal states */
-  let [apiCall, setApiCall] = useState(false);
+  // let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
-  const [hide, sethide] = useState(props.hide || false);
-  const [user_id, setuser_id] = useState(props.user_id);
-  const [user_type, setuser_type] = useState(props.user_type);
-  const [action_id, setaction_id] = useState(props.action_id);
-  const [action_type, setaction_type] = useState(props.action_type);
+  const [hide/*, sethide*/] = useState(props.hide || false);
+  const [user_id/*, setuser_id*/] = useState(props.user_id);
+  const [user_type/*, setuser_type*/] = useState(props.user_type);
+  const [action_id/*, setaction_id*/] = useState(props.action_id);
+  const [action_type/*, setaction_type*/] = useState(props.action_type);
   const [activityData, setactivityData] = useState([]);
   /*Pagination states */
   // const [status, setStatus] = useState(props.self === "yes" ? -1 : 4);

@@ -62,8 +62,8 @@ function JobDetailpageAdmim(props) {
   if (jobData !== "") {
     skill =
       jobData.keyskill === null ||
-      jobData.keyskill === undefined ||
-      jobData.keyskill === "undefined"
+        jobData.keyskill === undefined ||
+        jobData.keyskill === "undefined"
         ? []
         : jobData.keyskill.split(",");
   }
@@ -128,6 +128,29 @@ function JobDetailpageAdmim(props) {
                         <PiPencilDuotone />
                       </CustomButton>
                     </h3>
+                    <span>
+                      <b title="Operating Name">
+                        {jobData.franchise
+                          ? jobData.franchise
+                          : "Unknown Client"}
+                      </b>
+                    </span>
+                    {/* {jobData.address ? (
+                      <div
+                        className="font-size-3 text-default-color line-height-2 m-0 text-break mr-7"
+                        title="Address"
+                      >
+                        <i className="fas fa-map-marker-alt mr-2"></i>
+                        {jobData.address}
+                        {", "} {jobData.city}
+                        {" asdasa "}
+                        {jobData.pin_code}
+                        {", "}
+                        {jobData.state}
+                        {", "}
+                        {jobData.country}
+                      </div>
+                    ) : null} */}
                     {/* <p className="font-size-3 text-default-color line-height-2 m-0">
                       {jobData.department}
                     </p> */}
@@ -147,7 +170,7 @@ function JobDetailpageAdmim(props) {
                         <CustomButton
                           title={"Send Custom Email"}
                           className="font-size-4 rounded-3 btn-primary py-0 d-none"
-                          /*Functionalities have to be done. */
+                        /*Functionalities have to be done. */
                         >
                           {/*Take off "d-none" when you Send Custom Email API or when you're told to remove it*/}
                           <RiMailSendLine />
@@ -170,8 +193,8 @@ function JobDetailpageAdmim(props) {
                 <div className="col px-5 pt-5 pb-5  border-right position-relative">
                   <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap">
                     {!jobData.location &&
-                    !jobData.language &&
-                    !jobData.address ? (
+                      !jobData.language &&
+                      !jobData.address ? (
                       <div className="info_box text-left text-capitalize">
                         <span className="font-size-3 text-smoke  mr-7">
                           No Data FOund
@@ -179,7 +202,7 @@ function JobDetailpageAdmim(props) {
                       </div>
                     ) : (
                       <>
-                        {/* <div className="info_box text-left text-capitalize text-break">
+                        <div className="info_box text-left text-capitalize text-break">
                           {jobData.location ? (
                             <span
                               className="font-size-3 text-smoke  mr-7"
@@ -197,7 +220,7 @@ function JobDetailpageAdmim(props) {
                           ) : (
                             ""
                           )}
-                        </div> */}
+                        </div>
                         <div className="info_box text-left text-capitalize text-break">
                           {jobData.language ? (
                             <span
@@ -354,15 +377,23 @@ function JobDetailpageAdmim(props) {
                                   ? `(${jobData.employement})`
                                   : ""}
                               </h3>
+                              <h5 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center text-break">
+                                <b> {jobData.franchise}{" "}</b>
+                                <small>
+                                  {jobData.company_name
+                                    ? `(${jobData.company_name})`
+                                    : ""}</small>
+                              </h5>
+
                               <hr className="my-3" />
                               <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap w-100">
                                 {!jobData.location &&
-                                !jobData.language &&
-                                !jobData.address ? (
+                                  !jobData.language &&
+                                  !jobData.address ? (
                                   ""
                                 ) : (
                                   <>
-                                    {/* <div className="info_box text-left text-capitalize">
+                                    <div className="info_box text-left text-capitalize">
                                       {jobData.location ? (
                                         <div
                                           className="font-size-3 text-smoke mr-7"
@@ -374,19 +405,19 @@ function JobDetailpageAdmim(props) {
                                             src="image/icons/marker.svg"
                                             alt="Location"
                                           />
-                                          <span
+                                          {/* <span
                                             dangerouslySetInnerHTML={{
                                               __html: jobData.your_duties,
                                             }}
                                           />{" "}
                                           {jobData.industry_type &&
-                                            `,${jobData.industry_type}`}
+                                            `,${jobData.industry_type}`} */}
                                           {jobData.location}
                                         </div>
                                       ) : (
                                         ""
                                       )}
-                                    </div> */}
+                                    </div>
                                     <div className="info_box text-left text-capitalize">
                                       {jobData.language ? (
                                         <div
@@ -409,7 +440,7 @@ function JobDetailpageAdmim(props) {
                                       {jobData.address ? (
                                         <span
                                           className="font-size-3 text-smoke  mr-7"
-                                          title="Currently Located Country"
+                                          title="Currently Address"
                                         >
                                           <img
                                             className="mr-1"
@@ -440,13 +471,13 @@ function JobDetailpageAdmim(props) {
                                   </h4>
                                 </div>
                                 {!jobData.industry &&
-                                !jobData.corporation &&
-                                !jobData.company_size &&
-                                !jobData.job_type &&
-                                !jobData.education &&
-                                !jobData.role_category &&
-                                !jobData.experience_required &&
-                                !jobData.department ? (
+                                  !jobData.corporation &&
+                                  !jobData.company_size &&
+                                  !jobData.job_type &&
+                                  !jobData.education &&
+                                  !jobData.role_category &&
+                                  !jobData.experience_required &&
+                                  !jobData.department ? (
                                   <div className="text-left row m-0">
                                     <div className="font-size-3 mb-4 mr-10">
                                       No Data Found
@@ -565,11 +596,11 @@ function JobDetailpageAdmim(props) {
                                       {jobData.email}
                                     </Link>
                                     {user_type === "admin" ||
-                                    props.self === "no" ? (
+                                      props.self === "no" ? (
                                       <CustomButton
                                         title={"Send Custom Email"}
                                         className="font-size-4 rounded-3 btn-primary py-0 d-none"
-                                        /*Functionalities have to be done. */
+                                      /*Functionalities have to be done. */
                                       >
                                         {/*Take off "d-none" when you Send Custom Email API or when you're told to remove it*/}
                                         <RiMailSendLine />

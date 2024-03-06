@@ -40,6 +40,7 @@ import PayentForm from "../forms/admin/payentForm";
 import MainEmailPage from "../email/mainemailPage";
 import AgentConversation from "../common/AgentConversation";
 import UserTimline from "../common/UserTimline";
+import InterviewHistoryTable from "../common/InterviewHistoryTable";
 const NewUserProfile = (props) => {
   const { eid } = useParams();
   const location = useLocation();
@@ -705,8 +706,8 @@ const NewUserProfile = (props) => {
                     </li>
                     <li
                       className={`${user_type === "company"
-                          ? "d-none"
-                          : "tab-menu-items nav-item"
+                        ? "d-none"
+                        : "tab-menu-items nav-item"
                         }`}
                     >
                       <Link
@@ -727,8 +728,8 @@ const NewUserProfile = (props) => {
                     </li>
                     <li
                       className={`${user_type === "company"
-                          ? "d-none"
-                          : "tab-menu-items nav-item"
+                        ? "d-none"
+                        : "tab-menu-items nav-item"
                         }`}
                     >
                       <Link
@@ -923,6 +924,29 @@ const NewUserProfile = (props) => {
                         onClick={() => setTabActive("agent conversation")}
                       >
                         Partner
+                      </Link>
+                    </li>
+                    <li
+                      className={
+                        user_type === "company" || user_type === "user"
+                          ? "d-none"
+                          : "tab-menu-items nav-item d-none"
+                      }
+                    >
+                      <Link
+                        className={
+                          TabActive === "InterviewHistory"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
+                        }
+                        id="docTab"
+                        data-toggle="tab"
+                        role="tab"
+                        aria-controls="docTab"
+                        aria-selected="true"
+                        onClick={() => setTabActive("InterviewHistory")}
+                      >
+                        Interview History
                       </Link>
                     </li>
                   </ul>
@@ -1893,6 +1917,22 @@ const NewUserProfile = (props) => {
                       userName={PersonalDetail.name}
                     />
                   ) : null}
+                  <div
+                    className={
+                      TabActive === "InterviewHistory"
+                        ? "justify-content-center "
+                        : "d-none"
+                    }
+                  >
+                    {TabActive === "InterviewHistory" ?
+                      <InterviewHistoryTable
+                        employee_id={eid}
+                      // setApiCall={setApiCall}
+                      // apiCall={apiCall}
+                      // page={"user_profile"}
+                      />
+                      : null}
+                  </div>
                 </div>
               </div>
             </div>
