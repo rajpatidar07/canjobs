@@ -5,7 +5,7 @@ import { Modal } from 'react-bootstrap';
 // import filterjson from '../../json/filterjson';
 // import Select from "react-select"
 export default function ApplicantCategory(props) {
-    const [category, setcategory] = useState("");
+    const [category, setcategory] = useState(props.data.categor);
     const [loading, setLoading] = useState(false);
     console.log(props.data)
     /*Function to set data to the search Category  */
@@ -63,7 +63,7 @@ export default function ApplicantCategory(props) {
                         </label>
                         <select
                             name="category"
-                            value={category || props.data.category}
+                            value={category}
                             onChange={(e) => setcategory(e.target.value)}
                             className={
                                 // errors.category

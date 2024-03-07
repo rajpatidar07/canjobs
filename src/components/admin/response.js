@@ -130,7 +130,6 @@ function JobResponse(props) {
       setIsLoading(false);
     }
   };
-  console.log(resData);
   /*Render function to get the Response*/
   useEffect(() => {
     ResponseData();

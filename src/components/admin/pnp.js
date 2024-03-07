@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import EmployeeTable from "../common/employeeTable";
@@ -12,27 +12,28 @@ export default function Pnp() {
   const [agentFilterValue, setAgentFilterValue] = useState("");
   const [adminFilterValue, setAdminFilterValue] = useState("");
   const [interestFilterValue, setinterestFilterValue] = useState("");
+  const [categoryFilterValue, setCategoryFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
   let user_type = localStorage.getItem("userType")
   let [apiCall, setApiCall] = useState(false);
-/*Function to search the employee */
-const onSearch = (e) => {
-  const inputValue = e.target.value;
-  setSearch(inputValue);
-  setpageNo(1);
-  if (inputValue.length > 0) {
-    if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
-      setSearchError("Client Name cannot start with a number.");
-    } else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
-      setSearchError("Cannot use special characters.");
+  /*Function to search the employee */
+  const onSearch = (e) => {
+    const inputValue = e.target.value;
+    setSearch(inputValue);
+    setpageNo(1);
+    if (inputValue.length > 0) {
+      if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
+        setSearchError("Client Name cannot start with a number.");
+      } else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
+        setSearchError("Cannot use special characters.");
+      } else {
+        setSearchError("");
+      }
     } else {
       setSearchError("");
     }
-  } else {
-    setSearchError("");
-  }
-};
+  };
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -68,11 +69,13 @@ const onSearch = (e) => {
                     interestFilterValue={interestFilterValue}
                     setinterestFilterValue={setinterestFilterValue}
                     setSearchError={setSearchError}
+                    categoryFilterValue={categoryFilterValue}
+                    setCategoryFilterValue={setCategoryFilterValue}
                     // skill={props.skill}
                     pageName={"pnp"}
                   />
-              </div>
-              <small className="text-danger">{searcherror}</small>
+                </div>
+                <small className="text-danger">{searcherror}</small>
               </div>
               {/*<-- PNP Table -->*/}
               <EmployeeTable
@@ -94,6 +97,8 @@ const onSearch = (e) => {
                 pageNo={pageNo}
                 setpageNo={setpageNo}
                 ApplicantType={"pnp"}
+                categoryFilterValue={categoryFilterValue}
+
               />
             </div>
           </div>

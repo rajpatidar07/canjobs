@@ -21,6 +21,8 @@ export default function ApplicantsFilter({ search,
     setSearchError,
     skill,
     pageName,
+    setCategoryFilterValue,
+    categoryFilterValue
 }) {
     let [SkillList, setSkillList] = useState([]);
     let [EducationList, setEducationList] = useState([]);
@@ -87,7 +89,7 @@ export default function ApplicantsFilter({ search,
                     onChange={(e) => onSearch(e)}
                 />
             </div>
-            <div
+            {/* <div
                 className={
                     skill === null || skill === undefined
                         ? "col p-1 form_group mb-3"
@@ -115,7 +117,7 @@ export default function ApplicantsFilter({ search,
                         ))}
                     </select>
                 </div>
-            </div>
+            </div> */}
             {/* <div
                 className={
                     skill === null || skill === undefined
@@ -250,7 +252,7 @@ export default function ApplicantsFilter({ search,
                         : "d-none"
                 }
             >
-                <p className="input_label">Filter by Appication type:</p>
+                <p className="input_label">Filter by Application type:</p>
                 <div className="select_div">
                     <select
                         name="interest"
@@ -260,21 +262,48 @@ export default function ApplicantsFilter({ search,
                             setinterestFilterValue(e.target.value);
                             setpageNo(1);
                         }}
-                        className="text-capitalize form-control"
+                        className={`text-capitalize form-control ${interestFilterValue === "pnp" ?
+                            `text-uppercase` :
+                            "text-capitalize"}`}
                     >
                         <option value="" data-display="Product Designer">
-                            Select Appication type
+                            Select Application type
                         </option>
-                        {(FilterJson.Applicantscategories || []).map((data) => {
-                            return (
-                                <option value={data.label} key={data.value}
-                                    className={data.label === "pnp" ?
-                                        `text-uppercase` :
-                                        "text-capitalize"}>
-                                    {data.label}
-                                </option>
-                            );
-                        })}
+                        {(FilterJson.interested || []).map((interest) => (
+                            <option key={interest} value={interest}
+                                className={interest === "pnp" ?
+                                    `text-uppercase` :
+                                    "text-capitalize"}>
+                                {interest}
+                            </option>
+                        ))}
+
+                    </select>
+                </div>
+            </div>
+            <div
+                className={
+                    skill === null || skill === undefined
+                        ? "col p-1 form_group mb-3"
+                        : "d-none"
+                }
+            >
+                <p className="input_label">Filter by Sub Type:</p>
+                <div className="select_div">
+                    <select
+                        name="sub type"
+                        value={categoryFilterValue}
+                        id="sub type"
+                        onChange={(e) => {
+                            setCategoryFilterValue(e.target.value);
+                            setpageNo(1);
+                        }}
+                        className="text-capitalize form-control"
+                    >
+                        <option value={""}>Select sub type</option>
+                        <option value={"aos"}>AOS</option>
+                        <option value={"rrs"}>RRS</option>
+                        <option value={"tech pilot"}>Tech Pilot</option>
                     </select>
                 </div>
             </div>

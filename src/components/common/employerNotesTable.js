@@ -218,9 +218,9 @@ export default function EmployerNotesTable({ search }) {
 
                               <div className=" mb-0">
                                 {data.company_name === null ||
-                                data.company_name === undefined ||
-                                data.company_name === "undefined" ||
-                                data.company_name === "" ? (
+                                  data.company_name === undefined ||
+                                  data.company_name === "undefined" ||
+                                  data.company_name === "" ? (
                                   <p className="font-size-3  mb-0">N/A</p>
                                 ) : (
                                   <p
@@ -283,7 +283,15 @@ export default function EmployerNotesTable({ search }) {
                           colSpan={5}
                           className="font-size-3 font-weight-normal text-black-2 mb-0text-truncate text-break"
                         >
-                          <b>Description:</b> {data.remark}
+                          <div className=" d-flex">
+                          <b className="">Description:</b>
+                          <span
+                          className="px-2"
+                            dangerouslySetInnerHTML={{
+                              __html: data.remark,
+                            }}
+                          />
+                          </div>
                         </td>
                       </tr>
                     </>

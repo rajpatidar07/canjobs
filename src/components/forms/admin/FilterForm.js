@@ -22,8 +22,8 @@ function AddFilter(props) {
           ? "Filter type is required"
           : value.length < 2
           ? "Filter type should have 2 or more letters"
-          : !/^[A-Za-z0-9 ]*$/.test(value)
-          ? "Cannot use special character "
+          // : !/^[A-Za-z0-9 ]*$/.test(value)
+          // ? "Cannot use special character "
           : "",
     ],
   };
@@ -92,7 +92,7 @@ function AddFilter(props) {
                   ? "Language Type"
                   : ""
               }
-              maxLength={60}
+              // maxLength={60}
             />
             {loading === true ? (
               <button

@@ -1578,6 +1578,10 @@ input::-webkit-inner-spin-button {
   color: blue;
 }
 
+.public-DraftStyleDefault-block {
+  margin: 0 !important
+}
+
 /* Chat input form */
 /* .chat-input {
   display: flex;

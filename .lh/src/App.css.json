@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 2,
             "patches": [
                 {
                     "date": 1698993617030,
@@ -12,6 +12,10 @@
                 {
                     "date": 1698993678307,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -223,15 +223,8 @@\n   padding: 5px 10px !important;\n   font-size: 14px;\n }\n \n-\n-.filter-search-form-2 .filter-inputs .form-control {\n-  border: 0;\n-  height: 45px;\n-  color: #6b6e6f;\n-}\n-\n .dashboard-main-container .form_group .input_label {\n   position: unset;\n   margin: 0;\n   font-size: 12px;\n@@ -855,13 +848,11 @@\n \n   .main_job_box_ button.btn.btn-secondary {\n     width: 100%;\n   }\n-\n   .main_job_box_ button.btn.btn-info {\n     width: 100%;\n   }\n-\n   .job_search_box_page.translateY-25 {\n     transform: none;\n   }\n \n@@ -1027,13 +1018,12 @@\n @media (max-width: 568px) {\n   .doc_upload_row .btn {\n     min-width: 118px;\n   }\n-\n-  .media_profile_box {\n-    text-align-last: start;\n-  }\n+.media_profile_box{\n+  text-align-last: start;\n }\n+}\n \n .dropdown-menu.show {\n   min-width: 100px;\n }\n@@ -1093,9 +1083,8 @@\n   padding: 10px 20px;\n   text-decoration: none;\n   border-radius: 5px;\n }\n-\n /* Email preview css */\n /* src/PreviewEmail.css */\n .gmail-preview-container {\n   /* background-color: #f9f9f9; */\n@@ -1104,9 +1093,9 @@\n   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);\n   max-width: 800px;\n   margin: 0 auto;\n   height: auto;\n-\n+  \n }\n \n .email-content {\n   padding: 30px;\n@@ -1139,5 +1128,5 @@\n \n .attachments img {\n   margin-top: 10px;\n   max-width: 100%;\n-}\n\\ No newline at end of file\n+}\n"
+                },
+                {
+                    "date": 1709808885720,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1576,9 +1576,11 @@\n .timeline-item-description a:focus {\n   outline: 0;\n   color: blue;\n }\n-\n+.public-DraftStyleDefault-block{\n+  margin: 0;\n+}\n /* Chat input form */\n /* .chat-input {\n   display: flex;\n   align-items: center;\n"
                 }
             ],
             "date": 1698993617030,

@@ -319,7 +319,15 @@ export default function EmployeeNotesTable({ search }) {
                           colSpan={5}
                           className="font-size-3 font-weight-normal text-black-2 mb-0text-truncate text-break"
                         >
-                          <b>Description:</b> {data.remark}
+                          <div className=" d-flex">
+                          <b className="">Description: {}</b>
+                          <span
+                          className="px-2"
+                            dangerouslySetInnerHTML={{
+                              __html: data.remark,
+                            }}
+                          />
+                          </div>
                         </td>
                       </tr>
                     </>

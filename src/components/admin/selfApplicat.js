@@ -7,7 +7,7 @@ import PersonalDetails from "../forms/user/personal";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserProfile from "../user/profile";
-import { GetFilter, GetAgentJson,getallAdminData } from "../../api/api";
+// import { GetFilter, GetAgentJson,getallAdminData } from "../../api/api";
 import EmployeeTable from "../common/employeeTable";
 import CustomButton from "../common/button";
 import ApplicantsFilter from "../common/applicantsFilter";
@@ -28,6 +28,7 @@ function SelfApplicat(props) {
   const [adminFilterValue, setAdminFilterValue] = useState("");
   const [educationFilterValue, setEducationFilterValue] = useState("");
   const [interestFilterValue, setinterestFilterValue] = useState("");
+  const [categoryFilterValue, setCategoryFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
   let [pageNo, setpageNo] = useState(1);
@@ -128,6 +129,8 @@ let user_type = localStorage.getItem("userType")
                     setAdminFilterValue={setAdminFilterValue}
                     interestFilterValue={interestFilterValue}
                     setinterestFilterValue={setinterestFilterValue}
+                    setCategoryFilterValue={setCategoryFilterValue}
+                    categoryFilterValue={categoryFilterValue}
                     setSearchError={setSearchError}
                     skill={props.skill}
                     pageName={"employee"}
@@ -167,6 +170,8 @@ let user_type = localStorage.getItem("userType")
                 agentFilterValue={agentFilterValue}
                 adminFilterValue={adminFilterValue}
                 interestFilterValue={interestFilterValue}
+                categoryFilterValue={categoryFilterValue}
+
               />
             </div>
           </div>

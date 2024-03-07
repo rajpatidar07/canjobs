@@ -25,6 +25,7 @@ function Employee(props) {
   const [agentFilterValue, setAgentFilterValue] = useState("");
   const [adminFilterValue, setAdminFilterValue] = useState("");
   const [interestFilterValue, setinterestFilterValue] = useState("");
+  const [categoryFilterValue, setCategoryFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
   let user_type = localStorage.getItem("userType")
@@ -125,6 +126,8 @@ function Employee(props) {
                     setAdminFilterValue={setAdminFilterValue}
                     interestFilterValue={interestFilterValue}
                     setinterestFilterValue={setinterestFilterValue}
+                    setCategoryFilterValue={setCategoryFilterValue}
+                    categoryFilterValue={categoryFilterValue}
                     setSearchError={setSearchError}
                     skill={props.skill}
                     pageName={"employee"}
@@ -165,6 +168,7 @@ function Employee(props) {
                 agentFilterValue={agentFilterValue}
                 adminFilterValue={adminFilterValue}
                 interestFilterValue={interestFilterValue}
+                categoryFilterValue={categoryFilterValue}
               />
             </div>
           </div>

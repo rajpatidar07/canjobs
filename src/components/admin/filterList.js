@@ -271,7 +271,7 @@ function FilterList() {
                     </div>
                   </div>
                   {/* <!-- Experience  Filter List --> */}
-                  {/* <div className="col-xl-12 p-0 col-lg-12 col-md-12 col-sm-12 mt-3">
+                  <div className="col-xl-12 p-0 col-lg-12 col-md-12 col-sm-12 mt-3">
                     <div className="card job_filter_card">
                       <div className="card-body  m-0">
                         <h4 className="card-title text-dark text-left mb-7 w-100">
@@ -305,7 +305,295 @@ function FilterList() {
                         </ul>
                       </div>
                     </div>
-                  </div> */}
+                  </div>
+                  {/* <!-- Applicant's types   Filter List --> */}
+                  <div className="col-xl-12 p-0 col-lg-12 col-md-12 col-sm-12 mt-3">
+                    <div className="card job_filter_card">
+                      <div className="card-body  m-0">
+                        <h4 className="card-title text-dark text-left mb-7 w-100">
+                        Applicant's types 
+                        </h4>
+                        <AddFilter setApiCall={() => setApiCall(true)} id={11} />
+                        <ul className="row m-0 p-0">
+                          {filterData.length === 0 ? (
+                            <p> No Data Found</p>
+                          ) : (
+                            (filterData.Interested  || []).map((data) => (
+                              <React.Fragment key={data.id}>
+                                <li
+                                  className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                                  key={data.id}
+                                >
+                                  {data.value}
+                                  <Link
+                                    onClick={() => ShowDeleteAlert(data, 11)}
+                                    title="Delete"
+                                  >
+                                    <i
+                                      className="px-3 fa fa-times-circle"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </Link>
+                                </li>
+                              </React.Fragment>
+                            ))
+                          )}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  {/* <!-- Applicant's Categories   Filter List --> */}
+                  <div className="col-xl-12 p-0 col-lg-12 col-md-12 col-sm-12 mt-3">
+                    <div className="card job_filter_card">
+                      <div className="card-body  m-0">
+                        <h4 className="card-title text-dark text-left mb-7 w-100">
+                        Applicant's Categories  
+                        </h4>
+                        <AddFilter setApiCall={() => setApiCall(true)} id={13} />
+                        <ul className="row m-0 p-0">
+                          {filterData.length === 0 ? (
+                            <p> No Data Found</p>
+                          ) : (
+                            (filterData.Applicantscategories  || []).map((data) => (
+                              <React.Fragment key={data.id}>
+                                <li
+                                  className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                                  key={data.id}
+                                >
+                                  {data.value}
+                                  <Link
+                                    onClick={() => ShowDeleteAlert(data, 13)}
+                                    title="Delete"
+                                  >
+                                    <i
+                                      className="px-3 fa fa-times-circle"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </Link>
+                                </li>
+                              </React.Fragment>
+                            ))
+                          )}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  {/* <!-- Job types   Filter List --> */}
+                  <div className="col-xl-12 p-0 col-lg-12 col-md-12 col-sm-12 mt-3">
+                    <div className="card job_filter_card">
+                      <div className="card-body  m-0">
+                        <h4 className="card-title text-dark text-left mb-7 w-100">
+                        Job types 
+                        </h4>
+                        <AddFilter setApiCall={() => setApiCall(true)} id={12} />
+                        <ul className="row m-0 p-0">
+                          {filterData.length === 0 ? (
+                            <p> No Data Found</p>
+                          ) : (
+                            (filterData.JobType  || []).map((data) => (
+                              <React.Fragment key={data.id}>
+                                <li
+                                  className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                                  key={data.id}
+                                >
+                                  {data.value}
+                                  <Link
+                                    onClick={() => ShowDeleteAlert(data, 12)}
+                                    title="Delete"
+                                  >
+                                    <i
+                                      className="px-3 fa fa-times-circle"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </Link>
+                                </li>
+                              </React.Fragment>
+                            ))
+                          )}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                    {/* <!-- Qualification   Filter List --> */}
+                    <div className="col-xl-12 p-0 col-lg-12 col-md-12 col-sm-12 mt-3">
+                    <div className="card job_filter_card">
+                      <div className="card-body  m-0">
+                        <h4 className="card-title text-dark text-left mb-7 w-100">
+                        Qualification 
+                        </h4>
+                        <AddFilter setApiCall={() => setApiCall(true)} id={14} />
+                        <ul className="row m-0 p-0">
+                          {filterData.length === 0 ? (
+                            <p> No Data Found</p>
+                          ) : (
+                            (filterData.Qualification  || []).map((data) => (
+                              <React.Fragment key={data.id}>
+                                <li
+                                  className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                                  key={data.id}
+                                >
+                                  {data.value}
+                                  <Link
+                                    onClick={() => ShowDeleteAlert(data, 14)}
+                                    title="Delete"
+                                  >
+                                    <i
+                                      className="px-3 fa fa-times-circle"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </Link>
+                                </li>
+                              </React.Fragment>
+                            ))
+                          )}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                   {/* <!-- Salary   Filter List --> */}
+                   <div className="col-xl-12 p-0 col-lg-12 col-md-12 col-sm-12 mt-3">
+                    <div className="card job_filter_card">
+                      <div className="card-body  m-0">
+                        <h4 className="card-title text-dark text-left mb-7 w-100">
+                        Salary 
+                        </h4>
+                        <AddFilter setApiCall={() => setApiCall(true)} id={15} />
+                        <ul className="row m-0 p-0">
+                          {filterData.length === 0 ? (
+                            <p> No Data Found</p>
+                          ) : (
+                            (filterData.Salary  || []).map((data) => (
+                              <React.Fragment key={data.id}>
+                                <li
+                                  className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                                  key={data.id}
+                                >
+                                  {data.value}
+                                  <Link
+                                    onClick={() => ShowDeleteAlert(data, 15)}
+                                    title="Delete"
+                                  >
+                                    <i
+                                      className="px-3 fa fa-times-circle"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </Link>
+                                </li>
+                              </React.Fragment>
+                            ))
+                          )}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                   {/* <!-- LMIA Status   Filter List --> */}
+                   <div className="col-xl-12 p-0 col-lg-12 col-md-12 col-sm-12 mt-3">
+                    <div className="card job_filter_card">
+                      <div className="card-body  m-0">
+                        <h4 className="card-title text-dark text-left mb-7 w-100">
+                        LMIA Status 
+                        </h4>
+                        <AddFilter setApiCall={() => setApiCall(true)} id={16} />
+                        <ul className="row m-0 p-0">
+                          {filterData.length === 0 ? (
+                            <p> No Data Found</p>
+                          ) : (
+                            (filterData.LmiaStatus  || []).map((data) => (
+                              <React.Fragment key={data.id}>
+                                <li
+                                  className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                                  key={data.id}
+                                >
+                                  {data.value}
+                                  <Link
+                                    onClick={() => ShowDeleteAlert(data, 16)}
+                                    title="Delete"
+                                  >
+                                    <i
+                                      className="px-3 fa fa-times-circle"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </Link>
+                                </li>
+                              </React.Fragment>
+                            ))
+                          )}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                   {/* <!-- LMIA's SubStage Onboarding    Filter List --> */}
+                   <div className="col-xl-12 p-0 col-lg-12 col-md-12 col-sm-12 mt-3">
+                    <div className="card job_filter_card">
+                      <div className="card-body  m-0">
+                        <h4 className="card-title text-dark text-left mb-7 w-100">
+                        LMIA's SubStage Onboarding  
+                        </h4>
+                        <AddFilter setApiCall={() => setApiCall(true)} id={17} />
+                        <ul className="row m-0 p-0">
+                          {filterData.length === 0 ? (
+                            <p> No Data Found</p>
+                          ) : (
+                            (filterData.LimaSubStagesOnboarding  || []).map((data) => (
+                              <React.Fragment key={data.id}>
+                                <li
+                                  className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                                  key={data.id}
+                                >
+                                  {data.value}
+                                  <Link
+                                    onClick={() => ShowDeleteAlert(data, 17)}
+                                    title="Delete"
+                                  >
+                                    <i
+                                      className="px-3 fa fa-times-circle"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </Link>
+                                </li>
+                              </React.Fragment>
+                            ))
+                          )}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  {/* <!-- LMIA's SubStage Advertisements    Filter List --> */}
+                  <div className="col-xl-12 p-0 col-lg-12 col-md-12 col-sm-12 mt-3">
+                    <div className="card job_filter_card">
+                      <div className="card-body  m-0">
+                        <h4 className="card-title text-dark text-left mb-7 w-100">
+                        LMIA's SubStage Advertisements  
+                        </h4>
+                        <AddFilter setApiCall={() => setApiCall(true)} id={18} />
+                        <ul className="row m-0 p-0">
+                          {filterData.length === 0 ? (
+                            <p> No Data Found</p>
+                          ) : (
+                            (filterData.LimaSubStagesAdvertisements  || []).map((data) => (
+                              <React.Fragment key={data.id}>
+                                <li
+                                  className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                                  key={data.id}
+                                >
+                                  {data.value}
+                                  <Link
+                                    onClick={() => ShowDeleteAlert(data, 18)}
+                                    title="Delete"
+                                  >
+                                    <i
+                                      className="px-3 fa fa-times-circle"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </Link>
+                                </li>
+                              </React.Fragment>
+                            ))
+                          )}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

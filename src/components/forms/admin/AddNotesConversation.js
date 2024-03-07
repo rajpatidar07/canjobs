@@ -32,7 +32,7 @@ export default function AddNotesConversation({
       </div>
       <form onSubmit={handleMessageSubmit} className="chat-input px-3 py-3">
         <div className="text_msg_box w-100">
-          {/* <textarea
+          <textarea
             placeholder="Type your message..."
             value={state.message}
             onChange={onInputChange}
@@ -41,11 +41,11 @@ export default function AddNotesConversation({
               errors.message && "border border-danger"
             }`}
             disabled={state.DocUrl}
-          ></textarea> */}
-          <TextEditor
+          ></textarea>
+          {/* <TextEditor
             setState={setState}
             state={state}
-            page={"addAgentConversation"} />
+            page={"addAgentConversation"} /> */}
         </div>
 
         <div className="text_msg_control">

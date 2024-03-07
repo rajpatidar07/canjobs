@@ -16,14 +16,14 @@ import Loader from "../common/loader";
 import JobModal from "../admin/Modal/jobModal";
 import VisaStatus from "../forms/user/visaStatus";
 import ApplicantsStatusModal from "../forms/admin/ApplicantsStatusModal";
-// import { MdOutlineCastForEducation } from "react-icons/md";
+import { /*MdOutlineCastForEducation*/MdTypeSpecimen } from "react-icons/md";
 // import { LiaUserEditSolid, LiaUserTieSolid } from "react-icons/lia";
 import { GoTasklist } from "react-icons/go";
 // import { GiSkills } from "react-icons/gi";
 import { AiOutlineFilePdf } from "react-icons/ai";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { PiBriefcaseLight } from "react-icons/pi";
-import ApplicantCategory from "../forms/user/ApplicantCategory";
+// import ApplicantCategory from "../forms/user/ApplicantCategory";
 export default function EmployeeTable(props) {
   let agentId = localStorage.getItem("agent_id");
   let user_type = localStorage.getItem("userType");
@@ -37,7 +37,7 @@ export default function EmployeeTable(props) {
   let [showChangeJobModal, setShowChangeJobModal] = useState(false);
   let [showEducationModal, setShowEducationModal] = useState(false);
   let [showSkillsModal, setShowSkillsModal] = useState(false);
-  let [showCategoryModal, setShowCategoryModal] = useState(false);
+  let [pageNameForForm, setPageNameForForm] = useState(false);
   // let [documentModal, setDocumentModal] = useState(false);
   let [showStatusChangeModal, setShowStatusChange] = useState(false);
   /*data and id states */
@@ -80,6 +80,7 @@ export default function EmployeeTable(props) {
         "",
         user_type === "agent" ? agentId : props.agentFilterValue,
         props.adminFilterValue,
+        props.categoryFilterValue
       );
       if (userData.data.length === 0) {
         setemployeeData([]);
@@ -125,7 +126,8 @@ export default function EmployeeTable(props) {
     props.heading,
     props.agentFilterValue,
     props.adminFilterValue,
-    props.interestFilterValue
+    props.interestFilterValue,
+    props.categoryFilterValue
   ]);
 
   /* Function to show the single data to update Employee*/
@@ -252,12 +254,18 @@ export default function EmployeeTable(props) {
     setemployeeId(e);
     setShowStatusChange(true);
   };
-  /*function to Open  change applicants status Modal */
+  /*function to Open  change applicants category Modal */
   const ChangeApplicantsCategory = (e) => {
     setemployeeId(e);
-    setShowCategoryModal(true);
+    setShowEmployeeMOdal(true);
+    setPageNameForForm("Category")
   };
-
+  /*function to Open  change applicants type Modal */
+  // const ChangeApplicantsType = (e) => {
+  //   setemployeeId(e);
+  //   setShowEmployeeMOdal(true);
+  //   setPageNameForForm("ApplicantType")
+  // };
   /*Function to get the new user */
   // const currentDate = new Date(); // Get current date
   // const oneMonthAgo = new Date(); // Create a new date object for one month ago
@@ -275,6 +283,7 @@ export default function EmployeeTable(props) {
           apiCall={apiCall}
           setApiCall={setApiCall}
           close={() => setShowEmployeeMOdal(false)}
+          pageNameForForm={pageNameForForm}
         />
       ) : null}
       {showVisaModal ? (
@@ -339,12 +348,12 @@ export default function EmployeeTable(props) {
           employee_id={employeeId}
         />
       ) : null} */}
-      {showCategoryModal ?
+      {/* {showCategoryModal ?
         <ApplicantCategory
           show={showCategoryModal}
           close={() => setShowCategoryModal(false)}
           data={employeeId} />
-        : null}
+        : null} */}
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5 ">
         {props.heading === "Dashboard" ? null : (
           <div
@@ -473,7 +482,7 @@ export default function EmployeeTable(props) {
                       Name
                     </Link>
                   </th>
-                  <th
+                  {/* <th
                     scope="col"
                     className="border-0 font-size-4 font-weight-normal"
                   >
@@ -488,7 +497,7 @@ export default function EmployeeTable(props) {
                     >
                       Contact
                     </Link>
-                  </th>
+                  </th> */}
                   {props.heading === "Dashboard" ? (
                     ""
                   ) : (
@@ -579,17 +588,23 @@ export default function EmployeeTable(props) {
                       <Link
                         to={""}
                         onClick={() => {
-                          handleSort("experience");
+                          handleSort("interested_in");
                           props.setpageNo(1);
                         }}
                         className="text-gray"
-                        title="Sort by Experience"
+                        title="Sort by Applicant Type"
                       >
-                        Experience
+                        Applicant Type
                       </Link>
                     </th>
                   )}
-
+                  {props.ApplicantType === "pnp" &&
+                    <th
+                      scope="col"
+                      className="border-0 font-size-4 font-weight-normal"
+                    >
+                      Sub Applicant
+                    </th>}
                   {props.visa === "yes" ? null : (
                     <th
                       scope="col"
@@ -613,6 +628,7 @@ export default function EmployeeTable(props) {
                       Action
                     </th>
                   )}
+
                 </tr>
               </thead>
               <tbody>
@@ -694,6 +710,27 @@ export default function EmployeeTable(props) {
                                   )
                                 </p>
                               ) : null}
+                              {empdata.contact_no === null ? null : (
+                          <p className="m-0">
+                            +
+                            <Link
+                              className="text-dark font-size-2"
+                              to={`tel:${empdata.contact_no}`}
+                            >
+                              {empdata.contact_no}
+                            </Link>
+                          </p>
+                        )}
+                        <h3 className=" font-weight-normal text-black-2 mb-0">
+                          <p className="text-gray font-size-2 m-0">
+                            <Link
+                              className="text-dark"
+                              to={`mailto:${empdata.email}`}
+                            >
+                              {empdata.email}
+                            </Link>
+                          </p>
+                        </h3>
                               {empdata.is_featured === "1" ||
                                 empdata.is_featured === 1 ? (
                                 <span className="bg-orange text-white featured_tag">
@@ -716,7 +753,7 @@ export default function EmployeeTable(props) {
                           </span>
                         ) : null}
                       </td>
-                      <td className="py-5 ">
+                      {/* <td className="py-5 ">
                         {empdata.contact_no === null ? null : (
                           <p className="m-0">
                             +
@@ -738,7 +775,7 @@ export default function EmployeeTable(props) {
                             </Link>
                           </p>
                         </h3>
-                      </td>
+                      </td> */}
                       {props.heading === "Dashboard" ? (
                         ""
                       ) : (
@@ -806,23 +843,46 @@ export default function EmployeeTable(props) {
                       {props.heading === "Dashboard" ? (
                         ""
                       ) : (
-                        <td className=" py-5">
-                          {empdata.experience === null ? (
+                        // <td className=" py-5">
+                        //   {empdata.experience === null ? (
+                        //     <p className="font-size-3 mb-0">N/A</p>
+                        //   ) : (
+                        //     <p className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        //       {empdata.experience === "1-3 " ||
+                        //         empdata.experience === "1-2 " ||
+                        //         empdata.experience === "3-5 " ||
+                        //         empdata.experience === "5-7 " ||
+                        //         empdata.experience === "7+ "
+                        //         ? empdata.experience + "years"
+                        //         : empdata.experience}
+                        //     </p>
+                        //   )}
+                        // </td>
+                          <td className=" py-5">
+                          {empdata.interested_in === null ? (
                             <p className="font-size-3 mb-0">N/A</p>
                           ) : (
-                            <p className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {empdata.experience === "1-3 " ||
-                                empdata.experience === "1-2 " ||
-                                empdata.experience === "3-5 " ||
-                                empdata.experience === "5-7 " ||
-                                empdata.experience === "7+ "
-                                ? empdata.experience + "years"
-                                : empdata.experience}
+                            <p className={`font-size-3 font-weight-normal text-black-2 mb-0 ${empdata.interested_in === "pnp" ?
+                            `text-uppercase` :
+                            "text-capitalize"}`}>
+                              {empdata.interested_in }
                             </p>
                           )}
                         </td>
                       )}
-
+                      {props.ApplicantType === "pnp" && (
+                        <td className=" py-5">
+                          {empdata.category === null ? (
+                            <p className="font-size-3 mb-0">N/A</p>
+                          ) : (
+                            <p className={`font-size-3 font-weight-normal text-black-2 mb-0 
+                            ${empdata.category === "tech pilot" ? "text-capitalize" : `text-uppercase`
+                              }`}>
+                              {empdata.category}
+                            </p>
+                          )}
+                        </td>
+                      )}
                       {props.visa === "yes" ? null : (
                         <td className="">
                           <p className="font-size-2 font-weight-normal text-black-2 mb-0">
@@ -926,21 +986,32 @@ export default function EmployeeTable(props) {
                                 <>
                                   <button
                                     className={
-                                      // props.ApplicantType === "pnp"
-                                      // ? 
-                                      "btn btn-outline-info action_btn"
-                                      //: "d-none"
+                                      props.ApplicantType === "pnp"
+                                      ? "btn btn-outline-info action_btn"
+                                      : "d-none"
+
                                     }
+                                    // disabled={empdata.interested_in !== "pnp"}
                                     onClick={() =>
-                                      ChangeApplicantsCategory(empdata)
+                                      ChangeApplicantsCategory(empdata.employee_id)
                                     }
                                     title="Change Applicant's Category"
                                   >
                                     <span className="text-gray px-2">
                                       <BiSolidCategory />
                                     </span>
-                                    {/* <i className="fas fa-stream text-gray"></i> */}
                                   </button>
+                                  {/* <button
+                                    className="btn btn-outline-info action_btn"
+                                    onClick={() =>
+                                      ChangeApplicantsType(empdata.employee_id)
+                                    }
+                                    title="Change Applicant's Type"
+                                  >
+                                    <span className="text-gray px-2">
+                                      <MdTypeSpecimen />
+                                    </span>
+                                  </button> */}
                                   <button
                                     className="btn btn-outline-info action_btn"
                                     onClick={() =>

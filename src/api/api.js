@@ -223,7 +223,8 @@ export const getallEmployeeData = async (
   inserted,
   candian,
   agentId,
-  assignedadminId
+  assignedadminId,
+  subType
   // agent_u_id
 ) => {
   const response = await axios.post(
@@ -245,7 +246,8 @@ export const getallEmployeeData = async (
       work_permit_canada: candian,
       interested_in: inserted,
       agent_id: agentId,
-      assigned_by: assignedadminId
+      assigned_by: assignedadminId,
+      category:subType
     },
     {
       headers: {

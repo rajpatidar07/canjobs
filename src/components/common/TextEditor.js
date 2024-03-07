@@ -7,6 +7,8 @@ import { stateToHTML } from 'draft-js-export-html';
 export default function TextEditor({ state, setState, page, identifier }) {
   // Text editor for the description
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
+
+  //Set variable to update particular state of particular page.
   let orgVariable = page === "description" ? "description" :
     page === "FollowUp" ? "remark" :
       page === "addAgentConversation" ? "message" :
@@ -14,7 +16,8 @@ export default function TextEditor({ state, setState, page, identifier }) {
           page === "requirement" ? "requirement" :
             page === "yourDuties" ? "your_duties" :
               page === "jobDescription" ? "job_description" : null
-  console.log(page, orgVariable + 66, state, state.orgVariabl)
+
+  //Function to set deafault value
   useEffect(() => {
     // Check if content is not null
     if (state[orgVariable] === null ||
@@ -40,11 +43,11 @@ export default function TextEditor({ state, setState, page, identifier }) {
     }
   }, [state, page, identifier]);
 
-
+  /*On chnage function to set updated value */
   const handleEditorChange = (newEditorState) => {
     setEditorState(newEditorState);
   };
-
+  // Function set cursor correct 
   const handleBlur = () => {
     const htmlContent = stateToHTML(editorState.getCurrentContent());
     if (page === "emailReplyPage") {
@@ -67,7 +70,7 @@ export default function TextEditor({ state, setState, page, identifier }) {
   const wrapperStyle = {
     display: "block",
     width: " 100%",
-    lineHeight: " 1.88",
+    // lineHeight: " 1.88",
     color: " #6b6e6f",
     backgroundColor: " #fff",
     backgroundClip: " padding-box",
@@ -84,7 +87,6 @@ export default function TextEditor({ state, setState, page, identifier }) {
     // className='border p-2'
     // style={{ height: "100px", overflow: "auto" }}
     >
-      {console.log(editorState, page)}
       <Editor
         editorState={editorState}
         onEditorStateChange={handleEditorChange}
