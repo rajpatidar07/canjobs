@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import PersonalDetails from "../forms/user/personal";
 import Education from "../forms/user/education";
 import Skills from "../forms/user/skills";
@@ -57,6 +57,7 @@ export default function EmployeeTable(props) {
     props.heading === "Dashboard" ? "created_at" : "employee_id"
   );
   const [sortOrder, setSortOrder] = useState("DESC");
+
   /* Function to get Employee data*/
   const EmpData = async () => {
     // const params = useParams();
@@ -366,7 +367,7 @@ export default function EmployeeTable(props) {
                 <button
                   type="button"
                   className={
-                    status === -1 || status === "-1"
+                    status === -1 || status === "-1" || status === "1"
                       ? "btn btn-primary"
                       : "btn btn-outline-primary"
                   }
@@ -711,26 +712,26 @@ export default function EmployeeTable(props) {
                                 </p>
                               ) : null}
                               {empdata.contact_no === null ? null : (
-                          <p className="m-0">
-                            +
-                            <Link
-                              className="text-dark font-size-2"
-                              to={`tel:${empdata.contact_no}`}
-                            >
-                              {empdata.contact_no}
-                            </Link>
-                          </p>
-                        )}
-                        <h3 className=" font-weight-normal text-black-2 mb-0">
-                          <p className="text-gray font-size-2 m-0">
-                            <Link
-                              className="text-dark"
-                              to={`mailto:${empdata.email}`}
-                            >
-                              {empdata.email}
-                            </Link>
-                          </p>
-                        </h3>
+                                <p className="m-0">
+                                  +
+                                  <Link
+                                    className="text-dark font-size-2"
+                                    to={`tel:${empdata.contact_no}`}
+                                  >
+                                    {empdata.contact_no}
+                                  </Link>
+                                </p>
+                              )}
+                              <h3 className=" font-weight-normal text-black-2 mb-0">
+                                <p className="text-gray font-size-2 m-0">
+                                  <Link
+                                    className="text-dark"
+                                    to={`mailto:${empdata.email}`}
+                                  >
+                                    {empdata.email}
+                                  </Link>
+                                </p>
+                              </h3>
                               {empdata.is_featured === "1" ||
                                 empdata.is_featured === 1 ? (
                                 <span className="bg-orange text-white featured_tag">
@@ -858,14 +859,44 @@ export default function EmployeeTable(props) {
                         //     </p>
                         //   )}
                         // </td>
-                          <td className=" py-5">
+                        <td className="">
                           {empdata.interested_in === null ? (
                             <p className="font-size-3 mb-0">N/A</p>
                           ) : (
-                            <p className={`font-size-3 font-weight-normal text-black-2 mb-0 ${empdata.interested_in === "pnp" ?
-                            `text-uppercase` :
-                            "text-capitalize"}`}>
-                              {empdata.interested_in }
+                            <p className={`font-size-2 font-weight-normal text-black-2 mb-0 ${empdata.interested_in === "pnp" ?
+                              `text-uppercase` :
+                              "text-capitalize"}`}>
+                              <span
+                                className={
+                                  `p-1 text-white text-center w-100 border rounded-pill 
+                                  ${empdata.interested_in === "business visa"
+                                    ? "bg-eastern"
+                                    : empdata.interested_in === "co-op"
+                                      ? "bg-secondary"
+                                      : empdata.interested_in === "express entry"
+                                        ? "bg-violet"
+                                        : empdata.interested_in === "full-time"
+                                          ? "bg-info"
+                                          : empdata.interested_in === "pnp"
+                                            ? "bg-warning"
+                                            : empdata.interested_in === "spousal open work permit"
+                                              ? "bg-coral-opacity-visible"
+                                              : empdata.interested_in === "super visa"
+                                                ? "bg-allports"
+                                                : empdata.interested_in === "visitor visa"
+                                                  ? "bg-dark"
+                                                  : empdata.interested_in === "work permit extension"
+                                                    ? "bg-pink"
+                                                    : empdata.interested_in === "working visa"
+                                                      ? "bg-poppy"
+                                                      : empdata.interested_in === "workpermit application"
+                                                        ? "bg-success"
+                                                        : "bg-dark"
+                                  }`
+                                }
+                              >
+                                {empdata.interested_in}
+                              </span>
                             </p>
                           )}
                         </td>
@@ -886,49 +917,31 @@ export default function EmployeeTable(props) {
                       {props.visa === "yes" ? null : (
                         <td className="">
                           <p className="font-size-2 font-weight-normal text-black-2 mb-0">
-                            {empdata.status === "1" ? (
-                              <span
-                                className={
-                                  !isTimeWithin24Hours(empdata.created_at)
-                                    ? "p-1 bg-danger text-white text-center w-100 border rounded-pill"
-                                    : "p-1 bg-info text-white text-center w-100 border rounded-pill"
-                                }
-                              >
-                                New
-                              </span>
-                            ) : empdata.status === "2" ? (
-                              <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
-                                Prospect
-                              </span>
-                            ) : empdata.status === "3" ? (
-                              <span className="p-1 bg-coral-opacity-visible text-white text-center w-100 border rounded-pill">
-                                Lead
-                              </span>
-                            ) : empdata.status === "4" ? (
-                              <span className="p-1 bg-secondary text-white text-center w-100 border rounded-pill">
-                                Retained
-                              </span>
-                            ) : empdata.status === "5" ? (
-                              <span className="p-1 bg-spray text-white text-center w-100 border rounded-pill">
-                                Lost
-                              </span>
-                            ) : empdata.status === "6" ? (
-                              <span className="p-1 bg-dark text-white text-center w-100 border rounded-pill">
-                                Dead
-                              </span>
-                            ) : empdata.status === "7" ? (
-                              <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
-                                Working on
-                              </span>
-                            ) : empdata.status === "0" ? (
-                              <span className="p-1 bg-info text-white text-center w-100 border rounded-pill">
-                                New
-                              </span>
-                            ) : empdata.status === "8" ? (
-                              <span className="p-1 bg-info text-white text-center w-100 border rounded-pill">
-                                Submitted
-                              </span>
-                            ) : null}
+                            <span
+                              className={`p-1 text-white text-center w-100 border rounded-pill ${empdata.status === "1" || empdata.status === "0" ? (
+                                !isTimeWithin24Hours(empdata.created_at)
+                                  ? "bg-danger "
+                                  : "bg-info ") : empdata.status === "2" ?
+                                "bg-warning" : empdata.status === "3" ?
+                                  "bg-coral-opacity-visible" : empdata.status === "4" ?
+                                    "bg-secondary" : empdata.status === "5" ?
+                                      "bg-spray" : empdata.status === "6" ?
+                                        "bg-dark" : empdata.status === "7" ?
+                                          "bg-primary-opacity-8" : empdata.status === "8" ?
+                                            "bg-eastern" : ""
+                                }`}
+                            >
+                              {empdata.status === "1" || empdata.status === "0" ?
+                                "New" : empdata.status === "2" ?
+                                  "Prospect" : empdata.status === "3" ?
+                                    "Lead" : empdata.status === "4" ?
+                                      "Retained" : empdata.status === "5" ?
+                                        "Lost" : empdata.status === "6" ?
+                                          "Dead" : empdata.status === "7" ?
+                                            "Working on" : empdata.status === "8" ?
+                                              "Submitted" : ""}
+                            </span>
+
                           </p>
                         </td>
                       )}
@@ -987,8 +1000,8 @@ export default function EmployeeTable(props) {
                                   <button
                                     className={
                                       props.ApplicantType === "pnp"
-                                      ? "btn btn-outline-info action_btn"
-                                      : "d-none"
+                                        ? "btn btn-outline-info action_btn"
+                                        : "d-none"
 
                                     }
                                     // disabled={empdata.interested_in !== "pnp"}

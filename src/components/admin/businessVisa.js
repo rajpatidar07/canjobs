@@ -52,7 +52,7 @@ if (inputValue.length > 0) {
                 {/*<-- Search Busniness visa -->*/}
                 <div className="row m-0 align-items-center">
               {/* Employees filter's */}
-             {/* <ApplicantsFilter
+             <ApplicantsFilter
                     user_type={user_type}
                     search={search}
                     onSearch={onSearch}
@@ -71,13 +71,13 @@ if (inputValue.length > 0) {
                     setinterestFilterValue={setinterestFilterValue}
                     setSearchError={setSearchError}
                     // skill={props.skill}
-                    pageName={"express_entry"}
-  />*/}
+                    pageName={"busniess_visa"}
+  />
             </div>
                 <small className="text-danger">{searcherror}</small>
               </div>
               {/*<-- Business visa Table -->*/}
-              {/* <EmployeeTable
+              <EmployeeTable
                   // showEmployeeProfile={showEmployeeProfile}
                 // employeeDetails={employeeDetails}
                 search={search}
@@ -96,7 +96,7 @@ if (inputValue.length > 0) {
                 pageNo={pageNo}
                 setpageNo={setpageNo}
                 ApplicantType={"business visa"}
-              /> */}
+              />
             </div>
           </div>
         </div>

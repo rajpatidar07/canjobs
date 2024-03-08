@@ -50,7 +50,7 @@ if (inputValue.length > 0) {
                 {/*<-- Search Express Entry -->*/}
                 <div className="row m-0 align-items-center">
                   {/* Employees filter's */}
-                  {/* <ApplicantsFilter
+                  <ApplicantsFilter
                     user_type={user_type}
                     search={search}
                     onSearch={onSearch}
@@ -70,12 +70,12 @@ if (inputValue.length > 0) {
                     setSearchError={setSearchError}
                     // skill={props.skill}
                     pageName={"express_entry"}
-                  /> */}
+                  />
               </div>
               <small className="text-danger">{searcherror}</small>
               </div>
               {/*<-- Express entry Table -->*/}
-              {/* <EmployeeTable
+              <EmployeeTable
                  // showEmployeeProfile={showEmployeeProfile}
                 // employeeDetails={employeeDetails}
                 search={search}
@@ -94,7 +94,7 @@ if (inputValue.length > 0) {
                 pageNo={pageNo}
                 setpageNo={setpageNo}
                 ApplicantType={"express entry"}
-              /> */}
+              />
             </div>
           </div>
         </div>

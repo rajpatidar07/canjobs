@@ -283,7 +283,8 @@ export default function ApplicantsFilter({ search,
             </div>
             <div
                 className={
-                    skill === null || skill === undefined
+                    skill === null || skill === undefined && (
+                        pageName === "pnp" || pageName === "employee")
                         ? "col p-1 form_group mb-3"
                         : "d-none"
                 }

@@ -47,6 +47,21 @@ export const GetAllChartData = async (id, type) => {
     });
   return response.data;
 };
+//Api to get the graph data count of all applicants type data 
+export const GetAllApplicanttypeChartData = async (id, type) => {
+  const response = await axios.post(`${API_URL}admin/getCategoryCount`, {
+    "id": id,
+    "type": type
+  },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    });
+  return response.data;
+};
+
 /*Chanage password Api */
 export const ChangePasswordApi = async (props) => {
   const response = await axios.put(

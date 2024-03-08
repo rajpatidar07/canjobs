@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 11,
+            "activePatchIndex": 12,
             "patches": [
                 {
                     "date": 1709550767474,
@@ -52,6 +52,10 @@
                 {
                     "date": 1709621224971,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -109,9 +109,9 @@\n     recordsPerPage,\n     columnName,\n     sortOrder,\n     props.apiCall,\n-    apiCall, +\n+    apiCall, \n   ]);\n   /*To Show the delete alert box */\n   const ShowDeleteAlert = (e) => {\n     setDeleteID(e.id);\n"
+                },
+                {
+                    "date": 1709880208175,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -257,9 +257,10 @@\n                           <div className=\"d-flex justify-content-between p-5 align-items-center\">\n                             <h3 className=\"font-size-5 px-3 m-0 \">Applicant's status</h3>\n                           </div>\n                           <div className=\" mb-7\">\n-                            <DataChart data={chartData} />\n+                            <DataChart data={chartData} \n+                            dataType={\"status\"}/>\n                           </div>\n                         </div>\n                       </div>\n                       {/* <!-- Agent by emmployee --> */}\n"
                 }
             ],
             "date": 1709550767474,

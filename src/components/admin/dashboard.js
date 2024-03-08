@@ -10,13 +10,14 @@ import LimiaStatusTable from "../common/limiaStatusTable";
 import JobTable from "../common/jobTable";
 import EmployeeTable from "../common/employeeTable";
 import EmployerTable from "../common/employerTable";
-import { /*getSummaryCount*/ GetAllChartData } from "../../api/api";
+import { /*getSummaryCount*/ GetAllApplicanttypeChartData, GetAllChartData } from "../../api/api";
 // import FollowUpDashBoard from "../common/followUpTableDashboard";
 import Addfollowup from "../forms/admin/addfollowup";
 import { FaWindowMaximize } from "react-icons/fa";
 import { BsUsbMiniFill } from "react-icons/bs";
 import AdminTaskTable from "../common/AdminTaskTable";
 import DataChart from "../common/DataChart";
+import Loader from "../common/loader";
 const AdminDashboard = () => {
   // eslint-disable-next-line
   /*States */
@@ -38,7 +39,10 @@ const AdminDashboard = () => {
   const [interviewPageNo, setInterviewPageNo] = useState(1);
   const [taskPageNo, setTaskPageNo] = useState(1);
   const [openTable, setOpenTable] = useState(null);
-  const [chartData, setChartData] = useState([]);
+  const [applicantStatusChartData, setApplicantStatusData] = useState([]);
+  const [loadingStatus, setLoadingStatus] = useState(true);
+  const [loadingType, setLoadingType] = useState(true);
+  const [applicantsTypeChartData, setapplicantsTypeChartData] = useState([]);
 
   /*Function to maximixe and minimize the tables*/
   const toggleTable = (tableNumber) => {
@@ -60,11 +64,23 @@ const AdminDashboard = () => {
   /*Function to Get Graph data */
   const GetChartData = async () => {
     try {
-      let res = await GetAllChartData(localStorage.getItem("admin_id"),localStorage.getItem("admin_type"))
+      let res = await GetAllChartData("", localStorage.getItem("admin_type"))
+      let typeRes = await GetAllApplicanttypeChartData("", localStorage.getItem("admin_type"))
+      //Applicants status data
       if (res.status === 1) {
-        setChartData(res.data)
+        setApplicantStatusData(res.data)
+        setLoadingStatus(false)
       } else {
-        setChartData([])
+        setApplicantStatusData([])
+        setLoadingStatus(false)
+      }
+      //Applicants types data
+      if (typeRes.status === 1) {
+        setapplicantsTypeChartData(typeRes.data)
+        setLoadingType(false)
+      } else {
+        setapplicantsTypeChartData([])
+        setLoadingType(false)
       }
     } catch (err) {
       console.log(err)
@@ -339,8 +355,27 @@ const AdminDashboard = () => {
                 <div className="d-flex justify-content-between p-5 align-items-center">
                   <h3 className="font-size-5 px-3 m-0 ">Applicant's status</h3>
                 </div>
-                <div className="bg-white dashboard_card mb-7">
-                  <DataChart data={chartData} />
+                <div className="bg-white dashboard_card ">
+                  {loadingStatus
+                    ? <Loader />
+                    : <DataChart data={applicantStatusChartData}
+                      dataType={"status"} />}
+                </div>
+              </div>
+            </div>
+            <div
+              id="table_0"
+              className={"col-md-6"}
+            >
+              <div className="bg-white dashboard_card mb-7">
+                <div className="d-flex justify-content-between p-5 align-items-center">
+                  <h3 className="font-size-5 px-3 m-0 ">Applicant Type's</h3>
+                </div>
+                <div className="bg-white dashboard_card ">
+                  {loadingType
+                    ? <Loader />
+                    : <DataChart data={applicantsTypeChartData}
+                      dataType={"type"} />}
                 </div>
               </div>
             </div>

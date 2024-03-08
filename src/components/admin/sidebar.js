@@ -262,7 +262,7 @@ const AdminSidebar = (props) => {
               Manage Notes
             </Link>
           </li>
-          {user_type === "admin" ? (
+          {/* {user_type === "admin" ? (
             <li
               className={
                 user_type === "admin" && props.heading === "Partner Dashboard"
@@ -280,7 +280,7 @@ const AdminSidebar = (props) => {
                 Partner Dashboard
               </Link>
             </li>
-          ) : null}
+          ) : null} */}
           <li
             className={
               user_type === "agent"

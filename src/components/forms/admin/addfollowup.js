@@ -172,10 +172,10 @@ function Addfollowup(props) {
                       </div>
                       <p className="font-size-4 m-0">
                         <div
-                        dangerouslySetInnerHTML={{
-                          __html: res.remark,
-                        }}
-                      />{ }</p>
+                          dangerouslySetInnerHTML={{
+                            __html: res.remark,
+                          }}
+                        />{ }</p>
                     </div>
                   </div>
                   // <div className="card mt-5 mb-5" key={res.id}>
@@ -540,9 +540,11 @@ function Addfollowup(props) {
                           res.remark === undefined ? (
                           <p className="font-size-3 mb-0">N/A</p>
                         ) : (
-                          <p className="m-0 text-black-2 font-weight-bold text-capitalize  text-truncate">
-                            <small>{res.remark}</small>
-                          </p>
+                          <p className="m-0 text-black-2 font-weight-bold text-capitalize  text-truncate"
+                            dangerouslySetInnerHTML={{
+                              __html: res.remark
+                            }} />
+
                         )}
                       </td>
                       <td>
