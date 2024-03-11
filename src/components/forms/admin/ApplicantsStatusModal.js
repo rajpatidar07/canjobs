@@ -17,7 +17,7 @@ export default function ApplicantsStatusModal(props) {
     try {
       let response = await AddEmployeeDetails(data);
       if (response.message === "Employee data updated successfully") {
-        toast.success("Employee status changes successfully", {
+        toast.success("Candidate status changes successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });

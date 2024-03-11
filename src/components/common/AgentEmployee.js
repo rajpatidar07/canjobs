@@ -184,7 +184,7 @@ function AgentsEmployee(props) {
   //           };
   //           let LimiaResponse = await AddLimia(lmia);
   //           if (LimiaResponse.message === "Data added successfully") {
-  //             toast.success("Employee Reserved successfully", {
+  //             toast.success("Candidate Reserved successfully", {
   //               position: toast.POSITION.TOP_RIGHT,
   //               autoClose: 1000,
   //             });
@@ -207,7 +207,7 @@ function AgentsEmployee(props) {
   //         ResponseData();
   //       }
   //       if (response.message === "already reserved") {
-  //         toast.error("Employee already reserved for another job", {
+  //           toast.error("Candidate already reserved for another job", {
   //           position: toast.POSITION.TOP_RIGHT,
   //           autoClose: 1000,
   //         });
@@ -226,7 +226,7 @@ function AgentsEmployee(props) {
   //         e.employee_id
   //       );
   //       if (Response.message === "successfully") {
-  //         toast.success("Employee Removed successfully", {
+  //         toast.success("Candidate Removed successfully", {
   //           position: toast.POSITION.TOP_RIGHT,
   //           autoClose: 1000,
   //         });
@@ -647,7 +647,7 @@ function AgentsEmployee(props) {
                                 //     ? () => employeeDetails(empdata.employee_id)
                                 //     : null
                                 // }
-                                title="Employee Details"
+                                title="Candidate Details"
                               >
                                 <div className="d-flex profile_box gx-2">
                                   <div className="media  align-items-center">

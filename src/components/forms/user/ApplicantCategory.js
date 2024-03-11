@@ -23,7 +23,7 @@ export default function ApplicantCategory(props) {
         try {
             let response = await AddEmployeeDetails(data);
             if (response.message === "Employee data updated successfully") {
-                toast.success("Employee Category updated successfully", {
+                toast.success("Candidate Category updated successfully", {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 1000,
                 });

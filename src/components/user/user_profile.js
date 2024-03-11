@@ -226,7 +226,7 @@ const NewUserProfile = (props) => {
     try {
       let response = await AddEmployeeDetails(data);
       if (response.message === "Employee data updated successfully") {
-        toast.success("Employee status changes successfully", {
+        toast.success("Candidate status changes successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
@@ -349,7 +349,7 @@ const NewUserProfile = (props) => {
                       <h4 className="mb-0 text-capitalize line-height-1">
                         {PersonalDetail.name ? PersonalDetail.name : ""}
                       </h4>
-                      <div className="m-0 age_gender font-size-3 d-flex align-items-center">
+                      <div className="m-0 age_gender font-size-3 d-flex align-items-center text-capitalize">
                         <p>
                           {PersonalDetail.gender ||
                             PersonalDetail.marital_status ||
@@ -1025,7 +1025,7 @@ const NewUserProfile = (props) => {
                                   </span>
                                 ) : null}
                                 {PersonalDetail.marital_status ? (
-                                  <span className="bg-info rounded-pill font-size-3 px-3 py-2 text-white mr-2">
+                                  <span className="bg-info rounded-pill font-size-3 px-3 py-2 text-white mr-2 text-capitalize">
                                     {PersonalDetail.marital_status}
                                   </span>
                                 ) : null}

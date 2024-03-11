@@ -185,7 +185,7 @@ function JobResponse(props) {
           };
           let LimiaResponse = await AddLimia(lmia);
           if (LimiaResponse.message === "Data added successfully") {
-            toast.success("Employee Reserved successfully", {
+            toast.success("Candidate Reserved successfully", {
               position: toast.POSITION.TOP_RIGHT,
               autoClose: 1000,
             });
@@ -210,7 +210,7 @@ function JobResponse(props) {
         ResponseData();
       }
       if (response.message === "already reserved") {
-        toast.error("Employee already reserved for another job", {
+          toast.error("Candidate already reserved for another job", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
@@ -229,7 +229,7 @@ function JobResponse(props) {
         e.employee_id
       );
       if (Response.message === "successfully") {
-        toast.success("Employee Removed successfully", {
+        toast.success("Candidate Removed successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
@@ -919,7 +919,7 @@ function JobResponse(props) {
                                         ? "d-none"
                                         : "btn btn-outline-info action_btn"
                                     }
-                                    title="Employee LMIA"
+                                    title="Candidate LMIA"
                                   >
                                     <Link
                                       to="/lmia"
@@ -939,7 +939,7 @@ function JobResponse(props) {
                                         ? "d-none"
                                         : "btn btn-outline-info action_btn"
                                     }
-                                    title="Employee Visa"
+                                    title="Candidate Visa"
                                   >
                                     <Link
                                       to="/visa"

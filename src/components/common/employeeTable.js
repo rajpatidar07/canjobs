@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import PersonalDetails from "../forms/user/personal";
 import Education from "../forms/user/education";
 import Skills from "../forms/user/skills";
@@ -16,7 +16,7 @@ import Loader from "../common/loader";
 import JobModal from "../admin/Modal/jobModal";
 import VisaStatus from "../forms/user/visaStatus";
 import ApplicantsStatusModal from "../forms/admin/ApplicantsStatusModal";
-import { /*MdOutlineCastForEducation*/MdTypeSpecimen } from "react-icons/md";
+// import { MdOutlineCastForEducationMdTypeSpecimen } from "react-icons/md";
 // import { LiaUserEditSolid, LiaUserTieSolid } from "react-icons/lia";
 import { GoTasklist } from "react-icons/go";
 // import { GiSkills } from "react-icons/gi";
@@ -195,7 +195,7 @@ export default function EmployeeTable(props) {
     try {
       const responseData = await DeleteJobEmployee(e);
       if (responseData.message === "Employee has been deleted") {
-        toast.error("Employee deleted Successfully", {
+        toast.error("Candidate deleted Successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
@@ -657,7 +657,7 @@ export default function EmployeeTable(props) {
                             //     ? () => employeeDetails(empdata.employee_id)
                             //     : null
                           }
-                          title="Employee Details"
+                          title="Candidate Details"
                         >
                           <div className="d-flex profile_box gx-2">
                             <div className="media  align-items-center">
@@ -902,14 +902,21 @@ export default function EmployeeTable(props) {
                         </td>
                       )}
                       {props.ApplicantType === "pnp" && (
-                        <td className=" py-5">
+                        <td className="">
                           {empdata.category === null ? (
                             <p className="font-size-3 mb-0">N/A</p>
                           ) : (
-                            <p className={`font-size-3 font-weight-normal text-black-2 mb-0 
-                            ${empdata.category === "tech pilot" ? "text-capitalize" : `text-uppercase`
+                            <p className={`font-size-2 font-weight-normal text-black-2 mb-0 
+                            ${empdata.category === "tech pathway" ? "text-capitalize" : `text-uppercase`
                               }`}>
+                              <span
+                              className={`p-1 text-white text-center w-100 border rounded-pill ${empdata.category === "tech pathway" ?  "bg-info " : empdata.category === "rrs" ?
+                                "bg-warning" :empdata.category === "aos" ?
+                                  "bg-coral-opacity-visible" : ""
+                                }`}
+                            >
                               {empdata.category}
+                            </span>
                             </p>
                           )}
                         </td>
@@ -1045,7 +1052,7 @@ export default function EmployeeTable(props) {
                                     }}
                                     className="btn btn-sm btn-outline-info action_btn text-center"
                                     to={`/${empdata.employee_id}`}
-                                    title="Employee Details"
+                                    title="Candidate Details"
                                     onClick={() => localStorage.setItem("StatusTab", status === "" ? "00" : status)}
                                   >
                                     Update

@@ -381,7 +381,7 @@ export default function VisaTable(props) {
                             </div>
                           </div>
 
-                          <div title="Employee Details">
+                          <div title="Candidate Details">
                             {empdata.name === null ? (
                               <div className="font-size-3 mb-0 text-capitalize">
                                 N/A

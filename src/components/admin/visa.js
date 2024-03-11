@@ -144,12 +144,12 @@ export default function Visa() {
                   }
                 >
                   <div className="col p-1 form_group mb-3">
-                    <p className="input_label">Search Employee:</p>
+                    <p className="input_label">Search Candidate:</p>
                     <input
                       required
                       type="text"
                       className="form-control"
-                      placeholder={"Search Employee"}
+                      placeholder={"Search Candidate"}
                       value={search}
                       name={"Employee_name"}
                       onChange={(e) => onSearch(e)}

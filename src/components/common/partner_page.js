@@ -219,10 +219,10 @@ export default function PartnerPage(props) {
                         onClick={() => {
                           setAgentId(data.id);
                         }}
-                        title="View Employees"
+                        title="View Candidate's"
                         disabled={data.agent_employee_count === "0" || 0}
                       >
-                        <MdFormatListBulletedAdd /> {"View Employees"}
+                        <MdFormatListBulletedAdd /> {"View Candidate's"}
                         {/* <i className="fa fa-list"></i> */}
                       </button>
                       <button

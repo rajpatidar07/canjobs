@@ -73,17 +73,18 @@ export default function ApplicantsFilter({ search,
         <>
             <div
                 className={
-                    skill === null || skill === undefined
-                        ? "col p-1 form_group mb-3"
-                        : "d-none"
+                    // skill === null || skill === undefined
+                        // ? 
+                        "col p-1 form_group mb-3"
+                        // : "d-none"
                 }
             >
-                <p className="input_label">Search Employee:</p>
+                <p className="input_label">Search Candidate:</p>
                 <input
                     required
                     type="text"
                     className="form-control"
-                    placeholder={"Search Employee"}
+                    placeholder={"Search Candidate"}
                     value={search}
                     name={"Employee_name"}
                     onChange={(e) => onSearch(e)}
@@ -262,7 +263,7 @@ export default function ApplicantsFilter({ search,
                             setinterestFilterValue(e.target.value);
                             setpageNo(1);
                         }}
-                        className={`text-capitalize form-control ${interestFilterValue === "pnp" ?
+                        className={` form-control ${interestFilterValue === "pnp" ?
                             `text-uppercase` :
                             "text-capitalize"}`}
                     >
@@ -304,7 +305,7 @@ export default function ApplicantsFilter({ search,
                         <option value={""}>Select sub type</option>
                         <option value={"aos"}>AOS</option>
                         <option value={"rrs"}>RRS</option>
-                        <option value={"tech pilot"}>Tech Pilot</option>
+                        <option value={"tech pathway"}>Tech Pathway</option>
                     </select>
                 </div>
             </div>

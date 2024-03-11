@@ -203,7 +203,7 @@ function UserRegisterPage() {
             // let Response = await AddEmployeePermission(Permissions);
             // conditions for the response toaster message
             // if (Response.message === "successfully") {
-            toast.success("Employee added successfully", {
+            toast.success("Candidate added successfully", {
               position: toast.POSITION.TOP_RIGHT,
               autoClose: 1000,
             });
@@ -215,7 +215,7 @@ function UserRegisterPage() {
           }
         }
         if (responseData.message === "Employee data updated successfully") {
-          toast.success("Employee Updated successfully", {
+          toast.success("Candidate Updated successfully", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
@@ -547,6 +547,7 @@ function UserRegisterPage() {
                   >
                     <option value={""}>Marital Status</option>
                     <option value={"single"}>Single</option>
+                    <option value={"widow"}>Widow</option>
                     <option value={"married"}>Married</option>
                     <option value={"separated"}>Separated</option>
                     <option value={"divorced"}>Divorced</option>

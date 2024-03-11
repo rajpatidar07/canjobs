@@ -302,7 +302,7 @@ function PersonalDetails(props) {
 
   // USER PERSONAL DETAIL SUBMIT BUTTON
   async function onUserPersonalDetailClick(event) {
-    console.log(errors)
+    // console.log(errors)
     event.preventDefault();
     if (validate() && imgError === "") {
       setLoading(true);
@@ -313,7 +313,7 @@ function PersonalDetails(props) {
             // let Response = await AddEmployeePermission(Permissions);
             // conditions for the response toaster message
             // if (Response.message === "successfully") {
-            toast.success("Employee added successfully", {
+            toast.success("Candidate added successfully", {
               position: toast.POSITION.TOP_RIGHT,
               autoClose: 1000,
             });
@@ -325,7 +325,7 @@ function PersonalDetails(props) {
           }
         }
         if (responseData.message === "Employee data updated successfully") {
-          toast.success("Employee Updated successfully", {
+          toast.success("Candidate Updated successfully", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
@@ -403,6 +403,10 @@ function PersonalDetails(props) {
     let base64Name = encoded.base64;
     setState({ ...state, profile_photo: base64Name });
   };
+    // Calculate min and max dates dynamically
+    const currentYear = moment().year();
+    const minDate = moment().subtract(10, 'years').format("YYYY-MM-DD");
+    const maxDate = moment().add(10, 'years').format("YYYY-MM-DD");
   return (
     <>
       <Modal
@@ -640,7 +644,9 @@ function PersonalDetails(props) {
                       Date Of Birth: <span className="text-danger">*</span>
                     </label>
                     <input
-                      max={moment().format("DD-MM-YYYY")}
+                      // max={moment().format("DD-MM-YYYY")}
+                      min={ moment().subtract(44, 'years').format("YYYY-MM-DD")}
+                      max={ moment().subtract(1, 'year').endOf('year').format("YYYY-MM-DD")}
                       type="date"
                       placeholder="Date Of Birth "
                       name="date_of_birth"
@@ -654,6 +660,7 @@ function PersonalDetails(props) {
                       }
                       id="date_of_birth"
                     />
+ 
                     {/*----ERROR MESSAGE FOR DOB----*/}
                     {errors.date_of_birth && (
                       <span
@@ -718,6 +725,7 @@ function PersonalDetails(props) {
                     >
                       <option value={""}>Marital Status</option>
                       <option value={"single"}>Single</option>
+                      <option value={"widow"}>Widow</option>
                       <option value={"married"}>Married</option>
                       <option value={"separated"}>Separated</option>
                       <option value={"divorced"}>Divorced</option>
@@ -919,8 +927,8 @@ function PersonalDetails(props) {
                     </label>
                     <select
                       className={`${errors.interested_in
-                          ? "form-control text-capitalize border border-danger "
-                          : "form-control text-capitalize "}
+                          ? "form-control  border border-danger "
+                          : "form-control "}
                           ${state.interested_in === "pnp" ?
                           `text-uppercase` :
                           "text-capitalize"}`
@@ -982,7 +990,7 @@ function PersonalDetails(props) {
                         <option value={""}>Select user type</option>
                         <option value={"aos"}>AOS</option>
                         <option value={"rrs"}>RRS</option>
-                        <option value={"tech pilot"}>Tech Pilot</option>
+                        <option value={"tech pathway"}>Tech Pathway</option>
                       </select>
                       {/* ----ERROR MESSAGE FOR category---- */}
                       {errors.category && (

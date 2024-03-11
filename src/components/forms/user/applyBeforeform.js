@@ -79,7 +79,7 @@ function ApplyBeforeform(props) {
       try {
         const responseData = await AddEmployeeDetails(state);
         if (responseData.message === "Employee data inserted successfully") {
-          toast.success("Employee added successfully", {
+          toast.success("Candidate added successfully", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
@@ -88,7 +88,7 @@ function ApplyBeforeform(props) {
           return close();
         }
         if (responseData.message === "Employee data updated successfully") {
-          toast.success("Employee Updated successfully", {
+          toast.success("Candidate Updated successfully", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });

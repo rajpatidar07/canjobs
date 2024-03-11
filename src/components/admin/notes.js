@@ -337,7 +337,7 @@ function Notes() {
               </div>
               <div className="col-6 mb-18">
                 <div className="col p-1 form_group mb-3">
-                  <p className="input_label">Search by Company:</p>
+                  <p className="input_label">Search by Client:</p>
                   <input
                     required
                     type="text"

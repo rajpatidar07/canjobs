@@ -1,7 +1,7 @@
 import React from "react";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import moment from "moment";
-import TextEditor from "../../common/TextEditor";
+// import TextEditor from "../../common/TextEditor";
 export default function AddNotesConversation({
   handleMessageSubmit,
   state,

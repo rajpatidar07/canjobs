@@ -3,11 +3,27 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 4,
             "patches": [
                 {
                     "date": 1709804709865,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1710132787079,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -918,9 +918,9 @@\n                                       props.response === \"lmia\"\n                                         ? \"d-none\"\n                                         : \"btn btn-outline-info action_btn\"\n                                     }\n-                                    title=\"Employee LMIA\"\n+                                    title=\"Candidate LMIA\"\n                                   >\n                                     <Link\n                                       to=\"/lmia\"\n                                       state={{\n@@ -938,9 +938,9 @@\n                                       res.is_reserve === \"0\"\n                                         ? \"d-none\"\n                                         : \"btn btn-outline-info action_btn\"\n                                     }\n-                                    title=\"Employee Visa\"\n+                                    title=\"Candidate Visa\"\n                                   >\n                                     <Link\n                                       to=\"/visa\"\n                                       state={{ id: res.employee_id }}\n"
+                },
+                {
+                    "date": 1710134375309,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -184,9 +184,9 @@\n             apply_id: e.apply_id,\n           };\n           let LimiaResponse = await AddLimia(lmia);\n           if (LimiaResponse.message === \"Data added successfully\") {\n-            toast.success(\"Employee Reserved successfully\", {\n+            toast.success(\"Candidate Reserved successfully\", {\n               position: toast.POSITION.TOP_RIGHT,\n               autoClose: 1000,\n             });\n             setApiCall(true);\n@@ -228,9 +228,9 @@\n         e.apply_id,\n         e.employee_id\n       );\n       if (Response.message === \"successfully\") {\n-        toast.success(\"Employee Removed successfully\", {\n+        toast.success(\"Candidate Removed successfully\", {\n           position: toast.POSITION.TOP_RIGHT,\n           autoClose: 1000,\n         });\n         setApiCall(true);\n"
+                },
+                {
+                    "date": 1710135185735,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -209,9 +209,9 @@\n         }\n         ResponseData();\n       }\n       if (response.message === \"already reserved\") {\n-        toast.error(\"Employee already reserved for another job\", {\n+         toast.error(\"Candidateerror(\"Employee already reserved for another job\", {\n           position: toast.POSITION.TOP_RIGHT,\n           autoClose: 1000,\n         });\n         ResponseData();\n"
+                },
+                {
+                    "date": 1710135205836,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -209,9 +209,9 @@\n         }\n         ResponseData();\n       }\n       if (response.message === \"already reserved\") {\n-         toast.error(\"Candidateerror(\"Employee already reserved for another job\", {\n+          toast.error(\"Candidate already reserved for another job\", {\n           position: toast.POSITION.TOP_RIGHT,\n           autoClose: 1000,\n         });\n         ResponseData();\n"
                 }
             ],
             "date": 1709804709865,

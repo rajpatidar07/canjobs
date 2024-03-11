@@ -194,7 +194,7 @@ export default function EmployeeNotesTable({ search }) {
                             //     ? () => employeeDetails(empdata.employee_id)
                             //     : null
                             // }
-                            title="Employee Details"
+                            title="Candidate Details"
                           >
                             <div className="d-flex profile_box gx-2">
                               <div className="media  align-items-center">

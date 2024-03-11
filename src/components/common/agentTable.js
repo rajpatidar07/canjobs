@@ -329,7 +329,7 @@ export default function AgentTable(props) {
                           //     ? () => employeeDetails(data.employee_id)
                           //     : null
                           // }
-                          title="Employee Details"
+                          title="Candidate Details"
                         > */}
                           <div className="d-flex profile_box gx-2">
                             <div className="media  align-items-center">
@@ -494,7 +494,7 @@ export default function AgentTable(props) {
                               onClick={() => {
                                 setAgentId(data.id);
                               }}
-                              title="Employee's"
+                              title="Candidate's"
                               disabled={data.agent_employee_count === "0" || 0}
                             >
                               <span className="text-gray px-2">
