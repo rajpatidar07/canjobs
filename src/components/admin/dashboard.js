@@ -10,7 +10,7 @@ import LimiaStatusTable from "../common/limiaStatusTable";
 import JobTable from "../common/jobTable";
 import EmployeeTable from "../common/employeeTable";
 import EmployerTable from "../common/employerTable";
-import { /*getSummaryCount*/ GetAllApplicanttypeChartData, GetAllChartData } from "../../api/api";
+import { /*getSummaryCount*/ GetAllApplicanttypeChartData, GetAllChartData, GetAllLimaChartData, GetAllVisaChartData } from "../../api/api";
 // import FollowUpDashBoard from "../common/followUpTableDashboard";
 import Addfollowup from "../forms/admin/addfollowup";
 import { FaWindowMaximize } from "react-icons/fa";
@@ -42,7 +42,11 @@ const AdminDashboard = () => {
   const [applicantStatusChartData, setApplicantStatusData] = useState([]);
   const [loadingStatus, setLoadingStatus] = useState(true);
   const [loadingType, setLoadingType] = useState(true);
+  // const [loadingLmia, setLoadingLmia] = useState(true);
+  // const [loadingVisa, setLoadingVisa] = useState(true);
   const [applicantsTypeChartData, setapplicantsTypeChartData] = useState([]);
+  // const [lmiaChartData, setLmiaChartData] = useState([]);
+  // const [visaChartData, setVisaChartData] = useState([]);
 
   /*Function to maximixe and minimize the tables*/
   const toggleTable = (tableNumber) => {
@@ -61,12 +65,12 @@ const AdminDashboard = () => {
   const getIcon = (tableNumber) => {
     return openTable === tableNumber ? <BsUsbMiniFill /> : <FaWindowMaximize />;
   };
+  let adminType = localStorage.getItem("admin_type")
   /*Function to Get Graph data */
   const GetChartData = async () => {
+    //Applicants status data
     try {
-      let res = await GetAllChartData("", localStorage.getItem("admin_type"))
-      let typeRes = await GetAllApplicanttypeChartData("", localStorage.getItem("admin_type"))
-      //Applicants status data
+      let res = await GetAllChartData("", adminType)
       if (res.status === 1) {
         setApplicantStatusData(res.data)
         setLoadingStatus(false)
@@ -74,7 +78,15 @@ const AdminDashboard = () => {
         setApplicantStatusData([])
         setLoadingStatus(false)
       }
-      //Applicants types data
+
+    } catch (err) {
+      console.log(err)
+      setLoadingStatus(false)
+
+    }
+    //Applicants types data
+    try {
+      let typeRes = await GetAllApplicanttypeChartData("", adminType)
       if (typeRes.status === 1) {
         setapplicantsTypeChartData(typeRes.data)
         setLoadingType(false)
@@ -82,9 +94,48 @@ const AdminDashboard = () => {
         setapplicantsTypeChartData([])
         setLoadingType(false)
       }
+
     } catch (err) {
       console.log(err)
+      setLoadingType(false)
+
     }
+    //Applicants lmia types data
+    // try {
+    //   let limaRes = await GetAllLimaChartData("", adminType)
+    //   if (limaRes.status === 1) {
+    //     setLmiaChartData(limaRes.data)
+    //     setLoadingLmia(false)
+    //   } else {
+    //     setLmiaChartData([])
+    //     setLoadingLmia(false)
+    //   }
+    //   //Applicants visa types data
+    //   if (visaRes.status === 1) {
+    //     setVisaChartData(visaRes.data)
+    //     setLoadingVisa(false)
+    //   } else {
+    //     setVisaChartData([])
+    //     setLoadingVisa(false)
+    //   }
+    // } catch (err) {
+    //   setLoadingLmia(false)
+    //   console.log(err)
+    // }
+    //Applicants visa types data
+    // try {
+    //   let visaRes = await GetAllVisaChartData("", adminType)
+    //   if (visaRes.status === 1) {
+    //     setVisaChartData(visaRes.data)
+    //     setLoadingVisa(false)
+    //   } else {
+    //     setVisaChartData([])
+    //     setLoadingVisa(false)
+    //   }
+    // } catch (err) {
+    //   console.log(err)
+    //   setLoadingVisa(false)
+    // }
   }
   useEffect(() => {
     GetChartData()
@@ -363,6 +414,7 @@ const AdminDashboard = () => {
                 </div>
               </div>
             </div>
+            {/* Applicant's type */}
             <div
               id="table_0"
               className={"col-md-6"}
@@ -379,6 +431,40 @@ const AdminDashboard = () => {
                 </div>
               </div>
             </div>
+            {/* Applicant's Lima */}
+            {/* <div
+              id="table_01"
+              className={"col-md-6 d-none"}
+            >
+              <div className="bg-white dashboard_card mb-7">
+                <div className="d-flex justify-content-between p-5 align-items-center">
+                  <h3 className="font-size-5 px-3 m-0 ">Applicant's LMIA</h3>
+                </div>
+                <div className="bg-white dashboard_card ">
+                  {loadingLmia
+                    ? <Loader />
+                    : <DataChart data={lmiaChartData}
+                      dataType={"lima"} />}
+                </div>
+              </div>
+            </div> */}
+            {/* Applicant's visa */}
+            {/* <div
+              id="table_02"
+              className={"col-md-6 d-none"}
+            >
+              <div className="bg-white dashboard_card mb-7">
+                <div className="d-flex justify-content-between p-5 align-items-center">
+                  <h3 className="font-size-5 px-3 m-0 ">Applicant's Visa</h3>
+                </div>
+                <div className="bg-white dashboard_card ">
+                  {loadingVisa
+                    ? <Loader />
+                    : <DataChart data={visaChartData}
+                      dataType={"visa"} />}
+                </div>
+              </div>
+            </div> */}
             {/* <!-- Recent Jobs- --> */}
             <div
               id="table1"

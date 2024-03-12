@@ -1,21 +1,48 @@
 import moment from "moment/moment";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useValidation from "../common/useValidation";
 // import { CKEditor } from "ckeditor4-react";
-import { AddEmployeeDetails } from "../../api/api";
+import { AddEmployeeDetails, GetAgentJson } from "../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import FilterJson from "../json/filterjson";
 // import AddAgent from "../admin/addAgent";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Permissions from "../json/emailPermisionJson";
 function UserRegisterPage() {
   let encoded;
   const [imgError, setImgError] = useState("");
   const [loading, setLoading] = useState(false);
   const [SingUpSuccess, setSingUpSuccess] = useState("");
+  const [agentList, setAgentList] = useState([]);
 
   let user_type = localStorage.getItem("userType");
+  const location = useLocation()
+
+  // const partnerId = searchParams.get("docId");
+  /*Function to get agent json list */
+  const AgentJson = async () => {
+    let response = await GetAgentJson();
+    try {
+      // let json = await GetFilter();
+      // console.log(json);
+      // if (Array.isArray(response)) {
+      //   const options = response.map((option) => ({
+      //     value: option.id,
+      //     label: option.u_id + "  " + option.name,
+      //     name: option.name
+      //   }));
+      // }
+      setAgentList(response);
+      // setJsonList(json.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    AgentJson()
+  }, [])
+
   // USER PERSONAL DETAIL VALIDATION
   // INITIAL STATE ASSIGNMENT
   const initialFormStateuser = {
@@ -39,7 +66,8 @@ function UserRegisterPage() {
     profile_photo: "",
     // is_featured: "",
     status: "1",
-    reffer_by: "1",
+    reffer_by: location.search ? location.search.split("?")[1] : "1",//39
+    assigned_by: "1",//26
     permission: JSON.stringify(Permissions),
   };
 
@@ -470,7 +498,9 @@ function UserRegisterPage() {
                     Date Of Birth: <span className="text-danger">*</span>
                   </label>
                   <input
-                    max={moment().format("DD-MM-YYYY")}
+                    // max={moment().format("DD-MM-YYYY")}
+                    min={moment().subtract(44, 'years').format("YYYY-MM-DD")}
+                    max={moment().subtract(1, 'year').endOf('year').format("YYYY-MM-DD")}
                     type="date"
                     placeholder="Date Of Birth "
                     name="date_of_birth"
@@ -731,10 +761,12 @@ function UserRegisterPage() {
                     Interested In: <span className="text-danger">*</span>
                   </label>
                   <select
-                    className={
-                      errors.interested_in
-                        ? "form-control border border-danger"
-                        : "form-control"
+                    className={`${errors.interested_in
+                      ? "form-control  border border-danger "
+                      : "form-control "}
+                      ${state.interested_in === "pnp" ?
+                        `text-uppercase` :
+                        "text-capitalize"}`
                     }
                     id="interested_in"
                     name="interested_in"
@@ -743,7 +775,10 @@ function UserRegisterPage() {
                   >
                     <option value={""}>Select</option>
                     {(FilterJson.interested || []).map((interest) => (
-                      <option key={interest} value={interest}>
+                      <option key={interest} value={interest}
+                        className={interest === "pnp" ?
+                          `text-uppercase` :
+                          "text-capitalize"}>
                         {interest}
                       </option>
                     ))}
@@ -758,6 +793,39 @@ function UserRegisterPage() {
                       className="text-danger font-size-3"
                     >
                       {errors.interested_in}
+                    </span>
+                  )}
+                </div>
+                <div className="form-group col-md-4">
+                  <label
+                    htmlFor="reffer_by"
+                    className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  >
+                    Reffer by: <span className="text-danger">*</span>
+                  </label>
+                  <select
+                    name="reffer_by"
+                    value={state.reffer_by || ""}
+                    onChange={onInputChange}
+                    className={
+                      errors.reffer_by
+                        ? "form-control text-capitalize border border-danger"
+                        : "form-control text-capitalize"
+                    }
+                    disabled={state.reffer_by}
+                    id="reffer_by"
+                  >
+                    <option value={""}>Select partner</option>
+                    {agentList.map((item) => <option value={item.id}>{item.u_id + " " + item.name} </option>)}
+
+                  </select>
+                  {/*----ERROR MESSAGE FOR reffer_by----*/}
+                  {errors.reffer_by && (
+                    <span
+                      key={errors.reffer_by}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.reffer_by}
                     </span>
                   )}
                 </div>

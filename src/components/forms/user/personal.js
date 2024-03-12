@@ -290,7 +290,9 @@ function PersonalDetails(props) {
   // };
   useEffect(() => {
     AgentJson();
-    AdminJson()
+    if(user_type === "admin"){
+      AdminJson()
+    }
     if (props.employeeId === "0" || props.employeeId === undefined) {
       setState(initialFormStateuser);
     } else {

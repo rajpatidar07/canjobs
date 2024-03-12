@@ -604,7 +604,7 @@ export default function EmployeeTable(props) {
                       scope="col"
                       className="border-0 font-size-4 font-weight-normal"
                     >
-                      Sub Applicant
+                      Sub Type
                     </th>}
                   {props.visa === "yes" ? null : (
                     <th

@@ -6,6 +6,7 @@ const DataChart = ({ data, dataType }) => {
   // Extracting counts from data
   const counts = data.map(item => parseInt(item.count, 10));
   let navigate = useNavigate()
+  // Applicant's status data
   // Reverse mapping object for status names to status numbers
   const statusMap = {
     "New": "1",
@@ -18,7 +19,6 @@ const DataChart = ({ data, dataType }) => {
     "Submitted": "8",
     "Web": "0"
   };
-
   const statuses = data.map(item => `${item.status === "1"
     ? "New"
     : item.status === "2"
@@ -40,9 +40,14 @@ const DataChart = ({ data, dataType }) => {
                     : "status"}`);
   //Applicants types data
   const interests = data.map(item => item.interested_in || "Unknown"); // Handle null value
-  console.log(interests, counts, dataType)
 
-  // On Click function for navigation
+  //Applicants lima data
+  let lmia = data.map(item => item.lmia_status || "Unknown")
+
+  //Applicants lima data
+  let visa = data.map(item => item.visa_status || "Unknown")
+
+  // On Click function for navigation from applicant status
   const handleStatusClick = (event, chartContext, { seriesIndex, dataPointIndex }) => {
     const clickedStatusName = statuses[dataPointIndex];
     const clickedStatusNumber = statusMap[clickedStatusName];
@@ -66,7 +71,7 @@ const DataChart = ({ data, dataType }) => {
   const options = {
     chart: {
       events: {
-        dataPointSelection: handleStatusClick
+        dataPointSelection: dataType === "status" ? handleStatusClick : null
       },
       width: '100%', // Change width to 100%
       type: 'pie', // Change chart type to 'pie'
@@ -74,7 +79,12 @@ const DataChart = ({ data, dataType }) => {
         show: false // Hide toolbar
       }
     },
-    labels: dataType === "status" ? statuses : interests, // Using extracted statuses as labels
+    labels: dataType === "status" ?
+      statuses : dataType === "type" ?
+        interests : dataType === "lima" ?
+          lmia : dataType === "visa" ?
+            visa : null
+    , // Using extracted statuses as labels
     legend: {
       position: 'bottom'
     },

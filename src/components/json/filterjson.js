@@ -603,7 +603,7 @@ const filterjson = {
     "working visa",
     "express entry",
     "business visa",
-    "federal p r"
+    "federal PR"
     // "swep",
     // "internship",
     // "co-op",

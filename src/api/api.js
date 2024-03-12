@@ -61,7 +61,34 @@ export const GetAllApplicanttypeChartData = async (id, type) => {
     });
   return response.data;
 };
-
+//Api to get the graph data count of all lima status
+export const GetAllLimaChartData = async (id, type) => {
+  const response = await axios.post(`${API_URL}admin/getLmiaStatusCount`, {
+    "id": id,
+    "type": type
+  },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    });
+  return response.data;
+};
+//Api to get the graph data count of all applicants type data  of visa status
+export const GetAllVisaChartData = async (id, type) => {
+  const response = await axios.post(`${API_URL}admin/getVisaStatusCount`, {
+    "id": id,
+    "type": type
+  },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    });
+  return response.data;
+};
 /*Chanage password Api */
 export const ChangePasswordApi = async (props) => {
   const response = await axios.put(
@@ -208,16 +235,22 @@ export const EmployeeAppliedJob = async (props) => {
   return response.data;
 };
 
-/*Add Employee detail api */
+/* Add Employee detail api */
 export const AddEmployeeDetails = async (props) => {
+  const headers = Token
+    ? {
+        "Content-Type": "application/json",
+        Authorization: Token
+      }
+    : {
+        "Content-Type": "application/json",
+        type: "event"
+      };
+console.log(Token,headers)
   const response = await axios.put(`${API_URL}employeePersonal_detail`, props, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: Token
-        ? Token
-        : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhZG1pbl9pZCI6IjIiLCJlbWFpbCI6InJhai53ZTJjb2RlQGdtYWlsLmNvbSIsInVzZXJfdHlwZSI6InN1cGVyLWFkbWluIiwiQVBJX1RJTUUiOjE3MDkwMzA1ODJ9._gFba5UnBxnVwzdeX_BHBAjd-Dno_fDzCNBJuoiv0Q8",//Vercel token
-    },
+    headers: headers
   });
+  
   return response.data;
 };
 /*Employee List Api */
@@ -262,7 +295,7 @@ export const getallEmployeeData = async (
       interested_in: inserted,
       agent_id: agentId,
       assigned_by: assignedadminId,
-      category:subType
+      category: subType
     },
     {
       headers: {
@@ -2714,7 +2747,7 @@ export const getActivityLog = async (
       user_type: user_type,
       action_id: action_id,
       action_type: action_type,
-      column_name: 
+      column_name:
         "created_at",
       sort_order: sort ? sort : "sort",
       limit: limit,
