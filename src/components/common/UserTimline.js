@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { getActivityLog } from "../../api/api";
 import moment from "moment";
-import Pagination from "./pagination";
+// import Pagination from "./pagination";
 export default function UserTimline() {
   // const [page, setpage] = useState(1);
-  const [perpage, setperpage] = useState(10);
-  const [pageNo, setpageNo] = useState(1);
+  // const [perpage, setperpage] = useState(10);
+  // const [pageNo, setpageNo] = useState(1);
   const [timeData, setTimeData] = useState([]);
-  const [totalRows, setTotalRows] = useState([]);
+  const [/*totalRows,*/ setTotalRows] = useState([]);
 
   let TimeLineData = async (userId, userEmail, userName) => {
     try {
@@ -22,7 +22,7 @@ export default function UserTimline() {
   useEffect(() => {
     TimeLineData();
   }, []);
-  console.log(timeData);
+  // console.log(timeData);
 
   return (
     <div className="timeline_box">

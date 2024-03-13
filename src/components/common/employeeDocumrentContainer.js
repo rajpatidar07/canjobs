@@ -43,6 +43,7 @@ export default function DocumrentContainer(props) {
   const [hide, setHide] = useState(false);
   const [bulkUpload, setBulkUpload] = useState("");
   const [loading, setLoading] = useState(true);
+  const [loadingBtn, setLoadingBtn] = useState(false);
   // Notification states to send in notificaion component
   const [notificationDoc, setNotificationDoc] = useState(props.docId ? 1 : 0);
   // const [notificationApiCall, setNotificationApiCall] = useState(false);
@@ -256,7 +257,7 @@ export default function DocumrentContainer(props) {
         setDocData([]);
         setLoading(false);
       } else {
-        {
+        
           if (
             response.data.data.allData.length === 0 ||
             response.data.data.allData === undefined ||
@@ -408,7 +409,7 @@ export default function DocumrentContainer(props) {
               }
             }
           }
-        }
+        
       }
     } catch (err) {
       console.log(err);
@@ -676,6 +677,7 @@ export default function DocumrentContainer(props) {
   // };
   /* Upload documents in bulk*/
   let SaveBulkDocument = async () => {
+    setLoadingBtn(true)
     try {
       let response = await UploadBulkDocument(
         props.employee_id,
@@ -715,6 +717,7 @@ export default function DocumrentContainer(props) {
             autoClose: 2000,
           });
         }
+        setLoadingBtn(false)
         setShowMoreDocType(false);
         setOtherDoc(false);
         setDocName(docName);
@@ -732,6 +735,7 @@ export default function DocumrentContainer(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        setLoadingBtn(false)
         setEditName(false);
         setDocId(docData[0] === docTypData ? docTypData.id : docId);
         setShowMoreDocType(false);
@@ -768,6 +772,7 @@ export default function DocumrentContainer(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        setLoadingBtn(false)
         setApiCall(true);
         setHide(false);
         setBulkUpload("");
@@ -781,6 +786,7 @@ export default function DocumrentContainer(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        setLoadingBtn(false)
         setApiCall(true);
         setShowSaveDoc(false);
         setHide(false);
@@ -791,6 +797,7 @@ export default function DocumrentContainer(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        setLoadingBtn(false)
         setApiCall(true);
         setHide(false);
         setShowSaveDoc(false);
@@ -802,6 +809,7 @@ export default function DocumrentContainer(props) {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
+      setLoadingBtn(false)
       setApiCall(true);
       setShowSaveDoc(false);
       setHide(false);
@@ -1361,6 +1369,7 @@ export default function DocumrentContainer(props) {
         />
         {/* Document view */}
         <ViewDocument
+          loadingBtn={loadingBtn}
           handleBulkFileChange={handleBulkFileChange}
           setBulkUpload={setBulkUpload}
           showSaveDoc={showSaveDoc}

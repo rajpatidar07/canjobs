@@ -478,6 +478,25 @@ const AdminSidebar = (props) => {
               Business Visa
             </Link>
           </li>
+          <li
+            className={
+              user_type === "agent"
+                ? "d-none"
+                : props.heading === "Federal PR"
+                ? "active"
+                : ""
+            }
+          >
+            <Link
+              to="/federal_pr
+              "
+              className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+            >
+              {/* <i className="fas fa-filter mr-5"></i> */}
+              <TiBusinessCard className="sidebar_icon" />
+              Federal PR
+            </Link>
+          </li>
         </ul>
       </div>
     </>

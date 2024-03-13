@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 13,
+            "activePatchIndex": 16,
             "patches": [
                 {
                     "date": 1709550767474,
@@ -60,6 +60,18 @@
                 {
                     "date": 1710133863889,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -218,12 +218,12 @@\n                         className=\"font-size-3 text-break btn btn-outline-secondary btn-rounded px-4 action_btn m-1\"\n                         onClick={() => {\n                           setAgentId(data.id);\n                         }}\n-                        title=\"View Employees\"\n+                        title=\"View Candidate's\"\n                         disabled={data.agent_employee_count === \"0\" || 0}\n                       >\n-                        <MdFormatListBulletedAdd /> {\"View Employees\"}\n+                        <MdFormatListBulletedAdd /> {\"View Candidate's\"}\n                         {/* <i className=\"fa fa-list\"></i> */}\n                       </button>\n                       <button\n                         className=\"font-size-3 text-break btn btn-outline-secondary btn-rounded px-4 action_btn m-1\"\n"
+                },
+                {
+                    "date": 1710309721571,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -299,8 +299,9 @@\n           />\n         </div>\n       </div>\n       <SAlert\n+className=\"text-capitalize\"\n         show={deleteAlert}\n         title={deleteName}\n         text=\"Are you Sure you want to delete !\"\n         onConfirm={() => OnDeleteAgent(deleteId)}\n"
+                },
+                {
+                    "date": 1710309859578,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -299,9 +299,9 @@\n           />\n         </div>\n       </div>\n       <SAlert\n-className=\"text-capitalize\"\n+  style={{ textTransform: 'capitalize' }}\n         show={deleteAlert}\n         title={deleteName}\n         text=\"Are you Sure you want to delete !\"\n         onConfirm={() => OnDeleteAgent(deleteId)}\n"
+                },
+                {
+                    "date": 1710310148551,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -299,9 +299,8 @@\n           />\n         </div>\n       </div>\n       <SAlert\n-  style={{ textTransform: 'capitalize' }}\n         show={deleteAlert}\n         title={deleteName}\n         text=\"Are you Sure you want to delete !\"\n         onConfirm={() => OnDeleteAgent(deleteId)}\n"
                 }
             ],
             "date": 1709550767474,

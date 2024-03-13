@@ -50,12 +50,12 @@ export default function ViewDocument({
   setDocTypeName,
   docTypeName,
   bulkUpload,
+  loadingBtn
 }) {
   return (
     <div
-      className={`${
-        user_type === "admin" ? "col-md-7" : "col-md-8"
-      } p-2 bg-dark`}
+      className={`${user_type === "admin" ? "col-md-7" : "col-md-8"
+        } p-2 bg-dark`}
     >
       <div className="row px-0 pt-0 pb-2 doc_upload_row m-0">
         {/* <div className="d-flex flex-wrap justify-content-start">
@@ -167,9 +167,9 @@ export default function ViewDocument({
           <button
             className={
               user_type === "user" ||
-              user_type === "admin" ||
-              user_type === "agent" ||
-              user_type === "company"
+                user_type === "admin" ||
+                user_type === "agent" ||
+                user_type === "company"
                 ? "btn btn-secondary btn-sm text-white mr-0 doc_btn"
                 : "d-none"
             }
@@ -200,23 +200,23 @@ export default function ViewDocument({
         {bulkUpload === "" || bulkUpload === "no"
           ? null
           : docTypeName && (
-              <div className="">
-                <label className="btn btn-secondary doc_btn">
-                  <AiOutlineCloudUpload className="font-size-3 mr-2" />
-                  <input
-                    type="file"
-                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-                    style={{ display: "none" }}
-                    onChange={(e) => {
-                      handleBulkFileChange(e);
-                      setHide(true);
-                    }}
-                    multiple
-                  />
-                  Select Documents
-                </label>
-              </div>
-            )}
+            <div className="">
+              <label className="btn btn-secondary doc_btn">
+                <AiOutlineCloudUpload className="font-size-3 mr-2" />
+                <input
+                  type="file"
+                  accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                  style={{ display: "none" }}
+                  onChange={(e) => {
+                    handleBulkFileChange(e);
+                    setHide(true);
+                  }}
+                  multiple
+                />
+                Select Documents
+              </label>
+            </div>
+          )}
 
         {docTypData && docTypData.id && (
           <div className="">
@@ -238,12 +238,25 @@ export default function ViewDocument({
         )}
         {showSaveDoc ? (
           <div className="doc_upload_col">
-            <button
-              className="btn btn-primary doc_btn"
-              onClick={SaveBulkDocument}
-            >
-              Save Documents
-            </button>
+            {loadingBtn ?
+              <button
+                className="btn btn-primary px-12"
+                type="button"
+                disabled
+              >
+                <span
+                  className="spinner-border spinner-border-sm "
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+                <span className="sr-only">Loading...</span>
+              </button>
+              : <button
+                className="btn btn-primary doc_btn"
+                onClick={SaveBulkDocument}
+              >
+                Save Documents
+              </button>}
           </div>
         ) : null}
         {hide === true ? (
@@ -265,8 +278,8 @@ export default function ViewDocument({
         ) : null}
       </div>
       <div className={`doc_preview_box p-0 bg-light rounded position-relative 
-      ${showSaveDoc||showMoreDocType
-      ?"d-none":""}`}>
+      ${showSaveDoc || showMoreDocType
+          ? "d-none" : ""}`}>
         {/* {docTypData ? ( */}
         <div className="doc_action_div">
           {/* {docFile ? (
@@ -332,16 +345,14 @@ export default function ViewDocument({
                 {/* <RenderNewDocFile /> */}
                 {RenderNewDocFile()}
                 <Link
-                  className={` ${
-                    hide === false &&
-                    docFile &&
-                    docName &&
-                    user_type === "admin"
-                      ? `btn-sm mt-7 doc_btn ${
-                          isAnnotationMode ? "btn-primary " : "btn-secondary"
-                        }`
+                  className={` ${hide === false &&
+                      docFile &&
+                      docName &&
+                      user_type === "admin"
+                      ? `btn-sm mt-7 doc_btn ${isAnnotationMode ? "btn-primary " : "btn-secondary"
+                      }`
                       : "d-none"
-                  }`}
+                    }`}
                   style={{
                     position: "fixed",
                     bottom: "285px",
@@ -398,12 +409,12 @@ export default function ViewDocument({
                         style={{
                           color:
                             selectedAnnotation &&
-                            selectedAnnotation.x_axis === annotation.x_axis &&
-                            selectedAnnotation.y_axis === annotation.y_axis
+                              selectedAnnotation.x_axis === annotation.x_axis &&
+                              selectedAnnotation.y_axis === annotation.y_axis
                               ? "blue"
                               : annotation.status === "1"
-                              ? "green"
-                              : "red",
+                                ? "green"
+                                : "red",
                           display: annotation.status === "1" ? "none" : "block",
                         }}
                       />

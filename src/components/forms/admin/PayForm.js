@@ -48,7 +48,7 @@ export default function PayForm({ setApicall, data, user, user_id }) {
 
   /*Function to made razor pay payment*/
   const onPayentClick = async (e) => {
-    console.log(errors, data);
+    // console.log(errors, data);
     if (validate() && (data.name || data.company_name)) {
       const script = document.createElement("script");
       script.src = "https://checkout.razorpay.com/v1/checkout.js";

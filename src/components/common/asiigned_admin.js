@@ -4,14 +4,14 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AdminSidebar from "../admin/sidebar";
 import AdminHeader from "../admin/header";
-import Admin_assigned_list from "./admin_assigned_list";
+import AdminAssignedlist from "./admin_assigned_list";
 export default function Asiigned_admin() {
 
   /*Show modal states */
   let [apiCall, setApiCall] = useState(false);
-  let [showAddEAgentModal, setShowAgentMOdal] = useState(false);
+  // let [showAddEAgentModal, setShowAgentMOdal] = useState(false);
   /*data and id states */
-  let [agentId, setAgentId] = useState();
+  // let [agentId, setAgentId] = useState();
   /*Filter and search state */
   const [pageNo, setpageNo] = useState(1);
   //   const [educationFilterValue, setEducationFilterValue] = useState("");
@@ -99,7 +99,7 @@ export default function Asiigned_admin() {
               <small className="text-danger">{searcherror}</small>
             </div>
             {/* <!-- Admi List Table- --> */}
-            <Admin_assigned_list
+            <AdminAssignedlist
               // showEmployeeProfile={showEmployeeProfile}
               // employeeDetails={employeeDetails}
               search={search}

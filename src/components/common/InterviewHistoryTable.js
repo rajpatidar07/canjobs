@@ -17,8 +17,8 @@ const InterviewHistoryTable = ({ employee_id }) => {
     // const [currentPage, setCurrentPage] = useState(1);
     const [recordsPerPage] = useState(10);
     /*Shorting states */
-    const [columnName, setcolumnName] = useState("id");
-    const [sortOrder, setSortOrder] = useState("DESC");
+    const [columnName,/* setcolumnName*/] = useState("id");
+    const [sortOrder,/* setSortOrder*/] = useState("DESC");
     const [currentPage, setCurrentPage] = useState(1);
 
     //   /* Function to get the intervew data*/

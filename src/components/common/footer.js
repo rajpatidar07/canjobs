@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import EmployeeLoginModal from "../user/login";
-import EmployeeSignupModal from "../user/signup";
+// import EmployeeLoginModal from "../user/login";
+// import EmployeeSignupModal from "../user/signup";
 
 function EmployeeFooter() {
-  const [showLogin, setShowLogin] = useState(false);
-  const [showSingUp, setShowSingUp] = useState(false);
+  // const [showLogin, setShowLogin] = useState(false);
+  // const [showSingUp, setShowSingUp] = useState(false);
   return (
     <footer className="footer bg-ebony-clay dark-mode-texts">
       <div className="container">
@@ -41,27 +41,27 @@ function EmployeeFooter() {
                 {/* <!-- Modal for Login--> */}
                 <Link
                   className="btn btn-outline-gallery btn-xl mx-4 mt-6 text-uppercase"
-                  to={""}
-                  onClick={() => setShowLogin(true)}
+                  to={"/candidate_login"}
+                  // onClick={() => setShowLogin(true)}
                 >
                   Log in
                 </Link>
-                <EmployeeLoginModal
+                {/* <EmployeeLoginModal
                   show={showLogin}
                   close={() => setShowLogin(false)}
-                />
+                /> */}
                 {/* <!-- Modal for SingUp--> */}
-                <button
+                <Link
                   className="btn btn-green btn-h-60 btn-xl mx-4 mt-6 text-uppercase"
-                  to={""}
-                  onClick={() => setShowSingUp(true)}
+                  to={"/candidate_signup"}
+                  // onClick={() => setShowSingUp(true)}
                 >
                   Sign up
-                </button>
-                <EmployeeSignupModal
+                </Link>
+                {/* <EmployeeSignupModal
                   show={showSingUp}
                   close={() => setShowSingUp(false)}
-                />
+                /> */}
               </div>
               {/* <!-- cta-btns end --> */}
             </div>
@@ -141,8 +141,8 @@ function EmployeeFooter() {
                     </li>
                     <li className="mb-3">
                       <Link
-                        to={""}
-                        onClick={() => setShowLogin(true)}
+                        to={"/candidate_login"}
+                        // onClick={() => setShowLogin(true)}
                         className="heading-default-color font-size-4 font-weight-normal"
                       >
                         User Login
@@ -151,7 +151,7 @@ function EmployeeFooter() {
                     <li className="mb-3">
                       <Link
                         to={"/client_login"}
-                        onClick={() => setShowSingUp(true)}
+                        // onClick={() => setShowSingUp(true)}
                         className="heading-default-color font-size-4 font-weight-normal"
                       >
                         Client Login

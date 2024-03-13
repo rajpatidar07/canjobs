@@ -7,7 +7,7 @@ import { Modal } from 'react-bootstrap';
 export default function ApplicantCategory(props) {
     const [category, setcategory] = useState(props.data.categor);
     const [loading, setLoading] = useState(false);
-    console.log(props.data)
+    // console.log(props.data)
     /*Function to set data to the search Category  */
     // const onCategorySelectChange = (option) => {
     //     setcategory(option.value);

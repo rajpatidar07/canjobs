@@ -3,11 +3,23 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 3,
             "patches": [
                 {
                     "date": 1710132787081,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1710309721743,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -562,8 +562,9 @@\n           />\n         </div>\n       </div>\n       <SAlert\n+className=\"text-capitalize\"\n         show={deleteAlert}\n         title={deleteName}\n         text=\"Are you Sure you want to delete !\"\n         onConfirm={() => OnDeleteAgent(deleteId)}\n"
+                },
+                {
+                    "date": 1710309859586,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -562,9 +562,9 @@\n           />\n         </div>\n       </div>\n       <SAlert\n-className=\"text-capitalize\"\n+  style={{ textTransform: 'capitalize' }}\n         show={deleteAlert}\n         title={deleteName}\n         text=\"Are you Sure you want to delete !\"\n         onConfirm={() => OnDeleteAgent(deleteId)}\n"
+                },
+                {
+                    "date": 1710310148532,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -562,9 +562,8 @@\n           />\n         </div>\n       </div>\n       <SAlert\n-  style={{ textTransform: 'capitalize' }}\n         show={deleteAlert}\n         title={deleteName}\n         text=\"Are you Sure you want to delete !\"\n         onConfirm={() => OnDeleteAgent(deleteId)}\n"
                 }
             ],
             "date": 1710132787081,

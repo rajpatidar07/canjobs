@@ -3,11 +3,23 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 3,
             "patches": [
                 {
                     "date": 1710133324638,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1710309721758,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -358,8 +358,9 @@\n             </div>\n           </div>\n           {/* <!-- Delete Sweet Alert- --> */}\n           {/* <SAlert\n+className=\"text-capitalize\"\n             show={deleteAlert}\n             title={deleteName}\n             text=\"Are you Sure you want to delete !\"\n             onConfirm={() => deleteCategory(deleteId)}\n"
+                },
+                {
+                    "date": 1710309859838,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -358,9 +358,9 @@\n             </div>\n           </div>\n           {/* <!-- Delete Sweet Alert- --> */}\n           {/* <SAlert\n-className=\"text-capitalize\"\n+  style={{ textTransform: 'capitalize' }}\n             show={deleteAlert}\n             title={deleteName}\n             text=\"Are you Sure you want to delete !\"\n             onConfirm={() => deleteCategory(deleteId)}\n"
+                },
+                {
+                    "date": 1710310148815,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -358,9 +358,8 @@\n             </div>\n           </div>\n           {/* <!-- Delete Sweet Alert- --> */}\n           {/* <SAlert\n-  style={{ textTransform: 'capitalize' }}\n             show={deleteAlert}\n             title={deleteName}\n             text=\"Are you Sure you want to delete !\"\n             onConfirm={() => deleteCategory(deleteId)}\n"
                 }
             ],
             "date": 1710133324638,

@@ -29,7 +29,7 @@ function MailPagination({
 
   // Function to handle pagination click
   const handlePageClick = (token, no) => {
-    console.log(token, no);
+    // console.log(token, no);
     // Call API with the token to fetch data
     // Update current page state
     setCurrentPage(currentPage === 1 ? "" : token);
@@ -37,7 +37,7 @@ function MailPagination({
     // Set another 10-digit number
     setPageToken([]);
   };
-  console.log(pageNumber);
+  // console.log(pageNumber);
   return (
     <div>
       {nPages > 1 && (
@@ -59,7 +59,7 @@ function MailPagination({
             </li>
             {visiblePageNumbers.map((pgNumber) => (
               <li className="page-item px-1" key={pgNumber}>
-                {console.log(pageToken, "Page no", pgNumber)}
+                {/* {console.log(pageToken, "Page no", pgNumber)} */}
                 <Link
                   onClick={() =>
                     handlePageClick(pageToken[pgNumber - 2], pgNumber)

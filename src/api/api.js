@@ -9,9 +9,9 @@ const view_as_token = localStorage.getItem("view_as_token");
 const user_id = localStorage.getItem("employee_id");
 const employer_id = localStorage.getItem("company_id");
 const admin_id = localStorage.getItem("admin_id");
-const agent_id = localStorage.getItem("agent_id");
+// const agent_id = localStorage.getItem("agent_id");
 const user_type = localStorage.getItem("userType");
-const admin_type = localStorage.getItem("admin_type");
+// const admin_type = localStorage.getItem("admin_type");
 if (view_as_token) {
   Token = view_as_token;
 }
@@ -246,7 +246,7 @@ export const AddEmployeeDetails = async (props) => {
         "Content-Type": "application/json",
         type: "event"
       };
-console.log(Token,headers)
+// console.log(Token,headers)
   const response = await axios.put(`${API_URL}employeePersonal_detail`, props, {
     headers: headers
   });
@@ -2251,7 +2251,7 @@ export const RemoveReservedEmployeeForJob = async (apply_id, employee_id) => {
 };
 /*Api to Send email to the user and company*/
 export const SendEmail = async (data, FileList) => {
-  console.log(FileList);
+  // console.log(FileList);
   const response = await axios.post(
     `${API_URL}sendEmailTest`,
     // {

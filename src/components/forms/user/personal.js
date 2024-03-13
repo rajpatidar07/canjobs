@@ -40,7 +40,7 @@ function PersonalDetails(props) {
   let [agentId /*, setAgentId*/] = useState();
 
   let user_type = localStorage.getItem("userType");
-  let admin_id = localStorage.getItem("admin_id");
+  // let admin_id = localStorage.getItem("admin_id");
   // USER PERSONAL DETAIL VALIDATION
   // INITIAL STATE ASSIGNMENT
   const initialFormStateuser = {
@@ -406,9 +406,9 @@ function PersonalDetails(props) {
     setState({ ...state, profile_photo: base64Name });
   };
     // Calculate min and max dates dynamically
-    const currentYear = moment().year();
-    const minDate = moment().subtract(10, 'years').format("YYYY-MM-DD");
-    const maxDate = moment().add(10, 'years').format("YYYY-MM-DD");
+    // const currentYear = moment().year();
+    // const minDate = moment().subtract(10, 'years').format("YYYY-MM-DD");
+    // const maxDate = moment().add(10, 'years').format("YYYY-MM-DD");
   return (
     <>
       <Modal

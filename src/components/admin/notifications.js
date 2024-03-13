@@ -21,7 +21,7 @@ function Notifications(
   }
 ) {
   const [show, setshow] = useState(false);
-  let [totalNotif, setTotalNotif] = useState(true);
+  let [totalNotif, setTotalNotif] = useState();
   let [notification, setNotiication] = useState([]);
   const [apicall, setApicall] = useState(false);
   let user_type = localStorage.getItem("userType");

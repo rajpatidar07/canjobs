@@ -18,7 +18,8 @@ function UserRegisterPage() {
 
   let user_type = localStorage.getItem("userType");
   const location = useLocation()
-
+  const searchParams = new URLSearchParams(location.search);
+  let ref = searchParams.get("ref")
   // const partnerId = searchParams.get("docId");
   /*Function to get agent json list */
   const AgentJson = async () => {
@@ -66,7 +67,7 @@ function UserRegisterPage() {
     profile_photo: "",
     // is_featured: "",
     status: "1",
-    reffer_by: location.search ? location.search.split("?")[1] : "1",//39
+    reffer_by: ref,//39
     assigned_by: "1",//26
     permission: JSON.stringify(Permissions),
   };
@@ -812,7 +813,7 @@ function UserRegisterPage() {
                         ? "form-control text-capitalize border border-danger"
                         : "form-control text-capitalize"
                     }
-                    disabled={state.reffer_by}
+                    // disabled={state.reffer_by}
                     id="reffer_by"
                   >
                     <option value={""}>Select partner</option>

@@ -5,7 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import TextEditor from "../common/TextEditor";
 const ReplyEmailForm = ({ mesId, emailType, setShowReplyForm, setApiCall, toggleReplyFormClick }) => {
     const [message, setMessage] = useState('');
-    console.log(mesId, emailType)
+    // console.log(mesId, emailType)
     // const handleMessageChange = (e) => {
     //     setMessage(e.target.value);
     // };

@@ -316,7 +316,7 @@ export default function EmployerDocumrentContainer(props) {
       setDocFile(base64Name);
       setDocFileExt(fileType.slice(1));
       setDocumentName(file.name.split(".")[0].replace(/ /g, "_"));
-      console.log(file.name.split(".")[0].replace(/ /g, "_"));
+      // console.log(file.name.split(".")[0].replace(/ /g, "_"));
       setDocFileBase(DocFile);
       setShowSaveDoc(true);
     }

@@ -60,7 +60,8 @@ import Pnp from "../admin/pnp";
 import PartnerDashboard from "./partner_dashboard";
 import ActivityLog from "./activity_log";
 import Credentional from "../admin/Credentional";
-import Asiigned_admin from "./asiigned_admin";
+import AsiignedAdmin from "./asiigned_admin";
+import Federalpr from "../admin/federalpr";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -165,7 +166,7 @@ function MainLayout() {
             <Route path="/followup" element={<Followup />} />
             <Route path="/partner" element={<Agent />} />
             <Route path="/partner_dashboard" element={<PartnerDashboard />} />
-            <Route path="/assigned_admin" element={<Asiigned_admin />} />
+            <Route path="/assigned_admin" element={<AsiignedAdmin />} />
             <Route path="/activity_log" element={<ActivityLog />} />
             <Route path="/filter" element={<FilterList />} />
             <Route path="/interview" element={<ManageInterview />} />
@@ -184,6 +185,7 @@ function MainLayout() {
             <Route path="/expressentry" element={<ExpressEntry />} />
             <Route path="/visitorsvisa" element={<VisitorVisa />} />
             <Route path="/pnp" element={<Pnp />} />
+            <Route path="/federal_pr" element={<Federalpr />} />
             <Route path="*" element={<Loader load={"yes"} />} />
           </>
         )}

@@ -442,7 +442,7 @@ export default function EmployeeTable(props) {
                   Submitted
                 </button>
               </>
-            )}{" "}
+            )}
             <button
               type="button"
               className={
@@ -613,7 +613,8 @@ export default function EmployeeTable(props) {
                     >
                       Status
                     </th>
-                  )} <th
+                  )}
+                  <th
                     scope="col"
                     className="border-0 font-size-4 font-weight-normal"
                   >
@@ -629,7 +630,6 @@ export default function EmployeeTable(props) {
                       Action
                     </th>
                   )}
-
                 </tr>
               </thead>
               <tbody>
@@ -910,13 +910,13 @@ export default function EmployeeTable(props) {
                             ${empdata.category === "tech pathway" ? "text-capitalize" : `text-uppercase`
                               }`}>
                               <span
-                              className={`p-1 text-white text-center w-100 border rounded-pill ${empdata.category === "tech pathway" ?  "bg-info " : empdata.category === "rrs" ?
-                                "bg-warning" :empdata.category === "aos" ?
-                                  "bg-coral-opacity-visible" : ""
-                                }`}
-                            >
-                              {empdata.category}
-                            </span>
+                                className={`p-1 text-white text-center w-100 border rounded-pill ${empdata.category === "tech pathway" ? "bg-info " : empdata.category === "rrs" ?
+                                  "bg-warning" : empdata.category === "aos" ?
+                                    "bg-coral-opacity-visible" : ""
+                                  }`}
+                              >
+                                {empdata.category}
+                              </span>
                             </p>
                           )}
                         </td>

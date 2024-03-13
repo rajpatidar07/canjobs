@@ -188,7 +188,7 @@ function SendMailForm({ email, setApiCall }) {
         fileList[DocRealName] = DocFile;
         fileNameList.push(DocRealName);
       }
-      console.log(fileList, fileNameList);
+      // console.log(fileList, fileNameList);
       setFileBase(fileList);
       setFileNames(fileNameList);
       // Store the object of files
@@ -205,7 +205,7 @@ function SendMailForm({ email, setApiCall }) {
 
   /*Function to sent email*/
   const onContactusClick = async () => {
-    console.log(fileBase);
+    // console.log(fileBase);
     if (validate()) {
       try {
         setLoading(true);

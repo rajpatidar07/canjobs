@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import FilterJson from "../json/filterjson";
-import { GetFilter, GetAgentJson, getallAdminData } from "../../api/api";
+import { /*GetFilter,*/ GetAgentJson, getallAdminData } from "../../api/api";
 
 export default function ApplicantsFilter({ search,
     onSearch,
@@ -24,22 +24,22 @@ export default function ApplicantsFilter({ search,
     setCategoryFilterValue,
     categoryFilterValue
 }) {
-    let [SkillList, setSkillList] = useState([]);
-    let [EducationList, setEducationList] = useState([]);
+    // let [SkillList, setSkillList] = useState([]);
+    // let [EducationList, setEducationList] = useState([]);
     let [AgentList, setAgentList] = useState([]);
     let [AdminList, setAdmintList] = useState([]);
     /*Function to get thejSon */
     const JsonData = async () => {
         try {
-            let Json = await GetFilter();
+            // let Json = await GetFilter();
             let agentjson = await GetAgentJson();
-            if (Json.data.message === "No data found") {
-                setSkillList([]);
-                setEducationList([]);
-            } else {
-                setSkillList(Json.data.data.Skill);
-                setEducationList(Json.data.data.Education);
-            }
+            // if (Json.data.message === "No data found") {
+            //     setSkillList([]);
+            //     setEducationList([]);
+            // } else {
+            //     setSkillList(Json.data.data.Skill);
+            //     setEducationList(Json.data.data.Education);
+            // }
             if (agentjson.length === 0) {
                 setAgentList([]);
             } else {
@@ -73,7 +73,7 @@ export default function ApplicantsFilter({ search,
         <>
             <div
                 className={
-                    // skill === null || skill === undefined
+                    // (skill === null || skill === undefined)
                         // ? 
                         "col p-1 form_group mb-3"
                         // : "d-none"
@@ -92,7 +92,7 @@ export default function ApplicantsFilter({ search,
             </div>
             {/* <div
                 className={
-                    skill === null || skill === undefined
+                    (skill === null || skill === undefined)
                         ? "col p-1 form_group mb-3"
                         : "d-none"
                 }
@@ -121,7 +121,7 @@ export default function ApplicantsFilter({ search,
             </div> */}
             {/* <div
                 className={
-                    skill === null || skill === undefined
+                    (skill === null || skill === undefined)
                         ? "col p-1 form_group mb-3"
                         : "d-none"
                 }
@@ -151,7 +151,7 @@ export default function ApplicantsFilter({ search,
             </div> */}
             {/* <div
                 className={
-                    skill === null || skill === undefined
+                    (skill === null || skill === undefined)
                         ? "col p-1 form_group mb-3"
                         : "d-none"
                 }
@@ -184,7 +184,7 @@ export default function ApplicantsFilter({ search,
 
             <div
                 className={
-                    skill === null || skill === undefined && user_type === "admin"
+                    (skill === null || skill === undefined) && user_type === "admin"
                         ? "col p-1 form_group mb-3"
                         : "d-none"
                 }
@@ -216,7 +216,7 @@ export default function ApplicantsFilter({ search,
             </div>
             <div
                 className={
-                    skill === null || skill === undefined
+                    (skill === null || skill === undefined)
                         && user_type === "admin" ? "col p-1 form_group mb-3 "
                         : "d-none"
                 }
@@ -248,7 +248,7 @@ export default function ApplicantsFilter({ search,
             </div>
             <div
                 className={
-                    skill === null || skill === undefined && (pageName === "employee") ?
+                    (skill === null || skill === undefined) && (pageName === "employee") ?
                         "col p-1 form_group mb-3 "
                         : "d-none"
                 }
@@ -284,7 +284,7 @@ export default function ApplicantsFilter({ search,
             </div>
             <div
                 className={
-                    skill === null || skill === undefined && (
+                    (skill === null || skill === undefined) && (
                         pageName === "pnp" || pageName === "employee")
                         ? "col p-1 form_group mb-3"
                         : "d-none"

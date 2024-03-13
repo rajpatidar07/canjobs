@@ -816,45 +816,30 @@ function AgentsEmployee(props) {
                             {props.visa === "yes" ? null : (
                               <td className="py-2">
                                 <p className="font-size-2  text-black-2 mb-0">
-                                  {empdata.status === "1" ? (
-                                    <span
-                                      className={
-                                        !isTimeWithin24Hours(empdata.created_at)
-                                          ? "p-1 bg-danger text-white text-center w-100 border rounded-pill"
-                                          : "p-1 bg-info text-white text-center w-100 border rounded-pill"
-                                      }
-                                    >
-                                      New
-                                    </span>
-                                  ) : empdata.status === "2" ? (
-                                    <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
-                                      Prospect
-                                    </span>
-                                  ) : empdata.status === "3" ? (
-                                    <span className="p-1 bg-coral-opacity-visible text-white text-center w-100 border rounded-pill">
-                                      Lead
-                                    </span>
-                                  ) : empdata.status === "4" ? (
-                                    <span className="p-1 bg-secondary text-white text-center w-100 border rounded-pill">
-                                      Reatined
-                                    </span>
-                                  ) : empdata.status === "5" ? (
-                                    <span className="p-1 bg-spray text-white text-center w-100 border rounded-pill">
-                                      Lost
-                                    </span>
-                                  ) : empdata.status === "6" ? (
-                                    <span className="p-1 bg-dark text-white text-center w-100 border rounded-pill">
-                                      Dead
-                                    </span>
-                                  ) : empdata.status === "7" ? (
-                                    <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
-                                      Reserved
-                                    </span>
-                                  ) : empdata.status === "0" ? (
-                                    <span className="p-1 bg-info text-white text-center w-100 border rounded-pill">
-                                      New
-                                    </span>
-                                  ) : null}
+                                <span
+                              className={`p-1 text-white text-center w-100 border rounded-pill ${empdata.status === "1" || empdata.status === "0" ? (
+                                !isTimeWithin24Hours(empdata.created_at)
+                                  ? "bg-danger "
+                                  : "bg-info ") : empdata.status === "2" ?
+                                "bg-warning" : empdata.status === "3" ?
+                                  "bg-coral-opacity-visible" : empdata.status === "4" ?
+                                    "bg-secondary" : empdata.status === "5" ?
+                                      "bg-spray" : empdata.status === "6" ?
+                                        "bg-dark" : empdata.status === "7" ?
+                                          "bg-primary-opacity-8" : empdata.status === "8" ?
+                                            "bg-eastern" : ""
+                                }`}
+                            >
+                              {empdata.status === "1" || empdata.status === "0" ?
+                                "New" : empdata.status === "2" ?
+                                  "Prospect" : empdata.status === "3" ?
+                                    "Lead" : empdata.status === "4" ?
+                                      "Retained" : empdata.status === "5" ?
+                                        "Lost" : empdata.status === "6" ?
+                                          "Dead" : empdata.status === "7" ?
+                                            "Working on" : empdata.status === "8" ?
+                                              "Submitted" : ""}
+                            </span>
                                 </p>
                               </td>
                             )}
