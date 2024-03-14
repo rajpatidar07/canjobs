@@ -102,7 +102,7 @@ const InterviewHistoryTable = ({ employee_id }) => {
                                         //     setCurrentPage(1);
                                         // }}
                                         className="text-gray"
-                                        // title="Sort by id"
+                                    // title="Sort by id"
                                     >   ID
                                     </Link>
                                 </th>
@@ -114,12 +114,15 @@ const InterviewHistoryTable = ({ employee_id }) => {
                                         //     setCurrentPage(1);
                                         // }}
                                         className="text-gray"
-                                        // title="Sort by Time"
+                                    // title="Sort by Time"
                                     >  Scheduled By
                                     </Link>
                                 </th>
                                 <th scope="col" className="border-0 font-size-4 font-weight-normal">
                                     Interview Status
+                                </th>
+                                <th scope="col" className="border-0 font-size-4 font-weight-normal">
+                                    Date
                                 </th>
                                 <th scope="col" className="border-0 font-size-4 font-weight-normal">
                                     Message
@@ -139,13 +142,12 @@ const InterviewHistoryTable = ({ employee_id }) => {
                                                 <b className="text-dark font-size-3 text-capitalize">
                                                     {interview.created_by}
                                                 </b>
-                                                <br />
-                                                <i className="font-size-2">
-                                                    {moment(interview.created_at).format("lll")}
-                                                </i>
                                             </div>
                                         }</td>
                                         <td className='text-capitalize '>{textReplaceFunction(interview.action_type)}</td>
+                                        <td><i className="font-size-2">
+                                            {moment(interview.created_at).format("lll")}
+                                        </i></td>
                                         <td>
                                             <p className="timeline_date text-dark font-size-3 text-capitalize mt-5">
                                                 {interview.msg}

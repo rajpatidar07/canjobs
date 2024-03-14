@@ -946,7 +946,7 @@ const NewUserProfile = (props) => {
                         aria-selected="true"
                         onClick={() => setTabActive("InterviewHistory")}
                       >
-                        Interview History
+                        Interview 
                       </Link>
                     </li>
                   </ul>
