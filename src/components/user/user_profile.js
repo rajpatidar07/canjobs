@@ -886,7 +886,7 @@ const NewUserProfile = (props) => {
                         TimeLine
                       </Link>
                     </li>
-                    <li className={"tab-menu-items nav-item"}>
+                    <li className={user_type === "company"|| user_type === "user"  ? "d-none" : "tab-menu-items nav-item"}>
                       <Link
                         className={
                           TabActive === "email"

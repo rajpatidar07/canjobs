@@ -176,12 +176,33 @@ function ResumeGrerator(props) {
       months === 1 ? months + " month " : months > 1 ? months + " months ," : ""
     } ${days === 1 ? days + " day" : days !== 1 ? days + " days" : ""}`;
   };
+  // function getText(html) {
+  //   var divContainer = document.createElement("div");
+  //   divContainer.innerHTML = html;
+  //   return divContainer.textContent || divContainer.innerText || "";
+  // }
   function getText(html) {
     var divContainer = document.createElement("div");
     divContainer.innerHTML = html;
-    return divContainer.textContent || divContainer.innerText || "";
+  
+    // Convert list items to text with proper indentation
+    divContainer.querySelectorAll('ul, ol').forEach(list => {
+      Array.from(list.children).forEach((li, index) => {
+        li.textContent = `${list.tagName === 'OL' ? `${index + 1}.` : '•'} ${li.textContent}`;
+      });
+    });
+  
+    // Preserve bold and italic formatting
+    divContainer.querySelectorAll('b').forEach(element => {
+      element.textContent = `**${element.textContent}**`;
+    });
+  
+    divContainer.querySelectorAll('i').forEach(element => {
+      element.textContent = `*${element.textContent}*`;
+    });
+      return divContainer.textContent;
   }
-
+  
   return (
     <PDFViewer style={styles.pagesetup}>
       <Document>

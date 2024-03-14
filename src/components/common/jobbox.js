@@ -36,7 +36,7 @@ function JobBox({
   const user_type = localStorage.getItem("userType");
   const user_id = localStorage.getItem("employee_id");
   const skill = localStorage.getItem("skill");
-let navigate =useNavigate()
+  let navigate = useNavigate()
   /*Functionality to get the data to search the jobs */
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -74,8 +74,10 @@ let navigate =useNavigate()
         setjobData([]);
       } else {
         if (
-          (!token && location.pathname === "/") ||
-          (!skill && !SkillFilterValue && user_type === "user")
+          ((!token && location.pathname === "/") ||
+          (!skill && !SkillFilterValue && user_type === "user"))
+          && userData.data.data.find((item) => item.is_featured === "1")
+          && location.pathname !== "/jobs"
         ) {
           setjobData(
             userData.data.data.filter((item) => item.is_featured === "1")
@@ -163,8 +165,8 @@ let navigate =useNavigate()
             if (job !== "") {
               skill =
                 job.keyskill === null ||
-                job.keyskill === undefined ||
-                job.keyskill === "undefined"
+                  job.keyskill === undefined ||
+                  job.keyskill === "undefined"
                   ? []
                   : job.keyskill.split(",");
             }
@@ -183,12 +185,12 @@ let navigate =useNavigate()
                   onClick={
                     token && (user_type === "user" || user_type === "company")
                       ? // ? job.is_applied === "0"
-                        () => {
-                          localStorage.setItem("job_id", job.job_id);
-                          OnApplyClick(1, job.job_id);
-                        }
+                      () => {
+                        localStorage.setItem("job_id", job.job_id);
+                        OnApplyClick(1, job.job_id);
+                      }
                       : // : null
-                        () => navigate("/candidate_login")//setShowLogin(true)
+                      () => navigate("/candidate_login")//setShowLogin(true)
                   }
                 >
                   {job.job_type === "swap" ? (

@@ -134,9 +134,9 @@ function CompanyProfileDetail(props) {
                       className="company_logo"
                       src={
                         employerData.logo === null ||
-                        employerData.logo === null ||
-                        employerData.logo === undefined ||
-                        employerData.logo === "undefined"
+                          employerData.logo === null ||
+                          employerData.logo === undefined ||
+                          employerData.logo === "undefined"
                           ? "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
                           : employerData.logo
                       }
@@ -184,7 +184,7 @@ function CompanyProfileDetail(props) {
                         <CustomButton
                           title={"Send Custom Email"}
                           className="font-size-4 rounded-3 btn-primary py-0 d-none"
-                          /*Functionalities have to be done. */
+                        /*Functionalities have to be done. */
                         >
                           {/*Take off "d-none" when you Send Custom Email API or when you're told to remove it*/}
                           <RiMailSendLine />
@@ -355,7 +355,7 @@ function CompanyProfileDetail(props) {
                       Activity History
                     </Link>
                   </li>
-                  <li className="tab-menu-items nav-item">
+                  <li className={user_type === "user" ? "d-none" : "tab-menu-items nav-item"}>
                     {/*Take off "d-none" when you use the activity log API or when you're told to remove it*/}
 
                     <Link
@@ -398,7 +398,7 @@ function CompanyProfileDetail(props) {
                       Contact Us
                     </Link>
                   </li>
-                  <li className={"tab-menu-items nav-item"}>
+                  <li className={user_type === "user" ? "d-none" : "tab-menu-items nav-item"}>
                     <Link
                       className={
                         TabActive === "email"
@@ -502,14 +502,14 @@ function CompanyProfileDetail(props) {
                                 <hr className="my-3" />
                                 <div className="position-relative">
                                   {!employerData.industry &&
-                                  !employerData.corporation &&
-                                  !employerData.company_size &&
-                                  !employerData.company_start_date &&
-                                  !employerData.website_url &&
-                                  !employerData.vacancy_for_post &&
-                                  !employerKycData.pan_no &&
-                                  !employerKycData.tan_number &&
-                                  !employerKycData.gstin ? (
+                                    !employerData.corporation &&
+                                    !employerData.company_size &&
+                                    !employerData.company_start_date &&
+                                    !employerData.website_url &&
+                                    !employerData.vacancy_for_post &&
+                                    !employerKycData.pan_no &&
+                                    !employerKycData.tan_number &&
+                                    !employerKycData.gstin ? (
                                     <div className="text-left row m-0">
                                       <div className="font-size-4 mb-8 text-center mr-10">
                                         No Data Found
@@ -589,7 +589,7 @@ function CompanyProfileDetail(props) {
                                         </div>
                                       ) : null}
                                       {employerKycData === "" ||
-                                      user_type === "user" ? null : (
+                                        user_type === "user" ? null : (
                                         <div className="d-none">
                                           {employerKycData.pan_no ? (
                                             <div
@@ -603,7 +603,7 @@ function CompanyProfileDetail(props) {
                                             </div>
                                           ) : null}
                                           {!employerKycData.tan_number ||
-                                          user_type === "user" ? null : (
+                                            user_type === "user" ? null : (
                                             <div
                                               className="font-size-3 mb-1 mr-10"
                                               title="TAN"
@@ -615,7 +615,7 @@ function CompanyProfileDetail(props) {
                                             </div>
                                           )}
                                           {!employerKycData.gstin ||
-                                          user_type === "user" ? null : (
+                                            user_type === "user" ? null : (
                                             <div
                                               className="font-size-3 mb-1 mr-10"
                                               title="GSTIN"
@@ -660,11 +660,11 @@ function CompanyProfileDetail(props) {
                                         {employerData.email}
                                       </Link>
                                       {user_type === "admin" ||
-                                      props.self === "no" ? (
+                                        props.self === "no" ? (
                                         <CustomButton
                                           title={"Send Custom Email"}
                                           className="font-size-4 rounded-3 btn-primary py-0 d-none"
-                                          /*Functionalities have to be done. */
+                                        /*Functionalities have to be done. */
                                         >
                                           {/*Take off "d-none" when you Send Custom Email API or when you're told to remove it*/}
                                           <RiMailSendLine />
@@ -749,7 +749,7 @@ function CompanyProfileDetail(props) {
                       setApiCall={setApiCall}
                       pageNo={jobPageNo}
                       setpageNo={setJobPageNO}
-                      // setLmiaStatusRejectComment={setLmiaStatusRejectComment}
+                    // setLmiaStatusRejectComment={setLmiaStatusRejectComment}
                     />
                   </div>
                   {/* <!-- Top Start --> */}
@@ -811,26 +811,26 @@ function CompanyProfileDetail(props) {
                       setApiCall={setApiCall}
                     />
                   ) : //  <div className="p-10 notes_container">
-                  //         <div className="single_note mb-5">
-                  //           <small>Created on: 2023-08-03 17:10:53</small>
-                  //           <div className="card p-5">
-                  //             This is some text within a card body.
-                  //           </div>
-                  //         </div>
-                  //         <div className="single_note mb-5">
-                  //           <small>Created on: 2023-08-03 17:10:53</small>
-                  //           <div className="card p-5">
-                  //             This is some text within a card body.
-                  //           </div>
-                  //         </div>
-                  //         <div className="single_note mb-5">
-                  //           <small>Created on: 2023-08-03 17:10:53</small>
-                  //           <div className="card p-5">
-                  //             This is some text within a card body.
-                  //           </div>
-                  //         </div>
-                  //       </div>
-                  null}
+                    //         <div className="single_note mb-5">
+                    //           <small>Created on: 2023-08-03 17:10:53</small>
+                    //           <div className="card p-5">
+                    //             This is some text within a card body.
+                    //           </div>
+                    //         </div>
+                    //         <div className="single_note mb-5">
+                    //           <small>Created on: 2023-08-03 17:10:53</small>
+                    //           <div className="card p-5">
+                    //             This is some text within a card body.
+                    //           </div>
+                    //         </div>
+                    //         <div className="single_note mb-5">
+                    //           <small>Created on: 2023-08-03 17:10:53</small>
+                    //           <div className="card p-5">
+                    //             This is some text within a card body.
+                    //           </div>
+                    //         </div>
+                    //       </div>
+                    null}
                 </div>
                 <div
                   className={

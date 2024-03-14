@@ -101,6 +101,8 @@ function MainLayout() {
             <Route path="/profile" element={<UserProfile />} />
             <Route path="/:eid" element={<NewUserProfile />} />
             <Route path="*" element={<NotFound />} />
+            <Route path="/job_detail" element={<JobDetailpageAdmim />} />
+            <Route path="/client_detail" element={<CompanyProfileDetail />} />
           </>
         ) : (
           <>
@@ -124,6 +126,7 @@ function MainLayout() {
             <Route path="/lmia_dashboard" element={<EmployerLMIA />} />
             <Route path="/resume/:id" element={<ResumeGrerator />} />
             <Route path="*" element={<NotFound />} />
+            <Route path="/job_detail" element={<JobDetailpageAdmim />} />
           </>
         ) : (
           <>
