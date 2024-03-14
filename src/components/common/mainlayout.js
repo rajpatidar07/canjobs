@@ -103,6 +103,7 @@ function MainLayout() {
             <Route path="*" element={<NotFound />} />
             <Route path="/job_detail" element={<JobDetailpageAdmim />} />
             <Route path="/client_detail" element={<CompanyProfileDetail />} />
+            <Route path="/userpdf" element={<PDFViewer />} />
           </>
         ) : (
           <>
@@ -123,10 +124,12 @@ function MainLayout() {
             <Route path="/response" element={<Response />} />
             <Route path="/empsearch" element={<EmployeeSearch />} />
             <Route path="/profile" element={<UserProfile />} />
-            <Route path="/lmia_dashboard" element={<EmployerLMIA />} />
+            {/* <Route path="/lmia_dashboard" element={<EmployerLMIA />} /> */}
+            <Route path="/lmia" element={<LimaContainer />} />
             <Route path="/resume/:id" element={<ResumeGrerator />} />
             <Route path="*" element={<NotFound />} />
             <Route path="/job_detail" element={<JobDetailpageAdmim />} />
+            <Route path="/userpdf" element={<PDFViewer />} />
           </>
         ) : (
           <>

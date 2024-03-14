@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 29,
+            "activePatchIndex": 31,
             "patches": [
                 {
                     "date": 1699004313800,
@@ -124,6 +124,14 @@
                 {
                     "date": 1710407173393,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -101,8 +101,9 @@\n             <Route path=\"/profile\" element={<UserProfile />} />\n             <Route path=\"/:eid\" element={<NewUserProfile />} />\n             <Route path=\"*\" element={<NotFound />} />\n             <Route path=\"/job_detail\" element={<JobDetailpageAdmim />} />\n+            <Route path=\"/client_detail\" element={<CompanyProfileDetail />} />\n           </>\n         ) : (\n           <>\n             <Route path=\"/\" element={<EmployeeHomePage />} />\n"
+                },
+                {
+                    "date": 1710413039430,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -102,8 +102,9 @@\n             <Route path=\"/:eid\" element={<NewUserProfile />} />\n             <Route path=\"*\" element={<NotFound />} />\n             <Route path=\"/job_detail\" element={<JobDetailpageAdmim />} />\n             <Route path=\"/client_detail\" element={<CompanyProfileDetail />} />\n+            <Route path=\"/userpdf\" element={<PDFViewer />} />\n           </>\n         ) : (\n           <>\n             <Route path=\"/\" element={<EmployeeHomePage />} />\n@@ -126,8 +127,9 @@\n             <Route path=\"/lmia_dashboard\" element={<EmployerLMIA />} />\n             <Route path=\"/resume/:id\" element={<ResumeGrerator />} />\n             <Route path=\"*\" element={<NotFound />} />\n             <Route path=\"/job_detail\" element={<JobDetailpageAdmim />} />\n+            <Route path=\"/userpdf\" element={<PDFViewer />} />\n           </>\n         ) : (\n           <>\n             <Route path=\"/\" element={<EmployeeHomePage />} />\n"
+                },
+                {
+                    "date": 1710415653886,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -123,9 +123,10 @@\n             <Route path=\"/managejobs\" element={<ManageJobs />} />\n             <Route path=\"/response\" element={<Response />} />\n             <Route path=\"/empsearch\" element={<EmployeeSearch />} />\n             <Route path=\"/profile\" element={<UserProfile />} />\n-            <Route path=\"/lmia_dashboard\" element={<EmployerLMIA />} />\n+            {/* <Route path=\"/lmia_dashboard\" element={<EmployerLMIA />} /> */}\n+            <Route path=\"/lmia\" element={<LimaContainer />} />\n             <Route path=\"/resume/:id\" element={<ResumeGrerator />} />\n             <Route path=\"*\" element={<NotFound />} />\n             <Route path=\"/job_detail\" element={<JobDetailpageAdmim />} />\n             <Route path=\"/userpdf\" element={<PDFViewer />} />\n"
                 }
             ],
             "date": 1699004313800,

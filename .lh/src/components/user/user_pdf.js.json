@@ -1,0 +1,22 @@
+{
+    "sourceFile": "src/components/user/user_pdf.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1710412959541,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1710413002987,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,50 @@\n+import React from \"react\";\r\n+import FileViewer from \"react-file-viewer\"; // Import your FileViewer library\r\n+import { useLocation } from \"react-router-dom\";\r\n+const PDFViewer = () => {\r\n+  const location = useLocation();\r\n+  const urlSearchParams = new URLSearchParams(location.search);\r\n+  const pdfUrl = urlSearchParams.get(\"pdfUrl\");\r\n+  const fileExtension = pdfUrl ? pdfUrl.split(\".\").pop().toLowerCase() : null;\r\n+\r\n+  /*Functio to Download pdf */\r\n+  const downloadPDF = () => {\r\n+    const link = document.createElement(\"a\");\r\n+    link.href = pdfUrl;\r\n+    link.target = \"_blank\";\r\n+    link.download = `resume.${fileExtension}`;\r\n+    link.click();\r\n+  };\r\n+  if (!pdfUrl) {\r\n+    // Handle the case where pdfUrl is null or empty\r\n+    return <div>No PDF URL provided.</div>;\r\n+  }\r\n+  return (\r\n+    <div>\r\n+      <div className=\"d-flex justify-content-end mt-15 \">\r\n+        <button\r\n+          className=\"p-5 rounded-3 btn-info mx-3 w-auto text-end\"\r\n+          onClick={downloadPDF}\r\n+          title=\"Download Document\"\r\n+        >\r\n+          <i className=\"fa fa-download\" aria-hidden=\"true\"></i>\r\n+        </button>\r\n+      </div>\r\n+      <div className=\"d-flex justify-content-around text-center\">\r\n+        <div className=\"w-100\">\r\n+          {pdfUrl ? (\r\n+            <FileViewer\r\n+              fileType={fileExtension === \"pdf\" ? \"pdf\" : \"image\"}\r\n+              filePath={decodeURIComponent(pdfUrl)}\r\n+              errorComponent={() => <div>Error loading document</div>}\r\n+            />\r\n+          ) : (\r\n+            <div>No PDF URL provided.</div>\r\n+          )}\r\n+        </div>\r\n+      </div>\r\n+    </div>\r\n+  );\r\n+};\r\n+\r\n+export default PDFViewer;\r\n"
+                }
+            ],
+            "date": 1710412959541,
+            "name": "Commit-0",
+            "content": "import React from \"react\";\r\nimport FileViewer from \"react-file-viewer\"; // Import your FileViewer library\r\nimport { useLocation } from \"react-router-dom\";\r\nconst PDFViewer = () => {\r\n  const location = useLocation();\r\n  const urlSearchParams = new URLSearchParams(location.search);\r\n  const pdfUrl = urlSearchParams.get(\"pdfUrl\");\r\n  const fileExtension = pdfUrl ? pdfUrl.split(\".\").pop().toLowerCase() : null;\r\n\r\n  /*Functio to Download pdf */\r\n  const downloadPDF = () => {\r\n    const link = document.createElement(\"a\");\r\n    link.href = pdfUrl;\r\n    link.target = \"_blank\";\r\n    link.download = `resume.${fileExtension}`;\r\n    link.click();\r\n  };\r\n  if (!pdfUrl) {\r\n    // Handle the case where pdfUrl is null or empty\r\n    return <div>No PDF URL provided.</div>;\r\n  }\r\n  return (\r\n    <div>\r\n      <div className=\"d-flex justify-content-end mt-15 \">\r\n        <button\r\n          className=\"p-5 rounded-3 btn-info mx-3 w-auto text-end\"\r\n          onClick={downloadPDF}\r\n          title=\"Download Document\"\r\n        >\r\n          <i className=\"fa fa-download\" aria-hidden=\"true\"></i>\r\n        </button>\r\n      </div>\r\n      <div className=\"d-flex justify-content-around text-center\">\r\n        <div className=\"w-100\">\r\n          {pdfUrl ? (\r\n            <FileViewer\r\n              fileType={fileExtension === \"pdf\" ? \"pdf\" : \"image\"}\r\n              filePath={pdfUrl}\r\n              errorComponent={() => <div>Error loading document</div>}\r\n            />\r\n          ) : (\r\n            <div>No PDF URL provided.</div>\r\n          )}\r\n        </div>\r\n      </div>\r\n    </div>\r\n  );\r\n};\r\n\r\nexport default PDFViewer;\r\n"
+        }
+    ]
+}
