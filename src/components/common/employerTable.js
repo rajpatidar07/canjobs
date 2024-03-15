@@ -261,11 +261,11 @@ export default function EmployerTable(props) {
                     >
                       Action
                     </th>
-                  )}{" "}
+                  )}
                 </tr>
               </thead>
               <tbody>
-                {" "}
+                
                 {/* Map function to show the data in the list*/}
                 {totalData === 0 || employerData.length === 0 ? (
                   <tr>
@@ -305,7 +305,7 @@ export default function EmployerTable(props) {
                                     alt=""
                                     className="w-100"
                                   />
-                                )}{" "}
+                                )}
                               </div>
                             </div>
                             {empdata.franchise === null ? (
@@ -318,13 +318,13 @@ export default function EmployerTable(props) {
                                   className="m-0 text-black-2 font-weight-bold text-capitalize text-truncate"
                                   title={empdata.franchise}
                                 >
-                                  {empdata.franchise}{" "}
+                                  {empdata.franchise}
                                 </p>
                                 <p className="font-size-3 font-weight-normal mb-0">
-                                  {empdata.industry}{" "}
+                                  {empdata.industry}
                                 </p>
                               </div>
-                            )}{" "}
+                            )}
                           </div>
                         </Link>
                       </th>
@@ -343,7 +343,7 @@ export default function EmployerTable(props) {
                             >
                               {empdata.contact_person_name === null
                                 ? "N/A"
-                                : empdata.contact_person_name}{" "}
+                                : empdata.contact_person_name}
                             </p>
                           </Link>
                         </th>
@@ -382,7 +382,7 @@ export default function EmployerTable(props) {
                                 " " +
                                 empdata.country}
                             </p>
-                          )}{" "}
+                          )}
                         </th>
                       )}
                       <th className=" py-5  pr-0">
@@ -398,7 +398,7 @@ export default function EmployerTable(props) {
                                 className="text-dark"
                                 to={`tel:${empdata.contact_no}`}
                               >
-                                {empdata.contact_no}{" "}
+                                {empdata.contact_no}
                               </Link>
                             </div>
                             <div className="font-size-3 font-weight-normal mb-0">
@@ -412,21 +412,21 @@ export default function EmployerTable(props) {
                                     className="text-dark"
                                     to={`tel:${empdata.contact_no_other}`}
                                   >
-                                    {empdata.contact_no_other}{" "}
+                                    {empdata.contact_no_other}
                                   </Link>
                                 </>
-                              )}{" "}
+                              )}
                             </div>
                             <p className="text-gray font-size-2 font-weight-normal m-0">
                               <Link
                                 className="text-dark"
                                 to={`mailto:${empdata.email}`}
                               >
-                                {empdata.email}{" "}
+                                {empdata.email}
                               </Link>
                             </p>
                           </>
-                        )}{" "}
+                        )}
                       </th>
                       <th className="py-5 ">
                         {empdata.vacancy_for_post === null ? (
@@ -437,7 +437,7 @@ export default function EmployerTable(props) {
                           <p className="font-size-3 font-weight-normal mb-0">
                             {empdata.vacancy_for_post}({empdata.vacancies})
                           </p>
-                        )}{" "}
+                        )}
                       </th>
                       <th className="  py-5 ">
                         <p className="font-size-2 font-weight-normal text-black-2 mb-0">
@@ -449,7 +449,7 @@ export default function EmployerTable(props) {
                             <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
                               Incomplete
                             </span>
-                          )}{" "}
+                          )}
                         </p>
                       </th>
                       {props.heading === "Dashboard" ? (
@@ -477,7 +477,7 @@ export default function EmployerTable(props) {
                                 <span className="text-gray px-1">
                                   <BsArrow90DegRight />
                                 </span>
-                                {/* <span className="fas fa-briefcase text-gray  "></span> */}{" "}
+                                {/* <span className="fas fa-briefcase text-gray  "></span> */}
                               </Link>
                             </button>
                             <button
@@ -490,7 +490,7 @@ export default function EmployerTable(props) {
                               <span className="text-gray px-1">
                                 <PiAddressBookLight />
                               </span>
-                              {/* <span className="fa fa-address-book text-gray px-1"></span> */}{" "}
+                              {/* <span className="fa fa-address-book text-gray px-1"></span> */}
                             </button>
                             {/* <button
                               className="btn btn-outline-info action_btn"
@@ -511,7 +511,7 @@ export default function EmployerTable(props) {
                               <span className="text-gray px-1">
                                 <LiaEdit />
                               </span>
-                              {/* <span className=" fas fa-edit text-gray px-1"></span> */}{" "}
+                              {/* <span className=" fas fa-edit text-gray px-1"></span> */}
                             </button>
                             <button
                               className="btn btn-outline-info action_btn"
@@ -521,17 +521,17 @@ export default function EmployerTable(props) {
                               <span className="text-danger px-1">
                                 <RiDeleteBin5Line />
                               </span>
-                              {/* <span className="fa fa-trash text-danger px-1"></span> */}{" "}
+                              {/* <span className="fa fa-trash text-danger px-1"></span> */}
                             </button>
                           </div>
                         </th>
-                      )}{" "}
+                      )}
                     </tr>
                   ))
-                )}{" "}
+                )}
               </tbody>
             </table>
-          )}{" "}
+          )}
         </div>
         <div className="pt-2">
           <Pagination

@@ -227,7 +227,7 @@ function ResumeGrerator(props) {
                 {User.contact_no ? (
                   <>
                     <Text style={styles.icon}>Phone:</Text>
-                    <Text style={styles.conValue}>{User.contact_no}</Text>{" "}
+                    <Text style={styles.conValue}>{User.contact_no}</Text>
                   </>
                 ) : (
                   ""

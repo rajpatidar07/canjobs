@@ -37,7 +37,7 @@ export default function UserTimline() {
                     <div className="timeline_date">
                       <b className="text-primary font-size-3 text-capitalize">
                         {item.created_by}
-                      </b>{" "}
+                      </b>
                       <i className="font-size-2">
                         {moment(item.created_at).format("lll")}
                       </i>

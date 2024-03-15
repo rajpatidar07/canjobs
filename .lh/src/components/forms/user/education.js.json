@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 4,
             "patches": [
                 {
                     "date": 1710309721560,
@@ -16,6 +16,14 @@
                 {
                     "date": 1710310148816,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -555,9 +555,8 @@\n             </div>\n           </form>\n           {/* </div> */}\n           <SAlert\n-  style={{ textTransform: 'capitalize' }}\n             show={deleteAlert}\n             title={deleteName}\n             text=\"Are you Sure you want to delete !\"\n             onConfirm={() => deleteEducation(deleteId)}\n"
+                },
+                {
+                    "date": 1710503309957,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -297,9 +297,9 @@\n                 </div>\n               ))}\n             </div>\n             <h4>\n-              {state.education_id ? \"Update Education\" : \"Add Education\"}{\" \"}\n+              {state.education_id ? \"Update Education\" : \"Add Education\"}\n             </h4>\n             <div className=\"row pt-5\">\n               <div className=\"form-group col-md-6\">\n                 <label\n"
+                },
+                {
+                    "date": 1710504369699,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -297,9 +297,9 @@\n                 </div>\n               ))}\n             </div>\n             <h4>\n-              {state.education_id ? \"Update Education\" : \"Add Education\"}\n+              {state.education_id ? \"Update Education\" : \"Add Education\"}{\" \"}\n             </h4>\n             <div className=\"row pt-5\">\n               <div className=\"form-group col-md-6\">\n                 <label\n"
                 }
             ],
             "date": 1710309721560,

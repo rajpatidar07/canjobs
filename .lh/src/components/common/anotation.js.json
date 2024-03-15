@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 17,
+            "activePatchIndex": 19,
             "patches": [
                 {
                     "date": 1709528741696,
@@ -76,6 +76,14 @@
                 {
                     "date": 1709721602902,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -576,9 +576,9 @@\n \n // export default Annotation;\n \n import React, { useState } from 'react';\n-import { EditorState, convertToRaw } from 'draft-js';\n+import { EditorState } from 'draft-js';\n import { Editor } from 'react-draft-wysiwyg';\n import { stateToHTML } from 'draft-js-export-html';\n import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';\n \n"
+                },
+                {
+                    "date": 1710503309845,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -148,9 +148,9 @@\n //           <h2>List of Comments:</h2>\n //           <ul>\n //             {getCommentsList().map((commentItem, index) => (\n //               <li key={index} className=\"text-break\">\n-//                 <strong>{commentItem.coordinates}:</strong>{\" \"}\n+//                 <strong>{commentItem.coordinates}:</strong>\n //                 {commentItem.comment}\n //               </li>\n //             ))}\n //           </ul>\n@@ -374,9 +374,9 @@\n //           <h2>List of Comments:</h2>\n //           <ul>\n //             {/* {(comments || []).map((commentItem, index) => (\n //               <li key={index} className=\"text-break\">\n-//                 <strong>{commentItem.coordinates}:</strong>{\" \"}\n+//                 <strong>{commentItem.coordinates}:</strong>\n //                 {commentItem.comment}\n //               </li>\n //             ))} */}\n //           </ul>\n"
+                },
+                {
+                    "date": 1710504314336,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -148,9 +148,9 @@\n //           <h2>List of Comments:</h2>\n //           <ul>\n //             {getCommentsList().map((commentItem, index) => (\n //               <li key={index} className=\"text-break\">\n-//                 <strong>{commentItem.coordinates}:</strong>\n+//                 <strong>{commentItem.coordinates}:</strong>{\" \"}\n //                 {commentItem.comment}\n //               </li>\n //             ))}\n //           </ul>\n@@ -374,9 +374,9 @@\n //           <h2>List of Comments:</h2>\n //           <ul>\n //             {/* {(comments || []).map((commentItem, index) => (\n //               <li key={index} className=\"text-break\">\n-//                 <strong>{commentItem.coordinates}:</strong>\n+//                 <strong>{commentItem.coordinates}:</strong>{\" \"}\n //                 {commentItem.comment}\n //               </li>\n //             ))} */}\n //           </ul>\n"
                 }
             ],
             "date": 1709528741696,

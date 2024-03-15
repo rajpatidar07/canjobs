@@ -2,34 +2,42 @@ import React, { useState } from "react";
 import { Form, InputGroup } from "react-bootstrap";
 import GlobalSearchCard from "./globalSearchCard";
 import { GlobalSearchResult } from "../../api/api";
-
+import { Link } from "react-router-dom";
+import { FaSearch } from "react-icons/fa";
 function GlobalSearch() {
   const [show, setshow] = useState(false);
-  let [isLoading, setIsLoading] = useState(true);
+  // let [isLoading, setIsLoading] = useState(true);
   let [searchData, setSearchData] = useState([]);
 
   /*Global Search API Call*/
   const GlobalSearchAPICall = async (e) => {
     let search = "";
     search = e.target.value;
-    setIsLoading(true);
+    // setIsLoading(true);
     try {
       const userData = await GlobalSearchResult(search);
       setSearchData(userData.data.data);
       // console.log(searchData.admin.length);
-      setIsLoading(false);
+      // setIsLoading(false);
     } catch (err) {
       console.log(err);
-      setIsLoading(false);
+      // setIsLoading(false);
     }
   };
   return (
     <div className="global_search_box">
-      <i
+      {/* <i
         style={{ cursor: "pointer" }}
         className="fas fa-search text-white mx-5"
         onClick={() => setshow(true)}
-      ></i>
+      ></i> */}
+      <span
+        style={{ cursor: "pointer" }}
+        className=" text-white mx-5"
+        onClick={() => setshow(true)}
+        title="Global Search">
+        <FaSearch />
+      </span>
       <div
         className={
           show
@@ -47,11 +55,11 @@ function GlobalSearch() {
                 aria-describedby="basic-addon2"
                 onChange={(e) => GlobalSearchAPICall(e)}
               />
-              <a
-                href={undefined}
+              <Link
+                // href={undefined}
                 style={{ position: "absolute", right: "5px" }}
                 className="fas fa-search text-dark"
-              ></a>
+              ></Link>
             </InputGroup>
             <i
               style={{ fontSize: "22px" }}

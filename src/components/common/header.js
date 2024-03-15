@@ -216,7 +216,7 @@ function EmployeeHeader() {
                             window.location.reload();
                           }}
                         >
-                          {" "}
+                          
                           Log out
                         </Link>
                       </li>

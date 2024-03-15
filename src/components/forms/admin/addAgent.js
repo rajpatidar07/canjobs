@@ -75,8 +75,8 @@ function AddAgent(props) {
     // ],
     password: [
       (value) =>
-        state.agent_id || props.agentId
-          ? value === ""
+      state.id || state.agent_id || props.agentId
+          ? ''
           : value === ""
           ? "Password is required"
           : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(
@@ -207,7 +207,7 @@ function AddAgent(props) {
   // USER agent PROFILE UPDATE SUBMIT BUTTON
   const onAgentProfileUpdateClick = async (event) => {
     event.preventDefault();
-    // console.log(errors, props.agentId);
+    console.log(errors, state);
     if (validate()) {
       setLoading(true);
       try {

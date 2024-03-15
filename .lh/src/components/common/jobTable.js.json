@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 4,
             "patches": [
                 {
                     "date": 1710309721559,
@@ -16,6 +16,14 @@
                 {
                     "date": 1710310148554,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1135,9 +1135,8 @@\n           setApiCall={setApiCall}\n         />\n       ) : null}\n       <SAlert\n-  style={{ textTransform: 'capitalize' }}\n         show={deleteAlert}\n         title={deleteName}\n         text=\"Are you Sure you want to delete !\"\n         onConfirm={() => deleteJob(deleteId)}\n"
+                },
+                {
+                    "date": 1710503309850,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -483,9 +483,9 @@\n                                 title={job.job_title + ` (${job.employement})`}\n                               >\n                                 <>\n                                   <p className=\"m-0 text-black-2 font-weight-bold text-capitalize\">\n-                                    {job.job_title}{\" \"}\n+                                    {job.job_title}\n                                     {job.employement\n                                       ? `(${job.employement})`\n                                       : \"\"}\n                                   </p>\n"
+                },
+                {
+                    "date": 1710504359058,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -483,9 +483,9 @@\n                                 title={job.job_title + ` (${job.employement})`}\n                               >\n                                 <>\n                                   <p className=\"m-0 text-black-2 font-weight-bold text-capitalize\">\n-                                    {job.job_title}\n+                                    {job.job_title}{\" \"}\n                                     {job.employement\n                                       ? `(${job.employement})`\n                                       : \"\"}\n                                   </p>\n"
                 }
             ],
             "date": 1710309721559,

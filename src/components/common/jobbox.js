@@ -274,7 +274,7 @@ function JobBox({
                             title="Posted Time"
                           >
                             <span className="mr-4">
-                              <LiaBusinessTimeSolid />{" "}
+                              <LiaBusinessTimeSolid />
                             </span>
                             <span className="font-weight-semibold">
                               {moment(job.created_at).format("DD MMMM, YYYY")}

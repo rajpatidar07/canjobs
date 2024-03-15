@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 4,
             "patches": [
                 {
                     "date": 1710309721559,
@@ -16,6 +16,14 @@
                 {
                     "date": 1710310148555,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -623,9 +623,8 @@\n                 )} */}\n               </div>\n             </div>\n             <SAlert\n-  style={{ textTransform: 'capitalize' }}\n               show={deleteAlert}\n               title={deleteName}\n               text=\"Are you Sure you want to delete !\"\n               onConfirm={() => deleteEducation(deleteId)}\n"
+                },
+                {
+                    "date": 1710503310609,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -269,9 +269,9 @@\n                         <div className=\"d-flex align-items-center justify-content-right flex-wrap text-right\">\n                           <span className=\"font-size-4 text-gray w-100\">\n                             {moment(CareerDetails.start_date).format(\n                               \"DD MMMM, YYYY\"\n-                            )}{\" \"}\n+                            )}\n                             -\n                             {CareerDetails.currently_work_here === (\"1\" || 1)\n                               ? \"Currently working\"\n                               : moment(CareerDetails.end_date).format(\n"
+                },
+                {
+                    "date": 1710504367316,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -269,9 +269,9 @@\n                         <div className=\"d-flex align-items-center justify-content-right flex-wrap text-right\">\n                           <span className=\"font-size-4 text-gray w-100\">\n                             {moment(CareerDetails.start_date).format(\n                               \"DD MMMM, YYYY\"\n-                            )}\n+                            )}{\" \"}\n                             -\n                             {CareerDetails.currently_work_here === (\"1\" || 1)\n                               ? \"Currently working\"\n                               : moment(CareerDetails.end_date).format(\n"
                 }
             ],
             "date": 1710309721559,

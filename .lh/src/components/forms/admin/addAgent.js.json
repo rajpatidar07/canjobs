@@ -3,11 +3,19 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 2,
             "patches": [
                 {
                     "date": 1710313132739,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1710497858359,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -206,9 +206,9 @@\n \n   // USER agent PROFILE UPDATE SUBMIT BUTTON\n   const onAgentProfileUpdateClick = async (event) => {\n     event.preventDefault();\n-    // console.log(errors, props.agentId);\n+    console.log(errors, state);\n     if (validate()) {\n       setLoading(true);\n       try {\n         const responseData = await AddUpdateAgent(state);\n"
+                },
+                {
+                    "date": 1710497946013,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -74,10 +74,10 @@\n     //       : \"Email is invalid\",\n     // ],\n     password: [\n       (value) =>\n-        state.agent_id || props.agentId\n-          ? value === \"\"\n+      state.id || state.agent_id || props.agentId\n+          ? ''\n           : value === \"\"\n           ? \"Password is required\"\n           : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\\W)(?!.* ).{8,16}$/.test(\n               value\n"
                 }
             ],
             "date": 1710313132739,

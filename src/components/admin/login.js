@@ -76,11 +76,10 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
           // console.log(updatedTodo);
           window.location.reload();
         } 
-         if (updatedTodo.message === "Invalid Credentials") {
+        if (updatedTodo.message === "Invalid Credentials") {
           setLoading(false);
+          setIsLoading(false);
           setErrors({ ...errors, Credentials: ["Invalid Credentials"] });
-        }else{
-          setLoading(false);
         }
       } catch (err) {
         console.log(err);
@@ -93,7 +92,6 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
       }
     }
   };
-
   // END USER LOGIN VALIDATION
   //Function to forgot password
   const onForgoteClick = async (event) => {
@@ -135,7 +133,7 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
           className="bg-white rounded"
           style={{ maxWidth: "500px", width: "100%" }}
         >
-          {isLoading ? (
+          {isLoading ===true ? (
             <Loader />
           ) : (
             <div className="bg-white-2 h-100 p-9 login_Modal_box border shadow">

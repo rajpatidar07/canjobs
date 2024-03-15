@@ -72,7 +72,7 @@ export default function ExecutiveBox({
                               ) : ( */}
                     <div>
                       <p className="m-0 text-black-2 font-weight-bold text-capitalize">
-                        {data.name}{" "}
+                        {data.name}
                       </p>
                       <p className="text-gray font-size-3 m-0 text-capitalize">
                         ({data.admin_type})

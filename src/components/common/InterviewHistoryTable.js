@@ -77,14 +77,14 @@ const InterviewHistoryTable = ({ employee_id }) => {
     //     setcolumnName(columnName);
     // };
     /* Function to replace the _ and correct the document type */
-    const textReplaceFunction = (e) => {
-        if (e && e.includes("_")) {
-            let new_text = e.replaceAll("_", " ");
-            return new_text;
-        } else {
-            return e;
-        }
-    };
+    // const textReplaceFunction = (e) => {
+    //     if (e && e.includes("_")) {
+    //         let new_text = e.replaceAll("_", " ");
+    //         return new_text;
+    //     } else {
+    //         return e;
+    //     }
+    // };
     return (
         <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
             <div className="table-responsive main_table_div">
@@ -94,7 +94,7 @@ const InterviewHistoryTable = ({ employee_id }) => {
                     <table className="table table-striped main_data_table">
                         <thead>
                             <tr>
-                                <th scope="col" className="border-0 font-size-4 font-weight-normal">
+                                {/* <th scope="col" className="border-0 font-size-4 font-weight-normal">
                                     <Link
                                         // to={""}
                                         // onClick={() => {
@@ -105,7 +105,7 @@ const InterviewHistoryTable = ({ employee_id }) => {
                                     // title="Sort by id"
                                     >   ID
                                     </Link>
-                                </th>
+                                </th> */}
                                 <th scope="col" className="border-0 font-size-4 font-weight-normal">
                                     <Link
                                         // to={""}
@@ -136,7 +136,7 @@ const InterviewHistoryTable = ({ employee_id }) => {
                                 </tr> :
                                 interviewHistoryData.map(interview => (
                                     <tr key={interview.id}>
-                                        <td>{interview.id}</td>
+                                        {/* <td>{interview.id}</td> */}
                                         <td>{
                                             <div className="timeline_date d-flex flex-column">
                                                 <b className="text-dark font-size-3 text-capitalize">
@@ -144,12 +144,15 @@ const InterviewHistoryTable = ({ employee_id }) => {
                                                 </b>
                                             </div>
                                         }</td>
-                                        <td className='text-capitalize '>{textReplaceFunction(interview.action_type)}</td>
+                                        <td className='text-capitalize '>
+                                            {interview.status === 36 ||interview.status === "36"?
+                                                "Interview completed" :
+                                                "Interview Schedule"}</td>
                                         <td><i className="font-size-2">
                                             {moment(interview.created_at).format("lll")}
                                         </i></td>
                                         <td>
-                                            <p className="timeline_date text-dark font-size-3 text-capitalize mt-5">
+                                            <p className="timeline_date text-dark font-size-3 intervire-msg mt-5">
                                                 {interview.msg}
                                             </p>
                                         </td>

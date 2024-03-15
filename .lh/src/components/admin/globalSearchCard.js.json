@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/components/admin/globalSearchCard.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1710495404022,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1710495404022,
+            "name": "Commit-0",
+            "content": "import React from \"react\";\n// import { Button, Form, InputGroup } from \"react-bootstrap\";\nimport { Link } from \"react-router-dom\";\n\nfunction GlobalSearchCard(props) {\n  return (\n    <Link\n      className=\"py-1 border-bottom w-100\"\n      to={props.to}\n      onClick={() => localStorage.setItem(\"company_id\", props.id)}\n    >\n      <div className=\"d-flex profile_box gx-2 justify-content-between\">\n        <div className=\" mb-0\">\n          <span className=\"m-0 font-size-4 font-weight-bold text-capitalize\">\n            {props.name}\n          </span>\n          {props.company === (\"\" || undefined) ? (\n            \"\"\n          ) : (\n            <p className=\"m-0 font-size-2 font-weight-bold text-uppercase\">\n              {props.company}\n            </p>\n          )}\n          {/* <p className=\"text-gray font-size-3 m-0 text-capitalize\">\n            M(married, 25Y)\n          </p> */}\n          <p className=\"m-0 font-size-3\">{props.mobile}</p>\n          <p className=\"m-0 font-size-3\">{props.email}</p>\n        </div>\n        {/* <div className=\"contact_div text-right\">\n          <p className=\"m-0 font-size-3\">1234567890</p>\n          <p className=\"m-0 font-size-3\">email@email.com</p>\n        </div> */}\n      </div>\n    </Link>\n  );\n}\n\nexport default GlobalSearchCard;\n"
+        }
+    ]
+}

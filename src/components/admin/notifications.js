@@ -110,16 +110,21 @@ function Notifications(
         onClick={() => setshow(true)}
       ></i> */}
       {type === "mention_partner" ?
-        <FaUserClock style={{ cursor: "pointer" }} className="text-white  mx-5"
-          onClick={() => {
-            setshow(true)
-            setApicall(true)
-          }} /> :
-        <HiDocumentSearch style={{ cursor: "pointer" }} className="text-white  mx-5"
-          onClick={() => {
-            setshow(true)
-            setApicall(true)
-          }} />}
+
+        <span title="Chat Notification">
+          <FaUserClock style={{ cursor: "pointer" }} className="text-white  mx-5"
+            onClick={() => {
+              setshow(true)
+              setApicall(true)
+            }} />
+        </span> :
+        <span title="Mention Notification">
+          <HiDocumentSearch style={{ cursor: "pointer" }} className="text-white  mx-5"
+            onClick={() => {
+              setshow(true)
+              setApicall(true)
+            }} />
+        </span>}
       {totalNotif > 0 ? (
         <div className="bg-primary text-white notification_count">
           {totalNotif}
@@ -150,74 +155,135 @@ function Notifications(
             {notification.length > 0 && (
               <ul className="w-100 col p-0 ">
                 {notification.map((data) => (
+                  // <li
+                  //   key={data.id}
+                  //   title={data.message}
+                  //   className={
+                  //     data.is_read === "1"
+                  //       ? " dropdown-item border-bottom  border-hit-gray font-size-3 text-wrap "
+                  //       : " font-weight-bold bg-light dropdown-item border-bottom  border-hit-gray font-size-3 text-wrap "
+                  //   }
+                  // >
+                  //   <Link
+                  //     to={
+                  //       data.subject === "added_new_job"
+                  //         ? "/job"
+                  //         : data.subject === "applied_on_job"
+                  //           ? "/responses"
+                  //           : data.subject === "interview_scheduled"
+                  //             ? "/interview"
+                  //             : data.subject === "mention_document" ? `/${data.employee_id}?docId=${data.mention_id}` : type === "mention_partner"
+                  //               ? `/${data.from_id}?partner=${data.from_id}`
+                  //               : ""
+                  //     }
+                  //     onClick={() => {
+                  //       try {
+                  //         // setDocId(data.mention_id);
+                  //         setshow(false);
+                  //         ReadNotification(data.id);
+                  //         // localStorage.setItem(
+                  //         //   type === "mention_document" ? "notificationUser" : type === "mention_partner" ? "notificationPartnerUser" : "",
+                  //         //   data.employee_id
+                  //         // );
+                  //         // setNotificationDoc(1);
+                  //         // setSelecttDocTypeName("");
+                  //       } catch (err) {
+                  //         console.log(err);
+                  //       }
+                  //       setApicall(true);
+                  //       // Notiication();
+                  //     }}
+                  //     className="text-truncate-2 text-dark"
+                  //   >
+                  //     <div>
+                  //       <div className="d-flex profile_box gx-2 mb-1 ">
+                  //         <div className="col-8 flex-start text-start">
+                  //           <div className="media  align-items-center">
+                  //             <div
+                  //               className={`col circle-24 mx-auto overflow-hidden text-capitalize text-white ${determineBackgroundColor(
+                  //                 data
+                  //               )}`}
+                  //               style={{ fontSize: "20px" }}
+                  //             >
+                  //               {data.reciver_name
+                  //                 ? data.reciver_name.charAt(0)
+                  //                 : ""}
+                  //             </div>
+                  //             <div className="font-size-3 font-weight-bold text-capitalize col">
+                  //               {data.reciver_name ? data.reciver_name : ""}
+                  //             </div>
+                  //           </div>
+                  //         </div>
+                  //         <div className="date flex-end text-end col-4">
+                  //           {moment(data.created_at).format("HH:mm D MMM")}
+                  //         </div>
+                  //       </div>
+                  //       <div className="message mt-3 mx-3">
+                  //         {data.message.replace("a", "Hi")}
+                  //       </div>
+                  //     </div>
+                  //     {/* {data.message.replace("a", "Hi")} */}
+                  //   </Link>
+                  // </li>
                   <li
                     key={data.id}
                     title={data.message}
                     className={
-                      data.is_read === "1"
-                        ? " dropdown-item border-bottom  border-hit-gray font-size-3 text-wrap "
-                        : " font-weight-bold bg-light dropdown-item border-bottom  border-hit-gray font-size-3 text-wrap "
+                      data.is_read === '1'
+                        ? 'dropdown-item border-bottom border-hit-gray font-size-3 text-wrap'
+                        : 'font-weight-bold bg-light dropdown-item border-bottom border-hit-gray font-size-3 text-wrap'
                     }
+                    style={{ padding: '10px', borderBottom: '1px solid #ddd' }}
                   >
                     <Link
                       to={
-                        data.subject === "added_new_job"
-                          ? "/job"
-                          : data.subject === "applied_on_job"
-                            ? "/responses"
-                            : data.subject === "interview_scheduled"
-                              ? "/interview"
-                              : data.subject === "mention_document" ? `/${data.employee_id}?docId=${data.mention_id}` : type === "mention_partner"
-                                ? `/${data.from_id}?partner=${data.from_id}`
-                                : ""
+                        data.subject === 'added_new_job'
+                          ? '/job'
+                          : data.subject === 'applied_on_job'
+                            ? '/responses'
+                            : data.subject === 'interview_scheduled'
+                              ? '/interview'
+                              : data.subject === 'mention_document'
+                                ? `/${data.employee_id}?docId=${data.mention_id}`
+                                : type === 'mention_partner'
+                                  ? `/${data.from_id}?partner=${data.from_id}`
+                                  : ''
                       }
                       onClick={() => {
                         try {
-                          // setDocId(data.mention_id);
                           setshow(false);
                           ReadNotification(data.id);
-                          // localStorage.setItem(
-                          //   type === "mention_document" ? "notificationUser" : type === "mention_partner" ? "notificationPartnerUser" : "",
-                          //   data.employee_id
-                          // );
-                          // setNotificationDoc(1);
-                          // setSelecttDocTypeName("");
+                          setApicall(true);
                         } catch (err) {
                           console.log(err);
                         }
                         setApicall(true);
-                        // Notiication();
                       }}
-                      className="text-truncate-2 text-dark"
+                      className="text-dark text-decoration-none d-flex justify-content-between"
                     >
-                      <div>
-                        <div className="d-flex profile_box gx-2 mb-1 ">
-                          <div className="col-8 flex-start text-start">
-                            <div className="media  align-items-center">
-                              <div
-                                className={`col circle-24 mx-auto overflow-hidden text-capitalize text-white ${determineBackgroundColor(
-                                  data
-                                )}`}
-                                style={{ fontSize: "20px" }}
-                              >
-                                {data.reciver_name
-                                  ? data.reciver_name.charAt(0)
-                                  : ""}
-                              </div>
-                              <div className="font-size-3 font-weight-bold text-capitalize col">
-                                {data.reciver_name ? data.reciver_name : ""}
-                              </div>
+                      <div className="d-flex align-items-center">
+                        <div
+                          className={`circle-48 mx-2 text-center text-capitalize  text-white font-weight-bold  ${determineBackgroundColor(data)}`}
+                        >
+                          {data.reciver_name ? data.reciver_name.charAt(0) : ''}
+                        </div>
+                        <div className="flex-grow-1">
+                          <div className="d-flex align-items-center justify-content-between">
+                            <div className="font-weight-bold text-truncate w-60 intervire-msg"
+                            >
+                              {data.reciver_name ? data.reciver_name : ''}
                             </div>
                           </div>
-                          <div className="date flex-end text-end col-4">
-                            {moment(data.created_at).format("HH:mm D MMM")}
+                          <div className="text-muted mw-80" style={{ fontSize: '14px' }}
+                          >
+                            {data.message.replace('a', 'Hi')}
                           </div>
                         </div>
-                        <div className="message mt-3 mx-3">
-                          {data.message.replace("a", "Hi")}
-                        </div>
                       </div>
-                      {/* {data.message.replace("a", "Hi")} */}
+                      <div className="text-muted font-size-2 line-height-1 ml-2"
+                      >
+                        {moment(data.created_at).format('HH:mm')}
+                      </div>
                     </Link>
                   </li>
                 ))}
