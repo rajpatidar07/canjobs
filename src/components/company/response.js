@@ -14,7 +14,9 @@ function Response() {
   const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
   const [SkillFilterValue, setSkillFilterValue] = useState("");
   const [locationFilterValue, setLocationFilterValue] = useState("");
-
+  const [jobsNo, setJobsNo] = useState(10);
+  const [jobCount, setJobCount] = useState();
+  const [totaljob, setTotalJob] = useState();
   /* Function to get the JSON data*/
   const FilterData = async () => {
     try {
@@ -155,19 +157,22 @@ function Response() {
                         jobSwapFilterValue={jobSwapFilterValue}
                         SkillFilterValue={SkillFilterValue}
                         locationFilterValue={locationFilterValue}
+                        setJobCount={setJobCount}
+                        jobsNo={jobsNo}
+                        setTotalJob={setTotalJob}
                       />
                       {/* <!-- End Single Featured Job --> */}
                     </div> : <div className="table-responsive main_table_div"><Loader /> </div>}
                   </div>
-                  <div className="text-center pt-5 pt-lg-13">
-                    <Link
-                      to={""}
-                      className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
-                    >
-                      Load More
-                      <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
-                    </Link>
-                  </div>
+                  {jobsNo <= totaljob
+                    ? <div className="text-center pt-5 pt-lg-13">
+                      <Link className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
+                        onClick={() => setJobsNo(jobCount + 10)}>
+                        Load More
+                        <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
+                      </Link>
+                    </div>
+                    : null}
                 </div>
                 {/* <!-- form end --> */}
               </div>

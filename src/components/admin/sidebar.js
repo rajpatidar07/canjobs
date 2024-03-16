@@ -170,7 +170,7 @@ const AdminSidebar = (props) => {
             className={
               user_type === "agent"
                 ? "d-none"
-                : props.heading === "Visa status"
+                : props.heading === "Working Visa"
                 ? "active"
                 : ""
             }

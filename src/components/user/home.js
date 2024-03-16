@@ -6,8 +6,12 @@ import SearchForm from "../common/search_form";
 import { ToastContainer } from "react-toastify";
 import { GetAllDataCount } from "../../api/api";
 import Loader from "../common/loader";
+import { Link } from "react-router-dom";
 function EmployeeHomePage() {
   const [Count, setCount] = useState([]);
+  const [jobsNo, setJobsNo] = useState(10);
+  const [jobCount, setJobCount] = useState();
+  const [totaljob, setTotalJob] = useState();
   let token = localStorage.getItem("token");
   const CountData = async () => {
     const res = await GetAllDataCount();
@@ -52,13 +56,26 @@ function EmployeeHomePage() {
           {/* <!-- Section Title End --> */}
           {<JobBox /> ? (
             <div className="row justify-content-center">
-              <JobBox />
+              <JobBox
+                setJobCount={setJobCount}
+                jobsNo={jobsNo}
+                setTotalJob={setTotalJob}
+              />
             </div>
           ) : (
             <div className="table-responsive main_table_div">
               <Loader />
             </div>
           )}{" "}
+          {jobsNo <= totaljob
+            ? <div className="text-center pt-5 pt-lg-13">
+              <Link className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
+                onClick={() => setJobsNo(jobCount + 10)}>
+                Load More
+                <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
+              </Link>
+            </div>
+            : null}
         </div>
       </section>
       {/* <!-- featuredJobOne Area --> */}

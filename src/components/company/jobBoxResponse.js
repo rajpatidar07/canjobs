@@ -15,6 +15,9 @@ function JobBoxResponse({
   locationFilterValue,
   SkillFilterValue,
   jobSwapFilterValue,
+  setJobCount,
+  jobsNo,
+  setTotalJob
 }) {
   let [jobData, setjobData] = useState([]);
   const [JobId, setJobId] = useState([]);
@@ -28,13 +31,18 @@ function JobBoxResponse({
         locationFilterValue,
         categoryFilterValue,
         SkillFilterValue,
-        jobSwapFilterValue
+        jobSwapFilterValue,
+        1,
+        jobsNo
       );
       if (userData.data.data.length === 0) {
         setjobData([]);
       } else {
         setjobData(userData.data.data);
+        setJobCount(userData.data.data.length)
         setNoData(userData.data.total_rows);
+        setTotalJob(userData.data.total_rows)
+
       }
     } catch (err) {
       console.log(err);
@@ -53,6 +61,7 @@ function JobBoxResponse({
     categoryFilterValue,
     SkillFilterValue,
     jobSwapFilterValue,
+    jobsNo
   ]);
 
   return (
@@ -190,8 +199,13 @@ function JobBoxResponse({
               </div>
             </div>
             <div className="row pt-4">
-              <div className="col-md-12 text-left">
-                <p>{job.job_description}</p>
+              <div className="col-md-12 text-left text-capitalize text-break text-dark" >
+                {/* <p>{job.job_description}</p> */}
+                <div
+                      dangerouslySetInnerHTML={{
+                        __html: job.job_description,
+                      }}
+                    />
               </div>
               <div className="col-md-8">
                 <ul className="d-flex list-unstyled mr-n3 flex-wrap">

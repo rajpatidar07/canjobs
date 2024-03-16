@@ -193,7 +193,7 @@ function JobProfileResponse(props) {
         }
       }
       if (response.message === "already reserved") {
-          toast.error("Candidate already reserved for another job", {
+        toast.error("Candidate already reserved for another job", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
@@ -305,7 +305,7 @@ function JobProfileResponse(props) {
           <div
             className={
               props.heading === "Response" ||
-              (props.heading === undefined && user_type === "admin")
+                (props.heading === undefined && user_type === "admin")
                 ? "row m-0 align-items-center"
                 : "d-none"
             }
@@ -403,11 +403,11 @@ function JobProfileResponse(props) {
         <div
           className={
             props.heading === "Response" ||
-            (props.heading === undefined && user_type === "admin")
+              (props.heading === undefined && user_type === "admin")
               ? ""
               : props.heading === "Dashboard"
-              ? "bg-white shadow-8 datatable_div pt-7 rounded pb-9 px-5"
-              : ""
+                ? "bg-white shadow-8 datatable_div pt-7 rounded pb-9 px-5"
+                : ""
           }
         >
           <div className="table-responsive main_table_div">
@@ -566,10 +566,10 @@ function JobProfileResponse(props) {
                       Interview
                     </th>
                     {props.heading === "Dashboard" ||
-                    user_type === "company" ||
-                    user_type === "user" ||
-                    props.self === "yes" ||
-                    user_type === "agent" ? (
+                      user_type === "company" ||
+                      user_type === "user" ||
+                      props.self === "yes" ||
+                      user_type === "agent" ? (
                       ""
                     ) : (
                       <th
@@ -584,11 +584,10 @@ function JobProfileResponse(props) {
                 <tbody>
                   {totalData === 0 || response.length === 0 ? (
                     <tr>
-                      <th className="bg-white"></th>
-                      <th className="bg-white"></th>
-                      <th className="bg-white text-center">No Data Found</th>
-                      <th className="bg-white"></th>
-                      <th className="bg-white"></th>
+                      <th colSpan={user_type === "user" ?
+                        3 : user_type === "company" ||
+                          user_type === "agent" ?
+                          4 : 5} className="bg-white text-center">No Data Found</th>
                     </tr>
                   ) : (
                     (response || []).map((res, i) => (
@@ -792,10 +791,10 @@ function JobProfileResponse(props) {
                           </p>
                         </th>
                         {props.heading === "Dashboard" ||
-                        user_type === "company" ||
-                        user_type === "user" ||
-                        props.self === "yes" ||
-                        user_type === "agent" ? (
+                          user_type === "company" ||
+                          user_type === "user" ||
+                          props.self === "yes" ||
+                          user_type === "agent" ? (
                           ""
                         ) : (
                           <th className="py-5  min-width-px-100">
@@ -909,7 +908,7 @@ function JobProfileResponse(props) {
                               <button
                                 className={
                                   props.response === "visa" ||
-                                  props.response === "lmia"
+                                    props.response === "lmia"
                                     ? "d-none"
                                     : "btn btn-outline-info action_btn"
                                 }
@@ -927,17 +926,17 @@ function JobProfileResponse(props) {
                               <button
                                 className={
                                   props.response === "visa" ||
-                                  props.response === "lmia"
+                                    props.response === "lmia"
                                     ? "d-none"
                                     : "btn btn-outline-info action_btn text-gray"
                                 }
                                 onClick={() => editJob(res)}
                                 title="Change Job"
-                                // disabled={
-                                //   props.total_applicants >= props.role_category
-                                //     ? true
-                                //     : false
-                                // }
+                              // disabled={
+                              //   props.total_applicants >= props.role_category
+                              //     ? true
+                              //     : false
+                              // }
                               >
                                 <PiBriefcaseLight />
                                 {/* <i className="fas fa-briefcase"></i> */}

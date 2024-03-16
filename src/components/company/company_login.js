@@ -419,7 +419,7 @@ function CompanyLoginForm(props) {
                   </span>
                 )}
               </div>
-              <div className="d-flex flex-wrap justify-content-between">
+              <div className="d-flex flex-wrap justify-content-between mx-6">
                 <label
                   htmlFor="terms-check"
                   className="gr-check-input d-flex  mr-3"

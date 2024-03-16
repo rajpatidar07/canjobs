@@ -21,6 +21,9 @@ function JobBox({
   locationFilterValue,
   jobLocation,
   apiCall,
+  setJobCount,
+  jobsNo,
+  setTotalJob
 }) {
   /*States */
   let [ApiCall, setApiCall] = useState(false);
@@ -68,22 +71,26 @@ function JobBox({
           : "",
         jobSwapFilterValue,
         1,
-        "10"
+        jobsNo
       );
       if (userData.data.data.length === 0) {
         setjobData([]);
       } else {
         if (
           ((!token && location.pathname === "/") ||
-          (!skill && !SkillFilterValue && user_type === "user"))
+            (!skill && !SkillFilterValue && user_type === "user"))
           && userData.data.data.find((item) => item.is_featured === "1")
           && location.pathname !== "/jobs"
         ) {
           setjobData(
             userData.data.data.filter((item) => item.is_featured === "1")
           );
+          setJobCount(userData.data.data.filter((item) => item.is_featured === "1").length)
+          setTotalJob(userData.data.data.filter((item) => item.is_featured === "1").length)
         } else {
           setjobData(userData.data.data);
+          setJobCount(userData.data.data.length)
+          setTotalJob(userData.data.total_rows)
         }
         setNoData(userData.data.total_rows);
       }
@@ -116,6 +123,7 @@ function JobBox({
     country,
     category,
     jobLocation,
+    jobsNo
   ]);
 
   /*FUnction to apply to the job */

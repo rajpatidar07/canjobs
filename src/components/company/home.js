@@ -612,7 +612,7 @@ function EmployerHome() {
       </div>
       {/* <!-- Blog area function end --> */}
       {/* <!-- ContentTwo Area --> */}
-      <section className="bg-green position-relative">
+      <section className="bg-green position-relative d-none">
         <div className="w-lg-50 ml-lg-auto">
           {/* <!-- gallery start --> */}
           <div

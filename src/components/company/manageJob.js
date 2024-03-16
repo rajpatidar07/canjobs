@@ -23,6 +23,9 @@ function ManageJobs() {
   const [SkillFilterValue, setSkillFilterValue] = useState("");
   const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
   const [jobLocation, setJobLocation] = useState("");
+  const [jobsNo, setJobsNo] = useState(10);
+  const [jobCount, setJobCount] = useState();
+  const [totaljob, setTotalJob] = useState();
 
   let Company_name = localStorage.getItem("name");
   /* Function to get the JSON data*/
@@ -164,10 +167,10 @@ function ManageJobs() {
                         <button
                           onClick={() =>
                             Company_name === null ||
-                            Company_name === "null" ||
-                            Company_name === "undefined" ||
-                            Company_name === undefined ||
-                            Company_name === ""
+                              Company_name === "null" ||
+                              Company_name === "undefined" ||
+                              Company_name === undefined ||
+                              Company_name === ""
                               ? CompleteProfileAlert()
                               : editJob("0")
                           }
@@ -212,6 +215,9 @@ function ManageJobs() {
                           showAddJobModal={showAddJobModal}
                           jobLocation={jobLocation}
                           apiCall={apiCall}
+                          setJobCount={setJobCount}
+                          jobsNo={jobsNo}
+                          setTotalJob={setTotalJob}
                         />
                         {/* <!-- End Single Featured Job --> */}
                       </div>
@@ -221,12 +227,15 @@ function ManageJobs() {
                       </div>
                     )}
                   </div>
-                  <div className="text-center pt-5 pt-lg-13">
-                    <Link className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center">
-                      Load More
-                      <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
-                    </Link>
-                  </div>
+                  {jobsNo <= totaljob
+                    ? <div className="text-center pt-5 pt-lg-13">
+                      <Link className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
+                        onClick={() => setJobsNo(jobCount + 10)}>
+                        Load More
+                        <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
+                      </Link>
+                    </div>
+                    : null}
                 </div>
                 {/* <!-- form end --> */}
               </div>

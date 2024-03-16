@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import EmployeeFooter from "../common/footer";
 import EmployeeHeader from "../common/header";
 import JobBox from "../common/jobbox";
@@ -19,6 +19,9 @@ function JobSearch() {
   const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
   const [jobLocation, setJobLocation] = useState("");
   let [Json, setJson] = useState([]);
+  const [jobsNo, setJobsNo] = useState(10);
+  const [jobCount, setJobCount] = useState();
+  const [totaljob, setTotalJob] = useState();
   /*Function to get thejSon */
   const JsonData = async () => {
     try {
@@ -164,6 +167,9 @@ function JobSearch() {
                           jobSwapFilterValue={jobSwapFilterValue}
                           jobLocation={jobLocation}
                           setJobLocation={setJobLocation}
+                          setJobCount={setJobCount}
+                          jobsNo={jobsNo}
+                          setTotalJob={setTotalJob}
                         />
                         {/* <!-- End Single Featured Job --> */}
                       </div>
@@ -173,6 +179,15 @@ function JobSearch() {
                       </div>
                     )}
                   </div>
+                  {jobsNo <= totaljob
+                    ? <div className="text-center pt-5 pt-lg-13">
+                      <Link className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
+                        onClick={() => setJobsNo(jobCount + 10)}>
+                        Load More
+                        <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
+                      </Link>
+                    </div>
+                    : null}
                 </div>
                 {/* <!-- form end --> */}
               </div>

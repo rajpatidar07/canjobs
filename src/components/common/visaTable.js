@@ -185,7 +185,7 @@ export default function VisaTable(props) {
           close={() => setDocumentModal(false)}
           employee_id={employeeId}
           job={"no"}
-          // lmia={lmiaStatus}
+        // lmia={lmiaStatus}
         />
       ) : null}
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
@@ -234,7 +234,7 @@ export default function VisaTable(props) {
                       Contact
                     </Link>
                   </th>
-                  {props.heading === "Dashboard" ? (
+                  {/* {props.heading === "Dashboard" ? (
                     ""
                   ) : (
                     <th
@@ -253,7 +253,7 @@ export default function VisaTable(props) {
                         Languages
                       </Link>
                     </th>
-                  )}
+                  )} */}
                   {props.heading === "Dashboard" ? (
                     ""
                   ) : (
@@ -400,8 +400,8 @@ export default function VisaTable(props) {
                                   {empdata.gender === "female"
                                     ? "F"
                                     : empdata.gender === "male"
-                                    ? "M"
-                                    : "O"}
+                                      ? "M"
+                                      : "O"}
                                   ( {empdata.marital_status + ", "}
                                   {/*Calculation of age from date of birth*/}
                                   {moment().diff(
@@ -451,27 +451,27 @@ export default function VisaTable(props) {
                         </h3>
                       </td>
 
-                      {props.heading === "Dashboard" ? (
+                      {/* {props.heading === "Dashboard" ? (
                         ""
                       ) : (
                         <td className=" py-5">
-                          {empdata.language === null ? (
+                          {empdata.language === null || empdata.language ? (
                             <p className="font-size-3  mb-0">N/A</p>
                           ) : (
-                            <p className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-capitalize">
                               {empdata.language}
                             </p>
                           )}
                         </td>
-                      )}
+                      )} */}
                       {props.heading === "Dashboard" ? (
                         ""
                       ) : (
                         <td className=" py-5">
-                          {empdata.interested_in === null ? (
+                          {empdata.interested_in === null || !empdata.interested_in ? (
                             <p className="font-size-3  mb-0">N/A</p>
                           ) : (
-                            <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
+                            <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate text-capitalize">
                               {empdata.interested_in}
                             </p>
                           )}
@@ -482,10 +482,10 @@ export default function VisaTable(props) {
                       ) : (
                         <td className=" py-5">
                           {empdata.visa_country === null ||
-                          empdata.visa_country === "" ? (
+                            empdata.visa_country === "" || !empdata.visa_country ? (
                             <p className="font-size-3  mb-0">N/A</p>
                           ) : (
-                            <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
+                            <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate text-capitalize">
                               {empdata.visa_country}
                             </p>
                           )}
@@ -495,17 +495,18 @@ export default function VisaTable(props) {
                         ""
                       ) : (
                         <td className=" py-5">
-                          {empdata.experience === null ? (
+                          {empdata.experience === null || !empdata.experience ? (
                             <p className="font-size-3 mb-0">N/A</p>
                           ) : (
-                            <p className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-capitalize">
                               {empdata.experience === "1-3 " ||
-                              empdata.experience === "1-2 " ||
-                              empdata.experience === "3-5 " ||
-                              empdata.experience === "5-7 " ||
-                              empdata.experience === "7+ "
+                                empdata.experience === "1-2 " ||
+                                empdata.experience === "3-5 " ||
+                                empdata.experience === "5-7 " ||
+                                empdata.experience === "7+ "
                                 ? empdata.experience + "years"
-                                : empdata.experience}
+                                : empdata.experience === "0-1 "
+                                  ? "0-1 year" : empdata.experience}
                             </p>
                           )}
                         </td>
@@ -595,7 +596,7 @@ export default function VisaTable(props) {
                           <button
                             className={
                               user_type === "company" ||
-                              props.page === "user_profile"
+                                props.page === "user_profile"
                                 ? "d-none"
                                 : "btn btn-outline-info action_btn"
                             }
