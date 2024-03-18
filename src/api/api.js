@@ -239,18 +239,18 @@ export const EmployeeAppliedJob = async (props) => {
 export const AddEmployeeDetails = async (props) => {
   const headers = Token
     ? {
-        "Content-Type": "application/json",
-        Authorization: Token
-      }
+      "Content-Type": "application/json",
+      Authorization: Token
+    }
     : {
-        "Content-Type": "application/json",
-        type: "event"
-      };
-// console.log(Token,headers)
+      "Content-Type": "application/json",
+      type: "event"
+    };
+  // console.log(Token,headers)
   const response = await axios.put(`${API_URL}employeePersonal_detail`, props, {
     headers: headers
   });
-  
+
   return response.data;
 };
 /*Employee List Api */
@@ -530,7 +530,25 @@ export const GetEmployeeDocumentList = async (id, empType, type) => {
   );
   return response;
 };
-
+/*Api to get list of the Document drive */
+export const GetDocumentDriveList = async (id, empType, type) => {
+  const response = await axios.post(
+    `${API_URL}admin/getSharpointSiteDriveFolderData`,
+    {
+      "driveId": "b!iUiBybFGWEWfqWdSYuUqrWrIPVmZDQxPmwO4Bzj6nJp5ByboftxMSY6hfWPT-m8F",
+      "userId": id,
+      "userType": empType,
+      "type": type
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+};
 /*Api to upload document*/
 export const UploadDocument = async (id, type, doc, docId, docName) => {
   const response = await axios.put(
@@ -2045,6 +2063,37 @@ export const GeEmailAuthenticationData = async () => {
       // type: emailType,
       // email_id: id,
     },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
+/* Function to get share point*/
+export const GetSharePointData = async () => {
+  const response = await axios.get(
+    `${API_URL}admin/sharePointToken`,
+    {
+      // type: emailType,
+      // email_id: id,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
+/* Function to Refresh share point*/
+export const RefreshPointData = async () => {
+  const response = await axios.get(
+    `${API_URL}admin/refreshSharePointToken`,
+
     {
       headers: {
         "Content-Type": "application/json",

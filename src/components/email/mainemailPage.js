@@ -232,7 +232,7 @@ const MainEmailPage = ({ email }) => {
                       className="text-capitalize form-control"
                     >
                       <option value="" data-display="Product Designer">
-                        Select Interested in
+                        Select Application type
                       </option>
                       {(FilterJson.interested || []).map((data, i) => {
                         return (

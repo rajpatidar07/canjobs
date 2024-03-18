@@ -169,7 +169,7 @@ export default function Visa() {
                         }}
                         className="text-capitalize form-control"
                       >
-                        <option value={""}>Select Country</option>
+                        <option value={""}>Candidate's Country</option>
                         {(FilterJson.location || []).map((item, i) => (
                           <option value={item} key={i}>
                             {item}
@@ -192,7 +192,7 @@ export default function Visa() {
                         }}
                         className="text-capitalize form-control"
                       >
-                        <option value={""}>Select visa status </option>
+                        <option value={""}>Candidate's visa status </option>
                         {(FilterJson.visa_status || []).map((item, index) => {
                           return (
                             <option value={item} key={index}>
@@ -204,7 +204,7 @@ export default function Visa() {
                     </div>
                   </div>
                   <div className="col p-1 form_group mb-3">
-                    <p className="input_label">Filter by Interested In:</p>
+                    <p className="input_label">Filter by Application type:</p>
                     <div className="select_div">
                       <select
                         name="intrested_in"
@@ -218,7 +218,7 @@ export default function Visa() {
                         className="text-capitalize form-control"
                       >
                         <option value="" data-display="Product Designer">
-                          Select Interested in
+                        Candidate's Application type
                         </option>
                         {(FilterJson.interested || []).map((data, i) => {
                           return (

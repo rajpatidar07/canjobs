@@ -6,6 +6,8 @@ import {
   GetAdminrSetting,
   AddAdminPermission,
   GeEmailAuthenticationData,
+  GetSharePointData,
+  RefreshPointData
 } from "../../../api/api";
 import { toast } from "react-toastify";
 import ParentSetting from "../../common/parentSetting";
@@ -24,6 +26,7 @@ function AdminSetting(props) {
     visa: 0,
   });
   let [emailAauthenticationLink, setEmailAuthenticationLink] = useState("");
+  let [sharePointData, setSharePointData] = useState("");
   /*Function to get the permision data */
   const GetPermissionData = async () => {
     try {
@@ -44,6 +47,14 @@ function AdminSetting(props) {
       let response = await GeEmailAuthenticationData();
       if (response.status === 1 || "1") {
         setEmailAuthenticationLink(response);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    try {
+      let response = await GetSharePointData()
+      if (response.status === 1 || "1") {
+        setSharePointData(response);
       }
     } catch (err) {
       console.log(err);
@@ -111,18 +122,18 @@ function AdminSetting(props) {
         (permissionName === "notification_lmia"
           ? updatedPermissions.notification_permission.lmia === 1
           : permissionName === "lmia"
-          ? updatedPermissions.email_permission.lmia === 1
-          : permissionName === "notification_visa"
-          ? updatedPermissions.notification_permission.visa === 1
-          : permissionName === "visa"
-          ? updatedPermissions.email_permission.visa === 1
-          : permissionName === "notification_interview"
-          ? updatedPermissions.notification_permission.interview === 1
-          : permissionName === "interview"
-          ? updatedPermissions.email_permission.interview === 1
-          : permissionName === "notification_job"
-          ? updatedPermissions.notification_permission.job === 1
-          : updatedPermissions.email_permission.job === 1)
+            ? updatedPermissions.email_permission.lmia === 1
+            : permissionName === "notification_visa"
+              ? updatedPermissions.notification_permission.visa === 1
+              : permissionName === "visa"
+                ? updatedPermissions.email_permission.visa === 1
+                : permissionName === "notification_interview"
+                  ? updatedPermissions.notification_permission.interview === 1
+                  : permissionName === "interview"
+                    ? updatedPermissions.email_permission.interview === 1
+                    : permissionName === "notification_job"
+                      ? updatedPermissions.notification_permission.job === 1
+                      : updatedPermissions.email_permission.job === 1)
       ) {
         toast.success("Permission granted successfully", {
           position: toast.POSITION.TOP_RIGHT,
@@ -135,18 +146,18 @@ function AdminSetting(props) {
         (permissionName === "notification_lmia"
           ? updatedPermissions.notification_permission.lmia === 0
           : permissionName === "lmia"
-          ? updatedPermissions.email_permission.lmia === 0
-          : permissionName === "notification_visa"
-          ? updatedPermissions.notification_permission.visa === 0
-          : permissionName === "visa"
-          ? updatedPermissions.email_permission.visa === 0
-          : permissionName === "notification_interview"
-          ? updatedPermissions.notification_permission.interview === 0
-          : permissionName === "interview"
-          ? updatedPermissions.email_permission.interview === 0
-          : permissionName === "notification_job"
-          ? updatedPermissions.notification_permission.job === 0
-          : updatedPermissions.email_permission.job === 0)
+            ? updatedPermissions.email_permission.lmia === 0
+            : permissionName === "notification_visa"
+              ? updatedPermissions.notification_permission.visa === 0
+              : permissionName === "visa"
+                ? updatedPermissions.email_permission.visa === 0
+                : permissionName === "notification_interview"
+                  ? updatedPermissions.notification_permission.interview === 0
+                  : permissionName === "interview"
+                    ? updatedPermissions.email_permission.interview === 0
+                    : permissionName === "notification_job"
+                      ? updatedPermissions.notification_permission.job === 0
+                      : updatedPermissions.email_permission.job === 0)
       ) {
         toast.error("Permission Denay successfully", {
           position: toast.POSITION.TOP_RIGHT,
@@ -345,6 +356,38 @@ function AdminSetting(props) {
                   Authenticate Mail
                 </button>
               )}
+            </div>
+            <div className="mb-3">
+
+              {
+                sharePointData.is_already_authorized === "yes" ? (
+                  <div>
+                    <h4 style={{ color: "#5be15b" }}>
+                      Share Point already authorized !
+                    </h4>
+                  </div>
+                ) :
+                (
+                  <button
+                    className="btn btn-secondary"
+                    onClick={async () => {
+                      try {
+                        let res = await RefreshPointData()
+                       if(res.messsage === "Success"){
+                        toast.success("Authoized successfully", {
+                          position: toast.POSITION.TOP_RIGHT,
+                          autoClose: 1000,
+                        });
+                        setApiCall(true)
+                       }
+                      } catch (err) {
+                        console.log(err)
+                      }
+                    }}
+                  >
+                    Authenticate Share point
+                  </button>
+                )}
             </div>
             <div className="mb-3">
               <ParentSetting />

@@ -89,7 +89,7 @@ export default function EmployeeNotesTable({ search }) {
                     scope="col"
                     className="border-0 font-size-4 font-weight-normal"
                   >
-                    {" "}
+                    
                     <Link
                       to={""}
                       onClick={() => {
@@ -179,8 +179,8 @@ export default function EmployeeNotesTable({ search }) {
                   </tr>
                 ) : (
                   (data || []).map((data, i) => (
-                    <>
-                      <tr className="text-capitalize" key={i}>
+                    <React.Fragment key={i}>
+                      <tr className="text-capitalize" >
                         <th className=" py-5">
                           <p className="font-size-3 font-weight-normal text-black-2 mb-0">
                             {data.employee_id}
@@ -314,7 +314,7 @@ export default function EmployeeNotesTable({ search }) {
                         </th>
                       </tr>
                       <tr>
-                        {" "}
+                        
                         <td
                           colSpan={5}
                           className="font-size-3 font-weight-normal text-black-2 mb-0text-truncate text-break"
@@ -330,7 +330,7 @@ export default function EmployeeNotesTable({ search }) {
                           </div>
                         </td>
                       </tr>
-                    </>
+                    </React.Fragment>
                   ))
                 )}
               </tbody>

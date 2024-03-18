@@ -485,7 +485,7 @@ const AdminDashboard = () => {
                         }}
                         className="form-control-sm bg-white dashboard_select rounded-3"
                       >
-                        <option value={""}>Select</option>
+                        <option value={""}>Time Duration</option>
                         <option value={"today"}>Today </option>
                         <option value={"this_week"}>This Week </option>
                         <option value={"last_week"}>Last Week</option>
@@ -548,7 +548,7 @@ const AdminDashboard = () => {
                         }}
                         className="form-control-sm bg-white dashboard_select rounded-3"
                       >
-                        <option value={""}>Select</option>
+                        <option value={""}>Time Duration</option>
                         <option value={"today"}>Today </option>
                         <option value={"this_week"}>This Week </option>
                         <option value={"last_week"}>Last Week</option>
@@ -609,7 +609,7 @@ const AdminDashboard = () => {
                         }}
                         className="form-control-sm bg-white dashboard_select rounded-3"
                       >
-                        <option value={""}>Select</option>
+                        <option value={""}>Time Duration</option>
                         <option value={"today"}>Today </option>
                         <option value={"this_week"}>This Week </option>
                         <option value={"last_week"}>Last Week</option>
@@ -662,7 +662,7 @@ const AdminDashboard = () => {
                         onChange={(e) => setResponse(e.target.value)}
                         className="form-control-sm bg-white dashboard_select rounded-3"
                       >
-                        <option value={""}>Select</option>
+                        <option value={""}>Time Duration</option>
                         <option value={"today"}>Today </option>
                         <option value={"this_week"}>This Week </option>
                         <option value={"last_week"}>Last Week</option>
@@ -705,7 +705,7 @@ const AdminDashboard = () => {
                         }}
                         className="form-control-sm bg-white dashboard_select rounded-3"
                       >
-                        <option value={""}>Select</option>
+                        <option value={""}>Time Duration</option>
                         <option value={"today"}>Today </option>
                         <option value={"this_week"}>This Week </option>
                         <option value={"last_week"}>Last Week</option>
@@ -767,7 +767,7 @@ const AdminDashboard = () => {
                         }}
                         className="form-control-sm bg-white dashboard_select rounded-3"
                       >
-                        <option value={""}>Select</option>
+                        <option value={""}>Time Duration</option>
                         <option value={"today"}>Today </option>
                         <option value={"this_week"}>This Week </option>
                         <option value={"last_week"}>Last Week</option>
@@ -832,7 +832,7 @@ const AdminDashboard = () => {
                         onChange={(e) => setFollowUP(e.target.value)}
                         className="form-control-sm bg-white dashboard_select rounded-3"
                       >
-                        <option value={""}>Select</option>
+                        <option value={""}>Time Duration</option>
                         <option value={"today"}>Today </option>
                         <option value={"this_week"}>This Week </option>
                         <option value={"last_week"}>Last Week</option>
@@ -879,7 +879,7 @@ const AdminDashboard = () => {
                         }}
                         className="form-control-sm bg-white dashboard_select rounded-3"
                       >
-                        <option value={""}>Select</option>
+                        <option value={""}>Time Duration</option>
                         <option value={"today"}>Today </option>
                         <option value={"this_week"}>This Week </option>
                         <option value={"last_week"}>Last Week</option>

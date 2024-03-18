@@ -50,12 +50,12 @@ export default function ManageInterview() {
                 {/*<-- Search interview -->*/}
                 <div className="row m-0 align-items-center">
                   <div className="col p-1 form_group mb-3">
-                    <p className="input_label">Search by Applicant's Name:</p>
+                    <p className="input_label">Search by Candidate's Name:</p>
                     <input
                       required
                       type="text"
                       className="form-control "
-                      placeholder={"Search Applicant"}
+                      placeholder={"Search Candidate's"}
                       value={search}
                       name={"Interview"}
                       onChange={(e) => onSearch(e)}
@@ -73,7 +73,7 @@ export default function ManageInterview() {
                           setpageNo(1)}}
                         className=" form-control"
                       >
-                        <option value="">Select Interview Status</option>
+                        <option value="">Candidate's Interview Status</option>
                         <option value="pending">Schedule</option>
                         <option value="complete">Complete</option>
                       </select>

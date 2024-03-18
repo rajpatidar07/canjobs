@@ -74,9 +74,9 @@ export default function ApplicantsFilter({ search,
             <div
                 className={
                     // (skill === null || skill === undefined)
-                        // ? 
-                        "col p-1 form_group mb-3"
-                        // : "d-none"
+                    // ? 
+                    "col p-1 form_group mb-3"
+                    // : "d-none"
                 }
             >
                 <p className="input_label">Search Candidate:</p>
@@ -189,7 +189,7 @@ export default function ApplicantsFilter({ search,
                         : "d-none"
                 }
             >
-                <p className="input_label">Filter by Agent:</p>
+                <p className="input_label">Filter by Partner</p>
                 <div className="select_div">
                     <select
                         name="agent"
@@ -202,7 +202,7 @@ export default function ApplicantsFilter({ search,
                         className="text-capitalize form-control"
                     >
                         <option value="" data-display="Product Designer">
-                            Select Agent
+                        Candidate's partner
                         </option>
                         {(AgentList || []).map((data) => {
                             return (
@@ -234,7 +234,7 @@ export default function ApplicantsFilter({ search,
                         className="text-capitalize form-control"
                     >
                         <option value="" data-display="Product Designer">
-                            Select Admin
+                            Admin's Candidates
                         </option>
                         {(AdminList || []).map((data) => {
                             return (
@@ -268,7 +268,7 @@ export default function ApplicantsFilter({ search,
                             "text-capitalize"}`}
                     >
                         <option value="" data-display="Product Designer">
-                            Select Application type
+                            Candidate's Application type
                         </option>
                         {(FilterJson.interested || []).map((interest) => (
                             <option key={interest} value={interest}
@@ -302,7 +302,7 @@ export default function ApplicantsFilter({ search,
                         }}
                         className="text-capitalize form-control"
                     >
-                        <option value={""}>Select sub type</option>
+                        <option value={""}>Candidate's sub type</option>
                         <option value={"aos"}>AOS</option>
                         <option value={"rrs"}>RRS</option>
                         <option value={"tech pathway"}>Tech Pathway</option>

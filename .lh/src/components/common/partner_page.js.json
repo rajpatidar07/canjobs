@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 16,
+            "activePatchIndex": 17,
             "patches": [
                 {
                     "date": 1709550767474,
@@ -72,6 +72,10 @@
                 {
                     "date": 1710310148551,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -299,9 +299,8 @@\n           />\n         </div>\n       </div>\n       <SAlert\n-  style={{ textTransform: 'capitalize' }}\n         show={deleteAlert}\n         title={deleteName}\n         text=\"Are you Sure you want to delete !\"\n         onConfirm={() => OnDeleteAgent(deleteId)}\n"
+                },
+                {
+                    "date": 1710744474468,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -109,9 +109,9 @@\n     recordsPerPage,\n     columnName,\n     sortOrder,\n     props.apiCall,\n-    apiCall, \n+    apiCall,\n   ]);\n   /*To Show the delete alert box */\n   const ShowDeleteAlert = (e) => {\n     setDeleteID(e.id);\n@@ -164,10 +164,10 @@\n           {isLoading ? (\n             <Loader />\n           ) : (\n             <>\n-              {(agenteData || []).map((data) => (\n-                <div className=\"rounded bg-light p-4 mb-1\">\n+              {(agenteData || []).map((data, index) => (\n+                <div className=\"rounded bg-light p-4 mb-1\" key={index}>\n                   <div\n                     className=\"d-flex align-items-center position-relative\"\n                     key={data.id}\n                   >\n@@ -257,10 +257,10 @@\n                           <div className=\"d-flex justify-content-between p-5 align-items-center\">\n                             <h3 className=\"font-size-5 px-3 m-0 \">Applicant's status</h3>\n                           </div>\n                           <div className=\" mb-7\">\n-                            <DataChart data={chartData} \n-                            dataType={\"status\"}/>\n+                            <DataChart data={chartData}\n+                              dataType={\"status\"} />\n                           </div>\n                         </div>\n                       </div>\n                       {/* <!-- Agent by emmployee --> */}\n"
                 }
             ],
             "date": 1709550767474,

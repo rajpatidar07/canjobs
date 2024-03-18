@@ -290,7 +290,7 @@ function PersonalDetails(props) {
   // };
   useEffect(() => {
     AgentJson();
-    if(user_type === "admin"){
+    if (user_type === "admin") {
       AdminJson()
     }
     if (props.employeeId === "0" || props.employeeId === undefined) {
@@ -405,10 +405,10 @@ function PersonalDetails(props) {
     let base64Name = encoded.base64;
     setState({ ...state, profile_photo: base64Name });
   };
-    // Calculate min and max dates dynamically
-    // const currentYear = moment().year();
-    // const minDate = moment().subtract(10, 'years').format("YYYY-MM-DD");
-    // const maxDate = moment().add(10, 'years').format("YYYY-MM-DD");
+  // Calculate min and max dates dynamically
+  // const currentYear = moment().year();
+  // const minDate = moment().subtract(10, 'years').format("YYYY-MM-DD");
+  // const maxDate = moment().add(10, 'years').format("YYYY-MM-DD");
   return (
     <>
       <Modal
@@ -445,12 +445,15 @@ function PersonalDetails(props) {
               <form onSubmit={onUserPersonalDetailClick}>
                 {props.employeeId === "0" ? (
                   <h5 className="text-center pt-2 mb-7">
-                    {" "}
                     Add Candidate Details
                   </h5>
                 ) : (
                   <h5 className="text-center pt-2 mb-7">
-                    Update Candidate Details
+                    Update {props.pageNameForForm === "ApplicantType" ?
+                      " Applicant Type" : props.user_of_page === "agentAssigned"
+                        ? "Reffer By" : props.user_of_page === "assignedUser"
+                          ? "Assigned By" :
+                          "Candidate Details"}
                   </h5>
                 )}
                 {/* FIRST LINE */}
@@ -647,8 +650,8 @@ function PersonalDetails(props) {
                     </label>
                     <input
                       // max={moment().format("DD-MM-YYYY")}
-                      min={ moment().subtract(44, 'years').format("YYYY-MM-DD")}
-                      max={ moment().subtract(1, 'year').endOf('year').format("YYYY-MM-DD")}
+                      min={moment().subtract(44, 'years').format("YYYY-MM-DD")}
+                      max={moment().subtract(1, 'year').endOf('year').format("YYYY-MM-DD")}
                       type="date"
                       placeholder="Date Of Birth "
                       name="date_of_birth"
@@ -662,7 +665,7 @@ function PersonalDetails(props) {
                       }
                       id="date_of_birth"
                     />
- 
+
                     {/*----ERROR MESSAGE FOR DOB----*/}
                     {errors.date_of_birth && (
                       <span
@@ -929,8 +932,8 @@ function PersonalDetails(props) {
                     </label>
                     <select
                       className={`${errors.interested_in
-                          ? "form-control  border border-danger "
-                          : "form-control "}
+                        ? "form-control  border border-danger "
+                        : "form-control "}
                           ${state.interested_in === "pnp" ?
                           `text-uppercase` :
                           "text-capitalize"}`
@@ -1123,8 +1126,8 @@ function PersonalDetails(props) {
                   </div>
                   <div
                     className={
-                      `form-group  ${user_type === "user"
-                        || props.pageNameForForm === "Category"
+                      `form-group  ${//user_type === "user"|| 
+                        props.pageNameForForm === "Category"
                         || props.pageNameForForm === "ApplicantType"
                         || props.user_of_page === "assignedUser"
                         ? " d-none"
@@ -1295,7 +1298,7 @@ function PersonalDetails(props) {
                         htmlFor="fetured"
                         className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                       >
-                        Featured:{" "}
+                    
                         <input
                           type="checkbox"
                           id="fetured"

@@ -16,13 +16,7 @@ function Addfollowup(props) {
   let employId = props.employee_id;
   let user_type = localStorage.getItem("userType");
   // le/*tjobId*/ = props.job_id;
-  /* Functionality to close the modal */
-  const close = () => {
-    setState(initialFormState);
-    setErrors("");
-    setLoading(false);
-    // props.close();
-  };
+
   // USER FOLLOW UP PROFILE UPDATE VALIDATION
 
   /* Function to get the Response data*/
@@ -91,6 +85,14 @@ function Addfollowup(props) {
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, onInputChange, errors, setErrors, validate } =
     useValidation(initialFormState, validators);
+
+  /* Functionality to close the modal */
+  const close = () => {
+    setState(initialFormState);
+    setErrors("");
+    setLoading(false);
+    // props.close();
+  };
 
   // USER FOLLOW UP PROFILE UPDATE SUBMIT BUTTON
   const onAminFollowClick = async (event) => {

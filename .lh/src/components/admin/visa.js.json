@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 4,
             "patches": [
                 {
                     "date": 1710133059211,
@@ -12,6 +12,18 @@
                 {
                     "date": 1710592361969,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -113,11 +113,11 @@\n           <EmployeeHeader />\r\n         ) : (\r\n           <>\r\n             {/* <!-- Header Area --> */}\r\n-            <AdminHeader heading={\"Visa status\"} />\r\n+            <AdminHeader heading={\"Working Visa\"} />\r\n             {/* <!-- navbar- --> */}\r\n-            <AdminSidebar heading={\"Visa status\"} />\r\n+            <AdminSidebar heading={\"Working Visa\"} />\r\n           </>\r\n         )}\r\n \r\n         <ToastContainer />\r\n"
+                },
+                {
+                    "date": 1710743282834,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -203,9 +203,9 @@\n                       </select>\r\n                     </div>\r\n                   </div>\r\n                   <div className=\"col p-1 form_group mb-3\">\r\n-                    <p className=\"input_label\">Filter by Interested In:</p>\r\n+                    <p className=\"input_label\">Filter by Application type:</p>\r\n                     <div className=\"select_div\">\r\n                       <select\r\n                         name=\"intrested_in\"\r\n                         value={IntrestedFilterValue}\r\n"
+                },
+                {
+                    "date": 1710743395372,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -217,9 +217,9 @@\n                         }}\r\n                         className=\"text-capitalize form-control\"\r\n                       >\r\n                         <option value=\"\" data-display=\"Product Designer\">\r\n-                          Select Interested in\r\n+                          Select Application type\r\n                         </option>\r\n                         {(FilterJson.interested || []).map((data, i) => {\r\n                           return (\r\n                             <option value={data} key={i}>\r\n"
+                },
+                {
+                    "date": 1710759947793,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -168,9 +168,9 @@\n                           setpageNo(1);\r\n                         }}\r\n                         className=\"text-capitalize form-control\"\r\n                       >\r\n-                        <option value={\"\"}>Select Country</option>\r\n+                        <option value={\"\"}>Candidate's Country</option>\r\n                         {(FilterJson.location || []).map((item, i) => (\r\n                           <option value={item} key={i}>\r\n                             {item}\r\n                           </option>\r\n@@ -191,9 +191,9 @@\n                           setpageNo(1);\r\n                         }}\r\n                         className=\"text-capitalize form-control\"\r\n                       >\r\n-                        <option value={\"\"}>Select visa status </option>\r\n+                        <option value={\"\"}>Candidate's visa status </option>\r\n                         {(FilterJson.visa_status || []).map((item, index) => {\r\n                           return (\r\n                             <option value={item} key={index}>\r\n                               {item}\r\n@@ -217,9 +217,9 @@\n                         }}\r\n                         className=\"text-capitalize form-control\"\r\n                       >\r\n                         <option value=\"\" data-display=\"Product Designer\">\r\n-                          Select Application type\r\n+                        Candidate's Application type\r\n                         </option>\r\n                         {(FilterJson.interested || []).map((data, i) => {\r\n                           return (\r\n                             <option value={data} key={i}>\r\n"
                 }
             ],
             "date": 1710133059211,

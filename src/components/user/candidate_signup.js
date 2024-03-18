@@ -5,7 +5,7 @@ import {
   SendOtp,
   LinkedSignup,
   SocialLogin,
-  // GetAgentJson,
+  GetAgentJson,
 } from "../../api/api";
 // import Select from "react-select";
 import useValidation from "../common/useValidation";
@@ -19,7 +19,7 @@ import Permission from "../json/emailPermisionJson";
 export default function CandidateSignup(props) {
   const [isChecked, setIsChecked] = useState(false);
   const [termsErr, settermsErr] = useState("");
-  // const [agentList, setAgentList] = useState([]);
+  const [agentList, setAgentList] = useState([]);
   const [SingUpSuccess, setSingUpSuccess] = useState("");
   let [loading, setLoading] = useState(false);
   let [otpBox, setOtpBox] = useState(false);
@@ -256,7 +256,7 @@ export default function CandidateSignup(props) {
           console.log(err);
         });
     }
-    // AgentJson();
+    AgentJson();
   }, []);
 
   /*FUnctiom to Sign Up with facebook */
@@ -314,19 +314,24 @@ export default function CandidateSignup(props) {
     }
   };
   /*Function to get agent json list */
-  // const AgentJson = async () => {
-  //   try {
-  //     let response = await GetAgentJson();
-  //     // setAgentJson(response);
-  //     const options = (response || []).map((option) => ({
-  //       value: option.id,
-  //       label: option.u_id + "  " + option.name,
-  //     }));
-  //     setAgentList(options);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  const AgentJson = async () => {
+    let response = await GetAgentJson();
+    try {
+      // let json = await GetFilter();
+      // console.log(json);
+      // if (Array.isArray(response)) {
+      //   const options = response.map((option) => ({
+      //     value: option.id,
+      //     label: option.u_id + "  " + option.name,
+      //     name: option.name
+      //   }));
+      // }
+      setAgentList(response);
+      // setJsonList(json.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   /*Function to set data to the search job by country */
   // const onSelectChange = (option) => {
   //   setState({ ...state, reffer_by: option.value });
@@ -481,14 +486,28 @@ export default function CandidateSignup(props) {
                         ></Link> */}
                 </div>
               </div>
-              {/* <div className={"form-group "}>
+              <div className={"form-group "}>
                         <label
                           htmlFor="reffer_by"
                           className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                         >
-                          Reffered by:<span className="text-danger">*</span>
+                          Reffered by:{/*<span className="text-danger">*</span>*/}
                         </label>
-                        <Select
+                        <select
+                          name="reffer_by"
+                          value={state.reffer_by || ""}
+                          onChange={onInputChange}
+                          className={
+                            errors.reffer_by
+                              ? "form-control text-capitalize border border-danger"
+                              : "form-control text-capitalize"
+                          }
+                          id="reffer_by"
+                        >
+                          <option value={""}>Selct Partner </option>
+                          {agentList.map((item) => <option value={item.id}>{item.u_id + " " + item.name} </option>)}
+                        </select>
+                        {/* <Select
                           options={"" || agentList}
                           name="reffer_by"
                           id="reffer_by"
@@ -498,8 +517,8 @@ export default function CandidateSignup(props) {
                               ? "form-control border border-danger"
                               : "form-control px-0 pt-4 border-0"
                           }
-                        />
-                        ERROR MSG FOR REFFER BY
+                        /> */}
+                        {/* ERROR MSG FOR REFFER BY */}
                         {errors.reffer_by && (
                           <span
                             key={errors.reffer_by}
@@ -508,7 +527,7 @@ export default function CandidateSignup(props) {
                             {errors.reffer_by}
                           </span>
                         )}
-                      </div> */}
+                      </div>
               <div className="form-group">
                 <label
                   htmlFor="resume"

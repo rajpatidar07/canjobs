@@ -16,7 +16,7 @@ import Loader from "../common/loader";
 import JobModal from "../admin/Modal/jobModal";
 import VisaStatus from "../forms/user/visaStatus";
 import ApplicantsStatusModal from "../forms/admin/ApplicantsStatusModal";
-// import { MdOutlineCastForEducationMdTypeSpecimen } from "react-icons/md";
+import {/* MdOutlineCastForEducation,*/MdTypeSpecimen } from "react-icons/md";
 // import { LiaUserEditSolid, LiaUserTieSolid } from "react-icons/lia";
 import { GoTasklist } from "react-icons/go";
 // import { GiSkills } from "react-icons/gi";
@@ -262,11 +262,11 @@ export default function EmployeeTable(props) {
     setPageNameForForm("Category")
   };
   /*function to Open  change applicants type Modal */
-  // const ChangeApplicantsType = (e) => {
-  //   setemployeeId(e);
-  //   setShowEmployeeMOdal(true);
-  //   setPageNameForForm("ApplicantType")
-  // };
+  const ChangeApplicantsType = (e) => {
+    setemployeeId(e);
+    setShowEmployeeMOdal(true);
+    setPageNameForForm("ApplicantType")
+  };
   /*Function to get the new user */
   // const currentDate = new Date(); // Get current date
   // const oneMonthAgo = new Date(); // Create a new date object for one month ago
@@ -884,14 +884,17 @@ export default function EmployeeTable(props) {
                                               : empdata.interested_in === "super visa"
                                                 ? "bg-allports"
                                                 : empdata.interested_in === "visitor visa"
-                                                  ? "bg-dark"
+                                                  ? "bg-conch"
                                                   : empdata.interested_in === "work permit extension"
                                                     ? "bg-pink"
                                                     : empdata.interested_in === "working visa"
                                                       ? "bg-poppy"
                                                       : empdata.interested_in === "workpermit application"
                                                         ? "bg-success"
-                                                        : "bg-dark"
+                                                        : empdata.interested_in === "federal PR"
+                                                          ? "bg-poppy" : empdata.interested_in === "visitor record" ?
+                                                            "bg-helio"
+                                                            : "bg-primary"
                                   }`
                                 }
                               >
@@ -1021,7 +1024,7 @@ export default function EmployeeTable(props) {
                                       <BiSolidCategory />
                                     </span>
                                   </button>
-                                  {/* <button
+                                  <button
                                     className="btn btn-outline-info action_btn"
                                     onClick={() =>
                                       ChangeApplicantsType(empdata.employee_id)
@@ -1031,7 +1034,7 @@ export default function EmployeeTable(props) {
                                     <span className="text-gray px-2">
                                       <MdTypeSpecimen />
                                     </span>
-                                  </button> */}
+                                  </button>
                                   <button
                                     className="btn btn-outline-info action_btn"
                                     onClick={() =>

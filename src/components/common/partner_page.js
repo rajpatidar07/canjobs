@@ -110,7 +110,7 @@ export default function PartnerPage(props) {
     columnName,
     sortOrder,
     props.apiCall,
-    apiCall, 
+    apiCall,
   ]);
   /*To Show the delete alert box */
   const ShowDeleteAlert = (e) => {
@@ -165,8 +165,8 @@ export default function PartnerPage(props) {
             <Loader />
           ) : (
             <>
-              {(agenteData || []).map((data) => (
-                <div className="rounded bg-light p-4 mb-1">
+              {(agenteData || []).map((data, index) => (
+                <div className="rounded bg-light p-4 mb-1" key={index}>
                   <div
                     className="d-flex align-items-center position-relative"
                     key={data.id}
@@ -258,8 +258,8 @@ export default function PartnerPage(props) {
                             <h3 className="font-size-5 px-3 m-0 ">Applicant's status</h3>
                           </div>
                           <div className=" mb-7">
-                            <DataChart data={chartData} 
-                            dataType={"status"}/>
+                            <DataChart data={chartData}
+                              dataType={"status"} />
                           </div>
                         </div>
                       </div>
