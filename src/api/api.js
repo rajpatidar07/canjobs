@@ -5,6 +5,7 @@ const API_URL = "https://apnaorganicstore.in/canjobs/";
 // New AWS backend
 // const API_URL = "https://api.canpathwaysjobs.com/canjobs/";
 let Token = localStorage.getItem("token");
+let driveId = "b!iUiBybFGWEWfqWdSYuUqrWrIPVmZDQxPmwO4Bzj6nJp5ByboftxMSY6hfWPT-m8F"
 const view_as_token = localStorage.getItem("view_as_token");
 const user_id = localStorage.getItem("employee_id");
 const employer_id = localStorage.getItem("company_id");
@@ -535,10 +536,10 @@ export const GetDocumentDriveList = async (id, empType, type) => {
   const response = await axios.post(
     `${API_URL}admin/getSharpointSiteDriveFolderData`,
     {
-      "driveId": "b!iUiBybFGWEWfqWdSYuUqrWrIPVmZDQxPmwO4Bzj6nJp5ByboftxMSY6hfWPT-m8F",
+      "driveId": driveId,
       "userId": id,
       "userType": empType,
-      "type": type
+      "type": type,
     },
     {
       headers: {
@@ -579,6 +580,52 @@ export const UploadBulkDocument = async (id, data, docId, empType) => {
       employee_type: empType,
       id: docId,
       data: data,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+};
+/*Api to Upload Drive document */
+export const UploadDriveDocument = async (id, data, docId, empType, docType) => {
+  const formData = new FormData();
+  formData.append("docType", docType);
+  formData.append("userType", empType);
+  formData.append("driveId", driveId);
+  formData.append("employee_id", id);
+  formData.append("id", docId);
+  // Loop through the array of files and append each file to formData
+  for (let i = 0; i < data.length; i++) {
+    formData.append(`file[${i}]`, data[i]);
+  }
+
+  const response = await axios.post(
+    `${API_URL}admin/sharpointSiteDriveDocumentUpload`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+};
+/*Api to document name */
+export const ChangeNameDocument = async (id, name, docId, empType, docRealId) => {
+  const response = await axios.post(
+    `${API_URL}admin/updateSharepointDocumentName`,
+    {
+      "driveId": driveId,
+      "userId": id,
+      "userType": empType,
+      "newDocumentName": name,
+      "documentId": docRealId,
+      "id": docId
     },
     {
       headers: {

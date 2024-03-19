@@ -38,6 +38,7 @@ export default function DocumentList({
   notificationApiCall,
   setNotificationApiCall,
   selectDocTypeName,
+  OnDocNameChange
 }) {
   const [editDocName, setEditDocName] = useState(docName);
   const [activeAccordion, setActiveAccordion] = useState(selectDocTypeName);
@@ -105,49 +106,50 @@ export default function DocumentList({
                       ) : (
                         docData.map((item) => (
                           <tr
-                            key={item.id}
-                            action
-                            active={
-                              item.document_name === docName ||
-                              docId === item.id
-                            }
-                            onClick={() => {
-                              setShowMoreDocType(false);
-                              setDocTypData(item);
-                              setDocTypeName(item.type);
-                              setDocName(item.document_name);
-                              setDocId(item.id);
-                              setOtherDoc(false);
-                              setHide(false);
-                              setShowSaveDoc(false);
-                              setFilteredEmails([]);
-                              setAnnotationMode(false);
-                              setReplyCommentClick();
-
-                              setDocFile(
-                                item.document_url +
-                                `?v=${new Date().getMinutes() +
-                                new Date().getSeconds()
-                                }`
+                          key={item.id}
+                          action
+                          active={
+                            item.document_name === docName ||
+                            docId === item.id
+                          }
+                          onClick={() => {
+                            setShowMoreDocType(false);
+                            setDocTypData(item);
+                            setDocTypeName(item.type);
+                            setDocName(item.document_name);
+                            setDocId(item.id);
+                            setOtherDoc(false);
+                            setHide(false);
+                            setShowSaveDoc(false);
+                            setFilteredEmails([]);
+                            setAnnotationMode(false);
+                            setReplyCommentClick();
+                            setDocFile(
+                              item.document_url 
+                              // +
+                              // `?v=${new Date().getMinutes() +
+                              //   new Date().getSeconds()
+                              // }`
                               );
                               if (editName === true && docId !== item.id) {
                                 setEditName(false)
-
+                                
                               }
                             }}
                             className={
                               item.document_name === docName ||
-                                docId === item.id
-                                ? "text-capitalize bg-primary text-white position-relative"
-                                : "text-capitalize position-relative"
+                              docId === item.id
+                              ? "text-capitalize bg-primary text-white position-relative"
+                              : "text-capitalize position-relative"
                             }
-                          >
+                            >
+                          
                             <td className="p-3 doc_name_td">
                               {editName === true && docId === item.id ? (
                                 <form
                                   onSubmit={(e) => {
                                     e.preventDefault();
-                                    SaveBulkDocument();
+                                    OnDocNameChange();
                                     setEditDocName("")
                                   }}
                                   className="reply_box position-relative d-flex w-100"
@@ -161,14 +163,14 @@ export default function DocumentList({
                                     onChange={(e) => {
                                       const key = e.target.value;
                                       setEditDocName(key);
-                                      const newData = [
-                                        {
-                                          type: item.type,
-                                          docName: key,
-                                          docUrl: "",
-                                        },
-                                      ];
-                                      setDocFileBase(newData);
+                                      // const newData = [
+                                      //   {
+                                      //     type: item.type,
+                                      //     docName: key,
+                                      //     docUrl: "",
+                                      //   },
+                                      // ];
+                                      setDocFileBase(key);
                                       setBulkUpload("no");
                                     }}
                                   />
