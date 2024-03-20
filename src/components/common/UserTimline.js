@@ -2,16 +2,16 @@ import React, { useEffect, useState } from "react";
 import { getActivityLog } from "../../api/api";
 import moment from "moment";
 // import Pagination from "./pagination";
-export default function UserTimline() {
+export default function UserTimline({ userId, userType }) {
   // const [page, setpage] = useState(1);
   // const [perpage, setperpage] = useState(10);
   // const [pageNo, setpageNo] = useState(1);
   const [timeData, setTimeData] = useState([]);
   const [/*totalRows,*/ setTotalRows] = useState([]);
 
-  let TimeLineData = async (userId, userEmail, userName) => {
+  let TimeLineData = async () => {
     try {
-      let res = await getActivityLog(1, userId);
+      let res = await getActivityLog(1,"","","","","", userId,userType);
       setTimeData(res.data.data);
       setTotalRows(res.data);
     } catch (err) {
@@ -43,7 +43,11 @@ export default function UserTimline() {
                       </i>
                     </div>
                     <div className="timeline_date text-muted font-size-3 text-capitalize">
-                      {item.msg}
+                      {item.msg.includes('<a href=') ? (
+                        <span dangerouslySetInnerHTML={{ __html: item.msg }} />
+                      ) : (
+                        item.msg
+                      )}
                     </div>
                   </div>
                 </div>

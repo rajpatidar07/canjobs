@@ -155,7 +155,7 @@ export default function VisaStatus(props) {
       let Response = await AddUpdateEmployeeVisaSubStage(data);
       /*Removed sub stage response */
       if (Response.message === "updated successfully") {
-        toast.success("visa Sub Stage Removed successfully", {
+        toast.success("Visa Sub Stage Removed successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
@@ -170,7 +170,7 @@ export default function VisaStatus(props) {
       }
       /*Added sub stage response */
       if (Response.message === "created successfully") {
-        toast.success("visa Sub Stage Added successfully", {
+        toast.success("Visa Sub Stage Added successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });

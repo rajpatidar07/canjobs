@@ -1905,7 +1905,7 @@ const NewUserProfile = (props) => {
                         userId={eid}
                         userEmail={PersonalDetail.email}
                         userName={PersonalDetail.name}
-                        assignusertype={"user"}
+                        assignusertype={"agent"}
                         partnerChat={partnerChat}
                       />
                     ) : null}
@@ -1915,6 +1915,7 @@ const NewUserProfile = (props) => {
                       userId={eid}
                       userEmail={PersonalDetail.email}
                       userName={PersonalDetail.name}
+                      userType={"employee"}
                     />
                   ) : null}
                   <div

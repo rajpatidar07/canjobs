@@ -24,6 +24,7 @@ function Notifications(
   let [totalNotif, setTotalNotif] = useState();
   let [notification, setNotiication] = useState([]);
   const [apicall, setApicall] = useState(false);
+  const [recordsPerPage, setRecordsPerPage] = useState(10);
   let user_type = localStorage.getItem("userType");
   let admin_type = localStorage.getItem("admin_type");
   let loginuserId =
@@ -37,7 +38,7 @@ function Notifications(
   /*notification API Call*/
   const Notiication = async () => {
     try {
-      let Response = await getAllMentionNotification(type, loginuserId, user_type === "admin" ? admin_type : user_type);//getAllAdminNotification(); //(new) getAllMentionNotification(loginuserId); //getAllAdminNotification();
+      let Response = await getAllMentionNotification(type, loginuserId, user_type === "admin" ? admin_type : user_type,"",1, recordsPerPage,);//getAllAdminNotification(); //(new) getAllMentionNotification(loginuserId); //getAllAdminNotification();
       if (Response.Data.data.length === 0) {
         setNotiication([]);
         setTotalNotif();
@@ -102,6 +103,14 @@ function Notifications(
 
     return colorClasses[index];
   };
+    /*Function to load more data while scrolling */
+    let handelScroll = (e) => {
+      if ((recordsPerPage === 10 || recordsPerPage + 10) <= notification.length) {
+        setRecordsPerPage(recordsPerPage + 10);
+      } else {
+        // setRecordsPerPage(emailData.length);
+      }
+    };
   return (
     <div className="global_search_box  position-relative">
       {/* <i
@@ -151,7 +160,8 @@ function Notifications(
               onClick={() => setshow(false)}
             ></i>
           </div>
-          <div className="row global_search_result notofications_list  px-5 ">
+          <div className="row global_search_result notofications_list  px-5 "
+          onScroll={handelScroll}>
             {notification.length > 0 && (
               <ul className="w-100 col p-0 ">
                 {notification.map((data) => (

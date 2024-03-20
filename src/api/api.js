@@ -1646,20 +1646,22 @@ export const getAllAdminNotification = async () => {
   });
   return response.data;
 };
-export const getAllMentionNotification = async (type, loginuserid, userType, id) => {
+export const getAllMentionNotification = async (type, loginuserid, userType, id, page, limit) => {
   const response = await axios.post(
     `${API_URL}common/getMentionNotifications`,
     {
       // from_id: loginuserid,
       // employee_id: id,
       // type: type,
-      "from_id": "",
-      "type": "",
+      "from_id": userType === "agent" ? "" : loginuserid,
+      "type": userType === "agent" ? "" : userType,
       "subject": type,
-      "action_id": loginuserid,
+      "action_id": userType === "agent" ? loginuserid : "",
       "mention_id": "",
       "employee_id": "",
-      "sender_type": userType
+      "sender_type": "",
+      "page": page,
+      "limit": limit,
     },
     {
       headers: {

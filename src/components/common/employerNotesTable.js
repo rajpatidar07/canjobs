@@ -95,7 +95,7 @@ export default function EmployerNotesTable({ search }) {
                         handleSort("company_id");
                       }}
                       className="text-gray"
-                      title="Sort by aadded date"
+                      title="Sort by Client Id"
                     >
                       CID
                     </Link>
@@ -110,7 +110,7 @@ export default function EmployerNotesTable({ search }) {
                         handleSort("company_name");
                       }}
                       className="text-gray"
-                      title="Sort by aadded date"
+                      title="Sort by name"
                     >
                       Name
                     </Link>

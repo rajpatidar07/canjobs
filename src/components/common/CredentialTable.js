@@ -50,7 +50,7 @@ export default function CredentialTable({ data, editCredential }) {
           ) : (
             data.map((item) => (
               <tr key={item.id}>
-                <th scope="row" className="pl-5 py-5 pr-0 ">
+                <th scope="row" className="pl-5 py-5 pr-0 text-capitalize">
                   {item.protocol || (
                     <small className="text-gray">
                       Field not needed for this protocol

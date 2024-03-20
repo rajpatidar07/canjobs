@@ -75,7 +75,7 @@ export default function PayentForm({ data, user_id, user_type }) {
                         <span className="col-md-10 col-sm-12 ">
                           {res.payment_mode ? (
                             <>
-                              <span className="text-break">
+                              <span className="text-break text-capitalize">
                                 <b>Payment mode</b>: {res.payment_mode}
                               </span>
                               <br />

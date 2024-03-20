@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 2,
             "patches": [
                 {
                     "date": 1710503309379,
@@ -12,6 +12,10 @@
                 {
                     "date": 1710504371982,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -65,9 +65,9 @@\n                 (paymentList || []).map((res, index) => (\r\n                   <div className=\"single_note mb-5\" key={index}>\r\n                     <div className=\"d-flex justify-content-between\">\r\n                       <p className=\"text-italic font-size-3 m-0\">\r\n-                        Payment on:\r\n+                        Payment on:{\" \"}\r\n                         {moment(res.created_at).format(\"Do MM YYYY, h:mm:ss a\")}\r\n                       </p>\r\n                     </div>\r\n                     <div className=\"card rounded-3 py-2 px-5\">\r\n"
+                },
+                {
+                    "date": 1710926976526,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -74,9 +74,9 @@\n                       <p className=\"fw-bold m-0 row\">\r\n                         <span className=\"col-md-10 col-sm-12 \">\r\n                           {res.payment_mode ? (\r\n                             <>\r\n-                              <span className=\"text-break\">\r\n+                              <span className=\"text-break text-capitalize\">\r\n                                 <b>Payment mode</b>: {res.payment_mode}\r\n                               </span>\r\n                               <br />\r\n                             </>\r\n"
                 }
             ],
             "date": 1710503309379,

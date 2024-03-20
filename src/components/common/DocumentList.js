@@ -106,44 +106,44 @@ export default function DocumentList({
                       ) : (
                         docData.map((item) => (
                           <tr
-                          key={item.id}
-                          action
-                          active={
-                            item.document_name === docName ||
-                            docId === item.id
-                          }
-                          onClick={() => {
-                            setShowMoreDocType(false);
-                            setDocTypData(item);
-                            setDocTypeName(item.type);
-                            setDocName(item.document_name);
-                            setDocId(item.id);
-                            setOtherDoc(false);
-                            setHide(false);
-                            setShowSaveDoc(false);
-                            setFilteredEmails([]);
-                            setAnnotationMode(false);
-                            setReplyCommentClick();
-                            setDocFile(
-                              item.document_url 
-                              // +
-                              // `?v=${new Date().getMinutes() +
-                              //   new Date().getSeconds()
-                              // }`
+                            key={item.id}
+                            action
+                            active={
+                              item.document_name === docName ||
+                              docId === item.id
+                            }
+                            onClick={() => {
+                              setShowMoreDocType(false);
+                              setDocTypData(item);
+                              setDocTypeName(item.type);
+                              setDocName(item.document_name);
+                              setDocId(item.id);
+                              setOtherDoc(false);
+                              setHide(false);
+                              setShowSaveDoc(false);
+                              setFilteredEmails([]);
+                              setAnnotationMode(false);
+                              setReplyCommentClick();
+                              setDocFile(
+                                item.document_url
+                                // +
+                                // `?v=${new Date().getMinutes() +
+                                //   new Date().getSeconds()
+                                // }`
                               );
                               if (editName === true && docId !== item.id) {
                                 setEditName(false)
-                                
+
                               }
                             }}
                             className={
                               item.document_name === docName ||
-                              docId === item.id
-                              ? "text-capitalize bg-primary text-white position-relative"
-                              : "text-capitalize position-relative"
+                                docId === item.id
+                                ? "text-capitalize bg-primary text-white position-relative"
+                                : "text-capitalize position-relative"
                             }
-                            >
-                          
+                          >
+
                             <td className="p-3 doc_name_td">
                               {editName === true && docId === item.id ? (
                                 <form
@@ -157,7 +157,10 @@ export default function DocumentList({
                                   <input
                                     type="text"
                                     value={
-                                      editDocName === "" ? docName : editDocName
+                                      editDocName === "" ?
+                                      textReplaceFunction(docName.split(".")[0])
+                                        // remove _ and extention from the document name 
+                                        : editDocName
                                     }
                                     className="form-control font-size-2 bg-primary bg-white"
                                     onChange={(e) => {
@@ -170,7 +173,8 @@ export default function DocumentList({
                                       //     docUrl: "",
                                       //   },
                                       // ];
-                                      setDocFileBase(key);
+                                      //Add extention while updating document name
+                                      setDocFileBase(key + "." + item.extension_type.split("/")[1]);
                                       setBulkUpload("no");
                                     }}
                                   />
@@ -196,7 +200,8 @@ export default function DocumentList({
                               ) : (
                                 <>
                                   <span>
-                                    {textReplaceFunction(item.document_name)}
+                                    {/* remove _ and extention from the document name */}
+                                    {textReplaceFunction(item.document_name.split(".")[0])}
                                   </span>
                                   <p className="font-size-2 m-0">
                                     {moment(item.updated_at).format(

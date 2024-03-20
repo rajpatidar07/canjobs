@@ -96,7 +96,7 @@ export default function EmployeeNotesTable({ search }) {
                         handleSort("employee_id");
                       }}
                       className="text-gray"
-                      title="Sort by aadded date"
+                      title="Sort by Candidate Id"
                     >
                       EID
                     </Link>
@@ -111,7 +111,7 @@ export default function EmployeeNotesTable({ search }) {
                         handleSort("name");
                       }}
                       className="text-gray"
-                      title="Sort by aadded date"
+                      title="Sort by name"
                     >
                       Name
                     </Link>
