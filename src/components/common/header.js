@@ -155,16 +155,16 @@ function EmployeeHeader() {
                       Client
                     </Link>
                   </li>
-                  <li className="drop-menu-item">
+                 { /*<li className="drop-menu-item">
                     <Link to={"/partnerlogin"} className="nav-link">
                       Partner
                     </Link>
-                  </li>
-                  <li className="nav-item">
+              </li>*/}
+                  {/* <li className="nav-item">
                     <Link className="nav-link" to="/adminlogin">
                       Admin
                     </Link>
-                  </li>
+                  </li> */}
                   {/* {userType === "company" || userType === "user" ? (
                     <>
                       <li className="nav-item">

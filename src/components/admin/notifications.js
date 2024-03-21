@@ -38,7 +38,7 @@ function Notifications(
   /*notification API Call*/
   const Notiication = async () => {
     try {
-      let Response = await getAllMentionNotification(type, loginuserId, user_type === "admin" ? admin_type : user_type,"",1, recordsPerPage,);//getAllAdminNotification(); //(new) getAllMentionNotification(loginuserId); //getAllAdminNotification();
+      let Response = await getAllMentionNotification(type, loginuserId, user_type === "admin" ? admin_type : user_type, "", 1, recordsPerPage,);//getAllAdminNotification(); //(new) getAllMentionNotification(loginuserId); //getAllAdminNotification();
       if (Response.Data.data.length === 0) {
         setNotiication([]);
         setTotalNotif();
@@ -63,7 +63,7 @@ function Notifications(
     }
   }, [
     apicall,
-    localStorage.getItem("callNotification") /*notificationApiCall*/,
+    localStorage.getItem("callNotification"), recordsPerPage /*notificationApiCall*/,
   ]);
   /*Function to set the color code to the background of the user name */
   const determineBackgroundColor = (commentItem) => {
@@ -103,14 +103,14 @@ function Notifications(
 
     return colorClasses[index];
   };
-    /*Function to load more data while scrolling */
-    let handelScroll = (e) => {
-      if ((recordsPerPage === 10 || recordsPerPage + 10) <= notification.length) {
-        setRecordsPerPage(recordsPerPage + 10);
-      } else {
-        // setRecordsPerPage(emailData.length);
-      }
-    };
+  /*Function to load more data while scrolling */
+  let handelScroll = (e) => {
+    if ((recordsPerPage === 10 || recordsPerPage + 10) <= notification.length) {
+      setRecordsPerPage(recordsPerPage + 10);
+    } else {
+      // setRecordsPerPage(emailData.length);
+    }
+  };
   return (
     <div className="global_search_box  position-relative">
       {/* <i
@@ -161,7 +161,8 @@ function Notifications(
             ></i>
           </div>
           <div className="row global_search_result notofications_list  px-5 "
-          onScroll={handelScroll}>
+            onScroll={handelScroll}
+            style={{ overflowY: "scroll", height: "590px" }}>
             {notification.length > 0 && (
               <ul className="w-100 col p-0 ">
                 {notification.map((data) => (

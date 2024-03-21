@@ -4,15 +4,17 @@ import useValidation from "../../common/useValidation";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import filterjson from "../../json/filterjson";
-import { AddUpdateAgent, GetAgent } from "../../../api/api";
+import { AddUpdateAgent, GetAgent, getallAdminData } from "../../../api/api";
 
 function AddAgent(props) {
   let encoded;
   const [imgError, setImgError] = useState("");
   //   let [already, setAlready] = useState("");
   let [loading, setLoading] = useState(false);
+  const [admiinList, setAdminList] = useState([]);
   const [showPassword, setShowPassword] = useState(false);
 
+  let user_type = localStorage.getItem("userType")
   /*Function to show hide password */
   const toggleShowPassword = () => setShowPassword((prev) => !prev);
 
@@ -27,6 +29,26 @@ function AddAgent(props) {
     return null;
   };
 
+  /*Function to get admin json list */
+  const AdminJson = async () => {
+    let response = await getallAdminData();
+    try {
+      // let json = await GetFilter();
+      // console.log(json);
+      // let newAdminJson = response.data.filter((item) => admin_id !== item.admin_id)
+      // if (Array.isArray(newAdminJson)) {
+      //   const options = newAdminJson.map((option) => ({
+      //     value: option.admin_id,
+      //     label: option.name,
+      //   }));
+      //   setAdminList(options);
+      // }
+      // setJsonList(json.data.data);
+      setAdminList(response.data)
+    } catch (err) {
+      console.log(err);
+    }
+  };
   /* Functionality to close the modal */
   const close = () => {
     setState(initialFormState);
@@ -50,6 +72,7 @@ function AddAgent(props) {
     state: "",
     city: "",
     id: props.agentId === "0" ? "" : props.agentId,
+    assigned_by: ""
   };
   // VALIDATION CONDITIONS
   const validators = {
@@ -58,12 +81,12 @@ function AddAgent(props) {
         value === "" || value.trim() === ""
           ? "Name is required"
           : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Name can not have a number."
-          : value.length < 2
-          ? "Name should have 2 or more letters"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : "",
+            ? "Name can not have a number."
+            : value.length < 2
+              ? "Name should have 2 or more letters"
+              : /[^A-Za-z 0-9]/g.test(value)
+                ? "Cannot use special character "
+                : "",
     ],
     // email: [
     //   (value) =>
@@ -75,15 +98,15 @@ function AddAgent(props) {
     // ],
     password: [
       (value) =>
-      state.id || state.agent_id || props.agentId
+        state.id || state.agent_id || props.agentId
           ? ''
           : value === ""
-          ? "Password is required"
-          : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(
+            ? "Password is required"
+            : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(
               value
             )
-          ? null
-          : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
+              ? null
+              : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
     ],
     // type: [(value) => (value === "" ? "Type is required" : null)],
     // contact_no: [
@@ -201,6 +224,9 @@ function AddAgent(props) {
       setState(initialFormState);
     } else {
       AgentData();
+    }
+    if (user_type === "admin") {
+      AdminJson()
     }
   }, [props.agentId]);
 
@@ -584,6 +610,65 @@ function AddAgent(props) {
                 {errors.city && (
                   <span key={errors.city} className="text-danger font-size-3">
                     {errors.city}
+                  </span>
+                )}
+              </div>
+              <div
+                className={user_type === "agent" ? "d-none" : "form-group col-md-6 "}
+              // style={{ position: "relative" }}
+              >
+                <label
+                  htmlFor="assigned_by"
+                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                >
+                  Assigned By: {/* <span className="text-danger">*</span> */}
+                </label>
+                {/* <Select
+                      options={"" || admiinList}
+                      name="assigned_by"
+                      value={state.assigned_by}
+                      id="assigned_by"
+                      onChange={onAdminSelectChange}
+                      className={
+                        errors.assigned_by
+                          ? "form-control border border-danger px-0 pt-4 "
+                          : "form-control px-0 pt-4 border-0"
+                      }
+                    /> */}
+                <select
+                  name="assigned_by"
+                  value={state.assigned_by || ""}
+                  onChange={onInputChange}
+                  className={
+                    errors.assigned_by
+                      ? "form-control text-capitalize border border-danger"
+                      : "form-control text-capitalize"
+                  }
+                  id="assigned_by"
+                >
+                  <option value={""}>Select Admin </option>
+                  {admiinList.map((item) => <option value={item.admin_id}>{item.name} </option>)}
+                </select>
+                {/* <span
+                      className="btn btn-sm btn-secondary"
+                      onClick={() => setShowAdminMOdal(true)}
+                      style={{
+                        width: "auto",
+                        minWidth: "auto",
+                        height: "44px",
+                      }}
+                      title="Add New Admin"
+                    >
+                      +
+                    </span>  */}
+
+                {/* ERROR MSG FOR REFFER BY  */}
+                {errors.assigned_by && (
+                  <span
+                    key={errors.assigned_by}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.assigned_by}
                   </span>
                 )}
               </div>

@@ -519,7 +519,7 @@ export default function EmployeeTable(props) {
                       </Link>
                     </th>
                   )}
-                  {props.heading === "Dashboard" ? (
+                  {props.heading === "Dashboard" || user_type === "agent" ? (
                     ""
                   ) : (
                     <th
@@ -711,7 +711,7 @@ export default function EmployeeTable(props) {
                                   )
                                 </p>
                               ) : null}
-                              {empdata.contact_no === null ? null : (
+                              {empdata.contact_no === null || !empdata.contact_no ? null : (
                                 <p className="m-0">
                                   +
                                   <Link
@@ -793,7 +793,7 @@ export default function EmployeeTable(props) {
                           )}
                         </td>
                       )}
-                      {props.heading === "Dashboard" ? (
+                      {props.heading === "Dashboard" || user_type === "agent" ? (
                         ""
                       ) : (
                         <td className=" py-5">
@@ -860,7 +860,7 @@ export default function EmployeeTable(props) {
                         //   )}
                         // </td>
                         <td className="">
-                          {empdata.interested_in === null ? (
+                          {empdata.interested_in === null || !empdata.interested_in ? (
                             <p className="font-size-3 mb-0">N/A</p>
                           ) : (
                             <p className={`font-size-2 font-weight-normal text-black-2 mb-0 ${empdata.interested_in === "pnp" ?

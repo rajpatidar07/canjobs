@@ -10,7 +10,8 @@ export default function AgentConversation({
   userEmail,
   userName,
   assignusertype,
-  partnerChat
+  partnerChat,
+  reffer_by
 }) {
   const [allData, setAllData] = useState([]);
   const [apicall, setApiCall] = useState([]);
@@ -248,32 +249,39 @@ export default function AgentConversation({
       setState({ ...state, DocUrl: "" });
     }
   };
-
+  console.log(
+    reffer_by)
   return (
     <div className="chat_box_container bg-white row m-0">
-      <div className="chat-container col-md-6">
-        <MessageList
-          data={allData.filter((item) => item.followup_status === "normal")}
-          loginuser={
-            user_type === "admin"
-              ? admin_id
-              : user_type === "agent"
-                ? agent_id
-                : employee_id
-          }
-          loginusertype={user_type === "admin" ? admin_type : user_type}
-        />
-        <AddNotesConversation
-          handleMessageSubmit={handleMessageSubmit}
-          onInputChange={onInputChange}
-          state={state}
-          errors={errors}
-          handleBulkFileChange={handleBulkFileChange}
-          handleRemoveFile={handleRemoveFile}
-          fileNames={fileNames}
-          setState={setState}
-        />
-      </div>
+      {reffer_by === "0"
+        ? <div className="chat-container d-flex justify-content-center align-items-center w-100">
+          <p className="text-center">
+            Please assign a partner first.
+          </p>
+        </div>
+        : <div className="chat-container col-md-6">
+          <MessageList
+            data={allData.filter((item) => item.followup_status === "normal")}
+            loginuser={
+              user_type === "admin"
+                ? admin_id
+                : user_type === "agent"
+                  ? agent_id
+                  : employee_id
+            }
+            loginusertype={user_type === "admin" ? admin_type : user_type}
+          />
+          <AddNotesConversation
+            handleMessageSubmit={handleMessageSubmit}
+            onInputChange={onInputChange}
+            state={state}
+            errors={errors}
+            handleBulkFileChange={handleBulkFileChange}
+            handleRemoveFile={handleRemoveFile}
+            fileNames={fileNames}
+            setState={setState}
+          />
+        </div>}
       {/*  <div className="chat-container col-md-6">
         <MessageList
           data={allData.filter((item) => item.followup_status === "private")}

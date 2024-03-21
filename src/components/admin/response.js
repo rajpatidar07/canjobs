@@ -663,7 +663,7 @@ function JobResponse(props) {
                                       </div>
                                     </div>
 
-                                    <div className=" mb-0">
+                                    <div className=" mb-0" title={res.name}>
                                       <p className="m-0 text-black-2 font-weight-bold text-capitalize">
                                         <Link
                                           className="text-dark"
@@ -723,7 +723,7 @@ function JobResponse(props) {
                                 <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                   {res.contact_no || res.email ? (
                                     <>
-                                      <p className="font-size-3 font-weight-normal m-0">
+                                      <p className="font-size-3 font-weight-normal m-0"  title={res.contact_no}>
                                         <Link
                                           className="text-dark"
                                           to={`tel:${res.contact_no}`}
@@ -731,7 +731,7 @@ function JobResponse(props) {
                                           {`+${res.contact_no}`}
                                         </Link>
                                       </p>
-                                      <p className="font-size-3 font-weight-normal m-0">
+                                      <p className="font-size-3 font-weight-normal m-0" title={res.email}>
                                         <Link
                                           className="text-dark"
                                           to={`mailto:${res.email}`}
@@ -752,7 +752,8 @@ function JobResponse(props) {
                               ""
                             ) : (
                               <th className="py-5 ">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0" title={res.current_location +" "+
+                                  res.currently_located_country}>
                                   {res.current_location ||
                                   res.currently_located_country ? (
                                     <>
@@ -773,9 +774,21 @@ function JobResponse(props) {
                               ""
                             ) : (
                               <th className=" py-5">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0" title={res.experience === "1-3 " ||
+                                    res.experience === "1-2 " ||
+                                    res.experience === "3-5 " ||
+                                    res.experience === "5-7 " ||
+                                    res.experience === "7+ "
+                                    ? res.experience + "years"
+                                    : res.experience}>
                                   {res.experience ? (
-                                    res.experience
+                                    res.experience === "1-3 " ||
+                                    res.experience === "1-2 " ||
+                                    res.experience === "3-5 " ||
+                                    res.experience === "5-7 " ||
+                                    res.experience === "7+ "
+                                    ? res.experience + "years"
+                                    : res.experience
                                   ) : (
                                     <span className="font-size-3 font-weight-normal text-black-2 mb-0">
                                       NA
@@ -784,8 +797,8 @@ function JobResponse(props) {
                                 </h3>
                               </th>
                             )}
-                            <th className=" py-5">
-                              <div className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            <th className=" py-5 ">
+                              <div className="font-size-3 font-weight-normal text-black-2 mb-0 " title={res.lmia_status||"N/a" }>
                                 <Link to="/lmia" state={{ id: res.job_id }}>
                                   {res.lmia_status === "candidate placement" ? (
                                     <span className="px-3 py-2 badge badge-pill badge-warning">

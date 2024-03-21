@@ -1127,7 +1127,7 @@ function PersonalDetails(props) {
                   <div
                     className={
                       `form-group  ${//user_type === "user"|| 
-                        props.pageNameForForm === "Category"
+                      props.pageNameForForm === "Category"
                         || props.pageNameForForm === "ApplicantType"
                         || props.user_of_page === "assignedUser"
                         ? " d-none"
@@ -1159,12 +1159,13 @@ function PersonalDetails(props) {
                           : "form-control text-capitalize"
                       }
                       id="reffer_by"
+                      disabled={user_type === "agent"}
                     >
-                      <option value={""}>Selct partner </option>
+                      <option value={""}>Select partner </option>
                       {agentList.map((item) => <option value={item.id}>{item.u_id + " " + item.name} </option>)}
                     </select>
                     <span
-                      className="btn btn-sm btn-secondary"
+                      className={user_type === "agent" ? "d-none" : "btn btn-sm btn-secondary"}
                       onClick={() => setShowAgentMOdal(true)}
                       style={{
                         width: "auto",
@@ -1229,7 +1230,7 @@ function PersonalDetails(props) {
                       }
                       id="assigned_by"
                     >
-                      <option value={""}>Selct Admin </option>
+                      <option value={""}>Select Admin </option>
                       {admiinList.map((item) => <option value={item.admin_id}>{item.name} </option>)}
                     </select>
                     {/* <span
@@ -1298,7 +1299,7 @@ function PersonalDetails(props) {
                         htmlFor="fetured"
                         className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                       >
-                    
+
                         <input
                           type="checkbox"
                           id="fetured"
