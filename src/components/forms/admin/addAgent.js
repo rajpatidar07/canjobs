@@ -621,7 +621,7 @@ function AddAgent(props) {
                   htmlFor="assigned_by"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Assigned By: {/* <span className="text-danger">*</span> */}
+                  Assigned To: {/* <span className="text-danger">*</span> */}
                 </label>
                 {/* <Select
                       options={"" || admiinList}

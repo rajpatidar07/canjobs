@@ -155,11 +155,11 @@ function EmployeeHeader() {
                       Client
                     </Link>
                   </li>
-                 { /*<li className="drop-menu-item">
+                 <li className="drop-menu-item">
                     <Link to={"/partnerlogin"} className="nav-link">
                       Partner
                     </Link>
-              </li>*/}
+              </li>
                   {/* <li className="nav-item">
                     <Link className="nav-link" to="/adminlogin">
                       Admin

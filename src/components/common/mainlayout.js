@@ -62,6 +62,7 @@ import ActivityLog from "./activity_log";
 import Credentional from "../admin/Credentional";
 import AsiignedAdmin from "./asiigned_admin";
 import Federalpr from "../admin/federalpr";
+import PartnerDetails from "../agent/partnerDetails";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -169,6 +170,7 @@ function MainLayout() {
             <Route path="/userpdf" element={<PDFViewer />} />
             <Route path="/job_detail" element={<JobDetailpageAdmim />} />
             <Route path="/client_detail" element={<CompanyProfileDetail />} />
+            <Route path="/partner_detail" element={<PartnerDetails   />} />
             <Route path="/followup" element={<Followup />} />
             <Route path="/partner" element={<Agent />} />
             <Route path="/partner_dashboard" element={<PartnerDashboard />} />

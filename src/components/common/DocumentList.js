@@ -174,7 +174,7 @@ export default function DocumentList({
                                       //   },
                                       // ];
                                       //Add extention while updating document name
-                                      setDocFileBase(key + "." + item.extension_type.split("/")[1]);
+                                      setDocFileBase(key);
                                       setBulkUpload("no");
                                     }}
                                   />
@@ -201,7 +201,7 @@ export default function DocumentList({
                                 <>
                                   <span>
                                     {/* remove _ and extention from the document name */}
-                                    {textReplaceFunction(item.document_name.split(".")[0])}
+                                    {textReplaceFunction(item.document_name)}
                                   </span>
                                   <p className="font-size-2 m-0">
                                     {moment(item.updated_at).format(

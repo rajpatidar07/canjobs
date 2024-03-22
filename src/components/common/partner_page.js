@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import SAlert from "../common/sweetAlert";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -189,14 +189,20 @@ export default function PartnerPage(props) {
                       />
                     )}
                     <div className="ml-5 w-100">
-                      <h5 className="mb-0 text-capitalize line-height-1 text-break">
-                        {data.name === null ||
-                          data.name === undefined ||
-                          data.name === "undefined" ||
-                          data.name === ""
-                          ? "N/A"
-                          : data.name}
-                      </h5>
+                      <Link
+                        // to={`/partner_detail`}
+                        // onClick={localStorage.setItem("agent_id", data.id)
+                        // }
+                        >
+                        <h5 className="mb-0 text-capitalize line-height-1 text-break">
+                          {data.name === null ||
+                            data.name === undefined ||
+                            data.name === "undefined" ||
+                            data.name === ""
+                            ? "N/A"
+                            : data.name}
+                        </h5>
+                      </Link>
                       <hr className="my-3" />
                       <div className="m-0 age_gender d-flex align-items-center">
                         <span className="bg-secondary rounded-pill font-size-3 px-3 py-2 text-white mr-2">

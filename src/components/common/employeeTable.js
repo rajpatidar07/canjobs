@@ -800,15 +800,20 @@ export default function EmployeeTable(props) {
                           {empdata.agent_name === null ? (
                             <p className="font-size-3  mb-0">N/A</p>
                           ) : (
-                            <p
-                              className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
-                              title={
-                                empdata.agent_u_id + " " + empdata.agent_name
-                              }
-                            >
-                              {empdata.agent_u_id} {"  "}
-                              {empdata.agent_name}
-                            </p>
+                            <Link 
+                            // to={`/partner_detail`}
+                            //   onClick={localStorage.setItem("agent_id", empdata.reffer_by)}
+                              >
+                              <p
+                                className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
+                                title={
+                                  empdata.agent_u_id + " " + empdata.agent_name
+                                }
+                              >
+                                {empdata.agent_u_id}
+                                {empdata.agent_name}
+                              </p>
+                            </Link>
                           )}
                         </td>
                       )}

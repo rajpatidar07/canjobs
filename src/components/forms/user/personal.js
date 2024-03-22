@@ -216,7 +216,7 @@ function PersonalDetails(props) {
     //   ? null
     //   : [
     //     (value) =>
-    //       value === "" || value === null ? "Assigned by is required" : null,
+    //       value === "" || value === null ? "Assigned To is required" : null,
     //   ],
   };
 
@@ -452,7 +452,7 @@ function PersonalDetails(props) {
                     Update {props.pageNameForForm === "ApplicantType" ?
                       " Applicant Type" : props.user_of_page === "agentAssigned"
                         ? "Reffer By" : props.user_of_page === "assignedUser"
-                          ? "Assigned By" :
+                          ? "Assigned To" :
                           "Candidate Details"}
                   </h5>
                 )}
@@ -1205,7 +1205,7 @@ function PersonalDetails(props) {
                       htmlFor="assigned_by"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
-                      Assigned By:<span className="text-danger">*</span>
+                      Assigned To:<span className="text-danger">*</span>
                     </label>
                     {/* <Select
                       options={"" || admiinList}

@@ -127,12 +127,17 @@ export default function DocumrentContainer(props) {
       if (allAdmin) {
         // Filter admin emails based on input
         let filteredAdminEmails = allAdmin.filter((admin) =>
-          admin.email.toLowerCase().includes(
+        (admin.email.toLowerCase().includes(
+          String(inputValue)
+            .substring(atIndex + 1)
+            .toLowerCase()
+        ) ||
+          admin.name.toLowerCase().includes(
             String(inputValue)
               .substring(atIndex + 1)
               .toLowerCase()
           )
-        );
+        ))
 
         // Update the filtered emails
         setFilteredEmails(filteredAdminEmails);
@@ -334,7 +339,7 @@ export default function DocumrentContainer(props) {
               //  +
               // `?v=${new Date().getMinutes() + new Date().getSeconds()}`
             );
-            console.log("object", response.data.data.allData[0].id)
+            // console.log("object", response.data.data.allData[0].id)
             setDocName(response.data.data.allData[0].document_name);
             setDocId(response.data.data.allData[0].id);
             setDocTypeName(response.data.data.allData[0].type);
@@ -368,9 +373,9 @@ export default function DocumrentContainer(props) {
                   (item) => item.document_name === docName
                 ).id
               );
-              console.log(response.data.data.allData.find(
-                (item) => item.document_name === docName
-              ).document_name, "pppppppp")
+              // console.log(response.data.data.allData.find(
+              //   (item) => item.document_name === docName
+              // ).document_name, "pppppppp")
               setDocFile(
                 response.data.data.allData.find(
                   (item) => item.document_name === docName
@@ -408,8 +413,8 @@ export default function DocumrentContainer(props) {
                 response.data.data.allData.find((item) => item.id === docId)
                   .id
               );
-              console.log("dfsfsf", response.data.data.allData.find((item) => item.id === docId)
-                .id)
+              // console.log("dfsfsf", response.data.data.allData.find((item) => item.id === docId)
+              //   .id)
               setDocTypeName(
                 response.data.data.allData.find((item) => item.id === docId)
                   .type
@@ -558,7 +563,7 @@ export default function DocumrentContainer(props) {
       let DocRealName;
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
-        console.log(file)
+        // console.log(file)
         // Check file type
         const fileType = `.${file.name.split(".").pop()}`;
         if (!allowedTypes.includes(fileType.toLowerCase())) {
@@ -718,20 +723,22 @@ export default function DocumrentContainer(props) {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 2000,
           });
-          toast.error(
-            <>
-              Unsupported Files:
-              <ul>
-                {response.data.data.map((item, index) => (
-                  <li key={index}>{item.type}</li>
-                ))}
-              </ul>
-            </>,
-            {
-              position: toast.POSITION.TOP_RIGHT,
-              autoClose: 2000,
-            }
-          );
+          if (response.data.data && response.data.data[1].length !== 0) {
+            toast.error(
+              <>
+                Unsupported Files:
+                <ul>
+                  {response.data.data[1].map((item, index) => (
+                    <li key={index}>{item.type}</li>
+                  ))}
+                </ul>
+              </>,
+              {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 2000,
+              }
+            );
+          }
         } else {
           toast.success("Documents uploaded Successfully", {
             position: toast.POSITION.TOP_RIGHT,
@@ -873,10 +880,10 @@ export default function DocumrentContainer(props) {
                         fileType={
                           docFileExt
                             ? docFileExt
-                            : docTypData.extension_type.split("/")[1] ===
+                            : docTypData.extension_type ===
                               "vnd.openxmlformats-officedocument.wordprocessingml.document"
                               ? "docx"
-                              : docTypData.extension_type.split("/")[1]
+                              : docTypData.extension_type
                         }
                         filePath={docFile}
                         errorComponent={() => <div>Error loading document</div>}
@@ -967,7 +974,6 @@ export default function DocumrentContainer(props) {
         docData[0] === docTypData ? docTypData.document_id :
           docData.find((item) => item.id === docId).document_id,
       )
-      console.log(res)
       if (res.data.message === "Document name updated successfully!") {
         toast.success("Document name updated Successfully", {
           position: toast.POSITION.TOP_RIGHT,

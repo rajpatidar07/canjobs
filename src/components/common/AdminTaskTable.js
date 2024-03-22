@@ -74,9 +74,9 @@ export default function AdminTaskTable(props) {
                       props.setpageNo(1);
                     }}
                     className="text-gray"
-                    title="Sort by Assigned By"
+                    title="Sort by Assigned To"
                   >
-                    Assigned By
+                    Assigned To
                   </Link>
                 </th>
                 <th
