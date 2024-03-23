@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 29,
+            "activePatchIndex": 30,
             "patches": [
                 {
                     "date": 1708925413896,
@@ -124,6 +124,10 @@
                 {
                     "date": 1711011976799,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1892,9 +1892,8 @@\n                     {TabActive === \"email\" ? (\n                       <MainEmailPage email={PersonalDetail.email} />\n                     ) : null}\n                   </div>\n-                  {console.log(PersonalDetail)}\n                   <div\n                     className={\n                       TabActive === \"agent conversation\"\n                         ? \"justify-content-center \"\n"
+                },
+                {
+                    "date": 1711174401148,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1907,8 +1907,9 @@\n                         userName={PersonalDetail.name}\n                         assignusertype={\"agent\"}\n                         partnerChat={partnerChat}\n                         reffer_by={PersonalDetail.reffer_by}\n+                        type={\"partner\"}\n                       />\n                     ) : null}\n                   </div>\n                   {TabActive === \"timline\" ? (\n"
                 }
             ],
             "date": 1708925413896,

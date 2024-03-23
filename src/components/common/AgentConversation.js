@@ -11,7 +11,8 @@ export default function AgentConversation({
   userName,
   assignusertype,
   partnerChat,
-  reffer_by
+  reffer_by,
+  type
 }) {
   const [allData, setAllData] = useState([]);
   const [apicall, setApiCall] = useState([]);
@@ -20,8 +21,8 @@ export default function AgentConversation({
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     name: "",
-    status: "normal",
-    nxtfollowupdate: moment().add(1, "week").format("YYYY-MM-DD"),
+    status: type === "partnerChat" ? "" : "normal",
+    nxtfollowupdate: type === "partnerChat" ? "" : moment().add(1, "week").format("YYYY-MM-DD"),
     subject: "",
     message: "",
     DocUrl: "",
@@ -88,8 +89,8 @@ export default function AgentConversation({
   //   Get the notes list
   const GetNotesData = async () => {
     try {
-      let res = await GetCommentsAndAssign("", userId, "", "partner");
-      if (res.data.status === (1 || "1")) {
+      let res = await GetCommentsAndAssign("", userId, "", type, "", "", "DESC", "created_on", "", assignusertype);
+      if (res.data.status === 1 || res.data.status === "1") {
         setAllData(res.data.data.data.reverse());
       } else if (res.data.message === "Task data not found") {
         setAllData([]);
@@ -116,7 +117,7 @@ export default function AgentConversation({
         state.message, //Comment
         0, //x_axis
         0, //y_axis
-        "partner", // Type for the api
+        type, // Type for the api
         user_type === "admin" ? admin_type : user_type, //sender type
         user_type === "admin" || user_type === "agent" ? admin_name : user_name, //sender name,
         userName, //assigned Admin or user Name,
@@ -253,15 +254,16 @@ export default function AgentConversation({
     reffer_by)
   return (
     <div className="chat_box_container bg-white row m-0">
-      {reffer_by === "0"
+      {reffer_by === "0" || reffer_by === undefined || !reffer_by
         ? <div className="chat-container d-flex justify-content-center align-items-center w-100">
           <p className="text-center">
-            Please assign a partner first.
+            {user_type === "agent" ? "Admin is not assigned." : ` Please assign a ${type === "partnerChat" ? "Admin" : "partner"} first.`}
           </p>
         </div>
         : <div className="chat-container col-md-6">
           <MessageList
-            data={allData.filter((item) => item.followup_status === "normal")}
+            data={type === "partnerChat" ?
+              allData : allData.filter((item) => item.followup_status === "normal")}
             loginuser={
               user_type === "admin"
                 ? admin_id

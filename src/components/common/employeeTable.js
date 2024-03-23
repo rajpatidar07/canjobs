@@ -801,8 +801,8 @@ export default function EmployeeTable(props) {
                             <p className="font-size-3  mb-0">N/A</p>
                           ) : (
                             <Link 
-                            // to={`/partner_detail`}
-                            //   onClick={localStorage.setItem("agent_id", empdata.reffer_by)}
+                            to={`/partner_profile`}
+                              onClick={localStorage.setItem("agent_id", empdata.reffer_by)}
                               >
                               <p
                                 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"

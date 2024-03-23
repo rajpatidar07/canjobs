@@ -170,7 +170,7 @@ function MainLayout() {
             <Route path="/userpdf" element={<PDFViewer />} />
             <Route path="/job_detail" element={<JobDetailpageAdmim />} />
             <Route path="/client_detail" element={<CompanyProfileDetail />} />
-            <Route path="/partner_detail" element={<PartnerDetails   />} />
+            <Route path="/partner_profile" element={<PartnerDetails   />} />
             <Route path="/followup" element={<Followup />} />
             <Route path="/partner" element={<Agent />} />
             <Route path="/partner_dashboard" element={<PartnerDashboard />} />

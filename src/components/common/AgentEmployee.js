@@ -652,7 +652,7 @@ function AgentsEmployee(props) {
                                 <div className="d-flex profile_box gx-2">
                                   <div className="media  align-items-center">
                                     <div className="circle-30 mx-auto overflow-hidden">
-                                      {empdata.profile_photo === null ? (
+                                      {!empdata.profile_photo || empdata.profile_photo === null ? (
                                         <img
                                           src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                           alt=""
@@ -816,30 +816,30 @@ function AgentsEmployee(props) {
                             {props.visa === "yes" ? null : (
                               <td className="py-2">
                                 <p className="font-size-2  text-black-2 mb-0">
-                                <span
-                              className={`p-1 text-white text-center w-100 border rounded-pill ${empdata.status === "1" || empdata.status === "0" ? (
-                                !isTimeWithin24Hours(empdata.created_at)
-                                  ? "bg-danger "
-                                  : "bg-info ") : empdata.status === "2" ?
-                                "bg-warning" : empdata.status === "3" ?
-                                  "bg-coral-opacity-visible" : empdata.status === "4" ?
-                                    "bg-secondary" : empdata.status === "5" ?
-                                      "bg-spray" : empdata.status === "6" ?
-                                        "bg-dark" : empdata.status === "7" ?
-                                          "bg-primary-opacity-8" : empdata.status === "8" ?
-                                            "bg-eastern" : ""
-                                }`}
-                            >
-                              {empdata.status === "1" || empdata.status === "0" ?
-                                "New" : empdata.status === "2" ?
-                                  "Prospect" : empdata.status === "3" ?
-                                    "Lead" : empdata.status === "4" ?
-                                      "Retained" : empdata.status === "5" ?
-                                        "Lost" : empdata.status === "6" ?
-                                          "Dead" : empdata.status === "7" ?
-                                            "Working on" : empdata.status === "8" ?
-                                              "Submitted" : ""}
-                            </span>
+                                  <span
+                                    className={`p-1 text-white text-center w-100 border rounded-pill ${empdata.status === "1" || empdata.status === "0" ? (
+                                      !isTimeWithin24Hours(empdata.created_at)
+                                        ? "bg-danger "
+                                        : "bg-info ") : empdata.status === "2" ?
+                                      "bg-warning" : empdata.status === "3" ?
+                                        "bg-coral-opacity-visible" : empdata.status === "4" ?
+                                          "bg-secondary" : empdata.status === "5" ?
+                                            "bg-spray" : empdata.status === "6" ?
+                                              "bg-dark" : empdata.status === "7" ?
+                                                "bg-primary-opacity-8" : empdata.status === "8" ?
+                                                  "bg-eastern" : ""
+                                      }`}
+                                  >
+                                    {empdata.status === "1" || empdata.status === "0" ?
+                                      "New" : empdata.status === "2" ?
+                                        "Prospect" : empdata.status === "3" ?
+                                          "Lead" : empdata.status === "4" ?
+                                            "Retained" : empdata.status === "5" ?
+                                              "Lost" : empdata.status === "6" ?
+                                                "Dead" : empdata.status === "7" ?
+                                                  "Working on" : empdata.status === "8" ?
+                                                    "Submitted" : ""}
+                                  </span>
                                 </p>
                               </td>
                             )}

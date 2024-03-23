@@ -702,7 +702,7 @@ export const ADocAnnotation = async (
       assigned_to: email,
       assigned_to_name: assignName,
       assigned_user_type: AssignUserType,
-      document_url: type === "partner" ? DocUrl : "",
+      document_url: type === "partner" || "partnerChat" ? DocUrl : "",
       next_followup_date: nextFollowupDate,
       followup_status: satus,
       subject: subject,
@@ -731,8 +731,20 @@ export const GetCommentsAndAssign = async (
   limit,
   sort,
   column,
-  time
+  time,
+  assigned_user_type
 ) => {
+
+  // console.log( "idi"+id,
+  // "userid"+userid,
+  // "status"+status,
+  //   "type"+type,
+  //   "page"+page,
+  //   "limit"+limit,
+  //   "sort"+sort,
+  //   "column"+column,
+  //   "time"+time,
+  //  "assigned_user_type" +assigned_user_type)
   const response = await axios.post(
     `${API_URL}admin/searchDocTask`,
     {
@@ -745,6 +757,8 @@ export const GetCommentsAndAssign = async (
       assined_to_user_id: userid,
       status: status,
       type: type,
+      assigned_user_type: assigned_user_type,
+
       // id:"",task_creator_user_id:""
     },
     {

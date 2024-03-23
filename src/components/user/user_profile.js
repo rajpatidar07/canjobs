@@ -1908,6 +1908,7 @@ const NewUserProfile = (props) => {
                         assignusertype={"agent"}
                         partnerChat={partnerChat}
                         reffer_by={PersonalDetail.reffer_by}
+                        type={"partner"}
                       />
                     ) : null}
                   </div>

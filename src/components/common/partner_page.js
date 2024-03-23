@@ -190,7 +190,7 @@ export default function PartnerPage(props) {
                     )}
                     <div className="ml-5 w-100">
                       <Link
-                        // to={`/partner_detail`}
+                        // to={`/partner_profile`}
                         // onClick={localStorage.setItem("agent_id", data.id)
                         // }
                         >

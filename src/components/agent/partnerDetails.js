@@ -13,7 +13,7 @@ import { BiPhoneCall } from "react-icons/bi";
 import ContactPage from "../common/contactPage"
 import AgentsEmployee from "../common/AgentEmployee";
 import AddAgent from "../forms/admin/addAgent";
-// import AgentConversation from "../common/AgentConversation";
+import AgentConversation from "../common/AgentConversation";
 export default function PartnerDetails() {
     const user_type = localStorage.getItem("userType");
     const agent_id = localStorage.getItem("agent_id");
@@ -33,22 +33,23 @@ export default function PartnerDetails() {
     const PartnerData = async () => {
         try {
             let userData = await GetAgent(Pid);
-            if (user_type === "agent") {
-                localStorage.setItem(
-                    "profile_photo",
-                    userData.data.data[0].logo
-                );
-                localStorage.setItem(
-                    "name",
-                    userData.data.data[0].company_name
-                );
-            }
-            if (userData === undefined) {
+            if (userData === undefined || !userData || userData.data.data.length === 0) {
                 setData("");
+                setIsLoading(false);
             }
             else {
                 setData(userData.data.data[0]);
                 setIsLoading(false);
+                if (user_type === "agent") {
+                    localStorage.setItem(
+                        "profile_photo",
+                        userData.data.data[0].logo
+                    );
+                    localStorage.setItem(
+                        "name",
+                        userData.data.data[0].company_name
+                    );
+                }
             }
         } catch (err) {
             console.log(err);
@@ -154,6 +155,23 @@ export default function PartnerDetails() {
                                             Support
                                         </Link>
                                     </li>
+                                    <li className="tab-menu-items nav-item">
+                                        <Link
+                                            className={
+                                                TabActive === "payment"
+                                                    ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
+                                                    : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                                            }
+                                            id="payment"
+                                            data-toggle="tab"
+                                            role="tab"
+                                            aria-controls="payment"
+                                            aria-selected="true"
+                                            onClick={() => setTabActive("payment")}
+                                        >
+                                            Payment
+                                        </Link>
+                                    </li>
                                     <li
                                         className={
                                             user_type === "admin" || user_type === "agent"
@@ -211,7 +229,7 @@ export default function PartnerDetails() {
                                                                 <img
                                                                     className="company_logo"
                                                                     src={
-                                                                        data.profile_image === null
+                                                                        data.profile_image === null || !data.profile_image || data.profile_image === undefined
                                                                             ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                                                             : data.profile_image
                                                                     }
@@ -378,17 +396,35 @@ export default function PartnerDetails() {
                                             : "d-none"
                                     }
                                 >
-                                    Support
-                                    {/* {TabActive === "support" ? (
-                                      <AgentConversation
-                                      userEmail={data.email}
-                                      userName={data.name}
-                                      assignusertype={"agent"}
-                                    //   partnerChat={partnerChat}
-                                      reffer_by={Pid}/>
-                                    ) : null} */}
+                                    {TabActive === "support" ? (
+                                        <AgentConversation
+                                            userId={Pid}
+                                            userEmail={data.email}
+                                            userName={data.name}
+                                            assignusertype={"agent"}
+                                            type={"partnerChat"}
+                                            //   partnerChat={partnerChat}
+                                            reffer_by={data.assigned_by} />
+                                    ) : null}
+
                                 </div>
-                                
+                                <div
+                                    className={
+                                        TabActive === "payment"
+                                            ? "justify-content-center "
+                                            : "d-none"
+                                    }
+                                >
+                                    Payment
+                                    {/* {TabActive === "payment" ? (
+                                        <div className="p-10 activity_container">
+                                            <PayentForm
+                                                data={data}
+                                                user_id={Pid}
+                                                user_type={"agent"}
+                                            />
+                                        </div>) : null} */}
+                                </div>
                             </div>
                         </div>
                     </div>
