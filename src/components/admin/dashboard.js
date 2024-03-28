@@ -10,7 +10,10 @@ import LimiaStatusTable from "../common/limiaStatusTable";
 import JobTable from "../common/jobTable";
 import EmployeeTable from "../common/employeeTable";
 import EmployerTable from "../common/employerTable";
-import { /*getSummaryCount*/ GetAllApplicanttypeChartData, GetAllChartData,/* GetAllLimaChartData, GetAllVisaChartData */} from "../../api/api";
+import {
+  /*getSummaryCount*/ GetAllApplicanttypeChartData,
+  GetAllChartData /* GetAllLimaChartData, GetAllVisaChartData */,
+} from "../../api/api";
 // import FollowUpDashBoard from "../common/followUpTableDashboard";
 import Addfollowup from "../forms/admin/addfollowup";
 import { FaWindowMaximize } from "react-icons/fa";
@@ -19,6 +22,7 @@ import AdminTaskTable from "../common/AdminTaskTable";
 import DataChart from "../common/DataChart";
 import Loader from "../common/loader";
 const AdminDashboard = () => {
+  let adminType = localStorage.getItem("admin_type");
   // eslint-disable-next-line
   /*States */
   // let [showEmployeeProfile, setShowEmployeeProfile] = useState(false);
@@ -65,40 +69,35 @@ const AdminDashboard = () => {
   const getIcon = (tableNumber) => {
     return openTable === tableNumber ? <BsUsbMiniFill /> : <FaWindowMaximize />;
   };
-  let adminType = localStorage.getItem("admin_type")
   /*Function to Get Graph data */
   const GetChartData = async () => {
     //Applicants status data
     try {
-      let res = await GetAllChartData("", adminType)
+      let res = await GetAllChartData("", adminType);
       if (res.status === 1) {
-        setApplicantStatusData(res.data)
-        setLoadingStatus(false)
+        setApplicantStatusData(res.data);
+        setLoadingStatus(false);
       } else {
-        setApplicantStatusData([])
-        setLoadingStatus(false)
+        setApplicantStatusData([]);
+        setLoadingStatus(false);
       }
-
     } catch (err) {
-      console.log(err)
-      setLoadingStatus(false)
-
+      console.log(err);
+      setLoadingStatus(false);
     }
     //Applicants types data
     try {
-      let typeRes = await GetAllApplicanttypeChartData("", adminType)
+      let typeRes = await GetAllApplicanttypeChartData("", adminType);
       if (typeRes.status === 1) {
-        setapplicantsTypeChartData(typeRes.data)
-        setLoadingType(false)
+        setapplicantsTypeChartData(typeRes.data);
+        setLoadingType(false);
       } else {
-        setapplicantsTypeChartData([])
-        setLoadingType(false)
+        setapplicantsTypeChartData([]);
+        setLoadingType(false);
       }
-
     } catch (err) {
-      console.log(err)
-      setLoadingType(false)
-
+      console.log(err);
+      setLoadingType(false);
     }
     //Applicants lmia types data
     // try {
@@ -136,9 +135,9 @@ const AdminDashboard = () => {
     //   console.log(err)
     //   setLoadingVisa(false)
     // }
-  }
+  };
   useEffect(() => {
-    GetChartData()
+    GetChartData();
     if (apiCall === true) {
       setApiCall(false);
     }
@@ -398,36 +397,38 @@ const AdminDashboard = () => {
 
           <div className="row">
             {/* Applicant's status */}
-            <div
-              id="table0"
-              className={"col-md-6"}
-            >
+            <div id="table0" className={"col-md-6"}>
               <div className="bg-white dashboard_card mb-7">
                 <div className="d-flex justify-content-between p-5 align-items-center">
                   <h3 className="font-size-5 px-3 m-0 ">Applicant's status</h3>
                 </div>
                 <div className="bg-white dashboard_card ">
-                  {loadingStatus
-                    ? <Loader />
-                    : <DataChart data={applicantStatusChartData}
-                      dataType={"status"} />}
+                  {loadingStatus ? (
+                    <Loader />
+                  ) : (
+                    <DataChart
+                      data={applicantStatusChartData}
+                      dataType={"status"}
+                    />
+                  )}
                 </div>
               </div>
             </div>
             {/* Applicant's type */}
-            <div
-              id="table_0"
-              className={"col-md-6"}
-            >
+            <div id="table_0" className={"col-md-6"}>
               <div className="bg-white dashboard_card mb-7">
                 <div className="d-flex justify-content-between p-5 align-items-center">
                   <h3 className="font-size-5 px-3 m-0 ">Applicant Type's</h3>
                 </div>
                 <div className="bg-white dashboard_card ">
-                  {loadingType
-                    ? <Loader />
-                    : <DataChart data={applicantsTypeChartData}
-                      dataType={"type"} />}
+                  {loadingType ? (
+                    <Loader />
+                  ) : (
+                    <DataChart
+                      data={applicantsTypeChartData}
+                      dataType={"type"}
+                    />
+                  )}
                 </div>
               </div>
             </div>
@@ -503,8 +504,9 @@ const AdminDashboard = () => {
                       </Link>
                     </div>
                     <Link
-                      className={`text-dark mx-5 ${openTable === 1 ? "open" : ""
-                        }`}
+                      className={`text-dark mx-5 ${
+                        openTable === 1 ? "open" : ""
+                      }`}
                       to=""
                       onClick={() => toggleTable(1)}
                       title={openTable === 1 ? "Minimize" : "Maximize"}
@@ -566,8 +568,9 @@ const AdminDashboard = () => {
                       </Link>
                     </div>
                     <Link
-                      className={`text-dark mx-5 ${openTable === 4 ? "open" : ""
-                        }`}
+                      className={`text-dark mx-5 ${
+                        openTable === 4 ? "open" : ""
+                      }`}
                       to=""
                       onClick={() => toggleTable(4)}
                       title={openTable === 4 ? "Minimize" : "Maximize"}
@@ -627,8 +630,9 @@ const AdminDashboard = () => {
                       </Link>
                     </div>
                     <Link
-                      className={`text-dark mx-5 ${openTable === 2 ? "open" : ""
-                        }`}
+                      className={`text-dark mx-5 ${
+                        openTable === 2 ? "open" : ""
+                      }`}
                       to=""
                       onClick={() => toggleTable(2)}
                       title={openTable === 2 ? "Minimize" : "Maximize"}
@@ -723,8 +727,9 @@ const AdminDashboard = () => {
                       </Link>
                     </div>
                     <Link
-                      className={`text-dark mx-5 ${openTable === 5 ? "open" : ""
-                        }`}
+                      className={`text-dark mx-5 ${
+                        openTable === 5 ? "open" : ""
+                      }`}
                       to=""
                       onClick={() => toggleTable(5)}
                       title={openTable === 5 ? "Minimize" : "Maximize"}
@@ -785,8 +790,9 @@ const AdminDashboard = () => {
                       </Link>
                     </div>
                     <Link
-                      className={`text-dark mx-5 ${openTable === 3 ? "open" : ""
-                        }`}
+                      className={`text-dark mx-5 ${
+                        openTable === 3 ? "open" : ""
+                      }`}
                       to=""
                       onClick={() => toggleTable(3)}
                       title={openTable === 3 ? "Minimize" : "Maximize"}
@@ -815,8 +821,9 @@ const AdminDashboard = () => {
                 <div className="d-flex justify-content-between p-5 align-items-center">
                   <h3 className="font-size-5 px-3 m-0">Employee Alerts</h3>
                   <Link
-                    className={`text-dark mx-5 ${openTable === 6 ? "open" : ""
-                      }`}
+                    className={`text-dark mx-5 ${
+                      openTable === 6 ? "open" : ""
+                    }`}
                     to=""
                     onClick={() => toggleTable(6)}
                     title={openTable === 6 ? "Minimize" : "Maximize"}
@@ -897,8 +904,9 @@ const AdminDashboard = () => {
                       </Link>
                     </div> */}
                     <Link
-                      className={`text-dark mx-5 ${openTable === 7 ? "open" : ""
-                        }`}
+                      className={`text-dark mx-5 ${
+                        openTable === 7 ? "open" : ""
+                      }`}
                       to=""
                       onClick={() => toggleTable(7)}
                       title={openTable === 7 ? "Minimize" : "Maximize"}

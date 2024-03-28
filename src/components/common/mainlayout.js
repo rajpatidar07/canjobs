@@ -74,6 +74,7 @@ import PartnerDetails from "../agent/partnerDetails";
 function MainLayout() {
   const token = localStorage.getItem("token");
   const userType = localStorage.getItem("userType");
+  let adminType = localStorage.getItem("admin_type");
 
   return (
     <BrowserRouter>
@@ -154,6 +155,7 @@ function MainLayout() {
           </>
         ) : (
           <>
+            {userType !== "admin" || userType === ""}
             <Route path="/dashboard" element={<AdminDashboard />} />
             <Route path="/job" element={<Job />} />
             <Route path="/selfjob" element={<SelfJob />} />
@@ -170,7 +172,7 @@ function MainLayout() {
             <Route path="/userpdf" element={<PDFViewer />} />
             <Route path="/job_detail" element={<JobDetailpageAdmim />} />
             <Route path="/client_detail" element={<CompanyProfileDetail />} />
-            <Route path="/partner_profile" element={<PartnerDetails   />} />
+            <Route path="/partner_profile" element={<PartnerDetails />} />
             <Route path="/followup" element={<Followup />} />
             <Route path="/partner" element={<Agent />} />
             <Route path="/partner_dashboard" element={<PartnerDashboard />} />

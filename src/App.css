@@ -1495,6 +1495,17 @@ input::-webkit-inner-spin-button {
   font-size: 30px;
 }
 
+span.placeholder {
+  display: inline-block;
+  min-height: 1em;
+  vertical-align: middle;
+  cursor: wait;
+  background-color: currentColor;
+  opacity: .5;
+  color: #000;
+  width: 75px;
+}
+
 /* USER TIMELINE CSS*/
 .timeline_box {
   height: calc(100vh - 150px);

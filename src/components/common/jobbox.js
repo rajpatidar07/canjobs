@@ -13,6 +13,7 @@ import {
   LiaBusinessTimeSolid,
 } from "react-icons/lia";
 import ApplyBeforeform from "../forms/user/applyBeforeform";
+import { CiDollar, CiLocationOn } from "react-icons/ci";
 function JobBox({
   showAddJobModal,
   categoryFilterValue,
@@ -23,7 +24,7 @@ function JobBox({
   apiCall,
   setJobCount,
   jobsNo,
-  setTotalJob
+  setTotalJob,
 }) {
   /*States */
   let [ApiCall, setApiCall] = useState(false);
@@ -39,7 +40,7 @@ function JobBox({
   const user_type = localStorage.getItem("userType");
   const user_id = localStorage.getItem("employee_id");
   const skill = localStorage.getItem("skill");
-  let navigate = useNavigate()
+  let navigate = useNavigate();
   /*Functionality to get the data to search the jobs */
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -78,19 +79,23 @@ function JobBox({
       } else {
         if (
           ((!token && location.pathname === "/") ||
-            (!skill && !SkillFilterValue && user_type === "user"))
-          && userData.data.data.find((item) => item.is_featured === "1")
-          && location.pathname !== "/jobs"
+            (!skill && !SkillFilterValue && user_type === "user")) &&
+          userData.data.data.find((item) => item.is_featured === "1") &&
+          location.pathname !== "/jobs"
         ) {
           setjobData(
             userData.data.data.filter((item) => item.is_featured === "1")
           );
-          setJobCount(userData.data.data.filter((item) => item.is_featured === "1").length)
-          setTotalJob(userData.data.data.filter((item) => item.is_featured === "1").length)
+          setJobCount(
+            userData.data.data.filter((item) => item.is_featured === "1").length
+          );
+          setTotalJob(
+            userData.data.data.filter((item) => item.is_featured === "1").length
+          );
         } else {
           setjobData(userData.data.data);
-          setJobCount(userData.data.data.length)
-          setTotalJob(userData.data.total_rows)
+          setJobCount(userData.data.data.length);
+          setTotalJob(userData.data.total_rows);
         }
         setNoData(userData.data.total_rows);
       }
@@ -123,7 +128,7 @@ function JobBox({
     country,
     category,
     jobLocation,
-    jobsNo
+    jobsNo,
   ]);
 
   /*FUnction to apply to the job */
@@ -173,8 +178,8 @@ function JobBox({
             if (job !== "") {
               skill =
                 job.keyskill === null ||
-                  job.keyskill === undefined ||
-                  job.keyskill === "undefined"
+                job.keyskill === undefined ||
+                job.keyskill === "undefined"
                   ? []
                   : job.keyskill.split(",");
             }
@@ -193,12 +198,12 @@ function JobBox({
                   onClick={
                     token && (user_type === "user" || user_type === "company")
                       ? // ? job.is_applied === "0"
-                      () => {
-                        localStorage.setItem("job_id", job.job_id);
-                        OnApplyClick(1, job.job_id);
-                      }
+                        () => {
+                          localStorage.setItem("job_id", job.job_id);
+                          OnApplyClick(1, job.job_id);
+                        }
                       : // : null
-                      () => navigate("/candidate_login")//setShowLogin(true)
+                        () => navigate("/candidate_login") //setShowLogin(true)
                   }
                 >
                   {job.job_type === "swap" ? (
@@ -245,9 +250,10 @@ function JobBox({
                             <span className="mr-4">
                               <LiaIndustrySolid />
                             </span>
-                            <span className="font-weight-semibold text-capitalize">
+                            <span class="placeholder"></span>
+                            {/* <span className="font-weight-semibold text-capitalize">
                               {job.industry_type}
-                            </span>
+                            </span> */}
                           </li>
                         )}
                         {job.location && (
@@ -256,11 +262,13 @@ function JobBox({
                             title="Location"
                           >
                             <span className="mr-4">
-                              <LiaSearchLocationSolid />
+                              <CiLocationOn />
                             </span>
-                            <span className="font-weight-semibold text-capitalize">
+                            <span class="placeholder"></span>
+
+                            {/* <span className="font-weight-semibold text-capitalize">
                               {job.location}
-                            </span>
+                            </span> */}
                           </li>
                         )}
                         {job.employement && (
@@ -271,9 +279,11 @@ function JobBox({
                             <span className="mr-4">
                               <LiaBriefcaseSolid />
                             </span>
-                            <span className="font-weight-semibold text-capitalize">
+                            <span class="placeholder"></span>
+
+                            {/* <span className="font-weight-semibold text-capitalize">
                               {job.employement}
-                            </span>
+                            </span> */}
                           </li>
                         )}
                         {job.created_at && (
@@ -284,9 +294,11 @@ function JobBox({
                             <span className="mr-4">
                               <LiaBusinessTimeSolid />
                             </span>
-                            <span className="font-weight-semibold">
+                            <span class="placeholder"></span>
+
+                            {/* <span className="font-weight-semibold">
                               {moment(job.created_at).format("DD MMMM, YYYY")}
-                            </span>
+                            </span> */}
                           </li>
                         )}
                         {job.salary && (
@@ -294,9 +306,14 @@ function JobBox({
                             className="mt-2 mr-8 font-size-small text-black-2 d-flex"
                             title="Salary"
                           >
-                            <span className="font-weight-semibold">
-                              $ {job.salary}
+                            <span className="mr-4">
+                              <CiDollar />
                             </span>
+                            <span class="placeholder"></span>
+
+                            {/* <span className="font-weight-semibold">
+                              $ {job.salary}
+                            </span> */}
                           </li>
                         )}
                       </ul>
@@ -365,7 +382,7 @@ function JobBox({
                                 name === "undefined"
                                 ? setShowDataForm(true)
                                 : OnApplyClick(0, job.job_id)
-                              : navigate("/candidate_login")//setShowLogin(true)
+                              : navigate("/candidate_login") //setShowLogin(true)
                         }
                         disabled={job.is_applied === "0" ? false : true}
                       >

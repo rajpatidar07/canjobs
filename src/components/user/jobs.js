@@ -135,7 +135,7 @@ function JobSearch() {
                         ))}
                       </select>
                     </div>
-                    <div className="col-md-4 col-lg-4 mb-5">
+                    <div className="col-md-2 col-lg-2 mb-5">
                       <CustomButton
                         className="font-size-3 rounded-3 btn btn-primary border-0"
                         onClick={() => onReset()}
@@ -179,15 +179,17 @@ function JobSearch() {
                       </div>
                     )}
                   </div>
-                  {jobsNo <= totaljob
-                    ? <div className="text-center pt-5 pt-lg-13">
-                      <Link className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
-                        onClick={() => setJobsNo(jobCount + 10)}>
+                  {jobsNo <= totaljob ? (
+                    <div className="text-center pt-5 pt-lg-13">
+                      <Link
+                        className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
+                        onClick={() => setJobsNo(jobCount + 10)}
+                      >
                         Load More
                         <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
                       </Link>
                     </div>
-                    : null}
+                  ) : null}
                 </div>
                 {/* <!-- form end --> */}
               </div>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import {
   MdOutlineDashboardCustomize,
   MdOutlinePhotoFilter,
@@ -23,6 +23,10 @@ const AdminSidebar = (props) => {
   // let view_as_admin_type = localStorage.getItem("view_as_token_admin_type");
   let admin_type = localStorage.getItem("admin_type");
   let user_type = localStorage.getItem("userType");
+  if (admin_type === "" || admin_type === null || admin_type === undefined) {
+    // Redirect to the login page
+    window.location.href = "/adminlogin";
+  }
   /*-- Function to open sidebar --*/
   function sideBar() {
     setIsMenuOpen(!isMenuOpen);
@@ -45,7 +49,9 @@ const AdminSidebar = (props) => {
         id="sidebar"
       >
         <div className="brand-logo px-2 mb-5">
-          <Link to="/dashboard">
+          <Link
+            to={user_type === "agent" ? "/partner_dashboard" : "/dashboard"}
+          >
             <img src="image/logo-main-black.png" alt="" />
           </Link>
         </div>
@@ -322,11 +328,11 @@ const AdminSidebar = (props) => {
             </Link>
           </li>
           <li
-            className={user_type === "admin" ? `
-               ${props.heading === "Manage Partner"
-                ? "active"
-                : ""}` :
-              "d-none"
+            className={
+              user_type === "admin"
+                ? `
+               ${props.heading === "Manage Partner" ? "active" : ""}`
+                : "d-none"
             }
           >
             <Link
@@ -335,7 +341,6 @@ const AdminSidebar = (props) => {
                 "px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
               }
             >
-
               <MdRealEstateAgent className="sidebar_icon" />
               Manage Partner
             </Link>

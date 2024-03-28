@@ -39,8 +39,8 @@ function EmployeeHomePage() {
       </div>
       {/* <!-- Hero Area --> */}
       {/* <!-- featuredJobOne Area --> */}
-      <section className="bg-athens pt-12 pt-lg-25 pb-7 pb-lg-25">
-        <div className="container">
+      <section className="bg-athens pt-12 pt-lg-25 pb-7 pb-lg-25 ">
+        <div className="container ">
           {/* <!-- Section Title --> */}
           <div className="row justify-content-center mb-lg-16 mb-11">
             <div className="col-xxl-5 col-xl-6 col-lg-7 col-md-10 text-center">
@@ -66,16 +66,18 @@ function EmployeeHomePage() {
             <div className="table-responsive main_table_div">
               <Loader />
             </div>
-          )}{" "}
-          {jobsNo <= totaljob
-            ? <div className="text-center pt-5 pt-lg-13">
-              <Link className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
-                onClick={() => setJobsNo(jobCount + 10)}>
+          )}
+          {jobsNo <= totaljob ? (
+            <div className="text-center pt-5 pt-lg-13">
+              <Link
+                className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
+                onClick={() => setJobsNo(jobCount + 10)}
+              >
                 Load More
                 <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
               </Link>
             </div>
-            : null}
+          ) : null}
         </div>
       </section>
       {/* <!-- featuredJobOne Area --> */}
