@@ -12,7 +12,7 @@ export default function AgentConversation({
   assignusertype,
   partnerChat,
   reffer_by,
-  type
+  type,
 }) {
   const [allData, setAllData] = useState([]);
   const [apicall, setApiCall] = useState([]);
@@ -22,7 +22,10 @@ export default function AgentConversation({
   const initialFormState = {
     name: "",
     status: type === "partnerChat" ? "" : "normal",
-    nxtfollowupdate: type === "partnerChat" ? "" : moment().add(1, "week").format("YYYY-MM-DD"),
+    nxtfollowupdate:
+      type === "partnerChat"
+        ? ""
+        : moment().add(1, "week").format("YYYY-MM-DD"),
     subject: "",
     message: "",
     DocUrl: "",
@@ -34,12 +37,12 @@ export default function AgentConversation({
         (value === "" || value.trim() === "") && state.DocUrl === ""
           ? "Message is required"
           : /[-]?\d+(\.\d+)?/.test(value)
-            ? "Message can not have a number."
-            : value.length < 2
-              ? "Message should have 2 or more letters"
-              : /[^A-Za-z 0-9]/g.test(value)
-                ? "Cannot use special character "
-                : "",
+          ? "Message can not have a number."
+          : value.length < 2
+          ? "Message should have 2 or more letters"
+          : /[^A-Za-z 0-9]/g.test(value)
+          ? "Cannot use special character "
+          : "",
     ],
     // status: [
     //   (value) =>
@@ -57,8 +60,12 @@ export default function AgentConversation({
     // ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState /*, setErrors*/, onInputChange, errors,/* validate*/ } =
-    useValidation(initialFormState, validators);
+  const {
+    state,
+    setState /*, setErrors*/,
+    onInputChange,
+    errors /* validate*/,
+  } = useValidation(initialFormState, validators);
 
   // Admin details
   let admin_id = localStorage.getItem("admin_id");
@@ -89,7 +96,18 @@ export default function AgentConversation({
   //   Get the notes list
   const GetNotesData = async () => {
     try {
-      let res = await GetCommentsAndAssign("", userId, "", type, "", "", "DESC", "created_on", "", assignusertype);
+      let res = await GetCommentsAndAssign(
+        "",
+        userId,
+        "",
+        type,
+        "",
+        "",
+        "DESC",
+        "created_on",
+        "",
+        assignusertype
+      );
       if (res.data.status === 1 || res.data.status === "1") {
         setAllData(res.data.data.data.reverse());
       } else if (res.data.message === "Task data not found") {
@@ -108,8 +126,8 @@ export default function AgentConversation({
         user_type === "admin"
           ? admin_id
           : user_type === "agent"
-            ? agent_id
-            : employee_id, //Sender id
+          ? agent_id
+          : employee_id, //Sender id
         "", //doc id
         userId, //assigne dUserId
         userEmail, //assigne email
@@ -129,10 +147,10 @@ export default function AgentConversation({
         ""
       );
       if (res.data.message === "task inserted successfully!") {
-        toast.success("Message sent Successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
+        // toast.success("Message sent Successfully", {
+        //   position: toast.POSITION.TOP_RIGHT,
+        //   autoClose: 1000,
+        // });
         setApiCall(true);
         setState(initialFormState);
         setFileNames("");
@@ -218,8 +236,9 @@ export default function AgentConversation({
         const base64Name = encoded.base64;
 
         // Construct file object with base64 data
-        const DocFile = `data:/${base64Name.split(";")[0].split("/")[1]};${base64Name.split(";")[1]
-          }`;
+        const DocFile = `data:/${base64Name.split(";")[0].split("/")[1]};${
+          base64Name.split(";")[1]
+        }`;
 
         // Use DocRealName as the key for DocFile
         DocRealName = file.name.split(".")[0].replace(/ /g, "_");
@@ -250,26 +269,33 @@ export default function AgentConversation({
       setState({ ...state, DocUrl: "" });
     }
   };
-  console.log(
-    reffer_by)
+  console.log(reffer_by);
   return (
     <div className="chat_box_container bg-white row m-0">
-      {reffer_by === "0" || reffer_by === undefined || !reffer_by
-        ? <div className="chat-container d-flex justify-content-center align-items-center w-100">
+      {reffer_by === "0" || reffer_by === undefined || !reffer_by ? (
+        <div className="chat-container d-flex justify-content-center align-items-center w-100">
           <p className="text-center">
-            {user_type === "agent" ? "Admin is not assigned." : ` Please assign a ${type === "partnerChat" ? "Admin" : "partner"} first.`}
+            {user_type === "agent"
+              ? "Admin is not assigned."
+              : ` Please assign a ${
+                  type === "partnerChat" ? "Admin" : "partner"
+                } first.`}
           </p>
         </div>
-        : <div className="chat-container col-md-6">
+      ) : (
+        <div className="chat-container col-md-6">
           <MessageList
-            data={type === "partnerChat" ?
-              allData : allData.filter((item) => item.followup_status === "normal")}
+            data={
+              type === "partnerChat"
+                ? allData
+                : allData.filter((item) => item.followup_status === "normal")
+            }
             loginuser={
               user_type === "admin"
                 ? admin_id
                 : user_type === "agent"
-                  ? agent_id
-                  : employee_id
+                ? agent_id
+                : employee_id
             }
             loginusertype={user_type === "admin" ? admin_type : user_type}
           />
@@ -283,7 +309,8 @@ export default function AgentConversation({
             fileNames={fileNames}
             setState={setState}
           />
-        </div>}
+        </div>
+      )}
       {/*  <div className="chat-container col-md-6">
         <MessageList
           data={allData.filter((item) => item.followup_status === "private")}

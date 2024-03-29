@@ -244,76 +244,67 @@ function JobBox({
                       <ul className="d-flex list-unstyled mr-n3 flex-wrap mr-n8 justify-content-md-end">
                         {job.industry_type && (
                           <li
-                            className="mt-2 mr-8 font-size-small text-black-2 d-flex"
+                            className="mt-2 mr-8 font-size-small text-black-2 d-flex placeholder"
                             title="Job Category"
                           >
                             <span className="mr-4">
                               <LiaIndustrySolid />
                             </span>
-                            <span class="placeholder"></span>
-                            {/* <span className="font-weight-semibold text-capitalize">
+                            <span className="font-weight-semibold text-capitalize">
                               {job.industry_type}
-                            </span> */}
+                            </span>
                           </li>
                         )}
                         {job.location && (
                           <li
-                            className="mt-2 mr-8 font-size-small text-black-2 d-flex"
+                            className="mt-2 mr-8 font-size-small text-black-2 d-flex placeholder"
                             title="Location"
                           >
                             <span className="mr-4">
                               <CiLocationOn />
                             </span>
-                            <span class="placeholder"></span>
-
-                            {/* <span className="font-weight-semibold text-capitalize">
+                            <span className="font-weight-semibold text-capitalize">
                               {job.location}
-                            </span> */}
+                            </span>
                           </li>
                         )}
                         {job.employement && (
                           <li
-                            className="mt-2 mr-8 font-size-small text-black-2 d-flex"
+                            className="mt-2 mr-8 font-size-small text-black-2 d-flex placeholder"
                             title="Job Type"
                           >
                             <span className="mr-4">
                               <LiaBriefcaseSolid />
                             </span>
-                            <span class="placeholder"></span>
-
-                            {/* <span className="font-weight-semibold text-capitalize">
+                            <span className="font-weight-semibold text-capitalize">
                               {job.employement}
-                            </span> */}
+                            </span>
                           </li>
                         )}
                         {job.created_at && (
                           <li
-                            className="mt-2 mr-8 font-size-small text-black-2 d-flex"
+                            className="mt-2 mr-8 font-size-small text-black-2 d-flex placeholder"
                             title="Posted Time"
                           >
                             <span className="mr-4">
                               <LiaBusinessTimeSolid />
                             </span>
-                            <span class="placeholder"></span>
-
-                            {/* <span className="font-weight-semibold">
+                            <span className="font-weight-semibold">
                               {moment(job.created_at).format("DD MMMM, YYYY")}
-                            </span> */}
+                            </span>
                           </li>
                         )}
                         {job.salary && (
                           <li
-                            className="mt-2 mr-8 font-size-small text-black-2 d-flex"
+                            className="mt-2 mr-8 font-size-small text-black-2 d-flex placeholder"
                             title="Salary"
                           >
                             <span className="mr-4">
                               <CiDollar />
                             </span>
-                            <span class="placeholder"></span>
-
-                            {/* <span className="font-weight-semibold">
+                            <span className="font-weight-semibold">
                               $ {job.salary}
-                            </span> */}
+                            </span>
                           </li>
                         )}
                       </ul>

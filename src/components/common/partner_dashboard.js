@@ -30,7 +30,6 @@ function PartnerDashboard() {
   //   let [EducationList, setEducationList] = useState([]);
   let user_type = localStorage.getItem("userType");
 
-  
   /* Function to show the single data to update Employee*/
   const EditAgent = (e) => {
     setShowAgentMOdal(true);
@@ -109,10 +108,8 @@ function PartnerDashboard() {
                 <small className="text-danger">{searcherror}</small>
               </div>
               <div className="row">
-
                 {/* <!-- Agent List Table- --> */}
                 <div className={"col-md-12"}>
-
                   <PartnerPage
                     // showEmployeeProfile={showEmployeeProfile}
                     // employeeDetails={employeeDetails}

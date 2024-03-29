@@ -1,6 +1,8 @@
 import React from "react";
 import SendMailForm from "../forms/user/sendMailForm";
 export default function ContactPage(props) {
+  const user_type = localStorage.getItem("userType");
+
   return (
     <div className="activity_container profile_id_card">
       <div className="row m-0">
@@ -68,10 +70,11 @@ export default function ContactPage(props) {
             </div>
           </div>
         </div>
-        <div className="p-10 col">
-          <h5>Send Email to Us</h5>
-          <SendMailForm email={props.email} />
-          {/* <form>
+        {user_type === "agent" || user_type === "" ? null : (
+          <div className="p-10 col">
+            <h5>Send Email to Us</h5>
+            <SendMailForm email={props.email} />
+            {/* <form>
             <div className="row pt-7">
               <div className="form-group col-12 p-0">
                 <label
@@ -173,7 +176,8 @@ export default function ContactPage(props) {
               </div>
             </div>
           </form> */}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,11 +1,12 @@
 import axios from "axios";
 const API_URL = "https://apnaorganicstore.in/canjobs/";
-//Local 
+//Local
 // const API_URL ="http://192.168.29.51/canjobs/"
 // New AWS backend
 // const API_URL = "https://api.canpathwaysjobs.com/canjobs/";
 let Token = localStorage.getItem("token");
-let driveId = "b!iUiBybFGWEWfqWdSYuUqrWrIPVmZDQxPmwO4Bzj6nJp5ByboftxMSY6hfWPT-m8F"
+let driveId =
+  "b!iUiBybFGWEWfqWdSYuUqrWrIPVmZDQxPmwO4Bzj6nJp5ByboftxMSY6hfWPT-m8F";
 const view_as_token = localStorage.getItem("view_as_token");
 const user_id = localStorage.getItem("employee_id");
 const employer_id = localStorage.getItem("company_id");
@@ -36,58 +37,70 @@ export const GetAllDataCount = async () => {
 
 //Api to get the graph data count of all data
 export const GetAllChartData = async (id, type) => {
-  const response = await axios.post(`${API_URL}admin/getEmployeeStatusCount`, {
-    "id": id,
-    "type": type
-  },
+  const response = await axios.post(
+    `${API_URL}admin/getEmployeeStatusCount`,
+    {
+      id: id,
+      type: type,
+    },
     {
       headers: {
         "Content-Type": "application/json",
         Authorization: Token,
       },
-    });
+    }
+  );
   return response.data;
 };
-//Api to get the graph data count of all applicants type data 
+//Api to get the graph data count of all applicants type data
 export const GetAllApplicanttypeChartData = async (id, type) => {
-  const response = await axios.post(`${API_URL}admin/getCategoryCount`, {
-    "id": id,
-    "type": type
-  },
+  const response = await axios.post(
+    `${API_URL}admin/getCategoryCount`,
+    {
+      id: id,
+      type: type,
+    },
     {
       headers: {
         "Content-Type": "application/json",
         Authorization: Token,
       },
-    });
+    }
+  );
   return response.data;
 };
 //Api to get the graph data count of all lima status
 export const GetAllLimaChartData = async (id, type) => {
-  const response = await axios.post(`${API_URL}admin/getLmiaStatusCount`, {
-    "id": id,
-    "type": type
-  },
+  const response = await axios.post(
+    `${API_URL}admin/getLmiaStatusCount`,
+    {
+      id: id,
+      type: type,
+    },
     {
       headers: {
         "Content-Type": "application/json",
         Authorization: Token,
       },
-    });
+    }
+  );
   return response.data;
 };
 //Api to get the graph data count of all applicants type data  of visa status
 export const GetAllVisaChartData = async (id, type) => {
-  const response = await axios.post(`${API_URL}admin/getVisaStatusCount`, {
-    "id": id,
-    "type": type
-  },
+  const response = await axios.post(
+    `${API_URL}admin/getVisaStatusCount`,
+    {
+      id: id,
+      type: type,
+    },
     {
       headers: {
         "Content-Type": "application/json",
         Authorization: Token,
       },
-    });
+    }
+  );
   return response.data;
 };
 /*Chanage password Api */
@@ -240,16 +253,16 @@ export const EmployeeAppliedJob = async (props) => {
 export const AddEmployeeDetails = async (props) => {
   const headers = Token
     ? {
-      "Content-Type": "application/json",
-      Authorization: Token
-    }
+        "Content-Type": "application/json",
+        Authorization: Token,
+      }
     : {
-      "Content-Type": "application/json",
-      type: "event"
-    };
+        "Content-Type": "application/json",
+        type: "event",
+      };
   // console.log(Token,headers)
   const response = await axios.put(`${API_URL}employeePersonal_detail`, props, {
-    headers: headers
+    headers: headers,
   });
 
   return response.data;
@@ -296,7 +309,8 @@ export const getallEmployeeData = async (
       interested_in: inserted,
       agent_id: agentId,
       assigned_by: assignedadminId,
-      category: subType
+      category: "",
+      employee_id: subType,
     },
     {
       headers: {
@@ -536,10 +550,10 @@ export const GetDocumentDriveList = async (id, empType, type) => {
   const response = await axios.post(
     `${API_URL}admin/getSharpointSiteDriveFolderData`,
     {
-      "driveId": driveId,
-      "userId": id,
-      "userType": empType,
-      "type": type,
+      driveId: driveId,
+      userId: id,
+      userType: empType,
+      type: type,
     },
     {
       headers: {
@@ -591,7 +605,13 @@ export const UploadBulkDocument = async (id, data, docId, empType) => {
   return response;
 };
 /*Api to Upload Drive document */
-export const UploadDriveDocument = async (id, data, docId, empType, docType) => {
+export const UploadDriveDocument = async (
+  id,
+  data,
+  docId,
+  empType,
+  docType
+) => {
   const formData = new FormData();
   formData.append("docType", docType);
   formData.append("userType", empType);
@@ -616,16 +636,22 @@ export const UploadDriveDocument = async (id, data, docId, empType, docType) => 
   return response;
 };
 /*Api to document name */
-export const ChangeNameDocument = async (id, name, docId, empType, docRealId) => {
+export const ChangeNameDocument = async (
+  id,
+  name,
+  docId,
+  empType,
+  docRealId
+) => {
   const response = await axios.post(
     `${API_URL}admin/updateSharepointDocumentName`,
     {
-      "driveId": driveId,
-      "userId": id,
-      "userType": empType,
-      "newDocumentName": name,
-      "documentId": docRealId,
-      "id": docId
+      driveId: driveId,
+      userId: id,
+      userType: empType,
+      newDocumentName: name,
+      documentId: docRealId,
+      id: docId,
     },
     {
       headers: {
@@ -734,7 +760,6 @@ export const GetCommentsAndAssign = async (
   time,
   assigned_user_type
 ) => {
-
   // console.log( "idi"+id,
   // "userid"+userid,
   // "status"+status,
@@ -1660,22 +1685,32 @@ export const getAllAdminNotification = async () => {
   });
   return response.data;
 };
-export const getAllMentionNotification = async (type, loginuserid, userType, id, page, limit) => {
+export const getAllMentionNotification = async (
+  type,
+  loginuserid,
+  userType,
+  id,
+  page,
+  limit
+) => {
   const response = await axios.post(
     `${API_URL}common/getMentionNotifications`,
     {
       // from_id: loginuserid,
       // employee_id: id,
       // type: type,
-      "from_id": userType === "agent" || type === "mention_partner" ? "" : loginuserid,
-      "type": userType === "agent" || type === "mention_partner" ? "" : userType,
-      "subject": type,
-      "action_id": userType === "agent" || type === "mention_partner" ? loginuserid : "",
-      "mention_id": "",
-      "employee_id": "",
-      "sender_type": userType === "agent" || type === "mention_partner" ? userType : "",
-      "page": page,
-      "limit": limit,
+      from_id:
+        userType === "agent" || type === "mention_partner" ? "" : loginuserid,
+      type: userType === "agent" || type === "mention_partner" ? "" : userType,
+      subject: type,
+      action_id:
+        userType === "agent" || type === "mention_partner" ? loginuserid : "",
+      mention_id: "",
+      employee_id: "",
+      sender_type:
+        userType === "agent" || type === "mention_partner" ? userType : "",
+      page: page,
+      limit: limit,
     },
     {
       headers: {
@@ -2258,7 +2293,6 @@ export const ReadAllEmail = async (page, limit, search, email) => {
       count: limit,
       // filter_by_email_id: email,
       search: search,
-
     },
     {
       headers: {
@@ -2274,9 +2308,9 @@ export const ReplyToMail = async (msgId, type, msg) => {
   const response = await axios.post(
     `${API_URL}common/replyToOutlookEmail`,
     {
-      "msg_id": msgId,
-      "inbox_type": type,
-      "replyMsg": msg
+      msg_id: msgId,
+      inbox_type: type,
+      replyMsg: msg,
     },
     {
       headers: {
@@ -2848,7 +2882,8 @@ export const getActivityLog = async (
   stackHolder_id,
   stackHolder_type,
   pagetype,
-  sort, columnName
+  sort,
+  columnName
 ) => {
   // console.log("Props" + props.user_id + props.user_type);
   const response = await axios.post(
@@ -2859,14 +2894,12 @@ export const getActivityLog = async (
       user_type: user_type,
       action_id: action_id,
       action_type: action_type,
-      column_name:
-        "created_at",
+      column_name: "created_at",
       sort_order: sort ? sort : "sort",
       limit: limit,
       stackHolder_id: stackHolder_id,
       stackHolder_type: stackHolder_type,
-      status: pagetype === "interviewHistory" ?
-        "21,36" : ""
+      status: pagetype === "interviewHistory" ? "21,36" : "",
     },
     {
       headers: {

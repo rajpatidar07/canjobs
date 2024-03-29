@@ -35,7 +35,8 @@ function GlobalSearch() {
         style={{ cursor: "pointer" }}
         className=" text-white mx-5"
         onClick={() => setshow(true)}
-        title="Global Search">
+        title="Global Search"
+      >
         <FaSearch />
       </span>
       <div

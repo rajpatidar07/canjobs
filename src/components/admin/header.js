@@ -53,8 +53,11 @@ const AdminHeader = (props) => {
           {/* <!-- Page Heading--> */}
           <h3 className="font-size-6 mb-0 text-capitalize">{props.heading}</h3>
           <div className="collapse navbar-collapse" id="mobile-menu"></div>
-          <GlobalSearch />
-          {userType === "agent" ? null : <Notifications type={"mention_document"} />}
+
+          {userType === "agent" || userType === "" ? "" : <GlobalSearch />}
+          {userType === "agent" ? null : (
+            <Notifications type={"mention_document"} />
+          )}
           <Notifications type={"mention_partner"} />
           <div className="header-btn-devider ml-auto ml-lg-5 pl-2 d-xs-flex align-items-center">
             <div>
@@ -111,8 +114,8 @@ const AdminHeader = (props) => {
                       userType === "admin"
                         ? "/adminlogin"
                         : userType === "agent"
-                          ? "/partnerlogin"
-                          : "/"
+                        ? "/partnerlogin"
+                        : "/"
                     }
                     onClick={() => {
                       localStorage.clear(); // clear the local storage
@@ -120,7 +123,7 @@ const AdminHeader = (props) => {
                         position: toast.POSITION.TOP_RIGHT,
                         autoClose: 1000,
                       });
-                      window.reload()
+                      window.reload();
                     }}
                     className="dropdown-item py-2 text-red font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
                   >
