@@ -17,9 +17,9 @@ function UserRegisterPage() {
   const [agentList, setAgentList] = useState([]);
 
   let user_type = localStorage.getItem("userType");
-  const location = useLocation()
+  const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  let ref = searchParams.get("ref")
+  let ref = searchParams.get("ref");
   // const partnerId = searchParams.get("docId");
   /*Function to get agent json list */
   const AgentJson = async () => {
@@ -41,8 +41,8 @@ function UserRegisterPage() {
     }
   };
   useEffect(() => {
-    AgentJson()
-  }, [])
+    AgentJson();
+  }, []);
 
   // USER PERSONAL DETAIL VALIDATION
   // INITIAL STATE ASSIGNMENT
@@ -67,8 +67,8 @@ function UserRegisterPage() {
     profile_photo: "",
     // is_featured: "",
     status: "1",
-    reffer_by: ref,//39
-    assigned_by: "1",//26
+    reffer_by: ref === "" || ref === null || ref === undefined ? 39 : ref, //39
+    assigned_by: "1", //26
     permission: JSON.stringify(Permissions),
   };
 
@@ -87,30 +87,30 @@ function UserRegisterPage() {
         value === "" || value === null || value.trim() === ""
           ? "Name is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : value.length < 2
-              ? "Name should have 2 or more letter"
-              : /[-]?\d+(\.\d+)?/.test(value)
-                ? "Name can not have a number."
-                : "",
+          ? "Cannot use special character "
+          : value.length < 2
+          ? "Name should have 2 or more letter"
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "Name can not have a number."
+          : "",
     ],
     email: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-            ? null
-            : "Email is invalid",
+          ? null
+          : "Email is invalid",
     ],
     contact_no: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Mobile number is required"
           : value.length < 10
-            ? "Mobile number should be more than 10 digits"
-            : value.length > 13
-              ? "Mobile no should be of 13 digits"
-              : "",
+          ? "Mobile number should be more than 10 digits"
+          : value.length > 13
+          ? "Mobile no should be of 13 digits"
+          : "",
     ],
     // description: [
     //   (value) =>
@@ -146,12 +146,12 @@ function UserRegisterPage() {
         value === "" || value === null || value.trim() === ""
           ? "Location is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : value.length < 3
-              ? "Location should have 3 or more letter"
-              : /[-]?\d+(\.\d+)?/.test(value)
-                ? "Location can not have a number."
-                : "",
+          ? "Cannot use special character "
+          : value.length < 3
+          ? "Location should have 3 or more letter"
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "Location can not have a number."
+          : "",
     ],
     // currently_located_country: [
     //   (value) =>
@@ -176,12 +176,12 @@ function UserRegisterPage() {
         value === "" || value === null || value.trim() === ""
           ? "Religion is required"
           : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : value.length < 3
-              ? "Religion should have 3 or more letter"
-              : /[-]?\d+(\.\d+)?/.test(value)
-                ? "Religion can not have a number."
-                : "",
+          ? "Cannot use special character "
+          : value.length < 3
+          ? "Religion should have 3 or more letter"
+          : /[-]?\d+(\.\d+)?/.test(value)
+          ? "Religion can not have a number."
+          : "",
     ],
     interested_in: [
       (value) => (value === "" ? "Interested in is required" : null),
@@ -207,13 +207,13 @@ function UserRegisterPage() {
     //       ? "Other permit sholud have 2 or more letters"
     //       : "",
     // ],
-    reffer_by:
-      user_type === "user"
-        ? null
-        : [
-          (value) =>
-            value === "" || value === null ? "Refferer is required" : null,
-        ],
+    // reffer_by:
+    //   user_type === "user"
+    //     ? null
+    //     : [
+    //       (value) =>
+    //         value === "" || value === null ? "Refferer is required" : null,
+    //     ],
   };
 
   // CUSTOM VALIDATIONS IMPORT
@@ -318,7 +318,7 @@ function UserRegisterPage() {
               // to="/"
               className="btn btn-primary mt-12"
               onClick={() => {
-                SingUpSuccess("")
+                SingUpSuccess("");
                 // props.CompanyLoginClick();
                 // setErrors("");
               }}
@@ -352,8 +352,9 @@ function UserRegisterPage() {
                     height={"100px"}
                   />
                   <label
-                    className="mt-lg-20 mx-lg-33 bg-transparent edit_profile_icon"
+                    className="bg-transparent edit_profile_icon"
                     htmlFor="profile_photo"
+                    style={{ left: 0, right: 0, top: "85%" }}
                   >
                     <span className="fas fa-pen text-white bg-gray p-1 rounded mx-lg-10 mt-lg-3 "></span>
                   </label>
@@ -500,8 +501,11 @@ function UserRegisterPage() {
                   </label>
                   <input
                     // max={moment().format("DD-MM-YYYY")}
-                    min={moment().subtract(44, 'years').format("YYYY-MM-DD")}
-                    max={moment().subtract(1, 'year').endOf('year').format("YYYY-MM-DD")}
+                    min={moment().subtract(44, "years").format("YYYY-MM-DD")}
+                    max={moment()
+                      .subtract(1, "year")
+                      .endOf("year")
+                      .format("YYYY-MM-DD")}
                     type="date"
                     placeholder="Date Of Birth "
                     name="date_of_birth"
@@ -762,13 +766,16 @@ function UserRegisterPage() {
                     Interested In: <span className="text-danger">*</span>
                   </label>
                   <select
-                    className={`${errors.interested_in
-                      ? "form-control  border border-danger "
-                      : "form-control "}
-                      ${state.interested_in === "pnp" ?
-                        `text-uppercase` :
-                        "text-capitalize"}`
+                    className={`${
+                      errors.interested_in
+                        ? "form-control  border border-danger "
+                        : "form-control "
                     }
+                      ${
+                        state.interested_in === "pnp"
+                          ? `text-uppercase`
+                          : "text-capitalize"
+                      }`}
                     id="interested_in"
                     name="interested_in"
                     value={state.interested_in || ""}
@@ -776,10 +783,15 @@ function UserRegisterPage() {
                   >
                     <option value={""}>Select</option>
                     {(FilterJson.interested || []).map((interest) => (
-                      <option key={interest} value={interest}
-                        className={interest === "pnp" ?
-                          `text-uppercase` :
-                          "text-capitalize"}>
+                      <option
+                        key={interest}
+                        value={interest}
+                        className={
+                          interest === "pnp"
+                            ? `text-uppercase`
+                            : "text-capitalize"
+                        }
+                      >
                         {interest}
                       </option>
                     ))}
@@ -797,7 +809,7 @@ function UserRegisterPage() {
                     </span>
                   )}
                 </div>
-                <div className="form-group col-md-4">
+                <div className="form-group col-md-4 d-none">
                   <label
                     htmlFor="reffer_by"
                     className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -817,8 +829,11 @@ function UserRegisterPage() {
                     id="reffer_by"
                   >
                     <option value={""}>Select partner</option>
-                    {agentList.map((item) => <option value={item.id}>{item.u_id + " " + item.name} </option>)}
-
+                    {agentList.map((item) => (
+                      <option value={item.id}>
+                        {item.u_id + " " + item.name}{" "}
+                      </option>
+                    ))}
                   </select>
                   {/*----ERROR MESSAGE FOR reffer_by----*/}
                   {errors.reffer_by && (
