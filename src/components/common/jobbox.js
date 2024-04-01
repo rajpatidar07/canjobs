@@ -8,7 +8,7 @@ import AddJobModal from "../forms/employer/job";
 import { toast } from "react-toastify";
 import {
   LiaIndustrySolid,
-  LiaSearchLocationSolid,
+  // LiaSearchLocationSolid,
   LiaBriefcaseSolid,
   LiaBusinessTimeSolid,
 } from "react-icons/lia";

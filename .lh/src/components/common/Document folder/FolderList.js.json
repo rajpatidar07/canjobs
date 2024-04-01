@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/components/common/Document folder/FolderList.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1711972535328,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1711972535328,
+            "name": "Commit-0",
+            "content": "import React from 'react'\r\nimport { Link } from 'react-router-dom';\r\nimport moment from 'moment';\r\nimport { BsFiletypeDocx } from \"react-icons/bs\";\r\nimport { FaRegFilePdf, FaFolder } from \"react-icons/fa6\";\r\nexport default function FolderList({docTypeList,setFolderID,setPrevFolderID}) {\r\n  return (\r\n    <div><div className=\"file-list\">\r\n    {(docTypeList || []).map((item, index) => (\r\n        <Link className=\"file-item\" key={index} to=\"\"\r\n            onClick={() => {\r\n                if (item.folder) {\r\n                    setFolderID(item.id);\r\n                    setPrevFolderID(item.parentReference.id);\r\n                }\r\n            }}\r\n        >\r\n            <div className=\"file-background\">\r\n                {item.folder && (\r\n                    <FaFolder\r\n                        style={{\r\n                            width: '100px',\r\n                            height: '100px',\r\n                            color: '#f5b317b0',\r\n                        }}\r\n                    />\r\n                )}\r\n                {item.file && item.file.mimeType.startsWith('image/') && (\r\n                    <img src={item['@microsoft.graph.downloadUrl']} alt={item.name} className=\"file-icon\" />\r\n                )}\r\n                {item.file && item.file.mimeType === 'application/pdf' && (\r\n                    <FaRegFilePdf\r\n                        style={{\r\n                            width: '100px',\r\n                            height: '100px',\r\n                            color: 'red',\r\n                        }}\r\n                    />\r\n                )}\r\n                {item.file && (item.file.mimeType === 'application/msword' || item.file.mimeType === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') && (\r\n                    <BsFiletypeDocx\r\n                        // className=\"file-icon\"\r\n                        style={{\r\n                            width: '100px',\r\n                            height: '100px',\r\n                            color: '#2B579A',\r\n                        }}\r\n                    />\r\n                )}\r\n                <div className=\"file-content\">\r\n                    <p className=\"file-name text-capitalize\">{item.name}</p>\r\n                    <p className=\"modified-time\">{moment(item.lastModifiedDateTime).fromNow()}</p>\r\n                </div>\r\n            </div>\r\n        </Link>\r\n    ))}\r\n</div></div>\r\n  )\r\n}\r\n"
+        }
+    ]
+}

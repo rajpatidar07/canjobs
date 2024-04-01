@@ -1609,6 +1609,66 @@ li.placeholder span svg {
   text-transform: uppercase;
 }
 
+/* Folder design */
+.file-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.file-item {
+  width: 200px;
+  /* Adjust width as needed */
+  /* background-color: #f7f7f7; */
+  border-radius: 10px;
+  /* box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); */
+  overflow: hidden;
+}
+
+.file-background {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.folder-icon,
+.word-icon,
+.pdf-icon,
+.file-icon {
+  margin-right: 10px;
+  /* Adjust margins as needed */
+}
+
+.file-icon {
+  max-width: 100px;
+  max-height: 100px;
+  /* Adjust max-width and max-height as needed */
+  /* border-radius: 50%; */
+}
+
+.file-content {
+  text-align: center;
+}
+
+.file-count {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.file-name {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.modified-time {
+  color: gray;
+  font-size: 12px;
+}
+
+.file-background:hover {
+  background-color: #edebe9
+}
+
 /* Chat input form */
 /* .chat-input {
   display: flex;

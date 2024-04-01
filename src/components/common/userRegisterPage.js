@@ -16,7 +16,7 @@ function UserRegisterPage() {
   const [SingUpSuccess, setSingUpSuccess] = useState("");
   const [agentList, setAgentList] = useState([]);
 
-  let user_type = localStorage.getItem("userType");
+  // let user_type = localStorage.getItem("userType");
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   let ref = searchParams.get("ref");

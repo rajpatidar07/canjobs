@@ -74,7 +74,7 @@ import PartnerDetails from "../agent/partnerDetails";
 function MainLayout() {
   const token = localStorage.getItem("token");
   const userType = localStorage.getItem("userType");
-  let adminType = localStorage.getItem("admin_type");
+  // let adminType = localStorage.getItem("admin_type");
 
   return (
     <BrowserRouter>

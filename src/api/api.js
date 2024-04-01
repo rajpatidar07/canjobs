@@ -253,13 +253,13 @@ export const EmployeeAppliedJob = async (props) => {
 export const AddEmployeeDetails = async (props) => {
   const headers = Token
     ? {
-        "Content-Type": "application/json",
-        Authorization: Token,
-      }
+      "Content-Type": "application/json",
+      Authorization: Token,
+    }
     : {
-        "Content-Type": "application/json",
-        type: "event",
-      };
+      "Content-Type": "application/json",
+      type: "event",
+    };
   // console.log(Token,headers)
   const response = await axios.put(`${API_URL}employeePersonal_detail`, props, {
     headers: headers,
@@ -2943,3 +2943,43 @@ export const UpdateCredentialApi = async (props) => {
   );
   return response;
 };
+/*Share point apis */
+// Api function to get folders or type of document of perticular employee
+export const getSharePointFoldersList = async (Id, User) => {
+  const response = await axios.post(
+    `${API_URL}admin/getSharpointSiteDriveFolderData`,
+    {
+      "driveId": "b!iUiBybFGWEWfqWdSYuUqrWrIPVmZDQxPmwO4Bzj6nJp5ByboftxMSY6hfWPT-m8F",
+      "userId": Id,
+      "userType": User
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+};
+//Api function to GET emolyee  peticular document folder data 
+export const getSharePointParticularFolders = async (Id, User,folderId) => {
+  const response = await axios.post(
+    `${API_URL}admin/getSharpointSiteDriveFolderToFolderData`,
+    {
+      "driveId": "b!iUiBybFGWEWfqWdSYuUqrWrIPVmZDQxPmwO4Bzj6nJp5ByboftxMSY6hfWPT-m8F",
+      "userId": Id,
+      "userType": User,
+      "folderId":folderId,
+
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+};
+

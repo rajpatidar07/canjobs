@@ -25,7 +25,7 @@ import Loader from "../common/loader";
 import { PiPencilDuotone } from "react-icons/pi";
 import AdminHeader from "../admin/header";
 import AdminSidebar from "../admin/sidebar";
-import DocumrentContainer from "../common/employeeDocumrentContainer";
+// import DocumrentContainer from "../common/employeeDocumrentContainer";
 import { BiPhoneCall } from "react-icons/bi";
 import { BsEnvelope } from "react-icons/bs";
 import JobProfileResponse from "../admin/profile_response";
@@ -41,6 +41,7 @@ import MainEmailPage from "../email/mainemailPage";
 import AgentConversation from "../common/AgentConversation";
 import UserTimline from "../common/UserTimline";
 import InterviewHistoryTable from "../common/InterviewHistoryTable";
+import SharePointDocument from "../common/Document folder/SharePointDocument";
 const NewUserProfile = (props) => {
   const { eid } = useParams();
   const location = useLocation();
@@ -1770,7 +1771,8 @@ const NewUserProfile = (props) => {
                       doc="yes"
                     /> */}
                     {TabActive === "documents" ? (
-                      <DocumrentContainer
+                      <SharePointDocument
+                        // DocumrentContainer
                         employee_id={eid}
                         emp_user_type={"employee"}
                         docId={docId ? docId : ""}
