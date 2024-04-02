@@ -1737,6 +1737,7 @@ export const ReadNotification = async (props) => {
   return response.data;
 };
 
+
 /*Admin List Api */
 export const getallAdminData = async (
   type,
@@ -2044,6 +2045,40 @@ export const getSingleCompanyFollowup = async (
     }
   );
 
+  return response.data;
+};
+/*Get All Users Followup Data */
+export const getAllUsersFollowUpData = async (userId, userType, column, sort) => {
+  const response = await axios.post(
+    `${API_URL}admin/getFollowUp`,
+    {
+      "user_id": userId,
+      "user_type": userType,
+      "column_name": column,
+      "sort_order": sort
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
+
+/*Add All user's Followup Api */
+export const AddAllUserFollowup = async (props) => {
+  const response = await axios.post(
+    `${API_URL}admin/addFollowUp`,
+    props,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
   return response.data;
 };
 
@@ -2711,7 +2746,7 @@ export const CreateRazorpay = async (price, currency) => {
   return response;
 };
 /*Razor pay payment api */
-export const AddRazorpay = async (amount, response, role) => {
+export const AddRazorpay = async (amount, response, role, id) => {
   await axios.post(
     `${API_URL}payment/addRazorPayReciept`,
     {
@@ -2720,6 +2755,7 @@ export const AddRazorpay = async (amount, response, role) => {
       razorpay0rderId: response.razorpay_order_id,
       razorpaysighature: response.razorpay_signature,
       user_role: role,
+      id: role === "agent" ? id : ""
     },
     {
       headers: {
@@ -2963,16 +2999,58 @@ export const getSharePointFoldersList = async (Id, User) => {
   return response;
 };
 //Api function to GET emolyee  peticular document folder data 
-export const getSharePointParticularFolders = async (Id, User,folderId) => {
+export const getSharePointParticularFolders = async (Id, User, folderId) => {
   const response = await axios.post(
     `${API_URL}admin/getSharpointSiteDriveFolderToFolderData`,
     {
       "driveId": "b!iUiBybFGWEWfqWdSYuUqrWrIPVmZDQxPmwO4Bzj6nJp5ByboftxMSY6hfWPT-m8F",
       "userId": Id,
       "userType": User,
-      "folderId":folderId,
+      "folderId": folderId,
 
     },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+};
+//Api function to Add document folder or type 
+export const AddSharePointFolders = async (folder, parentId) => {
+  const response = await axios.post(
+    `${API_URL}admin/createSharepointFolder`,
+    {
+      "driveId": "b!iUiBybFGWEWfqWdSYuUqrWrIPVmZDQxPmwO4Bzj6nJp5ByboftxMSY6hfWPT-m8F",
+      "newFolderName": folder,
+      "parentFolderId": parentId
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+};
+//Api function to Add sharepoint document 
+export const AddSharePointDOcument = async (id, user, folderId, docType, data) => {
+  const formData = new FormData();
+  formData.append("docType", docType);
+  formData.append("userType", user);
+  formData.append("driveId", driveId);
+  formData.append("employee_id", id);
+  formData.append("folder_Id", folderId);
+  // Loop through the array of files and append each file to formData
+  for (let i = 0; i < data.length; i++) {
+    formData.append(`file[${i}]`, data[i]);
+  }
+  const response = await axios.post(
+    `${API_URL}admin/sharpointSiteDriveDocumentUpload`,
+    formData,
     {
       headers: {
         "Content-Type": "application/json",

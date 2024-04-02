@@ -269,7 +269,6 @@ export default function AgentConversation({
       setState({ ...state, DocUrl: "" });
     }
   };
-  console.log(reffer_by);
   return (
     <div className="chat_box_container bg-white row m-0">
       {reffer_by === "0" || reffer_by === undefined || !reffer_by ? (

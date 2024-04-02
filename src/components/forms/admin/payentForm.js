@@ -10,7 +10,7 @@ export default function PayentForm({ data, user_id, user_type }) {
   const [apiCall, setApicall] = useState(true);
   // const [loading, setLoading] = useState(true);
   const [paymentList, setPaytemList] = useState([]);
-
+  
   let user = localStorage.getItem("userType");
 
   /*Function to get Payment list data */
@@ -105,11 +105,10 @@ export default function PayentForm({ data, user_id, user_type }) {
                         </span>
                         <span className="col-md-2 col-sm-12">
                           <span
-                            className={`${
-                              res.status === "success"
+                            className={`${res.status === "success"
                                 ? " bg-primary-opacity-8 text-white text-center w-100  rounded-pill"
                                 : " bg-warning text-white text-center w-100  rounded-pill"
-                            }`}
+                              }`}
                           >
                             {res.status}
                           </span>
@@ -121,7 +120,7 @@ export default function PayentForm({ data, user_id, user_type }) {
               )}
             </div>
           }
-          {user === "user" || user === "company" ? (
+          {user === "user" || user === "company" || user === "agent" ? (
             <PayForm
               data={data}
               setApicall={setApicall}

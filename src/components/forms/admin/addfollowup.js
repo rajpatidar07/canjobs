@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import useValidation from "../../common/useValidation";
 // import { Modal } from "react-bootstrap";
-import { getSingleFollowup, AddFollowup } from "../../../api/api";
+import {/* getSingleFollowup*/getAllUsersFollowUpData, AddAllUserFollowup /*AddFollowup*/ } from "../../../api/api";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
@@ -13,21 +13,23 @@ function Addfollowup(props) {
   /* Shorting states */
   const [columnName, setcolumnName] = useState("next_followup_date");
   const [sortOrder, setSortOrder] = useState("ASC");
-  let employId = props.employee_id;
+  // let employId = props.employee_id;
   let user_type = localStorage.getItem("userType");
-  // le/*tjobId*/ = props.job_id;
-
+  let adminId = localStorage.getItem("admin_id")
   // USER FOLLOW UP PROFILE UPDATE VALIDATION
 
   /* Function to get the Response data*/
   const ResponseData = async () => {
     try {
-      const userData = await getSingleFollowup(
-        props.employee_id !== "" ? props.employee_id : null,
-        columnName,
-        sortOrder
-        // props.job_id
-      );
+      /*only for employee*/
+      // const userData = await getSingleFollowup(
+      //   props.employee_id !== "" ? props.employee_id : null,
+      //   columnName,
+      //   sortOrder
+      //   // props.job_id
+      // );
+      /*For All user*/
+      const userData = await getAllUsersFollowUpData(props.userId, props.userType, columnName, sortOrder)
       if (
         userData.data === null ||
         userData.data === undefined ||
@@ -49,7 +51,7 @@ function Addfollowup(props) {
 
   /*Render function to get the Response*/
   useEffect(() => {
-    if (props.employee_id === undefined /*|| props.job_id === undefined*/) {
+    if (props.userId === undefined || !props.userId/*|| props.job_id === undefined*/) {
     } else {
       ResponseData();
     }
@@ -57,11 +59,20 @@ function Addfollowup(props) {
 
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
-    remark: "",
-    next_followup_date: "",
-    subject: "",
-    employee_id: employId,
-    status: "",
+    /*only for employee*/
+    // remark: "",
+    // next_followup_date: "",
+    // subject: "",
+    // employee_id: employId,
+    // status: "",
+    // For all user
+    "admin_id": adminId,
+    "user_id": props.userId,
+    "user_type": props.userType,
+    "remark": "",
+    "next_date": "",
+    "subject": "",
+    "status": ""
   };
   // VALIDATION CONDITIONS
   const validators = {
@@ -100,7 +111,10 @@ function Addfollowup(props) {
     if (validate()) {
       setLoading(true);
       try {
-        let responseData = await AddFollowup(state);
+        /*only for employee*/
+        // let responseData = await AddFollowup(state);
+        /*For all user*/
+        let responseData = await AddAllUserFollowup(state);
         if (responseData.message === "follow up updated successfully") {
           toast.success("Followup Updated successfully", {
             position: toast.POSITION.TOP_RIGHT,
@@ -148,7 +162,7 @@ function Addfollowup(props) {
         <div className="bg-white rounded h-100vh px-11 py-7 overflow-y-hidden">
           <div className="row">
             <div
-              className={`activity_container pr-10 ${user_type === "admin" ? "col-md-8 border-right" : "col-nd-12"
+              className={`activity_container pr-10 ${user_type === "admin" || user_type === "agent" ? "col-md-8 border-right" : "col-nd-12"
                 }`}
             >
               {response.length === 0 ? (
@@ -177,29 +191,15 @@ function Addfollowup(props) {
                           dangerouslySetInnerHTML={{
                             __html: res.remark,
                           }}
-                        />{ }</p>
+                        /></p>
                     </div>
                   </div>
-                  // <div className="card mt-5 mb-5" key={res.id}>
-                  //   <div className="card-header d-flex justify-content-space-between px-3 py-1">
-                  //     <div className="card-head font-size-3 text-dark card_left">
-                  //       <span className="text-dark"> Posted date: </span>
-                  //       {moment(res.created_at).format("DD-MM-YYYY")}
-                  //     </div>
-                  //     {res.next_followup_date === "0000-00-00" ? null :
-                  //       <div className="card-head font-size-3 text-dark card_right">
-                  //         <span className="text-dark"> Next date: </span>
-                  //         {moment(res.next_followup_date).format("DD-MM-YYYY")}
-                  //       </div>}
-                  //   </div>
-                  //   <div className="card-body p-3">{res.remark}</div>
-                  // </div>
                 ))
               )}
             </div>
             <div
               className={
-                user_type === "admin" ? "px-10 py-5 col-md-4" : "d-none"
+                user_type === "admin" || user_type === "agent" ? "px-10 py-5 col-md-4" : "d-none"
               }
             >
               <form>

@@ -16,7 +16,7 @@ export default function AddTransactionForm({
     payment_mode: "",
     payment_id: "",
     id: user_id,
-    user_type: user_type === "employee" ? "employee" : "employer",
+    user_type: user_type === "employee" ? "employee" : user_type === "agent" ? "agent" : "employer",
     pay_by_admin: 1,
   };
 
@@ -73,7 +73,7 @@ export default function AddTransactionForm({
       <div className="row">
         <div
           className={`col-6 text-capitalize`}
-          //   onClick={() => handleSubStageSelection(expandedStatus, subStage)}
+        //   onClick={() => handleSubStageSelection(expandedStatus, subStage)}
         >
           <input
             type="radio"
@@ -88,7 +88,7 @@ export default function AddTransactionForm({
         </div>
         <div
           className={`col-6 text-capitalize`}
-          //   onClick={() => handleSubStageSelection(expandedStatus, subStage)}
+        //   onClick={() => handleSubStageSelection(expandedStatus, subStage)}
         >
           <input
             type="radio"
@@ -149,7 +149,7 @@ export default function AddTransactionForm({
       <div className="row">
         <div
           className={`col-6 text-capitalize`}
-          //   onClick={() => handleSubStageSelection(expandedStatus, subStage)}
+        //   onClick={() => handleSubStageSelection(expandedStatus, subStage)}
         >
           <input
             type="radio"

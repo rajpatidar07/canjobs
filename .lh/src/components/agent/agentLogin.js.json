@@ -3,11 +3,15 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 1,
             "patches": [
                 {
                     "date": 1709354053177,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1712051994539,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -74,9 +74,9 @@\n             autoClose: 1000,\n           });\n           setLoading(false);\n           setIsLoading(false);\n-          navigate(\"/partner_dashboard\");\n+          navigate(\"/partner_profile\");\n           window.location.reload();\n         } else if (\n           updatedTodo.message === \"Invalid Credentials\" ||\n           updatedTodo.message === \"Invalid credentials !\"\n"
                 }
             ],
             "date": 1709354053177,

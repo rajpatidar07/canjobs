@@ -5,7 +5,8 @@ import { BsFiletypeDocx } from "react-icons/bs";
 import { FaRegFilePdf, FaFolder } from "react-icons/fa6";
 export default function FolderList({ docTypeList, setFolderID, setPrevFolderID }) {
     return (
-        <div><div className="file-list">
+        <div className=''>
+            <div className="file-list">
             {(docTypeList || []).map((item, index) => (
                 <Link className="file-item" key={index} to=""
                     onClick={() => {

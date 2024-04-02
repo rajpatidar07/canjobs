@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import useValidation from "./useValidation";
-// import { Modal } from "react-bootstrap";
 import { getSingleCompanyFollowup, AddCompanyFollowup } from "../../api/api";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -109,20 +108,6 @@ function AddCompanyfollowup(props) {
   return (
     <>
       <ToastContainer />
-      {/* <Modal
-        show={props.show}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      > 
-        <button
-          type="button"
-          className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper "
-          data-dismiss="modal"
-          onClick={close}
-        >
-          <i className="fas fa-times"></i>
-        </button>*/}
 
       <div className="bg-white rounded h-100 px-10 overflow-y-hidden">
         {/* <h5 className="text-center pt-2 mb-7">Follow Ups</h5> */}
@@ -158,20 +143,6 @@ function AddCompanyfollowup(props) {
                       /></p>
                   </div>
                 </div>
-                // <div className="card mt-5 mb-5" key={res.id}>
-                //   <div className="card-header d-flex justify-content-space-between px-3 py-1">
-                //     <div className="card-head font-size-3 text-dark card_left">
-                //       <span className="text-dark"> Posted date: </span>
-                //       {moment(res.created_at).format("DD-MM-YYYY")}
-                //     </div>
-                //     {res.next_date === "0000-00-00" ? null :
-                //       <div className="card-head font-size-3 text-dark card_right">
-                //         <span className="text-dark"> Next date: </span>
-                //         {moment(res.next_date).format("DD-MM-YYYY")}
-                //       </div>}
-                //   </div>
-                //   <div className="card-body p-3">{res.remark}</div>
-                // </div>
               ))
             )}
           </div>
@@ -343,7 +314,6 @@ function AddCompanyfollowup(props) {
         </div>
       </div>
 
-      {/* </Modal> */}
     </>
   );
 }

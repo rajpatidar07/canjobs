@@ -50,7 +50,7 @@ const AdminSidebar = (props) => {
       >
         <div className="brand-logo px-2 mb-5">
           <Link
-            to={user_type === "agent" ? "/partner_dashboard" : "/dashboard"}
+            to={user_type === "agent" ? "/partner_profile" : "/dashboard"}
           >
             <img src="image/logo-main-black.png" alt="" />
           </Link>

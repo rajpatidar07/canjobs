@@ -17,7 +17,8 @@ import AdminSidebar from "../admin/sidebar";
 import JobTable from "../common/jobTable";
 import DocumrentContainer from "..//common/employeeDocumrentContainer";
 import Interview from "../common/interviewTable";
-import AddCompanyfollowup from "../common/companyFollowUp";
+// import AddCompanyfollowup from "../common/companyFollowUp";
+import Addfollowup from "../forms/admin/addfollowup";
 import { BsEnvelope } from "react-icons/bs";
 import { RiMailSendLine } from "react-icons/ri";
 import { BiPhoneCall } from "react-icons/bi";
@@ -805,32 +806,16 @@ function CompanyProfileDetail(props) {
                     TabActive === "notes" ? "justify-content-center " : "d-none"
                   }
                 >
-                  {TabActive === "notes" ? (
+                  {/* {TabActive === "notes" ? (
                     <AddCompanyfollowup
                       company_id={cid}
                       setApiCall={setApiCall}
                     />
-                  ) : //  <div className="p-10 notes_container">
-                    //         <div className="single_note mb-5">
-                    //           <small>Created on: 2023-08-03 17:10:53</small>
-                    //           <div className="card p-5">
-                    //             This is some text within a card body.
-                    //           </div>
-                    //         </div>
-                    //         <div className="single_note mb-5">
-                    //           <small>Created on: 2023-08-03 17:10:53</small>
-                    //           <div className="card p-5">
-                    //             This is some text within a card body.
-                    //           </div>
-                    //         </div>
-                    //         <div className="single_note mb-5">
-                    //           <small>Created on: 2023-08-03 17:10:53</small>
-                    //           <div className="card p-5">
-                    //             This is some text within a card body.
-                    //           </div>
-                    //         </div>
-                    //       </div>
-                    null}
+                  ) : 
+                    null} */}
+                      {TabActive === "notes" ? (
+                      <Addfollowup  userId={cid} userType={"employer"} setApiCall={setApiCall} />
+                    ) : null}
                 </div>
                 <div
                   className={

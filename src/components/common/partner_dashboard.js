@@ -3,12 +3,14 @@ import CustomButton from "../common/button";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AddAgent from "../forms/admin/addAgent";
-// import {/*GetFilter*/ } from "../../api/api";
+import {/*GetFilter*/DeleteAgent } from "../../api/api";
 // import AgentTable from "../common/agentTable";
 import AdminSidebar from "../admin/sidebar";
 import AdminHeader from "../admin/header";
 import PartnerPage from "./partner_page";
-
+import PartnerTAble from "./PartnerTAble";
+import SAlert from "../common/sweetAlert";
+import { toast } from "react-toastify";
 // import FilterJson from "../json/filterjson";
 function PartnerDashboard() {
   /*Show modal states */
@@ -17,6 +19,10 @@ function PartnerDashboard() {
   /*data and id states */
   let [agentId, setAgentId] = useState();
 
+  /*delete state */
+  const [deleteAlert, setDeleteAlert] = useState(false);
+  const [deleteId, setDeleteID] = useState();
+  const [deleteName, setDeleteName] = useState("");
   /*Filter and search state */
   //   const [experienceFilterValue, setExperienceFilterValue] = useState("");
   //   const [skillFilterValue, setSkillFilterValue] = useState(
@@ -52,6 +58,37 @@ function PartnerDashboard() {
       setSearchError("");
     }
   };
+
+  /*To Show the delete alert box */
+  const ShowDeleteAlert = (e) => {
+    setDeleteID(e.id);
+    setDeleteName(e.name);
+    setDeleteAlert(true);
+  };
+
+  //   /*To cancel the delete alert box */
+  const CancelDelete = () => {
+    setDeleteAlert(false);
+  };
+
+
+  /*To call Api to delete employee */
+  async function OnDeleteAgent(e) {
+    try {
+      const responseData = await DeleteAgent(e);
+      if (responseData.message === "successfully") {
+        toast.error("Partner deleted Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setDeleteAlert(false);
+        setApiCall(true);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <>
       <div className={"site-wrapper overflow-hidden bg-default-2"}>
@@ -110,20 +147,32 @@ function PartnerDashboard() {
               <div className="row">
                 {/* <!-- Agent List Table- --> */}
                 <div className={"col-md-12"}>
-                  <PartnerPage
-                    // showEmployeeProfile={showEmployeeProfile}
-                    // employeeDetails={employeeDetails}
-                    search={search}
-                    // experienceFilterValue={experienceFilterValue}
-                    // educationFilterValue={educationFilterValue}
-                    // skillFilterValue={skillFilterValue}
-                    apiCall={apiCall}
-                    setApiCall={setApiCall}
-                    pageNo={pageNo}
-                    setpageNo={setpageNo}
-                    EditAgent={EditAgent}
-                    user={user_type}
-                  />
+                  {user_type === "admin" ?
+                    <PartnerTAble
+                      search={search}
+                      apiCall={apiCall}
+                      setApiCall={setApiCall}
+                      pageNo={pageNo}
+                      setpageNo={setpageNo}
+                      EditAgent={EditAgent}
+                      user={user_type}
+                      ShowDeleteAlert={ShowDeleteAlert} />
+
+                    : <PartnerPage
+                      // showEmployeeProfile={showEmployeeProfile}
+                      // employeeDetails={employeeDetails}
+                      search={search}
+                      // experienceFilterValue={experienceFilterValue}
+                      // educationFilterValue={educationFilterValue}
+                      // skillFilterValue={skillFilterValue}
+                      apiCall={apiCall}
+                      setApiCall={setApiCall}
+                      pageNo={pageNo}
+                      setpageNo={setpageNo}
+                      EditAgent={EditAgent}
+                      user={user_type}
+                      ShowDeleteAlert={ShowDeleteAlert}
+                    />}
                 </div>
               </div>
               {showAddEAgentModal ? (
@@ -139,6 +188,14 @@ function PartnerDashboard() {
           </div>
         </div>
       </div>
+      <SAlert
+        show={deleteAlert}
+        title={deleteName}
+        text="Are you Sure you want to delete !"
+        onConfirm={() => OnDeleteAgent(deleteId)}
+        showCancelButton={true}
+        onCancel={CancelDelete}
+      />
     </>
   );
 }

@@ -3,11 +3,15 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 1,
             "patches": [
                 {
                     "date": 1710313133610,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1712054248400,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -70,9 +70,9 @@\n             name: user === \"employee\" ? data.name : data.company_name,\n             description: \"FIRST RAZOR PAY\",\n             order_id: orderId,\n             handler: async function (response) {\n-              await AddRazorpay(amount, response, user);\n+              await AddRazorpay(amount, response, user,user_id);\n               // Perform any additional actions on successful payment here\n               toast.success(\"Payment Successful.\", {\n                 position: toast.POSITION.TOP_RIGHT,\n                 autoClose: 5000,\n"
                 }
             ],
             "date": 1710313133610,

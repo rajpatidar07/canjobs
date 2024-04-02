@@ -21,26 +21,25 @@ const DataChart = ({ data, dataType }) => {
   };
   const statuses = data.map(
     (item) =>
-      `${
-        item.status === "1"
-          ? "New"
-          : item.status === "2"
+      `${item.status === "1"
+        ? "New"
+        : item.status === "2"
           ? "Prospect"
           : item.status === "3"
-          ? "Lead"
-          : item.status === "4"
-          ? "Retained"
-          : item.status === "5"
-          ? "Lost"
-          : item.status === "6"
-          ? "Dead"
-          : item.status === "7"
-          ? "Working on"
-          : item.status === "8"
-          ? "Submitted"
-          : item.status === "0"
-          ? "Web"
-          : "status"
+            ? "Lead"
+            : item.status === "4"
+              ? "Retained"
+              : item.status === "5"
+                ? "Lost"
+                : item.status === "6"
+                  ? "Dead"
+                  : item.status === "7"
+                    ? "Working on"
+                    : item.status === "8"
+                      ? "Submitted"
+                      : item.status === "0"
+                        ? "Web"
+                        : "status"
       }`
   );
   //Applicants types data
@@ -82,6 +81,29 @@ const DataChart = ({ data, dataType }) => {
     }
   };
 
+  const brightColors = [
+    '#36A2EB',
+    '#FFCE56',
+    '#FF4500',
+    '#00FF00',
+    '#9966FF',
+    '#FF8C00',
+    '#8A2BE2',
+    '#FFD700',
+    '#008080',
+    '#40E0D0',
+    '#FF1493',
+    '#32CD32',
+    '#4BC0C0',
+    '#1E90FF',
+    '#FF00FF',
+    '#00FA9A',
+    '#FF69B4',
+    '#ADFF2F',
+    '#87CEFA',
+    '#FF6384',
+  ];
+
   const options = {
     chart: {
       events: {
@@ -97,15 +119,16 @@ const DataChart = ({ data, dataType }) => {
       dataType === "status"
         ? statuses
         : dataType === "type"
-        ? interests
-        : dataType === "lima"
-        ? lmia
-        : dataType === "visa"
-        ? visa
-        : null, // Using extracted statuses as labels
+          ? interests
+          : dataType === "lima"
+            ? lmia
+            : dataType === "visa"
+              ? visa
+              : null, // Using extracted statuses as labels
     legend: {
       position: "right",
     },
+    colors: brightColors,
     responsive: [
       {
         breakpoint: 480,

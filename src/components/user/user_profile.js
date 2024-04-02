@@ -25,7 +25,7 @@ import Loader from "../common/loader";
 import { PiPencilDuotone } from "react-icons/pi";
 import AdminHeader from "../admin/header";
 import AdminSidebar from "../admin/sidebar";
-// import DocumrentContainer from "../common/employeeDocumrentContainer";
+import DocumrentContainer from "../common/employeeDocumrentContainer";
 import { BiPhoneCall } from "react-icons/bi";
 import { BsEnvelope } from "react-icons/bs";
 import JobProfileResponse from "../admin/profile_response";
@@ -41,7 +41,7 @@ import MainEmailPage from "../email/mainemailPage";
 import AgentConversation from "../common/AgentConversation";
 import UserTimline from "../common/UserTimline";
 import InterviewHistoryTable from "../common/InterviewHistoryTable";
-import SharePointDocument from "../common/Document folder/SharePointDocument";
+// import SharePointDocument from "../common/Document folder/SharePointDocument";
 const NewUserProfile = (props) => {
   const { eid } = useParams();
   const location = useLocation();
@@ -701,9 +701,12 @@ const NewUserProfile = (props) => {
                         aria-controls="home"
                         aria-selected="true"
                         onClick={() => setTabActive("profile")}
+                       
                       >
                         Profile
                       </Link>
+                    
+                    
                     </li>
                     <li
                       className={`${user_type === "company"
@@ -887,7 +890,7 @@ const NewUserProfile = (props) => {
                         TimeLine
                       </Link>
                     </li>
-                    <li className={user_type === "company"|| user_type === "user"  ? "d-none" : "tab-menu-items nav-item"}>
+                    <li className={user_type === "company" || user_type === "user" ? "d-none" : "tab-menu-items nav-item"}>
                       <Link
                         className={
                           TabActive === "email"
@@ -947,7 +950,7 @@ const NewUserProfile = (props) => {
                         aria-selected="true"
                         onClick={() => setTabActive("InterviewHistory")}
                       >
-                        Interview 
+                        Interview
                       </Link>
                     </li>
                   </ul>
@@ -1771,11 +1774,12 @@ const NewUserProfile = (props) => {
                       doc="yes"
                     /> */}
                     {TabActive === "documents" ? (
-                      <SharePointDocument
-                        // DocumrentContainer
+                      <DocumrentContainer
+                        // SharePointDocument
                         employee_id={eid}
                         emp_user_type={"employee"}
                         docId={docId ? docId : ""}
+                      // folderId={PersonalDetail.documents_folder_id}
                       />
                     ) : null}
                   </div>
@@ -1803,28 +1807,8 @@ const NewUserProfile = (props) => {
                     }
                   >
                     {TabActive === "notes" ? (
-                      <Addfollowup employee_id={eid} setApiCall={setApiCall} />
+                      <Addfollowup userId={eid} userType={"employee"} setApiCall={setApiCall} />
                     ) : null}
-                    {/* <div className="p-10 notes_container">
-                      <div className="single_note mb-5">
-                        <small>Created on: 2023-08-03 17:10:53</small>
-                        <div className="card p-5">
-                          This is some text within a card body.
-                        </div>
-                      </div>
-                      <div className="single_note mb-5">
-                        <small>Created on: 2023-08-03 17:10:53</small>
-                        <div className="card p-5">
-                          This is some text within a card body.
-                        </div>
-                      </div>
-                      <div className="single_note mb-5">
-                        <small>Created on: 2023-08-03 17:10:53</small>
-                        <div className="card p-5">
-                          This is some text within a card body.
-                        </div>
-                      </div>
-                    </div> */}
                   </div>
                   <div
                     className={

@@ -497,7 +497,7 @@ function AddAgent(props) {
                   htmlFor="type"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Address <span className="text-danger">*</span> :
+                  Address {/*<span className="text-danger">*</span> */}:
                 </label>
                 <input
                   type={"text"}
@@ -528,7 +528,7 @@ function AddAgent(props) {
                   htmlFor="type"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Country <span className="text-danger">*</span> :
+                  Country {/*<span className="text-danger">*</span>*/} :
                 </label>
                 <input
                   type={"text"}
@@ -560,7 +560,7 @@ function AddAgent(props) {
                   htmlFor="type"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  State <span className="text-danger">*</span> :
+                  State {/*<span className="text-danger">*</span>*/} :
                 </label>
                 <input
                   type={"text"}
@@ -589,7 +589,7 @@ function AddAgent(props) {
                   htmlFor="type"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  City <span className="text-danger">*</span> :
+                  City {/*<span className="text-danger">*</span>*/} :
                 </label>
                 <input
                   type={"text"}

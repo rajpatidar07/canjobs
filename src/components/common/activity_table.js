@@ -106,26 +106,36 @@ export default function ActivityTable(props) {
               </tr>
             </thead>
             <tbody>
-              {(activityData || []).map((data) => (
-                <tr key={data.id} className="font-size-3">
-                  {hide ? null : <td>{data.user_id}</td>}
-                  {hide ? null : <td>{data.user_type}</td>}
-                  {hide ? null : <td>{data.created_by}</td>}
-                  <td>
-                    {/* {data.msg} */}
-                    {activity_json[`${data.status}`]}
-                    {" for "}
-                    <Link to={"/" + data.action_id}>
-                      {data.employee_name === ("" || undefined || null)
-                        ? "Candidate"
-                        : data.employee_name}
-                    </Link>{" "}
-                    {" by "}
-                    {data.user_type + " " + data.created_by}
-                  </td>
-                  <td>{moment(data.created_at).format("lll")}</td>
+              {totalData === 0 || activityData.length === 0 ? (
+                <tr>
+                  <th
+                    colSpan={5}
+                    className="bg-white text-center font-size-3"
+                  >
+                    No Data Found
+                  </th>
                 </tr>
-              ))}
+              ) :
+                (activityData || []).map((data) => (
+                  <tr key={data.id} className="font-size-3">
+                    {hide ? null : <td>{data.user_id}</td>}
+                    {hide ? null : <td>{data.user_type}</td>}
+                    {hide ? null : <td>{data.created_by}</td>}
+                    <td>
+                      {/* {data.msg} */}
+                      {activity_json[`${data.status}`]}
+                      {" for "}
+                      <Link to={"/" + data.action_id}>
+                        {data.employee_name === ("" || undefined || null)
+                          ? "Candidate"
+                          : data.employee_name}
+                      </Link>{" "}
+                      {" by "}
+                      {data.user_type + " " + data.created_by}
+                    </td>
+                    <td>{moment(data.created_at).format("lll")}</td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         )}

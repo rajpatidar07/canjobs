@@ -628,7 +628,9 @@ function AgentsEmployee(props) {
                           <th
                             colSpan={9}
                             className="bg-white text-center font-size-3"
-                          ></th>
+                          >
+                            No Data Found
+                          </th>
                         </tr>
                       ) : (
                         (agentByEmployeeData || []).map((empdata) => (

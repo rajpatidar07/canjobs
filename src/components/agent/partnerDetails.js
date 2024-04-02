@@ -16,6 +16,8 @@ import AddAgent from "../forms/admin/addAgent";
 import AgentConversation from "../common/AgentConversation";
 import DataChart from "../common/DataChart";
 import ActivityTable from "../common/activity_table";
+import PayentForm from "../forms/admin/payentForm";
+import Addfollowup from "../forms/admin/addfollowup";
 export default function PartnerDetails() {
   const user_type = localStorage.getItem("userType");
   const agent_id = localStorage.getItem("agent_id");
@@ -55,12 +57,17 @@ export default function PartnerDetails() {
       console.log(err);
     }
   };
-
+  const params = new URLSearchParams(window.location.search);
+  const transactionId = params.get("payment_intent");
   /*Render method to get Partner data */
   useEffect(() => {
     PartnerData();
     if (apiCall === true) {
       setApiCall(false);
+    }
+    if (transactionId) {
+      //   setPayment();
+      setTabActive("payment");
     }
   }, [apiCall, agent_id]);
   const GetChartData = async () => {
@@ -113,9 +120,8 @@ export default function PartnerDetails() {
         }
       >
         <div
-          className={`container${
-            user_type === "admin" || user_type === "agent" ? "-fluid" : ""
-          }`}
+          className={`container${user_type === "admin" || user_type === "agent" ? "-fluid" : ""
+            }`}
         >
           <div className="row text-left mt-5 pt-0">
             <div className="col-12 order-2 order-xl-1">
@@ -177,6 +183,30 @@ export default function PartnerDetails() {
                       Support
                     </Link>
                   </li>
+                  <li
+                      className={
+                        // user_type === "company"
+                        //   ? "d-none"
+                        //   :
+                           "tab-menu-items nav-item"
+                      }
+                    >
+                      <Link
+                        className={
+                          TabActive === "notes"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
+                        }
+                        id="notesTab"
+                        data-toggle="tab"
+                        role="tab"
+                        aria-controls="notesTab"
+                        aria-selected="true"
+                        onClick={() => setTabActive("notes")}
+                      >
+                        Notes
+                      </Link>
+                    </li>
                   <li className="tab-menu-items nav-item">
                     <Link
                       className={
@@ -194,23 +224,23 @@ export default function PartnerDetails() {
                       Activity
                     </Link>
                   </li>
-                  {/* <li className="tab-menu-items nav-item">
-                                        <Link
-                                            className={
-                                                TabActive === "payment"
-                                                    ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                                                    : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
-                                            }
-                                            id="payment"
-                                            data-toggle="tab"
-                                            role="tab"
-                                            aria-controls="payment"
-                                            aria-selected="true"
-                                            onClick={() => setTabActive("payment")}
-                                        >
-                                            Payment
-                                        </Link>
-                                    </li> */}
+                  <li className="tab-menu-items nav-item">
+                    <Link
+                      className={
+                        TabActive === "payment"
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                      }
+                      id="payment"
+                      data-toggle="tab"
+                      role="tab"
+                      aria-controls="payment"
+                      aria-selected="true"
+                      onClick={() => setTabActive("payment")}
+                    >
+                      Payment
+                    </Link>
+                  </li>
                   <li
                     className={
                       user_type === "admin" || user_type === "agent"
@@ -270,8 +300,8 @@ export default function PartnerDetails() {
                                   className="company_logo"
                                   src={
                                     data.profile_image === null ||
-                                    !data.profile_image ||
-                                    data.profile_image === undefined
+                                      !data.profile_image ||
+                                      data.profile_image === undefined
                                       ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                       : data.profile_image
                                   }
@@ -323,23 +353,21 @@ export default function PartnerDetails() {
                                   {(data.address ||
                                     data.city ||
                                     data.state) && (
-                                    <span
-                                      className="font-size-3 text-smoke  mr-7 text-capitalize"
-                                      title="Current Location"
-                                    >
-                                      <img
-                                        className="mr-1"
-                                        height={"16px"}
-                                        src="image/icons/marker.svg"
-                                        alt="Location"
-                                      />
-                                      {`${data.address} ${
-                                        data.city ? " , " + data.city : ""
-                                      } ${
-                                        data.state ? " , " + data.state : ""
-                                      }`}
-                                    </span>
-                                  )}
+                                      <span
+                                        className="font-size-3 text-smoke  mr-7 text-capitalize"
+                                        title="Current Location"
+                                      >
+                                        <img
+                                          className="mr-1"
+                                          height={"16px"}
+                                          src="image/icons/marker.svg"
+                                          alt="Location"
+                                        />
+                                        {`${data.address} ${data.city ? " , " + data.city : ""
+                                          } ${data.state ? " , " + data.state : ""
+                                          }`}
+                                      </span>
+                                    )}
                                 </div>
                                 <hr className="my-3" />
                                 {!data.email || user_type === "user" ? (
@@ -434,7 +462,7 @@ export default function PartnerDetails() {
                       setApiCall={setApiCall}
                       heading={"Dashboard"}
                       user_of_page={"agentAssigned"}
-                    />{" "}
+                    />
                   </div>
                   {/* <!-- Top Start --> */}
                 </div>
@@ -492,16 +520,27 @@ export default function PartnerDetails() {
                       : "d-none"
                   }
                 >
-                  Payment
-                  {/* {TabActive === "payment" ? (
-                                        <div className="p-10 activity_container">
-                                            <PayentForm
-                                                data={data}
-                                                user_id={Pid}
-                                                user_type={"agent"}
-                                            />
-                                        </div>) : null} */}
+                  {TabActive === "payment" ? (
+                    <div className="p-10 activity_container">
+                      <PayentForm
+                        data={data}
+                        user_id={Pid}
+                        user_type={"agent"}
+                      />
+                    </div>) : null}
+
                 </div>
+                <div
+                    className={
+                      TabActive === "notes"
+                        ? "justify-content-center "
+                        : "d-none"
+                    }
+                  >
+                    {TabActive === "notes" ? (
+                      <Addfollowup  userId={Pid} userType={"agent"} setApiCall={setApiCall} />
+                    ) : null}
+                  </div>
               </div>
             </div>
           </div>

@@ -1162,7 +1162,7 @@ function PersonalDetails(props) {
                       disabled={user_type === "agent"}
                     >
                       <option value={""}>Select partner </option>
-                      {agentList.map((item) => <option value={item.id}>{item.u_id + " " + item.name} </option>)}
+                      {agentList.map((item) => <option value={item.id}>{item.u_id} </option>)}
                     </select>
                     <span
                       className={user_type === "agent" ? "d-none" : "btn btn-sm btn-secondary"}

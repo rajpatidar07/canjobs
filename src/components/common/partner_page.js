@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import SAlert from "../common/sweetAlert";
-import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Pagination from "../common/pagination";
 import Loader from "../common/loader";
 import { LiaUserEditSolid } from "react-icons/lia";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import { GetAgent, GetAllChartData, DeleteAgent } from "../../api/api";
+import { GetAgent, GetAllChartData } from "../../api/api";
 import { MdFormatListBulletedAdd } from "react-icons/md";
 import AgentsEmployee from "./AgentEmployee";
 import ActivityTable from "./activity_table";
@@ -23,10 +21,6 @@ export default function PartnerPage(props) {
   const [agenteData, setAgentData] = useState([]);
   const [chartData, setChartData] = useState([]);
 
-  /*delete state */
-  const [deleteAlert, setDeleteAlert] = useState(false);
-  const [deleteId, setDeleteID] = useState();
-  const [deleteName, setDeleteName] = useState("");
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
   const [recordsPerPage] = useState(10);
@@ -112,42 +106,12 @@ export default function PartnerPage(props) {
     props.apiCall,
     apiCall,
   ]);
-  /*To Show the delete alert box */
-  const ShowDeleteAlert = (e) => {
-    setDeleteID(e.id);
-    setDeleteName(e.name);
-    setDeleteAlert(true);
-  };
-
-  //   /*To cancel the delete alert box */
-  const CancelDelete = () => {
-    setDeleteAlert(false);
-  };
-
-  /*Function to open add Document up modal */
+    /*Function to open add Document up modal */
   // const AddDoucument = (e) => {
   //   setDocumentModal(true);
   //   setemployeeId(e);
   // };
   // /*
-  /*To call Api to delete employee */
-  async function OnDeleteAgent(e) {
-    try {
-      const responseData = await DeleteAgent(e);
-      if (responseData.message === "successfully") {
-        toast.error("Partner deleted Successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        setDeleteAlert(false);
-        setApiCall(true);
-        props.setApiCall(true);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 
@@ -244,7 +208,7 @@ export default function PartnerPage(props) {
                             ? "d-none"
                             : "font-size-3 text-break btn btn-outline-secondary btn-rounded px-4 action_btn m-1"
                         }
-                        onClick={() => ShowDeleteAlert(data)}
+                        onClick={() => props.ShowDeleteAlert(data)}
                         title="Delete Partner"
                       >
                         <RiDeleteBin5Line /> {"Delete Partner"}
@@ -305,14 +269,7 @@ export default function PartnerPage(props) {
           />
         </div>
       </div>
-      <SAlert
-        show={deleteAlert}
-        title={deleteName}
-        text="Are you Sure you want to delete !"
-        onConfirm={() => OnDeleteAgent(deleteId)}
-        showCancelButton={true}
-        onCancel={CancelDelete}
-      />
+      
     </>
   );
 }
