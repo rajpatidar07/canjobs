@@ -16,6 +16,7 @@ function Addfollowup(props) {
   // let employId = props.employee_id;
   let user_type = localStorage.getItem("userType");
   let adminId = localStorage.getItem("admin_id")
+  let adminType = localStorage.getItem("admin_type")
   // USER FOLLOW UP PROFILE UPDATE VALIDATION
 
   /* Function to get the Response data*/
@@ -72,7 +73,9 @@ function Addfollowup(props) {
     "remark": "",
     "next_date": "",
     "subject": "",
-    "status": ""
+    "status": "",
+    "assigned_by_id": props.assigned_by_id,
+    "assigned_by_type": adminType
   };
   // VALIDATION CONDITIONS
   const validators = {
@@ -110,22 +113,31 @@ function Addfollowup(props) {
     event.preventDefault();
     if (validate()) {
       setLoading(true);
-      try {
-        /*only for employee*/
-        // let responseData = await AddFollowup(state);
-        /*For all user*/
-        let responseData = await AddAllUserFollowup(state);
-        if (responseData.message === "follow up updated successfully") {
-          toast.success("Followup Updated successfully", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
-          props.setApiCall(true);
-          return close();
-        }
-      } catch (err) {
-        console.log(err);
+      if (!props.assigned_by_id) {
+        toast.error("Please assign the admin first!", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 2000,
+        });
         setLoading(false);
+        setState(initialFormState);
+      } else {
+        try {
+          /*only for employee*/
+          // let responseData = await AddFollowup(state);
+          /*For all user*/
+          let responseData = await AddAllUserFollowup(state);
+          if (responseData.message === "follow up updated successfully") {
+            toast.success("Followup Updated successfully", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+            props.setApiCall(true);
+            return close();
+          }
+        } catch (err) {
+          console.log(err);
+          setLoading(false);
+        }
       }
     } else {
       setLoading(false);
@@ -162,10 +174,11 @@ function Addfollowup(props) {
         <div className="bg-white rounded h-100vh px-11 py-7 overflow-y-hidden">
           <div className="row">
             <div
-              className={`activity_container pr-10 ${user_type === "admin" || user_type === "agent" ? "col-md-8 border-right" : "col-nd-12"
+              className={`activity_container pr-10 ${user_type === "admin" ? "col-md-8 border-right" : "col-md-12"
                 }`}
             >
-              {response.length === 0 ? (
+              {console.log(response)}
+              {response.length === 0||!response ? (
                 <div className="single_note mb-5">
                   <div className="d-flex justify-content-center">
                     <p className="text-italic font-size-3 m-0">No Data Found</p>
@@ -199,7 +212,7 @@ function Addfollowup(props) {
             </div>
             <div
               className={
-                user_type === "admin" || user_type === "agent" ? "px-10 py-5 col-md-4" : "d-none"
+                user_type === "admin" ? "px-10 py-5 col-md-4" : "d-none"
               }
             >
               <form>

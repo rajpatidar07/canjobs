@@ -614,7 +614,7 @@ function AgentsEmployee(props) {
                         {(
                           <th
                             scope="col"
-                            className="border-0 font-size-3 font-weight-normal py-2"
+                            className={props.userType === "agent" ? "d-none" : "border-0 font-size-3 font-weight-normal py-2"}
                           >
                             Action
                           </th>
@@ -845,7 +845,7 @@ function AgentsEmployee(props) {
                                 </p>
                               </td>
                             )}
-                            <td>
+                            <td className={props.userType === "agent" ? "d-none" : ""}>
                               <Link
                                 style={{
                                   padding: "0 5px",

@@ -65,7 +65,7 @@ const AdminSidebar = (props) => {
               }
             >
               <Link
-                to="/partner_dashboard"
+                to="/partner_profile"
                 className={
                   "px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
                 }

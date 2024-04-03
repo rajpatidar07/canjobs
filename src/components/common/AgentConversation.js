@@ -10,18 +10,20 @@ export default function AgentConversation({
   userEmail,
   userName,
   assignusertype,
-  partnerChat,
+  partnerChatNav,
   reffer_by,
   type,
+  assigned_by_id,
+  page
 }) {
   const [allData, setAllData] = useState([]);
   const [apicall, setApiCall] = useState([]);
   const [fileNames, setFileNames] = useState([]);
-
+  const [recordsPerPage, setRecordsPerPage] = useState(30);
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     name: "",
-    status: type === "partnerChat" ? "" : "normal",
+    // status: type === "partnerChat" ? "" : "normal",
     nxtfollowupdate:
       type === "partnerChat"
         ? ""
@@ -37,12 +39,12 @@ export default function AgentConversation({
         (value === "" || value.trim() === "") && state.DocUrl === ""
           ? "Message is required"
           : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Message can not have a number."
-          : value.length < 2
-          ? "Message should have 2 or more letters"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : "",
+            ? "Message can not have a number."
+            : value.length < 2
+              ? "Message should have 2 or more letters"
+              : /[^A-Za-z 0-9]/g.test(value)
+                ? "Cannot use special character "
+                : "",
     ],
     // status: [
     //   (value) =>
@@ -88,25 +90,26 @@ export default function AgentConversation({
       setApiCall(false);
     }
     //Condition to clear docid from url after navigation from notification
-    if (partnerChat) {
+    if (partnerChatNav) {
       const newUrl = window.location.pathname;
       window.history.replaceState({}, document.title, newUrl);
     }
-  }, [apicall]);
+  }, [apicall, partnerChatNav]);
   //   Get the notes list
   const GetNotesData = async () => {
     try {
       let res = await GetCommentsAndAssign(
         "",
-        userId,
+        "",
         "",
         type,
-        "",
-        "",
+        "1",
+        recordsPerPage,
         "DESC",
         "created_on",
         "",
-        assignusertype
+        "",
+        userId
       );
       if (res.data.status === 1 || res.data.status === "1") {
         setAllData(res.data.data.data.reverse());
@@ -119,6 +122,7 @@ export default function AgentConversation({
   };
   // Submit function to add notes conversation
   const handleMessageSubmit = async (e) => {
+    console.log(page === "employeeProfile"&& user_type === "admin" , page === "agentProfile"&& user_type === "admin",page,user_type)
     e.preventDefault();
     // if (validate()) {
     try {
@@ -126,10 +130,11 @@ export default function AgentConversation({
         user_type === "admin"
           ? admin_id
           : user_type === "agent"
-          ? agent_id
-          : employee_id, //Sender id
+            ? agent_id
+            : employee_id, //Sender id
         "", //doc id
-        userId, //assigne dUserId
+        page === "employeeProfile" && user_type === "admin" || page === "agentProfile" && user_type === "admin" ? reffer_by :
+          assigned_by_id, //assigne dUserId
         userEmail, //assigne email
         state.subject, //subject
         state.message, //Comment
@@ -141,10 +146,11 @@ export default function AgentConversation({
         userName, //assigned Admin or user Name,
         state.status, //follow up status
         state.nxtfollowupdate, //Next follow up date
-        assignusertype, //Assign user type,
+        page === "employeeProfile" && user_type === "admin" || page === "agentProfile" && user_type === "admin" ? "agent" : "admin", //Assign user type,
         state.DocUrl,
         user_type === "admin" ? admin_email : user_email, //Sender email,
-        ""
+        userId,//employee id
+        assigned_by_id//user admin assigned id
       );
       if (res.data.message === "task inserted successfully!") {
         // toast.success("Message sent Successfully", {
@@ -236,9 +242,8 @@ export default function AgentConversation({
         const base64Name = encoded.base64;
 
         // Construct file object with base64 data
-        const DocFile = `data:/${base64Name.split(";")[0].split("/")[1]};${
-          base64Name.split(";")[1]
-        }`;
+        const DocFile = `data:/${base64Name.split(";")[0].split("/")[1]};${base64Name.split(";")[1]
+          }`;
 
         // Use DocRealName as the key for DocFile
         DocRealName = file.name.split(".")[0].replace(/ /g, "_");
@@ -269,34 +274,40 @@ export default function AgentConversation({
       setState({ ...state, DocUrl: "" });
     }
   };
+
   return (
     <div className="chat_box_container bg-white row m-0">
-      {reffer_by === "0" || reffer_by === undefined || !reffer_by ? (
-        <div className="chat-container d-flex justify-content-center align-items-center w-100">
-          <p className="text-center">
-            {user_type === "agent"
-              ? "Admin is not assigned."
-              : ` Please assign a ${
-                  type === "partnerChat" ? "Admin" : "partner"
+      {(page === "employeeProfile" ? reffer_by === "0" || reffer_by === undefined || !reffer_by
+        : assigned_by_id === "0" || assigned_by_id === undefined || !assigned_by_id)
+        ? (
+          <div className="chat-container d-flex justify-content-center align-items-center w-100">
+            <p className="text-center">
+              {user_type === "agent"
+                ? "Admin is not assigned."
+                : ` Please assign a ${type === "partnerChat" ? "Admin" : "partner"
                 } first.`}
-          </p>
-        </div>
-      ) : (
+            </p>
+          </div>
+        ) :
+
         <div className="chat-container col-md-6">
           <MessageList
             data={
-              type === "partnerChat"
-                ? allData
-                : allData.filter((item) => item.followup_status === "normal")
+              // type === "partnerChat"
+              //   ? 
+              allData
+              // : allData.filter((item) => item.followup_status === "normal")
             }
             loginuser={
               user_type === "admin"
                 ? admin_id
                 : user_type === "agent"
-                ? agent_id
-                : employee_id
+                  ? agent_id
+                  : employee_id
             }
-            loginusertype={user_type === "admin" ? admin_type : user_type}
+            loginusertype={user_type === "admin" ? "admin" : user_type}
+            recordsPerPage={recordsPerPage}
+            setRecordsPerPage={setRecordsPerPage}
           />
           <AddNotesConversation
             handleMessageSubmit={handleMessageSubmit}
@@ -309,7 +320,8 @@ export default function AgentConversation({
             setState={setState}
           />
         </div>
-      )}
+
+      }
       {/*  <div className="chat-container col-md-6">
         <MessageList
           data={allData.filter((item) => item.followup_status === "private")}

@@ -1,5 +1,4 @@
 import React, { useState /*, useEffect */ } from "react";
-// import CustomButton from "../common/button";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 // import {
@@ -8,7 +7,7 @@ import AdminSidebar from "./sidebar";
 import { ToastContainer /*, toast*/ } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import EmployeeNotesTable from "../common/employeeNotesTable";
-import EmployerNotesTable from "../common/employerNotesTable";
+// import EmployerNotesTable from "../common/employerNotesTable";
 // import SAlert from "../common/sweetAlert";
 // import Pagination from "../common/pagination";
 // import Loader from "../common/loader";
@@ -202,7 +201,7 @@ function Notes() {
     setSearch(inputValue);
     if (inputValue.length > 0) {
       if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
-        setSearchError("Category Name cannot start with a number.");
+        setSearchError("Candidate Name cannot start with a number.");
       } else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
         setSearchError("Cannot use special characters.");
       } else {
@@ -218,7 +217,7 @@ function Notes() {
     setCompanySearch(inputValue);
     if (inputValue.length > 0) {
       if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
-        setCompanySearchError("Category Name cannot start with a number.");
+        setCompanySearchError("Company Name cannot start with a number.");
       } else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
         setCompanySearchError("Cannot use special characters.");
       } else {
@@ -333,7 +332,7 @@ function Notes() {
                   <small className="text-danger">{searcherror}</small>
                 </div>
                 <h3 className="font-size-5 mb-0">Candidate's Notes</h3>
-                <EmployeeNotesTable search={search} />
+                <EmployeeNotesTable search={search} userType={"employee"}/>
               </div>
               <div className="col-6 mb-18">
                 <div className="col p-1 form_group mb-3">
@@ -353,7 +352,9 @@ function Notes() {
                   <small className="text-danger">{companySearcherror}</small>
                 </div>
                 <h3 className="font-size-5 mb-0">Client's Notes</h3>
-                <EmployerNotesTable search={Companysearch} />
+                <EmployeeNotesTable search={Companysearch} userType={"employer"}/>
+
+                {/* <EmployerNotesTable search={Companysearch} /> */}
               </div>
             </div>
           </div>

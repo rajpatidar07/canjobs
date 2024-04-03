@@ -10,7 +10,7 @@ export default function PayentForm({ data, user_id, user_type }) {
   const [apiCall, setApicall] = useState(true);
   // const [loading, setLoading] = useState(true);
   const [paymentList, setPaytemList] = useState([]);
-  
+
   let user = localStorage.getItem("userType");
 
   /*Function to get Payment list data */
@@ -106,8 +106,8 @@ export default function PayentForm({ data, user_id, user_type }) {
                         <span className="col-md-2 col-sm-12">
                           <span
                             className={`${res.status === "success"
-                                ? " bg-primary-opacity-8 text-white text-center w-100  rounded-pill"
-                                : " bg-warning text-white text-center w-100  rounded-pill"
+                              ? " bg-primary-opacity-8 text-white text-center w-100  rounded-pill"
+                              : " bg-warning text-white text-center w-100  rounded-pill"
                               }`}
                           >
                             {res.status}
@@ -120,22 +120,23 @@ export default function PayentForm({ data, user_id, user_type }) {
               )}
             </div>
           }
-          {user === "user" || user === "company" || user === "agent" ? (
-            <PayForm
-              data={data}
-              setApicall={setApicall}
-              user_id={user_id}
-              user={user_type}
-            />
-          ) : user === "agent" ? null : (
-            <AddTransactionForm
-              data={data}
-              setApicall={setApicall}
-              user_id={user_id}
-              user={user}
-              user_type={user_type}
-            />
-          )}
+          {(user_type === "employee" && user === "agent") ? null :
+            user === "user" || user === "company" || user === "agent" ? (
+              <PayForm
+                data={data}
+                setApicall={setApicall}
+                user_id={user_id}
+                user={user_type}
+              />
+            ) : user === "agent" ? null : (
+              <AddTransactionForm
+                data={data}
+                setApicall={setApicall}
+                user_id={user_id}
+                user={user}
+                user_type={user_type}
+              />
+            )}
         </div>
       </div>
       {/* </Modal> */}

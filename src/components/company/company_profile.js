@@ -814,7 +814,12 @@ function CompanyProfileDetail(props) {
                   ) : 
                     null} */}
                       {TabActive === "notes" ? (
-                      <Addfollowup  userId={cid} userType={"employer"} setApiCall={setApiCall} />
+                      <Addfollowup 
+                       userId={cid} 
+                       userType={"employer"} 
+                       setApiCall={setApiCall}
+                       assigned_by_id={localStorage.getItem("admin_id")}
+                        />
                     ) : null}
                 </div>
                 <div

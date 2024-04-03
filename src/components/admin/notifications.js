@@ -256,15 +256,19 @@ function Notifications(
                               ? '/interview'
                               : data.subject === 'mention_document'
                                 ? `/${data.employee_id}?docId=${data.mention_id}`
-                                : type === 'mention_partner'
-                                  ? `/${data.from_id}?partner=${data.from_id}`
-                                  : ''
+                                : data.subject === 'mention_partner'
+                                  ? `/${data.employee_id}?partner=${data.from_id}`
+                                  : data.subject === 'mention_partnerChat'
+                                    ? `/partner_profile?partner=${data.employee_id}` : ''
                       }
                       onClick={() => {
                         try {
                           setshow(false);
                           ReadNotification(data.id);
                           setApicall(true);
+                          if (data.subject === 'mention_partnerChat') {
+                            localStorage.setItem("agent_id", data.employee_id)
+                          }
                         } catch (err) {
                           console.log(err);
                         }
@@ -287,7 +291,7 @@ function Notifications(
                           </div>
                           <div className="text-muted mw-80" style={{ fontSize: '14px' }}
                           >
-                            {data.message.replace('a', 'Hi')}
+                            {data.message}
                           </div>
                         </div>
                       </div>
@@ -303,7 +307,7 @@ function Notifications(
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 

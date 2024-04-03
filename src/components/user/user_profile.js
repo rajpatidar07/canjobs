@@ -291,7 +291,7 @@ const NewUserProfile = (props) => {
         id="dashboard-body"
       >
         <ToastContainer />
-        <div className={`container${user_type === "admin" ? "-fluid" : ""}`}>
+        <div className={`container${user_type === "admin" || user_type === "agent" ? "-fluid" : ""}`}>
           {(name === null || name === "") && user_type === "user" ? (
             <h4>Complete profile</h4>
           ) : (
@@ -701,12 +701,12 @@ const NewUserProfile = (props) => {
                         aria-controls="home"
                         aria-selected="true"
                         onClick={() => setTabActive("profile")}
-                       
+
                       >
                         Profile
                       </Link>
-                    
-                    
+
+
                     </li>
                     <li
                       className={`${user_type === "company"
@@ -1807,7 +1807,10 @@ const NewUserProfile = (props) => {
                     }
                   >
                     {TabActive === "notes" ? (
-                      <Addfollowup userId={eid} userType={"employee"} setApiCall={setApiCall} />
+                      <Addfollowup userId={eid}
+                        userType={"employee"}
+                        assigned_by_id={PersonalDetail.assigned_by}
+                        setApiCall={setApiCall} />
                     ) : null}
                   </div>
                   <div
@@ -1891,10 +1894,12 @@ const NewUserProfile = (props) => {
                         userId={eid}
                         userEmail={PersonalDetail.email}
                         userName={PersonalDetail.name}
-                        assignusertype={"agent"}
-                        partnerChat={partnerChat}
+                        assignusertype={"admin"}
+                        assigned_by_id={PersonalDetail.assigned_by}
+                        partnerChatNav={partnerChat}
                         reffer_by={PersonalDetail.reffer_by}
                         type={"partner"}
+                        page={"employeeProfile"}
                       />
                     ) : null}
                   </div>

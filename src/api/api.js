@@ -1,9 +1,9 @@
 import axios from "axios";
-const API_URL = "https://apnaorganicstore.in/canjobs/";
+// const API_URL = "https://apnaorganicstore.in/canjobs/";
 //Local
 // const API_URL ="http://192.168.29.51/canjobs/"
 // New AWS backend
-// const API_URL = "https://api.canpathwaysjobs.com/canjobs/";
+const API_URL = "https://api.canpathwaysjobs.com/canjobs/";
 let Token = localStorage.getItem("token");
 let driveId =
   "b!iUiBybFGWEWfqWdSYuUqrWrIPVmZDQxPmwO4Bzj6nJp5ByboftxMSY6hfWPT-m8F";
@@ -714,24 +714,41 @@ export const ADocAnnotation = async (
   AssignUserType,
   DocUrl,
   Senderemail,
-  employee_id
+  employee_id,
+  assigned_by_id
 ) => {
+  console.log(AssignUserType, assineduserid)
   const response = await axios.post(
     `${API_URL}admin/docTaskAdd`,
+    //Old json {
+    //   task_creator_user_id: id,
+    //   task_creator_user_name: senderName,
+    //   task_creator_user_email: Senderemail,
+    //   task_creator_user_type: adminType,
+    //   doc_id: docId,
+    //   assined_to_user_id: assineduserid,
+    //   assigned_to: email,
+    //   assigned_to_name: assignName,
+    //   assigned_user_type: AssignUserType,
+    //   document_url: type === "partner" || "partnerChat" ? DocUrl : "",
+    //   next_followup_date: nextFollowupDate,
+    //   followup_status: satus,
+    //   subject: subject,
+    //   subject_description: comment,
+    //   x_axis: x,
+    //   y_axis: y,
+    //   type: type,
+    //   employee_id: employee_id,
+    // },
     {
       task_creator_user_id: id,
-      task_creator_user_name: senderName,
-      task_creator_user_email: Senderemail,
-      task_creator_user_type: adminType,
+      task_creator_user_type: user_type === "admin" ? "admin" : "agent",
       doc_id: docId,
+      user_admin_assigned: type === "partner" || "partnerChat" ? assigned_by_id : "",
+      json: "",
       assined_to_user_id: assineduserid,
-      assigned_to: email,
-      assigned_to_name: assignName,
       assigned_user_type: AssignUserType,
       document_url: type === "partner" || "partnerChat" ? DocUrl : "",
-      next_followup_date: nextFollowupDate,
-      followup_status: satus,
-      subject: subject,
       subject_description: comment,
       x_axis: x,
       y_axis: y,
@@ -758,7 +775,8 @@ export const GetCommentsAndAssign = async (
   sort,
   column,
   time,
-  assigned_user_type
+  assigned_user_type,
+  employeeId
 ) => {
   // console.log( "idi"+id,
   // "userid"+userid,
@@ -783,7 +801,7 @@ export const GetCommentsAndAssign = async (
       status: status,
       type: type,
       assigned_user_type: assigned_user_type,
-
+      employee_id: employeeId
       // id:"",task_creator_user_id:""
     },
     {
@@ -1696,19 +1714,25 @@ export const getAllMentionNotification = async (
   const response = await axios.post(
     `${API_URL}common/getMentionNotifications`,
     {
-      // from_id: loginuserid,
-      // employee_id: id,
-      // type: type,
-      from_id:
-        userType === "agent" || type === "mention_partner" ? "" : loginuserid,
-      type: userType === "agent" || type === "mention_partner" ? "" : userType,
+      //Old json
+      // from_id:
+      //   userType === "agent" || type === "mention_partner" ? "" : loginuserid,
+      // type: userType === "agent" || type === "mention_partner" ? "" : userType,
+      // subject: type,
+      // action_id:
+      //   userType === "agent" || type === "mention_partner" ? loginuserid : "",
+      // mention_id: "",
+      // employee_id: "",
+      // sender_type:
+      //   userType === "agent" || type === "mention_partner" ? userType : "",
+      // page: page,
+      // limit: limit,
+      from_id: loginuserid,//userType === "agent" || type === "mention_partner" ? loginuserid : "",
+      from_user_type: userType,//userType === "agent" || type === "mention_partner" ? "" : userType,
       subject: type,
-      action_id:
-        userType === "agent" || type === "mention_partner" ? loginuserid : "",
+      action_id: "",//userType === "agent" || type === "mention_partner" ? "" : loginuserid,
       mention_id: "",
       employee_id: "",
-      sender_type:
-        userType === "agent" || type === "mention_partner" ? userType : "",
       page: page,
       limit: limit,
     },
@@ -2048,14 +2072,15 @@ export const getSingleCompanyFollowup = async (
   return response.data;
 };
 /*Get All Users Followup Data */
-export const getAllUsersFollowUpData = async (userId, userType, column, sort) => {
+export const getAllUsersFollowUpData = async (userId, userType, column, sort, search) => {
   const response = await axios.post(
     `${API_URL}admin/getFollowUp`,
     {
       "user_id": userId,
       "user_type": userType,
       "column_name": column,
-      "sort_order": sort
+      "sort_order": sort,
+      "search": search
     },
     {
       headers: {

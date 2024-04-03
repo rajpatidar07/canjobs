@@ -1,22 +1,9 @@
 import moment from "moment-timezone";
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { AiOutlineDownload } from "react-icons/ai";
 import { Link } from "react-router-dom";
-const MessageList = ({ data, loginuser, loginusertype }) => {
-  // Create a ref for the div element
-  const divRef = useRef(null);
+const MessageList = ({ data, loginuser, loginusertype, recordsPerPage, setRecordsPerPage }) => {
 
-  // Function to scroll to the end of the div
-  const scrollToBottom = () => {
-    if (divRef.current) {
-      // Set scrollTop to the scrollHeight to scroll to the end
-      divRef.current.scrollTop = divRef.current.scrollHeight;
-    }
-  };
-  //   Render data
-  useEffect(() => {
-    scrollToBottom();
-  }, [data]);
   /*Local Time */
   const LocalTime = (_date) => {
     let timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -24,9 +11,19 @@ const MessageList = ({ data, loginuser, loginusertype }) => {
     return result.format("LLL");
   };
 
-  console.log(Intl.DateTimeFormat().resolvedOptions().timeZone);
+  /*Function to load more data while scrolling */
+  let handelScroll = (e) => {
+    if ((recordsPerPage === 30 || recordsPerPage + 30) <= data.length) {
+      setRecordsPerPage(recordsPerPage + 30);
+    } else {
+      // setRecordsPerPage(emailData.length);
+    }
+  };
+  // console.log(Intl.DateTimeFormat().resolvedOptions().timeZone);
   return (
-    <div className="chat-messages bg-light" ref={divRef}>
+    <div className="chat-messages bg-light"
+      onScroll={handelScroll}
+      style={{ overflowY: "scroll", height: "590px" }}>
       {data.length === 0 ? (
         <div className="message">
           <div>No Data Found</div>
@@ -59,14 +56,13 @@ const MessageList = ({ data, loginuser, loginusertype }) => {
                 "https://icons.iconarchive.com/icons/thehoth/seo/256/seo-web-code-icon.png";
             }
           }
-
           return (
             <div
               key={message.id}
               className={`message ${message.task_creator_user_id === loginuser &&
-                  message.task_creator_user_type === loginusertype
-                  ? "received"
-                  : "sent"
+                message.task_creator_user_type === loginusertype
+                ? "received"
+                : "sent"
                 }`}
             >
               <div className="message-content font-size-3">

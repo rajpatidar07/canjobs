@@ -320,7 +320,7 @@ export default function AgentSignUp(props) {
               </div>
             </div> */}
         {SingUpSuccess === "success" ? (
-          <div className="bg-white-2 h-100 px-11 pt-11 pb-7 login_Modal_box shadow">
+          <div className="bg-white-2 h-100 px-11 pt-11 pb-7 login_Modal_box ">
             Congratulations! <br />
             You have successfully registered your account. Please login to
             continue

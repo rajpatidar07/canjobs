@@ -4,7 +4,7 @@ import CustomButton from "../common/button";
 import { GetAgent, GetAllChartData } from "../../api/api";
 import { ToastContainer } from "react-toastify";
 import Loader from "../common/loader";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { PiPencilDuotone } from "react-icons/pi";
 import AdminHeader from "../admin/header";
 import AdminSidebar from "../admin/sidebar";
@@ -22,6 +22,9 @@ export default function PartnerDetails() {
   const user_type = localStorage.getItem("userType");
   const agent_id = localStorage.getItem("agent_id");
   let Pid = agent_id;
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const partnerChat = searchParams.get("partner");
   let navigate = useNavigate();
   /*Show modal and data state */
   // const [lima, setLmia] = useState(false);
@@ -30,7 +33,7 @@ export default function PartnerDetails() {
   // const [lmiaStatusRejectComment, setLmiaStatusRejectComment] = useState([]);
   const [showPartnerInfoModal, setShowPartnerInfoModal] = useState(false);
   useState(false);
-  const [TabActive, setTabActive] = useState("profile");
+  const [TabActive, setTabActive] = useState(partnerChat ? "support" : "profile");
   const [data, setData] = useState("");
   const [chartData, setChartData] = useState([]);
 
@@ -105,7 +108,7 @@ export default function PartnerDetails() {
               </Link>
             }
           />
-          <AdminSidebar />
+          <AdminSidebar heading={"Partner Dashboard"} />
         </>
       ) : null}
       <ToastContainer />
@@ -184,29 +187,29 @@ export default function PartnerDetails() {
                     </Link>
                   </li>
                   <li
+                    className={
+                      // user_type === "company"
+                      //   ? "d-none"
+                      //   :
+                      user_type === "admin" ? "tab-menu-items nav-item" : " d-none"
+                    }
+                  >
+                    <Link
                       className={
-                        // user_type === "company"
-                        //   ? "d-none"
-                        //   :
-                           "tab-menu-items nav-item"
+                        TabActive === "notes"
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
                       }
+                      id="notesTab"
+                      data-toggle="tab"
+                      role="tab"
+                      aria-controls="notesTab"
+                      aria-selected="true"
+                      onClick={() => setTabActive("notes")}
                     >
-                      <Link
-                        className={
-                          TabActive === "notes"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
-                        }
-                        id="notesTab"
-                        data-toggle="tab"
-                        role="tab"
-                        aria-controls="notesTab"
-                        aria-selected="true"
-                        onClick={() => setTabActive("notes")}
-                      >
-                        Notes
-                      </Link>
-                    </li>
+                      Notes
+                    </Link>
+                  </li>
                   <li className="tab-menu-items nav-item">
                     <Link
                       className={
@@ -462,6 +465,7 @@ export default function PartnerDetails() {
                       setApiCall={setApiCall}
                       heading={"Dashboard"}
                       user_of_page={"agentAssigned"}
+                      userType={user_type}
                     />
                   </div>
                   {/* <!-- Top Start --> */}
@@ -491,8 +495,10 @@ export default function PartnerDetails() {
                       userName={data.name}
                       assignusertype={"agent"}
                       type={"partnerChat"}
-                      //   partnerChat={partnerChat}
-                      reffer_by={data.assigned_by}
+                      assigned_by_id={data.assigned_by}
+                      partnerChatNav={partnerChat}
+                      reffer_by={Pid}
+                      page={"agentProfile"}
                     />
                   ) : null}
                 </div>
@@ -531,16 +537,22 @@ export default function PartnerDetails() {
 
                 </div>
                 <div
-                    className={
-                      TabActive === "notes"
-                        ? "justify-content-center "
-                        : "d-none"
-                    }
-                  >
-                    {TabActive === "notes" ? (
-                      <Addfollowup  userId={Pid} userType={"agent"} setApiCall={setApiCall} />
-                    ) : null}
-                  </div>
+                  className={
+                    TabActive === "notes"
+                      ? "justify-content-center "
+                      : "d-none"
+                  }
+                >
+                  {TabActive === "notes" ? (
+                    <Addfollowup 
+                    userId={Pid}
+                      userType={"agent"}
+                      assigned_by_id={data.assigned_by}
+                      setApiCall={setApiCall}
+                      
+                      />
+                  ) : null}
+                </div>
               </div>
             </div>
           </div>

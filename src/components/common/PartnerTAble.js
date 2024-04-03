@@ -194,7 +194,8 @@ export default function PartnerTAble(props) {
                                                 <td className="py-5 ">
                                                     <Link
                                                         to={`/partner_profile`}
-                                                        onClick={() =>
+                                                        onClick={
+                                                            () =>
                                                             localStorage.setItem("agent_id", data.id)
                                                         }
                                                         title="Partner Profile"

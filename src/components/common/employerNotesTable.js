@@ -37,6 +37,7 @@ export default function EmployerNotesTable({ search }) {
       setIsLoading(false);
     } catch (err) {
       console.log(err);
+      setIsLoading(false);
     }
   };
   useEffect(() => {

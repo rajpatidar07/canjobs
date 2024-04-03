@@ -58,7 +58,7 @@ const AdminHeader = (props) => {
           {userType === "agent" ? null : (
             <Notifications type={"mention_document"} />
           )}
-          <Notifications type={"mention_partner"} />
+          <Notifications type={""} />
           <div className="header-btn-devider ml-auto ml-lg-5 pl-2 d-xs-flex align-items-center">
             <div>
               <div className="dropdown show-gr-dropdown py-5">

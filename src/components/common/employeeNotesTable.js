@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AddFollowup, getSingleFollowup } from "../../api/api";
+import { AddAllUserFollowup/*AddFollowup*/, getAllUsersFollowUpData,/* getSingleFollowup */ } from "../../api/api";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
@@ -8,7 +8,7 @@ import Pagination from "./pagination";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import Loader from "./loader";
-export default function EmployeeNotesTable({ search }) {
+export default function EmployeeNotesTable({ search, userType }) {
   let [isLoading, setIsLoading] = useState(true);
   let [apiCall, setApiCall] = useState(false);
   const [data, setData] = useState([]);
@@ -21,15 +21,18 @@ export default function EmployeeNotesTable({ search }) {
   /*Function to get Employee's notes */
   const EmployeeNotes = async () => {
     try {
-      let res = await getSingleFollowup(
-        "",
-        columnName,
-        sortOrder,
-        currentPage,
-        recordsPerPage,
-        "1",
-        search
-      );
+      // let res = await getSingleFollowup(
+      //   "",
+      //   columnName,
+      //   sortOrder,
+      // currentPage,
+      // recordsPerPage,
+      //   "1",
+      //   search
+      // );
+      const res = await getAllUsersFollowUpData("", userType, columnName, sortOrder, search, currentPage,
+        recordsPerPage,)
+
       if (res.status === 1) {
         setTotalData(res.data.total_rows);
         setData(res.data.data);
@@ -59,11 +62,13 @@ export default function EmployeeNotesTable({ search }) {
   const OnStatusChange = async (e, value) => {
     // e.preventDefault()
     let data = {
-      employee_id: value.employee_id,
+      id: value.id,
       status: e,
+
     };
     try {
-      let responseData = await AddFollowup(data);
+      // let responseData = await AddAllUserFollowup/*AddFollowup*/(data);
+      let responseData = await AddAllUserFollowup(data);
       if (responseData.message === "follow up updated successfully") {
         toast.success("Followup Updated successfully", {
           position: toast.POSITION.TOP_RIGHT,
@@ -89,16 +94,16 @@ export default function EmployeeNotesTable({ search }) {
                     scope="col"
                     className="border-0 font-size-4 font-weight-normal"
                   >
-                    
+
                     <Link
                       to={""}
                       onClick={() => {
-                        handleSort("employee_id");
+                        handleSort("user_id");
                       }}
                       className="text-gray"
-                      title="Sort by Candidate Id"
+                      title="Sort by User Id"
                     >
-                      EID
+                      {userType === "employee" ? "EID" : "CID"}
                     </Link>
                   </th>
                   <th
@@ -183,27 +188,35 @@ export default function EmployeeNotesTable({ search }) {
                       <tr className="text-capitalize" >
                         <th className=" py-5">
                           <p className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            {data.employee_id}
+                            {data.user_id}
                           </p>
                         </th>
                         <th className=" py-5">
                           <Link
-                            to={`/${data.employee_id}`}
+                            to={userType === "employee" ? `/${data.user_id}` : `/client_detail`}
                             // onClick={
                             //   empdata.name !== null
                             //     ? () => employeeDetails(empdata.employee_id)
                             //     : null
                             // }
-                            title="Candidate Details"
+                            onClick={userType === "employee"
+                              ? null
+                              : () =>
+                                localStorage.setItem(
+                                  "company_id",
+                                  data.user_id
+                                )
+                            }
+                            title="User Details"
                           >
                             <div className="d-flex profile_box gx-2">
                               <div className="media  align-items-center">
                                 <div className="circle-30 mx-auto overflow-hidden">
-                                  {data.employee_profile_image === null ||
-                                  data.employee_profile_image === "" ||
-                                  data.employee_profile_image === undefined ||
-                                  data.employee_profile_image === "null" ||
-                                  data.employee_profile_image ===
+                                  {data.profile_photo === null ||
+                                    data.profile_photo === "" ||
+                                    data.profile_photo === undefined ||
+                                    data.profile_photo === "null" ||
+                                    data.profile_photo ===
                                     "undefined" ? (
                                     <img
                                       src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
@@ -212,7 +225,7 @@ export default function EmployeeNotesTable({ search }) {
                                     />
                                   ) : (
                                     <img
-                                      src={data.employee_profile_image}
+                                      src={data.profile_photo}
                                       alt=""
                                       className="w-100"
                                     />
@@ -222,9 +235,9 @@ export default function EmployeeNotesTable({ search }) {
 
                               <div className=" mb-0">
                                 {data.name === null ||
-                                data.name === undefined ||
-                                data.name === "undefined" ||
-                                data.name === "" ? (
+                                  data.name === undefined ||
+                                  data.name === "undefined" ||
+                                  data.name === "" ? (
                                   <p className="font-size-3  mb-0">N/A</p>
                                 ) : (
                                   <p
@@ -314,19 +327,19 @@ export default function EmployeeNotesTable({ search }) {
                         </th>
                       </tr>
                       <tr>
-                        
+
                         <td
                           colSpan={5}
                           className="font-size-3 font-weight-normal text-black-2 mb-0text-truncate text-break"
                         >
                           <div className=" d-flex">
-                          <b className="">Description: {}</b>
-                          <span
-                          className="px-2"
-                            dangerouslySetInnerHTML={{
-                              __html: data.remark,
-                            }}
-                          />
+                            <b className="">Description: { }</b>
+                            <span
+                              className="px-2"
+                              dangerouslySetInnerHTML={{
+                                __html: data.remark,
+                              }}
+                            />
                           </div>
                         </td>
                       </tr>
