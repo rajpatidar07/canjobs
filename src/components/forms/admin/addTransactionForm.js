@@ -16,7 +16,7 @@ export default function AddTransactionForm({
     payment_mode: "",
     payment_id: "",
     id: user_id,
-    user_type: user_type === "employee" ? "employee" : user_type === "agent" ? "agent" : "employer",
+    user_role: user_type === "employee" ? "employee" : user_type === "agent" ? "agent" : "employer",
     pay_by_admin: 1,
   };
 

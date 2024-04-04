@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 3,
             "patches": [
                 {
                     "date": 1710503309379,
@@ -16,6 +16,10 @@
                 {
                     "date": 1712056083306,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n     amount: \"\",\n     payment_mode: \"\",\n     payment_id: \"\",\n     id: user_id,\n-    user_type: user_type === \"employee\" ? \"employee\" : \"employer\",\n+    user_type: user_type === \"employee\" ? \"employee\" : user_type === \"agent\" ? \"agent\" : \"employer\",\n     pay_by_admin: 1,\n   };\n \n   /*Validation */\n@@ -72,9 +72,9 @@\n       </label>\n       <div className=\"row\">\n         <div\n           className={`col-6 text-capitalize`}\n-          //   onClick={() => handleSubStageSelection(expandedStatus, subStage)}\n+        //   onClick={() => handleSubStageSelection(expandedStatus, subStage)}\n         >\n           <input\n             type=\"radio\"\n             className=\"mx-2\"\n@@ -87,9 +87,9 @@\n           Canada & US\n         </div>\n         <div\n           className={`col-6 text-capitalize`}\n-          //   onClick={() => handleSubStageSelection(expandedStatus, subStage)}\n+        //   onClick={() => handleSubStageSelection(expandedStatus, subStage)}\n         >\n           <input\n             type=\"radio\"\n             className=\"mx-2\"\n@@ -148,9 +148,9 @@\n       </label>\n       <div className=\"row\">\n         <div\n           className={`col-6 text-capitalize`}\n-          //   onClick={() => handleSubStageSelection(expandedStatus, subStage)}\n+        //   onClick={() => handleSubStageSelection(expandedStatus, subStage)}\n         >\n           <input\n             type=\"radio\"\n             className=\"mx-2\"\n"
+                },
+                {
+                    "date": 1712204295421,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n     amount: \"\",\n     payment_mode: \"\",\n     payment_id: \"\",\n     id: user_id,\n-    user_type: user_type === \"employee\" ? \"employee\" : user_type === \"agent\" ? \"agent\" : \"employer\",\n+    user_role: user_type === \"employee\" ? \"employee\" : user_type === \"agent\" ? \"agent\" : \"employer\",\n     pay_by_admin: 1,\n   };\n \n   /*Validation */\n"
                 }
             ],
             "date": 1710503309379,

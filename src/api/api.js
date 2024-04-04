@@ -1,9 +1,9 @@
 import axios from "axios";
-// const API_URL = "https://apnaorganicstore.in/canjobs/";
+const API_URL = "https://apnaorganicstore.in/canjobs/";
 //Local
 // const API_URL ="http://192.168.29.51/canjobs/"
 // New AWS backend
-const API_URL = "https://api.canpathwaysjobs.com/canjobs/";
+// const API_URL = "https://api.canpathwaysjobs.com/canjobs/";
 let Token = localStorage.getItem("token");
 let driveId =
   "b!iUiBybFGWEWfqWdSYuUqrWrIPVmZDQxPmwO4Bzj6nJp5ByboftxMSY6hfWPT-m8F";
@@ -2843,7 +2843,7 @@ export const GetStripePaymentDetails = async (
       payment_intent_id: id,
       id: user_id,
       payment_mode: mode,
-      user_type: user,
+      user_role: user,
       status: status,
     },
     {
@@ -2869,7 +2869,7 @@ export const AddPaymentToDataBase = async (
     {
       id: user_id,
       order_id: data.orderID,
-      user_type: user,
+      user_role: user,
       payment_id: data.paymentID,
       amount: amount,
       status: "success",

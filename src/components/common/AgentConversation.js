@@ -122,7 +122,7 @@ export default function AgentConversation({
   };
   // Submit function to add notes conversation
   const handleMessageSubmit = async (e) => {
-    console.log(page === "employeeProfile"&& user_type === "admin" , page === "agentProfile"&& user_type === "admin",page,user_type)
+    console.log(page === "employeeProfile" && user_type === "admin", page === "agentProfile" && user_type === "admin", page, user_type)
     e.preventDefault();
     // if (validate()) {
     try {
@@ -133,7 +133,8 @@ export default function AgentConversation({
             ? agent_id
             : employee_id, //Sender id
         "", //doc id
-        page === "employeeProfile" && user_type === "admin" || page === "agentProfile" && user_type === "admin" ? reffer_by :
+        (page === "employeeProfile" && user_type === "admin")
+          || (page === "agentProfile" && user_type === "admin") ? reffer_by :
           assigned_by_id, //assigne dUserId
         userEmail, //assigne email
         state.subject, //subject
@@ -146,7 +147,8 @@ export default function AgentConversation({
         userName, //assigned Admin or user Name,
         state.status, //follow up status
         state.nxtfollowupdate, //Next follow up date
-        page === "employeeProfile" && user_type === "admin" || page === "agentProfile" && user_type === "admin" ? "agent" : "admin", //Assign user type,
+        (page === "employeeProfile" && user_type === "admin")
+          || (page === "agentProfile" && user_type === "admin") ? "agent" : "admin", //Assign user type,
         state.DocUrl,
         user_type === "admin" ? admin_email : user_email, //Sender email,
         userId,//employee id
@@ -277,8 +279,9 @@ export default function AgentConversation({
 
   return (
     <div className="chat_box_container bg-white row m-0">
-      {(page === "employeeProfile" ? reffer_by === "0" || reffer_by === undefined || !reffer_by
-        : assigned_by_id === "0" || assigned_by_id === undefined || !assigned_by_id)
+      {(page === "employeeProfile" && user_type === "admin" ?
+        reffer_by === null || reffer_by === "0" || reffer_by === undefined || !reffer_by
+        : assigned_by_id === null || assigned_by_id === "0" || assigned_by_id === undefined || !assigned_by_id)
         ? (
           <div className="chat-container d-flex justify-content-center align-items-center w-100">
             <p className="text-center">

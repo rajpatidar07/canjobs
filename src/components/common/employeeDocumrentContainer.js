@@ -1171,14 +1171,15 @@ export default function DocumrentContainer(props) {
         .map((admin) => admin.admin_id)
         .join(",")
       : "";
-    const assignedUserType = allAdmin.filter((item) =>
-      selectedAdmin.includes(item.email)
-    )
-      ? allAdmin
-        .filter((item) => selectedAdmin.includes(item.email))
-        .map((admin) => admin.admin_type)
-        .join(",")
-      : "";
+    const assignedUserType ="admin" 
+    // allAdmin.filter((item) =>
+    //   selectedAdmin.includes(item.email)
+    // )
+    //   ? allAdmin
+    //     .filter((item) => selectedAdmin.includes(item.email))
+    //     .map((admin) => admin.admin_type)
+    //     .join(",")
+    //   : "";
 
     // Send data to the API
     if (comment === "" && email === "") {
