@@ -16,7 +16,7 @@ import Loader from "../common/loader";
 import JobModal from "../admin/Modal/jobModal";
 import VisaStatus from "../forms/user/visaStatus";
 import ApplicantsStatusModal from "../forms/admin/ApplicantsStatusModal";
-import {/* MdOutlineCastForEducation,*/MdTypeSpecimen } from "react-icons/md";
+import {/* MdOutlineCastForEducation,*/MdTypeSpecimen,MdRealEstateAgent } from "react-icons/md";
 // import { LiaUserEditSolid, LiaUserTieSolid } from "react-icons/lia";
 import { GoTasklist } from "react-icons/go";
 // import { GiSkills } from "react-icons/gi";
@@ -267,6 +267,12 @@ export default function EmployeeTable(props) {
     setShowEmployeeMOdal(true);
     setPageNameForForm("ApplicantType")
   };
+    /*function to Open  change applicants Agent "Reffer_by" Modal */
+    const ChangeApplicantsAgent = (e) => {
+      setemployeeId(e);
+      setShowEmployeeMOdal(true);
+      setPageNameForForm("agentAssigned")
+    };
   /*Function to get the new user */
   // const currentDate = new Date(); // Get current date
   // const oneMonthAgo = new Date(); // Create a new date object for one month ago
@@ -1049,6 +1055,18 @@ export default function EmployeeTable(props) {
                                   >
                                     <span className="text-gray px-2">
                                       <GoTasklist />
+                                    </span>
+                                    {/* <i className="fas fa-stream text-gray"></i> */}
+                                  </button>
+                                  <button
+                                    className="btn btn-outline-info action_btn"
+                                    onClick={() =>
+                                      ChangeApplicantsAgent(empdata.employee_id)
+                                    }
+                                    title="Change partner"
+                                  >
+                                    <span className="text-gray px-2">
+                                      <MdRealEstateAgent />
                                     </span>
                                     {/* <i className="fas fa-stream text-gray"></i> */}
                                   </button>

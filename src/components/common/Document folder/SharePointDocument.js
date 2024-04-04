@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { /*getSharePointFoldersList,*/AddSharePointFolders, getSharePointParticularFolders, AddSharePointDOcument } from '../../../api/api';
+import { /*getSharePointFoldersList,*/getFolderBreadcrumb, AddSharePointFolders, getSharePointParticularFolders, AddSharePointDOcument } from '../../../api/api';
 import { Dropdown, Form } from 'react-bootstrap';
 // import { Link } from 'react-router-dom';
 // import { GrLinkPrevious } from "react-icons/gr";
 import FolderList from './FolderList';
 import { toast } from 'react-toastify';
 import DocSaveForm from './DocSaveForm';
+import Breadcrumbs from './Breadcrumb';
+import EditDocNameFOrm from './EditDocNameFOrm';
 export default function SharePointDocument({ emp_user_type, employee_id, folderId }) {
     const [docTypeName, setDocTypeName] = useState('');
     const [newType, setNewType] = useState('');
@@ -14,8 +16,11 @@ export default function SharePointDocument({ emp_user_type, employee_id, folderI
     const [apiCall, setApiCall] = useState(false);
     const [saveBtn, setSaveBtn] = useState(false);
     const [loadingBtn, setLoadingBtn] = useState(false);
-    const [prevFolderID, setPrevFolderID] = useState('');
+    const [breadcrumbData, setBreadcrumbData] = useState('');
     const [docTypeList, setDocTypeList] = useState([]);
+    const [showDropDown, setShowDropDown] = useState(false);
+    const [editNameForm, setEditNameForm] = useState(false)
+    const [docSingleDate, setDocSingleDate] = useState("")
 
     const DocTypeData =
         emp_user_type === 'employer'
@@ -67,12 +72,13 @@ export default function SharePointDocument({ emp_user_type, employee_id, folderI
         try {
             // if (folderID) {
             let res = await getSharePointParticularFolders(employee_id, emp_user_type, folderID)
-            console.log(res.data.status === 1, res.data.data)
             if (res.data.status === 1) {
                 setDocTypeList(res.data.data)
+                setShowDropDown(false)
                 // setFolderID(res.data.data[0].parentReference.id)
             } else if (res.data.data === 'No Documents Found') {
                 setDocTypeList([])
+                setShowDropDown(false)
             }
             // } else {
             //     let res = await getSharePointFoldersList(employee_id, emp_user_type)
@@ -82,6 +88,17 @@ export default function SharePointDocument({ emp_user_type, employee_id, folderI
             // }
         } catch (Err) {
             console.log(Err)
+            setShowDropDown(false)
+        }
+        /*Api for breadcrumb */
+        try {
+            let res = await getFolderBreadcrumb(folderID)
+            setBreadcrumbData(res.data.data)
+            setShowDropDown(false)
+        } catch (err) {
+            setBreadcrumbData([])
+            console.log(err)
+            setShowDropDown(false)
         }
     }
     useEffect(() => {
@@ -150,19 +167,33 @@ export default function SharePointDocument({ emp_user_type, employee_id, folderI
     //Document Save Function
     const SaveBulkDocument = async () => {
         setLoadingBtn(true)
+        setShowDropDown(false)
         try {
             let res = await AddSharePointDOcument(employee_id, emp_user_type, folderID, docTypeName, docFileBase)
-            console.log(res)
-            setLoadingBtn(false)
-            setSaveBtn(false)
+            if (res.data.message === "Document Upload") {
+                toast.success(
+                    `Document Uploaded successfully`,
+                    {
+                        position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 1000,
+                    }
+                );
+                setApiCall(true)
+                setLoadingBtn(false)
+                setSaveBtn(false)
+                setShowDropDown(false)
+            }
         } catch (err) {
             console.log(err)
             setLoadingBtn(false)
             setSaveBtn(false)
+            setShowDropDown(false)
         }
     }
+    /*Had folder function */
     const handleDocTypeChange = async (selectedType) => {
         setDocTypeName(selectedType);
+        setShowDropDown(false)
         if (selectedType === 'other') {
             // If "other" is selected, clear newType
             setNewType('');
@@ -186,12 +217,11 @@ export default function SharePointDocument({ emp_user_type, employee_id, folderI
         }
 
     };
-
+    /*Type folder name function */
     const handleNewTypeChange = (e) => {
         const value = e.target.value.replace(/[^a-zA-Z0-9 ]/g, '');
         setNewType(value);
     };
-    console.log(docFileBase)
     return (
         <div className={'document_container bg-white'}>
             <div className="row h-100vh m-0 bg-white">
@@ -235,17 +265,32 @@ export default function SharePointDocument({ emp_user_type, employee_id, folderI
                     saveBtn={saveBtn}
                     loadingBtn={loadingBtn}
                     SaveBulkDocument={SaveBulkDocument} />
-                {/* Back button */}
-                {/* {folderID !== prevFolderID &&
-                    <Link onClick={() => setFolderID(prevFolderID)}>
-                        <GrLinkPrevious />
-                    </Link>} */}
+                {/* Breadcrumbs */}
+                <Breadcrumbs
+                    data={breadcrumbData}
+                    setFolderID={setFolderID} />
                 {/* List of documents docTypeList */}
                 <FolderList
                     docTypeList={docTypeList}
                     setFolderID={setFolderID}
-                    setPrevFolderID={setPrevFolderID} />
+                    setDocTypeName={setDocTypeName}
+                    folderID={folderID}
+                    showDropDown={showDropDown}
+                    setShowDropDown={setShowDropDown}
+                    setDocSingleDate={setDocSingleDate}
+                    setEditNameForm={setEditNameForm} />
             </div>
+            {editNameForm &&
+                <EditDocNameFOrm
+                    userId={employee_id}
+                    name={docSingleDate.name}
+                    docId={docSingleDate.id}
+                    userType={emp_user_type}
+                    show={editNameForm}
+                    close={() => setEditNameForm(false)}
+                    setApiCall={setApiCall}
+                />
+            }
         </div>
     );
 }

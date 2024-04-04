@@ -5,7 +5,7 @@ export default function DocSaveForm({ handleBulkFileChange, saveBtn, loadingBtn,
         <div>
             <form>
                 <div className="">
-                    <label className="btn btn-secondary doc_btn">
+                    <label className="btn btn-light ">
                         <AiOutlineCloudUpload className="font-size-3 mr-2" />
                         <input
                             type="file"

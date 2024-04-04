@@ -450,7 +450,7 @@ function PersonalDetails(props) {
                 ) : (
                   <h5 className="text-center pt-2 mb-7">
                     Update {props.pageNameForForm === "ApplicantType" ?
-                      " Applicant Type" : props.user_of_page === "agentAssigned"
+                      " Applicant Type" : props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned"
                         ? "Reffer By" : props.user_of_page === "assignedUser"
                           ? "Assigned To" :
                           "Candidate Details"}
@@ -458,7 +458,7 @@ function PersonalDetails(props) {
                 )}
                 {/* FIRST LINE */}
                 <div className={`form-group mx-auto text-center ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" ||
-                  props.user_of_page === "agentAssigned" ?
+                  props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ?
                   "d-none" : ""}`}>
                   <div className="mb-4 position-relative">
                     <input
@@ -496,7 +496,7 @@ function PersonalDetails(props) {
                     type="hidden"
                     id="employee_id"
                   />
-                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" ? "d-none" : ""}`}>
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ? "d-none" : ""}`}>
                     <label
                       htmlFor="name"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -527,7 +527,7 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
-                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" ? "d-none" : ""}`}>
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ? "d-none" : ""}`}>
                     <label
                       htmlFor="email"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -559,7 +559,7 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
-                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" ? "d-none" : ""}`}>
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ? "d-none" : ""}`}>
                     <label
                       htmlFor="contact_no"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -592,7 +592,7 @@ function PersonalDetails(props) {
                     )}
                   </div>
 
-                  <div className={`form-group col-md-12 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" ? "d-none" : ""}`}>
+                  <div className={`form-group col-md-12 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ? "d-none" : ""}`}>
                     <label
                       htmlFor="description"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -641,7 +641,7 @@ function PersonalDetails(props) {
                   </div>
 
                   {/* SECOND LINE */}
-                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" ? "d-none" : ""}`}>
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ? "d-none" : ""}`}>
                     <label
                       htmlFor="date_of_birth"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -677,7 +677,7 @@ function PersonalDetails(props) {
                     )}
                   </div>
 
-                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" ? "d-none" : ""}`}>
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ? "d-none" : ""}`}>
                     <label
                       htmlFor="gender"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -710,7 +710,7 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
-                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" ? "d-none" : ""}`}>
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ? "d-none" : ""}`}>
                     <label
                       htmlFor="marital_status"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -778,7 +778,7 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div> */}
-                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" ? "d-none" : ""}`}>
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ? "d-none" : ""}`}>
                     <label
                       htmlFor="current_location"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -809,7 +809,7 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
-                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" ? "d-none" : ""}`}>
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ? "d-none" : ""}`}>
                     <label
                       htmlFor="currently_located_country"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -849,7 +849,7 @@ function PersonalDetails(props) {
                   </div>
 
                   {/* FOURTH LINE */}
-                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" ? "d-none" : ""}`}>
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ? "d-none" : ""}`}>
                     <label
                       htmlFor="language"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -921,7 +921,7 @@ function PersonalDetails(props) {
                 )}
               </div> */}
                   <div className={`form-group  ${props.user_of_page === "assignedUser" ||
-                    props.user_of_page === "agentAssigned" || props.pageNameForForm === "Category"
+                    props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" || props.pageNameForForm === "Category"
                     ? "d-none"
                     : `${props.pageNameForForm === "ApplicantType" ?
                       "col-md-12" : "col-md-4"}
@@ -969,7 +969,7 @@ function PersonalDetails(props) {
                   {state.interested_in === "pnp" &&
                     <div className={`form-group 
                     ${props.user_of_page === "assignedUser" ||
-                        props.user_of_page === "agentAssigned"
+                        props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned"
                         || props.pageNameForForm === "ApplicantType"
                         ? "d-none"
                         : `${props.pageNameForForm === "Category" ?
@@ -1008,7 +1008,7 @@ function PersonalDetails(props) {
                       )}
                     </div>}
                   <div className={`form-group col-md-4
-                  ${props.user_of_page === "assignedUser" || props.user_of_page === "agentAssigned"
+                  ${props.user_of_page === "assignedUser" || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned"
                       || props.pageNameForForm === "ApplicantType" || props.pageNameForForm === "Category" ? "d-none" : ""}`}>
                     <label
                       htmlFor="experience"
@@ -1045,7 +1045,7 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
-                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" ? "d-none" : ""}`}>
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ? "d-none" : ""}`}>
                     <label
                       htmlFor="work_permit_canada"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -1131,7 +1131,7 @@ function PersonalDetails(props) {
                         || props.pageNameForForm === "ApplicantType"
                         || props.user_of_page === "assignedUser"
                         ? " d-none"
-                        : ` d-flex ${props.user_of_page === "agentAssigned" ? " col-md-12" : " col-md-4 "}`}
+                        : ` d-flex ${props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ? " col-md-12" : " col-md-4 "}`}
                     `}
                     style={{ position: "relative" }}
                   >
@@ -1193,7 +1193,7 @@ function PersonalDetails(props) {
                         || props.pageNameForForm === "Category"
                         || user_type === "user"
                         || props.pageNameForForm === "ApplicantType"
-                        || props.user_of_page === "agentAssigned"
+                        || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned"
                         ? "d-none"
                         : props.user_of_page === "assignedUser" ?
                           "d-flex col-md-12" :
@@ -1231,7 +1231,7 @@ function PersonalDetails(props) {
                       id="assigned_by"
                     >
                       <option value={""}>Select Admin </option>
-                      {admiinList.map((item) => <option value={item.admin_id}>{item.name} </option>)}
+                      {(admiinList || []).map((item) => <option value={item.admin_id}>{item.name} </option>)}
                     </select>
                     {/* <span
                       className="btn btn-sm btn-secondary"
@@ -1260,7 +1260,7 @@ function PersonalDetails(props) {
                   <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser"
                     || props.pageNameForForm === "ApplicantType" ||
                     props.pageNameForForm === "Category" ||
-                    props.user_of_page === "agentAssigned" ? "d-none" : ""}`}>
+                    props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ? "d-none" : ""}`}>
                     <label
                       htmlFor="resume"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -1294,7 +1294,7 @@ function PersonalDetails(props) {
                     <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser"
                       || props.pageNameForForm === "ApplicantType"
                       || props.pageNameForForm === "Category"
-                      || props.user_of_page === "agentAssigned" ? "d-none" : ""}`}>
+                      || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ? "d-none" : ""}`}>
                       <label
                         htmlFor="fetured"
                         className="font-size-4 text-black-2 font-weight-semibold line-height-reset"

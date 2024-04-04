@@ -7,8 +7,8 @@ import {
 } from "../../api/api";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import { HiDocumentSearch } from "react-icons/hi";
-import { FaUserClock } from "react-icons/fa";
+import { CgFileDocument } from "react-icons/cg";
+import { FaRegBell } from "react-icons/fa";
 function Notifications(
   { type
     // userId,
@@ -118,17 +118,17 @@ function Notifications(
         className="fas fa-regular fa-bell text-dark mx-5"
         onClick={() => setshow(true)}
       ></i> */}
-      {type === "mention_partner" ?
+      {type === "" ?
 
         <span title="Chat Notification">
-          <FaUserClock style={{ cursor: "pointer" }} className="text-white  mx-5"
+        <FaRegBell style={{ cursor: "pointer" }} className="text-white bold mx-5"
             onClick={() => {
               setshow(true)
               setApicall(true)
             }} />
         </span> :
         <span title="Mention Notification">
-          <HiDocumentSearch style={{ cursor: "pointer" }} className="text-white  mx-5"
+          <CgFileDocument style={{ cursor: "pointer" }} className="text-white  mx-5"
             onClick={() => {
               setshow(true)
               setApicall(true)

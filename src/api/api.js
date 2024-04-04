@@ -3010,7 +3010,7 @@ export const getSharePointFoldersList = async (Id, User) => {
   const response = await axios.post(
     `${API_URL}admin/getSharpointSiteDriveFolderData`,
     {
-      "driveId": "b!iUiBybFGWEWfqWdSYuUqrWrIPVmZDQxPmwO4Bzj6nJp5ByboftxMSY6hfWPT-m8F",
+      "driveId": driveId,
       "userId": Id,
       "userType": User
     },
@@ -3028,7 +3028,7 @@ export const getSharePointParticularFolders = async (Id, User, folderId) => {
   const response = await axios.post(
     `${API_URL}admin/getSharpointSiteDriveFolderToFolderData`,
     {
-      "driveId": "b!iUiBybFGWEWfqWdSYuUqrWrIPVmZDQxPmwO4Bzj6nJp5ByboftxMSY6hfWPT-m8F",
+      "driveId": driveId,
       "userId": Id,
       "userType": User,
       "folderId": folderId,
@@ -3048,7 +3048,7 @@ export const AddSharePointFolders = async (folder, parentId) => {
   const response = await axios.post(
     `${API_URL}admin/createSharepointFolder`,
     {
-      "driveId": "b!iUiBybFGWEWfqWdSYuUqrWrIPVmZDQxPmwO4Bzj6nJp5ByboftxMSY6hfWPT-m8F",
+      "driveId": driveId,
       "newFolderName": folder,
       "parentFolderId": parentId
     },
@@ -3063,6 +3063,7 @@ export const AddSharePointFolders = async (folder, parentId) => {
 };
 //Api function to Add sharepoint document 
 export const AddSharePointDOcument = async (id, user, folderId, docType, data) => {
+  console.log("employee_id", id, "userType", user, "folder_Id", folderId, "docType", docType, "file", data)
   const formData = new FormData();
   formData.append("docType", docType);
   formData.append("userType", user);
@@ -3078,7 +3079,7 @@ export const AddSharePointDOcument = async (id, user, folderId, docType, data) =
     formData,
     {
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
         Authorization: Token,
       },
     }
@@ -3086,3 +3087,40 @@ export const AddSharePointDOcument = async (id, user, folderId, docType, data) =
   return response;
 };
 
+//Api function to get folder or type breadcrumb 
+export const getFolderBreadcrumb = async (folderid) => {
+  const response = await axios.post(
+    `${API_URL}admin/getFolderBreadcrumb`,
+    {
+      "driveId": driveId,
+      "folderId": folderid,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+};
+// /Api function to edit document name for 
+export const ChangeDocNameSharpoint = async (userId,userType,docName,DocId) => {
+  const response = await axios.post(
+    `${API_URL}admin/updateSharepointDocumentName`,
+    {
+      "driveId": driveId,
+      "userId":userId,
+      "userType":userType,
+      "newDocumentName":docName,
+      "documentId":DocId
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+};
