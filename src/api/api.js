@@ -3105,16 +3105,56 @@ export const getFolderBreadcrumb = async (folderid) => {
   return response;
 };
 // /Api function to edit document name for 
-export const ChangeDocNameSharpoint = async (userId,userType,docName,DocId) => {
+export const ChangeDocNameSharpoint = async (userId, userType, docName, DocId) => {
   const response = await axios.post(
     `${API_URL}admin/updateSharepointDocumentName`,
     {
       "driveId": driveId,
-      "userId":userId,
-      "userType":userType,
-      "newDocumentName":docName,
-      "documentId":DocId
+      "userId": userId,
+      "userType": userType,
+      "newDocumentName": docName,
+      "documentId": DocId
     },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+};
+// /Api function to edit Folder name for sharepoint 
+export const ChangeFolderNameSharpoint = async (userId, userType, FolderName, FolderId) => {
+  const response = await axios.post(
+    `${API_URL}admin/updateSharepointFolderName`,
+    {
+      "driveId": driveId,
+      "userId": userId,
+      "userType": userType,
+      "newFolderName": FolderName,
+      "folderId": FolderId
+    }
+    ,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+};
+// /Api function to Delete Folder or document for sharepoint 
+export const DeleteFolderOrDocument = async (FolderId, type) => {
+  const response = await axios.post(
+    `${API_URL}admin/deleteSharepointDocument`,
+    {
+      "driveId": driveId,
+      "id": FolderId,
+      "type": type
+    }
+    ,
     {
       headers: {
         "Content-Type": "application/json",

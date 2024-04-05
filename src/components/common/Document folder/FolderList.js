@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { BsFiletypeDocx } from "react-icons/bs";
 import { FaRegFilePdf, FaFolder } from "react-icons/fa6";
-export default function FolderList({ setDocSingleDate, setEditNameForm, showDropDown, setShowDropDown, docTypeList, setFolderID, setDocTypeName }) {
+export default function FolderList({ setDocPreview, ShowDeleteAlert, setDocSingleDate, setEditNameForm, showDropDown, setShowDropDown, docTypeList, setFolderID, setDocTypeName }) {
 
     return (
         <div className=''>
@@ -14,7 +14,11 @@ export default function FolderList({ setDocSingleDate, setEditNameForm, showDrop
                             onClick={() => {
                                 if (item.folder) {
                                     setFolderID(item.id);
-                                    setDocTypeName(item.name)
+                                    setDocTypeName(item.name) 
+                                } else {
+                                    setDocPreview(true)
+                                    setDocSingleDate(item)
+                                    setFolderID(item.id);
                                 }
                             }}
                             onContextMenu={(e) => {
@@ -67,16 +71,12 @@ export default function FolderList({ setDocSingleDate, setEditNameForm, showDrop
                                         setEditNameForm(true)
                                         setDocSingleDate(item)
                                     }}>
-                                        Edit Name
+                                        Rename
                                     </Link>
                                 </li>
-                                {item.folder ? null :
-                                    <li className="list-group-item">
-                                        Update Document
-                                    </li>
-                                }
                                 <li className="list-group-item text-darger">
-                                    Delete
+                                    <Link onClick={() => ShowDeleteAlert(item)}> Delete {item.folder ? "Folder" : "File"}
+                                    </Link>
                                 </li>
                             </ul>}
                     </React.Fragment>

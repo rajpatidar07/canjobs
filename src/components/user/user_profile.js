@@ -1776,7 +1776,8 @@ const NewUserProfile = (props) => {
                     {TabActive === "documents" ? (
                       < SharePointDocument
                         // DocumrentContainer
-                        employee_id={eid}
+                        // employee_id={eid}
+                        user_id={eid}
                         emp_user_type={"employee"}
                         docId={docId ? docId : ""}
                         folderId={PersonalDetail.documents_folder_id}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { /*getSharePointFoldersList,*/getFolderBreadcrumb, AddSharePointFolders, getSharePointParticularFolders, AddSharePointDOcument } from '../../../api/api';
+import { /*getSharePointFoldersList,*/DeleteFolderOrDocument, getFolderBreadcrumb, AddSharePointFolders, getSharePointParticularFolders, AddSharePointDOcument } from '../../../api/api';
 import { Dropdown, Form } from 'react-bootstrap';
+import SAlert from "../../common/sweetAlert";
 // import { Link } from 'react-router-dom';
 // import { GrLinkPrevious } from "react-icons/gr";
 import FolderList from './FolderList';
@@ -8,7 +9,8 @@ import { toast } from 'react-toastify';
 import DocSaveForm from './DocSaveForm';
 import Breadcrumbs from './Breadcrumb';
 import EditDocNameFOrm from './EditDocNameFOrm';
-export default function SharePointDocument({ emp_user_type, employee_id, folderId }) {
+import PreviewDocument from './PreviewDocument';
+export default function SharePointDocument({ emp_user_type, user_id, folderId }) {
     const [docTypeName, setDocTypeName] = useState('');
     const [newType, setNewType] = useState('');
     const [docFileBase, setDocFileBase] = useState('');
@@ -21,7 +23,20 @@ export default function SharePointDocument({ emp_user_type, employee_id, folderI
     const [showDropDown, setShowDropDown] = useState(false);
     const [editNameForm, setEditNameForm] = useState(false)
     const [docSingleDate, setDocSingleDate] = useState("")
-
+    const [docPreview, setDocPreview] = useState(false)
+    /*delete state */
+    const [deleteAlert, setDeleteAlert] = useState(false);
+    const [deleteData, setDeleteData] = useState();
+    /*To Show the delete alert box */
+    const ShowDeleteAlert = (e) => {
+        setDeleteData(e);
+        setDeleteAlert(true);
+    };
+    /*To cancel the delete alert box */
+    const CancelDelete = () => {
+        setDeleteAlert(false);
+        setEditNameForm(false)
+    };
     const DocTypeData =
         emp_user_type === 'employer'
             ? [
@@ -71,7 +86,7 @@ export default function SharePointDocument({ emp_user_type, employee_id, folderI
     const AllShareType = async () => {
         try {
             // if (folderID) {
-            let res = await getSharePointParticularFolders(employee_id, emp_user_type, folderID)
+            let res = await getSharePointParticularFolders(user_id, emp_user_type, folderID)
             if (res.data.status === 1) {
                 setDocTypeList(res.data.data)
                 setShowDropDown(false)
@@ -81,7 +96,7 @@ export default function SharePointDocument({ emp_user_type, employee_id, folderI
                 setShowDropDown(false)
             }
             // } else {
-            //     let res = await getSharePointFoldersList(employee_id, emp_user_type)
+            //     let res = await getSharePointFoldersList(user_id, emp_user_type)
             //     if (res.data.status === 1) {
             //         setDocTypeList(res.data.data)
             //     }
@@ -102,7 +117,9 @@ export default function SharePointDocument({ emp_user_type, employee_id, folderI
         }
     }
     useEffect(() => {
-        AllShareType()
+        if (docPreview === false) {
+            AllShareType() 
+        }
         if (apiCall === true) {
             setApiCall(false)
         }
@@ -169,7 +186,7 @@ export default function SharePointDocument({ emp_user_type, employee_id, folderI
         setLoadingBtn(true)
         setShowDropDown(false)
         try {
-            let res = await AddSharePointDOcument(employee_id, emp_user_type, folderID, docTypeName, docFileBase)
+            let res = await AddSharePointDOcument(user_id, emp_user_type, folderID, docTypeName, docFileBase)
             if (res.data.message === "Document Upload") {
                 toast.success(
                     `Document Uploaded successfully`,
@@ -222,75 +239,117 @@ export default function SharePointDocument({ emp_user_type, employee_id, folderI
         const value = e.target.value.replace(/[^a-zA-Z0-9 ]/g, '');
         setNewType(value);
     };
-    return (
-        <div className={'document_container bg-white'}>
-            <div className="row h-100vh m-0 bg-white">
-                {/* Button to add folder or type and upload documents */}
-                <div className=''>
-                    {docTypeName === 'other' ? (
-                        <>
-                            <Form.Control
-                                type="text"
-                                value={newType}
-                                placeholder="Enter new type"
-                                onChange={handleNewTypeChange}
-                            />
-                            <button type='button'
-                                onClick={() => handleDocTypeChange(newType)}>save</button>
-                        </>
-                    ) : (
-                        <Dropdown>
-                            <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-                                + Add New type
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu style={{ height: "400px", overflowY: "scroll" }}>
-                                <Dropdown.Item onClick={() => handleDocTypeChange('')} key={-1}>
-                                    Select document
-                                </Dropdown.Item>
-                                {DocTypeData.map((item, index) => (
-                                    <Dropdown.Item onClick={() => handleDocTypeChange(item)} key={index} className='text-capitalize'>
-                                        {item.replaceAll("_", " ")}
-                                    </Dropdown.Item>
-                                ))}
-                                <Dropdown.Item onClick={() => handleDocTypeChange('other')}>
-                                    Other
-                                </Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown>
-                    )}
-                </div>
-                {/* Upload Document form*/}
-                <DocSaveForm
-                    handleBulkFileChange={handleBulkFileChange}
-                    saveBtn={saveBtn}
-                    loadingBtn={loadingBtn}
-                    SaveBulkDocument={SaveBulkDocument} />
-                {/* Breadcrumbs */}
-                <Breadcrumbs
-                    data={breadcrumbData}
-                    setFolderID={setFolderID} />
-                {/* List of documents docTypeList */}
-                <FolderList
-                    docTypeList={docTypeList}
-                    setFolderID={setFolderID}
-                    setDocTypeName={setDocTypeName}
-                    folderID={folderID}
-                    showDropDown={showDropDown}
-                    setShowDropDown={setShowDropDown}
-                    setDocSingleDate={setDocSingleDate}
-                    setEditNameForm={setEditNameForm} />
-            </div>
-            {editNameForm &&
-                <EditDocNameFOrm
-                    userId={employee_id}
-                    name={docSingleDate.name}
-                    docId={docSingleDate.id}
-                    userType={emp_user_type}
-                    show={editNameForm}
-                    close={() => setEditNameForm(false)}
-                    setApiCall={setApiCall}
-                />
+    /*To call Api to delete Folder or document */
+    async function DeleteSharepointDocument(id, type) {
+        try {
+            const responseData = await DeleteFolderOrDocument(id, type);
+            if (responseData.data.message ===
+                "Document deleted successfully!") {
+                toast.error(
+                    "Document deleted successfully!", {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 1000,
+                });
+                CancelDelete()
+                setApiCall(true);
             }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    return (
+        <div>
+            {
+                docPreview ?
+                    <PreviewDocument
+                        docData={docSingleDate}
+                        docId={folderId}
+                        userId={user_id}
+                        docFile={docSingleDate['@microsoft.graph.downloadUrl']}
+                        setDocPreview={setDocPreview}
+                        setDocSingleDate={setDocSingleDate}
+                        setFolderID={setFolderID}
+                    /> :
+                    <div className={'document_container bg-white'}>
+                        <div className="row h-100vh m-0 bg-white">
+                            {/* Button to add folder or type and upload documents */}
+                            <div className=''>
+                                {docTypeName === 'other' ? (
+                                    <>
+                                        <Form.Control
+                                            type="text"
+                                            value={newType}
+                                            placeholder="Enter new type"
+                                            onChange={handleNewTypeChange}
+                                        />
+                                        <button type='button'
+                                            onClick={() => handleDocTypeChange(newType)}>save</button>
+                                    </>
+                                ) : (
+                                    <Dropdown>
+                                        <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+                                            + Add New type
+                                        </Dropdown.Toggle>
+                                        <Dropdown.Menu style={{ height: "400px", overflowY: "scroll" }}>
+                                            <Dropdown.Item onClick={() => handleDocTypeChange('')} key={-1}>
+                                                Select document
+                                            </Dropdown.Item>
+                                            {DocTypeData.map((item, index) => (
+                                                <Dropdown.Item onClick={() => handleDocTypeChange(item)} key={index} className='text-capitalize'>
+                                                    {item.replaceAll("_", " ")}
+                                                </Dropdown.Item>
+                                            ))}
+                                            <Dropdown.Item onClick={() => handleDocTypeChange('other')}>
+                                                Other
+                                            </Dropdown.Item>
+                                        </Dropdown.Menu>
+                                    </Dropdown>
+                                )}
+                            </div>
+                            {/* Upload Document form*/}
+                            <DocSaveForm
+                                handleBulkFileChange={handleBulkFileChange}
+                                saveBtn={saveBtn}
+                                loadingBtn={loadingBtn}
+                                SaveBulkDocument={SaveBulkDocument} />
+                            {/* Breadcrumbs */}
+                            <Breadcrumbs
+                                data={breadcrumbData}
+                                setFolderID={setFolderID} />
+                            {/* List of documents docTypeList */}
+                            <FolderList
+                                docTypeList={docTypeList}
+                                setFolderID={setFolderID}
+                                setDocTypeName={setDocTypeName}
+                                folderID={folderID}
+                                showDropDown={showDropDown}
+                                setShowDropDown={setShowDropDown}
+                                setDocSingleDate={setDocSingleDate}
+                                setEditNameForm={setEditNameForm}
+                                ShowDeleteAlert={ShowDeleteAlert}
+                                setDocPreview={setDocPreview} />
+                        </div>
+                        {editNameForm &&
+                            <EditDocNameFOrm
+                                userId={user_id}
+                                name={docSingleDate.name}
+                                docId={docSingleDate.id}
+                                userType={emp_user_type}
+                                show={editNameForm}
+                                close={() => setEditNameForm(false)}
+                                setApiCall={setApiCall}
+                                EditNameType={docSingleDate.folder ? "folder" : "file"}
+                            />
+                        }
+                        <SAlert
+                            show={deleteAlert}
+                            title={deleteData ? deleteData.name : ""}
+                            text="Are you Sure you want to delete !"
+                            onConfirm={() => DeleteSharepointDocument(deleteData.id, deleteData.folder ? "folder" : "document")}
+                            showCancelButton={true}
+                            onCancel={() => CancelDelete()}
+                        />
+                    </div>}
         </div>
     );
 }

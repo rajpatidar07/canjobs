@@ -16,7 +16,7 @@ import Loader from "../common/loader";
 import JobModal from "../admin/Modal/jobModal";
 import VisaStatus from "../forms/user/visaStatus";
 import ApplicantsStatusModal from "../forms/admin/ApplicantsStatusModal";
-import {/* MdOutlineCastForEducation,*/MdTypeSpecimen,MdRealEstateAgent } from "react-icons/md";
+import {/* MdOutlineCastForEducation,*/MdTypeSpecimen, MdRealEstateAgent } from "react-icons/md";
 // import { LiaUserEditSolid, LiaUserTieSolid } from "react-icons/lia";
 import { GoTasklist } from "react-icons/go";
 // import { GiSkills } from "react-icons/gi";
@@ -267,12 +267,12 @@ export default function EmployeeTable(props) {
     setShowEmployeeMOdal(true);
     setPageNameForForm("ApplicantType")
   };
-    /*function to Open  change applicants Agent "Reffer_by" Modal */
-    const ChangeApplicantsAgent = (e) => {
-      setemployeeId(e);
-      setShowEmployeeMOdal(true);
-      setPageNameForForm("agentAssigned")
-    };
+  /*function to Open  change applicants Agent "Reffer_by" Modal */
+  const ChangeApplicantsAgent = (e) => {
+    setemployeeId(e);
+    setShowEmployeeMOdal(true);
+    setPageNameForForm("agentAssigned")
+  };
   /*Function to get the new user */
   // const currentDate = new Date(); // Get current date
   // const oneMonthAgo = new Date(); // Create a new date object for one month ago
@@ -806,10 +806,10 @@ export default function EmployeeTable(props) {
                           {empdata.agent_name === null ? (
                             <p className="font-size-3  mb-0">N/A</p>
                           ) : (
-                            <Link 
-                            to={`/partner_profile`}
+                            <Link
+                              to={`/partner_profile`}
                               onClick={localStorage.setItem("agent_id", empdata.reffer_by)}
-                              >
+                            >
                               <p
                                 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
                                 title={
@@ -1059,7 +1059,7 @@ export default function EmployeeTable(props) {
                                     {/* <i className="fas fa-stream text-gray"></i> */}
                                   </button>
                                   <button
-                                    className="btn btn-outline-info action_btn"
+                                    className={user_type === "admin" ? "btn btn-outline-info action_btn" : " d-none"}
                                     onClick={() =>
                                       ChangeApplicantsAgent(empdata.employee_id)
                                     }
