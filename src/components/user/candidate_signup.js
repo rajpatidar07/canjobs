@@ -486,28 +486,28 @@ export default function CandidateSignup(props) {
                         ></Link> */}
                 </div>
               </div>
-              <div className={"form-group "}>
-                        <label
-                          htmlFor="reffer_by"
-                          className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                        >
-                          Reffered by:{/*<span className="text-danger">*</span>*/}
-                        </label>
-                        <select
-                          name="reffer_by"
-                          value={state.reffer_by || ""}
-                          onChange={onInputChange}
-                          className={
-                            errors.reffer_by
-                              ? "form-control text-capitalize border border-danger"
-                              : "form-control text-capitalize"
-                          }
-                          id="reffer_by"
-                        >
-                          <option value={""}>Selct Partner </option>
-                          {agentList.map((item) => <option value={item.id}>{item.u_id + " " + item.name} </option>)}
-                        </select>
-                        {/* <Select
+                <div className={"form-group d-none"}>
+                  <label
+                    htmlFor="reffer_by"
+                    className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                  >
+                    Reffered by:{/*<span className="text-danger">*</span>*/}
+                  </label>
+                  <select
+                    name="reffer_by"
+                    value={state.reffer_by || ""}
+                    onChange={onInputChange}
+                    className={
+                      errors.reffer_by
+                        ? "form-control text-capitalize border border-danger"
+                        : "form-control text-capitalize"
+                    }
+                    id="reffer_by"
+                  >
+                    <option value={""}>Selct Partner </option>
+                    {agentList.map((item) => <option value={item.id}>{item.u_id + " " + item.name} </option>)}
+                  </select>
+                  {/* <Select
                           options={"" || agentList}
                           name="reffer_by"
                           id="reffer_by"
@@ -518,16 +518,16 @@ export default function CandidateSignup(props) {
                               : "form-control px-0 pt-4 border-0"
                           }
                         /> */}
-                        {/* ERROR MSG FOR REFFER BY */}
-                        {errors.reffer_by && (
-                          <span
-                            key={errors.reffer_by}
-                            className="text-danger font-size-3"
-                          >
-                            {errors.reffer_by}
-                          </span>
-                        )}
-                      </div>
+                  {/* ERROR MSG FOR REFFER BY */}
+                  {errors.reffer_by && (
+                    <span
+                      key={errors.reffer_by}
+                      className="text-danger font-size-3"
+                    >
+                      {errors.reffer_by}
+                    </span>
+                  )}
+                </div>
               <div className="form-group">
                 <label
                   htmlFor="resume"

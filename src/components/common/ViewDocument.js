@@ -54,8 +54,10 @@ export default function ViewDocument({
 }) {
   return (
     <div
-      className={`${user_type === "admin" ? "col-md-7" : "col-md-8"
-        } p-2 bg-dark`}
+      className={" p-2 bg-dark col-md-10"
+        // `${user_type === "admin" ? "col-md-7" : "col-md-8"
+        // } p-2 bg-dark`
+      }
     >
       <div className="row px-0 pt-0 pb-2 doc_upload_row m-0">
         {/* <div className="d-flex flex-wrap justify-content-start">
@@ -299,7 +301,7 @@ export default function ViewDocument({
                   </div>
                 ) : null
               ) : null} */}
-          {hide === false && docFile && docName && user_type === "admin" ? (
+          {user_type === "admin" ? (
             <div className="doc_upload_col d-flex flex-end align-items-center">
               {docTypData.is_varify === "0" ? (
                 <button
@@ -330,6 +332,7 @@ export default function ViewDocument({
           ) : null}
         </div>
         {/* Annotation */}
+        <div className="d-none">
         {loading === true ? (
           <Loader />
         ) : docFile ? (
@@ -346,12 +349,12 @@ export default function ViewDocument({
                 {RenderNewDocFile()}
                 <Link
                   className={` ${hide === false &&
-                      docFile &&
-                      docName &&
-                      user_type === "admin"
-                      ? `btn-sm mt-7 doc_btn ${isAnnotationMode ? "btn-primary " : "btn-secondary"
-                      }`
-                      : "d-none"
+                    docFile &&
+                    docName &&
+                    user_type === "admin"
+                    ? `btn-sm mt-7 doc_btn ${isAnnotationMode ? "btn-primary " : "btn-secondary"
+                    }`
+                    : "d-none"
                     }`}
                   style={{
                     position: "fixed",
@@ -499,6 +502,7 @@ export default function ViewDocument({
         ) : (
           <div className="text-center mt-5">No document found</div>
         )}
+        </div>
         {/* Annotation Close */}
       </div>
     </div>

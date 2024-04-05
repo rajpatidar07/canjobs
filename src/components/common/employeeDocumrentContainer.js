@@ -1502,8 +1502,8 @@ export default function DocumrentContainer(props) {
           bulkUpload={bulkUpload}
         />
         {/* Annotation  */}
-        <div className="col-md-3 px-2 py-2 comments_and_replies">
-          {/* Add Annotation form */}
+        {/* <div className="col-md-3 px-2 py-2 comments_and_replies">
+          Add Annotation form
           {!hide &&
             docFile &&
             docName &&
@@ -1587,7 +1587,7 @@ export default function DocumrentContainer(props) {
               </form>
             </div>
           ) : null}
-          {/* Comment box */}
+          Comment box
           {user_type === "admin" ? (
             <CommentBox
               commentsReplyList={commentsReplyList}
@@ -1617,7 +1617,7 @@ export default function DocumrentContainer(props) {
               setHide={setHide}
             />
           ) : null}
-        </div>
+        </div> */}
       </div>
     </div>
   );

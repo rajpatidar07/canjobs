@@ -1,9 +1,9 @@
 import axios from "axios";
-const API_URL = "https://apnaorganicstore.in/canjobs/";
+// const API_URL = "https://apnaorganicstore.in/canjobs/";
 //Local
 // const API_URL ="http://192.168.29.51/canjobs/"
 // New AWS backend
-// const API_URL = "https://api.canpathwaysjobs.com/canjobs/";
+const API_URL = "https://api.canpathwaysjobs.com/canjobs/";
 let Token = localStorage.getItem("token");
 let driveId =
   "b!iUiBybFGWEWfqWdSYuUqrWrIPVmZDQxPmwO4Bzj6nJp5ByboftxMSY6hfWPT-m8F";
@@ -3008,7 +3008,7 @@ export const UpdateCredentialApi = async (props) => {
 // Api function to get folders or type of document of perticular employee
 export const getSharePointFoldersList = async (Id, User) => {
   const response = await axios.post(
-    `${API_URL}admin/getSharpointSiteDriveFolderData`,
+    `${API_URL}admin/getSharpointSiteDriveFolderData_new`,
     {
       "driveId": driveId,
       "userId": Id,
@@ -3026,7 +3026,7 @@ export const getSharePointFoldersList = async (Id, User) => {
 //Api function to GET emolyee  peticular document folder data 
 export const getSharePointParticularFolders = async (Id, User, folderId) => {
   const response = await axios.post(
-    `${API_URL}admin/getSharpointSiteDriveFolderToFolderData`,
+    `${API_URL}admin/getSharpointSiteDriveFolderToFolderData_new`,
     {
       "driveId": driveId,
       "userId": Id,
@@ -3046,7 +3046,7 @@ export const getSharePointParticularFolders = async (Id, User, folderId) => {
 //Api function to Add document folder or type 
 export const AddSharePointFolders = async (folder, parentId) => {
   const response = await axios.post(
-    `${API_URL}admin/createSharepointFolder`,
+    `${API_URL}admin/createSharepointFolder_new`,
     {
       "driveId": driveId,
       "newFolderName": folder,
@@ -3075,7 +3075,7 @@ export const AddSharePointDOcument = async (id, user, folderId, docType, data) =
     formData.append(`file[${i}]`, data[i]);
   }
   const response = await axios.post(
-    `${API_URL}admin/sharpointSiteDriveDocumentUpload`,
+    `${API_URL}admin/sharpointSiteDriveDocumentUpload_new`,
     formData,
     {
       headers: {
@@ -3086,11 +3086,10 @@ export const AddSharePointDOcument = async (id, user, folderId, docType, data) =
   );
   return response;
 };
-
 //Api function to get folder or type breadcrumb 
 export const getFolderBreadcrumb = async (folderid) => {
   const response = await axios.post(
-    `${API_URL}admin/getFolderBreadcrumb`,
+    `${API_URL}admin/getFolderBreadcrumb_new`,
     {
       "driveId": driveId,
       "folderId": folderid,
@@ -3107,7 +3106,7 @@ export const getFolderBreadcrumb = async (folderid) => {
 // /Api function to edit document name for 
 export const ChangeDocNameSharpoint = async (userId, userType, docName, DocId) => {
   const response = await axios.post(
-    `${API_URL}admin/updateSharepointDocumentName`,
+    `${API_URL}admin/updateSharepointDocumentName_new`,
     {
       "driveId": driveId,
       "userId": userId,
@@ -3127,7 +3126,7 @@ export const ChangeDocNameSharpoint = async (userId, userType, docName, DocId) =
 // /Api function to edit Folder name for sharepoint 
 export const ChangeFolderNameSharpoint = async (userId, userType, FolderName, FolderId) => {
   const response = await axios.post(
-    `${API_URL}admin/updateSharepointFolderName`,
+    `${API_URL}admin/updateSharepointFolderName_new`,
     {
       "driveId": driveId,
       "userId": userId,
@@ -3148,7 +3147,7 @@ export const ChangeFolderNameSharpoint = async (userId, userType, FolderName, Fo
 // /Api function to Delete Folder or document for sharepoint 
 export const DeleteFolderOrDocument = async (FolderId, type) => {
   const response = await axios.post(
-    `${API_URL}admin/deleteSharepointDocument`,
+    `${API_URL}admin/deleteSharepointDocument_new`,
     {
       "driveId": driveId,
       "id": FolderId,

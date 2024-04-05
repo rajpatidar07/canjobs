@@ -127,7 +127,7 @@ function Notifications(
               setApicall(true)
             }} />
         </span> :
-        <span title="Mention Notification">
+        <span title="Mention Notification "className="d-none">
           <CgFileDocument style={{ cursor: "pointer" }} className="text-white  mx-5"
             onClick={() => {
               setshow(true)

@@ -63,6 +63,7 @@ import Credentional from "../admin/Credentional";
 import AsiignedAdmin from "./asiigned_admin";
 import Federalpr from "../admin/federalpr";
 import PartnerDetails from "../agent/partnerDetails";
+import SharePointDocument from "./Document folder/SharePointDocument";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -170,6 +171,7 @@ function MainLayout() {
             <Route path="/assignedjobs" element={<JobAssignedDashboard />} />
             <Route path="/:eid" element={<NewUserProfile />} />
             <Route path="/userpdf" element={<PDFViewer />} />
+            <Route path="/sharepoint_document" element={<SharePointDocument />} />
             <Route path="/job_detail" element={<JobDetailpageAdmim />} />
             <Route path="/client_detail" element={<CompanyProfileDetail />} />
             <Route path="/partner_profile" element={<PartnerDetails />} />

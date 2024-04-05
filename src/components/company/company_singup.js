@@ -109,7 +109,8 @@ function CompanySingupForm(props) {
           setState(initialFormState);
           setOtpBox(false);
           setSingUpSuccess("success");
-        } else if (Response.message === " incorrect otp ") {
+        } else if (Response.message === 
+          " incorrect otp ") {
           setLoading(false);
           setotperr("Invalid Otp");
           setErrors({ ...errors, term_and_condition: "" });

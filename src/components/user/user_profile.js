@@ -25,7 +25,7 @@ import Loader from "../common/loader";
 import { PiPencilDuotone } from "react-icons/pi";
 import AdminHeader from "../admin/header";
 import AdminSidebar from "../admin/sidebar";
-// import DocumrentContainer from "../common/employeeDocumrentContainer";
+import DocumrentContainer from "../common/employeeDocumrentContainer";
 import { BiPhoneCall } from "react-icons/bi";
 import { BsEnvelope } from "react-icons/bs";
 import JobProfileResponse from "../admin/profile_response";
@@ -48,7 +48,6 @@ const NewUserProfile = (props) => {
   const searchParams = new URLSearchParams(location.search);
   const docId = searchParams.get("docId");
   const partnerChat = searchParams.get("partner");
-
   let navigate = useNavigate();
   const [apiCall, setApiCall] = useState(false);
   const [status, setStatus] = useState("");
@@ -750,6 +749,28 @@ const NewUserProfile = (props) => {
                         onClick={() => setTabActive("documents")}
                       >
                         Documents
+                      </Link>
+                    </li>
+                    <li
+                      className={`${user_type === "company"
+                        ? "d-none"
+                        : "tab-menu-items nav-item"
+                        } d-none`}
+                    >
+                      <Link
+                        className={
+                          TabActive === "sharepoint"
+                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
+                        }
+                        id="docTab"
+                        data-toggle="tab"
+                        role="tab"
+                        aria-controls="docTab"
+                        aria-selected="true"
+                        onClick={() => setTabActive("sharepoint")}
+                      >
+                        Share point Document
                       </Link>
                     </li>
                     <li
@@ -1774,14 +1795,39 @@ const NewUserProfile = (props) => {
                       doc="yes"
                     /> */}
                     {TabActive === "documents" ? (
+                      <  DocumrentContainer
+                        employee_id={eid}
+                        emp_user_type={"employee"}
+                        docId={docId ? docId : ""}
+                        folderId={PersonalDetail.documents_folder_id}
+                      />
+
+                    ) : null}
+                  </div>
+                  <div
+                    className={
+                      TabActive === "sharepoint"
+                        ? "justify-content-center"
+                        : "d-none"
+                    }
+                    id="applieddocuments"
+                    role="tabpanel"
+                    aria-labelledby="applieddocuments"
+                  >
+                    {/* <LmiaTime
+                      // lmia={props.lmia}
+                      // job={props.job}
+                      // location={location.pathname}
+                      doc="yes"
+                    /> */}
+                    {TabActive === "sharepoint" ? (
                       < SharePointDocument
-                        // DocumrentContainer
-                        // employee_id={eid}
                         user_id={eid}
                         emp_user_type={"employee"}
                         docId={docId ? docId : ""}
                         folderId={PersonalDetail.documents_folder_id}
                       />
+
                     ) : null}
                   </div>
                   <div

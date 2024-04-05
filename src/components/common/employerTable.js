@@ -265,7 +265,7 @@ export default function EmployerTable(props) {
                 </tr>
               </thead>
               <tbody>
-                
+
                 {/* Map function to show the data in the list*/}
                 {totalData === 0 || employerData.length === 0 ? (
                   <tr>
@@ -308,7 +308,7 @@ export default function EmployerTable(props) {
                                 )}
                               </div>
                             </div>
-                            {empdata.franchise === null ? (
+                            {!empdata.franchise || empdata.franchise === null ? (
                               <p className="m-0 text-black-2 font-weight-bold text-capitalize">
                                 N/A
                               </p>
@@ -341,7 +341,7 @@ export default function EmployerTable(props) {
                               className="m-0 font-weight-normal text-capitalize text-truncate font-size-3"
                               title={empdata.contact_person_name}
                             >
-                              {empdata.contact_person_name === null
+                              {empdata.contact_person_name === null || !empdata.contact_person_name
                                 ? "N/A"
                                 : empdata.contact_person_name}
                             </p>
@@ -403,8 +403,8 @@ export default function EmployerTable(props) {
                             </div>
                             <div className="font-size-3 font-weight-normal mb-0">
                               {empdata.contact_no_other === null ||
-                              empdata.contact_no_other === undefined ||
-                              empdata.contact_no_other === "" ? (
+                                empdata.contact_no_other === undefined ||
+                                empdata.contact_no_other === "" ? (
                                 ""
                               ) : (
                                 <>

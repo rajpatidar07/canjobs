@@ -127,7 +127,7 @@ export default function CommentBox({
                 key={index}
               >
                 <span
-                  className="comment_status_update"
+                  className="comment_status_update d-none"
                   style={{
                     cursor: "pointer",
                     color: commentItem.status === "0" ? "blue" : "white",
@@ -223,7 +223,7 @@ export default function CommentBox({
                   />
                 ) : (
                   <Link
-                    className="mx-5 mr-0 ml-auto font-size-3"
+                    className="mx-5 mr-0 ml-auto font-size-3 d-none"
                     onClick={() => {
                       setReplyCommentClick(commentItem.id);
                       getCommentsReplyList();
