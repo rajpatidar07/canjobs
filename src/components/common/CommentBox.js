@@ -223,7 +223,7 @@ export default function CommentBox({
                   />
                 ) : (
                   <Link
-                    className="mx-5 mr-0 ml-auto font-size-3 d-none"
+                    className="mx-5 mr-0 ml-auto font-size-3 "
                     onClick={() => {
                       setReplyCommentClick(commentItem.id);
                       getCommentsReplyList();

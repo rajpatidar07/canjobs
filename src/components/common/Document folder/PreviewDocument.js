@@ -17,6 +17,7 @@ export default function PreviewDocument({ setFolderID,
     setDocPreview,
     setDocSingleDate,
 }) {
+    console.log(docId)
     let admin_id = localStorage.getItem("admin_id")
     let user_type = localStorage.getItem("userType")
     let docFileExt = docData.file.mimeType.split("/")[1]
@@ -255,7 +256,9 @@ export default function PreviewDocument({ setFolderID,
                     assignedUserType, //Assign user type,
                     "", //Document url(for notes only)
                     senderEmail, //Sender email
-                    userId //employee id
+                    userId,//employee id,
+                    "",//assigned_by_id
+                    docData.parentReference.id// document parent code
                 );
                 if (res.data.message === "task inserted successfully!") {
                     toast.success("Comment uploaded Successfully", {

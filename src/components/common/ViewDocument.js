@@ -54,9 +54,9 @@ export default function ViewDocument({
 }) {
   return (
     <div
-      className={" p-2 bg-dark col-md-10"
-        // `${user_type === "admin" ? "col-md-7" : "col-md-8"
-        // } p-2 bg-dark`
+      className={
+        `${user_type === "admin" ? "col-md-7" : "col-md-8"
+        } p-2 bg-dark`
       }
     >
       <div className="row px-0 pt-0 pb-2 doc_upload_row m-0">
@@ -301,7 +301,7 @@ export default function ViewDocument({
                   </div>
                 ) : null
               ) : null} */}
-          {user_type === "admin" ? (
+          {hide === false && docFile && docName && user_type === "admin" ? (
             <div className="doc_upload_col d-flex flex-end align-items-center">
               {docTypData.is_varify === "0" ? (
                 <button
@@ -332,99 +332,99 @@ export default function ViewDocument({
           ) : null}
         </div>
         {/* Annotation */}
-        <div className="d-none">
-        {loading === true ? (
-          <Loader />
-        ) : docFile ? (
-          <div>
-            <div
-              id="annotation-container"
-              style={{
-                position: "relative",
-                width: "100%",
-              }}
-            >
-              <div className="d-flex justify-content-center position-relative">
-                {/* <RenderNewDocFile /> */}
-                {RenderNewDocFile()}
-                <Link
-                  className={` ${hide === false &&
-                    docFile &&
-                    docName &&
-                    user_type === "admin"
-                    ? `btn-sm mt-7 doc_btn ${isAnnotationMode ? "btn-primary " : "btn-secondary"
-                    }`
-                    : "d-none"
-                    }`}
-                  style={{
-                    position: "fixed",
-                    bottom: "285px",
-                    right: "24%",
-                    zIndex: "99",
-                  }}
-                  onClick={() => {
-                    setAnnotationMode(!isAnnotationMode);
-                    setComments("");
-                    setReplyCommentClick();
-                    setAddCommentFlag(false);
-                    //condition if the pdf is of imm
-                    if (
-                      docTypData.document_name &&
-                      !isAnnotationMode &&
-                      docTypData.document_name.toLowerCase().includes("imm")
-                    ) {
-                      handleFlagClick({ x_axis: 1, y_axis: 1 });
-                    } else setSelectedAnnotation(null);
-                  }}
-                >
-                  {isAnnotationMode ? <RxCrossCircled /> : <MdAddComment />}
-                </Link>
-              </div>
-              {/* Transparent overlay for capturing click events */}
-              {!hide && docFile && docName && user_type === "admin" && (
-                <>
-                  {isAnnotationMode && (
-                    <div
-                      style={{
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                        width: "100%",
-                        height: "100%",
-                        pointerEvents: "none",
-                      }}
-                    />
-                  )}
-
-                  {imageAnnotations.map((annotation, index) => (
-                    <div
-                      key={index}
-                      style={{
-                        position: "absolute",
-                        left: annotation.x_axis - 5,
-                        top: annotation.y_axis - 5,
-                        cursor: "pointer",
-                      }}
-                      onClick={() => handleFlagClick(annotation)}
-                    >
-                      <FaFlag
-                        className=""
+        <div >
+          {loading === true ? (
+            <Loader />
+          ) : docFile ? (
+            <div>
+              <div
+                id="annotation-container"
+                style={{
+                  position: "relative",
+                  width: "100%",
+                }}
+              >
+                <div className="d-flex justify-content-center position-relative">
+                  {/* <RenderNewDocFile /> */}
+                  {RenderNewDocFile()}
+                  <Link
+                    className={` ${hide === false &&
+                      docFile &&
+                      docName &&
+                      user_type === "admin"
+                      ? `btn-sm mt-7 doc_btn ${isAnnotationMode ? "btn-primary " : "btn-secondary"
+                      }`
+                      : "d-none"
+                      }`}
+                    style={{
+                      position: "fixed",
+                      bottom: "285px",
+                      right: "24%",
+                      zIndex: "99",
+                    }}
+                    onClick={() => {
+                      setAnnotationMode(!isAnnotationMode);
+                      setComments("");
+                      setReplyCommentClick();
+                      setAddCommentFlag(false);
+                      //condition if the pdf is of imm
+                      if (
+                        docTypData.document_name &&
+                        !isAnnotationMode &&
+                        docTypData.document_name.toLowerCase().includes("imm")
+                      ) {
+                        handleFlagClick({ x_axis: 1, y_axis: 1 });
+                      } else setSelectedAnnotation(null);
+                    }}
+                  >
+                    {isAnnotationMode ? <RxCrossCircled /> : <MdAddComment />}
+                  </Link>
+                </div>
+                {/* Transparent overlay for capturing click events */}
+                {!hide && docFile && docName && user_type === "admin" && (
+                  <>
+                    {isAnnotationMode && (
+                      <div
                         style={{
-                          color:
-                            selectedAnnotation &&
-                              selectedAnnotation.x_axis === annotation.x_axis &&
-                              selectedAnnotation.y_axis === annotation.y_axis
-                              ? "blue"
-                              : annotation.status === "1"
-                                ? "green"
-                                : "red",
-                          display: annotation.status === "1" ? "none" : "block",
+                          position: "absolute",
+                          top: 0,
+                          left: 0,
+                          width: "100%",
+                          height: "100%",
+                          pointerEvents: "none",
                         }}
                       />
-                    </div>
-                  ))}
+                    )}
 
-                  {/* {selectedAnnotation && addCommentFlag === true && (
+                    {imageAnnotations.map((annotation, index) => (
+                      <div
+                        key={index}
+                        style={{
+                          position: "absolute",
+                          left: annotation.x_axis - 5,
+                          top: annotation.y_axis - 5,
+                          cursor: "pointer",
+                        }}
+                        onClick={() => handleFlagClick(annotation)}
+                      >
+                        <FaFlag
+                          className=""
+                          style={{
+                            color:
+                              selectedAnnotation &&
+                                selectedAnnotation.x_axis === annotation.x_axis &&
+                                selectedAnnotation.y_axis === annotation.y_axis
+                                ? "blue"
+                                : annotation.status === "1"
+                                  ? "green"
+                                  : "red",
+                            display: annotation.status === "1" ? "none" : "block",
+                          }}
+                        />
+                      </div>
+                    ))}
+
+                    {/* {selectedAnnotation && addCommentFlag === true && (
                         <div
                           style={{
                             position: "absolute",
@@ -495,13 +495,13 @@ export default function ViewDocument({
                           </form>
                         </div>
                       )} */}
-                </>
-              )}
+                  </>
+                )}
+              </div>
             </div>
-          </div>
-        ) : (
-          <div className="text-center mt-5">No document found</div>
-        )}
+          ) : (
+            <div className="text-center mt-5">No document found</div>
+          )}
         </div>
         {/* Annotation Close */}
       </div>

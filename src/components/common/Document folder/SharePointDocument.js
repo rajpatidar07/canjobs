@@ -10,7 +10,7 @@ import DocSaveForm from './DocSaveForm';
 import Breadcrumbs from './Breadcrumb';
 import EditDocNameFOrm from './EditDocNameFOrm';
 import PreviewDocument from './PreviewDocument';
-export default function SharePointDocument({ emp_user_type, user_id, folderId }) {
+export default function SharePointDocument({ emp_user_type, user_id, folderId, notification, docId }) {
     const [docTypeName, setDocTypeName] = useState('');
     const [newType, setNewType] = useState('');
     const [docFileBase, setDocFileBase] = useState('');
@@ -90,6 +90,16 @@ export default function SharePointDocument({ emp_user_type, user_id, folderId })
             if (res.data.status === 1) {
                 setDocTypeList(res.data.data)
                 setShowDropDown(false)
+                console.log(notification, folderID, "object", res.data.data.find((item) => item.id)
+                )
+                if (notification === "yes") {
+                    if (res.data.data.find((item) => item.id === folderID)) {
+                        setDocPreview(true)
+                        setDocSingleDate(res.data.data.find((item) => item.id === docId))
+                        const newUrl = window.location.pathname;
+                        window.history.replaceState({}, document.title, newUrl);
+                    }
+                }
                 // setFolderID(res.data.data[0].parentReference.id)
             } else if (res.data.data === 'No Documents Found') {
                 setDocTypeList([])
@@ -117,9 +127,10 @@ export default function SharePointDocument({ emp_user_type, user_id, folderId })
         }
     }
     useEffect(() => {
-        if (docPreview === false) {
-            AllShareType() 
-        }
+        AllShareType()
+        // if (notification === "yes") {
+        //     setDocPreview(true)
+        // }
         if (apiCall === true) {
             setApiCall(false)
         }
@@ -263,7 +274,7 @@ export default function SharePointDocument({ emp_user_type, user_id, folderId })
                 docPreview ?
                     <PreviewDocument
                         docData={docSingleDate}
-                        docId={folderId}
+                        docId={docId ? docId : folderID}
                         userId={user_id}
                         docFile={docSingleDate['@microsoft.graph.downloadUrl']}
                         setDocPreview={setDocPreview}
@@ -313,21 +324,23 @@ export default function SharePointDocument({ emp_user_type, user_id, folderId })
                                 loadingBtn={loadingBtn}
                                 SaveBulkDocument={SaveBulkDocument} />
                             {/* Breadcrumbs */}
-                            <Breadcrumbs
-                                data={breadcrumbData}
-                                setFolderID={setFolderID} />
+                            {breadcrumbData &&
+                                <Breadcrumbs
+                                    data={breadcrumbData}
+                                    setFolderID={setFolderID} />}
                             {/* List of documents docTypeList */}
-                            <FolderList
-                                docTypeList={docTypeList}
-                                setFolderID={setFolderID}
-                                setDocTypeName={setDocTypeName}
-                                folderID={folderID}
-                                showDropDown={showDropDown}
-                                setShowDropDown={setShowDropDown}
-                                setDocSingleDate={setDocSingleDate}
-                                setEditNameForm={setEditNameForm}
-                                ShowDeleteAlert={ShowDeleteAlert}
-                                setDocPreview={setDocPreview} />
+                            {docTypeList &&
+                                <FolderList
+                                    docTypeList={docTypeList}
+                                    setFolderID={setFolderID}
+                                    setDocTypeName={setDocTypeName}
+                                    folderID={folderID}
+                                    showDropDown={showDropDown}
+                                    setShowDropDown={setShowDropDown}
+                                    setDocSingleDate={setDocSingleDate}
+                                    setEditNameForm={setEditNameForm}
+                                    ShowDeleteAlert={ShowDeleteAlert}
+                                    setDocPreview={setDocPreview} />}
                         </div>
                         {editNameForm &&
                             <EditDocNameFOrm

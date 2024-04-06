@@ -121,13 +121,13 @@ function Notifications(
       {type === "" ?
 
         <span title="Chat Notification">
-        <FaRegBell style={{ cursor: "pointer" }} className="text-white bold mx-5"
+          <FaRegBell style={{ cursor: "pointer" }} className="text-white bold mx-5"
             onClick={() => {
               setshow(true)
               setApicall(true)
             }} />
         </span> :
-        <span title="Mention Notification "className="d-none">
+        <span title="Mention Notification ">
           <CgFileDocument style={{ cursor: "pointer" }} className="text-white  mx-5"
             onClick={() => {
               setshow(true)
@@ -255,12 +255,13 @@ function Notifications(
                             : data.subject === 'interview_scheduled'
                               ? '/interview'
                               : data.subject === 'mention_document'
-                                ? `/${data.employee_id}?docId=${data.mention_id}`
+                                ? `/${data.employee_id}?docId=${data.mention_id}&docParentId=${data.notif_json}`
                                 : data.subject === 'mention_partner'
                                   ? `/${data.employee_id}?partner=${data.from_id}`
                                   : data.subject === 'mention_partnerChat'
                                     ? `/partner_profile?partner=${data.employee_id}` : ''
                       }
+                      
                       onClick={() => {
                         try {
                           setshow(false);
@@ -276,6 +277,7 @@ function Notifications(
                       }}
                       className="text-dark text-decoration-none d-flex justify-content-between"
                     >
+                      {console.log(JSON.parse(JSON.stringify(data.notif_json.replace("/"," "))))}
                       <div className="d-flex align-items-center">
                         <div
                           className={`circle-48 mx-2 text-center text-capitalize  text-white font-weight-bold  ${determineBackgroundColor(data)}`}

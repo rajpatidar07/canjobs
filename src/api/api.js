@@ -715,9 +715,10 @@ export const ADocAnnotation = async (
   DocUrl,
   Senderemail,
   employee_id,
-  assigned_by_id
+  assigned_by_id,
+  docPartentId
 ) => {
-  console.log(AssignUserType, assineduserid)
+  console.log(docPartentId)
   const response = await axios.post(
     `${API_URL}admin/docTaskAdd`,
     //Old json {
@@ -754,6 +755,7 @@ export const ADocAnnotation = async (
       y_axis: y,
       type: type,
       employee_id: employee_id,
+      doc_parent_id:docPartentId
     },
     {
       headers: {
@@ -885,6 +887,49 @@ export const SendReplyCommit = async (
   );
   return response;
 };
+/*Api to Send Reply for document comments */
+export const SendReplyCommitSharepoint = async (
+  data,
+  msg,
+  recid,
+  adminType,
+  type,
+  senderId,
+  senderType,
+  employee_id
+) => {
+  console.log("doc_id" + data.doc_id,
+    "employee_id" + employee_id,
+    "task_id" + data.id,
+    "sender_id" + senderId,
+    "sender_type" + senderType,
+    "receiver_id" + recid,
+    "receiver_type" + adminType,
+    "msg" + msg,
+    "type" + type)
+  const response = await axios.post(
+    `${API_URL}admin/sendMsg`,
+    {
+      "doc_id": data.doc_id,
+      "employee_id": employee_id,
+      "task_id": data.id,
+      "sender_id": senderId,
+      "sender_type": senderType,
+      "receiver_id": recid,
+      "receiver_type": adminType,
+      "msg": msg,
+      "type": type
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+};
+
 /*Api to Get Reply for document comments */
 export const GetReplyCommit = async (doc_id) => {
   const response = await axios.post(

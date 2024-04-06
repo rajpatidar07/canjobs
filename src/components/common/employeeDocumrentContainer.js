@@ -12,10 +12,11 @@ import {
   UpdateDocuentcommentAssign,
   // DeleteCommentsAndAssign,
   DeleteDocument,
-  SendReplyCommit,
+  // SendReplyCommit,
   GetReplyCommit,
   UploadDriveDocument,
-  ChangeNameDocument
+  ChangeNameDocument,
+  SendReplyCommitSharepoint
 } from "../../api/api";
 import LazyLoad from "react-lazy-load";
 import { toast } from "react-toastify";
@@ -196,7 +197,7 @@ export default function DocumrentContainer(props) {
     if (docId || (docData && docData.find((item) => item.type === docName))) {
       try {
         let res = await GetCommentsAndAssign(
-          docId ? docId : docData.find((item) => item.type === docName).id,
+          docId ? docId : docData.find((item) => item.type === docName).document_id,
           adminid,
           annotationStatus,
           "document"
@@ -221,10 +222,11 @@ export default function DocumrentContainer(props) {
 
   // Generate a list of comments reply
   const getCommentsReplyList = async () => {
+    console.log(docId)
     if (docId || docData.find((item) => item.type === docName)) {
       try {
         let res = await GetReplyCommit(
-          docId ? docId : docData.find((item) => item.type === docName).id,
+          docId ? docId : docData.find((item) => item.type === docName).document_id,
           adminid,
           annotationStatus
         );
@@ -293,29 +295,29 @@ export default function DocumrentContainer(props) {
           // Condition for Open document from notification
           setNotificationDoc(0);
 
-          if (response.data.data.allData.find((item) => item.id === docId)) {
+          if (response.data.data.allData.find((item) => item.document_id === docId)) {
             setSelecttDocTypeName(
-              response.data.data.allData.find((item) => item.id === docId)
+              response.data.data.allData.find((item) => item.document_id === docId)
                 .type
             );
             setDocTypData(
-              response.data.data.allData.find((item) => item.id === docId)
+              response.data.data.allData.find((item) => item.document_id === docId)
             );
             setDocName(
-              response.data.data.allData.find((item) => item.id === docId)
+              response.data.data.allData.find((item) => item.document_id === docId)
                 .document_name
             );
             setDocId(
-              response.data.data.allData.find((item) => item.id === docId).id
+              response.data.data.allData.find((item) => item.document_id === docId).document_id
             );
             setDocFile(
-              response.data.data.allData.find((item) => item.id === docId)
+              response.data.data.allData.find((item) => item.document_id === docId)
                 .document_url
               //    +
               // `?v=${new Date().getMinutes() + new Date().getSeconds()}`
             );
             setDocTypeName(
-              response.data.data.allData.find((item) => item.id === docId)
+              response.data.data.allData.find((item) => item.document_id === docId)
                 .type
             );
           } else {
@@ -339,9 +341,8 @@ export default function DocumrentContainer(props) {
               //  +
               // `?v=${new Date().getMinutes() + new Date().getSeconds()}`
             );
-            // console.log("object", response.data.data.allData[0].id)
             setDocName(response.data.data.allData[0].document_name);
-            setDocId(response.data.data.allData[0].id);
+            setDocId(response.data.data.allData[0].document_id);
             setDocTypeName(response.data.data.allData[0].type);
             setSelecttDocTypeName(response.data.data.allData[0].type);
             setNotificationDoc(0);
@@ -371,7 +372,7 @@ export default function DocumrentContainer(props) {
               setDocId(
                 response.data.data.allData.find(
                   (item) => item.document_name === docName
-                ).id
+                ).document_id
               );
               // console.log(response.data.data.allData.find(
               //   (item) => item.document_name === docName
@@ -392,31 +393,31 @@ export default function DocumrentContainer(props) {
           } else {
             //Condition for update
             if (
-              response.data.data.allData.find((item) => item.id === docId)
+              response.data.data.allData.find((item) => item.document_id === docId)
             ) {
               setNotificationDoc(0);
 
               setDocTypData(
-                response.data.data.allData.find((item) => item.id === docId)
+                response.data.data.allData.find((item) => item.document_id === docId)
               );
               setDocFile(
-                response.data.data.allData.find((item) => item.id === docId)
+                response.data.data.allData.find((item) => item.document_id === docId)
                   .document_url
                 //   +
                 // `?v=${new Date().getMinutes() + new Date().getSeconds()}`
               );
               setDocName(
-                response.data.data.allData.find((item) => item.id === docId)
+                response.data.data.allData.find((item) => item.document_id === docId)
                   .document_name
               );
               setDocId(
-                response.data.data.allData.find((item) => item.id === docId)
-                  .id
+                response.data.data.allData.find((item) => item.document_id === docId)
+                  .document_id
               );
-              // console.log("dfsfsf", response.data.data.allData.find((item) => item.id === docId)
+              // console.log("dfsfsf", response.data.data.allData.find((item) => item.document_id === docId)
               //   .id)
               setDocTypeName(
-                response.data.data.allData.find((item) => item.id === docId)
+                response.data.data.allData.find((item) => item.document_id === docId)
                   .type
               );
             } else {
@@ -709,7 +710,7 @@ export default function DocumrentContainer(props) {
           docFileBase,
           bulkUpload === "no"
             ? docData[0] === docTypData
-              ? docTypData.id
+              ? docTypData.document_id
               : docId
             : "",
           props.emp_user_type,
@@ -765,7 +766,8 @@ export default function DocumrentContainer(props) {
         });
         setLoadingBtn(false)
         setEditName(false);
-        setDocId(docData[0] === docTypData ? docTypData.id : docId);
+        setDocId(docData[0] === docTypData ? docTypData.document_id : docId);
+        console.log(docTypData.document_id, " ss ",)
         setShowMoreDocType(false);
         setOtherDoc(false);
         setApiCall(true);
@@ -787,7 +789,7 @@ export default function DocumrentContainer(props) {
         // );
         if (commentsList.length > 0) {
           OnHandleUpdateComment(
-            docData[0] === docTypData ? docTypData.id : docId
+            docData[0] === docTypData ? docTypData.document_id : docId
           );
           // OnDeleteComment(docData[0] === docTypData ? docTypData.id : docId);
         }
@@ -967,12 +969,12 @@ export default function DocumrentContainer(props) {
         props.employee_id,
         docFileBase,
         docData[0] === docTypData
-          ? docTypData.id
+          ? docTypData.document_id
           : docId
         ,
         props.emp_user_type,
         docData[0] === docTypData ? docTypData.document_id :
-          docData.find((item) => item.id === docId).document_id,
+          docData.find((item) => item.document_id === docId).document_id,
       )
       if (res.data.message === "Document name updated successfully!") {
         toast.success("Document name updated Successfully", {
@@ -981,7 +983,7 @@ export default function DocumrentContainer(props) {
         });
         setApiCall(true)
         setEditName(false);
-        setDocId(docData[0] === docTypData ? docTypData.id : docId);
+        setDocId(docData[0] === docTypData ? docTypData.document_id : docId);
         setShowMoreDocType(false);
         setOtherDoc(false);
         setApiCall(true);
@@ -1145,7 +1147,7 @@ export default function DocumrentContainer(props) {
     const comment = comments; ///\S+@\S+\.\S+/.test(comments) ? "" : comments;
     let DocId = docId
       ? docId
-      : docData.find((item) => item.type === docName).id;
+      : docData.find((item) => item.type === docName).document_id;
     let sender = allAdmin.find((item) => item.admin_id === admin_id)
       ? allAdmin.find((item) => item.admin_id === admin_id).name
       : "";
@@ -1171,7 +1173,7 @@ export default function DocumrentContainer(props) {
         .map((admin) => admin.admin_id)
         .join(",")
       : "";
-    const assignedUserType ="admin" 
+    const assignedUserType = "admin"
     // allAdmin.filter((item) =>
     //   selectedAdmin.includes(item.email)
     // )
@@ -1247,7 +1249,7 @@ export default function DocumrentContainer(props) {
   const OnHandleUpdateComment = async (originalData) => {
     let updatedData;
     //Condtion to update x and y axis on documet update
-    if (originalData === (docData[0] === docTypData ? docTypData.id : docId)) {
+    if (originalData === (docData[0] === docTypData ? docTypData.document_id : docId)) {
       updatedData = { doc_id: originalData, x_axis: 0, y_axis: 0 };
     } else {
       updatedData = { ...originalData };
@@ -1325,18 +1327,18 @@ export default function DocumrentContainer(props) {
     // let adminType = emailrejex.test(selectedAdminReply)
     //   ? allAdmin.find((item) => item.email === selectedAdminReply).admin_type
     //   : "admin";
-    let sender = allAdmin.find((item) => item.admin_id === admin_id)
-      ? allAdmin.find((item) => item.admin_id === admin_id).name
-      : "";
+    // let sender = allAdmin.find((item) => item.admin_id === admin_id)
+    //   ? allAdmin.find((item) => item.admin_id === admin_id).name
+    //   : "";
     let senderId = allAdmin.find((item) => item.admin_id === admin_id)
       ? allAdmin.find((item) => item.admin_id === admin_id).admin_id
-      : "";
-    let senderEmail = allAdmin.find((item) => item.admin_id === admin_id)
-      ? allAdmin.find((item) => item.admin_id === admin_id).email
-      : "";
+      : admin_id;
+    // let senderEmail = allAdmin.find((item) => item.admin_id === admin_id)
+    //   ? allAdmin.find((item) => item.admin_id === admin_id).email
+    //   : "";
     let senderType = allAdmin.find((item) => item.admin_id === admin_id)
       ? allAdmin.find((item) => item.admin_id === admin_id).admin_type
-      : "";
+      : "admin";
     // let assignedAdminName = allAdmin.find(
     //   (item) => item.email === selectedAdminReply
     // )
@@ -1344,14 +1346,14 @@ export default function DocumrentContainer(props) {
     //   : "";
     // Variables for mentioning admins
     const email = selectedAdminReply || ""; ///\S+@\S+\.\S+/.test(comments) ? comments : "";
-    let assignedAdminName = allAdmin.filter((item) =>
-      selectedAdminReply.includes(item.email)
-    )
-      ? allAdmin
-        .filter((item) => selectedAdminReply.includes(item.email))
-        .map((admin) => admin.name)
-        .join(",")
-      : "";
+    // let assignedAdminName = allAdmin.filter((item) =>
+    //   selectedAdminReply.includes(item.email)
+    // )
+    //   ? allAdmin
+    //     .filter((item) => selectedAdminReply.includes(item.email))
+    //     .map((admin) => admin.name)
+    //     .join(",")
+    //   : "";
     const assignedUserId = allAdmin.filter((item) =>
       selectedAdminReply.includes(item.email)
     )
@@ -1374,20 +1376,32 @@ export default function DocumrentContainer(props) {
       });
     } else {
       try {
-        let res = await SendReplyCommit(
+        // old api
+        // let res = await SendReplyCommit(
+        //   data,
+        //   email,
+        //   replyComment,
+        //   assignedUserId,
+        //   AdminType,
+        //   sender,
+        //   assignedAdminName,
+        //   "document",
+        //   senderId,
+        //   senderEmail,
+        //   senderType,
+        //   props.employee_id //Userid
+        // );
+        // new api for shre point
+        let res = await SendReplyCommitSharepoint(
           data,
-          email,
           replyComment,
           assignedUserId,
           AdminType,
-          sender,
-          assignedAdminName,
           "document",
           senderId,
-          senderEmail,
           senderType,
           props.employee_id //Userid
-        );
+        )
         if (res.data.message === "message sent successfully!") {
           toast.success("Replied Successfully", {
             position: toast.POSITION.TOP_RIGHT,
@@ -1502,8 +1516,8 @@ export default function DocumrentContainer(props) {
           bulkUpload={bulkUpload}
         />
         {/* Annotation  */}
-        {/* <div className="col-md-3 px-2 py-2 comments_and_replies">
-          Add Annotation form
+        <div className="col-md-3 px-2 py-2 comments_and_replies">
+          {/* Add Annotation form */}
           {!hide &&
             docFile &&
             docName &&
@@ -1587,7 +1601,7 @@ export default function DocumrentContainer(props) {
               </form>
             </div>
           ) : null}
-          Comment box
+          {/* Comment box */}
           {user_type === "admin" ? (
             <CommentBox
               commentsReplyList={commentsReplyList}
@@ -1617,7 +1631,7 @@ export default function DocumrentContainer(props) {
               setHide={setHide}
             />
           ) : null}
-        </div> */}
+        </div>
       </div>
     </div>
   );

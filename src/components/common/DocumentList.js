@@ -174,8 +174,8 @@ export default function DocumentList({
                                       //   },
                                       // ];
                                       //Add extention while updating document name
-                                      setDocFileBase(key);
-                                      setBulkUpload("no");
+                                      setDocFileBase(key+"."+item.extension_type);
+                                      // setBulkUpload("no");
                                     }}
                                   />
                                   <button

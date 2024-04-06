@@ -47,6 +47,7 @@ const NewUserProfile = (props) => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const docId = searchParams.get("docId");
+  const docParentId = searchParams.get("docParentId")
   const partnerChat = searchParams.get("partner");
   let navigate = useNavigate();
   const [apiCall, setApiCall] = useState(false);
@@ -59,7 +60,7 @@ const NewUserProfile = (props) => {
   const [showPersonalDetails, setShowPersonalDetails] = useState(false);
   const [showEducation, setShowEducation] = useState(false);
   const [showItSkills, setShowItSkills] = useState(false);
-  const [TabActive, setTabActive] = useState(docId ? "documents" : partnerChat ? "agent conversation" : "profile");
+  const [TabActive, setTabActive] = useState(docId ? "sharepoint"/*"documents"*/ : partnerChat ? "agent conversation" : "profile");
   const [userDetail, setuserDetail] = useState([]);
   const [PersonalDetail, setPersonalDetail] = useState([]);
   const [appliedJob, setAppliedJob] = useState([]);
@@ -70,7 +71,6 @@ const NewUserProfile = (props) => {
   // let id = localStorage.getItem("employee_id");
   const name = localStorage.getItem("name");
   const employeeId = eid;
-
   /*Function to get user Data */
   const UserData = async () => {
     try {
@@ -193,7 +193,7 @@ const NewUserProfile = (props) => {
       setTabActive("payment");
     }
     if (docId) {
-      setTabActive("documents");
+      setTabActive("sharepoint");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiCall, eid, docId]);
@@ -755,7 +755,7 @@ const NewUserProfile = (props) => {
                       className={`${user_type === "company"
                         ? "d-none"
                         : "tab-menu-items nav-item"
-                        } d-none`}
+                        }`}
                     >
                       <Link
                         className={
@@ -1788,12 +1788,6 @@ const NewUserProfile = (props) => {
                     role="tabpanel"
                     aria-labelledby="applieddocuments"
                   >
-                    {/* <LmiaTime
-                      // lmia={props.lmia}
-                      // job={props.job}
-                      // location={location.pathname}
-                      doc="yes"
-                    /> */}
                     {TabActive === "documents" ? (
                       <  DocumrentContainer
                         employee_id={eid}
@@ -1814,22 +1808,18 @@ const NewUserProfile = (props) => {
                     role="tabpanel"
                     aria-labelledby="applieddocuments"
                   >
-                    {/* <LmiaTime
-                      // lmia={props.lmia}
-                      // job={props.job}
-                      // location={location.pathname}
-                      doc="yes"
-                    /> */}
                     {TabActive === "sharepoint" ? (
                       < SharePointDocument
                         user_id={eid}
                         emp_user_type={"employee"}
+                        folderId={docId ? docParentId : PersonalDetail.documents_folder_id}
+                        notification={docId ? "yes" : "no"}
                         docId={docId ? docId : ""}
-                        folderId={PersonalDetail.documents_folder_id}
                       />
 
                     ) : null}
                   </div>
+                  {console.log(docId, PersonalDetail.documents_folder_id)}
                   <div
                     className={
                       TabActive === "visa"

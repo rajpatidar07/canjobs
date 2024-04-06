@@ -10,6 +10,7 @@ export default function FolderList({ setDocPreview, ShowDeleteAlert, setDocSingl
             <div className="file-list">
                 {(docTypeList || []).map((item, index) => (
                     <React.Fragment key={index}>
+                        {console.log(item.id)}
                         <Link className="file-item" to=""
                             onClick={() => {
                                 if (item.folder) {
