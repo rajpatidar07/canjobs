@@ -586,6 +586,7 @@ const AdminDashboard = () => {
                   self={"yes"}
                   apiCall={apiCall}
                   setApiCall={setApiCall}
+                  adminFilterValue={adminId}
                 />
               </div>
             </div>
