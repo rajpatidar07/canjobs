@@ -94,7 +94,7 @@ export default function AgentConversation({
       const newUrl = window.location.pathname;
       window.history.replaceState({}, document.title, newUrl);
     }
-  }, [apicall, partnerChatNav]);
+  }, [apicall, partnerChatNav, userId]);
   //   Get the notes list
   const GetNotesData = async () => {
     try {
@@ -122,7 +122,6 @@ export default function AgentConversation({
   };
   // Submit function to add notes conversation
   const handleMessageSubmit = async (e) => {
-    console.log(page === "employeeProfile" && user_type === "admin", page === "agentProfile" && user_type === "admin", page, user_type)
     e.preventDefault();
     // if (validate()) {
     try {

@@ -86,14 +86,13 @@ export default function SharePointDocument({ emp_user_type, user_id, folderId, n
     const AllShareType = async () => {
         try {
             // if (folderID) {
-            let res = await getSharePointParticularFolders(user_id, emp_user_type, folderID)
+            let res = await getSharePointParticularFolders(user_id, emp_user_type, docId ? folderId : folderID)
             if (res.data.status === 1) {
+                setDocPreview(false)
                 setDocTypeList(res.data.data)
                 setShowDropDown(false)
-                console.log(notification, folderID, "object", res.data.data.find((item) => item.id)
-                )
                 if (notification === "yes") {
-                    if (res.data.data.find((item) => item.id === folderID)) {
+                    if (res.data.data.find((item) => item.id === docId)) {
                         setDocPreview(true)
                         setDocSingleDate(res.data.data.find((item) => item.id === docId))
                         const newUrl = window.location.pathname;
@@ -134,7 +133,7 @@ export default function SharePointDocument({ emp_user_type, user_id, folderId, n
         if (apiCall === true) {
             setApiCall(false)
         }
-    }, [folderID, apiCall])
+    }, [folderID, apiCall, docId, folderId])
     /*On change fnction to upload bulk document in 1 array*/
     const handleBulkFileChange = async (event, id) => {
         const files = event.target.files;

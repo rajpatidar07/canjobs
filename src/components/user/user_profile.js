@@ -195,8 +195,11 @@ const NewUserProfile = (props) => {
     if (docId) {
       setTabActive("sharepoint");
     }
+    if (partnerChat) {
+      setTabActive("agent conversation")
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apiCall, eid, docId]);
+  }, [apiCall, eid, docId, docParentId]);
   /*Function to See uploaded resume */
   const handleViewResume = (pdfUrl) => {
     window.open(`/userpdf?pdfUrl=${encodeURIComponent(pdfUrl)}`, "_blank");
@@ -573,7 +576,9 @@ const NewUserProfile = (props) => {
                                 src="image/icons/envelope.svg"
                                 alt="Email"
                               />
-                              {PersonalDetail.experience} Years
+                              {PersonalDetail.experience === "fresher" || PersonalDetail.experience === "Other" || PersonalDetail.experience === "other"
+                                ? PersonalDetail.experience
+                                : PersonalDetail.experience + " Years"}
                             </span>
                           ) : (
                             ""
@@ -1192,7 +1197,9 @@ const NewUserProfile = (props) => {
                                             src="image/icons/envelope.svg"
                                             alt="Email"
                                           />
-                                          {PersonalDetail.experience} Years
+                                          {PersonalDetail.experisence === "fresher" || PersonalDetail.experience === "Other" || PersonalDetail.experience === "other"
+                                            ? PersonalDetail.experience
+                                            : PersonalDetail.experience + " Years"}
                                         </span>
                                       ) : (
                                         ""
@@ -1816,10 +1823,9 @@ const NewUserProfile = (props) => {
                         notification={docId ? "yes" : "no"}
                         docId={docId ? docId : ""}
                       />
-
                     ) : null}
                   </div>
-                  {console.log(docId, PersonalDetail.documents_folder_id)}
+
                   <div
                     className={
                       TabActive === "visa"

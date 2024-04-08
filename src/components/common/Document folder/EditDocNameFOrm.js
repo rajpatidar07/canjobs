@@ -8,13 +8,11 @@ export default function EditDocNameForm({ EditNameType, setApiCall, userId, name
         ? name :
         name.split(".")[0]);
     const [loading, setLoading] = useState(false);
-    console.log(EditNameType)
     const onEditNameClick = async () => {
         setLoading(true);
         if (EditNameType === "folder") {
             try {
                 let res = await ChangeFolderNameSharpoint(userId, userType, newName, docId);
-                console.log(res)
                 if (res.data.message ===
                     "Folder name updated successfully!") {
                     toast.success(

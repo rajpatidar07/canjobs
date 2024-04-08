@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 function EmployeeFooter() {
   // const [showLogin, setShowLogin] = useState(false);
   // const [showSingUp, setShowSingUp] = useState(false);
+  let token = localStorage.getItem("token")
+  let userType = localStorage.getItem("userType")
   return (
     <footer className="footer bg-ebony-clay dark-mode-texts">
       <div className="container">
@@ -37,12 +39,14 @@ function EmployeeFooter() {
               data-aos-once="true"
             >
               {/* <!-- cta-btns start --> */}
-              <div className="btns d-flex justify-content-xl-end justify-content-center align-items-xl-center flex-wrap h-100  mx-n4">
+              <div className={token
+                ? "d-none"
+                : "btns d-flex justify-content-xl-end justify-content-center align-items-xl-center flex-wrap h-100  mx-n4"}>
                 {/* <!-- Modal for Login--> */}
                 <Link
                   className="btn btn-outline-gallery btn-xl mx-4 mt-6 text-uppercase"
                   to={"/candidate_login"}
-                  // onClick={() => setShowLogin(true)}
+                // onClick={() => setShowLogin(true)}
                 >
                   Log in
                 </Link>
@@ -54,7 +58,7 @@ function EmployeeFooter() {
                 <Link
                   className="btn btn-green btn-h-60 btn-xl mx-4 mt-6 text-uppercase"
                   to={"/candidate_signup"}
-                  // onClick={() => setShowSingUp(true)}
+                // onClick={() => setShowSingUp(true)}
                 >
                   Sign up
                 </Link>
@@ -143,7 +147,7 @@ function EmployeeFooter() {
                       <Link
                         to={"/candidate_login"}
                         // onClick={() => setShowLogin(true)}
-                        className="heading-default-color font-size-4 font-weight-normal"
+                        className={userType === "user" ? "d-none" : "heading-default-color font-size-4 font-weight-normal"}
                       >
                         User Login
                       </Link>
@@ -152,7 +156,7 @@ function EmployeeFooter() {
                       <Link
                         to={"/client_login"}
                         // onClick={() => setShowSingUp(true)}
-                        className="heading-default-color font-size-4 font-weight-normal"
+                        className={userType === "company" ? "d-none" : "heading-default-color font-size-4 font-weight-normal"}
                       >
                         Client Login
                       </Link>
@@ -161,7 +165,7 @@ function EmployeeFooter() {
                       <Link
                         className="heading-default-color font-size-4 font-weight-normal"
                         to={"/partnerlogin"}
-                        // onClick={() => setShowCompanyLogin(true)}
+                      // onClick={() => setShowCompanyLogin(true)}
                       >
                         Partner Login
                       </Link>

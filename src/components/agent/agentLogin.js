@@ -108,7 +108,6 @@ export default function AgentLogin() {
     if (state.forget_email) {
       try {
         const Response = await ForgotAgentPasswordApi(state);
-        console.log(Response);
         if (Response.status === 1 || Response.message === "Sent you a mail") {
           toast.success("Email sent Successfully", {
             position: toast.POSITION.TOP_RIGHT,

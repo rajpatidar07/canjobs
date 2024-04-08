@@ -263,7 +263,7 @@ function CompanySingupForm(props) {
           }
         })
         .catch((err) => {
-          console.log(err.data);
+          console.log(err);
         });
     }
   }, []);

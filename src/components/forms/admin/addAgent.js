@@ -233,7 +233,7 @@ function AddAgent(props) {
   // USER agent PROFILE UPDATE SUBMIT BUTTON
   const onAgentProfileUpdateClick = async (event) => {
     event.preventDefault();
-    console.log(errors, state);
+    // console.log(errors, state);
     if (validate()) {
       setLoading(true);
       try {

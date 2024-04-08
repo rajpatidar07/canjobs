@@ -17,7 +17,6 @@ export default function PreviewDocument({ setFolderID,
     setDocPreview,
     setDocSingleDate,
 }) {
-    console.log(docId)
     let admin_id = localStorage.getItem("admin_id")
     let user_type = localStorage.getItem("userType")
     let docFileExt = docData.file.mimeType.split("/")[1]

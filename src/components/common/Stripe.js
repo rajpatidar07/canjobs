@@ -29,7 +29,6 @@ const CheckoutForm = ({
     // Trigger form validation and wallet collection
     try {
       const { error: submitError } = await elements.submit();
-      console.log(submitError);
       if (submitError) {
         // Show error to your customer
         setErrorMessage(submitError.message);

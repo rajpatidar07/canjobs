@@ -255,18 +255,19 @@ function Notifications(
                             : data.subject === 'interview_scheduled'
                               ? '/interview'
                               : data.subject === 'mention_document'
-                                ? `/${data.employee_id}?docId=${data.mention_id}&docParentId=${data.notif_json}`
+                                ? `/${data.employee_id}?docId=${data.mention_id}&docParentId=${data.notif_json ? JSON.parse(data.notif_json).doc_parent_id : ""}`
                                 : data.subject === 'mention_partner'
                                   ? `/${data.employee_id}?partner=${data.from_id}`
                                   : data.subject === 'mention_partnerChat'
                                     ? `/partner_profile?partner=${data.employee_id}` : ''
                       }
-                      
+
                       onClick={() => {
                         try {
                           setshow(false);
                           ReadNotification(data.id);
                           setApicall(true);
+                          window.history.replaceState({}, document.title, "/");
                           if (data.subject === 'mention_partnerChat') {
                             localStorage.setItem("agent_id", data.employee_id)
                           }
@@ -277,7 +278,6 @@ function Notifications(
                       }}
                       className="text-dark text-decoration-none d-flex justify-content-between"
                     >
-                      {console.log(JSON.parse(JSON.stringify(data.notif_json.replace("/"," "))))}
                       <div className="d-flex align-items-center">
                         <div
                           className={`circle-48 mx-2 text-center text-capitalize  text-white font-weight-bold  ${determineBackgroundColor(data)}`}

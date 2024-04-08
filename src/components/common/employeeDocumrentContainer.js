@@ -222,7 +222,6 @@ export default function DocumrentContainer(props) {
 
   // Generate a list of comments reply
   const getCommentsReplyList = async () => {
-    console.log(docId)
     if (docId || docData.find((item) => item.type === docName)) {
       try {
         let res = await GetReplyCommit(
