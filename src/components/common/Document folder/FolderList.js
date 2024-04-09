@@ -46,7 +46,7 @@ export default function FolderList({
                   setShowDropDown(item.id);
                 }}
               >
-                <div className="file-background">
+                <div className="file-background h-100">
                   {item.folder && (
                     <FaFolder
                       style={{
