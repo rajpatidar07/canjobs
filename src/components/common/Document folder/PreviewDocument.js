@@ -51,6 +51,8 @@ export default function PreviewDocument({
   useEffect(() => {
     setSelectedAnnotation(null);
     getCommentsList();
+    AdminData()
+    setFolderID("")
     if (commenAapiCall === true) {
       setCommentApiCall(false);
     }
@@ -146,10 +148,10 @@ export default function PreviewDocument({
   };
   // Generate a list of comments from the state for image annotation
   const getCommentsList = async () => {
-    if (docId) {
+    if (docData.id) {
       try {
         let res = await GetCommentsAndAssign(
-          docId,
+          docData.id,//docId,
           adminid,
           annotationStatus,
           "document"
@@ -174,9 +176,9 @@ export default function PreviewDocument({
 
   // Generate a list of comments reply
   const getCommentsReplyList = async () => {
-    if (docId) {
+    if (docData.id) {
       try {
-        let res = await GetReplyCommit(docId, adminid, annotationStatus);
+        let res = await GetReplyCommit(docData.id, adminid, annotationStatus);
         if (res.data.status === (1 || "1")) {
           setCommentsReplyList(res.data.data);
         }
@@ -197,7 +199,7 @@ export default function PreviewDocument({
 
     const subject = "";
     const comment = comments; ///\S+@\S+\.\S+/.test(comments) ? "" : comments;
-    let DocId = docId;
+    let DocId = docData.id//docId;
     //   ? docId
     //   : docData.find((item) => item.type === docName).id;
     let sender = allAdmin.find((item) => item.admin_id === admin_id)
@@ -213,17 +215,17 @@ export default function PreviewDocument({
       selectedAdmin.includes(item.email)
     )
       ? allAdmin
-          .filter((item) => selectedAdmin.includes(item.email))
-          .map((admin) => admin.name)
-          .join(",")
+        .filter((item) => selectedAdmin.includes(item.email))
+        .map((admin) => admin.name)
+        .join(",")
       : "";
     const assignedUserId = allAdmin.filter((item) =>
       selectedAdmin.includes(item.email)
     )
       ? allAdmin
-          .filter((item) => selectedAdmin.includes(item.email))
-          .map((admin) => admin.admin_id)
-          .join(",")
+        .filter((item) => selectedAdmin.includes(item.email))
+        .map((admin) => admin.admin_id)
+        .join(",")
       : "";
     const assignedUserType = "admin";
     // allAdmin.filter((item) =>
@@ -404,24 +406,24 @@ export default function PreviewDocument({
       selectedAdminReply.includes(item.email)
     )
       ? allAdmin
-          .filter((item) => selectedAdminReply.includes(item.email))
-          .map((admin) => admin.name)
-          .join(",")
+        .filter((item) => selectedAdminReply.includes(item.email))
+        .map((admin) => admin.name)
+        .join(",")
       : "";
     const assignedUserId = allAdmin.filter((item) =>
       selectedAdminReply.includes(item.email)
     )
       ? allAdmin
-          .filter((item) => selectedAdminReply.includes(item.email))
-          .map((admin) => admin.admin_id)
-          .join(",")
+        .filter((item) => selectedAdminReply.includes(item.email))
+        .map((admin) => admin.admin_id)
+        .join(",")
       : "";
     const AdminType = //localStorage.getItem("admin_type");
       allAdmin.filter((item) => selectedAdminReply.includes(item.email))
         ? allAdmin
-            .filter((item) => selectedAdminReply.includes(item.email))
-            .map((admin) => admin.admin_type)
-            .join(",")
+          .filter((item) => selectedAdminReply.includes(item.email))
+          .map((admin) => admin.admin_type)
+          .join(",")
         : "";
     if (replyComment === "" && email === "") {
       toast.error("Comment or email cannot be empty!", {
@@ -469,7 +471,7 @@ export default function PreviewDocument({
         className={`${
           user_type === "admin"
             ? "col-md-8 col-lg-8 col-sm-9"
-            : "col-md-8 col-lg-8 col-sm-9"
+            : "col-md-12 col-lg-12 col-sm-12"
         } p-2 bg-dark`}
       >
         <div className="back_btn_div">
@@ -487,6 +489,7 @@ export default function PreviewDocument({
               justifyContent: "center",
               alignItems: "center",
             }}
+            to=""
             onClick={() => {
               setDocSingleDate("");
               setDocPreview(false);
@@ -532,7 +535,7 @@ export default function PreviewDocument({
                           >
                             {docData &&
                               (docData.name &&
-                              docData.name.toLowerCase().includes("imm") ? (
+                                docData.name.toLowerCase().includes("imm") ? (
                                 <iframe
                                   src={docFile}
                                   style={{
@@ -548,7 +551,7 @@ export default function PreviewDocument({
                                     key={docData.id}
                                     fileType={
                                       docFileExt ===
-                                      "vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                        "vnd.openxmlformats-officedocument.wordprocessingml.document"
                                         ? "docx"
                                         : docFileExt
                                     }
@@ -573,13 +576,12 @@ export default function PreviewDocument({
                     )}
                   </React.Fragment>
                   <Link
-                    className={` ${
-                      user_type === "admin"
-                        ? `btn-sm mt-7 doc_btn ${
-                            isAnnotationMode ? "btn-primary " : "btn-secondary"
-                          }`
+                    to=""
+                    className={` ${user_type === "admin"
+                        ? `btn-sm mt-7 doc_btn ${isAnnotationMode ? "btn-primary " : "btn-secondary"
+                        }`
                         : "d-none"
-                    }`}
+                      }`}
                     style={{
                       position: "absolute",
                       top: "10&",
@@ -636,12 +638,12 @@ export default function PreviewDocument({
                           style={{
                             color:
                               selectedAnnotation &&
-                              selectedAnnotation.x_axis === annotation.x_axis &&
-                              selectedAnnotation.y_axis === annotation.y_axis
+                                selectedAnnotation.x_axis === annotation.x_axis &&
+                                selectedAnnotation.y_axis === annotation.y_axis
                                 ? "blue"
                                 : annotation.status === "1"
-                                ? "green"
-                                : "red",
+                                  ? "green"
+                                  : "red",
                             display:
                               annotation.status === "1" ? "none" : "block",
                           }}
@@ -659,13 +661,13 @@ export default function PreviewDocument({
       </div>
       <div className="col-md-4 col-lg-4 col-sm-3 px-2 py-2 comments_and_replies">
         {docFile &&
-        user_type === "admin" &&
-        selectedAnnotation && //condition for imm pdf
-        (docData.name && docData.name.toLowerCase().includes("imm")
-          ? replyCommentClick === undefined ||
+          user_type === "admin" &&
+          selectedAnnotation && //condition for imm pdf
+          (docData.name && docData.name.toLowerCase().includes("imm")
+            ? replyCommentClick === undefined ||
             replyCommentClick === "" ||
             replyCommentClick === null
-          : addCommentFlag === true) ? (
+            : addCommentFlag === true) ? (
           <div
             style={
               {
@@ -765,7 +767,7 @@ export default function PreviewDocument({
             setAddCommentFlag={setAddCommentFlag}
             setFilteredEmails={setFilteredEmails}
             docTypData={docData}
-            // setHide={setHide}
+          // setHide={setHide}
           />
         ) : null}
       </div>

@@ -18,10 +18,12 @@ export default function FolderList({
   saveBtn,
   loadingBtn,
   SaveBulkDocument,
+  setSaveBtn,
+  setDocFileBase,
 }) {
   return (
     <div className="bg-light" style={{ minHeight: "200px" }}>
-      <div className="file-list">
+      <div className="file-list pb-8">
         {(docTypeList || []).map((item, index) => (
           <React.Fragment key={index}>
             <div
@@ -87,7 +89,7 @@ export default function FolderList({
                   {item.file &&
                     (item.file.mimeType === "application/msword" ||
                       item.file.mimeType ===
-                        "application/vnd.openxmlformats-officedocument.wordprocessingml.document") && (
+                      "application/vnd.openxmlformats-officedocument.wordprocessingml.document") && (
                       <BsFiletypeDocx
                         // className="file-icon"
                         style={{
@@ -140,6 +142,8 @@ export default function FolderList({
           saveBtn={saveBtn}
           loadingBtn={loadingBtn}
           SaveBulkDocument={SaveBulkDocument}
+          setSaveBtn={setSaveBtn}
+          setDocFileBase={setDocFileBase}
         />
       </div>
     </div>

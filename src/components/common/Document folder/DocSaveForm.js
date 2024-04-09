@@ -1,10 +1,13 @@
 import React from "react";
-import { AiOutlineCloudUpload } from "react-icons/ai";
+// import { AiOutlineCloudUpload } from "react-icons/ai";
 export default function DocSaveForm({
   handleBulkFileChange,
   saveBtn,
   loadingBtn,
   SaveBulkDocument,
+  setSaveDoc,
+  setSaveBtn,
+  setDocFileBase,
 }) {
   return (
     <div className="d-flex align-items-center">
@@ -40,7 +43,7 @@ export default function DocSaveForm({
         {saveBtn === true ? (
           <div className="doc_upload_col">
             {loadingBtn ? (
-              <button className="btn btn-primary px-12" type="button" disabled>
+              <button className="btn btn-primary doc_btn" type="button" disabled>
                 <span
                   className="spinner-border spinner-border-sm "
                   role="status"
@@ -49,17 +52,33 @@ export default function DocSaveForm({
                 <span className="sr-only">Loading...</span>
               </button>
             ) : (
-              <button
-                className="btn btn-primary doc_btn"
-                onClick={SaveBulkDocument}
-                style={{
-                  fontSize: 14,
-                  marginRight: "auto",
-                  marginLeft: "auto",
-                }}
-              >
-                Save Documents
-              </button>
+              <>
+                <button
+                  className="btn btn-primary doc_btn"
+                  onClick={SaveBulkDocument}
+                  style={{
+                    fontSize: 14,
+                    marginRight: "auto",
+                    marginLeft: "auto",
+                  }}
+                >
+                  Save Documents
+                </button>
+                <button
+                  className="btn btn-secondary doc_btn"
+                  onClick={() => {
+                    setSaveBtn(false)
+                    setDocFileBase("")
+                  }}
+                  style={{
+                    fontSize: 14,
+                    marginRight: "auto",
+                    marginLeft: "auto",
+                  }}
+                >
+                  Cancel
+                </button>
+              </>
             )}
           </div>
         ) : null}

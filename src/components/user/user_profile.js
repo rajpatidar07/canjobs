@@ -42,7 +42,7 @@ import AgentConversation from "../common/AgentConversation";
 import UserTimline from "../common/UserTimline";
 import InterviewHistoryTable from "../common/InterviewHistoryTable";
 import SharePointDocument from "../common/Document folder/SharePointDocument";
-import AdobePDFViewer from "../common/adobeFile";
+// import AdobePDFViewer from "../common/adobeFile";
 const NewUserProfile = (props) => {
   const { eid } = useParams();
   const location = useLocation();
@@ -688,7 +688,7 @@ const NewUserProfile = (props) => {
                   </ul> */}
                   {/*----Profile Header----*/}
                   <ul
-                    className={`nav border-top border-bottom border-mercury user_profile_tab ${user_type === "admin" ? "" : "mt-13"
+                    className={`nav border-top border-bottom border-mercury user_profile_tab ${user_type === "admin" ? "" : "mt-md-13"
                       }`}
                     id="myTab"
                     role="tablist"
@@ -739,7 +739,7 @@ const NewUserProfile = (props) => {
                       className={`${user_type === "company"
                         ? "d-none"
                         : "tab-menu-items nav-item"
-                        }`}
+                        } d-none`}
                     >
                       <Link
                         className={
@@ -776,7 +776,7 @@ const NewUserProfile = (props) => {
                         aria-selected="true"
                         onClick={() => setTabActive("sharepoint")}
                       >
-                        Share point Document
+                         Documents
                       </Link>
                     </li>
                     <li
