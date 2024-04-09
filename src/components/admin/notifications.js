@@ -3,23 +3,22 @@ import React, { useEffect, useState } from "react";
 // import NotificationsCard from "./notificationsCard";
 import {
   ReadNotification,
-  getAllMentionNotification /* getAllAdminNotification,*/
+  getAllMentionNotification /* getAllAdminNotification,*/,
 } from "../../api/api";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import { CgFileDocument } from "react-icons/cg";
 import { FaRegBell } from "react-icons/fa";
-function Notifications(
-  { type
-    // userId,
-    // setDocId,
-    // setNotificationDoc,
-    // setSelecttDocTypeName,
-    // notificationApiCall,
-    // setNotificationApiCall,
-    // user_type,
-  }
-) {
+function Notifications({
+  type,
+  // userId,
+  // setDocId,
+  // setNotificationDoc,
+  // setSelecttDocTypeName,
+  // notificationApiCall,
+  // setNotificationApiCall,
+  // user_type,
+}) {
   const [show, setshow] = useState(false);
   let [totalNotif, setTotalNotif] = useState();
   let [notification, setNotiication] = useState([]);
@@ -31,22 +30,31 @@ function Notifications(
     user_type === "admin"
       ? localStorage.getItem("admin_id")
       : user_type === "user"
-        ? localStorage.getItem("employee_id")
-        : user_type === "agent"
-          ? localStorage.getItem("agent_id")
-          : "";
+      ? localStorage.getItem("employee_id")
+      : user_type === "agent"
+      ? localStorage.getItem("agent_id")
+      : "";
   /*notification API Call*/
   const Notiication = async () => {
     try {
-      let Response = await getAllMentionNotification(type, loginuserId, user_type === "admin" ? admin_type : user_type, "", 1, recordsPerPage,);//getAllAdminNotification(); //(new) getAllMentionNotification(loginuserId); //getAllAdminNotification();
+      let Response = await getAllMentionNotification(
+        type,
+        loginuserId,
+        user_type === "admin" ? admin_type : user_type,
+        "",
+        1,
+        recordsPerPage
+      ); //getAllAdminNotification(); //(new) getAllMentionNotification(loginuserId); //getAllAdminNotification();
       if (Response.Data.data.length === 0) {
         setNotiication([]);
         setTotalNotif();
       } else {
         setNotiication(Response.Data.data);
-        setTotalNotif(Response.Data.data.filter((item) =>
-          item.is_read === 0 || item.is_read === "0"
-        ).length);
+        setTotalNotif(
+          Response.Data.data.filter(
+            (item) => item.is_read === 0 || item.is_read === "0"
+          ).length
+        );
       }
     } catch (err) {
       console.log(err);
@@ -63,7 +71,8 @@ function Notifications(
     }
   }, [
     apicall,
-    localStorage.getItem("callNotification"), recordsPerPage /*notificationApiCall*/,
+    localStorage.getItem("callNotification"),
+    recordsPerPage /*notificationApiCall*/,
   ]);
   /*Function to set the color code to the background of the user name */
   const determineBackgroundColor = (commentItem) => {
@@ -118,22 +127,29 @@ function Notifications(
         className="fas fa-regular fa-bell text-dark mx-5"
         onClick={() => setshow(true)}
       ></i> */}
-      {type === "" ?
-
-        <span title="Chat Notification">
-          <FaRegBell style={{ cursor: "pointer" }} className="text-white bold mx-5"
+      {type === "" ? (
+        <span title="Chat Notifications">
+          <FaRegBell
+            style={{ cursor: "pointer" }}
+            className="text-white bold mx-5"
             onClick={() => {
-              setshow(true)
-              setApicall(true)
-            }} />
-        </span> :
-        <span title="Mention Notification ">
-          <CgFileDocument style={{ cursor: "pointer" }} className="text-white  mx-5"
+              setshow(true);
+              setApicall(true);
+            }}
+          />
+        </span>
+      ) : (
+        <span title="Document Notifications">
+          <CgFileDocument
+            style={{ cursor: "pointer" }}
+            className="text-white  mx-5"
             onClick={() => {
-              setshow(true)
-              setApicall(true)
-            }} />
-        </span>}
+              setshow(true);
+              setApicall(true);
+            }}
+          />
+        </span>
+      )}
       {totalNotif > 0 ? (
         <div className="bg-primary text-white notification_count">
           {totalNotif}
@@ -160,9 +176,11 @@ function Notifications(
               onClick={() => setshow(false)}
             ></i>
           </div>
-          <div className="row global_search_result notofications_list  px-5 "
+          <div
+            className="row global_search_result notofications_list  px-5 "
             onScroll={handelScroll}
-            style={{ overflowY: "scroll", height: "590px" }}>
+            style={{ overflowY: "scroll", height: "590px" }}
+          >
             {notification.length > 0 && (
               <ul className="w-100 col p-0 ">
                 {notification.map((data) => (
@@ -240,36 +258,42 @@ function Notifications(
                     key={data.id}
                     title={data.message}
                     className={
-                      data.is_read === '1'
-                        ? 'dropdown-item border-bottom border-hit-gray font-size-3 text-wrap'
-                        : 'font-weight-bold bg-light dropdown-item border-bottom border-hit-gray font-size-3 text-wrap'
+                      data.is_read === "1"
+                        ? "dropdown-item border-bottom border-hit-gray font-size-3 text-wrap"
+                        : "font-weight-bold bg-light dropdown-item border-bottom border-hit-gray font-size-3 text-wrap"
                     }
-                    style={{ padding: '10px', borderBottom: '1px solid #ddd' }}
+                    style={{ padding: "10px", borderBottom: "1px solid #ddd" }}
                   >
                     <Link
                       to={
-                        data.subject === 'added_new_job'
-                          ? '/job'
-                          : data.subject === 'applied_on_job'
-                            ? '/responses'
-                            : data.subject === 'interview_scheduled'
-                              ? '/interview'
-                              : data.subject === 'mention_document'
-                                ? `/${data.employee_id}?docId=${data.mention_id}&docParentId=${data.notif_json ? JSON.parse(data.notif_json).doc_parent_id : ""}`
-                                : data.subject === 'mention_partner'
-                                  ? `/${data.employee_id}?partner=${data.from_id}`
-                                  : data.subject === 'mention_partnerChat'
-                                    ? `/partner_profile?partner=${data.employee_id}` : ''
+                        data.subject === "added_new_job"
+                          ? "/job"
+                          : data.subject === "applied_on_job"
+                          ? "/responses"
+                          : data.subject === "interview_scheduled"
+                          ? "/interview"
+                          : data.subject === "mention_document"
+                          ? `/${data.employee_id}?docId=${
+                              data.mention_id
+                            }&docParentId=${
+                              data.notif_json
+                                ? JSON.parse(data.notif_json).doc_parent_id
+                                : ""
+                            }`
+                          : data.subject === "mention_partner"
+                          ? `/${data.employee_id}?partner=${data.from_id}`
+                          : data.subject === "mention_partnerChat"
+                          ? `/partner_profile?partner=${data.employee_id}`
+                          : ""
                       }
-
                       onClick={() => {
                         try {
                           setshow(false);
                           ReadNotification(data.id);
                           setApicall(true);
                           window.history.replaceState({}, document.title, "/");
-                          if (data.subject === 'mention_partnerChat') {
-                            localStorage.setItem("agent_id", data.employee_id)
+                          if (data.subject === "mention_partnerChat") {
+                            localStorage.setItem("agent_id", data.employee_id);
                           }
                         } catch (err) {
                           console.log(err);
@@ -280,26 +304,28 @@ function Notifications(
                     >
                       <div className="d-flex align-items-center">
                         <div
-                          className={`circle-48 mx-2 text-center text-capitalize  text-white font-weight-bold  ${determineBackgroundColor(data)}`}
+                          className={`circle-48 mx-2 text-center text-capitalize  text-white font-weight-bold  ${determineBackgroundColor(
+                            data
+                          )}`}
                         >
-                          {data.reciver_name ? data.reciver_name.charAt(0) : ''}
+                          {data.reciver_name ? data.reciver_name.charAt(0) : ""}
                         </div>
                         <div className="flex-grow-1">
                           <div className="d-flex align-items-center justify-content-between">
-                            <div className="font-weight-bold text-truncate w-60 intervire-msg"
-                            >
-                              {data.reciver_name ? data.reciver_name : ''}
+                            <div className="font-weight-bold text-truncate w-60 intervire-msg">
+                              {data.reciver_name ? data.reciver_name : ""}
                             </div>
                           </div>
-                          <div className="text-muted mw-80" style={{ fontSize: '14px' }}
+                          <div
+                            className="text-muted mw-80"
+                            style={{ fontSize: "14px" }}
                           >
                             {data.message}
                           </div>
                         </div>
                       </div>
-                      <div className="text-muted font-size-2 line-height-1 ml-2"
-                      >
-                        {moment(data.created_at).format('HH:mm')}
+                      <div className="text-muted font-size-2 line-height-1 ml-2">
+                        {moment(data.created_at).format("HH:mm")}
                       </div>
                     </Link>
                   </li>
@@ -309,7 +335,7 @@ function Notifications(
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 }
 
