@@ -300,150 +300,158 @@ export default function SharePointDocument({
     }
   }
   return (
-    <div className="document_section">
-      {docPreview ? (
-        <PreviewDocument
-          docData={docSingleDate}
-          docId={docId ? docId : folderID}
-          userId={user_id}
-          docFile={docSingleDate["@microsoft.graph.downloadUrl"]}
-          setDocPreview={setDocPreview}
-          setDocSingleDate={setDocSingleDate}
-          setFolderID={setFolderID}
-        />
-      ) : (
-        <div className={"document_container bg-white"}>
-          <div className="row m-0 bg-white justify-content-between p-2">
-            {/* Breadcrumbs */}
-            {docBreadCrumbLoder ?
-              <ul className="breadcrumb">
-                <li className="breadcrumb-item "
-                  style={{ padding: 5, margin: 0, borderRadius: 3 }}>
-                  <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                  <span>Loading...</span>
-                </li>
-              </ul> : (
-                <Breadcrumbs data={breadcrumbData} setFolderID={setFolderID} />
-              )}
-            {/* Button to add folder or type and upload documents */}
-            <div className="new_folder_create d-flex">
-              {docTypeName === "other" ? (
-                <>
-                  <Form.Control
-                    type="text"
-                    value={newType}
-                    placeholder="Enter new type"
-                    height={34}
-                    style={{ Height: 34 }}
-                    onChange={handleNewTypeChange}
-                    className="px-2"
-                  />
-                  <button
-                    className="btn btn-sm btn-primary"
-                    type="button"
-                    style={{ maxHeight: 34, minWidth: "auto" }}
-                    onClick={() => handleDocTypeChange(newType)}
-                  >
-                    Save
-                  </button>
-                  <button
-                    className="btn btn-sm btn-secondry"
-                    type="button"
-                    style={{ maxHeight: 34, minWidth: "auto" }}
-                    onClick={() => setDocTypeName("")}
-                  >
-                    Cancel
-                  </button>
-                </>
-              ) : (
-                <Dropdown>
-                  <Dropdown.Toggle
-                    variant="secondary"
-                    size={"sm"}
-                    style={{ maxHeight: 34 }}
-                    id="dropdown-basic"
-                  >
-                    + Add New Folder
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu
-                    style={{ height: "400px", overflowY: "scroll" }}
-                  >
-                    <Dropdown.Item
-                      onClick={() => handleDocTypeChange("")}
-                      key={-1}
-                    >
-                      Select Folder Name
-                    </Dropdown.Item>
-                    {DocTypeData.map((item, index) => (
-                      <Dropdown.Item
-                        onClick={() => handleDocTypeChange(item)}
-                        key={index}
-                        className="text-capitalize"
+    <>
+      {folderId
+        ? <div className="document_section">
+          {docPreview ? (
+            <PreviewDocument
+              docData={docSingleDate}
+              docId={docId ? docId : folderID}
+              userId={user_id}
+              docFile={docSingleDate["@microsoft.graph.downloadUrl"]}
+              setDocPreview={setDocPreview}
+              setDocSingleDate={setDocSingleDate}
+              setFolderID={setFolderID}
+            />
+          ) : (
+            <div className={"document_container bg-white"}>
+              <div className="row m-0 bg-white justify-content-between p-2">
+                {/* Breadcrumbs */}
+                {docBreadCrumbLoder ?
+                  <ul className="breadcrumb">
+                    <li className="breadcrumb-item "
+                      style={{ padding: 5, margin: 0, borderRadius: 3 }}>
+                      <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                      <span>Loading...</span>
+                    </li>
+                  </ul> : (
+                    <Breadcrumbs data={breadcrumbData} setFolderID={setFolderID} />
+                  )}
+                {/* Button to add folder or type and upload documents */}
+                <div className="new_folder_create d-flex">
+                  {docTypeName === "other" ? (
+                    <>
+                      <Form.Control
+                        type="text"
+                        value={newType}
+                        placeholder="Enter new type"
+                        height={34}
+                        style={{ Height: 34 }}
+                        onChange={handleNewTypeChange}
+                        className="px-2"
+                      />
+                      <button
+                        className="btn btn-sm btn-primary"
+                        type="button"
+                        style={{ maxHeight: 34, minWidth: "auto" }}
+                        onClick={() => handleDocTypeChange(newType)}
                       >
-                        {item.replaceAll("_", " ")}
-                      </Dropdown.Item>
-                    ))}
-                    <Dropdown.Item onClick={() => handleDocTypeChange("other")}>
-                      Other
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              )}
-            </div>
-          </div>
-          <div className="row m-0 bg-white px-2 pb-2 justify-content-center">
-            {/* List of documents docTypeList */}
-            {docLoder ?
-              <div className="table-responsive main_table_div">
-                <Loader />
-              </div> : (
-                <FolderList
-                  docTypeList={docTypeList}
-                  setFolderID={setFolderID}
-                  setDocTypeName={setDocTypeName}
-                  folderID={folderID}
-                  showDropDown={showDropDown}
-                  setShowDropDown={setShowDropDown}
-                  setDocSingleDate={setDocSingleDate}
-                  setEditNameForm={setEditNameForm}
-                  ShowDeleteAlert={ShowDeleteAlert}
-                  setDocPreview={setDocPreview}
-                  handleBulkFileChange={handleBulkFileChange}
-                  saveBtn={saveBtn}
-                  loadingBtn={loadingBtn}
-                  SaveBulkDocument={SaveBulkDocument}
-                  setSaveBtn={setSaveBtn}
-                  setDocFileBase={setDocFileBase}
+                        Save
+                      </button>
+                      <button
+                        className="btn btn-sm btn-secondry"
+                        type="button"
+                        style={{ maxHeight: 34, minWidth: "auto" }}
+                        onClick={() => setDocTypeName("")}
+                      >
+                        Cancel
+                      </button>
+                    </>
+                  ) : (
+                    <Dropdown>
+                      <Dropdown.Toggle
+                        variant="secondary"
+                        size={"sm"}
+                        style={{ maxHeight: 34 }}
+                        id="dropdown-basic"
+                      >
+                        + Add New Folder
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu
+                        style={{ height: "400px", overflowY: "scroll" }}
+                      >
+                        <Dropdown.Item
+                          onClick={() => handleDocTypeChange("")}
+                          key={-1}
+                        >
+                          Select Folder Name
+                        </Dropdown.Item>
+                        {DocTypeData.map((item, index) => (
+                          <Dropdown.Item
+                            onClick={() => handleDocTypeChange(item)}
+                            key={index}
+                            className="text-capitalize"
+                          >
+                            {item.replaceAll("_", " ")}
+                          </Dropdown.Item>
+                        ))}
+                        <Dropdown.Item onClick={() => handleDocTypeChange("other")}>
+                          Other
+                        </Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  )}
+                </div>
+              </div>
+              <div className="row m-0 bg-white px-2 pb-2 justify-content-center">
+                {/* List of documents docTypeList */}
+                {docLoder ?
+                  <div className="table-responsive main_table_div">
+                    <Loader />
+                  </div> : (
+                    <FolderList
+                      docTypeList={docTypeList}
+                      setFolderID={setFolderID}
+                      setDocTypeName={setDocTypeName}
+                      folderID={folderID}
+                      showDropDown={showDropDown}
+                      setShowDropDown={setShowDropDown}
+                      setDocSingleDate={setDocSingleDate}
+                      setEditNameForm={setEditNameForm}
+                      ShowDeleteAlert={ShowDeleteAlert}
+                      setDocPreview={setDocPreview}
+                      handleBulkFileChange={handleBulkFileChange}
+                      saveBtn={saveBtn}
+                      loadingBtn={loadingBtn}
+                      SaveBulkDocument={SaveBulkDocument}
+                      setSaveBtn={setSaveBtn}
+                      setDocFileBase={setDocFileBase}
+                    />
+                  )}
+              </div>
+              {editNameForm && (
+                <EditDocNameFOrm
+                  userId={user_id}
+                  name={docSingleDate.name}
+                  docId={docSingleDate.id}
+                  userType={emp_user_type}
+                  show={editNameForm}
+                  close={() => setEditNameForm(false)}
+                  setApiCall={setApiCall}
+                  EditNameType={docSingleDate.folder ? "folder" : "file"}
                 />
               )}
-          </div>
-          {editNameForm && (
-            <EditDocNameFOrm
-              userId={user_id}
-              name={docSingleDate.name}
-              docId={docSingleDate.id}
-              userType={emp_user_type}
-              show={editNameForm}
-              close={() => setEditNameForm(false)}
-              setApiCall={setApiCall}
-              EditNameType={docSingleDate.folder ? "folder" : "file"}
-            />
+              <SAlert
+                show={deleteAlert}
+                title={deleteData ? deleteData.name : ""}
+                text="Are you Sure you want to delete !"
+                onConfirm={() =>
+                  DeleteSharepointDocument(
+                    deleteData.id,
+                    deleteData.folder ? "folder" : "document"
+                  )
+                }
+                showCancelButton={true}
+                onCancel={() => CancelDelete()}
+              />
+            </div>
           )}
-          <SAlert
-            show={deleteAlert}
-            title={deleteData ? deleteData.name : ""}
-            text="Are you Sure you want to delete !"
-            onConfirm={() =>
-              DeleteSharepointDocument(
-                deleteData.id,
-                deleteData.folder ? "folder" : "document"
-              )
-            }
-            showCancelButton={true}
-            onCancel={() => CancelDelete()}
-          />
         </div>
-      )}
-    </div>
+        : <div className="chat_box_container bg-white row m-0">
+          <div className="chat-container d-flex justify-content-center align-items-center w-100">
+            Update the user profile to get a folder
+          </div>
+        </div>
+      }</>
   );
 }
