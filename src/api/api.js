@@ -3208,3 +3208,21 @@ export const DeleteFolderOrDocument = async (FolderId, type) => {
   );
   return response;
 };
+// /Api function to Get document url for sharepoint 
+export const GetSharePointDocUrl = async (Id) => {
+  const response = await axios.post(
+    `${API_URL}admin/getDocPreviewUrl_new`,
+    {
+      "driveId": driveId,
+      "doc_id": Id,
+    }
+    ,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+};

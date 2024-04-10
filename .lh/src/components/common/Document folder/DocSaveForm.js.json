@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 8,
+            "activePatchIndex": 9,
             "patches": [
                 {
                     "date": 1711975135947,
@@ -40,6 +40,10 @@
                 {
                     "date": 1712651976176,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,9 +42,9 @@\n         </div>\r\n         {saveBtn === true ? (\r\n           <div className=\"doc_upload_col\">\r\n             {loadingBtn ? (\r\n-              <button className=\"btn btn-primary px-12\" type=\"button\" disabled>\r\n+              <button className=\"btn btn-primary doc_btn\" type=\"button\" disabled>\r\n                 <span\r\n                   className=\"spinner-border spinner-border-sm \"\r\n                   role=\"status\"\r\n                   aria-hidden=\"true\"\r\n"
+                },
+                {
+                    "date": 1712664980000,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -42,13 +42,20 @@\n         </div>\r\n         {saveBtn === true ? (\r\n           <div className=\"doc_upload_col\">\r\n             {loadingBtn ? (\r\n-              <button className=\"btn btn-primary doc_btn\" type=\"button\" disabled>\r\n+              <button className=\"btn btn-primary doc_btn\"\r\n+                style={{\r\n+                  fontSize: 14,\r\n+                  marginRight: \"auto\",\r\n+                  marginLeft: \"auto\",\r\n+                }}\r\n+                type=\"button\" disabled>\r\n                 <span\r\n                   className=\"spinner-border spinner-border-sm \"\r\n                   role=\"status\"\r\n                   aria-hidden=\"true\"\r\n+\r\n                 ></span>\r\n                 <span className=\"sr-only\">Loading...</span>\r\n               </button>\r\n             ) : (\r\n"
                 }
             ],
             "date": 1711975135947,

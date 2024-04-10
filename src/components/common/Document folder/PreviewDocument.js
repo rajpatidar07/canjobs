@@ -8,6 +8,7 @@ import {
   UpdateDocuentcommentAssign,
   SendReplyCommit,
   GetCommentsAndAssign,
+  GetSharePointDocUrl
 } from "../../../api/api";
 import LazyLoad from "react-lazy-load";
 import { toast } from "react-toastify";
@@ -17,6 +18,8 @@ import { MdAddComment } from "react-icons/md";
 import { RxCrossCircled } from "react-icons/rx";
 import { FaFlag } from "react-icons/fa";
 import { IoMdArrowBack } from "react-icons/io";
+import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
+
 export default function PreviewDocument({
   setFolderID,
   docData,
@@ -47,16 +50,28 @@ export default function PreviewDocument({
   let [annotationStatus, setAnnotationStatus] = useState();
   let [replyCommentClick, setReplyCommentClick] = useState();
   const [commentsReplyList, setCommentsReplyList] = useState([]);
+  const [actualDocFile, setActualDocFile] = useState("");
   //USeEffect foe commet list
   useEffect(() => {
     setSelectedAnnotation(null);
     getCommentsList();
     AdminData()
+    GetDocUrl()
     setFolderID("")
     if (commenAapiCall === true) {
       setCommentApiCall(false);
     }
   }, [docId, commenAapiCall, adminid, annotationStatus]);
+  /*Function to get document url */
+  const GetDocUrl = async () => {
+    try {
+      let res = await GetSharePointDocUrl(docData.id)
+      setActualDocFile(res.data.data.getUrl)
+    } catch (err) {
+      console.log(err)
+      setActualDocFile()
+    }
+  }
   /*Function to get admin list */
   const AdminData = async () => {
     try {
@@ -465,14 +480,18 @@ export default function PreviewDocument({
       }
     }
   };
+  const Doc = [
+    {
+      uri: docFile
+    }
+  ]
   return (
     <div className="row m-0 bg-white document_preview_box h-100vh overflow-hidden">
       <div
-        className={`${
-          user_type === "admin"
+        className={`${user_type === "admin"
             ? "col-md-8 col-lg-8 col-sm-9"
             : "col-md-12 col-lg-12 col-sm-12"
-        } p-2 bg-dark`}
+          } p-2 bg-dark`}
       >
         <div className="back_btn_div">
           <Link
@@ -521,14 +540,23 @@ export default function PreviewDocument({
                 >
                   {/* <RenderNewDocFile /> */}
                   <React.Fragment>
-                    {docFile ? (
+                    {actualDocFile ? (
                       <>
                         <div
                           className="w-100"
-                          ref={fileViewerRef}
-                          onClick={handleFileViewerClick}
+                          // ref={fileViewerRef}
+                          // onClick={handleFileViewerClick}
                         >
-                          <LazyLoad
+                      <DocViewer
+  pluginRenderers={DocViewerRenderers}
+  documents={Doc}
+  onerror={(error) => {
+    console.error("Error in DocViewer:", error);
+    // Add any additional handling or logging here
+  }}
+/>
+
+                          {/* <LazyLoad
                             height={"100%"}
                             offsetVertical={"100%"}
                             debounce={false}
@@ -537,7 +565,7 @@ export default function PreviewDocument({
                               (docData.name &&
                                 docData.name.toLowerCase().includes("imm") ? (
                                 <iframe
-                                  src={docFile}
+                                  src={actualDocFile}
                                   style={{
                                     height: "calc(100vh - 200px)",
                                     overflowY: "auto",
@@ -555,7 +583,7 @@ export default function PreviewDocument({
                                         ? "docx"
                                         : docFileExt
                                     }
-                                    filePath={docFile}
+                                    filePath={`${docFile}&bytes=0-1023`}
                                     errorComponent={() => (
                                       <div>Error loading document</div>
                                     )}
@@ -566,9 +594,11 @@ export default function PreviewDocument({
                                       )
                                     }
                                   />
+                                        <DocViewer pluginRenderers={DocViewerRenderers} documents={Doc} />
+
                                 </>
                               ))}
-                          </LazyLoad>
+                          </LazyLoad> */}
                         </div>
                       </>
                     ) : (
@@ -578,9 +608,9 @@ export default function PreviewDocument({
                   <Link
                     to=""
                     className={` ${user_type === "admin"
-                        ? `btn-sm mt-7 doc_btn ${isAnnotationMode ? "btn-primary " : "btn-secondary"
-                        }`
-                        : "d-none"
+                      ? `btn-sm mt-7 doc_btn ${isAnnotationMode ? "btn-primary " : "btn-secondary"
+                      }`
+                      : "d-none"
                       }`}
                     style={{
                       position: "absolute",

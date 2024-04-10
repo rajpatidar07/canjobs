@@ -43,11 +43,18 @@ export default function DocSaveForm({
         {saveBtn === true ? (
           <div className="doc_upload_col">
             {loadingBtn ? (
-              <button className="btn btn-primary doc_btn" type="button" disabled>
+              <button className="btn btn-primary doc_btn"
+                style={{
+                  fontSize: 14,
+                  marginRight: "auto",
+                  marginLeft: "auto",
+                }}
+                type="button" disabled>
                 <span
                   className="spinner-border spinner-border-sm "
                   role="status"
                   aria-hidden="true"
+
                 ></span>
                 <span className="sr-only">Loading...</span>
               </button>

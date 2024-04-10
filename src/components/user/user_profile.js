@@ -42,7 +42,7 @@ import AgentConversation from "../common/AgentConversation";
 import UserTimline from "../common/UserTimline";
 import InterviewHistoryTable from "../common/InterviewHistoryTable";
 import SharePointDocument from "../common/Document folder/SharePointDocument";
-// import AdobePDFViewer from "../common/adobeFile";
+import AdobePDFViewer from "../common/adobeFile";
 const NewUserProfile = (props) => {
   const { eid } = useParams();
   const location = useLocation();
@@ -1797,13 +1797,13 @@ const NewUserProfile = (props) => {
                     aria-labelledby="applieddocuments"
                   >
                     {TabActive === "documents" ? (
-                      <  DocumrentContainer
-                        employee_id={eid}
-                        emp_user_type={"employee"}
-                        docId={docId ? docId : ""}
-                        folderId={PersonalDetail.documents_folder_id}
-                      />
-                      // <AdobePDFViewer/>
+                      // <  DocumrentContainer
+                      //   employee_id={eid}
+                      //   emp_user_type={"employee"}
+                      //   docId={docId ? docId : ""}
+                      //   folderId={PersonalDetail.documents_folder_id}
+                      // />
+                      <AdobePDFViewer/>
 
                     ) : null}
                   </div>
