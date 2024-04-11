@@ -18,8 +18,7 @@ import { MdAddComment } from "react-icons/md";
 import { RxCrossCircled } from "react-icons/rx";
 import { FaFlag } from "react-icons/fa";
 import { IoMdArrowBack } from "react-icons/io";
-import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
-
+import { usePdf } from 'react-pdf-js';
 export default function PreviewDocument({
   setFolderID,
   docData,
@@ -65,8 +64,10 @@ export default function PreviewDocument({
   /*Function to get document url */
   const GetDocUrl = async () => {
     try {
-      let res = await GetSharePointDocUrl(docData.id)
+      let res = await GetSharePointDocUrl(docData.id);
+      console.log(res.data.data.getUrl);
       setActualDocFile(res.data.data.getUrl)
+      setActualDocFile(res.data.data.getUrl + "&withCredentials=true")
     } catch (err) {
       console.log(err)
       setActualDocFile()
@@ -480,17 +481,50 @@ export default function PreviewDocument({
       }
     }
   };
-  const Doc = [
-    {
-      uri: docFile
-    }
-  ]
+  /*PDF canvas code */
+  const canvasEl = useRef(null);
+  const [page, setPage] = useState(1);
+  const [pages, setPages] = useState(null);
+  if(docFileExt === "pdf"){
+ const [loading, numPages] = usePdf({
+   canvasEl,
+   file: docFile,
+   page,
+
+ }); 
+ useEffect(() => {
+   setPages(numPages);
+ }, [numPages]);
+ 
+}
+const renderPagination = (page, pages) => {
+  if (!pages) {
+    return null;
+  }
+  let previousButton = <span className="previous" onClick={() => setPage(page - 1)}><a href="#"><i className="fa fa-arrow-left"></i> Previous</a></span>;
+  if (page === 1) {
+    previousButton = <span className="previous disabled"><a href="#"><i className="fa fa-arrow-left"></i> Previous</a></span>;
+  }
+  let nextButton = <span className="next" onClick={() => setPage(page + 1)}><a href="#">Next <i className="fa fa-arrow-right"></i></a></span>;
+  if (page === pages) {
+    nextButton = <span className="next disabled"><a href="#">Next <i className="fa fa-arrow-right"></i></a></span>;
+  }
+  return (
+    <nav>
+      <p className="pager row text-center d-flex justify-content-between">
+        {previousButton}
+        {nextButton}
+      </p>
+    </nav>
+  );
+}
+ 
   return (
     <div className="row m-0 bg-white document_preview_box h-100vh overflow-hidden">
       <div
         className={`${user_type === "admin"
-            ? "col-md-8 col-lg-8 col-sm-9"
-            : "col-md-12 col-lg-12 col-sm-12"
+          ? "col-md-8 col-lg-8 col-sm-9"
+          : "col-md-12 col-lg-12 col-sm-12"
           } p-2 bg-dark`}
       >
         <div className="back_btn_div">
@@ -540,23 +574,15 @@ export default function PreviewDocument({
                 >
                   {/* <RenderNewDocFile /> */}
                   <React.Fragment>
-                    {actualDocFile ? (
+                    {docFile ? (
                       <>
                         <div
                           className="w-100"
-                          // ref={fileViewerRef}
-                          // onClick={handleFileViewerClick}
+                          ref={fileViewerRef}
+                          onClick={handleFileViewerClick}
                         >
-                      <DocViewer
-  pluginRenderers={DocViewerRenderers}
-  documents={Doc}
-  onerror={(error) => {
-    console.error("Error in DocViewer:", error);
-    // Add any additional handling or logging here
-  }}
-/>
 
-                          {/* <LazyLoad
+                          <LazyLoad
                             height={"100%"}
                             offsetVertical={"100%"}
                             debounce={false}
@@ -565,7 +591,7 @@ export default function PreviewDocument({
                               (docData.name &&
                                 docData.name.toLowerCase().includes("imm") ? (
                                 <iframe
-                                  src={actualDocFile}
+                                  src={docFile}
                                   style={{
                                     height: "calc(100vh - 200px)",
                                     overflowY: "auto",
@@ -575,30 +601,36 @@ export default function PreviewDocument({
                                 ></iframe>
                               ) : (
                                 <>
-                                  <FileViewer
-                                    key={docData.id}
-                                    fileType={
-                                      docFileExt ===
-                                        "vnd.openxmlformats-officedocument.wordprocessingml.document"
-                                        ? "docx"
-                                        : docFileExt
-                                    }
-                                    filePath={`${docFile}&bytes=0-1023`}
-                                    errorComponent={() => (
-                                      <div>Error loading document</div>
-                                    )}
-                                    onError={(error) =>
-                                      console.error(
-                                        "Error loading document:",
-                                        error
-                                      )
-                                    }
-                                  />
-                                        <DocViewer pluginRenderers={DocViewerRenderers} documents={Doc} />
+                                  {docFileExt === "pdf" ?
+                                  <div className="col">
+                                    <canvas ref={canvasEl} />
+                                    <div> 
+                                      {renderPagination(page, pages)}
+                                     </div>
+                                    </div>
+                                    : <FileViewer
+                                      key={docData.id}
+                                      fileType={
+                                        docFileExt ===
+                                          "vnd.openxmlformats-officedocument.wordprocessingml.document"
+                                          ? "docx"
+                                          : docFileExt
+                                      }
+                                      filePath={`${docFile}&bytes=0-1023`}
+                                      errorComponent={() => (
+                                        <div>Error loading document</div>
+                                      )}
+                                      onError={(error) =>
+                                        console.error(
+                                          "Error loading document:",
+                                          error
+                                        )
+                                      }
+                                    />}
 
                                 </>
                               ))}
-                          </LazyLoad> */}
+                          </LazyLoad>
                         </div>
                       </>
                     ) : (
