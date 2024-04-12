@@ -19,23 +19,23 @@ showDownloadPDF: false, showPrintPDF: false}, state.menuLink);
 });
 }
 return (
-<div >
+<div style={{height:"100vh"}}>
 {
 state.isDataLoaded ?
-<div>
+<div style={{height:"100vh"}}>
 {
 state.hasFile ?
 <>
-<div id="pdf-div" className="full-window-div" onDocumentLoad={loadPDF()}></div>
+<div id="pdf-div" className="full-window-div" onDocumentLoad={loadPDF()} style={{height:"100vh"}}></div>
 </>
 :
-<div>
+<div style={{height:"100vh"}}>
 <p className='text dashboard' id="no-file">Sorry, no file at this link</p>
 </div>
 }
 </div>
 :
-<div className='cp'>
+<div className='cp' >
 <CircularProgress  style={{color: '#ffc107'}} />
 </div>
 }
