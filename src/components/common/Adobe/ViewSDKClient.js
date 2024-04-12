@@ -146,16 +146,17 @@ class ViewSDKClient {
 
         this.adobeDCView = new window.AdobeDC.View(config);
 
+        // Set viewer configuration with all options enabled for all file types
         viewerConfig = {
             ...viewerConfig,
-            embedMode: window.AdobeDC.View.Enum.EmbedMode.INLINE,
-            showAnnotationTools: true,
-            showDownloadPDF: true,
-            showPrintPDF: true,
-            enableFormFilling: true,
-            showLeftHandPanel: true,
-            showSearchPDF: true,
-            showDocumentInfo: true,
+            embedMode: window.AdobeDC.View.Enum.EmbedMode.INLINE, // Display inline
+            showAnnotationTools: true, // Show annotation tools
+            showDownloadPDF: true, // Show download PDF option
+            showPrintPDF: true, // Show print PDF option
+            enableFormFilling: true, // Enable form filling
+            showLeftHandPanel: true, // Show left-hand panel
+            showSearchPDF: true, // Show search PDF option
+            showDocumentInfo: true, // Show document information
         };
 
         const previewFilePromise = this.adobeDCView.previewFile({
@@ -171,6 +172,8 @@ class ViewSDKClient {
                 id: data.id,
             }
         }, viewerConfig);
+
+        this.registerSaveApiHandler(); // Register save API handler
 
         return previewFilePromise;
     }
@@ -189,42 +192,19 @@ class ViewSDKClient {
                 fileName: data.name
             }
         }, {});
-    }
 
-    saveAnnotations(annotationData) {
-        if (!this.adobeDCView) {
-            console.error("Adobe DC View is not initialized.");
-            return;
-        }
-
-        let existingAnnotations = [];
-        try {
-            existingAnnotations = JSON.parse(localStorage.getItem('annotations')) || [];
-        } catch (error) {
-            console.error("Error parsing existing annotations:", error);
-        }
-
-        existingAnnotations.push(annotationData);
-
-        localStorage.setItem('annotations', JSON.stringify(existingAnnotations));
-        console.log("Annotations saved successfully.");
-    }
-
-    retrieveAnnotations() {
-        let existingAnnotations = [];
-        try {
-            existingAnnotations = JSON.parse(localStorage.getItem('annotations')) || [];
-        } catch (error) {
-            console.error("Error parsing existing annotations:", error);
-        }
-        return existingAnnotations;
+        this.registerSaveApiHandler(); // Register save API handler
     }
 
     registerSaveApiHandler() {
         const saveApiHandler = (metaData, content, options) => {
-            this.saveAnnotations(metaData);
+            console.log(metaData, content, options);
             return new Promise(resolve => {
                 setTimeout(() => {
+                    const savedData = JSON.parse(localStorage.getItem("annotations")) || {};
+                    savedData[metaData.id] = content;
+                    localStorage.setItem("annotations", JSON.stringify(savedData));
+
                     const response = {
                         code: window.AdobeDC.View.Enum.ApiResponseCode.SUCCESS,
                         data: {
@@ -240,6 +220,11 @@ class ViewSDKClient {
             saveApiHandler,
             {}
         );
+    }
+
+    retrieveAnnotations(documentId) {
+        const savedData = JSON.parse(localStorage.getItem("annotations")) || {};
+        return savedData[documentId] || {};
     }
 
     registerEventsHandler() {

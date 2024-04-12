@@ -76,30 +76,5 @@
 <!-- <script type="text/javascript" src="https://documentcloud.adobe.com/view-sdk/main.js"></script> -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.1.266/pdf.worker.js"></script>
 <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
-<script type="module">
-  import ViewSDKClient from './ViewSDKClient.js';
-
-  const viewSDKClient = new ViewSDKClient();
-
-  const fileUrl = 'https://www.example.com/sample.pdf';
-  const fileName = 'sample.pdf';
-
-  viewSDKClient.ready().then(() => {
-    const viewerConfig = {};
-    viewSDKClient.previewFile('adobe-dc-view', viewerConfig, fileUrl, { name: fileName, mimeType: 'application/pdf', id: 1 })
-      .then(adobeViewer => {
-        viewSDKClient.registerSaveApiHandler();
-        viewSDKClient.registerEventsHandler();
-
-        const saveButton = document.createElement('button');
-        saveButton.textContent = 'Save Annotations';
-        saveButton.addEventListener('click', () => {
-          viewSDKClient.saveAnnotations({ id: 1, text: 'This is a sample annotation', createdBy: 'John Doe' });
-        });
-        document.body.appendChild(saveButton);
-      })
-      .catch(error => console.error('Error previewing file:', error));
-  });
-</script>
 
 </html>
