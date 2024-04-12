@@ -213,13 +213,19 @@ class ViewSDKClient {
                     const documentId = metaData.id;
                     const savedData = JSON.parse(localStorage.getItem(documentId)) || {};
                     savedData[metaData.id] = content;
-                    console.log("data",savedData)
+                    console.log("data", savedData);
                     localStorage.setItem(`annotations${documentId}`, JSON.stringify(savedData));
+
+                    // Set a sample message for the annotation
+                    const annotationMessage = "This is a sample annotation message.";
 
                     const response = {
                         code: window.AdobeDC.View.Enum.ApiResponseCode.SUCCESS,
                         data: {
-                            metaData: Object.assign(metaData, { updatedAt: new Date().getTime() })
+                            metaData: Object.assign(metaData, {
+                                updatedAt: new Date().getTime(),
+                                message: annotationMessage // Set the annotation message here
+                            })
                         },
                     };
                     resolve(response);
