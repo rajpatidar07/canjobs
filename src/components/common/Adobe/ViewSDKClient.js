@@ -201,10 +201,11 @@ class ViewSDKClient {
             console.log(metaData, content, options);
             return new Promise(resolve => {
                 setTimeout(() => {
-                    const savedData = JSON.parse(localStorage.getItem("annotations")) || {};
+                    const documentId = metaData.id;
+                    const savedData = JSON.parse(localStorage.getItem(documentId)) || {};
                     savedData[metaData.id] = content;
-                    localStorage.setItem("annotations", JSON.stringify(savedData));
-
+                    localStorage.setItem(documentId, JSON.stringify(savedData));
+    
                     const response = {
                         code: window.AdobeDC.View.Enum.ApiResponseCode.SUCCESS,
                         data: {
