@@ -215,7 +215,7 @@ class ViewSDKClient {
                     const documentId = metaData.id;
                     const savedData = JSON.parse(localStorage.getItem(documentId)) || {};
                     savedData[metaData.id] = content;
-                    console.log("data", savedData);
+                    console.log(annotationMessage,"data", savedData);
                     localStorage.setItem(`annotations${documentId}`, JSON.stringify(savedData));
 
                     // Set the dynamic annotation message
