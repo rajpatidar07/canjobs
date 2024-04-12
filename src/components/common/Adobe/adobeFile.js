@@ -2,7 +2,7 @@ import React/*, { useEffect } */from 'react';
 // import axios from 'axios';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ViewSDKClient from './ViewSDKClient.js';
-const AdobePDFViewer = ({url}) => {
+const AdobePDFViewer = ({url,data}) => {
 const [state/*, setState*/] = React.useState({isDataLoaded: true, menuLink: url
 , hasFile: url
 });
@@ -16,7 +16,7 @@ const loadPDF = () => {
 const viewSDKClient = new ViewSDKClient();
 viewSDKClient.ready().then(() => {
 viewSDKClient.previewFile("pdf-div", {showAnnotationTools: false, showLeftHandPanel: false, showPageControls: false,
-showDownloadPDF: false, showPrintPDF: false}, state.menuLink);
+showDownloadPDF: false, showPrintPDF: false}, state.menuLink,data.name);
 });
 }
 return (

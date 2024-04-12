@@ -22,7 +22,7 @@ import React/*, { useState, useEffect, useRef }*/ from "react";
 import AdobePDFViewer from "../Adobe/adobeFile";
 export default function PreviewDocument({
   // setFolderID,
-  // docData,
+  docData,
   // docId,
   // userId,
   docFile,
@@ -532,7 +532,7 @@ export default function PreviewDocument({
 
   return (
     <AdobePDFViewer
-      url={docFile} />
+      url={docFile} data={docData}/>
     // <div className="row m-0 bg-white document_preview_box h-100vh overflow-hidden">
     //   <div
     //     className={`${user_type === "admin"
