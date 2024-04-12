@@ -115,6 +115,7 @@
 // export default ViewSDKClient;
 class ViewSDKClient {
     constructor() {
+        // Promise that resolves when AdobeDC SDK is ready
         this.readyPromise = new Promise((resolve) => {
             if (window.AdobeDC) {
                 resolve();
@@ -124,14 +125,17 @@ class ViewSDKClient {
                 });
             }
         });
-        this.adobeDCView = undefined;
+        this.adobeDCView = undefined; // Initialize AdobeDC View object
     }
 
+    // Method to check if AdobeDC SDK is ready
     ready() {
         return this.readyPromise;
     }
 
+    // Method to preview a file
     previewFile(divId, viewerConfig, url, data) {
+        // Log file information
         console.log(data.name, data);
         const fileExtension = data.name.split('.').pop().toLowerCase();
         console.log("File extension:", fileExtension);
@@ -144,21 +148,23 @@ class ViewSDKClient {
             config.divId = divId;
         }
 
+        // Create AdobeDC View object
         this.adobeDCView = new window.AdobeDC.View(config);
 
-        // Set viewer configuration with all options enabled for all file types
+        // Set viewer configuration
         viewerConfig = {
             ...viewerConfig,
-            embedMode: window.AdobeDC.View.Enum.EmbedMode.INLINE, // Display inline
-            showAnnotationTools: true, // Show annotation tools
-            showDownloadPDF: true, // Show download PDF option
-            showPrintPDF: true, // Show print PDF option
-            enableFormFilling: true, // Enable form filling
-            showLeftHandPanel: true, // Show left-hand panel
-            showSearchPDF: true, // Show search PDF option
-            showDocumentInfo: true, // Show document information
+            embedMode: window.AdobeDC.View.Enum.EmbedMode.INLINE,
+            showAnnotationTools: true,
+            showDownloadPDF: true,
+            showPrintPDF: true,
+            enableFormFilling: true,
+            showLeftHandPanel: true,
+            showSearchPDF: true,
+            showDocumentInfo: true,
         };
 
+        // Preview file using AdobeDC View object
         const previewFilePromise = this.adobeDCView.previewFile({
             content: {
                 location: {
@@ -173,11 +179,13 @@ class ViewSDKClient {
             }
         }, viewerConfig);
 
-        this.registerSaveApiHandler(); // Register save API handler
+        // Register save API handler
+        this.registerSaveApiHandler();
 
         return previewFilePromise;
     }
 
+    // Method to preview a file using a file promise
     previewFileUsingFilePromise(divId, filePromise, data) {
         this.adobeDCView = new window.AdobeDC.View({
             clientId: "d9b36f468d7a4e4e8b275f13728f1132",
@@ -193,9 +201,11 @@ class ViewSDKClient {
             }
         }, {});
 
-        this.registerSaveApiHandler(); // Register save API handler
+        // Register save API handler
+        this.registerSaveApiHandler();
     }
 
+    // Method to register a save API handler
     registerSaveApiHandler() {
         const saveApiHandler = (metaData, content, options) => {
             console.log(metaData, content, options);
@@ -205,7 +215,7 @@ class ViewSDKClient {
                     const savedData = JSON.parse(localStorage.getItem(documentId)) || {};
                     savedData[metaData.id] = content;
                     localStorage.setItem(documentId, JSON.stringify(savedData));
-    
+
                     const response = {
                         code: window.AdobeDC.View.Enum.ApiResponseCode.SUCCESS,
                         data: {
@@ -216,6 +226,7 @@ class ViewSDKClient {
                 }, 2000);
             });
         };
+        // Register save API handler with AdobeDC View object
         this.adobeDCView.registerCallback(
             window.AdobeDC.View.Enum.CallbackType.SAVE_API,
             saveApiHandler,
@@ -223,11 +234,13 @@ class ViewSDKClient {
         );
     }
 
+    // Method to retrieve annotations from local storage
     retrieveAnnotations(documentId) {
         const savedData = JSON.parse(localStorage.getItem("annotations")) || {};
         return savedData[documentId] || {};
     }
 
+    // Method to register event handlers
     registerEventsHandler() {
         this.adobeDCView.registerCallback(
             window.AdobeDC.View.Enum.CallbackType.EVENT_LISTENER,
