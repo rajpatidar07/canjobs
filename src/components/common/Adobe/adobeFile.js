@@ -16,7 +16,7 @@ const loadPDF = () => {
 const viewSDKClient = new ViewSDKClient();
 viewSDKClient.ready().then(() => {
 viewSDKClient.previewFile("pdf-div", {showAnnotationTools: false, showLeftHandPanel: false, showPageControls: false,
-showDownloadPDF: false, showPrintPDF: false}, state.menuLink,data.name);
+showDownloadPDF: false, showPrintPDF: false}, state.menuLink,data);
 });
 }
 return (

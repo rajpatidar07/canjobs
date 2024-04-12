@@ -112,7 +112,9 @@ class ViewSDKClient {
     }
 
     previewFile(divId, viewerConfig, url, data) {
-        // const fileExtension = data.name.split('.').pop().toLowerCase();
+        const fileExtension = data.name.split('.').pop().toLowerCase();
+        console.log(data.name, data,"File extension:", fileExtension);
+
         const config = {
             clientId: "d9b36f468d7a4e4e8b275f13728f1132",
         };
@@ -122,8 +124,9 @@ class ViewSDKClient {
         }
 
         this.adobeDCView = new window.AdobeDC.View(config);
-        
+
         // Set different viewer configurations based on file type
+        if (fileExtension === 'pdf' || fileExtension === 'docx') {
             viewerConfig = {
                 ...viewerConfig,
                 annotationUIConfig: {
@@ -131,7 +134,17 @@ class ViewSDKClient {
                     enableAnnotationPanel: true,
                 },
             };
-        
+        } else if (fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'png') {
+            // For images, enable specific image viewer options
+            viewerConfig = {
+                ...viewerConfig,
+                embedMode: window.AdobeDC.View.Enum.EmbedMode.INLINE,
+                showAnnotationTools: false, // Disable annotation tools for images
+            };
+        } else {
+            // For unsupported file types, use default viewer configuration
+            viewerConfig = {};
+        }
 
         const previewFilePromise = this.adobeDCView.previewFile({
             content: {
