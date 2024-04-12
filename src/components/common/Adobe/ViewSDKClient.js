@@ -208,13 +208,13 @@ class ViewSDKClient {
     // Method to register a save API handler
     registerSaveApiHandler() {
         const saveApiHandler = (metaData, content, options) => {
-            console.log(metaData, content, options);
             return new Promise(resolve => {
                 setTimeout(() => {
                     const documentId = metaData.id;
                     const savedData = JSON.parse(localStorage.getItem(documentId)) || {};
                     savedData[metaData.id] = content;
-                    localStorage.setItem(documentId, JSON.stringify(savedData));
+                    console.log("data",savedData)
+                    localStorage.setItem(`annotations${documentId}`, JSON.stringify(savedData));
 
                     const response = {
                         code: window.AdobeDC.View.Enum.ApiResponseCode.SUCCESS,
@@ -236,7 +236,7 @@ class ViewSDKClient {
 
     // Method to retrieve annotations from local storage
     retrieveAnnotations(documentId) {
-        const savedData = JSON.parse(localStorage.getItem("annotations")) || {};
+        const savedData = JSON.parse(localStorage.getItem(`annotations${documentId}`)) || {};
         return savedData[documentId] || {};
     }
 
