@@ -35,7 +35,7 @@
 //             content: {
 //                 location: {
 //                     url: url,
-                
+
 //                 },
 //             },
 //             metaData: {
@@ -112,8 +112,9 @@ class ViewSDKClient {
     }
 
     previewFile(divId, viewerConfig, url, data) {
+        console.log(data.name, data);
         const fileExtension = data.name.split('.').pop().toLowerCase();
-        console.log(data.name, data,"File extension:", fileExtension);
+        console.log("File extension:", fileExtension);
 
         const config = {
             clientId: "d9b36f468d7a4e4e8b275f13728f1132",
@@ -125,31 +126,25 @@ class ViewSDKClient {
 
         this.adobeDCView = new window.AdobeDC.View(config);
 
-        // Set different viewer configurations based on file type
-        if (fileExtension === 'pdf' || fileExtension === 'docx') {
-            viewerConfig = {
-                ...viewerConfig,
-                annotationUIConfig: {
-                    enableAnnotationAPIs: true,
-                    enableAnnotationPanel: true,
-                },
-            };
-        } else if (fileExtension === 'jpg' || fileExtension === 'jpeg' || fileExtension === 'png') {
-            // For images, enable specific image viewer options
-            viewerConfig = {
-                ...viewerConfig,
-                embedMode: window.AdobeDC.View.Enum.EmbedMode.INLINE,
-                showAnnotationTools: false, // Disable annotation tools for images
-            };
-        } else {
-            // For unsupported file types, use default viewer configuration
-            viewerConfig = {};
-        }
+        // Set viewer configuration with all options enabled for all file types
+        viewerConfig = {
+            ...viewerConfig,
+            embedMode: window.AdobeDC.View.Enum.EmbedMode.INLINE, // Display inline
+            showAnnotationTools: true, // Show annotation tools
+            showDownloadPDF: true, // Show download PDF option
+            showPrintPDF: true, // Show print PDF option
+            enableFormFilling: true, // Enable form filling
+            showLeftHandPanel: true, // Show left-hand panel
+            showSearchPDF: true, // Show search PDF option
+            showDocumentInfo: true, // Show document information
+        };
 
         const previewFilePromise = this.adobeDCView.previewFile({
             content: {
                 location: {
                     url: url,
+                    fileExtension: fileExtension,
+                    fileType: data.mimeType
                 },
             },
             metaData: {
