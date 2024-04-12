@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 10,
+            "activePatchIndex": 11,
             "patches": [
                 {
                     "date": 1712063614705,
@@ -48,6 +48,10 @@
                 {
                     "date": 1712836446295,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -72,10 +72,9 @@\n <script src=\"plugins/ui-range-slider/jquery-ui.js\"></script> -->\n <!-- Activation Script -->\n <!-- <script src=\"js/drag-n-drop.js\"></script> -->\n <!-- <script src=\"js/custom.js\"></script> -->\n-<script type=\"text/javascript\" src=\"https://documentcloud.adobe.com/view-sdk/main.js\"></script>\n+<!-- <script type=\"text/javascript\" src=\"https://documentcloud.adobe.com/view-sdk/main.js\"></script> -->\n <script type=\"text/javascript\" src=\"https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.1.266/pdf.worker.js\"></script>\n-<script src=\"https://mozilla.github.io/pdf.js/build/pdf.mjs\" type=\"text/javascript\"></script>\n \n \n </html>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1712911202032,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -74,7 +74,7 @@\n <!-- <script src=\"js/drag-n-drop.js\"></script> -->\n <!-- <script src=\"js/custom.js\"></script> -->\n <!-- <script type=\"text/javascript\" src=\"https://documentcloud.adobe.com/view-sdk/main.js\"></script> -->\n <script type=\"text/javascript\" src=\"https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.1.266/pdf.worker.js\"></script>\n+<script src=\"https://documentcloud.adobe.com/view-sdk/main.js\"></script>\n \n-\n </html>\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1712063614705,

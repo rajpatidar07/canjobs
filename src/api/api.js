@@ -718,7 +718,6 @@ export const ADocAnnotation = async (
   assigned_by_id,
   docPartentId
 ) => {
-  console.log(docPartentId)
   const response = await axios.post(
     `${API_URL}admin/docTaskAdd`,
     //Old json {

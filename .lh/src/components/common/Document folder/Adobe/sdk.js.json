@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/components/common/Document folder/Adobe/sdk.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1712911184456,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1712911184456,
+            "name": "Commit-0",
+            "content": "class ViewSDKClient {\r\n    constructor() {\r\n    this.readyPromise = new Promise((resolve) => {\r\n    if (window.AdobeDC) {\r\n    resolve();\r\n    } else {\r\n    document.addEventListener(\"adobe_dc_view_sdk.ready\", () => {\r\n    resolve();\r\n    });\r\n    }\r\n    });\r\n    this.adobeDCView = undefined;\r\n    }\r\n    ready() {\r\n    return this.readyPromise;\r\n    }\r\n    previewFile(divId, viewerConfig, url) {\r\n    const config = {\r\n    clientId: \"be44a0cd9b6848f9965783cf16356f78\",\r\n    };\r\n    if (divId) {\r\n    config.divId = divId;\r\n    }\r\n    this.adobeDCView = new window.AdobeDC.View(config);\r\n    const previewFilePromise = this.adobeDCView.previewFile({\r\n    content: {\r\n    location: {\r\n    url: url,\r\n    },\r\n    },\r\n    metaData: {\r\n    fileName: \"Menu.pdf\",\r\n    id: \"6d07d124-ac85-43b3-a867-36930f502ac6\",\r\n    }\r\n    }, viewerConfig);\r\n    return previewFilePromise;\r\n    }\r\n    previewFileUsingFilePromise(divId, filePromise, fileName) {\r\n    this.adobeDCView = new window.AdobeDC.View({\r\n    clientId: \"be44a0cd9b6848f9965783cf16356f78\",\r\n    divId,\r\n    });\r\n    this.adobeDCView.previewFile({\r\n    content: {\r\n    promise: filePromise,\r\n    },\r\n    metaData: {\r\n    fileName: fileName\r\n    }\r\n    }, {});\r\n    }\r\n    registerSaveApiHandler() {\r\n    const saveApiHandler = (metaData, content, options) => {\r\n    console.log(metaData, content, options);\r\n    return new Promise(resolve => {\r\n    setTimeout(() => {\r\n    const response = {\r\n    code: window.AdobeDC.View.Enum.ApiResponseCode.SUCCESS,\r\n    data: {\r\n    metaData: Object.assign(metaData, {updatedAt: new Date().getTime()})\r\n    },\r\n    };\r\n    resolve(response);\r\n    }, 2000);\r\n    });\r\n    };\r\n    this.adobeDCView.registerCallback(\r\n    window.AdobeDC.View.Enum.CallbackType.SAVE_API,\r\n    saveApiHandler,\r\n    {}\r\n    );\r\n    }\r\n    registerEventsHandler() {\r\n    this.adobeDCView.registerCallback(\r\n    window.AdobeDC.View.Enum.CallbackType.EVENT_LISTENER,\r\n    event => {\r\n    console.log(event);\r\n    },\r\n    {\r\n    enablePDFAnalytics: true,\r\n    }\r\n    );\r\n    }\r\n    }\r\n    export default ViewSDKClient;"
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/components/common/Document folder/Adobe/adobeFile.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1712911210107,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1712911210107,
+            "name": "Commit-0",
+            "content": "import React, { useEffect } from 'react';\r\nimport axios from 'axios';\r\nimport CircularProgress from '@material-ui/core/CircularProgress';\r\nimport ViewSDKClient from './ViewSDKClient.js';\r\nconst AdobePDFViewer = (props) => {\r\nconst [state, setState] = React.useState({isDataLoaded: false, menuLink: null, hasFile: false});\r\nuseEffect(() => {\r\naxios.get(`${process.env.REACT_APP_BASE_URL}/get_menu`)\r\n.then(response => setState({isDataLoaded: true, hasFile: response.data.has_file, menuLink: response.data.menu_link}))\r\n.catch(error => alert(error.message))\r\n}, []);\r\nconst loadPDF = () => {\r\nconst viewSDKClient = new ViewSDKClient();\r\nviewSDKClient.ready().then(() => {\r\nviewSDKClient.previewFile(\"pdf-div\", {showAnnotationTools: false, showLeftHandPanel: false, showPageControls: false,\r\nshowDownloadPDF: false, showPrintPDF: false}, state.menuLink);\r\n});\r\n}\r\nreturn (\r\n<div >\r\n{\r\nstate.isDataLoaded ?\r\n<div>\r\n{\r\nstate.hasFile ?\r\n<>\r\n<div id=\"pdf-div\" className=\"full-window-div\" onDocumentLoad={loadPDF()}></div>\r\n</>\r\n:\r\n<div>\r\n<p className='text dashboard' id=\"no-file\">Sorry, no file at this link</p>\r\n</div>\r\n}\r\n</div>\r\n:\r\n<div className='cp'>\r\n<CircularProgress  style={{color: '#ffc107'}} />\r\n</div>\r\n}\r\n</div>\r\n);\r\n}\r\nexport default AdobePDFViewer;"
+        }
+    ]
+}

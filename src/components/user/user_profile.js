@@ -25,7 +25,7 @@ import Loader from "../common/loader";
 import { PiPencilDuotone } from "react-icons/pi";
 import AdminHeader from "../admin/header";
 import AdminSidebar from "../admin/sidebar";
-import DocumrentContainer from "../common/employeeDocumrentContainer";
+// import DocumrentContainer from "../common/employeeDocumrentContainer";
 import { BiPhoneCall } from "react-icons/bi";
 import { BsEnvelope } from "react-icons/bs";
 import JobProfileResponse from "../admin/profile_response";
@@ -42,7 +42,7 @@ import AgentConversation from "../common/AgentConversation";
 import UserTimline from "../common/UserTimline";
 import InterviewHistoryTable from "../common/InterviewHistoryTable";
 import SharePointDocument from "../common/Document folder/SharePointDocument";
-import AdobePDFViewer from "../common/adobeFile";
+import AdobePDFViewer from "../common/Adobe/adobeFile";
 const NewUserProfile = (props) => {
   const { eid } = useParams();
   const location = useLocation();

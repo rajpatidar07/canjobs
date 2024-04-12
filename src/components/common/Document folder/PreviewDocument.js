@@ -8,7 +8,7 @@ import {
   UpdateDocuentcommentAssign,
   SendReplyCommit,
   GetCommentsAndAssign,
-  GetSharePointDocUrl
+  // GetSharePointDocUrl
 } from "../../../api/api";
 import LazyLoad from "react-lazy-load";
 import { toast } from "react-toastify";
@@ -49,30 +49,30 @@ export default function PreviewDocument({
   let [annotationStatus, setAnnotationStatus] = useState();
   let [replyCommentClick, setReplyCommentClick] = useState();
   const [commentsReplyList, setCommentsReplyList] = useState([]);
-  const [actualDocFile, setActualDocFile] = useState("");
+  // const [actualDocFile, setActualDocFile] = useState("");
   //USeEffect foe commet list
   useEffect(() => {
     setSelectedAnnotation(null);
     getCommentsList();
     AdminData()
-    GetDocUrl()
+    // GetDocUrl()
     setFolderID("")
     if (commenAapiCall === true) {
       setCommentApiCall(false);
     }
   }, [docId, commenAapiCall, adminid, annotationStatus]);
   /*Function to get document url */
-  const GetDocUrl = async () => {
-    try {
-      let res = await GetSharePointDocUrl(docData.id);
-      console.log(res.data.data.getUrl);
-      setActualDocFile(res.data.data.getUrl)
-      setActualDocFile(res.data.data.getUrl + "&withCredentials=true")
-    } catch (err) {
-      console.log(err)
-      setActualDocFile()
-    }
-  }
+  // const GetDocUrl = async () => {
+  //   try {
+  //     let res = await GetSharePointDocUrl(docData.id);
+  //     console.log(res.data.data.getUrl);
+  //     setActualDocFile(res.data.data.getUrl)
+  //     setActualDocFile(res.data.data.getUrl + "&withCredentials=true")
+  //   } catch (err) {
+  //     console.log(err)
+  //     setActualDocFile()
+  //   }
+  // }
   /*Function to get admin list */
   const AdminData = async () => {
     try {
@@ -252,12 +252,12 @@ export default function PreviewDocument({
     //     .map((admin) => admin.admin_type)
     //     .join(",")
     //   : "";
-
     // Send data to the API
-    if (comment === "" && email === "") {
+    if ((comment === "" && email === "") ||
+      (comment.includes("@") && !/\S+@\S+\.\S+/.test(comment))) {
       toast.error("Comment or email cannot be empty!", {
         position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
+        autoClose: 2000,
       });
     } else {
       try {
@@ -485,40 +485,50 @@ export default function PreviewDocument({
   const canvasEl = useRef(null);
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(null);
-  if(docFileExt === "pdf"){
- const [loading, numPages] = usePdf({
-   canvasEl,
-   file: docFile,
-   page,
+  if (docFileExt === "pdf") {
+    // eslint-disable-next-line
+    const [loading, numPages] = usePdf({
+      canvasEl,
+      file: docFile,
+      page,
 
- }); 
- useEffect(() => {
-   setPages(numPages);
- }, [numPages]);
- 
-}
-const renderPagination = (page, pages) => {
-  if (!pages) {
-    return null;
+    });
+    useEffect(() => {
+      setPages(numPages);
+    }, [numPages]);
+
   }
-  let previousButton = <span className="previous" onClick={() => setPage(page - 1)}><a href="#"><i className="fa fa-arrow-left"></i> Previous</a></span>;
-  if (page === 1) {
-    previousButton = <span className="previous disabled"><a href="#"><i className="fa fa-arrow-left"></i> Previous</a></span>;
+  /*FUnction to render pagination for pdf document */
+  const renderPagination = (page, pages) => {
+    if (!pages) {
+      return null;
+    }
+    let previousButton = <span className="previous" onClick={() => setPage(page - 1)}>
+      <Link to=""><i className="fa fa-arrow-left"></i> Previous</Link>
+    </span>;
+    if (page === 1) {
+      previousButton = <span className="previous disabled">
+        <Link to=""><i className="fa fa-arrow-left"></i> Previous</Link>
+      </span>;
+    }
+    let nextButton = <span className="next" onClick={() => setPage(page + 1)}>
+      <Link to="">Next <i className="fa fa-arrow-right"></i></Link>
+    </span>;
+    if (page === pages) {
+      nextButton = <span className="next disabled">
+        <Link to="">Next <i className="fa fa-arrow-right"></i></Link>
+      </span>;
+    }
+    return (
+      <nav>
+        <p className="pager row text-center d-flex justify-content-between">
+          {previousButton}
+          {nextButton}
+        </p>
+      </nav>
+    );
   }
-  let nextButton = <span className="next" onClick={() => setPage(page + 1)}><a href="#">Next <i className="fa fa-arrow-right"></i></a></span>;
-  if (page === pages) {
-    nextButton = <span className="next disabled"><a href="#">Next <i className="fa fa-arrow-right"></i></a></span>;
-  }
-  return (
-    <nav>
-      <p className="pager row text-center d-flex justify-content-between">
-        {previousButton}
-        {nextButton}
-      </p>
-    </nav>
-  );
-}
- 
+
   return (
     <div className="row m-0 bg-white document_preview_box h-100vh overflow-hidden">
       <div
@@ -602,11 +612,11 @@ const renderPagination = (page, pages) => {
                               ) : (
                                 <>
                                   {docFileExt === "pdf" ?
-                                  <div className="col">
-                                    <canvas ref={canvasEl} />
-                                    <div> 
-                                      {renderPagination(page, pages)}
-                                     </div>
+                                    <div className="col">
+                                      <canvas ref={canvasEl} />
+                                      <div>
+                                        {renderPagination(page, pages)}
+                                      </div>
                                     </div>
                                     : <FileViewer
                                       key={docData.id}
