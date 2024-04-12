@@ -2,10 +2,11 @@ import React/*, { useEffect } */from 'react';
 // import axios from 'axios';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import ViewSDKClient from './ViewSDKClient.js';
-const AdobePDFViewer = (url) => {
+const AdobePDFViewer = ({url}) => {
 const [state/*, setState*/] = React.useState({isDataLoaded: true, menuLink: url
 , hasFile: url
 });
+console.log(url)
 // useEffect(() => {
 // axios.get(`${process.env.REACT_APP_BASE_URL}/get_menu`)
 // .then(response => setState({isDataLoaded: true, hasFile: response.data.has_file, menuLink: response.data.menu_link}))
