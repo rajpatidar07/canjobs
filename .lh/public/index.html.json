@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 11,
+            "activePatchIndex": 12,
             "patches": [
                 {
                     "date": 1712063614705,
@@ -52,6 +52,10 @@
                 {
                     "date": 1712911202032,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -74,7 +74,7 @@\n <!-- <script src=\"js/drag-n-drop.js\"></script> -->\n <!-- <script src=\"js/custom.js\"></script> -->\n <!-- <script type=\"text/javascript\" src=\"https://documentcloud.adobe.com/view-sdk/main.js\"></script> -->\n <script type=\"text/javascript\" src=\"https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.1.266/pdf.worker.js\"></script>\n+<script src=\"https://documentcloud.adobe.com/view-sdk/main.js\"></script>\n \n-\n </html>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1712922217720,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -75,6 +75,31 @@\n <!-- <script src=\"js/custom.js\"></script> -->\n <!-- <script type=\"text/javascript\" src=\"https://documentcloud.adobe.com/view-sdk/main.js\"></script> -->\n <script type=\"text/javascript\" src=\"https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.1.266/pdf.worker.js\"></script>\n <script src=\"https://documentcloud.adobe.com/view-sdk/main.js\"></script>\n+<script type=\"module\">\n+  import ViewSDKClient from './ViewSDKClient.js';\n \n+  const viewSDKClient = new ViewSDKClient();\n+\n+  const fileUrl = 'https://www.example.com/sample.pdf';\n+  const fileName = 'sample.pdf';\n+\n+  viewSDKClient.ready().then(() => {\n+      const viewerConfig = {};\n+      viewSDKClient.previewFile('adobe-dc-view', viewerConfig, fileUrl, { name: fileName, mimeType: 'application/pdf', id: 1 })\n+          .then(adobeViewer => {\n+              viewSDKClient.registerSaveApiHandler();\n+              viewSDKClient.registerEventsHandler();\n+\n+              const saveButton = document.createElement('button');\n+              saveButton.textContent = 'Save Annotations';\n+              saveButton.addEventListener('click', () => {\n+                  viewSDKClient.saveAnnotations({ id: 1, text: 'This is a sample annotation', createdBy: 'John Doe' });\n+              });\n+              document.body.appendChild(saveButton);\n+          })\n+          .catch(error => console.error('Error previewing file:', error));\n+  });\n+</script>\n+\n </html>\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1712063614705,
