@@ -1712,3 +1712,9 @@ li.placeholder span svg {
 } */
 
 /* Send button hover */
+/*Adobe pdf css*/
+#adobe-dc-view {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+}
