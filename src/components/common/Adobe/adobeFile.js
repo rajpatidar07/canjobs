@@ -44,104 +44,24 @@
 // );
 // }
 // export default AdobePDFViewer;
-import React, { useEffect } from 'react';
+import React from "react";
+import PSPDFKit from "pspdfkit";
 
-const AdobePDFViewer = ({url,data}) => {
-  const urlToPDF =
-  url;
-  const fileID = data.id;
-  const clientID = 'd9b36f468d7a4e4e8b275f13728f1132';
-console.log(urlToPDF,fileID)
-  const viewerOptions = {
-    embedMode: 'FULL_WINDOW',
-    defaultViewMode: 'FIT_PAGE',
-    showDownloadPDF: true,
-    showPrintPDF: true,
-    showLeftHandPanel: false,
-    showAnnotationTools: true,
-    enableAnnotationAPIs: true,
-  };
-
-  const annotationManagerConfig = {
-    showToolbar: true,
-    showCommentsPanel: true,
-    downloadWithAnnotations: true,
-    printWithAnnotations: true,
-  };
-
-  useEffect(() => {
-    const previewPDF = (view, pdfURL) => {
-      fetch(pdfURL)
-        .then((res) => res.blob())
-        .then((blob) => {
-          var previewPromise = view.previewFile(
-            {
-              content: { promise: Promise.resolve(blob.arrayBuffer()) },
-              metaData: {
-                fileName: pdfURL.split('/').slice(-1)[0],
-                id: fileID,
-              },
-            },
-            viewerOptions
-          );
-          createAnnotationManager(previewPromise);
-        });
+export default function AdobePDFViewer({ url, data }) {
+    const configuration = {
+        document: new PSPDFKit.Document(data.name),
+        licenseKey: 'cF6D-jxIY0iG3YSYeTiVDrV78npe1D7z9t_V3vxEaNrE4vyVgo88mqO7fpiZiQyrXcEYw5A8yC5a23ncanYYCu-rk3UKvkKH8EWvuxcRebigT5-o7tbXOdl5Fuzho3Y0BEa_Sk3scSnixH8-Y8jdAaOk4Idq4PHjtxMeLyMyjWfDX1Y4VUfABnQXNS7ygfMyJsit_6y2QpRucg',
+        toolbar: true,
+        sidebar: true,
+        annotations: [],
+        search: true,
+        print: true
     };
+    return (
+        <PSPDFKit
+            document={new PSPDFKit.Document(data.name)}
+            configuration={configuration}
+        />
+    );
 
-    const createAnnotationManager = (previewPromise) => {
-      previewPromise.then((view) => {
-        view.getAnnotationManager().then((annotationManager) => {
-          annotationManager.setConfig(annotationManagerConfig);
-          addAnnotations(annotationManager);
-        });
-      });
-    };
-
-    const addAnnotations = (annotationManager) => {
-      var annotationURLs = [
-        'https://assets.codepen.io/4479906/underline.json',
-        'https://assets.codepen.io/4479906/highlight.json',
-        'https://assets.codepen.io/4479906/scribble.json',
-      ];
-      for (let i = 0; i < annotationURLs.length; i++) {
-        var annotURL = annotationURLs[i];
-        fetch(annotURL)
-          .then((response) => response.json())
-          .then((json) => {
-            annotationManager.addAnnotations([json]);
-          });
-      }
-    };
-
-    const onAdobeDCViewSDKReady = () => {
-      const embeddedView = new window.AdobeDC.View({
-        clientId: clientID,
-        divId: 'embeddedView',
-      });
-      previewPDF(embeddedView, urlToPDF, fileID);
-    };
-
-    document.addEventListener('adobe_dc_view_sdk.ready', onAdobeDCViewSDKReady);
-
-    return () => {
-      document.removeEventListener('adobe_dc_view_sdk.ready', onAdobeDCViewSDKReady);
-    };
-  }, []);
-
-  // Add arrayBuffer if necessary i.e. Safari
-  if (!Blob.prototype.arrayBuffer) {
-    Blob.prototype.arrayBuffer = function () {
-      return new Promise((resolve) => {
-        let fileReader = new FileReader();
-        fileReader.onload = () => {
-          resolve(fileReader.result);
-        };
-        fileReader.readAsArrayBuffer(this);
-      });
-    };
-  }
-
-  return <div id="embeddedView" />;
-};
-
-export default AdobePDFViewer;
+}
