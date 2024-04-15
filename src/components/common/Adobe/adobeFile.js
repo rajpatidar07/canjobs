@@ -51,7 +51,7 @@ const AdobePDFViewer = ({url,data}) => {
   url;
   const fileID = data.id;
   const clientID = 'd9b36f468d7a4e4e8b275f13728f1132';
-
+console.log(urlToPDF,fileID)
   const viewerOptions = {
     embedMode: 'FULL_WINDOW',
     defaultViewMode: 'FIT_PAGE',
