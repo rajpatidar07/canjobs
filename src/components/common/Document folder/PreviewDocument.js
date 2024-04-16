@@ -18,7 +18,7 @@ import { MdAddComment } from "react-icons/md";
 import { RxCrossCircled } from "react-icons/rx";
 import { FaFlag } from "react-icons/fa";
 import { IoMdArrowBack } from "react-icons/io";
-import { usePdf } from 'react-pdf-js';
+// import { usePdf } from 'react-pdf-js';
 import AdobePDFViewer from "../Adobe/adobeFile";
 export default function PreviewDocument({
   setFolderID,
@@ -31,7 +31,7 @@ export default function PreviewDocument({
 }) {
   let admin_id = localStorage.getItem("admin_id");
   let user_type = localStorage.getItem("userType");
-  let docFileExt = docData.file.mimeType.split("/")[1];
+  // let docFileExt = docData.file.mimeType.split("/")[1];
   // const [loading, setLoading] = useState(false)
   const [commenAapiCall, setCommentApiCall] = useState("");
   const [imageAnnotations, setImageAnnotations] = useState([]);
@@ -483,52 +483,52 @@ export default function PreviewDocument({
     }
   };
   /*PDF canvas code */
-  const canvasEl = useRef(null);
-  const [page, setPage] = useState(1);
-  const [pages, setPages] = useState(null);
-  if (docFileExt === "pdf") {
-    // eslint-disable-next-line
-    const [loading, numPages] = usePdf({
-      canvasEl,
-      file: docFile,
-      page,
+  // const canvasEl = useRef(null);
+  // const [page, setPage] = useState(1);
+  // const [pages, setPages] = useState(null);
+  // if (docFileExt === "pdf") {
+  //   // eslint-disable-next-line
+  //   const [loading, numPages] = usePdf({
+  //     canvasEl,
+  //     file: docFile,
+  //     page,
 
-    });
-    useEffect(() => {
-      setPages(numPages);
-    }, [numPages]);
+  //   });
+  //   useEffect(() => {
+  //     setPages(numPages);
+  //   }, [numPages]);
 
-  }
+  // }
   /*FUnction to render pagination for pdf document */
-  const renderPagination = (page, pages) => {
-    if (!pages) {
-      return null;
-    }
-    let previousButton = <span className="previous" onClick={() => setPage(page - 1)}>
-      <Link to=""><i className="fa fa-arrow-left"></i> Previous</Link>
-    </span>;
-    if (page === 1) {
-      previousButton = <span className="previous disabled">
-        <Link to=""><i className="fa fa-arrow-left"></i> Previous</Link>
-      </span>;
-    }
-    let nextButton = <span className="next" onClick={() => setPage(page + 1)}>
-      <Link to="">Next <i className="fa fa-arrow-right"></i></Link>
-    </span>;
-    if (page === pages) {
-      nextButton = <span className="next disabled">
-        <Link to="">Next <i className="fa fa-arrow-right"></i></Link>
-      </span>;
-    }
-    return (
-      <nav>
-        <p className="pager row text-center d-flex justify-content-between">
-          {previousButton}
-          {nextButton}
-        </p>
-      </nav>
-    );
-  }
+  // const renderPagination = (page, pages) => {
+  //   if (!pages) {
+  //     return null;
+  //   }
+  //   let previousButton = <span className="previous" onClick={() => setPage(page - 1)}>
+  //     <Link to=""><i className="fa fa-arrow-left"></i> Previous</Link>
+  //   </span>;
+  //   if (page === 1) {
+  //     previousButton = <span className="previous disabled">
+  //       <Link to=""><i className="fa fa-arrow-left"></i> Previous</Link>
+  //     </span>;
+  //   }
+  //   let nextButton = <span className="next" onClick={() => setPage(page + 1)}>
+  //     <Link to="">Next <i className="fa fa-arrow-right"></i></Link>
+  //   </span>;
+  //   if (page === pages) {
+  //     nextButton = <span className="next disabled">
+  //       <Link to="">Next <i className="fa fa-arrow-right"></i></Link>
+  //     </span>;
+  //   }
+  //   return (
+  //     <nav>
+  //       <p className="pager row text-center d-flex justify-content-between">
+  //         {previousButton}
+  //         {nextButton}
+  //       </p>
+  //     </nav>
+  //   );
+  // }
 
   return (
 
