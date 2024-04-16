@@ -531,322 +531,322 @@ export default function PreviewDocument({
   // }
 
   return (
+    <AdobePDFViewer
+    url={docFile} data={docData} />
+    // <div className="row m-0 bg-white document_preview_box h-100vh overflow-hidden">
+    //   <div
+    //     className={`${user_type === "admin"
+    //       ? "col-md-8 col-lg-8 col-sm-9"
+    //       : "col-md-12 col-lg-12 col-sm-12"
+    //       } p-2 bg-dark`}
+    //   >
+    //     <div className="back_btn_div">
+    //       <Link
+    //         className="rounded-circle"
+    //         style={{
+    //           position: "absolute",
+    //           top: 5,
+    //           left: 5,
+    //           background: "#fff",
+    //           width: 30,
+    //           height: 30,
+    //           zIndex: 9999,
+    //           display: "flex",
+    //           justifyContent: "center",
+    //           alignItems: "center",
+    //         }}
+    //         to=""
+    //         onClick={() => {
+    //           setDocSingleDate("");
+    //           setDocPreview(false);
+    //           setFolderID(docData.parentReference.id);
+    //         }}
+    //       >
+    //         <IoMdArrowBack />
+    //       </Link>
+    //     </div>
+    //     {
+    //       // loading === true ? (
+    //       //     <Loader />
+    //       // ) :
+    //       docFile ? (
+    //         <div>
+    //           <div
+    //             id="annotation-container"
+    //             style={{
+    //               position: "relative",
+    //               width: "100%",
+    //             }}
+    //           >
+    //             <div
+    //               className="d-flex justify-content-center position-relative"
+    //               style={{
+    //                 height: "calc(100vh - 150px)",
+    //                 overflowY: "auto",
+    //               }}
+    //             >
+    //               {/* <RenderNewDocFile /> */}
+    //               <React.Fragment>
+    //                 {docFile ? (
+    //                   <>
+    //                     <div
+    //                       className="w-100"
+    //                       ref={fileViewerRef}
+    //                       onClick={handleFileViewerClick}
+    //                     >
 
-    <div className="row m-0 bg-white document_preview_box h-100vh overflow-hidden">
-      <div
-        className={`${user_type === "admin"
-          ? "col-md-8 col-lg-8 col-sm-9"
-          : "col-md-12 col-lg-12 col-sm-12"
-          } p-2 bg-dark`}
-      >
-        <div className="back_btn_div">
-          <Link
-            className="rounded-circle"
-            style={{
-              position: "absolute",
-              top: 5,
-              left: 5,
-              background: "#fff",
-              width: 30,
-              height: 30,
-              zIndex: 9999,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-            to=""
-            onClick={() => {
-              setDocSingleDate("");
-              setDocPreview(false);
-              setFolderID(docData.parentReference.id);
-            }}
-          >
-            <IoMdArrowBack />
-          </Link>
-        </div>
-        {
-          // loading === true ? (
-          //     <Loader />
-          // ) :
-          docFile ? (
-            <div>
-              <div
-                id="annotation-container"
-                style={{
-                  position: "relative",
-                  width: "100%",
-                }}
-              >
-                <div
-                  className="d-flex justify-content-center position-relative"
-                  style={{
-                    height: "calc(100vh - 150px)",
-                    overflowY: "auto",
-                  }}
-                >
-                  {/* <RenderNewDocFile /> */}
-                  <React.Fragment>
-                    {docFile ? (
-                      <>
-                        <div
-                          className="w-100"
-                          ref={fileViewerRef}
-                          onClick={handleFileViewerClick}
-                        >
+    //                       <LazyLoad
+    //                         height={"100%"}
+    //                         offsetVertical={"100%"}
+    //                         debounce={false}
+    //                       >
+                           
+    //                         {/* {docData &&
+    //                           (docData.name &&
+    //                             docData.name.toLowerCase().includes("imm") ? (
+    //                             <iframe
+    //                               src={docFile}
+    //                               style={{
+    //                                 height: "calc(100vh - 200px)",
+    //                                 overflowY: "auto",
+    //                               }}
+    //                               width={"100%"}
+    //                               title={docData.name}
+    //                             ></iframe>
+    //                           ) : (
+    //                             <>
+    //                               {docFileExt === "pdf" ?
+    //                                 <div className="col">
+    //                                   <canvas ref={canvasEl} />
+    //                                   <div>
+    //                                     {renderPagination(page, pages)}
+    //                                   </div>
+    //                                 </div>
+    //                                 : <FileViewer
+    //                                   key={docData.id}
+    //                                   fileType={
+    //                                     docFileExt ===
+    //                                       "vnd.openxmlformats-officedocument.wordprocessingml.document"
+    //                                       ? "docx"
+    //                                       : docFileExt
+    //                                   }
+    //                                   filePath={`${docFile}&bytes=0-1023`}
+    //                                   errorComponent={() => (
+    //                                     <div>Error loading document</div>
+    //                                   )}
+    //                                   onError={(error) =>
+    //                                     console.error(
+    //                                       "Error loading document:",
+    //                                       error
+    //                                     )
+    //                                   }
+    //                                 />}
 
-                          <LazyLoad
-                            height={"100%"}
-                            offsetVertical={"100%"}
-                            debounce={false}
-                          >
-                            <AdobePDFViewer
-                              url={docFile} data={docData} />
-                            {/* {docData &&
-                              (docData.name &&
-                                docData.name.toLowerCase().includes("imm") ? (
-                                <iframe
-                                  src={docFile}
-                                  style={{
-                                    height: "calc(100vh - 200px)",
-                                    overflowY: "auto",
-                                  }}
-                                  width={"100%"}
-                                  title={docData.name}
-                                ></iframe>
-                              ) : (
-                                <>
-                                  {docFileExt === "pdf" ?
-                                    <div className="col">
-                                      <canvas ref={canvasEl} />
-                                      <div>
-                                        {renderPagination(page, pages)}
-                                      </div>
-                                    </div>
-                                    : <FileViewer
-                                      key={docData.id}
-                                      fileType={
-                                        docFileExt ===
-                                          "vnd.openxmlformats-officedocument.wordprocessingml.document"
-                                          ? "docx"
-                                          : docFileExt
-                                      }
-                                      filePath={`${docFile}&bytes=0-1023`}
-                                      errorComponent={() => (
-                                        <div>Error loading document</div>
-                                      )}
-                                      onError={(error) =>
-                                        console.error(
-                                          "Error loading document:",
-                                          error
-                                        )
-                                      }
-                                    />}
+    //                             </>
+    //                           ))} */}
+    //                       </LazyLoad>
+    //                     </div>
+    //                   </>
+    //                 ) : (
+    //                   <div className="text-center mt-5">No document found</div>
+    //                 )}
+    //               </React.Fragment>
+    //               <Link
+    //                 to=""
+    //                 className={` ${user_type === "admin"
+    //                   ? `btn-sm mt-7 doc_btn ${isAnnotationMode ? "btn-primary " : "btn-secondary"
+    //                   }`
+    //                   : "d-none"
+    //                   }`}
+    //                 style={{
+    //                   position: "absolute",
+    //                   top: "10&",
+    //                   right: "0",
+    //                   zIndex: "99",
+    //                 }}
+    //                 onClick={() => {
+    //                   setAnnotationMode(!isAnnotationMode);
+    //                   setComments("");
+    //                   setReplyCommentClick();
+    //                   setAddCommentFlag(false);
+    //                   //condition if the pdf is of imm
+    //                   if (
+    //                     docData.name &&
+    //                     !isAnnotationMode &&
+    //                     docData.name.toLowerCase().includes("imm")
+    //                   ) {
+    //                     handleFlagClick({ x_axis: 1, y_axis: 1 });
+    //                   } else setSelectedAnnotation(null);
+    //                 }}
+    //               >
+    //                 {isAnnotationMode ? <RxCrossCircled /> : <MdAddComment />}
+    //               </Link>
+    //             </div>
+    //             {/* Transparent overlay for capturing click events */}
+    //             {docFile && user_type === "admin" && (
+    //               <>
+    //                 {isAnnotationMode && (
+    //                   <div
+    //                     style={{
+    //                       position: "absolute",
+    //                       top: 0,
+    //                       left: 0,
+    //                       width: "100%",
+    //                       height: "100%",
+    //                       pointerEvents: "none",
+    //                     }}
+    //                   />
+    //                 )}
 
-                                </>
-                              ))} */}
-                          </LazyLoad>
-                        </div>
-                      </>
-                    ) : (
-                      <div className="text-center mt-5">No document found</div>
-                    )}
-                  </React.Fragment>
-                  <Link
-                    to=""
-                    className={` ${user_type === "admin"
-                      ? `btn-sm mt-7 doc_btn ${isAnnotationMode ? "btn-primary " : "btn-secondary"
-                      }`
-                      : "d-none"
-                      }`}
-                    style={{
-                      position: "absolute",
-                      top: "10&",
-                      right: "0",
-                      zIndex: "99",
-                    }}
-                    onClick={() => {
-                      setAnnotationMode(!isAnnotationMode);
-                      setComments("");
-                      setReplyCommentClick();
-                      setAddCommentFlag(false);
-                      //condition if the pdf is of imm
-                      if (
-                        docData.name &&
-                        !isAnnotationMode &&
-                        docData.name.toLowerCase().includes("imm")
-                      ) {
-                        handleFlagClick({ x_axis: 1, y_axis: 1 });
-                      } else setSelectedAnnotation(null);
-                    }}
-                  >
-                    {isAnnotationMode ? <RxCrossCircled /> : <MdAddComment />}
-                  </Link>
-                </div>
-                {/* Transparent overlay for capturing click events */}
-                {docFile && user_type === "admin" && (
-                  <>
-                    {isAnnotationMode && (
-                      <div
-                        style={{
-                          position: "absolute",
-                          top: 0,
-                          left: 0,
-                          width: "100%",
-                          height: "100%",
-                          pointerEvents: "none",
-                        }}
-                      />
-                    )}
+    //                 {imageAnnotations.map((annotation, index) => (
+    //                   <div
+    //                     key={index}
+    //                     style={{
+    //                       position: "absolute",
+    //                       left: annotation.x_axis - 5,
+    //                       top: annotation.y_axis - 5,
+    //                       cursor: "pointer",
+    //                     }}
+    //                     onClick={() => handleFlagClick(annotation)}
+    //                   >
+    //                     <FaFlag
+    //                       className=""
+    //                       style={{
+    //                         color:
+    //                           selectedAnnotation &&
+    //                             selectedAnnotation.x_axis === annotation.x_axis &&
+    //                             selectedAnnotation.y_axis === annotation.y_axis
+    //                             ? "blue"
+    //                             : annotation.status === "1"
+    //                               ? "green"
+    //                               : "red",
+    //                         display:
+    //                           annotation.status === "1" ? "none" : "block",
+    //                       }}
+    //                     />
+    //                   </div>
+    //                 ))}
+    //               </>
+    //             )}
+    //           </div>
+    //         </div>
+    //       ) : (
+    //         <div className="text-center mt-5">No document found</div>
+    //       )
+    //     }
+    //   </div>
+    //   <div className="col-md-4 col-lg-4 col-sm-3 px-2 py-2 comments_and_replies">
+    //     {docFile &&
+    //       user_type === "admin" &&
+    //       selectedAnnotation && //condition for imm pdf
+    //       (docData.name && docData.name.toLowerCase().includes("imm")
+    //         ? replyCommentClick === undefined ||
+    //         replyCommentClick === "" ||
+    //         replyCommentClick === null
+    //         : addCommentFlag === true) ? (
+    //       <div
+    //         style={
+    //           {
+    //             // position: "absolute",
+    //             // left: selectedAnnotation.x_axis + 10,
+    //             // top: selectedAnnotation.y_axis + 20,
+    //             // zIndex: 1,
+    //           }
+    //         }
+    //         className="pt-0 pb-5"
+    //       >
+    //         <form
+    //           className="comment-form"
+    //           onSubmit={(e) => {
+    //             e.preventDefault();
+    //             addAnnotation(selectedAnnotation);
+    //           }}
+    //         >
+    //           <div className="comment-input-container m-0 mb-2">
+    //             <label className="m-0">
+    //               <b> Add Annotation:</b>
+    //             </label>
+    //             <input
+    //               type="text"
+    //               value={comments || ""}
+    //               onChange={handleInputChange}
+    //               placeholder="Comments or add others with @"
+    //               className="comment-input"
+    //             />
+    //             {filteredEmails.length > 0 && (
+    //               <ul className="email-suggestions">
+    //                 {filteredEmails.map((email) => (
+    //                   <li
+    //                     key={email.email}
+    //                     onClick={() => handleEmailClick(email.email)}
+    //                     onMouseOver={() => handleEmailMouseOver(email.email)}
+    //                     className="email-suggestion-item"
+    //                   >
+    //                     <strong>{email.name}</strong>
+    //                   </li>
+    //                 ))}
+    //               </ul>
+    //             )}
+    //           </div>
+    //           <div className="button-container mx-0">
+    //             <button
+    //               type="submit"
+    //               // onClick={(e) => {
+    //               //   e.preventDefault();
+    //               //   addAnnotation(selectedAnnotation);
 
-                    {imageAnnotations.map((annotation, index) => (
-                      <div
-                        key={index}
-                        style={{
-                          position: "absolute",
-                          left: annotation.x_axis - 5,
-                          top: annotation.y_axis - 5,
-                          cursor: "pointer",
-                        }}
-                        onClick={() => handleFlagClick(annotation)}
-                      >
-                        <FaFlag
-                          className=""
-                          style={{
-                            color:
-                              selectedAnnotation &&
-                                selectedAnnotation.x_axis === annotation.x_axis &&
-                                selectedAnnotation.y_axis === annotation.y_axis
-                                ? "blue"
-                                : annotation.status === "1"
-                                  ? "green"
-                                  : "red",
-                            display:
-                              annotation.status === "1" ? "none" : "block",
-                          }}
-                        />
-                      </div>
-                    ))}
-                  </>
-                )}
-              </div>
-            </div>
-          ) : (
-            <div className="text-center mt-5">No document found</div>
-          )
-        }
-      </div>
-      <div className="col-md-4 col-lg-4 col-sm-3 px-2 py-2 comments_and_replies">
-        {docFile &&
-          user_type === "admin" &&
-          selectedAnnotation && //condition for imm pdf
-          (docData.name && docData.name.toLowerCase().includes("imm")
-            ? replyCommentClick === undefined ||
-            replyCommentClick === "" ||
-            replyCommentClick === null
-            : addCommentFlag === true) ? (
-          <div
-            style={
-              {
-                // position: "absolute",
-                // left: selectedAnnotation.x_axis + 10,
-                // top: selectedAnnotation.y_axis + 20,
-                // zIndex: 1,
-              }
-            }
-            className="pt-0 pb-5"
-          >
-            <form
-              className="comment-form"
-              onSubmit={(e) => {
-                e.preventDefault();
-                addAnnotation(selectedAnnotation);
-              }}
-            >
-              <div className="comment-input-container m-0 mb-2">
-                <label className="m-0">
-                  <b> Add Annotation:</b>
-                </label>
-                <input
-                  type="text"
-                  value={comments || ""}
-                  onChange={handleInputChange}
-                  placeholder="Comments or add others with @"
-                  className="comment-input"
-                />
-                {filteredEmails.length > 0 && (
-                  <ul className="email-suggestions">
-                    {filteredEmails.map((email) => (
-                      <li
-                        key={email.email}
-                        onClick={() => handleEmailClick(email.email)}
-                        onMouseOver={() => handleEmailMouseOver(email.email)}
-                        className="email-suggestion-item"
-                      >
-                        <strong>{email.name}</strong>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-              <div className="button-container mx-0">
-                <button
-                  type="submit"
-                  // onClick={(e) => {
-                  //   e.preventDefault();
-                  //   addAnnotation(selectedAnnotation);
-
-                  // }}
-                  className="btn-sm btn-primary save-comment-btn"
-                >
-                  Save Comment
-                </button>
-                <button
-                  className="btn-sm btn-light cancel-btn"
-                  onClick={() => {
-                    setAddCommentFlag();
-                    setSelectedAnnotation(null);
-                    setComments("");
-                    setAnnotationMode(!isAnnotationMode);
-                    setFilteredEmails([]);
-                  }}
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
-        ) : null}
-        {/* Comment box */}
-        {user_type === "admin" ? (
-          <CommentBox
-            commentsReplyList={commentsReplyList}
-            docData={docData}
-            adminid={adminid}
-            setAdminId={setAdminId}
-            allAdmin={allAdmin}
-            annotationStatus={annotationStatus}
-            setAnnotationStatus={setAnnotationStatus}
-            commentsList={commentsList}
-            selectedAnnotation={selectedAnnotation}
-            setSelectedAnnotation={setSelectedAnnotation}
-            OnHandleUpdateComment={OnHandleUpdateComment}
-            determineBackgroundColor={determineBackgroundColor}
-            setReplyCommentClick={setReplyCommentClick}
-            replyCommentClick={replyCommentClick}
-            replyComment={replyComment}
-            handleInputChange={handleInputChange}
-            filteredEmails={filteredEmails}
-            handleEmailClick={handleEmailClick}
-            handleEmailMouseOver={handleEmailMouseOver}
-            ReplyAnnotation={ReplyAnnotation}
-            getCommentsReplyList={getCommentsReplyList}
-            setAddCommentFlag={setAddCommentFlag}
-            setFilteredEmails={setFilteredEmails}
-            docTypData={docData}
-          // setHide={setHide}
-          />
-        ) : null}
-      </div>
-    </div>
+    //               // }}
+    //               className="btn-sm btn-primary save-comment-btn"
+    //             >
+    //               Save Comment
+    //             </button>
+    //             <button
+    //               className="btn-sm btn-light cancel-btn"
+    //               onClick={() => {
+    //                 setAddCommentFlag();
+    //                 setSelectedAnnotation(null);
+    //                 setComments("");
+    //                 setAnnotationMode(!isAnnotationMode);
+    //                 setFilteredEmails([]);
+    //               }}
+    //             >
+    //               Cancel
+    //             </button>
+    //           </div>
+    //         </form>
+    //       </div>
+    //     ) : null}
+    //     {/* Comment box */}
+    //     {user_type === "admin" ? (
+    //       <CommentBox
+    //         commentsReplyList={commentsReplyList}
+    //         docData={docData}
+    //         adminid={adminid}
+    //         setAdminId={setAdminId}
+    //         allAdmin={allAdmin}
+    //         annotationStatus={annotationStatus}
+    //         setAnnotationStatus={setAnnotationStatus}
+    //         commentsList={commentsList}
+    //         selectedAnnotation={selectedAnnotation}
+    //         setSelectedAnnotation={setSelectedAnnotation}
+    //         OnHandleUpdateComment={OnHandleUpdateComment}
+    //         determineBackgroundColor={determineBackgroundColor}
+    //         setReplyCommentClick={setReplyCommentClick}
+    //         replyCommentClick={replyCommentClick}
+    //         replyComment={replyComment}
+    //         handleInputChange={handleInputChange}
+    //         filteredEmails={filteredEmails}
+    //         handleEmailClick={handleEmailClick}
+    //         handleEmailMouseOver={handleEmailMouseOver}
+    //         ReplyAnnotation={ReplyAnnotation}
+    //         getCommentsReplyList={getCommentsReplyList}
+    //         setAddCommentFlag={setAddCommentFlag}
+    //         setFilteredEmails={setFilteredEmails}
+    //         docTypData={docData}
+    //       // setHide={setHide}
+    //       />
+    //     ) : null}
+    //   </div>
+    // </div>
   );
 }

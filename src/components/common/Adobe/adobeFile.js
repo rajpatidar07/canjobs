@@ -6,7 +6,7 @@ const AdobePDFViewer = ({url,data}) => {
 const [state/*, setState*/] = React.useState({isDataLoaded: true, menuLink: url
 , hasFile: url
 });
-console.log(url)
+// console.log(url)
 // useEffect(() => {
 // axios.get(`${process.env.REACT_APP_BASE_URL}/get_menu`)
 // .then(response => setState({isDataLoaded: true, hasFile: response.data.has_file, menuLink: response.data.menu_link}))
