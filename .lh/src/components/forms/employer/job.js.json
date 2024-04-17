@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 8,
+            "activePatchIndex": 10,
             "patches": [
                 {
                     "date": 1709537126206,
@@ -40,6 +40,14 @@
                 {
                     "date": 1710504370614,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1098,9 +1098,9 @@\n                   <label\n                     htmlFor=\"fetured\"\n                     className=\"font-size-4 text-black-2 font-weight-semibold line-height-reset\"\n                   >\n-                    Featured:\n+                    Featured:{\" \"}\n                     <input\n                       type=\"checkbox\"\n                       id=\"fetured\"\n                       name=\"fetured\"\n"
+                },
+                {
+                    "date": 1713348082892,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -429,9 +429,9 @@\n                 <label\n                   htmlFor=\"job_category_id\"\n                   className=\"font-size-4 text-black-2  line-height-reset\"\n                 >\n-                  Job Category:<span className=\"text-danger\"> *</span>\n+                  Job Category type:<span className=\"text-danger\"> *</span>\n                 </label>\n                 <div className=\"position-relative\">\n                   <select\n                     name=\"job_category_id\"\n"
+                },
+                {
+                    "date": 1713348094847,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -325,9 +325,8 @@\n                 location.pathname === \"/adminclient\" ||\n                 location.pathname === \"/dashboard\" ? null : (\n                 <div className=\"form-group col-md-4 px-0 pr-3\">\n                   <label\n-                    htmlFor=\"job_category_id\"\n                     className=\"font-size-4 text-black-2  line-height-reset\"\n                   >\n                     Client:<span className=\"text-danger\">*</span>\n                   </label>\n"
                 }
             ],
             "date": 1709537126206,

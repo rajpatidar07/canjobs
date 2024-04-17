@@ -3225,3 +3225,20 @@ export const GetSharePointDocUrl = async (Id) => {
   );
   return response;
 };
+/*Adobe api */
+/*APi to adobe generate token */
+export const GetAdobeToken = async (Id) => {
+  console.log(Id)
+  const response = await axios.post(
+    `https://pdf-services-ue1.adobe.io/token`,
+    {
+      "client_id": Id,
+    },{
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+    
+  );
+  return response;
+};

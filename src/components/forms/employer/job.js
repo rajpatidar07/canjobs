@@ -326,7 +326,6 @@ function AddJobModal(props) {
                 location.pathname === "/dashboard" ? null : (
                 <div className="form-group col-md-4 px-0 pr-3">
                   <label
-                    htmlFor="job_category_id"
                     className="font-size-4 text-black-2  line-height-reset"
                   >
                     Client:<span className="text-danger">*</span>
@@ -430,7 +429,7 @@ function AddJobModal(props) {
                   htmlFor="job_category_id"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Job Category:<span className="text-danger"> *</span>
+                  Job Category type:<span className="text-danger"> *</span>
                 </label>
                 <div className="position-relative">
                   <select

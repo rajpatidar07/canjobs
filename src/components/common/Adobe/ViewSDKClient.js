@@ -10,6 +10,7 @@ class ViewSDKClient {
             }
         });
         this.adobeDCView = undefined;
+        this.annots = [];
     }
 
     ready() {
@@ -17,9 +18,7 @@ class ViewSDKClient {
     }
 
     previewFile(divId, viewerConfig, url, data) {
-        console.log(data.name, data);
         const fileExtension = data.name.split('.').pop().toLowerCase();
-        console.log("File extension:", fileExtension);
 
         const config = {
             clientId: "d9e8b7bcb61b42b6a387bfa9cf16a75b",
@@ -85,9 +84,11 @@ class ViewSDKClient {
                     const response = {
                         code: window.AdobeDC.View.Enum.ApiResponseCode.SUCCESS,
                         data: {
-                            metaData: Object.assign(metaData, { updatedAt: new Date().getTime() })
+                            metaData: Object.assign(metaData, { updatedAt: new Date().getTime() }),
+                            annotationData: this.annots
                         },
                     };
+                    console.log(response)
                     resolve(response);
                 }, 2000);
             });

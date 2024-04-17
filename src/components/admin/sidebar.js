@@ -202,7 +202,7 @@ const AdminSidebar = (props) => {
             className={
               user_type === "agent"
                 ? "d-none"
-                : props.heading === "LIMIA status"
+                : props.heading === "LMIA status"
                 ? "active"
                 : ""
             }

@@ -1,4 +1,4 @@
-// import React/*, { useEffect } */from 'react';
+// import React, { useEffect } from 'react';
 // // import axios from 'axios';
 // import CircularProgress from '@material-ui/core/CircularProgress';
 // import ViewSDKClient from './ViewSDKClient.js';
@@ -22,7 +22,7 @@
 //     viewSDKClient.ready().then(() => {
 //         /* Invoke file preview */
 //         /* By default the embed mode will be Full Window */
-//         const previewFilePromise = viewSDKClient.previewFile("pdf-div", { enableAnnotationAPIs: true, includePDFAnnotations: true,showAnnotationTools: false, showLeftHandPanel: false, showPageControls: false,
+//         const previewFilePromise = viewSDKClient.previewFile("pdf-div", { showAnnotationTools: false, showLeftHandPanel: false, showPageControls: false,
 //             showDownloadPDF: false, showPrintPDF: false}, state.menuLink,data);
 //         previewFilePromise
 //             .then((adobeViewer) => {
@@ -48,6 +48,9 @@
 //         // viewSDKClient.registerGetUserProfileApiHandler();
 //     });
 // }
+// useEffect(() => {
+//     loadPDF()
+// }, []);
 
 // return (
 // <div style={{height:"100vh"}}>
@@ -74,128 +77,84 @@
 // );
 // }
 // export default AdobePDFViewer;
-import React, { useEffect } from 'react';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import React, { useEffect, useRef } from 'react';
 import ViewSDKClient from './ViewSDKClient.js';
+import { GetAdobeToken } from '../../../api/api.js';
 
 const AdobePDFViewer = ({ url, data }) => {
-    const [state, setState] = React.useState({
-        isDataLoaded: true,
-        menuLink: url,
-        hasFile: url,
-    });
 
-    const loadPDF = () => {
+    useEffect(() => {
+        let Token = async () => {
+            try {
+                let res = await GetAdobeToken("d9e8b7bcb61b42b6a387bfa9cf16a75b")
+                console.log(res)
+            } catch (err) { console.log(err) }
+        }
         const viewSDKClient = new ViewSDKClient();
         viewSDKClient.ready().then(() => {
             const previewFilePromise = viewSDKClient.previewFile("pdf-div", {
-                enableAnnotationAPIs: true,
-                includePDFAnnotations: true,
-                showAnnotationTools: false,
-                showLeftHandPanel: false,
-                showPageControls: false,
-                showDownloadPDF: false,
-                showPrintPDF: false,
-            }, state.menuLink, data);
+                showAnnotationTools: false, showLeftHandPanel: false, showPageControls: false, enableAnnotationAPIs: true, includePDFAnnotations: true,
+                showDownloadPDF: false, showPrintPDF: false
+            }, url, data);
+            const eventOptions = {
+                listenOn: [
+                    "ANNOTATION_ADDED", "ANNOTATION_UPDATED", "ANNOTATION_DELETED"
+                ]
+            }
+            const filter = {
+                annotationIds: ["8a8ea969-d860-8dc3-5chb-29d9cbb1b84", "079d66a4-5ec2-4703-ae9d-30ccbb1aa84c", "eb46d1a9-e9c3-4e81-a6f4-ce5ba7a905e9", "40ac898a-5426-8f2a-57h8-d80b89ab9b2"]
+
+            }
 
             previewFilePromise
                 .then((adobeViewer) => {
+
                     adobeViewer.getAnnotationManager()
                         .then(annotationManager => {
-                            annotationManager.getAnnotations()
+                            annotationManager.getAnnotations(filter)
                                 .then(result => {
                                     console.log("GET all annotations", result);
+                                    viewSDKClient.annots = result;
+                                    console.log('viewSDKClient.annots in init');
+                                    console.log(viewSDKClient.annots);
                                 })
                                 .catch(e => {
-                                    console.log("Error getting annotations:", e);
+                                    console.log(e);
                                 });
+
+                            annotationManager.registerEventListener(
+                                function (event) {
+                                    console.log(event.type, event.data)
+                                    if (event.type === 'ANNOTATION_ADDED') {
+                                        viewSDKClient.annots = [...viewSDKClient.annots, event.data];
+                                    } else if (event.type === 'ANNOTATION_UPDATED') {
+                                        viewSDKClient.annots = [...(viewSDKClient.annots.filter(a => a.id !== event.data.id)), event.data]
+                                    } else if (event.type === 'ANNOTATION_DELETED') {
+                                        viewSDKClient.annots = viewSDKClient.annots.filter(a => a.id !== event.data.id);
+                                    }
+                                },
+                                eventOptions
+                            );
                         })
                         .catch(e => {
-                            console.log("Error getting annotation manager:", e);
+                            console.log(e);
                         });
                 })
                 .catch(e => {
-                    console.log("Error previewing file:", e);
+                    console.log(e);
                 });
+            viewSDKClient.registerSaveApiHandler();
+            // viewSDKClient.registerGetUserProfileApiHandler();
         });
-    };
-
-    useEffect(() => {
-        loadPDF();
+        Token()
     }, []);
+
 
     return (
         <div style={{ height: "100vh" }}>
-            {state.isDataLoaded ? (
-                <div style={{ height: "100vh" }}>
-                    {state.hasFile ? (
-                        <div id="pdf-div" className="full-window-div" style={{ height: "100vh" }}></div>
-                    ) : (
-                        <div style={{ height: "100vh" }}>
-                            <p className='text dashboard' id="no-file">Sorry, no file at this link</p>
-                        </div>
-                    )}
-                </div>
-            ) : (
-                <div className='cp'>
-                    <CircularProgress style={{ color: '#ffc107' }} />
-                </div>
-            )}
+            <div id="pdf-div" className="full-window-div" style={{ height: "100vh" }}></div>
         </div>
     );
-};
+}
 
 export default AdobePDFViewer;
-
-// import React from "react";
-// import PSPDFKit from "pspdfkit";
-
-// export default function AdobePDFViewer({ url, data }) {
-//     const configuration = {
-//         document: new PSPDFKit.Document(url),
-//         licenseKey: 'cF6D-jxIY0iG3YSYeTiVDrV78npe1D7z9t_V3vxEaNrE4vyVgo88mqO7fpiZiQyrXcEYw5A8yC5a23ncanYYCu-rk3UKvkKH8EWvuxcRebigT5-o7tbXOdl5Fuzho3Y0BEa_Sk3scSnixH8-Y8jdAaOk4Idq4PHjtxMeLyMyjWfDX1Y4VUfABnQXNS7ygfMyJsit_6y2QpRucg',
-//         toolbar: true,
-//         sidebar: true,
-//         annotations: [],
-//         search: true,
-//         print: true
-//     };
-//     return (
-//         <PSPDFKit
-//             document={new PSPDFKit.Document(url)}
-//             configuration={configuration}
-//         />
-//     );
-
-// }
-// import React, { useEffect, useRef } from "react";
-
-// export default function AdobePDFViewer({url,data}) {
-//   const containerRef = useRef(null);
-
-//   useEffect(() => {
-//     const container = containerRef.current; // This `useRef` instance will render the PDF.
-
-//     let PSPDFKit, instance;
-    
-//     (async function () {
-//       PSPDFKit = await import("pspdfkit")
-
-// 		PSPDFKit.unload(container) // Ensure that there's only one PSPDFKit instance.
-
-//       instance = await PSPDFKit.load({
-//         // Container where PSPDFKit should be mounted.
-//         container,
-//         // The document to open.
-//         document: data.name, 
-//         // Use the public directory URL as a base URL. PSPDFKit will download its library assets from here.
-//         baseUrl: url
-//       });
-//     })();
-    
-//     return () => PSPDFKit && PSPDFKit.unload(container)
-//   }, []);
-  
-//   // This div element will render the document to the DOM.
-//   return <div ref={containerRef} style={{ width: "100%", height: "100vh" }} />
-// }

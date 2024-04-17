@@ -111,9 +111,9 @@ function LimaContainer(props) {
         ) : (
           <>
             {/* <!-- Header Area --> */}
-            <AdminHeader heading={"LIMIA status"} />
+            <AdminHeader heading={"LMIA status"} />
             {/* <!-- navbar- --> */}
-            <AdminSidebar heading={"LIMIA status"} />
+            <AdminSidebar heading={"LMIA status"} />
           </>
         )}
 

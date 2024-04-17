@@ -38,6 +38,9 @@ function FilterList() {
   /*Render function to get the filter data*/
   useEffect(() => {
     FilterData();
+    if (apiCall === true) {
+      setApiCall(false)
+    }
   }, [apiCall]);
 
   /*To Show the delete alert box */
@@ -100,9 +103,12 @@ function FilterList() {
                           apiCall={apiCall}
                           setApiCall={setApiCall}
                           id={1}
+                          setFilterData={setFilterData}
+                          filterData={filterData}
+                          filterType={"Skill"}
                         />
                         <ul className="row m-0 p-0">
-                          {filterData.length === 0 ? (
+                          {filterData.Skill && filterData.Skill.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData.Skill || []).map((data, i) => (
@@ -136,27 +142,30 @@ function FilterList() {
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                           Industry
                         </h4>
-                        <AddFilter setApiCall={() => setApiCall(true)} id={4} />
+                        <AddFilter
+                          id={4}
+                          apiCall={apiCall}
+                          setApiCall={setApiCall}
+                          setFilterData={setFilterData}
+                          filterData={filterData}
+                          filterType={"Industry"}
+                        />
                         <ul className="row m-0 p-0">
-                          {filterData.length === 0 ? (
+                          {filterData.Industry && filterData.Industry.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
-                            (filterData.Industry || []).map((data, i) => (
+                            (filterData.Industry || []
+                            ).map((data, i) => (
                               <React.Fragment key={data.id}>
                                 <li className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
                                   {data.value}
-                                  <Link
-                                    onClick={() => ShowDeleteAlert(data, 4)}
-                                    title="Delete"
-                                  >
-                                    <i
-                                      className="px-3 fa fa-times-circle"
-                                      aria-hidden="true"
-                                    ></i>
+                                  <Link onClick={() => ShowDeleteAlert(data, 4)} title="Delete">
+                                    <i className="px-3 fa fa-times-circle" aria-hidden="true"></i>
                                   </Link>
                                 </li>
                               </React.Fragment>
                             ))
+
                           )}
                         </ul>
                       </div>
@@ -169,9 +178,15 @@ function FilterList() {
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                           Education
                         </h4>
-                        <AddFilter setApiCall={() => setApiCall(true)} id={5} />
+                        <AddFilter
+                          id={5}
+                          apiCall={apiCall}
+                          setApiCall={setApiCall}
+                          setFilterData={setFilterData}
+                          filterData={filterData}
+                          filterType={"Education"} />
                         <ul className="row m-0 p-0">
-                          {filterData.length === 0 ? (
+                          {filterData.Education && filterData.Education.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData.Education || []).map((data) => (
@@ -205,9 +220,14 @@ function FilterList() {
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                           Corporation
                         </h4>
-                        <AddFilter setApiCall={() => setApiCall(true)} id={6} />
+                        <AddFilter id={6}
+                          apiCall={apiCall}
+                          setApiCall={setApiCall}
+                          setFilterData={setFilterData}
+                          filterData={filterData}
+                          filterType={"Corporation"} />
                         <ul className="row m-0 p-0">
-                          {filterData.length === 0 ? (
+                          {filterData.Corporation && filterData.Corporation.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData.Corporation || []).map((data, i) => (
@@ -241,9 +261,14 @@ function FilterList() {
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                           Language
                         </h4>
-                        <AddFilter setApiCall={() => setApiCall(true)} id={7} />
+                        <AddFilter id={7}
+                          apiCall={apiCall}
+                          setApiCall={setApiCall}
+                          setFilterData={setFilterData}
+                          filterData={filterData}
+                          filterType={"Language"} />
                         <ul className="row m-0 p-0">
-                          {filterData.length === 0 ? (
+                          {filterData.Language && filterData.Language.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData.Language || []).map((data) => (
@@ -277,9 +302,14 @@ function FilterList() {
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                         Experience 
                         </h4>
-                        <AddFilter setApiCall={() => setApiCall(true)} id={10} />
-                        <ul className="row m-0 p-0">
-                          {filterData.length === 0 ? (
+                        <AddFilter  id={10} 
+                          apiCall={apiCall}
+                         setApiCall={setApiCall}
+                         setFilterData={setFilterData}
+                         filterData={filterData}
+                         filterType={"Experience"} />
+                       <ul className="row m-0 p-0">
+                         {filterData.Experience && filterData.Experience.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData.Experience  || []).map((data) => (
@@ -313,9 +343,14 @@ function FilterList() {
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                         Applicant's types 
                         </h4>
-                        <AddFilter setApiCall={() => setApiCall(true)} id={11} />
-                        <ul className="row m-0 p-0">
-                          {filterData.length === 0 ? (
+                        <AddFilter  id={11} 
+                          apiCall={apiCall}
+                         setApiCall={setApiCall}
+                         setFilterData={setFilterData}
+                         filterData={filterData}
+                         filterType={"Interested"} />
+                       <ul className="row m-0 p-0">
+                         {filterData.Interested && filterData.Interested.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData.Interested  || []).map((data) => (
@@ -349,9 +384,14 @@ function FilterList() {
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                         Applicant's Categories  
                         </h4>
-                        <AddFilter setApiCall={() => setApiCall(true)} id={13} />
-                        <ul className="row m-0 p-0">
-                          {filterData.length === 0 ? (
+                        <AddFilter  id={13}
+                         apiCall={apiCall}
+                         setApiCall={setApiCall}
+                         setFilterData={setFilterData}
+                         filterData={filterData}
+                         filterType={"Applicantscategories"} />
+                       <ul className="row m-0 p-0">
+                         {filterData.Applicantscategories && filterData.Applicantscategories.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData.Applicantscategories  || []).map((data) => (
@@ -385,9 +425,14 @@ function FilterList() {
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                         Job types 
                         </h4>
-                        <AddFilter setApiCall={() => setApiCall(true)} id={12} />
-                        <ul className="row m-0 p-0">
-                          {filterData.length === 0 ? (
+                        <AddFilter  id={12} 
+                          apiCall={apiCall}
+                         setApiCall={setApiCall}
+                         setFilterData={setFilterData}
+                         filterData={filterData}
+                         filterType={"JobType"} />
+                       <ul className="row m-0 p-0">
+                         {filterData.JobType && filterData.JobType.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData.JobType  || []).map((data) => (
@@ -421,9 +466,14 @@ function FilterList() {
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                         Qualification 
                         </h4>
-                        <AddFilter setApiCall={() => setApiCall(true)} id={14} />
-                        <ul className="row m-0 p-0">
-                          {filterData.length === 0 ? (
+                        <AddFilter  id={14} 
+                        apiCall={apiCall}
+                         setApiCall={setApiCall}
+                         setFilterData={setFilterData}
+                         filterData={filterData}
+                         filterType={"Qualification"} />
+                       <ul className="row m-0 p-0">
+                         {filterData.Qualification && filterData.Qualification.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData.Qualification  || []).map((data) => (
@@ -457,9 +507,14 @@ function FilterList() {
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                         Salary 
                         </h4>
-                        <AddFilter setApiCall={() => setApiCall(true)} id={15} />
-                        <ul className="row m-0 p-0">
-                          {filterData.length === 0 ? (
+                        <AddFilter  id={15} 
+                            apiCall={apiCall}
+                         setApiCall={setApiCall}
+                         setFilterData={setFilterData}
+                         filterData={filterData}
+                         filterType={"Salary"} />
+                       <ul className="row m-0 p-0">
+                         {filterData.Salary && filterData.Salary.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData.Salary  || []).map((data) => (
@@ -493,9 +548,14 @@ function FilterList() {
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                         LMIA Status 
                         </h4>
-                        <AddFilter setApiCall={() => setApiCall(true)} id={16} />
-                        <ul className="row m-0 p-0">
-                          {filterData.length === 0 ? (
+                        <AddFilter  id={16} 
+                         apiCall={apiCall}
+                         setApiCall={setApiCall}
+                         setFilterData={setFilterData}
+                         filterData={filterData}
+                         filterType={"LmiaStatus"} />
+                       <ul className="row m-0 p-0">
+                         {filterData.LmiaStatus && filterData.LmiaStatus.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData.LmiaStatus  || []).map((data) => (
@@ -529,9 +589,14 @@ function FilterList() {
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                         LMIA's SubStage Onboarding  
                         </h4>
-                        <AddFilter setApiCall={() => setApiCall(true)} id={17} />
-                        <ul className="row m-0 p-0">
-                          {filterData.length === 0 ? (
+                        <AddFilter  id={17} 
+                        apiCall={apiCall}
+                         setApiCall={setApiCall}
+                         setFilterData={setFilterData}
+                         filterData={filterData}
+                         filterType={"LimaSubStagesOnboarding"} />
+                       <ul className="row m-0 p-0">
+                         {filterData.LimaSubStagesOnboarding && filterData.LimaSubStagesOnboarding.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData.LimaSubStagesOnboarding  || []).map((data) => (
@@ -565,9 +630,14 @@ function FilterList() {
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                         LMIA's SubStage Advertisements  
                         </h4>
-                        <AddFilter setApiCall={() => setApiCall(true)} id={18} />
-                        <ul className="row m-0 p-0">
-                          {filterData.length === 0 ? (
+                        <AddFilter  id={18} 
+                        apiCall={apiCall}
+                         setApiCall={setApiCall}
+                         setFilterData={setFilterData}
+                         filterData={filterData}
+                         filterType={"LimaSubStagesAdvertisements"} />
+                       <ul className="row m-0 p-0">
+                         {filterData.LimaSubStagesAdvertisements && filterData.LimaSubStagesAdvertisements.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData.LimaSubStagesAdvertisements  || []).map((data) => (
@@ -601,9 +671,14 @@ function FilterList() {
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                           LMIA's SubStages Documentation
                         </h4>
-                        <AddFilter setApiCall={() => setApiCall(true)} id={19} />
-                        <ul className="row m-0 p-0">
-                          {filterData.length === 0 ? (
+                        <AddFilter  id={19} 
+                        apiCall={apiCall}
+                        setApiCall={setApiCall}
+                         setFilterData={setFilterData}
+                         filterData={filterData}
+                         filterType={"LimaSubStagesDocumentation"} />
+                       <ul className="row m-0 p-0">
+                         {filterData.LimaSubStagesDocumentation && filterData.LimaSubStagesDocumentation.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData.LimaSubStagesDocumentation || []).map((data) => (
@@ -637,9 +712,14 @@ function FilterList() {
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                           LMIA's SubStage Candidate Placement
                         </h4>
-                        <AddFilter setApiCall={() => setApiCall(true)} id={20} />
-                        <ul className="row m-0 p-0">
-                          {filterData.length === 0 ? (
+                        <AddFilter  id={20} 
+                         apiCall={apiCall}
+                        setApiCall={setApiCall}
+                         setFilterData={setFilterData}
+                         filterData={filterData}
+                         filterType={"LimaSubStagesCandidatePlacement"} />
+                       <ul className="row m-0 p-0">
+                         {filterData.LimaSubStagesCandidatePlacement && filterData.LimaSubStagesCandidatePlacement.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData.LimaSubStagesCandidatePlacement || []).map((data) => (
@@ -673,9 +753,14 @@ function FilterList() {
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                           LMIA's SubStage Submission
                         </h4>
-                        <AddFilter setApiCall={() => setApiCall(true)} id={21} />
-                        <ul className="row m-0 p-0">
-                          {filterData.length === 0 ? (
+                        <AddFilter  id={21} 
+                         apiCall={apiCall}
+                        setApiCall={setApiCall}
+                         setFilterData={setFilterData}
+                         filterData={filterData}
+                         filterType={"LimaSubStagesSubmission"} />
+                       <ul className="row m-0 p-0">
+                         {filterData.LimaSubStagesSubmission && filterData.LimaSubStagesSubmission.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData.LimaSubStagesSubmission || []).map((data) => (
@@ -709,9 +794,14 @@ function FilterList() {
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                           LMIA's SubStage Decision
                         </h4>
-                        <AddFilter setApiCall={() => setApiCall(true)} id={22} />
-                        <ul className="row m-0 p-0">
-                          {filterData.length === 0 ? (
+                        <AddFilter id={22} 
+                        apiCall={apiCall}
+                        setApiCall={setApiCall}
+                         setFilterData={setFilterData}
+                         filterData={filterData}
+                         filterType={"LimaSubStagesDecision"} />
+                       <ul className="row m-0 p-0">
+                         {filterData.LimaSubStagesDecision && filterData.LimaSubStagesDecision.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData.LimaSubStagesDecision || []).map((data) => (
@@ -745,9 +835,13 @@ function FilterList() {
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                           Visa Status
                         </h4>
-                        <AddFilter setApiCall={() => setApiCall(true)} id={23} />
-                        <ul className="row m-0 p-0">
-                          {filterData.length === 0 ? (
+                        <AddFilter id={23}  apiCall={apiCall}
+                        setApiCall={setApiCall}
+                         setFilterData={setFilterData}
+                         filterData={filterData}
+                         filterType={"VisaStatus"} />
+                       <ul className="row m-0 p-0">
+                         {filterData.VisaStatus && filterData.VisaStatus.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData.VisaStatus || []).map((data) => (
@@ -781,9 +875,14 @@ function FilterList() {
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                           Visa's SubStages Onboard
                         </h4>
-                        <AddFilter setApiCall={() => setApiCall(true)} id={24} />
-                        <ul className="row m-0 p-0">
-                          {filterData.length === 0 ? (
+                        <AddFilter  id={24}
+                        apiCall={apiCall}
+                        setApiCall={setApiCall}
+                         setFilterData={setFilterData}
+                         filterData={filterData}
+                         filterType={"VisaSubStagesOnboard"} />
+                       <ul className="row m-0 p-0">
+                         {filterData.VisaSubStagesOnboard && filterData.VisaSubStagesOnboard.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData.VisaSubStagesOnboard || []).map((data) => (
@@ -817,9 +916,14 @@ function FilterList() {
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                           Visa's SubStages Documentation
                         </h4>
-                        <AddFilter setApiCall={() => setApiCall(true)} id={25} />
-                        <ul className="row m-0 p-0">
-                          {filterData.length === 0 ? (
+                        <AddFilter id={25} 
+                         apiCall={apiCall}
+                        setApiCall={setApiCall}
+                         setFilterData={setFilterData}
+                         filterData={filterData}
+                         filterType={"VisaSubStagesDocumentation"} />
+                       <ul className="row m-0 p-0">
+                         {filterData.VisaSubStagesDocumentation && filterData.VisaSubStagesDocumentation.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData.VisaSubStagesDocumentation || []).map((data) => (
@@ -853,9 +957,14 @@ function FilterList() {
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                           Visa's SubStages File Preparation
                         </h4>
-                        <AddFilter setApiCall={() => setApiCall(true)} id={26} />
-                        <ul className="row m-0 p-0">
-                          {filterData.length === 0 ? (
+                        <AddFilter  id={26} 
+                         apiCall={apiCall}
+                        setApiCall={setApiCall}
+                         setFilterData={setFilterData}
+                         filterData={filterData}
+                         filterType={"VisaSubStagesFilePreparation"} />
+                       <ul className="row m-0 p-0">
+                         {filterData.VisaSubStagesFilePreparation && filterData.VisaSubStagesFilePreparation.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData.VisaSubStagesFilePreparation || []).map((data) => (
@@ -889,9 +998,14 @@ function FilterList() {
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                           Visa's SubStages File Review
                         </h4>
-                        <AddFilter setApiCall={() => setApiCall(true)} id={27} />
-                        <ul className="row m-0 p-0">
-                          {filterData.length === 0 ? (
+                        <AddFilter  id={27}
+                        apiCall={apiCall}
+                        setApiCall={setApiCall}
+                         setFilterData={setFilterData}
+                         filterData={filterData}
+                         filterType={"VisaSubStagesFileReview"} />
+                       <ul className="row m-0 p-0">
+                         {filterData.VisaSubStagesFileReview && filterData.VisaSubStagesFileReview.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData.VisaSubStagesFileReview || []).map((data) => (
@@ -925,9 +1039,14 @@ function FilterList() {
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                           Visa's SubStages File Decision
                         </h4>
-                        <AddFilter setApiCall={() => setApiCall(true)} id={28} />
-                        <ul className="row m-0 p-0">
-                          {filterData.length === 0 ? (
+                        <AddFilter  id={28}
+                        apiCall={apiCall}
+                        setApiCall={setApiCall}
+                         setFilterData={setFilterData}
+                         filterData={filterData}
+                         filterType={"VisaSubStagesFileDecision"} />
+                       <ul className="row m-0 p-0">
+                         {filterData.VisaSubStagesFileDecision && filterData.VisaSubStagesFileDecision.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData.VisaSubStagesFileDecision || []).map((data) => (
@@ -961,9 +1080,13 @@ function FilterList() {
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                           Canadian Candidate Work Status
                         </h4>
-                        <AddFilter setApiCall={() => setApiCall(true)} id={29} />
-                        <ul className="row m-0 p-0">
-                          {filterData.length === 0 ? (
+                        <AddFilter  id={29}  apiCall={apiCall}
+                        setApiCall={setApiCall}
+                         setFilterData={setFilterData}
+                         filterData={filterData}
+                         filterType={"CanadianCandidateWorkStatus"} />
+                       <ul className="row m-0 p-0">
+                         {filterData.CanadianCandidateWorkStatus && filterData.CanadianCandidateWorkStatus.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData.CanadianCandidateWorkStatus || []).map((data) => (
@@ -997,9 +1120,14 @@ function FilterList() {
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                           Employee Document
                         </h4>
-                        <AddFilter setApiCall={() => setApiCall(true)} id={30} />
-                        <ul className="row m-0 p-0">
-                          {filterData.length === 0 ? (
+                        <AddFilter  id={30} 
+                         apiCall={apiCall}
+                        setApiCall={setApiCall}
+                         setFilterData={setFilterData}
+                         filterData={filterData}
+                         filterType={"EmployeeDocument"} />
+                       <ul className="row m-0 p-0">
+                         {filterData.EmployeeDocument && filterData.EmployeeDocument.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData.EmployeeDocument || []).map((data) => (
@@ -1033,9 +1161,14 @@ function FilterList() {
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                           Employer Document
                         </h4>
-                        <AddFilter setApiCall={() => setApiCall(true)} id={31} />
-                        <ul className="row m-0 p-0">
-                          {filterData.length === 0 ? (
+                        <AddFilter  id={31} 
+                         apiCall={apiCall}
+                        setApiCall={setApiCall}
+                         setFilterData={setFilterData}
+                         filterData={filterData}
+                         filterType={"EmployerDocument"} />
+                       <ul className="row m-0 p-0">
+                         {filterData.EmployerDocument && filterData.EmployerDocument.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData.EmployerDocument || []).map((data) => (

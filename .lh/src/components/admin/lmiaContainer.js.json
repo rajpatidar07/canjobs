@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 2,
             "patches": [
                 {
                     "date": 1710503309379,
@@ -12,6 +12,10 @@
                 {
                     "date": 1710504382945,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -137,9 +137,9 @@\n                     style={{\r\n                       marginTop: userType === \"company\" ? \"110px\" : null,\r\n                     }}\r\n                   >\r\n-                    LMIA of Jobs\r\n+                    LMIA of Jobs{\" \"}\r\n                   </h3>\r\n                 </div>\r\n                 {/*<-- Job Search and Filter -->*/}\r\n                 {userType === \"company\" ? null : (\r\n"
+                },
+                {
+                    "date": 1713335931917,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -110,11 +110,11 @@\n           <EmployeeHeader />\r\n         ) : (\r\n           <>\r\n             {/* <!-- Header Area --> */}\r\n-            <AdminHeader heading={\"LIMIA status\"} />\r\n+            <AdminHeader heading={\"LMIA status\"} />\r\n             {/* <!-- navbar- --> */}\r\n-            <AdminSidebar heading={\"LIMIA status\"} />\r\n+            <AdminSidebar heading={\"LMIA status\"} />\r\n           </>\r\n         )}\r\n \r\n         <ToastContainer />\r\n"
                 }
             ],
             "date": 1710503309379,
