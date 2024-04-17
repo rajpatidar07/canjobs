@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 13,
+            "activePatchIndex": 14,
             "patches": [
                 {
                     "date": 1712063614705,
@@ -60,6 +60,10 @@
                 {
                     "date": 1712922962346,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -75,31 +75,6 @@\n <!-- <script src=\"js/custom.js\"></script> -->\n <!-- <script type=\"text/javascript\" src=\"https://documentcloud.adobe.com/view-sdk/main.js\"></script> -->\n <script type=\"text/javascript\" src=\"https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.1.266/pdf.worker.js\"></script>\n <script src=\"https://documentcloud.adobe.com/view-sdk/main.js\"></script>\n-<script type=\"module\">\n-  import ViewSDKClient from './ViewSDKClient.js';\n \n-  const viewSDKClient = new ViewSDKClient();\n-\n-  const fileUrl = 'https://www.example.com/sample.pdf';\n-  const fileName = 'sample.pdf';\n-\n-  viewSDKClient.ready().then(() => {\n-    const viewerConfig = {};\n-    viewSDKClient.previewFile('adobe-dc-view', viewerConfig, fileUrl, { name: fileName, mimeType: 'application/pdf', id: 1 })\n-      .then(adobeViewer => {\n-        viewSDKClient.registerSaveApiHandler();\n-        viewSDKClient.registerEventsHandler();\n-\n-        const saveButton = document.createElement('button');\n-        saveButton.textContent = 'Save Annotations';\n-        saveButton.addEventListener('click', () => {\n-          viewSDKClient.saveAnnotations({ id: 1, text: 'This is a sample annotation', createdBy: 'John Doe' });\n-        });\n-        document.body.appendChild(saveButton);\n-      })\n-      .catch(error => console.error('Error previewing file:', error));\n-  });\n-</script>\n-\n </html>\n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1713328375859,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,8 +48,10 @@\n \n <body>\n   <noscript>You need to enable JavaScript to run this app.</noscript>\n   <div id=\"root\"></div>\n+  <div id=\"pdf-div\" style=\"width: 100%; height: 100vh;\"></div>\n+\n   <!--\n       This HTML file is a template.\n       If you open it directly in the browser, you will see an empty page.\n \n"
                 }
             ],
             "date": 1712063614705,
