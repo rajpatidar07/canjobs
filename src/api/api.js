@@ -716,8 +716,26 @@ export const ADocAnnotation = async (
   Senderemail,
   employee_id,
   assigned_by_id,
-  docPartentId
+  docPartentId,
+  AdobeAnnotation,
+  annotationId
 ) => {
+  console.log(annotationId)
+  //   "1. task_creator_user_id =>", id,
+  //   "2. task_creator_user_type =>", user_type === "admin" ? "admin" : "agent",
+  //   "3. doc_id =>", docId,
+  //   "4. user_admin_assigned =>", type === "partner" || "partnerChat" ? assigned_by_id : "",
+  //   "5. json =>", AdobeAnnotation,
+  //   "6. assined_to_user_id =>", assineduserid,
+  //   "7. assigned_user_type =>", AssignUserType,
+  //   "8. document_url =>", type === "partner" || "partnerChat" ? DocUrl : "",
+  //   '9. subject_description =>', comment,
+  //   '10. x_axis =>', x,
+  //   '11. y_axis =>', y,
+  //   '12. type =>', type,
+  //   '13. employee_id =>', employee_id,
+  //   '14. doc_parent_id =>',docPartentId
+  // )
   const response = await axios.post(
     `${API_URL}admin/docTaskAdd`,
     //Old json {
@@ -745,7 +763,7 @@ export const ADocAnnotation = async (
       task_creator_user_type: user_type === "admin" ? "admin" : "agent",
       doc_id: docId,
       user_admin_assigned: type === "partner" || "partnerChat" ? assigned_by_id : "",
-      json: "",
+      json: AdobeAnnotation,
       assined_to_user_id: assineduserid,
       assigned_user_type: AssignUserType,
       document_url: type === "partner" || "partnerChat" ? DocUrl : "",
@@ -754,7 +772,8 @@ export const ADocAnnotation = async (
       y_axis: y,
       type: type,
       employee_id: employee_id,
-      doc_parent_id:docPartentId
+      doc_parent_id: docPartentId,
+      id: annotationId,
     },
     {
       headers: {
@@ -3228,17 +3247,19 @@ export const GetSharePointDocUrl = async (Id) => {
 /*Adobe api */
 /*APi to adobe generate token */
 export const GetAdobeToken = async (Id) => {
-  console.log(Id)
-  const response = await axios.post(
-    `https://pdf-services-ue1.adobe.io/token`,
-    {
-      "client_id": Id,
-    },{
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-    
+  // console.log(Id)
+  const response = await axios.get(
+    // `https://pdf-services-ue1.adobe.io/token`,
+    `https://ims-na1.adobelogin.com/ims/authorize/v2?client_id=d9e8b7bcb61b42b6a387bfa9cf16a75b
+    `,
+    // {
+    //   "client_id": Id,
+    // },{
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // }
+
   );
   return response;
 };

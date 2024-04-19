@@ -16,10 +16,10 @@ const Breadcrumbs = ({ data, setFolderID }) => {
             }`}
           >
             {index === data.length - 1 ? (
-              <span>{index === 0 ? "Home" : item.name}</span>
+              <span>{index === 0 ? "Home" : item.name.replaceAll("_", " ")}</span>
             ) : (
               <Link onClick={() => setFolderID(item.id)}>
-                {index === 0 ? "Home" : item.name}
+                {index === 0 ? "Home" : item.name.replaceAll("_", " ")}
               </Link>
             )}
           </li>

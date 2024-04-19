@@ -3,11 +3,19 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 2,
             "patches": [
                 {
                     "date": 1713355684907,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1713508482742,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,40 @@\n /* List of annotations */\r\n-export const annotations = [\r\n+export const annotations = [{\r\n+    \"@context\": [\r\n+        \"https://www.w3.org/ns/anno.jsonld\",\r\n+        \"https://comments.acrobat.com/ns/anno.jsonld\"\r\n+    ],\r\n+    \"id\": \"03a0ac01-a90d-89af-48h7-5b898bbf8b0\",\r\n+    \"type\": \"Annotation\",\r\n+    \"motivation\": \"commenting\",\r\n+    \"bodyValue\": \"ggggggggggg\",\r\n+    \"target\": {\r\n+        \"source\": \"01PMN6UKRPYDNIKLEM4ZH3PRQNQAJY62LM\",\r\n+        \"selector\": {\r\n+            \"node\": {\r\n+                \"index\": 0\r\n+            },\r\n+            \"opacity\": 0.4,\r\n+            \"subtype\": \"note\",\r\n+            \"boundingBox\": [\r\n+                577.510237777789,\r\n+                823.510237777789,\r\n+                596.0399780273438,\r\n+                842.0399780273438\r\n+            ],\r\n+            \"strokeColor\": \"#F8D147\",\r\n+            \"type\": \"AdobeAnnoSelector\"\r\n+        }\r\n+    },\r\n+    \"creator\": {\r\n+        \"id\": \"Guest\",\r\n+        \"name\": \"Guest\",\r\n+        \"type\": \"Person\"\r\n+    },\r\n+    \"created\": \"2024-04-19T06:34:21Z\",\r\n+    \"modified\": \"2024-04-19T06:34:21Z\"\r\n+},\r\n     /* Annotation data for highlight */\r\n     {\r\n         \"@context\": [\r\n             \"https://www.w3.org/ns/anno.jsonld\",\r\n"
+                },
+                {
+                    "date": 1713509363826,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,40 @@\n+/* List of annotations */\r\n+export const annotations = [{\r\n+    \"@context\": [\r\n+        \"https://www.w3.org/ns/anno.jsonld\",\r\n+        \"https://comments.acrobat.com/ns/anno.jsonld\"\r\n+    ],\r\n+    \"id\": \"03a0ac01-a90d-89af-48h7-5b898bbf8b0\",\r\n+    \"type\": \"Annotation\",\r\n+    \"motivation\": \"commenting\",\r\n+    \"bodyValue\": \"ggggggggggg\",\r\n+    \"target\": {\r\n+        \"source\": \"01PMN6UKRPYDNIKLEM4ZH3PRQNQAJY62LM\",\r\n+        \"selector\": {\r\n+            \"node\": {\r\n+                \"index\": 0\r\n+            },\r\n+            \"opacity\": 0.4,\r\n+            \"subtype\": \"note\",\r\n+            \"boundingBox\": [\r\n+                577.510237777789,\r\n+                823.510237777789,\r\n+                596.0399780273438,\r\n+                842.0399780273438\r\n+            ],\r\n+            \"strokeColor\": \"#F8D147\",\r\n+            \"type\": \"AdobeAnnoSelector\"\r\n+        }\r\n+    },\r\n+    \"creator\": {\r\n+        \"id\": \"Guest\",\r\n+        \"name\": \"Guest\",\r\n+        \"type\": \"Person\"\r\n+    },\r\n+    \"created\": \"2024-04-19T06:34:21Z\",\r\n+    \"modified\": \"2024-04-19T06:34:21Z\"\r\n+}\r\n+   \r\n+];\r\n+\r\n+export default { annotations };\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1713355684907,

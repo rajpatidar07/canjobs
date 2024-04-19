@@ -1,3 +1,6 @@
+import { toast } from "react-toastify";
+import { ADocAnnotation } from "../../../api/api";
+
 class ViewSDKClient {
     constructor() {
         this.readyPromise = new Promise((resolve) => {
@@ -11,13 +14,14 @@ class ViewSDKClient {
         });
         this.adobeDCView = undefined;
         this.annots = [];
+        this.newannots = [];
     }
 
     ready() {
         return this.readyPromise;
     }
 
-    previewFile(divId, viewerConfig, url, data) {
+    previewFile(divId, viewerConfig, url, data, userId, annotationId) {
         const fileExtension = data.name.split('.').pop().toLowerCase();
 
         const config = {
@@ -41,6 +45,9 @@ class ViewSDKClient {
             showLeftHandPanel: true, // Show left-hand panel
             showSearchPDF: true, // Show search PDF option
             showDocumentInfo: true, // Show document information
+            enablePDFAnnotationEditing: false,
+            enablePDFAnnotationModification: false, // Enable PDF annotation modification
+            enablePDFAnnotationDeletion: false,
         };
 
         const previewFilePromise = this.adobeDCView.previewFile({
@@ -54,6 +61,9 @@ class ViewSDKClient {
             metaData: {
                 fileName: data.name,
                 id: data.id,
+                parentReference: data.parentReference,
+                userId: userId,
+                annotationId: annotationId
             }
         }, viewerConfig);
 
@@ -78,9 +88,8 @@ class ViewSDKClient {
 
     registerSaveApiHandler() {
         const saveApiHandler = (metaData, content, options) => {
-            console.log(metaData, content, options);
             return new Promise(resolve => {
-                setTimeout(() => {
+                setTimeout(async () => {
                     const response = {
                         code: window.AdobeDC.View.Enum.ApiResponseCode.SUCCESS,
                         data: {
@@ -88,8 +97,65 @@ class ViewSDKClient {
                             annotationData: this.annots
                         },
                     };
-                    console.log(response)
+                    console.log(metaData.annotationId)
                     resolve(response);
+                    if (this.newannots.length !== 0) {
+                        try {
+                            let res = await ADocAnnotation(
+                                localStorage.getItem("admin_id"),
+                                metaData.id,
+                                "",//ASSIGNED ADMIN ID
+                                "",//ASSIGNED ADMIN EMAIL
+                                "",//SUBJECT
+                                "N/A",//COMMENT
+                                "0",//X AXIS
+                                "0",//Y AXIS
+                                "document",
+                                localStorage.getItem("admin_type"), //sender ADMIN type
+                                localStorage.getItem("admin"), //sender name,
+                                "", //assigned Admin or user Name,
+                                "", //follow up status(for notes only)
+                                "", //Next follow up date(for notes only)
+                                "", //Assign user type,
+                                "", //Document url(for notes only)
+                                localStorage.getItem("admin_email"), //Sender email
+                                metaData.userId, //employee id,
+                                "", //assigned_by_id
+                                metaData.parentReference.id, // document parent code,
+                                this.newannots,//Annotation data,
+                                metaData.annotationId //annotationId
+                            );
+                            if (res.data.message === "task inserted successfully!") {
+                                toast.success("Comment uploaded Successfully", {
+                                    position: toast.POSITION.TOP_RIGHT,
+                                    autoClose: 1000,
+                                });
+                                //   setSelectedAnnotation(null);
+                                //   setComments("");
+                                //   setCommentApiCall(true);
+                                //   setSelectedAdmin("");
+                                //   setAnnotationMode(!isAnnotationMode);
+                                //   setFilteredEmails([]);
+                                // setNotificationApiCall(true);
+                                localStorage.setItem("callNotification", true);
+                            }
+                        } catch (err) {
+                            console.log(err);
+                            if (err.response.data.message === "required fields cannot be blank") {
+                                toast.error(" Please try again later.", {
+                                    position: toast.POSITION.TOP_RIGHT,
+                                    autoClose: 1000,
+                                });
+                                //   setSelectedAnnotation(null);
+                                //   setComments("");
+                                //   setSelectedAdmin("");
+                                //   setCommentApiCall(true);
+                                //   setAnnotationMode(!isAnnotationMode);
+                                //   setAddCommentFlag();
+                                //   setFilteredEmails([]);
+                            }
+                        }
+                    }
                 }, 2000);
             });
         };
@@ -114,234 +180,7 @@ class ViewSDKClient {
 }
 
 export default ViewSDKClient;
-// class ViewSDKClient {
-//     constructor() {
-//         // Promise that resolves when AdobeDC SDK is ready
-//         this.readyPromise = new Promise((resolve) => {
-//             if (window.AdobeDC) {
-//                 resolve();
-//             } else {
-//                 document.addEventListener("adobe_dc_view_sdk.ready", () => {
-//                     resolve();
-//                 });
-//             }
-//         });
-//         this.adobeDCView = undefined; // Initialize AdobeDC View object
-//     }
-
-//     // Method to check if AdobeDC SDK is ready
-//     ready() {
-//         return this.readyPromise;
-//     }
-
-//     // Method to preview a file
-//     previewFile(divId, viewerConfig, url, data) {
-//         // Log file information
-//         console.log(data.name, data);
-//         const fileExtension = data.name.split('.').pop().toLowerCase();
-//         console.log("File extension:", fileExtension);
-
-//         const config = {
-//             clientId: "d9e8b7bcb61b42b6a387bfa9cf16a75b",
-//         };
-
-//         if (divId) {
-//             config.divId = divId;
-//         }
-
-//         // Create AdobeDC View object
-//         this.adobeDCView = new window.AdobeDC.View(config);
-
-//         // Set viewer configuration
-//         viewerConfig = {
-//             ...viewerConfig,
-//             embedMode: window.AdobeDC.View.Enum.EmbedMode.INLINE,
-//             showAnnotationTools: true,
-//             showDownloadPDF: true,
-//             showPrintPDF: true,
-//             enableFormFilling: true,
-//             showLeftHandPanel: true,
-//             showSearchPDF: true,
-//             showDocumentInfo: true,
-//         };
-
-//         // Preview file using AdobeDC View object
-//         const previewFilePromise = this.adobeDCView.previewFile({
-//             content: {
-//                 location: {
-//                     url: url,
-//                     fileExtension: fileExtension,
-//                     fileType: data.mimeType
-//                 },
-//             },
-//             metaData: {
-//                 fileName: data.name,
-//                 id: data.id,
-//             },
-//         }, viewerConfig);
-
-//         // Register save API handler with dynamic annotation message
-//         const annotationMessage = "This is a sample annotation message.";
-//         this.registerSaveApiHandler(annotationMessage);
-
-//         return previewFilePromise;
-//     }
-
-//     // Method to preview a file using a file promise
-//     previewFileUsingFilePromise(divId, filePromise, data,annotationMessage) {
-//         this.adobeDCView = new window.AdobeDC.View({
-//             clientId: "d9e8b7bcb61b42b6a387bfa9cf16a75b",
-//             divId,
-//         });
-
-//         this.adobeDCView.previewFile({
-//             content: {
-//                 promise: filePromise,
-//             },
-//             metaData: {
-//                 fileName: data.name
-//             }
-//         }, {});
-
-//         // Register save API handler with dynamic annotation message
-//         this.registerSaveApiHandler(annotationMessage);
-//     }
-
-//     // Method to register a save API handler with dynamic annotation message
-//     registerSaveApiHandler(annotationMessage) {
-//         const saveApiHandler = (metaData, content, options) => {
-//             console.log(metaData, "content => ", content, "Options:- ", options)
-//             return new Promise(resolve => {
-//                 setTimeout(() => {
-//                     const documentId = metaData.id;
-//                     const savedData = JSON.parse(localStorage.getItem(documentId)) || {};
-//                     savedData[metaData.id] = content;
-//                     console.log(annotationMessage, "data", savedData);
-//                     localStorage.setItem(`annotations${documentId}`, JSON.stringify(savedData));
-
-//                     // Set the dynamic annotation message
-//                     const response = {
-//                         code: window.AdobeDC.View.Enum.ApiResponseCode.SUCCESS,
-//                         data: {
-//                             metaData: Object.assign(metaData, {
-//                                 updatedAt: new Date().getTime(),
-//                                 message: annotationMessage // Set the annotation message dynamically
-//                             })
-//                         },
-//                     };
-//                     resolve(response);
-//                 }, 2000);
-//             });
-//         };
-//         // Register save API handler with AdobeDC View object
-//         this.adobeDCView.registerCallback(
-//             window.AdobeDC.View.Enum.CallbackType.SAVE_API,
-//             saveApiHandler,
-//             {}
-//         );
-//     }
-
-//     // Method to retrieve annotations from local storage
-//     retrieveAnnotations(documentId) {
-//         const savedData = JSON.parse(localStorage.getItem(`annotations${documentId}`)) || {};
-//         return savedData[documentId] || {};
-//     }
-
-//     // Method to register event handlers
-//     registerEventsHandler() {
-//         this.adobeDCView.registerCallback(
-//             window.AdobeDC.View.Enum.CallbackType.EVENT_LISTENER,
-//             event => {
-//                 console.log(event);
-//             },
-//             {
-//                 enablePDFAnalytics: true,
-//             }
-//         );
-//     }
-// }
-
-// export default ViewSDKClient;
-// class ViewSDKClient {
-//     constructor() {
-//         // Promise that resolves when AdobeDC SDK is ready
-//         this.readyPromise = new Promise((resolve) => {
-//             if (window.AdobeDC) {
-//                 resolve();
-//             } else {
-//                 document.addEventListener("adobe_dc_view_sdk.ready", () => {
-//                     resolve();
-//                 });
-//             }
-//         });
-//         this.adobeDCView = undefined; // Initialize AdobeDC View object
-//         this.dynamicAnnotationMessage = ""; // Initialize dynamic annotation message
-//         this.handleClick = this.handleClick.bind(this);
-//     }
-//   // Method to attach onclick event to a specific element
-//   attachClickEventToElement() {
-//     const element = document.getElementsByClassName("ModernEditableTextComponent__PostToolText___AYHrj");
-//     if (element) {
-//         element.addEventListener("click", this.handleClick);
-//     } else {
-//         console.error(`Element with ID  not found.`);
-//     }
-// }
-//   // Click event handler
-//   handleClick(event) {
-//     // Handle click event logic here
-//     console.log("Element clicked:", event.target);
-// }
-//     // Method to check if AdobeDC SDK is ready
-//     ready() {
-//         return this.readyPromise;
-//     }
-
-//     // Method to preview a file
-//     previewFile(divId, viewerConfig, url, data) {
-//         // Log file information
-//         console.log(data.name, data);
-//         const fileExtension = data.name.split('.').pop().toLowerCase();
-//         console.log("File extension:", fileExtension);
-
-//         const config = {
-//             clientId: "d9e8b7bcb61b42b6a387bfa9cf16a75b",
-//         };
-
-//         if (divId) {
-//             config.divId = divId;
-//         }
-
-//         // Create AdobeDC View object
-//         this.adobeDCView = new window.AdobeDC.View(config);
-
-//         // Set viewer configuration
-//         viewerConfig = {
-//             ...viewerConfig,
-//             embedMode: window.AdobeDC.View.Enum.EmbedMode.INLINE,
-//             showAnnotationTools: true,
-//             showDownloadPDF: true,
-//             showPrintPDF: true,
-//             enableFormFilling: true,
-//             showLeftHandPanel: true,
-//             showSearchPDF: true,
-//             showDocumentInfo: true,
-//         };
-
-//         // Preview file using AdobeDC View object
-//         const previewFilePromise = this.adobeDCView.previewFile({
-//             content: {
-//                 location: {
-//                     url: url,
-//                     fileExtension: fileExtension,
-//                     fileType: data.mimeType
-//                 },
-//             },
-//             metaData: {
-//                 fileName: data.name,
-//                 id: data.id,
-//             },
-//     options: {
+//  options: {
 //         enableAnnotationAPIs: true, // Enable annotation APIs for the viewer
 //         includePDFAnnotations: true, // Include PDF annotations in the preview
 //         showPageControls: true, // Show page navigation controls
@@ -534,71 +373,4 @@ export default ViewSDKClient;
 //         enablePDFAnnotationReviewRedactionTextExtraction: true, // Enable PDF annotation review redaction text extraction
 //         enablePDFAnnotationReviewRedactionFullTextRedaction: true, // Enable PDF annotation review redaction full text redaction
 //         // Add more options as needed based on your requirements
-//     },
-//         }, viewerConfig);
-
-//         // Register save API handler with dynamic annotation message
-//         this.registerSaveApiHandler();
-
-//         return previewFilePromise;
 //     }
-
-//     // Method to register a save API handler with dynamic annotation message
-//     registerSaveApiHandler() {
-//         const saveApiHandler = (metaData, content, options) => {
-//             return new Promise(resolve => {
-//                 setTimeout(() => {
-//                     const documentId = metaData.id;
-//                     const savedData = JSON.parse(localStorage.getItem(documentId)) || {};
-//                     savedData[metaData.id] = content;
-//                     console.log(this.dynamicAnnotationMessage, "data", savedData);
-//                     localStorage.setItem(`annotations${documentId}`, JSON.stringify(savedData));
-
-//                     // Set the dynamic annotation message
-//                     const response = {
-//                         code: window.AdobeDC.View.Enum.ApiResponseCode.SUCCESS,
-//                         data: {
-//                             metaData: Object.assign(metaData, {
-//                                 updatedAt: new Date().getTime(),
-//                                 message: this.dynamicAnnotationMessage // Set the annotation message dynamically
-//                             })
-//                         },
-//                     };
-//                     resolve(response);
-//                 }, 2000);
-//             });
-//         };
-//         // Register save API handler with AdobeDC View object
-//         this.adobeDCView.registerCallback(
-//             window.AdobeDC.View.Enum.CallbackType.SAVE_API,
-//             saveApiHandler,
-//             {}
-//         );
-//     }
-
-//     // Method to set dynamic annotation message
-//     setDynamicAnnotationMessage(message) {
-//         this.dynamicAnnotationMessage = message;
-//     }
-
-//     // Method to retrieve annotations from local storage
-//     retrieveAnnotations(documentId) {
-//         const savedData = JSON.parse(localStorage.getItem(`annotations${documentId}`)) || {};
-//         return savedData[documentId] || {};
-//     }
-
-//     // Method to register event handlers
-//     registerEventsHandler() {
-//         this.adobeDCView.registerCallback(
-//             window.AdobeDC.View.Enum.CallbackType.EVENT_LISTENER,
-//             event => {
-//                 console.log(event);
-//             },
-//             {
-//                 enablePDFAnalytics: true,
-//             }
-//         );
-//     }
-// }
-
-// export default ViewSDKClient;

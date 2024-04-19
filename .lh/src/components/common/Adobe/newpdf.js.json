@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/components/common/Adobe/newpdf.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1713442831871,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1713442831871,
+            "name": "Commit-0",
+            "content": "import React from 'react'\r\n\r\nexport default function Newpdf() {\r\n  return (\r\n    <div>Newpdf</div>\r\n  )\r\n}\r\n"
+        }
+    ]
+}

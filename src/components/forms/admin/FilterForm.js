@@ -3,7 +3,7 @@ import useValidation from "../../common/useValidation";
 import { AddFIlter } from "../../../api//api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { FiPlus } from "react-icons/fi";
 function AddFilter(props) {
   let [loading, setLoading] = useState(false);
@@ -142,7 +142,7 @@ function AddFilter(props) {
                   <FiPlus />
                 </button>
                 <button
-                  className="btn  action_btn btn-secondry "
+                  className="btn  action_btn btn-secondry d-none"
                   type="button"
                   id="button-addon3"
                   title={cancelBtn

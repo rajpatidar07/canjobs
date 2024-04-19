@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 6,
+            "activePatchIndex": 8,
             "patches": [
                 {
                     "date": 1713165997449,
@@ -32,6 +32,14 @@
                 {
                     "date": 1713244799569,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,8 +32,9 @@\n     \"build\": \"react-scripts --max_old_space_size=4096 build\",\n     \"test\": \"react-scripts test\",\n     \"eject\": \"react-scripts eject\"\n   },\n+  \n   \"eslintConfig\": {\n     \"extends\": [\n       \"react-app\",\n       \"react-app/jest\"\n"
+                },
+                {
+                    "date": 1713430765299,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -47,9 +47,10 @@\n   \"scripts\": {\n     \"start\": \"react-scripts start\",\n     \"build\": \"react-scripts --max_old_space_size=4096 build\",\n     \"test\": \"react-scripts test\",\n-    \"eject\": \"react-scripts eject\"\n+    \"eject\": \"react-scripts eject\",\n+    \"webviewer-server\": \"webviewer-server-package start\"\n   },\n   \"eslintConfig\": {\n     \"extends\": [\n       \"react-app\",\n"
+                },
+                {
+                    "date": 1713430810254,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,9 +48,9 @@\n     \"start\": \"react-scripts start\",\n     \"build\": \"react-scripts --max_old_space_size=4096 build\",\n     \"test\": \"react-scripts test\",\n     \"eject\": \"react-scripts eject\",\n-    \"webviewer-server\": \"webviewer-server-package start\"\n+    \"webviewer-server\": \"webviewer-server-package run\"\n   },\n   \"eslintConfig\": {\n     \"extends\": [\n       \"react-app\",\n"
                 }
             ],
             "date": 1713165997449,
