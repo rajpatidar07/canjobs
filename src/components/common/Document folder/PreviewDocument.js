@@ -1,15 +1,15 @@
-import React/* { useState, useEffect, useRef } */from "react";
+import React, { useState, useEffect/*, useRef */} from "react";
 // import { Link } from "react-router-dom";
 // import CommentBox from "../CommentBox";
-// import {
-//   getallAdminData,
-//   GetReplyCommit,
-//   ADocAnnotation,
-//   UpdateDocuentcommentAssign,
-//   SendReplyCommit,
-//   GetCommentsAndAssign,
-//   // GetSharePointDocUrl
-// } from "../../../api/api";
+import {
+  // getallAdminData,
+  // GetReplyCommit,
+  // ADocAnnotation,
+  // UpdateDocuentcommentAssign,
+  // SendReplyCommit,
+  GetCommentsAndAssign,
+  // GetSharePointDocUrl
+} from "../../../api/api";
 // import LazyLoad from "react-lazy-load";
 // import { toast } from "react-toastify";
 // // import FileViewer from "react-file-viewer";
@@ -38,7 +38,7 @@ export default function PreviewDocument({
   // const [imageAnnotations, setImageAnnotations] = useState([]);
   // const [comments, setComments] = useState("");
   // const [replyComment, setReplyComment] = useState("");
-  // const [commentsList, setCommentsList] = useState([]);
+  const [commentsList, setCommentsList] = useState([]);
   // const [selectedAnnotation, setSelectedAnnotation] = useState(null);
   // const [isAnnotationMode, setAnnotationMode] = useState(false);
   // let [allAdmin, setAllAdmin] = useState([]);
@@ -53,16 +53,16 @@ export default function PreviewDocument({
   // const [commentsReplyList, setCommentsReplyList] = useState([]);
   // // const [actualDocFile, setActualDocFile] = useState("");
   // //USeEffect foe commet list
-  // useEffect(() => {
-  //   setSelectedAnnotation(null);
-  //   getCommentsList();
-  //   AdminData()
-  //   // GetDocUrl()
-  //   setFolderID("")
-  //   if (commenAapiCall === true) {
-  //     setCommentApiCall(false);
-  //   }
-  // }, [docId, commenAapiCall, adminid, annotationStatus]);
+  useEffect(() => {
+    // setSelectedAnnotation(null);
+    getCommentsList();
+    // AdminData()
+    // GetDocUrl()
+    // setFolderID("")
+    // if (commenAapiCall === true) {
+    //   setCommentApiCall(false);
+    // }
+  }, [docData.id/*docId, commenAapiCall, adminid, annotationStatus*/]);
   // /*Function to get document url */
   // // const GetDocUrl = async () => {
   // //   try {
@@ -165,32 +165,32 @@ export default function PreviewDocument({
   //   setSelectedAnnotation(annotation);
   // };
   // // Generate a list of comments from the state for image annotation
-  // const getCommentsList = async () => {
-  //   if (docData.id) {
-  //     try {
-  //       let res = await GetCommentsAndAssign(
-  //         docData.id,//docId,
-  //         adminid,
-  //         annotationStatus,
-  //         "document"
-  //       );
-  //       if (res.data.status === (1 || "1")) {
-  //         setCommentsList(res.data.data.data);
-  //         setImageAnnotations(res.data.data.data);
-  //       } else if (res.data.message === "Task data not found") {
-  //         setCommentsList([]);
-  //         setImageAnnotations([]);
-  //       }
-  //     } catch (err) {
-  //       console.log(err);
-  //       setCommentsList([]);
-  //       setImageAnnotations([]);
-  //     }
-  //   } else {
-  //     setCommentsList([]);
-  //     setImageAnnotations([]);
-  //   }
-  // };
+  const getCommentsList = async () => {
+    if (docData.id) {
+      try {
+        let res = await GetCommentsAndAssign(
+          docData.id,//docId,
+         "",// adminid,
+         "",// annotationStatus,
+          "document"
+        );
+        if (res.data.status === (1 || "1")) {
+          setCommentsList(res.data.data.data);
+          // setImageAnnotations(res.data.data.data);
+        } else if (res.data.message === "Task data not found") {
+          setCommentsList([]);
+          // setImageAnnotations([]);
+        }
+      } catch (err) {
+        console.log(err);
+        setCommentsList([]);
+        // setImageAnnotations([]);
+      }
+    } else {
+      setCommentsList([]);
+      // setImageAnnotations([]);
+    }
+  };
 
   // // Generate a list of comments reply
   // const getCommentsReplyList = async () => {
@@ -534,8 +534,10 @@ export default function PreviewDocument({
   return (
     /*Adobe viwer */
     <AdobePDFViewer
-    url={docFile} data={docData}
-    userId={userId} />
+    url={docFile} 
+    data={docData}
+    userId={userId}
+    commentsList={commentsList} />
     /*Apryse Viewer */
     // <Apryse
     //   url={docFile} data={docData}
