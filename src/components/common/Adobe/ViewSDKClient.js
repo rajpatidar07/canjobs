@@ -24,7 +24,7 @@ class ViewSDKClient {
         const fileExtension = data.name.split('.').pop().toLowerCase();
 
         const config = {
-            clientId: "d9e8b7bcb61b42b6a387bfa9cf16a75b",
+            clientId: "d9b36f468d7a4e4e8b275f13728f1132",
         };
 
         if (divId) {
@@ -69,7 +69,7 @@ class ViewSDKClient {
 
     previewFileUsingFilePromise(divId, filePromise, data) {
         this.adobeDCView = new window.AdobeDC.View({
-            clientId: "d9e8b7bcb61b42b6a387bfa9cf16a75b",
+            clientId: "d9b36f468d7a4e4e8b275f13728f1132",
             divId,
         });
 
