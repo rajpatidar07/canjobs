@@ -42,7 +42,7 @@ import AgentConversation from "../common/AgentConversation";
 import UserTimline from "../common/UserTimline";
 import InterviewHistoryTable from "../common/InterviewHistoryTable";
 import SharePointDocument from "../common/Document folder/SharePointDocument";
-import AdobePDFViewer from "../common/Adobe/adobeFile";
+// import AdobePDFViewer from "../common/Adobe/adobeFile";
 const NewUserProfile = (props) => {
   const { eid } = useParams();
   const location = useLocation();
@@ -739,7 +739,7 @@ const NewUserProfile = (props) => {
                       className={`${user_type === "company"
                         ? "d-none"
                         : "tab-menu-items nav-item"
-                        } d-none`}
+                        }`}
                     >
                       <Link
                         className={
@@ -754,7 +754,7 @@ const NewUserProfile = (props) => {
                         aria-selected="true"
                         onClick={() => setTabActive("documents")}
                       >
-                        Documents
+                     Adobe   Documents
                       </Link>
                     </li>
                     <li
@@ -776,7 +776,7 @@ const NewUserProfile = (props) => {
                         aria-selected="true"
                         onClick={() => setTabActive("sharepoint")}
                       >
-                         Documents
+                       PSPDF  Documents
                       </Link>
                     </li>
                     <li
@@ -1803,8 +1803,14 @@ const NewUserProfile = (props) => {
                       //   docId={docId ? docId : ""}
                       //   folderId={PersonalDetail.documents_folder_id}
                       // />
-                      <AdobePDFViewer/>
-
+                      < SharePointDocument
+                      user_id={eid}
+                      emp_user_type={"employee"}
+                      folderId={docId ? docParentId : PersonalDetail.documents_folder_id}
+                      notification={docId ? "yes" : "no"}
+                      docId={docId ? docId : ""}
+                      docTypePage={"adobe"}
+                    />
                     ) : null}
                   </div>
                   <div

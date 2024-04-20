@@ -46,7 +46,7 @@ const AdobePDFViewer = ({ url, data, userId, commentsList }) => {
                                 });
                             annotationManager.registerEventListener(
                                 function (event) {
-                                    console.log(event.type, event.data, event)
+                                    // console.log(event.type, event.data, event)
                                     if (event.type === 'ANNOTATION_ADDED') {
                                         // Include AdminDetails for annotations 
                                         const newAnnotation = event.data;

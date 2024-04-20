@@ -8,8 +8,8 @@ import {
 } from "../../../api/api";
 import { Dropdown, Form } from "react-bootstrap";
 import SAlert from "../../common/sweetAlert";
-// import { Link } from 'react-router-dom';
-// import { GrLinkPrevious } from "react-icons/gr";
+import { Link } from 'react-router-dom';
+import { IoMdArrowBack } from "react-icons/io";
 import FolderList from "./FolderList";
 import { toast } from "react-toastify";
 // import DocSaveForm from "./DocSaveForm";
@@ -24,6 +24,7 @@ export default function SharePointDocument({
   folderId,
   notification,
   docId,
+  docTypePage
 }) {
   const [docTypeName, setDocTypeName] = useState("");
   const [newType, setNewType] = useState("");
@@ -56,48 +57,48 @@ export default function SharePointDocument({
   const DocTypeData =
     emp_user_type === "employer"
       ? [
-          "Business T2",
-          "Recent PD7A",
-          "Business T4",
-          "Business Incorporation Certificate",
-          "Employment Contract",
-          "Schedule A",
-          "Signed Job Offer",
-          "PD7A of year",
-          "T2 Schedule 100 and 125",
-          "Certificate of incorporation",
-          "Business license",
-          "T4 summary of year",
-          "Request for Exception from English Language Requirement for LMIA Application",
-          "CPA Attestation Letter",
-          "Representative Submission Letter",
-        ]
+        "Business T2",
+        "Recent PD7A",
+        "Business T4",
+        "Business Incorporation Certificate",
+        "Employment Contract",
+        "Schedule A",
+        "Signed Job Offer",
+        "PD7A of year",
+        "T2 Schedule 100 and 125",
+        "Certificate of incorporation",
+        "Business license",
+        "T4 summary of year",
+        "Request for Exception from English Language Requirement for LMIA Application",
+        "CPA Attestation Letter",
+        "Representative Submission Letter",
+      ]
       : [
-          "passport",
-          "drivers_license",
-          "photograph",
-          "immigration_status",
-          "lmia",
-          "job_offer_letter",
-          "provincial_nominee_letter",
-          "proof_of_funds",
-          "proof_of_employment",
-          "marriage_certificate",
-          "education_metric",
-          "education_higher_secondary",
-          "education_graduation",
-          "education_post_graduation",
-          "resume_or_cv",
-          "ielts",
-          "medical",
-          "police_clearance",
-          "refusal_letter",
-          "Employment Contract",
-          "Reference Letters",
-          "Client Info",
-          "Representative Submission Letter",
-          "Bank Statement",
-        ];
+        "passport",
+        "drivers_license",
+        "photograph",
+        "immigration_status",
+        "lmia",
+        "job_offer_letter",
+        "provincial_nominee_letter",
+        "proof_of_funds",
+        "proof_of_employment",
+        "marriage_certificate",
+        "education_metric",
+        "education_higher_secondary",
+        "education_graduation",
+        "education_post_graduation",
+        "resume_or_cv",
+        "ielts",
+        "medical",
+        "police_clearance",
+        "refusal_letter",
+        "Employment Contract",
+        "Reference Letters",
+        "Client Info",
+        "Representative Submission Letter",
+        "Bank Statement",
+      ];
 
   /*Function to call api to get all folders list of employees documnet from sharepoint */
   const AllShareType = async () => {
@@ -307,19 +308,53 @@ export default function SharePointDocument({
       {folderId ? (
         <div className="document_section">
           {docPreview ? (
-            // <PreviewDocument
-            //   docData={docSingleDate}
-            //   docId={docId ? docId : folderID}
-            //   userId={user_id}
-            //   docFile={docSingleDate["@microsoft.graph.downloadUrl"]}
-            //   setDocPreview={setDocPreview}
-            //   setDocSingleDate={setDocSingleDate}
-            //   setFolderID={setFolderID}
-            // />
+
             <div className="App-viewer">
-              <PdfViewerComponent
-                document={docSingleDate["@microsoft.graph.downloadUrl"]}
-              />
+              <div className="row m-0 bg-white document_preview_box h-100vh overflow-hidden">
+                <div
+                  className={` p-2 col-md-12 col-lg-12 col-sm-12`}
+                >
+                  <div className="back_btn_div">
+                    <Link
+                      className="rounded-circle"
+                      style={{
+                        position: "absolute",
+                        top: 5,
+                        left: 5,
+                        background: "#fff",
+                        width: 30,
+                        height: 30,
+                        zIndex: 9999,
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                      to=""
+                      onClick={() => {
+                        setDocSingleDate("");
+                        setDocPreview(false);
+                        setFolderID(docSingleDate.parentReference.id);
+                      }}
+                    >
+                      <IoMdArrowBack />
+                    </Link>
+                  </div>
+                  {docTypePage === "adobe" ?
+                    <PreviewDocument
+                      docData={docSingleDate}
+                      docId={docId ? docId : folderID}
+                      userId={user_id}
+                      docFile={docSingleDate["@microsoft.graph.downloadUrl"]}
+                      setDocPreview={setDocPreview}
+                      setDocSingleDate={setDocSingleDate}
+                      setFolderID={setFolderID}
+                    />
+                    :
+                    <PdfViewerComponent
+                      document={docSingleDate["@microsoft.graph.downloadUrl"]}
+                    />}
+                </div>
+              </div>
             </div>
           ) : (
             <div className={"document_container bg-white"}>
