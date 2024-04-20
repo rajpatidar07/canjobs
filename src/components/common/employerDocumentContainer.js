@@ -16,7 +16,7 @@ import {
   GetReplyCommit,
 } from "../../api/api";
 import { toast } from "react-toastify";
-import FileViewer from "react-file-viewer";
+// import FileViewer from "react-file-viewer";
 import Verified from "../../media/verified.png";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import { CiTrash } from "react-icons/ci";
@@ -498,19 +498,20 @@ export default function EmployerDocumrentContainer(props) {
                     title={docTypData.document_name}
                   ></iframe>
                 ) : (
-                  <FileViewer
-                    key={docTypData.id}
-                    fileType={
-                      docFileExt
-                        ? docFileExt
-                        : docTypData.extension_type ===
-                          "vnd.openxmlformats-officedocument.wordprocessingml.document"
-                        ? "docx"
-                        : docTypData.extension_type
-                    }
-                    filePath={docFile}
-                    errorComponent={() => <div>Error loading document</div>}
-                  />
+                  ""
+                  // <FileViewer
+                  //   key={docTypData.id}
+                  //   fileType={
+                  //     docFileExt
+                  //       ? docFileExt
+                  //       : docTypData.extension_type ===
+                  //         "vnd.openxmlformats-officedocument.wordprocessingml.document"
+                  //       ? "docx"
+                  //       : docTypData.extension_type
+                  //   }
+                  //   filePath={docFile}
+                  //   errorComponent={() => <div>Error loading document</div>}
+                  // />
                 )}
               </LazyLoad>
             </div>

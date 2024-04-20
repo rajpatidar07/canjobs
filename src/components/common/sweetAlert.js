@@ -12,7 +12,6 @@ const SAlert = (props) => {
         onConfirm={props.onConfirm}
         showCancelButton={props.showCancelButton}
         onCancel={props.onCancel}
-        
       />
     </div>
   );

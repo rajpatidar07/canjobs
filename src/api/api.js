@@ -253,13 +253,13 @@ export const EmployeeAppliedJob = async (props) => {
 export const AddEmployeeDetails = async (props) => {
   const headers = Token
     ? {
-      "Content-Type": "application/json",
-      Authorization: Token,
-    }
+        "Content-Type": "application/json",
+        Authorization: Token,
+      }
     : {
-      "Content-Type": "application/json",
-      type: "event",
-    };
+        "Content-Type": "application/json",
+        type: "event",
+      };
   // console.log(Token,headers)
   const response = await axios.put(`${API_URL}employeePersonal_detail`, props, {
     headers: headers,
@@ -720,7 +720,7 @@ export const ADocAnnotation = async (
   AdobeAnnotation,
   annotationId
 ) => {
-  console.log(annotationId)
+  console.log(annotationId);
   //   "1. task_creator_user_id =>", id,
   //   "2. task_creator_user_type =>", user_type === "admin" ? "admin" : "agent",
   //   "3. doc_id =>", docId,
@@ -762,7 +762,8 @@ export const ADocAnnotation = async (
       task_creator_user_id: id,
       task_creator_user_type: user_type === "admin" ? "admin" : "agent",
       doc_id: docId,
-      user_admin_assigned: type === "partner" || "partnerChat" ? assigned_by_id : "",
+      user_admin_assigned:
+        type === "partner" || "partnerChat" ? assigned_by_id : "",
       json: AdobeAnnotation,
       assined_to_user_id: assineduserid,
       assigned_user_type: AssignUserType,
@@ -821,7 +822,7 @@ export const GetCommentsAndAssign = async (
       status: status,
       type: type,
       assigned_user_type: assigned_user_type,
-      employee_id: employeeId
+      employee_id: employeeId,
       // id:"",task_creator_user_id:""
     },
     {
@@ -916,7 +917,8 @@ export const SendReplyCommitSharepoint = async (
   senderType,
   employee_id
 ) => {
-  console.log("doc_id" + data.doc_id,
+  console.log(
+    "doc_id" + data.doc_id,
     "employee_id" + employee_id,
     "task_id" + data.id,
     "sender_id" + senderId,
@@ -924,19 +926,20 @@ export const SendReplyCommitSharepoint = async (
     "receiver_id" + recid,
     "receiver_type" + adminType,
     "msg" + msg,
-    "type" + type)
+    "type" + type
+  );
   const response = await axios.post(
     `${API_URL}admin/sendMsg`,
     {
-      "doc_id": data.doc_id,
-      "employee_id": employee_id,
-      "task_id": data.id,
-      "sender_id": senderId,
-      "sender_type": senderType,
-      "receiver_id": recid,
-      "receiver_type": adminType,
-      "msg": msg,
-      "type": type
+      doc_id: data.doc_id,
+      employee_id: employee_id,
+      task_id: data.id,
+      sender_id: senderId,
+      sender_type: senderType,
+      receiver_id: recid,
+      receiver_type: adminType,
+      msg: msg,
+      type: type,
     },
     {
       headers: {
@@ -1790,10 +1793,10 @@ export const getAllMentionNotification = async (
       //   userType === "agent" || type === "mention_partner" ? userType : "",
       // page: page,
       // limit: limit,
-      from_id: loginuserid,//userType === "agent" || type === "mention_partner" ? loginuserid : "",
-      from_user_type: userType,//userType === "agent" || type === "mention_partner" ? "" : userType,
+      from_id: loginuserid, //userType === "agent" || type === "mention_partner" ? loginuserid : "",
+      from_user_type: userType, //userType === "agent" || type === "mention_partner" ? "" : userType,
       subject: type,
-      action_id: "",//userType === "agent" || type === "mention_partner" ? "" : loginuserid,
+      action_id: "", //userType === "agent" || type === "mention_partner" ? "" : loginuserid,
       mention_id: "",
       employee_id: "",
       page: page,
@@ -1823,7 +1826,6 @@ export const ReadNotification = async (props) => {
   );
   return response.data;
 };
-
 
 /*Admin List Api */
 export const getallAdminData = async (
@@ -2135,15 +2137,21 @@ export const getSingleCompanyFollowup = async (
   return response.data;
 };
 /*Get All Users Followup Data */
-export const getAllUsersFollowUpData = async (userId, userType, column, sort, search) => {
+export const getAllUsersFollowUpData = async (
+  userId,
+  userType,
+  column,
+  sort,
+  search
+) => {
   const response = await axios.post(
     `${API_URL}admin/getFollowUp`,
     {
-      "user_id": userId,
-      "user_type": userType,
-      "column_name": column,
-      "sort_order": sort,
-      "search": search
+      user_id: userId,
+      user_type: userType,
+      column_name: column,
+      sort_order: sort,
+      search: search,
     },
     {
       headers: {
@@ -2157,16 +2165,12 @@ export const getAllUsersFollowUpData = async (userId, userType, column, sort, se
 
 /*Add All user's Followup Api */
 export const AddAllUserFollowup = async (props) => {
-  const response = await axios.post(
-    `${API_URL}admin/addFollowUp`,
-    props,
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: Token,
-      },
-    }
-  );
+  const response = await axios.post(`${API_URL}admin/addFollowUp`, props, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  });
   return response.data;
 };
 
@@ -2843,7 +2847,7 @@ export const AddRazorpay = async (amount, response, role, id) => {
       razorpay0rderId: response.razorpay_order_id,
       razorpaysighature: response.razorpay_signature,
       user_role: role,
-      id: role === "agent" ? id : ""
+      id: role === "agent" ? id : "",
     },
     {
       headers: {
@@ -3073,9 +3077,9 @@ export const getSharePointFoldersList = async (Id, User) => {
   const response = await axios.post(
     `${API_URL}admin/getSharpointSiteDriveFolderData_new`,
     {
-      "driveId": driveId,
-      "userId": Id,
-      "userType": User
+      driveId: driveId,
+      userId: Id,
+      userType: User,
     },
     {
       headers: {
@@ -3086,16 +3090,15 @@ export const getSharePointFoldersList = async (Id, User) => {
   );
   return response;
 };
-//Api function to GET emolyee  peticular document folder data 
+//Api function to GET emolyee  peticular document folder data
 export const getSharePointParticularFolders = async (Id, User, folderId) => {
   const response = await axios.post(
     `${API_URL}admin/getSharpointSiteDriveFolderToFolderData_new`,
     {
-      "driveId": driveId,
-      "userId": Id,
-      "userType": User,
-      "folderId": folderId,
-
+      driveId: driveId,
+      userId: Id,
+      userType: User,
+      folderId: folderId,
     },
     {
       headers: {
@@ -3106,14 +3109,14 @@ export const getSharePointParticularFolders = async (Id, User, folderId) => {
   );
   return response;
 };
-//Api function to Add document folder or type 
+//Api function to Add document folder or type
 export const AddSharePointFolders = async (folder, parentId) => {
   const response = await axios.post(
     `${API_URL}admin/createSharepointFolder_new`,
     {
-      "driveId": driveId,
-      "newFolderName": folder,
-      "parentFolderId": parentId
+      driveId: driveId,
+      newFolderName: folder,
+      parentFolderId: parentId,
     },
     {
       headers: {
@@ -3124,9 +3127,26 @@ export const AddSharePointFolders = async (folder, parentId) => {
   );
   return response;
 };
-//Api function to Add sharepoint document 
-export const AddSharePointDOcument = async (id, user, folderId, docType, data) => {
-  console.log("employee_id", id, "userType", user, "folder_Id", folderId, "docType", docType, "file", data)
+//Api function to Add sharepoint document
+export const AddSharePointDOcument = async (
+  id,
+  user,
+  folderId,
+  docType,
+  data
+) => {
+  console.log(
+    "employee_id",
+    id,
+    "userType",
+    user,
+    "folder_Id",
+    folderId,
+    "docType",
+    docType,
+    "file",
+    data
+  );
   const formData = new FormData();
   formData.append("docType", docType);
   formData.append("userType", user);
@@ -3149,13 +3169,13 @@ export const AddSharePointDOcument = async (id, user, folderId, docType, data) =
   );
   return response;
 };
-//Api function to get folder or type breadcrumb 
+//Api function to get folder or type breadcrumb
 export const getFolderBreadcrumb = async (folderid) => {
   const response = await axios.post(
     `${API_URL}admin/getFolderBreadcrumb_new`,
     {
-      "driveId": driveId,
-      "folderId": folderid,
+      driveId: driveId,
+      folderId: folderid,
     },
     {
       headers: {
@@ -3166,16 +3186,21 @@ export const getFolderBreadcrumb = async (folderid) => {
   );
   return response;
 };
-// /Api function to edit document name for 
-export const ChangeDocNameSharpoint = async (userId, userType, docName, DocId) => {
+// /Api function to edit document name for
+export const ChangeDocNameSharpoint = async (
+  userId,
+  userType,
+  docName,
+  DocId
+) => {
   const response = await axios.post(
     `${API_URL}admin/updateSharepointDocumentName_new`,
     {
-      "driveId": driveId,
-      "userId": userId,
-      "userType": userType,
-      "newDocumentName": docName,
-      "documentId": DocId
+      driveId: driveId,
+      userId: userId,
+      userType: userType,
+      newDocumentName: docName,
+      documentId: DocId,
     },
     {
       headers: {
@@ -3186,18 +3211,22 @@ export const ChangeDocNameSharpoint = async (userId, userType, docName, DocId) =
   );
   return response;
 };
-// /Api function to edit Folder name for sharepoint 
-export const ChangeFolderNameSharpoint = async (userId, userType, FolderName, FolderId) => {
+// /Api function to edit Folder name for sharepoint
+export const ChangeFolderNameSharpoint = async (
+  userId,
+  userType,
+  FolderName,
+  FolderId
+) => {
   const response = await axios.post(
     `${API_URL}admin/updateSharepointFolderName_new`,
     {
-      "driveId": driveId,
-      "userId": userId,
-      "userType": userType,
-      "newFolderName": FolderName,
-      "folderId": FolderId
-    }
-    ,
+      driveId: driveId,
+      userId: userId,
+      userType: userType,
+      newFolderName: FolderName,
+      folderId: FolderId,
+    },
     {
       headers: {
         "Content-Type": "application/json",
@@ -3207,16 +3236,15 @@ export const ChangeFolderNameSharpoint = async (userId, userType, FolderName, Fo
   );
   return response;
 };
-// /Api function to Delete Folder or document for sharepoint 
+// /Api function to Delete Folder or document for sharepoint
 export const DeleteFolderOrDocument = async (FolderId, type) => {
   const response = await axios.post(
     `${API_URL}admin/deleteSharepointDocument_new`,
     {
-      "driveId": driveId,
-      "id": FolderId,
-      "type": type
-    }
-    ,
+      driveId: driveId,
+      id: FolderId,
+      type: type,
+    },
     {
       headers: {
         "Content-Type": "application/json",
@@ -3226,15 +3254,14 @@ export const DeleteFolderOrDocument = async (FolderId, type) => {
   );
   return response;
 };
-// /Api function to Get document url for sharepoint 
+// /Api function to Get document url for sharepoint
 export const GetSharePointDocUrl = async (Id) => {
   const response = await axios.post(
     `${API_URL}admin/getDocPreviewUrl_new`,
     {
-      "driveId": driveId,
-      "doc_id": Id,
-    }
-    ,
+      driveId: driveId,
+      doc_id: Id,
+    },
     {
       headers: {
         "Content-Type": "application/json",
@@ -3251,7 +3278,7 @@ export const GetAdobeToken = async (Id) => {
   const response = await axios.get(
     // `https://pdf-services-ue1.adobe.io/token`,
     `https://ims-na1.adobelogin.com/ims/authorize/v2?client_id=d9e8b7bcb61b42b6a387bfa9cf16a75b
-    `,
+    `
     // {
     //   "client_id": Id,
     // },{
@@ -3259,7 +3286,6 @@ export const GetAdobeToken = async (Id) => {
     //     "Content-Type": "application/json",
     //   },
     // }
-
   );
   return response;
 };
