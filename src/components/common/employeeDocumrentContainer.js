@@ -20,7 +20,7 @@ import {
 } from "../../api/api";
 import LazyLoad from "react-lazy-load";
 import { toast } from "react-toastify";
-import FileViewer from "react-file-viewer";
+// import FileViewer from "react-file-viewer";
 import { useEffect } from "react";
 import Verified from "../../media/verified.png";
 /*Annotation */
@@ -896,7 +896,7 @@ export default function DocumrentContainer(props) {
                     ></iframe>
                   ) : (
                     <>
-                      <FileViewer
+                      {/* <FileViewer
                         key={docTypData.id}
                         fileType={
                           docFileExt
@@ -911,7 +911,7 @@ export default function DocumrentContainer(props) {
                         onError={(error) =>
                           console.error("Error loading document:", error)
                         }
-                      />
+                      /> */}
                     </>
                   ))}
               </LazyLoad>
