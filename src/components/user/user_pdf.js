@@ -1,5 +1,5 @@
 import React from "react";
-import FileViewer from "react-file-viewer"; // Import your FileViewer library
+// import FileViewer from "react-file-viewer"; // Import your FileViewer library
 import { useLocation } from "react-router-dom";
 const PDFViewer = () => {
   const location = useLocation();
@@ -33,12 +33,13 @@ const PDFViewer = () => {
       <div className="d-flex justify-content-around text-center">
         <div className="w-100">
           {pdfUrl ? (
-            <FileViewer
-              fileType={fileExtension === "pdf" ? "pdf" : "image"}
-              filePath={decodeURIComponent(pdfUrl)}
-              errorComponent={() => <div>Error loading document</div>}
-            />
+            ""
           ) : (
+            // <FileViewer
+            //   fileType={fileExtension === "pdf" ? "pdf" : "image"}
+            //   filePath={decodeURIComponent(pdfUrl)}
+            //   errorComponent={() => <div>Error loading document</div>}
+            // />
             <div>No PDF URL provided.</div>
           )}
         </div>

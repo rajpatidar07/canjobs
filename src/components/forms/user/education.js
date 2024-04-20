@@ -558,7 +558,7 @@ function Education(props) {
           <SAlert
             show={deleteAlert}
             title={deleteName}
-            text="Are you Sure you want to delete !"
+            text="Are you Sure you want to delete"
             onConfirm={() => deleteEducation(deleteId)}
             showCancelButton={true}
             onCancel={CancelDelete}

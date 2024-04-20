@@ -4,7 +4,7 @@ import Loader from "./loader";
 import {
   // UploadDocument,
   // UploadBulkDocument,
-  GetDocumentDriveList,//GetEmployeeDocumentList(old),
+  GetDocumentDriveList, //GetEmployeeDocumentList(old),
   VarifyDocument,
   ADocAnnotation,
   GetCommentsAndAssign,
@@ -16,11 +16,11 @@ import {
   GetReplyCommit,
   UploadDriveDocument,
   ChangeNameDocument,
-  SendReplyCommitSharepoint
+  SendReplyCommitSharepoint,
 } from "../../api/api";
 import LazyLoad from "react-lazy-load";
 import { toast } from "react-toastify";
-import FileViewer from "react-file-viewer";
+// import FileViewer from "react-file-viewer";
 import { useEffect } from "react";
 import Verified from "../../media/verified.png";
 /*Annotation */
@@ -127,18 +127,19 @@ export default function DocumrentContainer(props) {
       AdminData();
       if (allAdmin) {
         // Filter admin emails based on input
-        let filteredAdminEmails = allAdmin.filter((admin) =>
-        (admin.email.toLowerCase().includes(
-          String(inputValue)
-            .substring(atIndex + 1)
-            .toLowerCase()
-        ) ||
-          admin.name.toLowerCase().includes(
-            String(inputValue)
-              .substring(atIndex + 1)
-              .toLowerCase()
-          )
-        ))
+        let filteredAdminEmails = allAdmin.filter(
+          (admin) =>
+            admin.email.toLowerCase().includes(
+              String(inputValue)
+                .substring(atIndex + 1)
+                .toLowerCase()
+            ) ||
+            admin.name.toLowerCase().includes(
+              String(inputValue)
+                .substring(atIndex + 1)
+                .toLowerCase()
+            )
+        );
 
         // Update the filtered emails
         setFilteredEmails(filteredAdminEmails);
@@ -197,7 +198,9 @@ export default function DocumrentContainer(props) {
     if (docId || (docData && docData.find((item) => item.type === docName))) {
       try {
         let res = await GetCommentsAndAssign(
-          docId ? docId : docData.find((item) => item.type === docName).document_id,
+          docId
+            ? docId
+            : docData.find((item) => item.type === docName).document_id,
           adminid,
           annotationStatus,
           "document"
@@ -225,7 +228,9 @@ export default function DocumrentContainer(props) {
     if (docId || docData.find((item) => item.type === docName)) {
       try {
         let res = await GetReplyCommit(
-          docId ? docId : docData.find((item) => item.type === docName).document_id,
+          docId
+            ? docId
+            : docData.find((item) => item.type === docName).document_id,
           adminid,
           annotationStatus
         );
@@ -244,18 +249,17 @@ export default function DocumrentContainer(props) {
   /*Functo get Applicants Document */
   const GetDocument = async (del) => {
     try {
-      let response = await
-        // GetEmployeeDocumentList old
-        GetDocumentDriveList(
-          props.employee_id,
-          props.emp_user_type,
-          props.docId &&
-            localStorage.getItem("notificationUser") === props.employee_id
-            ? ""
-            : selectDocTypeName
-              ? selectDocTypeName
-              : ""
-        );
+      let response = await // GetEmployeeDocumentList old
+      GetDocumentDriveList(
+        props.employee_id,
+        props.emp_user_type,
+        props.docId &&
+          localStorage.getItem("notificationUser") === props.employee_id
+          ? ""
+          : selectDocTypeName
+          ? selectDocTypeName
+          : ""
+      );
       if (
         response.data.data === undefined ||
         response.data.data === "" ||
@@ -267,7 +271,6 @@ export default function DocumrentContainer(props) {
         setDocData([]);
         setLoading(false);
       } else {
-
         if (
           response.data.data.allData.length === 0 ||
           response.data.data.allData === undefined ||
@@ -294,30 +297,42 @@ export default function DocumrentContainer(props) {
           // Condition for Open document from notification
           setNotificationDoc(0);
 
-          if (response.data.data.allData.find((item) => item.document_id === docId)) {
+          if (
+            response.data.data.allData.find(
+              (item) => item.document_id === docId
+            )
+          ) {
             setSelecttDocTypeName(
-              response.data.data.allData.find((item) => item.document_id === docId)
-                .type
+              response.data.data.allData.find(
+                (item) => item.document_id === docId
+              ).type
             );
             setDocTypData(
-              response.data.data.allData.find((item) => item.document_id === docId)
+              response.data.data.allData.find(
+                (item) => item.document_id === docId
+              )
             );
             setDocName(
-              response.data.data.allData.find((item) => item.document_id === docId)
-                .document_name
+              response.data.data.allData.find(
+                (item) => item.document_id === docId
+              ).document_name
             );
             setDocId(
-              response.data.data.allData.find((item) => item.document_id === docId).document_id
+              response.data.data.allData.find(
+                (item) => item.document_id === docId
+              ).document_id
             );
             setDocFile(
-              response.data.data.allData.find((item) => item.document_id === docId)
-                .document_url
+              response.data.data.allData.find(
+                (item) => item.document_id === docId
+              ).document_url
               //    +
               // `?v=${new Date().getMinutes() + new Date().getSeconds()}`
             );
             setDocTypeName(
-              response.data.data.allData.find((item) => item.document_id === docId)
-                .type
+              response.data.data.allData.find(
+                (item) => item.document_id === docId
+              ).type
             );
           } else {
             toast.error("Document not found", {
@@ -392,32 +407,40 @@ export default function DocumrentContainer(props) {
           } else {
             //Condition for update
             if (
-              response.data.data.allData.find((item) => item.document_id === docId)
+              response.data.data.allData.find(
+                (item) => item.document_id === docId
+              )
             ) {
               setNotificationDoc(0);
 
               setDocTypData(
-                response.data.data.allData.find((item) => item.document_id === docId)
+                response.data.data.allData.find(
+                  (item) => item.document_id === docId
+                )
               );
               setDocFile(
-                response.data.data.allData.find((item) => item.document_id === docId)
-                  .document_url
+                response.data.data.allData.find(
+                  (item) => item.document_id === docId
+                ).document_url
                 //   +
                 // `?v=${new Date().getMinutes() + new Date().getSeconds()}`
               );
               setDocName(
-                response.data.data.allData.find((item) => item.document_id === docId)
-                  .document_name
+                response.data.data.allData.find(
+                  (item) => item.document_id === docId
+                ).document_name
               );
               setDocId(
-                response.data.data.allData.find((item) => item.document_id === docId)
-                  .document_id
+                response.data.data.allData.find(
+                  (item) => item.document_id === docId
+                ).document_id
               );
               // console.log("dfsfsf", response.data.data.allData.find((item) => item.document_id === docId)
               //   .id)
               setDocTypeName(
-                response.data.data.allData.find((item) => item.document_id === docId)
-                  .type
+                response.data.data.allData.find(
+                  (item) => item.document_id === docId
+                ).type
               );
             } else {
               setDocTypData("");
@@ -429,7 +452,6 @@ export default function DocumrentContainer(props) {
             }
           }
         }
-
       }
     } catch (err) {
       console.log(err);
@@ -607,7 +629,7 @@ export default function DocumrentContainer(props) {
         //   docUrl: DocFile,
         // });
         //For drive uploade
-        filebseList.push(file)
+        filebseList.push(file);
       }
       // Store the object of files
       setDocFileBase(filebseList);
@@ -699,23 +721,22 @@ export default function DocumrentContainer(props) {
   // };
   /* Upload documents in bulk*/
   let SaveBulkDocument = async () => {
-    setLoadingBtn(true)
+    setLoadingBtn(true);
     try {
-      let response = await
-        // UploadBulkDocument (bluk upload)
-        //(Drive upload)
-        UploadDriveDocument(
-          props.employee_id,
-          docFileBase,
-          bulkUpload === "no"
-            ? docData[0] === docTypData
-              ? docTypData.document_id
-              : docId
-            : "",
-          props.emp_user_type,
-          docData[0] === docTypData ? docTypData.type : docTypeName,
-        );
-      setLoadingBtn(false)
+      let response = await // UploadBulkDocument (bluk upload)
+      //(Drive upload)
+      UploadDriveDocument(
+        props.employee_id,
+        docFileBase,
+        bulkUpload === "no"
+          ? docData[0] === docTypData
+            ? docTypData.document_id
+            : docId
+          : "",
+        props.emp_user_type,
+        docData[0] === docTypData ? docTypData.type : docTypeName
+      );
+      setLoadingBtn(false);
       if (response.data.message === "Document Upload") {
         // Condition: If some file types are not supported and some are supported, then those that are supported will be uploaded while those that are not supported won't.
         if (response.data.data.length > 0) {
@@ -745,7 +766,7 @@ export default function DocumrentContainer(props) {
             autoClose: 2000,
           });
         }
-        setLoadingBtn(false)
+        setLoadingBtn(false);
         setShowMoreDocType(false);
         setOtherDoc(false);
         setDocName(docName);
@@ -763,16 +784,16 @@ export default function DocumrentContainer(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        setLoadingBtn(false)
+        setLoadingBtn(false);
         setEditName(false);
         setDocId(docData[0] === docTypData ? docTypData.document_id : docId);
-        console.log(docTypData.document_id, " ss ",)
+        console.log(docTypData.document_id, " ss ");
         setShowMoreDocType(false);
         setOtherDoc(false);
         setApiCall(true);
         setCommentApiCall(true);
         setBulkUpload("");
-        setDocFile("")
+        setDocFile("");
         setHide(false);
         setDocName(docName);
         setShowSaveDoc(false);
@@ -816,7 +837,7 @@ export default function DocumrentContainer(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        setLoadingBtn(false)
+        setLoadingBtn(false);
         setApiCall(true);
         setShowSaveDoc(false);
         setHide(false);
@@ -827,7 +848,7 @@ export default function DocumrentContainer(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        setLoadingBtn(false)
+        setLoadingBtn(false);
         setApiCall(true);
         setHide(false);
         setShowSaveDoc(false);
@@ -839,14 +860,13 @@ export default function DocumrentContainer(props) {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 1000,
       });
-      setLoadingBtn(false)
+      setLoadingBtn(false);
       setApiCall(true);
       setShowSaveDoc(false);
       setHide(false);
       setBulkUpload("");
       setShowMoreDocType(false);
-      setEditName(false)
-
+      setEditName(false);
     }
   };
   /*Fuinction to render image */
@@ -867,7 +887,7 @@ export default function DocumrentContainer(props) {
               >
                 {docTypData &&
                   (docTypData.document_name &&
-                    docTypData.document_name.toLowerCase().includes("imm") ? (
+                  docTypData.document_name.toLowerCase().includes("imm") ? (
                     <iframe
                       src={docFile}
                       style={{ height: "calc(100vh - 200px)" }}
@@ -876,20 +896,22 @@ export default function DocumrentContainer(props) {
                     ></iframe>
                   ) : (
                     <>
-                      <FileViewer
+                      {/* <FileViewer
                         key={docTypData.id}
                         fileType={
                           docFileExt
                             ? docFileExt
                             : docTypData.extension_type ===
                               "vnd.openxmlformats-officedocument.wordprocessingml.document"
-                              ? "docx"
-                              : docTypData.extension_type
+                            ? "docx"
+                            : docTypData.extension_type
                         }
                         filePath={docFile}
                         errorComponent={() => <div>Error loading document</div>}
-                        onError={(error) => console.error('Error loading document:', error)}
-                      />
+                        onError={(error) =>
+                          console.error("Error loading document:", error)
+                        }
+                      /> */}
                     </>
                   ))}
               </LazyLoad>
@@ -967,20 +989,18 @@ export default function DocumrentContainer(props) {
       let res = await ChangeNameDocument(
         props.employee_id,
         docFileBase,
+        docData[0] === docTypData ? docTypData.document_id : docId,
+        props.emp_user_type,
         docData[0] === docTypData
           ? docTypData.document_id
-          : docId
-        ,
-        props.emp_user_type,
-        docData[0] === docTypData ? docTypData.document_id :
-          docData.find((item) => item.document_id === docId).document_id,
-      )
+          : docData.find((item) => item.document_id === docId).document_id
+      );
       if (res.data.message === "Document name updated successfully!") {
         toast.success("Document name updated Successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 2000,
         });
-        setApiCall(true)
+        setApiCall(true);
         setEditName(false);
         setDocId(docData[0] === docTypData ? docTypData.document_id : docId);
         setShowMoreDocType(false);
@@ -988,60 +1008,63 @@ export default function DocumrentContainer(props) {
         setApiCall(true);
         setCommentApiCall(true);
         setBulkUpload("");
-        setDocFile("")
+        setDocFile("");
         setHide(false);
         setDocName(docName);
         setShowSaveDoc(false);
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
   /*Type array */
-  let DocTypeData = props.emp_user_type === "employer" ?
-    ["Business T2",
-      "Recent PD7A",
-      "Business T4",
-      "Business Incorporation Certificate",
-      "Employment Contract",
-      "Schedule A",
-      "Signed Job Offer",
-      "PD7A of year",
-      "T2 Schedule 100 and 125",
-      "Certificate of incorporation, ",
-      "Business license",
-      "T4 summary of year",
-      "Request for Exception from English Language Requirement for LMIA Application",
-      "CPA Attestation Letter",
-      "Representative Submission Letter",] : [
-      "passport",
-      "drivers_license",
-      "photograph",
-      "immigration_status",
-      "lmia",
-      "job_offer_letter",
-      "provincial_nominee_letter",
-      "proof_of_funds",
-      "proof_of_employment",
-      "marriage_certificate",
-      "education_metric",
-      "education_higher_secondary",
-      "education_graduation",
-      "education_post_graduation",
-      "resume_or_cv",
-      "ielts",
-      "medical",
-      "police_clearance",
-      "refusal_letter",
-      "Employment Contract",
-      "Reference Letters",
-      "Client Info",
-      "Representative Submission Letter",
-      "Bank Statement",
-    ];
+  let DocTypeData =
+    props.emp_user_type === "employer"
+      ? [
+          "Business T2",
+          "Recent PD7A",
+          "Business T4",
+          "Business Incorporation Certificate",
+          "Employment Contract",
+          "Schedule A",
+          "Signed Job Offer",
+          "PD7A of year",
+          "T2 Schedule 100 and 125",
+          "Certificate of incorporation, ",
+          "Business license",
+          "T4 summary of year",
+          "Request for Exception from English Language Requirement for LMIA Application",
+          "CPA Attestation Letter",
+          "Representative Submission Letter",
+        ]
+      : [
+          "passport",
+          "drivers_license",
+          "photograph",
+          "immigration_status",
+          "lmia",
+          "job_offer_letter",
+          "provincial_nominee_letter",
+          "proof_of_funds",
+          "proof_of_employment",
+          "marriage_certificate",
+          "education_metric",
+          "education_higher_secondary",
+          "education_graduation",
+          "education_post_graduation",
+          "resume_or_cv",
+          "ielts",
+          "medical",
+          "police_clearance",
+          "refusal_letter",
+          "Employment Contract",
+          "Reference Letters",
+          "Client Info",
+          "Representative Submission Letter",
+          "Bank Statement",
+        ];
   //UseEfect for document
   useEffect(() => {
-
     RenderNewDocFile();
     if (apiCall === true) {
       setApiCall(false);
@@ -1052,14 +1075,16 @@ export default function DocumrentContainer(props) {
       const newUrl = window.location.pathname;
       window.history.replaceState({}, document.title, newUrl);
     }
-  }, [docId,
+  }, [
+    docId,
     apiCall,
     selectDocTypeName,
     props.employee_id,
     props.docId,
-    docFile]);
+    docFile,
+  ]);
   useEffect(() => {
-    GetDocument()
+    GetDocument();
     // /Condition to clear docid from url after navigation from notification
     if (props.docId) {
       const newUrl = window.location.pathname;
@@ -1068,7 +1093,7 @@ export default function DocumrentContainer(props) {
     if (apiCall === true) {
       setApiCall(false);
     }
-  }, [apiCall, selectDocTypeName, props.employee_id, props.docId])
+  }, [apiCall, selectDocTypeName, props.employee_id, props.docId]);
   //USeEffect foe commet replies list
   useEffect(() => {
     // getCommentsReplyList();
@@ -1160,19 +1185,19 @@ export default function DocumrentContainer(props) {
       selectedAdmin.includes(item.email)
     )
       ? allAdmin
-        .filter((item) => selectedAdmin.includes(item.email))
-        .map((admin) => admin.name)
-        .join(",")
+          .filter((item) => selectedAdmin.includes(item.email))
+          .map((admin) => admin.name)
+          .join(",")
       : "";
     const assignedUserId = allAdmin.filter((item) =>
       selectedAdmin.includes(item.email)
     )
       ? allAdmin
-        .filter((item) => selectedAdmin.includes(item.email))
-        .map((admin) => admin.admin_id)
-        .join(",")
+          .filter((item) => selectedAdmin.includes(item.email))
+          .map((admin) => admin.admin_id)
+          .join(",")
       : "";
-    const assignedUserType = "admin"
+    const assignedUserType = "admin";
     // allAdmin.filter((item) =>
     //   selectedAdmin.includes(item.email)
     // )
@@ -1248,7 +1273,10 @@ export default function DocumrentContainer(props) {
   const OnHandleUpdateComment = async (originalData) => {
     let updatedData;
     //Condtion to update x and y axis on documet update
-    if (originalData === (docData[0] === docTypData ? docTypData.document_id : docId)) {
+    if (
+      originalData ===
+      (docData[0] === docTypData ? docTypData.document_id : docId)
+    ) {
       updatedData = { doc_id: originalData, x_axis: 0, y_axis: 0 };
     } else {
       updatedData = { ...originalData };
@@ -1357,16 +1385,16 @@ export default function DocumrentContainer(props) {
       selectedAdminReply.includes(item.email)
     )
       ? allAdmin
-        .filter((item) => selectedAdminReply.includes(item.email))
-        .map((admin) => admin.admin_id)
-        .join(",")
+          .filter((item) => selectedAdminReply.includes(item.email))
+          .map((admin) => admin.admin_id)
+          .join(",")
       : "";
     const AdminType = //localStorage.getItem("admin_type");
       allAdmin.filter((item) => selectedAdminReply.includes(item.email))
         ? allAdmin
-          .filter((item) => selectedAdminReply.includes(item.email))
-          .map((admin) => admin.admin_type)
-          .join(",")
+            .filter((item) => selectedAdminReply.includes(item.email))
+            .map((admin) => admin.admin_type)
+            .join(",")
         : "";
     if (replyComment === "" && email === "") {
       toast.error("Comment or email cannot be empty!", {
@@ -1400,7 +1428,7 @@ export default function DocumrentContainer(props) {
           senderId,
           senderType,
           props.employee_id //Userid
-        )
+        );
         if (res.data.message === "message sent successfully!") {
           toast.success("Replied Successfully", {
             position: toast.POSITION.TOP_RIGHT,
@@ -1462,9 +1490,9 @@ export default function DocumrentContainer(props) {
           docAllTypes={docAllTypes}
           setDocTypeName={setDocTypeName}
           userId={props.employee_id}
-        // setNotificationDoc={setNotificationDoc}
-        // notificationApiCall={notificationApiCall}
-        // setNotificationApiCall={setNotificationApiCall}
+          // setNotificationDoc={setNotificationDoc}
+          // notificationApiCall={notificationApiCall}
+          // setNotificationApiCall={setNotificationApiCall}
         />
         {/* Document view */}
         <ViewDocument
@@ -1518,16 +1546,16 @@ export default function DocumrentContainer(props) {
         <div className="col-md-3 px-2 py-2 comments_and_replies">
           {/* Add Annotation form */}
           {!hide &&
-            docFile &&
-            docName &&
-            user_type === "admin" &&
-            selectedAnnotation && //condition for imm pdf
-            (docTypData.document_name &&
-              docTypData.document_name.toLowerCase().includes("imm")
-              ? replyCommentClick === undefined ||
+          docFile &&
+          docName &&
+          user_type === "admin" &&
+          selectedAnnotation && //condition for imm pdf
+          (docTypData.document_name &&
+          docTypData.document_name.toLowerCase().includes("imm")
+            ? replyCommentClick === undefined ||
               replyCommentClick === "" ||
               replyCommentClick === null
-              : addCommentFlag === true) ? (
+            : addCommentFlag === true) ? (
             <div
               style={
                 {

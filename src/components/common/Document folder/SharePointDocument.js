@@ -17,6 +17,7 @@ import Loader from "../loader";
 import Breadcrumbs from "./Breadcrumb";
 import EditDocNameFOrm from "./EditDocNameFOrm";
 import PreviewDocument from "./PreviewDocument";
+import PdfViewerComponent from "../../PdfViewerComponent";
 export default function SharePointDocument({
   emp_user_type,
   user_id,
@@ -55,59 +56,59 @@ export default function SharePointDocument({
   const DocTypeData =
     emp_user_type === "employer"
       ? [
-        "Business T2",
-        "Recent PD7A",
-        "Business T4",
-        "Business Incorporation Certificate",
-        "Employment Contract",
-        "Schedule A",
-        "Signed Job Offer",
-        "PD7A of year",
-        "T2 Schedule 100 and 125",
-        "Certificate of incorporation",
-        "Business license",
-        "T4 summary of year",
-        "Request for Exception from English Language Requirement for LMIA Application",
-        "CPA Attestation Letter",
-        "Representative Submission Letter",
-      ]
+          "Business T2",
+          "Recent PD7A",
+          "Business T4",
+          "Business Incorporation Certificate",
+          "Employment Contract",
+          "Schedule A",
+          "Signed Job Offer",
+          "PD7A of year",
+          "T2 Schedule 100 and 125",
+          "Certificate of incorporation",
+          "Business license",
+          "T4 summary of year",
+          "Request for Exception from English Language Requirement for LMIA Application",
+          "CPA Attestation Letter",
+          "Representative Submission Letter",
+        ]
       : [
-        "passport",
-        "drivers_license",
-        "photograph",
-        "immigration_status",
-        "lmia",
-        "job_offer_letter",
-        "provincial_nominee_letter",
-        "proof_of_funds",
-        "proof_of_employment",
-        "marriage_certificate",
-        "education_metric",
-        "education_higher_secondary",
-        "education_graduation",
-        "education_post_graduation",
-        "resume_or_cv",
-        "ielts",
-        "medical",
-        "police_clearance",
-        "refusal_letter",
-        "Employment Contract",
-        "Reference Letters",
-        "Client Info",
-        "Representative Submission Letter",
-        "Bank Statement",
-      ];
+          "passport",
+          "drivers_license",
+          "photograph",
+          "immigration_status",
+          "lmia",
+          "job_offer_letter",
+          "provincial_nominee_letter",
+          "proof_of_funds",
+          "proof_of_employment",
+          "marriage_certificate",
+          "education_metric",
+          "education_higher_secondary",
+          "education_graduation",
+          "education_post_graduation",
+          "resume_or_cv",
+          "ielts",
+          "medical",
+          "police_clearance",
+          "refusal_letter",
+          "Employment Contract",
+          "Reference Letters",
+          "Client Info",
+          "Representative Submission Letter",
+          "Bank Statement",
+        ];
 
   /*Function to call api to get all folders list of employees documnet from sharepoint */
   const AllShareType = async () => {
-    setDocLoder(true)
-    setBreadCrumbLoder(true)
+    setDocLoder(true);
+    setBreadCrumbLoder(true);
     try {
       // if (folderID) {
       let res = await getSharePointParticularFolders(
         user_id,
         emp_user_type,
-        // docId ? folderId : 
+        // docId ? folderId :
 
         folderID
       );
@@ -115,11 +116,11 @@ export default function SharePointDocument({
         setDocPreview(false);
         setDocTypeList(res.data.data);
         setShowDropDown(false);
-        setDocLoder(false)
+        setDocLoder(false);
         if (notification === "yes") {
           if (res.data.data.find((item) => item.id === docId)) {
             setDocPreview(true);
-            console.log("object")
+            console.log("object");
             setDocSingleDate(res.data.data.find((item) => item.id === docId));
             const newUrl = window.location.pathname;
             window.history.replaceState({}, document.title, newUrl);
@@ -129,7 +130,7 @@ export default function SharePointDocument({
       } else if (res.data.data === "No Documents Found") {
         setDocTypeList([]);
         setShowDropDown(false);
-        setDocLoder(false)
+        setDocLoder(false);
       }
       // } else {
       //     let res = await getSharePointFoldersList(user_id, emp_user_type)
@@ -140,19 +141,19 @@ export default function SharePointDocument({
     } catch (Err) {
       console.log(Err);
       setShowDropDown(false);
-      setDocLoder(false)
+      setDocLoder(false);
     }
     /*Api for breadcrumb */
     try {
       let res = await getFolderBreadcrumb(folderID);
       setBreadcrumbData(res.data.data);
       setShowDropDown(false);
-      setBreadCrumbLoder(false)
+      setBreadCrumbLoder(false);
     } catch (err) {
       setBreadcrumbData([]);
       console.log(err);
       setShowDropDown(false);
-      setBreadCrumbLoder(false)
+      setBreadCrumbLoder(false);
     }
   };
   useEffect(() => {
@@ -260,14 +261,16 @@ export default function SharePointDocument({
     } else {
       try {
         let res = await AddSharePointFolders(selectedType, folderID);
-        if (res.data.data.name && res.data.message === "Folder created successfully!") {
+        if (
+          res.data.data.name &&
+          res.data.message === "Folder created successfully!"
+        ) {
           toast.success(`Type Created successfully`, {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
           setApiCall(true);
-        } else if (res.data.data.error.message ===
-          "Name already exists") {
+        } else if (res.data.data.error.message === "Name already exists") {
           toast.error(`Type Already exists`, {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
@@ -301,32 +304,47 @@ export default function SharePointDocument({
   }
   return (
     <>
-      {folderId
-        ? <div className="document_section">
+      {folderId ? (
+        <div className="document_section">
           {docPreview ? (
-            <PreviewDocument
-              docData={docSingleDate}
-              docId={docId ? docId : folderID}
-              userId={user_id}
-              docFile={docSingleDate["@microsoft.graph.downloadUrl"]}
-              setDocPreview={setDocPreview}
-              setDocSingleDate={setDocSingleDate}
-              setFolderID={setFolderID}
-            />
+            // <PreviewDocument
+            //   docData={docSingleDate}
+            //   docId={docId ? docId : folderID}
+            //   userId={user_id}
+            //   docFile={docSingleDate["@microsoft.graph.downloadUrl"]}
+            //   setDocPreview={setDocPreview}
+            //   setDocSingleDate={setDocSingleDate}
+            //   setFolderID={setFolderID}
+            // />
+            <div className="App-viewer">
+              <PdfViewerComponent
+                document={docSingleDate["@microsoft.graph.downloadUrl"]}
+              />
+            </div>
           ) : (
             <div className={"document_container bg-white"}>
               <div className="row m-0 bg-white justify-content-between p-2">
                 {/* Breadcrumbs */}
-                {docBreadCrumbLoder ?
+                {docBreadCrumbLoder ? (
                   <ul className="breadcrumb">
-                    <li className="breadcrumb-item "
-                      style={{ padding: 5, margin: 0, borderRadius: 3 }}>
-                      <span className="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                    <li
+                      className="breadcrumb-item "
+                      style={{ padding: 5, margin: 0, borderRadius: 3 }}
+                    >
+                      <span
+                        className="spinner-grow spinner-grow-sm"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
                       <span>Loading...</span>
                     </li>
-                  </ul> : (
-                    <Breadcrumbs data={breadcrumbData} setFolderID={setFolderID} />
-                  )}
+                  </ul>
+                ) : (
+                  <Breadcrumbs
+                    data={breadcrumbData}
+                    setFolderID={setFolderID}
+                  />
+                )}
                 {/* Button to add folder or type and upload documents */}
                 <div className="new_folder_create d-flex">
                   {docTypeName === "other" ? (
@@ -385,7 +403,9 @@ export default function SharePointDocument({
                             {item.replaceAll("_", " ")}
                           </Dropdown.Item>
                         ))}
-                        <Dropdown.Item onClick={() => handleDocTypeChange("other")}>
+                        <Dropdown.Item
+                          onClick={() => handleDocTypeChange("other")}
+                        >
                           Other
                         </Dropdown.Item>
                       </Dropdown.Menu>
@@ -395,29 +415,30 @@ export default function SharePointDocument({
               </div>
               <div className="row m-0 bg-white px-2 pb-2 justify-content-center">
                 {/* List of documents docTypeList */}
-                {docLoder ?
+                {docLoder ? (
                   <div className="table-responsive main_table_div">
                     <Loader />
-                  </div> : (
-                    <FolderList
-                      docTypeList={docTypeList}
-                      setFolderID={setFolderID}
-                      setDocTypeName={setDocTypeName}
-                      folderID={folderID}
-                      showDropDown={showDropDown}
-                      setShowDropDown={setShowDropDown}
-                      setDocSingleDate={setDocSingleDate}
-                      setEditNameForm={setEditNameForm}
-                      ShowDeleteAlert={ShowDeleteAlert}
-                      setDocPreview={setDocPreview}
-                      handleBulkFileChange={handleBulkFileChange}
-                      saveBtn={saveBtn}
-                      loadingBtn={loadingBtn}
-                      SaveBulkDocument={SaveBulkDocument}
-                      setSaveBtn={setSaveBtn}
-                      setDocFileBase={setDocFileBase}
-                    />
-                  )}
+                  </div>
+                ) : (
+                  <FolderList
+                    docTypeList={docTypeList}
+                    setFolderID={setFolderID}
+                    setDocTypeName={setDocTypeName}
+                    folderID={folderID}
+                    showDropDown={showDropDown}
+                    setShowDropDown={setShowDropDown}
+                    setDocSingleDate={setDocSingleDate}
+                    setEditNameForm={setEditNameForm}
+                    ShowDeleteAlert={ShowDeleteAlert}
+                    setDocPreview={setDocPreview}
+                    handleBulkFileChange={handleBulkFileChange}
+                    saveBtn={saveBtn}
+                    loadingBtn={loadingBtn}
+                    SaveBulkDocument={SaveBulkDocument}
+                    setSaveBtn={setSaveBtn}
+                    setDocFileBase={setDocFileBase}
+                  />
+                )}
               </div>
               {editNameForm && (
                 <EditDocNameFOrm
@@ -447,11 +468,13 @@ export default function SharePointDocument({
             </div>
           )}
         </div>
-        : <div className="chat_box_container bg-white row m-0">
+      ) : (
+        <div className="chat_box_container bg-white row m-0">
           <div className="chat-container d-flex justify-content-center align-items-center w-100">
             Update the user profile to get a folder
           </div>
         </div>
-      }</>
+      )}
+    </>
   );
 }
