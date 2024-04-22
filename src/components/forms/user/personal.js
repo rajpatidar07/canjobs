@@ -1126,7 +1126,7 @@ function PersonalDetails(props) {
                   </div>
                   <div
                     className={
-                      `form-group  ${//user_type === "user"|| 
+                      `form-group  ${user_type === "user"|| 
                       props.pageNameForForm === "Category"
                         || props.pageNameForForm === "ApplicantType"
                         || props.user_of_page === "assignedUser"
