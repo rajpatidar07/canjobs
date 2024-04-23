@@ -72,6 +72,7 @@ export default function PartnerDetails() {
       //   setPayment();
       setTabActive("payment");
     }
+    // eslint-disable-next-line
   }, [apiCall, agent_id]);
   const GetChartData = async () => {
     try {
@@ -88,6 +89,7 @@ export default function PartnerDetails() {
   /*Render function to get the Chart Data*/
   useEffect(() => {
     GetChartData();
+    // eslint-disable-next-line
   }, [agent_id]);
   return (
     <div>

@@ -35,6 +35,7 @@ function AddCategoryType(props) {
       category_type: props.jobCategoryData.category_type,
       job_category_id: props.jobCategoryData.job_category_id,
     });
+    // eslint-disable-next-line
   }, [props]);
   // VALIDATION CONDITIONS
   const validators = {

@@ -142,6 +142,7 @@ const AdminDashboard = () => {
     if (apiCall === true) {
       setApiCall(false);
     }
+    // eslint-disable-next-line
   }, [apiCall]);
 
   /*Function to get the summary count */

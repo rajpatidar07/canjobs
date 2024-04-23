@@ -42,6 +42,7 @@ export default function PayentForm({ data, user_id, user_type }) {
     if (apiCall === true) {
       setApicall(false);
     }
+    // eslint-disable-next-line
   }, [apiCall]);
 
   return (

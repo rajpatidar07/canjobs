@@ -36,7 +36,7 @@ export default function EmployerDocumrentContainer(props) {
   const [apiCall, setApiCall] = useState("");
   const [docFile, setDocFile] = useState("");
   const [docFileBase, setDocFileBase] = useState("");
-  const [docFileExt, setDocFileExt] = useState("");
+  const [/*docFileExt,*/ setDocFileExt] = useState("");
   const [docId, setDocId] = useState("");
   const [documentName, setDocumentName] = useState("");
   const [showMoreDocType, setShowMoreDocType] = useState(false);
@@ -586,6 +586,7 @@ export default function EmployerDocumrentContainer(props) {
       setApiCall(false);
     }
     setAnnotationMode(false);
+    // eslint-disable-next-line
   }, [docId, apiCall, docName]);
   //USeEffect foe commet replies list
   useEffect(() => {
@@ -599,6 +600,7 @@ export default function EmployerDocumrentContainer(props) {
     if (commenAapiCall === true) {
       setCommentApiCall(false);
     }
+    // eslint-disable-next-line
   }, [docId, commenAapiCall, adminid, annotationStatus]);
 
   /*Function to change document type */

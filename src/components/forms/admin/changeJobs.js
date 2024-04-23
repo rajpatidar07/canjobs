@@ -42,6 +42,7 @@ function ChangeJob(props) {
 
   useEffect(() => {
     JobData();
+    // eslint-disable-next-line
   }, [props, apiCall]);
   // USER CHANGE JOB SUBMIT BUTTON
   const onSelectChange = (option) => {

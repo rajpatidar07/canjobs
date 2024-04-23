@@ -273,13 +273,33 @@ function UserRegisterPage() {
     });
   };
   /*Onchange function of Resume */
+  // const handleUploadFile = async (e) => {
+  //   encoded = await convertToBase64(e.target.files[0]);
+  //   let base64Name = encoded.base64;
+  //   let finalBase = base64Name;
+  //   setState({ ...state, resume: finalBase });
+  // };
+  /*Onchange function of Resume */
   const handleUploadFile = async (e) => {
-    encoded = await convertToBase64(e.target.files[0]);
-    let base64Name = encoded.base64;
-    let finalBase = base64Name;
-    setState({ ...state, resume: finalBase });
+    // const allowedFormats = ["image/jpeg", "image/png", "application/pdf"]; // List of allowed formats
+    const allowedFormats = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
+    const file = e.target.files[0];
+    const fileType = `.${file.name.split(".").pop()}`
+    if (allowedFormats.includes(fileType)) {
+      console.log("object")
+      encoded = await convertToBase64(file);
+      let base64Name = encoded.base64;
+      let finalBase = base64Name;
+      setState({ ...state, resume: finalBase });
+    } else {
+      setErrors({
+        ...errors,
+        resume: [
+          "Invalid file format. Please upload an image (JPEG, JPG or PNG) ,DOC ,DOCX or a PDF.",
+        ],
+      });
+    }
   };
-
   /*Onchange function of profile */
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
@@ -318,7 +338,7 @@ function UserRegisterPage() {
               // to="/"
               className="btn btn-primary mt-12"
               onClick={() => {
-                SingUpSuccess("");
+                setSingUpSuccess("");
                 // props.CompanyLoginClick();
                 // setErrors("");
               }}
@@ -958,7 +978,8 @@ function UserRegisterPage() {
                     placeholder="Resume"
                     id="resume"
                     name="resume"
-                    accept=".pdf,application/pdf"
+                    // accept=".pdf,application/pdf, .doc, .docx"
+                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
                     onChange={handleUploadFile}
                     className={
                       errors.resume

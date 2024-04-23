@@ -115,6 +115,7 @@ function JobBox({
     if (ApiCall === true) {
       setApiCall(false);
     }
+    // eslint-disable-next-line
   }, [
     showAddJobsModal,
     showAddJobModal,

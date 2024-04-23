@@ -52,6 +52,7 @@ function Employer() {
     if ((search === "") === true) {
       setSearchError("");
     }
+    // eslint-disable-next-line
   }, [industryFilterValue, corporationFilterValue]);
   /* Function to show the single data to update Employer */
   const editEmployer = (e) => {

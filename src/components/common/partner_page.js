@@ -82,7 +82,7 @@ export default function PartnerPage(props) {
   /*Render function to get the Chart Data*/
   useEffect(() => {
     GetChartData()
-
+// eslint-disable-next-line
   }, [AgentId])
 
   /*Render function to get the employer*/
@@ -97,6 +97,7 @@ export default function PartnerPage(props) {
         setAgentId("");
       }
     }
+    // eslint-disable-next-line
   }, [
     props.search,
     props.pageNo,

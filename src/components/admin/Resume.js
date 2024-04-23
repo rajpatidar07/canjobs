@@ -159,6 +159,7 @@ function ResumeGrerator(props) {
   };
   useEffect(() => {
     UserData();
+    // eslint-disable-next-line
   }, [props]);
 
   /*Function to calculate the time duration of two dates */

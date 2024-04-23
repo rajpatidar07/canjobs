@@ -103,6 +103,7 @@ export default function LimiaStatusTable(props) {
       setApiCall(false);
       setChangeJob(false);
     }
+    // eslint-disable-next-line
   }, [
     search,
     props.pageNo,

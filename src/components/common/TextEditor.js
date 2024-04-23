@@ -41,6 +41,7 @@ export default function TextEditor({ state, setState, page, identifier }) {
       const editorState = EditorState.createWithContent(contentState || null);
       setEditorState(editorState);
     }
+    // eslint-disable-next-line
   }, [state, page, identifier]);
 
   /*On chnage function to set updated value */

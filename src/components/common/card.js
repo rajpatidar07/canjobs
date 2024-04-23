@@ -20,6 +20,7 @@ const DashboardCard = (props) => {
   /*Render function to get the job */
   useEffect(() => {
     getLMIAdata();
+    // eslint-disable-next-line
   }, []);
 
   return (

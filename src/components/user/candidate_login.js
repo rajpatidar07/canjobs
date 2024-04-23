@@ -201,6 +201,7 @@ export default function CandidateLoginForm(props) {
     )}&scope=${encodeURIComponent(scope)}`;
   };
   useEffect(() => {
+    // eslint-disable-next-line
     i = i + 1;
     if (
       (code !== "" ||

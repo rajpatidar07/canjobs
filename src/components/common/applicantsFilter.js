@@ -68,6 +68,7 @@ export default function ApplicantsFilter({
     if ((search === "") === true) {
       setSearchError("");
     }
+    // eslint-disable-next-line
   }, [skillFilterValue, educationFilterValue]);
   return (
     <>

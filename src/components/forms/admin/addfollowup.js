@@ -56,6 +56,7 @@ function Addfollowup(props) {
     // } else {
     ResponseData();
     // }
+    // eslint-disable-next-line
   }, [props, sortOrder]);
 
   // INITIAL STATE ASSIGNMENT

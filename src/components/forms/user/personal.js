@@ -362,11 +362,13 @@ function PersonalDetails(props) {
   };
   /*Onchange function of Resume */
   const handleUploadFile = async (e) => {
-    const allowedFormats = ["image/jpeg", "image/png", "application/pdf"]; // List of allowed formats
-
+    // const allowedFormats = ["image/jpeg", "image/png", "application/pdf"]; // List of allowed formats
+    const allowedFormats = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
     const file = e.target.files[0];
-
-    if (allowedFormats.includes(file.type)) {
+    const fileType = `.${file.name.split(".").pop()}`
+    console.log(file.type, fileType)
+    if (allowedFormats.includes(fileType)) {
+      console.log("object")
       encoded = await convertToBase64(file);
       let base64Name = encoded.base64;
       let finalBase = base64Name;
@@ -375,12 +377,11 @@ function PersonalDetails(props) {
       setErrors({
         ...errors,
         resume: [
-          "Invalid file format. Please upload an image (JPEG or PNG) or a PDF.",
+          "Invalid file format. Please upload an image (JPEG, JPG or PNG) ,DOC ,DOCX or a PDF.",
         ],
       });
     }
   };
-
   /*Onchange function of profile */
   const handleFileChange = async (event) => {
     const file = event.target.files[0];
@@ -1126,8 +1127,8 @@ function PersonalDetails(props) {
                   </div>
                   <div
                     className={
-                      `form-group  ${user_type === "user"|| 
-                      props.pageNameForForm === "Category"
+                      `form-group  ${user_type === "user" ||
+                        props.pageNameForForm === "Category"
                         || props.pageNameForForm === "ApplicantType"
                         || props.user_of_page === "assignedUser"
                         ? " d-none"
@@ -1272,7 +1273,8 @@ function PersonalDetails(props) {
                       placeholder="Resume"
                       id="resume"
                       name="resume"
-                      accept=".pdf,application/pdf"
+                      // accept=".pdf,application/pdf"
+                      accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
                       onChange={handleUploadFile}
                       className={
                         errors.resume

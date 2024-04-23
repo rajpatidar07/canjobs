@@ -61,6 +61,7 @@ function EmployeeHeader() {
   // };
 
   useEffect(() => {
+    // eslint-disable-next-line
     profile_photo = localStorage.getItem("profile_photo");
     // name = localStorage.getItem("name");
     // condition to remove the className from the body when we are not at the admin modual

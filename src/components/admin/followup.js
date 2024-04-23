@@ -92,6 +92,7 @@ function Followup() {
     if ((search === "") === true) {
       setSearchError("");
     }
+    // eslint-disable-next-line
   }, [
     categoryFilterValue,
     SkillFilterValue,

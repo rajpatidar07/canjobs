@@ -105,6 +105,7 @@ const MainEmailPage = ({ email }) => {
     if (apiCall === true) {
       setApiCall(false);
     }
+    // eslint-disable-next-line
   }, [
     currentPage,
     recordsPerPage,

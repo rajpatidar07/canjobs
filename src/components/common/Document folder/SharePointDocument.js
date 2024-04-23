@@ -165,6 +165,7 @@ export default function SharePointDocument({
     if (apiCall === true) {
       setApiCall(false);
     }
+    // eslint-disable-next-line
   }, [folderID, apiCall, docId]);
   /*On change fnction to upload bulk document in 1 array*/
   const handleBulkFileChange = async (event, id) => {

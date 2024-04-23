@@ -47,6 +47,7 @@ export default function EmployeeNotesTable({ search, userType }) {
     if (apiCall === true) {
       setApiCall(false);
     }
+    // eslint-disable-next-line
   }, [apiCall, sortOrder, search]);
 
   /*Pagination Calculation */

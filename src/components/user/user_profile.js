@@ -739,7 +739,7 @@ const NewUserProfile = (props) => {
                       className={`${user_type === "company"
                         ? "d-none"
                         : "tab-menu-items nav-item"
-                        }`}
+                        } d-none`}
                     >
                       <Link
                         className={
@@ -776,7 +776,7 @@ const NewUserProfile = (props) => {
                         aria-selected="true"
                         onClick={() => setTabActive("sharepoint")}
                       >
-                       PSPDF  Documents
+                        Documents
                       </Link>
                     </li>
                     <li

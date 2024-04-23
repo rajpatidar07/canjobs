@@ -92,6 +92,7 @@ function CompanyProfileDetail(props) {
     if (transactionId) {
       setTabActive("payment");
     }
+    // eslint-disable-next-line
   }, [apiCall, company_id]);
 
   return (
@@ -782,6 +783,13 @@ function CompanyProfileDetail(props) {
                       employee_id={cid}
                       emp_user_type={"employer"}
                     />
+                  //   < SharePointDocument
+                  //   user_id={cid}
+                  //   emp_user_type={"employer"}
+                  //   folderId={docId ? docParentId : PersonalDetail.documents_folder_id}
+                  //   notification={docId ? "yes" : "no"}
+                  //   docId={docId ? docId : ""}
+                  // />
                   ) : null}
                 </div>
                 <div

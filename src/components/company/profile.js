@@ -60,6 +60,7 @@ function CompanyProfile(props) {
     if (apiCall === true) {
       setApiCall(false);
     }
+    // eslint-disable-next-line
   }, [apiCall]);
 
   return (

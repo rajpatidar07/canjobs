@@ -212,6 +212,7 @@ function CompanySingupForm(props) {
     )}&scope=${encodeURIComponent(scope)}`;
   };
   useEffect(() => {
+    // eslint-disable-next-line
     i = i + 2;
     if (
       (code !== "" ||

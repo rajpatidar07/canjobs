@@ -21,6 +21,7 @@ export default function UserTimline({ userId, userType }) {
   // const page = Math.ceil(timeData / perpage);
   useEffect(() => {
     TimeLineData();
+    // eslint-disable-next-line
   }, []);
   // console.log(timeData);
 

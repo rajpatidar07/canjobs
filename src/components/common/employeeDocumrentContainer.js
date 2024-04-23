@@ -37,7 +37,7 @@ export default function DocumrentContainer(props) {
   const [apiCall, setApiCall] = useState(false);
   const [docFile, setDocFile] = useState("");
   const [docFileBase, setDocFileBase] = useState("");
-  const [docFileExt, setDocFileExt] = useState("");
+  const [/*docFileExt,*/ setDocFileExt] = useState("");
   const [docId, setDocId] = useState(props.docId ? props.docId : "");
   const [docTypeName, setDocTypeName] = useState("");
   const [selectDocTypeName, setSelecttDocTypeName] = useState("");
@@ -1025,17 +1025,22 @@ export default function DocumrentContainer(props) {
           "Recent PD7A",
           "Business T4",
           "Business Incorporation Certificate",
-          "Employment Contract",
-          "Schedule A",
+          "Employment Contract of Candidate",//"Employment Contract",//(old)
+          "Schedule A Signed",//"Schedule A",//(old)
           "Signed Job Offer",
           "PD7A of year",
           "T2 Schedule 100 and 125",
           "Certificate of incorporation, ",
-          "Business license",
-          "T4 summary of year",
+          "Business License of Work Location",//"Business license",//(Old)
+          "T4 Summary of Remuneration Paid",//"T4 summary of year",//(Old)
           "Request for Exception from English Language Requirement for LMIA Application",
-          "CPA Attestation Letter",
+          "CPA Attestation Letter from Charted Professional Accountant",//"CPA Attestation Letter",//(Old)
           "Representative Submission Letter",
+          "PD7A Statement of account of Current Source Deductions",//(New)
+          "Intake Sheet",// (New)
+          "LMIA Representative Letter",//(New)
+          "Offer of Employment for Candidate",//(New)
+          "A copy of your provincial employer registration certificate or Proof of exemption",// (New)
         ]
       : [
           "passport",
@@ -1075,6 +1080,7 @@ export default function DocumrentContainer(props) {
       const newUrl = window.location.pathname;
       window.history.replaceState({}, document.title, newUrl);
     }
+    // eslint-disable-next-line
   }, [
     docId,
     apiCall,
@@ -1093,6 +1099,7 @@ export default function DocumrentContainer(props) {
     if (apiCall === true) {
       setApiCall(false);
     }
+    // eslint-disable-next-line
   }, [apiCall, selectDocTypeName, props.employee_id, props.docId]);
   //USeEffect foe commet replies list
   useEffect(() => {
@@ -1100,14 +1107,17 @@ export default function DocumrentContainer(props) {
     if (user_type === "admin") {
       AdminData();
     }
+    // eslint-disable-next-line
   }, [replyCommentClick]);
   //USeEffect foe commet list
   useEffect(() => {
     setSelectedAnnotation(null);
     getCommentsList();
+    // eslint-disable-next-line
     if (commenAapiCall === true) {
       setCommentApiCall(false);
     }
+    // eslint-disable-next-line
   }, [docId, commenAapiCall, adminid, annotationStatus]);
 
   const handleDocTypeChange = (e) => {

@@ -202,6 +202,7 @@ export default function CandidateSignup(props) {
     )}&scope=${encodeURIComponent(scope)}`;
   };
   useEffect(() => {
+    // eslint-disable-next-line
     i = i + 3;
     if (
       (code !== "" ||
@@ -295,20 +296,21 @@ export default function CandidateSignup(props) {
   };
   /*Onchange function of Resume */
   const handleUploadFile = async (e) => {
-    const allowedFormats = ["image/jpeg", "image/png", "application/pdf"]; // List of allowed formats
-
+    // const allowedFormats = ["image/jpeg", "image/png", "application/pdf"]; // List of allowed formats
+    const allowedFormats = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
     const file = e.target.files[0];
-
-    if (allowedFormats.includes(file.type)) {
+    const fileType = `.${file.name.split(".").pop()}`
+    if (allowedFormats.includes(fileType)) {
+      console.log("object")
       encoded = await convertToBase64(file);
       let base64Name = encoded.base64;
-      let finalBase = base64Name.split(",")[1];
+      let finalBase = base64Name;
       setState({ ...state, resume: finalBase });
     } else {
       setErrors({
         ...errors,
         resume: [
-          "Invalid file format. Please upload an image (JPEG or PNG) or a PDF.",
+          "Invalid file format. Please upload an image (JPEG, JPG or PNG) ,DOC ,DOCX or a PDF.",
         ],
       });
     }
@@ -541,7 +543,8 @@ export default function CandidateSignup(props) {
                     name="resume"
                     onChange={handleUploadFile}
                     type="file"
-                    accept=".pdf,application/pdf"
+                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                    // accept=".pdf,application/pdf"
                     className={
                       errors.resume
                         ? "form-control border border-danger"

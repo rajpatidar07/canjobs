@@ -41,6 +41,7 @@ export default function VisaStatus(props) {
     if (apiCall === true) {
       setApiCall(false);
     }
+    // eslint-disable-next-line
   }, [apiCall]);
 
   /* Functionality to close the modal */

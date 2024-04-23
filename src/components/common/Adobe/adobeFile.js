@@ -74,7 +74,7 @@ const AdobePDFViewer = ({ url, data, userId, commentsList }) => {
 
             viewSDKClient.registerSaveApiHandler();
         });
-
+// eslint-disable-next-line
     }, [annotationId, annotationData]);
     return (
         <div style={{ height: "100vh" }}>

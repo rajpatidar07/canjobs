@@ -54,6 +54,7 @@ const InterviewHistoryTable = ({ employee_id }) => {
     /*Render function to get the interview*/
     useEffect(() => {
         InterviewData();
+        // eslint-disable-next-line
     }, [
         columnName,
         recordsPerPage,

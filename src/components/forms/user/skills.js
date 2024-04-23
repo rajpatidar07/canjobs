@@ -100,6 +100,7 @@ function Skills(props) {
     }));
 
     setSkillOption({ ...state, skill: options });
+    // eslint-disable-next-line
   }, [SkillList]);
 
   // USER SKILLS SUBMIT BUTTON

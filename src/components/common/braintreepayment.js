@@ -31,6 +31,7 @@ function BraintreeDropIn(props) {
         initializeBraintree();
       }
     }
+    // eslint-disable-next-line
   }, [show]);
 
   return (

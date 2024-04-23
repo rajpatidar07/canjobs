@@ -62,6 +62,7 @@ export default function PreviewDocument({
     // if (commenAapiCall === true) {
     //   setCommentApiCall(false);
     // }
+    // eslint-disable-next-line
   }, [docData.id/*docId, commenAapiCall, adminid, annotationStatus*/]);
   // /*Function to get document url */
   // // const GetDocUrl = async () => {

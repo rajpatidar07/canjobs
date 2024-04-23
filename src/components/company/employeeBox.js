@@ -55,6 +55,7 @@ function EmployeeBox({ featured, categorye, Skill, Swap, Exp, candian }) {
       const newUrl = window.location.pathname;
       window.history.replaceState({}, document.title, newUrl);
     }
+    // eslint-disable-next-line
   }, [search, categorye, Skill, Swap, Exp, candian]);
   return (
     <>

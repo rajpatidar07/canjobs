@@ -83,6 +83,7 @@ function AddCategory(props) {
   };
   useEffect(() => {
     CatData();
+    // eslint-disable-next-line
   }, [props]);
 
   // USER CATEGORY SUBMIT BUTTON

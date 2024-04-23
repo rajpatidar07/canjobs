@@ -47,6 +47,7 @@ export default function PartnerTAble(props) {
         if (props.apiCall === true) {
             props.setApiCall(false)
         }
+        // eslint-disable-next-line
     }, [
         props.search,
         props.pageNo,

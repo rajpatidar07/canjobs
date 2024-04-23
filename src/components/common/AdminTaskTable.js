@@ -48,6 +48,7 @@ export default function AdminTaskTable(props) {
   };
   useEffect(() => {
     getCommentsList();
+    // eslint-disable-next-line
   }, [taskStatus, props.filter_by_time, currentPage, sortOrder, columnName]);
   /*Sorting Function */
   const handleSort = (columnName) => {

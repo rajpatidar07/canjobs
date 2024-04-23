@@ -70,6 +70,7 @@ function AddInterview(props) {
   /*Render function to get the interview*/
   useEffect(() => {
     InterviewData();
+    // eslint-disable-next-line
   }, [props]);
 
   // USER INTERVIEW UPDATE SUBMIT BUTTON

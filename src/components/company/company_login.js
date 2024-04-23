@@ -184,6 +184,7 @@ function CompanyLoginForm(props) {
     )}&scope=${encodeURIComponent(scope)}`;
   };
   useEffect(() => {
+    // eslint-disable-next-line
     i = i + 4;
     if (
       (code !== "" ||

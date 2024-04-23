@@ -94,6 +94,7 @@ export default function AgentConversation({
       const newUrl = window.location.pathname;
       window.history.replaceState({}, document.title, newUrl);
     }
+    // eslint-disable-next-line
   }, [apicall, partnerChatNav, userId]);
   //   Get the notes list
   const GetNotesData = async () => {

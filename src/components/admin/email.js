@@ -22,6 +22,7 @@ function EmailTemplate() {
   };
   useEffect(() => {
     GetAllEmail();
+    // eslint-disable-next-line
   }, []);
   /*Function to open Add or edit template */
   const editEmailTemplate = (e) => {

@@ -51,6 +51,7 @@ const PreviewEmail = ({ id, emailType, singleEmailData }) => {
     if (apiCall === true) {
       setApiCall(false);
     }
+    // eslint-disable-next-line
   }, [apiCall, id]);
 
   /*Function to decode the email subject */

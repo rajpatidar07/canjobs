@@ -56,6 +56,7 @@ function JobDetailpageAdmim(props) {
     if (apiCall === true) {
       setApiCall(false);
     }
+    // eslint-disable-next-line
   }, [apiCall]);
 
   /*Set skill variable to array frm string */

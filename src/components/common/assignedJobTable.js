@@ -72,6 +72,7 @@ export default function AssignedJobTable(props) {
     if (apiCall === true) {
       setApiCall(false);
     }
+    // eslint-disable-next-line
   }, [
     props.manager_id,
     apiCall,

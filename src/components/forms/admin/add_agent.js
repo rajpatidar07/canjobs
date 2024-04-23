@@ -202,6 +202,7 @@ function AddNewAgent(props) {
     } else {
       AgentData();
     }
+    // eslint-disable-next-line
   }, [props.agentId]);
 
   // USER agent PROFILE UPDATE SUBMIT BUTTON

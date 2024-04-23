@@ -145,6 +145,7 @@ function CompanyDetails(props) {
     if (props.employerId !== "0") {
       EmployerData();
     }
+    // eslint-disable-next-line
   }, [props]);
   // CUSTOM VALIDATIONS IMPORT
   const { state, setErrors, setState, onInputChange, errors, validate } =

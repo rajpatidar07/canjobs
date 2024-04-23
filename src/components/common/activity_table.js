@@ -87,6 +87,7 @@ export default function ActivityTable(props) {
   /*Render function to get the employer*/
   useEffect(() => {
     ActivityLog();
+    // eslint-disable-next-line
   }, [page]);
   // console.log("DATATATA" + activity_json["1"]);
   return (

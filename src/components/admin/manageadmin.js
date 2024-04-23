@@ -185,6 +185,7 @@ function ManageAdmin() {
       OnManagerDetailClick(managerData);
       setExecutiveApiCall(false);
     }
+    // eslint-disable-next-line
   }, [executiveapiCall, apiCall]);
   /*Function o add task to the executive */
   // const AddTask = async () => {

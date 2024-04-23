@@ -207,6 +207,7 @@ function AddJobModal(props) {
     } else {
       JobData();
     }
+    // eslint-disable-next-line
   }, [props]);
   // ADD JOBS SUBMIT BUTTON
   const onAddJobsClick = async (event) => {
@@ -429,7 +430,7 @@ function AddJobModal(props) {
                   htmlFor="job_category_id"
                   className="font-size-4 text-black-2  line-height-reset"
                 >
-                  Job Category type:<span className="text-danger"> *</span>
+                  Job Category :<span className="text-danger"> *</span>
                 </label>
                 <div className="position-relative">
                   <select

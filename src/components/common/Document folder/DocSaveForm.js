@@ -43,7 +43,7 @@ export default function DocSaveForm({
         {saveBtn === true ? (
           <div className="doc_upload_col">
             {loadingBtn ? (
-              <button className="btn btn-primary doc_btn"
+              <button className="btn btn-primary doc_btn w-100"
                 style={{
                   fontSize: 14,
                   marginRight: "auto",

@@ -69,8 +69,10 @@ function Notifications({
     if (localStorage.getItem("callNotification") === true) {
       localStorage.setItem("callNotification", false);
     }
+    // eslint-disable-next-line
   }, [
     apicall,
+    // eslint-disable-next-line
     localStorage.getItem("callNotification"),
     recordsPerPage /*notificationApiCall*/,
   ]);

@@ -72,8 +72,8 @@
 import React, { useEffect, useRef } from "react";
 export default function PdfViewerComponent(props) {
   const containerRef = useRef(null);
-  const ownerId = "owner123"; // Set your desired owner ID
-  const ownerName = "John Doe"; // Set your desired owner name
+  // const ownerId = "owner123"; // Set your desired owner ID
+  // const ownerName = "John Doe"; // Set your desired owner name
 
   useEffect(() => {
     const loadPSPDFKit = async () => {
@@ -137,6 +137,7 @@ export default function PdfViewerComponent(props) {
     loadPSPDFKit();
 
     return () => {
+      // eslint-disable-next-line
       const container = containerRef.current;
       if (container && window.PSPDFKit) {
         window.PSPDFKit.unload(container);

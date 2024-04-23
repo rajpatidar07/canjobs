@@ -47,6 +47,7 @@ function SearchForm() {
       ...state,
       country: options,
     });
+    // eslint-disable-next-line
   }, [states]);
 
   /*Onclick Function to search */

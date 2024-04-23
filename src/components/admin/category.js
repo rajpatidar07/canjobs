@@ -133,6 +133,7 @@ function Category() {
     if ((search === "") === true) {
       setSearchError("");
     }
+    // eslint-disable-next-line
   }, [
     categoryTypeFilterValue,
     search,

@@ -81,6 +81,7 @@ export default function Admin_assigned_list(props) {
             //     setAdminId("");
             //   }
         }
+        // eslint-disable-next-line
     }, [
         props.search,
         props.pageNo,

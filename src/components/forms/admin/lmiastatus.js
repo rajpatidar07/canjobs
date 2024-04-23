@@ -156,6 +156,7 @@ function LmiaStatus(props) {
     if (apiCall === true) {
       setApiCall(false);
     }
+    // eslint-disable-next-line
   }, [apiCall, lmia_status]);
 
   useEffect(() => {}, []);

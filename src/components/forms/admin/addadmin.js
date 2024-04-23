@@ -160,6 +160,7 @@ function Addadmin(props) {
     } else {
       AdminData();
     }
+    // eslint-disable-next-line
   }, [props]);
 
   // USER ADMIN PROFILE UPDATE SUBMIT BUTTON

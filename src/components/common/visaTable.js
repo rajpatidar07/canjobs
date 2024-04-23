@@ -108,6 +108,7 @@ export default function VisaTable(props) {
       props.setApiCall(false);
       setApiCall(false);
     }
+    // eslint-disable-next-line
   }, [
     props.search,
     props.VisStatusFilterValue,
