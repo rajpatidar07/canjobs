@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/components/common/card.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1713877047401,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1713877047401,
+            "name": "Commit-0",
+            "content": "import React, { useEffect, useState } from \"react\";\nimport Collapse from \"react-bootstrap/Collapse\";\nimport Card from \"react-bootstrap/Card\";\nimport { getLMIAstatus } from \"../../api/api\";\nimport { Table } from \"react-bootstrap\";\nimport moment from \"moment\";\nconst DashboardCard = (props) => {\n  const [open, setOpen] = useState(false);\n  const [LMIAdata, setLMIAdata] = useState([]);\n  const [totalData, settotalData] = useState([]);\n  const getLMIAdata = async () => {\n    try {\n      let lmiaData = await getLMIAstatus(props.lmia_status);\n      settotalData(lmiaData.total_rows);\n      setLMIAdata(lmiaData.data);\n    } catch (err) {\n      console.log(err);\n    }\n  };\n  /*Render function to get the job */\n  useEffect(() => {\n    getLMIAdata();\n    // eslint-disable-next-line\n  }, []);\n\n  return (\n    <Card className=\"mb-7 dash_card\">\n      <Card.Body>\n        <div\n          onClick={() => setOpen(!open)}\n          aria-controls={\"lmia_status_table_div_\"}\n          aria-expanded={open}\n          className=\"w-100\"\n        >\n          <h3 className=\"heading text-capitalize\">\n            {props.heading}\n            <p className=\"font-size-3 font-weight-normal\">{props.subheading}</p>\n            <span className=\"float-right dash_statistic\">{totalData || 0}</span>\n          </h3>\n        </div>\n        <Collapse in={open}>\n          <div id={\"lmia_status_table_div_\"}>\n            <Table striped bordered hover>\n              <thead>\n                <tr>\n                  <th>Client Name</th>\n                  <th>Job Name</th>\n                  <th>Applicant Name</th>\n                  <th>Status</th>\n                  <th>Exp. Completion time</th>\n                </tr>\n              </thead>\n              <tbody>\n                {(LMIAdata || []).map((item) => (\n                  <tr className=\"text-capitalize\">\n                    <td>{item.company_name}</td>\n                    <td>{item.job_title}</td>\n                    <td>{item.name}</td>\n                    <td>{item.lmia_status}</td>\n                    <td>\n                      {moment(item.expected_time_of_completion).format(\n                        \"Do MMM YY\"\n                      )}\n                    </td>\n                  </tr>\n                ))}\n              </tbody>\n            </Table>\n          </div>\n        </Collapse>\n      </Card.Body>\n    </Card>\n  );\n};\nexport default DashboardCard;\n"
+        }
+    ]
+}
