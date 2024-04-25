@@ -198,7 +198,7 @@ export default function PartnerPage(props) {
                       </button>
                       <button
                         className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4 action_btn m-1"
-                        onClick={() => props.EditAgent(data.id)}
+                        onClick={() => props.EditAgent(data)}
                         title="Edit Partner"
                       >
                         <LiaUserEditSolid /> {"Edit Partner"}

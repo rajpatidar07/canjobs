@@ -71,7 +71,7 @@ function AddAgent(props) {
     country: "",
     state: "",
     city: "",
-    id: props.agentId === "0" ? "" : props.agentId,
+    id: props.agentId === "0" ? "" : props.agentId.id,
     assigned_by: ""
   };
   // VALIDATION CONDITIONS
@@ -209,7 +209,7 @@ function AddAgent(props) {
   /*Function to get agent detail */
   const AgentData = async () => {
     try {
-      const userData = await GetAgent(props.agentId);
+      const userData = await GetAgent(props.agentId.id);
       if (userData) {
         setState(userData.data.data[0]);
       } else {
@@ -234,11 +234,26 @@ function AddAgent(props) {
   // USER agent PROFILE UPDATE SUBMIT BUTTON
   const onAgentProfileUpdateClick = async (event) => {
     event.preventDefault();
-    // console.log(errors, state);
+    // console.log(errors, state);.
+    let data = {
+      name: state.name,
+      email: state.email,
+      password: "",
+      type: state.type,
+      contact_no: state.contact_no,
+      profile_image: state.profile_image,
+      address: state.address,
+      country: state.country,
+      state: state.state,
+      city: state.city,
+      id: state.id,
+      assigned_by: props.agentId.assigned_by === state.assigned_by ? "" : state.assigned_by
+    }
+    console.log(props.agentId , state.assigned_by)
     if (validate()) {
       setLoading(true);
       try {
-        const responseData = await AddUpdateAgent(state);
+        const responseData = await AddUpdateAgent(data);
         if (responseData.message === "created successfully") {
           toast.success("Agent added successfully", {
             position: toast.POSITION.TOP_RIGHT,

@@ -30,10 +30,10 @@ function Notifications({
     user_type === "admin"
       ? localStorage.getItem("admin_id")
       : user_type === "user"
-      ? localStorage.getItem("employee_id")
-      : user_type === "agent"
-      ? localStorage.getItem("agent_id")
-      : "";
+        ? localStorage.getItem("employee_id")
+        : user_type === "agent"
+          ? localStorage.getItem("agent_id")
+          : "";
   /*notification API Call*/
   const Notiication = async () => {
     try {
@@ -271,22 +271,22 @@ function Notifications({
                         data.subject === "added_new_job"
                           ? "/job"
                           : data.subject === "applied_on_job"
-                          ? "/responses"
-                          : data.subject === "interview_scheduled"
-                          ? "/interview"
-                          : data.subject === "mention_document"
-                          ? `/${data.employee_id}?docId=${
-                              data.mention_id
-                            }&docParentId=${
-                              data.notif_json
-                                ? JSON.parse(data.notif_json).doc_parent_id
-                                : ""
-                            }`
-                          : data.subject === "mention_partner"
-                          ? `/${data.employee_id}?partner=${data.from_id}`
-                          : data.subject === "mention_partnerChat"
-                          ? `/partner_profile?partner=${data.employee_id}`
-                          : ""
+                            ? "/responses"
+                            : data.subject === "interview_scheduled"
+                              ? "/interview"
+                              : data.subject === "mention_document"
+                                ? `/${data.employee_id}?docId=${data.mention_id
+                                }&docParentId=${data.notif_json
+                                  ? JSON.parse(data.notif_json).doc_parent_id
+                                  : ""
+                                }`
+                                : data.subject === "mention_partner"
+                                  ? `/${data.employee_id}?partner=${data.from_id}`
+                                  : data.subject === "mention_partnerChat"
+                                    ? `/partner_profile?partner=${data.employee_id}`
+                                    : data.subject === "assigned_admin_to_partner" ?
+                                      "/partner_profile"
+                                      : ""
                       }
                       onClick={() => {
                         try {
@@ -296,6 +296,8 @@ function Notifications({
                           window.history.replaceState({}, document.title, "/");
                           if (data.subject === "mention_partnerChat") {
                             localStorage.setItem("agent_id", data.employee_id);
+                          } else if (data.subject === "assigned_admin_to_partner") {
+                            localStorage.setItem("agent_id", data.action_id);
                           }
                         } catch (err) {
                           console.log(err);

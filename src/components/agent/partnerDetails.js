@@ -563,7 +563,7 @@ export default function PartnerDetails() {
       {showPartnerInfoModal ? (
         <AddAgent
           show={showPartnerInfoModal}
-          agentId={Pid}
+          agentId={data}
           apiCall={apiCall}
           setApiCall={setApiCall}
           close={() => setShowPartnerInfoModal(false)}

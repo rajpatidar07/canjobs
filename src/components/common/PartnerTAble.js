@@ -316,7 +316,7 @@ export default function PartnerTAble(props) {
                                                         <button
                                                             className="btn btn-outline-info action_btn "
                                                             style={{ fontSize: "10px" }}
-                                                            onClick={() => props.EditAgent(data.id)}
+                                                            onClick={() => props.EditAgent(data)}
                                                             title="Edit Partner"
                                                         >
                                                             <FaEdit />

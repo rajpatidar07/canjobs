@@ -40,6 +40,7 @@ function PartnerDashboard() {
   const EditAgent = (e) => {
     setShowAgentMOdal(true);
     setAgentId(e);
+    console.log(e)
   };
   /*Function to search the agent */
   const onSearch = (e) => {

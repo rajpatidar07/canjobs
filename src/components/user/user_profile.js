@@ -754,7 +754,7 @@ const NewUserProfile = (props) => {
                         aria-selected="true"
                         onClick={() => setTabActive("documents")}
                       >
-                     Adobe   Documents
+                        Adobe   Documents
                       </Link>
                     </li>
                     <li
@@ -804,7 +804,7 @@ const NewUserProfile = (props) => {
                     </li>
                     <li
                       className={
-                        user_type === "company"
+                        user_type === "company" || user_type === "agent" || user_type === "user"
                           ? "d-none"
                           : "tab-menu-items nav-item"
                       }
@@ -1804,13 +1804,13 @@ const NewUserProfile = (props) => {
                       //   folderId={PersonalDetail.documents_folder_id}
                       // />
                       < SharePointDocument
-                      user_id={eid}
-                      emp_user_type={"employee"}
-                      folderId={docId ? docParentId : PersonalDetail.documents_folder_id}
-                      notification={docId ? "yes" : "no"}
-                      docId={docId ? docId : ""}
-                      docTypePage={"adobe"}
-                    />
+                        user_id={eid}
+                        emp_user_type={"employee"}
+                        folderId={docId ? docParentId : PersonalDetail.documents_folder_id}
+                        notification={docId ? "yes" : "no"}
+                        docId={docId ? docId : ""}
+                        docTypePage={"adobe"}
+                      />
                     ) : null}
                   </div>
                   <div

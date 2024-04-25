@@ -334,6 +334,15 @@ function PersonalDetails(props) {
           props.setApiCall(true);
           return close();
         }
+        if (responseData.message === "Email already exists") {
+          toast.error("Email already exists", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          // props.setApiCall(true);
+          setLoading(false)
+          setErrors({ ...errors, email: "Email already exists" })
+        }
       } catch (err) {
         console.log(err);
         setLoading(false);
@@ -548,7 +557,7 @@ function PersonalDetails(props) {
                       }
                       id="email"
                       placeholder="email"
-                    // disabled={props.employeeId === "0" ? false : true}
+                      disabled={user_type === "user"}
                     />
                     {/*----ERROR MESSAGE FOR EMAIL----*/}
                     {errors.email && (

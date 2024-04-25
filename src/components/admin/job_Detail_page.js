@@ -374,9 +374,9 @@ function JobDetailpageAdmim(props) {
                             <div className="text_box text-left w-100 text-capitalize">
                               <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center text-break">
                                 {jobData.job_title}{" "}
-                                {jobData.employement
+                                {/* {jobData.employement
                                   ? `(${jobData.employement})`
-                                  : ""}
+                                  : ""} */}
                               </h3>
                               <h5 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center text-break">
                                 <b> {jobData.franchise}{" "}</b>
@@ -437,7 +437,7 @@ function JobDetailpageAdmim(props) {
                                         ""
                                       )}
                                     </div>
-                                    <div className="info_box text-left text-capitalize text-break">
+                                    {/* <div className="info_box text-left text-capitalize text-break">
                                       {jobData.address ? (
                                         <span
                                           className="font-size-3 text-smoke  mr-7"
@@ -454,7 +454,7 @@ function JobDetailpageAdmim(props) {
                                       ) : (
                                         ""
                                       )}
-                                    </div>
+                                    </div> */}
                                   </>
                                 )}
                               </div>

@@ -11,7 +11,7 @@ import { Link, useLocation } from "react-router-dom";
 import Permissions from "../json/emailPermisionJson";
 function UserRegisterPage() {
   let encoded;
-  const [imgError, setImgError] = useState("");
+  // const [imgError, setImgError] = useState("");
   const [loading, setLoading] = useState(false);
   const [SingUpSuccess, setSingUpSuccess] = useState("");
   const [agentList, setAgentList] = useState([]);
@@ -54,7 +54,7 @@ function UserRegisterPage() {
     date_of_birth: "",
     gender: "",
     marital_status: "",
-    // nationality: "",
+    nationality: "",
     current_location: "",
     currently_located_country: "",
     language: "",
@@ -62,7 +62,7 @@ function UserRegisterPage() {
     interested_in: "",
     experience: "",
     work_permit_canada: "",
-    // work_permit_other_country: "",
+    work_permit_other_country: "",
     resume: "",
     profile_photo: "",
     // is_featured: "",
@@ -87,30 +87,30 @@ function UserRegisterPage() {
         value === "" || value === null || value.trim() === ""
           ? "Name is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : value.length < 2
-          ? "Name should have 2 or more letter"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Name can not have a number."
-          : "",
+            ? "Cannot use special character "
+            : value.length < 2
+              ? "Name should have 2 or more letter"
+              : /[-]?\d+(\.\d+)?/.test(value)
+                ? "Name can not have a number."
+                : "",
     ],
     email: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? null
+            : "Email is invalid",
     ],
     contact_no: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Mobile number is required"
           : value.length < 10
-          ? "Mobile number should be more than 10 digits"
-          : value.length > 13
-          ? "Mobile no should be of 13 digits"
-          : "",
+            ? "Mobile number should be more than 10 digits"
+            : value.length > 13
+              ? "Mobile no should be of 13 digits"
+              : "",
     ],
     // description: [
     //   (value) =>
@@ -120,15 +120,15 @@ function UserRegisterPage() {
     //       ? "Description should have 5 or more letter"
     //       : null,
     // ],
-    date_of_birth: [
-      (value) => (value === "" || value === null ? "Dob is required" : ""),
-    ],
-    gender: [
-      (value) => (value === "" || value === null ? "Gender is required" : null),
-    ],
-    marital_status: [
-      (value) => (value === "" || value === null ? "Status is required" : null),
-    ],
+    // date_of_birth: [
+    //   (value) => (value === "" || value === null ? "Dob is required" : ""),
+    // ],
+    // gender: [
+    //   (value) => (value === "" || value === null ? "Gender is required" : null),
+    // ],
+    // marital_status: [
+    //   (value) => (value === "" || value === null ? "Status is required" : null),
+    // ],
     // nationality: [
     //   (value) =>
     //     value === "" || value === null
@@ -141,18 +141,18 @@ function UserRegisterPage() {
     //       ? "Nationality can not have a number."
     //       : "",
     // ],
-    current_location: [
-      (value) =>
-        value === "" || value === null || value.trim() === ""
-          ? "Location is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : value.length < 3
-          ? "Location should have 3 or more letter"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Location can not have a number."
-          : "",
-    ],
+    // current_location: [
+    //   (value) =>
+    //     value === "" || value === null || value.trim() === ""
+    //       ? "Location is required"
+    //       : /[^A-Za-z 0-9]/g.test(value)
+    //         ? "Cannot use special character "
+    //         : value.length < 3
+    //           ? "Location should have 3 or more letter"
+    //           : /[-]?\d+(\.\d+)?/.test(value)
+    //             ? "Location can not have a number."
+    //             : "",
+    // ],
     // currently_located_country: [
     //   (value) =>
     //     value === "" || value === null || value.trim() === ""
@@ -165,38 +165,38 @@ function UserRegisterPage() {
     //       ? "Country can not have a number."
     //       : "",
     // ],
-    language: [
-      (value) =>
-        value === "" || value === null || value.trim() === ""
-          ? "Language is required"
-          : "",
-    ],
-    religion: [
-      (value) =>
-        value === "" || value === null || value.trim() === ""
-          ? "Religion is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : value.length < 3
-          ? "Religion should have 3 or more letter"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Religion can not have a number."
-          : "",
-    ],
+    // language: [
+    //   (value) =>
+    //     value === "" || value === null || value.trim() === ""
+    //       ? "Language is required"
+    //       : "",
+    // ],
+    // religion: [
+    //   (value) =>
+    //     value === "" || value === null || value.trim() === ""
+    //       ? "Religion is required"
+    //       : /[^A-Za-z 0-9]/g.test(value)
+    //       ? "Cannot use special character "
+    //       : value.length < 3
+    //       ? "Religion should have 3 or more letter"
+    //       : /[-]?\d+(\.\d+)?/.test(value)
+    //       ? "Religion can not have a number."
+    //       : "",
+    // ],
     interested_in: [
       (value) => (value === "" ? "Interested in is required" : null),
     ],
-    experience: [
-      (value) =>
-        value === "" || value === null ? "Experience is required" : null,
-    ],
+    // experience: [
+    //   (value) =>
+    //     value === "" || value === null ? "Experience is required" : null,
+    // ],
     // resume: [
     //   (value) => (value === "" || value === null ? "Resume is required" : null),
     // ],
-    work_permit_canada: [
-      (value) =>
-        value === "" || value === null ? "Work Permit is required" : null,
-    ],
+    // work_permit_canada: [
+    //   (value) =>
+    //     value === "" || value === null ? "Work Permit is required" : null,
+    // ],
     // work_permit_other_country: [
     //   (value) =>
     //     value === "" || value === null || value.trim() === ""
@@ -223,7 +223,7 @@ function UserRegisterPage() {
   // USER PERSONAL DETAIL SUBMIT BUTTON
   async function onUserPersonalDetailClick(event) {
     event.preventDefault();
-    if (validate() && imgError === "") {
+    if (validate()/* && imgError === ""*/) {
       setLoading(true);
       try {
         const responseData = await AddEmployeeDetails(state);
@@ -249,6 +249,14 @@ function UserRegisterPage() {
             autoClose: 1000,
           });
           return close();
+        }
+        if (responseData.message === "Email already exists") {
+          toast.error("Email already exists", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setLoading(false)
+          setErrors({ ...errors, email: "Email already exists" })
         }
       } catch (err) {
         console.log(err);
@@ -301,29 +309,29 @@ function UserRegisterPage() {
     }
   };
   /*Onchange function of profile */
-  const handleFileChange = async (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
+  // const handleFileChange = async (event) => {
+  //   const file = event.target.files[0];
+  //   const reader = new FileReader();
 
-    reader.onload = (event) => {
-      const img = new Image();
-      img.onload = () => {
-        if (/*file.size > 1024 * 100*/ (file.size > 100) * 1024 === true) {
-          setImgError("Image size can't be more then 100 kb");
-        } else {
-          setImgError("");
-          setState({ ...state, profile_photo: event.target.result });
-        }
-      };
-      img.src = event.target.result;
-    };
+  //   reader.onload = (event) => {
+  //     const img = new Image();
+  //     img.onload = () => {
+  //       if (/*file.size > 1024 * 100*/ (file.size > 100) * 1024 === true) {
+  //         setImgError("Image size can't be more then 100 kb");
+  //       } else {
+  //         setImgError("");
+  //         setState({ ...state, profile_photo: event.target.result });
+  //       }
+  //     };
+  //     img.src = event.target.result;
+  //   };
 
-    // Read the file as a data URL
-    reader.readAsDataURL(file);
-    encoded = await convertToBase64(file);
-    let base64Name = encoded.base64;
-    setState({ ...state, profile_photo: base64Name });
-  };
+  //   // Read the file as a data URL
+  //   reader.readAsDataURL(file);
+  //   encoded = await convertToBase64(file);
+  //   let base64Name = encoded.base64;
+  //   setState({ ...state, profile_photo: base64Name });
+  // };
 
   return (
     <div className="login-modal-main bg-white rounded-8 overflow-hidden">
@@ -351,7 +359,7 @@ function UserRegisterPage() {
             <form onSubmit={onUserPersonalDetailClick} className="p-2">
               <h5 className="text-center pt-2 mb-7"> Register Applicant</h5>
               {/* FIRST LINE */}
-              <div className="form-group mx-auto text-center">
+              {/* <div className="form-group mx-auto text-center">
                 <div className="mb-4 position-relative">
                   <input
                     type={"file"}
@@ -380,7 +388,7 @@ function UserRegisterPage() {
                   </label>
                 </div>
                 <small className="text-danger">{imgError}</small>
-              </div>
+              </div> */}
               <div className="row pt-5">
                 <input
                   maxLength={20}
@@ -517,7 +525,7 @@ function UserRegisterPage() {
                     htmlFor="date_of_birth"
                     className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                   >
-                    Date Of Birth: <span className="text-danger">*</span>
+                    Date Of Birth: 
                   </label>
                   <input
                     // max={moment().format("DD-MM-YYYY")}
@@ -554,7 +562,7 @@ function UserRegisterPage() {
                     htmlFor="gender"
                     className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                   >
-                    Gender: <span className="text-danger">*</span>
+                    Gender:
                   </label>
                   <select
                     name="gender"
@@ -572,7 +580,7 @@ function UserRegisterPage() {
                     <option value={"female"}>Female</option>
                     <option value={"other"}>Other</option>
                   </select>
-                  {/*----ERROR MESSAGE FOR GENDER----*/}
+                  {/* ----ERROR MESSAGE FOR GENDER---- */}
                   {errors.gender && (
                     <span
                       key={errors.gender}
@@ -582,7 +590,7 @@ function UserRegisterPage() {
                     </span>
                   )}
                 </div>
-                <div className="form-group col-md-4">
+                {/* <div className="form-group col-md-4">
                   <label
                     htmlFor="marital_status"
                     className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -607,7 +615,7 @@ function UserRegisterPage() {
                     <option value={"separated"}>Separated</option>
                     <option value={"divorced"}>Divorced</option>
                   </select>
-                  {/*----ERROR MESSAGE FOR MARITAL STATUS----*/}
+                  ----ERROR MESSAGE FOR MARITAL STATUS----
                   {errors.marital_status && (
                     <span
                       key={errors.marital_status}
@@ -616,9 +624,9 @@ function UserRegisterPage() {
                       {errors.marital_status}
                     </span>
                   )}
-                </div>
+                </div> */}
                 {/* THIRD LINE */}
-                <div className="form-group col-md-4">
+                {/* <div className="form-group col-md-4">
                   <label
                     htmlFor="nationality"
                     className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -640,7 +648,7 @@ function UserRegisterPage() {
                     }
                     id="nationality"
                   />
-                  {/* // ----ERROR MESSAGE FOR nationality---- */}
+                  // ----ERROR MESSAGE FOR nationality----
                   {errors.nationality && (
                     <span
                       key={errors.nationality}
@@ -649,13 +657,13 @@ function UserRegisterPage() {
                       {errors.nationality}
                     </span>
                   )}
-                </div>
+                </div> */}
                 <div className="form-group col-md-4">
                   <label
                     htmlFor="current_location"
                     className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                   >
-                    Current Location: <span className="text-danger">*</span>
+                    Current Location: 
                   </label>
                   <input
                     maxLength={60}
@@ -714,12 +722,12 @@ function UserRegisterPage() {
                 </div>
 
                 {/* FOURTH LINE */}
-                <div className="form-group col-md-4">
+                {/* <div className="form-group col-md-4">
                   <label
                     htmlFor="language"
                     className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                   >
-                    Languages Known {/*(Max 3)*/}:
+                    Languages Known 
                     <span className="text-danger">*</span>
                   </label>
                   <select
@@ -741,7 +749,7 @@ function UserRegisterPage() {
                       </option>
                     ))}
                   </select>
-                  {/*----ERROR MESSAGE FOR LANGUAGE----*/}
+                  ----ERROR MESSAGE FOR LANGUAGE----
                   {errors.language && (
                     <span
                       key={errors.language}
@@ -750,8 +758,8 @@ function UserRegisterPage() {
                       {errors.language}
                     </span>
                   )}
-                </div>
-                <div className="form-group col-md-4">
+                </div> */}
+                {/* <div className="form-group col-md-4">
                   <label
                     htmlFor="religion"
                     className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -780,21 +788,19 @@ function UserRegisterPage() {
                       {errors.religion}
                     </span>
                   )}
-                </div>
+                </div> */}
                 <div className="form-group col-md-4">
                   <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
                     Interested In: <span className="text-danger">*</span>
                   </label>
                   <select
-                    className={`${
-                      errors.interested_in
+                    className={`${errors.interested_in
                         ? "form-control  border border-danger "
                         : "form-control "
-                    }
-                      ${
-                        state.interested_in === "pnp"
-                          ? `text-uppercase`
-                          : "text-capitalize"
+                      }
+                      ${state.interested_in === "pnp"
+                        ? `text-uppercase`
+                        : "text-capitalize"
                       }`}
                     id="interested_in"
                     name="interested_in"
@@ -865,7 +871,7 @@ function UserRegisterPage() {
                     </span>
                   )}
                 </div>
-                <div className="form-group col-md-4">
+                {/* <div className="form-group col-md-4">
                   <label
                     htmlFor="experience"
                     className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -891,7 +897,7 @@ function UserRegisterPage() {
                       </option>
                     ))}
                   </select>
-                  {/*----ERROR MESSAGE FOR experience----*/}
+                  ----ERROR MESSAGE FOR experience----
                   {errors.experience && (
                     <span
                       key={errors.experience}
@@ -900,8 +906,8 @@ function UserRegisterPage() {
                       {errors.experience}
                     </span>
                   )}
-                </div>
-                <div className="form-group col-md-4">
+                </div> */}
+                {/* <div className="form-group col-md-4">
                   <label
                     htmlFor="work_permit_canada"
                     className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -924,7 +930,7 @@ function UserRegisterPage() {
                     <option value={"no"}>No</option>
                     <option value={"yes"}>Yes</option>
                   </select>
-                  {/*----ERROR MESSAGE FOR WORK PERMIT----*/}
+                  ----ERROR MESSAGE FOR WORK PERMIT----
                   {errors.work_permit_canada && (
                     <span
                       key={errors.work_permit_canada}
@@ -933,7 +939,7 @@ function UserRegisterPage() {
                       {errors.work_permit_canada}
                     </span>
                   )}
-                </div>
+                </div> */}
                 {/* <div className="form-group col-md-4">
                   <label
                     htmlFor="otherpermit"
