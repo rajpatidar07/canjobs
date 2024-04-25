@@ -75,7 +75,6 @@ function UserRegisterPage() {
   /* Functionality to close the modal */
   const close = () => {
     setState(initialFormStateuser);
-    setErrors("");
     setLoading(false);
   };
 
@@ -87,12 +86,12 @@ function UserRegisterPage() {
         value === "" || value === null || value.trim() === ""
           ? "Name is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : value.length < 2
-          ? "Name should have 2 or more letter"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Name can not have a number."
-          : "",
+            ? "Cannot use special character "
+            : value.length < 2
+              ? "Name should have 2 or more letter"
+              : /[-]?\d+(\.\d+)?/.test(value)
+                ? "Name can not have a number."
+                : "",
     ],
     email: [
       (value) =>
@@ -236,6 +235,7 @@ function UserRegisterPage() {
               position: toast.POSITION.TOP_RIGHT,
               autoClose: 1000,
             });
+            setErrors("");
             setSingUpSuccess("success");
             return close();
             // }
@@ -248,8 +248,17 @@ function UserRegisterPage() {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
+          setErrors("");
           return close();
         }
+        if (responseData.message ===
+          "Email already exists"){
+          toast.success("Candidate Updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+        setErrors({ ...errors, email: "Email already exists" })
+        setLoading(false)}
       } catch (err) {
         console.log(err);
         setLoading(false);
@@ -786,15 +795,13 @@ function UserRegisterPage() {
                     Interested In: <span className="text-danger">*</span>
                   </label>
                   <select
-                    className={`${
-                      errors.interested_in
+                    className={`${errors.interested_in
                         ? "form-control  border border-danger "
                         : "form-control "
-                    }
-                      ${
-                        state.interested_in === "pnp"
-                          ? `text-uppercase`
-                          : "text-capitalize"
+                      }
+                      ${state.interested_in === "pnp"
+                        ? `text-uppercase`
+                        : "text-capitalize"
                       }`}
                     id="interested_in"
                     name="interested_in"

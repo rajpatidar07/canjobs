@@ -320,6 +320,7 @@ function PersonalDetails(props) {
               autoClose: 1000,
             });
             props.setApiCall(true);
+            setErrors("");
             return close();
             // }
           } catch (err) {
@@ -332,7 +333,17 @@ function PersonalDetails(props) {
             autoClose: 1000,
           });
           props.setApiCall(true);
+          setErrors("");
           return close();
+        }
+        if (responseData.message ===
+          "Email already exists") {
+          toast.success("Candidate Updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setErrors({ ...errors, email: "Email already exists" })
+          setLoading(false);
         }
       } catch (err) {
         console.log(err);
@@ -548,7 +559,7 @@ function PersonalDetails(props) {
                       }
                       id="email"
                       placeholder="email"
-                    // disabled={props.employeeId === "0" ? false : true}
+                      disabled={user_type === "user"}
                     />
                     {/*----ERROR MESSAGE FOR EMAIL----*/}
                     {errors.email && (
