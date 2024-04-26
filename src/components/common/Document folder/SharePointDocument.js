@@ -5,6 +5,7 @@ import {
   AddSharePointFolders,
   getSharePointParticularFolders,
   AddSharePointDOcument,
+  getallAdminData,
 } from "../../../api/api";
 import { Dropdown, Form } from "react-bootstrap";
 import SAlert from "../../common/sweetAlert";
@@ -44,6 +45,27 @@ export default function SharePointDocument({
   /*delete state */
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteData, setDeleteData] = useState();
+  const [adminList, setAdminList] = useState([])
+  
+  const documentID = "YOUR_DOCUMENT_ID"; // Replace YOUR_DOCUMENT_ID with the actual document ID
+  const AdminData = async () => {
+    try {
+      const userData = await getallAdminData();
+      if (userData.data.length === 0) {
+        setAdminList([]);
+      } else {
+        // const filteredData = userData.data.filter(item => item.admin_type === "manager");
+        setAdminList( userData.data.map(obj => ({
+          name: obj.name,
+          id: obj.admin_id,
+          // description: obj.email,
+          displayName: obj.name
+        })))
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   /*To Show the delete alert box */
   const ShowDeleteAlert = (e) => {
     setDeleteData(e);
@@ -159,6 +181,7 @@ export default function SharePointDocument({
   };
   useEffect(() => {
     AllShareType();
+    AdminData()
     // if (notification === "yes") {
     //     setDocPreview(true)
     // }
@@ -353,6 +376,7 @@ export default function SharePointDocument({
                     :
                     <PdfViewerComponent
                       document={docSingleDate["@microsoft.graph.downloadUrl"]}
+                      adminDetailsFOrMention={adminList}
                     />}
                 </div>
               </div>
