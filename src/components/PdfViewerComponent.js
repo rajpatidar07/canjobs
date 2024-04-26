@@ -83,129 +83,159 @@ export default function PdfViewerComponent(props) {
     return new Promise((resolve, reject) => {
       // Simulate API call or async operation
       setTimeout(() => {
-        console.log("Note created:", noteJson);
-        resolve({ id: "generated_id_for_note" }); // Simulated response with an ID
+        console.log("Note created:",(noteJson));
+        resolve({
+          "bbox": [
+            noteJson.createdNote[5].left,
+            noteJson.createdNote[5].top,
+            noteJson.createdNote[5].width            ,
+            noteJson.createdNote[5].height
+          ],
+          "blendMode":"multiply",
+          "createdAt": noteJson.createdComments.createdAt          ,
+          "id":  noteJson.createdNote[0],
+          "name":  noteJson.createdNote[1],
+          "opacity":  noteJson.createdNote[4],
+          "pageIndex": noteJson.createdComments.pageIndex,
+          "strokeColor": "#2293FB",
+          // "strokeWidth": 5,
+          // "type": "pspdfkit/shape/rectangle",
+          // "updatedAt": "2024-04-26T06:12:56.653Z",
+          // "v": 1,
+          // "note": "<p>gggggggg</p>",
+          // "creatorName": "Raj",
+          // "createdComments": {
+          //   "id": "01HWCGJ2AV276JTHE91745Z4K9",
+          //   "rootId": "01HWCGJ2AP3MXSS46NPJ636C97",
+          //   "pageIndex": 2,
+          //   "pdfObjectId": null,
+          //   "creatorName": "Raj",
+          //   "createdAt": "2024-04-26T06:12:56.653Z",
+          //   "updatedAt": "2024-04-26T06:12:56.653Z",
+          //   "text": {
+          //     "format": "xhtml",
+          //     "value": "<p>gggggggg</p>"
+          //   },
+          //   "customData": null
+          // },
+          // "createdNote": [
+          //   "01HWCGJ2AP3MXSS46NPJ636C97",
+          //   "01HWCGJ2AP3MXSS46NPJ636C97",
+          //   null,
+          //   null,
+          //   2,
+          //   {
+          //     "left": 120.28019409179689,
+          //     "top": 246.2462158203125,
+          //     "width": 71.87578124999999,
+          //     "height": 21.29609375000001
+          //   },
+          //   null,
+          //   null,
+          //   null,
+          //   "Raj",
+          //   "2024-04-26T06:12:53.719Z",
+          //   "2024-04-26T06:12:53.719Z",
+          //   null,
+          //   null,
+          //   null,
+          //   null,
+          //   null,
+          //   null,
+          //   null,
+          //   null,
+          //   null,
+          //   null,
+          //   true
+          // ]
+        }); // Simulated response with an ID
       }, 1000);
     });
   };
-// Ink annotation with three lines on the second page
-// function newInkAnnotation() {
-//   return new PSPDFKit.Annotations.InkAnnotation({
-//     pageIndex: 1,
-//     boundingBox: new PSPDFKit.Geometry.Rect({
-//       width: 150,
-//       height: 50,
-//       top: 50,
-//       left: 50,
-//     }),
-//     strokeColor: PSPDFKit.Color.WHITE,
-//     lines: PSPDFKit.Immutable.List([
-//       PSPDFKit.Immutable.List([
-//         new PSPDFKit.Geometry.DrawingPoint({ x: 50, y: 50 }),
-//         new PSPDFKit.Geometry.DrawingPoint({ x: 200, y: 50 }),
-//       ]),
-//       PSPDFKit.Immutable.List([
-//         new PSPDFKit.Geometry.DrawingPoint({ x: 50, y: 75 }),
-//         new PSPDFKit.Geometry.DrawingPoint({ x: 200, y: 75 }),
-//       ]),
-//       PSPDFKit.Immutable.List([
-//         new PSPDFKit.Geometry.DrawingPoint({ x: 50, y: 100 }),
-//         new PSPDFKit.Geometry.DrawingPoint({ x: 200, y: 100 }),
-//       ]),
-//     ]),
-//   });
-// }
-
-// // Creates a text annotation on the first page that says "Welcome to PSPDFKit"
-// function newTextAnnotation() {
-//   return new PSPDFKit.Annotations.TextAnnotation({
-//     pageIndex: 0,
-//     boundingBox: new PSPDFKit.Geometry.Rect({
-//       width: 150,
-//       height: 150,
-//       top: 50,
-//       left: 50,
-//     }),
-//     "text": "Welcome to\nPSPDFKit",
-//     font: "Helvetica",
-//     isBold: true,
-//     horizontalAlign: "center",
-//     verticalAlign: "center",
-//     backgroundColor: PSPDFKit.Color.BLUE,
-//     fontColor: PSPDFKit.Color.WHITE,
-//   });
-// }
-
-// // Creates an ellipse annotation on the first page
-// function newEllipseAnnotationAnnotation() {
-//   return new PSPDFKit.Annotations.EllipseAnnotation({
-//     pageIndex: 0,
-//     boundingBox: new PSPDFKit.Geometry.Rect({
-//       left: 390,
-//       top: 380,
-//       width: 120,
-//       height: 120,
-//     }),
-//   });
-// }
-
-// // Highlights the  "Set of Kitchen Utensils" on the first page
-// function newHighlightAnnotation() {
-//   return new PSPDFKit.Annotations.HighlightAnnotation({
-//     pageIndex: 0,
-//     boundingBox: new PSPDFKit.Geometry.Rect({
-//       left: 30,
-//       top: 424,
-//       width: 223,
-//       height: 83,
-//     }),
-//     rects: PSPDFKit.Immutable.List([
-//       new PSPDFKit.Geometry.Rect({
-//         left: 30,
-//         top: 424,
-//         width: 223,
-//         height: 42,
-//       }),
-//       new PSPDFKit.Geometry.Rect({
-//         left: 30,
-//         top: 465,
-//         width: 122,
-//         height: 42,
-//       }),
-//     ]),
-//   });
-// }
-
-// // Creates a Note annotation on the first page
-// function newNoteAnnotation() {
-//   return new PSPDFKit.Annotations.NoteAnnotation({
-//     pageIndex: 0,
-//     text: "An example for a Note Annotation",
-//     boundingBox: new PSPDFKit.Geometry.Rect({
-//       left: 500,
-//       top: 20,
-//       width: 30,
-//       height: 30,
-//     }),
-//   });
-// }
   // Define toSerializableObject function here as well
   function toSerializableObject(obj) {
     return { ...obj }; // Just returning a shallow copy of the object for demonstration
   }
-  let annotedata=[     {
-    bbox: [100, 150, 200, 75],
-    blendMode: "normal",
-    createdAt: "1970-01-01T00:00:00Z",
-    id: "01F73GJ4RPENTCMFSCJ5CSFT5G",
-    name: "01F73GJ4RPENTCMFSCJ5CSFT5G",
-    opacity: 1,
-    pageIndex: 0,
-    strokeColor: "#2293FB",
-    strokeWidth: 5,
-    type: "pspdfkit/shape/rectangle",
-    updatedAt: "1970-01-01T00:00:00Z",
-    v: 1
+  let annotedata=[   
+  //     {
+  //   bbox: [100, 150, 200, 75],
+  //   blendMode: "normal",
+  //   createdAt: "1970-01-01T00:00:00Z",
+  //   id: "01F73GJ4RPENTCMFSCJ5CSFT5G",
+  //   name: "01F73GJ4RPENTCMFSCJ5CSFT5G",
+  //   opacity: 1,
+  //   pageIndex: 0,
+  //   strokeColor: "#2293FB",
+  //   strokeWidth: 5,
+  //   type: "pspdfkit/shape/rectangle",
+  //   updatedAt: "1970-01-01T00:00:00Z",
+  //   v: 1,
+  //   note:"Hello"
+  // },
+  {
+    "bbox": [
+      120.28019409179689,
+      246.2462158203125,
+      191.15697534179688,
+      267.5423095703125
+    ],
+    "blendMode":"multiply",
+    "createdAt": "2024-04-26T06:12:53.719Z",
+    "id": "01HWCGJ2AV276JTHE91745Z4K9",
+    "name": "01HWCGJ2AV276JTHE91745Z4K9",
+    "opacity": 1,
+    "pageIndex": 2,
+    "strokeColor": "#2293FB",
+    "strokeWidth": 5,
+    "type": "pspdfkit/shape/rectangle",
+    "updatedAt": "2024-04-26T06:12:56.653Z",
+    "v": 1,
+    "note": "<p>gggggggg</p>",
+    "creatorName": "Raj",
+    "createdComments": {
+      "id": "01HWCGJ2AV276JTHE91745Z4K9",
+      "rootId": "01HWCGJ2AP3MXSS46NPJ636C97",
+      "pageIndex": 2,
+      "pdfObjectId": null,
+      "creatorName": "Raj",
+      "createdAt": "2024-04-26T06:12:56.653Z",
+      "updatedAt": "2024-04-26T06:12:56.653Z",
+      "text": {
+        "format": "xhtml",
+        "value": "<p>gggggggg</p>"
+      },
+      "customData": null
+    },
+    "createdNote": [
+      "01HWCGJ2AP3MXSS46NPJ636C97",
+      "01HWCGJ2AP3MXSS46NPJ636C97",
+      null,
+      null,
+      2,
+      {
+        "left": 120.28019409179689,
+        "top": 246.2462158203125,
+        "width": 71.87578124999999,
+        "height": 21.29609375000001
+      },
+      null,
+      null,
+      null,
+      "Raj",
+      "2024-04-26T06:12:53.719Z",
+      "2024-04-26T06:12:53.719Z",
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      null,
+      true
+    ]
   }]
 
   useEffect(() => {
@@ -231,23 +261,44 @@ export default function PdfViewerComponent(props) {
 
         instance.setAnnotationCreatorName(adminName.charAt(0).toUpperCase() + adminName.slice(1));
 
-        /* Function to create Annotation comment */
-        instance.addEventListener("comments.create", async createdComments => {
-          console.log(createdComments.get(0).id);
-        });
 
         /* Function to create Annotation note */
+        // instance.addEventListener("annotations.create", async createdNote => {
+        //   const note = createdNote.get(0);
+        //   console.log(note)
+        //   const serializedObjectNote = toSerializableObject(note);
+        //   const noteJson = serializedObjectNote
+        //   if (!isLoadingNotes.current) {
+        //     createPdfNote(noteJson).then(response => {
+        //       console.log("Note created with ID:", response
+        //     ,"fffff",noteJson);
+        //     });
+        //   }
+        // });
+        let eventData = {};
+
+        /* Function to create Annotation comment */
+        instance.addEventListener("comments.create", async createdComments => {
+          eventData.createdComments = createdComments.get(0);
+          console.log("Data from comments.create:", createdComments.get(0));
+        });
+  
+        /* Function to create Annotation note */
         instance.addEventListener("annotations.create", async createdNote => {
-          const note = createdNote.get(0);
+          const note = createdNote.get(0);  
           const serializedObjectNote = toSerializableObject(note);
-          const noteJson = serializedObjectNote
+          console.log(serializedObjectNote)
+          const noteJson = serializedObjectNote;
           if (!isLoadingNotes.current) {
-            createPdfNote(noteJson).then(response => {
-              console.log("Note created with ID:", response.id);
+            // Store data from annotations.create in eventData
+            eventData.createdNote = noteJson._values._root.array[0].array;
+            console.log("Combined eventData:", (eventData));
+            createPdfNote(eventData).then(response => {
+              console.log("Note created with ID:", response, "Data from annotations.create:", noteJson);
+  
             });
           }
         });
-
         /* Function to Update Annotation comment */
         instance.addEventListener("comments.update", updatedComments => {
           console.log(updatedComments.get(0).id);
@@ -266,17 +317,81 @@ export default function PdfViewerComponent(props) {
           console.log("Something in the annotations has changed.");
         });
         /*Json tried to show */
-        // instance.applyOperations([
-        //   {
-        //     type: "applyInstantJson",
-        //     instantJson: {
-        //       annotations: 
-        //         annotedata
-        //       ,
-        //       format: "https://pspdfkit.com/instant-json/v1"
-        //     }
-        //   }
-        // ]);
+        instance.applyOperations([
+          {
+            type: "applyInstantJson",
+            instantJson: {
+              annotations: 
+              [{
+                "bbox": [
+                  120.28019409179689,
+                  246.2462158203125,
+                  191.15697534179688,
+                  267.5423095703125
+                ],
+                "blendMode":"multiply",
+                "createdAt": "2024-04-26T06:12:53.719Z",
+                "id": "01HWCGJ2AV276JTHE91745Z4K9",
+                "name": "01HWCGJ2AV276JTHE91745Z4K9",
+                "opacity": 1,
+                "pageIndex": 2,
+                "strokeColor": "#2293FB",
+                "strokeWidth": 5,
+                "type": "pspdfkit/shape/rectangle",
+                "updatedAt": "2024-04-26T06:12:56.653Z",
+                "v": 1,
+                "note": "<p>gggggggg</p>",
+                "creatorName": "Raj",
+                "createdComments": {
+                  "id": "01HWCGJ2AV276JTHE91745Z4K9",
+                  "rootId": "01HWCGJ2AP3MXSS46NPJ636C97",
+                  "pageIndex": 2,
+                  "pdfObjectId": null,
+                  "creatorName": "Raj",
+                  "createdAt": "2024-04-26T06:12:56.653Z",
+                  "updatedAt": "2024-04-26T06:12:56.653Z",
+                  "text": {
+                    "format": "xhtml",
+                    "value": "<p>gggggggg</p>"
+                  },
+                  "customData": null
+                },
+                "createdNote": [
+                  "01HWCGJ2AP3MXSS46NPJ636C97",
+                  "01HWCGJ2AP3MXSS46NPJ636C97",
+                  null,
+                  null,
+                  2,
+                  {
+                    "left": 120.28019409179689,
+                    "top": 246.2462158203125,
+                    "width": 71.87578124999999,
+                    "height": 21.29609375000001
+                  },
+                  null,
+                  null,
+                  null,
+                  "Raj",
+                  "2024-04-26T06:12:53.719Z",
+                  "2024-04-26T06:12:53.719Z",
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  null,
+                  true
+                ]}
+              ]
+              ,
+              format: "https://pspdfkit.com/instant-json/v1"
+            }
+          }
+        ]);
         // Create annotations using your functions
         // const annotationsOnFirstPage = await instance.getAnnotations(0);
         // if (annotationsOnFirstPage.size <= 1) {
