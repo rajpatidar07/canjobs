@@ -156,11 +156,11 @@ function EmployeeHeader() {
                       Client
                     </Link>
                   </li>
-                 <li className="drop-menu-item">
+                  <li className="drop-menu-item">
                     <Link to={"/partnerlogin"} className="nav-link">
                       Partner
                     </Link>
-              </li>
+                  </li>
                   {/* <li className="nav-item">
                     <Link className="nav-link" to="/adminlogin">
                       Admin
@@ -315,13 +315,15 @@ function EmployeeHeader() {
                   className="dropdown-menu gr-menu-dropdown dropdown-right border-0 border-width-2 py-2 w-auto bg-default"
                   aria-labelledby="dropdownMenuLink"
                 >
-                  <Link
-                    onClick={() => setShowSetting(true)}
-                    className="nav-link"
-                    to=""
-                  >
-                    Settings
-                  </Link>
+                  {userType !== "user" || userType !== "company" ? null : (
+                    <Link
+                      onClick={() => setShowSetting(true)}
+                      className="nav-link"
+                      to=""
+                    >
+                      Settings
+                    </Link>
+                  )}
                   {showSetting && (
                     <Setting
                       show={showSetting}

@@ -21,7 +21,11 @@ import { BsUsbMiniFill } from "react-icons/bs";
 import AdminTaskTable from "../common/AdminTaskTable";
 import DataChart from "../common/DataChart";
 import Loader from "../common/loader";
+// import SessionCheck from "../common/session";
 const AdminDashboard = () => {
+  // useEffect(() => {
+  //   SessionCheck();
+  // }, []);
   let adminType = localStorage.getItem("admin_type");
   let adminId = localStorage.getItem("admin_id");
   // eslint-disable-next-line
@@ -506,8 +510,9 @@ const AdminDashboard = () => {
                       </Link>
                     </div>
                     <Link
-                      className={`text-dark mx-5 ${openTable === 1 ? "open" : ""
-                        }`}
+                      className={`text-dark mx-5 ${
+                        openTable === 1 ? "open" : ""
+                      }`}
                       to=""
                       onClick={() => toggleTable(1)}
                       title={openTable === 1 ? "Minimize" : "Maximize"}
@@ -569,8 +574,9 @@ const AdminDashboard = () => {
                       </Link>
                     </div>
                     <Link
-                      className={`text-dark mx-5 ${openTable === 4 ? "open" : ""
-                        }`}
+                      className={`text-dark mx-5 ${
+                        openTable === 4 ? "open" : ""
+                      }`}
                       to=""
                       onClick={() => toggleTable(4)}
                       title={openTable === 4 ? "Minimize" : "Maximize"}
@@ -631,8 +637,9 @@ const AdminDashboard = () => {
                       </Link>
                     </div>
                     <Link
-                      className={`text-dark mx-5 ${openTable === 2 ? "open" : ""
-                        }`}
+                      className={`text-dark mx-5 ${
+                        openTable === 2 ? "open" : ""
+                      }`}
                       to=""
                       onClick={() => toggleTable(2)}
                       title={openTable === 2 ? "Minimize" : "Maximize"}
@@ -727,8 +734,9 @@ const AdminDashboard = () => {
                       </Link>
                     </div>
                     <Link
-                      className={`text-dark mx-5 ${openTable === 5 ? "open" : ""
-                        }`}
+                      className={`text-dark mx-5 ${
+                        openTable === 5 ? "open" : ""
+                      }`}
                       to=""
                       onClick={() => toggleTable(5)}
                       title={openTable === 5 ? "Minimize" : "Maximize"}
@@ -789,8 +797,9 @@ const AdminDashboard = () => {
                       </Link>
                     </div>
                     <Link
-                      className={`text-dark mx-5 ${openTable === 3 ? "open" : ""
-                        }`}
+                      className={`text-dark mx-5 ${
+                        openTable === 3 ? "open" : ""
+                      }`}
                       to=""
                       onClick={() => toggleTable(3)}
                       title={openTable === 3 ? "Minimize" : "Maximize"}
@@ -819,8 +828,9 @@ const AdminDashboard = () => {
                 <div className="d-flex justify-content-between p-5 align-items-center">
                   <h3 className="font-size-5 px-3 m-0">Candidate's Alerts</h3>
                   <Link
-                    className={`text-dark mx-5 ${openTable === 6 ? "open" : ""
-                      }`}
+                    className={`text-dark mx-5 ${
+                      openTable === 6 ? "open" : ""
+                    }`}
                     to=""
                     onClick={() => toggleTable(6)}
                     title={openTable === 6 ? "Minimize" : "Maximize"}
@@ -864,7 +874,8 @@ const AdminDashboard = () => {
                   userType={"employee"}
                   assigned_by_id={adminId}
                   setApiCall={setApiCall}
-                  page={"dashboard"} />
+                  page={"dashboard"}
+                />
               </div>
             </div>
             <div
@@ -906,8 +917,9 @@ const AdminDashboard = () => {
                       </Link>
                     </div> */}
                     <Link
-                      className={`text-dark mx-5 ${openTable === 7 ? "open" : ""
-                        }`}
+                      className={`text-dark mx-5 ${
+                        openTable === 7 ? "open" : ""
+                      }`}
                       to=""
                       onClick={() => toggleTable(7)}
                       title={openTable === 7 ? "Minimize" : "Maximize"}

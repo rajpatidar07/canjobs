@@ -42,13 +42,15 @@ import AgentConversation from "../common/AgentConversation";
 import UserTimline from "../common/UserTimline";
 import InterviewHistoryTable from "../common/InterviewHistoryTable";
 import SharePointDocument from "../common/Document folder/SharePointDocument";
+import useSessionCheck from "../common/user_session";
 // import AdobePDFViewer from "../common/Adobe/adobeFile";
 const NewUserProfile = (props) => {
+  useSessionCheck();
   const { eid } = useParams();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const docId = searchParams.get("docId");
-  const docParentId = searchParams.get("docParentId")
+  const docParentId = searchParams.get("docParentId");
   const partnerChat = searchParams.get("partner");
   let navigate = useNavigate();
   const [apiCall, setApiCall] = useState(false);
@@ -61,7 +63,13 @@ const NewUserProfile = (props) => {
   const [showPersonalDetails, setShowPersonalDetails] = useState(false);
   const [showEducation, setShowEducation] = useState(false);
   const [showItSkills, setShowItSkills] = useState(false);
-  const [TabActive, setTabActive] = useState(docId ? "sharepoint"/*"documents"*/ : partnerChat ? "agent conversation" : "profile");
+  const [TabActive, setTabActive] = useState(
+    docId
+      ? "sharepoint" /*"documents"*/
+      : partnerChat
+      ? "agent conversation"
+      : "profile"
+  );
   const [userDetail, setuserDetail] = useState([]);
   const [PersonalDetail, setPersonalDetail] = useState([]);
   const [appliedJob, setAppliedJob] = useState([]);
@@ -197,7 +205,7 @@ const NewUserProfile = (props) => {
       setTabActive("sharepoint");
     }
     if (partnerChat) {
-      setTabActive("agent conversation")
+      setTabActive("agent conversation");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiCall, eid, docId, docParentId]);
@@ -215,9 +223,11 @@ const NewUserProfile = (props) => {
     const months = duration.months();
     // const days = duration.days();
 
-    return `${years === 1 ? years + " year," : years > 1 ? years + " years," : ""
-      } ${months === 1 ? months + " month" : months > 1 ? months + " months" : ""
-      }`;
+    return `${
+      years === 1 ? years + " year," : years > 1 ? years + " years," : ""
+    } ${
+      months === 1 ? months + " month" : months > 1 ? months + " months" : ""
+    }`;
   };
   /*function to change applicants status */
   const OnStatusChange = async (e) => {
@@ -294,7 +304,11 @@ const NewUserProfile = (props) => {
         id="dashboard-body"
       >
         <ToastContainer />
-        <div className={`container${user_type === "admin" || user_type === "agent" ? "-fluid" : ""}`}>
+        <div
+          className={`container${
+            user_type === "admin" || user_type === "agent" ? "-fluid" : ""
+          }`}
+        >
           {(name === null || name === "") && user_type === "user" ? (
             <h4>Complete profile</h4>
           ) : (
@@ -356,15 +370,16 @@ const NewUserProfile = (props) => {
                       <div className="m-0 age_gender font-size-3 d-flex align-items-center text-capitalize">
                         <p>
                           {PersonalDetail.gender ||
-                            PersonalDetail.marital_status ||
-                            PersonalDetail.marital_status ||
-                            PersonalDetail.date_of_birth
-                            ? `(${PersonalDetail.gender === "female"
-                              ? "F"
-                              : PersonalDetail.gender === "male"
-                                ? "M"
-                                : "O"
-                            },
+                          PersonalDetail.marital_status ||
+                          PersonalDetail.marital_status ||
+                          PersonalDetail.date_of_birth
+                            ? `(${
+                                PersonalDetail.gender === "female"
+                                  ? "F"
+                                  : PersonalDetail.gender === "male"
+                                  ? "M"
+                                  : "O"
+                              },
                         ${PersonalDetail.marital_status},
                         ${moment().diff(PersonalDetail.date_of_birth, "years")}
                         Y)`
@@ -392,22 +407,22 @@ const NewUserProfile = (props) => {
                               status === "1"
                                 ? "New"
                                 : status === "2"
-                                  ? "Prospect"
-                                  : status === "3"
-                                    ? "Lead"
-                                    : status === "4"
-                                      ? "Retained"
-                                      : status === "5"
-                                        ? "Lost"
-                                        : status === "6"
-                                          ? "Dead"
-                                          : status === "7"
-                                            ? "Working on"
-                                            : status === "8"
-                                              ? "Submitted"
-                                              : status === "0"
-                                                ? "New"
-                                                : "status"
+                                ? "Prospect"
+                                : status === "3"
+                                ? "Lead"
+                                : status === "4"
+                                ? "Retained"
+                                : status === "5"
+                                ? "Lost"
+                                : status === "6"
+                                ? "Dead"
+                                : status === "7"
+                                ? "Working on"
+                                : status === "8"
+                                ? "Submitted"
+                                : status === "0"
+                                ? "New"
+                                : "status"
                             }
                             size="sm"
                             className="user_status_btn btn-primary text-white ml-1"
@@ -470,12 +485,12 @@ const NewUserProfile = (props) => {
                           {PersonalDetail.email}
                         </Link>
                         {user_type === "admin" ||
-                          user_type === "agent" ||
-                          props.self === "no" ? (
+                        user_type === "agent" ||
+                        props.self === "no" ? (
                           <CustomButton
                             title={"Send Custom Email"}
                             className="font-size-4 rounded-3 btn-primary py-0 d-none"
-                          /*Functionalities have to be done. */
+                            /*Functionalities have to be done. */
                           >
                             {/*Take off "d-none" when you Send Custom Email API or when you're told to remove it*/}
                             <RiMailSendLine />
@@ -497,15 +512,15 @@ const NewUserProfile = (props) => {
                   )}
                   <div className="col px-5 pt-5 pb-5 d-flex border-right">
                     {PersonalDetail.email === "" ||
-                      PersonalDetail.length === 0 ||
-                      (!PersonalDetail.current_location &&
-                        !PersonalDetail.language &&
-                        !PersonalDetail.currently_located_country &&
-                        !PersonalDetail.experience &&
-                        // !PersonalDetail.nationality &&
-                        !PersonalDetail.experience &&
-                        !PersonalDetail.work_permit_canada &&
-                        !PersonalDetail.work_permit_other_country) ? (
+                    PersonalDetail.length === 0 ||
+                    (!PersonalDetail.current_location &&
+                      !PersonalDetail.language &&
+                      !PersonalDetail.currently_located_country &&
+                      !PersonalDetail.experience &&
+                      // !PersonalDetail.nationality &&
+                      !PersonalDetail.experience &&
+                      !PersonalDetail.work_permit_canada &&
+                      !PersonalDetail.work_permit_other_country) ? (
                       <div>
                         <p className="text-center">No Data Found</p>
                       </div>
@@ -577,7 +592,9 @@ const NewUserProfile = (props) => {
                                 src="image/icons/envelope.svg"
                                 alt="Email"
                               />
-                              {PersonalDetail.experience === "fresher" || PersonalDetail.experience === "Other" || PersonalDetail.experience === "other"
+                              {PersonalDetail.experience === "fresher" ||
+                              PersonalDetail.experience === "Other" ||
+                              PersonalDetail.experience === "other"
                                 ? PersonalDetail.experience
                                 : PersonalDetail.experience + " Years"}
                             </span>
@@ -667,7 +684,7 @@ const NewUserProfile = (props) => {
                 }
               >
                 {(visaStatus && user_type === "admin") ||
-                  user_type === "agent" ? (
+                user_type === "agent" ? (
                   <VisaArrowProfile
                     visaStatus={visaStatus}
                     visaStatusRejectComment={visaStatusRejectComment}
@@ -688,8 +705,9 @@ const NewUserProfile = (props) => {
                   </ul> */}
                   {/*----Profile Header----*/}
                   <ul
-                    className={`nav border-top border-bottom border-mercury user_profile_tab ${user_type === "admin" ? "" : "mt-md-13"
-                      }`}
+                    className={`nav border-top border-bottom border-mercury user_profile_tab ${
+                      user_type === "admin" ? "" : "mt-md-13"
+                    }`}
                     id="myTab"
                     role="tablist"
                   >
@@ -706,18 +724,16 @@ const NewUserProfile = (props) => {
                         aria-controls="home"
                         aria-selected="true"
                         onClick={() => setTabActive("profile")}
-
                       >
                         Profile
                       </Link>
-
-
                     </li>
                     <li
-                      className={`${user_type === "company"
-                        ? "d-none"
-                        : "tab-menu-items nav-item"
-                        }`}
+                      className={`${
+                        user_type === "company"
+                          ? "d-none"
+                          : "tab-menu-items nav-item"
+                      }`}
                     >
                       <Link
                         className={
@@ -736,10 +752,11 @@ const NewUserProfile = (props) => {
                       </Link>
                     </li>
                     <li
-                      className={`${user_type === "company"
-                        ? "d-none"
-                        : "tab-menu-items nav-item"
-                        } d-none`}
+                      className={`${
+                        user_type === "company"
+                          ? "d-none"
+                          : "tab-menu-items nav-item"
+                      } d-none`}
                     >
                       <Link
                         className={
@@ -754,14 +771,15 @@ const NewUserProfile = (props) => {
                         aria-selected="true"
                         onClick={() => setTabActive("documents")}
                       >
-                        Adobe   Documents
+                        Adobe Documents
                       </Link>
                     </li>
                     <li
-                      className={`${user_type === "company"
-                        ? "d-none"
-                        : "tab-menu-items nav-item"
-                        }`}
+                      className={`${
+                        user_type === "company"
+                          ? "d-none"
+                          : "tab-menu-items nav-item"
+                      }`}
                     >
                       <Link
                         className={
@@ -804,7 +822,9 @@ const NewUserProfile = (props) => {
                     </li>
                     <li
                       className={
-                        user_type === "company" || user_type === "agent" || user_type === "user"
+                        user_type === "company" ||
+                        user_type === "agent" ||
+                        user_type === "user"
                           ? "d-none"
                           : "tab-menu-items nav-item"
                       }
@@ -844,8 +864,9 @@ const NewUserProfile = (props) => {
                       </Link>
                     </li>
                     <li
-                      className={`tab-menu-items nav-item ${user_type === "company" ? "d-none" : ""
-                        }`}
+                      className={`tab-menu-items nav-item ${
+                        user_type === "company" ? "d-none" : ""
+                      }`}
                     >
                       <Link
                         className={
@@ -917,7 +938,15 @@ const NewUserProfile = (props) => {
                         TimeLine
                       </Link>
                     </li>
-                    <li className={user_type === "company" || user_type === "user" || user_type === "agent" ? "d-none" : "tab-menu-items nav-item"}>
+                    <li
+                      className={
+                        user_type === "company" ||
+                        user_type === "user" ||
+                        user_type === "agent"
+                          ? "d-none"
+                          : "tab-menu-items nav-item"
+                      }
+                    >
                       <Link
                         className={
                           TabActive === "email"
@@ -1051,8 +1080,8 @@ const NewUserProfile = (props) => {
                                     {PersonalDetail.gender === "female"
                                       ? "Female"
                                       : PersonalDetail.gender === "male"
-                                        ? "Male"
-                                        : "Other"}
+                                      ? "Male"
+                                      : "Other"}
                                   </span>
                                 ) : null}
                                 {PersonalDetail.marital_status ? (
@@ -1071,60 +1100,60 @@ const NewUserProfile = (props) => {
                                 ) : null}
                                 {(user_type === "admin" ||
                                   user_type === "agent") && (
-                                    <DropdownButton
-                                      as={ButtonGroup}
-                                      title={
-                                        status === "1"
-                                          ? "New"
-                                          : status === "2"
-                                            ? "Prospect"
-                                            : status === "3"
-                                              ? "Lead"
-                                              : status === "4"
-                                                ? "Retained"
-                                                : status === "5"
-                                                  ? "Lost"
-                                                  : status === "6"
-                                                    ? "Dead"
-                                                    : status === "7"
-                                                      ? "Working on"
-                                                      : status === "8"
-                                                        ? "Submitted"
-                                                        : status === "0"
-                                                          ? "New"
-                                                          : "status"
-                                      }
-                                      size="sm"
-                                      className="user_status_btn btn-primary rounded-pill font-size-3 px-3 py-1 text-white mr-2"
-                                      onSelect={OnStatusChange}
-                                    >
-                                      {(FilterJson.employee_status || []).map(
-                                        (item, index) => (
-                                          <Dropdown.Item
-                                            key={index}
-                                            value={index + 1}
-                                            eventKey={index + 1}
-                                            className="text-capitalize"
-                                          >
-                                            {item}
-                                          </Dropdown.Item>
-                                        )
-                                      )}
-                                    </DropdownButton>
-                                  )}
+                                  <DropdownButton
+                                    as={ButtonGroup}
+                                    title={
+                                      status === "1"
+                                        ? "New"
+                                        : status === "2"
+                                        ? "Prospect"
+                                        : status === "3"
+                                        ? "Lead"
+                                        : status === "4"
+                                        ? "Retained"
+                                        : status === "5"
+                                        ? "Lost"
+                                        : status === "6"
+                                        ? "Dead"
+                                        : status === "7"
+                                        ? "Working on"
+                                        : status === "8"
+                                        ? "Submitted"
+                                        : status === "0"
+                                        ? "New"
+                                        : "status"
+                                    }
+                                    size="sm"
+                                    className="user_status_btn btn-primary rounded-pill font-size-3 px-3 py-1 text-white mr-2"
+                                    onSelect={OnStatusChange}
+                                  >
+                                    {(FilterJson.employee_status || []).map(
+                                      (item, index) => (
+                                        <Dropdown.Item
+                                          key={index}
+                                          value={index + 1}
+                                          eventKey={index + 1}
+                                          className="text-capitalize"
+                                        >
+                                          {item}
+                                        </Dropdown.Item>
+                                      )
+                                    )}
+                                  </DropdownButton>
+                                )}
                               </div>
                               <hr className="my-3" />
                               <div className="d-flex align-items-center">
                                 {PersonalDetail.email === "" ||
-                                  PersonalDetail.length === 0 ||
-                                  (!PersonalDetail.current_location &&
-                                    !PersonalDetail.language &&
-                                    !PersonalDetail.currently_located_country &&
-                                    !PersonalDetail.experience &&
-                                    // !PersonalDetail.nationality &&
-                                    !PersonalDetail.experience &&
-                                    !PersonalDetail.work_permit_canada &&
-                                    !PersonalDetail.work_permit_other_country) ? (
+                                PersonalDetail.length === 0 ||
+                                (!PersonalDetail.current_location &&
+                                  !PersonalDetail.language &&
+                                  !PersonalDetail.currently_located_country &&
+                                  !PersonalDetail.experience &&
+                                  // !PersonalDetail.nationality &&
+                                  !PersonalDetail.experience &&
+                                  !PersonalDetail.work_permit_canada &&
+                                  !PersonalDetail.work_permit_other_country) ? (
                                   <div>
                                     <p className="text-center">No Data Found</p>
                                   </div>
@@ -1198,9 +1227,14 @@ const NewUserProfile = (props) => {
                                             src="image/icons/envelope.svg"
                                             alt="Email"
                                           />
-                                          {PersonalDetail.experisence === "fresher" || PersonalDetail.experience === "Other" || PersonalDetail.experience === "other"
+                                          {PersonalDetail.experisence ===
+                                            "fresher" ||
+                                          PersonalDetail.experience ===
+                                            "Other" ||
+                                          PersonalDetail.experience === "other"
                                             ? PersonalDetail.experience
-                                            : PersonalDetail.experience + " Years"}
+                                            : PersonalDetail.experience +
+                                              " Years"}
                                         </span>
                                       ) : (
                                         ""
@@ -1243,7 +1277,7 @@ const NewUserProfile = (props) => {
                                   </div>
                                 )}
                                 {user_type === "company" ||
-                                  props.self === "yes" ? null : (
+                                props.self === "yes" ? null : (
                                   <CustomButton
                                     className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
                                     onClick={() => setShowPersonalDetails(true)}
@@ -1258,7 +1292,7 @@ const NewUserProfile = (props) => {
                                 style={{ gap: "10px" }}
                               >
                                 {!PersonalDetail.email ||
-                                  user_type === "company" ? null : (
+                                user_type === "company" ? null : (
                                   <div>
                                     <Link
                                       className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
@@ -1270,7 +1304,7 @@ const NewUserProfile = (props) => {
                                   </div>
                                 )}
                                 {!PersonalDetail.contact_no ||
-                                  user_type === "company" ? null : (
+                                user_type === "company" ? null : (
                                   <div>
                                     <Link
                                       className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
@@ -1309,12 +1343,12 @@ const NewUserProfile = (props) => {
                                   }
                                 >
                                   {PersonalDetail.name === null ||
-                                    PersonalDetail.name === undefined ||
-                                    PersonalDetail.name === "" ||
-                                    userDetail.skill === undefined ||
-                                    userDetail.skill.length === 0 ||
-                                    userDetail.education === undefined ||
-                                    userDetail.education.length === 0
+                                  PersonalDetail.name === undefined ||
+                                  PersonalDetail.name === "" ||
+                                  userDetail.skill === undefined ||
+                                  userDetail.skill.length === 0 ||
+                                  userDetail.education === undefined ||
+                                  userDetail.education.length === 0
                                     ? user_type === "user"
                                       ? "Complete your Profile"
                                       : "incomplete Profile"
@@ -1357,7 +1391,7 @@ const NewUserProfile = (props) => {
                               <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                                 <span>Skill</span>
                                 {user_type === "company" ||
-                                  props.self === "yes" ? null : (
+                                props.self === "yes" ? null : (
                                   <CustomButton
                                     className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
                                     onClick={() => setShowItSkills(true)}
@@ -1379,7 +1413,7 @@ const NewUserProfile = (props) => {
 
                                 <ul className="list-unstyled d-flex align-items-start flex-wrap m-0">
                                   {userDetail.skill === undefined ||
-                                    userDetail.skill.length === 0 ? (
+                                  userDetail.skill.length === 0 ? (
                                     <li>No Data Found</li>
                                   ) : (
                                     (userDetail.skill || []).map(
@@ -1405,7 +1439,7 @@ const NewUserProfile = (props) => {
                               <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                                 <span>Education</span>
                                 {user_type === "company" ||
-                                  props.self === "yes" ? null : (
+                                props.self === "yes" ? null : (
                                   <CustomButton
                                     className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
                                     onClick={() => setShowEducation(true)}
@@ -1415,7 +1449,7 @@ const NewUserProfile = (props) => {
                                 )}
                               </h4>
                               {userDetail.education === undefined ||
-                                userDetail.education.length === 0 ? (
+                              userDetail.education.length === 0 ? (
                                 <div className="w-100 card p-5 shadow-8 border-0 mb-2">
                                   Add Education Details
                                 </div>
@@ -1484,7 +1518,7 @@ const NewUserProfile = (props) => {
                               <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
                                 <span>Career</span>
                                 {user_type === "company" ||
-                                  props.self === "yes" ? null : (
+                                props.self === "yes" ? null : (
                                   <CustomButton
                                     className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
                                     onClick={() =>
@@ -1499,7 +1533,7 @@ const NewUserProfile = (props) => {
                               {moment([PersonalDetail.start_date]).diff(moment([PersonalDetail.end_date]), 'years', true)} */}
 
                               {userDetail.career === undefined ||
-                                userDetail.career.length === 0 ? (
+                              userDetail.career.length === 0 ? (
                                 <div className="w-100 card p-5 shadow-8 border-0 mb-2">
                                   Add Career Details
                                 </div>
@@ -1537,18 +1571,18 @@ const NewUserProfile = (props) => {
                                     "DD-MM-YYYY"
                                   )} */}
                                             {CareerDetails.currently_work_here ===
-                                              ("1" || 1)
+                                            ("1" || 1)
                                               ? "Currently working"
                                               : calculateDuration(
-                                                CareerDetails.start_date,
-                                                CareerDetails.end_date
-                                              )}
+                                                  CareerDetails.start_date,
+                                                  CareerDetails.end_date
+                                                )}
                                           </span>
                                           {CareerDetails.company_location && (
                                             <span className="font-size-3 text-gray w-100">
                                               <span
                                                 className="mr-4"
-                                              // style={{ marginTop: "-2px" }}
+                                                // style={{ marginTop: "-2px" }}
                                               >
                                                 <img
                                                   src="image/svg/icon-loaction-pin-black.svg"
@@ -1803,10 +1837,14 @@ const NewUserProfile = (props) => {
                       //   docId={docId ? docId : ""}
                       //   folderId={PersonalDetail.documents_folder_id}
                       // />
-                      < SharePointDocument
+                      <SharePointDocument
                         user_id={eid}
                         emp_user_type={"employee"}
-                        folderId={docId ? docParentId : PersonalDetail.documents_folder_id}
+                        folderId={
+                          docId
+                            ? docParentId
+                            : PersonalDetail.documents_folder_id
+                        }
                         notification={docId ? "yes" : "no"}
                         docId={docId ? docId : ""}
                         docTypePage={"adobe"}
@@ -1824,10 +1862,14 @@ const NewUserProfile = (props) => {
                     aria-labelledby="applieddocuments"
                   >
                     {TabActive === "sharepoint" ? (
-                      < SharePointDocument
+                      <SharePointDocument
                         user_id={eid}
                         emp_user_type={"employee"}
-                        folderId={docId ? docParentId : PersonalDetail.documents_folder_id}
+                        folderId={
+                          docId
+                            ? docParentId
+                            : PersonalDetail.documents_folder_id
+                        }
                         notification={docId ? "yes" : "no"}
                         docId={docId ? docId : ""}
                       />
@@ -1858,10 +1900,12 @@ const NewUserProfile = (props) => {
                     }
                   >
                     {TabActive === "notes" ? (
-                      <Addfollowup userId={eid}
+                      <Addfollowup
+                        userId={eid}
                         userType={"employee"}
                         assigned_by_id={PersonalDetail.assigned_by}
-                        setApiCall={setApiCall} />
+                        setApiCall={setApiCall}
+                      />
                     ) : null}
                   </div>
                   <div
@@ -1969,14 +2013,14 @@ const NewUserProfile = (props) => {
                         : "d-none"
                     }
                   >
-                    {TabActive === "InterviewHistory" ?
+                    {TabActive === "InterviewHistory" ? (
                       <InterviewHistoryTable
                         employee_id={eid}
-                      // setApiCall={setApiCall}
-                      // apiCall={apiCall}
-                      // page={"user_profile"}
+                        // setApiCall={setApiCall}
+                        // apiCall={apiCall}
+                        // page={"user_profile"}
                       />
-                      : null}
+                    ) : null}
                   </div>
                 </div>
               </div>

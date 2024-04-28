@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import GenerateToken from "./generateToken";
@@ -7,8 +7,10 @@ import AdminSetting from "./Modal/adminSetting";
 import ChangePassword from "../common/changepassword";
 import Notifications from "./notifications";
 import GlobalSearch from "./globalSearch";
+import useSessionCheck from "../common/admin_session";
 
 const AdminHeader = (props) => {
+  useSessionCheck();
   /*States */
   const [showChangePass, setShowChangePass] = useState(false);
   const [showSettings, setSettings] = useState(false);
@@ -46,6 +48,10 @@ const AdminHeader = (props) => {
   //     navigate("/");
   //   }
   // }, [apicall]);
+  // useEffect(() => {
+  //   SessionCheck();
+  // }, []);
+  // // SessionCheck();
   return (
     <header className="site-header admin_header site-header--menu-right bg-default position-fixed border-left site-header--absolute">
       <div className="container-fluid-fluid px-7">

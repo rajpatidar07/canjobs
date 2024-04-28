@@ -1,4 +1,4 @@
-import React, { useState, useEffect/*, useRef */} from "react";
+import React, { useState, useEffect /*, useRef */ } from "react";
 // import { Link } from "react-router-dom";
 // import CommentBox from "../CommentBox";
 import {
@@ -63,7 +63,7 @@ export default function PreviewDocument({
     //   setCommentApiCall(false);
     // }
     // eslint-disable-next-line
-  }, [docData.id/*docId, commenAapiCall, adminid, annotationStatus*/]);
+  }, [docData.id /*docId, commenAapiCall, adminid, annotationStatus*/]);
   // /*Function to get document url */
   // // const GetDocUrl = async () => {
   // //   try {
@@ -170,9 +170,9 @@ export default function PreviewDocument({
     if (docData.id) {
       try {
         let res = await GetCommentsAndAssign(
-          docData.id,//docId,
-         "",// adminid,
-         "",// annotationStatus,
+          docData.id, //docId,
+          "", // adminid,
+          "", // annotationStatus,
           "document"
         );
         if (res.data.status === (1 || "1")) {
@@ -535,10 +535,11 @@ export default function PreviewDocument({
   return (
     /*Adobe viwer */
     <AdobePDFViewer
-    url={docFile} 
-    data={docData}
-    userId={userId}
-    commentsList={commentsList} />
+      url={docFile}
+      data={docData}
+      userId={userId}
+      commentsList={commentsList}
+    />
     /*Apryse Viewer */
     // <Apryse
     //   url={docFile} data={docData}
