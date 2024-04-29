@@ -6,6 +6,7 @@ import {
   getSharePointParticularFolders,
   AddSharePointDOcument,
   getallAdminData,
+  GetCommentsAndAssign,
 } from "../../../api/api";
 import { Dropdown, Form } from "react-bootstrap";
 import SAlert from "../../common/sweetAlert";
@@ -46,7 +47,36 @@ export default function SharePointDocument({
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteData, setDeleteData] = useState();
   const [adminList, setAdminList] = useState([])
-  
+  const [commentsList, setCommentsList] = useState([])
+  const [commentsRes, setCommentsRes] = useState()
+
+  // Generate a list of comments from the state for image annotation
+  const getCommentsList = async (did) => {
+    if (did) {
+      try {
+        let res = await GetCommentsAndAssign(
+          did, //docId,
+          "", // adminid,
+          "", // annotationStatus,
+          "document"
+        );
+        if (res.data.status === (1 || "1")) {
+          setCommentsList(res.data.data.data.map(obj =>
+            JSON.parse(obj.doctaskjson)
+          ));
+          setCommentsRes(res.data.status)
+          // setImageAnnotations(res.data.data.data);
+        } else if (res.data.message === "Task data not found") {
+          setCommentsList([]);
+        }
+      } catch (err) {
+        console.log(err);
+        setCommentsList([])
+      }
+    } else {
+      setCommentsList([])
+    }
+  };
   // const documentID = "YOUR_DOCUMENT_ID"; // Replace YOUR_DOCUMENT_ID with the actual document ID
   const AdminData = async () => {
     try {
@@ -55,7 +85,7 @@ export default function SharePointDocument({
         setAdminList([]);
       } else {
         // const filteredData = userData.data.filter(item => item.admin_type === "manager");
-        setAdminList( userData.data.map(obj => ({
+        setAdminList(userData.data.map(obj => ({
           name: obj.name,
           id: obj.admin_id,
           // description: obj.email,
@@ -182,6 +212,7 @@ export default function SharePointDocument({
   useEffect(() => {
     AllShareType();
     AdminData()
+
     // if (notification === "yes") {
     //     setDocPreview(true)
     // }
@@ -374,10 +405,13 @@ export default function SharePointDocument({
                       setFolderID={setFolderID}
                     />
                     :
-                    <PdfViewerComponent
+                    commentsRes ? <PdfViewerComponent
                       document={docSingleDate["@microsoft.graph.downloadUrl"]}
                       adminDetailsFOrMention={adminList}
-                    />}
+                      data={docSingleDate}
+                      userId={user_id}
+                      commentsList={commentsList}
+                    /> : null}
                 </div>
               </div>
             </div>
@@ -497,6 +531,7 @@ export default function SharePointDocument({
                     SaveBulkDocument={SaveBulkDocument}
                     setSaveBtn={setSaveBtn}
                     setDocFileBase={setDocFileBase}
+                    getCommentsList={getCommentsList}
                   />
                 )}
               </div>

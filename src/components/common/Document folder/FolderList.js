@@ -20,6 +20,7 @@ export default function FolderList({
   SaveBulkDocument,
   setSaveBtn,
   setDocFileBase,
+  getCommentsList
 }) {
   return (
     <div className="bg-light" style={{ minHeight: "200px" }}>
@@ -41,6 +42,7 @@ export default function FolderList({
                     setDocPreview(true);
                     setDocSingleDate(item);
                     setFolderID(item.id);
+                    getCommentsList(item.id)
                   }
                 }}
                 onContextMenu={(e) => {

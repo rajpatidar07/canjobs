@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import PSPDFKit from "pspdfkit";
+import { ADocAnnotation } from "../api/api";
 // import { toolbarCustomBreakpoint } from "../../_server/components/example/utils";
-
+import { toast } from "react-toastify";
 export default function PdfViewerComponent(props) {
   const containerRef = useRef(null);
   const isLoadingNotes = useRef(false);
@@ -10,43 +11,48 @@ export default function PdfViewerComponent(props) {
   const createPdfNote = (noteJson) => {
     return new Promise((resolve, reject) => {
       // Simulate API call or async operation
-      setTimeout(() => {
-        // console.log("Note created:", (noteJson));
-        resolve({
-          "bbox": noteJson.createdNote[5]._values._tail.array,
-          "blendMode": "multiply",
-          "createdAt": noteJson.createdNote[10],
-          "id": noteJson.createdNote[0],
-          "name": noteJson.createdNote[1],
-          "opacity": noteJson.createdNote[4],
-          "pageIndex": noteJson.createdComments.pageIndex,
-          // "strokeColor": "#2293FB",
-          // "strokeWidth": 5,
-          "type": "pspdfkit/markup/highlight",
-          "rects": [[150, 275, 120, 70]],
-          "color": "#ffff00",
-          "updatedAt": noteJson.createdNote[11],
-          "v": 1,
-          // "note": "<p>gggggggg</p>",
-          "creatorName": noteJson.createdNote[9],
-          "rootId": noteJson.createdComments.rootId,
-          "pdfObjectId": null,
-          "text": {
-            "format": noteJson.createdComments.text.format,
-            "value": noteJson.createdComments.text.value
-          },
-          "customData": null,
-          "mentionId": noteJson.mentionId ? noteJson.mentionId : ""
+      if (noteJson.createdNote && noteJson.createdComments) {
+        console.log("object")
+        setTimeout(() => {
+          // console.log("Note created:", (noteJson));
+          resolve({
+            "bbox": noteJson.createdNote[5]._values._tail.array,
+            "blendMode": "multiply",
+            "createdAt": noteJson.createdNote[10],
+            "id": noteJson.createdNote[0],
+            "name": noteJson.createdNote[1],
+            "opacity": noteJson.createdNote[4],
+            "pageIndex": noteJson.createdComments.pageIndex,
+            // "strokeColor": "#2293FB",
+            "strokeWidth": 5,
+            "type": "pspdfkit/comment/highlight",
+            "rects": [[150, 275, 120, 70]],
+            "color": "#ffff00",
+            "updatedAt": noteJson.createdNote[11],
+            "v": 1,
+            // "note": "<p>gggggggg</p>",
+            "creatorName": noteJson.createdNote[9],
+            "rootId": noteJson.createdComments.rootId,
+            "pdfObjectId": null,
+            "text": {
+              "format": noteJson.createdComments.text.format,
+              "value": noteJson.createdComments.text.value
+            },
+            // "text": noteJson.createdComments.text.value,
+            "customData": null,
+            "mentionId": noteJson.mentionId ? noteJson.mentionId : ""
 
-        }); // Simulated response with an ID
-      }, 1000);
+          }); // Simulated response with an ID
+        }, 1000);
+      }
     });
   };
   // Define toSerializableObject function here as well
   function toSerializableObject(obj) {
     return { ...obj }; // Just returning a shallow copy of the object for demonstration
   }
-  let annotedata = [
+  // let annotedata =props.commentsList
+  // [
     //     {
     //   bbox: [100, 150, 200, 75],
     //   blendMode: "normal",
@@ -142,10 +148,10 @@ export default function PdfViewerComponent(props) {
     //   "id": "01F46S31WM8Q46MP3T0BAJ0F85",
     //   "name": "01F46S31WM8Q46MP3T0BAJ0F85",
     //   "type": "pspdfkit/text",
-      // "text": {
-      //   "format": "plain",
-      //   "value": "Content for a text annotation"
-      // },
+    // "text": {
+    //   "format": "plain",
+    //   "value": "Content for a text annotation"
+    // },
     //   "fontSize": 14,
     //   "fontStyle": ["bold"],
     //   "fontColor": "#000000",
@@ -153,18 +159,18 @@ export default function PdfViewerComponent(props) {
     //   "verticalAlign": "center",
     //   "rotation": 0
     // }
-    {
-      "type": "pspdfkit/comment",
-      "v": 1,
-      "rootId": "01F46WTF5X3J1WEN6J2YXWHHEW",
-      "pageIndex": 0,
-      "pdfObjectId": null,
-      "creatorName": null,
-      "createdAt": "2021-04-26T10:50:30.650Z",
-      "updatedAt": "2021-04-26T10:50:30.650Z",
-      "text":  "<p><span data-user-id=\"36\">Mayur</span> </p>",
-      "customData": null
-    } ]
+    // {
+    //   "type": "pspdfkit/comment",
+    //   "v": 1,
+    //   "rootId": "01F46WTF5X3J1WEN6J2YXWHHEW",
+    //   "pageIndex": 0,
+    //   "pdfObjectId": null,
+    //   "creatorName": null,
+    //   "createdAt": "2021-04-26T10:50:30.650Z",
+    //   "updatedAt": "2021-04-26T10:50:30.650Z",
+    //   "text": "<p><span data-user-id=\"36\">Mayur</span> </p>",
+    //   "customData": null
+    // }]
 
   useEffect(() => {
     const loadPSPDFKit = async () => {
@@ -198,7 +204,7 @@ export default function PdfViewerComponent(props) {
           mentionableUsers: props.adminDetailsFOrMention,
           enableRichText: () => true,
         });
-        
+
         instance.setAnnotationCreatorName(adminName.charAt(0).toUpperCase() + adminName.slice(1));
 
 
@@ -220,7 +226,8 @@ export default function PdfViewerComponent(props) {
         /* Function to create Annotation comment */
         instance.addEventListener("comments.create", async createdComments => {
           eventData.createdComments = createdComments.get(0);
-          eventData.mentionId = createdComments.get(0).getMentionedUserIds()._map._root.entries[0][0]
+          console.log( createdComments.get(0))
+          eventData.mentionId = createdComments.get(0).getMentionedUserIds()._map._root?createdComments.get(0).getMentionedUserIds()._map._root.entries[0][0]:""
           // console.log("Data from comments.create:", createdComments.get(0).getMentionedUserIds()._map._root.entries[0][0]);
         });
 
@@ -232,31 +239,85 @@ export default function PdfViewerComponent(props) {
           if (!isLoadingNotes.current) {
             // Store data from annotations.create in eventData
             eventData.createdNote = noteJson._values._root.array[0].array;
-            console.log("Combined eventData:", (eventData));
-            createPdfNote(eventData).then(response => {
+            // console.log("Combined eventData:", (eventData));
+            createPdfNote(eventData).then(async response => {
               console.log("Final data:", response);
-
+              try {
+                let res = await ADocAnnotation(
+                    localStorage.getItem("admin_id"),
+                    props.data.id,
+                    "",//ASSIGNED ADMIN ID
+                    "",//ASSIGNED ADMIN EMAIL
+                    "",//SUBJECT
+                    "N/A",//COMMENT
+                    "0",//X AXIS
+                    "0",//Y AXIS
+                    "document",
+                    localStorage.getItem("admin_type"), //sender ADMIN type
+                    localStorage.getItem("admin"), //sender name,
+                    "", //assigned Admin or user Name,
+                    "", //follow up status(for notes only)
+                    "", //Next follow up date(for notes only)
+                    "", //Assign user type,
+                    "", //Document url(for notes only)
+                    localStorage.getItem("admin_email"), //Sender email
+                    props.userId, //employee id,
+                    "", //assigned_by_id
+                    props.data.parentReference.id, // document parent code,
+                    response,//Annotation data,
+                    //metaData.annotationId //annotationId
+                );
+                if (res.data.message === "task inserted successfully!") {
+                    toast.success("Commented Successfully", {
+                        position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 1000,
+                    });
+                    //   setSelectedAnnotation(null);
+                    //   setComments("");
+                    //   setCommentApiCall(true);
+                    //   setSelectedAdmin("");
+                    //   setAnnotationMode(!isAnnotationMode);
+                    //   setFilteredEmails([]);
+                    // setNotificationApiCall(true);
+                    localStorage.setItem("callNotification", true);
+                }
+            } catch (err) {
+                console.log(err);
+                if (err.response.data.message === "required fields cannot be blank") {
+                    toast.error(" Please try again later.", {
+                        position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 1000,
+                    });
+                    //   setSelectedAnnotation(null);
+                    //   setComments("");
+                    //   setSelectedAdmin("");
+                    //   setCommentApiCall(true);
+                    //   setAnnotationMode(!isAnnotationMode);
+                    //   setAddCommentFlag();
+                    //   setFilteredEmails([]);
+                }
+            }
             });
           }
         });
         /* Function to Update Annotation comment */
         instance.addEventListener("comments.update", updatedComments => {
-          console.log(updatedComments.get(0).id);
+          // console.log(updatedComments.get(0).id);
         });
 
         /* Function to Delete Annotation comment */
         instance.addEventListener("comments.delete", deletedComments => {
-          console.log(deletedComments.get(0).id);
+          // console.log(deletedComments.get(0).id);
         });
 
         instance.setMentionableUsers(props.adminDetailsFOrMention)
 
         // Your existing code for PSPDFKit configuration and event listeners
         instance.addEventListener("annotations.load", (loadedAnnotations) => {
-          console.log("Annotations were loaded", loadedAnnotations.toJS());
+          // console.log("Annotations were loaded", loadedAnnotations.toJS());
         });
         instance.addEventListener("annotations.change", function () {
-          console.log("Something in the annotations has changed.");
+          // console.log("Something in the annotations has changed.");
         });
         /*Json tried to show */
         instance.applyOperations([
@@ -264,7 +325,7 @@ export default function PdfViewerComponent(props) {
             type: "applyInstantJson",
             instantJson: {
               annotations:
-                annotedata
+              props.commentsList
               ,
               format: "https://pspdfkit.com/instant-json/v1"
             }
@@ -303,7 +364,7 @@ export default function PdfViewerComponent(props) {
       }
     };
     // eslint-disable-next-line
-  }, [props.document]);
+  }, [props.document,props.commentsList]);
 
   return (
     <div
