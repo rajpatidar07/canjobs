@@ -47,7 +47,7 @@ export default function SharePointDocument({
   const [deleteData, setDeleteData] = useState();
   const [adminList, setAdminList] = useState([])
   
-  const documentID = "YOUR_DOCUMENT_ID"; // Replace YOUR_DOCUMENT_ID with the actual document ID
+  // const documentID = "YOUR_DOCUMENT_ID"; // Replace YOUR_DOCUMENT_ID with the actual document ID
   const AdminData = async () => {
     try {
       const userData = await getallAdminData();

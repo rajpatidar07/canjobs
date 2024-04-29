@@ -42,10 +42,10 @@ import AgentConversation from "../common/AgentConversation";
 import UserTimline from "../common/UserTimline";
 import InterviewHistoryTable from "../common/InterviewHistoryTable";
 import SharePointDocument from "../common/Document folder/SharePointDocument";
-import useSessionCheck from "../common/user_session";
+// import useSessionCheck from "../common/user_session";
 // import AdobePDFViewer from "../common/Adobe/adobeFile";
 const NewUserProfile = (props) => {
-  useSessionCheck();
+  // useSessionCheck();
   const { eid } = useParams();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);

@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import PSPDFKit from "pspdfkit";
-import { getallAdminData, } from "../api/api";
 // import { toolbarCustomBreakpoint } from "../../_server/components/example/utils";
 
 export default function PdfViewerComponent(props) {
@@ -25,7 +24,6 @@ export default function PdfViewerComponent(props) {
           // "strokeWidth": 5,
           "type": "pspdfkit/markup/highlight",
           "rects": [[150, 275, 120, 70]],
-          "blendMode": "multiply",
           "color": "#ffff00",
           "updatedAt": noteJson.createdNote[11],
           "v": 1,
@@ -64,40 +62,109 @@ export default function PdfViewerComponent(props) {
     //   v: 1,
     //   note:"Hello"
     // },
-    {
-      "bbox": [
-        72.36300659179688,
-        246.2462158203125,
-        47.91718750000001,
-        21.29609375000001
-      ],
-      "blendMode": "multiply",
-      "createdAt": "2024-04-26T12:42:02.244Z",
-      "id": "01HWD6TKM3D8W31NM6JJCE70NC",
-      "name": "01HWD6TKM3D8W31NM6JJCE70NC",
-      "opacity": 2,
-      "pageIndex": 2,
-      "type": "pspdfkit/markup/highlight",
-      "rects": [
-        [
-          150,
-          275,
-          120,
-          70
-        ]
-      ],
-      "color": "#ffff00",
-      "updatedAt": "2024-04-26T12:42:02.244Z",
-      "v": 1,
-      "creatorName": "Raj",
-      "rootId": "01HWD6TKM3D8W31NM6JJCE70NC",
-      "pdfObjectId": null,
+    // {
+    //   "bbox": [
+    //     72.36300659179688,
+    //     246.2462158203125,
+    //     47.91718750000001,
+    //     21.29609375000001
+    //   ],
+    //   "blendMode": "multiply",
+    //   "createdAt": "2024-04-26T12:42:02.244Z",
+    //   "id": "01HWD6TKM3D8W31NM6JJCE70NC",
+    //   "name": "01HWD6TKM3D8W31NM6JJCE70NC",
+    //   "opacity": 2,
+    //   "pageIndex": 2,
+    //   "type": "pspdfkit/markup/highlight",
+    //   "rects": [
+    //     [
+    //       150,
+    //       275,
+    //       120,
+    //       70
+    //     ]
+    //   ],
+    //   "color": "#ffff00",
+    //   "updatedAt": "2024-04-26T12:42:02.244Z",
+    //   "v": 1,
+    //   "creatorName": "Raj",
+    //   "rootId": "01HWD6TKM3D8W31NM6JJCE70NC",
+    //   "pdfObjectId": null,
 
-      "note": "<p><span data-user-id=\"36\">Mayur</span> </p>"
-      ,
-      "customData": null,
-      "mentionId": "36"
-    }]
+    //   "note": "<p><span data-user-id=\"36\">Mayur</span> </p>"
+    //   ,
+    //   "customData": null,
+    //   "mentionId": "36"
+    // },// Example of an Instant JSON schema for a markup annotation:
+    // {
+    //   "v": 1,
+    //   "pageIndex": 1,
+    //   "bbox": [150, 275, 120, 70],
+    //   "opacity": 1,
+    //   "pdfObjectId": 200,
+    //   "creatorName": "John Doe",
+    //   "createdAt": "2012-04-23T18:25:43.511Z",
+    //   "updatedAt": "2012-04-23T18:28:05.100Z",
+    //   "id": "01F46S31WM8Q46MP3T0BAJ0F84",
+    //   "name": "01F46S31WM8Q46MP3T0BAJ0F84",
+    //   "type": "pspdfkit/markup/highlight",
+    //   "rects": [[150, 275, 120, 70]],
+    //   "blendMode": "multiply",
+    //   "color": "#ffff00"
+    // },
+    // {
+    //   "v": 1,
+    //   "pageIndex": 1,
+    //   "bbox": [150, 275, 120, 70],
+    //   "opacity": 1,
+    //   "pdfObjectId": 200,
+    //   "creatorName": "John Doe",
+    //   "createdAt": "2012-04-23T18:25:43.511Z",
+    //   "updatedAt": "2012-04-23T18:28:05.100Z",
+    //   "id": "01F46S31WM8Q46MP3T0BAJ0F84",
+    //   "name": "01F46S31WM8Q46MP3T0BAJ0F84",
+    //   "type": "pspdfkit/markup/redaction",
+    //   "outlineColor": "#ff0000",
+    //   "fillColor": "#000000",
+    //   "overlayText": "REDACTED",
+    //   "repeatOverlayText": true,
+    //   "rotation": 0
+    // },
+    // {
+    //   "v": 2,
+    //   "pageIndex": 1,
+    //   "bbox": [150, 275, 120, 70],
+    //   "opacity": 1,
+    //   "pdfObjectId": 200,
+    //   "creatorName": "John Doe",
+    //   "createdAt": "2012-04-23T18:25:43.511Z",
+    //   "updatedAt": "2012-04-23T18:28:05.100Z",
+    //   "id": "01F46S31WM8Q46MP3T0BAJ0F85",
+    //   "name": "01F46S31WM8Q46MP3T0BAJ0F85",
+    //   "type": "pspdfkit/text",
+      // "text": {
+      //   "format": "plain",
+      //   "value": "Content for a text annotation"
+      // },
+    //   "fontSize": 14,
+    //   "fontStyle": ["bold"],
+    //   "fontColor": "#000000",
+    //   "horizontalAlign": "left",
+    //   "verticalAlign": "center",
+    //   "rotation": 0
+    // }
+    {
+      "type": "pspdfkit/comment",
+      "v": 1,
+      "rootId": "01F46WTF5X3J1WEN6J2YXWHHEW",
+      "pageIndex": 0,
+      "pdfObjectId": null,
+      "creatorName": null,
+      "createdAt": "2021-04-26T10:50:30.650Z",
+      "updatedAt": "2021-04-26T10:50:30.650Z",
+      "text":  "<p><span data-user-id=\"36\">Mayur</span> </p>",
+      "customData": null
+    } ]
 
   useEffect(() => {
     const loadPSPDFKit = async () => {
@@ -109,9 +176,20 @@ export default function PdfViewerComponent(props) {
           throw new Error("Container element not found.");
         }
 
+        // const instance = await PSPDFKit.load({
+        //   container,
+        //   license: "YOUR_PSPDFKIT_LICENSE_KEY",
+        //   document: props.document,
+        //   baseUrl: `${window.location.protocol}//${window.location.host}/${process.env.PUBLIC_URL}`,
+        //   CommentMarkerAnnotation: true,
+        //   setOnCommentCreationStart: true,
+        //   toolbarItems: PSPDFKit.defaultToolbarItems.concat({ type: "annotate" }),
+        //   mentionableUsers: props.adminDetailsFOrMention,
+        //   enableRichText: () => true,
+        // });
         const instance = await PSPDFKit.load({
           container,
-          license: "YOUR_PSPDFKIT_LICENSE_KEY",
+          license: "YOUR_PSPDFKIT_LICENSE_KEY", // Replace with your actual license key
           document: props.document,
           baseUrl: `${window.location.protocol}//${window.location.host}/${process.env.PUBLIC_URL}`,
           CommentMarkerAnnotation: true,
@@ -120,6 +198,7 @@ export default function PdfViewerComponent(props) {
           mentionableUsers: props.adminDetailsFOrMention,
           enableRichText: () => true,
         });
+        
         instance.setAnnotationCreatorName(adminName.charAt(0).toUpperCase() + adminName.slice(1));
 
 
@@ -217,11 +296,13 @@ export default function PdfViewerComponent(props) {
     loadPSPDFKit();
 
     return () => {
+      // eslint-disable-next-line
       const container = containerRef.current;
       if (container && window.PSPDFKit) {
         window.PSPDFKit.unload(container);
       }
     };
+    // eslint-disable-next-line
   }, [props.document]);
 
   return (

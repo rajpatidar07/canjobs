@@ -236,12 +236,12 @@ function Notifications({
                   //               )}`}
                   //               style={{ fontSize: "20px" }}
                   //             >
-                  //               {data.reciver_name
-                  //                 ? data.reciver_name.charAt(0)
+                  //               {data.receiver_name
+                  //                 ? data.receiver_name.charAt(0)
                   //                 : ""}
                   //             </div>
                   //             <div className="font-size-3 font-weight-bold text-capitalize col">
-                  //               {data.reciver_name ? data.reciver_name : ""}
+                  //               {data.receiver_name ? data.receiver_name : ""}
                   //             </div>
                   //           </div>
                   //         </div>
@@ -312,12 +312,12 @@ function Notifications({
                             data
                           )}`}
                         >
-                          {data.reciver_name ? data.reciver_name.charAt(0) : ""}
+                          {data.receiver_name ? data.receiver_name.charAt(0) : ""}
                         </div>
                         <div className="flex-grow-1">
                           <div className="d-flex align-items-center justify-content-between">
                             <div className="font-weight-bold text-truncate w-60 intervire-msg">
-                              {data.reciver_name ? data.reciver_name : ""}
+                              {data.receiver_name ? data.receiver_name : ""}
                             </div>
                           </div>
                           <div
