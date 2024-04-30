@@ -49,7 +49,12 @@ export default function SharePointDocument({
   const [adminList, setAdminList] = useState([])
   const [commentsList, setCommentsList] = useState([])
   const [commentsRes, setCommentsRes] = useState()
-
+  // Function to convert HTML text to plain text
+  function convertHtmlToText(html) {
+      const tempElement = document.createElement('div');
+      tempElement.innerHTML = html;
+      return tempElement.textContent || tempElement.innerText || '';
+  }
   // Generate a list of comments from the state for image annotation
   const getCommentsList = async (did) => {
     if (did) {
@@ -61,9 +66,16 @@ export default function SharePointDocument({
           "document"
         );
         if (res.data.status === (1 || "1")) {
-          setCommentsList(res.data.data.data.map(obj =>
-            JSON.parse(obj.doctaskjson)
-          ));
+          // setCommentsList(res.data.data.data.map(obj =>
+          //   JSON.parse(obj.doctaskjson)
+          // ));
+          setCommentsList(res.data.data.data.map(obj => {
+            const parsedObj = JSON.parse(obj.doctaskjson);
+            if (parsedObj.hasOwnProperty('text')) {
+                parsedObj.text = convertHtmlToText(parsedObj.text);
+            }
+            return parsedObj;
+        }));
           setCommentsRes(res.data.status)
           // setImageAnnotations(res.data.data.data);
         } else if (res.data.message === "Task data not found") {

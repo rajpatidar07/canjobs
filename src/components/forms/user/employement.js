@@ -241,8 +241,8 @@ function EmployementDetails(props) {
           <form onSubmit={onCarrerProfileClick}>
             <h5 className="text-center pt-2 mb-7">Add Employment</h5>
             <div className="row mb-5 bg-light py-5 pr-10 pl-4 rounded">
-              {(employementData || []).map((CareerDetails) => (
-                <div className="col-12 text-capitalize p-0">
+              {(employementData || []).map((CareerDetails,index) => (
+                <div className="col-12 text-capitalize p-0" key={index}>
                   <div
                     className="w-100 card px-6 py-3 shadow-8 border-0 mb-2" //"w-100 border mb-3 rounded-5 text-capitalize"
                     key={CareerDetails.career_id}

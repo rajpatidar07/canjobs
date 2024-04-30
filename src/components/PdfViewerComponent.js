@@ -11,35 +11,34 @@ export default function PdfViewerComponent(props) {
   const createPdfNote = (noteJson) => {
     return new Promise((resolve, reject) => {
       // Simulate API call or async operation
-      if (noteJson.createdNote && noteJson.createdComments) {
-        console.log("object")
+      if (noteJson) {
         setTimeout(() => {
-          // console.log("Note created:", (noteJson));
+          console.log("Note created:", (noteJson));
           resolve({
-            "bbox": noteJson.createdNote[5]._values._tail.array,
-            "blendMode": "multiply",
-            "createdAt": noteJson.createdNote[10],
-            "id": noteJson.createdNote[0],
-            "name": noteJson.createdNote[1],
-            "opacity": noteJson.createdNote[4],
-            "pageIndex": noteJson.createdComments.pageIndex,
+            "bbox": noteJson.createdNote.boundingBox,
+            "blendMode": noteJson.createdNote.blendMode,
+            "createdAt": noteJson.createdNote.createdAt,
+            "name": noteJson.createdNote.name,
+            "opacity": noteJson.createdNote.opacity,
+            "pageIndex": noteJson.createdNote.pageIndex,
             // "strokeColor": "#2293FB",
-            "strokeWidth": 5,
-            "type": "pspdfkit/comment/highlight",
-            "rects": [[150, 275, 120, 70]],
-            "color": "#ffff00",
-            "updatedAt": noteJson.createdNote[11],
+            // "strokeWidth": 5,
+            "type": "pspdfkit/comment",
+            "rects": noteJson.createdNote.rects,
+            "color": noteJson.createdNote.color,
+            "updatedAt": noteJson.createdNote.updatedAt,
             "v": 1,
+            canReply: true,
             // "note": "<p>gggggggg</p>",
-            "creatorName": noteJson.createdNote[9],
+            "creatorName": noteJson.createdNote.creatorName,
             "rootId": noteJson.createdComments.rootId,
-            "pdfObjectId": null,
-            "text": {
-              "format": noteJson.createdComments.text.format,
-              "value": noteJson.createdComments.text.value
-            },
-            // "text": noteJson.createdComments.text.value,
-            "customData": null,
+            "pdfObjectId": noteJson.createdNote.pdfObjectId,
+            // "text": {
+            //   "format": noteJson.createdComments.text.format,
+            //   "value": noteJson.createdComments.text.value
+            // },
+            "text": noteJson.createdComments.text.value,
+            // "customData": null,
             "mentionId": noteJson.mentionId ? noteJson.mentionId : ""
 
           }); // Simulated response with an ID
@@ -48,129 +47,129 @@ export default function PdfViewerComponent(props) {
     });
   };
   // Define toSerializableObject function here as well
-  function toSerializableObject(obj) {
-    return { ...obj }; // Just returning a shallow copy of the object for demonstration
-  }
+  // function toSerializableObject(obj) {
+  //   return { ...obj }; // Just returning a shallow copy of the object for demonstration
+  // }
   // let annotedata =props.commentsList
   // [
-    //     {
-    //   bbox: [100, 150, 200, 75],
-    //   blendMode: "normal",
-    //   createdAt: "1970-01-01T00:00:00Z",
-    //   id: "01F73GJ4RPENTCMFSCJ5CSFT5G",
-    //   name: "01F73GJ4RPENTCMFSCJ5CSFT5G",
-    //   opacity: 1,
-    //   pageIndex: 0,
-    //   strokeColor: "#2293FB",
-    //   strokeWidth: 5,
-    //   type: "pspdfkit/shape/rectangle",
-    //   updatedAt: "1970-01-01T00:00:00Z",
-    //   v: 1,
-    //   note:"Hello"
-    // },
-    // {
-    //   "bbox": [
-    //     72.36300659179688,
-    //     246.2462158203125,
-    //     47.91718750000001,
-    //     21.29609375000001
-    //   ],
-    //   "blendMode": "multiply",
-    //   "createdAt": "2024-04-26T12:42:02.244Z",
-    //   "id": "01HWD6TKM3D8W31NM6JJCE70NC",
-    //   "name": "01HWD6TKM3D8W31NM6JJCE70NC",
-    //   "opacity": 2,
-    //   "pageIndex": 2,
-    //   "type": "pspdfkit/markup/highlight",
-    //   "rects": [
-    //     [
-    //       150,
-    //       275,
-    //       120,
-    //       70
-    //     ]
-    //   ],
-    //   "color": "#ffff00",
-    //   "updatedAt": "2024-04-26T12:42:02.244Z",
-    //   "v": 1,
-    //   "creatorName": "Raj",
-    //   "rootId": "01HWD6TKM3D8W31NM6JJCE70NC",
-    //   "pdfObjectId": null,
+  //     {
+  //   bbox: [100, 150, 200, 75],
+  //   blendMode: "normal",
+  //   createdAt: "1970-01-01T00:00:00Z",
+  //   id: "01F73GJ4RPENTCMFSCJ5CSFT5G",
+  //   name: "01F73GJ4RPENTCMFSCJ5CSFT5G",
+  //   opacity: 1,
+  //   pageIndex: 0,
+  //   strokeColor: "#2293FB",
+  //   strokeWidth: 5,
+  //   type: "pspdfkit/shape/rectangle",
+  //   updatedAt: "1970-01-01T00:00:00Z",
+  //   v: 1,
+  //   note:"Hello"
+  // },
+  // {
+  //   "bbox": [
+  //     72.36300659179688,
+  //     246.2462158203125,
+  //     47.91718750000001,
+  //     21.29609375000001
+  //   ],
+  //   "blendMode": "multiply",
+  //   "createdAt": "2024-04-26T12:42:02.244Z",
+  //   "id": "01HWD6TKM3D8W31NM6JJCE70NC",
+  //   "name": "01HWD6TKM3D8W31NM6JJCE70NC",
+  //   "opacity": 2,
+  //   "pageIndex": 2,
+  //   "type": "pspdfkit/markup/highlight",
+  //   "rects": [
+  //     [
+  //       150,
+  //       275,
+  //       120,
+  //       70
+  //     ]
+  //   ],
+  //   "color": "#ffff00",
+  //   "updatedAt": "2024-04-26T12:42:02.244Z",
+  //   "v": 1,
+  //   "creatorName": "Raj",
+  //   "rootId": "01HWD6TKM3D8W31NM6JJCE70NC",
+  //   "pdfObjectId": null,
 
-    //   "note": "<p><span data-user-id=\"36\">Mayur</span> </p>"
-    //   ,
-    //   "customData": null,
-    //   "mentionId": "36"
-    // },// Example of an Instant JSON schema for a markup annotation:
-    // {
-    //   "v": 1,
-    //   "pageIndex": 1,
-    //   "bbox": [150, 275, 120, 70],
-    //   "opacity": 1,
-    //   "pdfObjectId": 200,
-    //   "creatorName": "John Doe",
-    //   "createdAt": "2012-04-23T18:25:43.511Z",
-    //   "updatedAt": "2012-04-23T18:28:05.100Z",
-    //   "id": "01F46S31WM8Q46MP3T0BAJ0F84",
-    //   "name": "01F46S31WM8Q46MP3T0BAJ0F84",
-    //   "type": "pspdfkit/markup/highlight",
-    //   "rects": [[150, 275, 120, 70]],
-    //   "blendMode": "multiply",
-    //   "color": "#ffff00"
-    // },
-    // {
-    //   "v": 1,
-    //   "pageIndex": 1,
-    //   "bbox": [150, 275, 120, 70],
-    //   "opacity": 1,
-    //   "pdfObjectId": 200,
-    //   "creatorName": "John Doe",
-    //   "createdAt": "2012-04-23T18:25:43.511Z",
-    //   "updatedAt": "2012-04-23T18:28:05.100Z",
-    //   "id": "01F46S31WM8Q46MP3T0BAJ0F84",
-    //   "name": "01F46S31WM8Q46MP3T0BAJ0F84",
-    //   "type": "pspdfkit/markup/redaction",
-    //   "outlineColor": "#ff0000",
-    //   "fillColor": "#000000",
-    //   "overlayText": "REDACTED",
-    //   "repeatOverlayText": true,
-    //   "rotation": 0
-    // },
-    // {
-    //   "v": 2,
-    //   "pageIndex": 1,
-    //   "bbox": [150, 275, 120, 70],
-    //   "opacity": 1,
-    //   "pdfObjectId": 200,
-    //   "creatorName": "John Doe",
-    //   "createdAt": "2012-04-23T18:25:43.511Z",
-    //   "updatedAt": "2012-04-23T18:28:05.100Z",
-    //   "id": "01F46S31WM8Q46MP3T0BAJ0F85",
-    //   "name": "01F46S31WM8Q46MP3T0BAJ0F85",
-    //   "type": "pspdfkit/text",
-    // "text": {
-    //   "format": "plain",
-    //   "value": "Content for a text annotation"
-    // },
-    //   "fontSize": 14,
-    //   "fontStyle": ["bold"],
-    //   "fontColor": "#000000",
-    //   "horizontalAlign": "left",
-    //   "verticalAlign": "center",
-    //   "rotation": 0
-    // }
-    // {
-    //   "type": "pspdfkit/comment",
-    //   "v": 1,
-    //   "rootId": "01F46WTF5X3J1WEN6J2YXWHHEW",
-    //   "pageIndex": 0,
-    //   "pdfObjectId": null,
-    //   "creatorName": null,
-    //   "createdAt": "2021-04-26T10:50:30.650Z",
-    //   "updatedAt": "2021-04-26T10:50:30.650Z",
-    //   "text": "<p><span data-user-id=\"36\">Mayur</span> </p>",
-    //   "customData": null
-    // }]
+  //   "note": "<p><span data-user-id=\"36\">Mayur</span> </p>"
+  //   ,
+  //   "customData": null,
+  //   "mentionId": "36"
+  // },// Example of an Instant JSON schema for a markup annotation:
+  // {
+  //   "v": 1,
+  //   "pageIndex": 1,
+  //   "bbox": [150, 275, 120, 70],
+  //   "opacity": 1,
+  //   "pdfObjectId": 200,
+  //   "creatorName": "John Doe",
+  //   "createdAt": "2012-04-23T18:25:43.511Z",
+  //   "updatedAt": "2012-04-23T18:28:05.100Z",
+  //   "id": "01F46S31WM8Q46MP3T0BAJ0F84",
+  //   "name": "01F46S31WM8Q46MP3T0BAJ0F84",
+  //   "type": "pspdfkit/markup/highlight",
+  //   "rects": [[150, 275, 120, 70]],
+  //   "blendMode": "multiply",
+  //   "color": "#ffff00"
+  // },
+  // {
+  //   "v": 1,
+  //   "pageIndex": 1,
+  //   "bbox": [150, 275, 120, 70],
+  //   "opacity": 1,
+  //   "pdfObjectId": 200,
+  //   "creatorName": "John Doe",
+  //   "createdAt": "2012-04-23T18:25:43.511Z",
+  //   "updatedAt": "2012-04-23T18:28:05.100Z",
+  //   "id": "01F46S31WM8Q46MP3T0BAJ0F84",
+  //   "name": "01F46S31WM8Q46MP3T0BAJ0F84",
+  //   "type": "pspdfkit/markup/redaction",
+  //   "outlineColor": "#ff0000",
+  //   "fillColor": "#000000",
+  //   "overlayText": "REDACTED",
+  //   "repeatOverlayText": true,
+  //   "rotation": 0
+  // },
+  // {
+  //   "v": 2,
+  //   "pageIndex": 1,
+  //   "bbox": [150, 275, 120, 70],
+  //   "opacity": 1,
+  //   "pdfObjectId": 200,
+  //   "creatorName": "John Doe",
+  //   "createdAt": "2012-04-23T18:25:43.511Z",
+  //   "updatedAt": "2012-04-23T18:28:05.100Z",
+  //   "id": "01F46S31WM8Q46MP3T0BAJ0F85",
+  //   "name": "01F46S31WM8Q46MP3T0BAJ0F85",
+  //   "type": "pspdfkit/text",
+  // "text": {
+  //   "format": "plain",
+  //   "value": "Content for a text annotation"
+  // },
+  //   "fontSize": 14,
+  //   "fontStyle": ["bold"],
+  //   "fontColor": "#000000",
+  //   "horizontalAlign": "left",
+  //   "verticalAlign": "center",
+  //   "rotation": 0
+  // }
+  // {
+  //   "type": "pspdfkit/comment",
+  //   "v": 1,
+  //   "rootId": "01F46WTF5X3J1WEN6J2YXWHHEW",
+  //   "pageIndex": 0,
+  //   "pdfObjectId": null,
+  //   "creatorName": null,
+  //   "createdAt": "2021-04-26T10:50:30.650Z",
+  //   "updatedAt": "2021-04-26T10:50:30.650Z",
+  //   "text": "<p><span data-user-id=\"36\">Mayur</span> </p>",
+  //   "customData": null
+  // }]
 
   useEffect(() => {
     const loadPSPDFKit = async () => {
@@ -206,97 +205,82 @@ export default function PdfViewerComponent(props) {
         });
 
         instance.setAnnotationCreatorName(adminName.charAt(0).toUpperCase() + adminName.slice(1));
-
-
-        /* Function to create Annotation note */
-        // instance.addEventListener("annotations.create", async createdNote => {
-        //   const note = createdNote.get(0);
-        //   console.log(note)
-        //   const serializedObjectNote = toSerializableObject(note);
-        //   const noteJson = serializedObjectNote
-        //   if (!isLoadingNotes.current) {
-        //     createPdfNote(noteJson).then(response => {
-        //       console.log("Note created with ID:", response
-        //     ,"fffff",noteJson);
-        //     });
-        //   }
-        // });
         let eventData = {};
-
         /* Function to create Annotation comment */
         instance.addEventListener("comments.create", async createdComments => {
           eventData.createdComments = createdComments.get(0);
-          console.log( createdComments.get(0))
-          eventData.mentionId = createdComments.get(0).getMentionedUserIds()._map._root?createdComments.get(0).getMentionedUserIds()._map._root.entries[0][0]:""
+          console.log(createdComments.get(0))
+          eventData.mentionId = createdComments.get(0).getMentionedUserIds()._map._root ? createdComments.get(0).getMentionedUserIds()._map._root.entries[0][0] : ""
           // console.log("Data from comments.create:", createdComments.get(0).getMentionedUserIds()._map._root.entries[0][0]);
         });
 
         /* Function to create Annotation note */
         instance.addEventListener("annotations.create", async createdNote => {
           const note = createdNote.get(0);
-          const serializedObjectNote = toSerializableObject(note);
-          const noteJson = serializedObjectNote;
+          console.log(note)
+          // const serializedObjectNote = toSerializableObject(note);
+          // const noteJson = serializedObjectNote;
           if (!isLoadingNotes.current) {
             // Store data from annotations.create in eventData
-            eventData.createdNote = noteJson._values._root.array[0].array;
+            eventData.createdNote = note;
             // console.log("Combined eventData:", (eventData));
             createPdfNote(eventData).then(async response => {
-              console.log("Final data:", response);
-              try {
-                let res = await ADocAnnotation(
-                    localStorage.getItem("admin_id"),
-                    props.data.id,
-                    "",//ASSIGNED ADMIN ID
-                    "",//ASSIGNED ADMIN EMAIL
-                    "",//SUBJECT
-                    "N/A",//COMMENT
-                    "0",//X AXIS
-                    "0",//Y AXIS
-                    "document",
-                    localStorage.getItem("admin_type"), //sender ADMIN type
-                    localStorage.getItem("admin"), //sender name,
-                    "", //assigned Admin or user Name,
-                    "", //follow up status(for notes only)
-                    "", //Next follow up date(for notes only)
-                    "", //Assign user type,
-                    "", //Document url(for notes only)
-                    localStorage.getItem("admin_email"), //Sender email
-                    props.userId, //employee id,
-                    "", //assigned_by_id
-                    props.data.parentReference.id, // document parent code,
-                    response,//Annotation data,
-                    //metaData.annotationId //annotationId
-                );
-                if (res.data.message === "task inserted successfully!") {
-                    toast.success("Commented Successfully", {
-                        position: toast.POSITION.TOP_RIGHT,
-                        autoClose: 1000,
-                    });
-                    //   setSelectedAnnotation(null);
-                    //   setComments("");
-                    //   setCommentApiCall(true);
-                    //   setSelectedAdmin("");
-                    //   setAnnotationMode(!isAnnotationMode);
-                    //   setFilteredEmails([]);
-                    // setNotificationApiCall(true);
-                    localStorage.setItem("callNotification", true);
-                }
-            } catch (err) {
-                console.log(err);
-                if (err.response.data.message === "required fields cannot be blank") {
-                    toast.error(" Please try again later.", {
-                        position: toast.POSITION.TOP_RIGHT,
-                        autoClose: 1000,
-                    });
-                    //   setSelectedAnnotation(null);
-                    //   setComments("");
-                    //   setSelectedAdmin("");
-                    //   setCommentApiCall(true);
-                    //   setAnnotationMode(!isAnnotationMode);
-                    //   setAddCommentFlag();
-                    //   setFilteredEmails([]);
-                }
-            }
+              console.log("Final data:", JSON.stringify(response));
+                try {
+                  let res = await ADocAnnotation(
+                      localStorage.getItem("admin_id"),
+                      props.data.id,
+                      "",//ASSIGNED ADMIN ID
+                      "",//ASSIGNED ADMIN EMAIL
+                      "",//SUBJECT
+                      "N/A",//COMMENT
+                      "0",//X AXIS
+                      "0",//Y AXIS
+                      "document",
+                      localStorage.getItem("admin_type"), //sender ADMIN type
+                      localStorage.getItem("admin"), //sender name,
+                      "", //assigned Admin or user Name,
+                      "", //follow up status(for notes only)
+                      "", //Next follow up date(for notes only)
+                      "", //Assign user type,
+                      "", //Document url(for notes only)
+                      localStorage.getItem("admin_email"), //Sender email
+                      props.userId, //employee id,
+                      "", //assigned_by_id
+                      props.data.parentReference.id, // document parent code,
+                      response,//Annotation data,
+                      //metaData.annotationId //annotationId
+                  );
+                  if (res.data.message === "task inserted successfully!") {
+                      toast.success("Commented Successfully", {
+                          position: toast.POSITION.TOP_RIGHT,
+                          autoClose: 1000,
+                      });
+                      //   setSelectedAnnotation(null);
+                      //   setComments("");
+                      //   setCommentApiCall(true);
+                      //   setSelectedAdmin("");
+                      //   setAnnotationMode(!isAnnotationMode);
+                      //   setFilteredEmails([]);
+                      // setNotificationApiCall(true);
+                      localStorage.setItem("callNotification", true);
+                  }
+              } catch (err) {
+                  console.log(err);
+                  if (err.response.data.message === "required fields cannot be blank") {
+                      toast.error(" Please try again later.", {
+                          position: toast.POSITION.TOP_RIGHT,
+                          autoClose: 1000,
+                      });
+                      //   setSelectedAnnotation(null);
+                      //   setComments("");
+                      //   setSelectedAdmin("");
+                      //   setCommentApiCall(true);
+                      //   setAnnotationMode(!isAnnotationMode);
+                      //   setAddCommentFlag();
+                      //   setFilteredEmails([]);
+                  }
+              }
             });
           }
         });
@@ -319,18 +303,48 @@ export default function PdfViewerComponent(props) {
         instance.addEventListener("annotations.change", function () {
           // console.log("Something in the annotations has changed.");
         });
+        console.log(props.commentsList)
         /*Json tried to show */
         instance.applyOperations([
           {
             type: "applyInstantJson",
             instantJson: {
-              annotations:
-              props.commentsList
-              ,
-              format: "https://pspdfkit.com/instant-json/v1"
+              annotations:props.commentsList
+              //  [
+              //   {
+              //     bbox: [176.91427917480468, 159.2779541015625, 49.424218749999994, 32.760156249999994],
+              //     blendMode: "multiply",
+              //     createdAt: "2024-04-30T09:04:23.944Z",
+              //     id: "01HWQ3YZC84S0BZJJ946AQH3DB",
+              //     name: "01HWQ3YZC84S0BZJJ946AQH3DB",
+              //     opacity: 1,
+              //     pageIndex: 0,
+              //     type: "pspdfkit/comment",
+              //     rects: [
+              //       {
+              //         left: 176.91427917480468,
+              //         top: 159.2779541015625,
+              //         width: 49.42421875,
+              //         height: 32.76015625
+              //       }
+              //     ],
+              //     color: { r: 252, g: 238, b: 124, transparent: false },
+              //     updatedAt: "2024-04-30T09:04:23.944Z",
+              //     v: 1,
+              //     creatorName: "Raj",
+              //     rootId: "01HWQ3YZC84S0BZJJ946AQH3DB",
+              //     pdfObjectId: null,
+              //     text: "<p>kkkkkk</p>",
+              //     customData: null,
+              //     "commentText": "This is a great comment!",
+              //     "mentionedUsers": ["user1", "user2"],
+              //     canReply: true
+              //   }
+              // ],
+             , format: "https://pspdfkit.com/instant-json/v1"
             }
           }
-        ]);
+        ])
         // Create annotations using your functions
         // const annotationsOnFirstPage = await instance.getAnnotations(0);
         // if (annotationsOnFirstPage.size <= 1) {
@@ -364,7 +378,7 @@ export default function PdfViewerComponent(props) {
       }
     };
     // eslint-disable-next-line
-  }, [props.document,props.commentsList]);
+  }, [props.document, props.commentsList]);
 
   return (
     <div

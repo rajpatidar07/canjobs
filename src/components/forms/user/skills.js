@@ -189,7 +189,7 @@ function Skills(props) {
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 p-7">
           <form onSubmit={onUserSkillsClick}>
-            <h5 className="text-center mb-7">Add It Skills </h5>
+            <h5 className="text-center mb-7">Add Skills </h5>
             <div className="form-group d-flex mb-3 p-0">
               <label
                 htmlFor="skill"
