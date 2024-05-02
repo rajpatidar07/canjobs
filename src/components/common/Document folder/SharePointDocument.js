@@ -18,8 +18,9 @@ import { toast } from "react-toastify";
 import Loader from "../loader";
 import Breadcrumbs from "./Breadcrumb";
 import EditDocNameFOrm from "./EditDocNameFOrm";
-import PreviewDocument from "./PreviewDocument";
+// import PreviewDocument from "./PreviewDocument";
 import PdfViewerComponent from "../../PdfViewerComponent";
+import AdobePDFViewer from "../Adobe/adobeFile";
 export default function SharePointDocument({
   emp_user_type,
   user_id,
@@ -51,10 +52,11 @@ export default function SharePointDocument({
   const [commentsRes, setCommentsRes] = useState()
   // Function to convert HTML text to plain text
   function convertHtmlToText(html) {
-      const tempElement = document.createElement('div');
-      tempElement.innerHTML = html;
-      return tempElement.textContent || tempElement.innerText || '';
+    const tempElement = document.createElement('div');
+    tempElement.innerHTML = html;
+    return tempElement.textContent || tempElement.innerText || '';
   }
+  console.log(adminList)
   // Generate a list of comments from the state for image annotation
   const getCommentsList = async (did) => {
     if (did) {
@@ -69,13 +71,17 @@ export default function SharePointDocument({
           // setCommentsList(res.data.data.data.map(obj =>
           //   JSON.parse(obj.doctaskjson)
           // ));
-          setCommentsList(res.data.data.data.map(obj => {
-            const parsedObj = JSON.parse(obj.doctaskjson);
-            if (parsedObj.hasOwnProperty('text')) {
+          if (docTypePage === "adobe") {
+            setCommentsList(res.data.data.data)
+          } else {
+            setCommentsList(res.data.data.data.map(obj => {
+              const parsedObj = JSON.parse(obj.doctaskjson);
+              if (parsedObj.hasOwnProperty('text')) {
                 parsedObj.text = convertHtmlToText(parsedObj.text);
-            }
-            return parsedObj;
-        }));
+              }
+              return parsedObj;
+            }));
+          }
           setCommentsRes(res.data.status)
           // setImageAnnotations(res.data.data.data);
         } else if (res.data.message === "Task data not found") {
@@ -187,6 +193,7 @@ export default function SharePointDocument({
             setDocPreview(true);
             console.log("object");
             setDocSingleDate(res.data.data.find((item) => item.id === docId));
+            console.log(res.data.data.find((item) => item.id === docId))
             const newUrl = window.location.pathname;
             window.history.replaceState({}, document.title, newUrl);
           }
@@ -407,23 +414,33 @@ export default function SharePointDocument({
                     </Link>
                   </div>
                   {docTypePage === "adobe" ?
-                    <PreviewDocument
-                      docData={docSingleDate}
-                      docId={docId ? docId : folderID}
-                      userId={user_id}
-                      docFile={docSingleDate["@microsoft.graph.downloadUrl"]}
-                      setDocPreview={setDocPreview}
-                      setDocSingleDate={setDocSingleDate}
-                      setFolderID={setFolderID}
-                    />
-                    :
-                    commentsRes ? <PdfViewerComponent
-                      document={docSingleDate["@microsoft.graph.downloadUrl"]}
-                      adminDetailsFOrMention={adminList}
+                    // <PreviewDocument
+                    //   docData={docSingleDate}
+                    //   docId={docId ? docId : folderID}
+                    //   userId={user_id}
+                    //   docFile={docSingleDate["@microsoft.graph.downloadUrl"]}
+                    //   setDocPreview={setDocPreview}
+                    //   setDocSingleDate={setDocSingleDate}
+                    //   setFolderID={setFolderID}
+                    //   commentsList={commentsList}
+                    // />
+                    <AdobePDFViewer
+                      url={docSingleDate["@microsoft.graph.downloadUrl"]}
                       data={docSingleDate}
                       userId={user_id}
                       commentsList={commentsList}
-                    /> : null}
+                    />
+                    :
+                    commentsRes ?
+
+                      <PdfViewerComponent
+                        document={docSingleDate["@microsoft.graph.downloadUrl"]}
+                        adminDetailsFOrMention={adminList}
+                        data={docSingleDate}
+                        userId={user_id}
+                        commentsList={commentsList}
+                      />
+                      : null}
                 </div>
               </div>
             </div>

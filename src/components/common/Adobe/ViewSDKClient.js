@@ -1,6 +1,26 @@
 import { toast } from "react-toastify";
 import { ADocAnnotation, UpdateDocuentcommentAssign } from "../../../api/api";
-
+const profile = {
+    userProfile: {
+        name: 
+        // localStorage.getItem("userType") === "user"
+        //     ? localStorage.getItem("name").charAt(0).toUpperCase() + localStorage.getItem("name").slice(1) :
+        localStorage.getItem("admin")?localStorage.getItem("admin").charAt(0).toUpperCase() + localStorage.getItem("admin").slice(1):"",
+        firstName:
+        //  localStorage.getItem("userType") === "user"
+        //     ? localStorage.getItem("name") : 
+            localStorage.getItem("admin"),
+        email:
+        //  localStorage.getItem("userType") === "user"
+        //     ? localStorage.getItem("email") :
+             localStorage.getItem("admin_email"),
+        id: 
+        // localStorage.getItem("userType") === "user"
+        //     ? localStorage.getItem("employee_id") :
+             localStorage.getItem("admin_id"),
+        type: "Person"
+    }
+};
 class ViewSDKClient {
     constructor() {
         this.readyPromise = new Promise((resolve) => {
@@ -16,15 +36,20 @@ class ViewSDKClient {
         this.annots = [];
     }
 
+    // ready() {
+    //     return this.readyPromise;
+    // }
     ready() {
-        return this.readyPromise;
+        return this.readyPromise.then(() => {
+            this.registerGetUserProfileApiHandler();
+        });
     }
 
     previewFile(divId, viewerConfig, url, data, userId, annotationId) {
         const fileExtension = data.name.split('.').pop().toLowerCase();
 
         const config = {
-            clientId: "d9b36f468d7a4e4e8b275f13728f1132",
+            clientId: "d9e8b7bcb61b42b6a387bfa9cf16a75b"//"d9b36f468d7a4e4e8b275f13728f1132",
         };
 
         if (divId) {
@@ -69,7 +94,7 @@ class ViewSDKClient {
 
     previewFileUsingFilePromise(divId, filePromise, data) {
         this.adobeDCView = new window.AdobeDC.View({
-            clientId: "d9b36f468d7a4e4e8b275f13728f1132",
+            clientId: "d9e8b7bcb61b42b6a387bfa9cf16a75b",//"d9b36f468d7a4e4e8b275f13728f1132",
             divId,
         });
 
@@ -96,6 +121,7 @@ class ViewSDKClient {
                     };
                     resolve(response);
                     if (this.annots) {
+                        console.log(this.annots)
                         if (metaData.annotationId) {
                             let updatedData = {
                                 // task_creator_user_id: localStorage.getItem("admin_id"),
@@ -192,7 +218,24 @@ class ViewSDKClient {
             {}
         );
     }
+    registerGetUserProfileApiHandler() {
+        const getUserProfileApiHandler = () => {
+            return new Promise((resolve, reject) => {
+                resolve({
+                    code: window.AdobeDC.View.Enum.ApiResponseCode.SUCCESS,
+                    data: profile
+                });
+            });
+        };
 
+        if (this.adobeDCView) {
+            this.adobeDCView.registerCallback(
+                window.AdobeDC.View.Enum.CallbackType.GET_USER_PROFILE_API,
+                getUserProfileApiHandler,
+                {}
+            );
+        }
+    }
     registerEventsHandler() {
         this.adobeDCView.registerCallback(
             window.AdobeDC.View.Enum.CallbackType.EVENT_LISTENER,
@@ -204,6 +247,7 @@ class ViewSDKClient {
             }
         );
     }
+
 }
 
 export default ViewSDKClient;

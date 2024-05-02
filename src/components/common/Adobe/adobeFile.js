@@ -16,11 +16,11 @@ const AdobePDFViewer = ({ url, data, userId, commentsList }) => {
                     "ANNOTATION_ADDED", "ANNOTATION_UPDATED", "ANNOTATION_DELETED"
                 ],
             }
-            const AdminDetails = {
-                "id": localStorage.getItem("admin_id"),
-                "name": localStorage.getItem("admin").charAt(0).toUpperCase() + localStorage.getItem("admin").slice(1),
-                "type": "Person"
-            }
+            // const AdminDetails = {
+            //     "id": localStorage.getItem("admin_id"),
+            //     "name": localStorage.getItem("admin").charAt(0).toUpperCase() + localStorage.getItem("admin").slice(1),
+            //     "type": "Person"
+            // }
             previewFilePromise
                 .then((adobeViewer) => {
 
@@ -50,7 +50,7 @@ const AdobePDFViewer = ({ url, data, userId, commentsList }) => {
                                     if (event.type === 'ANNOTATION_ADDED') {
                                         // Include AdminDetails for annotations 
                                         const newAnnotation = event.data;
-                                        newAnnotation.creator = AdminDetails;
+                                        // newAnnotation.creator = AdminDetails;
                                         viewSDKClient.annots = [...viewSDKClient.annots, newAnnotation];
                                     }
                                     else if (event.type === 'ANNOTATION_UPDATED') {
@@ -73,6 +73,7 @@ const AdobePDFViewer = ({ url, data, userId, commentsList }) => {
                 });
 
             viewSDKClient.registerSaveApiHandler();
+            viewSDKClient.registerGetUserProfileApiHandler()
         });
 // eslint-disable-next-line
     }, [annotationId, annotationData]);

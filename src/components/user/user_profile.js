@@ -756,7 +756,7 @@ const NewUserProfile = (props) => {
                         user_type === "company"
                           ? "d-none"
                           : "tab-menu-items nav-item"
-                      } d-none`}
+                      } `}
                     >
                       <Link
                         className={

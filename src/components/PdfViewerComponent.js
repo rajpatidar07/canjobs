@@ -173,14 +173,18 @@ export default function PdfViewerComponent(props) {
 
   useEffect(() => {
     const loadPSPDFKit = async () => {
+      let instance=null;
       try {
         const container = containerRef.current;
         let adminName = localStorage.getItem("admin");
 
+        PSPDFKit.unload(container)
         if (!container) {
           throw new Error("Container element not found.");
         }
-
+        const toolbarItems = PSPDFKit.defaultToolbarItems
+          .concat({ type: 'comment' }) // Add comment tool.
+          .filter((item) => item.type !== 'note'); // Remove note tool.
         // const instance = await PSPDFKit.load({
         //   container,
         //   license: "YOUR_PSPDFKIT_LICENSE_KEY",
@@ -192,18 +196,21 @@ export default function PdfViewerComponent(props) {
         //   mentionableUsers: props.adminDetailsFOrMention,
         //   enableRichText: () => true,
         // });
-        const instance = await PSPDFKit.load({
+         instance = await PSPDFKit.load({
           container,
-          license: "YOUR_PSPDFKIT_LICENSE_KEY", // Replace with your actual license key
+          license: "zFV8P9YHvxGpBc0Tp-W4cg6Fl-zD9VyTWQGiJTi1A0pM18iMZUQDrARKsunUn4oFAuan32RJzCDR--1nglDFAeacyOumrQOdc7aLnh0zkUHLoL9ZIyYS885cFaZySBalYNU4cbnmdUaZUlte0UEfoF8wM-_lJnbFYTYyWvpuPQ7BICRjm9_SGVz9V8bQGEU3OjpqY_YsvjfyRw", // Replace with your actual license key
           document: props.document,
           baseUrl: `${window.location.protocol}//${window.location.host}/${process.env.PUBLIC_URL}`,
           CommentMarkerAnnotation: true,
           setOnCommentCreationStart: true,
-          toolbarItems: PSPDFKit.defaultToolbarItems.concat({ type: "annotate" }),
+          toolbarItems:
+          PSPDFKit.defaultToolbarItems.concat({ type: "annotate" }),
           mentionableUsers: props.adminDetailsFOrMention,
+          autoSaveMode: PSPDFKit.AutoSaveMode.IMMEDIATE,
           enableRichText: () => true,
+          instant:true
         });
-
+        
         instance.setAnnotationCreatorName(adminName.charAt(0).toUpperCase() + adminName.slice(1));
         let eventData = {};
         /* Function to create Annotation comment */
@@ -226,60 +233,61 @@ export default function PdfViewerComponent(props) {
             // console.log("Combined eventData:", (eventData));
             createPdfNote(eventData).then(async response => {
               console.log("Final data:", JSON.stringify(response));
-                try {
-                  let res = await ADocAnnotation(
-                      localStorage.getItem("admin_id"),
-                      props.data.id,
-                      "",//ASSIGNED ADMIN ID
-                      "",//ASSIGNED ADMIN EMAIL
-                      "",//SUBJECT
-                      "N/A",//COMMENT
-                      "0",//X AXIS
-                      "0",//Y AXIS
-                      "document",
-                      localStorage.getItem("admin_type"), //sender ADMIN type
-                      localStorage.getItem("admin"), //sender name,
-                      "", //assigned Admin or user Name,
-                      "", //follow up status(for notes only)
-                      "", //Next follow up date(for notes only)
-                      "", //Assign user type,
-                      "", //Document url(for notes only)
-                      localStorage.getItem("admin_email"), //Sender email
-                      props.userId, //employee id,
-                      "", //assigned_by_id
-                      props.data.parentReference.id, // document parent code,
-                      response,//Annotation data,
-                      //metaData.annotationId //annotationId
-                  );
-                  if (res.data.message === "task inserted successfully!") {
-                      toast.success("Commented Successfully", {
-                          position: toast.POSITION.TOP_RIGHT,
-                          autoClose: 1000,
-                      });
-                      //   setSelectedAnnotation(null);
-                      //   setComments("");
-                      //   setCommentApiCall(true);
-                      //   setSelectedAdmin("");
-                      //   setAnnotationMode(!isAnnotationMode);
-                      //   setFilteredEmails([]);
-                      // setNotificationApiCall(true);
-                      localStorage.setItem("callNotification", true);
-                  }
+              try {
+                let res = await ADocAnnotation(
+                  localStorage.getItem("admin_id"),
+                  props.data.id,
+                  "",//ASSIGNED ADMIN ID
+                  "",//ASSIGNED ADMIN EMAIL
+                  "",//SUBJECT
+                  "N/A",//COMMENT
+                  "0",//X AXIS
+                  "0",//Y AXIS
+                  "document",
+                  localStorage.getItem("admin_type"), //sender ADMIN type
+                  localStorage.getItem("admin"), //sender name,
+                  "", //assigned Admin or user Name,
+                  "", //follow up status(for notes only)
+                  "", //Next follow up date(for notes only)
+                  "", //Assign user type,
+                  "", //Document url(for notes only)
+                  localStorage.getItem("admin_email"), //Sender email
+                  props.userId, //employee id,
+                  "", //assigned_by_id
+                  props.data.parentReference.id, // document parent code,
+                  response,//Annotation data,
+                  //metaData.annotationId //annotationId
+                );
+                if (res.data.message === "task inserted successfully!") {
+                  toast.success("Commented Successfully", {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 1000,
+                  });
+                  //   setSelectedAnnotation(null);
+                  //   setComments("");
+                  //   setCommentApiCall(true);
+                  //   setSelectedAdmin("");
+                  //   setAnnotationMode(!isAnnotationMode);
+                  //   setFilteredEmails([]);
+                  // setNotificationApiCall(true);
+                  localStorage.setItem("callNotification", true);
+                  instance.save();
+                }
               } catch (err) {
-                  console.log(err);
-                  if (err.response.data.message === "required fields cannot be blank") {
-                      toast.error(" Please try again later.", {
-                          position: toast.POSITION.TOP_RIGHT,
-                          autoClose: 1000,
-                      });
-                      //   setSelectedAnnotation(null);
-                      //   setComments("");
-                      //   setSelectedAdmin("");
-                      //   setCommentApiCall(true);
-                      //   setAnnotationMode(!isAnnotationMode);
-                      //   setAddCommentFlag();
-                      //   setFilteredEmails([]);
-                  }
+                console.log(err);
+                if (err.response.data.message === "required fields cannot be blank") {
+                  toast.error(" Please try again later.", {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 1000,
+                  });
+                  //   setSelectedAnnotation(null);
+                  //   setComments("");
+                  //   setSelectedAdmin("");
+                  //   setCommentApiCall(true);
+                  //   setAnnotationMode(!isAnnotationMode);
+                  //   setAddCommentFlag();
+                  //   setFilteredEmails([]);
+                }
               }
             });
           }
@@ -305,46 +313,242 @@ export default function PdfViewerComponent(props) {
         });
         console.log(props.commentsList)
         /*Json tried to show */
-        instance.applyOperations([
-          {
-            type: "applyInstantJson",
-            instantJson: {
-              annotations:props.commentsList
-              //  [
-              //   {
-              //     bbox: [176.91427917480468, 159.2779541015625, 49.424218749999994, 32.760156249999994],
-              //     blendMode: "multiply",
-              //     createdAt: "2024-04-30T09:04:23.944Z",
-              //     id: "01HWQ3YZC84S0BZJJ946AQH3DB",
-              //     name: "01HWQ3YZC84S0BZJJ946AQH3DB",
-              //     opacity: 1,
-              //     pageIndex: 0,
-              //     type: "pspdfkit/comment",
-              //     rects: [
-              //       {
-              //         left: 176.91427917480468,
-              //         top: 159.2779541015625,
-              //         width: 49.42421875,
-              //         height: 32.76015625
-              //       }
-              //     ],
-              //     color: { r: 252, g: 238, b: 124, transparent: false },
-              //     updatedAt: "2024-04-30T09:04:23.944Z",
-              //     v: 1,
-              //     creatorName: "Raj",
-              //     rootId: "01HWQ3YZC84S0BZJJ946AQH3DB",
-              //     pdfObjectId: null,
-              //     text: "<p>kkkkkk</p>",
-              //     customData: null,
-              //     "commentText": "This is a great comment!",
-              //     "mentionedUsers": ["user1", "user2"],
-              //     canReply: true
-              //   }
-              // ],
-             , format: "https://pspdfkit.com/instant-json/v1"
-            }
-          }
-        ])
+        // instance.applyOperations([
+        //   {
+        //     type: "applyInstantJson",
+        //     instantJson: {
+        //       annotations:
+        //       [
+        //         {
+        //             "bbox": {
+        //                 "left": 106,
+        //                 "top": 159.2779541015625,
+        //                 "width": 146.3759979248047,
+        //                 "height": 54.37175292968749
+        //             },
+        //             "blendMode": "multiply",
+        //             "createdAt": "2024-05-01T04:57:40.165Z",
+        //             "name": "01HWS87XJ2VXZ96CXMVDVXSNFE",
+        //             "opacity": 1,
+        //             "pageIndex": 0,
+        //             "type": "pspdfkit/comment",
+        //             "rects": [
+        //                 {
+        //                     "left": 154.7861541748047,
+        //                     "top": 159.2779541015625,
+        //                     "width": 97.58984375,
+        //                     "height": 32.76015625
+        //                 },
+        //                 {
+        //                     "left": 106,
+        //                     "top": 197.27001953125,
+        //                     "width": 122.43203125000001,
+        //                     "height": 16.3796875
+        //                 }
+        //             ],
+        //             "color": {
+        //                 "r": 252,
+        //                 "g": 238,
+        //                 "b": 124,
+        //                 "transparent": false
+        //             },
+        //             "updatedAt": "2024-05-01T04:57:40.165Z",
+        //             "v": 1,
+        //             "canReply": true,
+        //             "creatorName": "Raj",
+        //             "rootId": "01HWS87XJ2VXZ96CXMVDVXSNFE",
+        //             "pdfObjectId": null,
+        //             "text": "wdadasdasd Aashi vyas ",
+        //             "mentionId": "46"
+        //         },
+        //         {
+        //             "bbox": {
+        //                 "left": 106.55204772949219,
+        //                 "top": 449.2699890136719,
+        //                 "width": 377.37591552734375,
+        //                 "height": 52.37968749999999
+        //             },
+        //             "blendMode": "multiply",
+        //             "createdAt": "2024-04-30T12:55:49.344Z",
+        //             "name": "01HWQH6QAZQMY2RHKPZM3N0320",
+        //             "opacity": 1,
+        //             "pageIndex": 0,
+        //             "type": "pspdfkit/comment",
+        //             "rects": [
+        //                 {
+        //                     "left": 145.04612731933594,
+        //                     "top": 449.2699890136719,
+        //                     "width": 284.64140625,
+        //                     "height": 16.3796875
+        //                 },
+        //                 {
+        //                     "left": 106.55204772949219,
+        //                     "top": 467.2699890136719,
+        //                     "width": 377.37591552734375,
+        //                     "height": 16.3800048828125
+        //                 },
+        //                 {
+        //                     "left": 106.7680435180664,
+        //                     "top": 485.2699890136719,
+        //                     "width": 116.69375000000001,
+        //                     "height": 16.3796875
+        //                 }
+        //             ],
+        //             "color": {
+        //                 "r": 252,
+        //                 "g": 238,
+        //                 "b": 124,
+        //                 "transparent": false
+        //             },
+        //             "updatedAt": "2024-04-30T12:55:49.344Z",
+        //             "v": 1,
+        //             "canReply": true,
+        //             "creatorName": "Raj",
+        //             "rootId": "01HWQH6QAZQMY2RHKPZM3N0320",
+        //             "pdfObjectId": null,
+        //             "text": "yyyyjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj Mayur ",
+        //             "mentionId": "36"
+        //         },
+        //         {
+        //             "bbox": {
+        //                 "left": 107.96818542480469,
+        //                 "top": 159.2779541015625,
+        //                 "width": 144.4078125,
+        //                 "height": 32.760156249999994
+        //             },
+        //             "blendMode": "multiply",
+        //             "createdAt": "2024-04-30T12:55:13.444Z",
+        //             "name": "01HWQH5M94H1ZKGYXHDNQH0NS6",
+        //             "opacity": 1,
+        //             "pageIndex": 0,
+        //             "type": "pspdfkit/comment",
+        //             "rects": [
+        //                 {
+        //                     "left": 107.96818542480469,
+        //                     "top": 159.2779541015625,
+        //                     "width": 144.4078125,
+        //                     "height": 32.76015625
+        //                 }
+        //             ],
+        //             "color": {
+        //                 "r": 252,
+        //                 "g": 238,
+        //                 "b": 124,
+        //                 "transparent": false
+        //             },
+        //             "updatedAt": "2024-04-30T12:55:13.444Z",
+        //             "v": 1,
+        //             "canReply": true,
+        //             "creatorName": "Raj",
+        //             "rootId": "01HWQH5M94H1ZKGYXHDNQH0NS6",
+        //             "pdfObjectId": null,
+        //             "text": "gfffffffffffffffffffgfgfgfgfgfgfgfgfgfgffgfgfgfffgfgfgf Aashi vyas ",
+        //             "mentionId": "46",
+        //             "replies": [  {
+        //               "creatorName": "Jane Smith",
+        //               "createdAt": "2024-05-01T11:00:00.000Z",
+        //               "text": "This replies to the original comment."
+        //             },
+        //             {
+        //               "creatorName": "John Doe",
+        //               "createdAt": "2024-05-01T11:30:00.000Z",
+        //               "text": "Adding another reply to the conversation."
+        //             }
+        //           ]
+        //         }
+        //     ]
+        //         // [
+        //         //   //   {
+        //         //   //   "type": "pspdfkit/comment-marker",
+        //         //   //   "v": 1,
+        //         //   //   "pageIndex": 2,
+        //         //   //   "creatorName": "John Doe",
+        //         //   //   "createdAt": "2024-05-01T10:20:30.000Z",
+        //         //   //   "rootId": "commentId123",  "replies": [  {
+        //         //   //       "creatorName": "Jane Smith",
+        //         //   //       "createdAt": "2024-05-01T11:00:00.000Z",
+        //         //   //       "text": "This replies to the original comment."
+        //         //   //     },
+        //         //   //     {
+        //         //   //       "creatorName": "John Doe",
+        //         //   //       "createdAt": "2024-05-01T11:30:00.000Z",
+        //         //   //       "text": "Adding another reply to the conversation."
+        //         //   //     }
+        //         //   //   ]
+        //         //   // }
+        //         //   {
+        //         //     "bbox":[ 
+        //         //         238.41796875,
+        //         //         197.27001953125,
+        //         //         38.59687500000001,
+        //         //         16.37968749999999
+        //         //   ],
+        //         //     "blendMode": "multiply",
+        //         //     "createdAt": "2024-04-30T09:02:15.972Z",
+        //         //     "name": "01HWQ3V2D47F614ZPCW89Q1PVG",
+        //         //     "opacity": 1,
+        //         //     "pageIndex": 0,
+        //         //     "type": "pspdfkit/comment-marker",
+        //         //       "rects": [
+                        
+        //         //             238.41796875,
+        //         //              197.27001953125,
+        //         //              38.596875000000004,
+        //         //              16.3796875
+                        
+        //         //     ],
+        //         //     // "color": {
+        //         //     //     "r": 252,
+        //         //     //     "g": 238,
+        //         //     //     "b": 124,
+        //         //     //     "transparent": false
+        //         //     // },
+        //         //     "updatedAt": "2024-04-30T09:02:15.972Z",
+        //         //     "v": 1,
+        //         //     "creatorName": "Raj",
+        //         //     "rootId": "01HWQ3V2D47F614ZPCW89Q1PVG",
+        //         //     "pdfObjectId": null,
+        //         //     "text": "<p>ghytrfvb</p>",
+        //         //     "customData": null,
+        //         //     "mentionId": ""
+        //         //   }
+        //         // ]
+        //       // props.commentsList
+        //       //  [
+        //       //   {
+        //       //     bbox: [176.91427917480468, 159.2779541015625, 49.424218749999994, 32.760156249999994],
+        //       //     blendMode: "multiply",
+        //       //     createdAt: "2024-04-30T09:04:23.944Z",
+        //       //     id: "01HWQ3YZC84S0BZJJ946AQH3DB",
+        //       //     name: "01HWQ3YZC84S0BZJJ946AQH3DB",
+        //       //     opacity: 1,
+        //       //     pageIndex: 0,
+        //       //     type: "pspdfkit/comment",
+        //       //     rects: [
+        //       //       {
+        //       //         left: 176.91427917480468,
+        //       //         top: 159.2779541015625,
+        //       //         width: 49.42421875,
+        //       //         height: 32.76015625
+        //       //       }
+        //       //     ],
+        //       //     color: { r: 252, g: 238, b: 124, transparent: false },
+        //       //     updatedAt: "2024-04-30T09:04:23.944Z",
+        //       //     v: 1,
+        //       //     creatorName: "Raj",
+        //       //     rootId: "01HWQ3YZC84S0BZJJ946AQH3DB",
+        //       //     pdfObjectId: null,
+        //       //     text: "<p>kkkkkk</p>",
+        //       //     customData: null,
+        //       //     "commentText": "This is a great comment!",
+        //       //     "mentionedUsers": ["user1", "user2"],
+        //       //     canReply: true
+        //       //   }
+        //       // ],
+        //       , format: "https://pspdfkit.com/instant-json/v1"
+        //     }
+        //   }
+        // ])
         // Create annotations using your functions
         // const annotationsOnFirstPage = await instance.getAnnotations(0);
         // if (annotationsOnFirstPage.size <= 1) {
@@ -361,7 +565,8 @@ export default function PdfViewerComponent(props) {
         //       console.log("Saved annotations with IDs", savedAnnotations.map(it => it.id).join(", "));
         //     });
         // }
-
+        instance.addEventListener("annotations.didSave", (annotations) => {
+          console.log("Annotations saved!", annotations.toJS());})
         return instance;
       } catch (error) {
         console.error("Error loading PSPDFKit:", error);

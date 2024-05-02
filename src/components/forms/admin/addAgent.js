@@ -238,7 +238,7 @@ function AddAgent(props) {
     let data = {
       name: state.name,
       email: state.email,
-      password: "",
+      password: state.id ?"":state.password,
       type: state.type,
       contact_no: state.contact_no,
       profile_image: state.profile_image,
