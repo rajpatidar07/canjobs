@@ -9,15 +9,21 @@ function useSessionCheck() {
     const userType = localStorage.getItem("userType");
     const admin_id = localStorage.getItem("admin_id");
     const admin_type = localStorage.getItem("admin_type");
+    const agent_id = localStorage.getItem("agent_id");
+    const agent_type = localStorage.getItem("admin_type");
 
     if (
       !token ||
       !userType ||
-      !admin_id ||
-      !admin_type ||
-      userType !== "admin" // Assuming admin is the only user type that requires session check
+      (userType === "admin" && !admin_id && !admin_type) || // For admin users
+      (userType === "agent" && !agent_id && !agent_type) // For agent users
     ) {
-      navigate("/adminlogin");
+      // Redirect based on user type
+      if (userType === "admin") {
+        navigate("/adminlogin");
+      } else if (userType === "agent") {
+        navigate("/partnerlogin");
+      }
     }
   }, [navigate]);
 

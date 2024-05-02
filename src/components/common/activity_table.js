@@ -9,11 +9,11 @@ export default function ActivityTable(props) {
   /*Show modal states */
   // let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
-  const [hide/*, sethide*/] = useState(props.hide || false);
-  const [user_id/*, setuser_id*/] = useState(props.user_id);
-  const [user_type/*, setuser_type*/] = useState(props.user_type);
-  const [action_id/*, setaction_id*/] = useState(props.action_id);
-  const [action_type/*, setaction_type*/] = useState(props.action_type);
+  const [hide /*, sethide*/] = useState(props.hide || false);
+  const [user_id /*, setuser_id*/] = useState(props.user_id);
+  const [user_type /*, setuser_type*/] = useState(props.user_type);
+  const [action_id /*, setaction_id*/] = useState(props.action_id);
+  const [action_type /*, setaction_type*/] = useState(props.action_type);
   const [activityData, setactivityData] = useState([]);
   /*Pagination states */
   // const [status, setStatus] = useState(props.self === "yes" ? -1 : 4);
@@ -24,17 +24,17 @@ export default function ActivityTable(props) {
   const nPages = Math.ceil(totalData / recordsPerPage);
 
   let activity_json = {
-    1: "Employee updated",
-    2: "Employee inserted",
-    3: "Employee skill inserted",
-    4: "Employee education details inserted",
-    5: "Employee education details updated",
-    6: "Employee career details inserted",
-    7: "Employee career details updated",
-    8: "Employee document inserted",
-    9: "Employee document updated",
-    10: "Employee visa inserted",
-    11: "Employee visa updated",
+    1: "Candidate updated",
+    2: "Candidate inserted",
+    3: "Candidate skill inserted",
+    4: "Candidate education details inserted",
+    5: "Candidate education details updated",
+    6: "Candidate career details inserted",
+    7: "Candidate career details updated",
+    8: "Candidate document inserted",
+    9: "Candidate document updated",
+    10: "Candidate visa inserted",
+    11: "Candidate visa updated",
     12: "Employer details updated",
     13: "Employer details inserted",
     14: "Employer contact details updated",
@@ -109,14 +109,11 @@ export default function ActivityTable(props) {
             <tbody>
               {totalData === 0 || activityData.length === 0 ? (
                 <tr>
-                  <th
-                    colSpan={5}
-                    className="bg-white text-center font-size-3"
-                  >
+                  <th colSpan={5} className="bg-white text-center font-size-3">
                     No Data Found
                   </th>
                 </tr>
-              ) :
+              ) : (
                 (activityData || []).map((data) => (
                   <tr key={data.id} className="font-size-3">
                     {hide ? null : <td>{data.user_id}</td>}
@@ -124,19 +121,22 @@ export default function ActivityTable(props) {
                     {hide ? null : <td>{data.created_by}</td>}
                     <td>
                       {/* {data.msg} */}
-                      {activity_json[`${data.status}`]}
-                      {" for "}
                       <Link to={"/" + data.action_id}>
                         {data.employee_name === ("" || undefined || null)
                           ? "Candidate"
                           : data.employee_name}
                       </Link>{" "}
+                      {activity_json[`${data.status}`]}
+                      {/* {" for "} */}
                       {" by "}
-                      {data.user_type + " " + data.created_by}
+                      {data.user_type === "agent"
+                        ? "partner"
+                        : data.user_type + " " + data.created_by}
                     </td>
                     <td>{moment(data.created_at).format("lll")}</td>
                   </tr>
-                ))}
+                ))
+              )}
             </tbody>
           </table>
         )}
