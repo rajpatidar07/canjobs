@@ -33,7 +33,9 @@ export default function PartnerDetails() {
   // const [lmiaStatusRejectComment, setLmiaStatusRejectComment] = useState([]);
   const [showPartnerInfoModal, setShowPartnerInfoModal] = useState(false);
   useState(false);
-  const [TabActive, setTabActive] = useState(partnerChat ? "support" : "profile");
+  const [TabActive, setTabActive] = useState(
+    partnerChat ? "support" : "profile"
+  );
   const [data, setData] = useState("");
   const [chartData, setChartData] = useState([]);
 
@@ -104,7 +106,7 @@ export default function PartnerDetails() {
                 <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
                 <span className="text-uppercase font-size-3 font-weight-bold text-gray">
                   <h3 className="font-size-6 mb-0 text-capitalize">
-                    Partner's Profile
+                    {data.name === "" ? "Partner's Profile" : data.name}
                   </h3>
                 </span>
               </Link>
@@ -125,8 +127,9 @@ export default function PartnerDetails() {
         }
       >
         <div
-          className={`container${user_type === "admin" || user_type === "agent" ? "-fluid" : ""
-            }`}
+          className={`container${
+            user_type === "admin" || user_type === "agent" ? "-fluid" : ""
+          }`}
         >
           <div className="row text-left mt-5 pt-0">
             <div className="col-12 order-2 order-xl-1">
@@ -193,7 +196,9 @@ export default function PartnerDetails() {
                       // user_type === "company"
                       //   ? "d-none"
                       //   :
-                      user_type === "admin" ? "tab-menu-items nav-item" : " d-none"
+                      user_type === "admin"
+                        ? "tab-menu-items nav-item"
+                        : " d-none"
                     }
                   >
                     <Link
@@ -305,8 +310,8 @@ export default function PartnerDetails() {
                                   className="company_logo"
                                   src={
                                     data.profile_image === null ||
-                                      !data.profile_image ||
-                                      data.profile_image === undefined
+                                    !data.profile_image ||
+                                    data.profile_image === undefined
                                       ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                       : data.profile_image
                                   }
@@ -358,21 +363,23 @@ export default function PartnerDetails() {
                                   {(data.address ||
                                     data.city ||
                                     data.state) && (
-                                      <span
-                                        className="font-size-3 text-smoke  mr-7 text-capitalize"
-                                        title="Current Location"
-                                      >
-                                        <img
-                                          className="mr-1"
-                                          height={"16px"}
-                                          src="image/icons/marker.svg"
-                                          alt="Location"
-                                        />
-                                        {`${data.address} ${data.city ? " , " + data.city : ""
-                                          } ${data.state ? " , " + data.state : ""
-                                          }`}
-                                      </span>
-                                    )}
+                                    <span
+                                      className="font-size-3 text-smoke  mr-7 text-capitalize"
+                                      title="Current Location"
+                                    >
+                                      <img
+                                        className="mr-1"
+                                        height={"16px"}
+                                        src="image/icons/marker.svg"
+                                        alt="Location"
+                                      />
+                                      {`${data.address} ${
+                                        data.city ? " , " + data.city : ""
+                                      } ${
+                                        data.state ? " , " + data.state : ""
+                                      }`}
+                                    </span>
+                                  )}
                                 </div>
                                 <hr className="my-3" />
                                 {!data.email || user_type === "user" ? (
@@ -535,24 +542,21 @@ export default function PartnerDetails() {
                         user_id={Pid}
                         user_type={"agent"}
                       />
-                    </div>) : null}
-
+                    </div>
+                  ) : null}
                 </div>
                 <div
                   className={
-                    TabActive === "notes"
-                      ? "justify-content-center "
-                      : "d-none"
+                    TabActive === "notes" ? "justify-content-center " : "d-none"
                   }
                 >
                   {TabActive === "notes" ? (
-                    <Addfollowup 
-                    userId={Pid}
+                    <Addfollowup
+                      userId={Pid}
                       userType={"agent"}
                       assigned_by_id={data.assigned_by}
                       setApiCall={setApiCall}
-                      
-                      />
+                    />
                   ) : null}
                 </div>
               </div>
