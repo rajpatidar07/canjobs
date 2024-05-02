@@ -127,9 +127,8 @@ export default function PartnerDetails() {
         }
       >
         <div
-          className={`container${
-            user_type === "admin" || user_type === "agent" ? "-fluid" : ""
-          }`}
+          className={`container${user_type === "admin" || user_type === "agent" ? "-fluid" : ""
+            }`}
         >
           <div className="row text-left mt-5 pt-0">
             <div className="col-12 order-2 order-xl-1">
@@ -196,7 +195,7 @@ export default function PartnerDetails() {
                       // user_type === "company"
                       //   ? "d-none"
                       //   :
-                      user_type === "admin"
+                      user_type === "admin" || user_type === "agent"
                         ? "tab-menu-items nav-item"
                         : " d-none"
                     }
@@ -304,14 +303,16 @@ export default function PartnerDetails() {
 
                         <div className="company_detail_box w-100 row m-0 p-8">
                           <div className="bg-white row m-0 w-100 ">
-                            <div className="col-md-6 col-sm-6 p-0 media align-items-top company_box media bg-light rounded p-8">
-                              <div className="text_box text-left">
+                            <div className="col-md-7 col-sm-7 p-0  rounded p-8 flex-wrap">
+                              
+                              <div className="media align-items-top company_box media bg-light">
+                                <div className="text_box text-left">
                                 <img
                                   className="company_logo"
                                   src={
                                     data.profile_image === null ||
-                                    !data.profile_image ||
-                                    data.profile_image === undefined
+                                      !data.profile_image ||
+                                      data.profile_image === undefined
                                       ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                       : data.profile_image
                                   }
@@ -363,23 +364,21 @@ export default function PartnerDetails() {
                                   {(data.address ||
                                     data.city ||
                                     data.state) && (
-                                    <span
-                                      className="font-size-3 text-smoke  mr-7 text-capitalize"
-                                      title="Current Location"
-                                    >
-                                      <img
-                                        className="mr-1"
-                                        height={"16px"}
-                                        src="image/icons/marker.svg"
-                                        alt="Location"
-                                      />
-                                      {`${data.address} ${
-                                        data.city ? " , " + data.city : ""
-                                      } ${
-                                        data.state ? " , " + data.state : ""
-                                      }`}
-                                    </span>
-                                  )}
+                                      <span
+                                        className="font-size-3 text-smoke  mr-7 text-capitalize"
+                                        title="Current Location"
+                                      >
+                                        <img
+                                          className="mr-1"
+                                          height={"16px"}
+                                          src="image/icons/marker.svg"
+                                          alt="Location"
+                                        />
+                                        {`${data.address} ${data.city ? " , " + data.city : ""
+                                          } ${data.state ? " , " + data.state : ""
+                                          }`}
+                                      </span>
+                                    )}
                                 </div>
                                 <hr className="my-3" />
                                 {!data.email || user_type === "user" ? (
@@ -411,11 +410,18 @@ export default function PartnerDetails() {
                                   </div>
                                 )}
                               </div>
+                              </div>
+                             <div className="w-100 mt-8">
+                               <ActivityTable
+                                user_id={agent_id}
+                                user_type={"agent"}
+                                hide={true}
+                              />
+                              </div>
                             </div>
-                            <div className="col-md-5 col-sm-6 p-0 media align-items-center company_box media  rounded p-8">
+                            <div className="col-md-5 col-sm-5 p-0 media align-items-center company_box media  rounded p-8 ">
                               <DataChart data={chartData} dataType={"status"} />
                             </div>
-
                             {/* <div className="col-md-2 col-sm-6 d-flex justify-content-between">           
                               <CustomButton
                                 className=" font-size-4 rounded-3 btn-primary border-0"

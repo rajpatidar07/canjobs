@@ -21,6 +21,9 @@ const profile = {
         type: "Person"
     }
 };
+let client_id= "713b22cf34e345c388e4490f9c9dc79b"//Canpathways
+//"d9e8b7bcb61b42b6a387bfa9cf16a75b"//(Local)
+//"d9b36f468d7a4e4e8b275f13728f1132",//(vercel)
 class ViewSDKClient {
     constructor() {
         this.readyPromise = new Promise((resolve) => {
@@ -49,7 +52,7 @@ class ViewSDKClient {
         const fileExtension = data.name.split('.').pop().toLowerCase();
 
         const config = {
-            clientId: "d9e8b7bcb61b42b6a387bfa9cf16a75b"//"d9b36f468d7a4e4e8b275f13728f1132",
+            clientId: client_id
         };
 
         if (divId) {
@@ -94,7 +97,7 @@ class ViewSDKClient {
 
     previewFileUsingFilePromise(divId, filePromise, data) {
         this.adobeDCView = new window.AdobeDC.View({
-            clientId: "d9e8b7bcb61b42b6a387bfa9cf16a75b",//"d9b36f468d7a4e4e8b275f13728f1132",
+            clientId: client_id,
             divId,
         });
 

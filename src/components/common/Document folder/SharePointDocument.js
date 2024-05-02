@@ -58,11 +58,11 @@ export default function SharePointDocument({
   }
   console.log(adminList)
   // Generate a list of comments from the state for image annotation
-  const getCommentsList = async (did) => {
-    if (did) {
+  const getCommentsList = async (data) => {
+    if (data) {
       try {
         let res = await GetCommentsAndAssign(
-          did, //docId,
+          data.id, //docId,
           "", // adminid,
           "", // annotationStatus,
           "document"
@@ -71,7 +71,9 @@ export default function SharePointDocument({
           // setCommentsList(res.data.data.data.map(obj =>
           //   JSON.parse(obj.doctaskjson)
           // ));
-          if (docTypePage === "adobe") {
+          if (data.file.mimeType === "application/pdf"
+            // docTypePage === "adobe"
+          ) {
             setCommentsList(res.data.data.data)
           } else {
             setCommentsList(res.data.data.data.map(obj => {
@@ -230,7 +232,9 @@ export default function SharePointDocument({
   };
   useEffect(() => {
     AllShareType();
-    AdminData()
+    if (localStorage.getItem("userType" === "admin")) {
+      AdminData()
+    }
 
     // if (notification === "yes") {
     //     setDocPreview(true)
@@ -413,34 +417,35 @@ export default function SharePointDocument({
                       <IoMdArrowBack />
                     </Link>
                   </div>
-                  {docTypePage === "adobe" ?
-                    // <PreviewDocument
-                    //   docData={docSingleDate}
-                    //   docId={docId ? docId : folderID}
-                    //   userId={user_id}
-                    //   docFile={docSingleDate["@microsoft.graph.downloadUrl"]}
-                    //   setDocPreview={setDocPreview}
-                    //   setDocSingleDate={setDocSingleDate}
-                    //   setFolderID={setFolderID}
-                    //   commentsList={commentsList}
-                    // />
-                    <AdobePDFViewer
-                      url={docSingleDate["@microsoft.graph.downloadUrl"]}
-                      data={docSingleDate}
-                      userId={user_id}
-                      commentsList={commentsList}
-                    />
-                    :
-                    commentsRes ?
-
-                      <PdfViewerComponent
-                        document={docSingleDate["@microsoft.graph.downloadUrl"]}
-                        adminDetailsFOrMention={adminList}
+                  {
+                    // docTypePage === "adobe"
+                    docSingleDate.file.mimeType === "application/pdf" ?
+                      // <PreviewDocument
+                      //   docData={docSingleDate}
+                      //   docId={docId ? docId : folderID}
+                      //   userId={user_id}
+                      //   docFile={docSingleDate["@microsoft.graph.downloadUrl"]}
+                      //   setDocPreview={setDocPreview}
+                      //   setDocSingleDate={setDocSingleDate}
+                      //   setFolderID={setFolderID}
+                      //   commentsList={commentsList}
+                      // />
+                      <AdobePDFViewer
+                        url={docSingleDate["@microsoft.graph.downloadUrl"]}
                         data={docSingleDate}
                         userId={user_id}
                         commentsList={commentsList}
                       />
-                      : null}
+                      :
+                      commentsRes ?
+                        <PdfViewerComponent
+                          document={docSingleDate["@microsoft.graph.downloadUrl"]}
+                          adminDetailsFOrMention={adminList}
+                          data={docSingleDate}
+                          userId={user_id}
+                          commentsList={commentsList}
+                        />
+                        : null}
                 </div>
               </div>
             </div>

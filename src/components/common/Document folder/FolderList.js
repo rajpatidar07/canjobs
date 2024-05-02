@@ -42,7 +42,7 @@ export default function FolderList({
                     setDocPreview(true);
                     setDocSingleDate(item);
                     setFolderID(item.id);
-                    getCommentsList(item.id)
+                    getCommentsList(item)
                   }
                 }}
                 onContextMenu={(e) => {

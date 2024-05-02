@@ -8,11 +8,11 @@ import {
 import useValidation from "../common/useValidation";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-// const API_URL = "https://canjobs.vercel.app/";
+const API_URL = "https://canjobs.vercel.app/";
 // New AWS backend
 // const API_URL = "https://canpathwaysjobs.com/";
 /*Localhost*/
-const API_URL = "http://localhost:3000/";
+// const API_URL = "http://localhost:3000/";
 export default function ResetPassword() {
   const location = useLocation();
   const path = location.pathname;

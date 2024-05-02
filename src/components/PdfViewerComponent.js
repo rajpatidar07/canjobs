@@ -31,13 +31,13 @@ export default function PdfViewerComponent(props) {
             canReply: true,
             // "note": "<p>gggggggg</p>",
             "creatorName": noteJson.createdNote.creatorName,
-            "rootId": noteJson.createdComments.rootId,
+            "rootId": noteJson.createdComments ? noteJson.createdComments.rootId : "",
             "pdfObjectId": noteJson.createdNote.pdfObjectId,
             // "text": {
             //   "format": noteJson.createdComments.text.format,
             //   "value": noteJson.createdComments.text.value
             // },
-            "text": noteJson.createdComments.text.value,
+            "text": noteJson.createdComments ? noteJson.createdComments.text.value : "",
             // "customData": null,
             "mentionId": noteJson.mentionId ? noteJson.mentionId : ""
 
@@ -173,7 +173,7 @@ export default function PdfViewerComponent(props) {
 
   useEffect(() => {
     const loadPSPDFKit = async () => {
-      let instance=null;
+      let instance = null;
       try {
         const container = containerRef.current;
         let adminName = localStorage.getItem("admin");
@@ -182,21 +182,7 @@ export default function PdfViewerComponent(props) {
         if (!container) {
           throw new Error("Container element not found.");
         }
-        const toolbarItems = PSPDFKit.defaultToolbarItems
-          .concat({ type: 'comment' }) // Add comment tool.
-          .filter((item) => item.type !== 'note'); // Remove note tool.
-        // const instance = await PSPDFKit.load({
-        //   container,
-        //   license: "YOUR_PSPDFKIT_LICENSE_KEY",
-        //   document: props.document,
-        //   baseUrl: `${window.location.protocol}//${window.location.host}/${process.env.PUBLIC_URL}`,
-        //   CommentMarkerAnnotation: true,
-        //   setOnCommentCreationStart: true,
-        //   toolbarItems: PSPDFKit.defaultToolbarItems.concat({ type: "annotate" }),
-        //   mentionableUsers: props.adminDetailsFOrMention,
-        //   enableRichText: () => true,
-        // });
-         instance = await PSPDFKit.load({
+        instance = await PSPDFKit.load({
           container,
           license: "zFV8P9YHvxGpBc0Tp-W4cg6Fl-zD9VyTWQGiJTi1A0pM18iMZUQDrARKsunUn4oFAuan32RJzCDR--1nglDFAeacyOumrQOdc7aLnh0zkUHLoL9ZIyYS885cFaZySBalYNU4cbnmdUaZUlte0UEfoF8wM-_lJnbFYTYyWvpuPQ7BICRjm9_SGVz9V8bQGEU3OjpqY_YsvjfyRw", // Replace with your actual license key
           document: props.document,
@@ -204,13 +190,13 @@ export default function PdfViewerComponent(props) {
           CommentMarkerAnnotation: true,
           setOnCommentCreationStart: true,
           toolbarItems:
-          PSPDFKit.defaultToolbarItems.concat({ type: "annotate" }),
+            PSPDFKit.defaultToolbarItems.concat({ type: "annotate" }),
           mentionableUsers: props.adminDetailsFOrMention,
           autoSaveMode: PSPDFKit.AutoSaveMode.IMMEDIATE,
           enableRichText: () => true,
-          instant:true
+          instant: true
         });
-        
+
         instance.setAnnotationCreatorName(adminName.charAt(0).toUpperCase() + adminName.slice(1));
         let eventData = {};
         /* Function to create Annotation comment */
@@ -490,12 +476,12 @@ export default function PdfViewerComponent(props) {
         //         //     "pageIndex": 0,
         //         //     "type": "pspdfkit/comment-marker",
         //         //       "rects": [
-                        
+
         //         //             238.41796875,
         //         //              197.27001953125,
         //         //              38.596875000000004,
         //         //              16.3796875
-                        
+
         //         //     ],
         //         //     // "color": {
         //         //     //     "r": 252,
@@ -566,7 +552,8 @@ export default function PdfViewerComponent(props) {
         //     });
         // }
         instance.addEventListener("annotations.didSave", (annotations) => {
-          console.log("Annotations saved!", annotations.toJS());})
+          console.log("Annotations saved!", annotations.toJS());
+        })
         return instance;
       } catch (error) {
         console.error("Error loading PSPDFKit:", error);

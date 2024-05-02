@@ -175,7 +175,7 @@ function Addfollowup(props) {
         <div className="bg-white rounded h-100vh px-11 py-7 overflow-y-hidden">
           <div className="row">
             <div
-              className={`activity_container pr-10 ${user_type === "admin" ? "col-md-8 border-right" : "col-md-12"
+              className={`activity_container pr-10 ${user_type === "admin"|| user_type === "agent" ? "col-md-8 border-right" : "col-md-12"
                 }`}
             >
               {/* {console.log(response)} */}
@@ -213,7 +213,7 @@ function Addfollowup(props) {
             </div>
             <div
               className={
-                user_type === "admin" ? "px-10 py-5 col-md-4" : "d-none"
+                user_type === "admin" || user_type === "agent" ? "px-10 py-5 col-md-4" : "d-none"
               }
             >
               <form>

@@ -773,7 +773,7 @@ const NewUserProfile = (props) => {
                         aria-selected="true"
                         onClick={() => setTabActive("documents")}
                       >
-                        Adobe Documents
+                         Documents
                       </Link>
                     </li>
                     <li
@@ -781,7 +781,7 @@ const NewUserProfile = (props) => {
                         user_type === "company"
                           ? "d-none"
                           : "tab-menu-items nav-item"
-                      }`}
+                      } d-none`}
                     >
                       <Link
                         className={
