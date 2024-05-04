@@ -18,6 +18,7 @@ import DataChart from "../common/DataChart";
 import ActivityTable from "../common/activity_table";
 import PayentForm from "../forms/admin/payentForm";
 import Addfollowup from "../forms/admin/addfollowup";
+import MainEmailPage from "../email/mainemailPage";
 export default function PartnerDetails() {
   const user_type = localStorage.getItem("userType");
   const agent_id = localStorage.getItem("agent_id");
@@ -127,8 +128,9 @@ export default function PartnerDetails() {
         }
       >
         <div
-          className={`container${user_type === "admin" || user_type === "agent" ? "-fluid" : ""
-            }`}
+          className={`container${
+            user_type === "admin" || user_type === "agent" ? "-fluid" : ""
+          }`}
         >
           <div className="row text-left mt-5 pt-0">
             <div className="col-12 order-2 order-xl-1">
@@ -250,6 +252,23 @@ export default function PartnerDetails() {
                       Payment
                     </Link>
                   </li>
+                  <li className="tab-menu-items nav-item">
+                    <Link
+                      className={
+                        TabActive === "email"
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                      }
+                      id="email"
+                      data-toggle="tab"
+                      role="tab"
+                      aria-controls="email"
+                      aria-selected="true"
+                      onClick={() => setTabActive("email")}
+                    >
+                      email
+                    </Link>
+                  </li>
                   <li
                     className={
                       user_type === "admin" || user_type === "agent"
@@ -304,66 +323,67 @@ export default function PartnerDetails() {
                         <div className="company_detail_box w-100 row m-0 p-8">
                           <div className="bg-white row m-0 w-100 ">
                             <div className="col-md-7 col-sm-7 p-0  rounded p-8 flex-wrap">
-                              
                               <div className="media align-items-top company_box media bg-light">
                                 <div className="text_box text-left">
-                                <img
-                                  className="company_logo"
-                                  src={
-                                    data.profile_image === null ||
+                                  <img
+                                    className="company_logo"
+                                    src={
+                                      data.profile_image === null ||
                                       !data.profile_image ||
                                       data.profile_image === undefined
-                                      ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                                      : data.profile_image
-                                  }
-                                  alt=""
-                                />
-                              </div>
-                              <div className="text_box text-left w-100">
-                                <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center text-break text-capitalize">
-                                  <span>
-                                    <b title="Partner Name">
-                                      {data.name
-                                        ? data.name
-                                        : "Unknown Partner"}
-                                    </b>
-                                  </span>
-                                </h3>
-                                <CustomButton
-                                  className={
-                                    user_type === "user"
-                                      ? "d-none"
-                                      : "font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
-                                  }
-                                  onClick={() => setShowPartnerInfoModal(true)}
-                                >
-                                  <PiPencilDuotone />
-                                </CustomButton>
-                                <p className="font-size-3 text-default-color line-height-2 m-0 text-break">
-                                  <span className="mr-3" title="Unique Id">
-                                    {data.u_id}
-                                  </span>
-                                </p>
-
-                                <hr className="my-3" />
-                                <div className="position-relative">
-                                  {data.country && (
-                                    <span
-                                      className="font-size-3 text-smoke  mr-7 text-capitalize"
-                                      title="Currently Located Country"
-                                    >
-                                      <img
-                                        className="mr-1"
-                                        height={"16px"}
-                                        src="image/icons/address-book.svg"
-                                        alt="Address"
-                                      />
-                                      {data.country}
+                                        ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                                        : data.profile_image
+                                    }
+                                    alt=""
+                                  />
+                                </div>
+                                <div className="text_box text-left w-100">
+                                  <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center text-break text-capitalize">
+                                    <span>
+                                      <b title="Partner Name">
+                                        {data.name
+                                          ? data.name
+                                          : "Unknown Partner"}
+                                      </b>
                                     </span>
-                                  )}
-                                  {(data.address ||
-                                    data.city ||
-                                    data.state) && (
+                                  </h3>
+                                  <CustomButton
+                                    className={
+                                      user_type === "user"
+                                        ? "d-none"
+                                        : "font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
+                                    }
+                                    onClick={() =>
+                                      setShowPartnerInfoModal(true)
+                                    }
+                                  >
+                                    <PiPencilDuotone />
+                                  </CustomButton>
+                                  <p className="font-size-3 text-default-color line-height-2 m-0 text-break">
+                                    <span className="mr-3" title="Unique Id">
+                                      {data.u_id}
+                                    </span>
+                                  </p>
+
+                                  <hr className="my-3" />
+                                  <div className="position-relative">
+                                    {data.country && (
+                                      <span
+                                        className="font-size-3 text-smoke  mr-7 text-capitalize"
+                                        title="Currently Located Country"
+                                      >
+                                        <img
+                                          className="mr-1"
+                                          height={"16px"}
+                                          src="image/icons/address-book.svg"
+                                          alt="Address"
+                                        />
+                                        {data.country}
+                                      </span>
+                                    )}
+                                    {(data.address ||
+                                      data.city ||
+                                      data.state) && (
                                       <span
                                         className="font-size-3 text-smoke  mr-7 text-capitalize"
                                         title="Current Location"
@@ -374,49 +394,51 @@ export default function PartnerDetails() {
                                           src="image/icons/marker.svg"
                                           alt="Location"
                                         />
-                                        {`${data.address} ${data.city ? " , " + data.city : ""
-                                          } ${data.state ? " , " + data.state : ""
-                                          }`}
+                                        {`${data.address} ${
+                                          data.city ? " , " + data.city : ""
+                                        } ${
+                                          data.state ? " , " + data.state : ""
+                                        }`}
                                       </span>
                                     )}
-                                </div>
-                                <hr className="my-3" />
-                                {!data.email || user_type === "user" ? (
-                                  ""
-                                ) : (
-                                  <div
-                                    className="d-flex"
-                                    style={{ gap: "10px" }}
-                                  >
-                                    {data.contact_no &&
-                                      data.contact_no !== (0 || "0") && (
+                                  </div>
+                                  <hr className="my-3" />
+                                  {!data.email || user_type === "user" ? (
+                                    ""
+                                  ) : (
+                                    <div
+                                      className="d-flex"
+                                      style={{ gap: "10px" }}
+                                    >
+                                      {data.contact_no &&
+                                        data.contact_no !== (0 || "0") && (
+                                          <Link
+                                            className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
+                                            to={`tel:${data.contact_no}`}
+                                          >
+                                            <BiPhoneCall className="text-secondary font-size-5 mr-2" />
+                                            {data.contact_no}
+                                          </Link>
+                                        )}
+                                      {data.email && (
                                         <Link
                                           className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
-                                          to={`tel:${data.contact_no}`}
+                                          to={`mailto:${data.email}`}
                                         >
-                                          <BiPhoneCall className="text-secondary font-size-5 mr-2" />
-                                          {data.contact_no}
+                                          <BsEnvelope className="font-size-3 mr-4" />
+                                          {data.email}
                                         </Link>
                                       )}
-                                    {data.email && (
-                                      <Link
-                                        className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
-                                        to={`mailto:${data.email}`}
-                                      >
-                                        <BsEnvelope className="font-size-3 mr-4" />
-                                        {data.email}
-                                      </Link>
-                                    )}
-                                  </div>
-                                )}
+                                    </div>
+                                  )}
+                                </div>
                               </div>
-                              </div>
-                             <div className="w-100 mt-8">
-                               <ActivityTable
-                                user_id={agent_id}
-                                user_type={"agent"}
-                                hide={true}
-                              />
+                              <div className="w-100 mt-8">
+                                <ActivityTable
+                                  user_id={agent_id}
+                                  user_type={"agent"}
+                                  hide={true}
+                                />
                               </div>
                             </div>
                             <div className="col-md-5 col-sm-5 p-0 media align-items-center company_box media  rounded p-8 ">
@@ -563,6 +585,15 @@ export default function PartnerDetails() {
                       assigned_by_id={data.assigned_by}
                       setApiCall={setApiCall}
                     />
+                  ) : null}
+                </div>
+                <div
+                  className={
+                    TabActive === "email" ? "justify-content-center " : "d-none"
+                  }
+                >
+                  {TabActive === "email" ? (
+                    <MainEmailPage email={data.email} />
                   ) : null}
                 </div>
               </div>

@@ -28,8 +28,7 @@ function Employee(props) {
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
-  let user_type = localStorage.getItem("userType")
-
+  let user_type = localStorage.getItem("userType");
 
   /* Function to show the single data to update Employee*/
   const employeeDetails = (e) => {
@@ -58,6 +57,9 @@ function Employee(props) {
       setSearchError("");
     }
   };
+  /*Render method to get Partner data */
+  // eslint-disable-next-line no-undef
+
   return (
     <>
       <div
@@ -68,8 +70,8 @@ function Employee(props) {
         }
       >
         {props.skill === null ||
-          props.skill === undefined ||
-          Object.keys(props.skill).length === 0 ? (
+        props.skill === undefined ||
+        Object.keys(props.skill).length === 0 ? (
           <>
             {/* <!-- Header Area --> */}
             <AdminHeader heading={"Manage Applicants"} />
@@ -133,8 +135,8 @@ function Employee(props) {
                     pageName={"employee"}
                   />
                   {props.skill === null ||
-                    props.skill === undefined ||
-                    Object.keys(props.skill).length === 0 ? (
+                  props.skill === undefined ||
+                  Object.keys(props.skill).length === 0 ? (
                     <div className="col px-1 form_group mt-4 text-right">
                       <CustomButton
                         className="font-size-3 rounded-3 btn btn-primary border-0"
@@ -178,8 +180,8 @@ function Employee(props) {
           <div
             className={
               props.skill === null ||
-                props.skill === undefined ||
-                Object.keys(props.skill).length === 0
+              props.skill === undefined ||
+              Object.keys(props.skill).length === 0
                 ? "dashboard-main-container mt-16"
                 : ""
             }

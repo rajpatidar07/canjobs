@@ -1,18 +1,19 @@
 import React, { useState } from "react";
-import { Form, InputGroup } from "react-bootstrap";
+import { Button, Form, InputGroup } from "react-bootstrap";
 import GlobalSearchCard from "./globalSearchCard";
 import { GlobalSearchResult } from "../../api/api";
 import { Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
+import { CiSearch } from "react-icons/ci";
 function GlobalSearch() {
   const [show, setshow] = useState(false);
-  // let [isLoading, setIsLoading] = useState(true);
+  let [search, setsearch] = useState(true);
   let [searchData, setSearchData] = useState([]);
 
   /*Global Search API Call*/
   const GlobalSearchAPICall = async (e) => {
-    let search = "";
-    search = e.target.value;
+    // let search = "";
+    // search = e.target.value;
     // setIsLoading(true);
     try {
       const userData = await GlobalSearchResult(search);
@@ -22,6 +23,11 @@ function GlobalSearch() {
     } catch (err) {
       console.log(err);
       // setIsLoading(false);
+    }
+  };
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      GlobalSearchAPICall();
     }
   };
   return (
@@ -49,19 +55,46 @@ function GlobalSearch() {
         <div className="left_side" onClick={() => setshow(false)}></div>
         <div className="right_side bg-white">
           <div className="global_search d-flex align-items-center p-3 px-5 ">
-            <InputGroup className="search_box d-flex align-items-center position-relative">
+            <div class="input-group mb-3">
+              <input
+                required
+                type="text"
+                class="form-control"
+                placeholder="Search Candidate"
+                name="Employee_name"
+                onChange={(e) => setsearch(e.target.value)}
+                onKeyPress={handleKeyPress}
+              />
+              <div class="input-group-append">
+                <button
+                  class=""
+                  type="button"
+                  onClick={GlobalSearchAPICall}
+                  style={{
+                    background: "#fff",
+                    border: "1px solid #ccc",
+                    borderTopRightRadius: 5,
+                    borderBottomRightRadius: 5,
+                    outline: 0,
+                  }}
+                >
+                  <CiSearch />
+                </button>
+              </div>
+            </div>
+            {/* <InputGroup className="search_box d-flex align-items-center position-relative">
               <Form.Control
                 type="text"
                 placeholder="Search Candidates, Clients etc"
                 aria-describedby="basic-addon2"
                 onChange={(e) => GlobalSearchAPICall(e)}
               />
-              <Link
+              <Button
                 // href={undefined}
                 style={{ position: "absolute", right: "5px" }}
                 className="fas fa-search text-dark"
-              ></Link>
-            </InputGroup>
+              ></Button>
+            </InputGroup> */}
             <i
               style={{ fontSize: "22px" }}
               className="fas fa-times text-dark ml-4"

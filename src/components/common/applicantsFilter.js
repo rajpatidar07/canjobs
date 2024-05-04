@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import FilterJson from "../json/filterjson";
 import { /*GetFilter,*/ GetAgentJson, getallAdminData } from "../../api/api";
+import { CiSearch } from "react-icons/ci";
 
 export default function ApplicantsFilter({
   search,
@@ -27,9 +28,22 @@ export default function ApplicantsFilter({
 }) {
   // let [SkillList, setSkillList] = useState([]);
   // let [EducationList, setEducationList] = useState([]);
+  const [searchcall, setsearchcall] = useState(false);
+  const [candidateSearch, setcandidateSearch] = useState("");
   let [AgentList, setAgentList] = useState([]);
   let [AdminList, setAdmintList] = useState([]);
   /*Function to get thejSon */
+  const SearchCandidate = () => {
+    onSearch(candidateSearch);
+  };
+  /*Render method to get Partner data */
+  // useEffect(() => {
+  //   console.log("candiddd", candidateSearch);
+  //   if (candidateSearch !== undefined && candidateSearch !== null) {
+  //     onSearch(candidateSearch);
+  //     setsearchcall(false);
+  //   }
+  // }, [searchcall]);
   const JsonData = async () => {
     try {
       // let Json = await GetFilter();
@@ -62,6 +76,11 @@ export default function ApplicantsFilter({
       }
     }
   };
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      SearchCandidate();
+    }
+  };
   /*Render method to get the json*/
   useEffect(() => {
     JsonData();
@@ -81,7 +100,34 @@ export default function ApplicantsFilter({
         }
       >
         <p className="input_label">Search Candidate:</p>
-        <input
+        <div class="input-group mb-3">
+          <input
+            required
+            type="text"
+            class="form-control"
+            placeholder="Search Candidate"
+            name="Employee_name"
+            onChange={(e) => setcandidateSearch(e)}
+            onKeyPress={handleKeyPress}
+          />
+          <div class="input-group-append">
+            <button
+              class=""
+              type="button"
+              onClick={SearchCandidate}
+              style={{
+                background: "#fff",
+                border: "1px solid #ccc",
+                borderTopRightRadius: 5,
+                borderBottomRightRadius: 5,
+                outline: 0,
+              }}
+            >
+              <CiSearch />
+            </button>
+          </div>
+        </div>
+        {/* <input
           required
           type="text"
           className="form-control"
@@ -89,7 +135,7 @@ export default function ApplicantsFilter({
           value={search}
           name={"Employee_name"}
           onChange={(e) => onSearch(e)}
-        />
+        /> */}
       </div>
       {/* <div
                 className={
