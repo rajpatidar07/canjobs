@@ -660,7 +660,7 @@ function PersonalDetails(props) {
                     </label>
                     <input
                       // max={moment().format("DD-MM-YYYY")}
-                      min={moment().subtract(44, 'years').format("YYYY-MM-DD")}
+                      min={moment().subtract(84, 'years').format("YYYY-MM-DD")}
                       max={moment().subtract(1, 'year').endOf('year').format("YYYY-MM-DD")}
                       type="date"
                       placeholder="Date Of Birth "
