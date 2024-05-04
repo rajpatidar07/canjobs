@@ -19,8 +19,11 @@ import Loader from "../loader";
 import Breadcrumbs from "./Breadcrumb";
 import EditDocNameFOrm from "./EditDocNameFOrm";
 // import PreviewDocument from "./PreviewDocument";
-import PdfViewerComponent from "../../PdfViewerComponent";
+// import PdfViewerComponent from "../../PdfViewerComponent";
 import AdobePDFViewer from "../Adobe/adobeFile";
+import { jsPDF } from "jspdf";
+// import { PDFDocument } from 'pdf-lib';
+
 export default function SharePointDocument({
   emp_user_type,
   user_id,
@@ -381,6 +384,88 @@ export default function SharePointDocument({
       console.log(err);
     }
   }
+   const [convertedImg, setConvertedImg] = useState("")
+  const convertUrlToPDF = (imageUrl) => {
+    const img = new Image();
+    img.crossOrigin = 'anonymous'; // Enable cross-origin resource sharing (CORS) for the image
+    img.src = imageUrl;
+
+ 
+    img.onload = () => {
+      const doc = new jsPDF();
+      const pdfWidth = doc.internal.pageSize.getWidth();
+      const pdfHeight = doc.internal.pageSize.getHeight();
+  
+      let imgWidth, imgHeight;
+      const imgAspectRatio = img.width / img.height;
+      const pdfAspectRatio = pdfWidth / pdfHeight;
+  
+      if (imgAspectRatio > pdfAspectRatio) {
+        // Image is wider than the PDF page
+        imgWidth = pdfWidth;
+        imgHeight = imgWidth / imgAspectRatio;
+      } else {
+        // Image is taller than or equal to the PDF page
+        imgHeight = pdfHeight;
+        imgWidth = imgHeight * imgAspectRatio;
+      }
+  
+      const xPosition = (pdfWidth - imgWidth) / 2;
+      const yPosition = (pdfHeight - imgHeight) / 2;
+  
+      doc.addImage(img, 'JPEG', xPosition, yPosition, imgWidth, imgHeight); // Set the image dimensions to fit the PDF page
+  
+      // Convert PDF to Blob
+      const pdfBlob = doc.output('blob');
+
+      // Convert PDF Blob to base64
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result;
+        setConvertedImg(base64String)
+      };
+      reader.readAsDataURL(pdfBlob);
+    };
+  }
+// Function to convert a Blob to base64
+
+// const blobToBase64 = (blob) => {
+//   return new Promise((resolve, reject) => {
+//     const reader = new FileReader();
+//     reader.onload = () => {
+//       resolve(reader.result.split(',')[1]);
+//     };
+//     reader.onerror = (error) => {
+//       reject(error);
+//     };
+//     reader.readAsDataURL(blob);
+//   });
+// };
+
+// const convertUrlToPDF = async (fileUrl) => {
+//   let base64PDF = ''; // Variable to store base64 PDF data
+//   try {
+//     const response = await fetch(fileUrl);
+//     if (!response.ok) {
+//       throw new Error(`Failed to fetch the file: ${response.statusText}`);
+//     }
+
+//     const fileData = await response.blob();
+//     console.log(fileData);
+
+//     if (fileData.type === 'application/pdf') {
+//       // Convert PDF blob to base64
+//       base64PDF = await blobToBase64(fileData);
+//       console.log('Base64 PDF data:', base64PDF);
+//     } else {
+//       console.error('Unsupported file format. Expected PDF.');
+//     }
+//   } catch (error) {
+//     console.error('Error downloading or parsing the file:', error);
+//   }
+
+//   return base64PDF; // Return the base64 PDF data
+// };
   return (
     <>
       {folderId ? (
@@ -412,6 +497,7 @@ export default function SharePointDocument({
                         setDocSingleDate("");
                         setDocPreview(false);
                         setFolderID(docSingleDate.parentReference.id);
+                        setConvertedImg("")
                       }}
                     >
                       <IoMdArrowBack />
@@ -438,13 +524,21 @@ export default function SharePointDocument({
                       />
                       :
                       commentsRes ?
-                        <PdfViewerComponent
-                          document={docSingleDate["@microsoft.graph.downloadUrl"]}
-                          adminDetailsFOrMention={adminList}
-                          data={docSingleDate}
-                          userId={user_id}
-                          commentsList={commentsList}
-                        />
+                        <div>
+                          <button onClick={() => convertUrlToPDF(docSingleDate["@microsoft.graph.downloadUrl"])}>Convert to PDF and Display</button>
+                          {convertedImg ? <AdobePDFViewer
+                            url={convertedImg}
+                            data={docSingleDate}
+                            userId={user_id}
+                            commentsList={commentsList}
+                          />:<div>ol</div>}           </div>
+                        // <PdfViewerComponent
+                        //   document={docSingleDate["@microsoft.graph.downloadUrl"]}
+                        //   adminDetailsFOrMention={adminList}
+                        //   data={docSingleDate}
+                        //   userId={user_id}
+                        //   commentsList={commentsList}
+                        // />
                         : null}
                 </div>
               </div>

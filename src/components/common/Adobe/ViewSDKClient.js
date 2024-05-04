@@ -21,10 +21,10 @@ const profile = {
         type: "Person"
     }
 };
-let client_id= "d9b36f468d7a4e4e8b275f13728f1132"//(vercel)
+let client_id= "d9e8b7bcb61b42b6a387bfa9cf16a75b"//(Local)
 //"713b22cf34e345c388e4490f9c9dc79b"//Canpathways
 //"d9e8b7bcb61b42b6a387bfa9cf16a75b"//(Local)
-//"d9b36f468d7a4e4e8b275f13728f1132"//(vercel)
+//"d9b36f468d7a4e4e8b275f13728f1132",//(vercel)
 class ViewSDKClient {
     constructor() {
         this.readyPromise = new Promise((resolve) => {
