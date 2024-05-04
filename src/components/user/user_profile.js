@@ -283,9 +283,7 @@ const NewUserProfile = (props) => {
                 <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
                 <span className="text-uppercase font-size-3 font-weight-bold text-gray">
                   <h3 className="font-size-6 mb-0 text-capitalize">
-                    {PersonalDetail.name === ""
-                      ? "User Profile"
-                      : PersonalDetail.name}
+                    {PersonalDetail.name + " (Candidate)"}
                   </h3>
                 </span>
               </Link>
@@ -708,7 +706,9 @@ const NewUserProfile = (props) => {
                   {/*----Profile Header----*/}
                   <ul
                     className={`nav border-top border-bottom border-mercury user_profile_tab ${
-                      user_type === "admin"|| user_type === "agent" ? "" : "mt-md-13"
+                      user_type === "admin" || user_type === "agent"
+                        ? ""
+                        : "mt-md-13"
                     }`}
                     id="myTab"
                     role="tablist"
@@ -773,7 +773,7 @@ const NewUserProfile = (props) => {
                         aria-selected="true"
                         onClick={() => setTabActive("documents")}
                       >
-                         Documents
+                        Documents
                       </Link>
                     </li>
                     <li

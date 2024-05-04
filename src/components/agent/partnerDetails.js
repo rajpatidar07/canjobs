@@ -107,7 +107,7 @@ export default function PartnerDetails() {
                 <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
                 <span className="text-uppercase font-size-3 font-weight-bold text-gray">
                   <h3 className="font-size-6 mb-0 text-capitalize">
-                    {data.name === "" ? "Partner's Profile" : data.name}
+                    {data.name + " (Partner)"}
                   </h3>
                 </span>
               </Link>
