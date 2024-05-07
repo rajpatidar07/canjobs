@@ -28,13 +28,16 @@ export default function ApplicantsFilter({
 }) {
   // let [SkillList, setSkillList] = useState([]);
   // let [EducationList, setEducationList] = useState([]);
-  const [searchcall, setsearchcall] = useState(false);
+  // const [searchcall, setsearchcall] = useState(false);
   const [candidateSearch, setcandidateSearch] = useState("");
   let [AgentList, setAgentList] = useState([]);
   let [AdminList, setAdmintList] = useState([]);
   /*Function to get thejSon */
   const SearchCandidate = () => {
-    onSearch(candidateSearch);
+    if(candidateSearch === ""){
+      setSearchError("The search field cannot be empty.");
+    }else{
+    onSearch(candidateSearch);}
   };
   /*Render method to get Partner data */
   // useEffect(() => {

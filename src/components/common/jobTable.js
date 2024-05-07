@@ -812,7 +812,7 @@ export default function JobTable(props) {
                                             </Link>
                                           </button>
                                           <button
-                                            className={`${
+                                            className={`d-none ${
                                               props.detail === "company_detail"
                                                 ? "d-none"
                                                 : "btn btn-outline-info action_btn"

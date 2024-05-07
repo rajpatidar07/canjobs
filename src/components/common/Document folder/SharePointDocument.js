@@ -53,6 +53,7 @@ export default function SharePointDocument({
   const [adminList, setAdminList] = useState([])
   const [commentsList, setCommentsList] = useState([])
   const [commentsRes, setCommentsRes] = useState()
+  const [imgConRes, setImgConRes] = useState()
   const [convertedDoc, setConvertedDoc] = useState("")
   // Function to convert HTML text to plain text
   function convertHtmlToText(html) {
@@ -60,7 +61,6 @@ export default function SharePointDocument({
     tempElement.innerHTML = html;
     return tempElement.textContent || tempElement.innerText || '';
   }
-  console.log(adminList)
   // Generate a list of comments from the state for image annotation
   const getCommentsList = async (data) => {
     if (data) {
@@ -422,7 +422,9 @@ export default function SharePointDocument({
       reader.onloadend = () => {
         const base64String = reader.result;
         setConvertedDoc(base64String)
-        setCommentsRes("imageConverted")
+        if (base64String) {
+          setImgConRes("imageConverted")
+        }
       };
       reader.readAsDataURL(pdfBlob);
     };
@@ -499,6 +501,7 @@ export default function SharePointDocument({
                         setCommentsRes("")
                         setFolderID(docSingleDate.parentReference.id);
                         setConvertedDoc("")
+                        setShowDropDown("")
                       }}
                     >
                       <IoMdArrowBack />
@@ -506,8 +509,10 @@ export default function SharePointDocument({
                   </div>
                   {
                     // docTypePage === "adobe"
-                    (docSingleDate.file.mimeType === "application/pdf" ||
-                      ((docSingleDate.file.mimeType === "image/jpeg" || docSingleDate.file.mimeType === "image/png" || docSingleDate.file.mimeType === "image/jpg") && commentsRes === "imageConverted")) ?
+                    ((docSingleDate.file.mimeType === "application/pdf" ||
+                      ((docSingleDate.file.mimeType === "image/jpeg" || docSingleDate.file.mimeType === "image/png" || docSingleDate.file.mimeType === "image/jpg")
+                        && imgConRes === "imageConverted"))
+                      && convertedDoc) ?
                       // <PreviewDocument
                       //   docData={docSingleDate}
                       //   docId={docId ? docId : folderID}
@@ -518,12 +523,15 @@ export default function SharePointDocument({
                       //   setFolderID={setFolderID}
                       //   commentsList={commentsList}
                       // />
-                      <AdobePDFViewer
-                        url={convertedDoc}
-                        data={docSingleDate}
-                        userId={user_id}
-                        commentsList={commentsList}
-                      />
+                      commentsRes ?
+                        <AdobePDFViewer
+                          url={convertedDoc}
+                          data={docSingleDate}
+                          userId={user_id}
+                          commentsList={commentsList}
+                          adminDetailsFOrMention={adminList}
+                        />
+                        : null
                       :
                       commentsRes ?
 
@@ -639,7 +647,7 @@ export default function SharePointDocument({
                 ) : (
                   <FolderList
                     docTypeList={docTypeList}
-                    setFolderID={setFolderID}
+                    setFolderID={setShowDropDown}
                     setDocTypeName={setDocTypeName}
                     folderID={folderID}
                     showDropDown={showDropDown}

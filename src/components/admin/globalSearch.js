@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Button, Form, InputGroup } from "react-bootstrap";
+// import { Button, Form, InputGroup } from "react-bootstrap";
 import GlobalSearchCard from "./globalSearchCard";
 import { GlobalSearchResult } from "../../api/api";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
 function GlobalSearch() {
