@@ -775,6 +775,7 @@ export const ADocAnnotation = async (
       employee_id: employee_id,
       doc_parent_id: docPartentId,
       id: annotationId,
+      assigned_to:email
     },
     {
       headers: {

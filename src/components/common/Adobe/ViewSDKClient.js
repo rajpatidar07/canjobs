@@ -2,26 +2,26 @@ import { toast } from "react-toastify";
 import { ADocAnnotation, UpdateDocuentcommentAssign } from "../../../api/api";
 const profile = {
     userProfile: {
-        name: 
-        // localStorage.getItem("userType") === "user"
-        //     ? localStorage.getItem("name").charAt(0).toUpperCase() + localStorage.getItem("name").slice(1) :
-        localStorage.getItem("admin")?localStorage.getItem("admin").charAt(0).toUpperCase() + localStorage.getItem("admin").slice(1):"",
+        name:
+            // localStorage.getItem("userType") === "user"
+            //     ? localStorage.getItem("name").charAt(0).toUpperCase() + localStorage.getItem("name").slice(1) :
+            localStorage.getItem("admin") ? localStorage.getItem("admin").charAt(0).toUpperCase() + localStorage.getItem("admin").slice(1) : "",
         firstName:
-        //  localStorage.getItem("userType") === "user"
-        //     ? localStorage.getItem("name") : 
+            //  localStorage.getItem("userType") === "user"
+            //     ? localStorage.getItem("name") : 
             localStorage.getItem("admin"),
         email:
-        //  localStorage.getItem("userType") === "user"
-        //     ? localStorage.getItem("email") :
-             localStorage.getItem("admin_email"),
-        id: 
-        // localStorage.getItem("userType") === "user"
-        //     ? localStorage.getItem("employee_id") :
-             localStorage.getItem("admin_id"),
+            //  localStorage.getItem("userType") === "user"
+            //     ? localStorage.getItem("email") :
+            localStorage.getItem("admin_email"),
+        id:
+            // localStorage.getItem("userType") === "user"
+            //     ? localStorage.getItem("employee_id") :
+            localStorage.getItem("admin_id"),
         type: "Person"
     }
 };
-let client_id= "d9e8b7bcb61b42b6a387bfa9cf16a75b"//(Local)
+let client_id = "d9e8b7bcb61b42b6a387bfa9cf16a75b"//(Local)
 //"713b22cf34e345c388e4490f9c9dc79b"//Canpathways
 //"d9e8b7bcb61b42b6a387bfa9cf16a75b"//(Local)
 //"d9b36f468d7a4e4e8b275f13728f1132",//(vercel)
@@ -49,9 +49,8 @@ class ViewSDKClient {
         });
     }
 
-    previewFile(divId, viewerConfig, url, data, userId, annotationId) {
+    previewFile(divId, viewerConfig, url, data) {
         const fileExtension = data.name.split('.').pop().toLowerCase();
-
         const config = {
             clientId: client_id
         };
@@ -88,8 +87,6 @@ class ViewSDKClient {
                 fileName: data.name,
                 id: data.id,
                 parentReference: data.parentReference,
-                userId: userId,
-                annotationId: annotationId
             }
         }, viewerConfig);
 
@@ -112,8 +109,12 @@ class ViewSDKClient {
         }, {});
     }
 
-    registerSaveApiHandler() {
+    registerSaveApiHandler(selectedMentionAdmin, userId, annotationId,) {
         const saveApiHandler = (metaData, content, options) => {
+            console.log(selectedMentionAdmin.map(admin => admin.admin_id)
+                ,selectedMentionAdmin.map(admin => admin.name)
+                ,selectedMentionAdmin.map(admin => admin.email)
+            )
             return new Promise(resolve => {
                 setTimeout(async () => {
                     const response = {
@@ -125,8 +126,8 @@ class ViewSDKClient {
                     };
                     resolve(response);
                     if (this.annots) {
-                        console.log(this.annots)
-                        if (metaData.annotationId) {
+                        console.log(response)
+                        if (annotationId) {
                             let updatedData = {
                                 // task_creator_user_id: localStorage.getItem("admin_id"),
                                 // task_creator_user_type: "",
@@ -142,7 +143,7 @@ class ViewSDKClient {
                                 // type: "document",
                                 // employee_id: metaData.userId,
                                 // doc_parent_id: metaData.parentReference.id,
-                                id: metaData.annotationId,
+                                id: annotationId,
                             }
                             try {
                                 let res = await UpdateDocuentcommentAssign(updatedData)
@@ -160,8 +161,8 @@ class ViewSDKClient {
                                 let res = await ADocAnnotation(
                                     localStorage.getItem("admin_id"),
                                     metaData.id,
-                                    "",//ASSIGNED ADMIN ID
-                                    "",//ASSIGNED ADMIN EMAIL
+                                    "1,35",//selectedMentionAdmin.map(admin => admin.admin_id),//ASSIGNED ADMIN ID
+                                   "raj.we2code@gmail.com,g.choudhary.we2code@gmail.com",// selectedMentionAdmin.map(admin => admin.email),//ASSIGNED ADMIN EMAIL
                                     "",//SUBJECT
                                     "N/A",//COMMENT
                                     "0",//X AXIS
@@ -169,17 +170,17 @@ class ViewSDKClient {
                                     "document",
                                     localStorage.getItem("admin_type"), //sender ADMIN type
                                     localStorage.getItem("admin"), //sender name,
-                                    "", //assigned Admin or user Name,
+                                    "raj,gourav", //selectedMentionAdmin.map(admin => admin.name), //assigned Admin or user Name,
                                     "", //follow up status(for notes only)
                                     "", //Next follow up date(for notes only)
                                     "", //Assign user type,
                                     "", //Document url(for notes only)
                                     localStorage.getItem("admin_email"), //Sender email
-                                    metaData.userId, //employee id,
+                                    userId, //employee id,
                                     "", //assigned_by_id
                                     metaData.parentReference.id, // document parent code,
                                     this.annots,//Annotation data,
-                                    metaData.annotationId //annotationId
+                                    annotationId //annotationId
                                 );
                                 if (res.data.message === "task inserted successfully!") {
                                     toast.success("Commented Successfully", {

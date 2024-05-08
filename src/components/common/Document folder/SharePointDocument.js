@@ -11,7 +11,7 @@ import {
 import { Dropdown, Form } from "react-bootstrap";
 import SAlert from "../../common/sweetAlert";
 import { Link } from 'react-router-dom';
-import { IoMdArrowBack } from "react-icons/io";
+import { IoMdArrowBack, IoMdPersonAdd } from "react-icons/io";
 import FolderList from "./FolderList";
 import { toast } from "react-toastify";
 // import DocSaveForm from "./DocSaveForm";
@@ -22,6 +22,7 @@ import EditDocNameFOrm from "./EditDocNameFOrm";
 import PdfViewerComponent from "../../PdfViewerComponent";
 import AdobePDFViewer from "../Adobe/adobeFile";
 import { jsPDF } from "jspdf";
+import MentionAdminInDoc from "../Adobe/MentionAdminInDoc";
 // import { PDFDocument } from 'pdf-lib';
 
 export default function SharePointDocument({
@@ -42,7 +43,9 @@ export default function SharePointDocument({
   const [breadcrumbData, setBreadcrumbData] = useState("");
   const [docTypeList, setDocTypeList] = useState([]);
   const [showDropDown, setShowDropDown] = useState(false);
-  const [editNameForm, setEditNameForm] = useState(false);
+  const [showMentionAdminDropDown, setMentionAdminShowDropDown] = useState(false);
+  const [selectedMentionAdmin, setSelectedMentionAdmin] = useState([]);
+ const [editNameForm, setEditNameForm] = useState(false);
   const [docSingleDate, setDocSingleDate] = useState("");
   const [docPreview, setDocPreview] = useState(false);
   const [docLoder, setDocLoder] = useState(false);
@@ -75,7 +78,10 @@ export default function SharePointDocument({
           // setCommentsList(res.data.data.data.map(obj =>
           //   JSON.parse(obj.doctaskjson)
           // ));
-          if (data.file.mimeType === "application/pdf"
+          if (data.file.mimeType === "application/pdf"||
+          data.file.mimeType === "image/jpeg" ||
+           data.file.mimeType === "image/png" ||
+            data.file.mimeType === "image/jpg"
             // docTypePage === "adobe"
           ) {
             setCommentsList(res.data.data.data)
@@ -115,12 +121,13 @@ export default function SharePointDocument({
         setAdminList([]);
       } else {
         // const filteredData = userData.data.filter(item => item.admin_type === "manager");
-        setAdminList(userData.data.map(obj => ({
-          name: obj.name,
-          id: obj.admin_id,
-          // description: obj.email,
-          displayName: obj.name
-        })))
+        setAdminList(userData.data)
+        // setAdminList(userData.data.map(obj => ({
+        //   name: obj.name,
+        //   id: obj.admin_id,
+        //   description: obj.email,
+        //   displayName: obj.name
+        // })))
       }
     } catch (err) {
       console.log(err);
@@ -203,7 +210,6 @@ export default function SharePointDocument({
         if (notification === "yes") {
           if (res.data.data.find((item) => item.id === docId)) {
             setDocPreview(true);
-            console.log("object");
             setDocSingleDate(res.data.data.find((item) => item.id === docId));
             console.log(res.data.data.find((item) => item.id === docId))
             const newUrl = window.location.pathname;
@@ -242,7 +248,7 @@ export default function SharePointDocument({
   };
   useEffect(() => {
     AllShareType();
-    if (localStorage.getItem("userType" === "admin")) {
+    if (localStorage.getItem("userType") === "admin") {
       AdminData()
     }
 
@@ -481,7 +487,7 @@ export default function SharePointDocument({
                 >
                   <div className="back_btn_div">
                     <Link
-                      className="rounded-circle"
+                      className="rounded-circle back-btn"
                       style={{
                         position: "absolute",
                         top: 5,
@@ -493,20 +499,52 @@ export default function SharePointDocument({
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
+                        textDecoration: "none", // Added to remove underline from Link
                       }}
                       to=""
                       onClick={() => {
                         setDocSingleDate("");
                         setDocPreview(false);
-                        setCommentsRes("")
+                        setCommentsRes("");
                         setFolderID(docSingleDate.parentReference.id);
-                        setConvertedDoc("")
-                        setShowDropDown("")
+                        setConvertedDoc("");
+                        setShowDropDown("");
                       }}
                     >
                       <IoMdArrowBack />
                     </Link>
+                    <Link
+                      className="rounded-circle add-person-btn" // Changed class name for clarity
+                      style={{
+                        position: "absolute",
+                        top: 15,
+                        right: 75, // Changed to align with the right side
+                        background: "#fff",
+                        width: 30,
+                        height: 30,
+                        zIndex: 9999,
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        textDecoration: "none",
+                        color: "#4b4b4b"
+                      }}
+                      to=""
+                      onClick={() => {
+                        setMentionAdminShowDropDown(true)
+                      }}
+                    >
+                      <IoMdPersonAdd />
+                    </Link>
+                    {showMentionAdminDropDown === true ?
+                      <MentionAdminInDoc
+                        adminList={adminList}
+                        setMentionAdminShowDropDown={setMentionAdminShowDropDown}
+                        selectedMentionAdmin={selectedMentionAdmin}
+                         setSelectedMentionAdmin={setSelectedMentionAdmin}
+                      /> : null}
                   </div>
+
                   {
                     // docTypePage === "adobe"
                     ((docSingleDate.file.mimeType === "application/pdf" ||
@@ -529,7 +567,7 @@ export default function SharePointDocument({
                           data={docSingleDate}
                           userId={user_id}
                           commentsList={commentsList}
-                          adminDetailsFOrMention={adminList}
+                          selectedMentionAdmin={selectedMentionAdmin}
                         />
                         : null
                       :
@@ -647,7 +685,7 @@ export default function SharePointDocument({
                 ) : (
                   <FolderList
                     docTypeList={docTypeList}
-                    setFolderID={setShowDropDown}
+                    setFolderID={setFolderID}
                     setDocTypeName={setDocTypeName}
                     folderID={folderID}
                     showDropDown={showDropDown}

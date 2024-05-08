@@ -1,9 +1,6 @@
-import React, { useEffect,useState/*, useRef */ } from 'react';
+import React, { useEffect/*, useRef */ } from 'react';
 import ViewSDKClient from './ViewSDKClient.js';
-import { Link } from 'react-router-dom';
-const AdobePDFViewer = ({ url, data, userId, commentsList ,adminDetailsFOrMention}) => {
-    const [showDropDown, setShowDropDown] = useState(false)
-
+const AdobePDFViewer = ({ url, data, userId, commentsList, selectedMentionAdmin }) => {
     const annotationId = !commentsList || commentsList.length === 0 ? "" : commentsList[0].id
     let annotationData = !commentsList || commentsList.length === 0 ? "" : JSON.parse(commentsList[0].doctaskjson)
     useEffect(() => {
@@ -12,7 +9,7 @@ const AdobePDFViewer = ({ url, data, userId, commentsList ,adminDetailsFOrMentio
             const previewFilePromise = viewSDKClient.previewFile("pdf-div", {
                 showAnnotationTools: false, showLeftHandPanel: true, showPageControls: true, enableAnnotationAPIs: true, includePDFAnnotations: true,
                 showDownloadPDF: true, showPrintPDF: true,
-            }, url, data, userId, annotationId);
+            }, url, data );
             const eventOptions = {
                 listenOn: [
                     "ANNOTATION_ADDED", "ANNOTATION_UPDATED", "ANNOTATION_DELETED"
@@ -74,36 +71,15 @@ const AdobePDFViewer = ({ url, data, userId, commentsList ,adminDetailsFOrMentio
                     console.log(e);
                 });
 
-            viewSDKClient.registerSaveApiHandler();
+            viewSDKClient.registerSaveApiHandler(selectedMentionAdmin, userId, annotationId,);
             viewSDKClient.registerGetUserProfileApiHandler()
         });
         // eslint-disable-next-line
-    }, [annotationId]);
+    }, [annotationId, selectedMentionAdmin]);
     return (
         <div style={{ height: "100vh" }}>
             <div id="pdf-div" className="full-window-div" style={{ height: "100vh" }}
-                onContextMenu={(e) => {
-                    e.preventDefault(); // prevent the default behaviour when right clicked
-                    setShowDropDown(true);
-                }}>
-                {showDropDown && (
-                    <ul className="list-group">
-                        {adminDetailsFOrMention.map((item, index) => {
-                            return (
-                                <li className="list-group-item" key={index}>
-                                    <Link
-                                    //   onClick={() => {
-                                    //     setEditNameForm(true);
-                                    //     setDocSingleDate(item);
-                                    //   }}
-                                    >
-                                        {console.log(item)}
-                                    </Link>
-                                </li>
-                            )
-                        })}
-                    </ul>
-                )}
+            >
             </div>
         </div>
     );
