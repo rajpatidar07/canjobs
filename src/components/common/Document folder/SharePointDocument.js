@@ -199,7 +199,6 @@ export default function SharePointDocument({
         user_id,
         emp_user_type,
         // docId ? folderId :
-
         folderID
       );
       if (res.data.status === 1) {
@@ -211,8 +210,10 @@ export default function SharePointDocument({
           if (res.data.data.find((item) => item.id === docId)) {
             setDocPreview(true);
             setDocSingleDate(res.data.data.find((item) => item.id === docId));
+            getCommentsList(res.data.data.find((item) => item.id === docId))
             console.log(res.data.data.find((item) => item.id === docId))
             const newUrl = window.location.pathname;
+            console.log(newUrl)
             window.history.replaceState({}, document.title, newUrl);
           }
         }
@@ -429,6 +430,7 @@ export default function SharePointDocument({
         const base64String = reader.result;
         setConvertedDoc(base64String)
         if (base64String) {
+          console.log("ddddd")
           setImgConRes("imageConverted")
         }
       };

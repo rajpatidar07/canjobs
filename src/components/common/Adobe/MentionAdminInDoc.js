@@ -1,17 +1,26 @@
 import React from 'react';
 import { IoMdClose } from 'react-icons/io';
+import { useSelector } from 'react-redux';
+import { addAdmin } from '../../../Store';
+import {  useDispatch } from 'react-redux'
 
 const MentionAdminInDoc = ({ adminList, selectedMentionAdmin, setSelectedMentionAdmin }) => {
+  const admin = useSelector((state) => state.adminList)
+  const dispatch = useDispatch()
+
+  console.log(admin)
   const handleUserSelect = (userId) => {
     const userToAdd = adminList.find((user) => user.admin_id === userId);
     if (userToAdd && !selectedMentionAdmin.find((user) => user.admin_id === userId)) {
       setSelectedMentionAdmin([...selectedMentionAdmin, userToAdd]);
+       dispatch(addAdmin(userToAdd))
     }
   };
 
   const handleUserRemove = (userId) => {
     const updatedUsers = selectedMentionAdmin.filter((user) => user.admin_id !== userId);
     setSelectedMentionAdmin(updatedUsers);
+     dispatch(addAdmin(updatedUsers))
   };
 
   return (

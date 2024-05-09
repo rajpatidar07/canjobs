@@ -9,7 +9,7 @@ const AdobePDFViewer = ({ url, data, userId, commentsList, selectedMentionAdmin 
             const previewFilePromise = viewSDKClient.previewFile("pdf-div", {
                 showAnnotationTools: false, showLeftHandPanel: true, showPageControls: true, enableAnnotationAPIs: true, includePDFAnnotations: true,
                 showDownloadPDF: true, showPrintPDF: true,
-            }, url, data );
+            }, url, data,selectedMentionAdmin );
             const eventOptions = {
                 listenOn: [
                     "ANNOTATION_ADDED", "ANNOTATION_UPDATED", "ANNOTATION_DELETED"
@@ -71,11 +71,11 @@ const AdobePDFViewer = ({ url, data, userId, commentsList, selectedMentionAdmin 
                     console.log(e);
                 });
 
-            viewSDKClient.registerSaveApiHandler(selectedMentionAdmin, userId, annotationId,);
+            viewSDKClient.registerSaveApiHandler( userId, annotationId,);
             viewSDKClient.registerGetUserProfileApiHandler()
         });
         // eslint-disable-next-line
-    }, [annotationId, selectedMentionAdmin]);
+    }, [annotationId]);
     return (
         <div style={{ height: "100vh" }}>
             <div id="pdf-div" className="full-window-div" style={{ height: "100vh" }}

@@ -111,10 +111,10 @@ class ViewSDKClient {
 
     registerSaveApiHandler(selectedMentionAdmin, userId, annotationId,) {
         const saveApiHandler = (metaData, content, options) => {
-            console.log(selectedMentionAdmin.map(admin => admin.admin_id)
-                ,selectedMentionAdmin.map(admin => admin.name)
-                ,selectedMentionAdmin.map(admin => admin.email)
-            )
+            // console.log(selectedMentionAdmin.map(admin => admin.admin_id).join(",")
+            //     , selectedMentionAdmin.map(admin => admin.name)
+            //     , selectedMentionAdmin.map(admin => admin.email)
+            // )
             return new Promise(resolve => {
                 setTimeout(async () => {
                     const response = {
@@ -126,7 +126,6 @@ class ViewSDKClient {
                     };
                     resolve(response);
                     if (this.annots) {
-                        console.log(response)
                         if (annotationId) {
                             let updatedData = {
                                 // task_creator_user_id: localStorage.getItem("admin_id"),
@@ -157,12 +156,13 @@ class ViewSDKClient {
                                 console.log(err)
                             }
                         } else {
+                            console.log("object")
                             try {
                                 let res = await ADocAnnotation(
                                     localStorage.getItem("admin_id"),
                                     metaData.id,
-                                    "1,35",//selectedMentionAdmin.map(admin => admin.admin_id),//ASSIGNED ADMIN ID
-                                   "raj.we2code@gmail.com,g.choudhary.we2code@gmail.com",// selectedMentionAdmin.map(admin => admin.email),//ASSIGNED ADMIN EMAIL
+                                   "",// selectedMentionAdmin.map(admin => admin.admin_id).join(","),//ASSIGNED ADMIN ID
+                                    "",//selectedMentionAdmin.map(admin => admin.email).join(","),//ASSIGNED ADMIN EMAIL
                                     "",//SUBJECT
                                     "N/A",//COMMENT
                                     "0",//X AXIS
@@ -170,10 +170,10 @@ class ViewSDKClient {
                                     "document",
                                     localStorage.getItem("admin_type"), //sender ADMIN type
                                     localStorage.getItem("admin"), //sender name,
-                                    "raj,gourav", //selectedMentionAdmin.map(admin => admin.name), //assigned Admin or user Name,
+                                    "",//selectedMentionAdmin.map(admin => admin.name).join(","), //assigned Admin or user Name,
                                     "", //follow up status(for notes only)
                                     "", //Next follow up date(for notes only)
-                                    "", //Assign user type,
+                                    "admin", //Assign user type,
                                     "", //Document url(for notes only)
                                     localStorage.getItem("admin_email"), //Sender email
                                     userId, //employee id,
@@ -182,35 +182,36 @@ class ViewSDKClient {
                                     this.annots,//Annotation data,
                                     annotationId //annotationId
                                 );
-                                if (res.data.message === "task inserted successfully!") {
-                                    toast.success("Commented Successfully", {
-                                        position: toast.POSITION.TOP_RIGHT,
-                                        autoClose: 1000,
-                                    });
-                                    //   setSelectedAnnotation(null);
-                                    //   setComments("");
-                                    //   setCommentApiCall(true);
-                                    //   setSelectedAdmin("");
-                                    //   setAnnotationMode(!isAnnotationMode);
-                                    //   setFilteredEmails([]);
-                                    // setNotificationApiCall(true);
-                                    localStorage.setItem("callNotification", true);
-                                }
+                                console.log(res)
+                                // if (res.data.message === "task inserted successfully!") {
+                                //     toast.success("Commented Successfully", {
+                                //         position: toast.POSITION.TOP_RIGHT,
+                                //         autoClose: 1000,
+                                //     });
+                                //     //   setSelectedAnnotation(null);
+                                //     //   setComments("");
+                                //     //   setCommentApiCall(true);
+                                //     //   setSelectedAdmin("");
+                                //     //   setAnnotationMode(!isAnnotationMode);
+                                //     //   setFilteredEmails([]);
+                                //     // setNotificationApiCall(true);
+                                //     localStorage.setItem("callNotification", true);
+                                // }
                             } catch (err) {
                                 console.log(err);
-                                if (err.response.data.message === "required fields cannot be blank") {
-                                    toast.error(" Please try again later.", {
-                                        position: toast.POSITION.TOP_RIGHT,
-                                        autoClose: 1000,
-                                    });
-                                    //   setSelectedAnnotation(null);
-                                    //   setComments("");
-                                    //   setSelectedAdmin("");
-                                    //   setCommentApiCall(true);
-                                    //   setAnnotationMode(!isAnnotationMode);
-                                    //   setAddCommentFlag();
-                                    //   setFilteredEmails([]);
-                                }
+                                // if (err.response.data.message === "required fields cannot be blank") {
+                                //     toast.error(" Please try again later.", {
+                                //         position: toast.POSITION.TOP_RIGHT,
+                                //         autoClose: 1000,
+                                //     });
+                                //     //   setSelectedAnnotation(null);
+                                //     //   setComments("");
+                                //     //   setSelectedAdmin("");
+                                //     //   setCommentApiCall(true);
+                                //     //   setAnnotationMode(!isAnnotationMode);
+                                //     //   setAddCommentFlag();
+                                //     //   setFilteredEmails([]);
+                                // }
                             }
                         }
                     }
