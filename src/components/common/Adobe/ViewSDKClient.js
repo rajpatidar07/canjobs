@@ -111,7 +111,7 @@ class ViewSDKClient {
 
     registerSaveApiHandler(selectedMentionAdmin, userId, annotationId,) {
         const saveApiHandler = (metaData, content, options) => {
-            console.log(selectedMentionAdmin.map(admin => admin.admin_id)
+            console.log(selectedMentionAdmin.map(admin => admin.admin_id).join(",")
                 ,selectedMentionAdmin.map(admin => admin.name)
                 ,selectedMentionAdmin.map(admin => admin.email)
             )
