@@ -1,26 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { IoMdClose } from 'react-icons/io';
-import { useSelector } from 'react-redux';
-import { addAdmin } from '../../../Store';
-import {  useDispatch } from 'react-redux'
 
-const MentionAdminInDoc = ({ adminList, selectedMentionAdmin, setSelectedMentionAdmin }) => {
-  const admin = useSelector((state) => state.adminList)
-  const dispatch = useDispatch()
+const MentionAdminInDoc = ({ adminList, commentsList }) => {
+  let AssignedId = commentsList[0].assined_to_user_id.split(",").map(Number)
+  let AssigneAdmin = adminList.filter((item) => AssignedId.includes(parseInt(item.admin_id)))
+  const [selectedMentionAdmin, setSelectedMentionAdmin] = useState(AssigneAdmin || [])
 
-  console.log(admin)
+  /*Function to add Admin to assign */
   const handleUserSelect = (userId) => {
     const userToAdd = adminList.find((user) => user.admin_id === userId);
     if (userToAdd && !selectedMentionAdmin.find((user) => user.admin_id === userId)) {
       setSelectedMentionAdmin([...selectedMentionAdmin, userToAdd]);
-       dispatch(addAdmin(userToAdd))
     }
   };
-
+  /*Function to Remove Admin to assign */
   const handleUserRemove = (userId) => {
     const updatedUsers = selectedMentionAdmin.filter((user) => user.admin_id !== userId);
     setSelectedMentionAdmin(updatedUsers);
-     dispatch(addAdmin(updatedUsers))
   };
 
   return (
@@ -36,13 +32,14 @@ const MentionAdminInDoc = ({ adminList, selectedMentionAdmin, setSelectedMention
           </option>
         ))}
       </select>
-      <div className="selected-users-container">
+      <div className="selected-users-container" id='SelectAdmin'>
         {selectedMentionAdmin.map((user, index) => (
           <div key={index} className="badge">
             {user.name}
+            <span className='d-none'>{user.email} {user.admin_id}</span>
             <IoMdClose
               onClick={() => handleUserRemove(user.admin_id)
-                
+
               }
               style={{ marginLeft: '5px', cursor: 'pointer' }}
             />

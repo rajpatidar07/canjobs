@@ -45,7 +45,7 @@ export default function SharePointDocument({
   const [showDropDown, setShowDropDown] = useState(false);
   const [showMentionAdminDropDown, setMentionAdminShowDropDown] = useState(false);
   const [selectedMentionAdmin, setSelectedMentionAdmin] = useState([]);
- const [editNameForm, setEditNameForm] = useState(false);
+  const [editNameForm, setEditNameForm] = useState(false);
   const [docSingleDate, setDocSingleDate] = useState("");
   const [docPreview, setDocPreview] = useState(false);
   const [docLoder, setDocLoder] = useState(false);
@@ -78,9 +78,9 @@ export default function SharePointDocument({
           // setCommentsList(res.data.data.data.map(obj =>
           //   JSON.parse(obj.doctaskjson)
           // ));
-          if (data.file.mimeType === "application/pdf"||
-          data.file.mimeType === "image/jpeg" ||
-           data.file.mimeType === "image/png" ||
+          if (data.file.mimeType === "application/pdf" ||
+            data.file.mimeType === "image/jpeg" ||
+            data.file.mimeType === "image/png" ||
             data.file.mimeType === "image/jpg"
             // docTypePage === "adobe"
           ) {
@@ -538,12 +538,13 @@ export default function SharePointDocument({
                     >
                       <IoMdPersonAdd />
                     </Link>
-                    {showMentionAdminDropDown === true ?
+                    {showMentionAdminDropDown === true ||commentsList[0]?.assined_to_user_id ?
                       <MentionAdminInDoc
                         adminList={adminList}
                         setMentionAdminShowDropDown={setMentionAdminShowDropDown}
                         selectedMentionAdmin={selectedMentionAdmin}
-                         setSelectedMentionAdmin={setSelectedMentionAdmin}
+                        setSelectedMentionAdmin={setSelectedMentionAdmin}
+                        commentsList={commentsList}
                       /> : null}
                   </div>
 

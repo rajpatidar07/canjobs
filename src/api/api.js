@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useSelector } from "react-redux";
 const API_URL = "https://apnaorganicstore.in/canjobs/";
 //Local
 // const API_URL ="http://192.168.29.51/canjobs/"
@@ -721,8 +720,6 @@ export const ADocAnnotation = async (
   AdobeAnnotation,
   annotationId
 ) => {
-  const admin = useSelector((state) => state.adminList.value)
-  console.log(admin)
     //   "1. task_creator_user_id =>", id,
   //   "2. task_creator_user_type =>", user_type === "admin" ? "admin" : "agent",
   //   "3. doc_id =>", docId,
@@ -738,56 +735,56 @@ export const ADocAnnotation = async (
   //   '13. employee_id =>', employee_id,
   //   '14. doc_parent_id =>',docPartentId
   // )
-  // const response = await axios.post(
-  //   `${API_URL}admin/docTaskAdd`,
-  //   //Old json {
-  //   //   task_creator_user_id: id,
-  //   //   task_creator_user_name: senderName,
-  //   //   task_creator_user_email: Senderemail,
-  //   //   task_creator_user_type: adminType,
-  //   //   doc_id: docId,
-  //   //   assined_to_user_id: assineduserid,
-  //   //   assigned_to: email,
-  //   //   assigned_to_name: assignName,
-  //   //   assigned_user_type: AssignUserType,
-  //   //   document_url: type === "partner" || "partnerChat" ? DocUrl : "",
-  //   //   next_followup_date: nextFollowupDate,
-  //   //   followup_status: satus,
-  //   //   subject: subject,
-  //   //   subject_description: comment,
-  //   //   x_axis: x,
-  //   //   y_axis: y,
-  //   //   type: type,
-  //   //   employee_id: employee_id,
-  //   // },
-  //   {
-  //     task_creator_user_id: id,
-  //     task_creator_user_type: user_type === "admin" ? "admin" : "agent",
-  //     doc_id: docId,
-  //     user_admin_assigned:
-  //       type === "partner" || "partnerChat" ? assigned_by_id : "",
-  //     json: AdobeAnnotation,
-  //     assined_to_user_id: assineduserid,
-  //     assigned_user_type: AssignUserType,
-  //     document_url: type === "partner" || "partnerChat" ? DocUrl : "",
-  //     subject_description: comment,
-  //     x_axis: x,
-  //     y_axis: y,
-  //     type: type,
-  //     employee_id: employee_id,
-  //     doc_parent_id: docPartentId,
-  //     id: annotationId,
-  //     assigned_to:email,
-  //     assigned_to_name: assignName,
-  //   },
-  //   {
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: Token,
-  //     },
-  //   }
-  // );
-  // return response;
+  const response = await axios.post(
+    `${API_URL}admin/docTaskAdd`,
+    //Old json {
+    //   task_creator_user_id: id,
+    //   task_creator_user_name: senderName,
+    //   task_creator_user_email: Senderemail,
+    //   task_creator_user_type: adminType,
+    //   doc_id: docId,
+    //   assined_to_user_id: assineduserid,
+    //   assigned_to: email,
+    //   assigned_to_name: assignName,
+    //   assigned_user_type: AssignUserType,
+    //   document_url: type === "partner" || "partnerChat" ? DocUrl : "",
+    //   next_followup_date: nextFollowupDate,
+    //   followup_status: satus,
+    //   subject: subject,
+    //   subject_description: comment,
+    //   x_axis: x,
+    //   y_axis: y,
+    //   type: type,
+    //   employee_id: employee_id,
+    // },
+    {
+      task_creator_user_id: id,
+      task_creator_user_type: user_type === "admin" ? "admin" : "agent",
+      doc_id: docId,
+      user_admin_assigned:
+        type === "partner" || "partnerChat" ? assigned_by_id : "",
+      json: AdobeAnnotation,
+      assined_to_user_id: assineduserid,
+      assigned_user_type: AssignUserType,
+      document_url: type === "partner" || "partnerChat" ? DocUrl : "",
+      subject_description: comment,
+      x_axis: x,
+      y_axis: y,
+      type: type,
+      employee_id: employee_id,
+      doc_parent_id: docPartentId,
+      id: annotationId,
+      assigned_to:email,
+      assigned_to_name: assignName,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
 };
 /*Api to get document comment list  */
 export const GetCommentsAndAssign = async (

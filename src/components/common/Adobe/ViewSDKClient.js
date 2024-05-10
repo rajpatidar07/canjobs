@@ -109,12 +109,24 @@ class ViewSDKClient {
         }, {});
     }
 
-    registerSaveApiHandler(selectedMentionAdmin, userId, annotationId,) {
+    registerSaveApiHandler(userId, annotationId,) {
         const saveApiHandler = (metaData, content, options) => {
-            // console.log(selectedMentionAdmin.map(admin => admin.admin_id).join(",")
-            //     , selectedMentionAdmin.map(admin => admin.name)
-            //     , selectedMentionAdmin.map(admin => admin.email)
-            // )
+            const selectedMentionAdmin = [];
+            // Get the Assigned admin
+            const container = document.getElementById('SelectAdmin');
+            if (container && container.children) {
+                for (let i = 0; i < container.children.length; i++) {
+                    const child = container.children[i];
+                    if (child.classList.contains('badge')) {
+                        const childData = child.querySelector('span.d-none').innerText.trim();
+                        const [email, id] = childData.split(' ');
+                        const name = child.innerText.trim();
+                        selectedMentionAdmin.push({ name, email, id });
+                    }
+                }
+            } else {
+                console.error('Container element not found or has no children.');
+            }
             return new Promise(resolve => {
                 setTimeout(async () => {
                     const response = {
@@ -143,6 +155,9 @@ class ViewSDKClient {
                                 // employee_id: metaData.userId,
                                 // doc_parent_id: metaData.parentReference.id,
                                 id: annotationId,
+                                assigned_to: selectedMentionAdmin.map(admin => admin.email).join(","),
+                                assined_to_user_id: selectedMentionAdmin.map(admin => admin.id).join(","),
+                                assigned_to_name: selectedMentionAdmin.map(admin => admin.name).join(",")
                             }
                             try {
                                 let res = await UpdateDocuentcommentAssign(updatedData)
@@ -156,13 +171,12 @@ class ViewSDKClient {
                                 console.log(err)
                             }
                         } else {
-                            console.log("object")
                             try {
                                 let res = await ADocAnnotation(
                                     localStorage.getItem("admin_id"),
                                     metaData.id,
-                                   "",// selectedMentionAdmin.map(admin => admin.admin_id).join(","),//ASSIGNED ADMIN ID
-                                    "",//selectedMentionAdmin.map(admin => admin.email).join(","),//ASSIGNED ADMIN EMAIL
+                                    selectedMentionAdmin.map(admin => admin.id).join(","),//ASSIGNED ADMIN ID
+                                    selectedMentionAdmin.map(admin => admin.email).join(","),//ASSIGNED ADMIN EMAIL
                                     "",//SUBJECT
                                     "N/A",//COMMENT
                                     "0",//X AXIS
@@ -170,7 +184,7 @@ class ViewSDKClient {
                                     "document",
                                     localStorage.getItem("admin_type"), //sender ADMIN type
                                     localStorage.getItem("admin"), //sender name,
-                                    "",//selectedMentionAdmin.map(admin => admin.name).join(","), //assigned Admin or user Name,
+                                    selectedMentionAdmin.map(admin => admin.name).join(","), //assigned Admin or user Name,
                                     "", //follow up status(for notes only)
                                     "", //Next follow up date(for notes only)
                                     "admin", //Assign user type,
@@ -182,21 +196,20 @@ class ViewSDKClient {
                                     this.annots,//Annotation data,
                                     annotationId //annotationId
                                 );
-                                console.log(res)
-                                // if (res.data.message === "task inserted successfully!") {
-                                //     toast.success("Commented Successfully", {
-                                //         position: toast.POSITION.TOP_RIGHT,
-                                //         autoClose: 1000,
-                                //     });
-                                //     //   setSelectedAnnotation(null);
-                                //     //   setComments("");
-                                //     //   setCommentApiCall(true);
-                                //     //   setSelectedAdmin("");
-                                //     //   setAnnotationMode(!isAnnotationMode);
-                                //     //   setFilteredEmails([]);
-                                //     // setNotificationApiCall(true);
-                                //     localStorage.setItem("callNotification", true);
-                                // }
+                                if (res.data.message === "task inserted successfully!") {
+                                    toast.success("Commented Successfully", {
+                                        position: toast.POSITION.TOP_RIGHT,
+                                        autoClose: 1000,
+                                    });
+                                    //   setSelectedAnnotation(null);
+                                    //   setComments("");
+                                    //   setCommentApiCall(true);
+                                    //   setSelectedAdmin("");
+                                    //   setAnnotationMode(!isAnnotationMode);
+                                    //   setFilteredEmails([]);
+                                    // setNotificationApiCall(true);
+                                    localStorage.setItem("callNotification", true);
+                                }
                             } catch (err) {
                                 console.log(err);
                                 // if (err.response.data.message === "required fields cannot be blank") {
