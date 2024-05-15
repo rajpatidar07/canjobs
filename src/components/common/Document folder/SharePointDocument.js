@@ -20,7 +20,7 @@ import Loader from "../loader";
 import Breadcrumbs from "./Breadcrumb";
 import EditDocNameFOrm from "./EditDocNameFOrm";
 // import PreviewDocument from "./PreviewDocument";
-import PdfViewerComponent from "../../PdfViewerComponent";
+// import PdfViewerComponent from "../../PdfViewerComponent";
 import AdobePDFViewer from "../Adobe/adobeFile";
 import { jsPDF } from "jspdf";
 import MentionAdminInDoc from "../Adobe/MentionAdminInDoc";
@@ -61,11 +61,11 @@ export default function SharePointDocument({
   const [imgConRes, setImgConRes] = useState();
   const [convertedDoc, setConvertedDoc] = useState("");
   // Function to convert HTML text to plain text
-  function convertHtmlToText(html) {
-    const tempElement = document.createElement("div");
-    tempElement.innerHTML = html;
-    return tempElement.textContent || tempElement.innerText || "";
-  }
+  // function convertHtmlToText(html) {
+  //   const tempElement = document.createElement("div");
+  //   tempElement.innerHTML = html;
+  //   return tempElement.textContent || tempElement.innerText || "";
+  // }
   // Generate a list of comments from the state for image annotation
   const getCommentsList = async (data) => {
     if (data) {
