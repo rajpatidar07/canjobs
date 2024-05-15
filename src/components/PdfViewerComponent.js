@@ -13,34 +13,37 @@ export default function PdfViewerComponent(props) {
       // Simulate API call or async operation
       if (noteJson) {
         setTimeout(() => {
-          console.log("Note created:", (noteJson));
+          console.log("Note created:", noteJson);
           resolve({
-            "bbox": noteJson.createdNote.boundingBox,
-            "blendMode": noteJson.createdNote.blendMode,
-            "createdAt": noteJson.createdNote.createdAt,
-            "name": noteJson.createdNote.name,
-            "opacity": noteJson.createdNote.opacity,
-            "pageIndex": noteJson.createdNote.pageIndex,
+            bbox: noteJson.createdNote.boundingBox,
+            blendMode: noteJson.createdNote.blendMode,
+            createdAt: noteJson.createdNote.createdAt,
+            name: noteJson.createdNote.name,
+            opacity: noteJson.createdNote.opacity,
+            pageIndex: noteJson.createdNote.pageIndex,
             // "strokeColor": "#2293FB",
             // "strokeWidth": 5,
-            "type": "pspdfkit/comment",
-            "rects": noteJson.createdNote.rects,
-            "color": noteJson.createdNote.color,
-            "updatedAt": noteJson.createdNote.updatedAt,
-            "v": 1,
+            type: "pspdfkit/comment",
+            rects: noteJson.createdNote.rects,
+            color: noteJson.createdNote.color,
+            updatedAt: noteJson.createdNote.updatedAt,
+            v: 1,
             canReply: true,
             // "note": "<p>gggggggg</p>",
-            "creatorName": noteJson.createdNote.creatorName,
-            "rootId": noteJson.createdComments ? noteJson.createdComments.rootId : "",
-            "pdfObjectId": noteJson.createdNote.pdfObjectId,
+            creatorName: noteJson.createdNote.creatorName,
+            rootId: noteJson.createdComments
+              ? noteJson.createdComments.rootId
+              : "",
+            pdfObjectId: noteJson.createdNote.pdfObjectId,
             // "text": {
             //   "format": noteJson.createdComments.text.format,
             //   "value": noteJson.createdComments.text.value
             // },
-            "text": noteJson.createdComments ? noteJson.createdComments.text.value : "",
+            text: noteJson.createdComments
+              ? noteJson.createdComments.text.value
+              : "",
             // "customData": null,
-            "mentionId": noteJson.mentionId ? noteJson.mentionId : ""
-
+            mentionId: noteJson.mentionId ? noteJson.mentionId : "",
           }); // Simulated response with an ID
         }, 1000);
       }
@@ -178,57 +181,68 @@ export default function PdfViewerComponent(props) {
         const container = containerRef.current;
         let adminName = localStorage.getItem("admin");
 
-        PSPDFKit.unload(container)
+        PSPDFKit.unload(container);
         if (!container) {
           throw new Error("Container element not found.");
         }
         instance = await PSPDFKit.load({
           container,
-          license: "zFV8P9YHvxGpBc0Tp-W4cg6Fl-zD9VyTWQGiJTi1A0pM18iMZUQDrARKsunUn4oFAuan32RJzCDR--1nglDFAeacyOumrQOdc7aLnh0zkUHLoL9ZIyYS885cFaZySBalYNU4cbnmdUaZUlte0UEfoF8wM-_lJnbFYTYyWvpuPQ7BICRjm9_SGVz9V8bQGEU3OjpqY_YsvjfyRw", // Replace with your actual license key
+          license:
+            "zFV8P9YHvxGpBc0Tp-W4cg6Fl-zD9VyTWQGiJTi1A0pM18iMZUQDrARKsunUn4oFAuan32RJzCDR--1nglDFAeacyOumrQOdc7aLnh0zkUHLoL9ZIyYS885cFaZySBalYNU4cbnmdUaZUlte0UEfoF8wM-_lJnbFYTYyWvpuPQ7BICRjm9_SGVz9V8bQGEU3OjpqY_YsvjfyRw", // Replace with your actual license key
           document: props.document,
           baseUrl: `${window.location.protocol}//${window.location.host}/${process.env.PUBLIC_URL}`,
           CommentMarkerAnnotation: true,
           setOnCommentCreationStart: true,
-          toolbarItems:
-            PSPDFKit.defaultToolbarItems.concat({ type: "annotate" }),
+          toolbarItems: PSPDFKit.defaultToolbarItems.concat({
+            type: "annotate",
+          }),
           mentionableUsers: props.adminDetailsFOrMention,
           autoSaveMode: PSPDFKit.AutoSaveMode.IMMEDIATE,
           enableRichText: () => true,
-          instant: true
+          instant: true,
         });
 
-        instance.setAnnotationCreatorName(adminName.charAt(0).toUpperCase() + adminName.slice(1));
+        instance.setAnnotationCreatorName(
+          adminName.charAt(0).toUpperCase() + adminName.slice(1)
+        );
         let eventData = {};
         /* Function to create Annotation comment */
-        instance.addEventListener("comments.create", async createdComments => {
-          eventData.createdComments = createdComments.get(0);
-          console.log(createdComments.get(0))
-          eventData.mentionId = createdComments.get(0).getMentionedUserIds()._map._root ? createdComments.get(0).getMentionedUserIds()._map._root.entries[0][0] : ""
-          // console.log("Data from comments.create:", createdComments.get(0).getMentionedUserIds()._map._root.entries[0][0]);
-        });
+        instance.addEventListener(
+          "comments.create",
+          async (createdComments) => {
+            eventData.createdComments = createdComments.get(0);
+            console.log(createdComments.get(0));
+            eventData.mentionId = createdComments.get(0).getMentionedUserIds()
+              ._map._root
+              ? createdComments.get(0).getMentionedUserIds()._map._root
+                  .entries[0][0]
+              : "";
+            // console.log("Data from comments.create:", createdComments.get(0).getMentionedUserIds()._map._root.entries[0][0]);
+          }
+        );
 
         /* Function to create Annotation note */
-        instance.addEventListener("annotations.create", async createdNote => {
+        instance.addEventListener("annotations.create", async (createdNote) => {
           const note = createdNote.get(0);
-          console.log(note)
+          console.log(note);
           // const serializedObjectNote = toSerializableObject(note);
           // const noteJson = serializedObjectNote;
           if (!isLoadingNotes.current) {
             // Store data from annotations.create in eventData
             eventData.createdNote = note;
             // console.log("Combined eventData:", (eventData));
-            createPdfNote(eventData).then(async response => {
+            createPdfNote(eventData).then(async (response) => {
               console.log("Final data:", JSON.stringify(response));
               try {
                 let res = await ADocAnnotation(
                   localStorage.getItem("admin_id"),
                   props.data.id,
-                  "",//ASSIGNED ADMIN ID
-                  "",//ASSIGNED ADMIN EMAIL
-                  "",//SUBJECT
-                  "N/A",//COMMENT
-                  "0",//X AXIS
-                  "0",//Y AXIS
+                  "", //ASSIGNED ADMIN ID
+                  "", //ASSIGNED ADMIN EMAIL
+                  "", //SUBJECT
+                  "N/A", //COMMENT
+                  "0", //X AXIS
+                  "0", //Y AXIS
                   "document",
                   localStorage.getItem("admin_type"), //sender ADMIN type
                   localStorage.getItem("admin"), //sender name,
@@ -241,7 +255,7 @@ export default function PdfViewerComponent(props) {
                   props.userId, //employee id,
                   "", //assigned_by_id
                   props.data.parentReference.id, // document parent code,
-                  response,//Annotation data,
+                  response //Annotation data,
                   //metaData.annotationId //annotationId
                 );
                 if (res.data.message === "task inserted successfully!") {
@@ -261,7 +275,10 @@ export default function PdfViewerComponent(props) {
                 }
               } catch (err) {
                 console.log(err);
-                if (err.response.data.message === "required fields cannot be blank") {
+                if (
+                  err.response.data.message ===
+                  "required fields cannot be blank"
+                ) {
                   toast.error(" Please try again later.", {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 1000,
@@ -279,16 +296,16 @@ export default function PdfViewerComponent(props) {
           }
         });
         /* Function to Update Annotation comment */
-        instance.addEventListener("comments.update", updatedComments => {
+        instance.addEventListener("comments.update", (updatedComments) => {
           // console.log(updatedComments.get(0).id);
         });
 
         /* Function to Delete Annotation comment */
-        instance.addEventListener("comments.delete", deletedComments => {
+        instance.addEventListener("comments.delete", (deletedComments) => {
           // console.log(deletedComments.get(0).id);
         });
 
-        instance.setMentionableUsers(props.adminDetailsFOrMention)
+        instance.setMentionableUsers(props.adminDetailsFOrMention);
 
         // Your existing code for PSPDFKit configuration and event listeners
         instance.addEventListener("annotations.load", (loadedAnnotations) => {
@@ -297,7 +314,7 @@ export default function PdfViewerComponent(props) {
         instance.addEventListener("annotations.change", function () {
           // console.log("Something in the annotations has changed.");
         });
-        console.log(props.commentsList)
+        console.log(props.commentsList);
         /*Json tried to show */
         // instance.applyOperations([
         //   {
@@ -463,7 +480,7 @@ export default function PdfViewerComponent(props) {
         //         //   //   ]
         //         //   // }
         //         //   {
-        //         //     "bbox":[ 
+        //         //     "bbox":[
         //         //         238.41796875,
         //         //         197.27001953125,
         //         //         38.59687500000001,
@@ -553,7 +570,7 @@ export default function PdfViewerComponent(props) {
         // }
         instance.addEventListener("annotations.didSave", (annotations) => {
           console.log("Annotations saved!", annotations.toJS());
-        })
+        });
         return instance;
       } catch (error) {
         console.error("Error loading PSPDFKit:", error);
@@ -579,7 +596,6 @@ export default function PdfViewerComponent(props) {
     />
   );
 }
-
 
 // import React, { useEffect, useRef } from "react";
 // export default function PdfViewerComponent(props) {
@@ -611,7 +627,7 @@ export default function PdfViewerComponent(props) {
 //           toolbarItems,
 //           enableRichText: () => true
 //         });
-//         console.log(instance) 
+//         console.log(instance)
 //       try{  instance.contentDocument.addEventListener(
 //           "pointerdown",
 //           event => {
@@ -628,11 +644,11 @@ export default function PdfViewerComponent(props) {
 //           console.log(err)
 //         }
 //         instance.setAnnotationCreatorName(adminName.charAt(0).toUpperCase() + adminName.slice(1));
-//         /*Function to create Annotation comment */     
+//         /*Function to create Annotation comment */
 //          instance.addEventListener("comments.create", async createdComments => {
 //          console.log(createdComments.get(0).id)
 //         })
-//         /*Function to Update Annotation comment */     
+//         /*Function to Update Annotation comment */
 //         instance.addEventListener("comments.update", updatedComments => {
 //           console.log(updatedComments.get(0).id)
 //         });

@@ -489,7 +489,10 @@ export default function SharePointDocument({
         <div className="document_section">
           {docPreview ? (
             <div className="App-viewer">
-              <div className="row m-0 bg-white document_preview_box h-100vh overflow-hidden">
+              <div
+                className="row m-0 bg-white document_preview_box overflow-hidden"
+                style={{ maxHeight: "calc(100vh - 130px)" }}
+              >
                 <div className={` p-2 col-md-12 col-lg-12 col-sm-12`}>
                   <div className="back_btn_div">
                     <Link
@@ -523,20 +526,21 @@ export default function SharePointDocument({
                       className="mention_div"
                       style={{
                         position: "absolute",
-                        top: 133,
-                        right: 17, // Changed to align with the right side
+                        top: 14,
+                        right: 270, // Changed to align with the right side
                         background: "#fff",
                         zIndex: 9999,
-                        display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
                         textDecoration: "none",
                         color: "#4b4b4b",
+                        maxWidth: 155,
                       }}
                     >
                       <Link
                         className="rounded-circle add-person-btn" // Changed class name for clarity
                         to=""
+                        style={{ color: "#333", float: "right" }}
                         onClick={() => {
                           showMentionAdminDropDown
                             ? setMentionAdminShowDropDown(false)
