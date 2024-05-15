@@ -35,7 +35,7 @@ export default function EmployeeNotesTable({ search, userType }) {
 
       if (res.status === 1) {
         setTotalData(res.data.total_rows);
-        setData(res.data.data);
+        setData(res.data.data.filter((item) => item.status === "1"));
       }
       setIsLoading(false);
     } catch (err) {

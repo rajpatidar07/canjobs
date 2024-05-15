@@ -1,19 +1,23 @@
-import React, { useState ,useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { IoMdClose } from "react-icons/io";
 
-const MentionAdminInDoc = ({ adminList, commentsList ,docPreview}) => {
+const MentionAdminInDoc = ({ adminList, commentsList, docPreview }) => {
   let AssignedId = commentsList.length === 0 ? "" : commentsList[0].assined_to_user_id.split(",").map(Number)
   let AssigneAdmin = adminList.filter((item) =>
     AssignedId.includes(parseInt(item.admin_id))
   );
   const [selectedMentionAdmin, setSelectedMentionAdmin] = useState(
-    AssigneAdmin || []
+    docPreview === true ? AssigneAdmin : [] || []
   );
-  useEffect(() => {
-    setSelectedMentionAdmin(AssigneAdmin)
-     // eslint-disable-next-line
-  }, [AssignedId])
+  const hasRunEffect = useRef(false);
 
+  useEffect(() => {
+    if (!hasRunEffect.current && AssignedId.length !== 0) {
+      setSelectedMentionAdmin(AssigneAdmin)
+      hasRunEffect.current = true;
+    }
+    // eslint-disable-next-line
+  }, [AssignedId]);
   /*Function to add Admin to assign */
   const handleUserSelect = (userId) => {
     const userToAdd = adminList.find((user) => user.admin_id === userId);
