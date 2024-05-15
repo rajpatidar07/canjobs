@@ -11,10 +11,9 @@ const MentionAdminInDoc = ({ adminList, commentsList ,docPreview}) => {
   );
   useEffect(() => {
     setSelectedMentionAdmin(AssigneAdmin)
+     // eslint-disable-next-line
   }, [AssignedId])
-  
-console.log(selectedMentionAdmin,AssignedId,adminList.filter((item) =>
-  AssignedId.includes(parseInt(item.admin_id))))
+
   /*Function to add Admin to assign */
   const handleUserSelect = (userId) => {
     const userToAdd = adminList.find((user) => user.admin_id === userId);
