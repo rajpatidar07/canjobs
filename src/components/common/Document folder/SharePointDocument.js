@@ -459,30 +459,6 @@ export default function SharePointDocument({
   //   });
   // };
 
-  // const convertUrlToPDF = async (fileUrl) => {
-  //   let base64PDF = ''; // Variable to store base64 PDF data
-  //   try {
-  //     const response = await fetch(fileUrl);
-  //     if (!response.ok) {
-  //       throw new Error(`Failed to fetch the file: ${response.statusText}`);
-  //     }
-
-  //     const fileData = await response.blob();
-  //     console.log(fileData);
-
-  //     if (fileData.type === 'application/pdf') {
-  //       // Convert PDF blob to base64
-  //       base64PDF = await blobToBase64(fileData);
-  //       console.log('Base64 PDF data:', base64PDF);
-  //     } else {
-  //       console.error('Unsupported file format. Expected PDF.');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error downloading or parsing the file:', error);
-  //   }
-
-  //   return base64PDF; // Return the base64 PDF data
-  // };
   return (
     <>
       {folderId ? (
