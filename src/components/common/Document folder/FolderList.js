@@ -20,10 +20,17 @@ export default function FolderList({
   SaveBulkDocument,
   setSaveBtn,
   setDocFileBase,
-  getCommentsList
+  getCommentsList,
 }) {
   return (
-    <div className="bg-light" style={{ minHeight: "200px" }}>
+    <div
+      className="bg-light"
+      style={{
+        minHeight: "200px",
+        overflow: "auto",
+        maxHeight: "calc(100vh - 200px)",
+      }}
+    >
       <div className="file-list pb-8">
         {(docTypeList || []).map((item, index) => (
           <React.Fragment key={index}>
@@ -42,7 +49,7 @@ export default function FolderList({
                     setDocPreview(true);
                     setDocSingleDate(item);
                     setFolderID(item.id);
-                    getCommentsList(item)
+                    getCommentsList(item);
                   }
                 }}
                 onContextMenu={(e) => {
@@ -54,9 +61,9 @@ export default function FolderList({
                   {item.folder && (
                     <FaFolder
                       style={{
-                        width: "100px",
+                        width: "90px",
                         marginBottom: 5,
-                        height: "100px",
+                        height: "90px",
                         color: "#f5b317b0",
                       }}
                     />
@@ -65,9 +72,9 @@ export default function FolderList({
                     <div
                       className="d-flex justify-content-center align-items-center"
                       style={{
-                        width: "100px",
+                        width: "90px",
                         marginBottom: 5,
-                        height: "100px",
+                        height: "90px",
                         color: "#f5b317b0",
                       }}
                     >
@@ -81,9 +88,9 @@ export default function FolderList({
                   {item.file && item.file.mimeType === "application/pdf" && (
                     <FaRegFilePdf
                       style={{
-                        width: "100px",
+                        width: "90px",
                         marginBottom: 5,
-                        height: "100px",
+                        height: "90px",
                         color: "red",
                       }}
                     />
@@ -91,13 +98,13 @@ export default function FolderList({
                   {item.file &&
                     (item.file.mimeType === "application/msword" ||
                       item.file.mimeType ===
-                      "application/vnd.openxmlformats-officedocument.wordprocessingml.document") && (
+                        "application/vnd.openxmlformats-officedocument.wordprocessingml.document") && (
                       <BsFiletypeDocx
                         // className="file-icon"
                         style={{
-                          width: "100px",
+                          width: "90px",
                           marginBottom: 5,
-                          height: "100px",
+                          height: "90px",
                           color: "#2B579A",
                         }}
                       />

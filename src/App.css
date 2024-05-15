@@ -752,7 +752,7 @@ input.coustam_datepicker[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 #applieddocuments .document_container.bg-white {
-  max-height: calc(100vh - 137px);
+  max-height: calc(100vh - 127px);
 }
 
 .list-group {
@@ -1628,8 +1628,8 @@ li.placeholder span svg {
   /* gap: 15px; */
 }
 
-.file-item {
-  width: 150px;
+.file-list .file-item {
+  width: 130px;
   /* Adjust width as needed */
   /* background-color: #f7f7f7; */
   border-radius: 10px;
@@ -1638,7 +1638,7 @@ li.placeholder span svg {
 }
 
 .file-background {
-  padding: 10px;
+  padding: 10px 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1669,7 +1669,8 @@ li.placeholder span svg {
 }
 
 .file-name {
-  font-size: 14px;
+  font-size: 13px;
+  line-height: normal;
   /* margin-bottom: 5px; */
 }
 
