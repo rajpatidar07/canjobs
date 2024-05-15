@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect } from "react";
 import { IoMdClose } from "react-icons/io";
 
-const MentionAdminInDoc = ({ adminList, commentsList }) => {
-  let AssignedId = commentsList[0].assined_to_user_id.split(",").map(Number);
+const MentionAdminInDoc = ({ adminList, commentsList ,docPreview}) => {
+  let AssignedId = commentsList.length === 0 ? "" : commentsList[0].assined_to_user_id.split(",").map(Number)
   let AssigneAdmin = adminList.filter((item) =>
     AssignedId.includes(parseInt(item.admin_id))
   );
   const [selectedMentionAdmin, setSelectedMentionAdmin] = useState(
     AssigneAdmin || []
   );
-
+  useEffect(() => {
+    setSelectedMentionAdmin(AssigneAdmin)
+  }, [AssignedId])
+  
+console.log(selectedMentionAdmin,AssignedId,adminList.filter((item) =>
+  AssignedId.includes(parseInt(item.admin_id))))
   /*Function to add Admin to assign */
   const handleUserSelect = (userId) => {
     const userToAdd = adminList.find((user) => user.admin_id === userId);
@@ -31,7 +36,7 @@ const MentionAdminInDoc = ({ adminList, commentsList }) => {
   return (
     <div
       className="mention-admin-container"
-      style={{ boxShadow: "0 0 4px #ccc", borderRadius:5 }}
+      style={{ boxShadow: "0 0 4px #ccc", borderRadius: 5 }}
     >
       <div className="selected-users-container" id="SelectAdmin">
         {selectedMentionAdmin.map((user, index) => (

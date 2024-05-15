@@ -49,7 +49,6 @@ const AdobePDFViewer = ({
             .getAnnotationManager()
             .then((annotationManager) => {
               if (annotationData.length === 0) {
-                console.log("No Annotation data");
               } else {
                 annotationManager
                   .addAnnotations(annotationData)
@@ -66,7 +65,6 @@ const AdobePDFViewer = ({
                   console.log(e);
                 });
               annotationManager.registerEventListener(function (event) {
-                // console.log(event.type, event.data, event)
                 if (event.type === "ANNOTATION_ADDED") {
                   // Include AdminDetails for annotations
                   const newAnnotation = event.data;

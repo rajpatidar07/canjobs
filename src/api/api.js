@@ -253,13 +253,13 @@ export const EmployeeAppliedJob = async (props) => {
 export const AddEmployeeDetails = async (props) => {
   const headers = Token
     ? {
-        "Content-Type": "application/json",
-        Authorization: Token,
-      }
+      "Content-Type": "application/json",
+      Authorization: Token,
+    }
     : {
-        "Content-Type": "application/json",
-        type: "event",
-      };
+      "Content-Type": "application/json",
+      type: "event",
+    };
   // console.log(Token,headers)
   const response = await axios.put(`${API_URL}employeePersonal_detail`, props, {
     headers: headers,
@@ -720,7 +720,7 @@ export const ADocAnnotation = async (
   AdobeAnnotation,
   annotationId
 ) => {
-    //   "1. task_creator_user_id =>", id,
+  //   "1. task_creator_user_id =>", id,
   //   "2. task_creator_user_type =>", user_type === "admin" ? "admin" : "agent",
   //   "3. doc_id =>", docId,
   //   "4. user_admin_assigned =>", type === "partner" || "partnerChat" ? assigned_by_id : "",
@@ -774,7 +774,7 @@ export const ADocAnnotation = async (
       employee_id: employee_id,
       doc_parent_id: docPartentId,
       id: annotationId,
-      assigned_to:email,
+      assigned_to: email,
       assigned_to_name: assignName,
     },
     {
@@ -3184,6 +3184,13 @@ export const getFolderBreadcrumb = async (folderid) => {
         Authorization: Token,
       },
     }
+  );
+  return response;
+};
+// Api to convert doc to pdf
+export const GetDocConvertToken = async (doc_id) => {
+  const response = await axios.get(
+    `${API_URL}admin/getSharePointToken`,
   );
   return response;
 };

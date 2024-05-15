@@ -7,6 +7,7 @@ import {
   AddSharePointDOcument,
   getallAdminData,
   GetCommentsAndAssign,
+  GetDocConvertToken,
 } from "../../../api/api";
 import { Dropdown, Form } from "react-bootstrap";
 import SAlert from "../../common/sweetAlert";
@@ -79,25 +80,26 @@ export default function SharePointDocument({
           // setCommentsList(res.data.data.data.map(obj =>
           //   JSON.parse(obj.doctaskjson)
           // ));
-          if (
-            data.file.mimeType === "application/pdf" ||
-            data.file.mimeType === "image/jpeg" ||
-            data.file.mimeType === "image/png" ||
-            data.file.mimeType === "image/jpg"
-            // docTypePage === "adobe"
-          ) {
-            setCommentsList(res.data.data.data);
-          } else {
-            setCommentsList(
-              res.data.data.data.map((obj) => {
-                const parsedObj = JSON.parse(obj.doctaskjson);
-                if (parsedObj.hasOwnProperty("text")) {
-                  parsedObj.text = convertHtmlToText(parsedObj.text);
-                }
-                return parsedObj;
-              })
-            );
-          }
+          // if (
+          //   data.file.mimeType === "application/pdf" ||
+          //   data.file.mimeType === "image/jpeg" ||
+          //   data.file.mimeType === "image/png" ||
+          //   data.file.mimeType === "image/jpg"
+          //   // docTypePage === "adobe"
+          // ) {
+          //   setCommentsList(res.data.data.data);
+          // } else {
+          //   setCommentsList(
+          //     res.data.data.data.map((obj) => {
+          //       const parsedObj = JSON.parse(obj.doctaskjson);
+          //       if (parsedObj.hasOwnProperty("text")) {
+          //         parsedObj.text = convertHtmlToText(parsedObj.text);
+          //       }
+          //       return parsedObj;
+          //     })
+          //   );
+          // }
+          setCommentsList(res.data.data.data);
           setCommentsRes(res.data.status);
           // setImageAnnotations(res.data.data.data);
         } else if (res.data.message === "Task data not found") {
@@ -113,6 +115,10 @@ export default function SharePointDocument({
         data.file.mimeType === "image/jpg"
       ) {
         convertUrlToPDF(data["@microsoft.graph.downloadUrl"]);
+      } else if (
+        data.file.mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      ) {
+        convertToPDF(data)
       } else {
         setConvertedDoc(data["@microsoft.graph.downloadUrl"]);
       }
@@ -153,48 +159,48 @@ export default function SharePointDocument({
   const DocTypeData =
     emp_user_type === "employer"
       ? [
-          "Business T2",
-          "Recent PD7A",
-          "Business T4",
-          "Business Incorporation Certificate",
-          "Employment Contract",
-          "Schedule A",
-          "Signed Job Offer",
-          "PD7A of year",
-          "T2 Schedule 100 and 125",
-          "Certificate of incorporation",
-          "Business license",
-          "T4 summary of year",
-          "Request for Exception from English Language Requirement for LMIA Application",
-          "CPA Attestation Letter",
-          "Representative Submission Letter",
-        ]
+        "Business T2",
+        "Recent PD7A",
+        "Business T4",
+        "Business Incorporation Certificate",
+        "Employment Contract",
+        "Schedule A",
+        "Signed Job Offer",
+        "PD7A of year",
+        "T2 Schedule 100 and 125",
+        "Certificate of incorporation",
+        "Business license",
+        "T4 summary of year",
+        "Request for Exception from English Language Requirement for LMIA Application",
+        "CPA Attestation Letter",
+        "Representative Submission Letter",
+      ]
       : [
-          "passport",
-          "drivers_license",
-          "photograph",
-          "immigration_status",
-          "lmia",
-          "job_offer_letter",
-          "provincial_nominee_letter",
-          "proof_of_funds",
-          "proof_of_employment",
-          "marriage_certificate",
-          "education_metric",
-          "education_higher_secondary",
-          "education_graduation",
-          "education_post_graduation",
-          "resume_or_cv",
-          "ielts",
-          "medical",
-          "police_clearance",
-          "refusal_letter",
-          "Employment Contract",
-          "Reference Letters",
-          "Client Info",
-          "Representative Submission Letter",
-          "Bank Statement",
-        ];
+        "passport",
+        "drivers_license",
+        "photograph",
+        "immigration_status",
+        "lmia",
+        "job_offer_letter",
+        "provincial_nominee_letter",
+        "proof_of_funds",
+        "proof_of_employment",
+        "marriage_certificate",
+        "education_metric",
+        "education_higher_secondary",
+        "education_graduation",
+        "education_post_graduation",
+        "resume_or_cv",
+        "ielts",
+        "medical",
+        "police_clearance",
+        "refusal_letter",
+        "Employment Contract",
+        "Reference Letters",
+        "Client Info",
+        "Representative Submission Letter",
+        "Bank Statement",
+      ];
 
   /*Function to call api to get all folders list of employees documnet from sharepoint */
   const AllShareType = async () => {
@@ -218,9 +224,7 @@ export default function SharePointDocument({
             setDocPreview(true);
             setDocSingleDate(res.data.data.find((item) => item.id === docId));
             getCommentsList(res.data.data.find((item) => item.id === docId));
-            console.log(res.data.data.find((item) => item.id === docId));
             const newUrl = window.location.pathname;
-            console.log(newUrl);
             window.history.replaceState({}, document.title, newUrl);
           }
         }
@@ -437,7 +441,6 @@ export default function SharePointDocument({
         const base64String = reader.result;
         setConvertedDoc(base64String);
         if (base64String) {
-          console.log("ddddd");
           setImgConRes("imageConverted");
         }
       };
@@ -459,40 +462,38 @@ export default function SharePointDocument({
   //   });
   // };
 
-  // const convertUrlToPDF = async (fileUrl) => {
-  //   let base64PDF = ''; // Variable to store base64 PDF data
-  //   try {
-  //     const response = await fetch(fileUrl);
-  //     if (!response.ok) {
-  //       throw new Error(`Failed to fetch the file: ${response.statusText}`);
-  //     }
+  const convertToPDF = async (data) => {
+    try {
+      let response = await GetDocConvertToken()
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${response.data.data}`);
+      myHeaders.append("Content-type", "application/json");
 
-  //     const fileData = await response.blob();
-  //     console.log(fileData);
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        redirect: "follow"
+      };
+      fetch(`https://graph.microsoft.com/v1.0${data.parentReference.path}/${data.name}:/content?format=pdf`, requestOptions)
+        .then(function (resp) {
+          return resp.blob();
+        }).then(function (blob) {
+          setConvertedDoc(window.URL.createObjectURL(blob))
+        })
+        .catch((error) => console.error(error));
+    } catch (error) {
+      console.error('Error downloading or parsing the file:', error);
+    }
 
-  //     if (fileData.type === 'application/pdf') {
-  //       // Convert PDF blob to base64
-  //       base64PDF = await blobToBase64(fileData);
-  //       console.log('Base64 PDF data:', base64PDF);
-  //     } else {
-  //       console.error('Unsupported file format. Expected PDF.');
-  //     }
-  //   } catch (error) {
-  //     console.error('Error downloading or parsing the file:', error);
-  //   }
-
-  //   return base64PDF; // Return the base64 PDF data
-  // };
+    return; // Return the base64 PDF data
+  };
   return (
     <>
       {folderId ? (
         <div className="document_section">
           {docPreview ? (
             <div className="App-viewer">
-              <div
-                className="row m-0 bg-white document_preview_box overflow-hidden"
-                style={{ maxHeight: "calc(100vh - 130px)" }}
-              >
+              <div className="row m-0 bg-white document_preview_box h-100vh overflow-hidden">
                 <div className={` p-2 col-md-12 col-lg-12 col-sm-12`}>
                   <div className="back_btn_div">
                     <Link
@@ -518,6 +519,7 @@ export default function SharePointDocument({
                         setFolderID(docSingleDate.parentReference.id);
                         setConvertedDoc("");
                         setShowDropDown("");
+                        setCommentsList("")
                       }}
                     >
                       <IoMdArrowBack />
@@ -526,21 +528,20 @@ export default function SharePointDocument({
                       className="mention_div"
                       style={{
                         position: "absolute",
-                        top: 14,
-                        right: 270, // Changed to align with the right side
+                        top: 133,
+                        right: 17, // Changed to align with the right side
                         background: "#fff",
                         zIndex: 9999,
+                        display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
                         textDecoration: "none",
                         color: "#4b4b4b",
-                        maxWidth: 155,
                       }}
                     >
                       <Link
                         className="rounded-circle add-person-btn" // Changed class name for clarity
                         to=""
-                        style={{ color: "#333", float: "right" }}
                         onClick={() => {
                           showMentionAdminDropDown
                             ? setMentionAdminShowDropDown(false)
@@ -550,7 +551,7 @@ export default function SharePointDocument({
                         <IoMdPersonAdd />
                       </Link>
                       {showMentionAdminDropDown === true ||
-                      commentsList[0]?.assined_to_user_id ? (
+                        commentsList[0]?.assined_to_user_id ? (
                         <MentionAdminInDoc
                           adminList={adminList}
                           setMentionAdminShowDropDown={
@@ -559,6 +560,7 @@ export default function SharePointDocument({
                           selectedMentionAdmin={selectedMentionAdmin}
                           setSelectedMentionAdmin={setSelectedMentionAdmin}
                           commentsList={commentsList}
+                          docPreview={docPreview}
                         />
                       ) : null}
                     </div>
@@ -570,8 +572,9 @@ export default function SharePointDocument({
                       ((docSingleDate.file.mimeType === "image/jpeg" ||
                         docSingleDate.file.mimeType === "image/png" ||
                         docSingleDate.file.mimeType === "image/jpg") &&
-                        imgConRes === "imageConverted")) &&
-                    convertedDoc ? (
+                        imgConRes === "imageConverted") ||
+                      docSingleDate.file.mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") &&
+                      convertedDoc ? (
                       // <PreviewDocument
                       //   docData={docSingleDate}
                       //   docId={docId ? docId : folderID}
@@ -591,15 +594,17 @@ export default function SharePointDocument({
                           selectedMentionAdmin={selectedMentionAdmin}
                         />
                       ) : null
-                    ) : commentsRes ? (
-                      <PdfViewerComponent
-                        document={docSingleDate["@microsoft.graph.downloadUrl"]}
-                        adminDetailsFOrMention={adminList}
-                        data={docSingleDate}
-                        userId={user_id}
-                        commentsList={commentsList}
-                      />
-                    ) : null
+                    ) : <Loader />
+                    // : 
+                    // commentsRes ? (
+                    //   <PdfViewerComponent
+                    //     document={docSingleDate["@microsoft.graph.downloadUrl"]}
+                    //     adminDetailsFOrMention={adminList}
+                    //     data={docSingleDate}
+                    //     userId={user_id}
+                    //     commentsList={commentsList}
+                    //   />
+                    // ) : null
                   }
                 </div>
               </div>
