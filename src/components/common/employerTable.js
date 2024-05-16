@@ -144,9 +144,9 @@ export default function EmployerTable(props) {
     setcolumnName(columnName);
   };
   /* Function to show the Job detail data */
-  const EmployerDetail = (e) => {
-    props.EmployerDetail(e);
-  };
+  // const EmployerDetail = (e) => {
+  //   props.EmployerDetail(e);
+  // };
 
   return (
     <>
@@ -333,9 +333,15 @@ export default function EmployerTable(props) {
                       ) : (
                         <th className="py-5 pr-0">
                           <Link
-                            to={""}
+                            to={`/client_detail`}
                             title="Client Details"
-                            onClick={() => EmployerDetail(empdata.company_id)}
+                            onClick={() =>
+                              localStorage.setItem(
+                                "company_id",
+                                empdata.company_id
+                              )
+                            }
+                            // onClick={() => EmployerDetail(empdata.company_id)}
                           >
                             <p
                               className="m-0 font-weight-normal text-capitalize text-truncate font-size-3"

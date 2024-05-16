@@ -39,7 +39,7 @@ const MentionAdminInDoc = ({ adminList, commentsList, docPreview }) => {
   return (
     <div
       className="mention-admin-container"
-      style={{ boxShadow: "0 0 4px #ccc", borderRadius: 5 }}
+      style={{ boxShadow: "0 0 4px #ccc", borderRadius: 5 ,background:"#fff"}}
     >
       <div className="selected-users-container" id="SelectAdmin">
         {selectedMentionAdmin.map((user, index) => (

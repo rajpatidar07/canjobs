@@ -12,7 +12,7 @@ import {
 import { Dropdown, Form } from "react-bootstrap";
 import SAlert from "../../common/sweetAlert";
 import { Link } from "react-router-dom";
-import { IoMdArrowBack, IoMdPersonAdd } from "react-icons/io";
+import { IoMdArrowBack, IoMdClose, IoMdPersonAdd } from "react-icons/io";
 import FolderList from "./FolderList";
 import { toast } from "react-toastify";
 // import DocSaveForm from "./DocSaveForm";
@@ -59,13 +59,8 @@ export default function SharePointDocument({
   const [commentsList, setCommentsList] = useState([]);
   const [commentsRes, setCommentsRes] = useState();
   const [imgConRes, setImgConRes] = useState();
-  const [convertedDoc, setConvertedDoc] = useState("");
-  // Function to convert HTML text to plain text
-  // function convertHtmlToText(html) {
-  //   const tempElement = document.createElement("div");
-  //   tempElement.innerHTML = html;
-  //   return tempElement.textContent || tempElement.innerText || "";
-  // }
+  const [convertedDoc, setConvertedDoc] = useState(""); 
+
   // Generate a list of comments from the state for image annotation
   const getCommentsList = async (data) => {
     if (data) {
@@ -101,6 +96,9 @@ export default function SharePointDocument({
           // }
           setCommentsList(res.data.data.data);
           setCommentsRes(res.data.status);
+          if(res.data.data.data[0]?.assined_to_user_id){
+            setMentionAdminShowDropDown(true)
+          }
           // setImageAnnotations(res.data.data.data);
         } else if (res.data.message === "Task data not found") {
           setCommentsList([]);
@@ -409,7 +407,7 @@ export default function SharePointDocument({
       console.log(err);
     }
   }
-  /*FUnction to convert the Image into pdf */
+  /*Function to convert the Image into pdf */
   const convertUrlToPDF = (imageUrl) => {
     const img = new Image();
     img.crossOrigin = "anonymous"; // Enable cross-origin resource sharing (CORS) for the image
@@ -447,21 +445,7 @@ export default function SharePointDocument({
       reader.readAsDataURL(pdfBlob);
     };
   };
-  // Function to convert a Blob to base64
-
-  // const blobToBase64 = (blob) => {
-  //   return new Promise((resolve, reject) => {
-  //     const reader = new FileReader();
-  //     reader.onload = () => {
-  //       resolve(reader.result.split(',')[1]);
-  //     };
-  //     reader.onerror = (error) => {
-  //       reject(error);
-  //     };
-  //     reader.readAsDataURL(blob);
-  //   });
-  // };
-
+  // Function to convert a docx to pdf
   const convertToPDF = async (data) => {
     try {
       let response = await GetDocConvertToken()
@@ -520,6 +504,7 @@ export default function SharePointDocument({
                         setConvertedDoc("");
                         setShowDropDown("");
                         setCommentsList("")
+                        setMentionAdminShowDropDown(false)
                       }}
                     >
                       <IoMdArrowBack />
@@ -528,30 +513,30 @@ export default function SharePointDocument({
                       className="mention_div"
                       style={{
                         position: "absolute",
-                        top: 133,
-                        right: 17, // Changed to align with the right side
+                        top: 14,
+                        right: 270, // Changed to align with the right side
                         background: "#fff",
                         zIndex: 9999,
-                        display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
                         textDecoration: "none",
                         color: "#4b4b4b",
+                        maxWidth: 155,
                       }}
                     >
                       <Link
-                        className="rounded-circle add-person-btn" // Changed class name for clarity
+                        className="rounded-circle add-person-btn " // Changed class name for clarity
                         to=""
+                        style={{ color: "#333", float: "right",}}
                         onClick={() => {
-                          showMentionAdminDropDown
+                          showMentionAdminDropDown === true
                             ? setMentionAdminShowDropDown(false)
                             : setMentionAdminShowDropDown(true);
                         }}
                       >
-                        <IoMdPersonAdd />
+                      { showMentionAdminDropDown === false?  <IoMdPersonAdd />:<IoMdClose />}
                       </Link>
-                      {showMentionAdminDropDown === true ||
-                        commentsList[0]?.assined_to_user_id ? (
+                      {showMentionAdminDropDown === true  ? (
                         <MentionAdminInDoc
                           adminList={adminList}
                           setMentionAdminShowDropDown={

@@ -11,8 +11,8 @@ function Addfollowup(props) {
   let [response, setResponseData] = useState([]);
   let [loading, setLoading] = useState(false);
   /* Shorting states */
-  const [columnName, setcolumnName] = useState("next_followup_date");
-  const [sortOrder, setSortOrder] = useState("ASC");
+  const [columnName, setcolumnName] = useState("created_at");
+  const [sortOrder, setSortOrder] = useState("DESC");
   // let employId = props.employee_id;
   let user_type = localStorage.getItem("userType");
   let adminId = localStorage.getItem("admin_id")
@@ -56,6 +56,10 @@ function Addfollowup(props) {
     // } else {
     ResponseData();
     // }
+    if (props.noteNotification) {
+      const newUrl = window.location.pathname;
+      window.history.replaceState({}, document.title, newUrl);
+    }
     // eslint-disable-next-line
   }, [props, sortOrder]);
 
@@ -63,7 +67,7 @@ function Addfollowup(props) {
   const initialFormState = {
     /*only for employee*/
     // remark: "",
-    // next_followup_date: "",
+    next_followup_date: "",
     // subject: "",
     // employee_id: employId,
     // status: "",

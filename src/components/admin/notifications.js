@@ -258,7 +258,6 @@ function Notifications({
                   // </li>
                   <li
                     key={data.id}
-                    title={data.message}
                     className={
                       data.is_read === "1"
                         ? "dropdown-item border-bottom border-hit-gray font-size-3 text-wrap"
@@ -286,7 +285,9 @@ function Notifications({
                                     ? `/partner_profile?partner=${data.employee_id}`
                                     : data.subject === "assigned_admin_to_partner" ?
                                       "/partner_profile"
-                                      : ""
+                                      : data.subject==="mention_notes"
+                                      ?`/${data.employee_id}?note=true`
+                                      :""
                       }
                       onClick={() => {
                         try {
@@ -324,7 +325,7 @@ function Notifications({
                             className="text-muted mw-80"
                             style={{ fontSize: "14px" }}
                           >
-                            {data.message}
+                            <div dangerouslySetInnerHTML={{__html:data.message}}/>
                           </div>
                         </div>
                       </div>
