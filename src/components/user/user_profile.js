@@ -1067,7 +1067,7 @@ const NewUserProfile = (props) => {
                               <h2 className="mb-0 text-capitalize line-height-1 text-break">
                                 {PersonalDetail.name
                                   ? PersonalDetail.name
-                                  : "Unknown User"}
+                                  : "Unknown Candidate"}
                               </h2>
                               <hr className="my-3" />
                               <div className="m-0 age_gender d-flex align-items-center">

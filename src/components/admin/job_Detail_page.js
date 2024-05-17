@@ -412,8 +412,8 @@ function JobDetailpageAdmim(props) {
                                             }}
                                           />{" "}
                                           {jobData.industry_type &&
-                                            `,${jobData.industry_type}`}
-                                          {jobData.location && `, ${jobData.location}`}
+                                            `${jobData.industry_type} ,`}
+                                          {jobData.location && ` ${jobData.location}`}
                                         </div>
                                       ) : (
                                         ""

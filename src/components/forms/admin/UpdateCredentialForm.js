@@ -82,10 +82,10 @@ export default function UpdateCredentialForm({
             <div className="row pt-5">
               {/* New fields */}
               {data.protocol === "outlook" ||
-              data.protocol === "paypal" ||
-              data.protocol === "razorpay" ||
-              data.protocol === "stripe" ||
-              data.protocol === "braintree" ? null : (
+                data.protocol === "paypal" ||
+                data.protocol === "razorpay" ||
+                data.protocol === "stripe" ||
+                data.protocol === "braintree" ? null : (
                 <div className={`form-group col-md-4 `}>
                   <label
                     htmlFor="username"
@@ -105,10 +105,10 @@ export default function UpdateCredentialForm({
                 </div>
               )}
               {data.protocol === "outlook" ||
-              data.protocol === "paypal" ||
-              data.protocol === "razorpay" ||
-              data.protocol === "stripe" ||
-              data.protocol === "braintree" ? null : (
+                data.protocol === "paypal" ||
+                data.protocol === "razorpay" ||
+                data.protocol === "stripe" ||
+                data.protocol === "braintree" ? null : (
                 <div className={`form-group col-md-4 `}>
                   <label
                     htmlFor="host"
@@ -128,10 +128,10 @@ export default function UpdateCredentialForm({
                 </div>
               )}
               {data.protocol === "outlook" ||
-              data.protocol === "paypal" ||
-              data.protocol === "razorpay" ||
-              data.protocol === "stripe" ||
-              data.protocol === "braintree" ? null : (
+                data.protocol === "paypal" ||
+                data.protocol === "razorpay" ||
+                data.protocol === "stripe" ||
+                data.protocol === "braintree" ? null : (
                 <div className={`form-group col-md-4 `}>
                   <label
                     htmlFor="port"
@@ -151,10 +151,10 @@ export default function UpdateCredentialForm({
                 </div>
               )}
               {data.protocol === "outlook" ||
-              data.protocol === "paypal" ||
-              data.protocol === "razorpay" ||
-              data.protocol === "stripe" ||
-              data.protocol === "braintree" ? null : (
+                data.protocol === "paypal" ||
+                data.protocol === "razorpay" ||
+                data.protocol === "stripe" ||
+                data.protocol === "braintree" ? null : (
                 <div className={`form-group col-md-4 `}>
                   <label
                     htmlFor="encryptoion"
@@ -212,9 +212,9 @@ export default function UpdateCredentialForm({
                 </div>
               )}
               {data.protocol === "smtp" ||
-              data.protocol === "paypal" ||
-              data.protocol === "razorpay" ||
-              data.protocol === "stripe" ? null : (
+                data.protocol === "paypal" ||
+                data.protocol === "razorpay" ||
+                data.protocol === "stripe" ? null : (
                 <div className={`form-group col-md-4 `}>
                   <label
                     htmlFor="tenantId"
@@ -234,10 +234,10 @@ export default function UpdateCredentialForm({
                 </div>
               )}
               {data.protocol === "outlook" ||
-              data.protocol === "paypal" ||
-              data.protocol === "razorpay" ||
-              data.protocol === "stripe" ||
-              data.protocol === "braintree" ? null : (
+                data.protocol === "paypal" ||
+                data.protocol === "razorpay" ||
+                data.protocol === "stripe" ||
+                data.protocol === "braintree" ? null : (
                 <div className={`form-group col-md-4 `}>
                   <label
                     htmlFor="password"
@@ -256,30 +256,29 @@ export default function UpdateCredentialForm({
                   />
                 </div>
               )}
-
-              {/* Submit button */}
-              <div className="form-group text-center">
-                {loading === true ? (
-                  <button
-                    className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
-                    type="button"
-                  >
-                    <span
-                      className="spinner-border spinner-border-sm "
-                      role="status"
-                      aria-hidden="true"
-                    ></span>
-                    <span className="sr-only">Loading...</span>
-                  </button>
-                ) : (
-                  <button
-                    className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
-                    type="submit"
-                  >
-                    Submit
-                  </button>
-                )}
-              </div>
+            </div>
+            {/* Submit button */}
+            <div className="form-group text-center">
+              {loading === true ? (
+                <button
+                  className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  type="button"
+                >
+                  <span
+                    className="spinner-border spinner-border-sm "
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  <span className="sr-only">Loading...</span>
+                </button>
+              ) : (
+                <button
+                  className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                  type="submit"
+                >
+                  Submit
+                </button>
+              )}
             </div>
           </form>
         </div>

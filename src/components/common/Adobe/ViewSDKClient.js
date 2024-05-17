@@ -119,9 +119,9 @@ class ViewSDKClient {
                     const child = container.children[i];
                     if (child.classList.contains('badge')) {
                         const childData = child.querySelector('span.d-none').innerText.trim();
-                        const [email, id] = childData.split(' ');
+                        const [email, id, type] = childData.split(' ');
                         const name = child.innerText.trim();
-                        selectedMentionAdmin.push({ name, email, id });
+                        selectedMentionAdmin.push({ name, email, id, type });
                     }
                 }
             } else {
@@ -153,11 +153,14 @@ class ViewSDKClient {
                                 // y_axis: "0",
                                 // type: "document",
                                 // employee_id: metaData.userId,
-                                // doc_parent_id: metaData.parentReference.id,
+                                doc_parent_id: metaData.parentReference.id,
                                 id: annotationId,
                                 assigned_to: selectedMentionAdmin.map(admin => admin.email).join(","),
                                 assined_to_user_id: selectedMentionAdmin.map(admin => admin.id).join(","),
-                                assigned_to_name: selectedMentionAdmin.map(admin => admin.name).join(",")
+                                assigned_to_name: selectedMentionAdmin.map(admin => admin.name).join(","),
+                                assigned_user_type_new: selectedMentionAdmin.map(admin => admin.type).join(","),
+                                task_creator_user_id: localStorage.getItem("admin_id"),
+                                task_creator_user_type: "admin"
                             }
                             try {
                                 let res = await UpdateDocuentcommentAssign(updatedData)

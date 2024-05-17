@@ -546,6 +546,7 @@ export default function SharePointDocument({
                           setSelectedMentionAdmin={setSelectedMentionAdmin}
                           commentsList={commentsList}
                           docPreview={docPreview}
+                          getCommentsList={getCommentsList}
                         />
                       ) : null}
                     </div>
