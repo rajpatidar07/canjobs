@@ -21,7 +21,7 @@ const profile = {
         type: "Person"
     }
 };
-let client_id = "d9e8b7bcb61b42b6a387bfa9cf16a75b"//(Local)
+let client_id = "713b22cf34e345c388e4490f9c9dc79b"//Canpathways
 //"713b22cf34e345c388e4490f9c9dc79b"//Canpathways
 //"d9e8b7bcb61b42b6a387bfa9cf16a75b"//(Local)
 //"d9b36f468d7a4e4e8b275f13728f1132",//(vercel)
@@ -117,7 +117,7 @@ class ViewSDKClient {
             if (container && container.children) {
                 for (let i = 0; i < container.children.length; i++) {
                     const child = container.children[i];
-                    if (child.classList.contains('badge')) {
+                    if (child.classList.contains('badgebadge')) {
                         const childData = child.querySelector('span.d-none').innerText.trim();
                         const [email, id, type] = childData.split(' ');
                         const name = child.innerText.trim();
@@ -164,7 +164,7 @@ class ViewSDKClient {
                             }
                             try {
                                 let res = await UpdateDocuentcommentAssign(updatedData)
-                                if (res.message === "Task updated successfully!") {
+                                if (res.message === "Task updated successfully!1") {
                                     toast.success("Comment Data Updated Successfully", {
                                         position: toast.POSITION.TOP_RIGHT,
                                         autoClose: 1000,

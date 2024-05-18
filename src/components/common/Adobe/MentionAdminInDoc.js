@@ -58,20 +58,19 @@ const MentionAdminInDoc = ({ adminList, commentsList, docPreview }) => {
       if (res.message === "Task updated successfully!1") {
         status === "0"
           ? toast.success("Task completed Successfully", {
-              position: toast.POSITION.TOP_RIGHT,
-              autoClose: 1000,
-            })
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          })
           : toast.error("Task is incomplete !", {
-              position: toast.POSITION.TOP_RIGHT,
-              autoClose: 1000,
-            });
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
         setStatus(status === "1" ? "0" : "1");
       }
     } catch (err) {
       console.log(err);
     }
   };
-  console.log(AssigneAdmin);
   return (
     <div
       className="mention-admin-container"
@@ -90,7 +89,7 @@ const MentionAdminInDoc = ({ adminList, commentsList, docPreview }) => {
               style={{
                 cursor: "pointer",
                 color: status === "1" ? "white" : "black",
-                border: "solid 1px black",
+                border: status === "1" ? "solid 1px white" : "solid 1px black",
                 backgroundColor: status === "1" && "green",
                 borderRadius: "50%",
                 width: 20,

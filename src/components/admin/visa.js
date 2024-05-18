@@ -90,7 +90,7 @@ export default function Visa() {
     setpageNo(1);
     if (inputValue.length > 0) {
       if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
-        setSearchError("Client Name cannot start with a number.");
+        setSearchError("Candidate Name cannot start with a number.");
       } else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
         setSearchError("Cannot use special characters.");
       } else {
