@@ -37,7 +37,7 @@ const MentionAdminInDoc = ({ adminList, commentsList, docPreview }) => {
     );
     setSelectedMentionAdmin(updatedUsers);
   };
-  /* Function to update comment and assign */
+  /* Function to update status for the task */
   const OnHandleUpdateComment = async (originalData) => {
     console.log(originalData)
     let updatedData
@@ -50,40 +50,49 @@ const MentionAdminInDoc = ({ adminList, commentsList, docPreview }) => {
       }
     }
     try {
-      // Call the API with the updated data
+      // Call the API with the updated status for the task
       let res = await UpdateDocuentcommentAssign(updatedData);
       if (res.message === "Task updated successfully!1") {
-        toast.success("Task completed Successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
+        status === "0" ?
+          toast.success("Task completed Successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          })
+          :
+          toast.error("Task is incomplete !", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          })
         setStatus(status === "1" ? "0" : "1")
       }
     } catch (err) {
       console.log(err);
     }
   };
+  console.log(AssigneAdmin)
   return (
     <div
       className="mention-admin-container"
       style={{ boxShadow: "0 0 4px #ccc", borderRadius: 5, background: "#fff" }}
     >
-      <span
-        className="comment_status_update mx-2 rounded"
-        title="Update Task Status"
-        style={{
-          cursor: "pointer",
-          color: status === "1" ? "white" : "black",
-          border: "solid 1px black",
-          backgroundColor: status === "1" && "green",
-          borderRadius: "50%"
-        }}
-        onClick={(e) => {
-          OnHandleUpdateComment(commentsList[0]);
-        }}
-      >
-        &#x2713; {/* Checkmark symbol */}
-      </span>
+      {AssigneAdmin.length === 0 ?
+        null :
+        <span
+          className="comment_status_update mx-2 rounded"
+          title="Update Task Status"
+          style={{
+            cursor: "pointer",
+            color: status === "1" ? "white" : "black",
+            border: "solid 1px black",
+            backgroundColor: status === "1" && "green",
+            borderRadius: "50%"
+          }}
+          onClick={(e) => {
+            OnHandleUpdateComment(commentsList[0]);
+          }}
+        >
+          &#x2713; {/* Checkmark symbol */}
+        </span>}
       <div className="selected-users-container" id="SelectAdmin">
         {selectedMentionAdmin.map((user, index) => (
           <div key={index} className="badge">
@@ -91,9 +100,15 @@ const MentionAdminInDoc = ({ adminList, commentsList, docPreview }) => {
             <span className="d-none">
               {user.email} {user.admin_id} {user.admin_type}
             </span>
+
             <IoMdClose
               onClick={() => handleUserRemove(user.admin_id)}
-              style={{ marginLeft: "5px", cursor: "pointer" }}
+              style={{
+                marginLeft: "5px", cursor: "pointer",
+                display: AssigneAdmin.find((item) =>
+                  (item.admin_id === user.admin_id))?.admin_id === user.admin_id
+                  ? "none" : ""
+              }}
             />
           </div>
         ))}

@@ -253,7 +253,7 @@ function Category() {
           ) : null}
         </div>
         <div className="dashboard-main-container mt-16" id="dashboard-body">
-          <div className="container ">
+          <div className="container-fluid">
             <div className="row align-items-center m-0">
               <div className="col p-1 form_group mb-3">
                 <p className="input_label">Search by name:</p>

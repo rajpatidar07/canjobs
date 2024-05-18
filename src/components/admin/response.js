@@ -342,7 +342,7 @@ function JobResponse(props) {
           className={
             props.heading === "Response" ||
             (props.heading === undefined && user_type === "admin")
-              ? "container"
+              ? "container-fluid"
               : props.heading === "Dashboard"
               ? ""
               : "container"
