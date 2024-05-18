@@ -59,7 +59,7 @@ export default function SharePointDocument({
   const [commentsList, setCommentsList] = useState([]);
   const [commentsRes, setCommentsRes] = useState();
   const [imgConRes, setImgConRes] = useState();
-  const [convertedDoc, setConvertedDoc] = useState(""); 
+  const [convertedDoc, setConvertedDoc] = useState("");
 
   // Generate a list of comments from the state for image annotation
   const getCommentsList = async (data) => {
@@ -96,8 +96,8 @@ export default function SharePointDocument({
           // }
           setCommentsList(res.data.data.data);
           setCommentsRes(res.data.status);
-          if(res.data.data.data[0]?.assined_to_user_id){
-            setMentionAdminShowDropDown(true)
+          if (res.data.data.data[0]?.assined_to_user_id) {
+            setMentionAdminShowDropDown(true);
           }
           // setImageAnnotations(res.data.data.data);
         } else if (res.data.message === "Task data not found") {
@@ -114,9 +114,10 @@ export default function SharePointDocument({
       ) {
         convertUrlToPDF(data["@microsoft.graph.downloadUrl"]);
       } else if (
-        data.file.mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        data.file.mimeType ===
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
       ) {
-        convertToPDF(data)
+        convertToPDF(data);
       } else {
         setConvertedDoc(data["@microsoft.graph.downloadUrl"]);
       }
@@ -157,48 +158,48 @@ export default function SharePointDocument({
   const DocTypeData =
     emp_user_type === "employer"
       ? [
-        "Business T2",
-        "Recent PD7A",
-        "Business T4",
-        "Business Incorporation Certificate",
-        "Employment Contract",
-        "Schedule A",
-        "Signed Job Offer",
-        "PD7A of year",
-        "T2 Schedule 100 and 125",
-        "Certificate of incorporation",
-        "Business license",
-        "T4 summary of year",
-        "Request for Exception from English Language Requirement for LMIA Application",
-        "CPA Attestation Letter",
-        "Representative Submission Letter",
-      ]
+          "Business T2",
+          "Recent PD7A",
+          "Business T4",
+          "Business Incorporation Certificate",
+          "Employment Contract",
+          "Schedule A",
+          "Signed Job Offer",
+          "PD7A of year",
+          "T2 Schedule 100 and 125",
+          "Certificate of incorporation",
+          "Business license",
+          "T4 summary of year",
+          "Request for Exception from English Language Requirement for LMIA Application",
+          "CPA Attestation Letter",
+          "Representative Submission Letter",
+        ]
       : [
-        "passport",
-        "drivers_license",
-        "photograph",
-        "immigration_status",
-        "lmia",
-        "job_offer_letter",
-        "provincial_nominee_letter",
-        "proof_of_funds",
-        "proof_of_employment",
-        "marriage_certificate",
-        "education_metric",
-        "education_higher_secondary",
-        "education_graduation",
-        "education_post_graduation",
-        "resume_or_cv",
-        "ielts",
-        "medical",
-        "police_clearance",
-        "refusal_letter",
-        "Employment Contract",
-        "Reference Letters",
-        "Client Info",
-        "Representative Submission Letter",
-        "Bank Statement",
-      ];
+          "passport",
+          "drivers_license",
+          "photograph",
+          "immigration_status",
+          "lmia",
+          "job_offer_letter",
+          "provincial_nominee_letter",
+          "proof_of_funds",
+          "proof_of_employment",
+          "marriage_certificate",
+          "education_metric",
+          "education_higher_secondary",
+          "education_graduation",
+          "education_post_graduation",
+          "resume_or_cv",
+          "ielts",
+          "medical",
+          "police_clearance",
+          "refusal_letter",
+          "Employment Contract",
+          "Reference Letters",
+          "Client Info",
+          "Representative Submission Letter",
+          "Bank Statement",
+        ];
 
   /*Function to call api to get all folders list of employees documnet from sharepoint */
   const AllShareType = async () => {
@@ -448,7 +449,7 @@ export default function SharePointDocument({
   // Function to convert a docx to pdf
   const convertToPDF = async (data) => {
     try {
-      let response = await GetDocConvertToken()
+      let response = await GetDocConvertToken();
       const myHeaders = new Headers();
       myHeaders.append("Authorization", `Bearer ${response.data.data}`);
       myHeaders.append("Content-type", "application/json");
@@ -456,17 +457,21 @@ export default function SharePointDocument({
       const requestOptions = {
         method: "POST",
         headers: myHeaders,
-        redirect: "follow"
+        redirect: "follow",
       };
-      fetch(`https://graph.microsoft.com/v1.0${data.parentReference.path}/${data.name}:/content?format=pdf`, requestOptions)
+      fetch(
+        `https://graph.microsoft.com/v1.0${data.parentReference.path}/${data.name}:/content?format=pdf`,
+        requestOptions
+      )
         .then(function (resp) {
           return resp.blob();
-        }).then(function (blob) {
-          setConvertedDoc(window.URL.createObjectURL(blob))
+        })
+        .then(function (blob) {
+          setConvertedDoc(window.URL.createObjectURL(blob));
         })
         .catch((error) => console.error(error));
     } catch (error) {
-      console.error('Error downloading or parsing the file:', error);
+      console.error("Error downloading or parsing the file:", error);
     }
 
     return; // Return the base64 PDF data
@@ -503,8 +508,8 @@ export default function SharePointDocument({
                         setFolderID(docSingleDate.parentReference.id);
                         setConvertedDoc("");
                         setShowDropDown("");
-                        setCommentsList("")
-                        setMentionAdminShowDropDown(false)
+                        setCommentsList("");
+                        setMentionAdminShowDropDown(false);
                       }}
                     >
                       <IoMdArrowBack />
@@ -514,7 +519,7 @@ export default function SharePointDocument({
                       style={{
                         position: "absolute",
                         top: 14,
-                        right: 270, // Changed to align with the right side
+                        right: "27%", // Changed to align with the right side
                         background: "#fff",
                         zIndex: 9999,
                         justifyContent: "center",
@@ -527,16 +532,20 @@ export default function SharePointDocument({
                       <Link
                         className="rounded-circle add-person-btn " // Changed class name for clarity
                         to=""
-                        style={{ color: "#333", float: "right",}}
+                        style={{ color: "#333", float: "right" }}
                         onClick={() => {
                           showMentionAdminDropDown === true
                             ? setMentionAdminShowDropDown(false)
                             : setMentionAdminShowDropDown(true);
                         }}
                       >
-                      { showMentionAdminDropDown === false?  <IoMdPersonAdd />:<IoMdClose />}
+                        {showMentionAdminDropDown === false ? (
+                          <IoMdPersonAdd />
+                        ) : (
+                          <IoMdClose />
+                        )}
                       </Link>
-                      {showMentionAdminDropDown === true  ? (
+                      {showMentionAdminDropDown === true ? (
                         <MentionAdminInDoc
                           adminList={adminList}
                           setMentionAdminShowDropDown={
@@ -559,8 +568,9 @@ export default function SharePointDocument({
                         docSingleDate.file.mimeType === "image/png" ||
                         docSingleDate.file.mimeType === "image/jpg") &&
                         imgConRes === "imageConverted") ||
-                      docSingleDate.file.mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") &&
-                      convertedDoc ? (
+                      docSingleDate.file.mimeType ===
+                        "application/vnd.openxmlformats-officedocument.wordprocessingml.document") &&
+                    convertedDoc ? (
                       // <PreviewDocument
                       //   docData={docSingleDate}
                       //   docId={docId ? docId : folderID}
@@ -580,8 +590,10 @@ export default function SharePointDocument({
                           selectedMentionAdmin={selectedMentionAdmin}
                         />
                       ) : null
-                    ) : <Loader />
-                    // : 
+                    ) : (
+                      <Loader />
+                    )
+                    // :
                     // commentsRes ? (
                     //   <PdfViewerComponent
                     //     document={docSingleDate["@microsoft.graph.downloadUrl"]}
