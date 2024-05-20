@@ -514,7 +514,8 @@ export default function SharePointDocument({
                     >
                       <IoMdArrowBack />
                     </Link>
-                    <div
+                    {/* Mention admin code */}
+                   {localStorage.getItem("userType") === "admin" &&  <div
                       className="mention_div"
                       style={{
                         position: "absolute",
@@ -555,10 +556,12 @@ export default function SharePointDocument({
                           setSelectedMentionAdmin={setSelectedMentionAdmin}
                           commentsList={commentsList}
                           docPreview={docPreview}
-                          getCommentsList={getCommentsList}
+                          userId={user_id}
+                          data={docSingleDate}
+                          setCommentsList={setCommentsList}
                         />
                       ) : null}
-                    </div>
+                    </div>}
                   </div>
 
                   {

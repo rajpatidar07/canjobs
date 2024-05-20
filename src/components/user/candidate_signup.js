@@ -301,7 +301,6 @@ export default function CandidateSignup(props) {
     const file = e.target.files[0];
     const fileType = `.${file.name.split(".").pop()}`
     if (allowedFormats.includes(fileType)) {
-      console.log("object")
       encoded = await convertToBase64(file);
       let base64Name = encoded.base64;
       let finalBase = base64Name;

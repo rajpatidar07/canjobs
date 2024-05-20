@@ -913,7 +913,8 @@ export default function EmployerDocumrentContainer(props) {
                     <td className="p-3">
                       {textReplaceFunction(item.type)}
                       <p className="font-size-2 m-0">
-                        {moment(item.updated_at).format("DD MMMM, YYYY")}
+                      {moment.utc(item.updated_at).tz('America/Toronto').format("DD MMMM, YYYY")}
+                        {/* {moment(item.updated_at).format("DD MMMM, YYYY")} */}
                       </p>
                     </td>
                     {/* <td className="p-3">

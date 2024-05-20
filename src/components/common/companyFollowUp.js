@@ -128,7 +128,8 @@ function AddCompanyfollowup(props) {
                   <div className="d-flex justify-content-between">
                     <p className="text-italic font-size-3 m-0">
                       Created on:
-                      {moment(res.created_at).format("Do MM YYYY, h:mm:ss a")}
+                      {moment.utc(job.created_at).tz('America/Toronto').format("Do MM YYYY, h:mm:ss a")}
+                      {/* {moment(res.created_at).format("Do MM YYYY, h:mm:ss a")} */}
                     </p>
                   </div>
                   <div className="card rounded-3 py-2 px-5">

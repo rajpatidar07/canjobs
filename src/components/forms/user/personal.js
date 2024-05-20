@@ -69,13 +69,7 @@ function PersonalDetails(props) {
     assigned_by: ""
   };
 
-  /* Functionality to close the modal */
-  const close = () => {
-    setState(initialFormStateuser);
-    setErrors("");
-    setLoading(false);
-    props.close();
-  };
+  
 
   // VALIDATION CONDITIONS
 
@@ -265,6 +259,7 @@ function PersonalDetails(props) {
   // const onAdminSelectChange = (option) => {
   //   setState({ ...state, assigned_by: option.value });
   // };
+
   /*Function to get agent json list */
   const AgentJson = async () => {
     let response = await GetAgentJson();
@@ -375,9 +370,7 @@ function PersonalDetails(props) {
     const allowedFormats = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
     const file = e.target.files[0];
     const fileType = `.${file.name.split(".").pop()}`
-    console.log(file.type, fileType)
     if (allowedFormats.includes(fileType)) {
-      console.log("object")
       encoded = await convertToBase64(file);
       let base64Name = encoded.base64;
       let finalBase = base64Name;
@@ -415,6 +408,13 @@ function PersonalDetails(props) {
     let base64Name = encoded.base64;
     setState({ ...state, profile_photo: base64Name });
   };
+  /* Functionality to close the modal */
+const close = () => {
+  setState(initialFormStateuser);
+  setErrors("");
+  setLoading(false);
+  props.close();
+};
   // Calculate min and max dates dynamically
   // const currentYear = moment().year();
   // const minDate = moment().subtract(10, 'years').format("YYYY-MM-DD");
@@ -954,8 +954,8 @@ function PersonalDetails(props) {
                       onChange={onInputChange}
                     >
                       <option value={""}>Select</option>
-                      {(FilterJson.interested || []).map((interest) => (
-                        <option key={interest} value={interest}
+                      {(FilterJson.interested || []).map((interest,index) => (
+                        <option key={index} value={interest}
                           className={interest === "pnp" ?
                             `text-uppercase` :
                             "text-capitalize"}>
@@ -1172,7 +1172,7 @@ function PersonalDetails(props) {
                       disabled={user_type === "agent"}
                     >
                       <option value={""}>Select partner </option>
-                      {agentList.map((item) => <option value={item.id}>{item.u_id} </option>)}
+                      {agentList.map((item,index) => <option value={item.id} key={index}>{item.u_id} </option>)}
                     </select>
                     <span
                       className={user_type === "agent" ? "d-none" : "btn btn-sm btn-secondary"}
@@ -1241,7 +1241,10 @@ function PersonalDetails(props) {
                       id="assigned_by"
                     >
                       <option value={""}>Select Admin </option>
-                      {(admiinList || []).map((item) => <option value={item.admin_id}>{item.name} </option>)}
+                      {(admiinList || []).map((item,index) =>
+                         <option value={item.admin_id} key={index}>
+                          {item.name} 
+                          </option>)}
                     </select>
                     {/* <span
                       className="btn btn-sm btn-secondary"

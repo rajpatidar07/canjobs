@@ -186,7 +186,8 @@ export default function CommentBox({
                             : ""}
                         </div>
                         <div className="text-gray font-size-2 font-weight-normal m-0 text-capitalize">
-                          {moment(commentItem.created_on).format("HH:mm D MMM")}
+                        {moment.utc(commentItem.created_on).tz('America/Toronto').format("HH:mm D MMM")}
+                          {/* {moment(commentItem.created_on).format("HH:mm D MMM")} */}
                         </div>
                       </div>
                     </div>

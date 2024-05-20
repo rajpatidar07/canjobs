@@ -245,9 +245,10 @@ function JobDetailPage(props) {
                         Posted Time
                       </span>
                       <h6 className="font-size-5 text-black-2 font-weight-semibold mb-0">
-                        {moment(jobDetatilsData.created_at).format(
+                      {moment.utc(jobDetatilsData.created_at).tz('America/Toronto').format("DD MMMM, YYYY")}
+                        {/* {moment(jobDetatilsData.created_at).format(
                           "DD MMMM, YYYY"
-                        )}
+                        )} */}
                       </h6>
                     </div>
                   </div>

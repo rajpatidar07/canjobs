@@ -199,9 +199,10 @@ function Addfollowup(props) {
                         </b>
                         <i className="font-size-2">
                           Created on:
-                          {moment(res.created_at).format(
+                          {moment.utc(res.created_at).tz('America/Toronto').format("Do MMM YYYY, h:mm:ss a")}
+                          {/* {moment(res.created_at).format(
                             "Do MMM YYYY, h:mm:ss a"
-                          )}
+                          )} */}
                         </i>
                       </div>
                       <p className="font-size-4 m-0">
@@ -576,7 +577,10 @@ function Addfollowup(props) {
                               res.created_at === undefined ? (
                               <p className="font-size-3 mb-0">N/A</p>
                             ) : (
-                              <small>{moment(res.created_at).calendar()}</small>
+                              <small>
+                                {moment.utc(res.created_at).tz('America/Toronto').calendar()}
+                                {/* {moment(res.created_at).calendar()} */}
+                                </small>
                             )}
                           </td>
                           <td>

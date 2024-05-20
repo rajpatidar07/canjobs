@@ -885,9 +885,10 @@ const UserProfile = (props) => {
                                         className="bg-regent-opacity-15 text-gray font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                                       >
                                         <i className="text-gray fa fa-clock mr-2 font-weight-bold"></i>
-                                        {moment(data.created_at).format(
+                                        {moment.utc(data.created_at).tz('America/Toronto').format( "DD-MM-YYYY")}
+                                        {/* {moment(data.created_at).format(
                                           "DD-MM-YYYY"
-                                        )}
+                                        )} */}
                                       </span>
                                     </li>
 

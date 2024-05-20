@@ -13,7 +13,7 @@ export default function PdfViewerComponent(props) {
       // Simulate API call or async operation
       if (noteJson) {
         setTimeout(() => {
-          console.log("Note created:", noteJson);
+          // console.log("Note created:", noteJson);
           resolve({
             bbox: noteJson.createdNote.boundingBox,
             blendMode: noteJson.createdNote.blendMode,
@@ -211,7 +211,7 @@ export default function PdfViewerComponent(props) {
           "comments.create",
           async (createdComments) => {
             eventData.createdComments = createdComments.get(0);
-            console.log(createdComments.get(0));
+            // console.log(createdComments.get(0));
             eventData.mentionId = createdComments.get(0).getMentionedUserIds()
               ._map._root
               ? createdComments.get(0).getMentionedUserIds()._map._root
@@ -224,7 +224,7 @@ export default function PdfViewerComponent(props) {
         /* Function to create Annotation note */
         instance.addEventListener("annotations.create", async (createdNote) => {
           const note = createdNote.get(0);
-          console.log(note);
+          // console.log(note);
           // const serializedObjectNote = toSerializableObject(note);
           // const noteJson = serializedObjectNote;
           if (!isLoadingNotes.current) {
@@ -232,7 +232,7 @@ export default function PdfViewerComponent(props) {
             eventData.createdNote = note;
             // console.log("Combined eventData:", (eventData));
             createPdfNote(eventData).then(async (response) => {
-              console.log("Final data:", JSON.stringify(response));
+              // console.log("Final data:", JSON.stringify(response));
               try {
                 let res = await ADocAnnotation(
                   localStorage.getItem("admin_id"),
@@ -314,7 +314,7 @@ export default function PdfViewerComponent(props) {
         instance.addEventListener("annotations.change", function () {
           // console.log("Something in the annotations has changed.");
         });
-        console.log(props.commentsList);
+        // console.log(props.commentsList);
         /*Json tried to show */
         // instance.applyOperations([
         //   {

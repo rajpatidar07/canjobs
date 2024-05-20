@@ -756,9 +756,10 @@ function AgentsEmployee(props) {
                                       empdata.created_at,
                                       "YYYY-MM-DD HH:mm:ss"
                                     ).fromNow()} */}
-                                    {moment(empdata.created_at).format(
+                                    {moment.utc(empdata.created_at).tz('America/Toronto').format("DD MMMM, YYYY")}
+                                    {/* {moment(empdata.created_at).format(
                                       "DD MMMM, YYYY"
-                                    )}
+                                    )} */}
                                   </p>
                                 )}
                               </td>

@@ -9,13 +9,13 @@ import { EmployerDetails } from "../../api/api";
 import moment from "moment";
 import { ToastContainer } from "react-toastify";
 import Loader from "../common/loader";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import EmployerDocumentModal from "../forms/admin/EmployerDocumetModal";
 import { PiPencilDuotone } from "react-icons/pi";
 import AdminHeader from "../admin/header";
 import AdminSidebar from "../admin/sidebar";
 import JobTable from "../common/jobTable";
-import DocumrentContainer from "..//common/employeeDocumrentContainer";
+// import DocumrentContainer from "..//common/employeeDocumrentContainer";
 import Interview from "../common/interviewTable";
 // import AddCompanyfollowup from "../common/companyFollowUp";
 import Addfollowup from "../forms/admin/addfollowup";
@@ -25,11 +25,16 @@ import { BiPhoneCall } from "react-icons/bi";
 import ContactPage from "../common/contactPage";
 import PayentForm from "../forms/admin/payentForm";
 import MainEmailPage from "../email/mainemailPage";
+import SharePointDocument from "../common/Document folder/SharePointDocument";
 // import LimaArrowProfile from "../common/LimaArrowProfile";
 function CompanyProfileDetail(props) {
   const user_type = localStorage.getItem("userType");
   const company_id = localStorage.getItem("company_id");
   let cid = company_id;
+  let location =useLocation()
+  const searchParams = new URLSearchParams(location.search);
+  const docId = searchParams.get("docId");
+  const docParentId = searchParams.get("docParentId");
   let navigate = useNavigate();
   /*Show modal and data state */
   // const [lima, setLmia] = useState(false);
@@ -561,9 +566,10 @@ function CompanyProfileDetail(props) {
                                           title="Est. Since"
                                         >
                                           <i className="fas fa-business-time mr-2"></i>
-                                          {moment(
+                                          {moment.utc(employerData.company_start_date).tz('America/Toronto').format("YYYY")}
+                                          {/* {moment(
                                             employerData.company_start_date
-                                          ).format("YYYY")}
+                                          ).format("YYYY")} */}
                                         </div>
                                       ) : null}
                                       {employerData.website_url ? (
@@ -779,17 +785,18 @@ function CompanyProfileDetail(props) {
                     />
                   ) : null} */}
                   {TabActive === "documents" ? (
-                    <DocumrentContainer
-                      employee_id={cid}
-                      emp_user_type={"employer"}
-                    />
-                  //   < SharePointDocument
-                  //   user_id={cid}
-                  //   emp_user_type={"employer"}
-                  //   folderId={docId ? docParentId : PersonalDetail.documents_folder_id}
-                  //   notification={docId ? "yes" : "no"}
-                  //   docId={docId ? docId : ""}
-                  // />
+                    // <DocumrentContainer
+                    //   employee_id={cid}
+                    //   emp_user_type={"employer"}
+                    // />
+                    < SharePointDocument
+                    user_id={cid}
+                    emp_user_type={"employer"}
+                    folderId={docId ? docParentId : employerData.documents_folder_id}
+                    notification={docId ? "yes" : "no"}
+                    docId={docId ? docId : ""}
+                  />
+                  
                   ) : null}
                 </div>
                 <div

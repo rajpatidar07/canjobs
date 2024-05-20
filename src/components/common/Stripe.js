@@ -52,6 +52,7 @@ const CheckoutForm = ({
                   // save_payment_method: true,
                   //Aws: https://canpathwaysjobs.com
                   //Vercel: https://canjobs.vercel.app
+                  //local:http://localhost:3000
                   return_url: `https://canjobs.vercel.app${window.location.pathname}`,
                 },
                 // amount: amount,

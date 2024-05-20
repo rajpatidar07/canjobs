@@ -330,7 +330,8 @@ function Notifications({
                         </div>
                       </div>
                       <div className="text-muted font-size-2 line-height-1 ml-2">
-                        {moment(data.created_at).format("HH:mm")}
+                        {moment.utc(data.created_at).tz('America/Toronto').format('MMMM Do YYYY, h:mm:ss a')}
+                        {/* {moment(data.created_at).format("HH:mm")} */}
                       </div>
                     </Link>
                   </li>

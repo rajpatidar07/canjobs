@@ -194,9 +194,11 @@ function FollowUpDashBoard(props) {
                                 <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                   {data.next_followup_date === "0000-00-00"
                                     ? "N/A"
-                                    : moment(data.next_followup_date).format(
-                                        "DD MMMM, YYYY"
-                                      )}
+                                    : moment.utc(data.next_followup_date).tz('America/Toronto').format("DD MMMM, YYYY")
+                                    //  moment(data.next_followup_date).format(
+                                    //     "DD MMMM, YYYY"
+                                    //   )
+                                  }
                                 </h3>
                               </th>
                             </tr>

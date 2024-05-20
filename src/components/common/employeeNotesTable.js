@@ -286,7 +286,8 @@ export default function EmployeeNotesTable({ search, userType }) {
                         </th>
                         <th className="py-5">
                           <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                            {moment(data.created_at).format("DD MMMM, YYYY")}
+                          {moment.utc(data.created_at).tz('America/Toronto').format("DD MMMM, YYYY")}
+                            {/* {moment(data.created_at).format("DD MMMM, YYYY")} */}
                           </div>
                         </th>
                         <th className="py-5 ">

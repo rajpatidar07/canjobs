@@ -181,7 +181,8 @@ function JobBoxResponse({
                         <LiaBusinessTimeSolid />{" "}
                       </span>
                       <span className="font-weight-semibold">
-                        {moment(job.created_at).format("DD MMMM, YYYY")}
+                        {moment.utc(job.created_at).tz('America/Toronto').format("DD MMMM, YYYY")}
+                        {/* {moment(job.created_at).format("DD MMMM, YYYY")} */}
                       </span>
                     </li>
                   )}

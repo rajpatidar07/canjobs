@@ -149,9 +149,12 @@ const InterviewHistoryTable = ({ employee_id }) => {
                                             {interview.status === 36 ||interview.status === "36"?
                                                 "Interview completed" :
                                                 "Interview Schedule"}</td>
-                                        <td><i className="font-size-2">
-                                            {moment(interview.created_at).format("lll")}
-                                        </i></td>
+                                        <td>
+                                            <i className="font-size-2">
+                                            {moment.utc(interview.created_at).tz('America/Toronto').format("lll")}
+                                            {/* {moment(interview.created_at).format("lll")} */}
+                                        </i>
+                                        </td>
                                         <td>
                                             <p className="timeline_date text-dark font-size-3 intervire-msg mt-5">
                                                 {interview.msg}

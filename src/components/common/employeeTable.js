@@ -656,18 +656,19 @@ export default function EmployeeTable(props) {
                         </p>
                       </td>
                       <td className=" py-5">
-                        <Link
-                          to={`/${empdata.employee_id}`}
-                          onClick={() =>
-                            localStorage.setItem("StatusTab", status === "" ? "00" : status)
-                            //   empdata.name !== null
-                            //     ? () => employeeDetails(empdata.employee_id)
-                            //     : null
-                          }
-                          title="Candidate Details"
+                        <div
                         >
                           <div className="d-flex profile_box gx-2">
                             <div className="media  align-items-center">
+                                <Link
+                                to={`/${empdata.employee_id}`}
+                                onClick={() =>
+                                  localStorage.setItem("StatusTab", status === "" ? "00" : status)
+                                  //   empdata.name !== null
+                                  //     ? () => employeeDetails(empdata.employee_id)
+                                  //     : null
+                                }
+                                title="Candidate Details"> 
                               <div className="circle-30 mx-auto overflow-hidden">
                                 {empdata.profile_photo === null ? (
                                   <img
@@ -676,13 +677,14 @@ export default function EmployeeTable(props) {
                                     className="w-100"
                                   />
                                 ) : (
-                                  <img
+                                 <img
                                     src={empdata.profile_photo}
                                     alt=""
                                     className="w-100"
                                   />
                                 )}
                               </div>
+                                  </Link>
                             </div>
 
                             <div className=" mb-0">
@@ -692,12 +694,23 @@ export default function EmployeeTable(props) {
                                 empdata.name === "" ? (
                                 <p className="font-size-3  mb-0">N/A</p>
                               ) : (
+                               
+                               <Link 
+                               to={`/${empdata.employee_id}`}
+                               onClick={() =>
+                                 localStorage.setItem("StatusTab", status === "" ? "00" : status)
+                                 //   empdata.name !== null
+                                 //     ? () => employeeDetails(empdata.employee_id)
+                                 //     : null
+                               }
+                               title="Candidate Details">
                                 <p
                                   className="m-0 text-black-2 font-weight-bold text-capitalize text-truncate"
                                   title={empdata.name}
                                 >
                                   {empdata.name}
                                 </p>
+                                </Link>
                               )}
                               {empdata.gender || empdata.marital_status ? (
                                 <p className="text-gray font-size-2 m-0 text-capitalize">
@@ -753,7 +766,7 @@ export default function EmployeeTable(props) {
                               ) : null}
                             </div>
                           </div>
-                        </Link>
+                        </div>
                         {empdata.is_featured === "1" ||
                           empdata.is_featured === 1 ? (
                           <span className="bg-orange text-white featured_tag">
@@ -793,9 +806,10 @@ export default function EmployeeTable(props) {
                           ) : (
                             <p className="font-size-3 font-weight-normal text-black-2 mb-0">
                               {/* {empdata.language} */}
-                              {moment(empdata.created_at).format(
+                              {moment.utc(empdata.created_at).tz('America/Toronto').format("DD MMMM, YYYY")}
+                              {/* {moment(empdata.created_at).format(
                                 "DD MMMM, YYYY"
-                              )}
+                              )} */}
                             </p>
                           )}
                         </td>

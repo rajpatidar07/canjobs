@@ -918,17 +918,17 @@ export const SendReplyCommitSharepoint = async (
   senderType,
   employee_id
 ) => {
-  console.log(
-    "doc_id" + data.doc_id,
-    "employee_id" + employee_id,
-    "task_id" + data.id,
-    "sender_id" + senderId,
-    "sender_type" + senderType,
-    "receiver_id" + recid,
-    "receiver_type" + adminType,
-    "msg" + msg,
-    "type" + type
-  );
+  // console.log(
+  //   "doc_id" + data.doc_id,
+  //   "employee_id" + employee_id,
+  //   "task_id" + data.id,
+  //   "sender_id" + senderId,
+  //   "sender_type" + senderType,
+  //   "receiver_id" + recid,
+  //   "receiver_type" + adminType,
+  //   "msg" + msg,
+  //   "type" + type
+  // );
   const response = await axios.post(
     `${API_URL}admin/sendMsg`,
     {
@@ -3136,18 +3136,18 @@ export const AddSharePointDOcument = async (
   docType,
   data
 ) => {
-  console.log(
-    "employee_id",
-    id,
-    "userType",
-    user,
-    "folder_Id",
-    folderId,
-    "docType",
-    docType,
-    "file",
-    data
-  );
+  // console.log(
+  //   "employee_id",
+  //   id,
+  //   "userType",
+  //   user,
+  //   "folder_Id",
+  //   folderId,
+  //   "docType",
+  //   docType,
+  //   "file",
+  //   data
+  // );
   const formData = new FormData();
   formData.append("docType", docType);
   formData.append("userType", user);

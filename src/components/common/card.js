@@ -58,9 +58,10 @@ const DashboardCard = (props) => {
                     <td>{item.name}</td>
                     <td>{item.lmia_status}</td>
                     <td>
-                      {moment(item.expected_time_of_completion).format(
+                    {moment.utc(item.expected_time_of_completion).tz('America/Toronto').format("Do MMM YY")}
+                      {/* {moment(item.expected_time_of_completion).format(
                         "Do MMM YY"
-                      )}
+                      )} */}
                     </td>
                   </tr>
                 ))}

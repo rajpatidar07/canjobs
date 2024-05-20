@@ -333,9 +333,10 @@ function Interview(props) {
                             <p className="font-size-3  mb-0">N/A</p>
                           ) : (
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              {moment(data.interview_date).format(
+                             {moment.utc(data.interview_date).tz('America/Toronto').format("DD MMMM, YYYY")}
+                              {/* {moment(data.interview_date).format(
                                 "DD MMMM, YYYY"
-                              )}
+                              )} */}
                             </h3>
                           )}
                         </td>

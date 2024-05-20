@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { IoMdClose } from "react-icons/io";
-import { UpdateDocuentcommentAssign } from "../../../api/api";
+import { ADocAnnotation, UpdateDocuentcommentAssign } from "../../../api/api";
 import { toast } from "react-toastify";
-const MentionAdminInDoc = ({ adminList, commentsList, docPreview }) => {
+const MentionAdminInDoc = ({ adminList, commentsList, docPreview, userId, data, setCommentsList }) => {
   let AssignedId =
     commentsList.length === 0
       ? ""
@@ -42,7 +42,6 @@ const MentionAdminInDoc = ({ adminList, commentsList, docPreview }) => {
   };
   /* Function to update status for the task */
   const OnHandleUpdateComment = async (originalData) => {
-    console.log(originalData);
     let updatedData;
     if (originalData) {
       updatedData = {
@@ -71,6 +70,131 @@ const MentionAdminInDoc = ({ adminList, commentsList, docPreview }) => {
       console.log(err);
     }
   };
+  /*Function to Add update mention admin */
+  const OnMentionAdmin = async () => {
+    console.log(selectedMentionAdmin)
+    if (selectedMentionAdmin.length === 0) {
+      toast.error("The admin is not chosen to assign tasks!", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+    } else {
+      if (commentsList[0]?.id) {
+        let updatedData = {
+          // task_creator_user_id: localStorage.getItem("admin_id"),
+          // task_creator_user_type: "",
+          doc_id: data?.id,
+          // user_admin_assigned: "",
+          // json: this.annots,
+          // assined_to_user_id: "",
+          // assigned_user_type: "",
+          // document_url: "",
+          // subject_description: "N/A",
+          // x_axis: "0",
+          // y_axis: "0",
+          // type: "document",
+          // employee_id:  data?.userId,
+          doc_parent_id: data?.parentReference.id,
+          id: commentsList[0]?.id,
+          assigned_to: selectedMentionAdmin.map(admin => admin.email).join(","),
+          assined_to_user_id: selectedMentionAdmin.map(admin => admin.admin_id).join(","),
+          assigned_to_name: selectedMentionAdmin.map(admin => admin.name).join(","),
+          assigned_user_type_new: selectedMentionAdmin.map(admin => admin.admin_type).join(","),
+          task_creator_user_id: localStorage.getItem("admin_id"),
+          task_creator_user_type: "admin"
+        }
+        try {
+          let res = await UpdateDocuentcommentAssign(updatedData)
+          if (res.message === "Task updated successfully!1") {
+            toast.success("Admin mentioned Successfully", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+            const updatedCommentsList = [...commentsList]; // Create a copy of the existing commentsList
+            const updatedComment = updatedCommentsList[0]; // Assuming you are updating the first comment
+            if (updatedComment) {
+              updatedComment.assined_to_user_id = selectedMentionAdmin.map((admin) => admin.admin_id).join(",");
+              updatedComment.assigned_to = selectedMentionAdmin.map((admin) => admin.email).join(",");
+              updatedComment.assigned_to_name = selectedMentionAdmin.map((admin) => admin.name).join(",");
+              updatedComment.assigned_user_type_new = selectedMentionAdmin.map((admin) => admin.admin_type).join(",");
+            }
+
+            // Update the state with the modified commentsList
+            setCommentsList(updatedCommentsList);
+          }
+        } catch (err) {
+          console.log(err)
+        }
+      } else {
+        try {
+          let res = await ADocAnnotation(
+            localStorage.getItem("admin_id"),
+            data?.id,
+            selectedMentionAdmin.map(admin => admin.admin_id).join(","),//ASSIGNED ADMIN ID
+            selectedMentionAdmin.map(admin => admin.email).join(","),//ASSIGNED ADMIN EMAIL
+            "",//SUBJECT
+            "N/A",//COMMENT
+            "0",//X AXIS
+            "0",//Y AXIS
+            "document",
+            localStorage.getItem("admin_type"), //sender ADMIN type
+            localStorage.getItem("admin"), //sender name,
+            selectedMentionAdmin.map(admin => admin.name).join(","), //assigned Admin or user Name,
+            "", //follow up status(for notes only)
+            "", //Next follow up date(for notes only)
+            "admin", //Assign user type,
+            "", //Document url(for notes only)
+            localStorage.getItem("admin_email"), //Sender email
+            userId, //employee id,
+            "", //assigned_by_id
+            data?.parentReference.id, // document parent code,
+            // this.annots,//Annotation data,
+            commentsList[0]?.id//annotationId
+          );
+          if (res.data.message === "task inserted successfully!") {
+            toast.success("Admin mentioned Successfully", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+            //   setSelectedAnnotation(null);
+            //   setComments("");
+            //   setCommentApiCall(true);
+            //   setSelectedAdmin("");
+            //   setAnnotationMode(!isAnnotationMode);
+            //   setFilteredEmails([]);
+            // setNotificationApiCall(true);
+            localStorage.setItem("callNotification", true);
+            const updatedCommentsList = [...commentsList]; // Create a copy of the existing commentsList
+            const updatedComment = updatedCommentsList[0]; // Assuming you are updating the first comment
+            if (updatedComment) {
+              updatedComment.assined_to_user_id = selectedMentionAdmin.map((admin) => admin.admin_id).join(",");
+              updatedComment.assigned_to = selectedMentionAdmin.map((admin) => admin.email).join(",");
+              updatedComment.assigned_to_name = selectedMentionAdmin.map((admin) => admin.name).join(",");
+              updatedComment.assigned_user_type_new = selectedMentionAdmin.map((admin) => admin.admin_type).join(",");
+            }
+
+            // Update the state with the modified commentsList
+            setCommentsList(updatedCommentsList);
+          }
+        } catch (err) {
+          console.log(err);
+          // if (err.response.data.message === "required fields cannot be blank") {
+          //     toast.error(" Please try again later.", {
+          //         position: toast.POSITION.TOP_RIGHT,
+          //         autoClose: 1000,
+          //     });
+          //     //   setSelectedAnnotation(null);
+          //     //   setComments("");
+          //     //   setSelectedAdmin("");
+          //     //   setCommentApiCall(true);
+          //     //   setAnnotationMode(!isAnnotationMode);
+          //     //   setAddCommentFlag();
+          //     //   setFilteredEmails([]);
+          // }
+        }
+      }
+    }
+  }
   return (
     <div
       className="mention-admin-container"
@@ -143,6 +267,13 @@ const MentionAdminInDoc = ({ adminList, commentsList, docPreview }) => {
           </option>
         ))}
       </select>
+      <div className="d-flex justify-content-end">
+        <button onClick={() => OnMentionAdmin()}
+         className="border-1 bg-white  rounded-pill"
+         title="Mention Admin">
+          <b className="p-3">Save</b>
+        </button>
+      </div>
     </div>
   );
 };

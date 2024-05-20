@@ -140,7 +140,8 @@ function JobDetail({ ids }) {
                       Posted Time
                     </span>
                     <h6 className="font-size-5 text-black-2 font-weight-semibold mb-0">
-                      {moment(jobData.created_at).format("DD MMMM, YYYY")}
+                     {moment.utc(jobData.created_at).tz('America/Toronto').format("DD MMMM, YYYY")}
+                      {/* {moment(jobData.created_at).format("DD MMMM, YYYY")} */}
                     </h6>
                   </div>
                 </div>

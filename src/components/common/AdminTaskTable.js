@@ -201,7 +201,7 @@ export default function AdminTaskTable(props) {
                           data.task_creator_user_name === "undefined" ||
                           data.task_creator_user_name === "" ||
                           data.task_creator_user_name === "0" ? (
-                            <p className="font-size-3  mb-0">N/A</p>
+                            <span className="font-size-3  mb-0">N/A</span>
                           ) : (
                             data.task_creator_user_name
                           )}
@@ -214,7 +214,7 @@ export default function AdminTaskTable(props) {
                           data.assigned_to_name === "undefined" ||
                           data.assigned_to_name === "" ||
                           data.assigned_to_name === "0" ? (
-                            <p className="font-size-3  mb-0">N/A</p>
+                            <span className="font-size-3  mb-0">N/A</span>
                           ) : (
                             data.assigned_to_name
                           )}
@@ -228,11 +228,11 @@ export default function AdminTaskTable(props) {
                         data.subject_description === "0" ? (
                           <p className="font-size-3  mb-0">N/A</p>
                         ) : (
-                          <p className="m-0">
+                          <div className="m-0">
                             <p className="text-gray font-size-2 m-0">
                               {data.subject_description.replace(/@/g, "")}
                             </p>
-                          </p>
+                          </div>
                         )}
                       </td>
 

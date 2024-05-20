@@ -103,19 +103,19 @@ export default function ApplicantsFilter({
         }
       >
         <p className="input_label">Search Candidate:</p>
-        <div class="input-group mb-3">
+        <div className="input-group mb-3">
           <input
             required
             type="text"
-            class="form-control"
+            className="form-control"
             placeholder="Search Candidate"
             name="Employee_name"
             onChange={(e) => setcandidateSearch(e)}
             onKeyPress={handleKeyPress}
           />
-          <div class="input-group-append">
+          <div className="input-group-append">
             <button
-              class=""
+              className=""
               type="button"
               onClick={SearchCandidate}
               style={{

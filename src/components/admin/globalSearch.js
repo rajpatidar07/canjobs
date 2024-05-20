@@ -55,19 +55,19 @@ function GlobalSearch() {
         <div className="left_side" onClick={() => setshow(false)}></div>
         <div className="right_side bg-white">
           <div className="global_search d-flex align-items-center p-3 px-5 ">
-            <div class="input-group mb-3">
+            <div className="input-group mb-3">
               <input
                 required
                 type="text"
-                class="form-control"
+                className="form-control"
                 placeholder="Search Candidate"
                 name="Employee_name"
                 onChange={(e) => setsearch(e.target.value)}
                 onKeyPress={handleKeyPress}
               />
-              <div class="input-group-append">
+              <div className="input-group-append">
                 <button
-                  class=""
+                  className=""
                   type="button"
                   onClick={GlobalSearchAPICall}
                   style={{

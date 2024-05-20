@@ -268,15 +268,18 @@ function EmployementDetails(props) {
                       <div className="d-flex ">
                         <div className="d-flex align-items-center justify-content-right flex-wrap text-right">
                           <span className="font-size-4 text-gray w-100">
-                            {moment(CareerDetails.start_date).format(
+                            {/* {moment(CareerDetails.start_date).format(
                               "DD MMMM, YYYY"
-                            )}{" "}
+                            )}{" "} */}
+                            {moment.utc(CareerDetails.start_date).tz('America/Toronto').format( "DD MMMM, YYYY")}
                             -
                             {CareerDetails.currently_work_here === ("1" || 1)
                               ? "Currently working"
-                              : moment(CareerDetails.end_date).format(
-                                  "DD MMMM, YYYY"
-                                )}
+                              :moment.utc(CareerDetails.end_date).tz('America/Toronto').format( "DD MMMM, YYYY")
+                              //  moment(CareerDetails.end_date).format(
+                              //     "DD MMMM, YYYY"
+                                // )
+                                }
                           </span>
                           <span className="d-none font-size-3 text-gray w-100">
                             <span
@@ -573,7 +576,8 @@ function EmployementDetails(props) {
                   }
                   value={state.end_date || ""}
                   onChange={onInputChange}
-                  nKeyDownCapture={(e) => e.preventDefault()}
+                  onKeyDownCapture={(e) => e.preventDefault()}
+                  // nKeyDownCapture={(e) => e.preventDefault()}
                   className={
                     errors.end_date
                       ? "form-control coustam_datepicker border border-danger"

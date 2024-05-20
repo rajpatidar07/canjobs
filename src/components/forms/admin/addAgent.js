@@ -249,7 +249,7 @@ function AddAgent(props) {
       id: state.id,
       assigned_by: props.agentId.assigned_by === state.assigned_by ? "" : state.assigned_by
     }
-    console.log(props.agentId , state.assigned_by)
+    // console.log(props.agentId , state.assigned_by)
     if (validate()) {
       setLoading(true);
       try {

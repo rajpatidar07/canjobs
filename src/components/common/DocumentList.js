@@ -204,9 +204,10 @@ export default function DocumentList({
                                     {textReplaceFunction(item.document_name)}
                                   </span>
                                   <p className="font-size-2 m-0">
-                                    {moment(item.updated_at).format(
+                                  {moment.utc(item.updated_at).tz('America/Toronto').format("DD-MMM-YYYY")}
+                                    {/* {moment(item.updated_at).format(
                                       "DD-MMM-YYYY"
-                                    )}
+                                    )} */}
                                   </p>
                                 </>
                               )}
