@@ -493,11 +493,13 @@ export default function SharePointDocument({
                         top: 5,
                         left: 5,
                         background: "#fff",
-                        width: 30,
-                        height: 30,
-                        zIndex: 9999,
+                        width: 35,
+                        height: 35,
+                        fontSize: 24,
+                        zIndex: 99,
                         display: "flex",
                         justifyContent: "center",
+                        boxShadow: "0 0 4px #ccc",
                         alignItems: "center",
                         textDecoration: "none", // Added to remove underline from Link
                       }}
@@ -524,7 +526,7 @@ export default function SharePointDocument({
                           top: 14,
                           right: "27%", // Changed to align with the right side
                           background: "#fff",
-                          zIndex: 9999,
+                          zIndex: 99,
                           justifyContent: "center",
                           alignItems: "center",
                           textDecoration: "none",
