@@ -9,7 +9,8 @@ const MentionAdminInDoc = ({
   userId,
   data,
   setTaggedAdmin,
-  DocUserType
+  DocUserType,
+  showMentionAdminDropDown,
 }) => {
   let AssignedId =
     commentsList.length === 0
@@ -65,13 +66,13 @@ const MentionAdminInDoc = ({
       if (res.message === "Task updated successfully!1") {
         status === "0"
           ? toast.success("Task completed Successfully", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          })
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            })
           : toast.error("Task is incomplete !", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
         setStatus(status === "1" ? "0" : "1");
       }
     } catch (err) {
@@ -126,13 +127,16 @@ const MentionAdminInDoc = ({
               position: toast.POSITION.TOP_RIGHT,
               autoClose: 1000,
             });
-            localStorage.setItem("mentionAdmin", JSON.stringify(selectedMentionAdmin))
+            localStorage.setItem(
+              "mentionAdmin",
+              JSON.stringify(selectedMentionAdmin)
+            );
           }
         } catch (err) {
           console.log(err);
         }
       } else {
-        console.log(DocUserType)
+        console.log(DocUserType);
         try {
           let res = await ADocAnnotation(
             localStorage.getItem("admin_id"),
@@ -155,9 +159,9 @@ const MentionAdminInDoc = ({
             userId, //employee id,
             "", //assigned_by_id
             data?.parentReference.id, // document parent code,
-            "",// this.annots,//Annotation data,
-            commentsList[0]?.id,//annotationId
-            DocUserType,//document's uset type
+            "", // this.annots,//Annotation data,
+            commentsList[0]?.id, //annotationId
+            DocUserType //document's uset type
           );
           if (res.data.message === "task inserted successfully!") {
             toast.success("Admin mentioned Successfully", {
@@ -165,7 +169,10 @@ const MentionAdminInDoc = ({
               autoClose: 1000,
             });
             localStorage.setItem("callNotification", true);
-            localStorage.setItem("mentionAdmin", JSON.stringify(selectedMentionAdmin))
+            localStorage.setItem(
+              "mentionAdmin",
+              JSON.stringify(selectedMentionAdmin)
+            );
           }
         } catch (err) {
           console.log(err);
@@ -174,92 +181,108 @@ const MentionAdminInDoc = ({
     }
   };
   return (
-    <div
-      className="mention-admin-container"
-      style={{ boxShadow: "0 0 4px #ccc", borderRadius: 5, background: "#fff" }}
-    >
-      <div className="d-flex flex-wrap p-1">
+    <>
+      {showMentionAdminDropDown === true ? (
         <div
-          className="selected-users-container d-flex flex-wrap align-items-center"
-          id="SelectAdmin"
-          style={{ gap: 5 }}
+          className="mention-admin-container"
+          style={{
+            boxShadow: "0 0 4px #ccc",
+            borderRadius: 5,
+            background: "#fff",
+          }}
         >
-          {AssigneAdmin.length === 0 ? null : (
-            <span
-              className="comment_status_update me-1"
-              title="Update Task Status"
-              style={{
-                cursor: "pointer",
-                color: status === "1" ? "white" : "black",
-                border: status === "1" ? "solid 1px white" : "solid 1px black",
-                backgroundColor: status === "1" && "green",
-                borderRadius: "50%",
-                width: 20,
-                height: 20,
-                fontSize: 14,
-                textAlign: "center",
-              }}
-              onClick={(e) => {
-                OnHandleUpdateComment(commentsList[0]);
-              }}
-            >
-              &#x2713; {/* Checkmark symbol */}
-            </span>
-          )}
-
-          {selectedMentionAdmin.map((user, index) => (
+          <div className="d-flex flex-wrap p-1">
             <div
-              key={index}
-              className="badgebadge badge-pill badge-info"
-              style={{
-                fontSize: 12, display: AssigneAdmin.find((item) => item.admin_id === user.admin_id)
-                  ?.admin_id === user.admin_id
-                  ? "none"
-                  : "",
-              }}
+              className="selected-users-container d-flex flex-wrap align-items-center"
+              id="SelectAdmin"
+              style={{ gap: 5 }}
             >
-              {user.name}
-              <span className="d-none">
-                {user.email} {user.admin_id} {user.admin_type}
-              </span>
+              {AssigneAdmin.length === 0 ? null : (
+                <span
+                  className="comment_status_update me-1"
+                  title="Update Task Status"
+                  style={{
+                    cursor: "pointer",
+                    color: status === "1" ? "white" : "black",
+                    border:
+                      status === "1" ? "solid 1px white" : "solid 1px black",
+                    backgroundColor: status === "1" && "green",
+                    borderRadius: "50%",
+                    width: 20,
+                    height: 20,
+                    fontSize: 14,
+                    textAlign: "center",
+                  }}
+                  onClick={(e) => {
+                    OnHandleUpdateComment(commentsList[0]);
+                  }}
+                >
+                  &#x2713; {/* Checkmark symbol */}
+                </span>
+              )}
 
-              <IoMdClose
-                onClick={() => handleUserRemove(user.admin_id)}
-                style={{
-                  marginLeft: "5px",
-                  cursor: "pointer",
-                }}
-              />
+              {selectedMentionAdmin.map((user, index) => (
+                <div
+                  key={index}
+                  className="badgebadge badge-pill badge-info"
+                  style={{
+                    fontSize: 12,
+                    display:
+                      AssigneAdmin.find(
+                        (item) => item.admin_id === user.admin_id
+                      )?.admin_id === user.admin_id
+                        ? "none"
+                        : "",
+                  }}
+                >
+                  {user.name}
+                  <span className="d-none">
+                    {user.email} {user.admin_id} {user.admin_type}
+                  </span>
+
+                  <IoMdClose
+                    onClick={() => handleUserRemove(user.admin_id)}
+                    style={{
+                      marginLeft: "5px",
+                      cursor: "pointer",
+                    }}
+                  />
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      </div>
-      <select
-        multiple
-        className="form-control"
-        onChange={(e) => handleUserSelect(e.target.value)}
-        style={{ fontSize: 15, textTransform: "capitalize", minHeight: 200 }}
-      >
-        {adminList.map((user, index) => (
-          <option
-            key={index}
-            value={user.admin_id}
-            style={{ borderBottom: "1px solid #eee" }}
+          </div>
+          <select
+            multiple
+            className="form-control"
+            onChange={(e) => handleUserSelect(e.target.value)}
+            style={{
+              fontSize: 15,
+              textTransform: "capitalize",
+              minHeight: 200,
+            }}
           >
-            {user.name}
-          </option>
-        ))}
-      </select>
-      <div className="d-flex justify-content-center p-1">
-        <button
-          onClick={() => OnMentionAdmin()}
-          className="font-size-3 rounded-3 btn btn-primary border-0 btn-sm w-100"
-          title="Save Mention Admin"
-        >
-          Save
-        </button>
-      </div>
-    </div>
+            {adminList.map((user, index) => (
+              <option
+                key={index}
+                value={user.admin_id}
+                style={{ borderBottom: "1px solid #eee" }}
+              >
+                {user.name}
+              </option>
+            ))}
+          </select>
+          <div className="d-flex justify-content-center p-1">
+            <button
+              onClick={() => OnMentionAdmin()}
+              className="font-size-3 rounded-3 btn btn-primary border-0 btn-sm w-100"
+              title="Save Mention Admin"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+      ) : null}
+    </>
   );
 };
 
