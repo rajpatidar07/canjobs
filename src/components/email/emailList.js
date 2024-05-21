@@ -299,13 +299,13 @@ const EmailList = ({
                                   ) : (
                                     <p className=" font-weight-normal text-black-2 font-size-2 mb-0 ">
                                       {email.IsRead === true ? (
-                                        moment.utc(email.sentDateTime).tz('America/Toronto').format( "DD MMMM, YYYY")
+                                        moment(email.sentDateTime).tz('America/Toronto').format( "DD MMMM, YYYY")
                                         // moment(email.sentDateTime).format(
                                         //   "DD MMMM, YYYY"
                                         // )
                                       ) : (
                                         <b>
-                                          {moment.utc(email.sentDateTime).tz('America/Toronto').format( "DD MMMM, YYYY")}
+                                          {moment(email.sentDateTime).tz('America/Toronto').format( "DD MMMM, YYYY")}
                                           {/* {moment(email.sentDateTime).format(
                                             "DD MMMM, YYYY"
                                           )} */}

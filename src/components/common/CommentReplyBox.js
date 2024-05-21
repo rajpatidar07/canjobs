@@ -38,7 +38,7 @@ export default function CommentReplyBox({
                         : ""} */}
                     </h6>
                     <i className="font-size-2">
-                    {moment.utc(replyItem.updated_at).tz('America/Toronto').format("HH:mm D MMM")}
+                    {moment(replyItem.updated_at).tz('America/Toronto').format("HH:mm D MMM")}
                       {/* {moment(replyItem.updated_at).format("HH:mm D MMM")} */}
                     </i>
                   </div>

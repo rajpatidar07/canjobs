@@ -56,15 +56,49 @@ export default function SharePointDocument({
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteData, setDeleteData] = useState();
   const [adminList, setAdminList] = useState([]);
+  let defaultAdminMention = localStorage.getItem("mentionAdmin") ? JSON.parse(localStorage.getItem("mentionAdmin")) : []
   const [taggedadmin, setTaggedAdmin] = useState([]);
   const [commentsList, setCommentsList] = useState([]);
   const [commentsRes, setCommentsRes] = useState();
   const [imgConRes, setImgConRes] = useState();
   const [convertedDoc, setConvertedDoc] = useState("");
+  useEffect(() => {
+    AllShareType();
+    if (localStorage.getItem("userType") === "admin") {
+      AdminData();
+    }
 
+    // if (notification === "yes") {
+    //     setDocPreview(true)
+    // }
+    if (apiCall === true) {
+      setApiCall(false);
+    }
+    // eslint-disable-next-line
+  }, [folderID, apiCall, docId]);
+  const AdminData = async () => {
+    try {
+      const userData = await getallAdminData();
+      if (userData.data.length === 0) {
+        setAdminList([]);
+      } else {
+        // const filteredData = userData.data.filter(item => item.admin_type === "manager");
+        setAdminList(userData.data);
+        // setAdminList(userData.data.map(obj => ({
+        //   name: obj.name,
+        //   id: obj.admin_id,
+        //   description: obj.email,
+        //   displayName: obj.name
+        // })))
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   // Generate a list of comments from the state for image annotation
   const getCommentsList = async (data) => {
     if (data) {
+      localStorage.setItem("mentionAdmin", "")
       try {
         let res = await GetCommentsAndAssign(
           data.id, //docId,
@@ -96,10 +130,14 @@ export default function SharePointDocument({
           //   );
           // }
           setCommentsList(res.data.data.data);
+          setTaggedAdmin(adminList.filter((item) =>
+            res.data.data.data[0]?.assined_to_user_id.split(",").map(Number).includes(parseInt(item.admin_id))))
+          console.log(adminList,"obj",res.data.data.data,"ect",adminList.filter((item) =>
+            res.data.data.data[0]?.assined_to_user_id.split(",").map(Number).includes(parseInt(item.admin_id))))
           setCommentsRes(res.data.status);
-          if (res.data.data.data[0]?.assined_to_user_id) {
-            setMentionAdminShowDropDown(true);
-          }
+          // if (res.data.data.data[0]?.assined_to_user_id) {
+          //   setMentionAdminShowDropDown(true);
+          // }
           // setImageAnnotations(res.data.data.data);
         } else if (res.data.message === "Task data not found") {
           setCommentsList([]);
@@ -127,25 +165,7 @@ export default function SharePointDocument({
     }
   };
   // const documentID = "YOUR_DOCUMENT_ID"; // Replace YOUR_DOCUMENT_ID with the actual document ID
-  const AdminData = async () => {
-    try {
-      const userData = await getallAdminData();
-      if (userData.data.length === 0) {
-        setAdminList([]);
-      } else {
-        // const filteredData = userData.data.filter(item => item.admin_type === "manager");
-        setAdminList(userData.data);
-        // setAdminList(userData.data.map(obj => ({
-        //   name: obj.name,
-        //   id: obj.admin_id,
-        //   description: obj.email,
-        //   displayName: obj.name
-        // })))
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+
   /*To Show the delete alert box */
   const ShowDeleteAlert = (e) => {
     setDeleteData(e);
@@ -159,48 +179,48 @@ export default function SharePointDocument({
   const DocTypeData =
     emp_user_type === "employer"
       ? [
-          "Business T2",
-          "Recent PD7A",
-          "Business T4",
-          "Business Incorporation Certificate",
-          "Employment Contract",
-          "Schedule A",
-          "Signed Job Offer",
-          "PD7A of year",
-          "T2 Schedule 100 and 125",
-          "Certificate of incorporation",
-          "Business license",
-          "T4 summary of year",
-          "Request for Exception from English Language Requirement for LMIA Application",
-          "CPA Attestation Letter",
-          "Representative Submission Letter",
-        ]
+        "Business T2",
+        "Recent PD7A",
+        "Business T4",
+        "Business Incorporation Certificate",
+        "Employment Contract",
+        "Schedule A",
+        "Signed Job Offer",
+        "PD7A of year",
+        "T2 Schedule 100 and 125",
+        "Certificate of incorporation",
+        "Business license",
+        "T4 summary of year",
+        "Request for Exception from English Language Requirement for LMIA Application",
+        "CPA Attestation Letter",
+        "Representative Submission Letter",
+      ]
       : [
-          "passport",
-          "drivers_license",
-          "photograph",
-          "immigration_status",
-          "lmia",
-          "job_offer_letter",
-          "provincial_nominee_letter",
-          "proof_of_funds",
-          "proof_of_employment",
-          "marriage_certificate",
-          "education_metric",
-          "education_higher_secondary",
-          "education_graduation",
-          "education_post_graduation",
-          "resume_or_cv",
-          "ielts",
-          "medical",
-          "police_clearance",
-          "refusal_letter",
-          "Employment Contract",
-          "Reference Letters",
-          "Client Info",
-          "Representative Submission Letter",
-          "Bank Statement",
-        ];
+        "passport",
+        "drivers_license",
+        "photograph",
+        "immigration_status",
+        "lmia",
+        "job_offer_letter",
+        "provincial_nominee_letter",
+        "proof_of_funds",
+        "proof_of_employment",
+        "marriage_certificate",
+        "education_metric",
+        "education_higher_secondary",
+        "education_graduation",
+        "education_post_graduation",
+        "resume_or_cv",
+        "ielts",
+        "medical",
+        "police_clearance",
+        "refusal_letter",
+        "Employment Contract",
+        "Reference Letters",
+        "Client Info",
+        "Representative Submission Letter",
+        "Bank Statement",
+      ];
 
   /*Function to call api to get all folders list of employees documnet from sharepoint */
   const AllShareType = async () => {
@@ -219,7 +239,7 @@ export default function SharePointDocument({
         setDocTypeList(res.data.data);
         setShowDropDown(false);
         setDocLoder(false);
-        if (notification === "yes") {
+        if (notification === "yes") { 
           if (res.data.data.find((item) => item.id === docId)) {
             setDocPreview(true);
             setDocSingleDate(res.data.data.find((item) => item.id === docId));
@@ -258,20 +278,7 @@ export default function SharePointDocument({
       setBreadCrumbLoder(false);
     }
   };
-  useEffect(() => {
-    AllShareType();
-    if (localStorage.getItem("userType") === "admin") {
-      AdminData();
-    }
 
-    // if (notification === "yes") {
-    //     setDocPreview(true)
-    // }
-    if (apiCall === true) {
-      setApiCall(false);
-    }
-    // eslint-disable-next-line
-  }, [folderID, apiCall, docId]);
   /*On change fnction to upload bulk document in 1 array*/
   const handleBulkFileChange = async (event, id) => {
     const files = event.target.files;
@@ -350,6 +357,7 @@ export default function SharePointDocument({
         setLoadingBtn(false);
         setSaveBtn(false);
         setShowDropDown(false);
+        setTaggedAdmin([])
       }
     } catch (err) {
       console.log(err);
@@ -404,6 +412,7 @@ export default function SharePointDocument({
         });
         CancelDelete();
         setApiCall(true);
+        setTaggedAdmin([])
       }
     } catch (err) {
       console.log(err);
@@ -510,6 +519,7 @@ export default function SharePointDocument({
                         setConvertedDoc("");
                         setShowDropDown("");
                         setCommentsList("");
+                        setTaggedAdmin([])
                         setMentionAdminShowDropDown(false);
                       }}
                     >
@@ -556,7 +566,7 @@ export default function SharePointDocument({
                             <IoMdClose />
                           )}
                         </Link>
-                        {taggedadmin.map(
+                        {(defaultAdminMention.length > 0 ? defaultAdminMention : taggedadmin).map(
                           (user, index) =>
                             // <div
                             //   key={index}
@@ -569,8 +579,8 @@ export default function SharePointDocument({
                             //   </span>
                             // </div>
                             user.profile_image === null ||
-                            user.profile_image === "" ||
-                            user.profile_image === undefined ? (
+                              user.profile_image === "" ||
+                              user.profile_image === undefined ? (
                               <span
                                 className="rounded-circle"
                                 data-toggle="tooltip"
@@ -586,7 +596,8 @@ export default function SharePointDocument({
                                 }}
                                 title={user.name}
                               >
-                                {user.name.charAt(0).toUpperCase()}
+                                {console.log(user)}
+                                {user.name?.charAt(0).toUpperCase()}
                               </span>
                             ) : (
                               <img
@@ -602,8 +613,8 @@ export default function SharePointDocument({
                                 }}
                                 src={
                                   user.profile_image === null ||
-                                  user.profile_image === "" ||
-                                  user.profile_image === undefined
+                                    user.profile_image === "" ||
+                                    user.profile_image === undefined
                                     ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                     : user.profile_image
                                 }
@@ -624,8 +635,8 @@ export default function SharePointDocument({
                             docPreview={docPreview}
                             userId={user_id}
                             data={docSingleDate}
-                            setCommentsList={setCommentsList}
                             setTaggedAdmin={setTaggedAdmin}
+                            DocUserType={emp_user_type}
                           />
                         ) : null}
                       </div>
@@ -640,8 +651,8 @@ export default function SharePointDocument({
                         docSingleDate.file.mimeType === "image/jpg") &&
                         imgConRes === "imageConverted") ||
                       docSingleDate.file.mimeType ===
-                        "application/vnd.openxmlformats-officedocument.wordprocessingml.document") &&
-                    convertedDoc ? (
+                      "application/vnd.openxmlformats-officedocument.wordprocessingml.document") &&
+                      convertedDoc ? (
                       // <PreviewDocument
                       //   docData={docSingleDate}
                       //   docId={docId ? docId : folderID}
@@ -659,6 +670,7 @@ export default function SharePointDocument({
                           userId={user_id}
                           commentsList={commentsList}
                           selectedMentionAdmin={selectedMentionAdmin}
+                          DocUserType={emp_user_type}
                         />
                       ) : null
                     ) : (

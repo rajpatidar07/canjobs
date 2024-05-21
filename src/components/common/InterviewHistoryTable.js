@@ -151,7 +151,7 @@ const InterviewHistoryTable = ({ employee_id }) => {
                                                 "Interview Schedule"}</td>
                                         <td>
                                             <i className="font-size-2">
-                                            {moment.utc(interview.created_at).tz('America/Toronto').format("lll")}
+                                            {moment(interview.created_at).tz('America/Toronto').format("lll")}
                                             {/* {moment(interview.created_at).format("lll")} */}
                                         </i>
                                         </td>

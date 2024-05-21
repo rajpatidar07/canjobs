@@ -40,7 +40,7 @@ export default function UserTimline({ userId, userType }) {
                         {item.created_by}
                       </b>
                       <i className="font-size-2">
-                        {moment.utc(item.created_at).tz('America/Toronto').format("lll")}
+                        {moment(item.created_at).tz('America/Toronto').format("lll")}
                         {/* {moment(item.created_at).format("lll")} */}
                       </i>
                     </div>

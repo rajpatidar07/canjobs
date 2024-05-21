@@ -45,7 +45,8 @@ function CompanyProfileDetail(props) {
   const [showCompanyInfoModal, setShowCompanyInfoModal] = useState(false);
   const [showKycComplainDetailsModal, setShowKycComplainDetailsModal] =
     useState(false);
-  const [TabActive, setTabActive] = useState("profile");
+  const [TabActive, setTabActive] = useState( docId
+    ? "documents":"profile");
   const [employerData, setEmployerData] = useState("");
   const [employerKycData, setEmployerKycData] = useState("");
   const [jobPageNo, setJobPageNO] = useState(1);
@@ -96,6 +97,9 @@ function CompanyProfileDetail(props) {
     }
     if (transactionId) {
       setTabActive("payment");
+    }
+    if (docId) {
+      setTabActive("documents");
     }
     // eslint-disable-next-line
   }, [apiCall, company_id]);
@@ -566,7 +570,7 @@ function CompanyProfileDetail(props) {
                                           title="Est. Since"
                                         >
                                           <i className="fas fa-business-time mr-2"></i>
-                                          {moment.utc(employerData.company_start_date).tz('America/Toronto').format("YYYY")}
+                                          {moment(employerData.company_start_date).tz('America/Toronto').format("YYYY")}
                                           {/* {moment(
                                             employerData.company_start_date
                                           ).format("YYYY")} */}

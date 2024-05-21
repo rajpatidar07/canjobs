@@ -199,7 +199,7 @@ function Addfollowup(props) {
                         </b>
                         <i className="font-size-2">
                           Created on:
-                          {moment.utc(res.created_at).tz('America/Toronto').format("Do MMM YYYY, h:mm:ss a")}
+                          {moment(res.created_at).tz('America/Toronto').format("Do MMM YYYY, h:mm:ss a")}
                           {/* {moment(res.created_at).format(
                             "Do MMM YYYY, h:mm:ss a"
                           )} */}
@@ -578,7 +578,7 @@ function Addfollowup(props) {
                               <p className="font-size-3 mb-0">N/A</p>
                             ) : (
                               <small>
-                                {moment.utc(res.created_at).tz('America/Toronto').calendar()}
+                                {moment(res.created_at).tz('America/Toronto').calendar()}
                                 {/* {moment(res.created_at).calendar()} */}
                                 </small>
                             )}

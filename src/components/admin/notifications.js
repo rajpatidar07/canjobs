@@ -274,20 +274,26 @@ function Notifications({
                             : data.subject === "interview_scheduled"
                               ? "/interview"
                               : data.subject === "mention_document"
-                                ? `/${data.employee_id}?docId=${data.mention_id
-                                }&docParentId=${data.notif_json
-                                  ? JSON.parse(data.notif_json).doc_parent_id
-                                  : ""
-                                }`
+                                ? data.document_user_type === "employer"
+                                  ? `/client_detail?docId=${data.mention_id
+                                  }&docParentId=${data.notif_json
+                                    ? JSON.parse(data.notif_json).doc_parent_id
+                                    : ""
+                                  }`
+                                  : `/${data.employee_id}?docId=${data.mention_id
+                                  }&docParentId=${data.notif_json
+                                    ? JSON.parse(data.notif_json).doc_parent_id
+                                    : ""
+                                  }`
                                 : data.subject === "mention_partner"
                                   ? `/${data.employee_id}?partner=${data.from_id}`
                                   : data.subject === "mention_partnerChat"
                                     ? `/partner_profile?partner=${data.employee_id}`
                                     : data.subject === "assigned_admin_to_partner" ?
                                       "/partner_profile"
-                                      : data.subject==="mention_notes"
-                                      ?`/${data.employee_id}?note=true`
-                                      :""
+                                      : data.subject === "mention_notes"
+                                        ? `/${data.employee_id}?note=true`
+                                        : ""
                       }
                       onClick={() => {
                         try {
@@ -299,6 +305,8 @@ function Notifications({
                             localStorage.setItem("agent_id", data.employee_id);
                           } else if (data.subject === "assigned_admin_to_partner") {
                             localStorage.setItem("agent_id", data.action_id);
+                          } else if (data.subject === "mention_document" && data.document_user_type === "employer") {
+                            localStorage.setItem("company_id", data.employee_id);
                           }
                         } catch (err) {
                           console.log(err);
@@ -325,12 +333,12 @@ function Notifications({
                             className="text-muted mw-80"
                             style={{ fontSize: "14px" }}
                           >
-                            <div dangerouslySetInnerHTML={{__html:data.message}}/>
+                            <div dangerouslySetInnerHTML={{ __html: data.message }} />
                           </div>
                         </div>
                       </div>
                       <div className="text-muted font-size-2 line-height-1 ml-2">
-                        {moment.utc(data.created_at).tz('America/Toronto').format('MMMM Do YYYY, h:mm:ss a')}
+                        {moment(data.created_at).tz('America/Toronto').format('MMMM Do YYYY, h:mm:ss a')}
                         {/* {moment(data.created_at).format("HH:mm")} */}
                       </div>
                     </Link>

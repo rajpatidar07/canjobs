@@ -8,8 +8,8 @@ const MentionAdminInDoc = ({
   docPreview,
   userId,
   data,
-  setCommentsList,
   setTaggedAdmin,
+  DocUserType
 }) => {
   let AssignedId =
     commentsList.length === 0
@@ -24,7 +24,6 @@ const MentionAdminInDoc = ({
   );
   const hasRunEffect = useRef(false);
   setTaggedAdmin(selectedMentionAdmin);
-
   useEffect(() => {
     if (!hasRunEffect.current && AssignedId.length !== 0) {
       setSelectedMentionAdmin(AssigneAdmin);
@@ -66,13 +65,13 @@ const MentionAdminInDoc = ({
       if (res.message === "Task updated successfully!1") {
         status === "0"
           ? toast.success("Task completed Successfully", {
-              position: toast.POSITION.TOP_RIGHT,
-              autoClose: 1000,
-            })
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          })
           : toast.error("Task is incomplete !", {
-              position: toast.POSITION.TOP_RIGHT,
-              autoClose: 1000,
-            });
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
         setStatus(status === "1" ? "0" : "1");
       }
     } catch (err) {
@@ -127,30 +126,13 @@ const MentionAdminInDoc = ({
               position: toast.POSITION.TOP_RIGHT,
               autoClose: 1000,
             });
-            const updatedCommentsList = [...commentsList]; // Create a copy of the existing commentsList
-            const updatedComment = updatedCommentsList[0]; // Assuming you are updating the first comment
-            if (updatedComment) {
-              updatedComment.assined_to_user_id = selectedMentionAdmin
-                .map((admin) => admin.admin_id)
-                .join(",");
-              updatedComment.assigned_to = selectedMentionAdmin
-                .map((admin) => admin.email)
-                .join(",");
-              updatedComment.assigned_to_name = selectedMentionAdmin
-                .map((admin) => admin.name)
-                .join(",");
-              updatedComment.assigned_user_type_new = selectedMentionAdmin
-                .map((admin) => admin.admin_type)
-                .join(",");
-            }
-
-            // Update the state with the modified commentsList
-            setCommentsList(updatedCommentsList);
+            localStorage.setItem("mentionAdmin", JSON.stringify(selectedMentionAdmin))
           }
         } catch (err) {
           console.log(err);
         }
       } else {
+        console.log(DocUserType)
         try {
           let res = await ADocAnnotation(
             localStorage.getItem("admin_id"),
@@ -173,57 +155,20 @@ const MentionAdminInDoc = ({
             userId, //employee id,
             "", //assigned_by_id
             data?.parentReference.id, // document parent code,
-            // this.annots,//Annotation data,
-            commentsList[0]?.id //annotationId
+            "",// this.annots,//Annotation data,
+            commentsList[0]?.id,//annotationId
+            DocUserType,//document's uset type
           );
           if (res.data.message === "task inserted successfully!") {
             toast.success("Admin mentioned Successfully", {
               position: toast.POSITION.TOP_RIGHT,
               autoClose: 1000,
             });
-            //   setSelectedAnnotation(null);
-            //   setComments("");
-            //   setCommentApiCall(true);
-            //   setSelectedAdmin("");
-            //   setAnnotationMode(!isAnnotationMode);
-            //   setFilteredEmails([]);
-            // setNotificationApiCall(true);
             localStorage.setItem("callNotification", true);
-            const updatedCommentsList = [...commentsList]; // Create a copy of the existing commentsList
-            const updatedComment = updatedCommentsList[0]; // Assuming you are updating the first comment
-            if (updatedComment) {
-              updatedComment.assined_to_user_id = selectedMentionAdmin
-                .map((admin) => admin.admin_id)
-                .join(",");
-              updatedComment.assigned_to = selectedMentionAdmin
-                .map((admin) => admin.email)
-                .join(",");
-              updatedComment.assigned_to_name = selectedMentionAdmin
-                .map((admin) => admin.name)
-                .join(",");
-              updatedComment.assigned_user_type_new = selectedMentionAdmin
-                .map((admin) => admin.admin_type)
-                .join(",");
-            }
-
-            // Update the state with the modified commentsList
-            setCommentsList(updatedCommentsList);
+            localStorage.setItem("mentionAdmin", JSON.stringify(selectedMentionAdmin))
           }
         } catch (err) {
           console.log(err);
-          // if (err.response.data.message === "required fields cannot be blank") {
-          //     toast.error(" Please try again later.", {
-          //         position: toast.POSITION.TOP_RIGHT,
-          //         autoClose: 1000,
-          //     });
-          //     //   setSelectedAnnotation(null);
-          //     //   setComments("");
-          //     //   setSelectedAdmin("");
-          //     //   setCommentApiCall(true);
-          //     //   setAnnotationMode(!isAnnotationMode);
-          //     //   setAddCommentFlag();
-          //     //   setFilteredEmails([]);
-          // }
         }
       }
     }
@@ -266,7 +211,12 @@ const MentionAdminInDoc = ({
             <div
               key={index}
               className="badgebadge badge-pill badge-info"
-              style={{ fontSize: 12 }}
+              style={{
+                fontSize: 12, display: AssigneAdmin.find((item) => item.admin_id === user.admin_id)
+                  ?.admin_id === user.admin_id
+                  ? "none"
+                  : "",
+              }}
             >
               {user.name}
               <span className="d-none">
@@ -278,11 +228,6 @@ const MentionAdminInDoc = ({
                 style={{
                   marginLeft: "5px",
                   cursor: "pointer",
-                  display:
-                    AssigneAdmin.find((item) => item.admin_id === user.admin_id)
-                      ?.admin_id === user.admin_id
-                      ? "none"
-                      : "",
                 }}
               />
             </div>
