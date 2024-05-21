@@ -31,7 +31,7 @@ function CompanyProfileDetail(props) {
   const user_type = localStorage.getItem("userType");
   const company_id = localStorage.getItem("company_id");
   let cid = company_id;
-  let location =useLocation()
+  let location = useLocation()
   const searchParams = new URLSearchParams(location.search);
   const docId = searchParams.get("docId");
   const docParentId = searchParams.get("docParentId");
@@ -45,8 +45,10 @@ function CompanyProfileDetail(props) {
   const [showCompanyInfoModal, setShowCompanyInfoModal] = useState(false);
   const [showKycComplainDetailsModal, setShowKycComplainDetailsModal] =
     useState(false);
-  const [TabActive, setTabActive] = useState( docId
-    ? "documents":"profile");
+  const [TabActive, setTabActive] = useState(docId
+    ? "documents" : "profile");
+
+  const [addNote, setAddNote] = useState(false);
   const [employerData, setEmployerData] = useState("");
   const [employerKycData, setEmployerKycData] = useState("");
   const [jobPageNo, setJobPageNO] = useState(1);
@@ -112,7 +114,14 @@ function CompanyProfileDetail(props) {
             heading={
               <Link
                 className="d-flex align-items-center "
-                onClick={() => navigate(-1)}
+                onClick={() => {
+                  if (TabActive === "notes") {
+                    navigate(-1)
+                  }else{
+                    setAddNote(true)
+                  }
+                }
+                }
               >
                 <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
                 <span className="text-uppercase font-size-3 font-weight-bold text-gray">
@@ -794,13 +803,13 @@ function CompanyProfileDetail(props) {
                     //   emp_user_type={"employer"}
                     // />
                     < SharePointDocument
-                    user_id={cid}
-                    emp_user_type={"employer"}
-                    folderId={docId ? docParentId : employerData.documents_folder_id}
-                    notification={docId ? "yes" : "no"}
-                    docId={docId ? docId : ""}
-                  />
-                  
+                      user_id={cid}
+                      emp_user_type={"employer"}
+                      folderId={docId ? docParentId : employerData.documents_folder_id}
+                      notification={docId ? "yes" : "no"}
+                      docId={docId ? docId : ""}
+                    />
+
                   ) : null}
                 </div>
                 <div
@@ -832,14 +841,20 @@ function CompanyProfileDetail(props) {
                     />
                   ) : 
                     null} */}
-                      {TabActive === "notes" ? (
-                      <Addfollowup 
-                       userId={cid} 
-                       userType={"employer"} 
-                       setApiCall={setApiCall}
-                       assigned_by_id={localStorage.getItem("admin_id")}
-                        />
-                    ) : null}
+                  {/* {TabActive === "notes" ? ( */}
+                  <Addfollowup
+                    userId={cid}
+                    userType={"employer"}
+                    setApiCall={setApiCall}
+                    assigned_by_id={localStorage.getItem("admin_id")}
+                    show={TabActive === "notes" || addNote}
+                    page={TabActive === "notes" ? "no" : "yes"}
+                    close={() => {
+                      setAddNote(false)
+                      if (addNote) { navigate(-1) }
+                    }}
+                  />
+                  {/* // ) : null} */}
                 </div>
                 <div
                   className={

@@ -64,7 +64,8 @@ const NewUserProfile = (props) => {
   const [showPersonalDetails, setShowPersonalDetails] = useState(false);
   const [showEducation, setShowEducation] = useState(false);
   const [showItSkills, setShowItSkills] = useState(false);
-  const [TabActive, setTabActive] = useState(
+  const [addNote, setAddNote] = useState(false);
+    const [TabActive, setTabActive] = useState(
     docId
       ? "sharepoint" /*"documents"*/
       : partnerChat
@@ -279,8 +280,14 @@ const NewUserProfile = (props) => {
             heading={
               <Link
                 className="d-flex align-items-center "
-                onClick={() => navigate(-1)}
-              >
+                onClick={() => {
+                  if (TabActive === "notes") {
+                    navigate(-1)
+                  }else{
+                    setAddNote(true)
+                  }
+                }
+                }              >
                 <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
                 <span className="text-uppercase font-size-3 font-weight-bold text-gray">
                   <h3 className="font-size-6 mb-0 text-capitalize">
@@ -1895,7 +1902,7 @@ const NewUserProfile = (props) => {
                         : "d-none"
                     }
                   >
-                    {TabActive === "notes" ? (
+                    {/* {TabActive === "notes" ? (
                       <Addfollowup
                         userId={eid}
                         userType={"employee"}
@@ -1903,7 +1910,20 @@ const NewUserProfile = (props) => {
                         setApiCall={setApiCall}
                         noteNotification={notes}
                       />
-                    ) : null}
+                    ) : null} */}
+                      <Addfollowup
+                    userId={eid}
+                    userType={"employee"}
+                    setApiCall={setApiCall}
+                    assigned_by_id={PersonalDetail.assigned_by}
+                    noteNotification={notes}
+                    show={TabActive === "notes" || addNote}
+                    page={TabActive === "notes" ? "no" : "yes"}
+                    close={() => {
+                      setAddNote(false)
+                     if(addNote){ navigate(-1)}
+                    }}
+                  />
                   </div>
                   <div
                     className={

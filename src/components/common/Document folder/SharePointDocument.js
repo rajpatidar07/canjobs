@@ -64,28 +64,7 @@ export default function SharePointDocument({
   const [commentsRes, setCommentsRes] = useState();
   const [imgConRes, setImgConRes] = useState();
   const [convertedDoc, setConvertedDoc] = useState("");
-  useEffect(() => {
-    AllShareType();
-    if (localStorage.getItem("userType") === "admin") {
-      AdminData();
-    }
 
-    // if (notification === "yes") {
-    //     setDocPreview(true)
-    // }
-    if (apiCall === true) {
-      setApiCall(false);
-    }
-    // setTaggedAdmin(
-    //   adminList.filter((item) =>
-    //     commentsList?.assined_to_user_id?
-    //       .split(",")
-    //       .map(Number)
-    //       .includes(parseInt(item.admin_id))
-    //   )
-    // );
-    // eslint-disable-next-line
-  }, [folderID, apiCall, docId]);
   const AdminData = async () => {
     try {
       const userData = await getallAdminData();
@@ -140,19 +119,6 @@ export default function SharePointDocument({
           //   );
           // }
           setCommentsList(res.data.data.data);
-
-          console.log(
-            adminList,
-            "obj",
-            res.data.data.data,
-            "ect",
-            adminList.filter((item) =>
-              res.data.data.data[0]?.assined_to_user_id
-                .split(",")
-                .map(Number)
-                .includes(parseInt(item.admin_id))
-            )
-          );
           setCommentsRes(res.data.status);
           // if (res.data.data.data[0]?.assined_to_user_id) {
           //   setMentionAdminShowDropDown(true);
@@ -245,12 +211,12 @@ export default function SharePointDocument({
   const AllShareType = async () => {
     setDocLoder(true);
     setBreadCrumbLoder(true);
-    try {
+        try {
       // if (folderID) {
       let res = await getSharePointParticularFolders(
         user_id,
         emp_user_type,
-        // docId ? folderId :
+        docId ? folderId :
         folderID
       );
       if (res.data.status === 1) {
@@ -297,7 +263,27 @@ export default function SharePointDocument({
       setBreadCrumbLoder(false);
     }
   };
-
+  useEffect(() => {
+    AllShareType();
+    if (localStorage.getItem("userType") === "admin") {
+      AdminData();
+    }
+    // if (notification === "yes") {
+    //     setDocPreview(true)
+    // }
+    if (apiCall === true) {
+      setApiCall(false);
+    }
+    // setTaggedAdmin(
+    //   adminList.filter((item) =>
+    //     commentsList?.assined_to_user_id?
+    //       .split(",")
+    //       .map(Number)
+    //       .includes(parseInt(item.admin_id))
+    //   )
+    // );
+    // eslint-disable-next-line
+  }, [folderID, apiCall, docId]);
   /*On change fnction to upload bulk document in 1 array*/
   const handleBulkFileChange = async (event, id) => {
     const files = event.target.files;
@@ -512,7 +498,7 @@ export default function SharePointDocument({
           {docPreview ? (
             <div className="App-viewer">
               <div className="row m-0 bg-white document_preview_box h-100vh overflow-hidden">
-                <div className={` p-2 col-md-12 col-lg-12 col-sm-12`}>
+                <div className={`p-2 col-md-12 col-lg-12 col-sm-12`}>
                   <div className="back_btn_div">
                     <Link
                       className="rounded-circle back-btn"
@@ -620,7 +606,6 @@ export default function SharePointDocument({
                                 }}
                                 title={user.name}
                               >
-                                {console.log(user)}
                                 {user.name?.charAt(0).toUpperCase()}
                               </span>
                             ) : (
