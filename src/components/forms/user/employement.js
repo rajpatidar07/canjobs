@@ -271,11 +271,11 @@ function EmployementDetails(props) {
                             {/* {moment(CareerDetails.start_date).format(
                               "DD MMMM, YYYY"
                             )}{" "} */}
-                            {moment.utc(CareerDetails.start_date).tz('America/Toronto').format( "DD MMMM, YYYY")}
+                            {moment(CareerDetails.start_date).tz('America/Toronto').format( "DD MMMM, YYYY")}
                             -
                             {CareerDetails.currently_work_here === ("1" || 1)
                               ? "Currently working"
-                              :moment.utc(CareerDetails.end_date).tz('America/Toronto').format( "DD MMMM, YYYY")
+                              :moment(CareerDetails.end_date).tz('America/Toronto').format( "DD MMMM, YYYY")
                               //  moment(CareerDetails.end_date).format(
                               //     "DD MMMM, YYYY"
                                 // )

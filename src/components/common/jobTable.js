@@ -546,14 +546,14 @@ export default function JobTable(props) {
                               <h3
                                 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
                                 title={
-                                  moment.utc(job.created_at).tz('America/Toronto').format("DD MMMM, YYYY")
+                                  moment(job.created_at).tz('America/Toronto').format("DD MMMM, YYYY")
                                 //   moment(job.created_at).format(
                                 //   "DD MMMM, YYYY"
                                 // ) 
                               }
                               >
                                 {/* {job.created_at ? job.created_at : "N/A"} */}
-                                {moment.utc(job.created_at).tz('America/Toronto').format("DD MMMM, YYYY")}
+                                {moment(job.created_at).tz('America/Toronto').format("DD MMMM, YYYY")}
                                 {/* {moment(job.created_at).format("DD MMMM, YYYY")} */}
                               </h3>
                             </th>

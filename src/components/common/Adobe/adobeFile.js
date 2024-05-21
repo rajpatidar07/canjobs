@@ -6,6 +6,7 @@ const AdobePDFViewer = ({
   userId,
   commentsList,
   selectedMentionAdmin,
+  DocUserType
 }) => {
   const annotationId =
     !commentsList || commentsList.length === 0 ? "" : commentsList[0].id;
@@ -95,7 +96,7 @@ const AdobePDFViewer = ({
           console.log(e);
         });
 
-      viewSDKClient.registerSaveApiHandler(userId, annotationId);
+      viewSDKClient.registerSaveApiHandler(userId, annotationId,DocUserType);
       viewSDKClient.registerGetUserProfileApiHandler();
     });
     // eslint-disable-next-line

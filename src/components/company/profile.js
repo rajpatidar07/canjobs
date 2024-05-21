@@ -159,7 +159,7 @@ function CompanyProfile(props) {
                 {employerData.company_start_date ? (
                   <div className="font-size-3 mb-4 mr-10" title="Est. Since">
                     <i className="fas fa-business-time mr-2"></i>
-                    {moment.utc(employerData.company_start_date).tz('America/Toronto').format("YYYY")}
+                    {moment(employerData.company_start_date).tz('America/Toronto').format("YYYY")}
                     {/* {moment(employerData.company_start_date).format("YYYY")} */}
                   </div>
                 ) : null}

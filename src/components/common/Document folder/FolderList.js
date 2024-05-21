@@ -21,6 +21,7 @@ export default function FolderList({
   setSaveBtn,
   setDocFileBase,
   getCommentsList,
+  setCommentsList
 }) {
   return (
     <div
@@ -117,7 +118,7 @@ export default function FolderList({
                       {item.name.replace("_", " ")}
                     </p>
                     <p className="modified-time m-0">
-                    {moment.utc(item.lastModifiedDateTime).tz('America/Toronto').fromNow()}
+                    {moment(item.lastModifiedDateTime).tz('America/Toronto').fromNow()}
                       {/* {moment(item.lastModifiedDateTime).fromNow()} */}
                     </p>
                   </div>

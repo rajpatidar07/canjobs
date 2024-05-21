@@ -134,7 +134,7 @@ export default function ActivityTable(props) {
                         : data.user_type + " " + data.created_by}
                     </td>
                     <td>
-                    {moment.utc(data.created_at).tz('America/Toronto').format('MMMM Do YYYY, h:mm:ss a')}
+                    {moment(data.created_at).tz('America/Toronto').format('MMMM Do YYYY, h:mm:ss a')}
                       {/* {moment(data.created_at).format("lll")} */}
                       </td>
                   </tr>

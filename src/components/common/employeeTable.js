@@ -806,7 +806,7 @@ export default function EmployeeTable(props) {
                           ) : (
                             <p className="font-size-3 font-weight-normal text-black-2 mb-0">
                               {/* {empdata.language} */}
-                              {moment.utc(empdata.created_at).tz('America/Toronto').format("DD MMMM, YYYY")}
+                              {moment(empdata.created_at).tz('America/Toronto').format("DD MMMM, YYYY")}
                               {/* {moment(empdata.created_at).format(
                                 "DD MMMM, YYYY"
                               )} */}
