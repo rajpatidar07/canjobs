@@ -1,275 +1,297 @@
 import { toast } from "react-toastify";
 import { ADocAnnotation, UpdateDocuentcommentAssign } from "../../../api/api";
 const profile = {
-    userProfile: {
-        name:
-            // localStorage.getItem("userType") === "user"
-            //     ? localStorage.getItem("name").charAt(0).toUpperCase() + localStorage.getItem("name").slice(1) :
-            localStorage.getItem("admin") ? localStorage.getItem("admin").charAt(0).toUpperCase() + localStorage.getItem("admin").slice(1) : "",
-        firstName:
-            //  localStorage.getItem("userType") === "user"
-            //     ? localStorage.getItem("name") : 
-            localStorage.getItem("admin"),
-        email:
-            //  localStorage.getItem("userType") === "user"
-            //     ? localStorage.getItem("email") :
-            localStorage.getItem("admin_email"),
-        id:
-            // localStorage.getItem("userType") === "user"
-            //     ? localStorage.getItem("employee_id") :
-            localStorage.getItem("admin_id"),
-        type: "Person"
-    }
+  userProfile: {
+    name:
+      // localStorage.getItem("userType") === "user"
+      //     ? localStorage.getItem("name").charAt(0).toUpperCase() + localStorage.getItem("name").slice(1) :
+      localStorage.getItem("admin")
+        ? localStorage.getItem("admin").charAt(0).toUpperCase() +
+          localStorage.getItem("admin").slice(1)
+        : "",
+    firstName:
+      //  localStorage.getItem("userType") === "user"
+      //     ? localStorage.getItem("name") :
+      localStorage.getItem("admin"),
+    email:
+      //  localStorage.getItem("userType") === "user"
+      //     ? localStorage.getItem("email") :
+      localStorage.getItem("admin_email"),
+    id:
+      // localStorage.getItem("userType") === "user"
+      //     ? localStorage.getItem("employee_id") :
+      localStorage.getItem("admin_id"),
+    type: "Person",
+  },
 };
-let client_id = "d9b36f468d7a4e4e8b275f13728f1132"//(vercel)
+let client_id = "d9e8b7bcb61b42b6a387bfa9cf16a75b";
+// "d9b36f468d7a4e4e8b275f13728f1132"//(vercel)
 //"713b22cf34e345c388e4490f9c9dc79b"//Canpathways
 //"d9e8b7bcb61b42b6a387bfa9cf16a75b"//(Local)
 //"d9b36f468d7a4e4e8b275f13728f1132"//(vercel)
 class ViewSDKClient {
-    constructor() {
-        this.readyPromise = new Promise((resolve) => {
-            if (window.AdobeDC) {
-                resolve();
-            } else {
-                document.addEventListener("adobe_dc_view_sdk.ready", () => {
-                    resolve();
-                });
-            }
+  constructor() {
+    this.readyPromise = new Promise((resolve) => {
+      if (window.AdobeDC) {
+        resolve();
+      } else {
+        document.addEventListener("adobe_dc_view_sdk.ready", () => {
+          resolve();
         });
-        this.adobeDCView = undefined;
-        this.annots = [];
+      }
+    });
+    this.adobeDCView = undefined;
+    this.annots = [];
+  }
+
+  // ready() {
+  //     return this.readyPromise;
+  // }
+  ready() {
+    return this.readyPromise.then(() => {
+      this.registerGetUserProfileApiHandler();
+    });
+  }
+
+  previewFile(divId, viewerConfig, url, data) {
+    const fileExtension = data.name.split(".").pop().toLowerCase();
+    const config = {
+      clientId: client_id,
+    };
+
+    if (divId) {
+      config.divId = divId;
     }
 
-    // ready() {
-    //     return this.readyPromise;
-    // }
-    ready() {
-        return this.readyPromise.then(() => {
-            this.registerGetUserProfileApiHandler();
-        });
-    }
+    this.adobeDCView = new window.AdobeDC.View(config);
 
-    previewFile(divId, viewerConfig, url, data) {
-        const fileExtension = data.name.split('.').pop().toLowerCase();
-        const config = {
-            clientId: client_id
-        };
+    // Set viewer configuration with all options enabled for all file types
+    viewerConfig = {
+      ...viewerConfig,
+      embedMode: window.AdobeDC.View.Enum.EmbedMode.INLINE, // Display inline
+      showAnnotationTools:
+        localStorage.getItem("userType") === "admin" ? true : false, // Show annotation tools
+      showDownloadPDF: true, // Show download PDF option
+      showPrintPDF: true, // Show print PDF option
+      enableFormFilling: true, // Enable form filling
+      showLeftHandPanel: true, // Show left-hand panel
+      showSearchPDF: true, // Show search PDF option
+      showDocumentInfo: true, // Show document information
+      enablePDFAnnotationEditing: false,
+    };
 
-        if (divId) {
-            config.divId = divId;
+    const previewFilePromise = this.adobeDCView.previewFile(
+      {
+        content: {
+          location: {
+            url: url,
+            fileExtension: fileExtension,
+            fileType: data.mimeType,
+          },
+        },
+        metaData: {
+          fileName: data.name,
+          id: data.id,
+          parentReference: data.parentReference,
+        },
+      },
+      viewerConfig
+    );
+
+    return previewFilePromise;
+  }
+
+  previewFileUsingFilePromise(divId, filePromise, data) {
+    this.adobeDCView = new window.AdobeDC.View({
+      clientId: client_id,
+      divId,
+    });
+
+    this.adobeDCView.previewFile(
+      {
+        content: {
+          promise: filePromise,
+        },
+        metaData: {
+          fileName: data.name,
+        },
+      },
+      {}
+    );
+  }
+
+  registerSaveApiHandler(userId, annotationId) {
+    const saveApiHandler = (metaData, content, options) => {
+      const selectedMentionAdmin = [];
+      // Get the Assigned admin
+      const container = document.getElementById("SelectAdmin");
+      if (container && container.children) {
+        for (let i = 0; i < container.children.length; i++) {
+          const child = container.children[i];
+          if (child.classList.contains("badgebadge")) {
+            const childData = child
+              .querySelector("span.d-none")
+              .innerText.trim();
+            const [email, id, type] = childData.split(" ");
+            const name = child.innerText.trim();
+            selectedMentionAdmin.push({ name, email, id, type });
+          }
         }
-
-        this.adobeDCView = new window.AdobeDC.View(config);
-
-        // Set viewer configuration with all options enabled for all file types
-        viewerConfig = {
-            ...viewerConfig,
-            embedMode: window.AdobeDC.View.Enum.EmbedMode.INLINE, // Display inline
-            showAnnotationTools: localStorage.getItem("userType") === "admin" ? true : false, // Show annotation tools
-            showDownloadPDF: true, // Show download PDF option
-            showPrintPDF: true, // Show print PDF option
-            enableFormFilling: true, // Enable form filling
-            showLeftHandPanel: true, // Show left-hand panel
-            showSearchPDF: true, // Show search PDF option
-            showDocumentInfo: true, // Show document information
-            enablePDFAnnotationEditing: false
-        };
-
-        const previewFilePromise = this.adobeDCView.previewFile({
-            content: {
-                location: {
-                    url: url,
-                    fileExtension: fileExtension,
-                    fileType: data.mimeType
-                },
+      } else {
+        console.error("Container element not found or has no children.");
+      }
+      return new Promise((resolve) => {
+        setTimeout(async () => {
+          const response = {
+            code: window.AdobeDC.View.Enum.ApiResponseCode.SUCCESS,
+            data: {
+              metaData: Object.assign(metaData, {
+                updatedAt: new Date().getTime(),
+              }),
+              annotationData: this.annots,
             },
-            metaData: {
-                fileName: data.name,
-                id: data.id,
-                parentReference: data.parentReference,
-            }
-        }, viewerConfig);
-
-        return previewFilePromise;
-    }
-
-    previewFileUsingFilePromise(divId, filePromise, data) {
-        this.adobeDCView = new window.AdobeDC.View({
-            clientId: client_id,
-            divId,
-        });
-
-        this.adobeDCView.previewFile({
-            content: {
-                promise: filePromise,
-            },
-            metaData: {
-                fileName: data.name
-            }
-        }, {});
-    }
-
-    registerSaveApiHandler(userId, annotationId,) {
-        const saveApiHandler = (metaData, content, options) => {
-            const selectedMentionAdmin = [];
-            // Get the Assigned admin
-            const container = document.getElementById('SelectAdmin');
-            if (container && container.children) {
-                for (let i = 0; i < container.children.length; i++) {
-                    const child = container.children[i];
-                    if (child.classList.contains('badgebadge')) {
-                        const childData = child.querySelector('span.d-none').innerText.trim();
-                        const [email, id, type] = childData.split(' ');
-                        const name = child.innerText.trim();
-                        selectedMentionAdmin.push({ name, email, id, type });
-                    }
+          };
+          resolve(response);
+          if (this.annots) {
+            if (annotationId) {
+              let updatedData = {
+                // task_creator_user_id: localStorage.getItem("admin_id"),
+                // task_creator_user_type: "",
+                doc_id: metaData.id,
+                // user_admin_assigned: "",
+                json: this.annots,
+                // assined_to_user_id: "",
+                // assigned_user_type: "",
+                // document_url: "",
+                // subject_description: "N/A",
+                // x_axis: "0",
+                // y_axis: "0",
+                // type: "document",
+                // employee_id: metaData.userId,
+                doc_parent_id: metaData.parentReference.id,
+                id: annotationId,
+                assigned_to: selectedMentionAdmin
+                  .map((admin) => admin.email)
+                  .join(","),
+                assined_to_user_id: selectedMentionAdmin
+                  .map((admin) => admin.id)
+                  .join(","),
+                assigned_to_name: selectedMentionAdmin
+                  .map((admin) => admin.name)
+                  .join(","),
+                assigned_user_type_new: selectedMentionAdmin
+                  .map((admin) => admin.type)
+                  .join(","),
+                task_creator_user_id: localStorage.getItem("admin_id"),
+                task_creator_user_type: "admin",
+              };
+              try {
+                let res = await UpdateDocuentcommentAssign(updatedData);
+                if (res.message === "Task updated successfully!1") {
+                  toast.success("Comment Data Updated Successfully", {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 1000,
+                  });
                 }
+              } catch (err) {
+                console.log(err);
+              }
             } else {
-                console.error('Container element not found or has no children.');
+              try {
+                let res = await ADocAnnotation(
+                  localStorage.getItem("admin_id"),
+                  metaData.id,
+                  selectedMentionAdmin.map((admin) => admin.id).join(","), //ASSIGNED ADMIN ID
+                  selectedMentionAdmin.map((admin) => admin.email).join(","), //ASSIGNED ADMIN EMAIL
+                  "", //SUBJECT
+                  "N/A", //COMMENT
+                  "0", //X AXIS
+                  "0", //Y AXIS
+                  "document",
+                  localStorage.getItem("admin_type"), //sender ADMIN type
+                  localStorage.getItem("admin"), //sender name,
+                  selectedMentionAdmin.map((admin) => admin.name).join(","), //assigned Admin or user Name,
+                  "", //follow up status(for notes only)
+                  "", //Next follow up date(for notes only)
+                  "admin", //Assign user type,
+                  "", //Document url(for notes only)
+                  localStorage.getItem("admin_email"), //Sender email
+                  userId, //employee id,
+                  "", //assigned_by_id
+                  metaData.parentReference.id, // document parent code,
+                  this.annots, //Annotation data,
+                  annotationId //annotationId
+                );
+                if (res.data.message === "task inserted successfully!") {
+                  toast.success("Commented Successfully", {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 1000,
+                  });
+                  //   setSelectedAnnotation(null);
+                  //   setComments("");
+                  //   setCommentApiCall(true);
+                  //   setSelectedAdmin("");
+                  //   setAnnotationMode(!isAnnotationMode);
+                  //   setFilteredEmails([]);
+                  // setNotificationApiCall(true);
+                  localStorage.setItem("callNotification", true);
+                }
+              } catch (err) {
+                console.log(err);
+                // if (err.response.data.message === "required fields cannot be blank") {
+                //     toast.error(" Please try again later.", {
+                //         position: toast.POSITION.TOP_RIGHT,
+                //         autoClose: 1000,
+                //     });
+                //     //   setSelectedAnnotation(null);
+                //     //   setComments("");
+                //     //   setSelectedAdmin("");
+                //     //   setCommentApiCall(true);
+                //     //   setAnnotationMode(!isAnnotationMode);
+                //     //   setAddCommentFlag();
+                //     //   setFilteredEmails([]);
+                // }
+              }
             }
-            return new Promise(resolve => {
-                setTimeout(async () => {
-                    const response = {
-                        code: window.AdobeDC.View.Enum.ApiResponseCode.SUCCESS,
-                        data: {
-                            metaData: Object.assign(metaData, { updatedAt: new Date().getTime() }),
-                            annotationData: this.annots
-                        },
-                    };
-                    resolve(response);
-                    if (this.annots) {
-                        if (annotationId) {
-                            let updatedData = {
-                                // task_creator_user_id: localStorage.getItem("admin_id"),
-                                // task_creator_user_type: "",
-                                doc_id: metaData.id,
-                                // user_admin_assigned: "",
-                                json: this.annots,
-                                // assined_to_user_id: "",
-                                // assigned_user_type: "",
-                                // document_url: "",
-                                // subject_description: "N/A",
-                                // x_axis: "0",
-                                // y_axis: "0",
-                                // type: "document",
-                                // employee_id: metaData.userId,
-                                doc_parent_id: metaData.parentReference.id,
-                                id: annotationId,
-                                assigned_to: selectedMentionAdmin.map(admin => admin.email).join(","),
-                                assined_to_user_id: selectedMentionAdmin.map(admin => admin.id).join(","),
-                                assigned_to_name: selectedMentionAdmin.map(admin => admin.name).join(","),
-                                assigned_user_type_new: selectedMentionAdmin.map(admin => admin.type).join(","),
-                                task_creator_user_id: localStorage.getItem("admin_id"),
-                                task_creator_user_type: "admin"
-                            }
-                            try {
-                                let res = await UpdateDocuentcommentAssign(updatedData)
-                                if (res.message === "Task updated successfully!1") {
-                                    toast.success("Comment Data Updated Successfully", {
-                                        position: toast.POSITION.TOP_RIGHT,
-                                        autoClose: 1000,
-                                    });
-                                }
-                            } catch (err) {
-                                console.log(err)
-                            }
-                        } else {
-                            try {
-                                let res = await ADocAnnotation(
-                                    localStorage.getItem("admin_id"),
-                                    metaData.id,
-                                    selectedMentionAdmin.map(admin => admin.id).join(","),//ASSIGNED ADMIN ID
-                                    selectedMentionAdmin.map(admin => admin.email).join(","),//ASSIGNED ADMIN EMAIL
-                                    "",//SUBJECT
-                                    "N/A",//COMMENT
-                                    "0",//X AXIS
-                                    "0",//Y AXIS
-                                    "document",
-                                    localStorage.getItem("admin_type"), //sender ADMIN type
-                                    localStorage.getItem("admin"), //sender name,
-                                    selectedMentionAdmin.map(admin => admin.name).join(","), //assigned Admin or user Name,
-                                    "", //follow up status(for notes only)
-                                    "", //Next follow up date(for notes only)
-                                    "admin", //Assign user type,
-                                    "", //Document url(for notes only)
-                                    localStorage.getItem("admin_email"), //Sender email
-                                    userId, //employee id,
-                                    "", //assigned_by_id
-                                    metaData.parentReference.id, // document parent code,
-                                    this.annots,//Annotation data,
-                                    annotationId //annotationId
-                                );
-                                if (res.data.message === "task inserted successfully!") {
-                                    toast.success("Commented Successfully", {
-                                        position: toast.POSITION.TOP_RIGHT,
-                                        autoClose: 1000,
-                                    });
-                                    //   setSelectedAnnotation(null);
-                                    //   setComments("");
-                                    //   setCommentApiCall(true);
-                                    //   setSelectedAdmin("");
-                                    //   setAnnotationMode(!isAnnotationMode);
-                                    //   setFilteredEmails([]);
-                                    // setNotificationApiCall(true);
-                                    localStorage.setItem("callNotification", true);
-                                }
-                            } catch (err) {
-                                console.log(err);
-                                // if (err.response.data.message === "required fields cannot be blank") {
-                                //     toast.error(" Please try again later.", {
-                                //         position: toast.POSITION.TOP_RIGHT,
-                                //         autoClose: 1000,
-                                //     });
-                                //     //   setSelectedAnnotation(null);
-                                //     //   setComments("");
-                                //     //   setSelectedAdmin("");
-                                //     //   setCommentApiCall(true);
-                                //     //   setAnnotationMode(!isAnnotationMode);
-                                //     //   setAddCommentFlag();
-                                //     //   setFilteredEmails([]);
-                                // }
-                            }
-                        }
-                    }
-                }, 2000);
-            });
-        };
-        this.adobeDCView.registerCallback(
-            window.AdobeDC.View.Enum.CallbackType.SAVE_API,
-            saveApiHandler,
-            {}
-        );
-    }
-    registerGetUserProfileApiHandler() {
-        const getUserProfileApiHandler = () => {
-            return new Promise((resolve, reject) => {
-                resolve({
-                    code: window.AdobeDC.View.Enum.ApiResponseCode.SUCCESS,
-                    data: profile
-                });
-            });
-        };
+          }
+        }, 2000);
+      });
+    };
+    this.adobeDCView.registerCallback(
+      window.AdobeDC.View.Enum.CallbackType.SAVE_API,
+      saveApiHandler,
+      {}
+    );
+  }
+  registerGetUserProfileApiHandler() {
+    const getUserProfileApiHandler = () => {
+      return new Promise((resolve, reject) => {
+        resolve({
+          code: window.AdobeDC.View.Enum.ApiResponseCode.SUCCESS,
+          data: profile,
+        });
+      });
+    };
 
-        if (this.adobeDCView) {
-            this.adobeDCView.registerCallback(
-                window.AdobeDC.View.Enum.CallbackType.GET_USER_PROFILE_API,
-                getUserProfileApiHandler,
-                {}
-            );
-        }
+    if (this.adobeDCView) {
+      this.adobeDCView.registerCallback(
+        window.AdobeDC.View.Enum.CallbackType.GET_USER_PROFILE_API,
+        getUserProfileApiHandler,
+        {}
+      );
     }
-    registerEventsHandler() {
-        this.adobeDCView.registerCallback(
-            window.AdobeDC.View.Enum.CallbackType.EVENT_LISTENER,
-            event => {
-                // console.log(event);
-            },
-            {
-                enablePDFAnalytics: true,
-            }
-        );
-    }
-
+  }
+  registerEventsHandler() {
+    this.adobeDCView.registerCallback(
+      window.AdobeDC.View.Enum.CallbackType.EVENT_LISTENER,
+      (event) => {
+        // console.log(event);
+      },
+      {
+        enablePDFAnalytics: true,
+      }
+    );
+  }
 }
 
 export default ViewSDKClient;

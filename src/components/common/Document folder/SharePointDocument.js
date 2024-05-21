@@ -56,6 +56,7 @@ export default function SharePointDocument({
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteData, setDeleteData] = useState();
   const [adminList, setAdminList] = useState([]);
+  const [taggedadmin, setTaggedAdmin] = useState([]);
   const [commentsList, setCommentsList] = useState([]);
   const [commentsRes, setCommentsRes] = useState();
   const [imgConRes, setImgConRes] = useState();
@@ -515,53 +516,120 @@ export default function SharePointDocument({
                       <IoMdArrowBack />
                     </Link>
                     {/* Mention admin code */}
-                   {localStorage.getItem("userType") === "admin" &&  <div
-                      className="mention_div"
-                      style={{
-                        position: "absolute",
-                        top: 14,
-                        right: "27%", // Changed to align with the right side
-                        background: "#fff",
-                        zIndex: 9999,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        textDecoration: "none",
-                        color: "#4b4b4b",
-                        maxWidth: 155,
-                      }}
-                    >
-                      <Link
-                        className="rounded-circle add-person-btn " // Changed class name for clarity
-                        to=""
-                        style={{ color: "#333", float: "right" }}
-                        onClick={() => {
-                          showMentionAdminDropDown === true
-                            ? setMentionAdminShowDropDown(false)
-                            : setMentionAdminShowDropDown(true);
+                    {localStorage.getItem("userType") === "admin" && (
+                      <div
+                        className="mention_div"
+                        style={{
+                          position: "absolute",
+                          top: 14,
+                          right: "27%", // Changed to align with the right side
+                          background: "#fff",
+                          zIndex: 9999,
+                          justifyContent: "center",
+                          alignItems: "center",
+                          textDecoration: "none",
+                          color: "#4b4b4b",
+                          maxWidth: 200,
                         }}
                       >
-                        {showMentionAdminDropDown === false ? (
-                          <IoMdPersonAdd />
-                        ) : (
-                          <IoMdClose />
+                        <Link
+                          className="rounded-circle add-person-btn" // Changed class name for clarity
+                          to=""
+                          title="Mention Admin"
+                          style={{
+                            color: "#333",
+                            width: 24,
+                            height: 24,
+                            backgroundColor: "#eee",
+                            textAlign: "center",
+                            margin: "0 3px 3px 0",
+                          }}
+                          onClick={() => {
+                            showMentionAdminDropDown === true
+                              ? setMentionAdminShowDropDown(false)
+                              : setMentionAdminShowDropDown(true);
+                          }}
+                        >
+                          {showMentionAdminDropDown === false ? (
+                            <IoMdPersonAdd />
+                          ) : (
+                            <IoMdClose />
+                          )}
+                        </Link>
+                        {taggedadmin.map(
+                          (user, index) =>
+                            // <div
+                            //   key={index}
+                            //   className="badgebadge badge-pill badge-info"
+                            //   style={{ fontSize: 12 }}
+                            // >
+                            //   {user.name}
+                            //   <span className="d-none">
+                            //     {user.email} {user.admin_id} {user.admin_type}
+                            //   </span>
+                            // </div>
+                            user.profile_image === null ||
+                            user.profile_image === "" ||
+                            user.profile_image === undefined ? (
+                              <span
+                                className="rounded-circle"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                style={{
+                                  width: 24,
+                                  height: 24,
+                                  backgroundColor: "red",
+                                  color: "#fff",
+                                  textAlign: "center",
+                                  cursor: "pointer",
+                                  margin: "0 3px 3px 0",
+                                }}
+                                title={user.name}
+                              >
+                                {user.name.charAt(0).toUpperCase()}
+                              </span>
+                            ) : (
+                              <img
+                                className="rounded-circle"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title={user.name}
+                                style={{
+                                  width: 24,
+                                  height: 24,
+                                  cursor: "pointer",
+                                  margin: "0 3px 3px 0",
+                                }}
+                                src={
+                                  user.profile_image === null ||
+                                  user.profile_image === "" ||
+                                  user.profile_image === undefined
+                                    ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                                    : user.profile_image
+                                }
+                                alt={user.name}
+                              />
+                            )
+                          // {user.name.charAt(0).toUpperCase()}
                         )}
-                      </Link>
-                      {showMentionAdminDropDown === true ? (
-                        <MentionAdminInDoc
-                          adminList={adminList}
-                          setMentionAdminShowDropDown={
-                            setMentionAdminShowDropDown
-                          }
-                          selectedMentionAdmin={selectedMentionAdmin}
-                          setSelectedMentionAdmin={setSelectedMentionAdmin}
-                          commentsList={commentsList}
-                          docPreview={docPreview}
-                          userId={user_id}
-                          data={docSingleDate}
-                          setCommentsList={setCommentsList}
-                        />
-                      ) : null}
-                    </div>}
+                        {showMentionAdminDropDown === true ? (
+                          <MentionAdminInDoc
+                            adminList={adminList}
+                            setMentionAdminShowDropDown={
+                              setMentionAdminShowDropDown
+                            }
+                            selectedMentionAdmin={selectedMentionAdmin}
+                            setSelectedMentionAdmin={setSelectedMentionAdmin}
+                            commentsList={commentsList}
+                            docPreview={docPreview}
+                            userId={user_id}
+                            data={docSingleDate}
+                            setCommentsList={setCommentsList}
+                            setTaggedAdmin={setTaggedAdmin}
+                          />
+                        ) : null}
+                      </div>
+                    )}
                   </div>
 
                   {
