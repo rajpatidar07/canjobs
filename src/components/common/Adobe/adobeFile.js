@@ -100,7 +100,7 @@ const AdobePDFViewer = ({
       viewSDKClient.registerGetUserProfileApiHandler();
     });
     // eslint-disable-next-line
-  }, [annotationId]);
+  }, [annotationId,url]);
   return (
     <div style={{ height: "calc(100vh - 130px)" }}>
       <div

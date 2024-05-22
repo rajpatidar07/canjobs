@@ -361,7 +361,7 @@ function ContactInfo(props) {
                   htmlFor="state"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  State:
+                  Province :
                 </label>
                 <input
                   type="text"

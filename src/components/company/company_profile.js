@@ -35,6 +35,8 @@ function CompanyProfileDetail(props) {
   const searchParams = new URLSearchParams(location.search);
   const docId = searchParams.get("docId");
   const docParentId = searchParams.get("docParentId");
+  const notes = searchParams.get("note")
+
   let navigate = useNavigate();
   /*Show modal and data state */
   // const [lima, setLmia] = useState(false);
@@ -46,8 +48,10 @@ function CompanyProfileDetail(props) {
   const [showKycComplainDetailsModal, setShowKycComplainDetailsModal] =
     useState(false);
   const [TabActive, setTabActive] = useState(docId
-    ? "documents" : "profile");
-
+    ? "documents"
+    : notes === "true"
+      ? "notes"
+      : "profile");
   const [addNote, setAddNote] = useState(false);
   const [employerData, setEmployerData] = useState("");
   const [employerKycData, setEmployerKycData] = useState("");
@@ -117,7 +121,7 @@ function CompanyProfileDetail(props) {
                 onClick={() => {
                   if (TabActive === "notes") {
                     navigate(-1)
-                  }else{
+                  } else {
                     setAddNote(true)
                   }
                 }
@@ -846,13 +850,14 @@ function CompanyProfileDetail(props) {
                     userId={cid}
                     userType={"employer"}
                     setApiCall={setApiCall}
+                    noteNotification={notes}
                     assigned_by_id={localStorage.getItem("admin_id")}
                     show={TabActive === "notes" || addNote}
                     page={TabActive === "notes" ? "no" : "yes"}
                     close={() => {
                       setAddNote(false)
-                      if (addNote) { navigate(-1) }
                     }}
+                    skip={() => navigate(-1)}
                   />
                   {/* // ) : null} */}
                 </div>

@@ -66,13 +66,13 @@ const MentionAdminInDoc = ({
       if (res.message === "Task updated successfully!1") {
         status === "0"
           ? toast.success("Task completed Successfully", {
-              position: toast.POSITION.TOP_RIGHT,
-              autoClose: 1000,
-            })
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          })
           : toast.error("Task is incomplete !", {
-              position: toast.POSITION.TOP_RIGHT,
-              autoClose: 1000,
-            });
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
         setStatus(status === "1" ? "0" : "1");
       }
     } catch (err) {

@@ -269,7 +269,7 @@ function CompanyDetails(props) {
                   htmlFor="company_name"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Client’s Legal Name
+                   Business Legal Name
                   <span className="text-danger">*</span>:
                 </label>
                 <input

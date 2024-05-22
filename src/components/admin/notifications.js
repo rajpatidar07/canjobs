@@ -292,7 +292,8 @@ function Notifications({
                                     : data.subject === "assigned_admin_to_partner" ?
                                       "/partner_profile"
                                       : data.subject === "mention_notes"
-                                        ? `/${data.employee_id}?note=true`
+                                        ? data.document_user_type === "employer"
+                                          ? `/client_detail?note=true` : `/${data.employee_id}?note=true`
                                         : ""
                       }
                       onClick={() => {
@@ -305,7 +306,8 @@ function Notifications({
                             localStorage.setItem("agent_id", data.employee_id);
                           } else if (data.subject === "assigned_admin_to_partner") {
                             localStorage.setItem("agent_id", data.action_id);
-                          } else if (data.subject === "mention_document" && data.document_user_type === "employer") {
+                          } else if ((data.subject === "mention_document" || data.subject === "mention_notes")
+                            && data.document_user_type === "employer") {
                             localStorage.setItem("company_id", data.employee_id);
                           }
                         } catch (err) {

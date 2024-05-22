@@ -65,7 +65,7 @@ const NewUserProfile = (props) => {
   const [showEducation, setShowEducation] = useState(false);
   const [showItSkills, setShowItSkills] = useState(false);
   const [addNote, setAddNote] = useState(false);
-    const [TabActive, setTabActive] = useState(
+  const [TabActive, setTabActive] = useState(
     docId
       ? "sharepoint" /*"documents"*/
       : partnerChat
@@ -283,7 +283,7 @@ const NewUserProfile = (props) => {
                 onClick={() => {
                   if (TabActive === "notes") {
                     navigate(-1)
-                  }else{
+                  } else {
                     setAddNote(true)
                   }
                 }
@@ -712,8 +712,8 @@ const NewUserProfile = (props) => {
                   {/*----Profile Header----*/}
                   <ul
                     className={`nav border-top border-bottom border-mercury user_profile_tab ${user_type === "admin" || user_type === "agent"
-                        ? ""
-                        : "mt-md-13"
+                      ? ""
+                      : "mt-md-13"
                       }`}
                     id="myTab"
                     role="tablist"
@@ -737,8 +737,8 @@ const NewUserProfile = (props) => {
                     </li>
                     <li
                       className={`${user_type === "company"
-                          ? "d-none"
-                          : "tab-menu-items nav-item"
+                        ? "d-none"
+                        : "tab-menu-items nav-item"
                         }`}
                     >
                       <Link
@@ -759,8 +759,8 @@ const NewUserProfile = (props) => {
                     </li>
                     <li
                       className={`${user_type === "company"
-                          ? "d-none"
-                          : "tab-menu-items nav-item"
+                        ? "d-none"
+                        : "tab-menu-items nav-item"
                         } `}
                     >
                       <Link
@@ -781,8 +781,8 @@ const NewUserProfile = (props) => {
                     </li>
                     <li
                       className={`${user_type === "company"
-                          ? "d-none"
-                          : "tab-menu-items nav-item"
+                        ? "d-none"
+                        : "tab-menu-items nav-item"
                         } d-none`}
                     >
                       <Link
@@ -1911,19 +1911,19 @@ const NewUserProfile = (props) => {
                         noteNotification={notes}
                       />
                     ) : null} */}
-                      <Addfollowup
-                    userId={eid}
-                    userType={"employee"}
-                    setApiCall={setApiCall}
-                    assigned_by_id={PersonalDetail.assigned_by}
-                    noteNotification={notes}
-                    show={TabActive === "notes" || addNote}
-                    page={TabActive === "notes" ? "no" : "yes"}
-                    close={() => {
-                      setAddNote(false)
-                     if(addNote){ navigate(-1)}
-                    }}
-                  />
+                    <Addfollowup
+                      userId={eid}
+                      userType={"employee"}
+                      setApiCall={setApiCall}
+                      assigned_by_id={PersonalDetail.assigned_by}
+                      noteNotification={notes}
+                      show={TabActive === "notes" || addNote}
+                      page={TabActive === "notes" ? "no" : "yes"}
+                      close={() => {
+                        setAddNote(false)
+                      }}
+                      skip={() => navigate(-1)}
+                    />
                   </div>
                   <div
                     className={
