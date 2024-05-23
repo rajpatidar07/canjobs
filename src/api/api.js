@@ -877,7 +877,8 @@ export const SendReplyCommit = async (
   senderId,
   senderEmail,
   senderType,
-  employee_id
+  employee_id,
+  parent_id
 ) => {
   const response = await axios.post(
     `${API_URL}/admin/sendMsg`,
@@ -899,6 +900,7 @@ export const SendReplyCommit = async (
       msg: msg,
       type: type,
       employee_id: employee_id,
+      doc_parent_id: parent_id// want to make changes to the backend for this variable
     },
     {
       headers: {
