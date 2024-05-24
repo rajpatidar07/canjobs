@@ -681,6 +681,7 @@ export default function SharePointDocument({
                           selectedMentionAdmin={selectedMentionAdmin}
                           DocUserType={emp_user_type}
                           adminList={adminList}
+                          setCommentsList={setCommentsList}
                         />
                       ) : null
                     ) : (

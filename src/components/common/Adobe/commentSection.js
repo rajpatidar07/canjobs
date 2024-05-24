@@ -4,30 +4,33 @@ import { FaReplyAll } from "react-icons/fa";
 import CommentReplyBox from "../CommentReplyBox";
 import moment from "moment";
 import { toast } from "react-toastify"
-import { ADocAnnotation, GetReplyCommit, SendReplyCommit } from "../../../api/api";
+import { ADocAnnotation, GetCommentsAndAssign, GetReplyCommit, SendReplyCommit, UpdateDocuentcommentAssign } from "../../../api/api";
 export default function CommentSection({ commentsList,
   docData,
   allAdmin,
   userId,
   annotationDrawBox,
-  DocUserType ,
-  setAnnotationDrawBox}) {
+  DocUserType,
+  setAnnotationId,
+  annotationId,
+  setCommentsList,
+  setAnnotationData,
+  setAnnotationDrawBox }) {
   const [comments, setComments] = useState()
   const [replyComment, setReplyComment] = useState()
   const [commentsReplyList, setCommentsReplyList] = useState()
-    const [filteredEmails, setFilteredEmails] = useState([])
-  let [adminid, setAdminId] = useState();
-  let [annotationStatus, setAnnotationStatus] = useState();
+  const [filteredEmails, setFilteredEmails] = useState([])
+  // let [adminid, setAdminId] = useState();
+  // let [annotationStatus, setAnnotationStatus] = useState();
   let [selectedAdminReply, setSelectedAdminReplye] = useState();
   let [replyCommentClick, setReplyCommentClick] = useState();
   let [selectedAdmin, setSelectedAdmin] = useState();
-  let [addMention, setAddMention] = useState();
   let admin_id = localStorage.getItem("admin_id");
   // Generate a list of comments reply
   const getCommentsReplyList = async () => {
     if (docData.id) {
       try {
-        let res = await GetReplyCommit(docData.id, adminid, annotationStatus);
+        let res = await GetReplyCommit(docData.id/*, adminid, annotationStatus*/);
         if (res.data.status === (1 || "1")) {
           setCommentsReplyList(res.data.data);
         }
@@ -142,9 +145,7 @@ export default function CommentSection({ commentsList,
 
     const subject = "";
     const comment = comments; ///\S+@\S+\.\S+/.test(comments) ? "" : comments;
-    let DocId = docData.id//docId;
-    //   ? docId
-    //   : docData.find((item) => item.type === docName).id;
+    let DocId = docData.id
     let sender = allAdmin.find((item) => item.admin_id === admin_id)
       ? allAdmin.find((item) => item.admin_id === admin_id).name
       : "";
@@ -171,14 +172,6 @@ export default function CommentSection({ commentsList,
         .join(",")
       : "";
     const assignedUserType = "admin";
-    // allAdmin.filter((item) =>
-    //   selectedAdmin.includes(item.email)
-    // )
-    //   ? allAdmin
-    //     .filter((item) => selectedAdmin.includes(item.email))
-    //     .map((admin) => admin.admin_type)
-    //     .join(",")
-    //   : "";
     // Send data to the API
     if ((comment === "" && email === "") ||
       (comment.includes("@") && !/\S+@\S+\.\S+/.test(comment))) {
@@ -218,14 +211,12 @@ export default function CommentSection({ commentsList,
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
-          // setSelectedAnnotation(null);
           setComments("");
-          // setCommentApiCall(true);
           setSelectedAdmin("");
-          // setAnnotationMode(!isAnnotationMode);
           setFilteredEmails([]);
-          // setNotificationApiCall(true);
+          setAnnotationDrawBox("")
           localStorage.setItem("callNotification", true);
+          Getcomments()
         }
       } catch (err) {
         console.log(err);
@@ -237,25 +228,14 @@ export default function CommentSection({ commentsList,
           // setSelectedAnnotation(null);
           setComments("");
           setSelectedAdmin("");
-          // setCommentApiCall(true);
-          // setAnnotationMode(!isAnnotationMode);
-          // setAddCommentFlag();
           setFilteredEmails([]);
         }
       }
     }
     // Update state to include the new annotation
-    // setImageAnnotations([...imageAnnotations, { x, y }]);
   };
-   /*Function to reply for the comment */
-   const ReplyAnnotation = async (data) => {
-    // let emailrejex = /\S+@\S+\.\S+/;
-    // let id = emailrejex.test(selectedAdminReply)
-    //   ? allAdmin.find((item) => item.email === selectedAdminReply).admin_id
-    //   : data.assined_to_user_id;
-    // let adminType = emailrejex.test(selectedAdminReply)
-    //   ? allAdmin.find((item) => item.email === selectedAdminReply).admin_type
-    //   : "admin";
+  /*Function to reply for the comment */
+  const ReplyAnnotation = async (data) => {
     let sender = allAdmin.find((item) => item.admin_id === admin_id)
       ? allAdmin.find((item) => item.admin_id === admin_id).name
       : "";
@@ -268,11 +248,6 @@ export default function CommentSection({ commentsList,
     let senderType = allAdmin.find((item) => item.admin_id === admin_id)
       ? allAdmin.find((item) => item.admin_id === admin_id).admin_type
       : "";
-    // let assignedAdminName = allAdmin.find(
-    //   (item) => item.email === selectedAdminReply
-    // )
-    //   ? allAdmin.find((item) => item.email === selectedAdminReply).name
-    //   : "";
     // Variables for mentioning admins
     const email = selectedAdminReply || ""; ///\S+@\S+\.\S+/.test(comments) ? comments : "";
     let assignedAdminName = allAdmin.filter((item) =>
@@ -331,6 +306,7 @@ export default function CommentSection({ commentsList,
           getCommentsReplyList();
           setSelectedAdminReplye("");
           setFilteredEmails([]);
+          setAnnotationDrawBox("")
         }
       } catch (err) {
         console.log(err);
@@ -339,102 +315,123 @@ export default function CommentSection({ commentsList,
       }
     }
   };
+  /* Function to update comment and assign */
+  const OnHandleUpdateComment = async (originalData) => {
+    let updatedData;
+    //Condtion to update x and y axis on documet update
+
+    updatedData = { ...originalData };
+    updatedData = {
+      doc_id: originalData.doc_id,
+      status: originalData.status === "1" ? "0" : "1",
+      id: originalData.id,
+      is_status_update: true,
+    }//.status = originalData.status === "1" ? "0" : "1";
+
+    try {
+      // Call the API with the updated data
+      let res = await UpdateDocuentcommentAssign(updatedData);
+      if (res.message === "Task updated successfully!1") {
+        toast.success("Task completed Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setComments("");
+        Getcomments()
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  /*FUnction to get comment list */
+  const Getcomments = async (annotStatus, adminfilter,) => {
+    let CommentRes = await GetCommentsAndAssign(
+      docData.id, //docId,
+      adminfilter, // adminid,
+      annotStatus, // annotationStatus,
+      "document"
+    )
+    if (CommentRes.data.status === (1 || "1")) {
+      setCommentsList(CommentRes.data.data.data);
+      setAnnotationData(CommentRes.data.data.data.map((item) => JSON.parse(item.doctaskjson)))
+    }
+  }
   return (
     <div className="col-md-4 col-lg-4 col-sm-3 px-2 py-2 comments_and_replies">
       {
-        addMention ? //condition for imm pdf
-        // (docData.name && docData.name.toLowerCase().includes("imm")
-        //   ? replyCommentClick === undefined ||
-        //   replyCommentClick === "" ||
-        //   replyCommentClick === null
-        //   : addCommentFlag === true) ?
-        (
-          <div
-            style={
-              {
-                // position: "absolute",
-                // left: selectedAnnotation.x_axis + 10,
-                // top: selectedAnnotation.y_axis + 20,
-                // zIndex: 1,
+        annotationDrawBox ? //condition for imm pdf
+          // (docData.name && docData.name.toLowerCase().includes("imm")
+          //   ? replyCommentClick === undefined ||
+          //   replyCommentClick === "" ||
+          //   replyCommentClick === null
+          //   : addCommentFlag === true) ?
+          (
+            <div
+              style={
+                {
+                  // position: "absolute",
+                  // left: selectedAnnotation.x_axis + 10,
+                  // top: selectedAnnotation.y_axis + 20,
+                  // zIndex: 1,
+                }
               }
-            }
-            className="pt-0 pb-5"
-          >
-            <form
-              className="comment-form"
-              onSubmit={(e) => {
-                e.preventDefault();
-                addAnnotation(annotationDrawBox);
-              }}
+              className="pt-0 pb-5"
             >
-              <div className="comment-input-container m-0 mb-2">
-                <label className="m-0">
-                  <b> Add Annotation:</b>
-                </label>
-                <input
-                  type="text"
-                  value={comments || ""}
-                  onChange={handleInputChange}
-                  placeholder="Comments or add others with @"
-                  className="comment-input"
-                />
-                {filteredEmails.length > 0 && (
-                  <ul className="email-suggestions">
-                    {filteredEmails.map((email) => (
-                      <li
-                        key={email.email}
-                        onClick={() => handleEmailClick(email.email)}
-                        onMouseOver={() => handleEmailMouseOver(email.email)}
-                        className="email-suggestion-item"
-                      >
-                        <strong>{email.name}</strong>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-              <div className="button-container mx-0">
-                <button
-                  type="submit"
-                  // onClick={(e) => {
-                  //   e.preventDefault();
-                  //   addAnnotation(selectedAnnotation);
-
-                  // }}
-                  className="btn-sm btn-primary save-comment-btn"
-                >
-                  Save Comment
-                </button>
-                <button
-                  className="btn-sm btn-light cancel-btn"
-                  onClick={() => {
-                    // setAddCommentFlag();
-                    // setSelectedAnnotation(null);
-                    setComments("");
-                    // setAnnotationMode(!isAnnotationMode);
-                    setAddMention(false)
-                  }}
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
-        )
-        : 
-        <div className="button-container mx-0">
-                <button
-                  type="submit"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setAddMention(true);
-
-                  }}
-                  className="btn-sm btn-primary save-comment-btn"
-                >
-                  Mention Admin
-                </button>
+              <form
+                className="comment-form"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  addAnnotation(annotationDrawBox);
+                }}
+              >
+                <div className="comment-input-container m-0 mb-2">
+                  <label className="m-0">
+                    <b> Add Annotation:</b>
+                  </label>
+                  <input
+                    type="text"
+                    value={comments || ""}
+                    onChange={handleInputChange}
+                    placeholder="Comments or add others with @"
+                    className="comment-input"
+                  />
+                  {filteredEmails.length > 0 && (
+                    <ul className="email-suggestions">
+                      {filteredEmails.map((email) => (
+                        <li
+                          key={email.email}
+                          onClick={() => handleEmailClick(email.email)}
+                          onMouseOver={() => handleEmailMouseOver(email.email)}
+                          className="email-suggestion-item"
+                        >
+                          <strong>{email.name}</strong>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
+                <div className="button-container mx-0">
+                  <button
+                    type="submit"
+                    className="btn-sm btn-primary save-comment-btn"
+                  >
+                    Save Comment
+                  </button>
+                  <button
+                    className="btn-sm btn-light cancel-btn"
+                    onClick={() => {
+                      setComments("");
+                      setAnnotationDrawBox("")
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
+          )
+          :
+          null
       }
       <div>
         <div style={{ marginTop: "0px" }}>
@@ -443,9 +440,10 @@ export default function CommentSection({ commentsList,
               <p className="input_label">Filter by Admin:</p>
               <div className="select_div">
                 <select name="admin" id="admin"
-                  value={adminid}
+                  // value={adminid}
                   onChange={(e) => {
-                    setAdminId(e.target.value)
+                    // setAdminId(e.target.value)
+                    Getcomments("", e.target.value)
                   }} className="text-capitalize form-control">
                   <option value={""}>Select Admin</option>
                   {(allAdmin || []).map((data, index) => {
@@ -462,7 +460,10 @@ export default function CommentSection({ commentsList,
               <p className="input_label">Filter by Status:</p>
               <div className="select_div">
                 <select name="status" id="status"
-                  onClick={(e) => setAnnotationStatus(e.target.value)}
+                  onClick={(e) => {
+                    // setAnnotationStatus(e.target.value)
+                    Getcomments(e.target.value)
+                  }}
                   className="text-capitalize form-control">
                   <option value={""}>Select Status</option>
                   <option value={"1"}>Done</option>
@@ -479,40 +480,33 @@ export default function CommentSection({ commentsList,
             ) : (
               (commentsList || []).map((commentItem, index) => (
                 <div
-                  className={`card col-12 mb-3 p-0 comment_box_card`}
-                  // ${
-                  //   //Condition fot imm pdf doc file
-                  //   docTypData &&
-                  //   docTypData.document_name &&
-                  //   docTypData.document_name.toLowerCase().includes("imm")
-                  //     ? null
-                  //     : selectedAnnotation &&
-                  //       selectedAnnotation.x_axis === commentItem.x_axis &&
-                  //       selectedAnnotation.y_axis === commentItem.y_axis
-                  //     ? "highlighted-comment"
-                  //     : ""
-                  // }`}
+                  className={`card col-12 mb-3 p-0 comment_box_card
+                  ${annotationId === JSON.parse(commentItem.doctaskjson).id
+                      ? "highlighted-comment"
+                      : ""
+                    }`}
                   style={{
                     backgroundColor: "#fafafa",
                     color: "white",
                   }}
                   onClick={() => {
-                    setAnnotationDrawBox(JSON.parse(commentItem.doctaskjson).id)}}
+                    setAnnotationId(JSON.parse(commentItem.doctaskjson).id)
+                  }}
                   key={index}
                 >
                   <span
-                    className="comment_status_update d-none"
+                    className="comment_status_update "
                     style={{
                       cursor: "pointer",
-                      // color: commentItem.status === "0" ? "blue" : "white",
-                      // border: commentItem.status === "0" ? "solid 1px blue" : "",
-                      // backgroundColor: commentItem.status === "1" && "green",
+                      color: commentItem.status === "0" ? "blue" : "white",
+                      border: commentItem.status === "0" ? "solid 1px blue" : "",
+                      backgroundColor: commentItem.status === "1" && "green",
                     }}
-                  // onClick={(e) => {
-                  //   OnHandleUpdateComment(commentItem);
-                  //   setFilteredEmails([]);
-                  //   setAddCommentFlag(false);
-                  // }}
+                    onClick={(e) => {
+                      OnHandleUpdateComment(commentItem);
+                      setFilteredEmails([]);
+                      setAnnotationDrawBox("")
+                    }}
                   >
                     &#x2713; {/* Checkmark symbol */}
                   </span>
@@ -583,32 +577,31 @@ export default function CommentSection({ commentsList,
                   )} */}
                   </div>
                   {replyCommentClick === commentItem.id ? (
-                  //Reply box
-                  <CommentReplyBox
-                    commentsReplyList={commentsReplyList}
-                    replyComment={replyComment}
-                    handleInputChange={handleInputChange}
-                    filteredEmails={filteredEmails}
-                    handleEmailClick={handleEmailClick}
-                    handleEmailMouseOver={handleEmailMouseOver}
-                    ReplyAnnotation={ReplyAnnotation}
-                    setReplyCommentClick={setReplyCommentClick}
-                    commentItem={commentItem}
-                    allAdmin={allAdmin}
-                  />
-                ) : (
-                  <Link
-                    className="mx-5 mr-0 ml-auto font-size-3 "
-                    onClick={() => {
-                      setReplyCommentClick(commentItem.id);
-                      getCommentsReplyList();
-                      // setAddCommentFlag(false);
-                      setFilteredEmails([]);
-                    }}
-                  >
-                    Reply <FaReplyAll />
-                  </Link>
-                )}
+                    //Reply box
+                    <CommentReplyBox
+                      commentsReplyList={commentsReplyList}
+                      replyComment={replyComment}
+                      handleInputChange={handleInputChange}
+                      filteredEmails={filteredEmails}
+                      handleEmailClick={handleEmailClick}
+                      handleEmailMouseOver={handleEmailMouseOver}
+                      ReplyAnnotation={ReplyAnnotation}
+                      setReplyCommentClick={setReplyCommentClick}
+                      commentItem={commentItem}
+                      allAdmin={allAdmin}
+                    />
+                  ) : (
+                    <Link
+                      className="mx-5 mr-0 ml-auto font-size-3 "
+                      onClick={() => {
+                        setReplyCommentClick(commentItem.id);
+                        getCommentsReplyList();
+                        setFilteredEmails([]);
+                      }}
+                    >
+                      Reply <FaReplyAll />
+                    </Link>
+                  )}
                 </div>
               ))
             )}

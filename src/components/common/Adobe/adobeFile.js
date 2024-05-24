@@ -8,14 +8,17 @@ const AdobePDFViewer = ({
   commentsList,
   selectedMentionAdmin,
   DocUserType,
-  adminList }) => {
+  adminList,
+  setCommentsList }) => {
   let [annotationDrawBox, setAnnotationDrawBox] = useState("")
+  let [annotationId, setAnnotationId] = useState("")
+  let [annotationData, setAnnotationData] = useState(commentsList.map((item) => JSON.parse(item.doctaskjson)) || "")
+  const [annotationManager, setAnnotationManager] = useState(null);
+  const [adobeViewer, setAdobeViewer] = useState(null);
   // const annotationId ="1a94b3cc-c5a0-8bda-8bh6-8a7b78aa996"
-    // !commentsList || commentsList.length === 0 ? "" : commentsList[0].id;
-  let annotationData =
-    !commentsList || commentsList.length === 0
-      ? ""
-      : commentsList.map((item) => JSON.parse(item.doctaskjson))
+  // !commentsList || commentsList.length === 0 ? "" : commentsList[0].id;
+
+  /*REnder document method */
   useEffect(() => {
     const viewSDKClient = new ViewSDKClient();
     viewSDKClient.ready().then(() => {
@@ -49,9 +52,11 @@ const AdobePDFViewer = ({
       // }
       previewFilePromise
         .then((adobeViewer) => {
+          setAdobeViewer(adobeViewer)
           adobeViewer
             .getAnnotationManager()
             .then((annotationManager) => {
+              setAnnotationManager(annotationManager)
               if (annotationData.length === 0) {
               } else {
                 annotationManager
@@ -91,66 +96,98 @@ const AdobePDFViewer = ({
                   );
                 }
               }, eventOptions);
-               // Add the new functionality here
-               if (annotationDrawBox) {
-                console.log("IN the function =>", annotationDrawBox)
+              // Add the new functionality here
+              //  if (annotationDrawBox) {
+              //   console.log("IN the function =>", annotationDrawBox)
 
-                annotationManager.selectAnnotation(annotationDrawBox)
-                  .then(() => console.log("Annotation selected successfully"))
-                  .catch(error => console.log(error));
-              }
+              //   annotationManager.selectAnnotation(annotationDrawBox)
+              //     .then(() => console.log("Annotation selected successfully"))
+              //     .catch(error => console.log(error));
+              // }
 
-              // Highlight and focus on a specific annotation
-              const highlightAndFocusAnnotation = (annotationId) => {
-                console.log("while calling =>",annotationId)
-                annotationManager
-                  .getAnnotations()
-                  .then((annotations) => {
-                    const annotation = annotations.find((a) => a.id === annotationDrawBox);
-                    console.log(annotations.find((a) => a.id),annotationId)
-                    if (annotation) {
-                      // Highlight the annotation
-                      annotation.color = [1, 0, 0]; // Change color to red (RGB)
+              // // Highlight and focus on a specific annotation
+              // const highlightAndFocusAnnotation = (annotationId) => {
+              //   console.log("while calling =>",annotationId)
+              //   annotationManager
+              //     .getAnnotations()
+              //     .then((annotations) => {
+              //       const annotation = annotations.find((a) => a.id === annotationDrawBox);
+              //       console.log(annotations.find((a) => a.id),annotationId)
+              //       if (annotation) {
+              //         // Highlight the annotation
+              //         annotation.color = [1, 0, 0]; // Change color to red (RGB)
 
-                      annotationManager
-                        .updateAnnotation(annotation)
-                        .then(() => {
-                          // Ensure APIs are available before calling scrollTo
-                          adobeViewer.getAPIs().then((apis) => {
-                            if (apis && apis.pdfView) {
-                              const { location } = annotation;
-                              apis.pdfView.scrollTo(location.pageNumber, {
-                                left: location.left,
-                                top: location.top,
-                              });
-                            } else {
-                              console.log("PDF view APIs are not available");
-                            }
-                          }).catch((error) => {
-                            console.log("Error getting APIs:", error);
-                          });
-                        })
-                        .catch((error) => console.log("Error updating annotation:", error));
-                    }
-                  })
-                  .catch((error) => console.log("Error getting annotations:", error));
-              };
+              //         annotationManager
+              //           .updateAnnotation(annotation)
+              //           .then(() => {
+              //             // Ensure APIs are available before calling scrollTo
+              //             adobeViewer.getAPIs().then((apis) => {
+              //               if (apis && apis.pdfView) {
+              //                 const { location } = annotation;
+              //                 apis.pdfView.scrollTo(location.pageNumber, {
+              //                   left: location.left,
+              //                   top: location.top,
+              //                 });
+              //               } else {
+              //                 console.log("PDF view APIs are not available");
+              //               }
+              //             }).catch((error) => {
+              //               console.log("Error getting APIs:", error);
+              //             });
+              //           })
+              //           .catch((error) => console.log("Error updating annotation:", error));
+              //       }
+              //     })
+              //     .catch((error) => console.log("Error getting annotations:", error));
+              // };
 
-              // Call the function with the desired annotation ID
-              highlightAndFocusAnnotation(annotationDrawBox);
+              // // Call the function with the desired annotation ID
+              // highlightAndFocusAnnotation(annotationDrawBox);
             })
             .catch((e) => {
               console.log("Error getting Annotation Manager:", e);
             });
+          // Customize the toolbar to show only the freehand drawing tool
+          adobeViewer.getToolbar().then(toolbar => {
+            toolbar.setToolbarItems([{
+              type: "shapeToolGroup",
+              items: ["drawTool"]
+            }]);
+          });
         })
         .catch((e) => {
           console.log("Error in previewFilePromise:", e);
         });
-      viewSDKClient.registerSaveApiHandler(userId, annotationDrawBox, DocUserType);
+      viewSDKClient.registerSaveApiHandler(userId, annotationId, DocUserType);
       viewSDKClient.registerGetUserProfileApiHandler();
     });
+
     // eslint-disable-next-line
-  }, [annotationDrawBox, url]);
+  }, [url]);
+  /*Render method to Highlight the annotation from clicking it */
+  useEffect(() => {
+    if (annotationId && annotationManager && adobeViewer) {
+      annotationManager.getAnnotations().then((annotations) => {
+        const annotation = annotations.find((a) => a.id === annotationId);
+        if (annotation) {
+          annotationManager.selectAnnotation(annotationId)
+            .then(() => {
+              adobeViewer.getAPIs().then((apis) => {
+                if (apis && apis.pdfView) {
+                  const { location } = annotation;
+                  apis.pdfView.scrollTo(location.pageNumber, {
+                    left: location.left,
+                    top: location.top,
+                  });
+                }
+              }).catch((error) => console.log("Error getting APIs:", error));
+            })
+            .catch((error) => console.log("Error selecting annotation:", error));
+        }
+      }).catch((error) => console.log("Error getting annotations:", error));
+    }
+  }, [annotationId, annotationManager, adobeViewer]);
+
   return (
     <div style={{ height: "calc(100vh - 130px)" }} className="row">
       <div
@@ -167,8 +204,12 @@ const AdobePDFViewer = ({
         userId={userId}
         commentsList={commentsList}
         annotationDrawBox={annotationDrawBox}
-        DocUserType={DocUserType}
         setAnnotationDrawBox={setAnnotationDrawBox}
+        annotationId={annotationId}
+        DocUserType={DocUserType}
+        setAnnotationId={setAnnotationId}
+        setAnnotationData={setAnnotationData}
+        setCommentsList={setCommentsList}
       />
     </div>
   );
