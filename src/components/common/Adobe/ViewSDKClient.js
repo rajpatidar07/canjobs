@@ -24,9 +24,9 @@ const profile = {
     type: "Person",
   },
 };
-let client_id = "d9b36f468d7a4e4e8b275f13728f1132"//(vercel)
+// let client_id = "d9b36f468d7a4e4e8b275f13728f1132"//(vercel)
 //"713b22cf34e345c388e4490f9c9dc79b"//Canpathways
-//"d9e8b7bcb61b42b6a387bfa9cf16a75b"//(Local)
+let client_id = "d9e8b7bcb61b42b6a387bfa9cf16a75b"; //(Local)
 //"d9b36f468d7a4e4e8b275f13728f1132"//(vercel)
 class ViewSDKClient {
   constructor() {
@@ -69,7 +69,10 @@ class ViewSDKClient {
       ...viewerConfig,
       embedMode: window.AdobeDC.View.Enum.EmbedMode.INLINE, // Display inline
       showAnnotationTools:
-        localStorage.getItem("userType") === "admin"|| localStorage.getItem("userType") === "agent"  ? true : false, // Show annotation tools
+        localStorage.getItem("userType") === "admin" ||
+        localStorage.getItem("userType") === "agent"
+          ? true
+          : false, // Show annotation tools
       showDownloadPDF: true, // Show download PDF option
       showPrintPDF: true, // Show print PDF option
       enableFormFilling: true, // Enable form filling
@@ -119,7 +122,7 @@ class ViewSDKClient {
     );
   }
 
-  registerSaveApiHandler(userId, annotationId,DocUserType) {
+  registerSaveApiHandler(userId, annotationId, DocUserType) {
     const saveApiHandler = (metaData, content, options) => {
       const selectedMentionAdmin = [];
       // Get the Assigned admin
@@ -219,8 +222,8 @@ class ViewSDKClient {
                   "", //assigned_by_id
                   metaData.parentReference.id, // document parent code,
                   this.annots, //Annotation data,
-                  annotationId ,//annotationId
-                  DocUserType,//User type of document  
+                  annotationId, //annotationId
+                  DocUserType //User type of document
                 );
                 if (res.data.message === "task inserted successfully!") {
                   toast.success("Commented Successfully", {

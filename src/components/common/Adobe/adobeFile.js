@@ -1,4 +1,4 @@
-import React, { useEffect, useState/*, useRef */ } from "react";
+import React, { useEffect, useState /*, useRef */ } from "react";
 import ViewSDKClient from "./ViewSDKClient.js";
 import CommentSection from "./commentSection.js";
 const AdobePDFViewer = ({
@@ -9,10 +9,13 @@ const AdobePDFViewer = ({
   selectedMentionAdmin,
   DocUserType,
   adminList,
-  setCommentsList }) => {
-  let [annotationDrawBox, setAnnotationDrawBox] = useState("")
-  let [annotationId, setAnnotationId] = useState("")
-  let [annotationData, setAnnotationData] = useState(commentsList.map((item) => JSON.parse(item.doctaskjson)) || "")
+  setCommentsList,
+}) => {
+  let [annotationDrawBox, setAnnotationDrawBox] = useState("");
+  let [annotationId, setAnnotationId] = useState("");
+  let [annotationData, setAnnotationData] = useState(
+    commentsList.map((item) => JSON.parse(item.doctaskjson)) || ""
+  );
   const [annotationManager, setAnnotationManager] = useState(null);
   const [adobeViewer, setAdobeViewer] = useState(null);
   // const annotationId ="1a94b3cc-c5a0-8bda-8bh6-8a7b78aa996"
@@ -42,7 +45,6 @@ const AdobePDFViewer = ({
           "ANNOTATION_ADDED",
           "ANNOTATION_UPDATED",
           "ANNOTATION_DELETED",
-
         ],
       };
       // const AdminDetails = {
@@ -52,11 +54,11 @@ const AdobePDFViewer = ({
       // }
       previewFilePromise
         .then((adobeViewer) => {
-          setAdobeViewer(adobeViewer)
+          setAdobeViewer(adobeViewer);
           adobeViewer
             .getAnnotationManager()
             .then((annotationManager) => {
-              setAnnotationManager(annotationManager)
+              setAnnotationManager(annotationManager);
               if (annotationData.length === 0) {
               } else {
                 annotationManager
@@ -82,7 +84,11 @@ const AdobePDFViewer = ({
                     ...viewSDKClient.annots,
                     newAnnotation,
                   ];
-                  setAnnotationDrawBox(annotationData.find((item) => item.id === event.data.id) ? "" : event.data)
+                  setAnnotationDrawBox(
+                    annotationData.find((item) => item.id === event.data.id)
+                      ? ""
+                      : event.data
+                  );
                 } else if (event.type === "ANNOTATION_UPDATED") {
                   viewSDKClient.annots = [
                     ...viewSDKClient.annots.filter(
@@ -148,11 +154,13 @@ const AdobePDFViewer = ({
               console.log("Error getting Annotation Manager:", e);
             });
           // Customize the toolbar to show only the freehand drawing tool
-          adobeViewer.getToolbar().then(toolbar => {
-            toolbar.setToolbarItems([{
-              type: "shapeToolGroup",
-              items: ["drawTool"]
-            }]);
+          adobeViewer.getToolbar().then((toolbar) => {
+            toolbar.setToolbarItems([
+              {
+                type: "shapeToolGroup",
+                items: ["drawTool"],
+              },
+            ]);
           });
         })
         .catch((e) => {
@@ -167,35 +175,46 @@ const AdobePDFViewer = ({
   /*Render method to Highlight the annotation from clicking it */
   useEffect(() => {
     if (annotationId && annotationManager && adobeViewer) {
-      annotationManager.getAnnotations().then((annotations) => {
-        const annotation = annotations.find((a) => a.id === annotationId);
-        if (annotation) {
-          annotationManager.selectAnnotation(annotationId)
-            .then(() => {
-              adobeViewer.getAPIs().then((apis) => {
-                if (apis && apis.pdfView) {
-                  const { location } = annotation;
-                  apis.pdfView.scrollTo(location.pageNumber, {
-                    left: location.left,
-                    top: location.top,
-                  });
-                }
-              }).catch((error) => console.log("Error getting APIs:", error));
-            })
-            .catch((error) => console.log("Error selecting annotation:", error));
-        }
-      }).catch((error) => console.log("Error getting annotations:", error));
+      annotationManager
+        .getAnnotations()
+        .then((annotations) => {
+          const annotation = annotations.find((a) => a.id === annotationId);
+          if (annotation) {
+            annotationManager
+              .selectAnnotation(annotationId)
+              .then(() => {
+                adobeViewer
+                  .getAPIs()
+                  .then((apis) => {
+                    if (apis && apis.pdfView) {
+                      const { location } = annotation;
+                      apis.pdfView.scrollTo(location.pageNumber, {
+                        left: location.left,
+                        top: location.top,
+                      });
+                    }
+                  })
+                  .catch((error) => console.log("Error getting APIs:", error));
+              })
+              .catch((error) =>
+                console.log("Error selecting annotation:", error)
+              );
+          }
+        })
+        .catch((error) => console.log("Error getting annotations:", error));
     }
   }, [annotationId, annotationManager, adobeViewer]);
 
   return (
-    <div style={{ height: "calc(100vh - 130px)" }} className="row">
+    <div style={{ height: "calc(100vh - 130px)" }} className="row m-0">
       <div
         id="pdf-div"
-        className={`${localStorage.getItem("userType") === "admin" || localStorage.getItem("userType") === "agent"
-          ? "col-md-8 col-lg-8 col-sm-9"
-          : "col-md-12 col-lg-12 col-sm-12"
-          } full-window-div`}
+        className={`${
+          localStorage.getItem("userType") === "admin" ||
+          localStorage.getItem("userType") === "agent"
+            ? "col-md-8 col-lg-8 col-sm-9"
+            : "col-md-12 col-lg-12 col-sm-12"
+        } full-window-div`}
         style={{ maxHeight: "calc(100vh - 130px)" }}
       ></div>
       <CommentSection

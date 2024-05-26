@@ -164,48 +164,48 @@ export default function SharePointDocument({
   const DocTypeData =
     emp_user_type === "employer"
       ? [
-        "Business T2",
-        "Recent PD7A",
-        "Business T4",
-        "Business Incorporation Certificate",
-        "Employment Contract",
-        "Schedule A",
-        "Signed Job Offer",
-        "PD7A of year",
-        "T2 Schedule 100 and 125",
-        "Certificate of incorporation",
-        "Business license",
-        "T4 summary of year",
-        "Request for Exception from English Language Requirement for LMIA Application",
-        "CPA Attestation Letter",
-        "Representative Submission Letter",
-      ]
+          "Business T2",
+          "Recent PD7A",
+          "Business T4",
+          "Business Incorporation Certificate",
+          "Employment Contract",
+          "Schedule A",
+          "Signed Job Offer",
+          "PD7A of year",
+          "T2 Schedule 100 and 125",
+          "Certificate of incorporation",
+          "Business license",
+          "T4 summary of year",
+          "Request for Exception from English Language Requirement for LMIA Application",
+          "CPA Attestation Letter",
+          "Representative Submission Letter",
+        ]
       : [
-        "passport",
-        "drivers_license",
-        "photograph",
-        "immigration_status",
-        "lmia",
-        "job_offer_letter",
-        "provincial_nominee_letter",
-        "proof_of_funds",
-        "proof_of_employment",
-        "marriage_certificate",
-        "education_metric",
-        "education_higher_secondary",
-        "education_graduation",
-        "education_post_graduation",
-        "resume_or_cv",
-        "ielts",
-        "medical",
-        "police_clearance",
-        "refusal_letter",
-        "Employment Contract",
-        "Reference Letters",
-        "Client Info",
-        "Representative Submission Letter",
-        "Bank Statement",
-      ];
+          "passport",
+          "drivers_license",
+          "photograph",
+          "immigration_status",
+          "lmia",
+          "job_offer_letter",
+          "provincial_nominee_letter",
+          "proof_of_funds",
+          "proof_of_employment",
+          "marriage_certificate",
+          "education_metric",
+          "education_higher_secondary",
+          "education_graduation",
+          "education_post_graduation",
+          "resume_or_cv",
+          "ielts",
+          "medical",
+          "police_clearance",
+          "refusal_letter",
+          "Employment Contract",
+          "Reference Letters",
+          "Client Info",
+          "Representative Submission Letter",
+          "Bank Statement",
+        ];
 
   /*Function to call api to get all folders list of employees documnet from sharepoint */
   const AllShareType = async () => {
@@ -216,8 +216,7 @@ export default function SharePointDocument({
       let res = await getSharePointParticularFolders(
         user_id,
         emp_user_type,
-        docId ? folderId :
-          folderID
+        docId ? folderId : folderID
       );
       if (res.data.status === 1) {
         setDocPreview(false);
@@ -266,7 +265,7 @@ export default function SharePointDocument({
   useEffect(() => {
     AllShareType();
     // if (localStorage.getItem("userType") === "admin") {
-      AdminData();
+    AdminData();
     // }
     // if (notification === "yes") {
     //     setDocPreview(true)
@@ -497,8 +496,11 @@ export default function SharePointDocument({
         <div className="document_section">
           {docPreview ? (
             <div className="App-viewer">
-              <div className="row m-0 bg-white document_preview_box h-100vh overflow-hidden">
-                <div className={`p-2 col-md-12 col-lg-12 col-sm-12`}>
+              <div
+                className="row m-0 bg-white document_preview_box overflow-hidden"
+                style={{ height: "calc(100vh - 100px)" }}
+              >
+                <div className={`px-2 col-md-12 col-lg-12 col-sm-12`}>
                   <div className="back_btn_div">
                     <Link
                       className="rounded-circle back-btn"
@@ -533,7 +535,9 @@ export default function SharePointDocument({
                       <IoMdArrowBack />
                     </Link>
                     {/* Mention admin code */}
-                    {(localStorage.getItem("userType") === "admin" || localStorage.getItem("userType") === "agent") && (
+                    {((1 === 2 &&
+                      localStorage.getItem("userType") === "admin") ||
+                      localStorage.getItem("userType") === "agent") && (
                       <div
                         className="mention_div"
                         style={{
@@ -589,8 +593,8 @@ export default function SharePointDocument({
                             //   </span>
                             // </div>
                             user.profile_image === null ||
-                              user.profile_image === "" ||
-                              user.profile_image === undefined ? (
+                            user.profile_image === "" ||
+                            user.profile_image === undefined ? (
                               <span
                                 className="rounded-circle"
                                 data-toggle="tooltip"
@@ -622,8 +626,8 @@ export default function SharePointDocument({
                                 }}
                                 src={
                                   user.profile_image === null ||
-                                    user.profile_image === "" ||
-                                    user.profile_image === undefined
+                                  user.profile_image === "" ||
+                                  user.profile_image === undefined
                                     ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                     : user.profile_image
                                 }
@@ -660,8 +664,8 @@ export default function SharePointDocument({
                         docSingleDate.file.mimeType === "image/jpg") &&
                         imgConRes === "imageConverted") ||
                       docSingleDate.file.mimeType ===
-                      "application/vnd.openxmlformats-officedocument.wordprocessingml.document") &&
-                      convertedDoc ? (
+                        "application/vnd.openxmlformats-officedocument.wordprocessingml.document") &&
+                    convertedDoc ? (
                       // <PreviewDocument
                       //   docData={docSingleDate}
                       //   docId={docId ? docId : folderID}

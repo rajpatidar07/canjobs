@@ -1,6 +1,7 @@
 import React from "react";
 // import { Link } from "react-router-dom";
 import moment from "moment";
+import { CiPaperplane } from "react-icons/ci";
 export default function CommentReplyBox({
   commentsReplyList,
   commentItem,
@@ -12,7 +13,7 @@ export default function CommentReplyBox({
   ReplyAnnotation,
 }) {
   return (
-    <div className="reply_box_container mx-2">
+    <div className="reply_box_container mx-2 fade show">
       {/* Display replies only if task_id matches */}
       {(commentsReplyList || []).map(
         (replyItem, replyIndex) =>
@@ -23,9 +24,31 @@ export default function CommentReplyBox({
               {
                 <div className="p-2 bg-white rounded mb-1">
                   <div className="d-flex justify-content-between align-items-center text-dark">
-                    <h6 className="font-size-3 text-break m-0 text-capitalize">
-                      {replyItem.sender_name}
-                      {/* {replyItem.task_creator_user_id
+                    <div class="d-flex profile_box gx-2 mb-1">
+                      <div class="media  align-items-center">
+                        <div
+                          class="circle-24 mx-auto overflow-hidden text-capitalize text-white bg-warning-opacity-7"
+                          style={{ fontSize: 16, fontWeight: 700 }}
+                        >
+                          r
+                        </div>
+                      </div>
+                      <div class=" mb-0">
+                        <div class="font-size-3 font-weight-bold text-capitalize">
+                          {replyItem.sender_name}
+                        </div>
+                        <div class="text-gray font-size-2 font-weight-normal m-0 text-capitalize">
+                          <i className="font-size-2">
+                            {moment(replyItem.updated_at)
+                              .tz("America/Toronto")
+                              .format("HH:mm D MMM")}
+                            {/* {moment(replyItem.updated_at).format("HH:mm D MMM")} */}
+                          </i>
+                        </div>
+                      </div>
+                    </div>
+                    {/* {replyItem.sender_name} */}
+                    {/* {replyItem.task_creator_user_id
                         ? allAdmin.find(
                             (item) =>
                               item.admin_id === replyItem.task_creator_user_id
@@ -36,11 +59,6 @@ export default function CommentReplyBox({
                             ).name
                           : ""
                         : ""} */}
-                    </h6>
-                    <i className="font-size-2">
-                    {moment(replyItem.updated_at).tz('America/Toronto').format("HH:mm D MMM")}
-                      {/* {moment(replyItem.updated_at).format("HH:mm D MMM")} */}
-                    </i>
                   </div>
                   {replyItem.msg && (
                     <span className="m-0 font-size-3 text-dark text-break">
@@ -69,14 +87,15 @@ export default function CommentReplyBox({
           ReplyAnnotation(commentItem);
         }}
       >
-        <div className="comment-input-container rounded">
-          <div className="reply_box position-relative d-flex">
+        <div className="comment-input-container">
+          <div className="reply_box position-relative d-flex rounded bg-white">
             <input
               type="text"
               value={replyComment || ""}
               onChange={(e) => handleInputChange(e, "reply")}
               placeholder="Comments or add others with @"
-              className="comment-input"
+              className="comment-input border-0"
+              style={{ outline: 0 }}
               onSubmit={() => {
                 ReplyAnnotation(commentItem);
               }}
@@ -86,9 +105,10 @@ export default function CommentReplyBox({
               onClick={() => {
                 ReplyAnnotation(commentItem);
               }}
-              className="btn btn-primary border-0 rounded reply_btn doc_btn"
+              className="btn reply_btn doc_btn m-0"
+              style={{ fontSize: 30 }}
             >
-              {">>"}
+              <CiPaperplane />
             </button>
             {/* <a
               className="border-0 bg-white rounded cancel-btn text-dark"

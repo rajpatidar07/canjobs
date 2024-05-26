@@ -747,8 +747,12 @@ input.coustam_datepicker[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .comments_and_replies {
-  max-height: calc(100vh - 137px);
+  max-height: calc(100vh - 130px);
   overflow: auto;
+}
+
+.SkinnyRail__Wrapper___uuKuh {
+  display: none;
 }
 
 #applieddocuments .document_container.bg-white {
