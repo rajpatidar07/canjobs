@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaReplyAll } from "react-icons/fa";
 import CommentReplyBox from "../CommentReplyBox";
 import moment from "moment";
 import { toast } from "react-toastify";
