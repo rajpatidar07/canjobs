@@ -64,6 +64,7 @@ import AsiignedAdmin from "./asiigned_admin";
 import Federalpr from "../admin/federalpr";
 import PartnerDetails from "../agent/partnerDetails";
 import SharePointDocument from "./Document folder/SharePointDocument";
+import Newpdf from "./Adobe/newpdf";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -197,6 +198,7 @@ function MainLayout() {
             <Route path="/expressentry" element={<ExpressEntry />} />
             <Route path="/visitorsvisa" element={<VisitorVisa />} />
             <Route path="/pnp" element={<Pnp />} />
+            <Route path="/Newpdf" element={<Newpdf />} />
             <Route path="/federal_pr" element={<Federalpr />} />
             <Route path="*" element={<Loader load={"yes"} />} />
           </>

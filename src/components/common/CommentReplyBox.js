@@ -9,8 +9,9 @@ export default function CommentReplyBox({
   handleInputChange,
   filteredEmails,
   handleEmailClick,
-  handleEmailMouseOver,
+  // handleEmailMouseOver,
   ReplyAnnotation,
+  determineBackgroundColor
 }) {
   return (
     <div className="reply_box_container mx-2 fade show">
@@ -25,14 +26,16 @@ export default function CommentReplyBox({
                 <div className="p-2 bg-white rounded mb-1">
                   <div className="d-flex justify-content-between align-items-center text-dark">
                     <div class="d-flex profile_box gx-2 mb-1">
-                      <div class="media  align-items-center">
-                        <div
-                          class="circle-24 mx-auto overflow-hidden text-capitalize text-white bg-warning-opacity-7"
-                          style={{ fontSize: 16, fontWeight: 700 }}
-                        >
-                          r
-                        </div>
-                      </div>
+                    <div className="media  align-items-center">
+                            <div
+                              className={`circle-24 mx-auto overflow-hidden text-capitalize text-white ${determineBackgroundColor(
+                                replyItem
+                              )}`}
+                              style={{ fontSize: "16px", fontWeight: 700 }}
+                            >
+                              {replyItem.sender_name.charAt(0)}
+                            </div>
+                          </div>
                       <div class=" mb-0">
                         <div class="font-size-3 font-weight-bold text-capitalize">
                           {replyItem.sender_name}
@@ -129,10 +132,10 @@ export default function CommentReplyBox({
                 <li
                   key={index}
                   onClick={() => handleEmailClick(email.email, "reply")}
-                  onMouseOver={() => handleEmailMouseOver(email.email, "reply")}
+                  // onMouseOver={() => handleEmailMouseOver(email.email, "reply")}
                   className="email-suggestion-item text-dark"
                 >
-                  <strong>{email.name}</strong>
+                  <strong>{email.name + "(" + email.email + ")"}</strong>
                 </li>
               ))}
             </ul>

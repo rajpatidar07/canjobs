@@ -30,9 +30,9 @@ export default function CommentSection({
   const [filteredEmails, setFilteredEmails] = useState([]);
   // let [adminid, setAdminId] = useState();
   // let [annotationStatus, setAnnotationStatus] = useState();
-  let [selectedAdminReply, setSelectedAdminReplye] = useState();
+  let [selectedAdminReply, setSelectedAdminReplye] = useState("");
   let [replyCommentClick, setReplyCommentClick] = useState();
-  let [selectedAdmin, setSelectedAdmin] = useState();
+  let [selectedAdmin, setSelectedAdmin] = useState("");
   let admin_id = localStorage.getItem("admin_id");
   // Generate a list of comments reply
   const getCommentsReplyList = async () => {
@@ -90,38 +90,72 @@ export default function CommentSection({
 
     return colorClasses[index];
   };
-  /*onchange Function to set email or any other comment  */
+  // /*onchange Function to set email or any other comment  */
+  // const handleInputChange = (event, type) => {
+  //   const inputValue = event.target.value;
+  //   // Update the input value
+  //   if (type === "reply") {
+  //     setReplyComment(inputValue);
+  //   } else {
+  //     setComments(inputValue);
+  //   }
+
+  //   let lastChar = inputValue.slice(-1);
+  //   const atIndex = inputValue.indexOf("@");
+
+  //   if (lastChar === "@" || inputValue.includes("@")) {
+  //     if (allAdmin) {
+  //       // Filter admin emails based on input
+  //       let filteredAdminEmails = allAdmin.filter(
+  //         (admin) =>
+  //           admin.email.toLowerCase().includes(
+  //             String(inputValue)
+  //               .substring(atIndex + 1)
+  //               .toLowerCase()
+  //           ) ||
+  //           admin.name.toLowerCase().includes(
+  //             String(inputValue)
+  //               .substring(atIndex + 1)
+  //               .toLowerCase()
+  //           )
+  //       );
+
+  //       // Update the filtered emails
+  //       setFilteredEmails(filteredAdminEmails);
+  //     }
+  //   } else {
+  //     setFilteredEmails([]);
+  //   }
+  // };
+  /* Function to handle input change and set email or other comments */
   const handleInputChange = (event, type) => {
     const inputValue = event.target.value;
-    // Update the input value
+
+    // Update the input value based on the type
     if (type === "reply") {
       setReplyComment(inputValue);
     } else {
       setComments(inputValue);
     }
 
-    let lastChar = inputValue.slice(-1);
-    const atIndex = inputValue.indexOf("@");
+    const cursorPosition = event.target.selectionStart;
+    const textBeforeCursor = inputValue.substring(0, cursorPosition);
+    const lastWord = textBeforeCursor.split(' ').pop();
 
-    if (lastChar === "@" || inputValue.includes("@")) {
-      if (allAdmin) {
+    if (lastWord.startsWith('@')) {
+      const query = lastWord.substring(1);
+      if (query && allAdmin) {
         // Filter admin emails based on input
-        let filteredAdminEmails = allAdmin.filter(
+        const filteredAdminEmails = allAdmin.filter(
           (admin) =>
-            admin.email.toLowerCase().includes(
-              String(inputValue)
-                .substring(atIndex + 1)
-                .toLowerCase()
-            ) ||
-            admin.name.toLowerCase().includes(
-              String(inputValue)
-                .substring(atIndex + 1)
-                .toLowerCase()
-            )
+            admin.email.toLowerCase().includes(query.toLowerCase()) ||
+            admin.name.toLowerCase().includes(query.toLowerCase())
         );
 
         // Update the filtered emails
         setFilteredEmails(filteredAdminEmails);
+      } else {
+        setFilteredEmails(allAdmin);
       }
     } else {
       setFilteredEmails([]);
@@ -131,28 +165,31 @@ export default function CommentSection({
   const handleEmailClick = (email, type) => {
     // Set the selected admin and update the input value
     if (type === "reply") {
-      setSelectedAdminReplye((prevValue) => prevValue + email + ",");
-      setReplyComment((prevValue) => `${prevValue} ${email} `);
+      setSelectedAdminReplye(prevValue => prevValue + email + ",");
+      setReplyComment(prevValue => `${prevValue} ${email} `);
     } else {
-      setSelectedAdmin((prevValue) => prevValue + email + ",");
-      setComments((prevValue) => `${prevValue} ${email} `);
+      setSelectedAdmin(prevValue => prevValue + email + ",");
+      setComments(prevValue => `${prevValue} ${email} `);
     }
-    setFilteredEmails([]);
+    setFilteredEmails([]); // Clear filtered emails
   };
+
   /*Function to get the email to input on hover */
-  const handleEmailMouseOver = (email, type) => {
-    // Highlight the email on mouseover
-    if (type === "reply") {
-      setSelectedAdminReplye(email);
-    } else {
-      setSelectedAdmin(email);
-    }
-  };
+  // const handleEmailMouseOver = (email, type) => {
+  //   let newItem = email;
+  //   // Highlight the email on mouseover
+  //   if (type === "reply") {
+  //     // setSelectedAdminReplye(email);
+
+  //     setSelectedAdminReplye(prevItems => [...prevItems, newItem]);
+  //   } else {
+  //     setSelectedAdmin(email);
+  //   }
+  // };
   // Function to add annotation based on conditions
   const addAnnotation = async (annotation) => {
     // setAddCommentFlag(false);
     // Retrieve data from local storage
-
     const subject = "";
     const comment = comments; ///\S+@\S+\.\S+/.test(comments) ? "" : comments;
     let DocId = docData.id;
@@ -169,17 +206,17 @@ export default function CommentSection({
       selectedAdmin?.includes(item.email)
     )
       ? allAdmin
-          .filter((item) => selectedAdmin?.includes(item.email))
-          .map((admin) => admin.name)
-          .join(",")
+        .filter((item) => selectedAdmin?.includes(item.email))
+        .map((admin) => admin.name)
+        .join(",")
       : "";
     const assignedUserId = allAdmin.filter((item) =>
       selectedAdmin?.includes(item.email)
     )
       ? allAdmin
-          .filter((item) => selectedAdmin?.includes(item.email))
-          .map((admin) => admin.admin_id)
-          .join(",")
+        .filter((item) => selectedAdmin?.includes(item.email))
+        .map((admin) => admin.admin_id)
+        .join(",")
       : "";
     const assignedUserType = "admin";
     // Send data to the API
@@ -266,24 +303,24 @@ export default function CommentSection({
       selectedAdminReply?.includes(item.email)
     )
       ? allAdmin
-          .filter((item) => selectedAdminReply?.includes(item.email))
-          .map((admin) => admin.name)
-          .join(",")
+        .filter((item) => selectedAdminReply?.includes(item.email))
+        .map((admin) => admin.name)
+        .join(",")
       : "";
     const assignedUserId = allAdmin.filter((item) =>
       selectedAdminReply?.includes(item.email)
     )
       ? allAdmin
-          .filter((item) => selectedAdminReply?.includes(item.email))
-          .map((admin) => admin.admin_id)
-          .join(",")
+        .filter((item) => selectedAdminReply?.includes(item.email))
+        .map((admin) => admin.admin_id)
+        .join(",")
       : "";
     const AdminType = //localStorage.getItem("admin_type");
       allAdmin.filter((item) => selectedAdminReply?.includes(item.email))
         ? allAdmin
-            .filter((item) => selectedAdminReply?.includes(item.email))
-            .map((admin) => admin.admin_type)
-            .join(",")
+          .filter((item) => selectedAdminReply?.includes(item.email))
+          .map((admin) => admin.admin_type)
+          .join(",")
         : "";
     if (replyComment === "" && email === "") {
       toast.error("Comment or email cannot be empty!", {
@@ -370,6 +407,7 @@ export default function CommentSection({
       );
     }
   };
+  console.log(allAdmin.map((neha)=>neha.name))
   return (
     <div className="col-md-4 col-lg-4 col-sm-3 py-2 bg-light comments_and_replies">
       {annotationDrawBox ? ( //condition for imm pdf
@@ -391,10 +429,10 @@ export default function CommentSection({
         >
           <form
             className="comment-form p-5 rounded bg-white"
-            onSubmit={(e) => {
-              e.preventDefault();
-              addAnnotation(annotationDrawBox);
-            }}
+          // onSubmit={(e) => {
+          //   e.preventDefault();
+          //   addAnnotation(annotationDrawBox);
+          // }}
           >
             <div className="comment-input-container m-0">
               <label className="input_label m-0">Add new comment:</label>
@@ -423,7 +461,7 @@ export default function CommentSection({
                     <li
                       key={email.email}
                       onClick={() => handleEmailClick(email.email)}
-                      onMouseOver={() => handleEmailMouseOver(email.email)}
+                      // onMouseOver={() => handleEmailMouseOver(email.email)}
                       className="email-suggestion-item"
                     >
                       <strong>{email.name + "(" + email.email + ")"}</strong>
@@ -454,6 +492,10 @@ export default function CommentSection({
                 <Link
                   type="submit"
                   className="save-comment-btn text-muted"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    addAnnotation(annotationDrawBox)
+                  }}
                   style={{ fontSize: 30, lineHeight: 1 }}
                 >
                   <CiPaperplane />
@@ -518,11 +560,10 @@ export default function CommentSection({
                 (commentsList || []).map((commentItem, index) => (
                   <div
                     className={`card col-12 mb-3 p-0 comment_box_card bg-white
-                  ${
-                    annotationId === JSON.parse(commentItem.doctaskjson).id
-                      ? "highlighted-comment"
-                      : ""
-                  }`}
+                  ${annotationId === JSON.parse(commentItem.doctaskjson).id
+                        ? "highlighted-comment"
+                        : ""
+                      }`}
                     style={{
                       backgroundColor: "#fff",
                       color: "white",
@@ -532,6 +573,9 @@ export default function CommentSection({
                       setReplyCommentClick(commentItem.id);
                       getCommentsReplyList();
                       setFilteredEmails([]);
+                      setComments("")
+                      setSelectedAdmin("")
+                      // setSelectedAdminReplye("")
                     }}
                     key={index}
                   >
@@ -564,17 +608,17 @@ export default function CommentSection({
                             >
                               {commentItem.task_creator_user_id
                                 ? allAdmin.find(
-                                    (item) =>
-                                      item.admin_id ===
-                                      commentItem.task_creator_user_id
-                                  )
+                                  (item) =>
+                                    item.admin_id ===
+                                    commentItem.task_creator_user_id
+                                )
                                   ? allAdmin
-                                      .find(
-                                        (item) =>
-                                          item.admin_id ===
-                                          commentItem.task_creator_user_id
-                                      )
-                                      .name.charAt(0)
+                                    .find(
+                                      (item) =>
+                                        item.admin_id ===
+                                        commentItem.task_creator_user_id
+                                    )
+                                    .name.charAt(0)
                                   : ""
                                 : ""}
                             </div>
@@ -583,15 +627,15 @@ export default function CommentSection({
                             <div className="font-size-3 font-weight-bold text-capitalize">
                               {commentItem.task_creator_user_id
                                 ? allAdmin.find(
+                                  (item) =>
+                                    item.admin_id ===
+                                    commentItem.task_creator_user_id
+                                )
+                                  ? allAdmin.find(
                                     (item) =>
                                       item.admin_id ===
                                       commentItem.task_creator_user_id
-                                  )
-                                  ? allAdmin.find(
-                                      (item) =>
-                                        item.admin_id ===
-                                        commentItem.task_creator_user_id
-                                    ).name
+                                  ).name
                                   : ""
                                 : ""}
                             </div>
@@ -629,11 +673,12 @@ export default function CommentSection({
                           handleInputChange={handleInputChange}
                           filteredEmails={filteredEmails}
                           handleEmailClick={handleEmailClick}
-                          handleEmailMouseOver={handleEmailMouseOver}
+                          // handleEmailMouseOver={handleEmailMouseOver}
                           ReplyAnnotation={ReplyAnnotation}
                           setReplyCommentClick={setReplyCommentClick}
                           commentItem={commentItem}
                           allAdmin={allAdmin}
+                          determineBackgroundColor={determineBackgroundColor}
                         />
                       ) : null
                       // <Link
