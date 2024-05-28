@@ -407,7 +407,6 @@ export default function CommentSection({
       );
     }
   };
-  console.log(allAdmin.map((neha)=>neha.name))
   return (
     <div className="col-md-4 col-lg-4 col-sm-3 py-2 bg-light comments_and_replies">
       {annotationDrawBox ? ( //condition for imm pdf
@@ -532,7 +531,7 @@ export default function CommentSection({
                   </select>
                 </div>
               </div>
-              <div className="col ml-2 p-0 form_group">
+              <div className="col ml-2 p-0 form_group d-none">
                 <p className="input_label d-none">Filter by Status:</p>
                 <div className="select_div">
                   <select

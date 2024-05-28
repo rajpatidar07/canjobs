@@ -66,7 +66,6 @@ const AdobePDFViewer = ({
                   .then(() => console.log("Success"))
                   .catch((error) => console.log(error));
               }
-
               annotationManager
                 .getAnnotations()
                 .then((result) => {
