@@ -190,6 +190,7 @@ export default function EmployeeSignupModal(props) {
   };
   useEffect(() => {
     i = i + 3;
+    // eslint-disable-next-line
     if (
       (code !== "" ||
         code !== undefined ||

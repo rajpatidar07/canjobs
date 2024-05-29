@@ -45,6 +45,7 @@ export default function EmployerNotesTable({ search }) {
     if (apiCall === true) {
       setApiCall(false);
     }
+    // eslint-disable-next-line
   }, [apiCall, sortOrder, search]);
 
   /*Pagination Calculation */

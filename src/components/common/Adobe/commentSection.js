@@ -33,7 +33,8 @@ export default function CommentSection({
   let [selectedAdminReply, setSelectedAdminReplye] = useState("");
   let [replyCommentClick, setReplyCommentClick] = useState();
   let [selectedAdmin, setSelectedAdmin] = useState("");
-  let admin_id = localStorage.getItem("admin_id");
+  const AdminType = localStorage.getItem("admin_type");
+  let admin_id = AdminType === "agent" ? localStorage.getItem("agent_id") : localStorage.getItem("admin_id");
   // Generate a list of comments reply
   const getCommentsReplyList = async () => {
     if (docData.id) {
@@ -199,7 +200,7 @@ export default function CommentSection({
     let senderEmail = allAdmin.find((item) => item.admin_id === admin_id)
       ? allAdmin.find((item) => item.admin_id === admin_id).email
       : "";
-    const AdminType = localStorage.getItem("admin_type");
+
     // Variables for mentionaing admins
     const email = selectedAdmin || ""; ///\S+@\S+\.\S+/.test(comments) ? comments : "";
     let assignedAdminName = allAdmin.filter((item) =>
@@ -508,7 +509,7 @@ export default function CommentSection({
           <div style={{ marginTop: "0px" }}>
             <div className="row m-0 px-2">
               <div className="col mr-2 p-0 form_group">
-                <p className="input_label d-none">Filter by Admin:</p>
+                <p className="input_label ">Filter by Admin:</p>
                 <div className="select_div">
                   <select
                     name="admin"
@@ -531,8 +532,8 @@ export default function CommentSection({
                   </select>
                 </div>
               </div>
-              <div className="col ml-2 p-0 form_group d-none">
-                <p className="input_label d-none">Filter by Status:</p>
+              <div className="col ml-2 p-0 form_group">
+                <p className="input_label ">Filter by Status:</p>
                 <div className="select_div">
                   <select
                     name="status"

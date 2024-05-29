@@ -535,9 +535,9 @@ export default function SharePointDocument({
                       <IoMdArrowBack />
                     </Link>
                     {/* Mention admin code */}
-                    {((1 === 2 &&
-                      localStorage.getItem("userType") === "admin") ||
-                      localStorage.getItem("userType") === "agent") && (
+                    {((1 === 2 )&&
+                     ( localStorage.getItem("userType") === "admin" ||
+                      localStorage.getItem("userType") === "agent")) && (
                       <div
                         className="mention_div"
                         style={{

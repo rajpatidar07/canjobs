@@ -47,6 +47,7 @@ function AddCompanyfollowup(props) {
     } else {
       ResponseData();
     }
+    // eslint-disable-next-line
   }, [props]);
 
   // INITIAL STATE ASSIGNMENT

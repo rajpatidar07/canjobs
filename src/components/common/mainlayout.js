@@ -2,7 +2,7 @@ import React from "react";
 import {
   Route,
   BrowserRouter,
-  Routes /*, useLocation */,
+  Routes, useParams /*, useLocation */,
 } from "react-router-dom";
 import EmployerHome from "../company/home";
 import CompanyProfile from "../company/profile";
@@ -77,7 +77,21 @@ function MainLayout() {
   const token = localStorage.getItem("token");
   const userType = localStorage.getItem("userType");
   // let adminType = localStorage.getItem("admin_type");
+  /*FUnction to check the employee profile with just its id  */
+  const ValidateRoute = () => {
+    const { eid } = useParams();
+    const isValidEid = /^\d+$/.test(eid); // Check if eid is a number
+    const userType = localStorage.getItem('userType'); // Assuming userType is stored in localStorage
+    const employeeId = localStorage.getItem('employee_id'); // Assuming employee_id is stored in localStorage
 
+    if (userType === "user" && eid === employeeId && isValidEid) {
+      return <NewUserProfile />;
+    } else if (isValidEid && userType !== "user") {
+      return <NewUserProfile />;
+    } else {
+      return <NotFound userType={userType}/>;
+    }
+  };
   return (
     <BrowserRouter>
       {/* <CurrentRoute /> */}
@@ -94,17 +108,20 @@ function MainLayout() {
         <Route path="/jobdetail" element={<JobDetail />} />
         <Route path="/resetpassword/:id" element={<ResetPassword />} />
         <Route exact path="/linkedin" component={LinkedInCallback} />
-        <Route path="*" element={<NotFound />} />
-        {(userType === "user" && token !== "") ||
-        token !== null ||
-        token !== undefined ? (
+        <Route path="*" element={<NotFound userType={userType}/>} />
+        {(userType === "user" && (token !== "" ||
+          token !== null ||
+          token !== undefined ||
+          token !== "null" ||
+          token !== "undefined")) ? (
           <>
             <Route path="/" element={<EmployeeHomePage />} />
             <Route path="/jobs" element={<JobSearch />} />
             <Route path="/jobdetail" element={<JobDetail />} />
             <Route path="/profile" element={<UserProfile />} />
-            <Route path="/:eid" element={<NewUserProfile />} />
-            <Route path="*" element={<NotFound />} />
+            {/* <Route path="/:eid" element={<NewUserProfile />} /> */}
+            <Route path="/:eid" element={<ValidateRoute />} />
+            <Route path="*" element={<NotFound userType={userType}/>} />
             <Route path="/job_detail" element={<JobDetailpageAdmim />} />
             <Route path="/client_detail" element={<CompanyProfileDetail />} />
             <Route path="/userpdf" element={<PDFViewer />} />
@@ -114,13 +131,15 @@ function MainLayout() {
             <Route path="/" element={<EmployeeHomePage />} />
             <Route path="/jobs" element={<JobSearch />} />
             <Route path="/jobdetail" element={<JobDetail />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="*" element={<NotFound userType={userType}/>} />
           </>
         )}
         {/* Employer */}
-        {(userType === "company" && token !== "") ||
-        token !== null ||
-        token !== undefined ? (
+        {(userType === "company" && (token !== "" ||
+          token !== null ||
+          token !== undefined ||
+          token !== "null" ||
+          token !== "undefined")) ? (
           <>
             <Route path="/client" element={<EmployerHome />} />
             <Route path="/clientprofile" element={<CompanyProfile />} />
@@ -131,29 +150,29 @@ function MainLayout() {
             {/* <Route path="/lmia_dashboard" element={<EmployerLMIA />} /> */}
             <Route path="/lmia" element={<LimaContainer />} />
             <Route path="/resume/:id" element={<ResumeGrerator />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="*" element={<NotFound userType={userType}/>} />
             <Route path="/job_detail" element={<JobDetailpageAdmim />} />
             <Route path="/userpdf" element={<PDFViewer />} />
           </>
         ) : (
           <>
             <Route path="/" element={<EmployeeHomePage />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="*" element={<NotFound userType={userType}/>} />
           </>
         )}
         {/* Admin */}
         <Route path="/adminlogin" element={<AdminLoginFrom />} />
-        {userType === "company" ||
-        userType === "user" ||
-        userType === "" ||
-        userType === null ||
-        (userType === "null" && token === "") ||
-        token === null ||
-        token === undefined ||
-        token === "null" ? (
+        {(userType === "company" ||
+          userType === "user" ||
+          userType === "" ||
+          userType === null ||
+          userType === "null") && (token === "" ||
+            token === null ||
+            token === undefined ||
+            token === "null") ? (
           <>
             <Route path="/" element={<EmployeeHomePage />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="*" element={<NotFound userType={userType}/>} />
           </>
         ) : (
           <>
@@ -170,7 +189,8 @@ function MainLayout() {
             <Route path="/adminclient" element={<Employer />} />
             <Route path="/adminprofile" element={<ManageAdmin />} />
             <Route path="/assignedjobs" element={<JobAssignedDashboard />} />
-            <Route path="/:eid" element={<NewUserProfile />} />
+            {/* <Route path="/:eid" element={<NewUserProfile />} /> */}
+            <Route path="/:eid" element={<ValidateRoute />} />
             <Route path="/userpdf" element={<PDFViewer />} />
             <Route path="/sharepoint_document" element={<SharePointDocument />} />
             <Route path="/job_detail" element={<JobDetailpageAdmim />} />
@@ -191,7 +211,7 @@ function MainLayout() {
             <Route path="/resume/:id" element={<ResumeGrerator />} />
             {/* <Route path="/emailpreview" element={<PreviewEmail />} /> */}
             <Route path="/email" element={<MainEmailPage />} />
-            {/* <Route path="*" element={<NotFound />} /> */}
+            {/* <Route path="*" element={<NotFound userType={userType}/>} /> */}
             <Route path="/googledrive" element={<GoogleDrive />} />
             <Route path="/anotation" element={<Anotation />} />
             <Route path="/businessvisa" element={<BusinessVIsa />} />
@@ -206,7 +226,7 @@ function MainLayout() {
         {/* Agent */}
         <Route path="/partnerlogin" element={<AgentLogin />} />
 
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<NotFound userType={userType}/>} />
       </Routes>
     </BrowserRouter>
   );

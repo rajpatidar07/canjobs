@@ -42,6 +42,7 @@ import AgentConversation from "../common/AgentConversation";
 import UserTimline from "../common/UserTimline";
 import InterviewHistoryTable from "../common/InterviewHistoryTable";
 import SharePointDocument from "../common/Document folder/SharePointDocument";
+import NotFound from "../common/notfound";
 // import useSessionCheck from "../common/user_session";
 // import AdobePDFViewer from "../common/Adobe/adobeFile";
 const NewUserProfile = (props) => {
@@ -75,6 +76,7 @@ const NewUserProfile = (props) => {
           "profile"
   );
   const [userDetail, setuserDetail] = useState([]);
+  const [userFound, setuserFound] = useState([]);
   const [PersonalDetail, setPersonalDetail] = useState([]);
   const [appliedJob, setAppliedJob] = useState([]);
   const [visaStatus, setVisaStatus] = useState([]);
@@ -88,6 +90,7 @@ const NewUserProfile = (props) => {
   const UserData = async () => {
     try {
       const userData = await EmployeeDetails(employeeId);
+
       if (
         userData.data === undefined ||
         userData.data.length === 0 ||
@@ -98,6 +101,7 @@ const NewUserProfile = (props) => {
         setIsLoading(false);
       } else {
         setuserDetail(userData.data);
+        setuserFound(userData.data.employee[0].employee_id)
         setStatus(userData.data.employee[0].status);
         setPersonalDetail(userData.data.employee[0]);
         if (user_type === "user") {
@@ -291,7 +295,7 @@ const NewUserProfile = (props) => {
                 <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
                 <span className="text-uppercase font-size-3 font-weight-bold text-gray">
                   <h3 className="font-size-6 mb-0 text-capitalize">
-                    {PersonalDetail.name + " (Candidate)"}
+                    {PersonalDetail.name ? PersonalDetail.name + " (Candidate)" : ""}
                   </h3>
                 </span>
               </Link>
@@ -326,72 +330,73 @@ const NewUserProfile = (props) => {
               <Loader />
             </div>
           ) : (
-            <div className="row text-left mt-3 pt-0 flex-wrap">
-              <div className="col-12 mb-1 d-none">
-                <div className="bg-white shadow-9 d-flex">
-                  <div className="col-md-3 col-sm-6 px-5 pt-5 pb-5 d-flex align-items-center border-right">
-                    <Link
-                      className="position-relative text-white"
-                      onClick={
-                        user_type === "company" || props.self === "yes"
-                          ? null
-                          : () => setShowPersonalDetails(true)
-                      }
-                    >
-                      {user_type === "admin" ? (
-                        <>
-                          <input
-                            type="file"
-                            id="ImgUploadInput"
-                            className="d-none"
-                          />
-                          <label
-                            className="image_upload_btn image_upload_btn_2 m-0 bg-warning"
-                            htmlFor="ImgUploadInput"
-                          >
-                            <span className="text-">
-                              <PiPencilDuotone />
-                            </span>
-                            {/* <span className="fas fa-pen text-gray"> </span> */}
-                          </label>
-                        </>
-                      ) : (
-                        ""
-                      )}
-                      <img
-                        className="rounded-circle"
-                        src={
-                          PersonalDetail.profile_photo
-                            ? PersonalDetail.profile_photo
-                            : `https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png`
+            userFound === eid
+              ? <div className="row text-left mt-3 pt-0 flex-wrap">
+                <div className="col-12 mb-1 d-none">
+                  <div className="bg-white shadow-9 d-flex">
+                    <div className="col-md-3 col-sm-6 px-5 pt-5 pb-5 d-flex align-items-center border-right">
+                      <Link
+                        className="position-relative text-white"
+                        onClick={
+                          user_type === "company" || props.self === "yes"
+                            ? null
+                            : () => setShowPersonalDetails(true)
                         }
-                        alt=""
-                        width={"50px"}
-                        height={"50px"}
-                      />
-                    </Link>
-                    <div className="ml-2">
-                      <h4 className="mb-0 text-capitalize line-height-1">
-                        {PersonalDetail.name ? PersonalDetail.name : ""}
-                      </h4>
-                      <div className="m-0 age_gender font-size-3 d-flex align-items-center text-capitalize">
-                        <p>
-                          {PersonalDetail.gender ||
-                            PersonalDetail.marital_status ||
-                            PersonalDetail.marital_status ||
-                            PersonalDetail.date_of_birth
-                            ? `(${PersonalDetail.gender === "female"
-                              ? "F"
-                              : PersonalDetail.gender === "male"
-                                ? "M"
-                                : "O"
-                            },
+                      >
+                        {user_type === "admin" ? (
+                          <>
+                            <input
+                              type="file"
+                              id="ImgUploadInput"
+                              className="d-none"
+                            />
+                            <label
+                              className="image_upload_btn image_upload_btn_2 m-0 bg-warning"
+                              htmlFor="ImgUploadInput"
+                            >
+                              <span className="text-">
+                                <PiPencilDuotone />
+                              </span>
+                              {/* <span className="fas fa-pen text-gray"> </span> */}
+                            </label>
+                          </>
+                        ) : (
+                          ""
+                        )}
+                        <img
+                          className="rounded-circle"
+                          src={
+                            PersonalDetail.profile_photo
+                              ? PersonalDetail.profile_photo
+                              : `https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png`
+                          }
+                          alt=""
+                          width={"50px"}
+                          height={"50px"}
+                        />
+                      </Link>
+                      <div className="ml-2">
+                        <h4 className="mb-0 text-capitalize line-height-1">
+                          {PersonalDetail.name ? PersonalDetail.name : ""}
+                        </h4>
+                        <div className="m-0 age_gender font-size-3 d-flex align-items-center text-capitalize">
+                          <p>
+                            {PersonalDetail.gender ||
+                              PersonalDetail.marital_status ||
+                              PersonalDetail.marital_status ||
+                              PersonalDetail.date_of_birth
+                              ? `(${PersonalDetail.gender === "female"
+                                ? "F"
+                                : PersonalDetail.gender === "male"
+                                  ? "M"
+                                  : "O"
+                              },
                         ${PersonalDetail.marital_status},
                         ${moment().diff(PersonalDetail.date_of_birth, "years")}
                         Y)`
-                            : ""}
-                        </p>
-                        {/* <DropdownButton
+                              : ""}
+                          </p>
+                          {/* <DropdownButton
                           as={ButtonGroup}
                           title={"Variant"}
                           size={"sm"}
@@ -406,49 +411,49 @@ const NewUserProfile = (props) => {
                             )
                           })}
                         </DropdownButton> */}
-                        {(user_type === "admin" || user_type === "agent") && (
-                          <DropdownButton
-                            as={ButtonGroup}
-                            title={
-                              status === "1"
-                                ? "New"
-                                : status === "2"
-                                  ? "Prospect"
-                                  : status === "3"
-                                    ? "Lead"
-                                    : status === "4"
-                                      ? "Retained"
-                                      : status === "5"
-                                        ? "Lost"
-                                        : status === "6"
-                                          ? "Dead"
-                                          : status === "7"
-                                            ? "Working on"
-                                            : status === "8"
-                                              ? "Submitted"
-                                              : status === "0"
-                                                ? "New"
-                                                : "status"
-                            }
-                            size="sm"
-                            className="user_status_btn btn-primary text-white ml-1"
-                            onSelect={OnStatusChange}
-                          >
-                            {(FilterJson.employee_status || []).map(
-                              (item, index) => (
-                                <Dropdown.Item
-                                  key={index}
-                                  value={index + 1}
-                                  eventKey={index + 1}
-                                  className="text-capitalize"
-                                >
-                                  {item}
-                                </Dropdown.Item>
-                              )
-                            )}
-                          </DropdownButton>
-                        )}
-                        {/* <div className="d-flex">
+                          {(user_type === "admin" || user_type === "agent") && (
+                            <DropdownButton
+                              as={ButtonGroup}
+                              title={
+                                status === "1"
+                                  ? "New"
+                                  : status === "2"
+                                    ? "Prospect"
+                                    : status === "3"
+                                      ? "Lead"
+                                      : status === "4"
+                                        ? "Retained"
+                                        : status === "5"
+                                          ? "Lost"
+                                          : status === "6"
+                                            ? "Dead"
+                                            : status === "7"
+                                              ? "Working on"
+                                              : status === "8"
+                                                ? "Submitted"
+                                                : status === "0"
+                                                  ? "New"
+                                                  : "status"
+                              }
+                              size="sm"
+                              className="user_status_btn btn-primary text-white ml-1"
+                              onSelect={OnStatusChange}
+                            >
+                              {(FilterJson.employee_status || []).map(
+                                (item, index) => (
+                                  <Dropdown.Item
+                                    key={index}
+                                    value={index + 1}
+                                    eventKey={index + 1}
+                                    className="text-capitalize"
+                                  >
+                                    {item}
+                                  </Dropdown.Item>
+                                )
+                              )}
+                            </DropdownButton>
+                          )}
+                          {/* <div className="d-flex">
                           {(visaStatus || []).map((item, index) => {
                             return (
                               <p
@@ -474,141 +479,141 @@ const NewUserProfile = (props) => {
                             );
                           })}
                         </div> */}
+                        </div>
                       </div>
-                    </div>
-                    {/* <p className="mb-8 text-gray font-size-4">
+                      {/* <p className="mb-8 text-gray font-size-4">
                     {PersonalDetail.gender}
                     </p> */}
-                  </div>
-                  {PersonalDetail.email ? (
-                    <div className="col-md-3 col-sm-6 px-5 pt-5 pb-5 border-right">
-                      <div className="d-flex justify-content-between align-items-center">
-                        <Link
-                          className="text-dark font-size-5 w-100 text-break"
-                          to={`mailto:${PersonalDetail.email}`}
-                        >
-                          <BsEnvelope className="text-primary font-size-5 " />
-                          {PersonalDetail.email}
-                        </Link>
-                        {user_type === "admin" ||
-                          user_type === "agent" ||
-                          props.self === "no" ? (
-                          <CustomButton
-                            title={"Send Custom Email"}
-                            className="font-size-4 rounded-3 btn-primary py-0 d-none"
-                          /*Functionalities have to be done. */
-                          >
-                            {/*Take off "d-none" when you Send Custom Email API or when you're told to remove it*/}
-                            <RiMailSendLine />
-                          </CustomButton>
-                        ) : null}
-                      </div>
-                      {PersonalDetail.contact_no && (
-                        <Link
-                          className="text-dark font-size-5 w-100"
-                          to={`tel:${PersonalDetail.contact_no}`}
-                        >
-                          <BiPhoneCall className="text-primary font-size-5" />
-                          {PersonalDetail.contact_no}
-                        </Link>
-                      )}
                     </div>
-                  ) : (
-                    ""
-                  )}
-                  <div className="col px-5 pt-5 pb-5 d-flex border-right">
-                    {PersonalDetail.email === "" ||
-                      PersonalDetail.length === 0 ||
-                      (!PersonalDetail.current_location &&
-                        !PersonalDetail.language &&
-                        !PersonalDetail.currently_located_country &&
-                        !PersonalDetail.experience &&
-                        // !PersonalDetail.nationality &&
-                        !PersonalDetail.experience &&
-                        !PersonalDetail.work_permit_canada &&
-                        !PersonalDetail.work_permit_other_country) ? (
-                      <div>
-                        <p className="text-center">No Data Found</p>
+                    {PersonalDetail.email ? (
+                      <div className="col-md-3 col-sm-6 px-5 pt-5 pb-5 border-right">
+                        <div className="d-flex justify-content-between align-items-center">
+                          <Link
+                            className="text-dark font-size-5 w-100 text-break"
+                            to={`mailto:${PersonalDetail.email}`}
+                          >
+                            <BsEnvelope className="text-primary font-size-5 " />
+                            {PersonalDetail.email}
+                          </Link>
+                          {user_type === "admin" ||
+                            user_type === "agent" ||
+                            props.self === "no" ? (
+                            <CustomButton
+                              title={"Send Custom Email"}
+                              className="font-size-4 rounded-3 btn-primary py-0 d-none"
+                            /*Functionalities have to be done. */
+                            >
+                              {/*Take off "d-none" when you Send Custom Email API or when you're told to remove it*/}
+                              <RiMailSendLine />
+                            </CustomButton>
+                          ) : null}
+                        </div>
+                        {PersonalDetail.contact_no && (
+                          <Link
+                            className="text-dark font-size-5 w-100"
+                            to={`tel:${PersonalDetail.contact_no}`}
+                          >
+                            <BiPhoneCall className="text-primary font-size-5" />
+                            {PersonalDetail.contact_no}
+                          </Link>
+                        )}
                       </div>
                     ) : (
-                      <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap">
-                        <div className="info_box text-left text-capitalize">
-                          {PersonalDetail.current_location ? (
-                            <span
-                              className="font-size-3 text-smoke  mr-7"
-                              title="Current Location"
-                            >
-                              <img
-                                className="mr-1"
-                                height={"16px"}
-                                src="image/icons/marker.svg"
-                                alt="Location"
-                              />
-                              {PersonalDetail.current_location}
-                            </span>
-                          ) : (
-                            ""
-                          )}
+                      ""
+                    )}
+                    <div className="col px-5 pt-5 pb-5 d-flex border-right">
+                      {PersonalDetail.email === "" ||
+                        PersonalDetail.length === 0 ||
+                        (!PersonalDetail.current_location &&
+                          !PersonalDetail.language &&
+                          !PersonalDetail.currently_located_country &&
+                          !PersonalDetail.experience &&
+                          // !PersonalDetail.nationality &&
+                          !PersonalDetail.experience &&
+                          !PersonalDetail.work_permit_canada &&
+                          !PersonalDetail.work_permit_other_country) ? (
+                        <div>
+                          <p className="text-center">No Data Found</p>
                         </div>
-                        <div className="info_box text-left text-capitalize">
-                          {PersonalDetail.language ? (
-                            <span
-                              className="font-size-3 text-smoke  mr-7"
-                              title="User Language"
-                            >
-                              <img
-                                className="mr-1"
-                                height={"16px"}
-                                src="image/icons/language.svg"
-                                alt="language"
-                              />
-                              {PersonalDetail.language}
-                            </span>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                        <div className="info_box text-left text-capitalize">
-                          {PersonalDetail.currently_located_country ? (
-                            <span
-                              className="font-size-3 text-smoke  mr-7"
-                              title="Currently Located Country"
-                            >
-                              <img
-                                className="mr-1"
-                                height={"16px"}
-                                src="image/icons/address-book.svg"
-                                alt="Address"
-                              />
-                              {PersonalDetail.currently_located_country}
-                            </span>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                        <div className="info_box text-left text-capitalize">
-                          {PersonalDetail.experience ? (
-                            <span
-                              className="font-size-3 text-smoke  mr-7"
-                              title="Total Experience"
-                            >
-                              <img
-                                className="mr-1"
-                                height={"16px"}
-                                src="image/icons/envelope.svg"
-                                alt="Email"
-                              />
-                              {PersonalDetail.experience === "fresher" ||
-                                PersonalDetail.experience === "Other" ||
-                                PersonalDetail.experience === "other"
-                                ? PersonalDetail.experience
-                                : PersonalDetail.experience + " Years"}
-                            </span>
-                          ) : (
-                            ""
-                          )}
-                        </div>
-                        {/* {PersonalDetail.nationality ? (
+                      ) : (
+                        <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap">
+                          <div className="info_box text-left text-capitalize">
+                            {PersonalDetail.current_location ? (
+                              <span
+                                className="font-size-3 text-smoke  mr-7"
+                                title="Current Location"
+                              >
+                                <img
+                                  className="mr-1"
+                                  height={"16px"}
+                                  src="image/icons/marker.svg"
+                                  alt="Location"
+                                />
+                                {PersonalDetail.current_location}
+                              </span>
+                            ) : (
+                              ""
+                            )}
+                          </div>
+                          <div className="info_box text-left text-capitalize">
+                            {PersonalDetail.language ? (
+                              <span
+                                className="font-size-3 text-smoke  mr-7"
+                                title="User Language"
+                              >
+                                <img
+                                  className="mr-1"
+                                  height={"16px"}
+                                  src="image/icons/language.svg"
+                                  alt="language"
+                                />
+                                {PersonalDetail.language}
+                              </span>
+                            ) : (
+                              ""
+                            )}
+                          </div>
+                          <div className="info_box text-left text-capitalize">
+                            {PersonalDetail.currently_located_country ? (
+                              <span
+                                className="font-size-3 text-smoke  mr-7"
+                                title="Currently Located Country"
+                              >
+                                <img
+                                  className="mr-1"
+                                  height={"16px"}
+                                  src="image/icons/address-book.svg"
+                                  alt="Address"
+                                />
+                                {PersonalDetail.currently_located_country}
+                              </span>
+                            ) : (
+                              ""
+                            )}
+                          </div>
+                          <div className="info_box text-left text-capitalize">
+                            {PersonalDetail.experience ? (
+                              <span
+                                className="font-size-3 text-smoke  mr-7"
+                                title="Total Experience"
+                              >
+                                <img
+                                  className="mr-1"
+                                  height={"16px"}
+                                  src="image/icons/envelope.svg"
+                                  alt="Email"
+                                />
+                                {PersonalDetail.experience === "fresher" ||
+                                  PersonalDetail.experience === "Other" ||
+                                  PersonalDetail.experience === "other"
+                                  ? PersonalDetail.experience
+                                  : PersonalDetail.experience + " Years"}
+                              </span>
+                            ) : (
+                              ""
+                            )}
+                          </div>
+                          {/* {PersonalDetail.nationality ? (
                           <div
                             className="info_box text-left"
                             title="Nationality"
@@ -618,276 +623,276 @@ const NewUserProfile = (props) => {
                             </span>
                           </div>
                         ) : null} */}
-                        {PersonalDetail.work_permit_canada ? (
-                          <div className="info_box text-left">
-                            <span
-                              className="font-size-3 text-smoke  mr-7 text-capitalize"
-                              title="Canada Work Permit"
-                            >
-                              Canada Work Permit:
-                              <b>{` ${PersonalDetail.work_permit_canada}`}</b>
-                            </span>
-                          </div>
-                        ) : null}
-                        {PersonalDetail.work_permit_other_country ? (
-                          <div className="info_box text-left">
-                            <span className="font-size-3 text-smoke  mr-7 text-capitalize">
-                              Work Status:
-                              <b>{` ${PersonalDetail.work_permit_other_country}`}</b>
-                            </span>
-                          </div>
-                        ) : null}
-                      </div>
-                    )}
-                    {user_type === "company" || props.self === "yes" ? null : (
-                      <CustomButton
-                        className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
-                        onClick={() => setShowPersonalDetails(true)}
-                      >
-                        <PiPencilDuotone />
-                      </CustomButton>
-                    )}
-                  </div>
-
-                  {PersonalDetail.resume ? (
-                    <div className="col-1 px-5 pt-5 pb-5 d-flex align-items-center">
-                      <span className="font-size-5">
-                        <Link
-                          to={""}
-                          onClick={() =>
-                            handleViewResume(PersonalDetail.resume)
-                          }
+                          {PersonalDetail.work_permit_canada ? (
+                            <div className="info_box text-left">
+                              <span
+                                className="font-size-3 text-smoke  mr-7 text-capitalize"
+                                title="Canada Work Permit"
+                              >
+                                Canada Work Permit:
+                                <b>{` ${PersonalDetail.work_permit_canada}`}</b>
+                              </span>
+                            </div>
+                          ) : null}
+                          {PersonalDetail.work_permit_other_country ? (
+                            <div className="info_box text-left">
+                              <span className="font-size-3 text-smoke  mr-7 text-capitalize">
+                                Work Status:
+                                <b>{` ${PersonalDetail.work_permit_other_country}`}</b>
+                              </span>
+                            </div>
+                          ) : null}
+                        </div>
+                      )}
+                      {user_type === "company" || props.self === "yes" ? null : (
+                        <CustomButton
+                          className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
+                          onClick={() => setShowPersonalDetails(true)}
                         >
-                          Resume
-                        </Link>
-                      </span>
+                          <PiPencilDuotone />
+                        </CustomButton>
+                      )}
                     </div>
-                  ) : (
-                    ""
-                  )}
 
-                  {/* <div className="col px-5 pt-5 pb-5 d-flex align-items-center border-right"></div>
+                    {PersonalDetail.resume ? (
+                      <div className="col-1 px-5 pt-5 pb-5 d-flex align-items-center">
+                        <span className="font-size-5">
+                          <Link
+                            to={""}
+                            onClick={() =>
+                              handleViewResume(PersonalDetail.resume)
+                            }
+                          >
+                            Resume
+                          </Link>
+                        </span>
+                      </div>
+                    ) : (
+                      ""
+                    )}
+
+                    {/* <div className="col px-5 pt-5 pb-5 d-flex align-items-center border-right"></div>
                   <div className="profile_email_mobile"></div> */}
+                  </div>
                 </div>
-              </div>
-              <div
-                className={
-                  // noLima==="1"?"d-none":
-                  "visa_lmia_status_div px-6"
-                }
-              >
-                {(lima && user_type === "admin") || user_type === "agent" ? (
-                  <LimaArrowProfile
-                    lmia={lima}
-                    lmiaStatusRejectComment={lmiaStatusRejectComment}
-                  />
-                ) : null}
-              </div>
-              <div
-                className={
-                  // noLima==="1"?"d-none":
-                  "visa_lmia_status_div px-6"
-                }
-              >
-                {(visaStatus && user_type === "admin") ||
-                  user_type === "agent" ? (
-                  <VisaArrowProfile
-                    visaStatus={visaStatus}
-                    visaStatusRejectComment={visaStatusRejectComment}
-                    apiCall={apiCall}
-                  />
-                ) : null}
-              </div>
+                <div
+                  className={
+                    // noLima==="1"?"d-none":
+                    "visa_lmia_status_div px-6"
+                  }
+                >
+                  {(lima && user_type === "admin") || user_type === "agent" ? (
+                    <LimaArrowProfile
+                      lmia={lima}
+                      lmiaStatusRejectComment={lmiaStatusRejectComment}
+                    />
+                  ) : null}
+                </div>
+                <div
+                  className={
+                    // noLima==="1"?"d-none":
+                    "visa_lmia_status_div px-6"
+                  }
+                >
+                  {(visaStatus && user_type === "admin") ||
+                    user_type === "agent" ? (
+                    <VisaArrowProfile
+                      visaStatus={visaStatus}
+                      visaStatusRejectComment={visaStatusRejectComment}
+                      apiCall={apiCall}
+                    />
+                  ) : null}
+                </div>
 
-              <div className=" col-12 order-2 order-xl-1">
-                <div className="bg-white">
-                  {/* LMIA */}
-                  {/* <ul
+                <div className=" col-12 order-2 order-xl-1">
+                  <div className="bg-white">
+                    {/* LMIA */}
+                    {/* <ul
                     className="nav border-bottom border-bottom border-mercury user_profile_tab"
                     id="myTab"
                     role="tablist"
                   >
                     
                   </ul> */}
-                  {/*----Profile Header----*/}
-                  <ul
-                    className={`nav border-top border-bottom border-mercury user_profile_tab ${user_type === "admin" || user_type === "agent"
-                      ? ""
-                      : "mt-md-13"
-                      }`}
-                    id="myTab"
-                    role="tablist"
-                  >
-                    <li className="tab-menu-items nav-item">
-                      <Link
-                        className={
-                          TabActive === "profile"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
-                        }
-                        id="home-tab"
-                        data-toggle="tab"
-                        role="tab"
-                        aria-controls="home"
-                        aria-selected="true"
-                        onClick={() => setTabActive("profile")}
-                      >
-                        Profile
-                      </Link>
-                    </li>
-                    <li
-                      className={`${user_type === "company"
-                        ? "d-none"
-                        : "tab-menu-items nav-item"
+                    {/*----Profile Header----*/}
+                    <ul
+                      className={`nav border-top border-bottom border-mercury user_profile_tab ${user_type === "admin" || user_type === "agent"
+                        ? ""
+                        : "mt-md-13"
                         }`}
+                      id="myTab"
+                      role="tablist"
                     >
-                      <Link
-                        className={
-                          TabActive === "jobs"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
-                        }
-                        id="appliedJobs"
-                        data-toggle="tab"
-                        role="tab"
-                        aria-controls="appliedJobs"
-                        aria-selected="true"
-                        onClick={() => setTabActive("jobs")}
-                      >
-                        Applied Jobs
-                      </Link>
-                    </li>
-                    <li
-                      className={`${user_type === "company"
-                        ? "d-none"
-                        : "tab-menu-items nav-item"
-                        } `}
-                    >
-                      <Link
-                        className={
-                          TabActive === "documents"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
-                        }
-                        id="docTab"
-                        data-toggle="tab"
-                        role="tab"
-                        aria-controls="docTab"
-                        aria-selected="true"
-                        onClick={() => setTabActive("documents")}
-                      >
-                        Documents
-                      </Link>
-                    </li>
-                    <li
-                      className={`${user_type === "company"
-                        ? "d-none"
-                        : "tab-menu-items nav-item"
-                        } d-none`}
-                    >
-                      <Link
-                        className={
-                          TabActive === "sharepoint"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
-                        }
-                        id="docTab"
-                        data-toggle="tab"
-                        role="tab"
-                        aria-controls="docTab"
-                        aria-selected="true"
-                        onClick={() => setTabActive("sharepoint")}
-                      >
-                        Documents
-                      </Link>
-                    </li>
-                    <li
-                      className={
-                        user_type === "user" || user_type === "company"
+                      <li className="tab-menu-items nav-item">
+                        <Link
+                          className={
+                            TabActive === "profile"
+                              ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                              : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
+                          }
+                          id="home-tab"
+                          data-toggle="tab"
+                          role="tab"
+                          aria-controls="home"
+                          aria-selected="true"
+                          onClick={() => setTabActive("profile")}
+                        >
+                          Profile
+                        </Link>
+                      </li>
+                      <li
+                        className={`${user_type === "company"
                           ? "d-none"
                           : "tab-menu-items nav-item"
-                      }
-                    >
-                      <Link
-                        className={
-                          TabActive === "visa"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
-                        }
-                        id="visaTab"
-                        data-toggle="tab"
-                        role="tab"
-                        aria-controls="visaTab"
-                        aria-selected="true"
-                        onClick={() => setTabActive("visa")}
+                          }`}
                       >
-                        Visa
-                      </Link>
-                    </li>
-                    <li
-                      className={
-                        user_type === "company" ||
-                          user_type === "agent" ||
-                          user_type === "user"
+                        <Link
+                          className={
+                            TabActive === "jobs"
+                              ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                              : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
+                          }
+                          id="appliedJobs"
+                          data-toggle="tab"
+                          role="tab"
+                          aria-controls="appliedJobs"
+                          aria-selected="true"
+                          onClick={() => setTabActive("jobs")}
+                        >
+                          Applied Jobs
+                        </Link>
+                      </li>
+                      <li
+                        className={`${user_type === "company"
                           ? "d-none"
                           : "tab-menu-items nav-item"
-                      }
-                    >
-                      <Link
-                        className={
-                          TabActive === "notes"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
-                        }
-                        id="notesTab"
-                        data-toggle="tab"
-                        role="tab"
-                        aria-controls="notesTab"
-                        aria-selected="true"
-                        onClick={() => setTabActive("notes")}
+                          } `}
                       >
-                        Notes
-                      </Link>
-                    </li>
-                    <li className="tab-menu-items nav-item d-none">
-                      {/*Take off "d-none" when you use the activity log API or when you're told to remove it*/}
-                      <Link
-                        className={
-                          TabActive === "activity"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
-                        }
-                        id="activityTab"
-                        data-toggle="tab"
-                        role="tab"
-                        aria-controls="activityTab"
-                        aria-selected="true"
-                        onClick={() => setTabActive("activity")}
+                        <Link
+                          className={
+                            TabActive === "documents"
+                              ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                              : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
+                          }
+                          id="docTab"
+                          data-toggle="tab"
+                          role="tab"
+                          aria-controls="docTab"
+                          aria-selected="true"
+                          onClick={() => setTabActive("documents")}
+                        >
+                          Documents
+                        </Link>
+                      </li>
+                      <li
+                        className={`${user_type === "company"
+                          ? "d-none"
+                          : "tab-menu-items nav-item"
+                          } d-none`}
                       >
-                        Activity History
-                      </Link>
-                    </li>
-                    <li
-                      className={`tab-menu-items nav-item ${user_type === "company" ? "d-none" : ""
-                        }`}
-                    >
-                      <Link
+                        <Link
+                          className={
+                            TabActive === "sharepoint"
+                              ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                              : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
+                          }
+                          id="docTab"
+                          data-toggle="tab"
+                          role="tab"
+                          aria-controls="docTab"
+                          aria-selected="true"
+                          onClick={() => setTabActive("sharepoint")}
+                        >
+                          Documents
+                        </Link>
+                      </li>
+                      <li
                         className={
-                          TabActive === "payment"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
+                          user_type === "user" || user_type === "company"
+                            ? "d-none"
+                            : "tab-menu-items nav-item"
                         }
-                        id="activityTab"
-                        data-toggle="tab"
-                        role="tab"
-                        aria-controls="activityTab"
-                        aria-selected="true"
-                        onClick={() => setTabActive("payment")}
                       >
-                        Payments
-                      </Link>
-                    </li>
-                    {/* <li className="tab-menu-items nav-item pr-12">
+                        <Link
+                          className={
+                            TabActive === "visa"
+                              ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                              : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
+                          }
+                          id="visaTab"
+                          data-toggle="tab"
+                          role="tab"
+                          aria-controls="visaTab"
+                          aria-selected="true"
+                          onClick={() => setTabActive("visa")}
+                        >
+                          Visa
+                        </Link>
+                      </li>
+                      <li
+                        className={
+                          user_type === "company" ||
+                            user_type === "agent" ||
+                            user_type === "user"
+                            ? "d-none"
+                            : "tab-menu-items nav-item"
+                        }
+                      >
+                        <Link
+                          className={
+                            TabActive === "notes"
+                              ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                              : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
+                          }
+                          id="notesTab"
+                          data-toggle="tab"
+                          role="tab"
+                          aria-controls="notesTab"
+                          aria-selected="true"
+                          onClick={() => setTabActive("notes")}
+                        >
+                          Notes
+                        </Link>
+                      </li>
+                      <li className="tab-menu-items nav-item d-none">
+                        {/*Take off "d-none" when you use the activity log API or when you're told to remove it*/}
+                        <Link
+                          className={
+                            TabActive === "activity"
+                              ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                              : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
+                          }
+                          id="activityTab"
+                          data-toggle="tab"
+                          role="tab"
+                          aria-controls="activityTab"
+                          aria-selected="true"
+                          onClick={() => setTabActive("activity")}
+                        >
+                          Activity History
+                        </Link>
+                      </li>
+                      <li
+                        className={`tab-menu-items nav-item ${user_type === "company" ? "d-none" : ""
+                          }`}
+                      >
+                        <Link
+                          className={
+                            TabActive === "payment"
+                              ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                              : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
+                          }
+                          id="activityTab"
+                          data-toggle="tab"
+                          role="tab"
+                          aria-controls="activityTab"
+                          aria-selected="true"
+                          onClick={() => setTabActive("payment")}
+                        >
+                          Payments
+                        </Link>
+                      </li>
+                      {/* <li className="tab-menu-items nav-item pr-12">
                       <CustomButton
                         className=" font-size-4 rounded-3 btn-primary border-0 mt-2"
                         onClick={() => setShowDoc(true)}
@@ -895,355 +900,355 @@ const NewUserProfile = (props) => {
                         {user_type === "user" ? "Add Document" : "Documents"}
                       </CustomButton>
                     </li> */}
-                    <li
-                      className={
-                        user_type === "user" || user_type === "company"
-                          ? "d-none"
-                          : "tab-menu-items nav-item "
-                      }
-                    >
-                      <Link
+                      <li
                         className={
-                          TabActive === "contact"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
+                          user_type === "user" || user_type === "company"
+                            ? "d-none"
+                            : "tab-menu-items nav-item "
                         }
-                        id="docTab"
-                        data-toggle="tab"
-                        role="tab"
-                        aria-controls="docTab"
-                        aria-selected="true"
-                        onClick={() => setTabActive("contact")}
                       >
-                        Contact Us
-                      </Link>
-                    </li>
-                    <li
-                      className={
-                        user_type === "user" || user_type === "company"
-                          ? "d-none"
-                          : "tab-menu-items nav-item "
-                      }
-                    >
-                      <Link
+                        <Link
+                          className={
+                            TabActive === "contact"
+                              ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                              : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
+                          }
+                          id="docTab"
+                          data-toggle="tab"
+                          role="tab"
+                          aria-controls="docTab"
+                          aria-selected="true"
+                          onClick={() => setTabActive("contact")}
+                        >
+                          Contact Us
+                        </Link>
+                      </li>
+                      <li
                         className={
-                          TabActive === "timline"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
+                          user_type === "user" || user_type === "company"
+                            ? "d-none"
+                            : "tab-menu-items nav-item "
                         }
-                        id="docTab"
-                        data-toggle="tab"
-                        role="tab"
-                        aria-controls="docTab"
-                        aria-selected="true"
-                        onClick={() => setTabActive("timline")}
                       >
-                        TimeLine
-                      </Link>
-                    </li>
-                    <li
-                      className={
-                        user_type === "company" ||
-                          user_type === "user" ||
-                          user_type === "agent"
-                          ? "d-none"
-                          : "tab-menu-items nav-item"
-                      }
-                    >
-                      <Link
+                        <Link
+                          className={
+                            TabActive === "timline"
+                              ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                              : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
+                          }
+                          id="docTab"
+                          data-toggle="tab"
+                          role="tab"
+                          aria-controls="docTab"
+                          aria-selected="true"
+                          onClick={() => setTabActive("timline")}
+                        >
+                          TimeLine
+                        </Link>
+                      </li>
+                      <li
                         className={
-                          TabActive === "email"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
+                          user_type === "company" ||
+                            user_type === "user" ||
+                            user_type === "agent"
+                            ? "d-none"
+                            : "tab-menu-items nav-item"
                         }
-                        id="docTab"
-                        data-toggle="tab"
-                        role="tab"
-                        aria-controls="docTab"
-                        aria-selected="true"
-                        onClick={() => setTabActive("email")}
                       >
-                        Email
-                      </Link>
-                    </li>
-                    <li
-                      className={
-                        user_type === "company" || user_type === "user"
-                          ? "d-none"
-                          : "tab-menu-items nav-item"
-                      }
-                    >
-                      <Link
+                        <Link
+                          className={
+                            TabActive === "email"
+                              ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                              : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
+                          }
+                          id="docTab"
+                          data-toggle="tab"
+                          role="tab"
+                          aria-controls="docTab"
+                          aria-selected="true"
+                          onClick={() => setTabActive("email")}
+                        >
+                          Email
+                        </Link>
+                      </li>
+                      <li
                         className={
-                          TabActive === "agent conversation"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
+                          user_type === "company" || user_type === "user"
+                            ? "d-none"
+                            : "tab-menu-items nav-item"
                         }
-                        id="docTab"
-                        data-toggle="tab"
-                        role="tab"
-                        aria-controls="docTab"
-                        aria-selected="true"
-                        onClick={() => setTabActive("agent conversation")}
                       >
-                        Partner
-                      </Link>
-                    </li>
-                    <li
-                      className={
-                        user_type === "company" //|| user_type === "user"
-                          ? "d-none"
-                          : "tab-menu-items nav-item "
-                      }
-                    >
-                      <Link
+                        <Link
+                          className={
+                            TabActive === "agent conversation"
+                              ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                              : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
+                          }
+                          id="docTab"
+                          data-toggle="tab"
+                          role="tab"
+                          aria-controls="docTab"
+                          aria-selected="true"
+                          onClick={() => setTabActive("agent conversation")}
+                        >
+                          Partner
+                        </Link>
+                      </li>
+                      <li
                         className={
-                          TabActive === "InterviewHistory"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
+                          user_type === "company" //|| user_type === "user"
+                            ? "d-none"
+                            : "tab-menu-items nav-item "
                         }
-                        id="docTab"
-                        data-toggle="tab"
-                        role="tab"
-                        aria-controls="docTab"
-                        aria-selected="true"
-                        onClick={() => setTabActive("InterviewHistory")}
                       >
-                        Interview
-                      </Link>
-                    </li>
-                  </ul>
-                  {/*---Profile Details----*/}
-                  <div
-                    className={
-                      TabActive === "profile" ? "tab-content" : "d-none"
-                    }
-                    id="myTabContent"
-                  >
+                        <Link
+                          className={
+                            TabActive === "InterviewHistory"
+                              ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                              : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
+                          }
+                          id="docTab"
+                          data-toggle="tab"
+                          role="tab"
+                          aria-controls="docTab"
+                          aria-selected="true"
+                          onClick={() => setTabActive("InterviewHistory")}
+                        >
+                          Interview
+                        </Link>
+                      </li>
+                    </ul>
+                    {/*---Profile Details----*/}
                     <div
-                      className="tab-pane fade show active"
-                      id="home"
-                      role="tabpanel"
-                      aria-labelledby="home-tab"
+                      className={
+                        TabActive === "profile" ? "tab-content" : "d-none"
+                      }
+                      id="myTabContent"
                     >
-                      {/*----About Employee----*/}
-                      <div className="row m-0 ">
-                        <div className="col-md-12 px-8 pt-8 pb-4">
-                          <div className="d-flex align-items-center rounded bg-light p-8 position-relative">
-                            <Link
-                              className="position-relative text-white"
-                              onClick={
-                                user_type === "company" || props.self === "yes"
-                                  ? null
-                                  : () => setShowPersonalDetails(true)
-                              }
-                            >
-                              {user_type === "admin" ? (
-                                <>
-                                  <input
-                                    type="file"
-                                    id="ImgUploadInput"
-                                    className="d-none"
-                                  />
-                                  <label
-                                    className="image_upload_btn image_upload_btn_2 bg-warning"
-                                    htmlFor="ImgUploadInput"
-                                  >
-                                    <span className="text-">
-                                      <PiPencilDuotone />
-                                    </span>
-                                    {/* <span className="fas fa-pen text-gray"> </span> */}
-                                  </label>
-                                </>
-                              ) : (
-                                ""
-                              )}
-                              <img
-                                className="rounded"
-                                src={
-                                  PersonalDetail.profile_photo
-                                    ? PersonalDetail.profile_photo
-                                    : `https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png`
+                      <div
+                        className="tab-pane fade show active"
+                        id="home"
+                        role="tabpanel"
+                        aria-labelledby="home-tab"
+                      >
+                        {/*----About Employee----*/}
+                        <div className="row m-0 ">
+                          <div className="col-md-12 px-8 pt-8 pb-4">
+                            <div className="d-flex align-items-center rounded bg-light p-8 position-relative">
+                              <Link
+                                className="position-relative text-white"
+                                onClick={
+                                  user_type === "company" || props.self === "yes"
+                                    ? null
+                                    : () => setShowPersonalDetails(true)
                                 }
-                                alt=""
-                                width={"180px"}
-                                height={"180px"}
-                              />
-                            </Link>
-                            <div className="ml-5 w-100">
-                              <h2 className="mb-0 text-capitalize line-height-1 text-break">
-                                {PersonalDetail.name
-                                  ? PersonalDetail.name
-                                  : "Unknown Candidate"}
-                              </h2>
-                              <hr className="my-3" />
-                              <div className="m-0 age_gender d-flex align-items-center">
-                                {PersonalDetail.gender ? (
-                                  <span className="bg-secondary rounded-pill font-size-3 px-3 py-2 text-white mr-2">
-                                    {PersonalDetail.gender === "female"
-                                      ? "Female"
-                                      : PersonalDetail.gender === "male"
-                                        ? "Male"
-                                        : "Other"}
-                                  </span>
-                                ) : null}
-                                {PersonalDetail.marital_status ? (
-                                  <span className="bg-info rounded-pill font-size-3 px-3 py-2 text-white mr-2 text-capitalize">
-                                    {PersonalDetail.marital_status}
-                                  </span>
-                                ) : null}
-                                {PersonalDetail.date_of_birth ? (
-                                  <span className="bg-warning rounded-pill font-size-3 px-3 py-2 text-white mr-2">
-                                    {moment().diff(
-                                      PersonalDetail.date_of_birth,
-                                      "years"
-                                    )}
-                                    Y
-                                  </span>
-                                ) : null}
-                                {(user_type === "admin" ||
-                                  user_type === "agent") && (
-                                    <DropdownButton
-                                      as={ButtonGroup}
-                                      title={
-                                        status === "1"
-                                          ? "New"
-                                          : status === "2"
-                                            ? "Prospect"
-                                            : status === "3"
-                                              ? "Lead"
-                                              : status === "4"
-                                                ? "Retained"
-                                                : status === "5"
-                                                  ? "Lost"
-                                                  : status === "6"
-                                                    ? "Dead"
-                                                    : status === "7"
-                                                      ? "Working on"
-                                                      : status === "8"
-                                                        ? "Submitted"
-                                                        : status === "0"
-                                                          ? "New"
-                                                          : "status"
-                                      }
-                                      size="sm"
-                                      className="user_status_btn btn-primary rounded-pill font-size-3 px-3 py-1 text-white mr-2"
-                                      onSelect={OnStatusChange}
+                              >
+                                {user_type === "admin" ? (
+                                  <>
+                                    <input
+                                      type="file"
+                                      id="ImgUploadInput"
+                                      className="d-none"
+                                    />
+                                    <label
+                                      className="image_upload_btn image_upload_btn_2 bg-warning"
+                                      htmlFor="ImgUploadInput"
                                     >
-                                      {(FilterJson.employee_status || []).map(
-                                        (item, index) => (
-                                          <Dropdown.Item
-                                            key={index}
-                                            value={index + 1}
-                                            eventKey={index + 1}
-                                            className="text-capitalize"
-                                          >
-                                            {item}
-                                          </Dropdown.Item>
-                                        )
-                                      )}
-                                    </DropdownButton>
-                                  )}
-                              </div>
-                              <hr className="my-3" />
-                              <div className="d-flex align-items-center">
-                                {PersonalDetail.email === "" ||
-                                  PersonalDetail.length === 0 ||
-                                  (!PersonalDetail.current_location &&
-                                    !PersonalDetail.language &&
-                                    !PersonalDetail.currently_located_country &&
-                                    !PersonalDetail.experience &&
-                                    // !PersonalDetail.nationality &&
-                                    !PersonalDetail.experience &&
-                                    !PersonalDetail.work_permit_canada &&
-                                    !PersonalDetail.work_permit_other_country) ? (
-                                  <div>
-                                    <p className="text-center">No Data Found</p>
-                                  </div>
+                                      <span className="text-">
+                                        <PiPencilDuotone />
+                                      </span>
+                                      {/* <span className="fas fa-pen text-gray"> </span> */}
+                                    </label>
+                                  </>
                                 ) : (
-                                  <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap">
-                                    <div className="info_box text-left text-capitalize">
-                                      {PersonalDetail.current_location ? (
-                                        <span
-                                          className="font-size-3 text-smoke  mr-7"
-                                          title="Current Location"
-                                        >
-                                          <img
-                                            className="mr-1"
-                                            height={"16px"}
-                                            src="image/icons/marker.svg"
-                                            alt="Location"
-                                          />
-                                          {PersonalDetail.current_location}
-                                        </span>
-                                      ) : (
-                                        ""
+                                  ""
+                                )}
+                                <img
+                                  className="rounded"
+                                  src={
+                                    PersonalDetail.profile_photo
+                                      ? PersonalDetail.profile_photo
+                                      : `https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png`
+                                  }
+                                  alt=""
+                                  width={"180px"}
+                                  height={"180px"}
+                                />
+                              </Link>
+                              <div className="ml-5 w-100">
+                                <h2 className="mb-0 text-capitalize line-height-1 text-break">
+                                  {PersonalDetail.name
+                                    ? PersonalDetail.name
+                                    : "Unknown Candidate"}
+                                </h2>
+                                <hr className="my-3" />
+                                <div className="m-0 age_gender d-flex align-items-center">
+                                  {PersonalDetail.gender ? (
+                                    <span className="bg-secondary rounded-pill font-size-3 px-3 py-2 text-white mr-2">
+                                      {PersonalDetail.gender === "female"
+                                        ? "Female"
+                                        : PersonalDetail.gender === "male"
+                                          ? "Male"
+                                          : "Other"}
+                                    </span>
+                                  ) : null}
+                                  {PersonalDetail.marital_status ? (
+                                    <span className="bg-info rounded-pill font-size-3 px-3 py-2 text-white mr-2 text-capitalize">
+                                      {PersonalDetail.marital_status}
+                                    </span>
+                                  ) : null}
+                                  {PersonalDetail.date_of_birth ? (
+                                    <span className="bg-warning rounded-pill font-size-3 px-3 py-2 text-white mr-2">
+                                      {moment().diff(
+                                        PersonalDetail.date_of_birth,
+                                        "years"
                                       )}
+                                      Y
+                                    </span>
+                                  ) : null}
+                                  {(user_type === "admin" ||
+                                    user_type === "agent") && (
+                                      <DropdownButton
+                                        as={ButtonGroup}
+                                        title={
+                                          status === "1"
+                                            ? "New"
+                                            : status === "2"
+                                              ? "Prospect"
+                                              : status === "3"
+                                                ? "Lead"
+                                                : status === "4"
+                                                  ? "Retained"
+                                                  : status === "5"
+                                                    ? "Lost"
+                                                    : status === "6"
+                                                      ? "Dead"
+                                                      : status === "7"
+                                                        ? "Working on"
+                                                        : status === "8"
+                                                          ? "Submitted"
+                                                          : status === "0"
+                                                            ? "New"
+                                                            : "status"
+                                        }
+                                        size="sm"
+                                        className="user_status_btn btn-primary rounded-pill font-size-3 px-3 py-1 text-white mr-2"
+                                        onSelect={OnStatusChange}
+                                      >
+                                        {(FilterJson.employee_status || []).map(
+                                          (item, index) => (
+                                            <Dropdown.Item
+                                              key={index}
+                                              value={index + 1}
+                                              eventKey={index + 1}
+                                              className="text-capitalize"
+                                            >
+                                              {item}
+                                            </Dropdown.Item>
+                                          )
+                                        )}
+                                      </DropdownButton>
+                                    )}
+                                </div>
+                                <hr className="my-3" />
+                                <div className="d-flex align-items-center">
+                                  {PersonalDetail.email === "" ||
+                                    PersonalDetail.length === 0 ||
+                                    (!PersonalDetail.current_location &&
+                                      !PersonalDetail.language &&
+                                      !PersonalDetail.currently_located_country &&
+                                      !PersonalDetail.experience &&
+                                      // !PersonalDetail.nationality &&
+                                      !PersonalDetail.experience &&
+                                      !PersonalDetail.work_permit_canada &&
+                                      !PersonalDetail.work_permit_other_country) ? (
+                                    <div>
+                                      <p className="text-center">No Data Found</p>
                                     </div>
-                                    <div className="info_box text-left text-capitalize">
-                                      {PersonalDetail.language ? (
-                                        <span
-                                          className="font-size-3 text-smoke  mr-7"
-                                          title="User Language"
-                                        >
-                                          <img
-                                            className="mr-1"
-                                            height={"16px"}
-                                            src="image/icons/language.svg"
-                                            alt="language"
-                                          />
-                                          {PersonalDetail.language}
-                                        </span>
-                                      ) : (
-                                        ""
-                                      )}
-                                    </div>
-                                    <div className="info_box text-left text-capitalize">
-                                      {PersonalDetail.currently_located_country ? (
-                                        <span
-                                          className="font-size-3 text-smoke  mr-7"
-                                          title="Currently Located Country"
-                                        >
-                                          <img
-                                            className="mr-1"
-                                            height={"16px"}
-                                            src="image/icons/address-book.svg"
-                                            alt="Address"
-                                          />
-                                          {
-                                            PersonalDetail.currently_located_country
-                                          }
-                                        </span>
-                                      ) : (
-                                        ""
-                                      )}
-                                    </div>
-                                    <div className="info_box text-left text-capitalize">
-                                      {PersonalDetail.experience ? (
-                                        <span
-                                          className="font-size-3 text-smoke  mr-7"
-                                          title="Total Experience"
-                                        >
-                                          <img
-                                            className="mr-1"
-                                            height={"16px"}
-                                            src="image/icons/envelope.svg"
-                                            alt="Email"
-                                          />
-                                          {PersonalDetail.experisence ===
-                                            "fresher" ||
-                                            PersonalDetail.experience ===
-                                            "Other" ||
-                                            PersonalDetail.experience === "other"
-                                            ? PersonalDetail.experience
-                                            : PersonalDetail.experience +
-                                            " Years"}
-                                        </span>
-                                      ) : (
-                                        ""
-                                      )}
-                                    </div>
-                                    {/* {PersonalDetail.nationality ? (
+                                  ) : (
+                                    <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap">
+                                      <div className="info_box text-left text-capitalize">
+                                        {PersonalDetail.current_location ? (
+                                          <span
+                                            className="font-size-3 text-smoke  mr-7"
+                                            title="Current Location"
+                                          >
+                                            <img
+                                              className="mr-1"
+                                              height={"16px"}
+                                              src="image/icons/marker.svg"
+                                              alt="Location"
+                                            />
+                                            {PersonalDetail.current_location}
+                                          </span>
+                                        ) : (
+                                          ""
+                                        )}
+                                      </div>
+                                      <div className="info_box text-left text-capitalize">
+                                        {PersonalDetail.language ? (
+                                          <span
+                                            className="font-size-3 text-smoke  mr-7"
+                                            title="User Language"
+                                          >
+                                            <img
+                                              className="mr-1"
+                                              height={"16px"}
+                                              src="image/icons/language.svg"
+                                              alt="language"
+                                            />
+                                            {PersonalDetail.language}
+                                          </span>
+                                        ) : (
+                                          ""
+                                        )}
+                                      </div>
+                                      <div className="info_box text-left text-capitalize">
+                                        {PersonalDetail.currently_located_country ? (
+                                          <span
+                                            className="font-size-3 text-smoke  mr-7"
+                                            title="Currently Located Country"
+                                          >
+                                            <img
+                                              className="mr-1"
+                                              height={"16px"}
+                                              src="image/icons/address-book.svg"
+                                              alt="Address"
+                                            />
+                                            {
+                                              PersonalDetail.currently_located_country
+                                            }
+                                          </span>
+                                        ) : (
+                                          ""
+                                        )}
+                                      </div>
+                                      <div className="info_box text-left text-capitalize">
+                                        {PersonalDetail.experience ? (
+                                          <span
+                                            className="font-size-3 text-smoke  mr-7"
+                                            title="Total Experience"
+                                          >
+                                            <img
+                                              className="mr-1"
+                                              height={"16px"}
+                                              src="image/icons/envelope.svg"
+                                              alt="Email"
+                                            />
+                                            {PersonalDetail.experisence ===
+                                              "fresher" ||
+                                              PersonalDetail.experience ===
+                                              "Other" ||
+                                              PersonalDetail.experience === "other"
+                                              ? PersonalDetail.experience
+                                              : PersonalDetail.experience +
+                                              " Years"}
+                                          </span>
+                                        ) : (
+                                          ""
+                                        )}
+                                      </div>
+                                      {/* {PersonalDetail.nationality ? (
                                     <div
                                       className="info_box text-left"
                                       title="Nationality"
@@ -1254,365 +1259,365 @@ const NewUserProfile = (props) => {
                                       </span>
                                     </div>
                                   ) : null} */}
-                                    {PersonalDetail.work_permit_canada ? (
-                                      <div className="info_box text-left">
-                                        <span
-                                          className="font-size-3 text-smoke  mr-7 text-capitalize"
-                                          title="Canada Work Permit"
-                                        >
-                                          Canada Work Permit:
-                                          <b>
-                                            {` ${PersonalDetail.work_permit_canada}`}
-                                          </b>
-                                        </span>
-                                      </div>
-                                    ) : null}
-                                    {PersonalDetail.work_permit_other_country ? (
-                                      <div className="info_box text-left">
-                                        <span className="font-size-3 text-smoke  mr-7 text-capitalize">
-                                          Work Status:
-                                          <b>
-                                            {` ${PersonalDetail.work_permit_other_country}`}
-                                          </b>
-                                        </span>
-                                      </div>
-                                    ) : null}
-                                  </div>
-                                )}
-                                {user_type === "company" ||
-                                  props.self === "yes" ? null : (
-                                  <CustomButton
-                                    className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
-                                    onClick={() => setShowPersonalDetails(true)}
-                                  >
-                                    <PiPencilDuotone />
-                                  </CustomButton>
-                                )}
-                              </div>
-                              <hr className="my-3" />
-                              <div
-                                className="d-flex flex-wrap"
-                                style={{ gap: "10px" }}
-                              >
-                                {!PersonalDetail.email ||
-                                  user_type === "company" ? null : (
-                                  <div>
+                                      {PersonalDetail.work_permit_canada ? (
+                                        <div className="info_box text-left">
+                                          <span
+                                            className="font-size-3 text-smoke  mr-7 text-capitalize"
+                                            title="Canada Work Permit"
+                                          >
+                                            Canada Work Permit:
+                                            <b>
+                                              {` ${PersonalDetail.work_permit_canada}`}
+                                            </b>
+                                          </span>
+                                        </div>
+                                      ) : null}
+                                      {PersonalDetail.work_permit_other_country ? (
+                                        <div className="info_box text-left">
+                                          <span className="font-size-3 text-smoke  mr-7 text-capitalize">
+                                            Work Status:
+                                            <b>
+                                              {` ${PersonalDetail.work_permit_other_country}`}
+                                            </b>
+                                          </span>
+                                        </div>
+                                      ) : null}
+                                    </div>
+                                  )}
+                                  {user_type === "company" ||
+                                    props.self === "yes" ? null : (
+                                    <CustomButton
+                                      className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
+                                      onClick={() => setShowPersonalDetails(true)}
+                                    >
+                                      <PiPencilDuotone />
+                                    </CustomButton>
+                                  )}
+                                </div>
+                                <hr className="my-3" />
+                                <div
+                                  className="d-flex flex-wrap"
+                                  style={{ gap: "10px" }}
+                                >
+                                  {!PersonalDetail.email ||
+                                    user_type === "company" ? null : (
+                                    <div>
+                                      <Link
+                                        className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
+                                        to={`mailto:${PersonalDetail.email}`}
+                                      >
+                                        <BsEnvelope className="font-size-3 mr-4" />
+                                        {PersonalDetail.email}
+                                      </Link>
+                                    </div>
+                                  )}
+                                  {!PersonalDetail.contact_no ||
+                                    user_type === "company" ? null : (
+                                    <div>
+                                      <Link
+                                        className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
+                                        to={`tel:${PersonalDetail.contact_no}`}
+                                      >
+                                        <BiPhoneCall className="font-size-3 mr-4" />
+                                        {PersonalDetail.contact_no}
+                                      </Link>
+                                    </div>
+                                  )}
+                                  {PersonalDetail.resume ? (
                                     <Link
                                       className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
-                                      to={`mailto:${PersonalDetail.email}`}
+                                      to={""}
+                                      onClick={() =>
+                                        handleViewResume(PersonalDetail.resume)
+                                      }
                                     >
-                                      <BsEnvelope className="font-size-3 mr-4" />
-                                      {PersonalDetail.email}
+                                      Resume
                                     </Link>
-                                  </div>
-                                )}
-                                {!PersonalDetail.contact_no ||
-                                  user_type === "company" ? null : (
-                                  <div>
-                                    <Link
-                                      className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
-                                      to={`tel:${PersonalDetail.contact_no}`}
-                                    >
-                                      <BiPhoneCall className="font-size-3 mr-4" />
-                                      {PersonalDetail.contact_no}
-                                    </Link>
-                                  </div>
-                                )}
-                                {PersonalDetail.resume ? (
-                                  <Link
+                                  ) : null}
+                                  <button
                                     className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
-                                    to={""}
+                                    to={""} // You should specify a valid URL here
                                     onClick={() =>
-                                      handleViewResume(PersonalDetail.resume)
+                                      ResumeClick(PersonalDetail.employee_id)
+                                    }
+                                    disabled={
+                                      PersonalDetail.name === null ||
+                                      PersonalDetail.name === undefined ||
+                                      PersonalDetail.name === "" ||
+                                      userDetail.skill === undefined ||
+                                      userDetail.skill.length === 0 ||
+                                      userDetail.education === undefined ||
+                                      userDetail.education.length === 0
                                     }
                                   >
-                                    Resume
-                                  </Link>
-                                ) : null}
-                                <button
-                                  className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
-                                  to={""} // You should specify a valid URL here
-                                  onClick={() =>
-                                    ResumeClick(PersonalDetail.employee_id)
-                                  }
-                                  disabled={
-                                    PersonalDetail.name === null ||
-                                    PersonalDetail.name === undefined ||
-                                    PersonalDetail.name === "" ||
-                                    userDetail.skill === undefined ||
-                                    userDetail.skill.length === 0 ||
-                                    userDetail.education === undefined ||
-                                    userDetail.education.length === 0
-                                  }
-                                >
-                                  {PersonalDetail.name === null ||
-                                    PersonalDetail.name === undefined ||
-                                    PersonalDetail.name === "" ||
-                                    userDetail.skill === undefined ||
-                                    userDetail.skill.length === 0 ||
-                                    userDetail.education === undefined ||
-                                    userDetail.education.length === 0
-                                    ? user_type === "user"
-                                      ? "Complete your Profile"
-                                      : "incomplete Profile"
-                                    : "Generated Resume"}
-                                </button>
+                                    {PersonalDetail.name === null ||
+                                      PersonalDetail.name === undefined ||
+                                      PersonalDetail.name === "" ||
+                                      userDetail.skill === undefined ||
+                                      userDetail.skill.length === 0 ||
+                                      userDetail.education === undefined ||
+                                      userDetail.education.length === 0
+                                      ? user_type === "user"
+                                        ? "Complete your Profile"
+                                        : "incomplete Profile"
+                                      : "Generated Resume"}
+                                  </button>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <div className="row m-0 px-8 pb-8 rounded position-relative">
-                        <div className="col-12 p-0 d-flex rounded bg-light">
-                          <div className="col-lg-5 col-md-6 p-8 border-right">
-                            <div
-                              id="about_Profile"
-                              className="position-relative"
-                            >
-                              <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
-                                <span>About</span>
-                              </h4>
+                        <div className="row m-0 px-8 pb-8 rounded position-relative">
+                          <div className="col-12 p-0 d-flex rounded bg-light">
+                            <div className="col-lg-5 col-md-6 p-8 border-right">
+                              <div
+                                id="about_Profile"
+                                className="position-relative"
+                              >
+                                <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
+                                  <span>About</span>
+                                </h4>
 
-                              {/* <p className="w-100 card p-5 shadow-8 border-0 m-0">
+                                {/* <p className="w-100 card p-5 shadow-8 border-0 m-0">
                                 {PersonalDetail.description
                                   ? PersonalDetail.description
                                   : "No Data Found"}
                               </p> */}
-                              <div className="w-100 card p-5 shadow-8 border-0 m-0 text-break">
-                                {PersonalDetail.description ? (
-                                  <div
-                                    dangerouslySetInnerHTML={{
-                                      __html: PersonalDetail.description,
-                                    }}
-                                  />
-                                ) : (
-                                  "No Data Found"
-                                )}
-                              </div>
-                            </div>
-                            <div className="position-relative mt-8">
-                              <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
-                                <span>Skill</span>
-                                {user_type === "company" ||
-                                  props.self === "yes" ? null : (
-                                  <CustomButton
-                                    className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
-                                    onClick={() => setShowItSkills(true)}
-                                  >
-                                    <PiPencilDuotone />
-                                  </CustomButton>
-                                )}
-                              </h4>
-                              <div className="w-100 card p-5 shadow-8 border-0">
-                                {showItSkills ? (
-                                  <ItSkills
-                                    show={showItSkills}
-                                    employeeId={employeeId}
-                                    apiCall={apiCall}
-                                    setApiCall={setApiCall}
-                                    close={() => setShowItSkills(false)}
-                                  />
-                                ) : null}
-
-                                <ul className="list-unstyled d-flex align-items-start flex-wrap m-0">
-                                  {userDetail.skill === undefined ||
-                                    userDetail.skill.length === 0 ? (
-                                    <li>No Data Found</li>
-                                  ) : (
-                                    (userDetail.skill || []).map(
-                                      (employeeSkills, i) => (
-                                        <li key={i}>
-                                          <span className="bg-polar text-black-2 mr-3 mb-2 p-2 font-size-3 rounded-3 d-flex align-items-center">
-                                            {employeeSkills.skill}
-                                          </span>
-                                        </li>
-                                      )
-                                    )
-                                  )}
-                                </ul>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="col-lg-7 col-md-6 p-8">
-                            {/*----Employee's Education Profile----*/}
-                            <div
-                              id="Education_Profile"
-                              className="position-relative"
-                            >
-                              <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
-                                <span>Education</span>
-                                {user_type === "company" ||
-                                  props.self === "yes" ? null : (
-                                  <CustomButton
-                                    className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
-                                    onClick={() => setShowEducation(true)}
-                                  >
-                                    <PiPencilDuotone />
-                                  </CustomButton>
-                                )}
-                              </h4>
-                              {userDetail.education === undefined ||
-                                userDetail.education.length === 0 ? (
-                                <div className="w-100 card p-5 shadow-8 border-0 mb-2">
-                                  Add Education Details
-                                </div>
-                              ) : (
-                                (userDetail.education || []).map(
-                                  (EducationDetails, index) => (
+                                <div className="w-100 card p-5 shadow-8 border-0 m-0 text-break">
+                                  {PersonalDetail.description ? (
                                     <div
-                                      className="w-100 card px-5 py-2 shadow-8 border-0 mb-2"
-                                      key={index}
+                                      dangerouslySetInnerHTML={{
+                                        __html: PersonalDetail.description,
+                                      }}
+                                    />
+                                  ) : (
+                                    "No Data Found"
+                                  )}
+                                </div>
+                              </div>
+                              <div className="position-relative mt-8">
+                                <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
+                                  <span>Skill</span>
+                                  {user_type === "company" ||
+                                    props.self === "yes" ? null : (
+                                    <CustomButton
+                                      className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
+                                      onClick={() => setShowItSkills(true)}
                                     >
-                                      <div className="d-flex align-items-center flex-wrap media_profile_box flex-sm-nowrap justify-content-between">
-                                        <div className="media align-items-center company_box p-0">
-                                          <div className="text_box text-left w-100 mt-n2 text-capitalize ">
-                                            <h4 className="mb-0">
-                                              <span className="font-size-4 font-weight-semibold">
-                                                {EducationDetails.qualification +
-                                                  " "}
-                                                <span className="font-size-4 text-break">
-                                                  (
-                                                  {
-                                                    EducationDetails.university_institute
-                                                  }
-                                                  )
+                                      <PiPencilDuotone />
+                                    </CustomButton>
+                                  )}
+                                </h4>
+                                <div className="w-100 card p-5 shadow-8 border-0">
+                                  {showItSkills ? (
+                                    <ItSkills
+                                      show={showItSkills}
+                                      employeeId={employeeId}
+                                      apiCall={apiCall}
+                                      setApiCall={setApiCall}
+                                      close={() => setShowItSkills(false)}
+                                    />
+                                  ) : null}
+
+                                  <ul className="list-unstyled d-flex align-items-start flex-wrap m-0">
+                                    {userDetail.skill === undefined ||
+                                      userDetail.skill.length === 0 ? (
+                                      <li>No Data Found</li>
+                                    ) : (
+                                      (userDetail.skill || []).map(
+                                        (employeeSkills, i) => (
+                                          <li key={i}>
+                                            <span className="bg-polar text-black-2 mr-3 mb-2 p-2 font-size-3 rounded-3 d-flex align-items-center">
+                                              {employeeSkills.skill}
+                                            </span>
+                                          </li>
+                                        )
+                                      )
+                                    )}
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="col-lg-7 col-md-6 p-8">
+                              {/*----Employee's Education Profile----*/}
+                              <div
+                                id="Education_Profile"
+                                className="position-relative"
+                              >
+                                <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
+                                  <span>Education</span>
+                                  {user_type === "company" ||
+                                    props.self === "yes" ? null : (
+                                    <CustomButton
+                                      className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
+                                      onClick={() => setShowEducation(true)}
+                                    >
+                                      <PiPencilDuotone />
+                                    </CustomButton>
+                                  )}
+                                </h4>
+                                {userDetail.education === undefined ||
+                                  userDetail.education.length === 0 ? (
+                                  <div className="w-100 card p-5 shadow-8 border-0 mb-2">
+                                    Add Education Details
+                                  </div>
+                                ) : (
+                                  (userDetail.education || []).map(
+                                    (EducationDetails, index) => (
+                                      <div
+                                        className="w-100 card px-5 py-2 shadow-8 border-0 mb-2"
+                                        key={index}
+                                      >
+                                        <div className="d-flex align-items-center flex-wrap media_profile_box flex-sm-nowrap justify-content-between">
+                                          <div className="media align-items-center company_box p-0">
+                                            <div className="text_box text-left w-100 mt-n2 text-capitalize ">
+                                              <h4 className="mb-0">
+                                                <span className="font-size-4 font-weight-semibold">
+                                                  {EducationDetails.qualification +
+                                                    " "}
+                                                  <span className="font-size-4 text-break">
+                                                    (
+                                                    {
+                                                      EducationDetails.university_institute
+                                                    }
+                                                    )
+                                                  </span>
                                                 </span>
+                                              </h4>
+                                              <span className="font-size-3 text-default-color text-break">
+                                                {EducationDetails.course +
+                                                  (EducationDetails.specialization
+                                                    ? ` - ${EducationDetails.specialization}`
+                                                    : "")}
                                               </span>
-                                            </h4>
-                                            <span className="font-size-3 text-default-color text-break">
-                                              {EducationDetails.course +
-                                                (EducationDetails.specialization
-                                                  ? ` - ${EducationDetails.specialization}`
-                                                  : "")}
-                                            </span>
+                                            </div>
                                           </div>
-                                        </div>
-                                        <div className="d-flex align-items-center justify-content-right flex-wrap text-right text-capitalize">
-                                          <span className="font-size-4 text-gray w-100">
-                                            {EducationDetails.passing_year}
-                                          </span>
-                                          {EducationDetails.institute_location && (
-                                            <span className="font-size-3 text-gray w-100">
-                                              <span
-                                                className="mr-4"
-                                                style={{ marginTop: "-2px" }}
-                                              >
-                                                <img
-                                                  src="image/svg/icon-loaction-pin-black.svg"
-                                                  alt=""
-                                                />
-                                              </span>
-                                              {
-                                                EducationDetails.institute_location
-                                              }
+                                          <div className="d-flex align-items-center justify-content-right flex-wrap text-right text-capitalize">
+                                            <span className="font-size-4 text-gray w-100">
+                                              {EducationDetails.passing_year}
                                             </span>
-                                          )}
+                                            {EducationDetails.institute_location && (
+                                              <span className="font-size-3 text-gray w-100">
+                                                <span
+                                                  className="mr-4"
+                                                  style={{ marginTop: "-2px" }}
+                                                >
+                                                  <img
+                                                    src="image/svg/icon-loaction-pin-black.svg"
+                                                    alt=""
+                                                  />
+                                                </span>
+                                                {
+                                                  EducationDetails.institute_location
+                                                }
+                                              </span>
+                                            )}
+                                          </div>
                                         </div>
                                       </div>
-                                    </div>
+                                    )
                                   )
-                                )
-                              )}
-                            </div>
-                            <div
-                              id="Career_Profile"
-                              className="position-relative mt-8"
-                            >
-                              <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
-                                <span>Career</span>
-                                {user_type === "company" ||
-                                  props.self === "yes" ? null : (
-                                  <CustomButton
-                                    className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
-                                    onClick={() =>
-                                      setShowEmplyomentDetails(true)
-                                    }
-                                  >
-                                    <PiPencilDuotone />
-                                  </CustomButton>
                                 )}
-                              </h4>
-                              {/* {moment(PersonalDetail.start_date)}
+                              </div>
+                              <div
+                                id="Career_Profile"
+                                className="position-relative mt-8"
+                              >
+                                <h4 className="text-black-2 mb-5 font-size-5 d-flex align-items-center justify-content-space-between">
+                                  <span>Career</span>
+                                  {user_type === "company" ||
+                                    props.self === "yes" ? null : (
+                                    <CustomButton
+                                      className="font-size-3 rounded-3 btn-primary border-0 ml-2 absolute_top_right"
+                                      onClick={() =>
+                                        setShowEmplyomentDetails(true)
+                                      }
+                                    >
+                                      <PiPencilDuotone />
+                                    </CustomButton>
+                                  )}
+                                </h4>
+                                {/* {moment(PersonalDetail.start_date)}
                               {moment([PersonalDetail.start_date]).diff(moment([PersonalDetail.end_date]), 'years', true)} */}
 
-                              {userDetail.career === undefined ||
-                                userDetail.career.length === 0 ? (
-                                <div className="w-100 card p-5 shadow-8 border-0 mb-2">
-                                  Add Career Details
-                                </div>
-                              ) : (
-                                (userDetail.career || []).map(
-                                  (CareerDetails, i) => (
-                                    <div
-                                      className="w-100 card px-5 py-2 shadow-8 border-0 mb-2"
-                                      key={i}
-                                    >
-                                      <div className="d-flex align-items-center flex-wrap media_profile_box flex-sm-nowrap justify-content-between">
-                                        <div className="media align-items-center company_box col-md-6 p-0">
-                                          <div className="text_box text-left w-100 mt-n2 text-capitalize p-4">
-                                            <span className="font-size-5 text-black-2 font-weight-semibold w-100">
-                                              {CareerDetails.designation}
-                                              <span className="font-size-4">
-                                                {CareerDetails.functional_area &&
-                                                  ` - ${CareerDetails.functional_area}`}
+                                {userDetail.career === undefined ||
+                                  userDetail.career.length === 0 ? (
+                                  <div className="w-100 card p-5 shadow-8 border-0 mb-2">
+                                    Add Career Details
+                                  </div>
+                                ) : (
+                                  (userDetail.career || []).map(
+                                    (CareerDetails, i) => (
+                                      <div
+                                        className="w-100 card px-5 py-2 shadow-8 border-0 mb-2"
+                                        key={i}
+                                      >
+                                        <div className="d-flex align-items-center flex-wrap media_profile_box flex-sm-nowrap justify-content-between">
+                                          <div className="media align-items-center company_box col-md-6 p-0">
+                                            <div className="text_box text-left w-100 mt-n2 text-capitalize p-4">
+                                              <span className="font-size-5 text-black-2 font-weight-semibold w-100">
+                                                {CareerDetails.designation}
+                                                <span className="font-size-4">
+                                                  {CareerDetails.functional_area &&
+                                                    ` - ${CareerDetails.functional_area}`}
+                                                </span>
                                               </span>
-                                            </span>
-                                            <span className="font-size-3 text-default-color">
-                                              {CareerDetails.company}
-                                              {CareerDetails.industry &&
-                                                ` (${CareerDetails.industry})`}
-                                            </span>
+                                              <span className="font-size-3 text-default-color">
+                                                {CareerDetails.company}
+                                                {CareerDetails.industry &&
+                                                  ` (${CareerDetails.industry})`}
+                                              </span>
+                                            </div>
                                           </div>
-                                        </div>
-                                        <div className="d-flex align-items-center justify-content-right flex-wrap text-right text-capitalize">
-                                          <span className="font-size-3 text-gray w-100">
-                                            {/* {moment(CareerDetails.start_date).format(
+                                          <div className="d-flex align-items-center justify-content-right flex-wrap text-right text-capitalize">
+                                            <span className="font-size-3 text-gray w-100">
+                                              {/* {moment(CareerDetails.start_date).format(
                                     "DD-MM-YYYY"
                                   )}
                                   -
                                   {moment(CareerDetails.end_date).format(
                                     "DD-MM-YYYY"
                                   )} */}
-                                            {CareerDetails.currently_work_here ===
-                                              ("1" || 1)
-                                              ? "Currently working"
-                                              : calculateDuration(
-                                                CareerDetails.start_date,
-                                                CareerDetails.end_date
-                                              )}
-                                          </span>
-                                          {CareerDetails.company_location && (
-                                            <span className="font-size-3 text-gray w-100">
-                                              <span
-                                                className="mr-4"
-                                              // style={{ marginTop: "-2px" }}
-                                              >
-                                                <img
-                                                  src="image/svg/icon-loaction-pin-black.svg"
-                                                  alt=""
-                                                />
-                                              </span>
-                                              {CareerDetails.company_location}
+                                              {CareerDetails.currently_work_here ===
+                                                ("1" || 1)
+                                                ? "Currently working"
+                                                : calculateDuration(
+                                                  CareerDetails.start_date,
+                                                  CareerDetails.end_date
+                                                )}
                                             </span>
-                                          )}
+                                            {CareerDetails.company_location && (
+                                              <span className="font-size-3 text-gray w-100">
+                                                <span
+                                                  className="mr-4"
+                                                // style={{ marginTop: "-2px" }}
+                                                >
+                                                  <img
+                                                    src="image/svg/icon-loaction-pin-black.svg"
+                                                    alt=""
+                                                  />
+                                                </span>
+                                                {CareerDetails.company_location}
+                                              </span>
+                                            )}
+                                          </div>
                                         </div>
                                       </div>
-                                    </div>
+                                    )
                                   )
-                                )
-                              )}
+                                )}
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div
-                      className="tab-pane fade"
-                      id="profile"
-                      role="tabpanel"
-                      aria-labelledby="profile-tab"
-                    >
-                      {/* <div className="pr-xl-11 p-5 pl-xs-12 pt-9 pb-11">
+                      <div
+                        className="tab-pane fade"
+                        id="profile"
+                        role="tabpanel"
+                        aria-labelledby="profile-tab"
+                      >
+                        {/* <div className="pr-xl-11 p-5 pl-xs-12 pt-9 pb-11">
                         <form>
                           <div className="row">
                             <div className="col-12 mb-7">
@@ -1679,34 +1684,34 @@ const NewUserProfile = (props) => {
                           </div>
                         </form>
                       </div> */}
+                      </div>
                     </div>
-                  </div>
-                  {/* <!-- Sidebar End --> */}
-                  <div
-                    className={
-                      TabActive === "jobs"
-                        ? "row m-0  justify-content-center"
-                        : "d-none"
-                    }
-                    id="appliedJobs"
-                    role="tabpanel"
-                    aria-labelledby="appliedJobs"
-                  >
-                    {/* <EmployeeTable /> */}
-                    {TabActive === "jobs" ? (
-                      <JobProfileResponse
-                        employee_id={eid}
-                        heading={"userprofile"}
-                        setApiCall={setApiCall}
-                        apiCall={apiCall}
-                        statusCall={statusCall}
-                        setStatusCall={setStatusCall}
-                        pageNo={pageNo}
-                        setpageNo={setpageNo}
-                      />
-                    ) : null}
-                    {/* <!-- Top Start --> */}
-                    {/* <div className="mb-5">
+                    {/* <!-- Sidebar End --> */}
+                    <div
+                      className={
+                        TabActive === "jobs"
+                          ? "row m-0  justify-content-center"
+                          : "d-none"
+                      }
+                      id="appliedJobs"
+                      role="tabpanel"
+                      aria-labelledby="appliedJobs"
+                    >
+                      {/* <EmployeeTable /> */}
+                      {TabActive === "jobs" ? (
+                        <JobProfileResponse
+                          employee_id={eid}
+                          heading={"userprofile"}
+                          setApiCall={setApiCall}
+                          apiCall={apiCall}
+                          statusCall={statusCall}
+                          setStatusCall={setStatusCall}
+                          pageNo={pageNo}
+                          setpageNo={setpageNo}
+                        />
+                      ) : null}
+                      {/* <!-- Top Start --> */}
+                      {/* <div className="mb-5">
                       <h4 className="font-size-7 mb-9 mt-5">Applied Jobs</h4>
                       <div className="row justify-content-center">
                         {appliedJob === undefined || appliedJob.length === 0 ? (
@@ -1822,87 +1827,87 @@ const NewUserProfile = (props) => {
                         )}
                       </div>
                     </div> */}
-                  </div>
-                  <div
-                    className={
-                      TabActive === "documents"
-                        ? "justify-content-center"
-                        : "d-none"
-                    }
-                    id="applieddocuments"
-                    role="tabpanel"
-                    aria-labelledby="applieddocuments"
-                  >
-                    {TabActive === "documents" ? (
-                      // <  DocumrentContainer
-                      //   employee_id={eid}
-                      //   emp_user_type={"employee"}
-                      //   docId={docId ? docId : ""}
-                      //   folderId={PersonalDetail.documents_folder_id}
-                      // />
-                      <SharePointDocument
-                        user_id={eid}
-                        emp_user_type={"employee"}
-                        folderId={
-                          docId
-                            ? docParentId
-                            : PersonalDetail.documents_folder_id
-                        }
-                        notification={docId ? "yes" : "no"}
-                        docId={docId ? docId : ""}
-                        docTypePage={"adobe"}
-                      />
-                    ) : null}
-                  </div>
-                  <div
-                    className={
-                      TabActive === "sharepoint"
-                        ? "justify-content-center"
-                        : "d-none"
-                    }
-                    id="applieddocuments"
-                    role="tabpanel"
-                    aria-labelledby="applieddocuments"
-                  >
-                    {TabActive === "sharepoint" ? (
-                      <SharePointDocument
-                        user_id={eid}
-                        emp_user_type={"employee"}
-                        folderId={
-                          docId
-                            ? docParentId
-                            : PersonalDetail.documents_folder_id
-                        }
-                        notification={docId ? "yes" : "no"}
-                        docId={docId ? docId : ""}
-                      />
-                    ) : null}
-                  </div>
+                    </div>
+                    <div
+                      className={
+                        TabActive === "documents"
+                          ? "justify-content-center"
+                          : "d-none"
+                      }
+                      id="applieddocuments"
+                      role="tabpanel"
+                      aria-labelledby="applieddocuments"
+                    >
+                      {TabActive === "documents" ? (
+                        // <  DocumrentContainer
+                        //   employee_id={eid}
+                        //   emp_user_type={"employee"}
+                        //   docId={docId ? docId : ""}
+                        //   folderId={PersonalDetail.documents_folder_id}
+                        // />
+                        <SharePointDocument
+                          user_id={eid}
+                          emp_user_type={"employee"}
+                          folderId={
+                            docId
+                              ? docParentId
+                              : PersonalDetail.documents_folder_id
+                          }
+                          notification={docId ? "yes" : "no"}
+                          docId={docId ? docId : ""}
+                          docTypePage={"adobe"}
+                        />
+                      ) : null}
+                    </div>
+                    <div
+                      className={
+                        TabActive === "sharepoint"
+                          ? "justify-content-center"
+                          : "d-none"
+                      }
+                      id="applieddocuments"
+                      role="tabpanel"
+                      aria-labelledby="applieddocuments"
+                    >
+                      {TabActive === "sharepoint" ? (
+                        <SharePointDocument
+                          user_id={eid}
+                          emp_user_type={"employee"}
+                          folderId={
+                            docId
+                              ? docParentId
+                              : PersonalDetail.documents_folder_id
+                          }
+                          notification={docId ? "yes" : "no"}
+                          docId={docId ? docId : ""}
+                        />
+                      ) : null}
+                    </div>
 
-                  <div
-                    className={
-                      TabActive === "visa"
-                        ? "justify-content-center "
-                        : "d-none"
-                    }
-                  >
-                    <VisaTable
-                      employee_id={eid}
-                      setApiCall={setApiCall}
-                      apiCall={apiCall}
-                      page={"user_profile"}
-                      setVisaStatus={setVisaStatus}
-                      setVisaStatusRejectComment={setVisaStatusRejectComment}
-                    />
-                  </div>
-                  <div
-                    className={
-                      TabActive === "notes"
-                        ? "justify-content-center "
-                        : "d-none"
-                    }
-                  >
-                    {/* {TabActive === "notes" ? (
+                    <div
+                      className={
+                        TabActive === "visa"
+                          ? "justify-content-center "
+                          : "d-none"
+                      }
+                    >
+                      <VisaTable
+                        employee_id={eid}
+                        setApiCall={setApiCall}
+                        apiCall={apiCall}
+                        page={"user_profile"}
+                        setVisaStatus={setVisaStatus}
+                        setVisaStatusRejectComment={setVisaStatusRejectComment}
+                      />
+                    </div>
+                    <div
+                      className={
+                        TabActive === "notes"
+                          ? "justify-content-center "
+                          : "d-none"
+                      }
+                    >
+                      {/* {TabActive === "notes" ? (
                       <Addfollowup
                         userId={eid}
                         userType={"employee"}
@@ -1911,140 +1916,146 @@ const NewUserProfile = (props) => {
                         noteNotification={notes}
                       />
                     ) : null} */}
-                    <Addfollowup
-                      userId={eid}
-                      userType={"employee"}
-                      setApiCall={setApiCall}
-                      assigned_by_id={PersonalDetail.assigned_by}
-                      noteNotification={notes}
-                      show={TabActive === "notes" || addNote}
-                      page={TabActive === "notes" ? "no" : "yes"}
-                      close={() => {
-                        setAddNote(false)
-                      }}
-                      skip={() => navigate(-1)}
-                    />
-                  </div>
-                  <div
-                    className={
-                      TabActive === "activity"
-                        ? "justify-content-center "
-                        : "d-none"
-                    }
-                  >
-                    {TabActive === "activity" ? (
-                      <div className="p-10 activity_container">
-                        <div className="single_note mb-5">
-                          <small>Created on: 2023-08-03 17:10:53</small>
-                          <div className="card p-5">
-                            This is some text within a card body.
+                      <Addfollowup
+                        userId={eid}
+                        userType={"employee"}
+                        setApiCall={setApiCall}
+                        assigned_by_id={PersonalDetail.assigned_by}
+                        noteNotification={notes}
+                        show={TabActive === "notes" || addNote}
+                        page={TabActive === "notes" ? "no" : "yes"}
+                        close={() => {
+                          setAddNote(false)
+                        }}
+                        skip={() => navigate(-1)}
+                      />
+                    </div>
+                    <div
+                      className={
+                        TabActive === "activity"
+                          ? "justify-content-center "
+                          : "d-none"
+                      }
+                    >
+                      {TabActive === "activity" ? (
+                        <div className="p-10 activity_container">
+                          <div className="single_note mb-5">
+                            <small>Created on: 2023-08-03 17:10:53</small>
+                            <div className="card p-5">
+                              This is some text within a card body.
+                            </div>
+                          </div>
+                          <div className="single_note mb-5">
+                            <small>Created on: 2023-08-03 17:10:53</small>
+                            <div className="card p-5">
+                              This is some text within a card body.
+                            </div>
+                          </div>
+                          <div className="single_note mb-5">
+                            <small>Created on: 2023-08-03 17:10:53</small>
+                            <div className="card p-5">
+                              This is some text within a card body.
+                            </div>
                           </div>
                         </div>
-                        <div className="single_note mb-5">
-                          <small>Created on: 2023-08-03 17:10:53</small>
-                          <div className="card p-5">
-                            This is some text within a card body.
-                          </div>
+                      ) : null}
+                    </div>
+                    <div
+                      className={
+                        TabActive === "payment"
+                          ? "justify-content-center "
+                          : "d-none"
+                      }
+                    >
+                      {TabActive === "payment" ? (
+                        <div className="p-10 activity_container">
+                          <PayentForm
+                            data={PersonalDetail}
+                            user_id={eid}
+                            user_type={"employee"}
+                          />
                         </div>
-                        <div className="single_note mb-5">
-                          <small>Created on: 2023-08-03 17:10:53</small>
-                          <div className="card p-5">
-                            This is some text within a card body.
-                          </div>
-                        </div>
-                      </div>
-                    ) : null}
-                  </div>
-                  <div
-                    className={
-                      TabActive === "payment"
-                        ? "justify-content-center "
-                        : "d-none"
-                    }
-                  >
-                    {TabActive === "payment" ? (
-                      <div className="p-10 activity_container">
-                        <PayentForm
-                          data={PersonalDetail}
-                          user_id={eid}
-                          user_type={"employee"}
+                      ) : null}
+                    </div>
+                    <div
+                      className={
+                        TabActive === "contact"
+                          ? "justify-content-center "
+                          : "d-none"
+                      }
+                    >
+                      {TabActive === "contact" ? (
+                        <ContactPage email={PersonalDetail.email} />
+                      ) : null}
+                    </div>
+                    <div
+                      className={
+                        TabActive === "email"
+                          ? "justify-content-center "
+                          : "d-none"
+                      }
+                    >
+                      {TabActive === "email" ? (
+                        <MainEmailPage email={PersonalDetail.email} />
+                      ) : null}
+                    </div>
+                    <div
+                      className={
+                        TabActive === "agent conversation"
+                          ? "justify-content-center "
+                          : "d-none"
+                      }
+                    >
+                      {TabActive === "agent conversation" ? (
+                        <AgentConversation
+                          userId={eid}
+                          userEmail={PersonalDetail.email}
+                          userName={PersonalDetail.name}
+                          assignusertype={"admin"}
+                          assigned_by_id={PersonalDetail.assigned_by}
+                          partnerChatNav={partnerChat}
+                          reffer_by={PersonalDetail.reffer_by}
+                          type={"partner"}
+                          page={"employeeProfile"}
                         />
-                      </div>
-                    ) : null}
-                  </div>
-                  <div
-                    className={
-                      TabActive === "contact"
-                        ? "justify-content-center "
-                        : "d-none"
-                    }
-                  >
-                    {TabActive === "contact" ? (
-                      <ContactPage email={PersonalDetail.email} />
-                    ) : null}
-                  </div>
-                  <div
-                    className={
-                      TabActive === "email"
-                        ? "justify-content-center "
-                        : "d-none"
-                    }
-                  >
-                    {TabActive === "email" ? (
-                      <MainEmailPage email={PersonalDetail.email} />
-                    ) : null}
-                  </div>
-                  <div
-                    className={
-                      TabActive === "agent conversation"
-                        ? "justify-content-center "
-                        : "d-none"
-                    }
-                  >
-                    {TabActive === "agent conversation" ? (
-                      <AgentConversation
+                      ) : null}
+                    </div>
+                    {TabActive === "timline" ? (
+                      <UserTimline
                         userId={eid}
                         userEmail={PersonalDetail.email}
                         userName={PersonalDetail.name}
-                        assignusertype={"admin"}
-                        assigned_by_id={PersonalDetail.assigned_by}
-                        partnerChatNav={partnerChat}
-                        reffer_by={PersonalDetail.reffer_by}
-                        type={"partner"}
-                        page={"employeeProfile"}
+                        userType={"employee"}
                       />
                     ) : null}
-                  </div>
-                  {TabActive === "timline" ? (
-                    <UserTimline
-                      userId={eid}
-                      userEmail={PersonalDetail.email}
-                      userName={PersonalDetail.name}
-                      userType={"employee"}
-                    />
-                  ) : null}
-                  <div
-                    className={
-                      TabActive === "InterviewHistory"
-                        ? "justify-content-center "
-                        : "d-none"
-                    }
-                  >
-                    {TabActive === "InterviewHistory" ? (
-                      <InterviewHistoryTable
-                        employee_id={eid}
-                      // setApiCall={setApiCall}
-                      // apiCall={apiCall}
-                      // page={"user_profile"}
-                      />
-                    ) : null}
+                    <div
+                      className={
+                        TabActive === "InterviewHistory"
+                          ? "justify-content-center "
+                          : "d-none"
+                      }
+                    >
+                      {TabActive === "InterviewHistory" ? (
+                        <InterviewHistoryTable
+                          employee_id={eid}
+                        // setApiCall={setApiCall}
+                        // apiCall={apiCall}
+                        // page={"user_profile"}
+                        />
+                      ) : null}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+              :
+                  <div className="col-12 order-2 order-xl-1  mt-15 text-center">
+                    <NotFound userType={user_type} />
+                  </div>
+
           )}
         </div>
       </div>
+
 
       {user_type === "admin" || user_type === "agent" ? "" : <EmployeeFooter />}
       {showEducation ? (

@@ -7,7 +7,7 @@ const profile = {
       //     ? localStorage.getItem("name").charAt(0).toUpperCase() + localStorage.getItem("name").slice(1) :
       localStorage.getItem("admin")
         ? localStorage.getItem("admin").charAt(0).toUpperCase() +
-          localStorage.getItem("admin").slice(1)
+        localStorage.getItem("admin").slice(1)
         : "",
     firstName:
       //  localStorage.getItem("userType") === "user"
@@ -70,7 +70,7 @@ class ViewSDKClient {
       embedMode: window.AdobeDC.View.Enum.EmbedMode.INLINE, // Display inline
       showAnnotationTools:
         localStorage.getItem("userType") === "admin" ||
-        localStorage.getItem("userType") === "agent"
+          localStorage.getItem("userType") === "agent"
           ? true
           : false, // Show annotation tools
       showDownloadPDF: true, // Show download PDF option
@@ -80,6 +80,14 @@ class ViewSDKClient {
       showSearchPDF: true, // Show search PDF option
       showDocumentInfo: true, // Show document information
       enablePDFAnnotationEditing: false,
+      annotationUIConfig: {
+        showToolbar: true,
+        showCommentsPanel: false,
+        showToolsOnTextSelection: true,
+        downloadWithAnnotations: false,
+        printWithAnnotations: false,
+        enableAddTextComment: false,
+      }
     };
 
     const previewFilePromise = this.adobeDCView.previewFile(
@@ -96,6 +104,8 @@ class ViewSDKClient {
           id: data.id,
           parentReference: data.parentReference,
         },
+        
+
       },
       viewerConfig
     );
@@ -409,11 +419,11 @@ export default ViewSDKClient;
 //         enablePDFPublicKeyEncryption: true, // Enable PDF public key encryption
 //         enablePDFPrivateKeyEncryption: true, // Enable PDF private key encryption
 //         enablePDFPageNumberFormatting: true, // Enable PDF page number formatting
-//         enablePDFAnnotationFormatting: true, // Enable PDF annotation formatting
 //         enablePDFDocumentFormatting: true, // Enable PDF document formatting
 //         enablePDFPageLayout: true, // Enable PDF page layout
 //         enablePDFTextFormatting: true, // Enable PDF text formatting
 //         enablePDFImageFormatting: true, // Enable PDF image formatting
+//         enablePDFAnnotationFormatting: true, // Enable PDF annotation formatting
 //         enablePDFAnnotationVisibility: true, // Enable PDF annotation visibility
 //         enablePDFAnnotationExport: true, // Enable PDF annotation export
 //         enablePDFAnnotationImport: true, // Enable PDF annotation import

@@ -202,6 +202,7 @@ export default function EmployeeLoginModal(props) {
   };
   useEffect(() => {
     i = i + 1;
+    // eslint-disable-next-line
     if (
       (code !== "" ||
         code !== undefined ||

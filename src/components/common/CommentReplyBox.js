@@ -25,7 +25,7 @@ export default function CommentReplyBox({
               {
                 <div className="p-2 bg-white rounded mb-1">
                   <div className="d-flex justify-content-between align-items-center text-dark">
-                    <div class="d-flex profile_box gx-2 mb-1">
+                    <div className="d-flex profile_box gx-2 mb-1">
                     <div className="media  align-items-center">
                             <div
                               className={`circle-24 mx-auto overflow-hidden text-capitalize text-white ${determineBackgroundColor(
@@ -36,11 +36,11 @@ export default function CommentReplyBox({
                               {replyItem.sender_name.charAt(0)}
                             </div>
                           </div>
-                      <div class=" mb-0">
-                        <div class="font-size-3 font-weight-bold text-capitalize">
+                      <div className=" mb-0">
+                        <div className="font-size-3 font-weight-bold text-capitalize">
                           {replyItem.sender_name}
                         </div>
-                        <div class="text-gray font-size-2 font-weight-normal m-0 text-capitalize">
+                        <div className="text-gray font-size-2 font-weight-normal m-0 text-capitalize">
                           <i className="font-size-2">
                             {moment(replyItem.updated_at)
                               .tz("America/Toronto")
