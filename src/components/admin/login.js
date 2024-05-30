@@ -5,7 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import Loader from "../common/loader";
 import ForgotPasswordForm from "../forms/admin/ForgotPasswordForm";
-export default function AdminLoginFrom({ setAdminLoggedIn }) {
+export default function AdminLoginFrom({ setAdminLoggedIn,setLoginCondition }) {
   let navigate = useNavigate();
   let [loading, setLoading] = useState(false);
   let [isLoading, setIsLoading] = useState(false);
@@ -60,6 +60,7 @@ export default function AdminLoginFrom({ setAdminLoggedIn }) {
           updatedTodo.status === true ||
           updatedTodo.message === "Successfully Logged "
         ) {
+          setLoginCondition(true)
           localStorage.setItem("token", updatedTodo.token);
           localStorage.setItem("userType", "admin");
           localStorage.setItem("admin", updatedTodo.name);

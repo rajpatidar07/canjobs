@@ -77,6 +77,7 @@ export default function CandidateLoginForm(props) {
       try {
         const updatedTodo = await EmployeeLogin(state);
         if (updatedTodo.message === "Successfully Logged In") {
+          props.setLoginCondition(true)
           localStorage.setItem("token", updatedTodo.token);
           localStorage.setItem("email", updatedTodo.email);
           localStorage.setItem("userType", "user");

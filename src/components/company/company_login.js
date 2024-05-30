@@ -81,6 +81,7 @@ function CompanyLoginForm(props) {
           Response.status === true ||
           Response.message === "Successfully Logged In"
         ) {
+          props.setLoginCondition(true)
           localStorage.setItem("token", Response.token);
           localStorage.setItem("userType", "company");
           localStorage.setItem("company_id", Response.company_id);

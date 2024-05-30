@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import EmployeeFooter from "../common/footer";
 import EmployeeHeader from "../common/header";
 import EmployeeBox from "./employeeBox";
@@ -8,7 +8,14 @@ import SearchForm from "../common/search_form";
 import { ToastContainer } from "react-toastify";
 import { Link } from "react-router-dom";
 import Loader from '../common/loader';
-function EmployerHome() {
+function EmployerHome({ setLoginCondition }) {
+  useEffect(() => {
+    if (localStorage.getItem("userType") === "company") {
+      setLoginCondition(false)
+    }
+     // eslint-disable-next-line
+  }, [])
+
   return (
     <div>
       <EmployeeHeader />
@@ -57,7 +64,7 @@ function EmployerHome() {
           {
             <EmployeeBox /> ?
               <div className="row justify-content-center">
-                <EmployeeBox featured="yes"/>
+                <EmployeeBox featured="yes" />
               </div> :
               <div className="table-responsive main_table_div"> <Loader /> </div>}
         </div>

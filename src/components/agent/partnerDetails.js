@@ -19,7 +19,7 @@ import ActivityTable from "../common/activity_table";
 import PayentForm from "../forms/admin/payentForm";
 import Addfollowup from "../forms/admin/addfollowup";
 import MainEmailPage from "../email/mainemailPage";
-export default function PartnerDetails() {
+export default function PartnerDetails({setLoginCondition}) {
   const user_type = localStorage.getItem("userType");
   const agent_id = localStorage.getItem("agent_id");
   let Pid = agent_id;
@@ -55,6 +55,7 @@ export default function PartnerDetails() {
         setData(userData.data.data[0]);
         setIsLoading(false);
         if (user_type === "agent") {
+          setLoginCondition(false)
           localStorage.setItem("profile_photo", userData.data.data[0].logo);
           localStorage.setItem("name", userData.data.data[0].company_name);
         }

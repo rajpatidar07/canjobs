@@ -100,6 +100,9 @@ const NewUserProfile = (props) => {
         setPersonalDetail([]);
         setIsLoading(false);
       } else {
+        if (user_type === "user") {
+          props.setLoginCondition(false)
+        }
         setuserDetail(userData.data);
         setuserFound(userData.data.employee[0].employee_id)
         setStatus(userData.data.employee[0].status);
@@ -2048,9 +2051,9 @@ const NewUserProfile = (props) => {
                 </div>
               </div>
               :
-                  <div className="col-12 order-2 order-xl-1  mt-15 text-center">
-                    <NotFound userType={user_type} />
-                  </div>
+              <div className="col-12 order-2 order-xl-1  mt-15 text-center">
+                <NotFound userType={user_type} />
+              </div>
 
           )}
         </div>

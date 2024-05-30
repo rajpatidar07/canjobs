@@ -82,11 +82,13 @@ const MessageList = ({ data, loginuser, loginusertype, recordsPerPage, setRecord
                           </span>
                         )}
                         <br />
-                        <div
-                          dangerouslySetInnerHTML={{
-                            __html: message.subject_description,
-                          }}
-                        />
+                        <div className="text-break">
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: message.subject_description,
+                            }}
+                          />
+                        </div>
                       </div>
                     </div>
                   )
@@ -140,7 +142,7 @@ const MessageList = ({ data, loginuser, loginusertype, recordsPerPage, setRecord
                       message.subject_description === "null" ? (
                       ""
                     ) : (
-                      <div className="text-start">
+                      <div className="text-start text-break" >
                         <div
                           dangerouslySetInnerHTML={{
                             __html: message.subject_description,

@@ -107,7 +107,7 @@ function EmployeeHeader() {
                   {/* EMPLOYER MENU ITEMS */}
 
                   <li className="nav-item nav-item">
-                    <Link className="nav-link" to="/clienty">
+                    <Link className="nav-link" to="/client">
                       Home
                     </Link>
                   </li>

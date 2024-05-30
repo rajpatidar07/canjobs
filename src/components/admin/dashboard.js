@@ -22,7 +22,7 @@ import AdminTaskTable from "../common/AdminTaskTable";
 import DataChart from "../common/DataChart";
 import Loader from "../common/loader";
 // import SessionCheck from "../common/session";
-const AdminDashboard = () => {
+const AdminDashboard = ({setLoginCondition}) => {
   // useEffect(() => {
   //   SessionCheck();
   // }, []);
@@ -80,6 +80,7 @@ const AdminDashboard = () => {
     try {
       let res = await GetAllChartData("", adminType);
       if (res.status === 1) {
+        setLoginCondition(false)
         setApplicantStatusData(res.data);
         setLoadingStatus(false);
       } else {

@@ -52,7 +52,6 @@ const AdobePDFViewer = ({
       //     "name": localStorage.getItem("admin").charAt(0).toUpperCase() + localStorage.getItem("admin").slice(1),
       //     "type": "Person"
       // }
-      console.log(previewFilePromise)
       previewFilePromise
         .then((adobeViewer) => {
           setAdobeViewer(adobeViewer);
@@ -107,11 +106,12 @@ const AdobePDFViewer = ({
             .catch((e) => {
               console.log("Error getting Annotation Manager:", e);
             });      
+            
         })
         .catch((e) => {
           console.log("Error in previewFilePromise:", e);
         });
-      viewSDKClient.registerSaveApiHandler(userId, annotationId, DocUserType);
+      // viewSDKClient.registerSaveApiHandler(userId, annotationId, DocUserType);
       viewSDKClient.registerGetUserProfileApiHandler();
     });
 
