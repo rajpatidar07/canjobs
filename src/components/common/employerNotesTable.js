@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import Pagination from "./pagination";
 import { Link } from "react-router-dom";
 import Loader from "./loader";
-import moment from "moment";
+import ConvertTime from "./ConvertTime";
 export default function EmployerNotesTable({ search }) {
   let [isLoading, setIsLoading] = useState(true);
   let [apiCall, setApiCall] = useState(false);
@@ -237,7 +237,7 @@ export default function EmployerNotesTable({ search }) {
                         </td>
                         <td className="py-5 ">
                           <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
-                          {moment(data.created_at).tz('America/Toronto').format("DD MMMM, YYYY")}
+                          <ConvertTime _date={data.created_at} format={"DD MMMM, YYYY"} />
                             {/* {moment(data.created_at).format("DD MMMM, YYYY")} */}
                           </div>
                         </td>

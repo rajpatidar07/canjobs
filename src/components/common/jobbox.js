@@ -1,4 +1,3 @@
-import moment from "moment";
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -14,6 +13,7 @@ import {
 } from "react-icons/lia";
 import ApplyBeforeform from "../forms/user/applyBeforeform";
 import { CiDollar, CiLocationOn } from "react-icons/ci";
+import ConvertTime from "./ConvertTime";
 function JobBox({
   showAddJobModal,
   categoryFilterValue,
@@ -291,7 +291,7 @@ function JobBox({
                               <LiaBusinessTimeSolid />
                             </span>
                             <span className="font-weight-semibold">
-                            {moment(job.created_at).tz('America/Toronto').format("DD MMMM, YYYY")}
+                            <ConvertTime _date={job.created_at} format={"DD MMMM, YYYY"}/>
                               {/* {moment(job.created_at).format("DD MMMM, YYYY")} */}
                             </span>
                           </li>

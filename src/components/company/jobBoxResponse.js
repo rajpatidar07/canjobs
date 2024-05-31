@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { GetAllJobs } from "../../api/api";
-import moment from "moment";
 import Response from "../admin/response";
 import {
   LiaIndustrySolid,
@@ -10,6 +9,7 @@ import {
   LiaBusinessTimeSolid,
   LiaDollarSignSolid,
 } from "react-icons/lia";
+import ConvertTime from "../common/ConvertTime";
 function JobBoxResponse({
   categoryFilterValue,
   locationFilterValue,
@@ -181,7 +181,7 @@ function JobBoxResponse({
                         <LiaBusinessTimeSolid />{" "}
                       </span>
                       <span className="font-weight-semibold">
-                        {moment(job.created_at).tz('America/Toronto').format("DD MMMM, YYYY")}
+                        <ConvertTime _date={job.created_at} format={"DD MMMM, YYYY"}/>
                         {/* {moment(job.created_at).format("DD MMMM, YYYY")} */}
                       </span>
                     </li>

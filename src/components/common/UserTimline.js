@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getActivityLog } from "../../api/api";
-import moment from "moment";
+import ConvertTime from "./ConvertTime";
 // import Pagination from "./pagination";
 export default function UserTimline({ userId, userType }) {
   // const [page, setpage] = useState(1);
@@ -40,7 +40,7 @@ export default function UserTimline({ userId, userType }) {
                         {item.created_by}
                       </b>
                       <i className="font-size-2">
-                        {moment(item.created_at).tz('America/Toronto').format("lll")}
+                      <ConvertTime _date={item.created_at} format={"lll"}/>
                         {/* {moment(item.created_at).format("lll")} */}
                       </i>
                     </div>

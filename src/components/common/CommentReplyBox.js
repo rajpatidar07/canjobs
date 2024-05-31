@@ -1,7 +1,7 @@
 import React from "react";
 // import { Link } from "react-router-dom";
-import moment from "moment";
 import { CiPaperplane } from "react-icons/ci";
+import ConvertTime from "./ConvertTime";
 export default function CommentReplyBox({
   commentsReplyList,
   commentItem,
@@ -42,9 +42,7 @@ export default function CommentReplyBox({
                         </div>
                         <div className="text-gray font-size-2 font-weight-normal m-0 text-capitalize">
                           <i className="font-size-2">
-                            {moment(replyItem.updated_at)
-                              .tz("America/Toronto")
-                              .format("HH:mm D MMM")}
+                           <ConvertTime _date={replyItem.updated_at} format={"HH:mm D MMM"}/>
                             {/* {moment(replyItem.updated_at).format("HH:mm D MMM")} */}
                           </i>
                         </div>

@@ -13,6 +13,7 @@ import { ToastContainer } from "react-toastify";
 import Loader from "../common/loader";
 import DocumentModal from "../forms/admin/EmployeeDocumentModal";
 import { PiPencilDuotone } from "react-icons/pi";
+import ConvertTime from "../common/ConvertTime";
 const UserProfile = (props) => {
   const [apiCall, setApiCall] = useState(false);
   const [showDoc, setShowDoc] = useState(false);
@@ -885,7 +886,8 @@ const UserProfile = (props) => {
                                         className="bg-regent-opacity-15 text-gray font-size-3 rounded-3 min-width-px-100 px-3 flex-all-center mr-6 h-px-33 mt-4"
                                       >
                                         <i className="text-gray fa fa-clock mr-2 font-weight-bold"></i>
-                                        {moment(data.created_at).tz('America/Toronto').format( "DD-MM-YYYY")}
+                                        <ConvertTime _date={data.created_at} format={"DD-MM-YYYY"}/>
+                                        {/* {moment(data.created_at).tz('America/Toronto').format( "DD-MM-YYYY")} */}
                                         {/* {moment(data.created_at).format(
                                           "DD-MM-YYYY"
                                         )} */}

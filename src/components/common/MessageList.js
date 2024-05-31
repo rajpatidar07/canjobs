@@ -1,15 +1,16 @@
-import moment from "moment-timezone";
 import React from "react";
 import { AiOutlineDownload } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import ConvertTime from "./ConvertTime";
 const MessageList = ({ data, loginuser, loginusertype, recordsPerPage, setRecordsPerPage }) => {
 
-  /*Local Time */
-  const LocalTime = (_date) => {
-    let timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const result = moment.utc(_date).tz(timezone);
-    return result.format("LLL");
-  };
+  // /*Local Time */
+  // const LocalTime = (_date) => {
+  //   let timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  //   console.log(timezone)
+  //   const result = moment.utc(_date).tz(timezone);
+  //   return result.format("LLL");
+  // };
 
   /*Function to load more data while scrolling */
   let handelScroll = (e) => {
@@ -155,7 +156,8 @@ const MessageList = ({ data, loginuser, loginusertype, recordsPerPage, setRecord
 
                 <div className="message-info">
                   <small className="text-muted">
-                    {LocalTime(message.created_on)}
+                    {/* {LocalTime(message.created_on)} */}
+                    <ConvertTime _date={message.created_on} format={"LLL"}/>
                   </small>
                 </div>
               </div>

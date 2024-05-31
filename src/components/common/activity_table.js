@@ -4,7 +4,7 @@ import Pagination from "../common/pagination";
 import Loader from "../common/loader";
 import { /*GetAgent,*/ getActivityLog } from "../../api/api";
 import { Link } from "react-router-dom";
-import moment from "moment";
+import ConvertTime from "./ConvertTime";
 export default function ActivityTable(props) {
   /*Show modal states */
   // let [apiCall, setApiCall] = useState(false);
@@ -134,7 +134,7 @@ export default function ActivityTable(props) {
                         : data.user_type + " " + data.created_by}
                     </td>
                     <td>
-                    {moment(data.created_at).tz('America/Toronto').format('MMMM Do YYYY, h:mm:ss a')}
+                    <ConvertTime _date={data.created_at} format={'MMMM Do YYYY, h:mm:ss a'}/>
                       {/* {moment(data.created_at).format("lll")} */}
                       </td>
                   </tr>

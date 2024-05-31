@@ -19,7 +19,7 @@ import ActivityTable from "../common/activity_table";
 import PayentForm from "../forms/admin/payentForm";
 import Addfollowup from "../forms/admin/addfollowup";
 import MainEmailPage from "../email/mainemailPage";
-export default function PartnerDetails({setLoginCondition}) {
+export default function PartnerDetails({ setLoginCondition }) {
   const user_type = localStorage.getItem("userType");
   const agent_id = localStorage.getItem("agent_id");
   let Pid = agent_id;
@@ -103,7 +103,7 @@ export default function PartnerDetails({setLoginCondition}) {
             heading={
               <Link
                 className="d-flex align-items-center "
-                onClick={() => navigate(-1)}
+                onClick={user_type === "agent" ? null : () => navigate(-1)}
               >
                 <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
                 <span className="text-uppercase font-size-3 font-weight-bold text-gray">
@@ -129,9 +129,8 @@ export default function PartnerDetails({setLoginCondition}) {
         }
       >
         <div
-          className={`container${
-            user_type === "admin" || user_type === "agent" ? "-fluid" : ""
-          }`}
+          className={`container${user_type === "admin" || user_type === "agent" ? "-fluid" : ""
+            }`}
         >
           <div className="row text-left mt-5 pt-0">
             <div className="col-12 order-2 order-xl-1">
@@ -330,8 +329,8 @@ export default function PartnerDetails({setLoginCondition}) {
                                     className="company_logo"
                                     src={
                                       data.profile_image === null ||
-                                      !data.profile_image ||
-                                      data.profile_image === undefined
+                                        !data.profile_image ||
+                                        data.profile_image === undefined
                                         ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                         : data.profile_image
                                     }
@@ -385,23 +384,21 @@ export default function PartnerDetails({setLoginCondition}) {
                                     {(data.address ||
                                       data.city ||
                                       data.state) && (
-                                      <span
-                                        className="font-size-3 text-smoke  mr-7 text-capitalize"
-                                        title="Current Location"
-                                      >
-                                        <img
-                                          className="mr-1"
-                                          height={"16px"}
-                                          src="image/icons/marker.svg"
-                                          alt="Location"
-                                        />
-                                        {`${data.address} ${
-                                          data.city ? " , " + data.city : ""
-                                        } ${
-                                          data.state ? " , " + data.state : ""
-                                        }`}
-                                      </span>
-                                    )}
+                                        <span
+                                          className="font-size-3 text-smoke  mr-7 text-capitalize"
+                                          title="Current Location"
+                                        >
+                                          <img
+                                            className="mr-1"
+                                            height={"16px"}
+                                            src="image/icons/marker.svg"
+                                            alt="Location"
+                                          />
+                                          {`${data.address} ${data.city ? " , " + data.city : ""
+                                            } ${data.state ? " , " + data.state : ""
+                                            }`}
+                                        </span>
+                                      )}
                                   </div>
                                   <hr className="my-3" />
                                   {!data.email || user_type === "user" ? (

@@ -5,8 +5,7 @@ import EmployeeFooter from "../common/footer";
 import CustomButton from "../common/button";
 import CompanyDetailPage from "./companydetail";
 import CompanyDetails from "../forms/employer/companyDetail";
-import { EmployerDetails } from "../../api/api";
-import moment from "moment";
+import { AddCompany, EmployerDetails } from "../../api/api";
 import { ToastContainer } from "react-toastify";
 import Loader from "../common/loader";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -26,6 +25,7 @@ import ContactPage from "../common/contactPage";
 import PayentForm from "../forms/admin/payentForm";
 import MainEmailPage from "../email/mainemailPage";
 import SharePointDocument from "../common/Document folder/SharePointDocument";
+import ConvertTime from "../common/ConvertTime";
 // import LimaArrowProfile from "../common/LimaArrowProfile";
 function CompanyProfileDetail(props) {
   const user_type = localStorage.getItem("userType");
@@ -130,7 +130,7 @@ function CompanyProfileDetail(props) {
                 <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
                 <span className="text-uppercase font-size-3 font-weight-bold text-gray">
                   <h3 className="font-size-6 mb-0 text-capitalize">
-                    Client's Profile
+                    {employerData.company_name ? employerData.company_name + " (Client)" : ""}
                   </h3>
                 </span>
               </Link>
@@ -310,7 +310,18 @@ function CompanyProfileDetail(props) {
                       role="tab"
                       aria-controls="docTab"
                       aria-selected="true"
-                      onClick={() => setTabActive("documents")}
+                      onClick={async () => {
+                        if (!employerData.documents_folder_id) {
+                          const responseData = await AddCompany(employerData);
+                          setApiCall(true)
+                          if (responseData.status === 1) {
+                            setTabActive("documents")
+                          }
+                        } else {
+                          setTabActive("documents")
+                        }
+                      }}
+                    // onClick={() => setTabActive("documents")}
                     >
                       Documents
                     </Link>
@@ -583,7 +594,7 @@ function CompanyProfileDetail(props) {
                                           title="Est. Since"
                                         >
                                           <i className="fas fa-business-time mr-2"></i>
-                                          {moment(employerData.company_start_date).tz('America/Toronto').format("YYYY")}
+                                          <ConvertTime _date={employerData.company_start_date} format={"YYYY"}/>
                                           {/* {moment(
                                             employerData.company_start_date
                                           ).format("YYYY")} */}

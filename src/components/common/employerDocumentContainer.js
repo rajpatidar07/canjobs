@@ -25,8 +25,8 @@ import { FaFlag } from "react-icons/fa";
 import { MdAddComment } from "react-icons/md";
 import { RxCrossCircled } from "react-icons/rx";
 import { Link } from "react-router-dom";
-import moment from "moment";
 import CommentBox from "./CommentBox";
+import ConvertTime from "./ConvertTime";
 
 export default function EmployerDocumrentContainer(props) {
   const [otherDoc, setOtherDoc] = useState(false);
@@ -913,7 +913,7 @@ export default function EmployerDocumrentContainer(props) {
                     <td className="p-3">
                       {textReplaceFunction(item.type)}
                       <p className="font-size-2 m-0">
-                      {moment(item.updated_at).tz('America/Toronto').format("DD MMMM, YYYY")}
+                      <ConvertTime _date={item.updated_at} format={"DD MMMM, YYYY"} />
                         {/* {moment(item.updated_at).format("DD MMMM, YYYY")} */}
                       </p>
                     </td>

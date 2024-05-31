@@ -782,7 +782,17 @@ const NewUserProfile = (props) => {
                           role="tab"
                           aria-controls="docTab"
                           aria-selected="true"
-                          onClick={() => setTabActive("documents")}
+                          onClick={async () => {
+                            if (!PersonalDetail.documents_folder_id) {
+                              const responseData = await AddEmployeeDetails(PersonalDetail);
+                              setApiCall(true)
+                              if (responseData.status === 1) {
+                                setTabActive("documents")
+                              }
+                            } else {
+                              setTabActive("documents")
+                            }
+                          }}
                         >
                           Documents
                         </Link>

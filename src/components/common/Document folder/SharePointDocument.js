@@ -164,48 +164,48 @@ export default function SharePointDocument({
   const DocTypeData =
     emp_user_type === "employer"
       ? [
-          "Business T2",
-          "Recent PD7A",
-          "Business T4",
-          "Business Incorporation Certificate",
-          "Employment Contract",
-          "Schedule A",
-          "Signed Job Offer",
-          "PD7A of year",
-          "T2 Schedule 100 and 125",
-          "Certificate of incorporation",
-          "Business license",
-          "T4 summary of year",
-          "Request for Exception from English Language Requirement for LMIA Application",
-          "CPA Attestation Letter",
-          "Representative Submission Letter",
-        ]
+        "Business T2",
+        "Recent PD7A",
+        "Business T4",
+        "Business Incorporation Certificate",
+        "Employment Contract",
+        "Schedule A",
+        "Signed Job Offer",
+        "PD7A of year",
+        "T2 Schedule 100 and 125",
+        "Certificate of incorporation",
+        "Business license",
+        "T4 summary of year",
+        "Request for Exception from English Language Requirement for LMIA Application",
+        "CPA Attestation Letter",
+        "Representative Submission Letter",
+      ]
       : [
-          "passport",
-          "drivers_license",
-          "photograph",
-          "immigration_status",
-          "lmia",
-          "job_offer_letter",
-          "provincial_nominee_letter",
-          "proof_of_funds",
-          "proof_of_employment",
-          "marriage_certificate",
-          "education_metric",
-          "education_higher_secondary",
-          "education_graduation",
-          "education_post_graduation",
-          "resume_or_cv",
-          "ielts",
-          "medical",
-          "police_clearance",
-          "refusal_letter",
-          "Employment Contract",
-          "Reference Letters",
-          "Client Info",
-          "Representative Submission Letter",
-          "Bank Statement",
-        ];
+        "passport",
+        "drivers_license",
+        "photograph",
+        "immigration_status",
+        "lmia",
+        "job_offer_letter",
+        "provincial_nominee_letter",
+        "proof_of_funds",
+        "proof_of_employment",
+        "marriage_certificate",
+        "education_metric",
+        "education_higher_secondary",
+        "education_graduation",
+        "education_post_graduation",
+        "resume_or_cv",
+        "ielts",
+        "medical",
+        "police_clearance",
+        "refusal_letter",
+        "Employment Contract",
+        "Reference Letters",
+        "Client Info",
+        "Representative Submission Letter",
+        "Bank Statement",
+      ];
 
   /*Function to call api to get all folders list of employees documnet from sharepoint */
   const AllShareType = async () => {
@@ -234,6 +234,10 @@ export default function SharePointDocument({
         }
         // setFolderID(res.data.data[0].parentReference.id)
       } else if (res.data.data === "No Documents Found") {
+        setDocTypeList([]);
+        setShowDropDown(false);
+        setDocLoder(false);
+      } else {
         setDocTypeList([]);
         setShowDropDown(false);
         setDocLoder(false);
@@ -535,126 +539,126 @@ export default function SharePointDocument({
                       <IoMdArrowBack />
                     </Link>
                     {/* Mention admin code */}
-                    {((1 === 2 )&&
-                     ( localStorage.getItem("userType") === "admin" ||
-                      localStorage.getItem("userType") === "agent")) && (
-                      <div
-                        className="mention_div"
-                        style={{
-                          position: "absolute",
-                          top: 14,
-                          right: "27%", // Changed to align with the right side
-                          background: "#fff",
-                          zIndex: 99,
-                          justifyContent: "center",
-                          alignItems: "center",
-                          textDecoration: "none",
-                          color: "#4b4b4b",
-                          maxWidth: 200,
-                        }}
-                      >
-                        <Link
-                          className="rounded-circle add-person-btn" // Changed class name for clarity
-                          to=""
-                          title="Mention Admin"
+                    {((1 === 2) &&
+                      (localStorage.getItem("userType") === "admin" ||
+                        localStorage.getItem("userType") === "agent")) && (
+                        <div
+                          className="mention_div"
                           style={{
-                            color: "#333",
-                            width: 24,
-                            height: 24,
-                            backgroundColor: "#eee",
-                            textAlign: "center",
-                            margin: "0 3px 3px 0",
-                          }}
-                          onClick={() => {
-                            showMentionAdminDropDown === true
-                              ? setMentionAdminShowDropDown(false)
-                              : setMentionAdminShowDropDown(true);
+                            position: "absolute",
+                            top: 14,
+                            right: "27%", // Changed to align with the right side
+                            background: "#fff",
+                            zIndex: 99,
+                            justifyContent: "center",
+                            alignItems: "center",
+                            textDecoration: "none",
+                            color: "#4b4b4b",
+                            maxWidth: 200,
                           }}
                         >
-                          {showMentionAdminDropDown === false ? (
-                            <IoMdPersonAdd />
-                          ) : (
-                            <IoMdClose />
-                          )}
-                        </Link>
-                        {(defaultAdminMention.length > 0
-                          ? defaultAdminMention
-                          : taggedadmin
-                        ).map(
-                          (user, index) =>
-                            // <div
-                            //   key={index}
-                            //   className="badgebadge badge-pill badge-info"
-                            //   style={{ fontSize: 12 }}
-                            // >
-                            //   {user.name}
-                            //   <span className="d-none">
-                            //     {user.email} {user.admin_id} {user.admin_type}
-                            //   </span>
-                            // </div>
-                            user.profile_image === null ||
-                            user.profile_image === "" ||
-                            user.profile_image === undefined ? (
-                              <span
-                                className="rounded-circle"
-                                data-toggle="tooltip"
-                                data-placement="top"
-                                style={{
-                                  width: 24,
-                                  height: 24,
-                                  backgroundColor: "red",
-                                  color: "#fff",
-                                  textAlign: "center",
-                                  cursor: "pointer",
-                                  margin: "0 3px 3px 0",
-                                }}
-                                title={user.name}
-                              >
-                                {user.name?.charAt(0).toUpperCase()}
-                              </span>
+                          <Link
+                            className="rounded-circle add-person-btn" // Changed class name for clarity
+                            to=""
+                            title="Mention Admin"
+                            style={{
+                              color: "#333",
+                              width: 24,
+                              height: 24,
+                              backgroundColor: "#eee",
+                              textAlign: "center",
+                              margin: "0 3px 3px 0",
+                            }}
+                            onClick={() => {
+                              showMentionAdminDropDown === true
+                                ? setMentionAdminShowDropDown(false)
+                                : setMentionAdminShowDropDown(true);
+                            }}
+                          >
+                            {showMentionAdminDropDown === false ? (
+                              <IoMdPersonAdd />
                             ) : (
-                              <img
-                                className="rounded-circle"
-                                data-toggle="tooltip"
-                                data-placement="top"
-                                title={user.name}
-                                style={{
-                                  width: 24,
-                                  height: 24,
-                                  cursor: "pointer",
-                                  margin: "0 3px 3px 0",
-                                }}
-                                src={
-                                  user.profile_image === null ||
-                                  user.profile_image === "" ||
-                                  user.profile_image === undefined
-                                    ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                                    : user.profile_image
-                                }
-                                alt={user.name}
-                              />
-                            )
-                          // {user.name.charAt(0).toUpperCase()}
-                        )}
-                        {/* {showMentionAdminDropDown === true ? ( */}
-                        <MentionAdminInDoc
-                          adminList={adminList}
-                          setMentionAdminShowDropDown={
-                            setMentionAdminShowDropDown
-                          }
-                          selectedMentionAdmin={selectedMentionAdmin}
-                          setSelectedMentionAdmin={setSelectedMentionAdmin}
-                          commentsList={commentsList}
-                          docPreview={docPreview}
-                          userId={user_id}
-                          data={docSingleDate}
-                          setTaggedAdmin={setTaggedAdmin}
-                          DocUserType={emp_user_type}
-                          showMentionAdminDropDown={showMentionAdminDropDown}
-                        />
-                        {/* ) : null} */}
-                      </div>
-                    )}
+                              <IoMdClose />
+                            )}
+                          </Link>
+                          {(defaultAdminMention.length > 0
+                            ? defaultAdminMention
+                            : taggedadmin
+                          ).map(
+                            (user, index) =>
+                              // <div
+                              //   key={index}
+                              //   className="badgebadge badge-pill badge-info"
+                              //   style={{ fontSize: 12 }}
+                              // >
+                              //   {user.name}
+                              //   <span className="d-none">
+                              //     {user.email} {user.admin_id} {user.admin_type}
+                              //   </span>
+                              // </div>
+                              user.profile_image === null ||
+                                user.profile_image === "" ||
+                                user.profile_image === undefined ? (
+                                <span
+                                  className="rounded-circle"
+                                  data-toggle="tooltip"
+                                  data-placement="top"
+                                  style={{
+                                    width: 24,
+                                    height: 24,
+                                    backgroundColor: "red",
+                                    color: "#fff",
+                                    textAlign: "center",
+                                    cursor: "pointer",
+                                    margin: "0 3px 3px 0",
+                                  }}
+                                  title={user.name}
+                                >
+                                  {user.name?.charAt(0).toUpperCase()}
+                                </span>
+                              ) : (
+                                <img
+                                  className="rounded-circle"
+                                  data-toggle="tooltip"
+                                  data-placement="top"
+                                  title={user.name}
+                                  style={{
+                                    width: 24,
+                                    height: 24,
+                                    cursor: "pointer",
+                                    margin: "0 3px 3px 0",
+                                  }}
+                                  src={
+                                    user.profile_image === null ||
+                                      user.profile_image === "" ||
+                                      user.profile_image === undefined
+                                      ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                                      : user.profile_image
+                                  }
+                                  alt={user.name}
+                                />
+                              )
+                            // {user.name.charAt(0).toUpperCase()}
+                          )}
+                          {/* {showMentionAdminDropDown === true ? ( */}
+                          <MentionAdminInDoc
+                            adminList={adminList}
+                            setMentionAdminShowDropDown={
+                              setMentionAdminShowDropDown
+                            }
+                            selectedMentionAdmin={selectedMentionAdmin}
+                            setSelectedMentionAdmin={setSelectedMentionAdmin}
+                            commentsList={commentsList}
+                            docPreview={docPreview}
+                            userId={user_id}
+                            data={docSingleDate}
+                            setTaggedAdmin={setTaggedAdmin}
+                            DocUserType={emp_user_type}
+                            showMentionAdminDropDown={showMentionAdminDropDown}
+                          />
+                          {/* ) : null} */}
+                        </div>
+                      )}
                   </div>
                   {
                     // docTypePage === "adobe"
@@ -664,8 +668,8 @@ export default function SharePointDocument({
                         docSingleDate.file.mimeType === "image/jpg") &&
                         imgConRes === "imageConverted") ||
                       docSingleDate.file.mimeType ===
-                        "application/vnd.openxmlformats-officedocument.wordprocessingml.document") &&
-                    convertedDoc ? (
+                      "application/vnd.openxmlformats-officedocument.wordprocessingml.document") &&
+                      convertedDoc ? (
                       // <PreviewDocument
                       //   docData={docSingleDate}
                       //   docId={docId ? docId : folderID}
@@ -856,7 +860,7 @@ export default function SharePointDocument({
       ) : (
         <div className="chat_box_container bg-white row m-0">
           <div className="chat-container d-flex justify-content-center align-items-center w-100">
-            Update the user profile to get a folder
+            Update the {emp_user_type === "employee" ? "user" : "client"} profile to get a folder
           </div>
         </div>
       )}

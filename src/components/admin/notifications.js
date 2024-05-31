@@ -6,9 +6,9 @@ import {
   getAllMentionNotification /* getAllAdminNotification,*/,
 } from "../../api/api";
 import { Link } from "react-router-dom";
-import moment from "moment";
 import { CgFileDocument } from "react-icons/cg";
 import { FaRegBell } from "react-icons/fa";
+import ConvertTime from "../common/ConvertTime";
 function Notifications({
   type,
   // userId,
@@ -340,7 +340,7 @@ function Notifications({
                         </div>
                       </div>
                       <div className="text-muted font-size-2 line-height-1 ml-2">
-                        {moment(data.created_at).tz('America/Toronto').format('MMMM Do YYYY, h:mm:ss a')}
+                        <ConvertTime _date={data.created_at} format={'LLL'}/>
                         {/* {moment(data.created_at).format("HH:mm")} */}
                       </div>
                     </Link>

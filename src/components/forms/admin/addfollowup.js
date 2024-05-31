@@ -6,6 +6,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 import TextEditor from "../../common/TextEditor";
+import ConvertTime from "../../common/ConvertTime";
 
 function Addfollowup(props) {
   let [response, setResponseData] = useState([]);
@@ -199,7 +200,7 @@ function Addfollowup(props) {
                         </b>
                         <i className="font-size-2">
                           Created on:
-                          {moment(res.created_at).tz('America/Toronto').format("Do MMM YYYY, h:mm:ss a")}
+                          <ConvertTime _date={res.created_at} format={"Do MM YYYY, h:mm:ss a"}/>
                           {/* {moment(res.created_at).format(
                             "Do MMM YYYY, h:mm:ss a"
                           )} */}
@@ -586,7 +587,7 @@ function Addfollowup(props) {
                               <p className="font-size-3 mb-0">N/A</p>
                             ) : (
                               <small>
-                                {moment(res.created_at).tz('America/Toronto').calendar()}
+                                <ConvertTime _date={res.created_at} format={".calendar()"}/>
                                 {/* {moment(res.created_at).calendar()} */}
                               </small>
                             )}

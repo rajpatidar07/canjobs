@@ -32,7 +32,7 @@ const AdobePDFViewer = ({
           showLeftHandPanel: true,
           showPageControls: true,
           enableAnnotationAPIs: true,
-          includePDFAnnotations: true,
+          includePDFAnnotations: false,
           showDownloadPDF: true,
           showPrintPDF: true,
         },

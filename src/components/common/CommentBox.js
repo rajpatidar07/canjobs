@@ -1,8 +1,8 @@
 import React from "react";
-import moment from "moment";
 import { Link } from "react-router-dom";
 import { FaReplyAll } from "react-icons/fa";
 import CommentReplyBox from "./CommentReplyBox";
+import ConvertTime from "./ConvertTime";
 export default function CommentBox({
   commentsReplyList,
   setAddCommentFlag,
@@ -186,7 +186,7 @@ export default function CommentBox({
                             : ""}
                         </div>
                         <div className="text-gray font-size-2 font-weight-normal m-0 text-capitalize">
-                        {moment(commentItem.created_on).tz('America/Toronto').format("HH:mm D MMM")}
+                        <ConvertTime _date={commentItem.created_on} format={"HH:mm D MMM"} />
                           {/* {moment(commentItem.created_on).format("HH:mm D MMM")} */}
                         </div>
                       </div>

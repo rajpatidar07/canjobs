@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import CommentReplyBox from "../CommentReplyBox";
-import moment from "moment";
 import { toast } from "react-toastify";
 import { CiPaperplane } from "react-icons/ci";
 import {
@@ -11,6 +10,7 @@ import {
   SendReplyCommit,
   UpdateDocuentcommentAssign,
 } from "../../../api/api";
+import ConvertTime from "../ConvertTime";
 export default function CommentSection({
   commentsList,
   docData,
@@ -640,9 +640,7 @@ export default function CommentSection({
                                 : ""}
                             </div>
                             <div className="text-gray font-size-2 font-weight-normal m-0 text-capitalize">
-                              {moment(commentItem.created_on)
-                                .tz("America/Toronto")
-                                .format("HH:mm D MMM")}
+                             <ConvertTime _date={commentItem.created_on} format={"HH:mm D MMM"}/>
                               {/* {moment(commentItem.created_on).format("HH:mm D MMM")} */}
                             </div>
                           </div>

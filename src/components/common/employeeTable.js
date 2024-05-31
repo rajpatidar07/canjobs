@@ -23,6 +23,7 @@ import { GoTasklist } from "react-icons/go";
 import { AiOutlineFilePdf } from "react-icons/ai";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { PiBriefcaseLight } from "react-icons/pi";
+import ConvertTime from "./ConvertTime";
 // import ApplicantCategory from "../forms/user/ApplicantCategory";
 export default function EmployeeTable(props) {
   let agentId = localStorage.getItem("agent_id");
@@ -806,7 +807,7 @@ export default function EmployeeTable(props) {
                           ) : (
                             <p className="font-size-3 font-weight-normal text-black-2 mb-0">
                               {/* {empdata.language} */}
-                              {moment(empdata.created_at).tz('America/Toronto').format("DD MMMM, YYYY")}
+                              <ConvertTime _date={empdata.created_at} format={"DD MMMM, YYYY"}/>
                               {/* {moment(empdata.created_at).format(
                                 "DD MMMM, YYYY"
                               )} */}

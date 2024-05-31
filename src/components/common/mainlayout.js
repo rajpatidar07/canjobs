@@ -86,11 +86,11 @@ function MainLayout() {
     const employeeId = localStorage.getItem('employee_id'); // Assuming employee_id is stored in localStorage
 
     if (userType === "user" && eid === employeeId && isValidEid) {
-      return <NewUserProfile setLoginCondition={setLoginCondition}/>;
+      return <NewUserProfile setLoginCondition={setLoginCondition} />;
     } else if (isValidEid && userType !== "user") {
       return <NewUserProfile />;
     } else {
-      return <NotFound userType={userType}/>;
+      return <NotFound userType={userType} />;
     }
   };
   return (
@@ -100,9 +100,9 @@ function MainLayout() {
         {/* Employee */}
         <Route path="/" element={<EmployeeHomePage />} />
         <Route path="/signup" element={<SinUpPage />} />
-        <Route path="/candidate_login" element={<CandidateLoginForm setLoginCondition={setLoginCondition}/>} />
+        <Route path="/candidate_login" element={<CandidateLoginForm setLoginCondition={setLoginCondition} />} />
         <Route path="/candidate_signup" element={<CandidateSignup />} />
-        <Route path="/client_login" element={<CompanyLoginForm setLoginCondition={setLoginCondition}/>} />
+        <Route path="/client_login" element={<CompanyLoginForm setLoginCondition={setLoginCondition} />} />
         <Route path="/client_singup" element={<CompanySingupForm />} />
         <Route path="/rozarepay" element={<RazorPay />} />
         <Route path="/jobs" element={<JobSearch />} />
@@ -116,13 +116,13 @@ function MainLayout() {
           token !== "null" ||
           token !== "undefined")) ? (
           <>
-            <Route path="/" element={<EmployeeHomePage setLoginCondition={setLoginCondition}/>} />
+            <Route path="/" element={<EmployeeHomePage setLoginCondition={setLoginCondition} />} />
             <Route path="/jobs" element={<JobSearch />} />
             <Route path="/jobdetail" element={<JobDetail />} />
             <Route path="/profile" element={<UserProfile />} />
             {/* <Route path="/:eid" element={<NewUserProfile />} /> */}
             <Route path="/:eid" element={<ValidateRoute />} />
-            <Route path="*" element={<NotFound userType={userType}/>} />
+            <Route path="*" element={<NotFound userType={userType} />} />
             <Route path="/job_detail" element={<JobDetailpageAdmim />} />
             <Route path="/client_detail" element={<CompanyProfileDetail />} />
             <Route path="/userpdf" element={<PDFViewer />} />
@@ -142,7 +142,7 @@ function MainLayout() {
           token !== "null" ||
           token !== "undefined")) ? (
           <>
-            <Route path="/client" element={<EmployerHome setLoginCondition={setLoginCondition}/>} />
+            <Route path="/client" element={<EmployerHome setLoginCondition={setLoginCondition} />} />
             <Route path="/clientprofile" element={<CompanyProfile />} />
             <Route path="/managejobs" element={<ManageJobs />} />
             <Route path="/response" element={<Response />} />
@@ -151,7 +151,7 @@ function MainLayout() {
             {/* <Route path="/lmia_dashboard" element={<EmployerLMIA />} /> */}
             <Route path="/lmia" element={<LimaContainer />} />
             <Route path="/resume/:id" element={<ResumeGrerator />} />
-            <Route path="*" element={<NotFound userType={userType}/>} />
+            <Route path="*" element={<NotFound userType={userType} />} />
             <Route path="/job_detail" element={<JobDetailpageAdmim />} />
             <Route path="/userpdf" element={<PDFViewer />} />
           </>
@@ -161,8 +161,10 @@ function MainLayout() {
             {/* <Route path="*" element={<NotFound userType={userType}/>} /> */}
           </>
         )}
+         {/* Agent */}
+         <Route path="/partnerlogin" element={<AgentLogin setLoginCondition={setLoginCondition} />} />
         {/* Admin */}
-        <Route path="/adminlogin" element={<AdminLoginFrom setLoginCondition={setLoginCondition}/>} />
+        <Route path="/adminlogin" element={<AdminLoginFrom setLoginCondition={setLoginCondition} />} />
         {(userType === "company" ||
           userType === "user" ||
           userType === "" ||
@@ -178,7 +180,7 @@ function MainLayout() {
         ) : (
           <>
             {userType !== "admin" || userType === ""}
-            <Route path="/dashboard" element={<AdminDashboard setLoginCondition={setLoginCondition}/>} />
+            <Route path="/dashboard" element={<AdminDashboard setLoginCondition={setLoginCondition} />} />
             <Route path="/job" element={<Job />} />
             <Route path="/selfjob" element={<SelfJob />} />
             <Route path="/category" element={<Category />} />
@@ -196,7 +198,7 @@ function MainLayout() {
             <Route path="/sharepoint_document" element={<SharePointDocument />} />
             <Route path="/job_detail" element={<JobDetailpageAdmim />} />
             <Route path="/client_detail" element={<CompanyProfileDetail />} />
-            <Route path="/partner_profile" element={<PartnerDetails setLoginCondition={setLoginCondition}/>} />
+            <Route path="/partner_profile" element={<PartnerDetails setLoginCondition={setLoginCondition} />} />
             <Route path="/followup" element={<Followup />} />
             <Route path="/partner" element={<Agent />} />
             <Route path="/partner_dashboard" element={<PartnerDashboard />} />
@@ -212,7 +214,7 @@ function MainLayout() {
             <Route path="/resume/:id" element={<ResumeGrerator />} />
             {/* <Route path="/emailpreview" element={<PreviewEmail />} /> */}
             <Route path="/email" element={<MainEmailPage />} />
-            <Route path="*" element={<NotFound userType={userType}/>} />
+            <Route path="*" element={<NotFound userType={userType} />} />
             <Route path="/googledrive" element={<GoogleDrive />} />
             <Route path="/anotation" element={<Anotation />} />
             <Route path="/businessvisa" element={<BusinessVIsa />} />
@@ -224,10 +226,8 @@ function MainLayout() {
             <Route path="*" element={<Loader load={"yes"} />} />
           </>
         )}
-        {/* Agent */}
-        <Route path="/partnerlogin" element={<AgentLogin setLoginCondition={setLoginCondition}/>} />
-
-        {loginCondition?null:<Route path="*" element={<NotFound userType={userType}/>} />}
+       
+        {loginCondition === true ? null : <Route path="*" element={<NotFound userType={userType} />} />}
       </Routes>
     </BrowserRouter>
   );

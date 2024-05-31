@@ -11,6 +11,7 @@ import {
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import SAlert from "../../common/sweetAlert";
+import ConvertTime from "../../common/ConvertTime";
 
 function EmployementDetails(props) {
   /*Data state */
@@ -271,11 +272,11 @@ function EmployementDetails(props) {
                             {/* {moment(CareerDetails.start_date).format(
                               "DD MMMM, YYYY"
                             )}{" "} */}
-                            {moment(CareerDetails.start_date).tz('America/Toronto').format( "DD MMMM, YYYY")}
+                            <ConvertTime _date={CareerDetails.start_date} format={"DD MMMM, YYYY"}/>
                             -
                             {CareerDetails.currently_work_here === ("1" || 1)
                               ? "Currently working"
-                              :moment(CareerDetails.end_date).tz('America/Toronto').format( "DD MMMM, YYYY")
+                              :<ConvertTime _date={CareerDetails.end_date} format={"DD MMMM, YYYY"}/>
                               //  moment(CareerDetails.end_date).format(
                               //     "DD MMMM, YYYY"
                                 // )

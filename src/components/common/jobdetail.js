@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GetJobDetail, ApplyJob } from "../../api/api";
-import moment from "moment";
 import { ToastContainer, toast } from "react-toastify";
 import Loader from "../common/loader";
+import ConvertTime from "./ConvertTime";
 
 function JobDetailPage(props) {
   let [jobDetatilsData, setJobDetailsData] = useState("");
@@ -245,7 +245,8 @@ function JobDetailPage(props) {
                         Posted Time
                       </span>
                       <h6 className="font-size-5 text-black-2 font-weight-semibold mb-0">
-                      {moment(jobDetatilsData.created_at).tz('America/Toronto').format("DD MMMM, YYYY")}
+                      <ConvertTime _date={jobDetatilsData.created_at} format={"DD MMMM, YYYY"}/>
+
                         {/* {moment(jobDetatilsData.created_at).format(
                           "DD MMMM, YYYY"
                         )} */}

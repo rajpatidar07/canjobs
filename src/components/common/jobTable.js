@@ -21,7 +21,7 @@ import { BsArrow90DegRight } from "react-icons/bs";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { MdFormatListBulletedAdd } from "react-icons/md";
 import { GrDocumentUpload } from "react-icons/gr";
-import moment from "moment";
+import ConvertTime from "./ConvertTime";
 export default function JobTable(props) {
   /*show Modal and props state */
   let [isLoading, setIsLoading] = useState(true);
@@ -546,14 +546,14 @@ export default function JobTable(props) {
                               <h3
                                 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
                                 title={
-                                  moment(job.created_at).tz('America/Toronto').format("DD MMMM, YYYY")
+                                  <ConvertTime _date={job.created_at} format={"DD MMMM, YYYY"}/>
                                 //   moment(job.created_at).format(
                                 //   "DD MMMM, YYYY"
                                 // ) 
                               }
                               >
                                 {/* {job.created_at ? job.created_at : "N/A"} */}
-                                {moment(job.created_at).tz('America/Toronto').format("DD MMMM, YYYY")}
+                                <ConvertTime _date={job.created_at} format={"DD MMMM, YYYY"}/>
                                 {/* {moment(job.created_at).format("DD MMMM, YYYY")} */}
                               </h3>
                             </th>

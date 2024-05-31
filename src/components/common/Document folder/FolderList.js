@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import moment from "moment";
 import { BsFiletypeDocx } from "react-icons/bs";
 import { FaRegFilePdf, FaFolder } from "react-icons/fa6";
 import DocSaveForm from "./DocSaveForm";
+import ConvertTime from "../ConvertTime";
 export default function FolderList({
   setDocPreview,
   ShowDeleteAlert,
@@ -118,7 +118,7 @@ export default function FolderList({
                       {item.name.replace("_", " ")}
                     </p>
                     <p className="modified-time m-0">
-                    {moment(item.lastModifiedDateTime).tz('America/Toronto').fromNow()}
+                    <ConvertTime _date={item.lastModifiedDateTime} format={".fromNow()"}/>
                       {/* {moment(item.lastModifiedDateTime).fromNow()} */}
                     </p>
                   </div>

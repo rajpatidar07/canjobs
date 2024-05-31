@@ -160,6 +160,12 @@ export default function EmployerTable(props) {
                 <tr>
                   <th
                     scope="col"
+                    className=" border-0 font-size-4 font-weight-normal"
+                  >
+                    CLient ID
+                  </th>
+                  <th
+                    scope="col"
                     className="border-0 font-size-4 font-weight-normal"
                   >
                     <Link
@@ -276,7 +282,12 @@ export default function EmployerTable(props) {
                 ) : (
                   (employerData || []).map((empdata) => (
                     <tr className="" key={empdata.company_id}>
-                      <th scope="row" className="pl-5 py-5 pr-0   ">
+                      <td className=" py-5">
+                        <p className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          {empdata.company_id}
+                        </p>
+                      </td>
+                      <td className="pl-5 py-5 pr-0   ">
                         <Link
                           to={`/client_detail`}
                           title="Client Details"
@@ -327,7 +338,7 @@ export default function EmployerTable(props) {
                             )}
                           </div>
                         </Link>
-                      </th>
+                      </td>
                       {props.heading === "Dashboard" ? (
                         ""
                       ) : (
@@ -341,7 +352,7 @@ export default function EmployerTable(props) {
                                 empdata.company_id
                               )
                             }
-                            // onClick={() => EmployerDetail(empdata.company_id)}
+                          // onClick={() => EmployerDetail(empdata.company_id)}
                           >
                             <p
                               className="m-0 font-weight-normal text-capitalize text-truncate font-size-3"
@@ -357,7 +368,7 @@ export default function EmployerTable(props) {
                       {props.heading === "Dashboard" ? (
                         ""
                       ) : (
-                        <th className=" py-5  pr-0">
+                        <td className=" py-5  pr-0">
                           {empdata.address === null ? (
                             <p className="font-size-3 font-weight-bold  mb-0">
                               N/A
@@ -389,9 +400,9 @@ export default function EmployerTable(props) {
                                 empdata.country}
                             </p>
                           )}
-                        </th>
+                        </td>
                       )}
-                      <th className=" py-5  pr-0">
+                      <td className=" py-5  pr-0">
                         {empdata.contact_no === null ? (
                           <p className="font-size-3 font-weight-bold  mb-0">
                             N/A
@@ -433,8 +444,8 @@ export default function EmployerTable(props) {
                             </p>
                           </>
                         )}
-                      </th>
-                      <th className="py-5 ">
+                      </td>
+                      <td className="py-5 ">
                         {empdata.vacancy_for_post === null ? (
                           <p className="font-size-3 font-weight-bold  mb-0">
                             N/A
@@ -444,8 +455,8 @@ export default function EmployerTable(props) {
                             {empdata.vacancy_for_post}({empdata.vacancies})
                           </p>
                         )}
-                      </th>
-                      <th className="  py-5 ">
+                      </td>
+                      <td className="  py-5 ">
                         <p className="font-size-2 font-weight-normal text-black-2 mb-0">
                           {empdata.profile_complete >= 99.0 ? (
                             <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
@@ -457,11 +468,11 @@ export default function EmployerTable(props) {
                             </span>
                           )}
                         </p>
-                      </th>
+                      </td>
                       {props.heading === "Dashboard" ? (
                         ""
                       ) : (
-                        <th className="py-5 min-width-px-100">
+                        <td className="py-5 min-width-px-100">
                           <div className="btn-group button_group" role="group">
                             <button
                               className="btn btn-outline-info action_btn"
@@ -530,7 +541,7 @@ export default function EmployerTable(props) {
                               {/* <span className="fa fa-trash text-danger px-1"></span> */}
                             </button>
                           </div>
-                        </th>
+                        </td>
                       )}
                     </tr>
                   ))

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getInterview } from "../../api/api";
-import moment from "moment";
 import Pagination from "./pagination";
 import AddInterview from "../forms/admin/addInterview";
 import Loader from "../common/loader";
 import { ToastContainer } from "react-toastify";
 import { ImCalendar } from "react-icons/im";
+import ConvertTime from "./ConvertTime";
 function Interview(props) {
   let search = props.search;
   let [isLoading, setIsLoading] = useState(true);
@@ -245,9 +245,9 @@ function Interview(props) {
                         </td>
                         <td className="py-5 ">
                           {data.name === null ||
-                          data.name === undefined ||
-                          data.name === "undefined" ||
-                          data.name === "" ? (
+                            data.name === undefined ||
+                            data.name === "undefined" ||
+                            data.name === "" ? (
                             <p className="font-size-3  mb-0">N/A</p>
                           ) : (
                             <div
@@ -265,9 +265,9 @@ function Interview(props) {
                         </td>
                         <td className="py-5 ">
                           {data.job_title === null ||
-                          data.job_title === undefined ||
-                          data.job_title === "undefined" ||
-                          data.job_title === "" ? (
+                            data.job_title === undefined ||
+                            data.job_title === "undefined" ||
+                            data.job_title === "" ? (
                             <p className="font-size-3  mb-0">N/A</p>
                           ) : (
                             <Link
@@ -288,9 +288,9 @@ function Interview(props) {
                         {props.heading === "userprofile" ? null : (
                           <td className="py-5 ">
                             {data.company_name === null ||
-                            data.company_name === undefined ||
-                            data.company_name === "undefined" ||
-                            data.company_name === "" ? (
+                              data.company_name === undefined ||
+                              data.company_name === "undefined" ||
+                              data.company_name === "" ? (
                               <p className="font-size-3  mb-0">N/A</p>
                             ) : (
                               <Link
@@ -314,9 +314,9 @@ function Interview(props) {
                         ) : (
                           <td className="py-5 ">
                             {data.skill === null ||
-                            data.skill === undefined ||
-                            data.skill === "undefined" ||
-                            data.skill === "" ? (
+                              data.skill === undefined ||
+                              data.skill === "undefined" ||
+                              data.skill === "" ? (
                               <p className="font-size-3  mb-0">N/A</p>
                             ) : (
                               <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
@@ -327,13 +327,13 @@ function Interview(props) {
                         )}
                         <td className=" py-5">
                           {data.interview_date === null ||
-                          data.interview_date === undefined ||
-                          data.interview_date === "undefined" ||
-                          data.interview_date === "" ? (
+                            data.interview_date === undefined ||
+                            data.interview_date === "undefined" ||
+                            data.interview_date === "" ? (
                             <p className="font-size-3  mb-0">N/A</p>
                           ) : (
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                             {moment(data.interview_date).tz('America/Toronto').format("DD MMMM, YYYY")}
+                              <ConvertTime _date={data.interview_date} format={"DD MMMM, YYYY"} />
                               {/* {moment(data.interview_date).format(
                                 "DD MMMM, YYYY"
                               )} */}
@@ -342,9 +342,9 @@ function Interview(props) {
                         </td>
                         <td className="py-5 ">
                           {data.status === null ||
-                          data.status === undefined ||
-                          data.status === "undefined" ||
-                          data.status === "" ? (
+                            data.status === undefined ||
+                            data.status === "undefined" ||
+                            data.status === "" ? (
                             <p className="font-size-3  mb-0">N/A</p>
                           ) : (
                             <p className="font-size-2 font-weight-normal text-black-2 mb-0">

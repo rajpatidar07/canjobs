@@ -23,6 +23,7 @@ import { LiaUserEditSolid } from "react-icons/lia";
 // import ChangeJob from "../forms/admin/changeJobs";
 import Loader from "../common/loader";
 import PersonalDetails from "../forms/user/personal";
+import ConvertTime from "./ConvertTime";
 // import VisaStatus from "../forms/user/visaStatus";
 // import DocumentModal from "../forms/admin/EmployeeDocumentModal";
 // import { BsArrow90DegRight } from "react-icons/bs";
@@ -756,7 +757,7 @@ function AgentsEmployee(props) {
                                       empdata.created_at,
                                       "YYYY-MM-DD HH:mm:ss"
                                     ).fromNow()} */}
-                                    {moment(empdata.created_at).tz('America/Toronto').format("DD MMMM, YYYY")}
+                                    <ConvertTime _date={empdata.created_at} format={"DD MMMM, YYYY"}/>
                                     {/* {moment(empdata.created_at).format(
                                       "DD MMMM, YYYY"
                                     )} */}

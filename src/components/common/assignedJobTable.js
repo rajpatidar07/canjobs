@@ -4,7 +4,7 @@ import Loader from "./loader";
 import { Link } from "react-router-dom";
 import ManagerListModal from "../admin/Modal/managerListModal";
 import { GetAllJobs } from "../../api/api";
-import moment from "moment";
+import ConvertTime from "./ConvertTime";
 export default function AssignedJobTable(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [apiCall, setApiCall] = useState(false);
@@ -226,7 +226,7 @@ export default function AssignedJobTable(props) {
                           </th>
                           <th className="py-5 ">
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            {moment(job.created_at).tz('America/Toronto').format("DD MMMM, YYYY")}
+                            <ConvertTime _date={job.created_at} format={"DD MMMM, YYYY"}/>
                               {/* {moment(job.created_at).format("DD MMMM, YYYY")} */}
                             </h3>
                           </th>

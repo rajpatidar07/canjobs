@@ -6,7 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import Loader from "../common/loader";
 import AgentSignUp from "./agentSingup";
 import ForgotPasswordForm from "../forms/admin/ForgotPasswordForm";
-export default function AgentLogin() {
+export default function AgentLogin({setLoginCondition}) {
   let navigate = useNavigate();
   let [loading, setLoading] = useState(false);
   let [isLoading, setIsLoading] = useState(false);
@@ -60,6 +60,7 @@ export default function AgentLogin() {
           updatedTodo.status === true ||
           updatedTodo.message === "Successfully Logged In"
         ) {
+          setLoginCondition(true)
           setIsLoading(true);
           localStorage.setItem("token", updatedTodo.token);
           localStorage.setItem("userType", "agent");

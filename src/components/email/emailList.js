@@ -6,9 +6,9 @@ import PreviewEmail from "./emailPreview";
 import SendMailForm from "../forms/user/sendMailForm";
 // import { BsFillPencilFill } from "react-icons/bs";
 // import { ImCross } from "react-icons/im";
-import moment from "moment";
 // import MailPaination from "./mailPaination";
 import { TiAttachment } from "react-icons/ti";
+import ConvertTime from "../common/ConvertTime";
 const EmailList = ({
   data,
   isLoading,
@@ -299,13 +299,13 @@ const EmailList = ({
                                   ) : (
                                     <p className=" font-weight-normal text-black-2 font-size-2 mb-0 ">
                                       {email.IsRead === true ? (
-                                        moment(email.sentDateTime).tz('America/Toronto').format( "DD MMMM, YYYY")
+                                        <ConvertTime _date={email.sentDateTime} format={"DD MMMM, YYYY"}/>
                                         // moment(email.sentDateTime).format(
                                         //   "DD MMMM, YYYY"
                                         // )
                                       ) : (
                                         <b>
-                                          {moment(email.sentDateTime).tz('America/Toronto').format( "DD MMMM, YYYY")}
+                                          <ConvertTime _date={email.sentDateTime} format={"DD MMMM, YYYY"}/>
                                           {/* {moment(email.sentDateTime).format(
                                             "DD MMMM, YYYY"
                                           )} */}

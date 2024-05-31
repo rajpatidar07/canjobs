@@ -3,7 +3,7 @@ import Collapse from "react-bootstrap/Collapse";
 import Card from "react-bootstrap/Card";
 import { getLMIAstatus } from "../../api/api";
 import { Table } from "react-bootstrap";
-import moment from "moment";
+import ConvertTime from "./ConvertTime";
 const DashboardCard = (props) => {
   const [open, setOpen] = useState(false);
   const [LMIAdata, setLMIAdata] = useState([]);
@@ -58,7 +58,7 @@ const DashboardCard = (props) => {
                     <td>{item.name}</td>
                     <td>{item.lmia_status}</td>
                     <td>
-                    {moment(item.expected_time_of_completion).tz('America/Toronto').format("Do MMM YY")}
+                    <ConvertTime _date={item.expected_time_of_completion} format={"Do MMM YY"}/>
                       {/* {moment(item.expected_time_of_completion).format(
                         "Do MMM YY"
                       )} */}

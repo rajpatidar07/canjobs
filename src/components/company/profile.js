@@ -6,12 +6,12 @@ import CustomButton from "../common/button";
 import CompanyDetailPage from "./companydetail";
 import CompanyDetails from "../forms/employer/companyDetail";
 import { EmployerDetails } from "../../api/api";
-import moment from "moment";
 import { ToastContainer } from "react-toastify";
 import Loader from "../common/loader";
 import { Link } from "react-router-dom";
 import EmployerDocumentModal from "../forms/admin/EmployerDocumetModal";
 import { PiPencilDuotone } from "react-icons/pi";
+import ConvertTime from "../common/ConvertTime";
 function CompanyProfile(props) {
   const user_type = localStorage.getItem("userType");
   const company_id = localStorage.getItem("company_id");
@@ -159,7 +159,7 @@ function CompanyProfile(props) {
                 {employerData.company_start_date ? (
                   <div className="font-size-3 mb-4 mr-10" title="Est. Since">
                     <i className="fas fa-business-time mr-2"></i>
-                    {moment(employerData.company_start_date).tz('America/Toronto').format("YYYY")}
+                    <ConvertTime _date={employerData.company_start_date} format={"YYYY"}/>
                     {/* {moment(employerData.company_start_date).format("YYYY")} */}
                   </div>
                 ) : null}

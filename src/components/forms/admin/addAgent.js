@@ -238,7 +238,7 @@ function AddAgent(props) {
     let data = {
       name: state.name,
       email: state.email,
-      password: state.id ?"":state.password,
+      password: state.id ? "" : state.password,
       type: state.type,
       contact_no: state.contact_no,
       profile_image: state.profile_image,
@@ -663,7 +663,7 @@ function AddAgent(props) {
                   id="assigned_by"
                 >
                   <option value={""}>Select Admin </option>
-                  {admiinList.map((item) => <option value={item.admin_id}>{item.name} </option>)}
+                  {admiinList.map((item, index) => <option value={item.admin_id} key={index}>{item.name} </option>)}
                 </select>
                 {/* <span
                       className="btn btn-sm btn-secondary"

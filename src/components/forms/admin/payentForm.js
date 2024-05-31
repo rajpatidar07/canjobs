@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import moment from "moment";
 import { ToastContainer } from "react-toastify";
 // import { useParams } from "react-router-dom";
 import { GetPaymentList } from "../../../api/api";
 import PayForm from "./PayForm";
 // import Loader from "../../common/loader";
 import AddTransactionForm from "./addTransactionForm";
+import ConvertTime from "../../common/ConvertTime";
 export default function PayentForm({ data, user_id, user_type }) {
   const [apiCall, setApicall] = useState(true);
   // const [loading, setLoading] = useState(true);
@@ -68,7 +68,7 @@ export default function PayentForm({ data, user_id, user_type }) {
                     <div className="d-flex justify-content-between">
                       <p className="text-italic font-size-3 m-0">
                         Payment on:{" "}
-                        {moment(res.created_at).tz('America/Toronto').format("Do MM YYYY, h:mm:ss a")}
+                        <ConvertTime _date={res.created_at} format={"Do MM YYYY, h:mm:ss a"}/>
                         {/* {moment(res.created_at).format("Do MM YYYY, h:mm:ss a")} */}
                       </p>
                     </div>

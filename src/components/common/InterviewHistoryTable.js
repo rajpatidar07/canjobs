@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import moment from 'moment';
 import Loader from './loader';
 import { getActivityLog } from "../../api/api"
 import Pagination from './pagination';
+import ConvertTime from './ConvertTime';
 const InterviewHistoryTable = ({ employee_id }) => {
     let [isLoading, setIsLoading] = useState(true);
     // let [showAddInterviewModal, setShowAddInterviewModal] = useState(false);
@@ -151,7 +151,7 @@ const InterviewHistoryTable = ({ employee_id }) => {
                                                 "Interview Schedule"}</td>
                                         <td>
                                             <i className="font-size-2">
-                                            {moment(interview.created_at).tz('America/Toronto').format("lll")}
+                                            <ConvertTime _date={interview.created_at} format={"lll"} />
                                             {/* {moment(interview.created_at).format("lll")} */}
                                         </i>
                                         </td>
