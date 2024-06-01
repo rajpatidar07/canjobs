@@ -63,7 +63,8 @@ export default function CommentReplyBox({
                   </div>
                   {replyItem.msg && (
                     <span className="m-0 font-size-3 text-dark text-break">
-                      {replyItem.msg}
+                      {/* {replyItem.msg} */}
+                      <div className="msg-color" dangerouslySetInnerHTML={{ __html: replyItem.msg.replace( " @ "," ") }} />
                     </span>
                   )}
                   {/* Display mention */}
@@ -129,7 +130,7 @@ export default function CommentReplyBox({
               {filteredEmails.map((email, index) => (
                 <li
                   key={index}
-                  onClick={() => handleEmailClick(email.email, "reply")}
+                  onClick={() => handleEmailClick(email , "reply")}
                   // onMouseOver={() => handleEmailMouseOver(email.email, "reply")}
                   className="email-suggestion-item text-dark"
                 >

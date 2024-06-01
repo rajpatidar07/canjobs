@@ -878,10 +878,11 @@ export const SendReplyCommit = async (
   senderEmail,
   senderType,
   employee_id,
-  parent_id
+  parent_id,
+  DocUserType
 ) => {
   const response = await axios.post(
-    `${API_URL}/admin/sendMsg`,
+    `${API_URL}/admin/sendMsg?document_user_type=${DocUserType}`,
     {
       doc_id: data.doc_id,
       task_id: data.id,

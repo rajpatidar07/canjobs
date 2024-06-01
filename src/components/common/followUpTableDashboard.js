@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { /*getFollowupLastData,*/ getSingleFollowup } from "../../api/api";
 import Pagination from "./pagination";
-import moment from "moment";
 import Loader from "./loader";
+import ConvertTime from "./ConvertTime";
 // import { toast } from "react-toastify";
 function FollowUpDashBoard(props) {
   const [followUpData, setFollowUpData] = useState([]);
@@ -194,7 +194,8 @@ function FollowUpDashBoard(props) {
                                 <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                   {data.next_followup_date === "0000-00-00"
                                     ? "N/A"
-                                    : moment(data.next_followup_date).tz('America/Toronto').format("DD MMMM, YYYY")
+                                    :
+                                    <ConvertTime _date={data.next_followup_date} format={"DD MMMM, YYYY"} />
                                     //  moment(data.next_followup_date).format(
                                     //     "DD MMMM, YYYY"
                                     //   )

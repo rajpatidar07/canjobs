@@ -25,6 +25,8 @@ export default function CommentSection({
   setAnnotationDrawBox,
 }) {
   const [comments, setComments] = useState();
+  const [commentToApi, setCommentToApi] = useState();
+  const [replyCommentToApi, setReplyCommentToApi] = useState();
   const [replyComment, setReplyComment] = useState();
   const [commentsReplyList, setCommentsReplyList] = useState();
   const [filteredEmails, setFilteredEmails] = useState([]);
@@ -131,12 +133,22 @@ export default function CommentSection({
   /* Function to handle input change and set email or other comments */
   const handleInputChange = (event, type) => {
     const inputValue = event.target.value;
+    const replacedStr = inputValue.replace(/@([^\s]+)/g, (match, name) => {
+      const foundEmail = allAdmin.find(email => email.name.toLowerCase() === name.toLowerCase());
+      if (foundEmail) {
+        return `<span title="${foundEmail.email}"><b>${foundEmail.name}</b></span>`;
+      } else {
+        return match; // Keep the original text if email not found
+      }
+    });
 
     // Update the input value based on the type
     if (type === "reply") {
       setReplyComment(inputValue);
+      setReplyCommentToApi(replacedStr)
     } else {
       setComments(inputValue);
+      setCommentToApi(replacedStr)
     }
 
     const cursorPosition = event.target.selectionStart;
@@ -166,11 +178,13 @@ export default function CommentSection({
   const handleEmailClick = (email, type) => {
     // Set the selected admin and update the input value
     if (type === "reply") {
-      setSelectedAdminReplye(prevValue => prevValue + email + ",");
-      setReplyComment(prevValue => `${prevValue} ${email} `);
+      setSelectedAdminReplye(prevValue => prevValue + email.email + ",");
+      setReplyComment(prevValue => `${prevValue}${email.name} `);
+      setReplyCommentToApi(prevValue => `${prevValue} <span title="${email.email}" > <b>${email.name}</b></span> `);
     } else {
-      setSelectedAdmin(prevValue => prevValue + email + ",");
-      setComments(prevValue => `${prevValue} ${email} `);
+      setSelectedAdmin(prevValue => prevValue + email.email + ",");
+      setComments(prevValue => `${prevValue}${email.name}`);
+      setCommentToApi(prevValue => `${prevValue} <span title="${email.email}" > <b>${email.name}</b></span> `);
     }
     setFilteredEmails([]); // Clear filtered emails
   };
@@ -192,7 +206,10 @@ export default function CommentSection({
     // setAddCommentFlag(false);
     // Retrieve data from local storage
     const subject = "";
-    const comment = comments; ///\S+@\S+\.\S+/.test(comments) ? "" : comments;
+    /*Comment */
+    let boldComment = commentToApi.replace(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi, '<b>$1</b>')
+    let removeBTage = boldComment.replace(/title="(<b>)(.*?)(<\/b>)"/g, 'title="$2"')
+    const comment = removeBTage//comments; ///\S+@\S+\.\S+/.test(comments) ? "" : comments;
     let DocId = docData.id;
     let sender = allAdmin.find((item) => item.admin_id === admin_id)
       ? allAdmin.find((item) => item.admin_id === admin_id).name
@@ -262,6 +279,7 @@ export default function CommentSection({
             autoClose: 1000,
           });
           setComments("");
+          setCommentToApi("")
           setSelectedAdmin("");
           setFilteredEmails([]);
           setAnnotationDrawBox("");
@@ -277,6 +295,7 @@ export default function CommentSection({
           });
           // setSelectedAnnotation(null);
           setComments("");
+          setCommentToApi("")
           setSelectedAdmin("");
           setFilteredEmails([]);
         }
@@ -323,6 +342,9 @@ export default function CommentSection({
           .map((admin) => admin.admin_type)
           .join(",")
         : "";
+        /*Reply comment */
+    let BoldComment = replyCommentToApi.replace(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi, '<b>$1</b>')
+    let removeBTage = BoldComment.replace(/title="(<b>)(.*?)(<\/b>)"/g, 'title="$2"')
     if (replyComment === "" && email === "") {
       toast.error("Comment or email cannot be empty!", {
         position: toast.POSITION.TOP_RIGHT,
@@ -333,7 +355,7 @@ export default function CommentSection({
         let res = await SendReplyCommit(
           data,
           email,
-          replyComment,
+          removeBTage,
           assignedUserId,
           AdminType,
           sender,
@@ -343,7 +365,8 @@ export default function CommentSection({
           senderEmail,
           senderType,
           userId, //Userid
-          docData.parentReference.id
+          docData.parentReference.id,
+          DocUserType
         );
         if (res.data.message === "message sent successfully!") {
           toast.success("Replied Successfully", {
@@ -387,6 +410,7 @@ export default function CommentSection({
           autoClose: 1000,
         });
         setComments("");
+        setCommentToApi("")
         Getcomments();
       }
     } catch (err) {
@@ -460,7 +484,7 @@ export default function CommentSection({
                   {filteredEmails.map((email) => (
                     <li
                       key={email.email}
-                      onClick={() => handleEmailClick(email.email)}
+                      onClick={() => handleEmailClick(email)}
                       // onMouseOver={() => handleEmailMouseOver(email.email)}
                       className="email-suggestion-item"
                     >
@@ -484,6 +508,7 @@ export default function CommentSection({
                   className="btn_cancel text-muted"
                   onClick={() => {
                     setComments("");
+                    setCommentToApi("")
                     setAnnotationDrawBox("");
                   }}
                 >
@@ -574,6 +599,7 @@ export default function CommentSection({
                       getCommentsReplyList();
                       setFilteredEmails([]);
                       setComments("")
+                      setCommentToApi("")
                       setSelectedAdmin("")
                       // setSelectedAdminReplye("")
                     }}
@@ -640,7 +666,7 @@ export default function CommentSection({
                                 : ""}
                             </div>
                             <div className="text-gray font-size-2 font-weight-normal m-0 text-capitalize">
-                             <ConvertTime _date={commentItem.created_on} format={"HH:mm D MMM"}/>
+                              <ConvertTime _date={commentItem.created_on} format={"HH:mm D MMM"} />
                               {/* {moment(commentItem.created_on).format("HH:mm D MMM")} */}
                             </div>
                           </div>
@@ -649,7 +675,7 @@ export default function CommentSection({
 
                       {commentItem.subject_description && (
                         <span className="card-title text-break text-dark m-0 font-size-3">
-                          {commentItem.subject_description.replace(/@ /g, " ")}
+                          <div className="msg-color" dangerouslySetInnerHTML={{ __html: commentItem.subject_description.replace( " @ "," ") }} />
                         </span>
                       )}
                       {/* {commentItem.assigned_to && (
