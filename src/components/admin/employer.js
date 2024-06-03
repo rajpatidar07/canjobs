@@ -144,9 +144,9 @@ function Employer() {
                         className="text-capitalize nice-select pl-7 h-100 arrow-3 arrow-3-black form-control text-black-2 w-100"
                       >
                         <option value={""}>Client Corporation</option>
-                        {(Corporation || []).map((corporation) => (
+                        {(Corporation || []).map((corporation,i) => (
                           <option
-                            key={corporation.id}
+                            key={i}
                             value={corporation.value}
                           >
                             {corporation.value}
@@ -169,8 +169,8 @@ function Employer() {
                         className="text-capitalize nice-select pl-7 h-100 arrow-3 arrow-3-black form-control text-black-2 w-100"
                       >
                         <option value={""}>Client Industry</option>
-                        {(Industry || []).map((industry) => (
-                          <option key={industry.id} value={industry.value}>
+                        {(Industry || []).map((industry,i) => (
+                          <option key={i} value={industry.value}>
                             {industry.value}
                           </option>
                         ))}

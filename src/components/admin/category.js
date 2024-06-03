@@ -287,7 +287,7 @@ function Category() {
                     <option value={""}>Select category type</option>
                     {(CateType || []).map((data, i) => {
                       return (
-                        <option value={data.value} key={data.id}>
+                        <option value={data.value} key={i}>
                           {data.value}
                         </option>
                       );
@@ -473,8 +473,8 @@ function Category() {
                               <th className="bg-white"></th>
                             </tr>
                           ) : (
-                            (categoryTypeData || []).map((catdata) => (
-                              <tr className="" key={catdata.job_category_id}>
+                            (categoryTypeData || []).map((catdata,i) => (
+                              <tr className="" key={i}>
                                 <th className=" py-5">
                                   <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 ">
                                     {catdata.category_type}

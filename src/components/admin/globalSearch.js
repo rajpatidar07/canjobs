@@ -107,10 +107,10 @@ function GlobalSearch() {
                 <h5 className="font-size-2 font-weight-bold m-0 border-bottom text-uppercase">
                   Applicants
                 </h5>
-                {searchData["employee"].map((data) => (
+                {searchData["employee"].map((data,i) => (
                   <GlobalSearchCard
                     to={`/${data.employee_id}`}
-                    key={data.employee_id} // Add a unique key to each rendered element
+                    key={i} // Add a unique key to each rendered element
                     name={data.name}
                     mobile={data.contact_no}
                     email={data.email}
@@ -123,9 +123,9 @@ function GlobalSearch() {
                 <h5 className="font-size-2 font-weight-bold m-0 border-bottom text-uppercase">
                   Clients
                 </h5>
-                {searchData["employer"].map((data) => (
+                {searchData["employer"].map((data,i) => (
                   <GlobalSearchCard
-                    key={data.company_id} // Add a unique key to each rendered element
+                    key={i} // Add a unique key to each rendered element
                     name={data.contact_person_name}
                     mobile={data.contact_no}
                     email={data.email}
@@ -141,9 +141,9 @@ function GlobalSearch() {
                 <h5 className="font-size-2 font-weight-bold m-0 border-bottom text-uppercase">
                   Partners
                 </h5>
-                {searchData["agent"].map((data) => (
+                {searchData["agent"].map((data,i) => (
                   <GlobalSearchCard
-                    key={data.id} // Add a unique key to each rendered element
+                    key={i} // Add a unique key to each rendered element
                     name={data.name}
                     mobile={data.contact_no}
                     email={data.email}
@@ -156,9 +156,9 @@ function GlobalSearch() {
                 <h5 className="font-size-2 font-weight-bold m-0 border-bottom text-uppercase">
                   Admins
                 </h5>
-                {searchData["admin"].map((data) => (
+                {searchData["admin"].map((data,i) => (
                   <GlobalSearchCard
-                    key={data.admin_id} // Add a unique key to each rendered element
+                    key={i} // Add a unique key to each rendered element
                     name={data.name}
                     mobile={data.contact_no}
                     email={data.email}

@@ -113,8 +113,8 @@ function EmailTemplate() {
                       </tr>
                     </thead>
                     <tbody>
-                      {(emailData || []).map((email) => (
-                        <tr className="text-capitalize" key={email.id}>
+                      {(emailData || []).map((email,i) => (
+                        <tr className="text-capitalize" key={i}>
                           <td className=" py-5">
                             <div className="font-size-3 font-weight-normal text-black-2 mb-0 text-capitalize">
                               {email.id}

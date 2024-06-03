@@ -103,7 +103,7 @@ export default function ApplicantsFilter({
         }
       >
         <p className="input_label">Search Candidate:</p>
-        <div className="input-group mb-3">
+        <div className="input-group ">
           <input
             required
             type="text"

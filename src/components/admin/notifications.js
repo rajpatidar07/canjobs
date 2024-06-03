@@ -49,11 +49,13 @@ function Notifications({
         setNotiication([]);
         setTotalNotif();
       } else {
-        setNotiication(Response.Data.data);
+        setNotiication(user_type === "agent" ? Response.Data.data.filter((item) => item.document_user_type !== "employer") : Response.Data.data);
         setTotalNotif(
-          Response.Data.data.filter(
-            (item) => item.is_read === 0 || item.is_read === "0"
-          ).length
+          user_type === "agent"
+            ? Response.Data.data.filter((item) => (item.document_user_type !== "employer" && (item.is_read === 0 || item.is_read === "0"))).length :
+            Response.Data.data.filter(
+              (item) => item.is_read === 0 || item.is_read === "0"
+            ).length
         );
       }
     } catch (err) {
@@ -259,9 +261,10 @@ function Notifications({
                   <li
                     key={data.id}
                     className={
-                      data.is_read === "1"
-                        ? "dropdown-item border-bottom border-hit-gray font-size-3 text-wrap"
-                        : "font-weight-bold bg-light dropdown-item border-bottom border-hit-gray font-size-3 text-wrap"
+                      `dropdown-item border-bottom border-hit-gray font-size-3 text-wrap ${data.is_read === "1"
+                        ? ""
+                        : "font-weight-bold bg-light "
+                      }`
                     }
                     style={{ padding: "10px", borderBottom: "1px solid #ddd" }}
                   >
@@ -340,7 +343,7 @@ function Notifications({
                         </div>
                       </div>
                       <div className="text-muted font-size-2 line-height-1 ml-2">
-                        <ConvertTime _date={data.created_at} format={'LLL'}/>
+                        <ConvertTime _date={data.created_at} format={'LLL'} />
                         {/* {moment(data.created_at).format("HH:mm")} */}
                       </div>
                     </Link>

@@ -51,8 +51,8 @@ const DashboardCard = (props) => {
                 </tr>
               </thead>
               <tbody>
-                {(LMIAdata || []).map((item) => (
-                  <tr className="text-capitalize">
+                {(LMIAdata || []).map((item,i) => (
+                  <tr className="text-capitalize" key={i}>
                     <td>{item.company_name}</td>
                     <td>{item.job_title}</td>
                     <td>{item.name}</td>

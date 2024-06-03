@@ -664,9 +664,9 @@ function JobDetailpageAdmim(props) {
                                   </h4>
                                   {skill.length > 0 ? (
                                     <ul className="list-unstyled d-flex align-items-center flex-wrap row px-2">
-                                      {(skill || []).map((skill) =>
+                                      {(skill || []).map((skill,i) =>
                                         skill === "" ? null : (
-                                          <li key={skill}>
+                                          <li key={i}>
                                             <span className="text-capitalize bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2 m-1 text-break">
                                               {skill}
                                             </span>

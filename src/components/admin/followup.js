@@ -191,9 +191,9 @@ function Followup() {
                         className="text-capitalize form-control"
                       >
                         <option value="">Select Category</option>
-                        {(Json.Category || []).map((data) => {
+                        {(Json.Category || []).map((data,i) => {
                           return (
-                            <option value={data.id} key={data.value}>
+                            <option value={i} key={data.value}>
                               {data.value}
                             </option>
                           );
@@ -237,9 +237,9 @@ function Followup() {
                         className=" form-control"
                       >
                         <option value="">Select Skill</option>
-                        {(Json.Skill || []).map((data) => {
+                        {(Json.Skill || []).map((data,i) => {
                           return (
-                            <option value={data.value} key={data.id}>
+                            <option value={i} key={data.id}>
                               {data.value}
                             </option>
                           );
@@ -441,8 +441,8 @@ function Followup() {
                             <th className="bg-white"></th>
                           </tr>
                         ) : (
-                          (jobData || []).map((job) => (
-                            <React.Fragment key={job.job_id}>
+                          (jobData || []).map((job,i) => (
+                            <React.Fragment key={i}>
                               <tr
                                 className="text-capitalize aos-init aos-animate"
                                 data-aos="fade-right"

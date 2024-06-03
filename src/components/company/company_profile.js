@@ -112,7 +112,7 @@ function CompanyProfileDetail(props) {
 
   return (
     <div>
-      {user_type === "admin" && (
+      {(user_type === "admin" || user_type === "agent") && (
         <>
           <AdminHeader
             heading={
@@ -140,15 +140,15 @@ function CompanyProfileDetail(props) {
         </>
       )}
       <ToastContainer />
-      {user_type !== "admin" ? <EmployeeHeader /> : null}
+      {user_type === "admin" || user_type === "agent" ? null : <EmployeeHeader />}
       <div
         className={
-          user_type === "admin"
+          user_type === "admin" || user_type === "agent"
             ? "dashboard-main-container bg-light mt-12 mt-lg-12"
             : "bg-default-2 pt-30 pt-lg-22 pb-lg-27"
         }
       >
-        <div className={`container${user_type === "admin" ? "-fluid" : ""}`}>
+        <div className={`container${user_type === "admin" || user_type === "agent" ? "-fluid" : ""}`}>
           <div className="row text-left mt-5 pt-0">
             <div className="col-12 mb-1 d-none">
               <div className="bg-white shadow-9 d-flex">
@@ -594,7 +594,7 @@ function CompanyProfileDetail(props) {
                                           title="Est. Since"
                                         >
                                           <i className="fas fa-business-time mr-2"></i>
-                                          <ConvertTime _date={employerData.company_start_date} format={"YYYY"}/>
+                                          <ConvertTime _date={employerData.company_start_date} format={"YYYY"} />
                                           {/* {moment(
                                             employerData.company_start_date
                                           ).format("YYYY")} */}

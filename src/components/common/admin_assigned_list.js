@@ -145,10 +145,10 @@ export default function Admin_assigned_list(props) {
                     ) : (
                         <>
                             {(adminData || []).map((data) => (
-                                <div className="rounded bg-light p-4 mb-1">
+                                <div className="rounded bg-light p-4 mb-1" key={data.id}>
                                     <div
                                         className="d-flex align-items-center position-relative"
-                                        key={data.id}
+
                                     >
                                         {data.profile_image === null ? (
                                             <img

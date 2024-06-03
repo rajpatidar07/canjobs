@@ -187,9 +187,9 @@ function LimaContainer(props) {
                         >
                           <option value="">Job Category</option>
                           {Json &&
-                            (Json.Category || []).map((data) => {
+                            (Json.Category || []).map((data,i) => {
                               return (
-                                <option value={data.id} key={data.id}>
+                                <option value={data.id} key={i}>
                                   {data.value}
                                 </option>
                               );
@@ -233,9 +233,9 @@ function LimaContainer(props) {
                           className="text-capitalize form-control"
                         >
                           <option value="">Job Skill</option>
-                          {(Skill || []).map((data) => {
+                          {(Skill || []).map((data,i) => {
                             return (
-                              <option value={data.value} key={data.id}>
+                              <option value={data.value} key={i}>
                                 {data.value}
                               </option>
                             );
@@ -257,9 +257,9 @@ function LimaContainer(props) {
                           className="text-capitalize form-control"
                         >
                           <option value="">Job Location</option>
-                          {(FilterJson.location || []).map((data) => {
+                          {(FilterJson.location || []).map((data,i) => {
                             return (
-                              <option value={data} key={data}>
+                              <option value={data} key={i}>
                                 {data}
                               </option>
                             );

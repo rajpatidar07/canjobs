@@ -178,8 +178,8 @@ export default function AdminLoginFrom({ setAdminLoggedIn,setLoginCondition }) {
                   {/*----ERROR MESSAGE FOR EMAIL----*/}
                   {errors.email && (
                     <span>
-                      {errors.email.map((error) => (
-                        <span key={error} className="text-danger font-size-3">
+                      {errors.email.map((error,i) => (
+                        <span key={i} className="text-danger font-size-3">
                           {error}
                         </span>
                       ))}
@@ -210,8 +210,8 @@ export default function AdminLoginFrom({ setAdminLoggedIn,setLoginCondition }) {
                     {/*----ERROR MESSAGE FOR PASSWORD----*/}
                     {errors.password && (
                       <span>
-                        {errors.password.map((error) => (
-                          <span key={error} className="text-danger font-size-3">
+                        {errors.password.map((error,i) => (
+                          <span key={i} className="text-danger font-size-3">
                             {error}
                           </span>
                         ))}
@@ -220,8 +220,8 @@ export default function AdminLoginFrom({ setAdminLoggedIn,setLoginCondition }) {
                   </div>
                   {errors.Credentials && (
                     <span>
-                      {errors.Credentials.map((error) => (
-                        <span key={error} className="text-danger font-size-3">
+                      {errors.Credentials.map((error,i) => (
+                        <span key={i} className="text-danger font-size-3">
                           {error}
                         </span>
                       ))}

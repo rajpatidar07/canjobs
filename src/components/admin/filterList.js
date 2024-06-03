@@ -112,7 +112,7 @@ function FilterList() {
                             <p> No Data Found</p>
                           ) : (
                             (filterData.Skill || []).map((data, i) => (
-                              <React.Fragment key={data.id}>
+                              <React.Fragment key={i}>
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
@@ -156,7 +156,7 @@ function FilterList() {
                           ) : (
                             (filterData.Industry || []
                             ).map((data, i) => (
-                              <React.Fragment key={data.id}>
+                              <React.Fragment key={i}>
                                 <li className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
                                   {data.value}
                                   <Link onClick={() => ShowDeleteAlert(data, 4)} title="Delete">
@@ -189,8 +189,8 @@ function FilterList() {
                           {filterData.Education && filterData.Education.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
-                            (filterData.Education || []).map((data) => (
-                              <React.Fragment key={data.id}>
+                            (filterData.Education || []).map((data,i) => (
+                              <React.Fragment key={i}>
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
@@ -231,7 +231,7 @@ function FilterList() {
                             <p> No Data Found</p>
                           ) : (
                             (filterData.Corporation || []).map((data, i) => (
-                              <React.Fragment key={data.id}>
+                              <React.Fragment key={i}>
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
@@ -271,8 +271,8 @@ function FilterList() {
                           {filterData.Language && filterData.Language.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
-                            (filterData.Language || []).map((data) => (
-                              <React.Fragment key={data.id}>
+                            (filterData.Language || []).map((data,i) => (
+                              <React.Fragment key={i}>
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
