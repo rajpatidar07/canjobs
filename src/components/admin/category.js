@@ -13,19 +13,19 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SAlert from "../common/sweetAlert";
 import Pagination from "../common/pagination";
-import AddCategoryType from "../forms/admin/categoryType";
+// import AddCategoryType from "../forms/admin/categoryType";
 import Loader from "../common/loader";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { LiaEdit } from "react-icons/lia";
 function Category() {
   /*Modal and Data states */
   let [isLoading, setIsLoading] = useState(true);
-  let [isLoading2, setIsLoading2] = useState(true);
+  // let [isLoading2, setIsLoading2] = useState(true);
   let [apiCall, setApiCall] = useState(false);
   let [showAddCategoryModal, setShowAddCategoryModal] = useState(false);
-  let [showAddCategoryTypeModal, setShowAddCategoryTypeModal] = useState(false);
+  // let [showAddCategoryTypeModal, setShowAddCategoryTypeModal] = useState(false);
   const [categoryData, setCategoryData] = useState([]);
-  const [categoryTypeData, setCategoryTypeData] = useState([]);
+  // const [categoryTypeData, setCategoryTypeData] = useState([]);
   const [CategoryId, setCategoryId] = useState([]);
   const [CateType, setCateType] = useState([]);
   /*Delete Category states */
@@ -40,9 +40,9 @@ function Category() {
   const [totalData, setTotalData] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage] = useState(10);
-  const [TypetotalData, setTypeTotalData] = useState("");
-  const [TypecurrentPage, setTypeCurrentPage] = useState(1);
-  const [TyperecordsPerPage] = useState(10);
+  // const [TypetotalData, setTypeTotalData] = useState("");
+  // const [TypecurrentPage, setTypeCurrentPage] = useState(1);
+  // const [TyperecordsPerPage] = useState(10);
   /*Shorting states */
   const [columnName, setcolumnName] = useState("job_category_id");
   const [sortOrder, setSortOrder] = useState("DESC");
@@ -94,35 +94,35 @@ function Category() {
     }
   };
   /* Function to get the job category Type data*/
-  const CategoryTypeData = async () => {
-    try {
-      const userData = await getAllJobsCategory(
-        0,
-        "",
-        "",
-        TypecurrentPage,
-        TyperecordsPerPage,
-        "job_category_id",
-        "DESC"
-      );
-      if (userData.data.length === 0) {
-        setCategoryTypeData([]);
-        setIsLoading2(false);
-      } else {
-        setCategoryTypeData(userData.data);
-        const FilterByType = userData.data
-          ? userData.data.filter(
-              (thing, index, self) =>
-                index === self.findIndex((t) => t.value === thing.value)
-            )
-          : [];
-        setTypeTotalData(FilterByType.length);
-        setIsLoading2(false);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const CategoryTypeData = async () => {
+  //   try {
+  //     const userData = await getAllJobsCategory(
+  //       0,
+  //       "",
+  //       "",
+  //       TypecurrentPage,
+  //       TyperecordsPerPage,
+  //       "job_category_id",
+  //       "DESC"
+  //     );
+  //     if (userData.data.length === 0) {
+  //       setCategoryTypeData([]);
+  //       setIsLoading2(false);
+  //     } else {
+  //       setCategoryTypeData(userData.data);
+  //       const FilterByType = userData.data
+  //         ? userData.data.filter(
+  //             (thing, index, self) =>
+  //               index === self.findIndex((t) => t.value === thing.value)
+  //           )
+  //         : [];
+  //       setTypeTotalData(FilterByType.length);
+  //       setIsLoading2(false);
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
   /*Render function to get the job category*/
   useEffect(() => {
     JsonData();
@@ -143,16 +143,16 @@ function Category() {
     sortOrder,
   ]);
   /*Render function to get the job category Type*/
-  useEffect(() => {
-    CategoryTypeData();
-    if (apiCall === true) {
-      setApiCall(false);
-    }
-    if ((search === "") === true) {
-      setSearchError("");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [TypecurrentPage, apiCall, columnName, sortOrder]);
+  // useEffect(() => {
+  //   CategoryTypeData();
+  //   if (apiCall === true) {
+  //     setApiCall(false);
+  //   }
+  //   if ((search === "") === true) {
+  //     setSearchError("");
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [TypecurrentPage, apiCall, columnName, sortOrder]);
 
   /* Function to show the single data to update job category*/
   const editJobCategory = (e) => {
@@ -161,16 +161,16 @@ function Category() {
   };
 
   /* Function to show the single data to update job category*/
-  const addJobCategoryType = (e) => {
-    setShowAddCategoryTypeModal(true);
-    setCategoryId(e);
-  };
+  // const addJobCategoryType = (e) => {
+  //   setShowAddCategoryTypeModal(true);
+  //   setCategoryId(e);
+  // };
 
   /* Function to show the single data to update job category Type*/
-  const editJobCategoryType = (e) => {
-    setShowAddCategoryTypeModal(true);
-    setCategoryId(e);
-  };
+  // const editJobCategoryType = (e) => {
+  //   setShowAddCategoryTypeModal(true);
+  //   setCategoryId(e);
+  // };
   /*To Show the delete alert box */
   const ShowDeleteAlert = (e) => {
     setDeleteID(e.job_category_id);
@@ -216,7 +216,7 @@ function Category() {
   };
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
-  const TypenPages = Math.ceil(TypetotalData / TyperecordsPerPage);
+  // const TypenPages = Math.ceil(TypetotalData / TyperecordsPerPage);
   /*Sorting Function */
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
@@ -242,7 +242,7 @@ function Category() {
               close={() => setShowAddCategoryModal(false)}
             />
           ) : null}
-          {showAddCategoryTypeModal ? (
+          {/* {showAddCategoryTypeModal ? (
             <AddCategoryType
               show={showAddCategoryTypeModal}
               jobCategoryData={CategoryId}
@@ -250,7 +250,7 @@ function Category() {
               setApiCall={setApiCall}
               close={() => setShowAddCategoryTypeModal(false)}
             />
-          ) : null}
+          ) : null} */}
         </div>
         <div className="dashboard-main-container mt-16" id="dashboard-body">
           <div className="container-fluid">
@@ -271,7 +271,7 @@ function Category() {
                 />
               </div>
 
-              <div className="col p-1 form_group mb-3">
+              <div className="col p-1 form_group mb-3 d-none">
                 <p className="input_label">Category Type:</p>
                 <div className="select_div">
                   <select
@@ -304,19 +304,19 @@ function Category() {
                   >
                     Add Category
                   </CustomButton>
-                  <CustomButton
-                    className="font-size-3 rounded-3 btn btn-primary border-0"
+                  {/* <CustomButton
+                    className="font-size-3 rounded-3 btn btn-primary border-0 d-none"
                     onClick={() => addJobCategoryType("0")}
                     title="Add Category"
                   >
                     Add Category Type
-                  </CustomButton>
+                  </CustomButton> */}
                 </div>
               </div>
             </div>
             <small className="text-danger">{searcherror}</small>
             <div className="row">
-              <div className="col-6 mb-18">
+              <div className="col-12 mb-18">
                 <h3 className="font-size-5 mb-0">Category</h3>
                 <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5 ">
                   <div className="table-responsive main_table_div">
@@ -344,7 +344,7 @@ function Category() {
                             </th>
                             <th
                               scope="col"
-                              className=" border-0 font-size-4 font-weight-normal"
+                              className=" border-0 font-size-4 font-weight-normal d-none"
                             >
                               <Link
                                 to={""}
@@ -387,7 +387,7 @@ function Category() {
                                     {catdata.category_name}
                                   </div>
                                 </th>
-                                <th className=" py-5">
+                                <th className=" py-5 d-none">
                                   <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                     {catdata.parent_type}
                                   </h3>
@@ -438,7 +438,7 @@ function Category() {
                   />
                 </div>
               </div>
-              <div className="col-6 mb-18">
+              {/* <div className="col-6 mb-18 d-none">
                 <h3 className="font-size-5 mb-0">Category type</h3>
                 <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5 d-flex  justify-content-between ">
                   <div className="table-responsive main_table_div">
@@ -463,7 +463,7 @@ function Category() {
                           </tr>
                         </thead>
                         <tbody>
-                          {/* Map function to show the data in the list*/}
+                          // Map function to show the data in the list*
                           {TypetotalData === 0 ||
                           categoryTypeData.length === 0 ? (
                             <tr>
@@ -495,7 +495,6 @@ function Category() {
                                       <span className="text-gray">
                                         <LiaEdit />
                                       </span>
-                                      {/* <span className=" fas fa-edit text-gray"></span> */}
                                     </button>
                                   </div>
                                 </th>
@@ -507,7 +506,7 @@ function Category() {
                     )}
                   </div>
                 </div>
-                {/* <!-- Pagination- --> */}
+                <!-- Pagination- -->
                 <div className="pt-2">
                   <Pagination
                     nPages={TypenPages}
@@ -517,7 +516,7 @@ function Category() {
                     count={categoryTypeData.length}
                   />
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
           {/* <!-- Delete Sweet Alert- --> */}

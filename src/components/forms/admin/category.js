@@ -21,8 +21,8 @@ function AddCategory(props) {
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     category_name: "",
-    category_type: "",
-    parent_id: "",
+    category_type: "Other",
+    parent_id: "1",
     job_category_id: "",
   };
   // VALIDATION CONDITIONS
@@ -39,12 +39,12 @@ function AddCategory(props) {
           ? "Category Name should have 2 or more letters"
           : "",
     ],
-    category_type: [
-      (value) =>
-        value === "" || value.trim() === ""
-          ? "Category Type is required"
-          : null,
-    ],
+    // category_type: [
+    //   (value) =>
+    //     value === "" || value.trim() === ""
+    //       ? "Category Type is required"
+    //       : null,
+    // ],
   };
 
   // CUSTOM VALIDATIONS IMPORT
@@ -152,7 +152,7 @@ function AddCategory(props) {
             ) : (
               <h5 className="text-center pt-2 mb-7">Update Category</h5>
             )}
-            <div className="form-group row mb-0 ">
+            <div className="form-group row mb-0 d-none">
               <label
                 htmlFor="category_type"
                 className="font-size-4 text-black-2 mx-6 line-height-reset"

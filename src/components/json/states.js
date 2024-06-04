@@ -1,5 +1,5 @@
 let states = {
-  Alberta: [
+  "Alberta": [
     "Banff",
     "Brooks",
     "Calgary",
@@ -50,7 +50,7 @@ let states = {
     "West Vancouver",
     "White Rock",
   ],
-  Manitoba: [
+  "Manitoba": [
     "Brandon",
     "Churchill",
     "Dauphin",
@@ -108,8 +108,8 @@ let states = {
     "Sydney",
     "Yarmouth",
   ],
-  Nunavut: ["Iqaluit"],
-  Ontario: [
+  "Nunavut": ["Iqaluit"],
+  "Ontario": [
     "Bancroft",
     "Barrie",
     "Belleville",
@@ -182,7 +182,7 @@ let states = {
     "Souris",
     "Summerside",
   ],
-  Quebec: [
+  "Quebec": [
     "Asbestos",
     "Baie-Comeau",
     "Beloeil",
@@ -228,7 +228,7 @@ let states = {
     "Val-d’Or",
     "Waskaganish",
   ],
-  Saskatchewan: [
+  "Saskatchewan": [
     "Batoche",
     "Cumberland House",
     "Estevan",
@@ -239,6 +239,6 @@ let states = {
     "Saskatoon",
     "Uranium City",
   ],
-  Yukon: ["Dawson", "Watson Lake", "Whitehorse"],
+  "Yukon": ["Dawson", "Watson Lake", "Whitehorse"],
 };
 export default states;
