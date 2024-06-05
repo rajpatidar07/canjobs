@@ -155,12 +155,12 @@ const AdminSidebar = (props) => {
             </Link>
           </li>
           <li
-            className={
-              user_type === "agent"
+            className={`d-none 
+             ${ user_type === "agent"
                 ? "d-none"
                 : props.heading === "Manage Self Jobs"
                 ? "active"
-                : ""
+                : ""}`
             }
           >
             <Link

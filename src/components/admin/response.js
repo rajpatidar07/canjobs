@@ -1154,7 +1154,7 @@ function JobResponse(props) {
           resData={resData}
           apiCall={apiCall}
           setApiCall={setApiCall}
-          // job={"no"}
+          job={"no"}
           close={() => {
             setShowLmiaAdditionalInfobModal(false);
             setResData("");

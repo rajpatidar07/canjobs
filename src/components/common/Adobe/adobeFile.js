@@ -102,7 +102,8 @@ const AdobePDFViewer = ({
                   );
                 }
               }, eventOptions);
-                        })
+
+            })
             .catch((e) => {
               console.log("Error getting Annotation Manager:", e);
             });      

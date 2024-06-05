@@ -204,7 +204,7 @@ function JobDetailpageAdmim(props) {
                     ) : (
                       <>
                         <div className="info_box text-left text-capitalize text-break">
-                          {jobData.location ? (
+                          {jobData.your_duties ? (
                             <span
                               className="font-size-3 text-smoke  mr-7"
                               title="Current Location"
@@ -386,16 +386,21 @@ function JobDetailpageAdmim(props) {
                                     : ""}</small>
                               </h5>
 
-                              <hr className="my-3" />
+                              <hr className={`my-3 ${!jobData.location &&
+                                !jobData.language &&
+                                !jobData.address &&
+                                !jobData.your_duties ? "d-none" : ""}`} />
                               <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap w-100">
                                 {!jobData.location &&
                                   !jobData.language &&
-                                  !jobData.address ? (
+                                  !jobData.address &&
+                                  !jobData.your_duties ? (
                                   ""
                                 ) : (
                                   <>
+
                                     <div className="info_box text-left text-capitalize">
-                                      {jobData.location ? (
+                                      {jobData.your_duties ? (
                                         <div
                                           className="font-size-3 text-smoke mr-7"
                                           title="Current Location"
@@ -664,7 +669,7 @@ function JobDetailpageAdmim(props) {
                                   </h4>
                                   {skill.length > 0 ? (
                                     <ul className="list-unstyled d-flex align-items-center flex-wrap row px-2">
-                                      {(skill || []).map((skill,i) =>
+                                      {(skill || []).map((skill, i) =>
                                         skill === "" ? null : (
                                           <li key={i}>
                                             <span className="text-capitalize bg-regent-opacity-15 min-width-px-96 mr-3 text-center rounded-3 px-6 py-1 font-size-3 text-black-2 mt-2 m-1 text-break">

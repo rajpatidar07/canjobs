@@ -142,10 +142,10 @@ function AddJobModal(props) {
         value === "" || value.trim() === "" ? "Job category is required" : null,
     ],
     company_id: [(value) => (value === "" ? "Client is required" : null)],
-    salary: [
-      (value) =>
-        /^\d*\.?\d*$/.test(value) ? "" : "Salary can not have a characters",
-    ],
+    // salary: [
+    //   (value) =>
+    //     !/^\d*\.?\d*$/.test(value) ?  "Salary can not have a characters":"",
+    // ],
   };
   // CUSTOM VALIDATIONS IMPORT
   const { state, setErrors, setState, onInputChange, errors, validate } =

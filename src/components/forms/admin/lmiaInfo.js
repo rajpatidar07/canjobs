@@ -3,21 +3,29 @@ import { Modal } from 'react-bootstrap'
 import useValidation from '../../common/useValidation';
 import moment from 'moment';
 import { toast } from "react-toastify"
-import { AddLmiaAdditionalInformation } from '../../../api/api';
+import { AddLmiaAdditionalInformationJob, AddLmiaAdditionalInformationEmployee } from '../../../api/api';
 export default function LmiaInfo(props) {
     const [loading, setLoading] = useState(false)
-console.log(props.resData)
+    console.log(props.resData)
     // USER CATEGORY VALIDATION
 
     // INITIAL STATE ASSIGNMENT
-    const initialFormState = {
-        apply_id: props.resData.apply_id,
-        lmia_number: "",
-        creation_date: "",
-        submissiom_date: "",
-        payment_status: "",
-        payment_by: "",
-    };
+    const initialFormState = props.job === "yes" ?
+        {
+            job_id: props.resData.job_id,
+            lmia_number: props.resData.lmia_number || "",
+            creation_date: props.resData.lmia_creation_date || "",
+            submissiom_date: props.resData.lmia_submissiom_date || "",
+            payment_status: props.resData.lmia_payment_status || "",
+            payment_by: props.resData.lmia_payment_by || "",
+        } : {
+            apply_id: props.resData.apply_id,
+            lmia_number: props.resData.lmia_number || "",
+            creation_date: props.resData.creation_date || "",
+            submissiom_date: props.resData.submissiom_date || "",
+            payment_status: props.resData.payment_status || "",
+            payment_by: props.resData.payment_by || "",
+        };
     //   VALIDATION CONDITIONS
     const validators = {
         lmia_number: [
@@ -41,7 +49,7 @@ console.log(props.resData)
     };
 
     // CUSTOM VALIDATIONS IMPORT
-    const { state,setState, onInputChange, errors, setErrors/*, validate*/ } =
+    const { state, setState, onInputChange, errors, setErrors/*, validate*/ } =
         useValidation(initialFormState, validators);
     /*function to close modalll */
     let close = () => {
@@ -51,12 +59,16 @@ console.log(props.resData)
         setErrors("");
     }
     /*FUnction to update additional lmia info */
-    const onAddInfo = async () => {
+    const onAddInfo = async (e) => {
+        e.preventDefault()
         setLoading(true)
         try {
-            let res = await AddLmiaAdditionalInformation(state)
+            let res = props.job === "yes"
+                ? await AddLmiaAdditionalInformationJob(state)
+                : await AddLmiaAdditionalInformationEmployee(state)
+                console.log(res)
             if (res.message === 'Data updated successfully') {
-                toast.success("INformation Added successfully", {
+                toast.success("Information Added successfully", {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 1000,
                 });
@@ -87,7 +99,7 @@ console.log(props.resData)
                 <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
                     <h5 className="text-center pt-2 mb-7">Add LMIA Additional Info</h5>
                     <form
-                    // onSubmit={onAddInfo}
+                    onSubmit={(e)=>onAddInfo(e)}
                     >
                         <div className="form-group">
                             <label
@@ -265,8 +277,8 @@ console.log(props.resData)
                             ) : (
                                 <button
                                     className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
-                                    type="button"
-                                    onClick={onAddInfo}
+                                    type="submit"
+                                    // onClick={onAddInfo}
                                 >
                                     Submit
                                 </button>

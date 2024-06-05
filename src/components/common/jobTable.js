@@ -22,6 +22,7 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import { MdFormatListBulletedAdd } from "react-icons/md";
 import { GrDocumentUpload } from "react-icons/gr";
 import ConvertTime from "./ConvertTime";
+import LmiaInfo from "../forms/admin/lmiaInfo";
 export default function JobTable(props) {
   /*show Modal and props state */
   let [isLoading, setIsLoading] = useState(true);
@@ -29,6 +30,7 @@ export default function JobTable(props) {
   let [showAddCompanyDocModal, setShowAddCompanyDocModal] = useState(false);
   let [openLimia, setOpenLimia] = useState(false);
   let [showCandidateModal, setShowCandidateModal] = useState(false);
+  let [showLmiaAdditionalInfobModal, setShowLmiaAdditionalInfobModal] = useState(false);
   let [apiCall, setApiCall] = useState(false);
   const [jobData, setjobData] = useState([]);
   const [lmiaStatus, setLmiaStatus] = useState([]);
@@ -55,8 +57,8 @@ export default function JobTable(props) {
   let job_id = location.state
     ? location.state.id
     : location.pathname === "/job_detail"
-    ? localStorage.getItem("job_id")
-    : "";
+      ? localStorage.getItem("job_id")
+      : "";
   /* Function to get Job data*/
   const JobData = async () => {
     setIsLoading(true);
@@ -209,7 +211,11 @@ export default function JobTable(props) {
   // const JobDetail = (e) => {
   //   props.JobDetail(e);
   // };
-
+  /*FUnction to open additionlima info modal */
+  const AdditionalLmiaInfo = (e) => {
+    setShowLmiaAdditionalInfobModal(true)
+    setJobId(e);
+  }
   /* Function to show the Table of the employee of perticular skill */
   const matchingCandidates = (e) => {
     setShowCandidateModal(true);
@@ -351,7 +357,7 @@ export default function JobTable(props) {
                   {props.heading === "Dashboard" ? null : (
                     <th
                       scope="col"
-                      className=" border-0 font-size-4 font-weight-normal"
+                      className=" border-0 font-size-4 font-weight-normal d-none"
                     >
                       <Link
                         to=""
@@ -366,7 +372,7 @@ export default function JobTable(props) {
                   {props.heading === "Dashboard" ? null : (
                     <th
                       scope="col"
-                      className=" border-0 font-size-4 font-weight-normal"
+                      className=" border-0 font-size-4 font-weight-normal d-none"
                     >
                       <Link
                         to=""
@@ -387,9 +393,11 @@ export default function JobTable(props) {
                         to=""
                         onClick={() => handleSort("created_at")}
                         className="text-gray"
-                        title="Sort by posting date"
+                        title={`Sort by ${user_type === "admin" &&
+                          props.response === "lmia" ? "submission" : "posting"} date`}
                       >
-                        Posting Date
+                        {user_type === "admin" &&
+                          props.response === "lmia" ? "Submission" : "Posting"} date
                       </Link>
                     </th>
                   )}
@@ -440,8 +448,8 @@ export default function JobTable(props) {
                     LMIA status
                   </th>
                   {props.heading === "Dashboard" ||
-                  user_type === "user" ||
-                  user_type === "company" ? null : (
+                    user_type === "user" ||
+                    user_type === "company" ? null : (
                     <th
                       scope="col"
                       className=" border-0 font-size-4 font-weight-normal"
@@ -525,14 +533,14 @@ export default function JobTable(props) {
                             </th>
                           )}
                           {props.heading === "Dashboard" ? null : (
-                            <th className="py-5 ">
+                            <th className="py-5 d-none">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {job.education ? job.education : "N/A"}
                               </h3>
                             </th>
                           )}
                           {props.heading === "Dashboard" ? null : (
-                            <th className="py-5 ">
+                            <th className="py-5 d-none">
                               <h3
                                 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
                                 title={job.keyskill}
@@ -546,14 +554,23 @@ export default function JobTable(props) {
                               <h3
                                 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
                                 title={
-                                  <ConvertTime _date={job.created_at} format={"DD MMMM, YYYY"}/>
-                                //   moment(job.created_at).format(
-                                //   "DD MMMM, YYYY"
-                                // ) 
-                              }
+                                  ConvertTime({
+                                    _date: (user_type === "admin" &&
+                                      props.response === "lmia")
+                                      ? job.lmia_submissiom_date
+                                      : job.created_at
+                                    , format: "DD MMMM, YYYY"
+                                  })
+                                  //   moment(job.created_at).format(
+                                  //   "DD MMMM, YYYY"
+                                  // ) 
+                                }
                               >
                                 {/* {job.created_at ? job.created_at : "N/A"} */}
-                                <ConvertTime _date={job.created_at} format={"DD MMMM, YYYY"}/>
+                               { <ConvertTime _date={(user_type === "admin" &&
+                                  props.response === "lmia")
+                                  ? job.lmia_submissiom_date
+                                  : job.created_at} format={"DD MMMM, YYYY"} />}
                                 {/* {moment(job.created_at).format("DD MMMM, YYYY")} */}
                               </h3>
                             </th>
@@ -567,10 +584,10 @@ export default function JobTable(props) {
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                               {job.experience_required}
                               {job.experience_required === "1-3 " ||
-                              job.experience_required === "1-2 " ||
-                              job.experience_required === "3-5 " ||
-                              job.experience_required === "5-7 " ||
-                              job.experience_required === "7+ "
+                                job.experience_required === "1-2 " ||
+                                job.experience_required === "3-5 " ||
+                                job.experience_required === "5-7 " ||
+                                job.experience_required === "7+ "
                                 ? "years"
                                 : ""}
                             </h3>
@@ -650,8 +667,8 @@ export default function JobTable(props) {
                             </div>
                           </th>
                           {props.heading === "Dashboard" ||
-                          user_type === "user" ||
-                          user_type === "company" ? null : (
+                            user_type === "user" ||
+                            user_type === "company" ? null : (
                             <th className="py-5 min-width-px-100">
                               <div
                                 className="btn-group button_group"
@@ -708,12 +725,12 @@ export default function JobTable(props) {
                                   //       Visa Responses
                                   //     </button> :
                                   props.skill === null ||
-                                  props.skill === undefined ||
-                                  Object.keys(props.skill).length === 0 ? (
+                                    props.skill === undefined ||
+                                    Object.keys(props.skill).length === 0 ? (
                                     <>
                                       <div
                                         className="btn-group button_group"
-                                        // role="group"
+                                      // role="group"
                                       >
                                         <button
                                           className="btn btn-outline-info action_btn"
@@ -726,8 +743,8 @@ export default function JobTable(props) {
                                                 ? false
                                                 : true
                                               : job.applied_by_admin > 0
-                                              ? false
-                                              : true
+                                                ? false
+                                                : true
                                           }
                                           title="Job Response"
                                         >
@@ -742,7 +759,7 @@ export default function JobTable(props) {
                                           <button
                                             className={
                                               user_type === "admin" &&
-                                              props.response === "lmia"
+                                                props.response === "lmia"
                                                 ? "btn btn-outline-info action_btn "
                                                 : "d-none"
                                             }
@@ -756,7 +773,7 @@ export default function JobTable(props) {
                                           <button
                                             className={
                                               props.response === "lmia" ||
-                                              props.response === "visa"
+                                                props.response === "visa"
                                                 ? "d-none"
                                                 : "btn btn-outline-info action_btn"
                                             }
@@ -764,11 +781,11 @@ export default function JobTable(props) {
                                               matchingCandidates(job)
                                             }
                                             title="All candidates"
-                                            // disabled={
-                                            //   Number(job.applied_by_admin) >= Number(job.role_category)
-                                            //     ? true
-                                            //     : false
-                                            // }
+                                          // disabled={
+                                          //   Number(job.applied_by_admin) >= Number(job.role_category)
+                                          //     ? true
+                                          //     : false
+                                          // }
                                           >
                                             <span className="text-gray px-2">
                                               <LiaUserTieSolid />
@@ -779,7 +796,7 @@ export default function JobTable(props) {
                                             className={
                                               (props.response === "lmia" &&
                                                 user_type === "admin") ||
-                                              props.response === "visa"
+                                                props.response === "visa"
                                                 ? "d-none"
                                                 : "btn btn-outline-info action_btn"
                                             }
@@ -796,8 +813,8 @@ export default function JobTable(props) {
                                             className={
                                               (props.response === "response" &&
                                                 location.pathname === "/job") ||
-                                              (user_type === "admin" &&
-                                                location.pathname ===
+                                                (user_type === "admin" &&
+                                                  location.pathname ===
                                                   "/job_detail")
                                                 ? "btn btn-outline-info action_btn"
                                                 : "d-none"
@@ -816,11 +833,22 @@ export default function JobTable(props) {
                                             </Link>
                                           </button>
                                           <button
-                                            className={`d-none ${
-                                              props.detail === "company_detail"
-                                                ? "d-none"
-                                                : "btn btn-outline-info action_btn"
-                                            }`}
+                                            className={
+                                              user_type === "admin" &&
+                                                props.response === "lmia"
+                                                ? "btn btn-outline-info action_btn "
+                                                : "d-none"
+                                            }
+                                            onClick={() => AdditionalLmiaInfo(job)}
+                                            title="Additional LMIA Info"
+                                          >
+                                            LMIA additional Info
+                                          </button>
+                                          <button
+                                            className={`d-none ${props.detail === "company_detail"
+                                              ? "d-none"
+                                              : "btn btn-outline-info action_btn"
+                                              }`}
                                             title="Client's document"
                                             onClick={() =>
                                               OpenAddDocModal(job.company_id)
@@ -833,7 +861,7 @@ export default function JobTable(props) {
                                           <button
                                             className={
                                               props.response === "lmia" ||
-                                              props.response === "visa"
+                                                props.response === "visa"
                                                 ? "d-none"
                                                 : "btn btn-outline-info action_btn"
                                             }
@@ -856,9 +884,9 @@ export default function JobTable(props) {
                                           ? true
                                           : false ||
                                             Number(job.applied_by_admin) >=
-                                              Number(job.role_category)
-                                          ? true
-                                          : false
+                                            Number(job.role_category)
+                                            ? true
+                                            : false
                                       }
                                       onClick={() =>
                                         onApplyJobClick(job.job_id)
@@ -876,14 +904,14 @@ export default function JobTable(props) {
                           )}
                         </tr>
                         {props.heading === "Dashboard" ||
-                        props.detail === "job_detail" ||
-                        user_type === "user" ? null : (
+                          props.detail === "job_detail" ||
+                          user_type === "user" ? null : (
                           <tr
                             className={
                               props.heading === "Dashboard" ||
-                              props.skill === null ||
-                              props.skill === undefined ||
-                              Object.keys(props.skill).length === 0
+                                props.skill === null ||
+                                props.skill === undefined ||
+                                Object.keys(props.skill).length === 0
                                 ? "col-12 "
                                 : "d-none"
                             }
@@ -904,135 +932,128 @@ export default function JobTable(props) {
                                   <div>
                                     <div
                                       key={i + 1}
-                                      className={`step text-capitalize ${
-                                        job.lmia_status === "advertisements" ||
+                                      className={`step text-capitalize ${job.lmia_status === "advertisements" ||
                                         job.lmia_status === "documentation" ||
                                         job.lmia_status ===
-                                          "candidate placement" ||
+                                        "candidate placement" ||
                                         job.lmia_status === "submission" ||
                                         job.lmia_status === "decision"
-                                          ? "approved"
-                                          : job.lmia_status === "onboarding"
+                                        ? "approved"
+                                        : job.lmia_status === "onboarding"
                                           ? "pending"
                                           : ""
-                                      }`}
+                                        }`}
                                     >
                                       <span>onboarding </span>
                                     </div>
                                     <div
                                       key={i + 2}
-                                      className={`step text-capitalize ${
-                                        job.lmia_status === "documentation" ||
+                                      className={`step text-capitalize ${job.lmia_status === "documentation" ||
                                         job.lmia_status ===
-                                          "candidate placement" ||
+                                        "candidate placement" ||
                                         job.lmia_status === "submission" ||
                                         job.lmia_status === "decision"
-                                          ? "approved"
-                                          : job.lmia_status === "advertisements"
+                                        ? "approved"
+                                        : job.lmia_status === "advertisements"
                                           ? "pending"
                                           : ""
-                                      }`}
+                                        }`}
                                     >
                                       <span>advertisements </span>
                                     </div>
                                     <div
                                       key={i + 3}
-                                      className={`step text-capitalize ${
-                                        job.lmia_status ===
-                                          "candidate placement" ||
+                                      className={`step text-capitalize ${job.lmia_status ===
+                                        "candidate placement" ||
                                         job.lmia_status === "submission" ||
                                         job.lmia_status === "decision"
-                                          ? "approved"
-                                          : job.lmia_status === "documentation"
+                                        ? "approved"
+                                        : job.lmia_status === "documentation"
                                           ? "pending"
                                           : ""
-                                      }`}
+                                        }`}
                                     >
                                       <span>documentation </span>
                                     </div>
                                     <div
                                       key={i + 4}
-                                      className={`step text-capitalize ${
-                                        job.lmia_status === "submission" ||
+                                      className={`step text-capitalize ${job.lmia_status === "submission" ||
                                         job.lmia_status === "decision"
-                                          ? "approved"
-                                          : job.lmia_status ===
-                                            "candidate placement"
+                                        ? "approved"
+                                        : job.lmia_status ===
+                                          "candidate placement"
                                           ? "pending"
                                           : ""
-                                      }`}
+                                        }`}
                                     >
                                       <span>candidate placement </span>
                                     </div>
                                     <div
                                       key={i + 5}
-                                      className={`step text-capitalize ${
-                                        job.lmia_status === "decision"
-                                          ? "approved"
-                                          : job.lmia_status === "submission"
+                                      className={`step text-capitalize ${job.lmia_status === "decision"
+                                        ? "approved"
+                                        : job.lmia_status === "submission"
                                           ? "pending"
                                           : ""
-                                      }`}
+                                        }`}
                                     >
                                       <span>submission </span>
                                     </div>
                                     {job.lmia_status === "decision" &&
-                                    lmiaStatusRejectComment ? (
+                                      lmiaStatusRejectComment ? (
                                       lmiaStatusRejectComment[0] !==
-                                        undefined &&
+                                      undefined &&
                                       (lmiaStatusRejectComment || []).map(
                                         (item, i) => {
                                           return (
                                             item === undefined ||
-                                            item === "undefined" ||
-                                            item === null ||
-                                            item === ""
+                                              item === "undefined" ||
+                                              item === null ||
+                                              item === ""
                                               ? null
                                               : item.job_id === job.job_id
                                           ) ? (
                                             <div
                                               key={i + 6}
-                                              className={`step text-capitalize ${
-                                                job.lmia_status ===
-                                                  "decision" &&
+                                              className={`step text-capitalize ${job.lmia_status ===
+                                                "decision" &&
                                                 item.lmia_substage ===
-                                                  "approved"
-                                                  ? "approved"
-                                                  : item.lmia_substage ===
-                                                    "rejected"
+                                                "approved"
+                                                ? "approved"
+                                                : item.lmia_substage ===
+                                                  "rejected"
                                                   ? "reject"
                                                   : "pending"
-                                              }`}
+                                                }`}
                                             >
                                               <span>
                                                 {item.lmia_substage ===
-                                                "approved"
+                                                  "approved"
                                                   ? "Approved"
                                                   : item.lmia_substage ===
                                                     "rejected"
-                                                  ? "Rejected"
-                                                  : "Awaiting Decision"}
+                                                    ? "Rejected"
+                                                    : "Awaiting Decision"}
                                               </span>
                                             </div>
                                           ) : // <small className="mx-10" key={i}>
-                                          // {item.lmia_substage === "approved"
-                                          //   ? "Congratulation your Limia is Approved"
-                                          //   : item.lmia_substage === "awaiting decision"
-                                          //   ? "Your Limia status is in progress"
-                                          //   : item.lmia_substage === "reject"
-                                          //   ? "Sorry to inform you your Limia got rejected."
-                                          //   : ""}
-                                          // </small>
-                                          null;
+                                            // {item.lmia_substage === "approved"
+                                            //   ? "Congratulation your Limia is Approved"
+                                            //   : item.lmia_substage === "awaiting decision"
+                                            //   ? "Your Limia status is in progress"
+                                            //   : item.lmia_substage === "reject"
+                                            //   ? "Sorry to inform you your Limia got rejected."
+                                            //   : ""}
+                                            // </small>
+                                            null;
                                         }
                                       )
                                     ) : (
                                       <div
-                                        className={`step text-capitalize${
-                                          job.lmia_status === "decision"
-                                            ? "pending"
-                                            : ""
-                                        } `}
+                                        className={`step text-capitalize${job.lmia_status === "decision"
+                                          ? "pending"
+                                          : ""
+                                          } `}
                                       >
                                         {job.lmia_status === "decision"
                                           ? " Awaiting Decision"
@@ -1047,8 +1068,8 @@ export default function JobTable(props) {
                         )}
                         {(responseId !== undefined ||
                           responseId !== "undefined") &&
-                        job.job_id === responseId &&
-                        job.total_applicants > 0 ? (
+                          job.job_id === responseId &&
+                          job.total_applicants > 0 ? (
                           <tr>
                             <td colSpan={11}>
                               <>
@@ -1063,9 +1084,9 @@ export default function JobTable(props) {
                                   role_category={job.role_category}
                                   status={
                                     props.response === "response" ||
-                                    props.response === "visa" ||
-                                    props.response === "lmia" ||
-                                    props.response === "companyprofile"
+                                      props.response === "visa" ||
+                                      props.response === "lmia" ||
+                                      props.response === "companyprofile"
                                       ? "1"
                                       : "0"
                                   }
@@ -1129,6 +1150,19 @@ export default function JobTable(props) {
           data={candidateSkill}
           setApiCall={setApiCall}
           job_id={candidateSkill.job_id}
+        />
+      ) : null}
+      {showLmiaAdditionalInfobModal ? (
+        <LmiaInfo
+          show={showLmiaAdditionalInfobModal}
+          resData={JobId}
+          apiCall={apiCall}
+          setApiCall={setApiCall}
+          job={"yes"}
+          close={() => {
+            setShowLmiaAdditionalInfobModal(false);
+            setJobId("");
+          }}
         />
       ) : null}
       {openLimia ? (

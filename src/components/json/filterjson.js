@@ -636,18 +636,31 @@ const filterjson = {
   lima_sub_stages: {
     onboarding: [
       "request email id",
-      "contact number",
+      //"contact number",(Old option)
+      "Send Retainer Agreement",//(New option)
       "introduction email",
       "job bank creation",
       "intake sheet completion",
     ],
     advertisements: [
       "job bank account",
-      "advertise on job bank and 3 portals.",
+      //"advertise on job bank and 3 portals."(old option),
+      //New options:
+      "advertise on job bank",
+      "advertise on newcomer hire",
+      "advertise on aboriginal hire ",
+      "advertise on all-star jobs ",
+      "advertise on career owl ",
+      "advertise on job spider ",
+      "advertise on refugee job board ",
+
     ],
     documentation: [
-      "Once ads are matured",
-      "Follow up",
+
+      // "Once ads are matured",(old option)
+      "request document",//(new option)
+      // "Follow up",(old option)
+      "follow-up (not received)",//(new option)
       // "birth certificate",
       // "marriage certificate",
       // "education docs",
@@ -672,22 +685,30 @@ const filterjson = {
       "attain information on candidate",
       "employer's work permit plans",
     ],
-    submission: [
-      "initiate  l m i a application on portal",
-      "fill job details and docs from employer",
-      "attach relevant documents",
-      "request harpreet Ma'am's review",
-      "attest and submit on portal",
-      "await payment request",
-      "inform employer of payment and potential interview",
+    "submission": [
+      //old options:
+      // "initiate  l m i a application on portal",
+      // "fill job details and docs from employer",
+      // "attach relevant documents",
+      // "request harpreet Ma'am's review",
+      // "attest and submit on portal",
+      // "await payment request",
+      // "inform employer of payment and potential interview",
+      //new options:
+      "start preparing application",
+      "request harpreet’s Review",
+      "initiate LMIA application on portal",
+      "application submitted",
+      "payment request",
+      "payment made",
     ],
-    decision: [
+    "decision": [
       // "awaiting decision",
       // "approved",
       // "rejected",
       //New Json given by client
-      "new",
-      "submitted",
+      // "new",(Client ask to remove)
+      //"submitted",(Client ask to remove)
       "approved",
       "refused",
       // "maintain mature ads throughout the process",

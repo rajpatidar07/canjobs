@@ -1533,8 +1533,8 @@ export const AddLimia = async (props, employee_id, job_id) => {
   );
   return response.data;
 };
-/*FUnction to add update lmia additional information */
-export const AddLmiaAdditionalInformation = async (data) => {
+/*FUnction to add update lmia additional information for employee lmia*/
+export const AddLmiaAdditionalInformationEmployee = async (data) => {
   // (props);
   const response = await axios.put(
     `${API_URL}admin/updateLmiaDetails`,
@@ -1548,6 +1548,22 @@ export const AddLmiaAdditionalInformation = async (data) => {
   );
   return response.data;
 };
+/*FUnction to add update lmia additional information for job lmia*/
+export const AddLmiaAdditionalInformationJob = async (data) => {
+  // (props);
+  const response = await axios.put(
+    `${API_URL}updateLmiaDetailsJob`,
+  data,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
+
 /*Function get lima substage of empolyee */
 export const GetLimaSubStages = async (id) => {
   const response = await axios.post(
