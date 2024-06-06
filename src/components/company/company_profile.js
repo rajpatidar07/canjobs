@@ -823,6 +823,7 @@ function CompanyProfileDetail(props) {
                       folderId={docId ? docParentId : employerData.documents_folder_id}
                       notification={docId ? "yes" : "no"}
                       docId={docId ? docId : ""}
+                      user_name={employerData.company_name}
                     />
 
                   ) : null}

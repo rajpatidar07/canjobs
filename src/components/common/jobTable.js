@@ -525,10 +525,10 @@ export default function JobTable(props) {
                           {props.heading === "Dashboard" ? null : (
                             <th className=" py-5">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                {job.industry_type
-                                  ? `${job.industry_type},`
-                                  : ""}
-                                {job.location}
+                                {job.industry_type || job.location
+                                  ? `${job.industry_type}, ${job.location}`
+                                  : "N/A"}
+
                               </h3>
                             </th>
                           )}
@@ -567,7 +567,7 @@ export default function JobTable(props) {
                                 }
                               >
                                 {/* {job.created_at ? job.created_at : "N/A"} */}
-                               { <ConvertTime _date={(user_type === "admin" &&
+                                {<ConvertTime _date={(user_type === "admin" &&
                                   props.response === "lmia")
                                   ? job.lmia_submissiom_date
                                   : job.created_at} format={"DD MMMM, YYYY"} />}
@@ -841,6 +841,7 @@ export default function JobTable(props) {
                                             }
                                             onClick={() => AdditionalLmiaInfo(job)}
                                             title="Additional LMIA Info"
+                                            disabled={!job.lmia_status}
                                           >
                                             LMIA additional Info
                                           </button>

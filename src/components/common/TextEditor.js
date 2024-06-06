@@ -95,33 +95,33 @@ export default function TextEditor({ state, setState, page, identifier }) {
         wrapperStyle={wrapperStyle}
         editorStyle={editorStyle}
         toolbar={{
-          options: ['inline', 'list',"fontSize"],
+          options: ['inline', 'list'/*,"fontSize"*/],
           inline: {
             options: ['bold', 'italic'],
           },
           list: {
             options: ['unordered', 'ordered'],
           },
-          fontSize:{
-            options:[8, 9, 10, 11, 12, 14, 16, 18, 24, 30, 36, 48, 60, 72, 96],
-            showOpenOptionOnHover:true,
-          }
+          // fontSize:{
+          //   options:[8, 9, 10, 11, 12, 14, 16, 18, 24, 30, 36, 48, 60, 72, 96],
+          //   showOpenOptionOnHover:true,
+          // }
         }}
-        /*Code to mention */
-        // mention={{
-        //   separator: ' ',
-        //   trigger: '@',
-        //   suggestions: [
-        //     { text: 'APPLE', value: 'apple', url: 'apple' },
-        //     { text: 'BANANA', value: 'banana', url: 'banana' },
-        //     { text: 'CHERRY', value: 'cherry', url: 'cherry' },
-        //     { text: 'DURIAN', value: 'durian', url: 'durian' },
-        //     { text: 'EGGFRUIT', value: 'eggfruit', url: 'eggfruit' },
-        //     { text: 'FIG', value: 'fig', url: 'fig' },
-        //     { text: 'GRAPEFRUIT', value: 'grapefruit', url: 'grapefruit' },
-        //     { text: 'HONEYDEW', value: 'honeydew', url: 'honeydew' },
-        //   ],
-        // }}
+      /*Code to mention */
+      // mention={{
+      //   separator: ' ',
+      //   trigger: '@',
+      //   suggestions: [
+      //     { text: 'APPLE', value: 'apple', url: 'apple' },
+      //     { text: 'BANANA', value: 'banana', url: 'banana' },
+      //     { text: 'CHERRY', value: 'cherry', url: 'cherry' },
+      //     { text: 'DURIAN', value: 'durian', url: 'durian' },
+      //     { text: 'EGGFRUIT', value: 'eggfruit', url: 'eggfruit' },
+      //     { text: 'FIG', value: 'fig', url: 'fig' },
+      //     { text: 'GRAPEFRUIT', value: 'grapefruit', url: 'grapefruit' },
+      //     { text: 'HONEYDEW', value: 'honeydew', url: 'honeydew' },
+      //   ],
+      // }}
       // toolbarOnFocus={toolbarOptions}
       />
     </div>

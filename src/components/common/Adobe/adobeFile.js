@@ -106,8 +106,8 @@ const AdobePDFViewer = ({
             })
             .catch((e) => {
               console.log("Error getting Annotation Manager:", e);
-            });      
-            
+            });
+
         })
         .catch((e) => {
           console.log("Error in previewFilePromise:", e);
@@ -156,25 +156,29 @@ const AdobePDFViewer = ({
       <div
         id="pdf-div"
         className={`${localStorage.getItem("userType") === "admin" ||
-            localStorage.getItem("userType") === "agent"
-            ? "col-md-8 col-lg-8 col-sm-9"
-            : "col-md-12 col-lg-12 col-sm-12"
+          localStorage.getItem("userType") === "agent"
+          ? "col-md-8 col-lg-8 col-sm-9"
+          : "col-md-12 col-lg-12 col-sm-12"
           } full-window-div`}
         style={{ maxHeight: "calc(100vh - 130px)" }}
       ></div>
-      <CommentSection
-        docData={data}
-        allAdmin={adminList}
-        userId={userId}
-        commentsList={commentsList}
-        annotationDrawBox={annotationDrawBox}
-        setAnnotationDrawBox={setAnnotationDrawBox}
-        annotationId={annotationId}
-        DocUserType={DocUserType}
-        setAnnotationId={setAnnotationId}
-        setAnnotationData={setAnnotationData}
-        setCommentsList={setCommentsList}
-      />
+      {
+        (localStorage.getItem("userType") === "admin" ||
+          localStorage.getItem("userType") === "agent")
+        && <CommentSection
+          docData={data}
+          allAdmin={adminList}
+          userId={userId}
+          commentsList={commentsList}
+          annotationDrawBox={annotationDrawBox}
+          setAnnotationDrawBox={setAnnotationDrawBox}
+          annotationId={annotationId}
+          DocUserType={DocUserType}
+          setAnnotationId={setAnnotationId}
+          setAnnotationData={setAnnotationData}
+          setCommentsList={setCommentsList}
+        />
+        }
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { AiOutlineDownload } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import ConvertTime from "./ConvertTime";
@@ -11,7 +11,13 @@ const MessageList = ({ data, loginuser, loginusertype, recordsPerPage, setRecord
   //   const result = moment.utc(_date).tz(timezone);
   //   return result.format("LLL");
   // };
-
+  const bottomRef = useRef(null);
+  // Scroll to bottom when component updates or new data arrives
+  useEffect(() => {
+    if (bottomRef.current) {
+      bottomRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [data]);
   /*Function to load more data while scrolling */
   let handelScroll = (e) => {
     if ((recordsPerPage === 30 || recordsPerPage + 30) <= data.length) {
@@ -30,10 +36,10 @@ const MessageList = ({ data, loginuser, loginusertype, recordsPerPage, setRecord
           <div>No Data Found</div>
         </div>
       ) : (
-        data.map((message) => {
+        data.map((message, index) => {
           const fileExtension =
-            message.document_name &&
-            message.document_name.split(".").pop().toLowerCase();
+            message.document_url &&
+            message.document_url.split(".").pop().toLowerCase();
           const isImage =
             message.document_url &&
             (message.document_url.toLowerCase().endsWith(".png") ||
@@ -41,7 +47,6 @@ const MessageList = ({ data, loginuser, loginusertype, recordsPerPage, setRecord
               message.document_url.toLowerCase().endsWith(".jpeg"));
           let iconSrc = isImage ? message.document_url : "";
           let title = message.document_name || "";
-
           if (!isImage) {
             if (fileExtension === "pdf") {
               iconSrc =
@@ -60,6 +65,7 @@ const MessageList = ({ data, loginuser, loginusertype, recordsPerPage, setRecord
           return (
             <div
               key={message.id}
+              ref={index === data.length - 1 ? bottomRef : null} // Ref to the last message for scrolling
               className={`message ${message.task_creator_user_id === loginuser &&
                 message.task_creator_user_type === loginusertype
                 ? "received"
@@ -157,7 +163,7 @@ const MessageList = ({ data, loginuser, loginusertype, recordsPerPage, setRecord
                 <div className="message-info">
                   <small className="text-muted">
                     {/* {LocalTime(message.created_on)} */}
-                    <ConvertTime _date={message.created_on} format={"LLL"}/>
+                    <ConvertTime _date={message.created_on} format={"LLL"} />
                   </small>
                 </div>
               </div>

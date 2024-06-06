@@ -8,6 +8,7 @@ import {
   getallAdminData,
   GetCommentsAndAssign,
   GetDocConvertToken,
+  ChangeFolderNameSharpoint,
 } from "../../../api/api";
 import { Dropdown, Form } from "react-bootstrap";
 import SAlert from "../../common/sweetAlert";
@@ -33,6 +34,7 @@ export default function SharePointDocument({
   notification,
   docId,
   docTypePage,
+  user_name
 }) {
   const [docTypeName, setDocTypeName] = useState("");
   const [newType, setNewType] = useState("");
@@ -65,6 +67,7 @@ export default function SharePointDocument({
   const [imgConRes, setImgConRes] = useState();
   const [convertedDoc, setConvertedDoc] = useState("");
 
+  /*FUnction to get admin data */
   const AdminData = async () => {
     try {
       const userData = await getallAdminData();
@@ -257,6 +260,21 @@ export default function SharePointDocument({
     try {
       let res = await getFolderBreadcrumb(folderID);
       setBreadcrumbData(res.data.data);
+      // console.log(res.data.data[0].name)
+      /*Api calling to changes employee_id or employer_id  to as per the user name */
+      if (res.data.data[0].name === `${emp_user_type}_${user_id}`
+        || res.data.data[0].name !== `${user_name}_${user_id}`) {
+        console.log("matched")
+        try {
+          // let MainFolderNameRes =
+          await ChangeFolderNameSharpoint(user_id, emp_user_type, `${user_name}_${user_id}`, res.data.data[0].id)
+          // if (MainFolderNameRes.data.message === "Folder name updated successfully!") {
+          //   setApiCall(true)
+          // }
+        } catch (Err) {
+          console.log(Err)
+        }
+      }
       setShowDropDown(false);
       setBreadCrumbLoder(false);
     } catch (err) {
@@ -287,6 +305,7 @@ export default function SharePointDocument({
     // );
     // eslint-disable-next-line
   }, [folderID, apiCall, docId]);
+
   /*On change fnction to upload bulk document in 1 array*/
   const handleBulkFileChange = async (event, id) => {
     const files = event.target.files;
@@ -362,6 +381,17 @@ export default function SharePointDocument({
           autoClose: 1000,
         });
         setApiCall(true);
+        setLoadingBtn(false);
+        setSaveBtn(false);
+        setShowDropDown(false);
+        setTaggedAdmin([]);
+      }
+      console.log(res.data)
+      if (res.data.message === "Failed" && res.data.data === "No Token Found") {
+        toast.success(`Document Uploaded successfully`, {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
         setLoadingBtn(false);
         setSaveBtn(false);
         setShowDropDown(false);

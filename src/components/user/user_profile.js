@@ -1869,6 +1869,7 @@ const NewUserProfile = (props) => {
                           notification={docId ? "yes" : "no"}
                           docId={docId ? docId : ""}
                           docTypePage={"adobe"}
+                          user_name={PersonalDetail.name}
                         />
                       ) : null}
                     </div>
