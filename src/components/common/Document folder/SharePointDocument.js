@@ -9,6 +9,7 @@ import {
   GetCommentsAndAssign,
   GetDocConvertToken,
   ChangeFolderNameSharpoint,
+  GetAgent,
 } from "../../../api/api";
 import { Dropdown, Form } from "react-bootstrap";
 import SAlert from "../../common/sweetAlert";
@@ -34,7 +35,8 @@ export default function SharePointDocument({
   notification,
   docId,
   docTypePage,
-  user_name
+  user_name,
+  partnerId
 }) {
   const [docTypeName, setDocTypeName] = useState("");
   const [newType, setNewType] = useState("");
@@ -58,6 +60,7 @@ export default function SharePointDocument({
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteData, setDeleteData] = useState();
   const [adminList, setAdminList] = useState([]);
+  const [partnerList, setPartnerist] = useState([]);
   let defaultAdminMention = localStorage.getItem("mentionAdmin")
     ? JSON.parse(localStorage.getItem("mentionAdmin"))
     : [];
@@ -71,6 +74,13 @@ export default function SharePointDocument({
   const AdminData = async () => {
     try {
       const userData = await getallAdminData();
+      if(window.location.pathname === `/${user_id}`){
+        const Partnerdata =await GetAgent()
+        let newPartnerList = Partnerdata.data.data.filter((item) => item.id === partnerId);
+        let otherPartners = Partnerdata.data.data.filter((item) => item.id!== partnerId);
+        newPartnerList = [...newPartnerList,...otherPartners];
+        setPartnerist(newPartnerList)
+    }
       if (userData.data.length === 0) {
         setAdminList([]);
       } else {
@@ -386,7 +396,7 @@ export default function SharePointDocument({
         setShowDropDown(false);
         setTaggedAdmin([]);
       }
-      console.log(res.data)
+      // console.log(res.data)
       if (res.data.message === "Failed" && res.data.data === "No Token Found") {
         toast.success(`Document Uploaded successfully`, {
           position: toast.POSITION.TOP_RIGHT,
@@ -719,6 +729,7 @@ export default function SharePointDocument({
                           selectedMentionAdmin={selectedMentionAdmin}
                           DocUserType={emp_user_type}
                           adminList={adminList}
+                          partnerList={partnerList}
                           setCommentsList={setCommentsList}
                         />
                       ) : null

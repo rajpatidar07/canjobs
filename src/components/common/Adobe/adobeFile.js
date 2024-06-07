@@ -10,6 +10,7 @@ const AdobePDFViewer = ({
   DocUserType,
   adminList,
   setCommentsList,
+  partnerList
 }) => {
   let [annotationDrawBox, setAnnotationDrawBox] = useState("");
   let [annotationId, setAnnotationId] = useState("");
@@ -168,6 +169,7 @@ const AdobePDFViewer = ({
         && <CommentSection
           docData={data}
           allAdmin={adminList}
+          partnerList={partnerList}
           userId={userId}
           commentsList={commentsList}
           annotationDrawBox={annotationDrawBox}

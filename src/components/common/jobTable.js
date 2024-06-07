@@ -526,9 +526,8 @@ export default function JobTable(props) {
                             <th className=" py-5">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {job.industry_type || job.location
-                                  ? `${job.industry_type}, ${job.location}`
+                                  ? `${job.industry_type ? job.industry_type + "," : ""} ${job.location}`
                                   : "N/A"}
-
                               </h3>
                             </th>
                           )}

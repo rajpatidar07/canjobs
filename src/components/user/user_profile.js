@@ -1870,6 +1870,7 @@ const NewUserProfile = (props) => {
                           docId={docId ? docId : ""}
                           docTypePage={"adobe"}
                           user_name={PersonalDetail.name}
+                          partnerId={PersonalDetail.reffer_by}
                         />
                       ) : null}
                     </div>

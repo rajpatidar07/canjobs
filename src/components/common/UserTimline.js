@@ -7,13 +7,13 @@ export default function UserTimline({ userId, userType }) {
   // const [perpage, setperpage] = useState(10);
   // const [pageNo, setpageNo] = useState(1);
   const [timeData, setTimeData] = useState([]);
-  const [/*totalRows,*/ setTotalRows] = useState([]);
+  // const [totalRows, setTotalRows] = useState([]);
 
   let TimeLineData = async () => {
     try {
       let res = await getActivityLog(1,"","","","","", userId,userType);
       setTimeData(res.data.data);
-      setTotalRows(res.data);
+      // setTotalRows(res.data);
     } catch (err) {
       console.log(err);
     }
@@ -45,7 +45,7 @@ export default function UserTimline({ userId, userType }) {
                       </i>
                     </div>
                     <div className="timeline_date text-muted font-size-3 text-capitalize">
-                      {item.msg.includes('<a href=') ? (
+                      {item.msg?.includes('<a href=') ? (
                         <span dangerouslySetInnerHTML={{ __html: item.msg }} />
                       ) : (
                         item.msg

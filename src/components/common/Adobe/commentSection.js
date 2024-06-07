@@ -23,6 +23,7 @@ export default function CommentSection({
   setCommentsList,
   setAnnotationData,
   setAnnotationDrawBox,
+  partnerList
 }) {
   const [comments, setComments] = useState();
   const [commentToApi, setCommentToApi] = useState();
@@ -35,6 +36,7 @@ export default function CommentSection({
   let [selectedAdminReply, setSelectedAdminReplye] = useState("");
   let [replyCommentClick, setReplyCommentClick] = useState();
   let [selectedAdmin, setSelectedAdmin] = useState("");
+  let [selectedPartner, setSelectedPartner] = useState("");
   const AdminType = localStorage.getItem("admin_type");
   let admin_id = AdminType === "agent" ? localStorage.getItem("agent_id") : localStorage.getItem("admin_id");
   // Generate a list of comments reply
@@ -154,21 +156,41 @@ export default function CommentSection({
     const cursorPosition = event.target.selectionStart;
     const textBeforeCursor = inputValue.substring(0, cursorPosition);
     const lastWord = textBeforeCursor.split(' ').pop();
-
     if (lastWord.startsWith('@')) {
+      // const query = lastWord.substring(1);
+      // if (query && allAdmin) {
+      //   // Filter admin emails based on input
+      //   const filteredAdminEmails = allAdmin.filter(
+      //     (admin) =>
+      //       admin.email.toLowerCase().includes(query.toLowerCase()) ||
+      //       admin.name.toLowerCase().includes(query.toLowerCase())
+      //   );
+
+      //   // Update the filtered emails
+      //   setFilteredEmails(filteredAdminEmails);
+      // } else {
+      //   setFilteredEmails(allAdmin);
+      // }
       const query = lastWord.substring(1);
       if (query && allAdmin) {
+        let newAssignList = allAdmin
+        let AddPartnersList = (selectedPartner || commentsList?.map((item) => item.assigned_user_type.includes("agent") === true) === false)
+          ? [] : partnerList.map((partner) => ({ ...partner, name: partner.name + " (Partner)" }));
+        newAssignList = [...newAssignList, ...AddPartnersList];
         // Filter admin emails based on input
-        const filteredAdminEmails = allAdmin.filter(
+        const filteredAdminEmails = newAssignList.filter(
           (admin) =>
             admin.email.toLowerCase().includes(query.toLowerCase()) ||
             admin.name.toLowerCase().includes(query.toLowerCase())
         );
-
         // Update the filtered emails
         setFilteredEmails(filteredAdminEmails);
       } else {
-        setFilteredEmails(allAdmin);
+        let newAssignList = allAdmin
+        let AddPartnersList = (selectedPartner || commentsList?.map((item) => item.assigned_user_type.includes("agent") === true) === false)
+          ? [] : partnerList.map((partner) => ({ ...partner, name: partner.name + " (Partner)" }));
+        newAssignList = [...newAssignList, ...AddPartnersList];
+        setFilteredEmails(newAssignList);
       }
     } else {
       setFilteredEmails([]);
@@ -176,7 +198,10 @@ export default function CommentSection({
   };
   /*Function to get the email to assign */
   const handleEmailClick = (email, type) => {
-    // Set the selected admin and update the input value
+    if (email.name.includes("(Partner)")) {
+      setSelectedPartner(email)
+    }
+    // Set the selected item and update the input value
     if (type === "reply") {
       setSelectedAdminReplye(prevValue => prevValue + email.email + ",");
       setReplyComment(prevValue => `${prevValue}${email.name} `);
@@ -206,37 +231,47 @@ export default function CommentSection({
     // setAddCommentFlag(false);
     // Retrieve data from local storage
     const subject = "";
+    let IspartnerList = selectedPartner ? partnerList : []
+    let newAssinList = [...allAdmin, ...IspartnerList]
     /*Comment */
     let boldComment = commentToApi.replace(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi, '<b>$1</b>')
     let removeBTage = boldComment.replace(/title="(<b>)(.*?)(<\/b>)"/g, 'title="$2"')
     const comment = removeBTage//comments; ///\S+@\S+\.\S+/.test(comments) ? "" : comments;
     let DocId = docData.id;
-    let sender = allAdmin.find((item) => item.admin_id === admin_id)
-      ? allAdmin.find((item) => item.admin_id === admin_id).name
+    let sender = newAssinList.find((item) => item.admin_id === admin_id)
+      ? newAssinList.find((item) => item.admin_id === admin_id).name
       : "";
-    let senderEmail = allAdmin.find((item) => item.admin_id === admin_id)
-      ? allAdmin.find((item) => item.admin_id === admin_id).email
+    let senderEmail = newAssinList.find((item) => item.admin_id === admin_id)
+      ? newAssinList.find((item) => item.admin_id === admin_id).email
       : "";
-
-    // Variables for mentionaing admins
-    const email = selectedAdmin || ""; ///\S+@\S+\.\S+/.test(comments) ? comments : "";
-    let assignedAdminName = allAdmin.filter((item) =>
+    // Variables for mentioning admins
+    const email = selectedAdmin// (selectedAdmin + `${selectedPartner && "," + selectedPartner.email}`) || ""; ///\S+@\S+\.\S+/.test(comments) ? comments : "";
+    let assignedAdminName = (((newAssinList).filter((item) =>
       selectedAdmin?.includes(item.email)
     )
-      ? allAdmin
+      ? newAssinList
         .filter((item) => selectedAdmin?.includes(item.email))
         .map((admin) => admin.name)
         .join(",")
-      : "";
-    const assignedUserId = allAdmin.filter((item) =>
+      : ""))
+    const assignedUserId = (newAssinList.filter((item) =>
       selectedAdmin?.includes(item.email)
     )
-      ? allAdmin
+      ? newAssinList
         .filter((item) => selectedAdmin?.includes(item.email))
-        .map((admin) => admin.admin_id)
+        .map((admin) => admin.u_id ? admin.id : admin.admin_id)
         .join(",")
-      : "";
-    const assignedUserType = "admin";
+      : "")
+    // eslint-disable-next-line no-useless-concat
+    const assignedUserType = ((newAssinList.filter((item) =>
+      selectedAdmin?.includes(item.email)
+    )
+      ? newAssinList
+        .filter((item) => selectedAdmin?.includes(item.email))
+        .map((admin) => admin.u_id ? "agent" : admin.admin_type)
+        .join(",")
+      : ""))
+    console.log(assignedAdminName, "assignedUserType", assignedUserType, "assignedUserId", assignedUserId)
     // Send data to the API
     if (
       (comment === "" && email === "") ||
@@ -281,6 +316,7 @@ export default function CommentSection({
           setComments("");
           setCommentToApi("")
           setSelectedAdmin("");
+          setSelectedPartner("")
           setFilteredEmails([]);
           setAnnotationDrawBox("");
           localStorage.setItem("callNotification", true);
@@ -297,6 +333,7 @@ export default function CommentSection({
           setComments("");
           setCommentToApi("")
           setSelectedAdmin("");
+          setSelectedPartner("")
           setFilteredEmails([]);
         }
       }
@@ -305,44 +342,46 @@ export default function CommentSection({
   };
   /*Function to reply for the comment */
   const ReplyAnnotation = async (data) => {
-    let sender = allAdmin.find((item) => item.admin_id === admin_id)
-      ? allAdmin.find((item) => item.admin_id === admin_id).name
+    let newAssinList = [...allAdmin, ...partnerList]
+
+    let sender = newAssinList.find((item) => item.admin_id === admin_id)
+      ? newAssinList.find((item) => item.admin_id === admin_id).name
       : "";
-    let senderId = allAdmin.find((item) => item.admin_id === admin_id)
-      ? allAdmin.find((item) => item.admin_id === admin_id).admin_id
+    let senderId = newAssinList.find((item) => item.admin_id === admin_id)
+      ? newAssinList.find((item) => item.admin_id === admin_id).admin_id
       : "";
-    let senderEmail = allAdmin.find((item) => item.admin_id === admin_id)
-      ? allAdmin.find((item) => item.admin_id === admin_id).email
+    let senderEmail = newAssinList.find((item) => item.admin_id === admin_id)
+      ? newAssinList.find((item) => item.admin_id === admin_id).email
       : "";
-    let senderType = allAdmin.find((item) => item.admin_id === admin_id)
-      ? allAdmin.find((item) => item.admin_id === admin_id).admin_type
+    let senderType = newAssinList.find((item) => item.admin_id === admin_id)
+      ? newAssinList.find((item) => item.admin_id === admin_id).admin_type
       : "";
     // Variables for mentioning admins
     const email = selectedAdminReply || ""; ///\S+@\S+\.\S+/.test(comments) ? comments : "";
-    let assignedAdminName = allAdmin.filter((item) =>
+    let assignedAdminName = (newAssinList.filter((item) =>
       selectedAdminReply?.includes(item.email)
     )
-      ? allAdmin
+      ? newAssinList
         .filter((item) => selectedAdminReply?.includes(item.email))
         .map((admin) => admin.name)
         .join(",")
-      : "";
-    const assignedUserId = allAdmin.filter((item) =>
+      : "")
+    const assignedUserId = (newAssinList.filter((item) =>
       selectedAdminReply?.includes(item.email)
     )
-      ? allAdmin
+      ? newAssinList
         .filter((item) => selectedAdminReply?.includes(item.email))
-        .map((admin) => admin.admin_id)
+        .map((admin) => admin.u_id ? admin.id : admin.admin_id)
         .join(",")
-      : "";
+      : "");
     const AdminType = //localStorage.getItem("admin_type");
-      allAdmin.filter((item) => selectedAdminReply?.includes(item.email))
-        ? allAdmin
+      (newAssinList.filter((item) => selectedAdminReply?.includes(item.email))
+        ? newAssinList
           .filter((item) => selectedAdminReply?.includes(item.email))
-          .map((admin) => admin.admin_type)
+          .map((admin) => admin.u_id ? "agent" : admin.admin_type)
           .join(",")
-        : "";
-        /*Reply comment */
+        : "");
+    /*Reply comment */
     let BoldComment = replyCommentToApi.replace(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi, '<b>$1</b>')
     let removeBTage = BoldComment.replace(/title="(<b>)(.*?)(<\/b>)"/g, 'title="$2"')
     if (replyComment === "" && email === "") {
@@ -481,9 +520,9 @@ export default function CommentSection({
                   className="email-suggestions"
                   style={{ maxHeight: 400, overflowY: "auto" }}
                 >
-                  {filteredEmails.map((email) => (
+                  {filteredEmails.map((email, index) => (
                     <li
-                      key={email.email}
+                      key={index}
                       onClick={() => handleEmailClick(email)}
                       // onMouseOver={() => handleEmailMouseOver(email.email)}
                       className="email-suggestion-item"
@@ -675,7 +714,7 @@ export default function CommentSection({
 
                       {commentItem.subject_description && (
                         <span className="card-title text-break text-dark m-0 font-size-3">
-                          <div className="msg-color" dangerouslySetInnerHTML={{ __html: commentItem.subject_description.replace( " @ "," ") }} />
+                          <div className="msg-color" dangerouslySetInnerHTML={{ __html: commentItem.subject_description.replace(" @ ", " ") }} />
                         </span>
                       )}
                       {/* {commentItem.assigned_to && (

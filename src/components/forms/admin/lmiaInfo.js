@@ -6,7 +6,6 @@ import { toast } from "react-toastify"
 import { AddLmiaAdditionalInformationJob, AddLmiaAdditionalInformationEmployee } from '../../../api/api';
 export default function LmiaInfo(props) {
     const [loading, setLoading] = useState(false)
-    console.log(props.resData)
     // USER CATEGORY VALIDATION
 
     // INITIAL STATE ASSIGNMENT

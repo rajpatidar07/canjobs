@@ -103,7 +103,7 @@ function Addfollowup(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setState, onInputChange, errors, setErrors, validate } =
+  const { state={}, setState, onInputChange, errors, setErrors, validate } =
     useValidation(initialFormState, validators);
 
   /* Functionality to close the modal */
@@ -206,12 +206,12 @@ function Addfollowup(props) {
                           )} */}
                         </i>
                       </div>
-                      <p className="font-size-4 m-0">
+                      <div className="font-size-4 m-0">
                         <div
                           dangerouslySetInnerHTML={{
                             __html: res.remark,
                           }}
-                        /></p>
+                        /></div>
                     </div>
                   </div>
                 ))
