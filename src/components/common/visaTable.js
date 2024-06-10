@@ -599,7 +599,7 @@ export default function VisaTable(props) {
                               user_type === "company" ||
                                 props.page === "user_profile"
                                 ? "d-none"
-                                : "btn btn-outline-info action_btn"
+                                : "btn btn-outline-info action_btn d-none"
                             }
                             onClick={() => AddDoucument(empdata)}
                             title="Documents"

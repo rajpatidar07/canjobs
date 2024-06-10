@@ -68,7 +68,7 @@ const NewUserProfile = (props) => {
   const [addNote, setAddNote] = useState(false);
   const [TabActive, setTabActive] = useState(
     docId
-      ? "sharepoint" /*"documents"*/
+      ? "documents"/*"sharepoint" */
       : partnerChat
         ? "agent conversation"
         : notes === "true"
@@ -213,7 +213,7 @@ const NewUserProfile = (props) => {
       setTabActive("payment");
     }
     if (docId) {
-      setTabActive("sharepoint");
+      setTabActive("documents");
     }
     if (partnerChat) {
       setTabActive("agent conversation");

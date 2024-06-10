@@ -26,23 +26,23 @@ export default function CommentReplyBox({
                 <div className="p-2 bg-white rounded mb-1">
                   <div className="d-flex justify-content-between align-items-center text-dark">
                     <div className="d-flex profile_box gx-2 mb-1">
-                    <div className="media  align-items-center">
-                            <div
-                              className={`circle-24 mx-auto overflow-hidden text-capitalize text-white ${determineBackgroundColor(
-                                replyItem
-                              )}`}
-                              style={{ fontSize: "16px", fontWeight: 700 }}
-                            >
-                              {replyItem.sender_name.charAt(0)}
-                            </div>
-                          </div>
+                      <div className="media  align-items-center">
+                        <div
+                          className={`circle-24 mx-auto overflow-hidden text-capitalize text-white ${determineBackgroundColor(
+                            replyItem
+                          )}`}
+                          style={{ fontSize: "16px", fontWeight: 700 }}
+                        >
+                          {replyItem.sender_name.charAt(0)}
+                        </div>
+                      </div>
                       <div className=" mb-0">
                         <div className="font-size-3 font-weight-bold text-capitalize">
                           {replyItem.sender_name}
                         </div>
                         <div className="text-gray font-size-2 font-weight-normal m-0 text-capitalize">
                           <i className="font-size-2">
-                           <ConvertTime _date={replyItem.updated_at} format={"HH:mm D MMM"}/>
+                            <ConvertTime _date={replyItem.updated_at} format={"HH:mm D MMM"} />
                             {/* {moment(replyItem.updated_at).format("HH:mm D MMM")} */}
                           </i>
                         </div>
@@ -64,7 +64,7 @@ export default function CommentReplyBox({
                   {replyItem.msg && (
                     <span className="m-0 font-size-3 text-dark text-break">
                       {/* {replyItem.msg} */}
-                      <div className="msg-color" dangerouslySetInnerHTML={{ __html: replyItem.msg.replace( " @ "," ") }} />
+                      <div className="msg-color" dangerouslySetInnerHTML={{ __html: replyItem.msg.replace(" @ ", " ") }} />
                     </span>
                   )}
                   {/* Display mention */}
@@ -130,11 +130,11 @@ export default function CommentReplyBox({
               {filteredEmails.map((email, index) => (
                 <li
                   key={index}
-                  onClick={() => handleEmailClick(email , "reply")}
+                  onClick={() => handleEmailClick(email, "reply")}
                   // onMouseOver={() => handleEmailMouseOver(email.email, "reply")}
                   className="email-suggestion-item text-dark"
                 >
-                  <strong>{email.name + "(" + email.email + ")"}</strong>
+                  <strong>{email.name + (email.u_id ? " (Partner)" : "") + "(" + email.email + ")"}</strong>
                 </li>
               ))}
             </ul>

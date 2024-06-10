@@ -77,8 +77,8 @@ export default function SharePointDocument({
       if(window.location.pathname === `/${user_id}`){
         const Partnerdata =await GetAgent()
         let newPartnerList = Partnerdata.data.data.filter((item) => item.id === partnerId);
-        let otherPartners = Partnerdata.data.data.filter((item) => item.id!== partnerId);
-        newPartnerList = [...newPartnerList,...otherPartners];
+        // let otherPartners = Partnerdata.data.data.filter((item) => item.id!== partnerId);
+        // newPartnerList = [...newPartnerList,...otherPartners];
         setPartnerist(newPartnerList)
     }
       if (userData.data.length === 0) {
@@ -597,6 +597,7 @@ export default function SharePointDocument({
                             maxWidth: 200,
                           }}
                         >
+                      
                           <Link
                             className="rounded-circle add-person-btn" // Changed class name for clarity
                             to=""
@@ -699,8 +700,11 @@ export default function SharePointDocument({
                           {/* ) : null} */}
                         </div>
                       )}
+                      
                   </div>
+                  {}
                   {
+                  
                     // docTypePage === "adobe"
                     (docSingleDate.file.mimeType === "application/pdf" ||
                       ((docSingleDate.file.mimeType === "image/jpeg" ||
