@@ -44,7 +44,7 @@ function Category() {
   // const [TypecurrentPage, setTypeCurrentPage] = useState(1);
   // const [TyperecordsPerPage] = useState(10);
   /*Shorting states */
-  const [columnName, setcolumnName] = useState("job_category_id");
+  const [columnName, setcolumnName] = useState("created_at");
   const [sortOrder, setSortOrder] = useState("DESC");
 
   /*Function to get thejSon */
@@ -377,10 +377,10 @@ function Category() {
                               <th className="bg-white"></th>
                             </tr>
                           ) : (
-                            (categoryData || []).map((catdata) => (
+                            (categoryData || []).map((catdata,i) => (
                               <tr
                                 className="text-capitalize"
-                                key={catdata.job_category_id}
+                                key={i}
                               >
                                 <th scope="row" className="py-5 ">
                                   <div className="font-size-3 mb-0 font-weight-semibold text-black-2">

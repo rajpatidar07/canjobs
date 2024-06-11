@@ -26,16 +26,19 @@ export default function PartnerDetails({ setLoginCondition }) {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const partnerChat = searchParams.get("partner");
+  const notes = searchParams.get("note")
   let navigate = useNavigate();
   /*Show modal and data state */
   // const [lima, setLmia] = useState(false);
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
+  const [addNote, setAddNote] = useState(false);
   // const [lmiaStatusRejectComment, setLmiaStatusRejectComment] = useState([]);
   const [showPartnerInfoModal, setShowPartnerInfoModal] = useState(false);
   useState(false);
   const [TabActive, setTabActive] = useState(
-    partnerChat ? "support" : "profile"
+    partnerChat ? "support" : notes === "true"
+      ? "notes" : "profile"
   );
   const [data, setData] = useState("");
   const [chartData, setChartData] = useState([]);
@@ -77,7 +80,7 @@ export default function PartnerDetails({ setLoginCondition }) {
       setTabActive("payment");
     }
     // eslint-disable-next-line
-  }, [apiCall, agent_id]);
+  }, [apiCall, agent_id, notes]);
   const GetChartData = async () => {
     try {
       let res = await GetAllChartData(agent_id, "agent");
@@ -103,9 +106,18 @@ export default function PartnerDetails({ setLoginCondition }) {
             heading={
               <Link
                 className="d-flex align-items-center "
-                onClick={user_type === "agent" ? null : () => navigate(-1)}
+                onClick={
+                  user_type === "agent"
+                    ? null : () => {
+                      if (TabActive === "notes") {
+                        navigate(-1)
+                      } else {
+                        setAddNote(true)
+                      }
+                    }
+                }
               >
-                <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
+                <i className={`icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8 ${user_type === "agent" ? "d-none" : ""}`}></i>
                 <span className="text-uppercase font-size-3 font-weight-bold text-gray">
                   <h3 className="font-size-6 mb-0 text-capitalize">
                     {data.name + " (Partner)"}
@@ -576,14 +588,21 @@ export default function PartnerDetails({ setLoginCondition }) {
                     TabActive === "notes" ? "justify-content-center " : "d-none"
                   }
                 >
-                  {TabActive === "notes" ? (
-                    <Addfollowup
-                      userId={Pid}
-                      userType={"agent"}
-                      assigned_by_id={data.assigned_by}
-                      setApiCall={setApiCall}
-                    />
-                  ) : null}
+                  {/* {TabActive === "notes" ? ( */}
+                  <Addfollowup
+                    userId={Pid}
+                    userType={"agent"}
+                    assigned_by_id={data.assigned_by}
+                    setApiCall={setApiCall}
+                    noteNotification={notes}
+                    show={TabActive === "notes" || addNote}
+                    page={TabActive === "notes" ? "no" : "yes"}
+                    close={() => {
+                      setAddNote(false)
+                    }}
+                    skip={() => navigate(-1)}
+                  />
+                  {/* ) : null} */}
                 </div>
                 <div
                   className={

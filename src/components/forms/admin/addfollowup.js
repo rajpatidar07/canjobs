@@ -16,8 +16,8 @@ function Addfollowup(props) {
   const [sortOrder, setSortOrder] = useState("DESC");
   // let employId = props.employee_id;
   let user_type = localStorage.getItem("userType");
-  let adminId = localStorage.getItem("admin_id")
   let adminType = localStorage.getItem("admin_type")
+  let adminId = adminType === "agent" ? localStorage.getItem("agent_id") : localStorage.getItem("admin_id")
   // USER FOLLOW UP PROFILE UPDATE VALIDATION
 
   /* Function to get the Response data*/
@@ -103,7 +103,7 @@ function Addfollowup(props) {
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state={}, setState, onInputChange, errors, setErrors, validate } =
+  const { state = {}, setState, onInputChange, errors, setErrors, validate } =
     useValidation(initialFormState, validators);
 
   /* Functionality to close the modal */
@@ -112,6 +112,9 @@ function Addfollowup(props) {
     setErrors("");
     setLoading(false);
     props.close();
+    if (props.page === "yes") {
+      props.skip()
+    }
   };
 
   // USER FOLLOW UP PROFILE UPDATE SUBMIT BUTTON
@@ -200,7 +203,7 @@ function Addfollowup(props) {
                         </b>
                         <i className="font-size-2">
                           Created on:
-                          <ConvertTime _date={res.created_at} format={"Do MM YYYY, h:mm:ss a"}/>
+                          <ConvertTime _date={res.created_at} format={"Do MM YYYY, h:mm:ss a"} />
                           {/* {moment(res.created_at).format(
                             "Do MMM YYYY, h:mm:ss a"
                           )} */}
@@ -587,7 +590,7 @@ function Addfollowup(props) {
                               <p className="font-size-3 mb-0">N/A</p>
                             ) : (
                               <small>
-                                <ConvertTime _date={res.created_at} format={".calendar()"}/>
+                                <ConvertTime _date={res.created_at} format={".calendar()"} />
                                 {/* {moment(res.created_at).calendar()} */}
                               </small>
                             )}

@@ -13,6 +13,7 @@ export default function ApplicantsStatusModal(props) {
     let data = {
       employee_id: props.data.employee_id,
       status: status,
+      name: props.data.name
     };
     try {
       let response = await AddEmployeeDetails(data);
@@ -117,7 +118,7 @@ export default function ApplicantsStatusModal(props) {
           <div className="form-group text-center d-flex justify-content-center">
             {loading === true ? (
               <button
-                className="btn-primary px-5  mx-2  rounded-5 text-uppercase"
+                className="btn btn-primary px-5  mx-2  rounded-5 text-uppercase"
                 type="button"
                 disabled
               >
@@ -130,7 +131,7 @@ export default function ApplicantsStatusModal(props) {
               </button>
             ) : (
               <button
-                className=" btn-primary px-5  mx-2  rounded-5 text-uppercase"
+                className="btn btn-primary px-5  mx-2  rounded-5 text-uppercase"
                 type="submit"
               >
                 submit

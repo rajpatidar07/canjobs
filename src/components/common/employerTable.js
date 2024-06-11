@@ -162,7 +162,17 @@ export default function EmployerTable(props) {
                     scope="col"
                     className=" border-0 font-size-4 font-weight-normal"
                   >
+                     <Link
+                      to={""}
+                      onClick={() => {
+                        handleSort("company_id");
+                        props.setpageNo(1);
+                      }}
+                      className="text-gray"
+                      title="Sort by Id"
+                    >
                     CLient ID
+                    </Link>
                   </th>
                   <th
                     scope="col"

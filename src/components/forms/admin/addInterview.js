@@ -22,7 +22,7 @@ function AddInterview(props) {
   const initialFormState = {
     interview_date: "",
     interview_status:
-      props.resData.status === "pending" || props.resData.status === ""
+      props.resData.status === "pending" || props.resData.status === "" || props.resData.status === 'PENDING'
         ? "pending"
         : "",
   };
@@ -84,7 +84,7 @@ function AddInterview(props) {
           employeeId,
           jobId
         );
-        if (responseData.message === "data inserted successfully") {
+        if (responseData.message === "data inserted successfully" || responseData.status === (1 || "1")) {
           toast.success("Interview Scheduled successfully", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
@@ -92,7 +92,7 @@ function AddInterview(props) {
           props.setApiCall(true);
           return close();
         }
-        if (responseData.message === "Failed to insert data") {
+        if (responseData.message === "Failed to insert data" || responseData.messsage === "Failed to insert data") {
           toast.error("Failed ", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,

@@ -335,13 +335,15 @@ function AdminSetting(props) {
               </li>
             </ul>
             <div className="mb-3">
-              {emailAauthenticationLink.is_already_authorized === "yes" ? (
+              {
+              emailAauthenticationLink.is_already_authorized === "yes" ? (
                 <div>
                   <h4 style={{ color: "#5be15b" }}>
                     Mail already authorized !
                   </h4>
                 </div>
-              ) : (
+              ) : 
+              (
                 <button
                   className="btn btn-secondary"
                   onClick={() => {

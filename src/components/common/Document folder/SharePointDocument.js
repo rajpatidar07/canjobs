@@ -74,13 +74,13 @@ export default function SharePointDocument({
   const AdminData = async () => {
     try {
       const userData = await getallAdminData();
-      if(window.location.pathname === `/${user_id}`){
-        const Partnerdata =await GetAgent()
+      if (window.location.pathname === `/${user_id}`) {
+        const Partnerdata = await GetAgent()
         let newPartnerList = Partnerdata.data.data.filter((item) => item.id === partnerId);
         // let otherPartners = Partnerdata.data.data.filter((item) => item.id!== partnerId);
         // newPartnerList = [...newPartnerList,...otherPartners];
         setPartnerist(newPartnerList)
-    }
+      }
       if (userData.data.length === 0) {
         setAdminList([]);
       } else {
@@ -269,24 +269,30 @@ export default function SharePointDocument({
     /*Api for breadcrumb */
     try {
       let res = await getFolderBreadcrumb(folderID);
-      setBreadcrumbData(res.data.data);
-      // console.log(res.data.data[0].name)
-      /*Api calling to changes employee_id or employer_id  to as per the user name */
-      if (res.data.data[0].name === `${emp_user_type}_${user_id}`
-        || res.data.data[0].name !== `${user_name}_${user_id}`) {
-        console.log("matched")
-        try {
-          // let MainFolderNameRes =
-          await ChangeFolderNameSharpoint(user_id, emp_user_type, `${user_name}_${user_id}`, res.data.data[0].id)
-          // if (MainFolderNameRes.data.message === "Folder name updated successfully!") {
-          //   setApiCall(true)
-          // }
-        } catch (Err) {
-          console.log(Err)
+      if (res.data.status === (1 || "1")) {
+        setBreadcrumbData(res.data.data);
+        /*Api calling to changes employee_id or employer_id  to as per the user name */
+        if (res.data.data[0].name === `${emp_user_type}_${user_id}`
+          || res.data.data[0].name !== `${user_name}_${user_id}`) {
+          console.log("matched")
+          try {
+            // let MainFolderNameRes =
+            await ChangeFolderNameSharpoint(user_id, emp_user_type, `${user_name}_${user_id}`, res.data.data[0].id)
+            // if (MainFolderNameRes.data.message === "Folder name updated successfully!") {
+            //   setApiCall(true)
+            // }
+          } catch (Err) {
+            console.log(Err)
+          }
         }
+        setShowDropDown(false);
+        setBreadCrumbLoder(false);
+      } else {
+        setBreadcrumbData([])
+        setShowDropDown(false);
+        setBreadCrumbLoder(false);
       }
-      setShowDropDown(false);
-      setBreadCrumbLoder(false);
+
     } catch (err) {
       setBreadcrumbData([]);
       console.log(err);
@@ -597,7 +603,7 @@ export default function SharePointDocument({
                             maxWidth: 200,
                           }}
                         >
-                      
+
                           <Link
                             className="rounded-circle add-person-btn" // Changed class name for clarity
                             to=""
@@ -700,11 +706,11 @@ export default function SharePointDocument({
                           {/* ) : null} */}
                         </div>
                       )}
-                      
+
                   </div>
-                  {}
+                  { }
                   {
-                  
+
                     // docTypePage === "adobe"
                     (docSingleDate.file.mimeType === "application/pdf" ||
                       ((docSingleDate.file.mimeType === "image/jpeg" ||

@@ -160,7 +160,7 @@ export default function PartnerTAble(props) {
                                             scope="col"
                                             className="border-0 font-size-4 font-weight-normal"
                                         >
-                                            <Link
+                                            {/* <Link
                                                 to={""}
                                                 onClick={() => {
                                                     handleSort("agent_employee_count");
@@ -168,9 +168,9 @@ export default function PartnerTAble(props) {
                                                 }}
                                                 className="text-gray"
                                                 title="Sort by Candidates"
-                                            >
+                                            > */}
                                                 Total Candidates
-                                            </Link>
+                                            {/* </Link> */}
                                         </th>
                                         <th
                                             scope="col"

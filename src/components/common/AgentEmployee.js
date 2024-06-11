@@ -491,7 +491,16 @@ function AgentsEmployee(props) {
                           scope="col"
                           className=" border-0 font-size-2 font-weight-normal py-2"
                         >
-                          EID
+                          <Link
+                            to={""}
+                            onClick={() => {
+                              handleSort("employee_id");
+                            }}
+                            className="text-gray"
+                            title="Sort by Id"
+                          >
+                            EID
+                            </Link>
                         </th>
                         <th
                           scope="col"

@@ -26,7 +26,7 @@ function Agent() {
   //   let [SkillList, setSkillList] = useState([]);
   //   let [EducationList, setEducationList] = useState([]);
   let user_type = localStorage.getItem("userType");
-  /*Function to get thejSon */
+  /*Function to get the jSon */
   //   const JsonData = async () => {
   //     try {
   //       let Json = await GetFilter();
@@ -83,7 +83,7 @@ function Agent() {
           heading={user_type === "agent" ? "Profile" : "Manage Partner"}
         />
         <ToastContainer />
-        {/* <!--Add Adgent Details Modal --> */}
+        {/* <!--Add Agent Details Modal --> */}
 
         <div className={"dashboard-main-container mt-16"} id="dashboard-body">
           <div className="container-fluid">

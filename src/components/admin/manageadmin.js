@@ -74,9 +74,9 @@ function ManageAdmin() {
         }
         if (apiCall === true) {
           let Admin_name = userData.data.filter(
-            (data) => data.admin_id === localStorage.getItem("admin_id")
+            (data) => data?.admin_id === localStorage.getItem("admin_id")
           );
-          if (Admin_name[0].admin_id === localStorage.getItem("admin_id")) {
+          if (Admin_name[0]?.admin_id === localStorage.getItem("admin_id")) {
             localStorage.setItem("admin", Admin_name[0].name);
           }
         }

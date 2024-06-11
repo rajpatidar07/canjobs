@@ -68,9 +68,6 @@ function PersonalDetails(props) {
     permission: props.employeeId === "0" ? JSON.stringify(Permissions) : null,
     assigned_by: ""
   };
-
-  
-
   // VALIDATION CONDITIONS
 
   const validators = {

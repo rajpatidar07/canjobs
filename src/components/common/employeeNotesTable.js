@@ -114,7 +114,7 @@ export default function EmployeeNotesTable({ search, userType }) {
                     <Link
                       to={""}
                       onClick={() => {
-                        handleSort("name");
+                        handleSort(userType === "employee" ?"name":"company_name");
                       }}
                       className="text-gray"
                       title="Sort by name"

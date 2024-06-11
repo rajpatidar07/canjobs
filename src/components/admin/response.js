@@ -491,7 +491,17 @@ function JobResponse(props) {
                           scope="col"
                           className="pl-0 border-0 font-size-4 font-weight-normal"
                         >
-                          EID
+                          <Link
+                            to={""}
+                            onClick={() => {
+                              handleSort("employee_id");
+                              setCurrentPage(1);
+                            }}
+                            className="text-gray"
+                            title="Sort by Id"
+                          >
+                            EID
+                          </Link>
                         </th>
                         <th
                           scope="col"
@@ -1047,7 +1057,7 @@ function JobResponse(props) {
                                     <PiBriefcaseLight />
                                     {/* <i className="fas fa-briefcase"></i> */}
                                   </button>
-                                  
+
                                   <button
                                     className={
                                       res.is_reserve === "1"

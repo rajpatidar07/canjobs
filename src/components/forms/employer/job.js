@@ -42,13 +42,7 @@ function AddJobModal(props) {
     }
   };
 
-  /* Functionality to close the modal */
-  const close = () => {
-    setState(initialFormState);
-    setErrors("");
-    setLoading(false);
-    props.close();
-  };
+
   // CKEDITOR
   // ClassicEditor.defaultConfig = {
   //   toolbar: {
@@ -148,7 +142,7 @@ function AddJobModal(props) {
     // ],
   };
   // CUSTOM VALIDATIONS IMPORT
-  const { state, setErrors, setState, onInputChange, errors, validate } =
+  const { state = {}, setErrors, setState, onInputChange, errors, validate } =
     useValidation(initialFormState, validators);
   // API CALL
   const JobData = async () => {
@@ -209,6 +203,13 @@ function AddJobModal(props) {
     }
     // eslint-disable-next-line
   }, [props]);
+  /* Functionality to close the modal */
+  const close = () => {
+    setState(initialFormState);
+    setErrors("");
+    setLoading(false);
+    props.close();
+  };
   // ADD JOBS SUBMIT BUTTON
   const onAddJobsClick = async (event) => {
     event.preventDefault();

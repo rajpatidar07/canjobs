@@ -196,7 +196,7 @@ export default function AgentTable(props) {
                         props.setpageNo(1);
                       }}
                       className="text-gray"
-                      title="Sort by Name"
+                      title="Sort by UID"
                     >
                       DN
                     </Link>

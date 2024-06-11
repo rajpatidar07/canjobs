@@ -62,12 +62,14 @@ const AdobePDFViewer = ({
               setAnnotationManager(annotationManager);
               if (annotationData.length === 0) {
               } else {
-                console.log(annotationManager)
+                // console.log(annotationManager)
                 annotationManager
                   .addAnnotations(annotationData)
-                  .then(() => console.log("Success"))
-                  .catch((error) => console.log(error));
-              }
+                //   .then(() => 
+                //     console.log("Success")
+                // )
+                //   .catch((error) => console.log(error));
+              } 
               annotationManager
                 .getAnnotations()
                 .then((result) => {

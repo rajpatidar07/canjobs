@@ -17,7 +17,7 @@ function AddCategory(props) {
     props.close();
   };
   // USER CATEGORY VALIDATION
-
+console.log(props.jobCategoryData)
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     category_name: "",

@@ -276,71 +276,71 @@ export default function CommentSection({
         .map((admin) => admin.u_id ? "agent" : admin.admin_type)
         .join(",")
       : ""))
-    // Send data to the API
-    if (
-      (comment === "" && email === "") ||
-      (comment.includes("@") && !/\S+@\S+\.\S+/.test(comment))
-    ) {
+      // Send data to the API
+      if (
+        ((comment === ""||comment.trim() === "") && email === "" ) 
+        // || (comment.includes("@") && !/\S+@\S+\.\S+/.test(comment))
+        ) {
       toast.error("Comment or email cannot be empty!", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 2000,
       });
     } else {
-      try {
-        let res = await ADocAnnotation(
-          admin_id,
-          DocId,
-          assignedUserId,
-          email,
-          subject,
-          comment,
-          "", //annotation.x_axis,
-          "", //annotation.y_axis,
-          "document",
-          AdminType, //sender type
-          sender, //sender name,
-          assignedAdminName, //assigned Admin or user Name,
-          "", //follow up status(for notes only)
-          "", //Next follow up date(for notes only)
-          assignedUserType, //Assign user type,
-          "", //Document url(for notes only)
-          senderEmail, //Sender email
-          userId, //employee id,
-          "", //assigned_by_id
-          docData.parentReference.id, // document parent code
-          annotationDrawBox, //Annotation data,
-          "", //annotationId
-          DocUserType //User type of document
-        );
-        if (res.data.message === "task inserted successfully!") {
-          toast.success("Comment uploaded Successfully", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
-          setComments("");
-          setCommentToApi("")
-          setSelectedAdmin("");
-          setSelectedPartner("")
-          setFilteredEmails([]);
-          setAnnotationDrawBox("");
-          localStorage.setItem("callNotification", true);
-          Getcomments();
+        try {
+          let res = await ADocAnnotation(
+            admin_id,
+            DocId,
+            assignedUserId,
+            email,
+            subject,
+            comment,
+            "", //annotation.x_axis,
+            "", //annotation.y_axis,
+            "document",
+            AdminType, //sender type
+            sender, //sender name,
+            assignedAdminName, //assigned Admin or user Name,
+            "", //follow up status(for notes only)
+            "", //Next follow up date(for notes only)
+            assignedUserType, //Assign user type,
+            "", //Document url(for notes only)
+            senderEmail, //Sender email
+            userId, //employee id,
+            "", //assigned_by_id
+            docData.parentReference.id, // document parent code
+            annotationDrawBox, //Annotation data,
+            "", //annotationId
+            DocUserType //User type of document
+          );
+          if (res.data.message === "task inserted successfully!") {
+            toast.success("Comment uploaded Successfully", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+            setComments("");
+            setCommentToApi("")
+            setSelectedAdmin("");
+            setSelectedPartner("")
+            setFilteredEmails([]);
+            setAnnotationDrawBox("");
+            localStorage.setItem("callNotification", true);
+            Getcomments();
+          }
+        } catch (err) {
+          console.log(err);
+          if (err.response.data.message === "required fields cannot be blank") {
+            toast.error(" Please try again later.", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+            // setSelectedAnnotation(null);
+            setComments("");
+            setCommentToApi("")
+            setSelectedAdmin("");
+            setSelectedPartner("")
+            setFilteredEmails([]);
+          }
         }
-      } catch (err) {
-        console.log(err);
-        if (err.response.data.message === "required fields cannot be blank") {
-          toast.error(" Please try again later.", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
-          // setSelectedAnnotation(null);
-          setComments("");
-          setCommentToApi("")
-          setSelectedAdmin("");
-          setSelectedPartner("")
-          setFilteredEmails([]);
-        }
-      }
     }
     // Update state to include the new annotation
   };
@@ -479,7 +479,6 @@ export default function CommentSection({
     );
     if (CommentRes.data.status === (1 || "1")) {
       setCommentsList(CommentRes.data.data.data);
-      console.log(CommentRes.data.data.data.map((item) => JSON.parse(item.doctaskjson)))
       setAnnotationData(
         CommentRes.data.data.data.map((item) => JSON.parse(item.doctaskjson))
       );

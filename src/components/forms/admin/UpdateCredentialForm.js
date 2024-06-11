@@ -97,7 +97,7 @@ export default function UpdateCredentialForm({
                     placeholder="Enter User Name"
                     type="text"
                     name="usernamee"
-                    value={state.username}
+                    value={state.username || ""}
                     onChange={onInputChange}
                     className="form-control"
                     id="username"
@@ -120,7 +120,7 @@ export default function UpdateCredentialForm({
                     placeholder="Enter Host"
                     type="text"
                     name="host"
-                    value={state.host}
+                    value={state.host || ""}
                     onChange={onInputChange}
                     className="form-control"
                     id="host"
@@ -143,7 +143,7 @@ export default function UpdateCredentialForm({
                     placeholder="Enter Port"
                     type="text"
                     name="port"
-                    value={state.port}
+                    value={state.port || ""}
                     onChange={onInputChange}
                     className="form-control"
                     id="port"
@@ -166,14 +166,14 @@ export default function UpdateCredentialForm({
                     placeholder="Enter Encryption"
                     type="text"
                     name="encryptoion"
-                    value={state.encryptoion}
+                    value={state.encryptoion || ""}
                     onChange={onInputChange}
                     className="form-control"
                     id="encryptoion"
                   />
                 </div>
               )}
-              {data.protocol === "smtp" ? null : (
+              {data.protocol === "smtp" || data.protocol === "smtp_old" ? null : (
                 <div className={`form-group col-md-4`}>
                   <label
                     htmlFor="client_id"
@@ -185,14 +185,14 @@ export default function UpdateCredentialForm({
                     placeholder="Enter Client Id"
                     type="text"
                     name="client_id"
-                    value={state.client_id}
+                    value={state.client_id || ""}
                     onChange={onInputChange}
                     className="form-control"
                     id="client_id"
                   />
                 </div>
               )}
-              {data.protocol === "smtp" || data.protocol === "stripe" ? null : (
+              {data.protocol === "smtp" || data.protocol === "smtp_old" || data.protocol === "stripe" ? null : (
                 <div className={`form-group col-md-4 `}>
                   <label
                     htmlFor="client_secret"
@@ -204,14 +204,14 @@ export default function UpdateCredentialForm({
                     placeholder="Enter Client secret"
                     type="text"
                     name="client_secret"
-                    value={state.client_secret}
+                    value={state.client_secret || ""}
                     onChange={onInputChange}
                     className="form-control"
                     id="client_secret"
                   />
                 </div>
               )}
-              {data.protocol === "smtp" ||
+              {data.protocol === "smtp" || data.protocol === "smtp_old" ||
                 data.protocol === "paypal" ||
                 data.protocol === "razorpay" ||
                 data.protocol === "stripe" ? null : (
@@ -226,7 +226,7 @@ export default function UpdateCredentialForm({
                     placeholder="Enter Tenant Id"
                     type="text"
                     name="tenantId"
-                    value={state.tenantId}
+                    value={state.tenantId || ""}
                     onChange={onInputChange}
                     className="form-control"
                     id="tenantId"
@@ -249,7 +249,7 @@ export default function UpdateCredentialForm({
                     placeholder="Enter Password"
                     type="password"
                     name="password"
-                    value={state.tenantId}
+                    value={state.password || ""}
                     onChange={onInputChange}
                     className="form-control"
                     id="password"

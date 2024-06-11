@@ -473,7 +473,17 @@ export default function EmployeeTable(props) {
                     scope="col"
                     className=" border-0 font-size-4 font-weight-normal"
                   >
-                    EID
+                    <Link
+                      to={""}
+                      onClick={() => {
+                        handleSort("employee_id");
+                        props.setpageNo(1);
+                      }}
+                      className="text-gray"
+                      title="Sort by Id"
+                    >
+                      EID
+                    </Link>
                   </th>
                   <th
                     scope="col"
@@ -661,7 +671,7 @@ export default function EmployeeTable(props) {
                         >
                           <div className="d-flex profile_box gx-2">
                             <div className="media  align-items-center">
-                                <Link
+                              <Link
                                 to={`/${empdata.employee_id}`}
                                 onClick={() =>
                                   localStorage.setItem("StatusTab", status === "" ? "00" : status)
@@ -669,23 +679,23 @@ export default function EmployeeTable(props) {
                                   //     ? () => employeeDetails(empdata.employee_id)
                                   //     : null
                                 }
-                                title="Candidate Details"> 
-                              <div className="circle-30 mx-auto overflow-hidden">
-                                {empdata.profile_photo === null ? (
-                                  <img
-                                    src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                                    alt=""
-                                    className="w-100"
-                                  />
-                                ) : (
-                                 <img
-                                    src={empdata.profile_photo}
-                                    alt=""
-                                    className="w-100"
-                                  />
-                                )}
-                              </div>
-                                  </Link>
+                                title="Candidate Details">
+                                <div className="circle-30 mx-auto overflow-hidden">
+                                  {empdata.profile_photo === null ? (
+                                    <img
+                                      src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                                      alt=""
+                                      className="w-100"
+                                    />
+                                  ) : (
+                                    <img
+                                      src={empdata.profile_photo}
+                                      alt=""
+                                      className="w-100"
+                                    />
+                                  )}
+                                </div>
+                              </Link>
                             </div>
 
                             <div className=" mb-0">
@@ -695,22 +705,22 @@ export default function EmployeeTable(props) {
                                 empdata.name === "" ? (
                                 <p className="font-size-3  mb-0">N/A</p>
                               ) : (
-                               
-                               <Link 
-                               to={`/${empdata.employee_id}`}
-                               onClick={() =>
-                                 localStorage.setItem("StatusTab", status === "" ? "00" : status)
-                                 //   empdata.name !== null
-                                 //     ? () => employeeDetails(empdata.employee_id)
-                                 //     : null
-                               }
-                               title="Candidate Details">
-                                <p
-                                  className="m-0 text-black-2 font-weight-bold text-capitalize text-truncate"
-                                  title={empdata.name}
-                                >
-                                  {empdata.name}
-                                </p>
+
+                                <Link
+                                  to={`/${empdata.employee_id}`}
+                                  onClick={() =>
+                                    localStorage.setItem("StatusTab", status === "" ? "00" : status)
+                                    //   empdata.name !== null
+                                    //     ? () => employeeDetails(empdata.employee_id)
+                                    //     : null
+                                  }
+                                  title="Candidate Details">
+                                  <p
+                                    className="m-0 text-black-2 font-weight-bold text-capitalize text-truncate"
+                                    title={empdata.name}
+                                  >
+                                    {empdata.name}
+                                  </p>
                                 </Link>
                               )}
                               {empdata.gender || empdata.marital_status ? (
@@ -807,7 +817,7 @@ export default function EmployeeTable(props) {
                           ) : (
                             <p className="font-size-3 font-weight-normal text-black-2 mb-0">
                               {/* {empdata.language} */}
-                              <ConvertTime _date={empdata.created_at} format={"DD MMMM, YYYY"}/>
+                              <ConvertTime _date={empdata.created_at} format={"DD MMMM, YYYY"} />
                               {/* {moment(empdata.created_at).format(
                                 "DD MMMM, YYYY"
                               )} */}
@@ -832,7 +842,7 @@ export default function EmployeeTable(props) {
                                   empdata.agent_u_id + " " + empdata.agent_name
                                 }
                               >
-                                {empdata.agent_u_id +" "}
+                                {empdata.agent_u_id + " "}
                                 {empdata.agent_name}
                               </p>
                             </Link>

@@ -125,7 +125,17 @@ function Interview(props) {
                       scope="col"
                       className="border-0 font-size-4 font-weight-normal"
                     >
-                      EID
+                      <Link
+                        to={""}
+                        onClick={() => {
+                          handleSort("employee_id");
+                          props.setpageNo(1);
+                        }}
+                        className="text-gray"
+                        title="Sort by Id"
+                      >
+                        EID
+                      </Link>
                     </th>
                     <th
                       scope="col"

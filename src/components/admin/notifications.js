@@ -292,11 +292,17 @@ function Notifications({
                                   ? `/${data.employee_id}?partner=${data.from_id}`
                                   : data.subject === "mention_partnerChat"
                                     ? `/partner_profile?partner=${data.employee_id}`
-                                    : data.subject === "assigned_admin_to_partner" ?
+                                    : data.subject === "assigned_admin_to_partner"
+                                      ?
                                       "/partner_profile"
                                       : data.subject === "mention_notes"
                                         ? data.document_user_type === "employer"
-                                          ? `/client_detail?note=true` : `/${data.employee_id}?note=true`
+                                          ? `/client_detail?note=true`
+                                          : data.document_user_type === "agent" && (window.location.pathname === "/partner_profile" && user_type === "agent")
+                                            ?
+                                            `?note=true`
+                                            : data.document_user_type === "agent" ? `/partner_profile?note=true`
+                                              : `/${data.employee_id}?note=true`
                                         : ""
                       }
                       onClick={() => {
@@ -307,8 +313,9 @@ function Notifications({
                           window.history.replaceState({}, document.title, "/");
                           if (data.subject === "mention_partnerChat") {
                             localStorage.setItem("agent_id", data.employee_id);
-                          } else if (data.subject === "assigned_admin_to_partner") {
-                            localStorage.setItem("agent_id", data.action_id);
+                          } else if (data.subject === "assigned_admin_to_partner" || (data.document_user_type === "agent" && data.subject === "mention_notes")) {
+                            localStorage.setItem("agent_id",
+                              data.document_user_type === "agent" ? data.employee_id : data.action_id);
                           } else if ((data.subject === "mention_document" || data.subject === "mention_notes")
                             && data.document_user_type === "employer") {
                             localStorage.setItem("company_id", data.employee_id);

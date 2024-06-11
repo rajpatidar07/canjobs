@@ -65,7 +65,6 @@ export default function LmiaInfo(props) {
             let res = props.job === "yes"
                 ? await AddLmiaAdditionalInformationJob(state)
                 : await AddLmiaAdditionalInformationEmployee(state)
-                console.log(res)
             if (res.message === 'Data updated successfully') {
                 toast.success("Information Added successfully", {
                     position: toast.POSITION.TOP_RIGHT,
