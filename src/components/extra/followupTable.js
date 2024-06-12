@@ -1,16 +1,18 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { GetAllJobs, getAllJobsCategory } from "../../api/api";
 import JobResponse from "./response";
 import Loader from "../common/loader";
+import { Pagination } from "react-bootstrap";
 
-function FollowupTable() {
+function FollowupTable(props) {
   /*show Modal and props state */
   const [jobData, setjobData] = useState([]);
   const [JobId, setJobId] = useState([]);
   let [isLoading, setIsLoading] = useState(true);
   /*Filter and search state */
-  const [Categorylist, setCategoryList] = useState([]);
+  const [/*Categorylist,*/ setCategoryList] = useState([]);
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -291,7 +293,7 @@ function FollowupTable() {
                         data-aos-once="true"
                         key={job.job_id}
                       >
-                        <td scope="row" className="py-5 ">
+                        <td  className="py-5 ">
                           <div className="">
                             <Link
                               to={""}

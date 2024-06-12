@@ -79,6 +79,9 @@ export default function PartnerDetails({ setLoginCondition }) {
       //   setPayment();
       setTabActive("payment");
     }
+    if(notes){
+      setTabActive("notes");
+    }
     // eslint-disable-next-line
   }, [apiCall, agent_id, notes]);
   const GetChartData = async () => {

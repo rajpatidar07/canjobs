@@ -218,8 +218,11 @@ const NewUserProfile = (props) => {
     if (partnerChat) {
       setTabActive("agent conversation");
     }
+    if (notes) {
+      setTabActive("notes");
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apiCall, eid, docId, docParentId]);
+  }, [apiCall, eid, docId, docParentId, notes]);
   /*Function to See uploaded resume */
   const handleViewResume = (pdfUrl) => {
     window.open(`/userpdf?pdfUrl=${encodeURIComponent(pdfUrl)}`, "_blank");
@@ -314,7 +317,7 @@ const NewUserProfile = (props) => {
         className={
           user_type === "admin" || user_type === "agent"
             ? "dashboard-main-container mt-12 mt-lg-12"
-            : "mt-22 mt-lg-22"
+            : " employee-detail-top-padding"
         }
         id="dashboard-body"
       >
@@ -334,7 +337,7 @@ const NewUserProfile = (props) => {
             </div>
           ) : (
             userFound === eid
-              ? <div className="row text-left mt-3 pt-0 flex-wrap">
+              ? <div className="row text-left mt-5 pt-0 flex-wrap">
                 <div className="col-12 mb-1 d-none">
                   <div className="bg-white shadow-9 d-flex">
                     <div className="col-md-3 col-sm-6 px-5 pt-5 pb-5 d-flex align-items-center border-right">

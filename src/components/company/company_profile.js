@@ -107,8 +107,11 @@ function CompanyProfileDetail(props) {
     if (docId) {
       setTabActive("documents");
     }
+    if (notes) {
+      setTabActive("notes");
+    }
     // eslint-disable-next-line
-  }, [apiCall, company_id]);
+  }, [apiCall, company_id, notes]);
 
   return (
     <div>
@@ -130,7 +133,7 @@ function CompanyProfileDetail(props) {
                 <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
                 <span className="text-uppercase font-size-3 font-weight-bold text-gray">
                   <h3 className="font-size-6 mb-0 text-capitalize">
-                    {employerData.company_name ? employerData.company_name + " (Client)" : ""}
+                    {employerData.company_name ? employerData.company_name + " (Company)" : ""}
                   </h3>
                 </span>
               </Link>
@@ -145,7 +148,7 @@ function CompanyProfileDetail(props) {
         className={
           user_type === "admin" || user_type === "agent"
             ? "dashboard-main-container bg-light mt-12 mt-lg-12"
-            : "bg-default-2 pt-30 pt-lg-22 pb-lg-27"
+            : "bg-default-2 employer-detail-top-padding"
         }
       >
         <div className={`container${user_type === "admin" || user_type === "agent" ? "-fluid" : ""}`}>
@@ -842,6 +845,7 @@ function CompanyProfileDetail(props) {
                       heading={"userprofile"}
                       pageNo={interviewPageNo}
                       setpageNo={setInterviewPageNO}
+                      user_type={user_type}
                     />
                   ) : null}
                 </div>
@@ -945,7 +949,7 @@ function CompanyProfileDetail(props) {
           </div>
         </div>
       </div>
-      {user_type !== "admin" ? <EmployeeFooter /> : null}
+      {user_type === "admin" || user_type === "agent" ? "" : <EmployeeFooter />}
       {showCompanyInfoModal ? (
         <CompanyDetails
           employerId={user_type === "company" ? company_id : cid}

@@ -10,7 +10,7 @@ const Breadcrumbs = ({ data, setFolderID }) => {
       >
         {(data || []).map((item, index) => (
           <li
-            key={item.id}
+            key={index}
             className={`breadcrumb-item ${
               index === data.length - 1 ? "active" : ""
             }`}

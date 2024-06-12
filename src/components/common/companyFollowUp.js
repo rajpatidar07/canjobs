@@ -4,6 +4,7 @@ import { getSingleCompanyFollowup, AddCompanyFollowup } from "../../api/api";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TextEditor from "./TextEditor";
+import ConvertTime from "./ConvertTime";
 
 function AddCompanyfollowup(props) {
   let [response, setResponseData] = useState([]);
@@ -129,7 +130,7 @@ function AddCompanyfollowup(props) {
                   <div className="d-flex justify-content-between">
                     <p className="text-italic font-size-3 m-0">
                       Created on:
-                      <ConvertTime _date={job.created_at} format={"Do MM YYYY, h:mm:ss a"} />
+                      <ConvertTime _date={res.created_at} format={"Do MM YYYY, h:mm:ss a"} />
                       {/* {moment(res.created_at).format("Do MM YYYY, h:mm:ss a")} */}
                     </p>
                   </div>

@@ -14,6 +14,7 @@ import { BsEnvelope } from "react-icons/bs";
 import { RiMailSendLine } from "react-icons/ri";
 import { BiPhoneCall } from "react-icons/bi";
 import LimaArrowProfile from "../common/LimaArrowProfile";
+import EmployeeFooter from "../common/footer";
 function JobDetailpageAdmim(props) {
   const user_type = localStorage.getItem("userType");
   let jid = localStorage.getItem("job_id");
@@ -96,7 +97,7 @@ function JobDetailpageAdmim(props) {
         className={
           user_type === "admin" || user_type === "agent"
             ? "dashboard-main-container bg-light mt-12 mt-lg-12"
-            : "bg-default-2 pt-30 pt-lg-22 pb-lg-27"
+            : "bg-default-2 employer-detail-top-padding"
         }
       >
         <div className={`container${user_type === "admin" || user_type === "agent" ? "-fluid" : ""}`}>
@@ -758,7 +759,7 @@ function JobDetailpageAdmim(props) {
           </div>
         </div>
       </div>
-      {/* {user_type !== "admin" ? <EmployeeFooter /> : null} */}
+      {user_type === "admin" || user_type === "agent" ? "" : <EmployeeFooter />}
       {showJobEditModal ? (
         <AddJobModal
           show={showJobEditModal}

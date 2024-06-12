@@ -89,7 +89,6 @@ export default function ActivityTable(props) {
     ActivityLog();
     // eslint-disable-next-line
   }, [page]);
-  // console.log("DATATATA" + activity_json["1"]);
   return (
     <>
       <div className="table-responsive main_table_div">

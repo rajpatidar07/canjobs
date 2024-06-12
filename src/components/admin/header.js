@@ -53,11 +53,20 @@ const AdminHeader = (props) => {
   // }, []);
   // // SessionCheck();
   return (
-    <header className="site-header admin_header site-header--menu-right bg-default position-fixed border-left site-header--absolute">
-      <div className="container-fluid-fluid px-7">
+    <header className="site-header admin_header site-header--menu-right bg-default position-fixed border-left site-header--absolute w-100">
+      <div className="container-fluid-fluid">
         <nav className="navbar site-navbar offcanvas-active navbar-expand-lg  px-0 py-0">
+          {/* <!-- Page logo--> */}
+          {/* /*Added logo To set sidebar menu to show and hide on all screens*/ }
+        <div className="brand-logo ">
+          <Link
+            to={userType === "agent" ? "/partner_profile" : "/dashboard"}
+          >
+            <img src="image/logo-main-black.png" alt="" />
+          </Link>
+        </div>
           {/* <!-- Page Heading--> */}
-          <h3 className="font-size-6 mb-0 text-capitalize">{props.heading}</h3>
+          <h3 className="font-size-6 mb-0 mx-5 text-capitalize">{props.heading}</h3>
           <div className="collapse navbar-collapse" id="mobile-menu"></div>
 
           {userType === "agent" || userType === "" ? "" : <GlobalSearch />}

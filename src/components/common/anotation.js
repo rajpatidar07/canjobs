@@ -585,14 +585,16 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 const Annotation = () => {
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
 
+  /*Onchange function for editor  */
   const handleEditorChange = (newEditorState) => {
     setEditorState(newEditorState);
   };
-
+/*Function to CLear editor */
   const handleClearEditor = () => {
     handleEditorChange(EditorState.createEmpty());
   };
 
+  /*Function to get content to HTML */
   const getContentAsHTML = () => {
     const contentState = editorState.getCurrentContent();
     return stateToHTML(contentState);

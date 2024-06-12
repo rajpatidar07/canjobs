@@ -9,6 +9,7 @@ export default function AdminTaskTable(props) {
   const [taskStatus/*, setTaskStatus*/] = useState("");
   const [columnName, setcolumnName] = useState("");
   const [sortOrder, setSortOrder] = useState("ASC");
+  let adminEmail = localStorage.getItem("admin_id");
 
   /*Pagination states */
   const [totalData, setTotalData] = useState(true);
@@ -17,7 +18,6 @@ export default function AdminTaskTable(props) {
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 
-  let adminEmail = localStorage.getItem("admin_id");
   // Generate a list of admin;s task
   const getCommentsList = async () => {
     try {

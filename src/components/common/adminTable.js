@@ -46,7 +46,6 @@ export default function AdminTable({
           <table className="table table-striped main_data_table">
             <thead>
               <tr>
-                {/* <th></th> */}
                 <th
                   scope="col"
                   className="border-0 font-size-4 font-weight-normal"

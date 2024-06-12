@@ -81,7 +81,6 @@ const MentionAdminInDoc = ({
   };
   /*Function to Add update mention admin */
   const OnMentionAdmin = async () => {
-    console.log(selectedMentionAdmin);
     if (selectedMentionAdmin.length === 0) {
       toast.error("The admin is not chosen to assign tasks!", {
         position: toast.POSITION.TOP_RIGHT,
@@ -136,7 +135,6 @@ const MentionAdminInDoc = ({
           console.log(err);
         }
       } else {
-        console.log(DocUserType);
         try {
           let res = await ADocAnnotation(
             localStorage.getItem("admin_id"),

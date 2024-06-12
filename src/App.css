@@ -298,7 +298,8 @@ header.site-header.admin_header {
   right: 0;
   left: auto;
   margin: 1px 20px 5px; */
-  max-width: calc(100% - 125px);
+  max-width: calc(100% - 0px);
+  /*To show full width header*/
   right: 0;
   left: auto;
   margin: 0;
@@ -1686,6 +1687,46 @@ li.placeholder span svg {
 
 .file-background:hover {
   background-color: #edebe9
+}
+
+/*Employer page martin top for user and company module*/
+.employer-detail-top-padding {
+  padding-top: 70px;
+}
+
+@media (max-width: 768px) {
+  .employer-detail-top-padding {
+    padding-top: 120px;
+  }
+}
+
+@media (max-width: 320px) {
+  .employer-detail-top-padding {
+    padding-top: 140px;
+  }
+}
+
+/*Employee page martin top for user and company module*/
+.employee-detail-top-padding {
+  padding-top: 26px;
+}
+
+@media (max-width: 768px) {
+  .employee-detail-top-padding {
+    padding-top: 65px;
+  }
+}
+
+@media (max-width: 425px) {
+  .employee-detail-top-padding {
+    padding-top: 115px;
+  }
+}
+
+@media (max-width: 320px) {
+  .employee-detail-top-padding {
+    padding-top: 140px;
+  }
 }
 
 /* Chat input form */

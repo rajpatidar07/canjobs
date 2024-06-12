@@ -135,7 +135,7 @@ function EmployeeHeader() {
               ) : null}
 
               {/* EMPLOYEE MENU ITEMS */}
-              {userType === "company" ? null : (
+              {userType === "company" || userType === "user" ? null : (
                 <ul className="navbar-nav main-menu">
                   <li className="nav-item">
                     <Link className="nav-link" to="/">
@@ -151,7 +151,7 @@ function EmployeeHeader() {
                     <Link
                       className="nav-link"
                       to={"/client_login"}
-                      // onClick={() => setShowCompanyLogin(true)}
+                    // onClick={() => setShowCompanyLogin(true)}
                     >
                       Client
                     </Link>
@@ -255,7 +255,7 @@ function EmployeeHeader() {
               <Link
                 className="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset"
                 to={"/candidate_login"}
-                // onClick={() => setShowLogin(true)}
+              // onClick={() => setShowLogin(true)}
               >
                 Log in
               </Link>
@@ -269,7 +269,7 @@ function EmployeeHeader() {
               <Link
                 className="btn btn-primary"
                 to={"/candidate_signup"}
-                // onClick={() => setShowSingUp(true)}
+              // onClick={() => setShowSingUp(true)}
               >
                 Sign up
               </Link>
@@ -297,10 +297,10 @@ function EmployeeHeader() {
                       className="rounded-circle"
                       src={
                         profile_photo === null ||
-                        profile_photo === "" ||
-                        profile_photo === "null" ||
-                        profile_photo === undefined ||
-                        profile_photo === "undefined"
+                          profile_photo === "" ||
+                          profile_photo === "null" ||
+                          profile_photo === undefined ||
+                          profile_photo === "undefined"
                           ? "image/user.png"
                           : profile_photo
                       }
@@ -336,8 +336,8 @@ function EmployeeHeader() {
                       userType === "user"
                         ? `/${employee_id}`
                         : userType === "company"
-                        ? "/client_detail"
-                        : null
+                          ? "/client_detail"
+                          : null
                     }
                     onClick={
                       userType === "company"
@@ -368,7 +368,7 @@ function EmployeeHeader() {
           ) : null}
           {/* <!-- Mobile Menu Hamburger--> */}
           <button
-            className="navbar-toggler btn-close-off-canvas  hamburger-icon border-0"
+            className={`navbar-toggler btn-close-off-canvas  hamburger-icon border-0 ${userType === "user" ? " d-none" : ""}`}
             type="button"
             data-toggle="collapse"
             data-target="#mobile-menu"

@@ -41,7 +41,6 @@ export default function ApplicantsFilter({
   };
   /*Render method to get Partner data */
   // useEffect(() => {
-  //   console.log("candiddd", candidateSearch);
   //   if (candidateSearch !== undefined && candidateSearch !== null) {
   //     onSearch(candidateSearch);
   //     setsearchcall(false);

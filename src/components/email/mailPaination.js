@@ -25,6 +25,7 @@ function MailPagination({
       (_, i) => start + i
     );
     setVisiblePageNumbers(newVisiblePageNumbers);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, nPages]);
 
   // Function to handle pagination click

@@ -227,7 +227,7 @@ function Interview(props) {
                     >
                       Interview
                     </th>
-                    {props.heading === "Dashboard" ? null : (
+                    {props.heading === "Dashboard" || props.user_type === "company" ? null : (
                       <th
                         scope="col"
                         className=" border-0 font-size-4 font-weight-normal"
@@ -372,7 +372,7 @@ function Interview(props) {
                         </td>
                         <td
                           className={
-                            props.heading === "Dashboard" ? "d-none" : "py-5 "
+                            props.heading === "Dashboard" || props.user_type === "company" ? "d-none" : "py-5 "
                           }
                         >
                           <div className="btn-group button_group" role="group">
