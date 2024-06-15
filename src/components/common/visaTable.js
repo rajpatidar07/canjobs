@@ -210,7 +210,7 @@ export default function VisaTable(props) {
                       className="text-gray"
                       title="Sort by Id"
                     >
-                      EID.
+                      EID
                     </Link>
                   </th>
                   <th
@@ -328,6 +328,7 @@ export default function VisaTable(props) {
                   <th
                     scope="col"
                     className="border-0 font-size-4 font-weight-normal"
+                    title="Profile"
                   >
                     Profile
                   </th>
@@ -335,6 +336,7 @@ export default function VisaTable(props) {
                     <th
                       scope="col"
                       className="border-0 font-size-4 font-weight-normal"
+                      title="Status"
                     >
                       Status
                     </th>
@@ -345,6 +347,7 @@ export default function VisaTable(props) {
                     <th
                       scope="col"
                       className="border-0 font-size-4 font-weight-normal"
+                      title="Actions"
                     >
                       Action
                     </th>
@@ -363,7 +366,9 @@ export default function VisaTable(props) {
                   (employeeData || []).map((empdata, i) => (
                     <tr className="applicant_row" key={i}>
                       <td className=" py-5">
-                        <p className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        <p className="font-size-3 font-weight-normal text-black-2 mb-0"
+                          title={empdata.employee_id}
+                        >
                           <Link
                             className="text-dark"
                             to={`/${empdata.employee_id}`}
@@ -399,7 +404,8 @@ export default function VisaTable(props) {
                               </div>
                             ) : (
                               <div className=" mb-0">
-                                <p className="m-0 text-black-2 font-weight-bold text-capitalize">
+                                <p className="m-0 text-black-2 font-weight-bold text-capitalize"
+                                  title={empdata.name}>
                                   <Link
                                     className="text-dark"
                                     to={`/${empdata.employee_id}`}
@@ -407,19 +413,38 @@ export default function VisaTable(props) {
                                     {empdata.name}
                                   </Link>
                                 </p>
-                                <p className="text-gray font-size-2 m-0 text-capitalize">
+                                <p className="text-gray font-size-2 m-0 text-capitalize"
+                                  title={(empdata.gender === "female"
+                                    ? "F"
+                                    : empdata.gender === "male"
+                                      ? "M"
+                                      : "O") + (empdata.marital_status ||
+                                        empdata.date_of_birth
+                                        ? `(${empdata.marital_status
+                                        }${((moment().diff(
+                                          empdata.date_of_birth,
+                                          "years"
+                                        )) === 0
+                                          ? ""
+                                          : (`,${(moment().diff(
+                                            empdata.date_of_birth,
+                                            "years"
+                                          ))}Y`))})`
+                                        : null)}>
                                   {empdata.gender === "female"
                                     ? "F"
                                     : empdata.gender === "male"
                                       ? "M"
                                       : "O"}
-                                  ( {empdata.marital_status + ", "}
+                                  ({empdata.marital_status}
                                   {/*Calculation of age from date of birth*/}
-                                  {moment().diff(
+                                  {((moment().diff(
                                     empdata.date_of_birth,
                                     "years"
-                                  )}
-                                  Y)
+                                  )) === 0 ? "" : (`,${(moment().diff(
+                                    empdata.date_of_birth,
+                                    "years"
+                                  ))}Y`))})
                                   {empdata.is_featured === "1" ? (
                                     <span className="bg-orange text-white featured_tag">
                                       Featured
@@ -440,7 +465,7 @@ export default function VisaTable(props) {
                         {empdata.contact_no === null ? (
                           <p className="font-size-3 mb-0">N/A</p>
                         ) : (
-                          <p className="m-0">
+                          <p className="m-0" title={empdata.contact_no}>
                             +
                             <Link
                               className="text-dark"
@@ -451,7 +476,8 @@ export default function VisaTable(props) {
                           </p>
                         )}
                         <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                          <p className="text-gray font-size-2 m-0">
+                          <p className="text-gray font-size-2 m-0"
+                            title={empdata.email}>
                             <Link
                               className="text-dark"
                               to={`mailto:${empdata.email}`}
@@ -482,7 +508,8 @@ export default function VisaTable(props) {
                           {empdata.interested_in === null || !empdata.interested_in ? (
                             <p className="font-size-3  mb-0">N/A</p>
                           ) : (
-                            <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate text-capitalize">
+                            <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate text-capitalize"
+                              title={empdata.interested_in}>
                               {empdata.interested_in}
                             </p>
                           )}
@@ -494,9 +521,10 @@ export default function VisaTable(props) {
                         <td className=" py-5">
                           {empdata.visa_country === null ||
                             empdata.visa_country === "" || !empdata.visa_country ? (
-                            <p className="font-size-3  mb-0">N/A</p>
+                            <p className="font-size-3  mb-0" title="N/A ">N/A</p>
                           ) : (
-                            <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate text-capitalize">
+                            <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate text-capitalize"
+                              title={empdata.visa_country}>
                               {empdata.visa_country}
                             </p>
                           )}
@@ -509,21 +537,31 @@ export default function VisaTable(props) {
                           {empdata.experience === null || !empdata.experience ? (
                             <p className="font-size-3 mb-0">N/A</p>
                           ) : (
-                            <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-capitalize">
+                            <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-capitalize"
+                              title={empdata.experience === "1-3 " ||
+                                empdata.experience === "1-2 " ||
+                                empdata.experience === "3-5 " ||
+                                empdata.experience === "5-7 " ||
+                                empdata.experience === "7+ "
+                                ? empdata.experience + "Years"
+                                : empdata.experience === "0-1 "
+                                  ? "0-1 Year" : empdata.experience}>
                               {empdata.experience === "1-3 " ||
                                 empdata.experience === "1-2 " ||
                                 empdata.experience === "3-5 " ||
                                 empdata.experience === "5-7 " ||
                                 empdata.experience === "7+ "
-                                ? empdata.experience + "years"
+                                ? empdata.experience + "Years"
                                 : empdata.experience === "0-1 "
-                                  ? "0-1 year" : empdata.experience}
+                                  ? "0-1 Year" : empdata.experience}
                             </p>
                           )}
                         </td>
                       )}
                       <td className=" py-5">
-                        <p className="font-size-2 font-weight-normal text-black-2 mb-0">
+                        <p className="font-size-2 font-weight-normal text-black-2 mb-0"
+                          title={empdata.profile_complete === "100.00"
+                            ? "Complete" : "Incomplete"}>
                           {empdata.profile_complete === "100.00" ? (
                             <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
                               Complete
@@ -537,7 +575,8 @@ export default function VisaTable(props) {
                       </td>
 
                       <td className="">
-                        <p className="font-size-2 font-weight-normal text-black-2 mb-0">
+                        <p className="font-size-2 font-weight-normal text-black-2 mb-0"
+                          title={empdata.visa_status || "N/A"}>
                           {empdata.visa_status === "onboard" ? (
                             <span className="p-1 bg-coral-opacity-visible text-white text-center w-100 border rounded-pill">
                               On Board
@@ -564,7 +603,7 @@ export default function VisaTable(props) {
                             </span>
                           ) : (
                             <span className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              NA
+                              N/A
                             </span>
                           )}
                         </p>

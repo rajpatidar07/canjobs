@@ -330,7 +330,7 @@ export default function JobTable(props) {
                       <Link
                         to=""
                         onClick={() => handleSort("job_type")}
-                        title="Sort by Job"
+                        title="Sort by Job type"
                         className="text-gray"
                       >
                         Job Type
@@ -433,9 +433,15 @@ export default function JobTable(props) {
                       user_type === "user"
                         ? "d-none"
                         : " border-0 font-size-4 font-weight-normal"
-                    }
-                  >
-                    Vacancies / Responses
+                    }>
+                    <Link onClick={() => handleSort(props.selfJob === "yes"
+                      ? "applied_by_self"
+                      : "applied_by_admin")}
+                      className="text-gray"
+                      title="Sort by Responses"
+                    >
+                      Vacancies / Responses
+                    </Link>
                   </th>
                   <th
                     scope="col"
@@ -445,14 +451,22 @@ export default function JobTable(props) {
                         : " border-0 font-size-4 font-weight-normal"
                     }
                   >
-                    LMIA status
+                    <Link
+                      to=""
+                      onClick={() => handleSort("lmia_status")}
+                      className="text-gray"
+                      title="Sort by LMIA status"
+                    >
+                      LMIA status
+                    </Link>
                   </th>
                   {props.heading === "Dashboard" ||
                     user_type === "user" ||
-                    user_type === "company" ? null : (
+                    user_type === "company" || user_type === "agent" ? null : (
                     <th
                       scope="col"
                       className=" border-0 font-size-4 font-weight-normal"
+                      title="Actions"
                     >
                       Action
                     </th>
@@ -488,17 +502,18 @@ export default function JobTable(props) {
                                     localStorage.setItem("job_id", job.job_id)
                                   // JobDetail(job.job_id)
                                 }
-                                className="font-size-3 mb-0 font-weight-semibold text-black-2 text-truncate"
-                                title={job.job_title + ` (${job.employement})`}
+                                className="font-size-3 mb-0 font-weight-semibold text-black-2 "
+                                title={job.job_title + (job.employement ? ` (${job.employement})` : "")}
                               >
                                 <>
-                                  <p className="m-0 text-black-2 font-weight-bold text-capitalize">
+                                  <p className="m-0 text-truncate text-black-2 font-weight-bold text-capitalize">
                                     {job.job_title}{" "}
                                     {job.employement
                                       ? `(${job.employement})`
                                       : ""}
                                   </p>
-                                  <p className="text-gray font-size-2 m-0 text-capitalize">
+                                  <p className="text-gray font-size-2 m-0 text-capitalize"
+                                    title={job.company_name}>
                                     {job.company_name}
                                     {/* - {job.industry_type} */}
                                     <br />
@@ -513,7 +528,8 @@ export default function JobTable(props) {
                             </div>
                           </th>
                           {props.heading === "Dashboard" ? null : (
-                            <th className=" py-5">
+                            <th className=" py-5"
+                              title={job.job_type}>
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {/* {job.employement} -  */}
                                 {job.job_type}
@@ -523,7 +539,9 @@ export default function JobTable(props) {
                             </th>
                           )}
                           {props.heading === "Dashboard" ? null : (
-                            <th className=" py-5">
+                            <th className=" py-5" title={job.industry_type || job.location
+                              ? `${job.industry_type ? job.industry_type + "," : ""} ${job.location}`
+                              : "N/A"}>
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {job.industry_type || job.location
                                   ? `${job.industry_type ? job.industry_type + "," : ""} ${job.location}`
@@ -575,20 +593,34 @@ export default function JobTable(props) {
                             </th>
                           )}
                           <th className="py-5 ">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
+                              title={job.salary ? "$" + job.salary : "N/A"}>
                               {job.salary ? "$" + job.salary : "N/A"}
                             </h3>
                           </th>
                           <th className="py-5 ">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
+                              title={job.experience_required + (
+                                job.experience_required === "1-3 " ||
+                                  job.experience_required === "1-2 " ||
+                                  job.experience_required === "3-5 " ||
+                                  job.experience_required === "5-7 " ||
+                                  job.experience_required === "7+ "
+                                  ? "Years"
+                                  : job.experience_required === "0-1 "
+                                    ? "Year"
+                                    : "")}>
                               {job.experience_required}
                               {job.experience_required === "1-3 " ||
                                 job.experience_required === "1-2 " ||
                                 job.experience_required === "3-5 " ||
                                 job.experience_required === "5-7 " ||
                                 job.experience_required === "7+ "
-                                ? "years"
-                                : ""}
+                                ? "Years"
+                                : job.experience_required === "0-1 "
+                                  ? "Year"
+                                  : ""
+                              }
                             </h3>
                           </th>
                           <th
@@ -596,8 +628,11 @@ export default function JobTable(props) {
                               user_type === "user" ? "d-none" : "py-5 "
                             }
                           >
-                            <h3 className="font-size-3 font-weight-bold text-black-2 mb-0">
-                              {props.heading === "Dashboard" ? (
+                            <h3 className="font-size-3 font-weight-bold text-black-2 mb-0"
+                              title={`${job.role_category} /${props.selfJob === "yes"
+                                ? job.applied_by_self
+                                : job.applied_by_admin}`}>
+                              {props.heading === "Dashboard" || user_type === "agent" ? (
                                 <span>
                                   {job.role_category} /
                                   {props.selfJob === "yes"
@@ -627,7 +662,8 @@ export default function JobTable(props) {
                               user_type === "user" ? "d-none" : " py-5"
                             }
                           >
-                            <div className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            <div className="font-size-3 font-weight-normal text-black-2 mb-0"
+                              title={job.lmia_status || "N/A"}>
                               {
                                 job.lmia_status === "onboarding" ? (
                                   <span className="px-3 py-2 badge badge-pill badge-shamrock">
@@ -655,7 +691,7 @@ export default function JobTable(props) {
                                     Decision
                                   </span>
                                 ) : (
-                                  <span>NA</span>
+                                  <span>N/A</span>
                                 )
                                 // ) : (job.lmia_status === "application submitted" ? (
                                 //   <span className="px-3 py-2 badge badge-pill badge-info">
@@ -667,7 +703,7 @@ export default function JobTable(props) {
                           </th>
                           {props.heading === "Dashboard" ||
                             user_type === "user" ||
-                            user_type === "company" ? null : (
+                            user_type === "company" || user_type === "agent" ? null : (
                             <th className="py-5 min-width-px-100">
                               <div
                                 className="btn-group button_group"
@@ -839,10 +875,10 @@ export default function JobTable(props) {
                                                 : "d-none"
                                             }
                                             onClick={() => AdditionalLmiaInfo(job)}
-                                            title="Additional LMIA Info"
+                                            title="Edit LMIA Info"
                                             disabled={!job.lmia_status}
                                           >
-                                            LMIA additional Info
+                                            LMIA Info
                                           </button>
                                           <button
                                             className={`d-none ${props.detail === "company_detail"
@@ -919,10 +955,10 @@ export default function JobTable(props) {
                             <td
                               colSpan="11"
                               className={
-                                job.lmia_status ? "bg-white" : "d-none"
+                                job.lmia_status ? "bg-white text-center" : "d-none"
                               }
                             >
-                              <div className="arrow-wrapper custome_arrow_wrapper w-100 d-flex flex-wrap mb-0">
+                              <div className="arrow-wrapper custome_arrow_wrapper  d-flex flex-wrap mb-0">
                                 <div className="arrow-steps" key={i}>
                                   <div className="job_name text-dark">
                                     <span className="m-0 font-size-2 d-block mb-1">

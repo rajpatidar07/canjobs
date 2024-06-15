@@ -296,7 +296,7 @@ function PersonalDetails(props) {
 
   // USER PERSONAL DETAIL SUBMIT BUTTON
   async function onUserPersonalDetailClick(event) {
-    // console.log(errors)
+    // console.log(errors,validate() ,imgError)
     event.preventDefault();
     if (validate() && imgError === "") {
       setLoading(true);
@@ -973,7 +973,7 @@ const close = () => {
                       </span>
                     )}
                   </div>
-                  {state.interested_in === "pnp" &&
+                  {(state.interested_in === "pnp"||state.interested_in === "PNP") &&
                     <div className={`form-group 
                     ${props.user_of_page === "assignedUser" ||
                         props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned"

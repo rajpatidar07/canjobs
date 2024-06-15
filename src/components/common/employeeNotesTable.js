@@ -132,7 +132,7 @@ export default function EmployeeNotesTable({ search, userType }) {
                         handleSort("created_at");
                       }}
                       className="text-gray"
-                      title="Sort by aadded date"
+                      title="Sort by added date"
                     >
                       Date added
                     </Link>
@@ -170,6 +170,7 @@ export default function EmployeeNotesTable({ search, userType }) {
                   <th
                     scope="col"
                     className="border-0 font-size-4 font-weight-normal"
+                  title="status"
                   >
                     status
                   </th>
@@ -188,7 +189,8 @@ export default function EmployeeNotesTable({ search, userType }) {
                     <React.Fragment key={i}>
                       <tr className="text-capitalize" >
                         <th className=" py-5">
-                          <p className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          <p className="font-size-3 font-weight-normal text-black-2 mb-0"
+                          title={data.user_id}>
                             {data.user_id}
                           </p>
                         </th>
@@ -285,7 +287,8 @@ export default function EmployeeNotesTable({ search, userType }) {
                           </Link>
                         </th>
                         <th className="py-5">
-                          <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                          <div className="font-size-3 mb-0 font-weight-semibold text-black-2"
+                          title={ConvertTime({_date:data.created_at,format:"DD MMMM, YYYY"})}>
                           <ConvertTime _date={data.created_at} format={"DD MMMM, YYYY"} />
                             {/* {moment(data.created_at).format("DD MMMM, YYYY")} */}
                           </div>
@@ -335,7 +338,7 @@ export default function EmployeeNotesTable({ search, userType }) {
                           className="font-size-3 font-weight-normal text-black-2 mb-0text-truncate text-break"
                         >
                           <div className=" d-flex">
-                            <b className="">Description: { }</b>
+                            <b className=""title="Description">Description: { }</b>
                             <span
                               className="px-2"
                               dangerouslySetInnerHTML={{

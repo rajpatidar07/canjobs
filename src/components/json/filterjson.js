@@ -766,5 +766,23 @@ const filterjson = {
     "LMIA Closed Work permit",
     "Spousal Open Work Permit",
   ],
+  Rerainer_Agreement_subCategories: [
+    "visitor",
+    "study",
+    "work permit",
+    "post graduation work permit",
+    "temporary resident visa",
+    "prospective workers",
+    "express entry",
+    "PNP + express entry/federal PR",
+    "super visa application",
+    "spousal sponsorship",
+    "citizenship",
+    "PR card renewal",
+    "permanent residency travel document",
+    "ATIP",
+    "employers",
+    "LMIA exempt employers",
+  ]
 };
 export default filterjson;

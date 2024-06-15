@@ -89,11 +89,19 @@ export default function AdminTable({
                   scope="col"
                   className="pl-4 border-0 font-size-4 font-weight-normal"
                 >
-                  Mobile
+                  <Link
+                    className="text-gray"
+                    to={""}
+                    onClick={() => handleSort("contact_no")}
+                    title="Mobile"
+                  >
+                    Mobile
+                  </Link>
                 </th>
                 <th
                   scope="col"
                   className="pl-4 border-0 font-size-4 font-weight-normal"
+                  title="Actions"
                 >
                   Action
                 </th>
@@ -148,11 +156,11 @@ export default function AdminTable({
                         className="text-gray"
                         onClick={
                           page === "admin page" &&
-                          admin.admin_type === "manager"
+                            admin.admin_type === "manager"
                             ? () => {
-                                OnManagerDetailClick(admin);
-                                setAddTeamListShow(false);
-                              }
+                              OnManagerDetailClick(admin);
+                              setAddTeamListShow(false);
+                            }
                             : null
                         }
                       >
@@ -175,7 +183,8 @@ export default function AdminTable({
                             </div>
                           </div>
                           <div className=" mb-0">
-                            <p className="m-0 text-black-2 font-weight-bold text-capitalize">
+                            <p className="m-0 text-black-2 font-weight-bold text-capitalize"
+                              title={admin.name}>
                               {admin.name}
                             </p>
                           </div>
@@ -199,7 +208,7 @@ export default function AdminTable({
                       </h3> */}
                     </th>
                     <th className="py-5">
-                      <Link
+                      {/* <Link
                         className="text-gray"
                         onClick={
                           page === "admin page" &&
@@ -210,15 +219,17 @@ export default function AdminTable({
                               }
                             : null
                         }
-                      >
-                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-capitalize">
-                          {admin.admin_type}
-                        </h3>
-                      </Link>
+                      > */}
+                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-capitalize"
+                        title={admin.admin_type}>
+                        {admin.admin_type}
+                      </h3>
+                      {/* </Link> */}
                     </th>
                     <th className="py-5 ">
                       <h3 className="font-size-3 font-weight-normal mb-0">
-                        <p className="font-size-3 m-0">
+                        <p className="font-size-3 m-0"
+                          title={admin.email}>
                           <Link
                             className="text-dark  text-lowercase"
                             to={`mailto:${admin.email}`}
@@ -246,7 +257,7 @@ export default function AdminTable({
                         <Link
                           className="font-weight-normal  font-size-3 text-gray"
                           to={`tel:${admin.contact_no}`}
-                        >
+                          title={admin.contact_no}>
                           +{admin.contact_no}
                         </Link>
                       )}

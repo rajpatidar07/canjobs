@@ -54,8 +54,8 @@ const EmailList = ({
             >
               <div
                 className={` ${user_type === "user" || user_type === "company"
-                    ? ""
-                    : "row m-0"
+                  ? ""
+                  : "row m-0"
                   }`}
               >
                 <div
@@ -79,7 +79,7 @@ const EmailList = ({
                         setEmailId();
                       }}
                     >
-                      Inbox
+                      {user_type === "company" || user_type === "user" ? "Sent" : "Inbox"}
                     </button>
                     <button
                       type="button"
@@ -93,13 +93,13 @@ const EmailList = ({
                         setEmailId();
                       }}
                     >
-                      Sent
+                      {user_type === "company" || user_type === "user" ? "Inbox" : "Sent"}
                     </button>
                     <button
                       type="button"
                       className={`btn btn-sm d-none ${emailType === "ALL"
-                          ? " btn-primary"
-                          : " btn-outline-primary"}`
+                        ? " btn-primary"
+                        : " btn-outline-primary"}`
                       }
                       onClick={() => {
                         setEmailType("ALL");
@@ -111,10 +111,10 @@ const EmailList = ({
                     <button
                       type="button"
                       className={`${user_type === "user" ||
-                          user_type === "company" ||
-                          user_type === "agent"
-                          ? "d-none btn btn-outline-primary"
-                          : "btn btn-sm btn-outline-primary"
+                        user_type === "company" ||
+                        user_type === "agent"
+                        ? "d-none btn btn-outline-primary"
+                        : "btn btn-sm btn-outline-primary"
                         }`}
                       onClick={() => {
                         sentEmail === "yes"
@@ -299,13 +299,13 @@ const EmailList = ({
                                   ) : (
                                     <p className=" font-weight-normal text-black-2 font-size-2 mb-0 ">
                                       {email.IsRead === true ? (
-                                        <ConvertTime _date={email.sentDateTime} format={"DD MMMM, YYYY"}/>
+                                        <ConvertTime _date={email.sentDateTime} format={"DD MMMM, YYYY"} />
                                         // moment(email.sentDateTime).format(
                                         //   "DD MMMM, YYYY"
                                         // )
                                       ) : (
                                         <b>
-                                          <ConvertTime _date={email.sentDateTime} format={"DD MMMM, YYYY"}/>
+                                          <ConvertTime _date={email.sentDateTime} format={"DD MMMM, YYYY"} />
                                           {/* {moment(email.sentDateTime).format(
                                             "DD MMMM, YYYY"
                                           )} */}

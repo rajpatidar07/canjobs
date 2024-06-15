@@ -224,6 +224,7 @@ function Interview(props) {
                     <th
                       scope="col"
                       className=" border-0 font-size-4 font-weight-normal"
+                      title="Interview"
                     >
                       Interview
                     </th>
@@ -231,6 +232,7 @@ function Interview(props) {
                       <th
                         scope="col"
                         className=" border-0 font-size-4 font-weight-normal"
+                        title="Actions"
                       >
                         Action
                       </th>
@@ -249,7 +251,8 @@ function Interview(props) {
                     (interviewData || []).map((data) => (
                       <tr className="text-capitalize" key={data.id}>
                         <td className="py-5 ">
-                          <div className="font-size-3 mb-0 font-weight-normal text-black-2">
+                          <div className="font-size-3 mb-0 font-weight-normal text-black-2"
+                            title={data.employee_id}>
                             {data.employee_id}
                           </div>
                         </td>
@@ -327,9 +330,9 @@ function Interview(props) {
                               data.skill === undefined ||
                               data.skill === "undefined" ||
                               data.skill === "" ? (
-                              <p className="font-size-3  mb-0">N/A</p>
+                              <p className="font-size-3  mb-0" title="N/A">N/A</p>
                             ) : (
-                              <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                              <div className="font-size-3 mb-0 font-weight-semibold text-black-2" title={data.skill}>
                                 {data.skill}
                               </div>
                             )}
@@ -342,7 +345,8 @@ function Interview(props) {
                             data.interview_date === "" ? (
                             <p className="font-size-3  mb-0">N/A</p>
                           ) : (
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
+                              title={ConvertTime({ _date: data.interview_date, format: "DD MMMM, YYYY" })}>
                               <ConvertTime _date={data.interview_date} format={"DD MMMM, YYYY"} />
                               {/* {moment(data.interview_date).format(
                                 "DD MMMM, YYYY"
@@ -350,20 +354,21 @@ function Interview(props) {
                             </h3>
                           )}
                         </td>
-                        <td className="py-5 ">
+                        <td className="py-5 text-center">
                           {data.status === null ||
                             data.status === undefined ||
                             data.status === "undefined" ||
                             data.status === "" ? (
                             <p className="font-size-3  mb-0">N/A</p>
                           ) : (
-                            <p className="font-size-2 font-weight-normal text-black-2 mb-0">
+                            <p className="font-size-2 font-weight-normal text-black-2 mb-0"
+                              title={data.status === "complete" ? "Complete" : "Schedule"}>
                               {data.status === "complete" ? (
-                                <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
+                                <span className="p-1 bg-primary-opacity-8 text-white text-center  border rounded-pill">
                                   Complete
                                 </span>
                               ) : (
-                                <span className="p-1 bg-info text-white text-center w-100 border rounded-pill">
+                                <span className="p-1 bg-info text-white text-center  border rounded-pill">
                                   Schedule
                                 </span>
                               )}

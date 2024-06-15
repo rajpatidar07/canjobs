@@ -383,12 +383,14 @@ function Category() {
                                 key={i}
                               >
                                 <th scope="row" className="py-5 ">
-                                  <div className="font-size-3 mb-0 font-weight-semibold text-black-2">
+                                  <div className="font-size-3 mb-0 font-weight-semibold text-black-2"
+                                  title={catdata.category_name}>
                                     {catdata.category_name}
                                   </div>
                                 </th>
                                 <th className=" py-5 d-none">
-                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
+                                  title={catdata.parent_type}>
                                     {catdata.parent_type}
                                   </h3>
                                 </th>
@@ -410,7 +412,7 @@ function Category() {
                                     <button
                                       className="btn btn-outline-info action_btn"
                                       onClick={() => ShowDeleteAlert(catdata)}
-                                      title="Delete"
+                                      title="Delete Category"
                                     >
                                       <span className=" text-danger">
                                         <RiDeleteBin5Line />

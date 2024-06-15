@@ -88,13 +88,16 @@ export default function ManegerBox({
     <table className="table table-striped main_data_table">
       <thead>
         <tr>
-          <th scope="col" className="border-0 font-size-4 font-weight-normal">
+          <th scope="col" className="border-0 font-size-4 font-weight-normal" 
+          title="Name">
             Name
           </th>
-          <th scope="col" className="border-0 font-size-4 font-weight-normal">
+          <th scope="col" className="border-0 font-size-4 font-weight-normal"
+          title="Contact">
             Contact
           </th>
-          <th scope="col" className="border-0 font-size-4 font-weight-normal">
+          <th scope="col" className="border-0 font-size-4 font-weight-normal"
+          title="Total Jobs">
             Total Jobs
           </th>
         </tr>
@@ -134,9 +137,10 @@ export default function ManegerBox({
                           </div>
                         </div>
                         <div className="text-left mb-0 d-flex profile_name_box ">
-                          <h5 className="m-0 text-black-3 font-weight-bold d-block text-capitalize ml-4">
+                          <h5 className="m-0 text-black-3 font-weight-bold d-block text-capitalize ml-4" title={item.name}>
                             {item.name}
-                            <p className="text-gray font-size-3 m-0 text-capitalize">
+                            <p className="text-gray font-size-3 m-0 text-capitalize"
+                            title={`(${item.admin_type})`}>
                               ({item.admin_type})
                             </p>
                           </h5>
@@ -165,13 +169,19 @@ export default function ManegerBox({
             </td>
             <td className="border-0 align-baseline">
               <div className="ml-4">
-                <p className="text-gray font-size-3 m-0 mb-3">{item.email}</p>
-                <p className="text-gray font-size-3 m-0 ">{item.contact_no}</p>
+                <p className="text-gray font-size-3 m-0 mb-3"
+                title={item.email}>{item.email}</p>
+                <p className="text-gray font-size-3 m-0 "
+                title={item.contact_no}>{item.contact_no}</p>
               </div>
             </td>
             <td className="border-0 align-baseline">
               <div className="ml-4">
-                <p>
+                <p title={(totalJobs || []).find((i) => i.managerId === item.admin_id)
+                    ? (totalJobs || []).find(
+                        (i) => i.managerId === item.admin_id
+                      ).count
+                    : 0}>
                   {(totalJobs || []).find((i) => i.managerId === item.admin_id)
                     ? (totalJobs || []).find(
                         (i) => i.managerId === item.admin_id

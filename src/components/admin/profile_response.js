@@ -619,14 +619,19 @@ function JobProfileResponse(props) {
                             <div className="d-flex profile_box gx-2">
                               <div className=" mb-0">
                                 <Link
-                                  to={`/client_detail`}
-                                  title="Client Details"
-                                  onClick={() =>
-                                    localStorage.setItem(
-                                      "company_id",
-                                      res.company_id
-                                    )
+                                  to={user_type === "agent"
+                                    ? null
+                                    : `/client_detail`}
+                                  title={user_type === "agent" ? "" : "Client Details"}
+                                  onClick={user_type === "agent"
+                                    ? null
+                                    : () =>
+                                      localStorage.setItem(
+                                        "company_id",
+                                        res.company_id
+                                      )
                                   }
+                                  style={{ cursor: user_type === "agent" ? "text" : "pointer" }}
                                 >
                                   <p className="text-gray text-black-2 m-0 text-capitalize">
                                     {res.company_name}
@@ -739,7 +744,7 @@ function JobProfileResponse(props) {
                                 </span>
                               ) : (
                                 <span className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                  NA
+                                  N/A
                                 </span>
                               )}
                             </Link>

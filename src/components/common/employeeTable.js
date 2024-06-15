@@ -380,6 +380,7 @@ export default function EmployeeTable(props) {
                       : "btn btn-outline-primary"
                   }
                   onClick={() => setStatus(-1)}
+                  title="New"
                 >
                   New
                 </button>
@@ -389,6 +390,7 @@ export default function EmployeeTable(props) {
                     status === 2 || status === "2" ? "btn btn-primary" : "btn btn-outline-primary"
                   }
                   onClick={() => setStatus(2)}
+                  title="Prospect"
                 >
                   Prospect
                 </button>
@@ -398,6 +400,7 @@ export default function EmployeeTable(props) {
                     status === 3 || status === "3" ? "btn btn-primary" : "btn btn-outline-primary"
                   }
                   onClick={() => setStatus(3)}
+                  title="Lead"
                 >
                   Lead
                 </button>
@@ -407,6 +410,7 @@ export default function EmployeeTable(props) {
                     status === "5" || status === 5 ? "btn btn-primary" : "btn btn-outline-primary"
                   }
                   onClick={() => setStatus(5)}
+                  title="Lost"
                 >
                   Lost
                 </button>
@@ -416,6 +420,7 @@ export default function EmployeeTable(props) {
                     status === "6" || status === 6 ? "btn btn-primary" : "btn btn-outline-primary"
                   }
                   onClick={() => setStatus(6)}
+                  title="Dead"
                 >
                   Dead
                 </button>
@@ -428,6 +433,7 @@ export default function EmployeeTable(props) {
                     status === "4" || status === 4 ? "btn btn-primary" : "btn btn-outline-primary"
                   }
                   onClick={() => setStatus(4)}
+                  title="Retained"
                 >
                   Retained
                 </button>
@@ -437,6 +443,7 @@ export default function EmployeeTable(props) {
                     status === "7" || status === 7 ? "btn btn-primary" : "btn btn-outline-primary"
                   }
                   onClick={() => setStatus(7)}
+                  title="Working on"
                 >
                   Working on
                 </button>
@@ -446,6 +453,7 @@ export default function EmployeeTable(props) {
                     status === "8" || status === 8 ? "btn btn-primary" : "btn btn-outline-primary"
                   }
                   onClick={() => setStatus(8)}
+                  title="Submitted"
                 >
                   Submitted
                 </button>
@@ -457,6 +465,7 @@ export default function EmployeeTable(props) {
                 status === "" || status === "00" ? "btn btn-primary" : "btn btn-outline-primary"
               }
               onClick={() => setStatus("")}
+              title="All"
             >
               All
             </button>
@@ -621,6 +630,7 @@ export default function EmployeeTable(props) {
                     <th
                       scope="col"
                       className="border-0 font-size-4 font-weight-normal"
+                      title="Sub Type"
                     >
                       Sub Type
                     </th>}
@@ -628,6 +638,7 @@ export default function EmployeeTable(props) {
                     <th
                       scope="col"
                       className="border-0 font-size-4 font-weight-normal"
+                      title="Status"
                     >
                       Status
                     </th>
@@ -635,6 +646,7 @@ export default function EmployeeTable(props) {
                   <th
                     scope="col"
                     className="border-0 font-size-4 font-weight-normal"
+                    title="Profile"
                   >
                     Profile
                   </th>
@@ -644,6 +656,7 @@ export default function EmployeeTable(props) {
                     <th
                       scope="col"
                       className="border-0 font-size-4 font-weight-normal"
+                      title="Actions"
                     >
                       Action
                     </th>
@@ -661,7 +674,7 @@ export default function EmployeeTable(props) {
                 ) : (
                   (employeeData || []).map((empdata) => (
                     <tr className="applicant_row" key={empdata.employee_id}>
-                      <td className=" py-5">
+                      <td className=" py-5" title={empdata.employee_id}>
                         <p className="font-size-3 font-weight-normal text-black-2 mb-0">
                           {empdata.employee_id}
                         </p>
@@ -724,7 +737,18 @@ export default function EmployeeTable(props) {
                                 </Link>
                               )}
                               {empdata.gender || empdata.marital_status ? (
-                                <p className="text-gray font-size-2 m-0 text-capitalize">
+                                <p className="text-gray font-size-2 m-0 text-capitalize" title={(empdata.gender === "female"
+                                  ? "F"
+                                  : empdata.gender === "male"
+                                    ? "M"
+                                    : "O") + (empdata.marital_status ||
+                                      empdata.date_of_birth
+                                      ? `${empdata.marital_status
+                                      },${moment().diff(
+                                        empdata.date_of_birth,
+                                        "years"
+                                      )} Y`
+                                      : null)}>
                                   {empdata.gender === "female"
                                     ? "F"
                                     : empdata.gender === "male"
@@ -743,7 +767,7 @@ export default function EmployeeTable(props) {
                                 </p>
                               ) : null}
                               {empdata.contact_no === null || !empdata.contact_no ? null : (
-                                <p className="m-0">
+                                <p className="m-0" title={empdata.contact_no}>
                                   +
                                   <Link
                                     className="text-dark font-size-2"
@@ -754,7 +778,7 @@ export default function EmployeeTable(props) {
                                 </p>
                               )}
                               <h3 className=" font-weight-normal text-black-2 mb-0">
-                                <p className="text-gray font-size-2 m-0">
+                                <p className="text-gray font-size-2 m-0" title={empdata.email}>
                                   <Link
                                     className="text-dark"
                                     to={`mailto:${empdata.email}`}
@@ -815,7 +839,7 @@ export default function EmployeeTable(props) {
                           {empdata.language === null ? (
                             <p className="font-size-3  mb-0">N/A</p>
                           ) : (
-                            <p className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            <p className="font-size-3 font-weight-normal text-black-2 mb-0" title={ConvertTime({ _date: empdata.created_at, format: "DD MMMM, YYYY" })}>
                               {/* {empdata.language} */}
                               <ConvertTime _date={empdata.created_at} format={"DD MMMM, YYYY"} />
                               {/* {moment(empdata.created_at).format(
@@ -896,16 +920,18 @@ export default function EmployeeTable(props) {
                         //     </p>
                         //   )}
                         // </td>
-                        <td className="">
+                        <td className="text-center ">
                           {empdata.interested_in === null || !empdata.interested_in ? (
-                            <p className="font-size-3 mb-0">N/A</p>
+                            <p className="font-size-3 mb-0" title="N/A">N/A</p>
                           ) : (
                             <p className={`font-size-2 font-weight-normal text-black-2 mb-0 ${empdata.interested_in === "pnp" ?
                               `text-uppercase` :
-                              "text-capitalize"}`}>
+                              "text-capitalize"}`}
+                              title={empdata.interested_in}>
                               <span
                                 className={
-                                  `p-1 text-white text-center w-100 border rounded-pill 
+                                  `p-1 ${ empdata.interested_in === "visitor visa"
+                                    ? "text-dark":"text-white"} text-center  border rounded-pill 
                                   ${empdata.interested_in === "business visa"
                                     ? "bg-eastern"
                                     : empdata.interested_in === "co-op"
@@ -942,16 +968,17 @@ export default function EmployeeTable(props) {
                         </td>
                       )}
                       {props.ApplicantType === "pnp" && (
-                        <td className="">
-                          {empdata.category === null ? (
-                            <p className="font-size-3 mb-0">N/A</p>
+                        <td className="text-center">
+                          {empdata.category === null || !empdata.category ? (
+                            <p className="font-size-3 mb-0" title="N/A">N/A</p>
                           ) : (
                             <p className={`font-size-2 font-weight-normal text-black-2 mb-0 
-                            ${empdata.category === "tech pathway" ? "text-capitalize" : `text-uppercase`
-                              }`}>
+                            ${(empdata.category === "tech pathway" || empdata.category === "Tech Pathway") ? "text-capitalize" : `text-uppercase`
+                              }`}
+                              title={empdata.category}>
                               <span
-                                className={`p-1 text-white text-center w-100 border rounded-pill ${empdata.category === "tech pathway" ? "bg-info " : empdata.category === "rrs" ?
-                                  "bg-warning" : empdata.category === "aos" ?
+                                className={`p-1 text-white text-center border rounded-pill ${(empdata.category === "tech pathway" || empdata.category === "Tech Pathway") ? "bg-info " : (empdata.category === "rrs" || empdata.category === "RRS") ?
+                                  "bg-warning" : (empdata.category === "aos" || empdata.category === "AOS") ?
                                     "bg-coral-opacity-visible" : ""
                                   }`}
                               >
@@ -962,10 +989,19 @@ export default function EmployeeTable(props) {
                         </td>
                       )}
                       {props.visa === "yes" ? null : (
-                        <td className="">
-                          <p className="font-size-2 font-weight-normal text-black-2 mb-0">
+                        <td className="text-center ">
+                          <p className="font-size-2 font-weight-normal text-black-2 mb-0"
+                            title={empdata.status === "1" || empdata.status === "0" ?
+                              "New" : empdata.status === "2" ?
+                                "Prospect" : empdata.status === "3" ?
+                                  "Lead" : empdata.status === "4" ?
+                                    "Retained" : empdata.status === "5" ?
+                                      "Lost" : empdata.status === "6" ?
+                                        "Dead" : empdata.status === "7" ?
+                                          "Working on" : empdata.status === "8" ?
+                                            "Submitted" : "N/A"}>
                             <span
-                              className={`p-1 text-white text-center w-100 border rounded-pill ${empdata.status === "1" || empdata.status === "0" ? (
+                              className={`p-1 text-white text-center  border rounded-pill ${empdata.status === "1" || empdata.status === "0" ? (
                                 !isTimeWithin24Hours(empdata.created_at)
                                   ? "bg-danger "
                                   : "bg-info ") : empdata.status === "2" ?
@@ -992,20 +1028,22 @@ export default function EmployeeTable(props) {
                           </p>
                         </td>
                       )}
-                      <td className=" py-5">
-                        <p className="font-size-2 font-weight-normal text-black-2 mb-0">
+                      <td className="text-center py-5">
+                        <p className="font-size-2 font-weight-normal text-black-2 mb-0"
+                          title={empdata.profile_complete === "100.00" ? "Complete" :
+                            "Incomplete"}>
                           {empdata.profile_complete === "100.00" ? (
-                            <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
+                            <span className="p-1 bg-primary-opacity-8 text-white text-center  border rounded-pill">
                               Complete
                             </span>
                           ) : (
-                            <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
+                            <span className="p-1 bg-warning text-white text-center  border rounded-pill">
                               Incomplete
                             </span>
                           )}
                         </p>
                       </td>
-                      {/* Calulation to get user is new or retained */}
+                      {/* Calculation to get user is new or retained */}
                       {/* <td className=" py-5">
           <p className="font-size-3 font-weight-normal text-black-2 mb-0">
             {(new Date(empdata.created_at) >= oneMonthAgo && new Date(empdata.created_at) <= currentDate) === true ? "New" : "Retained"}          

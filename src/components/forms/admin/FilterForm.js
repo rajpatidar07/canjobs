@@ -8,6 +8,66 @@ import { FiPlus } from "react-icons/fi";
 function AddFilter(props) {
   let [loading, setLoading] = useState(false);
   let [cancelBtn, setCancelBtn] = useState(false);
+let filterName =
+   props.id === 1
+    ? "Skill Type"
+    : props.id === 4
+    ? "Industry Type"
+    : props.id === 5
+    ? "Education Type"
+    : props.id === 6
+    ? "Corporation Type"
+    : props.id === 7
+    ? "Language Type"
+    : props.id === 2
+    ? "Category Type"
+    : props.id === 3
+    ? "Applicantscategories Type"
+    : props.id === 8
+    ? "Interested Type"
+    : props.id === 9
+    ? "Degree Type"
+    : props.id === 10
+    ? "Salary Type"
+    : props.id === 11
+    ? "LmiaStatus Type"
+    : props.id === 12
+    ? "LimaSubStagesOnboarding Type"
+    : props.id === 13
+    ? "LimaSubStagesAdvertisements Type"
+    : props.id === 14
+    ? "LimaSubStagesDocumentation Type"
+    : props.id === 15
+    ? "LimaSubStagesCandidatePlacement Type"
+    : props.id === 16
+    ? "LimaSubStagesSubmission Type"
+    : props.id === 17
+    ? "LimaSubStagesDecision Type"
+    : props.id === 18
+    ? "VisaStatus Type"
+    : props.id === 19
+    ? "VisaSubStagesOnboard Type"
+    : props.id === 20
+    ? "VisaSubStagesDocumentation Type"
+    : props.id === 21
+    ? "VisaSubStagesFilePreparation Type"
+    : props.id === 22
+    ? "VisaSubStagesFileReview Type"
+    : props.id === 23
+    ? "VisaSubStagesFileDecision Type"
+    : props.id === 24
+    ? "CanadianCandidateWorkStatus Type"
+    : props.id === 25
+    ? "EmployeeDocument Type"
+    : props.id === 26
+    ? "EmployerDocument Type"
+    : props.id === 27
+    ? "Country Type"
+    : props.id === 28
+    ? "State Type"
+    : props.id === 29
+    ? "City Type"
+    : ""
 
   // FILTER UPDATE VALIDATION
 
@@ -111,23 +171,11 @@ function AddFilter(props) {
               id="json_item"
               name="json_item"
               type={"text"}
-              placeholder={
-                props.id === 1
-                  ? "Skill Type"
-                  : props.id === 4
-                    ? "Industry Type"
-                    : props.id === 5
-                      ? "Education Type"
-                      : props.id === 6
-                        ? "Corporation Type"
-                        : props.id === 7
-                          ? "Language Type"
-                          : ""
-              }
+              placeholder={filterName}
             // maxLength={60}
             />
             {loading ? (
-              <button className="btn action_btn btn-primaryy" type="button" disabled>
+              <button className="btn action_btn btn-primary" type="button" disabled>
                 <div className="spinner-border spinner-border-sm" role="status"></div>
               </button>
             ) : (
@@ -136,13 +184,13 @@ function AddFilter(props) {
                   className="btn  action_btn btn-primary px-2"
                   type="submit"
                   id="button-addon2"
-                  title="Add Filter"
+                  title={`Add ${filterName}`}
                   onClick={onAddFIlterClick}
                 >
                   <FiPlus />
                 </button>
                 <button
-                  className="btn  action_btn btn-secondry d-none"
+                  className="btn  action_btn btn-secondary d-none"
                   type="button"
                   id="button-addon3"
                   title={cancelBtn

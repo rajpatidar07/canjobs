@@ -116,11 +116,12 @@ function FilterList() {
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
+                                  title={data.value}
                                 >
                                   {data.value}
                                   <Link
                                     onClick={() => ShowDeleteAlert(data, 1)}
-                                    title="Delete"
+                                    title={`Delete ${data.value}`}
                                   >
                                     <i
                                       className="px-3 fa fa-times-circle"
@@ -157,9 +158,11 @@ function FilterList() {
                             (filterData.Industry || []
                             ).map((data, i) => (
                               <React.Fragment key={i}>
-                                <li className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
+                                <li 
+                                title={data.value}
+                                className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
                                   {data.value}
-                                  <Link onClick={() => ShowDeleteAlert(data, 4)} title="Delete">
+                                  <Link onClick={() => ShowDeleteAlert(data, 4)} title={`Delete ${data.value}`}>
                                     <i className="px-3 fa fa-times-circle" aria-hidden="true"></i>
                                   </Link>
                                 </li>
@@ -194,11 +197,12 @@ function FilterList() {
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
+                                  title={data.value}
                                 >
                                   {data.value}
                                   <Link
                                     onClick={() => ShowDeleteAlert(data, 5)}
-                                    title="Delete"
+                                    title={`Delete ${data.value}`}
                                   >
                                     <i
                                       className="px-3 fa fa-times-circle"
@@ -235,11 +239,12 @@ function FilterList() {
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
+                                  title={data.value}
                                 >
                                   {data.value}
                                   <Link
                                     onClick={() => ShowDeleteAlert(data, 6)}
-                                    title="Delete"
+                                    title={`Delete ${data.value}`}
                                   >
                                     <i
                                       className="px-3 fa fa-times-circle"
@@ -276,11 +281,12 @@ function FilterList() {
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
+                                  title={data.value}
                                 >
                                   {data.value}
                                   <Link
                                     onClick={() => ShowDeleteAlert(data, 7)}
-                                    title="Delete"
+                                    title={`Delete ${data.value}`}
                                   >
                                     <i
                                       className="px-3 fa fa-times-circle"
@@ -317,11 +323,12 @@ function FilterList() {
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
+                                  title={data.value}
                                 >
                                   {data.value}
                                   <Link
                                     onClick={() => ShowDeleteAlert(data, 32)}
-                                    title="Delete"
+                                    title={`Delete ${data.value}`}
                                   >
                                     <i
                                       className="px-3 fa fa-times-circle"
@@ -358,11 +365,12 @@ function FilterList() {
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
+                                  title={data.value}
                                 >
                                   {data.value}
                                   <Link
                                     onClick={() => ShowDeleteAlert(data, 33)}
-                                    title="Delete"
+                                    title={`Delete ${data.value}`}
                                   >
                                     <i
                                       className="px-3 fa fa-times-circle"
@@ -399,11 +407,12 @@ function FilterList() {
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
+                                  title={data.value}
                                 >
                                   {data.value}
                                   <Link
                                     onClick={() => ShowDeleteAlert(data, 34)}
-                                    title="Delete"
+                                    title={`Delete ${data.value}`}
                                   >
                                     <i
                                       className="px-3 fa fa-times-circle"
@@ -440,11 +449,12 @@ function FilterList() {
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
+                                  title={data.value}
                                 >
                                   {data.value}
                                   <Link
                                     onClick={() => ShowDeleteAlert(data, 10)}
-                                    title="Delete"
+                                    title={`Delete ${data.value}`}
                                   >
                                     <i
                                       className="px-3 fa fa-times-circle"
@@ -481,11 +491,12 @@ function FilterList() {
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
+                                  title={data.value}
                                 >
                                   {data.value}
                                   <Link
                                     onClick={() => ShowDeleteAlert(data, 11)}
-                                    title="Delete"
+                                    title={`Delete ${data.value}`}
                                   >
                                     <i
                                       className="px-3 fa fa-times-circle"
@@ -522,11 +533,12 @@ function FilterList() {
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
+                                  title={data.value}
                                 >
                                   {data.value}
                                   <Link
                                     onClick={() => ShowDeleteAlert(data, 13)}
-                                    title="Delete"
+                                    title={`Delete ${data.value}`}
                                   >
                                     <i
                                       className="px-3 fa fa-times-circle"
@@ -563,11 +575,12 @@ function FilterList() {
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
+                                  title={data.value}
                                 >
                                   {data.value}
                                   <Link
                                     onClick={() => ShowDeleteAlert(data, 12)}
-                                    title="Delete"
+                                    title={`Delete ${data.value}`}
                                   >
                                     <i
                                       className="px-3 fa fa-times-circle"
@@ -604,11 +617,12 @@ function FilterList() {
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
+                                  title={data.value}
                                 >
                                   {data.value}
                                   <Link
                                     onClick={() => ShowDeleteAlert(data, 14)}
-                                    title="Delete"
+                                    title={`Delete ${data.value}`}
                                   >
                                     <i
                                       className="px-3 fa fa-times-circle"
@@ -645,11 +659,12 @@ function FilterList() {
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
+                                  title={data.value}
                                 >
                                   {data.value}
                                   <Link
                                     onClick={() => ShowDeleteAlert(data, 15)}
-                                    title="Delete"
+                                    title={`Delete ${data.value}`}
                                   >
                                     <i
                                       className="px-3 fa fa-times-circle"
@@ -686,11 +701,12 @@ function FilterList() {
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
+                                  title={data.value}
                                 >
                                   {data.value}
                                   <Link
                                     onClick={() => ShowDeleteAlert(data, 16)}
-                                    title="Delete"
+                                    title={`Delete ${data.value}`}
                                   >
                                     <i
                                       className="px-3 fa fa-times-circle"
@@ -727,11 +743,12 @@ function FilterList() {
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
+                                  title={data.value}
                                 >
                                   {data.value}
                                   <Link
                                     onClick={() => ShowDeleteAlert(data, 17)}
-                                    title="Delete"
+                                    title={`Delete ${data.value}`}
                                   >
                                     <i
                                       className="px-3 fa fa-times-circle"
@@ -768,11 +785,12 @@ function FilterList() {
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
+                                  title={data.value}
                                 >
                                   {data.value}
                                   <Link
                                     onClick={() => ShowDeleteAlert(data, 18)}
-                                    title="Delete"
+                                    title={`Delete ${data.value}`}
                                   >
                                     <i
                                       className="px-3 fa fa-times-circle"
@@ -809,11 +827,12 @@ function FilterList() {
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
+                                  title={data.value}
                                 >
                                   {data.value}
                                   <Link
                                     onClick={() => ShowDeleteAlert(data, 19)}
-                                    title="Delete"
+                                    title={`Delete ${data.value}`}
                                   >
                                     <i
                                       className="px-3 fa fa-times-circle"
@@ -850,11 +869,12 @@ function FilterList() {
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
+                                  title={data.value}
                                 >
                                   {data.value}
                                   <Link
                                     onClick={() => ShowDeleteAlert(data, 20)}
-                                    title="Delete"
+                                    title={`Delete ${data.value}`}
                                   >
                                     <i
                                       className="px-3 fa fa-times-circle"
@@ -891,11 +911,12 @@ function FilterList() {
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
+                                  title={data.value}
                                 >
                                   {data.value}
                                   <Link
                                     onClick={() => ShowDeleteAlert(data, 21)}
-                                    title="Delete"
+                                    title={`Delete ${data.value}`}
                                   >
                                     <i
                                       className="px-3 fa fa-times-circle"
@@ -932,11 +953,12 @@ function FilterList() {
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
+                                  title={data.value}
                                 >
                                   {data.value}
                                   <Link
                                     onClick={() => ShowDeleteAlert(data, 22)}
-                                    title="Delete"
+                                    title={`Delete ${data.value}`}
                                   >
                                     <i
                                       className="px-3 fa fa-times-circle"
@@ -972,11 +994,12 @@ function FilterList() {
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
+                                  title={data.value}
                                 >
                                   {data.value}
                                   <Link
                                     onClick={() => ShowDeleteAlert(data, 23)}
-                                    title="Delete"
+                                    title={`Delete ${data.value}`}
                                   >
                                     <i
                                       className="px-3 fa fa-times-circle"
@@ -1013,11 +1036,12 @@ function FilterList() {
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
+                                  title={data.value}
                                 >
                                   {data.value}
                                   <Link
                                     onClick={() => ShowDeleteAlert(data, 24)}
-                                    title="Delete"
+                                    title={`Delete ${data.value}`}
                                   >
                                     <i
                                       className="px-3 fa fa-times-circle"
@@ -1054,11 +1078,12 @@ function FilterList() {
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
+                                  title={data.value}
                                 >
                                   {data.value}
                                   <Link
                                     onClick={() => ShowDeleteAlert(data, 25)}
-                                    title="Delete"
+                                    title={`Delete ${data.value}`}
                                   >
                                     <i
                                       className="px-3 fa fa-times-circle"
@@ -1095,11 +1120,12 @@ function FilterList() {
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
+                                  title={data.value}
                                 >
                                   {data.value}
                                   <Link
                                     onClick={() => ShowDeleteAlert(data, 26)}
-                                    title="Delete"
+                                    title={`Delete ${data.value}`}
                                   >
                                     <i
                                       className="px-3 fa fa-times-circle"
@@ -1136,11 +1162,12 @@ function FilterList() {
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
+                                  title={data.value}
                                 >
                                   {data.value}
                                   <Link
                                     onClick={() => ShowDeleteAlert(data, 27)}
-                                    title="Delete"
+                                    title={`Delete ${data.value}`}
                                   >
                                     <i
                                       className="px-3 fa fa-times-circle"
@@ -1177,11 +1204,12 @@ function FilterList() {
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
+                                  title={data.value}
                                 >
                                   {data.value}
                                   <Link
                                     onClick={() => ShowDeleteAlert(data, 28)}
-                                    title="Delete"
+                                    title={`Delete ${data.value}`}
                                   >
                                     <i
                                       className="px-3 fa fa-times-circle"
@@ -1217,11 +1245,12 @@ function FilterList() {
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
+                                  title={data.value}
                                 >
                                   {data.value}
                                   <Link
                                     onClick={() => ShowDeleteAlert(data, 29)}
-                                    title="Delete"
+                                    title={`Delete ${data.value}`}
                                   >
                                     <i
                                       className="px-3 fa fa-times-circle"
@@ -1258,11 +1287,12 @@ function FilterList() {
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
+                                  title={data.value}
                                 >
                                   {data.value}
                                   <Link
                                     onClick={() => ShowDeleteAlert(data, 30)}
-                                    title="Delete"
+                                    title={`Delete ${data.value}`}
                                   >
                                     <i
                                       className="px-3 fa fa-times-circle"
@@ -1299,11 +1329,12 @@ function FilterList() {
                                 <li
                                   className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                   key={data.id}
+                                  title={data.value}
                                 >
                                   {data.value}
                                   <Link
                                     onClick={() => ShowDeleteAlert(data, 31)}
-                                    title="Delete"
+                                    title={`Delete ${data.value}`}
                                   >
                                     <i
                                       className="px-3 fa fa-times-circle"

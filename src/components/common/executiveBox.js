@@ -15,12 +15,12 @@ export default function ExecutiveBox({
   // const handleToggle = (index) => {
   //   setActiveIndex(index === activeIndex ? null : index);
   // };
-  /*Functo to remove assigned executive */
+  /*Function to remove assigned executive */
   // const RemoveAssined = async () => {
   // };
   const [selectedStatus, setSelectedStatus] = useState(selected);
 
-  /*Function to remove asign memeber to the manager */
+  /*Function to remove assign member to the manager */
   const HandleRemoveexecutive = async (Eid) => {
     try {
       let Response = await RemoveExecutiveTeam(Eid);

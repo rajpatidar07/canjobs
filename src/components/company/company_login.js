@@ -93,7 +93,7 @@ function CompanyLoginForm(props) {
             autoClose: 1000,
           });
           close();
-          Navigate("/client");
+          Navigate("/client_detail");
           window.location.reload();
         }
         if (Response.message === "Invalid Credentials !") {

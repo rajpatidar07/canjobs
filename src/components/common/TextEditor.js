@@ -37,14 +37,17 @@ export default function TextEditor({ state, setState, page, identifier }) {
                     page === "yourDuties" ? state.your_duties :
                       page === "jobDescription" ? state.job_description : null
       );
-      const contentState = ContentState.createFromBlockArray(contentBlock || []);
-      const editorState = EditorState.createWithContent(contentState || null);
-      setEditorState(editorState);
+      if (contentBlock) { // Add this null check
+        const contentState = ContentState.createFromBlockArray(contentBlock);
+        const editorState = EditorState.createWithContent(contentState);
+        setEditorState(editorState);
+      } else {
+        setEditorState(EditorState.createEmpty()); // Set an empty editor state if contentBlock is null
+      }
     }
     // eslint-disable-next-line
   }, [state, page, identifier]);
-
-  /*On chnage function to set updated value */
+  /*On change function to set updated value */
   const handleEditorChange = (newEditorState) => {
     setEditorState(newEditorState);
   };

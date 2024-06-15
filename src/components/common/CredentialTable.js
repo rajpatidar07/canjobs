@@ -7,35 +7,43 @@ export default function CredentialTable({ data, editCredential }) {
       <table className="table table-striped main_data_table">
         <thead>
           <tr>
-            <th scope="col" className="border-0 font-size-4 font-weight-normal">
+            <th scope="col" className="border-0 font-size-4 font-weight-normal"
+            title="Protocol">
               Protocol
             </th>
             <th
               scope="col"
               className=" border-0 font-size-4 font-weight-normal"
+              title="CLient Name"
             >
               Client Name
             </th>
-            <th scope="col" className="border-0 font-size-4 font-weight-normal">
+            <th scope="col" className="border-0 font-size-4 font-weight-normal"
+            title="Host">
               Host
             </th>
-            <th scope="col" className="border-0 font-size-4 font-weight-normal">
+            <th scope="col" className="border-0 font-size-4 font-weight-normal"
+            title="Port">
               Port
             </th>
-            <th scope="col" className="border-0 font-size-4 font-weight-normal">
+            <th scope="col" className="border-0 font-size-4 font-weight-normal"
+            title="Encryption">
               Encryption
             </th>
-            <th scope="col" className="border-0 font-size-4 font-weight-normal">
+            <th scope="col" className="border-0 font-size-4 font-weight-normal"
+            title="Client ID">
               Client ID
             </th>
-            <th scope="col" className="border-0 font-size-4 font-weight-normal">
+            <th scope="col" className="border-0 font-size-4 font-weight-normal"
+            title="Client Secret">
               Client Secret
             </th>
-            <th scope="col" className="border-0 font-size-4 font-weight-normal">
+            <th scope="col" className="border-0 font-size-4 font-weight-normal"
+            title="Tenant ID">
               Tenant ID
             </th>
-            {/* Add more columns here if needed */}
-            <th scope="col" className="border-0 font-size-4 font-weight-normal">
+            <th scope="col" className="border-0 font-size-4 font-weight-normal"
+            title="Action">
               Action
             </th>
           </tr>

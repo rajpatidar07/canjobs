@@ -162,7 +162,7 @@ export default function EmployerTable(props) {
                     scope="col"
                     className=" border-0 font-size-4 font-weight-normal"
                   >
-                     <Link
+                    <Link
                       to={""}
                       onClick={() => {
                         handleSort("company_id");
@@ -171,7 +171,7 @@ export default function EmployerTable(props) {
                       className="text-gray"
                       title="Sort by Id"
                     >
-                    CLient ID
+                      Client ID
                     </Link>
                   </th>
                   <th
@@ -265,6 +265,7 @@ export default function EmployerTable(props) {
                   <th
                     scope="col"
                     className="border-0 font-size-4 font-weight-normal"
+                    title="Profile"
                   >
                     Profile
                   </th>
@@ -274,6 +275,7 @@ export default function EmployerTable(props) {
                     <th
                       scope="col"
                       className="border-0 font-size-4 font-weight-normal"
+                      title="Actions"
                     >
                       Action
                     </th>
@@ -293,7 +295,7 @@ export default function EmployerTable(props) {
                   (employerData || []).map((empdata) => (
                     <tr className="" key={empdata.company_id}>
                       <td className=" py-5">
-                        <p className="font-size-3 font-weight-normal text-black-2 mb-0">
+                        <p className="font-size-3 font-weight-normal text-black-2 mb-0" title={empdata.company_id}>
                           {empdata.company_id}
                         </p>
                       </td>
@@ -341,7 +343,9 @@ export default function EmployerTable(props) {
                                 >
                                   {empdata.franchise}
                                 </p>
-                                <p className="font-size-3 font-weight-normal mb-0">
+                                <p className="font-size-3 font-weight-normal mb-0"
+                                  title={empdata.industry}
+                                >
                                   {empdata.industry}
                                 </p>
                               </div>
@@ -419,13 +423,14 @@ export default function EmployerTable(props) {
                           </p>
                         ) : (
                           <>
-                            <div className="font-size-3 font-weight-normal mb-0">
-                              +
+                            <div className="font-size-3 font-weight-normal mb-0"
+                              title={empdata.contact_no}>
+                              
                               <Link
                                 className="text-dark"
                                 to={`tel:${empdata.contact_no}`}
                               >
-                                {empdata.contact_no}
+                                +{empdata.contact_no}
                               </Link>
                             </div>
                             <div className="font-size-3 font-weight-normal mb-0">
@@ -437,15 +442,17 @@ export default function EmployerTable(props) {
                                 <>
                                   <Link
                                     className="text-dark"
+                                    title={empdata.contact_no_other}
                                     to={`tel:${empdata.contact_no_other}`}
                                   >
-                                    {empdata.contact_no_other}
+                                    +{empdata.contact_no_other}
                                   </Link>
                                 </>
                               )}
                             </div>
                             <p className="text-gray font-size-2 font-weight-normal m-0">
                               <Link
+                                title={empdata.email}
                                 className="text-dark"
                                 to={`mailto:${empdata.email}`}
                               >
@@ -461,19 +468,21 @@ export default function EmployerTable(props) {
                             N/A
                           </p>
                         ) : (
-                          <p className="font-size-3 font-weight-normal mb-0">
+                          <p className="font-size-3 text-capitalize font-weight-normal mb-0"
+                            title={`${empdata.vacancy_for_post}(${empdata.vacancies})`}>
                             {empdata.vacancy_for_post}({empdata.vacancies})
                           </p>
                         )}
                       </td>
-                      <td className="  py-5 ">
-                        <p className="font-size-2 font-weight-normal text-black-2 mb-0">
+                      <td className="text-center  py-5 ">
+                        <p className="font-size-2 font-weight-normal text-black-2 mb-0"
+                          title={empdata.profile_complete >= 99.0 ? "Complete" : "Incomplete"}>
                           {empdata.profile_complete >= 99.0 ? (
-                            <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
+                            <span className="p-1 bg-primary-opacity-8 text-white text-center  border rounded-pill">
                               Complete
                             </span>
                           ) : (
-                            <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
+                            <span className="p-1 bg-warning text-white text-center  border rounded-pill">
                               Incomplete
                             </span>
                           )}

@@ -479,7 +479,7 @@ const NewUserProfile = (props) => {
                                     ? "File Submission"
                                     : item.visa_status === "file decision"
                                     ? "File Decision"
-                                    : "NA"}
+                                    : "N/A"}
                                 </span>
                               </p>
                             );

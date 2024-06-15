@@ -147,7 +147,7 @@ function CompanyProfileDetail(props) {
       <div
         className={
           user_type === "admin" || user_type === "agent"
-            ? "dashboard-main-container bg-light mt-12 mt-lg-12"
+            ? "dashboard-main-container bg-light mt-12 mt-lg-12 mt-sm-22" 
             : "bg-default-2 employer-detail-top-padding"
         }
       >
@@ -354,7 +354,7 @@ function CompanyProfileDetail(props) {
                   </li>
                   <li
                     className={
-                      user_type === "admin" || user_type === "company"
+                      user_type === "admin" 
                         ? "tab-menu-items nav-item"
                         : "d-none"
                     }

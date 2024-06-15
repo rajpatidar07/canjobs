@@ -106,19 +106,19 @@ function EmployeeHeader() {
                 <ul className="navbar-nav main-menu">
                   {/* EMPLOYER MENU ITEMS */}
 
-                  <li className="nav-item nav-item">
+                  <li className="nav-item nav-item d-none" >
                     <Link className="nav-link" to="/client">
                       Home
                     </Link>
                   </li>
-                  <li className="nav-item">
+                  <li className="nav-item d-none">
                     <Link className="nav-link" to="/managejobs">
                       Manage Jobs
                     </Link>
                   </li>
                   <li className="nav-item">
                     <Link className="nav-link" to="/response">
-                      Responses
+                      Jobs
                     </Link>
                   </li>
                   <li className="nav-item">
@@ -301,7 +301,9 @@ function EmployeeHeader() {
                           profile_photo === "null" ||
                           profile_photo === undefined ||
                           profile_photo === "undefined"
-                          ? "image/user.png"
+                          ? userType === "company"
+                            ? "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
+                            : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                           : profile_photo
                       }
                       width={50}

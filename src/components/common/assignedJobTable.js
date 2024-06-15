@@ -114,7 +114,7 @@ export default function AssignedJobTable(props) {
                       onClick={() => {
                         handleSort("job_title");
                       }}
-                      title="Sort by Industry"
+                      title="Sort by Job"
                       className="text-gray"
                     >
                       Job title
@@ -129,7 +129,7 @@ export default function AssignedJobTable(props) {
                       onClick={() => {
                         handleSort("company_name");
                       }}
-                      title="Sort by Job"
+                      title="Sort by Client"
                       className="text-gray"
                     >
                       Client
@@ -145,7 +145,7 @@ export default function AssignedJobTable(props) {
                         handleSort("created_at");
                       }}
                       className="text-gray"
-                      title="Sort by Language"
+                      title="Sort by  Created at"
                     >
                       Created at
                     </Link>
@@ -160,7 +160,7 @@ export default function AssignedJobTable(props) {
                         handleSort("total_applicants");
                       }}
                       className="text-gray"
-                      title="Sort by Salary"
+                      title="Sort by Responses"
                     >
                       Responses
                     </Link>
@@ -169,6 +169,7 @@ export default function AssignedJobTable(props) {
                     <th
                       scope="col"
                       className=" border-0 font-size-4 font-weight-normal"
+                      title="Actions"
                     >
                       Action
                     </th>
@@ -191,15 +192,14 @@ export default function AssignedJobTable(props) {
                           <th scope="row" className="py-5 ">
                             <div className="">
                               <Link
-                                title="Job Details"
-                                //   to={`/job_detail`}
-                                //   onClick={
-                                //     () =>
-                                //       localStorage.setItem("job_id", job.job_id)
-                                //     // JobDetail(job.job_id)
-                                //   }
+                                  to={`/job_detail`}
+                                  onClick={
+                                    () =>
+                                      localStorage.setItem("job_id", job.job_id)
+                                    // JobDetail(job.job_id)
+                                  }
                                 className="font-size-3 mb-0 font-weight-semibold text-black-2"
-                              >
+                                title={job.job_title}>
                                 <>
                                   <p className="m-0 text-black-2 font-weight-bold text-capitalize">
                                     {job.job_title}
@@ -211,7 +211,7 @@ export default function AssignedJobTable(props) {
                           <th className=" py-5">
                             <Link
                               to={`/client_detail`}
-                              title="Client Details"
+                              title={job.company_name}
                               onClick={() =>
                                 localStorage.setItem(
                                   "company_id",
@@ -225,13 +225,15 @@ export default function AssignedJobTable(props) {
                             </Link>
                           </th>
                           <th className="py-5 ">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            <ConvertTime _date={job.created_at} format={"DD MMMM, YYYY"}/>
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
+                              title={ConvertTime({ _date: job.created_at, format: "DD MMMM, YYYY" })}>
+                              <ConvertTime _date={job.created_at} format={"DD MMMM, YYYY"} />
                               {/* {moment(job.created_at).format("DD MMMM, YYYY")} */}
                             </h3>
                           </th>
                           <th className="">
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
+                            title={job.total_applicants}>
                               {job.total_applicants}
                             </h3>
                           </th>

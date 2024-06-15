@@ -48,7 +48,7 @@ const AdminSidebar = (props) => {
           aria-expanded="false"
           aria-controls="sidebar"
         >
-          {isMenuOpen ? <FaChevronLeft /> : <FaChevronRight />}
+          {isMenuOpen ? <FaChevronLeft /> : <FaChevronRight style={{paddingLeft:"6px"}}/>}
         </Link>
         <div className="brand-logo px-2 mb-5 d-none">
           <Link

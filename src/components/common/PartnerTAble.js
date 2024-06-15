@@ -159,6 +159,7 @@ export default function PartnerTAble(props) {
                                         <th
                                             scope="col"
                                             className="border-0 font-size-4 font-weight-normal"
+                                            title='Total Candidates'
                                         >
                                             {/* <Link
                                                 to={""}
@@ -175,6 +176,7 @@ export default function PartnerTAble(props) {
                                         <th
                                             scope="col"
                                             className=" border-0 font-size-4 font-weight-normal"
+                                            title='Actions'
                                         >
                                             Action
                                         </th>
@@ -191,7 +193,7 @@ export default function PartnerTAble(props) {
                                         </tr>
                                     ) : (
                                         (prtnerData || []).map((data) => (
-                                            <tr className="text-capitalize" key={data.id}>
+                                            <tr className="" key={data.id}>
                                                 <td className="py-5 ">
                                                     <Link
                                                         to={`/partner_profile`}
@@ -212,7 +214,7 @@ export default function PartnerTAble(props) {
                                                         onClick={() =>
                                                             localStorage.setItem("agent_id", data.id)
                                                         }
-                                                        title="Partner Profile"
+                                                        // title="Partner Profile"
                                                     >
                                                         <div className="d-flex profile_box gx-2">
                                                             <div className="media  align-items-center">
@@ -252,9 +254,9 @@ export default function PartnerTAble(props) {
                                                         </div>
                                                     </Link>
                                                 </td>
-                                                <td className="py-5 ">
+                                                <td className="py-5 text-capitalize">
                                                     {data.address === null || !data.address ? (
-                                                        <p className="font-size-3 font-weight-bold  mb-0">
+                                                        <p className="font-size-3 font-weight-normal mb-0">
                                                             N/A
                                                         </p>
                                                     ) : (
@@ -275,18 +277,21 @@ export default function PartnerTAble(props) {
                                                     ) : (
                                                         <>
                                                             <div className="font-size-3 font-weight-normal mb-0">
-                                                                +
-                                                                <Link
+                                                            <Link
                                                                     className="text-dark"
                                                                     to={`tel:${data.contact_no}`}
+                                                                    title={data.contact_no}
                                                                 >
-                                                                    {data.contact_no}
+                                                                    {(data.contact_no && data.contact_no !== "0")
+                                          ? `+${data.contact_no}`
+                                          : ""}
                                                                 </Link>
                                                             </div>
                                                             <p className="text-gray font-size-2 font-weight-normal m-0">
                                                                 <Link
                                                                     className="text-dark"
                                                                     to={`mailto:${data.email}`}
+                                                                    title={data.email}
                                                                 >
                                                                     {data.email}
                                                                 </Link>
@@ -300,10 +305,12 @@ export default function PartnerTAble(props) {
                                                         data.agent_employee_count === "undefined" ||
                                                         data.agent_employee_count === "" ||
                                                         data.agent_employee_count === "0" || data.agent_employee_count === 0 ? (
-                                                        <p className="font-size-3  mb-0">N/A</p>
+                                                        <p className="font-size-3  mb-0"
+                                                        title='N/A'>N/A</p>
                                                     ) : (
-                                                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                                            {(data.agent_employee_count)}
+                                                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
+                                                        title={`(${data.agent_employee_count})`}>
+                                                            ({(data.agent_employee_count)})
                                                         </h3>
                                                     )}
                                                 </td>

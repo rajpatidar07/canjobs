@@ -121,7 +121,7 @@ function JobDetailpageAdmim(props) {
                       {jobData.job_title}
                       <CustomButton
                         className={
-                          user_type === "user" || jobData.length === 0
+                          user_type === "user" || user_type === "agent" || jobData.length === 0
                             ? "d-none"
                             : "font-size-3 rounded-3 btn-primary border-0  absolute_top_right"
                         }
@@ -352,7 +352,7 @@ function JobDetailpageAdmim(props) {
                         <div className="text-capitalize company_detail_box w-100 m-0 bg-light rounded p-8 position-relative">
                           <CustomButton
                             className={
-                              user_type === "user" || jobData.length === 0
+                              user_type === "user" || user_type === "agent" || jobData.length === 0
                                 ? "d-none"
                                 : "font-size-3 rounded-3 btn-primary border-0  absolute_top_right"
                             }
