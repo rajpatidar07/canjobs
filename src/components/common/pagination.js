@@ -33,6 +33,7 @@ function Pagination({ nPages, currentPage, setCurrentPage, total, count }) {
                       ? "disabled-link page-link  font-size-3 py-2 font-weight-semibold px-3"
                       : "page-link  font-size-3 py-2 font-weight-semibold px-3"
                   }
+                  title="Previous"
                 >
                   <i className="fas fa-chevron-left"></i>
                 </Link>
@@ -41,9 +42,8 @@ function Pagination({ nPages, currentPage, setCurrentPage, total, count }) {
                 <li className="page-item px-1" key={pgNumber}>
                   <Link
                     onClick={() => setCurrentPage(pgNumber)}
-                    className={`page-link  font-size-3 py-2 font-weight-semibold px-3 ${
-                      currentPage === pgNumber ? "active " : ""
-                    } `}
+                    className={`page-link  font-size-3 py-2 font-weight-semibold px-3 ${currentPage === pgNumber ? "active " : ""
+                      } `}
                   >
                     {pgNumber}
                   </Link>
@@ -57,6 +57,7 @@ function Pagination({ nPages, currentPage, setCurrentPage, total, count }) {
                       ? "disabled-link page-link  font-size-3 py-2 font-weight-semibold px-3"
                       : "page-link  font-size-3 py-2 font-weight-semibold px-3"
                   }
+                  title="Next"
                 >
                   <i className="fas fa-chevron-right"></i>
                 </Link>

@@ -276,71 +276,71 @@ export default function CommentSection({
         .map((admin) => admin.u_id ? "agent" : admin.admin_type)
         .join(",")
       : ""))
-      // Send data to the API
-      if (
-        ((comment === ""||comment.trim() === "") && email === "" ) 
-        // || (comment.includes("@") && !/\S+@\S+\.\S+/.test(comment))
-        ) {
+    // Send data to the API
+    if (
+      ((comment === "" || comment.trim() === "") && email === "")
+      // || (comment.includes("@") && !/\S+@\S+\.\S+/.test(comment))
+    ) {
       toast.error("Comment or email cannot be empty!", {
         position: toast.POSITION.TOP_RIGHT,
         autoClose: 2000,
       });
     } else {
-        try {
-          let res = await ADocAnnotation(
-            admin_id,
-            DocId,
-            assignedUserId,
-            email,
-            subject,
-            comment,
-            "", //annotation.x_axis,
-            "", //annotation.y_axis,
-            "document",
-            AdminType, //sender type
-            sender, //sender name,
-            assignedAdminName, //assigned Admin or user Name,
-            "", //follow up status(for notes only)
-            "", //Next follow up date(for notes only)
-            assignedUserType, //Assign user type,
-            "", //Document url(for notes only)
-            senderEmail, //Sender email
-            userId, //employee id,
-            "", //assigned_by_id
-            docData.parentReference.id, // document parent code
-            annotationDrawBox, //Annotation data,
-            "", //annotationId
-            DocUserType //User type of document
-          );
-          if (res.data.message === "task inserted successfully!") {
-            toast.success("Comment uploaded Successfully", {
-              position: toast.POSITION.TOP_RIGHT,
-              autoClose: 1000,
-            });
-            setComments("");
-            setCommentToApi("")
-            setSelectedAdmin("");
-            setSelectedPartner("")
-            setFilteredEmails([]);
-            setAnnotationDrawBox("");
-            localStorage.setItem("callNotification", true);
-            Getcomments();
-          }
-        } catch (err) {
-          console.log(err);
-          if (err.response.data.message === "required fields cannot be blank") {
-            toast.error(" Please try again later.", {
-              position: toast.POSITION.TOP_RIGHT,
-              autoClose: 1000,
-            });
-            // setSelectedAnnotation(null);
-            setComments("");
-            setCommentToApi("")
-            setSelectedAdmin("");
-            setSelectedPartner("")
-            setFilteredEmails([]);
-          }
+      try {
+        let res = await ADocAnnotation(
+          admin_id,
+          DocId,
+          assignedUserId,
+          email,
+          subject,
+          comment,
+          "", //annotation.x_axis,
+          "", //annotation.y_axis,
+          "document",
+          AdminType, //sender type
+          sender, //sender name,
+          assignedAdminName, //assigned Admin or user Name,
+          "", //follow up status(for notes only)
+          "", //Next follow up date(for notes only)
+          assignedUserType, //Assign user type,
+          "", //Document url(for notes only)
+          senderEmail, //Sender email
+          userId, //employee id,
+          "", //assigned_by_id
+          docData.parentReference.id, // document parent code
+          annotationDrawBox, //Annotation data,
+          "", //annotationId
+          DocUserType //User type of document
+        );
+        if (res.data.message === "task inserted successfully!") {
+          toast.success("Comment uploaded Successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setComments("");
+          setCommentToApi("")
+          setSelectedAdmin("");
+          setSelectedPartner("")
+          setFilteredEmails([]);
+          setAnnotationDrawBox("");
+          localStorage.setItem("callNotification", true);
+          Getcomments();
         }
+      } catch (err) {
+        console.log(err);
+        if (err.response.data.message === "required fields cannot be blank") {
+          toast.error(" Please try again later.", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          // setSelectedAnnotation(null);
+          setComments("");
+          setCommentToApi("")
+          setSelectedAdmin("");
+          setSelectedPartner("")
+          setFilteredEmails([]);
+        }
+      }
     }
     // Update state to include the new annotation
   };
@@ -684,7 +684,8 @@ export default function CommentSection({
                               )}`}
                               style={{ fontSize: "16px", fontWeight: 700 }}
                             >
-                              {commentItem.task_creator_user_id
+                              {commentItem.task_creator_user_name.charAt(0)}
+                              {/* {commentItem.task_creator_user_id
                                 ? allAdmin.find(
                                   (item) =>
                                     item.admin_id ===
@@ -698,12 +699,12 @@ export default function CommentSection({
                                     )
                                     .name.charAt(0)
                                   : ""
-                                : ""}
+                                : ""} */}
                             </div>
                           </div>
                           <div className=" mb-0">
                             <div className="font-size-3 font-weight-bold text-capitalize">
-                              {commentItem.task_creator_user_id
+                              {/* {commentItem.task_creator_user_id
                                 ? allAdmin.find(
                                   (item) =>
                                     item.admin_id ===
@@ -715,7 +716,8 @@ export default function CommentSection({
                                       commentItem.task_creator_user_id
                                   ).name
                                   : ""
-                                : ""}
+                                : ""} */}
+                              {commentItem.task_creator_user_name}
                             </div>
                             <div className="text-gray font-size-2 font-weight-normal m-0 text-capitalize">
                               <ConvertTime _date={commentItem.created_on} format={"HH:mm D MMM"} />

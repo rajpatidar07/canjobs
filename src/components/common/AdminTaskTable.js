@@ -229,9 +229,10 @@ export default function AdminTaskTable(props) {
                           <p className="font-size-3  mb-0">N/A</p>
                         ) : (
                           <div className="m-0">
-                            <p className="text-gray font-size-2 m-0">
-                              {data.subject_description.replace(/@/g, "")}
-                            </p>
+                            <div className="text-gray font-size-2 m-0"
+                            dangerouslySetInnerHTML={{__html:data.subject_description}}/>
+                              {/* {data.subject_description.replace(/@/g, "")} */}
+                            
                           </div>
                         )}
                       </td>

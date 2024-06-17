@@ -154,6 +154,7 @@ export default function AdminTable({
                     <th className=" py-5">
                       <Link
                         className="text-gray"
+                        to={"/admindetail"}
                         onClick={
                           page === "admin page" &&
                             admin.admin_type === "manager"

@@ -234,7 +234,7 @@ export default function PartnerPage(props) {
                           </div>
                         </div>
                       </div>
-                      {/* <!-- Agent by emmployee --> */}
+                      {/* <!-- Agent by employee --> */}
                       <div className="col-md-4">
                         <AgentsEmployee
                           Agentid={AgentId}
