@@ -66,6 +66,7 @@ import PartnerDetails from "../agent/partnerDetails";
 import SharePointDocument from "./Document folder/SharePointDocument";
 import Newpdf from "./Adobe/newpdf";
 import AgreementOne from "./Retaineragreement/AgreementOne";
+import Commanforsignatureandpdf from "./Retaineragreement/Commanforsignatureandpdf";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -204,6 +205,7 @@ function MainLayout() {
             <Route path="/partner" element={<Agent />} />
             <Route path="/partner_dashboard" element={<PartnerDashboard />} />
             <Route path="/agreeone" element={<AgreementOne />} />
+            <Route path="/addsign" element={<Commanforsignatureandpdf />} />
             <Route path="/assigned_admin" element={<AsiignedAdmin />} />
             <Route path="/activity_log" element={<ActivityLog />} />
             <Route path="/filter" element={<FilterList />} />
