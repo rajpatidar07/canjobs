@@ -1,9 +1,25 @@
 import React from 'react';
 import { Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
 import { PDFViewer } from "@react-pdf/renderer";
+import { AddSharePointDOcument } from '../../../api/api';
 
 const AggrementOne = () => {
-  const signature = localStorage.getItem("signature") //window.history.state.
+  const signature =window.history.state.usr.dataUrl
+
+  const saveDoc =async()=>{
+    try{
+      // let res = await AddSharePointDOcument(
+      //   user_id,
+      //   emp_user_type,
+      //   folderID,
+      //   "",
+      //   dataUrl
+      // );
+      // console.log(res)
+    }catch(err){
+console.log(err)
+    }
+  }
   return (
     <PDFViewer width="100%" height="900">
       <Document>

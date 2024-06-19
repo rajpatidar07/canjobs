@@ -2,8 +2,9 @@
 import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SignatureCanvas from 'react-signature-canvas';
+import { AddSharePointDOcument } from '../../../api/api';
 
-const SignaturePadComponent = () => {
+const SignaturePadComponent = ({ user_id, emp_user_type, folderID }) => {
     const sigPad = useRef(null);
     let navigate = useNavigate();
 
@@ -11,12 +12,10 @@ const SignaturePadComponent = () => {
         sigPad.current.clear();
     };
 
-    const save = () => {
+    const save = async () => {
         const dataUrl = sigPad.current.getTrimmedCanvas().toDataURL('image/png');
-        // console.log('Signature data URL:', dataUrl); // Debug log
         if (sigPad.current) {
-            localStorage.setItem("signature", dataUrl);
-            navigate("/agreeone", { state: { dataUrl } });
+            navigate("/agreeone", { state: { dataUrl, user_id, emp_user_type, folderID } });
         }
     };
 

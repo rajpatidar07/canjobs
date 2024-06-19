@@ -43,6 +43,7 @@ import UserTimline from "../common/UserTimline";
 import InterviewHistoryTable from "../common/InterviewHistoryTable";
 import SharePointDocument from "../common/Document folder/SharePointDocument";
 import NotFound from "../common/notfound";
+import SignaturePadComponent from "../common/Retaineragreement/SignaturePadComponent";
 // import useSessionCheck from "../common/user_session";
 // import AdobePDFViewer from "../common/Adobe/adobeFile";
 const NewUserProfile = (props) => {
@@ -870,22 +871,21 @@ const NewUserProfile = (props) => {
                           Notes
                         </Link>
                       </li>
-                      <li className="tab-menu-items nav-item d-none">
-                        {/*Take off "d-none" when you use the activity log API or when you're told to remove it*/}
+                      <li className="tab-menu-items nav-item ">
                         <Link
                           className={
-                            TabActive === "activity"
+                            TabActive === "signature"
                               ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
                               : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
                           }
-                          id="activityTab"
+                          id="signatureTab"
                           data-toggle="tab"
                           role="tab"
-                          aria-controls="activityTab"
+                          aria-controls="signatureTab"
                           aria-selected="true"
-                          onClick={() => setTabActive("activity")}
+                          onClick={() => setTabActive("signature")}
                         >
-                          Activity History
+                          Add signature
                         </Link>
                       </li>
                       <li
@@ -1950,32 +1950,21 @@ const NewUserProfile = (props) => {
                     </div>
                     <div
                       className={
-                        TabActive === "activity"
+                        TabActive === "signature"
                           ? "justify-content-center "
                           : "d-none"
                       }
                     >
-                      {TabActive === "activity" ? (
-                        <div className="p-10 activity_container">
-                          <div className="single_note mb-5">
-                            <small>Created on: 2023-08-03 17:10:53</small>
-                            <div className="card p-5">
-                              This is some text within a card body.
-                            </div>
-                          </div>
-                          <div className="single_note mb-5">
-                            <small>Created on: 2023-08-03 17:10:53</small>
-                            <div className="card p-5">
-                              This is some text within a card body.
-                            </div>
-                          </div>
-                          <div className="single_note mb-5">
-                            <small>Created on: 2023-08-03 17:10:53</small>
-                            <div className="card p-5">
-                              This is some text within a card body.
-                            </div>
-                          </div>
-                        </div>
+                      {TabActive === "signature" ? (
+                        <SignaturePadComponent 
+                        user_id={eid}
+                          emp_user_type={"employee"}
+                          folderId={
+                            // docId
+                            //   ? docParentId
+                            //   :
+                               PersonalDetail.documents_folder_id
+                          }/>
                       ) : null}
                     </div>
                     <div
