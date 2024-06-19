@@ -1,5 +1,5 @@
 // SignaturePadComponent.js
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import SignatureCanvas from 'react-signature-canvas';
 
 const SignaturePadComponent = ({ onSignature, navigate }) => {
@@ -14,6 +14,7 @@ const SignaturePadComponent = ({ onSignature, navigate }) => {
         // console.log('Signature data URL:', dataUrl); // Debug log
         if (sigPad.current) {
             onSignature(dataUrl);
+            localStorage.setItem("signature",dataUrl)
             navigate("/agreeone", { state: { dataUrl } })
         }
     };

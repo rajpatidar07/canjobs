@@ -1,13 +1,12 @@
 import React from 'react';
 import { Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
-import { PDFViewer } from "@react-pdf/renderer"
-// import { useLocation } from 'react-router-dom';
+import { PDFViewer } from "@react-pdf/renderer";
+
 const AggrementOne = () => {
-  const signature = window.history.state.usr.dataUrl
-  console.log(signature)
+  const signature = localStorage.getItem("signature") //window.history.state.
   return (
     <PDFViewer width="100%" height="900">
-      <Document >
+      <Document>
         <Page size="A4" style={styles.page}>
           <Image
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJqpMcgU4d7gdbObHftFK_NaqFzratFKGRGg&s"
@@ -109,26 +108,19 @@ const AggrementOne = () => {
             <Text style={styles.text}>
               The Client acknowledges that the granting of a visa or status and the time required for processing this application is at the sole discretion of the government of Canada (or Government Authorities) and not the RCIC. Furthermore, the Client acknowledges that fees are not refundable in the event of an application refusal.
             </Text>
-
           </View>
 
           <View style={styles.section}>
             <Text style={styles.bold}>Confidentiality</Text>
             <Text style={styles.text}>
               All information and documentation reviewed by the RCIC, required by IRCC and all other governing bodies, and used for the preparation of the application will not be divulged to any third party, other than agents and employees of the RCIC, without prior consent, except as demanded by the Council or required under law. The RCIC, and all agents and employees of the RCIC, are also bound by the confidentiality requirements of Article 8 of the Code of Professional Ethics.
-
             </Text>
           </View>
-          <View
-            fixed
-          >
-            <Text style={{ color: "red", fontSize: 10, flexWrap: "wrap" }}>Office: 2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7, Canada | Tel.: 403.888.5308 |
-              Email: <Text style={{ color: "blue", textDecoration: "underline" }}>info@canpathways.ca</Text> | Website:www.canpathways.ca
-            </Text>
-            <Text style={styles.initial}>Initial:
-              {signature && <Image style={styles.signatureImage} src={signature} />}
-            </Text>
-          </View>
+          <Text fixed style={{ color: "red", fontSize: 10, textAlign: "center", marginHorizontal: 100, width: 350 }}>Office: 2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7, Canada | Tel.: 403.888.5308 |
+            Email: <Text style={{ color: "blue", textDecoration: "underline" }}>info@canpathways.ca</Text> | Website:www.canpathways.ca
+          </Text>
+          <Text fixed style={styles.initial}>Initial:</Text>
+          <Image fixed style={styles.signatureImage} src={signature} />
         </Page>
       </Document>
     </PDFViewer>
@@ -156,7 +148,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   },
   text: {
-    marginBottom: 5
+    marginBottom: 5,
+    padding:2
   },
   image: {
     width: '30%',
@@ -164,12 +157,17 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   initial: {
+    marginTop: 100,
     textAlign: 'right',
+
   },
   signatureImage: {
-    // marginTop: 30,
-    width: 80, // Adjust the width as needed
-    height: 80, // Adjust the height as needed
+    textDecoration: "underline",
+    marginHorizontal: 480,
+    marginVertical: -100,
+    width: 80,
+    height: 80,
+    marginBottom: 20,
   },
   textunderline: {
     textDecoration: "underline"
