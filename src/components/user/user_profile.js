@@ -43,7 +43,7 @@ import UserTimline from "../common/UserTimline";
 import InterviewHistoryTable from "../common/InterviewHistoryTable";
 import SharePointDocument from "../common/Document folder/SharePointDocument";
 import NotFound from "../common/notfound";
-import SignaturePadComponent from "../common/Retaineragreement/SignaturePadComponent";
+import RetainerAgrementMainPage from "../common/Retaineragreement/RetainerAgrementMainPage";
 // import useSessionCheck from "../common/user_session";
 // import AdobePDFViewer from "../common/Adobe/adobeFile";
 const NewUserProfile = (props) => {
@@ -874,18 +874,18 @@ const NewUserProfile = (props) => {
                       <li className="tab-menu-items nav-item ">
                         <Link
                           className={
-                            TabActive === "signature"
+                            TabActive === "retaineragreement"
                               ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
                               : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
                           }
-                          id="signatureTab"
+                          id="retaineragreementTab"
                           data-toggle="tab"
                           role="tab"
-                          aria-controls="signatureTab"
+                          aria-controls="retaineragreementTab"
                           aria-selected="true"
-                          onClick={() => setTabActive("signature")}
+                          onClick={() => setTabActive("retaineragreement")}
                         >
-                          Add signature
+                          Add Retainer Agreement
                         </Link>
                       </li>
                       <li
@@ -1950,13 +1950,13 @@ const NewUserProfile = (props) => {
                     </div>
                     <div
                       className={
-                        TabActive === "signature"
+                        TabActive === "retaineragreement"
                           ? "justify-content-center "
                           : "d-none"
                       }
                     >
-                      {TabActive === "signature" ? (
-                        <SignaturePadComponent 
+                      {TabActive === "retaineragreement" ? (
+                        <RetainerAgrementMainPage 
                         user_id={eid}
                           emp_user_type={"employee"}
                           folderId={
