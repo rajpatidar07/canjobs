@@ -1,33 +1,24 @@
 import React from 'react';
 import { StyleSheet } from '@react-pdf/renderer';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const HtmlAgreementOne = () => {
-  let navigate = useNavigate();
+  const { user_id, emp_user_type, folderId, } = useLocation().state;
   // Function to replace tags
   const replaceTags = (html) => {
     // Replace opening and closing div and ul tags with View tags
+    html = html.replaceAll("<img", "<Image")
     html = html.replaceAll('<div', '<View').replaceAll('</div>', '</View>');
     html = html.replaceAll('<ul', '<View').replaceAll('</ul>', '</View>');
     html = html.replaceAll('<p', '<Text').replaceAll('</p>', '</Text>');
     html = html.replaceAll('<Link', '<Text').replaceAll('</Link>', '</Text>');
     html = html.replaceAll('<li', '<Text').replaceAll('</li>', '</Text>');
-    html = html.replaceAll('<img', '<Image')
 
     return html;
   };
-  const handleGeneratePdf = () => {
-    let newCOde = replaceTags(jsxContent)
-    if (newCOde) {
-      console.log(newCOde)
-      navigate("/agreeone", { state: { newCOde } });
-    }
-  };
-
   // JSX structure with potential tag replacements
   const jsxContent = (
-    ` <div style=${styles.page} id='Agreeone'>
-    <img Fixed style=${styles.image} src="https://storage.googleapis.com/mmstudio-images/gallery/AGUBlh69w0N2AXPYQJJy0zx0x363/1712771136849-0.png"/>
+    ` <div id='Agreeone'>
       <div className="header" style=${styles.header}>
         <p>Office: 2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7, Canada | Tel.: 403.888.5308 |</p>
         <p>Email: info@canpathways.ca | Website: www.canpathways.ca</p>
@@ -86,13 +77,6 @@ const HtmlAgreementOne = () => {
         </p>
         <Link >Code of Professional Conduct</Link>
       </div>
-      <div className="footer" style=${styles.header}>
-        <p>Office: 2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7, Canada | Tel.: 403.888.5308 |</p>
-        <p style=${{ color: "blue", textDecoration: "underline" }}>Email: info@canpathways.ca | Website: www.canpathways.ca</p>
-      </div>
-      <div className="initial" style=${styles.initial}>
-        <p>Initial:</p>
-      </div>
     </div>`
   );
 
@@ -100,8 +84,13 @@ const HtmlAgreementOne = () => {
     <div>
 
       <div dangerouslySetInnerHTML={{ __html: jsxContent }} />
-      <Link to={`/agreeone`} state={replaceTags(jsxContent)} >
-        {/* onClick={() => handleGeneratePdf()} */}
+      <Link to={`/agreeone`} state={{
+        code: replaceTags(jsxContent), user_id: user_id,
+        emp_user_type: emp_user_type,
+        folderId: folderId
+      }}
+
+      >
         Generated Pdf</Link>
     </div>
   );

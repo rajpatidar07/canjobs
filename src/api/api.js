@@ -3174,15 +3174,15 @@ export const AddSharePointDOcument = async (
   data
 ) => {
   // console.log(
-  //   "employee_id",
+  //   "employee_id =>",
   //   id,
-  //   "userType",
+  //   "userType =>",
   //   user,
-  //   "folder_Id",
+  //   "folder_Id =>",
   //   folderId,
-  //   "docType",
+  //   "docType =>",
   //   docType,
-  //   "file",
+  //   "file =>",
   //   data
   // );
   const formData = new FormData();
@@ -3193,6 +3193,7 @@ export const AddSharePointDOcument = async (
   formData.append("folder_Id", folderId);
   // Loop through the array of files and append each file to formData
   for (let i = 0; i < data.length; i++) {
+    console.log(data[i])
     formData.append(`file[${i}]`, data[i]);
   }
   const response = await axios.post(

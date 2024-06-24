@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { Pagination } from 'react-bootstrap'
-import ConvertTime from '../ConvertTime'
-import Loader from "../../common/loader"
-import { Link, useNavigate } from 'react-router-dom'
-import AggrementOne from './AgreementOne'
+import React/*, { useEffect, useState } */from 'react'
+// import { Pagination } from 'react-bootstrap'
+// import ConvertTime from '../ConvertTime'
+// import Loader from "../../common/loader"
+import { useNavigate } from 'react-router-dom'
+// import AggrementOne from './AgreementOne'
 export default function RetauberAgreementList({
     user_id,
     emp_user_type,
@@ -139,7 +139,7 @@ export default function RetauberAgreementList({
                                                 className="btn btn-outline-info action_btn "
                                                 style={{ fontSize: "10px" }}
                                                 onClick={() => {
-                                                    navigate("/agreeone", {
+                                                    navigate("/agreepreivew", {
                                                         state: {
                                                             user_id: user_id,
                                                             emp_user_type: emp_user_type,

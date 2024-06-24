@@ -117,18 +117,20 @@
 // });
 
 // export default AggrementOne;
-import React from 'react';
-import { pdf, Document, Page, Text, View, StyleSheet, Image, PDFViewer, BlobProvider } from '@react-pdf/renderer';
+import React, { useEffect, useState } from 'react';
+import { Document, Page, Text, View, StyleSheet, Image, PDFViewer, BlobProvider } from '@react-pdf/renderer';
 import { useLocation } from 'react-router-dom';
+import { AddSharePointDOcument } from '../../../api/api';
+import { toast } from 'react-toastify';
 
 const AggrementOne = () => {
-  const testvalue = useLocation();
-  let code = testvalue.state;
-
-  const text = JSON.stringify(code).replace('" <', "<").replace('>"', ">");
-  let newText = text.split("\\n").join("");
-  let latestCode = newText.split(">,").join(">");
-
+  const [blobData, setBlobData] = useState()
+  const { user_id, emp_user_type, folderId: folderID, code } = useLocation().state;
+  const latestCode = JSON.stringify(code)
+    .replace('" <', "<")
+    .replace('>"', ">")
+    .replace(/\\n/g, "")
+    .replace(/>,/g, ">");
   // Function to convert the provided string into React PDF Renderer components
   const convertStringToComponent = (str) => {
     const htmlParser = new DOMParser();
@@ -172,32 +174,97 @@ const AggrementOne = () => {
   };
 
   const components = convertStringToComponent(latestCode.trim());
+  /*COnvert blob to file  */
+  useEffect(() => {
+
+    const convertBlob = async () => {
+      try {
+        if (!blobData) {
+          console.error('Invalid blob data');
+          return;
+        }
+        const arrayBuffer = await blobData.arrayBuffer();
+        const newBlob = new Blob([arrayBuffer], { type: 'application/pdf' });
+        if (!newBlob) {
+          console.error('Failed to create new blob');
+          return;
+        }
+        const file = new File([newBlob], 'filename.pdf', { type: 'application/pdf' });
+        try {
+          let res = await AddSharePointDOcument(
+            user_id,
+            emp_user_type,
+            folderID,
+            "",
+            [file]
+          );
+          if (res.data.message === "Document Upload") {
+            toast.success(`Document Uploaded successfully`, {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+          }
+          // console.log(res.data)
+          if (res.data.message === "Failed" && res.data.data === "No Token Found") {
+            toast.success(`Document Uploaded successfully`, {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+          }
+        } catch (error) {
+          console.log("Error saving doc to sharepoint", error)
+        }
+      } catch (error) {
+        console.error('Error converting blob to file:', error);
+      }
+    };
+    convertBlob()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [blobData])
 
   return (
-    <PDFViewer width="100%" height="900">
+    <BlobProvider document={
       <Document>
         <Page size="A4" style={styles.page}>
           <View>
-          <Image fixed style={styles.image} src={'https://storage.googleapis.com/mmstudio-images/gallery/AGUBlh69w0N2AXPYQJJy0zx0x363/1712771136849-0.png'} />
-          {components}
+            <Image fixed style={styles.image}
+              src={"https://canpathwaysjobs.com/image/00logo-main-black.png"} />
+            {components}
+            <View className="footer" fixed style={{ color: "red", textAlign: "center" }}>
+              <Text>Office: 2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7, Canada | Tel.: 403.888.5308 |</Text>
+              <Text style={{ color: "blue", textDecoration: "underline" }}>Email: info@canpathways.ca | Website: www.canpathways.ca</Text>
+            </View>
+            <View className="initial" fixed style={styles.initial}>
+              <Text>Initial:</Text>
+            </View>
           </View>
         </Page>
-      </Document>
-    </PDFViewer>
-  );
-};
-const blob = () => (
-  <div>
-    <BlobProvider document={AggrementOne}>
+      </Document>}>
       {({ blob, url, loading, error }) => {
-        console.log("blob",blob,"url",url,"loading",loading,"error",error)
+        setBlobData(blob)
         // Do whatever you need with blob here
-        return <div>There's something going on on the fly</div>;
+        return <PDFViewer width="100%" height="900">
+          <Document>
+            <Page size="A4" style={styles.page}>
+              <View>
+                <Image fixed style={styles.image} src={"https://canpathwaysjobs.com/image/00logo-main-black.png"} />
+                {components}
+
+                <View className="footer" fixed style={{ color: "red", textAlign: "center" }}>
+                  <Text>Office: 2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7, Canada | Tel.: 403.888.5308 |</Text>
+                  <Text style={{ color: "blue", textDecoration: "underline" }}>Email: info@canpathways.ca | Website: www.canpathways.ca</Text>
+                </View>
+                <View className="initial" fixed style={styles.initial}>
+                  <Text>Initial:</Text>
+                </View>
+              </View>
+            </Page>
+          </Document>
+        </PDFViewer>;
       }}
     </BlobProvider>
-  </div>
-);
-console.log( blob)
+  );
+};
 const styles = StyleSheet.create({
   page: {
     padding: 30,
@@ -206,7 +273,7 @@ const styles = StyleSheet.create({
     lineHeight: 1.5
   },
   section: {
-    marginBottom: 10
+    // marginBottom: 10
   },
   header: {
     fontSize: 14,
@@ -225,19 +292,11 @@ const styles = StyleSheet.create({
   image: {
     width: '30%',
     height: 'auto',
-    marginBottom: 10
+    // marginBottom: 10
   },
   initial: {
-    marginTop: 100,
+    // marginTop: 10,
     textAlign: 'right'
-  },
-  signatureImage: {
-    textDecoration: "underline",
-    marginHorizontal: 480,
-    marginVertical: -100,
-    width: 80,
-    height: 80,
-    marginBottom: 20
   },
   textunderline: {
     textDecoration: "underline"
