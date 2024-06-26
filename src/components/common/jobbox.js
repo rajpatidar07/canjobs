@@ -39,7 +39,7 @@ function JobBox({
   const token = localStorage.getItem("token");
   const user_type = localStorage.getItem("userType");
   const user_id = localStorage.getItem("employee_id");
-  const skill = localStorage.getItem("skill");
+  // const skill = localStorage.getItem("skill");
   let navigate = useNavigate();
   /*Functionality to get the data to search the jobs */
   const location = useLocation();
@@ -65,11 +65,7 @@ function JobBox({
           (path === "/response" && !category)
           ? categoryFilterValue
           : category,
-        skill || SkillFilterValue
-          ? token && location.pathname === "/"
-            ? skill
-            : SkillFilterValue
-          : "",
+        SkillFilterValue,
         jobSwapFilterValue,
         1,
         jobsNo
@@ -78,8 +74,6 @@ function JobBox({
         setjobData([]);
       } else {
         if (
-          ((!token && location.pathname === "/") ||
-            (!skill && !SkillFilterValue && user_type === "user")) &&
           userData.data.data.find((item) => item.is_featured === "1") &&
           location.pathname !== "/jobs"
         ) {
@@ -167,7 +161,7 @@ function JobBox({
         {noData === 0 || noData === "" || jobData.length === 0 ? (
           <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 text-center">
             <h4>
-              {skill || SkillFilterValue
+              {SkillFilterValue
                 ? "No jobs found for your skills"
                 : "No jobs found"}
             </h4>
@@ -179,8 +173,8 @@ function JobBox({
             if (job !== "") {
               skill =
                 job.keyskill === null ||
-                job.keyskill === undefined ||
-                job.keyskill === "undefined"
+                  job.keyskill === undefined ||
+                  job.keyskill === "undefined"
                   ? []
                   : job.keyskill.split(",");
             }
@@ -199,12 +193,12 @@ function JobBox({
                   onClick={
                     token && (user_type === "user" || user_type === "company")
                       ? // ? job.is_applied === "0"
-                        () => {
-                          localStorage.setItem("job_id", job.job_id);
-                          OnApplyClick(1, job.job_id);
-                        }
+                      () => {
+                        localStorage.setItem("job_id", job.job_id);
+                        OnApplyClick(1, job.job_id);
+                      }
                       : // : null
-                        () => navigate("/candidate_login") //setShowLogin(true)
+                      () => navigate("/candidate_login") //setShowLogin(true)
                   }
                 >
                   {job.job_type === "swap" ? (
@@ -291,7 +285,7 @@ function JobBox({
                               <LiaBusinessTimeSolid />
                             </span>
                             <span className="font-weight-semibold">
-                            <ConvertTime _date={job.created_at} format={"DD MMMM, YYYY"}/>
+                              <ConvertTime _date={job.created_at} format={"DD MMMM, YYYY"} />
                               {/* {moment(job.created_at).format("DD MMMM, YYYY")} */}
                             </span>
                           </li>

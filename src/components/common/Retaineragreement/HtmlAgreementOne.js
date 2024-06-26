@@ -1,21 +1,20 @@
 import React from 'react';
-import { StyleSheet } from '@react-pdf/renderer';
 import { Link, useLocation } from 'react-router-dom';
 
 const HtmlAgreementOne = () => {
   const { user_id, emp_user_type, folderId, } = useLocation().state;
   // Function to replace tags
-  const replaceTags = (html) => {
-    // Replace opening and closing div and ul tags with View tags
-    html = html.replaceAll("<img", "<Image")
-    html = html.replaceAll('<div', '<View').replaceAll('</div>', '</View>');
-    html = html.replaceAll('<ul', '<View').replaceAll('</ul>', '</View>');
-    html = html.replaceAll('<p', '<Text').replaceAll('</p>', '</Text>');
-    html = html.replaceAll('<Link', '<Text').replaceAll('</Link>', '</Text>');
-    html = html.replaceAll('<li', '<Text').replaceAll('</li>', '</Text>');
+  // const replaceTags = (html) => {
+  //   // Replace opening and closing div and ul tags with View tags
+  //   html = html.replaceAll("<img", "<Image")
+  //   html = html.replaceAll('<div', '<View').replaceAll('</div>', '</View>');
+  //   html = html.replaceAll('<ul', '<View').replaceAll('</ul>', '</View>');
+  //   html = html.replaceAll('<p', '<Text').replaceAll('</p>', '</Text>');
+  //   html = html.replaceAll('<Link', '<Text').replaceAll('</Link>', '</Text>');
+  //   html = html.replaceAll('<li', '<Text').replaceAll('</li>', '</Text>');
 
-    return html;
-  };
+  //   return html;
+  // };
   // JSX structure with potential tag replacements
   const jsxContent = (
     // ` <div id='Agreeone'>
@@ -1288,52 +1287,5 @@ const HtmlAgreementOne = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  page: {
-    margin: "20px",
-    padding: 30,
-    fontFamily: 'Times-Roman',
-    fontSize: 12,
-    lineHeight: 1.5
-  },
-  section: {
-    marginBottom: 10
-  },
-  header: {
-    fontSize: 14,
-    marginBottom: 10,
-    fontWeight: 'bold'
-  },
-  subHeader: {
-    fontSize: 12,
-    marginBottom: 5,
-    fontWeight: 'bold'
-  },
-  text: {
-    marginBottom: 5,
-    padding: 2
-  },
-  image: {
-    width: '30%',
-    height: 'auto',
-    marginBottom: 10
-  },
-  initial: {
-    marginTop: 10,
-    textAlign: 'right',
-
-  },
-  signatureImage: {
-    textDecoration: "underline",
-    marginHorizontal: 480,
-    marginVertical: -100,
-    width: 80,
-    height: 80,
-    marginBottom: 20,
-  },
-  textunderline: {
-    textDecoration: "underline"
-  },
-});
 
 export default HtmlAgreementOne;

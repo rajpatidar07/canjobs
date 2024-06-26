@@ -45,7 +45,7 @@ function EmployeeHomePage() {
           <div className="row justify-content-center mb-lg-16 mb-11">
             <div className="col-xxl-5 col-xl-6 col-lg-7 col-md-10 text-center">
               <h2 className="mb-6 mb-lg-7 text-black-2 font-size-10">
-                {token ? "Recommended Jobs" : "Featured Jobs"}{" "}
+                Featured Jobs
               </h2>
               <p className="px-xs-3 px-md-12 px-lg-8 px-xl-8 px-xxl-6 font-size-5 mb-0">
                 Leverage agile frameworks to provide a robust synopsis for high
@@ -60,6 +60,7 @@ function EmployeeHomePage() {
                 setJobCount={setJobCount}
                 jobsNo={jobsNo}
                 setTotalJob={setTotalJob}
+                SkillFilterValue={""}
               />
             </div>
           ) : (
@@ -67,6 +68,52 @@ function EmployeeHomePage() {
               <Loader />
             </div>
           )}
+          {jobsNo <= totaljob ? (
+            <div className="text-center pt-5 pt-lg-13">
+              <Link
+                className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
+                onClick={() => setJobsNo(jobCount + 10)}
+              >
+                Load More
+                <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
+              </Link>
+            </div>
+          ) : null}
+        </div>
+        <div className="container ">
+          {/* <!-- Section Title --> */}
+          <div className="row justify-content-center mb-lg-16 mb-11">
+            <div className="col-xxl-5 col-xl-6 col-lg-7 col-md-10 text-center">
+              <h2 className="mb-6 mb-lg-7 text-black-2 font-size-10">
+                Recommended Jobs
+              </h2>
+              <p className="px-xs-3 px-md-12 px-lg-8 px-xl-8 px-xxl-6 font-size-5 mb-0">
+                Leverage agile frameworks to provide a robust synopsis for high
+                level overviews to start.
+              </p>
+            </div>
+          </div>
+          {/* <!-- Section Title End --> */}
+          {token ?
+            <JobBox /> ? (
+              <div className="row justify-content-center">
+                <JobBox
+                  setJobCount={setJobCount}
+                  jobsNo={jobsNo}
+                  setTotalJob={setTotalJob}
+                  SkillFilterValue={localStorage.getItem("skill")}
+                />
+              </div>
+            ) : (
+              <div className="table-responsive main_table_div">
+                <Loader />
+              </div>
+            ) :
+            <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 text-center">
+              <h4>
+                Log in to get recommended jobs for you.
+              </h4>
+            </div>}
           {jobsNo <= totaljob ? (
             <div className="text-center pt-5 pt-lg-13">
               <Link

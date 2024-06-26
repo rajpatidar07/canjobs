@@ -107,7 +107,11 @@ function EmployeeHeader() {
                   {/* EMPLOYER MENU ITEMS */}
 
                   <li className="nav-item nav-item d-none" >
-                    <Link className="nav-link" to="/client">
+                    <Link className="nav-link" to={window.location.pathname === "/client" ? "" : "/client"}
+                      onClick={() =>
+                        window.location.pathname === "/client" ? window.location.reload() : null}
+                    >
+
                       Home
                     </Link>
                   </li>
@@ -138,7 +142,9 @@ function EmployeeHeader() {
               {userType === "company" || userType === "user" ? null : (
                 <ul className="navbar-nav main-menu">
                   <li className="nav-item">
-                    <Link className="nav-link" to="/">
+                    <Link className="nav-link" to={window.location.pathname === "/" ? "" : "/"}
+                      onClick={() =>
+                        window.location.pathname === "/" ? window.location.reload() : null}>
                       Home
                     </Link>
                   </li>
