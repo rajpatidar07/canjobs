@@ -1,14 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import AgreementOneForm from '../../forms/Agreement/AgreementOneForm';
+import { GetAgreement } from '../../../api/api';
 
 const HtmlAgreementOne = () => {
-  const { user_id, emp_user_type, folderId, } = useLocation().state;
+  const [openAddFeildsModal, setOpenAddFeildsModal] = useState(false)
+  const { user_id, emp_user_type, folderId,userData } = useLocation().state;
+  console.log(userData)
+  /*Function to get the Agreement Data */
+  const getAgreeFelidData = async () => {
+    try {
+      let res = await GetAgreement("1")
+      console.log(res)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+  useEffect(() => {
+    getAgreeFelidData()
+  }, [])
+
   // Function to replace tags
   // const replaceTags = (html) => {
   //   // Replace opening and closing div and ul tags with View tags
   //   html = html.replaceAll("<img", "<Image")
   //   html = html.replaceAll('<div', '<View').replaceAll('</div>', '</View>');
-  //   html = html.replaceAll('<ul', '<View').replaceAll('</ul>', '</View>');
+  //   html = html.replaceAll('<spanl', '<View').replaceAll('</ul>', '</View>');
   //   html = html.replaceAll('<p', '<Text').replaceAll('</p>', '</Text>');
   //   html = html.replaceAll('<Link', '<Text').replaceAll('</Link>', '</Text>');
   //   html = html.replaceAll('<li', '<Text').replaceAll('</li>', '</Text>');
@@ -54,13 +71,13 @@ const HtmlAgreementOne = () => {
     //     <p>
     //       In consideration of the fees paid and the matter stated above, the RCIC agrees to do the following:
     //     </p>
-    //     <ul>
+    //     <spanl>
     //       <li>Consultation and providing document checklists and intake sheet, file opening</li>
     //       <li>Data gathering, filling out forms</li>
     //       <li>Information verification, completeness check</li>
     //       <li>Application submission</li>
     //       <li>File maintenance and correspondence with client and IRCC</li>
-    //     </ul>
+    //     </spanl>
     //     <p>
     //       The RCIC shall provide the Client with a finalized, signed copy of this Retainer Agreement. RCIC is not responsible
     //       for any documentation or information provided by client to IRCC in any of the previous applications therefore shall
@@ -107,22 +124,19 @@ const HtmlAgreementOne = () => {
     <div class="main_div" style="padding: 10px 20px">
       <h1 style="text-align: center">RETAINER AGREEMENT</h1>
       <div style="display: flex; justify-content: space-between">
-        <b>RCIC Membership Number<u> :R533393 </u></b>
-        <b>Client File Number:<u> :R533393 </u></b>
+        <b>RCIC Membership Number<span> :R533393 </span></b>
+        <b>Client File Number:<span>__________</span></b>
       </div>
       <p>
-        This Retainer Agreement is made this <u>22</u> day of <u>March</u> 2024
+        This Retainer Agreement is made this <span>__</span> day of <span>______</span> _____
         between Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur
-        (the “RCIC”), RCIC Membership Number <u>R533393</u>, phone number
-        <u>4038885308</u>
+        (the “RCIC”), RCIC Membership Number <span>R533393</span>, phone number
+        <span>4038885308</span>
         <a href="mailto:info@canpathways.ca" class="a" target="_blank"
           >, email </a
         >info@canpathways.ca located at 2618
-        <u>Hopewell Pl NE #310 Calgary, AB T1Y 7J7,</u> <u>Canada</u> and Client
-        <u class="para_gap"> </u>(the “Client”)
-
-        <span class="p">, located at</span><u class="para_gap"> </u>, email
-        <u class="para_gap"> </u>, contact number <u class="para_gap"> </u>.
+        <span>Hopewell Pl NE #310 Calgary, AB T1Y 7J7,</span> <span>Canada</span> and Client<span class="para_gap">${userData.name}</span>(the “Client”)<span class="p">, located at <span class="para_gap"> ${userData.current_location+" "+userData.currently_located_country
+        }</span> </span> , email <span class="para_gap">${userData.email}</span>, contact number <span class="para_gap"> ${userData.contact_no}</span>.
       </p>
       <p>
         WHEREAS the RCIC and the Client wish to enter into a written agreement
@@ -156,14 +170,14 @@ const HtmlAgreementOne = () => {
             Client in the matter of
           </p>
           <p>
-            <u class="para_gap"> </u>. In consideration of the fees paid and the
+            <span class="para_gap"> </span>. In consideration of the fees paid and the
             matter stated above, the RCIC agrees to do the following:
           </p>
           <ol id="l2">
             <li data-list-text="a)">
               <p>
                 [Summary of preliminary advice given to the client
-                <u class="para_gap"> </u>]
+                <span class="para_gap"> </span>]
               </p>
             </li>
             <li data-list-text="b)">
@@ -215,7 +229,7 @@ const HtmlAgreementOne = () => {
           <ol id="l3">
             <li data-list-text="3.1">
               <p>The Client must provide, upon request from the RCIC:</p>
-              <ul id="l4">
+              <spanl id="l4">
                 <li data-list-text="">
                   <p>All necessary documentation</p>
                 </li>
@@ -225,7 +239,7 @@ const HtmlAgreementOne = () => {
                     or French translation
                   </p>
                 </li>
-              </ul>
+              </spanl>
             </li>
             <li data-list-text="3.2">
               <p>
@@ -480,7 +494,7 @@ const HtmlAgreementOne = () => {
             filing): $
           </p>
           <p>Note:</p>
-          <ul id="l5">
+          <spanl id="l5">
             <li data-list-text="•">
               <p>
                 There will be an additional fee, or a new fee arrangement will
@@ -531,7 +545,7 @@ const HtmlAgreementOne = () => {
                 has to be paid by client.
               </p>
             </li>
-          </ul>
+          </spanl>
         </li>
         <br />
         <li data-list-text="5." style="font-size: 18px">
@@ -543,7 +557,7 @@ const HtmlAgreementOne = () => {
             options:
           </p>
 
-          <ul id="l6">
+          <spanl id="l6">
             <li data-list-text="o">
               <h3>
                 In-person Cash Drop-Off
@@ -585,7 +599,7 @@ const HtmlAgreementOne = () => {
                 For Clients Located OUTSIDE Canada, we receive the following
                 payment options:
               </p>
-              <ul id="l7">
+              <spanl id="l7">
                 <li data-list-text="o">
                   <h3>
                     Wire Transfer<span class="p"
@@ -611,7 +625,7 @@ const HtmlAgreementOne = () => {
                     >
                   </h3>
                 </li>
-              </ul>
+              </spanl>
             </li>
           </ul>
         </li>
@@ -650,7 +664,7 @@ const HtmlAgreementOne = () => {
             professional fees paid.
           </p>
           <p>RCIC will not refund any fee paid by the client if</p>
-          <ul id="l8">
+          <spanl id="l8">
             <li data-list-text="">
               <p>
                 Cancellation by the applicant of the immigration application for
@@ -672,15 +686,15 @@ const HtmlAgreementOne = () => {
             <li data-list-text="">
               <p>Not providing required documents within given timeframe</p>
             </li>
-          </ul>
+          </spanl>
 
           <p>
             If application is refused because of an error or omission on the
             part of the RCIC or the professional staff, Unused and/or unearned
             fees will be refunded in accordance with the
-            <u>Client File Management Regulation</u>, the
-            <u>Client Account Regulation</u> and the
-            <u>Retainer Agreement Regulation</u> and in the following manner:
+            <span>Client File Management Regulation</span>, the
+            <span>Client Account Regulation</span> and the
+            <span>Retainer Agreement Regulation</span> and in the following manner:
           </p>
           <p>Cheque</p>
 
@@ -698,7 +712,7 @@ const HtmlAgreementOne = () => {
         <li data-list-text="8." style="font-size: 18px">
           <p style="font-weight: 600">Invoicing</p>
           <p>The RCIC will provide invoices, which include:</p>
-          <ul id="l9">
+          <spanl id="l9">
             <li data-list-text="">
               <p>the name and address of the Client,</p>
             </li>
@@ -714,7 +728,7 @@ const HtmlAgreementOne = () => {
                 the servicesrendered.
               </p>
             </li>
-          </ul>
+          </spanl>
           <p>
             Invoices must be provided to the Client in accordance with the
             payment terms and conditions, found in section 5 of this Retainer
@@ -740,7 +754,7 @@ const HtmlAgreementOne = () => {
             the complaint in writing to the RCIC and allow the RCIC
           </p>
           <p>
-            <u>30</u> days to respond to the Client. In the event the dispute is
+            <span>30</span> days to respond to the Client. In the event the dispute is
             still unresolved, the Client may follow the complaint and discipline
             procedure outlined by the Council on their
             <span class="s17">website:</span
@@ -863,7 +877,7 @@ const HtmlAgreementOne = () => {
             <li data-list-text="15.2">
               <p>
                 Pursuant to Article 11 of the
-                <u>Code of Professional Ethics</u>, the RCIC may withdraw
+                <span>Code of Professional Ethics</span>, the RCIC may withdraw
                 representation and terminate this Agreement, upon writing,
                 provided withdrawal does not cause prejudice to the Client, at
                 which time any outstanding or unearned fees or Disbursements
@@ -1046,7 +1060,7 @@ const HtmlAgreementOne = () => {
         <br />
         <li data-list-text="20.">
           <p>
-            CLIENT ACKNOLEDGES THAT ALL THE 9 PAGES HAVE BEEN READ AND INITIALED
+            CLIENT ACKNOWLEDGES THAT ALL THE 9 PAGES HAVE BEEN READ AND INITIALED
             AFTER ACCEPTING ALL THE TERMS AND CONDITIONS OF THIS RETAINER
             AGREEMENT
           </p>
@@ -1058,20 +1072,20 @@ const HtmlAgreementOne = () => {
       </ol>
       <p>Client Name</p>
       <p>
-        Given Name<u class="para_gap"> </u>Family Name
-        <u class="para_gap"> </u>
-        Address<u class="para_gap"> </u> Telephone Number<u class="para_gap">
-        </u
+        Given Name <span class="para_gap">${userData.name.split(" ")[0]} </span>Family Name
+        <span class="para_gap">${userData.name.split(" ")[1]} </span>
+        Address <span class="para_gap">${userData.current_location+" "+ userData.currently_located_country} </span> Telephone Number<span class="para_gap">${userData.contact_no}
+        </span
         >Cellphone Number
-        <u class="para_gap"> </u>
+        <span class="para_gap"> </span>
         Fax Number
-        <u class="para_gap"> </u>E-mail Address<u class="para_gap"> </u>
+        <span class="para_gap"> </span>E-mail Address <span class="para_gap">${userData.email}</span>
       </p>
       <p>RCIC</p>
       <p>
-        Given Name<u> Harpreet </u>Family Name: Kaur<u class="para_gap"> </u>
-        Address: <u>2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7</u> Telephone
-        Number<u> 403-888-5308</u>
+        Given Name<span> Harpreet </span>Family Name: Kaur<span class="para_gap"> </span>
+        Address: <span>2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7</span> Telephone
+        Number<span> 403-888-5308</span>
       </p>
       <p>Fax Number</p>
       <p>
@@ -1098,7 +1112,7 @@ const HtmlAgreementOne = () => {
           <p style="margin: 0 0 30px 0">Signature of RCIC</p>
         </div>
         <div style="width: 50%">
-          <p class="para_gap" style="margin: 0"></p>
+          <p class="para_gap" style="margin: 0">${userData.name}</p>
           <p style="margin: 0 0 30px 0">Name of Client</p>
         </div>
         <div style="width: 50%">
@@ -1117,7 +1131,7 @@ const HtmlAgreementOne = () => {
 
       <h3 style="text-align: center">AUTHORIZATION</h3>
       <p>
-        I<u class="para_gap"> </u>( hereinafter referred to as the “client”),
+        I<span class="para_gap">${userData.name}</span>( hereinafter referred to as the “client”),
         hereby authorize and appoint Harpreet kaur (hereinafter referred to as
         the “RCIC” with a CICC# R533393), of CAN Pathways Immigration
         consultancy ltd.,(hereinafter referred to as the “firm”), to represent
@@ -1231,7 +1245,7 @@ const HtmlAgreementOne = () => {
       <br /><br />
       <div style="display: flex; flex-wrap: wrap">
         <div style="width: 33.33%; text-align: center">
-          <p class="para_gap" style="margin: 0"></p>
+          <p class="para_gap" style="margin: 0">${userData.name}</p>
           <p style="margin: 0 0 30px 0">Client’s full name</p>
         </div>
         <div style="width: 33.33%; text-align: center">
@@ -1273,16 +1287,22 @@ const HtmlAgreementOne = () => {
 
   return (
     <div>
-
+      <button onClick={() => setOpenAddFeildsModal(true)}>Add Felids</button>
       <div dangerouslySetInnerHTML={{ __html: jsxContent }} />
       <Link to={`/agreeone`} state={{
-        code:jsxContent/* replaceTags(jsxContent)*/, user_id: user_id,
+        code: jsxContent/* replaceTags(jsxContent)*/, user_id: user_id,
         emp_user_type: emp_user_type,
         folderId: folderId
       }}
 
       >
         Generated Pdf</Link>
+      {openAddFeildsModal ?
+        <AgreementOneForm
+          show={openAddFeildsModal}
+          close={() => setOpenAddFeildsModal()}
+          userData={userData} />
+        : null}
     </div>
   );
 };

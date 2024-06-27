@@ -3193,7 +3193,7 @@ export const AddSharePointDOcument = async (
   formData.append("folder_Id", folderId);
   // Loop through the array of files and append each file to formData
   for (let i = 0; i < data.length; i++) {
-    console.log(data[i])
+    // console.log(data[i])
     formData.append(`file[${i}]`, data[i]);
   }
   const response = await axios.post(
@@ -3332,6 +3332,37 @@ export const GetAdobeToken = async (Id) => {
     //     "Content-Type": "application/json",
     //   },
     // }
+  );
+  return response;
+};
+/*Agreement Apis */
+// /Api function to Get document url for sharepoint
+export const GetAgreement = async (Id) => {
+  const response = await axios.post(
+    `${API_URL}api/Agreement_api/get_agreement`,
+    {
+      id: Id,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+};
+// /Api function to Get document url for sharepoint
+export const AddUpdateAgreement = async (data) => {
+  const response = await axios.put(
+    `${API_URL}api/Agreement_api/addUpdateAgreement`,
+   data,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
   );
   return response;
 };

@@ -7,7 +7,8 @@ import { useNavigate } from 'react-router-dom'
 export default function RetauberAgreementList({
     user_id,
     emp_user_type,
-    folderId
+    folderId,
+    userData
 }) {
     // let [isLoading, setIsLoading] = useState(true);
     // const [openAgreement, setOpenAgreement] = useState([]);
@@ -143,7 +144,8 @@ export default function RetauberAgreementList({
                                                         state: {
                                                             user_id: user_id,
                                                             emp_user_type: emp_user_type,
-                                                            folderId: folderId
+                                                            folderId: folderId,
+                                                            userData:userData
                                                         }
                                                     });
                                                 }}

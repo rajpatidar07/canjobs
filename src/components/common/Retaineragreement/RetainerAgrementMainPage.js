@@ -4,7 +4,8 @@ import RetauberAgreementList from './RetauberAgreementList'
 export default function RetainerAgrementMainPage({
     user_id,
     emp_user_type,
-    folderId }) {
+    folderId,
+    userData }) {
     return (
         < div className="activity_container profile_id_card">
             <div className="row m-0">
@@ -12,6 +13,7 @@ export default function RetainerAgrementMainPage({
                     user_id={user_id}
                     emp_user_type={emp_user_type}
                     folderId={folderId}
+                    userData={userData}
                 />
             </div>
         </div>

@@ -274,7 +274,7 @@ export default function SharePointDocument({
         /*Api calling to changes employee_id or employer_id  to as per the user name */
         if (res.data.data[0].name === `${emp_user_type}_${user_id}`
           || res.data.data[0].name !== `${user_name}_${user_id}`) {
-          console.log("matched")
+          // console.log("matched")
           try {
             // let MainFolderNameRes =
             await ChangeFolderNameSharpoint(user_id, emp_user_type, `${user_name}_${user_id}`, res.data.data[0].id)

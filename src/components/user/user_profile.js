@@ -1964,7 +1964,8 @@ const NewUserProfile = (props) => {
                             //   ? docParentId
                             //   :
                                PersonalDetail.documents_folder_id
-                          }/>
+                          }
+                          userData={PersonalDetail}/>
                       ) : null}
                     </div>
                     <div
