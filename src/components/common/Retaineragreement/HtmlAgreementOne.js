@@ -1,25 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link/*, useLocation */ } from 'react-router-dom';
 import AgreementOneForm from '../../forms/Agreement/AgreementOneForm';
 import { GetAgreement } from '../../../api/api';
-
-const HtmlAgreementOne = () => {
+// import { ToastContainer } from 'react-toastify';
+import moment from "moment"
+const HtmlAgreementOne = ({ user_id, emp_user_type, folderId, userData, setOpenAgreement }) => {
   const [openAddFeildsModal, setOpenAddFeildsModal] = useState(false)
-  const { user_id, emp_user_type, folderId,userData } = useLocation().state;
-  console.log(userData)
+  const [apicall, setApicall] = useState(false)
+  const [felidData, setFelidData] = useState({})
+  // const { user_id, emp_user_type, folderId, userData } = useLocation().state;
   /*Function to get the Agreement Data */
   const getAgreeFelidData = async () => {
     try {
-      let res = await GetAgreement("1")
-      console.log(res)
+      let res = await GetAgreement("", user_id, emp_user_type)
+      setFelidData(res.data.data[0])
     } catch (err) {
       console.log(err)
     }
   }
+  console.log(userData)
   useEffect(() => {
     getAgreeFelidData()
-  }, [])
-
+    if (apicall === true) {
+      setApicall(false)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [apicall])
   // Function to replace tags
   // const replaceTags = (html) => {
   //   // Replace opening and closing div and ul tags with View tags
@@ -125,18 +131,17 @@ const HtmlAgreementOne = () => {
       <h1 style="text-align: center">RETAINER AGREEMENT</h1>
       <div style="display: flex; justify-content: space-between">
         <b>RCIC Membership Number<span> :R533393 </span></b>
-        <b>Client File Number:<span>__________</span></b>
+        <b>Client File Number: <span>${felidData.client_file_no}</span></b>
       </div>
       <p>
-        This Retainer Agreement is made this <span>__</span> day of <span>______</span> _____
+        This Retainer Agreement is made this <span class="para_gap">${(felidData.client_file_no)} </span> day of <u > ${moment(new Date(felidData.agreement_date)).format("Do")}</u> <u >${moment(new Date(felidData.agreement_date)).format("MMMM")} </u><u > ${moment(new Date(felidData.agreement_date)).format("YYYY")}</u>
         between Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur
         (the “RCIC”), RCIC Membership Number <span>R533393</span>, phone number
         <span>4038885308</span>
         <a href="mailto:info@canpathways.ca" class="a" target="_blank"
           >, email </a
         >info@canpathways.ca located at 2618
-        <span>Hopewell Pl NE #310 Calgary, AB T1Y 7J7,</span> <span>Canada</span> and Client<span class="para_gap">${userData.name}</span>(the “Client”)<span class="p">, located at <span class="para_gap"> ${userData.current_location+" "+userData.currently_located_country
-        }</span> </span> , email <span class="para_gap">${userData.email}</span>, contact number <span class="para_gap"> ${userData.contact_no}</span>.
+        <span>Hopewell Pl NE #310 Calgary, AB T1Y 7J7,</span> <span>Canada</span> and Client<span class="para_gap">${(felidData.client_first_name + " " + felidData.client_last_name) ??(emp_user_type ==="employee"? userData.name:userData.company_name)}</span>(the “Client”)<span class="p">, located at <span class="para_gap"> ${felidData.client_address ?? userData.current_location + " " + userData.currently_located_country}</span> </span> , email <span class="para_gap">${felidData.client_email ?? userData.email}</span>, contact number <span class="para_gap"> ${felidData.client_contact ?? userData.ontact_no}</span>.
       </p>
       <p>
         WHEREAS the RCIC and the Client wish to enter into a written agreement
@@ -170,14 +175,14 @@ const HtmlAgreementOne = () => {
             Client in the matter of
           </p>
           <p>
-            <span class="para_gap"> </span>. In consideration of the fees paid and the
+            <span class="para_gap">${felidData.matter} </span>. In consideration of the fees paid and the
             matter stated above, the RCIC agrees to do the following:
           </p>
           <ol id="l2">
             <li data-list-text="a)">
               <p>
                 [Summary of preliminary advice given to the client
-                <span class="para_gap"> </span>]
+                <span class="para_gap">${felidData.summary}</span>]
               </p>
             </li>
             <li data-list-text="b)">
@@ -196,7 +201,7 @@ const HtmlAgreementOne = () => {
               <p>[Application submission]</p>
             </li>
             <li data-list-text="f)">
-              <p>[File maintenance andcorrespondence with client and IRCC]</p>
+              <p>[File maintenance and correspondence with client and IRCC]</p>
             </li>
           </ol>
           <p>
@@ -229,7 +234,7 @@ const HtmlAgreementOne = () => {
           <ol id="l3">
             <li data-list-text="3.1">
               <p>The Client must provide, upon request from the RCIC:</p>
-              <spanl id="l4">
+              <span id="l4">
                 <li data-list-text="">
                   <p>All necessary documentation</p>
                 </li>
@@ -239,7 +244,7 @@ const HtmlAgreementOne = () => {
                     or French translation
                   </p>
                 </li>
-              </spanl>
+              </span>
             </li>
             <li data-list-text="3.2">
               <p>
@@ -382,10 +387,10 @@ const HtmlAgreementOne = () => {
                 >
                   Discount: Courier charges Government fees
                 </td>
-                <td style="border: 1px solid black"></td>
+                <td style="border: 1px solid black">${felidData.courier_charges}</td>
               </tr>
               <tr>
-                <td style="border: 1px solid black"></td>
+                <td style="border: 1px solid black">${felidData.government_fees}</td>
               </tr>
               <tr>
                 <td style="border: 1px solid black"></td>
@@ -394,25 +399,25 @@ const HtmlAgreementOne = () => {
                 <td style="text-align: center; border: 1px solid black">
                   Administrative fee [as required]
                 </td>
-                <td style="border: 1px solid black"></td>
+                <td style="border: 1px solid black">${felidData.administrative_fee}</td>
               </tr>
               <tr>
                 <td style="text-align: center; border: 1px solid black">
                   Applicable Taxes: 5%
                 </td>
-                <td style="border: 1px solid black"></td>
+                <td style="border: 1px solid black">${felidData.applicable_taxes}</td>
               </tr>
               <tr>
                 <td style="text-align: center; border: 1px solid black">
                   Balance (Paid at time of filing):
                 </td>
-                <td style="border: 1px solid black"></td>
+                <td style="border: 1px solid black">${felidData.balance_paid_at_time_of_filing}</td>
               </tr>
               <tr>
                 <td style="text-align: center; border: 1px solid black">
                   Total Cost
                 </td>
-                <td style="border: 1px solid black"></td>
+                <td style="border: 1px solid black">${felidData.total_cost}</td>
               </tr>
             </tbody>
           </table>
@@ -432,13 +437,13 @@ const HtmlAgreementOne = () => {
               </td>
               <td>
                 <p>Estimated</p>
-                <p>date of Comple tion</p>
+                <p>date of Completion</p>
               </td>
               <td>
                 <p>Professional Fees (Non-Refundable)</p>
               </td>
               <td>
-                <p>Applicable Retainer Feefor</p>
+                <p>Applicable Retainer Fee for</p>
                 <p>this stage (Non- Refundable)</p>
               </td>
               <td>
@@ -459,8 +464,8 @@ const HtmlAgreementOne = () => {
               <td>
                 <p>Non-refundable</p>
               </td>
-              <td></td>
-              <td></td>
+              <td>${felidData.applicable_retainer_fee_stape_1}</td>
+              <td>${felidData.applicable_government_processing_fee_stape_1}</td>
             </tr>
             <tr>
               <td>
@@ -484,8 +489,8 @@ const HtmlAgreementOne = () => {
                 </p>
                 <p>scheduled at this stage</p>
               </td>
-              <td></td>
-              <td></td>
+              <td>${felidData.applicable_retainer_fee_stape_2}</td>
+              <td>${felidData.applicable_government_processing_fee_stape_2}</td>
             </tr>
           </table>
           <p>
@@ -684,7 +689,7 @@ const HtmlAgreementOne = () => {
               <p>Disregarding RCIC’s instructions</p>
             </li>
             <li data-list-text="">
-              <p>Not providing required documents within given timeframe</p>
+              <p>Not providing required documents within given time frame</p>
             </li>
           </spanl>
 
@@ -698,7 +703,7 @@ const HtmlAgreementOne = () => {
           </p>
           <p>Cheque</p>
 
-          <p>[describe the manner of refund, including method and timeframe]</p>
+          <p>[describe the manner of refund, including method and time frame]</p>
           <p>
             There shall be no refund due if the application is not submitted,
             refused, returned, or cannot proceed due to reasons relating to
@@ -725,7 +730,7 @@ const HtmlAgreementOne = () => {
             <li data-list-text="">
               <p>
                 the total fees and applicable taxes payable to the Member for
-                the servicesrendered.
+                the services rendered.
               </p>
             </li>
           </spanl>
@@ -891,7 +896,7 @@ const HtmlAgreementOne = () => {
                 At the time of withdrawal or discharge, the RCIC must provide
                 the Client with an invoice detailing all services that have been
                 rendered or accounting for the time that has been spent on the
-                Client’sfile.
+                Client’s file.
               </p>
             </li>
           </ol>
@@ -906,7 +911,7 @@ const HtmlAgreementOne = () => {
             applicable therein and except for disputes pursuant to Section 9
             hereof, any dispute with respect to the terms of this Agreement
             shall be decided by a court of competent jurisdiction within the
-            Province/Territoryof Alberta
+            Province/Territory of Alberta
           </p>
         </li>
         <br />
@@ -1072,24 +1077,24 @@ const HtmlAgreementOne = () => {
       </ol>
       <p>Client Name</p>
       <p>
-        Given Name <span class="para_gap">${userData.name.split(" ")[0]} </span>Family Name
-        <span class="para_gap">${userData.name.split(" ")[1]} </span>
-        Address <span class="para_gap">${userData.current_location+" "+ userData.currently_located_country} </span> Telephone Number<span class="para_gap">${userData.contact_no}
+        Given Name <span class="para_gap">${felidData.client_first_name ?? (emp_user_type ==="employee"? userData.name:userData.company_name).split(" ")[0]} </span>Family Name
+        <span class="para_gap">${felidData.client_last_name ?? (emp_user_type ==="employee"? userData.name:userData.company_name).split(" ")[1]} </span>
+        Address <span class="para_gap">${felidData.client_address ?? userData.current_location + " " + userData.currently_located_country} </span> Telephone Number <span class="para_gap">${felidData.client_contact ?? userData.contact_no}
         </span
         >Cellphone Number
-        <span class="para_gap"> </span>
+        <span class="para_gap">${felidData.client_cellphone}</span>
         Fax Number
-        <span class="para_gap"> </span>E-mail Address <span class="para_gap">${userData.email}</span>
+        <span class="para_gap">${felidData.client_fax}</span>E-mail Address <span class="para_gap">${felidData.client_email ?? userData.email}</span>
       </p>
       <p>RCIC</p>
       <p>
-        Given Name<span> Harpreet </span>Family Name: Kaur<span class="para_gap"> </span>
-        Address: <span>2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7</span> Telephone
+        Given Name: <span> Harpreet </span>   Family Name :<span> Kaur </span>
+        Address:<span>2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7</span> Telephone
         Number<span> 403-888-5308</span>
       </p>
       <p>Fax Number</p>
       <p>
-        E-mail Address<a
+        E-mail Address: <a
           href="mailto:info@canpathways.ca"
           class="s19"
           target="_blank"
@@ -1098,40 +1103,44 @@ const HtmlAgreementOne = () => {
         </a>
       </p>
       <p>
-        IN WITNESS THEREOF this Agreement has been duly executed by the parties
+        IN WITNESS THERE OF this Agreement has been duly executed by the parties
         hereto on the date first above written.
       </p>
       <br /><br />
       <div style="display: flex; flex-wrap: wrap">
         <div style="width: 50%">
-          <p class="para_gap" style="margin: 0"></p>
+          <p class="para_gap" style="margin: 0"><img src=${felidData.client_signature}
+           alt=${(felidData.client_first_name + " " + felidData.client_last_name) ?? (emp_user_type ==="employee"? userData.name:userData.company_name)}
+          style="max-width: 200px; float: right"/></p>
           <p style="margin: 0 0 30px 0">Signature of Client</p>
         </div>
         <div style="width: 50%">
-          <p class="para_gap" style="margin: 0"></p>
+          <p class="para_gap" style="margin: 0"><img src=${felidData.rcic_signature}
+           alt="Harpreet Kaur"
+          style="max-width: 200px; float: right"/></p>
           <p style="margin: 0 0 30px 0">Signature of RCIC</p>
         </div>
         <div style="width: 50%">
-          <p class="para_gap" style="margin: 0">${userData.name}</p>
+          <p class="para_gap" style="margin: 0">${(felidData.client_first_name + " " + felidData.client_last_name) ?? (emp_user_type ==="employee"? userData.name:userData.company_name)}</p>
           <p style="margin: 0 0 30px 0">Name of Client</p>
         </div>
         <div style="width: 50%">
-          <p class="para_gap" style="margin: 0"></p>
+          <p class="para_gap" style="margin: 0" >Harpreet Kaur</p>
           <p style="margin: 0 0 30px 0">Name of RCIC</p>
         </div>
         <div style="width: 50%">
-          <p class="para_gap" style="margin: 0"></p>
+          <p class="para_gap" style="margin: 0">${felidData.date_signature_client}</p>
           <p style="margin: 0 0 30px 0">Date</p>
         </div>
         <div style="width: 50%">
-          <p class="para_gap" style="margin: 0"></p>
+          <p class="para_gap" style="margin: 0">${felidData.date_signature_rcic}</p>
           <p style="margin: 0 0 30px 0">Date</p>
         </div>
       </div>
 
       <h3 style="text-align: center">AUTHORIZATION</h3>
       <p>
-        I<span class="para_gap">${userData.name}</span>( hereinafter referred to as the “client”),
+        I <span class="para_gap">${(felidData.client_first_name + " " + felidData.client_last_name) ?? (emp_user_type ==="employee"? userData.name:userData.company_name)}</span>( here in after referred to as the “client”),
         hereby authorize and appoint Harpreet kaur (hereinafter referred to as
         the “RCIC” with a CICC# R533393), of CAN Pathways Immigration
         consultancy ltd.,(hereinafter referred to as the “firm”), to represent
@@ -1245,15 +1254,17 @@ const HtmlAgreementOne = () => {
       <br /><br />
       <div style="display: flex; flex-wrap: wrap">
         <div style="width: 33.33%; text-align: center">
-          <p class="para_gap" style="margin: 0">${userData.name}</p>
+          <p class="para_gap" style="margin: 0">${(felidData.client_first_name + " " + felidData.client_last_name) ?? (emp_user_type ==="employee"? userData.name:userData.company_name)}</p>
           <p style="margin: 0 0 30px 0">Client’s full name</p>
         </div>
         <div style="width: 33.33%; text-align: center">
-          <p class="para_gap" style="margin: 0"></p>
+          <p class="para_gap" style="margin: 0"><img src=${felidData.client_signature}
+           alt=${(felidData.client_first_name + " " + felidData.client_last_name) ?? (emp_user_type ==="employee"? userData.name:userData.company_name)}
+          style="max-width: 200px; float: right"/></p>
           <p style="margin: 0 0 30px 0">Signatures</p>
         </div>
         <div style="width: 33.33%; text-align: center">
-          <p class="para_gap" style="margin: 0"></p>
+          <p class="para_gap" style="margin: 0">${felidData.date_signature_client}</p>
           <p style="margin: 0 0 30px 0">Date</p>
         </div>
       </div>
@@ -1275,8 +1286,8 @@ const HtmlAgreementOne = () => {
       >
         Initial:
         <img
-          src="https://canpathwaysjobs.com/image/00logo-main-black.png"
-          alt=""
+          src=${felidData.initial}
+          alt=${(felidData.client_first_name + " " + felidData.client_last_name) ?? (emp_user_type ==="employee"? userData.name:userData.company_name)}
           style="max-width: 200px; float: right"
         />
       </div>
@@ -1287,12 +1298,17 @@ const HtmlAgreementOne = () => {
 
   return (
     <div>
-      <button onClick={() => setOpenAddFeildsModal(true)}>Add Felids</button>
+      {/* <ToastContainer /> */}
+      <div className='d-flex justify-content-space-between mt-5'>
+        <button className='btn btn-secondary ' onClick={() => setOpenAgreement(false)}>Add Back</button>
+        <button className='btn btn-primary' onClick={() => setOpenAddFeildsModal(true)}>Add Felids</button>
+      </div>
       <div dangerouslySetInnerHTML={{ __html: jsxContent }} />
       <Link to={`/agreeone`} state={{
         code: jsxContent/* replaceTags(jsxContent)*/, user_id: user_id,
         emp_user_type: emp_user_type,
-        folderId: folderId
+        folderId: folderId,
+        felidData: felidData
       }}
 
       >
@@ -1301,7 +1317,9 @@ const HtmlAgreementOne = () => {
         <AgreementOneForm
           show={openAddFeildsModal}
           close={() => setOpenAddFeildsModal()}
-          userData={userData} />
+          userData={userData}
+          setApicall={setApicall}
+          felidData={felidData} />
         : null}
     </div>
   );

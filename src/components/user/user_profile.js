@@ -885,7 +885,7 @@ const NewUserProfile = (props) => {
                           aria-selected="true"
                           onClick={() => setTabActive("retaineragreement")}
                         >
-                          Add Retainer Agreement
+                         Retainer Agreement
                         </Link>
                       </li>
                       <li

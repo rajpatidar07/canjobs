@@ -1243,8 +1243,21 @@ export const GetAllJobs = async (
   reserved,
   // employeeSkill,
   cid,
-  manager_id
+  manager_id,
+  featured
 ) => {
+  // console.log(
+  //    "column_name =>",column_name,
+  //   "sort_order =>",sort_order,
+  //   "company =>",company,
+  //   "time =>",time,
+  //   "id =>",id,
+  //   "selfValue =>",selfValue,
+  //   "adminValue =>",adminValue,
+  //   "reserved =>",reserved,
+  //   "cid =>",cid,
+  //   "manager_id =>",manager_id,
+  //   "featured =>",featured)
   const response = await axios.post(
     Token ? `${API_URL}getAllJobs` : `${API_URL}common/getJobs`,
     {
@@ -1266,6 +1279,7 @@ export const GetAllJobs = async (
       // employee_skills: employeeSkill,
       filter_company_id: cid,
       manager_id: manager_id,
+      is_featured:featured
     },
     {
       headers: {
@@ -1539,7 +1553,7 @@ export const AddLmiaAdditionalInformationEmployee = async (data) => {
   // (props);
   const response = await axios.put(
     `${API_URL}admin/updateLmiaDetails`,
-  data,
+    data,
     {
       headers: {
         "Content-Type": "application/json",
@@ -1554,7 +1568,7 @@ export const AddLmiaAdditionalInformationJob = async (data) => {
   // (props);
   const response = await axios.put(
     `${API_URL}updateLmiaDetailsJob`,
-  data,
+    data,
     {
       headers: {
         "Content-Type": "application/json",
@@ -3193,7 +3207,7 @@ export const AddSharePointDOcument = async (
   formData.append("folder_Id", folderId);
   // Loop through the array of files and append each file to formData
   for (let i = 0; i < data.length; i++) {
-    // console.log(data[i])
+    console.log(data[i])
     formData.append(`file[${i}]`, data[i]);
   }
   const response = await axios.post(
@@ -3337,11 +3351,13 @@ export const GetAdobeToken = async (Id) => {
 };
 /*Agreement Apis */
 // /Api function to Get document url for sharepoint
-export const GetAgreement = async (Id) => {
+export const GetAgreement = async (Id, receiver, receiver_type) => {
   const response = await axios.post(
     `${API_URL}api/Agreement_api/get_agreement`,
     {
-      id: Id,
+      // id: Id,
+      receiver: receiver,
+      receiver_type: receiver_type
     },
     {
       headers: {
@@ -3356,7 +3372,7 @@ export const GetAgreement = async (Id) => {
 export const AddUpdateAgreement = async (data) => {
   const response = await axios.put(
     `${API_URL}api/Agreement_api/addUpdateAgreement`,
-   data,
+    data,
     {
       headers: {
         "Content-Type": "application/json",

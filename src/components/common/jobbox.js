@@ -25,6 +25,7 @@ function JobBox({
   setJobCount,
   jobsNo,
   setTotalJob,
+  featured
 }) {
   /*States */
   let [ApiCall, setApiCall] = useState(false);
@@ -68,29 +69,40 @@ function JobBox({
         SkillFilterValue,
         jobSwapFilterValue,
         1,
-        jobsNo
+        jobsNo,
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        featured
       );
       if (userData.data.data.length === 0) {
         setjobData([]);
       } else {
-        if (
-          userData.data.data.find((item) => item.is_featured === "1") &&
-          location.pathname !== "/jobs"
-        ) {
-          setjobData(
-            userData.data.data.filter((item) => item.is_featured === "1")
-          );
-          setJobCount(
-            userData.data.data.filter((item) => item.is_featured === "1").length
-          );
-          setTotalJob(
-            userData.data.data.filter((item) => item.is_featured === "1").length
-          );
-        } else {
-          setjobData(userData.data.data);
-          setJobCount(userData.data.data.length);
-          setTotalJob(userData.data.total_rows);
-        }
+        // if (
+        //   userData.data.data.find((item) => item.is_featured === "1") &&
+        //   location.pathname !== "/jobs"
+        // ) {
+        //   setjobData(
+        //     userData.data.data.filter((item) => item.is_featured === "1")
+        //   );
+        //   setJobCount(
+        //     userData.data.data.filter((item) => item.is_featured === "1").length
+        //   );
+        //   setTotalJob(
+        //     userData.data.data.filter((item) => item.is_featured === "1").length
+        //   );
+        // } else {
+        setjobData(userData.data.data);
+        setJobCount(userData.data.data.length);
+        setTotalJob(userData.data.total_rows);
+        // }
         setNoData(userData.data.total_rows);
       }
     } catch (err) {

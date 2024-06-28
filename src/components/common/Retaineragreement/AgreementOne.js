@@ -119,13 +119,14 @@
 // export default AggrementOne;
 import React, { useEffect, useState } from 'react';
 import { Document, Page, Text, View, StyleSheet, Image, PDFViewer, BlobProvider, Link } from '@react-pdf/renderer';
-// import { useLocation } from 'react-router-dom';
-// import { AddSharePointDOcument } from '../../../api/api';
-// import { toast } from 'react-toastify';
+import { useLocation } from 'react-router-dom';
+import moment from 'moment';
+import { AddSharePointDOcument } from '../../../api/api';
+import { toast } from 'react-toastify';
 
 const AggrementOne = () => {
   const [blobData, setBlobData] = useState()
-  // const { user_id, emp_user_type, folderId: folderID, code } = useLocation().state;
+  const { felidData ,user_id, emp_user_type, folderId: folderID/*, code*/ } = useLocation().state;
   // const latestCode = JSON.stringify(code)
   //   .replace('" <', "<")
   //   .replace('>"', ">")
@@ -232,31 +233,31 @@ const AggrementOne = () => {
           return;
         }
         const file = new File([newBlob], 'Retainer_Agreement-Client_1_column_Express_Entry.pdf', { type: 'application/pdf' });
-        console.log('file =>',file)
-        // try {
-        //   let res = await AddSharePointDOcument(
-        //     user_id,
-        //     emp_user_type,
-        //     folderID,
-        //     "",
-        //     [file]
-        //   );
-        //   if (res.data.message === "Document Upload") {
-        //     toast.success(`Document Uploaded successfully`, {
-        //       position: toast.POSITION.TOP_RIGHT,
-        //       autoClose: 1000,
-        //     });
-        //   }
-        //   // console.log(res.data)
-        //   if (res.data.message === "Failed" && res.data.data === "No Token Found") {
-        //     toast.success(`Document Uploaded successfully`, {
-        //       position: toast.POSITION.TOP_RIGHT,
-        //       autoClose: 1000,
-        //     });
-        //   }
-        // } catch (error) {
-        //   console.log("Error saving doc to sharepoint", error)
-        // }
+        console.log('file =>', file)
+        try {
+          let res = await AddSharePointDOcument(
+            user_id,
+            emp_user_type,
+            folderID,
+            "",
+            [file]
+          );
+          if (res.data.message === "Document Upload") {
+            toast.success(`Document Uploaded successfully`, {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+          }
+          // console.log(res.data)
+          if (res.data.message === "Failed" && res.data.data === "No Token Found") {
+            toast.success(`Document Uploaded successfully`, {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+          }
+        } catch (error) {
+          console.log("Error saving doc to sharepoint", error)
+        }
       } catch (error) {
         console.error('Error converting blob to file:', error);
       }
@@ -271,21 +272,23 @@ const AggrementOne = () => {
         <View style={{ display: "flex", justifyContent: "space-between" }}>
           <Text style={{ fontWeight: "bold" }}>RCIC Membership Number<Text style={styles.textunderline}> :R533393 </Text>
           </Text>
-          <Text style={{ fontWeight: "bold" }}>Client File Number:<Text style={styles.textunderline}> :R533393 </Text>
+          <Text style={{ fontWeight: "bold" }}>Client File Number:<Text style={styles.textunderline}> :{felidData.client_file_no} </Text>
           </Text>
         </View>
-        <Text>
-          This Retainer Agreement is made this <Text style={styles.textunderline}>22</Text> day of <Text style={styles.textunderline}>March</Text> 2024
-          between Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur
-          (the “RCIC”), RCIC Membership Number <Text style={styles.textunderline}>R533393</Text>, phone number
-          <Text style={styles.textunderline}>4038885308</Text>
-          <Link src="mailto:info@canpathways.ca" className="a" target="_blank"
-          >, email </Link>info@canpathways.ca located at 2618
-          <Text style={styles.textunderline}>Hopewell Pl NE #310 Calgary, AB T1Y 7J7,</Text> <Text style={styles.textunderline}>Canada</Text> and Client
-          <Text style={styles.textunderline} className="para_gap">___________________________</Text>(the “Client”)
-          <Text className="p">, located at</Text><Text style={styles.textunderline} className="para_gap">______________________________</Text>, email
-          <Text style={styles.textunderline} className="para_gap">______________________________</Text>, contact number <Text style={styles.textunderline}className="para_gap">______________________________</Text>.
-        </Text>
+        <View>
+          <Text>
+            This Retainer Agreement is made this {felidData.client_file_no} <Text style={styles.textunderline}>{moment(new Date(felidData.agreement_date)).format("Do")}</Text> day of <Text style={styles.textunderline}>{moment(new Date(felidData.agreement_date)).format("MMMM")}</Text> {moment(new Date(felidData.agreement_date)).format("YYYY")}
+            between Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur
+            (the “RCIC”), RCIC Membership Number <Text style={styles.textunderline}>R533393</Text>, phone number
+            <Text style={styles.textunderline}>4038885308</Text>
+            <Link src="mailto:info@canpathways.ca" className="a" target="_blank"
+            >, email </Link>info@canpathways.ca located at 2618
+            <Text style={styles.textunderline}>Hopewell Pl NE #310 Calgary, AB T1Y 7J7,</Text> <Text style={styles.textunderline}>Canada</Text> and Client
+            <Text style={styles.textunderline} className="para_gap">{(felidData.client_first_name + " " + felidData.client_last_name)}</Text>(the “Client”)
+            <Text className="p">, located at</Text><Text style={styles.textunderline} className="para_gap">{felidData.client_address}</Text>, email
+            <Text style={styles.textunderline} className="para_gap">{felidData.client_email}</Text>, contact number <Text style={styles.textunderline} className="para_gap">{felidData.client_contact}</Text>.
+          </Text>
+        </View>
         <View>
           <Text style={{ marginTop: 15 }}>
             WHEREAS the RCIC and the Client wish to enter into a written agreement
@@ -307,14 +310,16 @@ const AggrementOne = () => {
           </Text>
         </View>
         <View id="l1">
-          <Text data-list-text="1." >
+          <View data-list-text="1." >
             <Text style={[styles.definition, { fontWeight: 600 }]} >1. Definitions</Text>
-            <Text>
-              The terms set out in this Retainer Agreement, have the meaning given
-              to such terms in the Retainer Agreement Regulation and By-law of the
-              Council, as amended from time to time.
-            </Text>
-          </Text>
+            <View>
+              <Text>
+                The terms set out in this Retainer Agreement, have the meaning given
+                to such terms in the Retainer Agreement Regulation and By-law of the
+                Council, as amended from time to time.
+              </Text>
+            </View>
+          </View>
           <View data-list-text="2." >
             <Text style={[styles.definition, { fontWeight: 600 }]}>
               2. RCIC Responsibilities and Commitments</Text>
@@ -322,10 +327,10 @@ const AggrementOne = () => {
               The Client asked the RCIC, and the RCIC has agreed, to act for the
               Client in the matter of
             </Text>
-            <Text style={styles.textunderline} className="para_gap">____________________________________________________________________________________</Text><Text>. In consideration of the fees paid and the matter stated above, the RCIC agrees to do the following:
+            <Text style={styles.textunderline} className="para_gap">{felidData.matter}</Text><Text>. In consideration of the fees paid and the matter stated above, the RCIC agrees to do the following:
             </Text>
             <View >
-              <Text>a) [Summary of preliminary advice given to the client<Text style={styles.textunderline} className="para_gap">______________________________</Text>]</Text>
+              <Text>a) [Summary of preliminary advice given to the client <Text style={styles.textunderline} className="para_gap">{felidData.summary}</Text>]</Text>
               <Text>b) [Consultation and providing document checklists and intake sheet, file opening]</Text>
               <Text>c) [Data gathering, filling out forms]</Text>
               <Text>d) [Information verification, completeness check]</Text>
@@ -463,7 +468,7 @@ const AggrementOne = () => {
                 <View style={styles.cell}>
                   <Text>Professional Fees</Text>
                 </View>
-                <View style={styles.cell}></View>
+                <View style={styles.cell}> <Text>{felidData.professional_fees}</Text></View>
               </View>
               <View style={styles.row}>
                 <View style={styles.cell}>
@@ -476,46 +481,50 @@ const AggrementOne = () => {
                     <View style={[{
                       flex: 1,
                       paddingBottom: 8, paddingTop: 4
-                    }]}></View>
+                    }]}>
+                      <Text>{felidData.courier_charges}</Text>
+                    </View>
                   </View>
                   <View style={styles.row}>
                     <View style={[{
                       flex: 1,
                       paddingBottom: 8, paddingTop: 8
-                    }]}></View>
+                    }]}> <Text>{felidData.government_fees}</Text></View>
                   </View>
                   <View style={styles.row}>
                     <View style={[{
                       flex: 1,
                       paddingBottom: 8, paddingTop: 8
-                    }]}></View>
+                    }]}>
+                      <Text></Text>
+                    </View>
                   </View>
                 </View>
               </View>
               <View style={styles.row}>
-                <View style={styles.cell}>Administrative fee [as required]
+                <View style={styles.cell}> <Text>Administrative fee [as required]</Text>
                 </View>
-                <View style={styles.cell}></View>
+                <View style={styles.cell}> <Text>{felidData.administrative_fee}</Text></View>
               </View>
               <View style={styles.row}>
                 <View style={styles.cell}>
                   <Text>ApplicableTaxes: 13%
                   </Text>
                 </View>
-                <View style={styles.cell}></View>
+                <View style={styles.cell}> <Text>{felidData.applicable_taxes}</Text></View>
               </View>
               <View style={styles.row}>
                 <View style={styles.cell}>
                   <Text>Balance (Paid at time of filing):
                   </Text>
                 </View>
-                <View style={styles.cell}></View>
+                <View style={styles.cell}> <Text>{felidData.balance}</Text></View>
               </View>
               <View style={styles.row}>
                 <View style={styles.cell}>
                   <Text style={{ color: "red" }}>Total Cost</Text>
                 </View>
-                <View style={styles.cell}></View>
+                <View style={styles.cell}> <Text>{felidData.total_cost}</Text></View>
               </View>
             </View>
             <Text style={{ marginTop: 15 }}>
@@ -558,8 +567,8 @@ const AggrementOne = () => {
                 <View style={styles.cell}>
                   <Text>Non-refundable</Text>
                 </View>
-                <View style={styles.cell}></View>
-                <View style={styles.cell}></View>
+                <View style={styles.cell}><Text>{felidData.applicable_retainer_fee_stape_1}</Text></View>
+                <View style={styles.cell}><Text>{felidData.applicable_government_processing_fee_stape_1}</Text></View>
               </View>
               <View style={styles.row}>
                 <View style={styles.cell}>
@@ -583,21 +592,21 @@ const AggrementOne = () => {
                   </Text>
                   <Text>scheduled at this stage</Text>
                 </View>
-                <View style={styles.cell}></View>
-                <View style={styles.cell}></View>
+                <View style={styles.cell}><Text>{felidData.applicable_retainer_fee_stape_2}</Text></View>
+                <View style={styles.cell}><Text>{felidData.applicable_government_processing_fee_stape_2}</Text></View>
               </View>
             </View>
             <View style={{ marginTop: 15 }} >
               <View>
                 <Text style={{ fontWeight: "bold" }}> TotalAmount (Non-Refundable) (Paid at signing of contract and
                   sharing of checklist)</Text>:
-                <Text style={styles.textunderline}>_______$</Text>
+                <Text style={styles.textunderline}>{felidData.total_amount_signing_of_contract} $</Text>
               </View>
               <View>
                 <Text style={{ fontWeight: "bold" }}>Balance (Non-Refundable) (Paid at time of
                   filing)</Text>
                 :
-                <Text style={styles.textunderline}>_______$</Text>
+                <Text style={styles.textunderline}>{felidData.balance_paid_at_time_of_filing} $</Text>
               </View>
             </View>
             <View style={{ marginTop: 15 }}>Note:</View>
@@ -788,7 +797,8 @@ const AggrementOne = () => {
               <Text style={styles.textunderline}>Client Account Regulation</Text> and the
               <Text style={styles.textunderline}>Retainer Agreement Regulation</Text> and in the following manner:
             </Text>
-            <Text>Cheque</Text><Text style={styles.textunderline}>            </Text><Text >[describe the manner of refund, including method and timeframe]</Text>
+            <Text>Cheque</Text>{/*<Text style={styles.textunderline}></Text>*/}
+            <Text >[describe the manner of refund, including method and timeframe]</Text>
             <Text style={{ marginTop: 5 }}>There shall be no refund due if the application is not submitted,
               refused, returned, or cannot proceed due to reasons relating to
               government policy, a change in the selection criteria,
@@ -1125,33 +1135,33 @@ const AggrementOne = () => {
             }}>
               <View style={styles.clientForm} >
                 <View style={styles.clientFormChild}>
-                  <Text>Given Name: <Text style={styles.textunderline} className="para_gap">______________________</Text>
+                  <Text>Given Name: <Text style={styles.textunderline} className="para_gap">{felidData.client_first_name}</Text>
                   </Text>
                 </View>
                 <View style={styles.clientFormChild}>
                   <Text>Family Name:
-                    <Text style={styles.textunderline} className="para_gap">______________________</Text>
+                    <Text style={styles.textunderline} className="para_gap">{felidData.client_last_name}</Text>
                   </Text>
                 </View>
               </View>
               <View style={styles.clientForm} >
                 <View style={styles.clientFormChild}>
-                  <Text> Address: <Text style={styles.textunderline} className="para_gap">______________________</Text>
+                  <Text> Address: <Text style={styles.textunderline} className="para_gap">{felidData.client_address}</Text>
                   </Text>
                 </View>
                 <View style={styles.clientFormChild}>
-                  <Text> Telephone Number: <Text style={styles.textunderline} className="para_gap">______________________</Text>
+                  <Text> Telephone Number: <Text style={styles.textunderline} className="para_gap">{felidData.client_telephone}</Text>
                   </Text>
                 </View>
               </View>
               <View style={styles.clientForm} >
                 <View style={styles.clientFormChild}>
                   <Text>Cellphone Number:
-                    <Text style={styles.textunderline} className="para_gap">______________________</Text>
+                    <Text style={styles.textunderline} className="para_gap">{felidData.client_cellphone}</Text>
                   </Text>
                 </View>
                 <View style={styles.clientFormChild}>
-                  <Text>E-mail Address:<Text style={styles.textunderline} className="para_gap">______________________</Text>
+                  <Text>E-mail Address:<Text style={styles.textunderline} className="para_gap">{felidData.client_email}</Text>
                   </Text>
                 </View>
               </View>
@@ -1169,7 +1179,7 @@ const AggrementOne = () => {
                 </Text>
                 <Text style={styles.clientFormChild}>
                   <Text>
-                    Family Name: Kaur<Text style={styles.textunderline} className="para_gap">______________________</Text>
+                    Family Name: <Text style={styles.textunderline} className="para_gap">Kaur</Text>
                   </Text>
                 </Text>
               </View>
@@ -1188,7 +1198,7 @@ const AggrementOne = () => {
               <View style={styles.clientForm}>
                 <View style={styles.clientFormChild}>
                   <Text>
-                    <Text style={styles.cell}>Fax Number<Text style={styles.textunderline} className="para_gap">______________________</Text>
+                    <Text style={styles.cell}>Fax Number<Text style={styles.textunderline} className="para_gap">{felidData.client_fax}</Text>
                     </Text>
                   </Text>
                 </View>
@@ -1217,31 +1227,35 @@ const AggrementOne = () => {
             }}>
               <View style={styles.clientForm}>
                 <View style={styles.clientFormChild}>
-                  <Text className="para_gap" style={{ margin: 0 }}>______________________</Text>
+                  <View className="para_gap" style={[styles.textunderline, { width: "100%", height: "auto" }]}>
+                    <Image style={[styles.textunderline]} src={felidData.client_signature} />
+                  </View>
                   <Text style={{ margin: "0 0 30px 0" }}>Signature of Client</Text>
                 </View>
                 <View style={styles.clientFormChild}>
-                  <Text className="para_gap" style={{ margin: 0 }}>______________________</Text>
+                <View className="para_gap" style={[styles.textunderline, { width: "100%", height: "auto" }]}>
+                    <Image style={[styles.textunderline]} src={felidData.rcic_signature} />
+                  </View>
                   <Text style={{ margin: "0 0 30px 0" }}>Signature of RCIC</Text>
                 </View>
               </View>
               <View style={styles.clientForm}>
                 <View style={styles.clientFormChild}>
-                  <Text className="para_gap" style={{ margin: 0 }}>______________________</Text>
+                  <Text className="para_gap" style={{ margin: 0 }}>{(felidData.client_first_name + " " + felidData.client_last_name)}</Text>
                   <Text style={{ margin: "0 0 30px 0" }}>Name of Client</Text>
                 </View>
                 <View style={styles.clientFormChild}>
-                  <Text className="para_gap" style={{ margin: 0 }}>______________________</Text>
+                  <Text className="para_gap" style={{ margin: 0 }}>Harpreet Kaur</Text>
                   <Text style={{ margin: "0 0 30px 0" }}>Name of RCIC</Text>
                 </View>
               </View>
               <View style={styles.clientForm}>
                 <View style={styles.clientFormChild}>
-                  <Text className="para_gap" style={{ margin: 0 }}>______________________</Text>
+                  <Text className="para_gap" style={{ margin: 0 }}>{felidData.date_signature_client}</Text>
                   <Text style={{ margin: "0 0 30px 0" }}>Date</Text>
                 </View>
                 <View style={styles.clientFormChild}>
-                  <Text className="para_gap" style={{ margin: 0 }}>______________________</Text>
+                <Text className="para_gap" style={{ margin: 0 }}>{felidData.date_signature_rcic}</Text>
                   <Text style={{ margin: "0 0 30px 0" }}>Date</Text>
                 </View>
               </View>
@@ -1251,7 +1265,7 @@ const AggrementOne = () => {
         <View>
           <Text style={[{ textAlign: "center" }, styles.definition]}>AUTHORIZATION</Text>
           <Text style={{ marginTop: 5 }}>
-            I<Text style={styles.textunderline} className="para_gap">______________________</Text>( hereinafter referred to as the “client”),
+            I<Text style={styles.textunderline} className="para_gap">{(felidData.client_first_name + " " + felidData.client_last_name)}</Text>( hereinafter referred to as the “client”),
             hereby authorize and appoint Harpreet kaur (hereinafter referred to as
             the “RCIC” with a CICC# R533393), of CAN Pathways Immigration
             consultancy ltd.,(hereinafter referred to as the “firm”), to represent
@@ -1361,15 +1375,17 @@ const AggrementOne = () => {
           }}>
             <View style={[styles.clientForm, { textAlign: "center" }]}>
               <View style={styles.clientFormChild}>
-                <Text className="para_gap" style={{ margin: 0 }}>______________________</Text>
+                <Text className="para_gap" style={{ margin: 0 }}>{(felidData.client_first_name + " " + felidData.client_last_name)}</Text>
                 <Text style={{ margin: "0 0 30px 0" }}>Client’s full name</Text>
               </View>
               <View style={styles.clientFormChild}>
-                <Text className="para_gap" style={{ margin: 0 }}>______________________</Text>
+                <View className="para_gap" style={[styles.textunderline, { width: "100%", height: "auto" }]}>
+                  <Image style={[styles.textunderline]} src={felidData.client_signature} />
+                </View>
                 <Text style={{ margin: "0 0 30px 0" }}>Signatures</Text>
               </View>
               <View style={styles.clientFormChild}>
-                <Text className="para_gap" style={{ margin: 0 }}>______________________</Text>
+                <Text className="para_gap" style={{ margin: 0 }}>{felidData.date_signature_client}</Text>
                 <Text style={{ margin: "0 0 30px 0" }}>Date</Text>
               </View>
             </View>
@@ -1391,6 +1407,7 @@ const AggrementOne = () => {
               <Text>Office: 2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7, Canada | Tel.: 403.888.5308 |</Text>
               <Text style={{ color: "blue", textDecoration: "underline" }}>Email: info@canpathways.ca | Website: www.canpathways.ca</Text>
             </View>
+            <Image fixed style={[styles.textunderline,{width:"20%",left:450,height:"auto"}]} src={felidData.initial} />
             <View className="initial" fixed style={styles.initial}>
               <Text>Initial:</Text>
             </View>
@@ -1411,6 +1428,7 @@ const AggrementOne = () => {
                   <Text>Office: 2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7, Canada | Tel.: 403.888.5308 |</Text>
                   <Text style={{ color: "blue", textDecoration: "underline" }}>Email: info@canpathways.ca | Website: www.canpathways.ca</Text>
                 </View>
+                    <Image fixed style={[styles.textunderline,{width:"20%",left:450,height:"auto"}]} src={felidData.initial} />
                 <View className="initial" fixed style={styles.initial}>
                   <Text>Initial:</Text>
                 </View>

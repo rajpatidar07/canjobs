@@ -61,6 +61,7 @@ function EmployeeHomePage() {
                 jobsNo={jobsNo}
                 setTotalJob={setTotalJob}
                 SkillFilterValue={""}
+                featured={"1"}
               />
             </div>
           ) : (
@@ -80,7 +81,7 @@ function EmployeeHomePage() {
             </div>
           ) : null}
         </div>
-        <div className="container ">
+        {token && <div className="container ">
           {/* <!-- Section Title --> */}
           <div className="row justify-content-center mb-lg-16 mb-11">
             <div className="col-xxl-5 col-xl-6 col-lg-7 col-md-10 text-center">
@@ -94,7 +95,7 @@ function EmployeeHomePage() {
             </div>
           </div>
           {/* <!-- Section Title End --> */}
-          {token ?
+          {
             <JobBox /> ? (
               <div className="row justify-content-center">
                 <JobBox
@@ -108,12 +109,7 @@ function EmployeeHomePage() {
               <div className="table-responsive main_table_div">
                 <Loader />
               </div>
-            ) :
-            <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 text-center">
-              <h4>
-                Log in to get recommended jobs for you.
-              </h4>
-            </div>}
+            )}
           {jobsNo <= totaljob ? (
             <div className="text-center pt-5 pt-lg-13">
               <Link
@@ -125,7 +121,7 @@ function EmployeeHomePage() {
               </Link>
             </div>
           ) : null}
-        </div>
+        </div>}
       </section>
       {/* <!-- featuredJobOne Area --> */}
       {/* <!-- Category Area --> */}

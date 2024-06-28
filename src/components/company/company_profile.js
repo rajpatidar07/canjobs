@@ -26,6 +26,7 @@ import PayentForm from "../forms/admin/payentForm";
 import MainEmailPage from "../email/mainemailPage";
 import SharePointDocument from "../common/Document folder/SharePointDocument";
 import ConvertTime from "../common/ConvertTime";
+import RetainerAgrementMainPage from "../common/Retaineragreement/RetainerAgrementMainPage";
 // import LimaArrowProfile from "../common/LimaArrowProfile";
 function CompanyProfileDetail(props) {
   const user_type = localStorage.getItem("userType");
@@ -329,6 +330,23 @@ function CompanyProfileDetail(props) {
                       Documents
                     </Link>
                   </li>
+                  <li className="tab-menu-items nav-item ">
+                        <Link
+                          className={
+                            TabActive === "retaineragreement"
+                              ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                              : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
+                          }
+                          id="retaineragreementTab"
+                          data-toggle="tab"
+                          role="tab"
+                          aria-controls="retaineragreementTab"
+                          aria-selected="true"
+                          onClick={() => setTabActive("retaineragreement")}
+                        >
+                         Retainer Agreement
+                        </Link>
+                      </li>
                   <li
                     className={
                       user_type === "user"
@@ -815,6 +833,7 @@ function CompanyProfileDetail(props) {
                       page={"company_profile"}
                     />
                   ) : null} */}
+                 
                   {TabActive === "documents" ? (
                     // <DocumrentContainer
                     //   employee_id={cid}
@@ -944,6 +963,26 @@ function CompanyProfileDetail(props) {
                     <MainEmailPage email={employerData.email} />
                   ) : null}
                 </div>
+                 <div
+                      className={
+                        TabActive === "retaineragreement"
+                          ? "justify-content-center "
+                          : "d-none"
+                      }
+                    >
+                      {TabActive === "retaineragreement" ? (
+                        <RetainerAgrementMainPage 
+                        user_id={cid}
+                          emp_user_type={"employer"}
+                          folderId={
+                            // docId
+                            //   ? docParentId
+                            //   :
+                               employerData.documents_folder_id
+                          }
+                          userData={employerData}/>
+                      ) : null}
+                    </div>
               </div>
             </div>
           </div>
