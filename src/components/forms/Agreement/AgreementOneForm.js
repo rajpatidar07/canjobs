@@ -4,7 +4,7 @@ import SignaturePadComponent from '../../common/Retaineragreement/SignaturePadCo
 import { AddUpdateAgreement } from "../../../api/api"
 import useValidation from '../../common/useValidation';
 import { toast } from 'react-toastify';
-const AgreementOneForm = ({ show, close, userData, setApicall,felidData }) => {
+const AgreementOneForm = ({ emp_user_type, show, close, userData, setApicall, felidData, em }) => {
   const [loading, setLoading] = useState(false);
   // USER CATEGORY TYPE VALIDATION
   console.log(userData)
@@ -17,14 +17,14 @@ const AgreementOneForm = ({ show, close, userData, setApicall,felidData }) => {
     rcic_membership_no: "",
     client_file_no: "",
     agreement_date: "",
-    client_first_name: userData.name.split(" ")[0],
-    client_last_name: userData.name.split(" ")[1],
+    client_first_name: (emp_user_type === "employee" ? userData.name : userData.company_name).split(" ")[0],
+    client_last_name: (emp_user_type === "employee" ? userData.name : userData.company_name).split(" ")[1],
     client_email: userData.email,
     client_contact: userData.contact_no,
     client_telephone: "",
     client_cellphone: "",
     client_fax: "",
-    client_address: userData.current_location + " " + userData.currently_located_country,
+    client_address: emp_user_type === "employee" ? userData.current_location + " " + userData.currently_located_country : userData.address,
     client_signature: "",
     matter: "",
     summary: "",
@@ -51,8 +51,8 @@ const AgreementOneForm = ({ show, close, userData, setApicall,felidData }) => {
     date_signature_rcic: "",
     sender: localStorage.getItem("admin_id"),
     sender_type: localStorage.getItem("admin_type"),
-    receiver: userData.employee_id,
-    receiver_type: userData.employee_id ? "employee" : "employer",
+    receiver: emp_user_type === "employee" ? userData.employee_id : userData.company_id,
+    receiver_type: emp_user_type === "employee" ? "employee" : "employer",
     assigned_by_id: "",
     assigned_by_type: "",
   };
@@ -71,11 +71,11 @@ const AgreementOneForm = ({ show, close, userData, setApicall,felidData }) => {
   const { state, setState, onInputChange, errors/*, setErrors, validate*/ } =
     useValidation(initialFormState, validators);
 
-    useEffect(() => {
-      setState(felidData)
-     
-     // eslint-disable-next-line react-hooks/exhaustive-deps
-     }, [])
+  useEffect(() => {
+    setState(felidData ? felidData : initialFormState)
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   // API CALL
   // USER Test Email SUBMIT BUTTON
   const onFormSubmit = async (e) => {

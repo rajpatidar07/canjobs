@@ -126,7 +126,7 @@ import { toast } from 'react-toastify';
 
 const AggrementOne = () => {
   const [blobData, setBlobData] = useState()
-  const { felidData ,user_id, emp_user_type, folderId: folderID/*, code*/ } = useLocation().state;
+  const { felidData, user_id, emp_user_type, folderId: folderID/*, code*/ } = useLocation().state;
   // const latestCode = JSON.stringify(code)
   //   .replace('" <', "<")
   //   .replace('>"', ">")
@@ -508,7 +508,7 @@ const AggrementOne = () => {
               </View>
               <View style={styles.row}>
                 <View style={styles.cell}>
-                  <Text>ApplicableTaxes: 13%
+                  <Text>ApplicableTaxes: {felidData.gst || "0"}%
                   </Text>
                 </View>
                 <View style={styles.cell}> <Text>{felidData.applicable_taxes}</Text></View>
@@ -1228,13 +1228,13 @@ const AggrementOne = () => {
               <View style={styles.clientForm}>
                 <View style={styles.clientFormChild}>
                   <View className="para_gap" style={[styles.textunderline, { width: "100%", height: "auto" }]}>
-                    <Image style={[styles.textunderline]} src={felidData.client_signature} />
+                    <Image style={[styles.textunderline]} src={felidData.client_signature || ""} />
                   </View>
                   <Text style={{ margin: "0 0 30px 0" }}>Signature of Client</Text>
                 </View>
                 <View style={styles.clientFormChild}>
-                <View className="para_gap" style={[styles.textunderline, { width: "100%", height: "auto" }]}>
-                    <Image style={[styles.textunderline]} src={felidData.rcic_signature} />
+                  <View className="para_gap" style={[styles.textunderline, { width: "100%", height: "auto" }]}>
+                    <Image style={[styles.textunderline]} src={felidData.rcic_signature || ""} />
                   </View>
                   <Text style={{ margin: "0 0 30px 0" }}>Signature of RCIC</Text>
                 </View>
@@ -1255,7 +1255,7 @@ const AggrementOne = () => {
                   <Text style={{ margin: "0 0 30px 0" }}>Date</Text>
                 </View>
                 <View style={styles.clientFormChild}>
-                <Text className="para_gap" style={{ margin: 0 }}>{felidData.date_signature_rcic}</Text>
+                  <Text className="para_gap" style={{ margin: 0 }}>{felidData.date_signature_rcic}</Text>
                   <Text style={{ margin: "0 0 30px 0" }}>Date</Text>
                 </View>
               </View>
@@ -1380,7 +1380,7 @@ const AggrementOne = () => {
               </View>
               <View style={styles.clientFormChild}>
                 <View className="para_gap" style={[styles.textunderline, { width: "100%", height: "auto" }]}>
-                  <Image style={[styles.textunderline]} src={felidData.client_signature} />
+                  <Image style={[styles.textunderline]} src={felidData.client_signature || ""} />
                 </View>
                 <Text style={{ margin: "0 0 30px 0" }}>Signatures</Text>
               </View>
@@ -1407,7 +1407,7 @@ const AggrementOne = () => {
               <Text>Office: 2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7, Canada | Tel.: 403.888.5308 |</Text>
               <Text style={{ color: "blue", textDecoration: "underline" }}>Email: info@canpathways.ca | Website: www.canpathways.ca</Text>
             </View>
-            <Image fixed style={[styles.textunderline,{width:"20%",left:450,height:"auto"}]} src={felidData.initial} />
+            <Image fixed style={[styles.textunderline, { width: "20%", left: 450, height: "auto" }]} src={felidData.initial || ""} />
             <View className="initial" fixed style={styles.initial}>
               <Text>Initial:</Text>
             </View>
@@ -1428,7 +1428,7 @@ const AggrementOne = () => {
                   <Text>Office: 2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7, Canada | Tel.: 403.888.5308 |</Text>
                   <Text style={{ color: "blue", textDecoration: "underline" }}>Email: info@canpathways.ca | Website: www.canpathways.ca</Text>
                 </View>
-                    <Image fixed style={[styles.textunderline,{width:"20%",left:450,height:"auto"}]} src={felidData.initial} />
+                <Image fixed style={[styles.textunderline, { width: "20%", left: 450, height: "auto" }]} src={felidData.initial} />
                 <View className="initial" fixed style={styles.initial}>
                   <Text>Initial:</Text>
                 </View>
