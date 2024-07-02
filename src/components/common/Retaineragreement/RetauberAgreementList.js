@@ -1,9 +1,14 @@
-import React, { useState }/*, { useEffect, useState } */ from 'react'
+import React, { useEffect, useState }/*, { useEffect, useState } */ from 'react'
 // import { Pagination } from 'react-bootstrap'
 // import ConvertTime from '../ConvertTime'
 // import Loader from "../../common/loader"
 // import { useNavigate } from 'react-router-dom'
-import HtmlAgreementOne from './HtmlAgreementOne';
+import RetainerAgreement from '../../forms/Agreement/RetainerAgreement';
+import AgreementOneForm from '../../forms/Agreement/AgreementOneForm';
+import { GetAgreement } from '../../../api/api';
+import { FaEye } from "react-icons/fa";
+import MainRetainerAggHtml from './MainRetainerAggHtml';
+import ViewPdf from './viewPdf';
 // import AggrementOne from './AgreementOne'
 export default function RetauberAgreementList({
     user_id,
@@ -13,6 +18,12 @@ export default function RetauberAgreementList({
 }) {
     // let [isLoading, setIsLoading] = useState(true);
     const [openAgreement, setOpenAgreement] = useState(false);
+    const [openAddAgreementForm, setOpenAddAgreementForm] = useState(false);
+    const [openAddAgreementFelids, setOpenAddAgreementFelids] = useState(false);
+    const [openViewAgreement, setOpenViewAgreement] = useState(false);
+    const [agreementList, setAgreementList] = useState([]);
+    const [agreementData, setAgreementData] = useState("");
+    const [apicall, setApicall] = useState(false)
     // let navigate = useNavigate()
     /*Pagination states */
     // const [totalData, setTotalData] = useState("");
@@ -22,60 +33,55 @@ export default function RetauberAgreementList({
     // const [sortOrder,/* setSortOrder*/] = useState("DESC");
     // const [currentPage, setCurrentPage] = useState(1);
 
-    //   /* Function to get the intervew data*/
-    // const InterviewData = async () => {
-    //     try {
-    //         const userData = await getActivityLog(
-    //             currentPage,
-    //             "",
-    //             "",
-    //             "",
-    //             "",
-    //             recordsPerPage,
-    //             employee_id,
-    //             "employee",
-    //             "interviewHistory",
-    //             sortOrder,
-    //             columnName
-    //         );
-    //         if (userData.data.data.length === 0) {
-    //             setInterviewHistoryData([]);
-    //             setIsLoading(false);
-    //         } else {
-    //             setInterviewHistoryData(userData.data.data);
-    //             setTotalData(userData.total_rows);
-    //             setIsLoading(false);
-    //         }
-    //     } catch (err) {
-    //         console.log(err);
-    //         setIsLoading(false);
-    //     }
-    // };
-
-    /*Render function to get the interview*/
-    // useEffect(() => {
-    //     // eslint-disable-next-line
-    // }, [
-    //     columnName,
-    //     recordsPerPage,
-    //     sortOrder,
-    //     currentPage,
-    // ]);
-
     /*Pagination Calculation */
     // const nPages = Math.ceil(totalData / recordsPerPage);
+    /*Function to get the Agreement Data */
+    const getAgreeFelidData = async () => {
+        try {
+            let res = await GetAgreement("", user_id, emp_user_type)
+            if (res.data.data) {
+                setAgreementList(res.data.data)
+            } else {
+                setAgreementList([])
+            }
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    // console.log(userData?)
+    useEffect(() => {
+        getAgreeFelidData()
+        if (apicall === true) {
+            setApicall(false)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [apicall])
+
+
+
+
     return (
 
         <div className='response_main_div w-100'>
             <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
+                <div className={`${openAgreement ? "d-none" : "d-flex"} justify-content-between`}>
+                    <div className='p-3'>
+                        <h3 className=''>Agreement's</h3>
+                    </div>
+                    <div className='p-3'>
+                        <button className='btn btn-primary' onClick={() => setOpenAddAgreementForm(true)}>Add Agreement</button>
+                    </div>
+                </div>
+
                 <div className="table-responsive main_table_div w-100">
                     {openAgreement ?
-                        <HtmlAgreementOne
+                        <MainRetainerAggHtml
                             userData={userData}
                             user_id={user_id}
                             emp_user_type={emp_user_type}
                             folderId={folderId}
                             setOpenAgreement={setOpenAgreement}
+                            agreementData={agreementData}
                         /> :
                         // isLoading ? (
                         //     <Loader />
@@ -93,7 +99,7 @@ export default function RetauberAgreementList({
                                         className="text-gray"
                                     // title="Sort by id"
                                     > */}
-                                        S NO.
+                                        S.NO.
                                         {/* </Link> */}
                                     </th>
                                     <th scope="col" className="border-0 font-size-4 font-weight-normal">
@@ -110,10 +116,10 @@ export default function RetauberAgreementList({
                                         {/* </Link> */}
                                     </th>
                                     <th scope="col" className="border-0 font-size-4 font-weight-normal">
-                                        Status
+                                        Sent Date
                                     </th>
                                     <th scope="col" className="border-0 font-size-4 font-weight-normal">
-                                        Date
+                                        Receive Date
                                     </th>
                                     <th scope="col" className="border-0 font-size-4 font-weight-normal">
                                         Action
@@ -122,51 +128,70 @@ export default function RetauberAgreementList({
                             </thead>
                             <tbody>
                                 {
-                                    // interviewHistoryData.length === 0 ?
-                                    // <tr >
-                                    //     <td colSpan={7} className="bg-white text-center">No data found</td>
-                                    // </tr> 
-                                    // :
-                                    // interviewHistoryData.map(interview => (
-                                    <tr >
-                                        {/* <td>{interview.id}</td> */}
-                                        <td>{
-                                            <div className="timeline_date d-flex flex-column">
-                                                01
-                                            </div>
-                                        }</td>
-                                        <td className='text-capitalize '>
-                                            Retainer Agreement - Client 1 column - Express Entry
-                                        </td>
-                                        <td>
-                                            Not Done
-                                        </td>
-                                        <td>
-                                            N/A
-                                        </td>
-                                        <td>
-                                            <div className="btn-group button_group" role="group">
-                                                <button
-                                                    className="btn btn-outline-info action_btn "
-                                                    style={{ fontSize: "10px" }}
-                                                    onClick={() => {
-                                                        setOpenAgreement(true)
-                                                        // navigate("/agreepreivew", {
-                                                        //     state: {
-                                                        //         user_id: user_id,
-                                                        //         emp_user_type: emp_user_type,
-                                                        //         folderId: folderId,
-                                                        //         userData:userData
-                                                        //     }
-                                                        // });
-                                                    }}
-                                                    title="Open Agreement"
-                                                >                                         Open Agreement
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    // ))
+                                    agreementList.length === 0 ?
+                                        <tr >
+                                            <td colSpan={7} className="bg-white text-center">No data found</td>
+                                        </tr>
+                                        :
+                                        agreementList.map((data, index) => (
+                                            <tr key={index}>
+                                                {/* <td>{interview.id}</td> */}
+                                                <td>{
+                                                    <div className="timeline_date d-flex flex-column">
+                                                        {index + 1}
+                                                    </div>
+                                                }</td>
+                                                <td className='text-capitalize '>
+                                                    {data.type || "N/A"}
+                                                </td>
+                                                <td>
+                                                    {data.daterasent || "N/A"}
+                                                </td>
+                                                <td>
+                                                    {data.daterasigned || "N/A"}
+                                                </td>
+                                                <td>
+                                                    <div className="btn-group button_group" role="group">
+                                                        <button
+                                                            className="btn btn-outline-info action_btn "
+                                                            style={{ fontSize: "10px" }}
+                                                            onClick={() => {
+                                                                setOpenAgreement(true)
+                                                                setAgreementData(data)
+                                                                // navigate("/agreepreivew", {
+                                                                //     state: {
+                                                                //         user_id: user_id,
+                                                                //         emp_user_type: emp_user_type,
+                                                                //         folderId: folderId,
+                                                                //         userData:userData
+                                                                //     }
+                                                                // });
+                                                            }}
+                                                            title="Open Agreement"
+                                                        >                                         Open Agreement
+                                                        </button>
+                                                        <button
+                                                            className="btn btn-outline-info action_btn "
+                                                            style={{ fontSize: "10px" }}
+                                                            onClick={() => {
+                                                                setOpenAddAgreementFelids(true)
+                                                                setAgreementData(data)
+                                                            }}
+                                                            title="Add Felids"
+                                                        >                                         Add Felids
+                                                        </button>
+                                                        <button
+                                                        className="btn btn-outline-info action_btn "
+                                                        style={{ fontSize: "10px" }}
+                                                        onClick={() => {
+                                                            setOpenViewAgreement(true)
+                                                            setAgreementData(data)
+                                                        }}
+                                                        title="View Agreement"><FaEye /></button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        ))
                                 }
                             </tbody>
                         </table>
@@ -190,6 +215,36 @@ export default function RetauberAgreementList({
                 folderId={folderId}
             />
              : null} */}
+                {openAddAgreementFelids ?
+                    <AgreementOneForm
+                        show={openAddAgreementFelids}
+                        close={() => setOpenAddAgreementFelids()}
+                        userData={userData}
+                        setApicall={"setApicall"}
+                        agreementData={agreementData}
+                        //   felidData={felidData}
+                        emp_user_type={emp_user_type} />
+                    : null}
+                {openAddAgreementForm ?
+                    <RetainerAgreement
+                        show={openAddAgreementForm}
+                        close={() => setOpenAddAgreementForm(false)}
+                        emp_user_type={emp_user_type}
+                        userData={userData}
+                        setApicall={setApicall}
+                         /> :
+                    null}
+                    {openViewAgreement?
+                    <ViewPdf 
+                    show={openViewAgreement}
+                    close={() => setOpenViewAgreement(false)}
+                    agreementData={agreementData}
+                    emp_user_type={emp_user_type}
+                    userData={userData}
+                    setApicall={setApicall}
+                    folderId={folderId}
+                    />
+                    :null}
             </div>
         </div>
     )

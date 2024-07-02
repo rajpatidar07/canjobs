@@ -4,16 +4,13 @@ import SignaturePadComponent from '../../common/Retaineragreement/SignaturePadCo
 import { AddUpdateAgreement } from "../../../api/api"
 import useValidation from '../../common/useValidation';
 import { toast } from 'react-toastify';
-const AgreementOneForm = ({ emp_user_type, show, close, userData, setApicall, felidData, em }) => {
+const AgreementOneForm = ({agreementData, emp_user_type, show, close, userData, setApicall, felidData, em }) => {
   const [loading, setLoading] = useState(false);
   // USER CATEGORY TYPE VALIDATION
-  console.log(userData)
-
-
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     id: "",
-    type: "",
+    type:agreementData?.type,
     rcic_membership_no: "",
     client_file_no: "",
     agreement_date: "",
@@ -72,8 +69,16 @@ const AgreementOneForm = ({ emp_user_type, show, close, userData, setApicall, fe
     useValidation(initialFormState, validators);
 
   useEffect(() => {
-    setState(felidData ? felidData : initialFormState)
+    const mergedState = { ...initialFormState, ...felidData };
 
+    // Only replace null or undefined values in felidData with values from initialFormState
+    Object.keys(mergedState).forEach(key => {
+      if (felidData?.[key] === null || felidData?.[key] === undefined) {
+        mergedState[key] = initialFormState[key];
+      }
+    });
+
+    setState(mergedState);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   // API CALL
@@ -165,15 +170,6 @@ const AgreementOneForm = ({ emp_user_type, show, close, userData, setApicall, fe
               </div>
             ))}
             <div className="form-group col-md-6 mb-0 mt-4">
-              <SignaturePadComponent setState={setState} state={state} label="Signature of RCIC" name="rcic_signature" />
-            </div>
-            <div className="form-group col-md-6 mb-0 mt-4">
-              <SignaturePadComponent setState={setState} state={state} label="Client’s Signature" name="client_signature" />
-            </div>
-            <div className="form-group col-md-6 mb-0 mt-4">
-              <SignaturePadComponent setState={setState} state={state} label="Initial" name="initial" />
-            </div>
-            <div className="form-group col-md-6 mb-0 mt-4">
               <label className="font-size-4 text-black-2 line-height-reset">GST</label>
               <select
                 className="form-control col mx-5"
@@ -186,6 +182,15 @@ const AgreementOneForm = ({ emp_user_type, show, close, userData, setApicall, fe
                   <option key={value} value={value}>{`${value}%`}</option>
                 ))}
               </select>
+            </div>
+            {/* <div className="form-group col-md-6 mb-0 mt-4">
+              <SignaturePadComponent setState={setState} state={state} label="Signature of RCIC" name="rcic_signature" />
+            </div> */}
+            {/* <div className="form-group col-md-6 mb-0 mt-4">
+              <SignaturePadComponent setState={setState} state={state} label="Client’s Signature" name="client_signature" />
+            </div> */}
+            <div className="form-group col-md-6 mb-0 mt-4">
+              <SignaturePadComponent setState={setState} state={state} label="Initial" name="initial" />
             </div>
           </div>
           <div className="form-group text-center">

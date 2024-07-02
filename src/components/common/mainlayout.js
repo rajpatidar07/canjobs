@@ -67,12 +67,11 @@ import SharePointDocument from "./Document folder/SharePointDocument";
 import Newpdf from "./Adobe/newpdf";
 import AgreementOne from "./Retaineragreement/AgreementOne";
 import SignaturePadComponent from "./Retaineragreement/SignaturePadComponent";
-import HtmlAgreementOne from "./Retaineragreement/HtmlAgreementOne";
+import HtmlAgreementOne from "./Retaineragreement/Html/HtmlAgreementOne";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
 //   const path = location.pathname;
-
 //   // Use the path variable in your component
 //   return path;
 // }

@@ -121,12 +121,12 @@ import React, { useEffect, useState } from 'react';
 import { Document, Page, Text, View, StyleSheet, Image, PDFViewer, BlobProvider, Link } from '@react-pdf/renderer';
 import { useLocation } from 'react-router-dom';
 import moment from 'moment';
-import { AddSharePointDOcument } from '../../../api/api';
+import { AddSharePointDOcument, AddUpdateAgreement } from '../../../api/api';
 import { toast } from 'react-toastify';
 
 const AggrementOne = () => {
   const [blobData, setBlobData] = useState()
-  const { felidData, user_id, emp_user_type, folderId: folderID/*, code*/ } = useLocation().state;
+  const { felidData, user_id, emp_user_type, folderId: folderID ,agreementData/*, code*/ } = useLocation().state;
   // const latestCode = JSON.stringify(code)
   //   .replace('" <', "<")
   //   .replace('>"', ">")
@@ -221,6 +221,7 @@ const AggrementOne = () => {
   useEffect(() => {
 
     const convertBlob = async () => {
+      console.log(blobData)
       try {
         if (!blobData) {
           console.error('Invalid blob data');
@@ -232,7 +233,7 @@ const AggrementOne = () => {
           console.error('Failed to create new blob');
           return;
         }
-        const file = new File([newBlob], 'Retainer_Agreement-Client_1_column_Express_Entry.pdf', { type: 'application/pdf' });
+        const file = new File([newBlob], `${agreementData?.type.replace(" ","_")}.pdf`, { type: 'application/pdf' });
         console.log('file =>', file)
         try {
           let res = await AddSharePointDOcument(
@@ -247,6 +248,17 @@ const AggrementOne = () => {
               position: toast.POSITION.TOP_RIGHT,
               autoClose: 1000,
             });
+            try {
+              let data={
+                id:felidData.id,
+                type:felidData.type,
+                document_id:res.data.data[0][0].document_id
+              }
+              let addDocId = AddUpdateAgreement(data)
+              console.log(addDocId)
+            } catch (error) {
+              
+            }
           }
           // console.log(res.data)
           if (res.data.message === "Failed" && res.data.data === "No Token Found") {
@@ -277,16 +289,12 @@ const AggrementOne = () => {
         </View>
         <View>
           <Text>
-            This Retainer Agreement is made this {felidData.client_file_no} <Text style={styles.textunderline}>{moment(new Date(felidData.agreement_date)).format("Do")}</Text> day of <Text style={styles.textunderline}>{moment(new Date(felidData.agreement_date)).format("MMMM")}</Text> {moment(new Date(felidData.agreement_date)).format("YYYY")}
-            between Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur
-            (the “RCIC”), RCIC Membership Number <Text style={styles.textunderline}>R533393</Text>, phone number
-            <Text style={styles.textunderline}>4038885308</Text>
+            This Retainer Agreement is made this {felidData.client_file_no} <Text style={styles.textunderline}>{moment(new Date(felidData.agreement_date)).format("Do")}</Text> day of <Text style={styles.textunderline}>{moment(new Date(felidData.agreement_date)).format("MMMM")}</Text> {moment(new Date(felidData.agreement_date)).format("YYYY")}  between Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur
+            (the “RCIC”), RCIC Membership Number <Text style={styles.textunderline}>R533393</Text>, phone number <Text style={styles.textunderline}> 4038885308</Text>
             <Link src="mailto:info@canpathways.ca" className="a" target="_blank"
-            >, email </Link>info@canpathways.ca located at 2618
-            <Text style={styles.textunderline}>Hopewell Pl NE #310 Calgary, AB T1Y 7J7,</Text> <Text style={styles.textunderline}>Canada</Text> and Client
-            <Text style={styles.textunderline} className="para_gap">{(felidData.client_first_name + " " + felidData.client_last_name)}</Text>(the “Client”)
-            <Text className="p">, located at</Text><Text style={styles.textunderline} className="para_gap">{felidData.client_address}</Text>, email
-            <Text style={styles.textunderline} className="para_gap">{felidData.client_email}</Text>, contact number <Text style={styles.textunderline} className="para_gap">{felidData.client_contact}</Text>.
+            >, email </Link> info@canpathways.ca located at 2618
+            <Text style={styles.textunderline}> Hopewell Pl NE #310 Calgary, AB T1Y 7J7,</Text> <Text style={styles.textunderline}> Canada</Text> and Client <Text style={styles.textunderline} className="para_gap"> {(felidData.client_first_name + " " + felidData.client_last_name)}</Text> (the “Client”)
+            <Text className="p">, located at</Text><Text style={styles.textunderline} className="para_gap"> {felidData.client_address}</Text> , email  <Text style={styles.textunderline} className="para_gap"> {felidData.client_email}</Text>, contact number <Text style={styles.textunderline} className="para_gap"> {felidData.client_contact}</Text>.
           </Text>
         </View>
         <View>
@@ -330,12 +338,12 @@ const AggrementOne = () => {
             <Text style={styles.textunderline} className="para_gap">{felidData.matter}</Text><Text>. In consideration of the fees paid and the matter stated above, the RCIC agrees to do the following:
             </Text>
             <View >
-              <Text>a) [Summary of preliminary advice given to the client <Text style={styles.textunderline} className="para_gap">{felidData.summary}</Text>]</Text>
-              <Text>b) [Consultation and providing document checklists and intake sheet, file opening]</Text>
-              <Text>c) [Data gathering, filling out forms]</Text>
-              <Text>d) [Information verification, completeness check]</Text>
-              <Text>e) [Application submission]</Text>
-              <Text>f) [File maintenance and correspondence with client and IRCC]</Text>
+              <Text>(a) [Summary of preliminary advice given to the client <Text style={styles.textunderline} className="para_gap">{felidData.summary}</Text>]</Text>
+              <Text>(b) [Consultation and providing document checklists and intake sheet, file opening]</Text>
+              <Text>(c) [Data gathering, filling out forms]</Text>
+              <Text>(d) [Information verification, completeness check]</Text>
+              <Text>(e) [Application submission]</Text>
+              <Text>(f) [File maintenance and correspondence with client and IRCC]</Text>
             </View>
             <Text style={{ marginTop: 15 }}>
               The RCIC shall provide the Client with a finalized, signed copy of
@@ -496,7 +504,10 @@ const AggrementOne = () => {
                       flex: 1,
                       paddingBottom: 8, paddingTop: 8
                     }]}>
-                      <Text></Text>
+                      <Text>
+                        {parseInt(felidData.courier_charges)+parseInt(felidData.government_fees)}
+
+                      </Text>
                     </View>
                   </View>
                 </View>
@@ -1228,13 +1239,13 @@ const AggrementOne = () => {
               <View style={styles.clientForm}>
                 <View style={styles.clientFormChild}>
                   <View className="para_gap" style={[styles.textunderline, { width: "100%", height: "auto" }]}>
-                    <Image style={[styles.textunderline]} src={felidData.client_signature || ""} />
+                    <Image style={[styles.textunderline]} src={felidData.client_signature || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"} />
                   </View>
                   <Text style={{ margin: "0 0 30px 0" }}>Signature of Client</Text>
                 </View>
                 <View style={styles.clientFormChild}>
                   <View className="para_gap" style={[styles.textunderline, { width: "100%", height: "auto" }]}>
-                    <Image style={[styles.textunderline]} src={felidData.rcic_signature || ""} />
+                    <Image style={[styles.textunderline]} src={felidData.rcic_signature || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"} />
                   </View>
                   <Text style={{ margin: "0 0 30px 0" }}>Signature of RCIC</Text>
                 </View>
@@ -1380,7 +1391,7 @@ const AggrementOne = () => {
               </View>
               <View style={styles.clientFormChild}>
                 <View className="para_gap" style={[styles.textunderline, { width: "100%", height: "auto" }]}>
-                  <Image style={[styles.textunderline]} src={felidData.client_signature || ""} />
+                  <Image style={[styles.textunderline]} src={felidData.client_signature || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"} />
                 </View>
                 <Text style={{ margin: "0 0 30px 0" }}>Signatures</Text>
               </View>
@@ -1393,6 +1404,7 @@ const AggrementOne = () => {
         </View>
       </View >
     </View >
+    
   return (
     <BlobProvider document={
       <Document>
@@ -1407,7 +1419,7 @@ const AggrementOne = () => {
               <Text>Office: 2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7, Canada | Tel.: 403.888.5308 |</Text>
               <Text style={{ color: "blue", textDecoration: "underline" }}>Email: info@canpathways.ca | Website: www.canpathways.ca</Text>
             </View>
-            <Image fixed style={[styles.textunderline, { width: "20%", left: 450, height: "auto" }]} src={felidData.initial || ""} />
+            <Image fixed style={[styles.textunderline, { width: "20%", left: 450, height: "auto" }]} src={felidData.initial ||"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"} />
             <View className="initial" fixed style={styles.initial}>
               <Text>Initial:</Text>
             </View>
@@ -1428,7 +1440,7 @@ const AggrementOne = () => {
                   <Text>Office: 2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7, Canada | Tel.: 403.888.5308 |</Text>
                   <Text style={{ color: "blue", textDecoration: "underline" }}>Email: info@canpathways.ca | Website: www.canpathways.ca</Text>
                 </View>
-                <Image fixed style={[styles.textunderline, { width: "20%", left: 450, height: "auto" }]} src={felidData.initial} />
+                <Image fixed style={[styles.textunderline, { width: "20%", left: 450, height: "auto" }]} src={felidData.initial ||"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"} />
                 <View className="initial" fixed style={styles.initial}>
                   <Text>Initial:</Text>
                 </View>

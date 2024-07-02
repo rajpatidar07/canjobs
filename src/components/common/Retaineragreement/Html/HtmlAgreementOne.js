@@ -1,42 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Link/*, useLocation */ } from 'react-router-dom';
-import AgreementOneForm from '../../forms/Agreement/AgreementOneForm';
-import { GetAgreement } from '../../../api/api';
-// import { ToastContainer } from 'react-toastify';
 import moment from "moment"
-const HtmlAgreementOne = ({ user_id, emp_user_type, folderId, userData, setOpenAgreement }) => {
-  const [openAddFeildsModal, setOpenAddFeildsModal] = useState(false)
-  const [apicall, setApicall] = useState(false)
-  const [felidData, setFelidData] = useState([])
-  // const { user_id, emp_user_type, folderId, userData? } = useLocation().state;
-  /*Function to get the Agreement Data */
-  const getAgreeFelidData = async () => {
-    try {
-      let res = await GetAgreement("", user_id, emp_user_type)
-      if (res.data.data) {
-        setFelidData(res.data.data[0])
-      } else {
-        setFelidData([])
-      }
-    } catch (err) {
-      console.log(err)
-    }
-  }
-  // console.log(userData?)
-  useEffect(() => {
-    getAgreeFelidData()
-    if (apicall === true) {
-      setApicall(false)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apicall])
+const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
 
   // Function to replace tags
   // const replaceTags = (html) => {
   //   // Replace opening and closing div and ul tags with View tags
   //   html = html.replaceAll("<img", "<Image")
   //   html = html.replaceAll('<div', '<View').replaceAll('</div>', '</View>');
-  //   html = html.replaceAll('<spanl', '<View').replaceAll('</ul>', '</View>');
+  //   html = html.replaceAll('<span', '<View').replaceAll('</ul>', '</View>');
   //   html = html.replaceAll('<p', '<Text').replaceAll('</p>', '</Text>');
   //   html = html.replaceAll('<Link', '<Text').replaceAll('</Link>', '</Text>');
   //   html = html.replaceAll('<li', '<Text').replaceAll('</li>', '</Text>');
@@ -45,66 +15,6 @@ const HtmlAgreementOne = ({ user_id, emp_user_type, folderId, userData, setOpenA
   // };
   // JSX structure with potential tag replacements
   const jsxContent = (
-    // ` <div id='Agreeone'>
-    //   <div className="header" style=${styles.header}>
-    //     <p>Office: 2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7, Canada | Tel.: 403.888.5308 |</p>
-    //     <p>Email: info@canpathways.ca | Website: www.canpathways.ca</p>
-    //   </div>
-    //   <div className="retainer-agreement" style=${styles.section}>
-    //     <h1>RETAINER AGREEMENT</h1>
-    //     <p>RCIC Membership Number: R533393 Client File Number: 0223</p>
-    //     <p>
-    //       This Retainer Agreement is made this 22 day of March 2024 between Regulated Canadian Immigration
-    //       Consultant (RCIC) Harpreet Kaur (the “RCIC”), RCIC Membership Number R533393, phone number
-    //       4038885308, email info@canpathways.ca located at 2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7,
-    //       Canada and Client (the “Client”), located at , email , contact number .
-    //     </p>
-    //     <p>
-    //       WHEREAS the RCIC and the Client wish to enter into a written agreement which contains the agreed upon
-    //       terms and conditions upon which the RCIC will provide his/her services to the Client.
-    //     </p>
-    //     <p>
-    //       AND WHEREAS the RCIC is a member College of Immigration and Citizenship Consultants
-    //       (the “Council”), the regulator in Canada for immigration consultants;
-    //     </p>
-    //     <p>
-    //       IN CONSIDERATION of the mutual covenants contained in this Agreement, the parties agree as follows:
-    //     </p>
-    //     <h2>1. Definitions</h2>
-    //     <p>
-    //       The terms set out in this Retainer Agreement, have the meaning given to such terms in the Retainer
-    //       Agreement Regulation and By-law of the Council, as amended from time to time.
-    //     </p>
-    //     <h2>2. RCIC Responsibilities and Commitments</h2>
-    //     <p>
-    //       The Client asked the RCIC, and the RCIC has agreed, to act for the Client in the matter of.
-    //     </p>
-    //     <p>
-    //       In consideration of the fees paid and the matter stated above, the RCIC agrees to do the following:
-    //     </p>
-    //     <spanl>
-    //       <li>Consultation and providing document checklists and intake sheet, file opening</li>
-    //       <li>Data gathering, filling out forms</li>
-    //       <li>Information verification, completeness check</li>
-    //       <li>Application submission</li>
-    //       <li>File maintenance and correspondence with client and IRCC</li>
-    //     </spanl>
-    //     <p>
-    //       The RCIC shall provide the Client with a finalized, signed copy of this Retainer Agreement. RCIC is not responsible
-    //       for any documentation or information provided by client to IRCC in any of the previous applications therefore shall
-    //       not be held responsible/liable for it. RCIC will be providing services in English Language.
-    //     </p>
-    //     <p>
-    //       RCIC will return any original document that the client provides as soon as the purpose for which the documents were
-    //       taken is complete.
-    //     </p>
-    //     <p>
-    //       The RCIC is obligated to provide professional, ethical, and competent services as per the Code of Professional
-    //       Conduct of the College. A copy of the Code has been provided to the client(s).
-    //     </p>
-    //     <Link >Code of Professional Conduct</Link>
-    //   </div>
-    // </div>`
     `<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
@@ -139,14 +49,14 @@ const HtmlAgreementOne = ({ user_id, emp_user_type, folderId, userData, setOpenA
         <b>Client File Number: <span>${felidData?.client_file_no || ""}</span></b>
       </div>
       <p>
-        This Retainer Agreement is made this  <span class="para_gap">${(felidData?.client_file_no || "")} </span> day of <u > ${(felidData && moment(new Date(felidData?.agreement_date)).format("Do")) || ""}</u> <u >${(felidData && moment(new Date(felidData?.agreement_date)).format("MMMM")) || ""} </u><u > ${(felidData && moment(new Date(felidData?.agreement_date)).format("YYYY")) || ""}</u>
+        This Retainer Agreement is made this  <span class="para_gap">${(felidData?.client_file_no || "")} </span> day of <span class="para_gap"> ${(felidData && (felidData.agreement_date ? moment(new Date(felidData?.agreement_date)).format("Do") : " ")) || ""}</span> <span class="para_gap">${(felidData && (felidData.agreement_date ? moment(new Date(felidData?.agreement_date)).format("MMMM") : " ")) || ""} </span><span class="para_gap"> ${(felidData && (felidData.agreement_date ? moment(new Date(felidData?.agreement_date)).format("YYYY") : " ")) || ""}</span>
         between Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur
         (the “RCIC”), RCIC Membership Number <span>R533393</span>, phone number
         <span>4038885308</span>
         <a href="mailto:info@canpathways.ca" class="a" target="_blank"
           >, email </a
         >info@canpathways.ca located at 2618
-        <span>Hopewell Pl NE #310 Calgary, AB T1Y 7J7,</span> <span>Canada</span> and Client  <span class="para_gap">${(felidData ? ((felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}</span>(the “Client”)<span class="p">, located at  <span class="para_gap"> ${felidData ? felidData.client_address : emp_user_type === "employer" ? (userData?.address || "") : (((userData?.current_location || "") || "") + " " + ((userData?.currently_located_country || "") || ""))}</span> </span> , email  <span class="para_gap">${felidData ? (felidData.client_email || "") : (userData?.email || "")}</span>, contact number  <span class="para_gap"> ${felidData ? felidData.client_contact : (userData?.contact_no || "")}</span>.
+        <span>Hopewell Pl NE #310 Calgary, AB T1Y 7J7,</span> <span>Canada</span> and Client  <span class="para_gap">${(felidData &&(felidData.client_first_name || felidData.client_last_name)? ( (felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}</span>(the “Client”)<span class="p">, located at  <span class="para_gap"> ${felidData&&felidData.client_address ? (felidData.client_address ) : emp_user_type === "employer" ? (userData?.address || "") : (((userData?.current_location || "") || "") + " " + ((userData?.currently_located_country || "") || ""))}</span> </span> , email  <span class="para_gap">${felidData&&felidData.client_email ? felidData.client_email : (userData?.email || "")}</span>, contact number  <span class="para_gap"> ${felidData&&felidData.client_contact  ?  felidData.client_contact : (userData?.contact_no || "")}</span>.
       </p>
       <p>
         WHEREAS the RCIC and the Client wish to enter into a written agreement
@@ -1082,14 +992,14 @@ const HtmlAgreementOne = ({ user_id, emp_user_type, folderId, userData, setOpenA
       </ol>
       <p>Client Name</p>
       <p>
-        Given Name  <span class="para_gap">${(felidData ? (felidData?.client_first_name) : (emp_user_type === "employee" ? (userData?.name || "") : (userData?.company_name || ""))?.split(" ")[0])} </span>Family Name
-         <span class="para_gap">${felidData?.client_last_name ?? (emp_user_type === "employee" ? (userData?.name || "") : (userData?.company_name || ""))?.split(" ")[1]} </span>
-        Address  <span class="para_gap">${felidData ? felidData.client_address : emp_user_type === "employer" ? (userData?.address || "") : ((userData?.current_location || "") + " " + (userData?.currently_located_country || ""))} </span> Telephone Number  <span class="para_gap">${felidData ? felidData.client_contact : (userData?.contact_no || "")}
+        Given Name  <span class="para_gap">${(felidData &&felidData.client_first_name ? felidData?.client_first_name  : (emp_user_type === "employee" ? (userData?.name || "") : (userData?.company_name || ""))?.split(" ")[0])} </span>Family Name
+         <span class="para_gap">${(felidData.client_last_name ? felidData?.client_last_name : " ") ?? (emp_user_type === "employee" ? (userData?.name || "") : (userData?.company_name || ""))?.split(" ")[1]} </span>
+        Address  <span class="para_gap">${felidData&&felidData.client_address?felidData.client_address : emp_user_type === "employer" ? (userData?.address || "") : ((userData?.current_location || "") + " " + (userData?.currently_located_country || ""))} </span> Telephone Number  <span class="para_gap">${felidData&&felidData.client_contact?felidData.client_contact : (userData?.contact_no || "")}
         </span
         >Cellphone Number
-         <span class="para_gap">${felidData?.client_cellphone || ""}</span>
+         <span class="para_gap">${(felidData.client_cellphone?felidData?.client_cellphone:" ") || ""}</span>
         Fax Number
-         <span class="para_gap">${felidData?.client_fax || ""}</span>E-mail Address  <span class="para_gap">${felidData ? (felidData.client_email || "") : (userData?.email || "")}</span>
+         <span class="para_gap">${(felidData.client_fax?felidData?.client_fax:" ") || ""}</span>E-mail Address  <span class="para_gap">${felidData && felidData.client_email ?(felidData?.client_email || "") : (userData?.email || "")}</span>
       </p>
       <p>RCIC</p>
       <p>
@@ -1115,8 +1025,8 @@ const HtmlAgreementOne = ({ user_id, emp_user_type, folderId, userData, setOpenA
       <div style="display: flex; flex-wrap: wrap">
         <div style="width: 50%">
           <p class="para_gap" style="margin: 0"><img src=${felidData?.client_signature}
-           alt=${(felidData ? ((felidData?.client_first_name + " " + felidData?.client_last_name)) : (emp_user_type === "employee" ? (userData?.name || "") : (userData?.company_name || "")))}
-          style="max-width: 200px; float: right"/></p>
+           alt="${(felidData &&(felidData.client_first_name || felidData.client_last_name)? ( (felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}"
+          style="max-width: 200px; float: right"/></p>  
           <p style="margin: 0 0 30px 0">Signature of Client</p>
         </div>
         <div style="width: 50%">
@@ -1126,7 +1036,7 @@ const HtmlAgreementOne = ({ user_id, emp_user_type, folderId, userData, setOpenA
           <p style="margin: 0 0 30px 0">Signature of RCIC</p>
         </div>
         <div style="width: 50%">
-          <p class="para_gap" style="margin: 0">${(felidData ? ((felidData?.client_first_name + " " + felidData?.client_last_name)) : (emp_user_type === "employee" ? (userData?.name || "") : (userData?.company_name || "")))}</p>
+          <p class="para_gap" style="margin: 0">${(felidData &&(felidData.client_first_name || felidData.client_last_name)? ( (felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}</p>
           <p style="margin: 0 0 30px 0">Name of Client</p>
         </div>
         <div style="width: 50%">
@@ -1145,7 +1055,7 @@ const HtmlAgreementOne = ({ user_id, emp_user_type, folderId, userData, setOpenA
 
       <h3 style="text-align: center">AUTHORIZATION</h3>
       <p>
-        I  <span class="para_gap">${(felidData ? ((felidData?.client_first_name + " " + felidData?.client_last_name)) : (emp_user_type === "employee" ? (userData?.name || "") : (userData?.company_name || "")))}</span>( here in after referred to as the “client”),
+        I  <span class="para_gap">${(felidData &&(felidData.client_first_name || felidData.client_last_name)? ( (felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}</span>( here in after referred to as the “client”),
         hereby authorize and appoint Harpreet kaur (hereinafter referred to as
         the “RCIC” with a CICC# R533393), of CAN Pathways Immigration
         consultancy ltd.,(hereinafter referred to as the “firm”), to represent
@@ -1259,12 +1169,12 @@ const HtmlAgreementOne = ({ user_id, emp_user_type, folderId, userData, setOpenA
       <br /><br />
       <div style="display: flex; flex-wrap: wrap">
         <div style="width: 33.33%; text-align: center">
-          <p class="para_gap" style="margin: 0">${(felidData ? ((felidData?.client_first_name + " " + felidData?.client_last_name)) : (emp_user_type === "employee" ? (userData?.name || "") : (userData?.company_name || "")))}</p>
+          <p class="para_gap" style="margin: 0">${(felidData &&(felidData.client_first_name || felidData.client_last_name)? ( (felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}</p>
           <p style="margin: 0 0 30px 0">Client’s full name</p>
         </div>
         <div style="width: 33.33%; text-align: center">
           <p class="para_gap" style="margin: 0"><img src=${felidData?.client_signature}
-           alt=${(felidData ? ((felidData?.client_first_name + " " + felidData?.client_last_name)) : (emp_user_type === "employee" ? (userData?.name || "") : (userData?.company_name || "")))}
+           alt="${(felidData &&(felidData.client_first_name || felidData.client_last_name)? ( (felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}"
           style="max-width: 200px; float: right"/></p>
           <p style="margin: 0 0 30px 0">Signatures</p>
         </div>
@@ -1292,7 +1202,7 @@ const HtmlAgreementOne = ({ user_id, emp_user_type, folderId, userData, setOpenA
         Initial:
         <img
           src=${felidData?.initial}
-          alt=${(felidData ? ((felidData?.client_first_name + " " + felidData?.client_last_name)) : (emp_user_type === "employee" ? (userData?.name || "") : (userData?.company_name || "")))}
+          alt="${(felidData &&(felidData.client_first_name || felidData.client_last_name)? ( (felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}"
           style="max-width: 200px; float: right"
         />
       </div>
@@ -1303,30 +1213,7 @@ const HtmlAgreementOne = ({ user_id, emp_user_type, folderId, userData, setOpenA
 
   return (
     <div>
-      {/* <ToastContainer /> */}
-      <div className='d-flex justify-content-space-between mt-5'>
-        <button className='btn btn-secondary ' onClick={() => setOpenAgreement(false)}>Add Back</button>
-        <button className='btn btn-primary' onClick={() => setOpenAddFeildsModal(true)}>Add Felids</button>
-      </div>
       <div dangerouslySetInnerHTML={{ __html: jsxContent }} />
-      <Link className={felidData ? "d-block" : "d-none"} to={`/agreeone`} state={{
-        code: jsxContent/* replaceTags(jsxContent)*/, user_id: user_id,
-        emp_user_type: emp_user_type,
-        folderId: folderId,
-        felidData: felidData
-      }}
-
-      >
-        Generated Pdf</Link>
-      {openAddFeildsModal ?
-        <AgreementOneForm
-          show={openAddFeildsModal}
-          close={() => setOpenAddFeildsModal()}
-          userData={userData}
-          setApicall={setApicall}
-          felidData={felidData}
-          emp_user_type={emp_user_type} />
-        : null}
     </div>
   );
 };

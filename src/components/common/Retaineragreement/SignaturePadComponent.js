@@ -43,7 +43,7 @@ const SignaturePadComponent = ({ setState, state, label, name }) => {
         const saveSignature = () => {
             if (sigPad.current) {
                 const signature = sigPad.current.getTrimmedCanvas().toDataURL('image/png');
-                console.log(signature);
+                // console.log(signature);          
                 setState({ ...state, [name]: signature });
             }
         };

@@ -1279,7 +1279,7 @@ export const GetAllJobs = async (
       // employee_skills: employeeSkill,
       filter_company_id: cid,
       manager_id: manager_id,
-      is_featured:featured
+      is_featured: featured
     },
     {
       headers: {
@@ -3351,13 +3351,14 @@ export const GetAdobeToken = async (Id) => {
 };
 /*Agreement Apis */
 // /Api function to Get document url for sharepoint
-export const GetAgreement = async (Id, receiver, receiver_type) => {
+export const GetAgreement = async (Id, receiver, receiver_type, type) => {
   const response = await axios.post(
     `${API_URL}api/Agreement_api/get_agreement`,
     {
       // id: Id,
       receiver: receiver,
-      receiver_type: receiver_type
+      receiver_type: receiver_type,
+      type: type
     },
     {
       headers: {

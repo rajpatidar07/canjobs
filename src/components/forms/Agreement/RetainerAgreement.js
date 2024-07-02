@@ -2,20 +2,24 @@ import React, { useState } from 'react'
 import { Modal } from 'react-bootstrap'
 import useValidation from '../../common/useValidation';
 import filterjson from '../../json/filterjson';
+import { AddUpdateAgreement } from '../../../api/api';
+import { toast } from 'react-toastify';
 export default function RetainerAgreement(props) {
   const [loading, setLoading] = useState(false)
 
   // USER Retainer Agreement VALIDATION
   // INITIAL STATE ASSIGNMENT
   const initialFormStateuser = {
-    subcategories: "",
-    daterasigned: "",
-    daterasent: "",
+    type: "",
+    receiver: props.emp_user_type === "employee" ? props.userData.employee_id : props.userData.company_id,
+    receiver_type: props.emp_user_type === "employee" ? "employee" : "employer",
+    // daterasigned: "",
+    // daterasent: "",
   };
   // VALIDATION CONDITIONS
 
   const validators = {
-    subcategories: [
+    type: [
       (value) => (value === "" || value === null ? "Sub categories is required" : null),
     ],
     daterasigned: [
@@ -28,6 +32,7 @@ export default function RetainerAgreement(props) {
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, onInputChange, errors,/* validate,*/ setErrors } =
     useValidation(initialFormStateuser, validators);
+    
   /* Functionality to close the modal */
   const close = () => {
     setState(initialFormStateuser);
@@ -35,16 +40,27 @@ export default function RetainerAgreement(props) {
     setLoading(false);
     props.close();
   };
+
   /*Function to add update retainer agreement */
-  const onAddUpdateRetaine = () => {
-    console.log("state", state)
+  const onAddUpdateRetaine =async (e) => {
+    e.preventDefault();
+    console.log(state)
+    setLoading(true);
     try {
-      setLoading(false)
-      setState(initialFormStateuser)
+      let res = await AddUpdateAgreement(state)
+      if (res.data.status === 1 && res.data.message === "Agreement added successfully.") {
+        setLoading(false)
+        setState(initialFormStateuser)
+        toast.success("Felids added successfully.", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        close()
+        props.setApicall(true)
+      }
     } catch (err) {
-      setLoading(false)
-      setState(initialFormStateuser)
       console.log(err)
+      setLoading(false)
     }
 
   }
@@ -70,14 +86,14 @@ export default function RetainerAgreement(props) {
             <h5 className="text-center pt-2 mb-7">Add Retainer Agreement</h5>
             <div className="form-group col mt-5">
               <label
-                htmlFor="subcategories"
+                htmlFor="type"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
               >
                 Sub categories  : <span className="text-danger">*</span>
               </label>
               <select
-                name="subcategories"
-                value={state.subcategories || ""}
+                name="type"
+                value={state.type || ""}
                 onChange={onInputChange}
                 multiple={false}
                 className={
@@ -85,7 +101,7 @@ export default function RetainerAgreement(props) {
                     ? "form-control text-capitalize border border-danger"
                     : "form-control text-capitalize"
                 }
-                id="subcategories"
+                id="type"
               >
                 <option value={""}>Select Sub Categories  </option>
                 {(filterjson.Rerainer_Agreement_subCategories || []).map((item, index) =>
@@ -94,13 +110,13 @@ export default function RetainerAgreement(props) {
                 )}
               </select>
               {/*----ERROR MESSAGE FOR WORK PERMIT----*/}
-              {errors.subcategories && (
-                <span key={errors.subcategories} className="text-danger font-size-3">
-                  {errors.subcategories}
+              {errors.type && (
+                <span key={errors.type} className="text-danger font-size-3">
+                  {errors.type}
                 </span>
               )}
             </div>
-            <div className="form-group col">
+            <div className="form-group col d-none">
               <label
                 htmlFor="daterasent"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -118,7 +134,7 @@ export default function RetainerAgreement(props) {
                 type='date'
               />
             </div>
-            <div className="form-group col">
+            <div className="form-group col d-none">
               <label
                 htmlFor="daterasigned"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
