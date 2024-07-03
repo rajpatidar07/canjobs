@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import AgreementOneForm from '../../forms/Agreement/AgreementOneForm'
-import { GetAgreement } from '../../../api/api'
+import { AddUpdateAgreement, GetAgreement } from '../../../api/api'
 import HtmlAgreementOne from './Html/HtmlAgreementOne'
 import HtmlAgreementTwo from './Html/HtmlAgreementTwo'
 import { useNavigate } from 'react-router-dom'
@@ -36,14 +36,13 @@ export default function MainRetainerAggHtml({ openSignature, agreementData, user
   }, [apicall])
   useEffect(() => {
     if (openSignature === "yes") {
-      console.log(agreementData.signature_status, "signature_status", agreementData.signature_status === "0", !agreementData.initial)
       if ((agreementData.signature_status === "0" && !agreementData.initial) || (felidData.signature_status === "0" && !felidData.initial)) {
         setOpenAddFeildsModal(true)
       } else {
         setOpenAddFeildsModal(false)
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
     <div className='mb-12'>
@@ -66,17 +65,26 @@ export default function MainRetainerAggHtml({ openSignature, agreementData, user
         //   felidData: felidData,
         //   agreementData: agreementData
         // }}
-        onClick={() => {
+        onClick={async () => {
           navigate('/agreeone', {
             state: {
               user_id: user_id,
               emp_user_type: emp_user_type,
               folderId: folderId,
               felidData: felidData,
-              agreementData: agreementData
             }
           });
-
+          if (agreementData.pdf_genrated_status === "0") {
+            let data = {
+              ...agreementData,
+              pdf_genrated_status: "1"
+            }
+            try {
+              await AddUpdateAgreement(data)
+            } catch (error) {
+              console.log(error)
+            }
+          }
         }}
 
       >

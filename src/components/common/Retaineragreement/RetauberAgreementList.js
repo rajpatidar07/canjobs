@@ -122,6 +122,12 @@ export default function RetauberAgreementList({
                                         Receive Date
                                     </th>
                                     <th scope="col" className="border-0 font-size-4 font-weight-normal">
+                                        Pdf generated status
+                                    </th>
+                                    <th scope="col" className="border-0 font-size-4 font-weight-normal">
+                                        Signature status
+                                    </th>
+                                    <th scope="col" className="border-0 font-size-4 font-weight-normal">
                                         Action
                                     </th>
                                 </tr>
@@ -144,11 +150,33 @@ export default function RetauberAgreementList({
                                                 <td className='text-capitalize '>
                                                     {data.type || "N/A"}
                                                 </td>
-                                                <td>
-                                                    {data.daterasent || "N/A"}
+                                                <td className='text-capitalize '>
+                                                    {data.sent_date || "N/A"}
+                                                </td>
+                                                <td className='text-capitalize '>
+                                                    {data.receive_Date || "N/A"}
                                                 </td>
                                                 <td>
-                                                    {data.daterasigned || "N/A"}
+                                                    {data.pdf_genrated_status    === "1" ?
+                                                        (<span className="p-1 bg-primary-opacity-8 text-white text-center  border rounded-pill">
+                                                            Complete
+                                                        </span>
+                                                        ) : (
+                                                            <span className="p-1 bg-warning text-white text-center  border rounded-pill">
+                                                                Incomplete
+                                                            </span>
+                                                        )}
+                                                </td>
+                                                <td>
+                                                    {data.signature_status === "1" ?
+                                                        (<span className="p-1 bg-primary-opacity-8 text-white text-center  border rounded-pill">
+                                                            Complete
+                                                        </span>
+                                                        ) : (
+                                                            <span className="p-1 bg-warning text-white text-center  border rounded-pill">
+                                                                Incomplete
+                                                            </span>
+                                                        )}
                                                 </td>
                                                 <td>
                                                     <div className="btn-group button_group" role="group">
@@ -181,14 +209,14 @@ export default function RetauberAgreementList({
                                                         >                                         Add Felids
                                                         </button>
                                                         <button
-                                                        className="btn btn-outline-info action_btn "
-                                                        style={{ fontSize: "10px" }}
-                                                        disabled={!data.document_id}
-                                                        onClick={() => {
-                                                            setOpenViewAgreement(true)
-                                                            setAgreementData(data)
-                                                        }}
-                                                        title="View Agreement"><FaEye /></button>
+                                                            className="btn btn-outline-info action_btn "
+                                                            style={{ fontSize: "10px" }}
+                                                            disabled={!data.document_id}
+                                                            onClick={() => {
+                                                                setOpenViewAgreement(true)
+                                                                setAgreementData(data)
+                                                            }}
+                                                            title="View Agreement"><FaEye /></button>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -222,7 +250,7 @@ export default function RetauberAgreementList({
                         close={() => setOpenAddAgreementFelids()}
                         userData={userData}
                         setApicall={setApicall}
-                          felidData={agreementData}
+                        felidData={agreementData}
                         emp_user_type={emp_user_type} />
                     : null}
                 {openAddAgreementForm ?
@@ -232,20 +260,20 @@ export default function RetauberAgreementList({
                         emp_user_type={emp_user_type}
                         userData={userData}
                         setApicall={setApicall}
-                         /> :
+                    /> :
                     null}
-                    {openViewAgreement?
-                    <ViewPdf 
-                    show={openViewAgreement}
-                    close={() => setOpenViewAgreement(false)}
-                    agreementData={agreementData}
-                    emp_user_type={emp_user_type}
-                    userData={userData}
-                    setApicall={setApicall}
-                    folderId={folderId}
-                    user_id={user_id}
+                {openViewAgreement ?
+                    <ViewPdf
+                        show={openViewAgreement}
+                        close={() => setOpenViewAgreement(false)}
+                        agreementData={agreementData}
+                        emp_user_type={emp_user_type}
+                        userData={userData}
+                        setApicall={setApicall}
+                        folderId={folderId}
+                        user_id={user_id}
                     />
-                    :null}
+                    : null}
             </div>
         </div>
     )

@@ -126,7 +126,7 @@ import { toast } from 'react-toastify';
 
 const AggrementOne = () => {
   const [blobData, setBlobData] = useState()
-  const { felidData, user_id, emp_user_type, folderId: folderID ,agreementData/*, code*/ } = useLocation().state;
+  const { felidData, user_id, emp_user_type, folderId: folderID /*, code*/ } = useLocation().state;
   // const latestCode = JSON.stringify(code)
   //   .replace('" <', "<")
   //   .replace('>"', ">")
@@ -233,7 +233,7 @@ const AggrementOne = () => {
           console.error('Failed to create new blob');
           return;
         }
-        const file = new File([newBlob], `${agreementData?.type.replace(" ","_")}.pdf`, { type: 'application/pdf' });
+        const file = new File([newBlob], `${felidData?.type.replace(" ","_")}.pdf`, { type: 'application/pdf' });
         console.log('file =>', file)
         try {
           let res = await AddSharePointDOcument(
