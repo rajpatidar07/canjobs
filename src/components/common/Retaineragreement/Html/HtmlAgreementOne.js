@@ -56,7 +56,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
         <a href="mailto:info@canpathways.ca" class="a" target="_blank"
           >, email </a
         >info@canpathways.ca located at 2618
-        <span>Hopewell Pl NE #310 Calgary, AB T1Y 7J7,</span> <span>Canada</span> and Client  <span class="para_gap">${(felidData &&(felidData.client_first_name || felidData.client_last_name)? ( (felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}</span>(the “Client”)<span class="p">, located at  <span class="para_gap"> ${felidData&&felidData.client_address ? (felidData.client_address ) : emp_user_type === "employer" ? (userData?.address || "") : (((userData?.current_location || "") || "") + " " + ((userData?.currently_located_country || "") || ""))}</span> </span> , email  <span class="para_gap">${felidData&&felidData.client_email ? felidData.client_email : (userData?.email || "")}</span>, contact number  <span class="para_gap"> ${felidData&&felidData.client_contact  ?  felidData.client_contact : (userData?.contact_no || "")}</span>.
+        <span>Hopewell Pl NE #310 Calgary, AB T1Y 7J7,</span> <span>Canada</span> and Client  <span class="para_gap">${(felidData && (felidData.client_first_name || felidData.client_last_name) ? ((felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}</span>(the “Client”)<span class="p">, located at  <span class="para_gap"> ${felidData && felidData.client_address ? (felidData.client_address) : emp_user_type === "employer" ? (userData?.address || "") : (((userData?.current_location || "") || "") + " " + ((userData?.currently_located_country || "") || ""))}</span> </span> , email  <span class="para_gap">${felidData && felidData.client_email ? felidData.client_email : (userData?.email || "")}</span>, contact number  <span class="para_gap"> ${felidData && felidData.client_contact ? felidData.client_contact : (userData?.contact_no || "")}</span>.
       </p>
       <p>
         WHEREAS the RCIC and the Client wish to enter into a written agreement
@@ -992,14 +992,14 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
       </ol>
       <p>Client Name</p>
       <p>
-        Given Name  <span class="para_gap">${(felidData &&felidData.client_first_name ? felidData?.client_first_name  : (emp_user_type === "employee" ? (userData?.name || "") : (userData?.company_name || ""))?.split(" ")[0])} </span>Family Name
+        Given Name  <span class="para_gap">${(felidData && felidData.client_first_name ? felidData?.client_first_name : (emp_user_type === "employee" ? (userData?.name || "") : (userData?.company_name || ""))?.split(" ")[0])} </span>Family Name
          <span class="para_gap">${(felidData.client_last_name ? felidData?.client_last_name : " ") ?? (emp_user_type === "employee" ? (userData?.name || "") : (userData?.company_name || ""))?.split(" ")[1]} </span>
-        Address  <span class="para_gap">${felidData&&felidData.client_address?felidData.client_address : emp_user_type === "employer" ? (userData?.address || "") : ((userData?.current_location || "") + " " + (userData?.currently_located_country || ""))} </span> Telephone Number  <span class="para_gap">${felidData&&felidData.client_contact?felidData.client_contact : (userData?.contact_no || "")}
+        Address  <span class="para_gap">${felidData && felidData.client_address ? felidData.client_address : emp_user_type === "employer" ? (userData?.address || "") : ((userData?.current_location || "") + " " + (userData?.currently_located_country || ""))} </span> Telephone Number  <span class="para_gap">${felidData && felidData.client_contact ? felidData.client_contact : (userData?.contact_no || "")}
         </span
         >Cellphone Number
-         <span class="para_gap">${(felidData.client_cellphone?felidData?.client_cellphone:" ") || ""}</span>
+         <span class="para_gap">${(felidData.client_cellphone ? felidData?.client_cellphone : " ") || ""}</span>
         Fax Number
-         <span class="para_gap">${(felidData.client_fax?felidData?.client_fax:" ") || ""}</span>E-mail Address  <span class="para_gap">${felidData && felidData.client_email ?(felidData?.client_email || "") : (userData?.email || "")}</span>
+         <span class="para_gap">${(felidData.client_fax ? felidData?.client_fax : " ") || ""}</span>E-mail Address  <span class="para_gap">${felidData && felidData.client_email ? (felidData?.client_email || "") : (userData?.email || "")}</span>
       </p>
       <p>RCIC</p>
       <p>
@@ -1024,19 +1024,21 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
       <br /><br />
       <div style="display: flex; flex-wrap: wrap">
         <div style="width: 50%">
-          <p class="para_gap" style="margin: 0"><img src=${felidData?.client_signature}
-           alt="${(felidData &&(felidData.client_first_name || felidData.client_last_name)? ( (felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}"
+          <p class="para_gap" style="margin: 0"><img src=${felidData.client_signature ?
+      felidData?.client_signature : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"}
+           alt="${(felidData && (felidData.client_first_name || felidData.client_last_name) ? ((felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}"
           style="max-width: 200px; float: right"/></p>  
           <p style="margin: 0 0 30px 0">Signature of Client</p>
         </div>
         <div style="width: 50%">
-          <p class="para_gap" style="margin: 0"><img src=${felidData?.rcic_signature || ""}
+          <p class="para_gap" style="margin: 0"><img src=${felidData.rcic_signature ?
+      felidData?.rcic_signature : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"}
            alt="Harpreet Kaur"
           style="max-width: 200px; float: right"/></p>
           <p style="margin: 0 0 30px 0">Signature of RCIC</p>
         </div>
         <div style="width: 50%">
-          <p class="para_gap" style="margin: 0">${(felidData &&(felidData.client_first_name || felidData.client_last_name)? ( (felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}</p>
+          <p class="para_gap" style="margin: 0">${(felidData && (felidData.client_first_name || felidData.client_last_name) ? ((felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}</p>
           <p style="margin: 0 0 30px 0">Name of Client</p>
         </div>
         <div style="width: 50%">
@@ -1044,18 +1046,18 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
           <p style="margin: 0 0 30px 0">Name of RCIC</p>
         </div>
         <div style="width: 50%">
-          <p class="para_gap" style="margin: 0">${felidData?.date_signature_client || ""}</p>
+          <p class="para_gap" style="margin: 0">${felidData.date_signature_client ? felidData?.date_signature_client: ""}</p>
           <p style="margin: 0 0 30px 0">Date</p>
         </div>
         <div style="width: 50%">
-          <p class="para_gap" style="margin: 0">${felidData?.date_signature_rcic || ""}</p>
+          <p class="para_gap" style="margin: 0">${felidData.date_signature_rcic ? felidData?.date_signature_rcic: ""}</p>
           <p style="margin: 0 0 30px 0">Date</p>
         </div>
       </div>
 
       <h3 style="text-align: center">AUTHORIZATION</h3>
       <p>
-        I  <span class="para_gap">${(felidData &&(felidData.client_first_name || felidData.client_last_name)? ( (felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}</span>( here in after referred to as the “client”),
+        I  <span class="para_gap">${(felidData && (felidData.client_first_name || felidData.client_last_name) ? ((felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}</span>( here in after referred to as the “client”),
         hereby authorize and appoint Harpreet kaur (hereinafter referred to as
         the “RCIC” with a CICC# R533393), of CAN Pathways Immigration
         consultancy ltd.,(hereinafter referred to as the “firm”), to represent
@@ -1169,17 +1171,18 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
       <br /><br />
       <div style="display: flex; flex-wrap: wrap">
         <div style="width: 33.33%; text-align: center">
-          <p class="para_gap" style="margin: 0">${(felidData &&(felidData.client_first_name || felidData.client_last_name)? ( (felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}</p>
+          <p class="para_gap" style="margin: 0">${(felidData && (felidData.client_first_name || felidData.client_last_name) ? ((felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}</p>
           <p style="margin: 0 0 30px 0">Client’s full name</p>
         </div>
         <div style="width: 33.33%; text-align: center">
-          <p class="para_gap" style="margin: 0"><img src=${felidData?.client_signature}
-           alt="${(felidData &&(felidData.client_first_name || felidData.client_last_name)? ( (felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}"
+          <p class="para_gap" style="margin: 0"><img src=${felidData.client_signature ?
+      felidData?.client_signature : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"}
+           alt="${(felidData && (felidData.client_first_name || felidData.client_last_name) ? ((felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}"
           style="max-width: 200px; float: right"/></p>
           <p style="margin: 0 0 30px 0">Signatures</p>
         </div>
         <div style="width: 33.33%; text-align: center">
-          <p class="para_gap" style="margin: 0">${felidData?.date_signature_client || ""}</p>
+          <p class="para_gap" style="margin: 0">${felidData.date_signature_client ? felidData?.date_signature_client: ""}</p>
           <p style="margin: 0 0 30px 0">Date</p>
         </div>
       </div>
@@ -1201,8 +1204,8 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
       >
         Initial:
         <img
-          src=${felidData?.initial}
-          alt="${(felidData &&(felidData.client_first_name || felidData.client_last_name)? ( (felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}"
+          src=${felidData.initial ? felidData?.initial : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"}
+          alt="${(felidData && (felidData.client_first_name || felidData.client_last_name) ? ((felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}"
           style="max-width: 200px; float: right"
         />
       </div>
