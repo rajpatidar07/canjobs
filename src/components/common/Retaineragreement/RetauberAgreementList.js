@@ -183,6 +183,7 @@ export default function RetauberAgreementList({
                                                         <button
                                                         className="btn btn-outline-info action_btn "
                                                         style={{ fontSize: "10px" }}
+                                                        disabled={!data.document_id}
                                                         onClick={() => {
                                                             setOpenViewAgreement(true)
                                                             setAgreementData(data)
@@ -220,9 +221,8 @@ export default function RetauberAgreementList({
                         show={openAddAgreementFelids}
                         close={() => setOpenAddAgreementFelids()}
                         userData={userData}
-                        setApicall={"setApicall"}
-                        agreementData={agreementData}
-                        //   felidData={felidData}
+                        setApicall={setApicall}
+                          felidData={agreementData}
                         emp_user_type={emp_user_type} />
                     : null}
                 {openAddAgreementForm ?
@@ -243,6 +243,7 @@ export default function RetauberAgreementList({
                     userData={userData}
                     setApicall={setApicall}
                     folderId={folderId}
+                    user_id={user_id}
                     />
                     :null}
             </div>

@@ -10,7 +10,6 @@ const SignaturePadComponent = ({ setState, state, label, name }) => {
     const clear = () => {
         sigPad.current.clear();
         setState({ ...state, [name]: "" });
-
     };
 
     // const save = async () => {
@@ -69,7 +68,7 @@ const SignaturePadComponent = ({ setState, state, label, name }) => {
                 />
             </div>
             <input type="file" accept="image/*" onChange={handleImageUpload} />
-            <button onClick={clear} className="btn btn-secondary btn-sm">Clear</button>
+            <button onClick={()=>clear()} type='button' className="btn btn-secondary btn-sm">Clear</button>
         </div>
     );
 };

@@ -3,22 +3,22 @@
 const profile = {
   userProfile: {
     name:
-      // localStorage.getItem("userType") === "user"
+      //userType === "user"
       //     ? localStorage.getItem("name").charAt(0).toUpperCase() + localStorage.getItem("name").slice(1) :
       localStorage.getItem("admin")
         ? localStorage.getItem("admin").charAt(0).toUpperCase() +
         localStorage.getItem("admin").slice(1)
         : "",
     firstName:
-      //  localStorage.getItem("userType") === "user"
+      // userType === "user"
       //     ? localStorage.getItem("name") :
       localStorage.getItem("admin"),
     email:
-      //  localStorage.getItem("userType") === "user"
+      // userType === "user"
       //     ? localStorage.getItem("email") :
       localStorage.getItem("admin_email"),
     id:
-      // localStorage.getItem("userType") === "user"
+      //userType === "user"
       //     ? localStorage.getItem("employee_id") :
       localStorage.getItem("admin_id"),
     type: "Person",
@@ -51,8 +51,8 @@ class ViewSDKClient {
     });
   }
 
-  previewFile(divId, viewerConfig, url, data) {
-    const fileExtension = data.name.split(".").pop().toLowerCase();
+  previewFile(divId, viewerConfig, url, data ,userType) {
+    const fileExtension = data?.name?.split(".").pop().toLowerCase();
     const config = {
       clientId: client_id,
     };
@@ -68,11 +68,11 @@ class ViewSDKClient {
       ...viewerConfig,
       embedMode: window.AdobeDC.View.Enum.EmbedMode.INLINE, // Display inline
       showAnnotationTools:
-        localStorage.getItem("userType") === "admin" ||
-          localStorage.getItem("userType") === "agent"
+       userType === "admin" ||
+         userType === "agent"
           ? true
           :
-           false, // Show annotation tools
+          false, // Show annotation tools
       showDownloadPDF: true, // Show download PDF option
       showPrintPDF: true, // Show print PDF option
       enableFormFilling: true, // Enable form filling
@@ -104,7 +104,7 @@ class ViewSDKClient {
           id: data.id,
           parentReference: data.parentReference,
         },
-        
+
 
       },
       viewerConfig

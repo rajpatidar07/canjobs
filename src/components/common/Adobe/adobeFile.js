@@ -10,7 +10,8 @@ const AdobePDFViewer = ({
   DocUserType,
   adminList,
   setCommentsList,
-  partnerList
+  partnerList,
+  userType
 }) => {
   let [annotationDrawBox, setAnnotationDrawBox] = useState("");
   let [annotationId, setAnnotationId] = useState("");
@@ -39,7 +40,8 @@ const AdobePDFViewer = ({
         },
         url,
         data,
-        selectedMentionAdmin
+        selectedMentionAdmin,
+        userType
       );
       const eventOptions = {
         listenOn: [
@@ -158,16 +160,16 @@ const AdobePDFViewer = ({
     <div style={{ height: "calc(100vh - 130px)" }} className="row m-0">
       <div
         id="pdf-div"
-        className={`${localStorage.getItem("userType") === "admin" ||
-          localStorage.getItem("userType") === "agent"
+        className={`${userType === "admin" ||
+          userType === "agent"
           ? "col-md-8 col-lg-8 col-sm-9"
           : "col-md-12 col-lg-12 col-sm-12"
           } full-window-div`}
         style={{ maxHeight: "calc(100vh - 130px)" }}
       ></div>
       {
-        (localStorage.getItem("userType") === "admin" ||
-          localStorage.getItem("userType") === "agent")
+        (userType === "admin" ||
+          userType === "agent")
         && <CommentSection
           docData={data}
           allAdmin={adminList}

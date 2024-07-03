@@ -741,6 +741,7 @@ export default function SharePointDocument({
                           adminList={adminList}
                           partnerList={partnerList}
                           setCommentsList={setCommentsList}
+                          userType={localStorage.getItem("userType")}
                         />
                       ) : null
                     ) : (

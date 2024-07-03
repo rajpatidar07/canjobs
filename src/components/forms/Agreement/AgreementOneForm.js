@@ -4,13 +4,13 @@ import SignaturePadComponent from '../../common/Retaineragreement/SignaturePadCo
 import { AddUpdateAgreement } from "../../../api/api"
 import useValidation from '../../common/useValidation';
 import { toast } from 'react-toastify';
-const AgreementOneForm = ({agreementData, emp_user_type, show, close, userData, setApicall, felidData, em }) => {
+const AgreementOneForm = ({ openSignature, emp_user_type, show, close, userData, setApicall, felidData, em }) => {
   const [loading, setLoading] = useState(false);
   // USER CATEGORY TYPE VALIDATION
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     id: "",
-    type:agreementData?.type,
+    type: felidData?.type,
     rcic_membership_no: "",
     client_file_no: "",
     agreement_date: "",
@@ -52,6 +52,7 @@ const AgreementOneForm = ({agreementData, emp_user_type, show, close, userData, 
     receiver_type: emp_user_type === "employee" ? "employee" : "employer",
     assigned_by_id: "",
     assigned_by_type: "",
+    signature_status: felidData.initial ? 1 : 0
   };
   // VALIDATION CONDITIONS
   const validators = {
@@ -67,20 +68,20 @@ const AgreementOneForm = ({agreementData, emp_user_type, show, close, userData, 
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, onInputChange, errors/*, setErrors, validate*/ } =
     useValidation(initialFormState, validators);
-
   useEffect(() => {
-    const mergedState = { ...initialFormState, ...felidData };
-
-    // Only replace null or undefined values in felidData with values from initialFormState
-    Object.keys(mergedState).forEach(key => {
-      if (felidData?.[key] === null || felidData?.[key] === undefined) {
-        mergedState[key] = initialFormState[key];
+    if (felidData) {
+      const updatedState = { ...initialFormState };
+      for (const key in felidData) {
+        if (felidData[key] !== null && felidData[key] !== undefined) {
+          updatedState[key] = felidData[key];
+        }
       }
-    });
-
-    setState(mergedState);
+      setState(updatedState);
+    } else {
+      setState(initialFormState);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [felidData]);
   // API CALL
   // USER Test Email SUBMIT BUTTON
   const onFormSubmit = async (e) => {
@@ -104,7 +105,13 @@ const AgreementOneForm = ({agreementData, emp_user_type, show, close, userData, 
       setLoading(false)
     }
   };
-
+  useEffect(() => {
+    if (state.initial) {
+      setState({ ...state, signature_status: "1" });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.initial])
+  console.log(state.initial)
   return (
     <Modal
       show={show}
@@ -122,54 +129,55 @@ const AgreementOneForm = ({agreementData, emp_user_type, show, close, userData, 
       </button>
       <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
         <form onSubmit={onFormSubmit}>
-          <h5 className="text-center mb-7 pt-2">Client Retainer Agreement Form</h5>
+          <h5 className="text-center mb-7 pt-2">{openSignature === "yes" ? "Add Signature" : "Add Retainer Agreement Felids"}</h5>
           <div className="row">
-            {[
-              { label: "Client File Number", name: "client_file_no", type: "number" },
-              { label: "Agreement Creation Date", name: "agreement_date", type: "date" },
-              { label: "Client Name", name: "client_first_name", type: "text" },
-              { label: "Client Address", name: "client_address", type: "text" },
-              { label: "Client Email", name: "client_email", type: "email" },
-              { label: "Client Contact No", name: "client_contact", type: "number" },
-              { label: "The Client asked the RCIC, and the RCIC has agreed, to act for the Client in the matter of", name: "matter", type: "text" },
-              { label: "Summary of preliminary advice given to the client", name: "summary", type: "text" },
-              { label: "Professional Fees", name: "professional_fees", type: "number" },
-              { label: "Courier charges", name: "courier_charges", type: "number" },
-              { label: "Administrative Fee", name: "administrative_fee", type: "number" },
-              { label: "Government fees", name: "government_fees", type: "number" },
-              { label: "Applicable Taxes", name: "application_fees", type: "number" },
-              { label: "Balance (Paid at time of filing)", name: "balance", type: "number" },
-              { label: "Total Cost", name: "total_cost", type: "number" },
-              { label: "Applicable Retainer Fee for this stage (Non-Refundable) for Step 1", name: "applicable_retainer_fee_stape_1", type: "number" },
-              { label: "Applicable Government Processing Fee for Step 1", name: "applicable_government_processing_fee_stape_1", type: "number" },
-              { label: "Applicable Retainer Fee for this stage (Non-Refundable) for Step 2", name: "applicable_retainer_fee_stape_2", type: "number" },
-              { label: "Total Amount: (Non-Refundable) (Paid at signing of contract and sharing of checklist)", name: "total_amount_signing_of_contract", type: "number" },
-              { label: "Balance (Non-Refundable) (Paid at time of filing)", name: "balance_paid_at_time_of_filing", type: "number" },
-              { label: "Client's Family Name", name: "client_last_name", type: "text" },
-              { label: "Client's Telephone Number", name: "client_telephone", type: "number" },
-              { label: "Client's Cellphone Number", name: "client_cellphone", type: "number" },
-              { label: "Client's Fax Number", name: "client_fax", type: "number" },
-              { label: "Date for Client", name: "date_signature_client", type: "date" },
-              { label: "Date for RCIC", name: "date_signature_rcic", type: "date" },
-              { label: "Authorization's Name", name: "authorizationName", type: "text" },
-            ].map(({ label, name, type }) => (
-              <div className="form-group col-md-6 mb-0 mt-4" key={name}>
-                <label htmlFor={name} className="font-size-4 text-black-2 line-height-reset">
-                  {label}
-                </label>
-                <input
-                  type={type}
-                  className={errors[name] ? "form-control mx-5 border border-danger col" : "form-control col mx-5"}
-                  value={state[name] || ""}
-                  onChange={onInputChange}
-                  placeholder={label}
-                  id={name}
-                  name={name}
-                />
-                {errors[name] && <span className="text-danger font-size-3 mx-5">{errors[name]}</span>}
-              </div>
-            ))}
-            <div className="form-group col-md-6 mb-0 mt-4">
+            {openSignature === "yes" ?
+              null : [
+                { label: "Client File Number", name: "client_file_no", type: "number" },
+                { label: "Agreement Creation Date", name: "agreement_date", type: "date" },
+                { label: "Client Name", name: "client_first_name", type: "text" },
+                { label: "Client Address", name: "client_address", type: "text" },
+                { label: "Client Email", name: "client_email", type: "email" },
+                { label: "Client Contact No", name: "client_contact", type: "number" },
+                { label: "The Client asked the RCIC, and the RCIC has agreed, to act for the Client in the matter of", name: "matter", type: "text" },
+                { label: "Summary of preliminary advice given to the client", name: "summary", type: "text" },
+                { label: "Professional Fees", name: "professional_fees", type: "number" },
+                { label: "Courier charges", name: "courier_charges", type: "number" },
+                { label: "Administrative Fee", name: "administrative_fee", type: "number" },
+                { label: "Government fees", name: "government_fees", type: "number" },
+                { label: "Applicable Taxes", name: "application_fees", type: "number" },
+                { label: "Balance (Paid at time of filing)", name: "balance", type: "number" },
+                { label: "Total Cost", name: "total_cost", type: "number" },
+                { label: "Applicable Retainer Fee for this stage (Non-Refundable) for Step 1", name: "applicable_retainer_fee_stape_1", type: "number" },
+                { label: "Applicable Government Processing Fee for Step 1", name: "applicable_government_processing_fee_stape_1", type: "number" },
+                { label: "Applicable Retainer Fee for this stage (Non-Refundable) for Step 2", name: "applicable_retainer_fee_stape_2", type: "number" },
+                { label: "Total Amount: (Non-Refundable) (Paid at signing of contract and sharing of checklist)", name: "total_amount_signing_of_contract", type: "number" },
+                { label: "Balance (Non-Refundable) (Paid at time of filing)", name: "balance_paid_at_time_of_filing", type: "number" },
+                { label: "Client's Family Name", name: "client_last_name", type: "text" },
+                { label: "Client's Telephone Number", name: "client_telephone", type: "number" },
+                { label: "Client's Cellphone Number", name: "client_cellphone", type: "number" },
+                { label: "Client's Fax Number", name: "client_fax", type: "number" },
+                // { label: "Date for Client", name: "date_signature_client", type: "date" },
+                // { label: "Date for RCIC", name: "date_signature_rcic", type: "date" },
+                // { label: "Authorization's Name", name: "authorizationName", type: "text" },
+              ].map(({ label, name, type }) => (
+                <div className="form-group col-md-6 mb-0 mt-4" key={name}>
+                  <label htmlFor={name} className="font-size-4 text-black-2 line-height-reset">
+                    {label}
+                  </label>
+                  <input
+                    type={type}
+                    className={errors[name] ? "form-control mx-5 border border-danger col" : "form-control col mx-5"}
+                    value={state[name] || ""}
+                    onChange={onInputChange}
+                    placeholder={label}
+                    id={name}
+                    name={name}
+                  />
+                  {errors[name] && <span className="text-danger font-size-3 mx-5">{errors[name]}</span>}
+                </div>
+              ))}
+            <div className={openSignature === "yes" ? "d-none" : "form-group col-md-6 mb-0 mt-4"}>
               <label className="font-size-4 text-black-2 line-height-reset">GST</label>
               <select
                 className="form-control col mx-5"
@@ -189,7 +197,7 @@ const AgreementOneForm = ({agreementData, emp_user_type, show, close, userData, 
             {/* <div className="form-group col-md-6 mb-0 mt-4">
               <SignaturePadComponent setState={setState} state={state} label="Client’s Signature" name="client_signature" />
             </div> */}
-            <div className="form-group col-md-6 mb-0 mt-4">
+            <div className={openSignature === "yes" ? "form-group col-md-6 mb-0 mt-4" : "d-none"}>
               <SignaturePadComponent setState={setState} state={state} label="Initial" name="initial" />
             </div>
           </div>
