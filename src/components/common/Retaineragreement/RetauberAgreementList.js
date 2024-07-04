@@ -157,27 +157,30 @@ export default function RetauberAgreementList({
                                                 <td className='text-capitalize '>
                                                     {data.receive_Date || "N/A"}
                                                 </td>
-                                                <td>
-                                                    {data.pdf_genrated_status    === "1" ?
-                                                        (<span className="p-1 bg-primary-opacity-8 text-white text-center  border rounded-pill">
-                                                            Complete
-                                                        </span>
-                                                        ) : (
-                                                            <span className="p-1 bg-warning text-white text-center  border rounded-pill">
-                                                                Incomplete
+                                                <td className="text-center py-5">
+                                                    <p className="font-size-2 font-weight-normal text-black-2 mb-0">
+                                                        {data.pdf_genrated_status === "1" ?
+                                                            (<span className="p-1 bg-primary-opacity-8 text-white text-center  border rounded-pill">
+                                                                Complete
                                                             </span>
-                                                        )}
+                                                            ) : (
+                                                                <span className="p-1 bg-warning text-white text-center  border rounded-pill">
+                                                                    Incomplete
+                                                                </span>
+                                                            )}</p>
                                                 </td>
-                                                <td>
-                                                    {data.signature_status === "1" ?
-                                                        (<span className="p-1 bg-primary-opacity-8 text-white text-center  border rounded-pill">
-                                                            Complete
-                                                        </span>
-                                                        ) : (
-                                                            <span className="p-1 bg-warning text-white text-center  border rounded-pill">
-                                                                Incomplete
+                                                <td className="text-center py-5">
+                                                    <p className="font-size-2 font-weight-normal text-black-2 mb-0">
+                                                        {data.signature_status === "1" ?
+                                                            (<span className="p-1 bg-primary-opacity-8 text-white text-center  border rounded-pill">
+                                                                Complete
                                                             </span>
-                                                        )}
+                                                            ) : (
+                                                                <span className="p-1 bg-warning text-white text-center  border rounded-pill">
+                                                                    Incomplete
+                                                                </span>
+                                                            )}
+                                                    </p>
                                                 </td>
                                                 <td>
                                                     <div className="btn-group button_group" role="group">
