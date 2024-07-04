@@ -82,7 +82,7 @@ export default function RetauberAgreementList({
                             folderId={folderId}
                             setOpenAgreement={setOpenAgreement}
                             agreementData={agreementData}
-                            callMainPageAPi={setApicall}
+                            setApicall={setApicall}
                         /> :
                         // isLoading ? (
                         //     <Loader />

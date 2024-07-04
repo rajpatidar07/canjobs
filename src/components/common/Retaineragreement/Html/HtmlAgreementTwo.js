@@ -47,6 +47,23 @@ export default function HtmlAgreementTwo() {
                 <td>7 Mar 2023</td>
             </tr>
         </table>
+         <div class="header" style="padding: 10px 20px">
+      <div style="text-align: center; color: #ed1c24">
+        Office: 2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7, Canada | Tel.:
+        403.888.5308 <br />Email: info@canpathways.ca |
+        Website:www.canpathways.ca
+      </div>
+      <div
+        style="
+          text-align: right;
+          display: flex;
+          align-items: baseline;
+          justify-content: end;
+        "
+      >
+        Initial:
+       ______________________
+      </div>
     </div>
 </body>
 </html>

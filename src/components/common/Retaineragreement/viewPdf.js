@@ -28,7 +28,7 @@ export default function ViewPdf({ show,
         setDocLoder(false);
         if (res.data.data.find((item) => item.id === agreementData.document_id)) {
           setPdf(res.data.data.find((item) => item.id === agreementData.document_id))
-          console.log(res.data.data.find((item) => item.id === agreementData.document_id))
+          // console.log(res.data.data.find((item) => item.id === agreementData.document_id))
         } else if (res.data.data === "No Documents Found") {
           setDocLoder(false);
         } else {
@@ -74,7 +74,8 @@ export default function ViewPdf({ show,
               folderId={folderId}
               setOpenAgreement={""}
               agreementData={agreementData}
-              close={close} />
+              close={close}
+              setApicall={setApicall} />
           </div>
           :
           <div>

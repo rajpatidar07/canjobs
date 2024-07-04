@@ -671,7 +671,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
               >www.iccrc-crcic.ca.</a
             >
           </p>
-          <h3>ICCRC Contact Information:</h3>
+          <h6>ICCRC Contact Information:</h6>
           <p>
             Immigration Consultants of Canada Regulatory Council (ICCRC) 5500
             North Service Rd., Suite 1002

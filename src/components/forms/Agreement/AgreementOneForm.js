@@ -4,7 +4,7 @@ import SignaturePadComponent from '../../common/Retaineragreement/SignaturePadCo
 import { AddUpdateAgreement } from "../../../api/api"
 import useValidation from '../../common/useValidation';
 import { toast } from 'react-toastify';
-const AgreementOneForm = ({folderId,user_id, openSignature, emp_user_type, show, close, userData, setApicall, felidData, em }) => {
+const AgreementOneForm = ({setNavigateOnece,folderId,user_id, openSignature, emp_user_type, show, close, userData, setApicall, felidData, em }) => {
   const [loading, setLoading] = useState(false);
   // USER CATEGORY TYPE VALIDATION
   // INITIAL STATE ASSIGNMENT
@@ -86,7 +86,6 @@ const AgreementOneForm = ({folderId,user_id, openSignature, emp_user_type, show,
   // USER Test Email SUBMIT BUTTON
   const onFormSubmit = async (e) => {
     e.preventDefault();
-    console.log(state)
     setLoading(true);
     try {
       let res = await AddUpdateAgreement(state)

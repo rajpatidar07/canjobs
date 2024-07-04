@@ -44,7 +44,6 @@ export default function RetainerAgreement(props) {
   /*Function to add update retainer agreement */
   const onAddUpdateRetaine =async (e) => {
     e.preventDefault();
-    console.log(state)
     setLoading(true);
     try {
       let res = await AddUpdateAgreement(state)
