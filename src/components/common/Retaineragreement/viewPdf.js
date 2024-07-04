@@ -42,7 +42,7 @@ export default function ViewPdf({ show,
   }
   useEffect(() => {
     GetAgreementPdf()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   const addSignatureCLick = async () => {
     setOpenAddSignatureModal(true)
@@ -65,17 +65,18 @@ export default function ViewPdf({ show,
           Preview Agreement
         </h3>
         {openAddSignatureModal ?
-        <div className='border'>
-          <MainRetainerAggHtml
-            openSignature={"yes"}
-            userData={userData}
-            user_id={user_id}
-            emp_user_type={emp_user_type}
-            folderId={folderId}
-            setOpenAgreement={""}
-            agreementData={agreementData} />
-            </div>
-             :
+          <div className='border'>
+            <MainRetainerAggHtml
+              openSignature={"yes"}
+              userData={userData}
+              user_id={user_id}
+              emp_user_type={emp_user_type}
+              folderId={folderId}
+              setOpenAgreement={""}
+              agreementData={agreementData}
+              close={close} />
+          </div>
+          :
           <div>
             <div>
               {docLoader ? (
@@ -95,8 +96,8 @@ export default function ViewPdf({ show,
                 userType={""}
               />}
             </div>
-            <div className='d-flex justify-content-between p-4'>
-              <button className='btn btn-secondary' disabled={agreementData.initial} onClick={() => addSignatureCLick()}>Add Signature</button>
+            <div className={`${agreementData.initial ? "d-none" : "d-flex"} justify-content-between p-4`}>
+              <button className='btn btn-secondary' onClick={() => addSignatureCLick()}>Add Signature</button>
             </div>
           </div>}
       </div>

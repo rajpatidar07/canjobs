@@ -119,14 +119,15 @@
 // export default AggrementOne;
 import React, { useEffect, useState } from 'react';
 import { Document, Page, Text, View, StyleSheet, Image, PDFViewer, BlobProvider, Link } from '@react-pdf/renderer';
-import { useLocation } from 'react-router-dom';
 import moment from 'moment';
 import { AddSharePointDOcument, AddUpdateAgreement } from '../../../api/api';
 import { toast } from 'react-toastify';
 
 const AggrementOne = () => {
   const [blobData, setBlobData] = useState()
-  const { felidData, user_id, emp_user_type, folderId: folderID /*, code*/ } = useLocation().state;
+  const data = localStorage.getItem('agreementStateData');
+  const { felidData, user_id, emp_user_type, folderId: folderID /*, code*/ } = JSON.parse(data) || {}
+  console.log(JSON.parse(data), felidData)
   // const latestCode = JSON.stringify(code)
   //   .replace('" <', "<")
   //   .replace('>"', ">")
@@ -233,7 +234,7 @@ const AggrementOne = () => {
           console.error('Failed to create new blob');
           return;
         }
-        const file = new File([newBlob], `${felidData?.type.replace(" ","_")}.pdf`, { type: 'application/pdf' });
+        const file = new File([newBlob], `${felidData?.type.replace(" ", "_")}.pdf`, { type: 'application/pdf' });
         console.log('file =>', file)
         try {
           let res = await AddSharePointDOcument(
@@ -249,15 +250,15 @@ const AggrementOne = () => {
               autoClose: 1000,
             });
             try {
-              let data={
-                id:felidData.id,
-                type:felidData.type,
-                document_id:res.data.data[0][0].document_id
+              let data = {
+                id: felidData.id,
+                type: felidData.type,
+                document_id: res.data.data[0][0].document_id
               }
               let addDocId = AddUpdateAgreement(data)
               console.log(addDocId)
             } catch (error) {
-              
+
             }
           }
           // console.log(res.data)
@@ -282,9 +283,9 @@ const AggrementOne = () => {
       <View style={{ padding: "10px 20px" }}>
         <Text style={{ textAlign: "center" }}>RETAINER AGREEMENT</Text>
         <View style={{ display: "flex", justifyContent: "space-between" }}>
-          <Text style={{ fontWeight: "bold" }}>RCIC Membership Number<Text style={styles.textunderline}> :R533393 </Text>
+          <Text style={{ fontWeight: "bold" }}>RCIC Membership Number<Text style={styles.textunderline}> : R533393 </Text>
           </Text>
-          <Text style={{ fontWeight: "bold" }}>Client File Number:<Text style={styles.textunderline}> :{felidData.client_file_no} </Text>
+          <Text style={{ fontWeight: "bold" }}>Client File Number:<Text style={styles.textunderline}> : {felidData.client_file_no} </Text>
           </Text>
         </View>
         <View>
@@ -505,7 +506,7 @@ const AggrementOne = () => {
                       paddingBottom: 8, paddingTop: 8
                     }]}>
                       <Text>
-                        {parseInt(felidData.courier_charges)+parseInt(felidData.government_fees)}
+                        {parseInt(felidData.courier_charges) + parseInt(felidData.government_fees)}
 
                       </Text>
                     </View>
@@ -1238,15 +1239,11 @@ const AggrementOne = () => {
             }}>
               <View style={styles.clientForm}>
                 <View style={styles.clientFormChild}>
-                  <View className="para_gap" style={[styles.textunderline, { width: "100%", height: "auto" }]}>
-                    <Image style={[styles.textunderline]} src={felidData.client_signature || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"} />
-                  </View>
+                  <Text>________________</Text>
                   <Text style={{ margin: "0 0 30px 0" }}>Signature of Client</Text>
                 </View>
                 <View style={styles.clientFormChild}>
-                  <View className="para_gap" style={[styles.textunderline, { width: "100%", height: "auto" }]}>
-                    <Image style={[styles.textunderline]} src={felidData.rcic_signature || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"} />
-                  </View>
+                  <Text>________________</Text>
                   <Text style={{ margin: "0 0 30px 0" }}>Signature of RCIC</Text>
                 </View>
               </View>
@@ -1390,9 +1387,7 @@ const AggrementOne = () => {
                 <Text style={{ margin: "0 0 30px 0" }}>Client’s full name</Text>
               </View>
               <View style={styles.clientFormChild}>
-                <View className="para_gap" style={[styles.textunderline, { width: "100%", height: "auto" }]}>
-                  <Image style={[styles.textunderline]} src={felidData.client_signature || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"} />
-                </View>
+                <Text>__________</Text>
                 <Text style={{ margin: "0 0 30px 0" }}>Signatures</Text>
               </View>
               <View style={styles.clientFormChild}>
@@ -1404,7 +1399,7 @@ const AggrementOne = () => {
         </View>
       </View >
     </View >
-    
+
   return (
     <BlobProvider document={
       <Document>
@@ -1419,7 +1414,7 @@ const AggrementOne = () => {
               <Text>Office: 2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7, Canada | Tel.: 403.888.5308 |</Text>
               <Text style={{ color: "blue", textDecoration: "underline" }}>Email: info@canpathways.ca | Website: www.canpathways.ca</Text>
             </View>
-            <Image fixed style={[styles.textunderline, { width: "20%", left: 450, height: "auto" }]} src={felidData.initial ||"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"} />
+            {felidData.initial?<Image fixed style={[styles.textunderline, { width: "20%", left: 450, height: "auto" }]} src={felidData.initial } />: <Text>__________</Text>}
             <View className="initial" fixed style={styles.initial}>
               <Text>Initial:</Text>
             </View>
@@ -1440,7 +1435,7 @@ const AggrementOne = () => {
                   <Text>Office: 2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7, Canada | Tel.: 403.888.5308 |</Text>
                   <Text style={{ color: "blue", textDecoration: "underline" }}>Email: info@canpathways.ca | Website: www.canpathways.ca</Text>
                 </View>
-                <Image fixed style={[styles.textunderline, { width: "20%", left: 450, height: "auto" }]} src={felidData.initial ||"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"} />
+                {felidData.initial?<Image fixed style={[styles.textunderline, { width: "20%", left: 450, height: "auto" }]} src={felidData.initial } />: <Text>__________</Text>}
                 <View className="initial" fixed style={styles.initial}>
                   <Text>Initial:</Text>
                 </View>

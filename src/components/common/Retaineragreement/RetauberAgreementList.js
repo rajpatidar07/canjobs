@@ -82,6 +82,7 @@ export default function RetauberAgreementList({
                             folderId={folderId}
                             setOpenAgreement={setOpenAgreement}
                             agreementData={agreementData}
+                            callMainPageAPi={setApicall}
                         /> :
                         // isLoading ? (
                         //     <Loader />
@@ -195,8 +196,8 @@ export default function RetauberAgreementList({
                                                                 //     }
                                                                 // });
                                                             }}
-                                                            title="Open Agreement"
-                                                        >                                         Open Agreement
+                                                            title="View Agreement"
+                                                        >                                         View Agreement
                                                         </button>
                                                         <button
                                                             className="btn btn-outline-info action_btn "
@@ -216,7 +217,7 @@ export default function RetauberAgreementList({
                                                                 setOpenViewAgreement(true)
                                                                 setAgreementData(data)
                                                             }}
-                                                            title="View Agreement"><FaEye /></button>
+                                                            title="View Pdf"><FaEye /></button>
                                                     </div>
                                                 </td>
                                             </tr>

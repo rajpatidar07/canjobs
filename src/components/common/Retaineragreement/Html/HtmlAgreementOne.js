@@ -45,7 +45,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
     <div class="main_div" style="padding: 10px 20px">
       <h1 style="text-align: center">RETAINER AGREEMENT</h1>
       <div style="display: flex; justify-content: space-between">
-        <b>RCIC Membership Number<span> :R533393 </span></b>
+        <b>RCIC Membership Number<span> : R533393 </span></b>
         <b>Client File Number: <span>${felidData?.client_file_no || ""}</span></b>
       </div>
       <p>
@@ -53,9 +53,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
         between Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur
         (the “RCIC”), RCIC Membership Number <span>R533393</span>, phone number
         <span>4038885308</span>
-        <a href="mailto:info@canpathways.ca" class="a" target="_blank"
-          >, email </a
-        >info@canpathways.ca located at 2618
+        , email <a href="mailto:info@canpathways.ca" class="a" target="_blank">info@canpathways.ca located at 2618 </a>
         <span>Hopewell Pl NE #310 Calgary, AB T1Y 7J7,</span> <span>Canada</span> and Client  <span class="para_gap">${(felidData && (felidData.client_first_name || felidData.client_last_name) ? ((felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}</span>(the “Client”)<span class="p">, located at  <span class="para_gap"> ${felidData && felidData.client_address ? (felidData.client_address) : emp_user_type === "employer" ? (userData?.address || "") : (((userData?.current_location || "") || "") + " " + ((userData?.currently_located_country || "") || ""))}</span> </span> , email  <span class="para_gap">${felidData && felidData.client_email ? felidData.client_email : (userData?.email || "")}</span>, contact number  <span class="para_gap"> ${felidData && felidData.client_contact ? felidData.client_contact : (userData?.contact_no || "")}</span>.
       </p>
       <p>
@@ -362,7 +360,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
                 <p>this stage (Non- Refundable)</p>
               </td>
               <td>
-                <p>Applicable Government ProcessingFee</p>
+                <p>Applicable Government Processing Fee</p>
               </td>
             </tr>
             <tr>
@@ -469,7 +467,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
         </li>
         <br />
         <li data-list-text="5." style="font-size: 18px">
-          <p style="font-weight: 600">
+          <p>
             Methods of Payment: We DO NOT accept cheques.
           </p>
           <p>
@@ -479,16 +477,13 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
 
           <spanl id="l6">
             <li data-list-text="o">
-              <h3>
                 In-person Cash Drop-Off
                 <span class="p"
                   >– Please contact us to arrange a time to drop off your
                   payment in cash. We will provide you with a receipt.</span
                 >
-              </h3>
             </li>
             <li data-list-text="o">
-              <h3>
                 E-transfer
                 <a
                   href="mailto:accounts@canpathways.com"
@@ -502,10 +497,8 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
                   target="_blank"
                   >accounts@canpathways.com</a
                 >
-              </h3>
             </li>
             <li data-list-text="o">
-              <h3>
                 Credit Card/PayPal:
                 <span class="p"
                   >Instructions will be shared, additional up to </span
@@ -514,14 +507,12 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
                   >charges will be applicable if the client is willing to pay by
                   this method.</span
                 >
-              </h3>
               <p>
                 For Clients Located OUTSIDE Canada, we receive the following
                 payment options:
               </p>
               <spanl id="l7">
                 <li data-list-text="o">
-                  <h3>
                     Wire Transfer<span class="p"
                       >- Bank details will be provided once the contract is
                       being signed. (*Banks usually charge a processing fee for
@@ -531,10 +522,8 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
                       >fee on top of your payment EVERY TIME you make a wire
                       transfer;</span
                     >
-                  </h3>
                 </li>
                 <li data-list-text="o">
-                  <h3>
                     Paypal:
                     <span class="p"
                       >Instructions will be shared, additional up to </span
@@ -543,7 +532,6 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
                       >charges will be applicable if the client is willing to
                       pay by this method.</span
                     >
-                  </h3>
                 </li>
               </spanl>
             </li>
@@ -1024,17 +1012,14 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
       <br /><br />
       <div style="display: flex; flex-wrap: wrap">
         <div style="width: 50%">
-          <p class="para_gap" style="margin: 0"><img src=${felidData.client_signature ?
-      felidData?.client_signature : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"}
-           alt="${(felidData && (felidData.client_first_name || felidData.client_last_name) ? ((felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}"
-          style="max-width: 200px; float: right"/></p>  
+          <p class="para_gap" style="margin: 0">
+          
+          </p>  
           <p style="margin: 0 0 30px 0">Signature of Client</p>
         </div>
         <div style="width: 50%">
-          <p class="para_gap" style="margin: 0"><img src=${felidData.rcic_signature ?
-      felidData?.rcic_signature : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"}
-           alt="Harpreet Kaur"
-          style="max-width: 200px; float: right"/></p>
+          <p class="para_gap" style="margin: 0">
+          </p>
           <p style="margin: 0 0 30px 0">Signature of RCIC</p>
         </div>
         <div style="width: 50%">
@@ -1046,11 +1031,11 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
           <p style="margin: 0 0 30px 0">Name of RCIC</p>
         </div>
         <div style="width: 50%">
-          <p class="para_gap" style="margin: 0">${felidData.date_signature_client ? felidData?.date_signature_client: ""}</p>
+          <p class="para_gap" style="margin: 0">${felidData.date_signature_client ? felidData?.date_signature_client : ""}</p>
           <p style="margin: 0 0 30px 0">Date</p>
         </div>
         <div style="width: 50%">
-          <p class="para_gap" style="margin: 0">${felidData.date_signature_rcic ? felidData?.date_signature_rcic: ""}</p>
+          <p class="para_gap" style="margin: 0">${felidData.date_signature_rcic ? felidData?.date_signature_rcic : ""}</p>
           <p style="margin: 0 0 30px 0">Date</p>
         </div>
       </div>
@@ -1089,7 +1074,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
       <ol id="l13">
         <li data-list-text="1.">
           <p>
-            I affirm that neither I nor any other family members included in my
+            I confirm that neither I nor any other family members included in my
             application have presented or will present at any future date, false
             and misleading information to either the consultant, the firm or to
             the government of Canada.
@@ -1097,7 +1082,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
         </li>
         <li data-list-text="2.">
           <p>
-            I affirm that neither I nor any other family members included in my
+            I confirm that neither I nor any other family members included in my
             application have presented or will present at any future date,
             fraudulently obtained or forged documents to either the consultant,
             the firm or to the government of Canada.
@@ -1105,7 +1090,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
         </li>
         <li data-list-text="3.">
           <p>
-            I affirm that it is my responsibility to ensure the co-operation of
+            I confirm that it is my responsibility to ensure the co-operation of
             my relatives/employers/educational institutes as needed.
           </p>
         </li>
@@ -1175,14 +1160,13 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
           <p style="margin: 0 0 30px 0">Client’s full name</p>
         </div>
         <div style="width: 33.33%; text-align: center">
-          <p class="para_gap" style="margin: 0"><img src=${felidData.client_signature ?
-      felidData?.client_signature : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"}
-           alt="${(felidData && (felidData.client_first_name || felidData.client_last_name) ? ((felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}"
-          style="max-width: 200px; float: right"/></p>
+          <p class="para_gap" style="margin: 0">
+          
+          </p>
           <p style="margin: 0 0 30px 0">Signatures</p>
         </div>
         <div style="width: 33.33%; text-align: center">
-          <p class="para_gap" style="margin: 0">${felidData.date_signature_client ? felidData?.date_signature_client: ""}</p>
+          <p class="para_gap" style="margin: 0">${felidData.date_signature_client ? felidData?.date_signature_client : ""}</p>
           <p style="margin: 0 0 30px 0">Date</p>
         </div>
       </div>
@@ -1207,6 +1191,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
           src=${felidData.initial ? felidData?.initial : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"}
           alt="${(felidData && (felidData.client_first_name || felidData.client_last_name) ? ((felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}"
           style="max-width: 200px; float: right"
+          class=${felidData.initial ? "d-block" : "d-none"}
         />
       </div>
     </div>

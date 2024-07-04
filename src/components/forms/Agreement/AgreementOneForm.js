@@ -4,7 +4,7 @@ import SignaturePadComponent from '../../common/Retaineragreement/SignaturePadCo
 import { AddUpdateAgreement } from "../../../api/api"
 import useValidation from '../../common/useValidation';
 import { toast } from 'react-toastify';
-const AgreementOneForm = ({ openSignature, emp_user_type, show, close, userData, setApicall, felidData, em }) => {
+const AgreementOneForm = ({folderId,user_id, openSignature, emp_user_type, show, close, userData, setApicall, felidData, em }) => {
   const [loading, setLoading] = useState(false);
   // USER CATEGORY TYPE VALIDATION
   // INITIAL STATE ASSIGNMENT
@@ -97,7 +97,7 @@ const AgreementOneForm = ({ openSignature, emp_user_type, show, close, userData,
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        close()
+          close()
         setApicall(true)
       }
     } catch (err) {
@@ -107,11 +107,10 @@ const AgreementOneForm = ({ openSignature, emp_user_type, show, close, userData,
   };
   useEffect(() => {
     if (state.initial) {
-      setState({ ...state, signature_status: "1" });
+      setState({ ...state, signature_status: "1", pdf_genrated_status: "1" });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.initial])
-  console.log(state.initial)
   return (
     <Modal
       show={show}
