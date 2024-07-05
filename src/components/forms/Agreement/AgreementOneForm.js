@@ -219,7 +219,7 @@ const AgreementOneForm = ({ folderId, user_id, openSignature, emp_user_type, sho
             {/* <div className="form-group col-md-6 mb-0 mt-4">
               <SignaturePadComponent setState={setState} state={state} label="Client’s Signature" name="client_signature" />
             </div> */}
-            <div className={openSignature === "yes" ? "form-group col-md-6 mb-0 mt-4" : "d-none"}>
+            <div className={openSignature === "yes" ? "form-group col-md-12 mb-0 mt-4" : "d-none"}>
               <SignaturePadComponent setState={setState} state={state} label="Initial" name="initial" />
             </div>
           </div>
