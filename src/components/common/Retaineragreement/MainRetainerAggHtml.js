@@ -3,7 +3,6 @@ import AgreementOneForm from '../../forms/Agreement/AgreementOneForm'
 import { AddUpdateAgreement, GetAgreement } from '../../../api/api'
 import HtmlAgreementOne from './Html/HtmlAgreementOne'
 import HtmlAgreementTwo from './Html/HtmlAgreementTwo'
-import { IoArrowBackCircleOutline } from "react-icons/io5";
 import { Link } from "react-router-dom"
 import HtmlAgreementThree from './Html/HtmlAgreementThree'
 import HtmlAGreementFour from './Html/HtmlAGreementFour'
@@ -19,6 +18,7 @@ import HtmlAgreementThirteen from './Html/HtmlAgreementThirteen'
 import HtmlAgreementFourTeen from './Html/HtmlAgreementFourTeen'
 import HtmlAgreementFifteenth from './Html/HtmlAgreementFifteenth'
 import HtmlAgreementsixteen from './Html/HtmlAgreementsixteen'
+import { IoMdArrowBack } from 'react-icons/io'
 export default function MainRetainerAggHtml({ setApicall, close, openSignature, agreementData, user_id, emp_user_type, folderId, userData, setOpenAgreement }) {
   const [openAddFeildsModal, setOpenAddFeildsModal] = useState(false)
   const [apicall, setapicall] = useState(false)
@@ -75,10 +75,33 @@ export default function MainRetainerAggHtml({ setApicall, close, openSignature, 
     <div className='mb-12'>
       {/* <ToastContainer /> */}
       <div className={`d-flex ${openSignature === "yes" ? "justify-content-end px-2" : "justify-content-space-between"} mt-5`}>
-        <Link className={openSignature === "yes" ? "d-none" : ''} onClick={() => {
-          setOpenAgreement(false)
-          setApicall(true)
-        }} style={{ cursor: "pointer" }}><IoArrowBackCircleOutline className='icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8' /></Link>
+        <div className="back_btn_div">
+          <Link
+            className="rounded-circle back-btn"
+            style={{
+              position: "absolute",
+              top: 5,
+              left: 5,
+              background: "#fff",
+              width: 35,
+              height: 35,
+              fontSize: 24,
+              zIndex: 99,
+              display: "flex",
+              justifyContent: "center",
+              boxShadow: "0 0 4px #ccc",
+              alignItems: "center",
+              textDecoration: "none", // Added to remove underline from Link
+            }}
+            to=""
+            onClick={() => {
+              setOpenAgreement(false)
+              setApicall(true)
+            }}
+          >
+            <IoMdArrowBack />
+          </Link>
+        </div>
         <div>
           <button className='btn btn-primary text-end m-2' onClick={() => setOpenAddFeildsModal(true)}>{openSignature === "yes" ? "Add Signature" : "Add Felids"}</button>
           <button className={felidData.agreement_date ? "btn btn-primary m-2" : "d-none"}
@@ -137,17 +160,17 @@ export default function MainRetainerAggHtml({ setApicall, close, openSignature, 
                           ? <HtmlAgreementTen />
                           : agreementData.type === "spousal sponsorship"
                             ? <HtmlAgreementEleven />
-                            :  agreementData.type ==="citizenship"
-                            ?<HtmlAgreementTwelve/>
-                            : agreementData.type ==="PR card renewal"
-                            ?<HtmlAgreementThirteen/>
-                            : agreementData.type === "permanent residency travel document"
-                            ?<HtmlAgreementFourTeen/>
-                          : agreementData.type === "employers"
-                           ?<HtmlAgreementFifteenth/>
-                           :agreementData.type === "LMIA exempt employers"
-                           ?<HtmlAgreementsixteen/>
-                           :null
+                            : agreementData.type === "citizenship"
+                              ? <HtmlAgreementTwelve />
+                              : agreementData.type === "PR card renewal"
+                                ? <HtmlAgreementThirteen />
+                                : agreementData.type === "permanent residency travel document"
+                                  ? <HtmlAgreementFourTeen />
+                                  : agreementData.type === "employers"
+                                    ? <HtmlAgreementFifteenth />
+                                    : agreementData.type === "LMIA exempt employers"
+                                      ? <HtmlAgreementsixteen />
+                                      : null
       }
       <button className={felidData.agreement_date ? "btn btn-primary" : "d-none"}
         onClick={async () => {
