@@ -63,7 +63,7 @@ export default function RetauberAgreementList({
 
     return (
 
-        <div className='response_main_div w-100'>
+        <div className='response_main_div w-100 mb-10'>
             <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
                 <div className={`${openAgreement ? "d-none" : "d-flex"} justify-content-between`}>
                     <div className='p-3'>

@@ -8,6 +8,17 @@ import { Link } from "react-router-dom"
 import HtmlAgreementThree from './Html/HtmlAgreementThree'
 import HtmlAGreementFour from './Html/HtmlAGreementFour'
 import HtmlAgreementFive from './Html/HtmlAgreementFive'
+import HtmlAgreementSix from './Html/HtmlAgreementSix'
+import HtmlAgreementSeven from './Html/HtmlAgreementSeven'
+import HtmlAgreementEight from './Html/HtmlAgreementEight'
+import HTmlAgreementNine from './Html/HTmlAgreementNine'
+import HtmlAgreementTen from './Html/HtmlAgreementTen'
+import HtmlAgreementEleven from './Html/HtmlAgreementEleven'
+import HtmlAgreementTwelve from './Html/HtmlAgreementTwelve'
+import HtmlAgreementThirteen from './Html/HtmlAgreementThirteen'
+import HtmlAgreementFourTeen from './Html/HtmlAgreementFourTeen'
+import HtmlAgreementFifteenth from './Html/HtmlAgreementFifteenth'
+import HtmlAgreementsixteen from './Html/HtmlAgreementsixteen'
 export default function MainRetainerAggHtml({ setApicall, close, openSignature, agreementData, user_id, emp_user_type, folderId, userData, setOpenAgreement }) {
   const [openAddFeildsModal, setOpenAddFeildsModal] = useState(false)
   const [apicall, setapicall] = useState(false)
@@ -68,7 +79,41 @@ export default function MainRetainerAggHtml({ setApicall, close, openSignature, 
           setOpenAgreement(false)
           setApicall(true)
         }} style={{ cursor: "pointer" }}><IoArrowBackCircleOutline className='icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8' /></Link>
-        <button className='btn btn-primary text-end' onClick={() => setOpenAddFeildsModal(true)}>{openSignature === "yes" ? "Add Signature" : "Add Felids"}</button>
+        <div>
+          <button className='btn btn-primary text-end m-2' onClick={() => setOpenAddFeildsModal(true)}>{openSignature === "yes" ? "Add Signature" : "Add Felids"}</button>
+          <button className={felidData.agreement_date ? "btn btn-primary m-2" : "d-none"}
+            onClick={async () => {
+              if (openSignature === "yes") {
+
+              } {
+                if (agreementData.pdf_genrated_status === "0") {
+                  let data = {
+                    ...agreementData,
+                    pdf_genrated_status: "1"
+                  }
+                  try {
+                    await AddUpdateAgreement(data)
+                    setApicall(true)
+                  } catch (error) {
+                    console.log(error)
+                  }
+                }
+                const stateData = {
+                  user_id: user_id,
+                  emp_user_type: emp_user_type,
+                  folderId: folderId,
+                  felidData: felidData,
+                };
+                // Serialize the state data to pass as query parameters
+                const newPageUrl = `/agreeone`
+                localStorage.setItem('agreementStateData', JSON.stringify(stateData));
+                // Open the new page in a new tab
+                window.open(newPageUrl, '_blank')
+              }
+            }}
+          >
+            Generated Pdf</button>
+        </div>
       </div>
       {agreementData.type === "temporary resident visa"
         ? <HtmlAgreementOne userData={userData} felidData={felidData} emp_user_type={emp_user_type} />
@@ -76,9 +121,34 @@ export default function MainRetainerAggHtml({ setApicall, close, openSignature, 
           ? <HtmlAgreementTwo userData={userData} felidData={felidData} emp_user_type={emp_user_type} />
           : agreementData.type === "visitor"
             ? <HtmlAgreementThree /> :
-            agreementData.type === "study"?
-            <HtmlAGreementFour/>
-            :agreementData.type === "Work permit	"?<HtmlAgreementFive/>:null}
+            agreementData.type === "study" ?
+              <HtmlAGreementFour />
+              : agreementData.type === "work permit"
+                ? <HtmlAgreementFive />
+                : agreementData.type === "post graduation work permit"
+                  ? <HtmlAgreementSix />
+                  : agreementData.type === "prospective workers"
+                    ? <HtmlAgreementSeven />
+                    : agreementData.type === "express entry"
+                      ? <HtmlAgreementEight />
+                      : agreementData.type === "PNP + express entry/federal PR"
+                        ? <HTmlAgreementNine />
+                        : agreementData.type === "super visa application"
+                          ? <HtmlAgreementTen />
+                          : agreementData.type === "spousal sponsorship"
+                            ? <HtmlAgreementEleven />
+                            :  agreementData.type ==="citizenship"
+                            ?<HtmlAgreementTwelve/>
+                            : agreementData.type ==="PR card renewal"
+                            ?<HtmlAgreementThirteen/>
+                            : agreementData.type === "permanent residency travel document"
+                            ?<HtmlAgreementFourTeen/>
+                          : agreementData.type === "employers"
+                           ?<HtmlAgreementFifteenth/>
+                           :agreementData.type === "LMIA exempt employers"
+                           ?<HtmlAgreementsixteen/>
+                           :null
+      }
       <button className={felidData.agreement_date ? "btn btn-primary" : "d-none"}
         onClick={async () => {
           if (openSignature === "yes") {

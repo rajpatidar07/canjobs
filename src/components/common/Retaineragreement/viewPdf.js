@@ -45,11 +45,21 @@ export default function ViewPdf({ show,
     GetAgreementPdf()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+  /*FUnction to open add signature modal */
   const addSignatureCLick = async () => {
     setOpenViewAgreementSign("sign")
     setOpenAddAgreementFelids(true)
     close()
   }
+//   const DownloadPdf = (pdf) => {
+//     const pdfUrl = pdf["@microsoft.graph.downloadUrl"];
+//     const link = document.createElement("a");
+//     link.href = pdfUrl;
+//     link.download = pdf.name; // specify the filename
+//     document.body.appendChild(link);
+//     link.click();
+//     document.body.removeChild(link);
+// };
   return (
     <Modal show={show}
       size="lg"
@@ -101,8 +111,9 @@ export default function ViewPdf({ show,
                 userType={""}
               />}
             </div>
-            <div className={`${agreementData.initial ? "d-none" : "d-flex"} justify-content-between p-4`}>
-              <button className='btn btn-secondary' onClick={() => addSignatureCLick()}>Add Signature</button>
+            <div className={`"d-flex justify-content-between p-4`}>
+              <button className={agreementData.initial ? "d-none" :'btn btn-secondary'} onClick={() => addSignatureCLick()}>Add Signature</button>
+              {/* <button className='btn btn-info' onClick={() => DownloadPdf(pdf)}>Download</button> */}
             </div>
           </div>}
       </div>

@@ -158,7 +158,7 @@ const AggrementOne = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blobData])
   let components =
-    <View>
+    <View style={{height:"auto"}}>
       <View style={{ padding: "10px 20px" }}>
         <Text style={{ textAlign: "center" }}>RETAINER AGREEMENT</Text>
         <View style={{ display: "flex", justifyContent: "space-between" }}>
@@ -311,7 +311,8 @@ const AggrementOne = () => {
                 administrative fee of CAD$ 300.00 plus taxes should be paid by client to
                 close the file. All pending fees are due and are to be paid by client and
                 if there is any unused money with RCIC, it should be refunded to client
-                if applicable.
+                if applicable.      
+                 
               </Text>
               <Text style={{ marginTop: 10 }}>
                 3.9    Client has been explained by RCIC and is aware of high chances of
@@ -463,13 +464,13 @@ const AggrementOne = () => {
               </View>
               <View style={styles.row}>
                 <View style={styles.cell}>
-                  <Text>
+                  <Text style={{marginTop:2}}>
                     Step 2 Application preparation, filling out the forms,
                     information verification and completeness check, preparing the
                     application package
+                    Payment is due before final submission of application.
+                    Provide proof of submission to the client
                   </Text>
-                  <Text>Payment is due before final submission of application.</Text>
-                  <Text>Provide proof of submission to the client</Text>
                 </View>
                 <View style={styles.cell}></View>
                 <View style={styles.cell}>
@@ -479,9 +480,8 @@ const AggrementOne = () => {
                     charges to be collected regardless, whether the client/ s
                     withdraw from the file at this stage. The government fee and
                     courier charges must be paid apart from professional fees
-                    payment
+                    payment scheduled at this stage
                   </Text>
-                  <Text>scheduled at this stage</Text>
                 </View>
                 <View style={styles.cell}><Text>{felidData.applicable_retainer_fee_stape_2}</Text></View>
                 <View style={styles.cell}><Text>{felidData.applicable_government_processing_fee_stape_2}</Text></View>
@@ -612,7 +612,7 @@ const AggrementOne = () => {
                     </Text>
                   </View>
                   <View data-list-text="o">
-                    <Text>
+                    <Text style={{marginTop:5}}>
                       <Text style={{ fontWeight: "bold" }}>o   Paypal:</Text>
                       Instructions will be shared, additional up to<Text style={{ fontWeight: "bold" }}> 5%</Text>
                       charges will be applicable if the client is willing to
@@ -640,7 +640,7 @@ const AggrementOne = () => {
             </Text>
           </ View>
           <View data-list-text="7." >
-            <Text style={[{ fontWeight: 600 }, styles.definition]}>7. Refund Policy</Text>
+            <Text style={[{ fontWeight: 600,marginTop:15 }, styles.definition]}>7. Refund Policy</Text>
             <Text style={{ marginTop: 10 }}>
               The Client acknowledges that the granting of a visa or status and
               the time required for processing this application is at the sole
@@ -766,14 +766,16 @@ const AggrementOne = () => {
               demanded by the Council or required under law. The RCIC, and all
               agents and employees of the RCIC, are also bound by the
               confidentiality requirements of Article 8 of the Code of
-              Professional Ethics.
+              Professional Ethics. 
+
             </Text>
 
-            <Text style={{ marginTop: 5 }}>
+            <Text style={{ marginTop: 15 }}>
               The Client agrees to the use of electronic communication and storage
               of confidential information. The RCIC will use his/her best efforts
               to maintain a high degree of security for electronic communication
               and information storage.
+               
             </Text>
             <Text style={{ marginTop: 5 }}>
               The client must file a written authorization with the RCIC, naming
@@ -1289,7 +1291,7 @@ const AggrementOne = () => {
             <View style={styles.section}>
               {components}
             </View>
-            <View className="footer" fixed style={{ color: "red", textAlign: "center", marginTop: 15 }}>
+            <View className="footer" fixed style={{ color: "red", textAlign: "center", marginTop: 25 }}>
               <Text>Office: 2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7, Canada | Tel.: 403.888.5308 |</Text>
               <Text style={{ color: "blue", textDecoration: "underline" }}>Email: info@canpathways.ca | Website: www.canpathways.ca</Text>
             </View>
@@ -1303,14 +1305,14 @@ const AggrementOne = () => {
       {({ blob, url, loading, error }) => {
         setBlobData(blob)
         // Do whatever you need with blob here
-        return <PDFViewer width="100%" height="900">
+        return <PDFViewer width="100%" height="900" >
           <Document>
             <Page size="A4" style={styles.page}>
               <View>
                 <Image fixed style={styles.image} src={"https://canpathwaysjobs.com/image/00logo-main-black.png"} />
                 {components}
 
-                <View className="footer" fixed style={{ color: "red", textAlign: "center" }}>
+                <View className="footer" fixed style={{ color: "red", textAlign: "center", marginTop: 25 }}>
                   <Text>Office: 2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7, Canada | Tel.: 403.888.5308 |</Text>
                   <Text style={{ color: "blue", textDecoration: "underline" }}>Email: info@canpathways.ca | Website: www.canpathways.ca</Text>
                 </View>
