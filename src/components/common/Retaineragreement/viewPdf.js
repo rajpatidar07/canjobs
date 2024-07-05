@@ -3,7 +3,7 @@ import { Modal } from 'react-bootstrap'
 import { getSharePointParticularFolders } from '../../../api/api';
 import AdobePDFViewer from '../Adobe/adobeFile';
 import Loader from "../../common/loader"
-import MainRetainerAggHtml from './MainRetainerAggHtml';
+// import MainRetainerAggHtml from './MainRetainerAggHtml';
 
 export default function ViewPdf({ show,
   close,
@@ -12,9 +12,10 @@ export default function ViewPdf({ show,
   userData,
   setApicall,
   folderId,
-  user_id }) {
+  user_id,
+  setOpenViewAgreementSign,setOpenAddAgreementFelids }) {
   let [docLoader, setDocLoder] = useState(false)
-  let [openAddSignatureModal, setOpenAddSignatureModal] = useState(false)
+  // let [openAddSignatureModal, setOpenAddSignatureModal] = useState(false)
   let [pdf, setPdf] = useState("")
   const GetAgreementPdf = async () => {
     try {
@@ -45,7 +46,9 @@ export default function ViewPdf({ show,
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   const addSignatureCLick = async () => {
-    setOpenAddSignatureModal(true)
+    setOpenViewAgreementSign("sign")
+    setOpenAddAgreementFelids(true)
+    close()
   }
   return (
     <Modal show={show}
@@ -64,20 +67,21 @@ export default function ViewPdf({ show,
         <h3 className='text-center'>
           Preview Agreement
         </h3>
-        {openAddSignatureModal ?
-          <div className='border'>
-            <MainRetainerAggHtml
-              openSignature={"yes"}
-              userData={userData}
-              user_id={user_id}
-              emp_user_type={emp_user_type}
-              folderId={folderId}
-              setOpenAgreement={""}
-              agreementData={agreementData}
-              close={close}
-              setApicall={setApicall} />
-          </div>
-          :
+        {
+        // openAddSignatureModal ?
+        //   <div className='border'>
+        //     <MainRetainerAggHtml
+        //       openSignature={"yes"}
+        //       userData={userData}
+        //       user_id={user_id}
+        //       emp_user_type={emp_user_type}
+        //       folderId={folderId}
+        //       setOpenAgreement={""}
+        //       agreementData={agreementData}
+        //       close={close}
+        //       setApicall={setApicall} />
+        //   </div>
+        //   :
           <div>
             <div>
               {docLoader ? (

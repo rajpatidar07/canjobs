@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Modal } from "react-bootstrap"
 import SignaturePadComponent from '../../common/Retaineragreement/SignaturePadComponent';
-import { AddUpdateAgreement } from "../../../api/api"
+import { AddUpdateAgreement, GetAgreement } from "../../../api/api"
 import useValidation from '../../common/useValidation';
 import { toast } from 'react-toastify';
-const AgreementOneForm = ({setNavigateOnece,folderId,user_id, openSignature, emp_user_type, show, close, userData, setApicall, felidData, em }) => {
+const AgreementOneForm = ({ folderId, user_id, openSignature, emp_user_type, show, close, userData, setApicall, felidData }) => {
   const [loading, setLoading] = useState(false);
   // USER CATEGORY TYPE VALIDATION
   // INITIAL STATE ASSIGNMENT
@@ -87,6 +87,7 @@ const AgreementOneForm = ({setNavigateOnece,folderId,user_id, openSignature, emp
   const onFormSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    // console.log(state)
     try {
       let res = await AddUpdateAgreement(state)
       if (res.data.status === 1 && res.data.message === "Agreement updated successfully.") {
@@ -96,7 +97,30 @@ const AgreementOneForm = ({setNavigateOnece,folderId,user_id, openSignature, emp
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-          close()
+        if (openSignature === "yes") {
+          try {
+            let res = await GetAgreement("", user_id, emp_user_type, felidData.type)
+
+            /*FUnction to generate pdf after adding signature */
+            if (openSignature === "yes" && res.data.data[0].initial && res.data.data[0].signature_status === "1") {
+              const stateData = {
+                user_id: user_id,
+                emp_user_type: emp_user_type,
+                folderId: folderId,
+                felidData: res.data.data[0],
+              };
+              const newPageUrl = `/agreeone`
+              localStorage.setItem('agreementStateData', JSON.stringify(stateData));
+              // Open the new page in a new tab
+              setApicall(true)
+              close()
+              window.open(newPageUrl, '_blank')
+            }
+          } catch (error) {
+            console.log(error)
+          }
+        }
+        close()
         setApicall(true)
       }
     } catch (err) {
@@ -121,7 +145,7 @@ const AgreementOneForm = ({setNavigateOnece,folderId,user_id, openSignature, emp
         type="button"
         className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
         data-dismiss="modal"
-        onClick={close}
+        onClick={() => { close() }}
       >
         <i className="fas fa-times"></i>
       </button>

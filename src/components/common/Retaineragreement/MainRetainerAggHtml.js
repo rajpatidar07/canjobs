@@ -19,20 +19,20 @@ export default function MainRetainerAggHtml({ setApicall, close, openSignature, 
       if (res.data.data) {
         setFelidData(res.data.data[0])
         /*FUnction to generate pdf after adding signature */
-        if (openSignature === "yes" && res.data.data[0].initial && res.data.data[0].signature_status === "1") {
-          const stateData = {
-            user_id: user_id,
-            emp_user_type: emp_user_type,
-            folderId: folderId,
-            felidData: res.data.data[0],
-          };
-          const newPageUrl = `/agreeone`
-          localStorage.setItem('agreementStateData', JSON.stringify(stateData));
-          // Open the new page in a new tab
-          setApicall(true)
-          close()
-          window.open(newPageUrl, '_blank')
-        }
+        // if (openSignature === "yes" && res.data.data[0].initial && res.data.data[0].signature_status  === "1") {
+        //   const stateData = {
+        //     user_id: user_id,
+        //     emp_user_type: emp_user_type,
+        //     folderId: folderId,
+        //     felidData: res.data.data[0],
+        //   };
+        //   const newPageUrl = `/agreeone`
+        //   localStorage.setItem('agreementStateData', JSON.stringify(stateData));
+        //   // Open the new page in a new tab
+        //   setApicall(true)
+        //   close()
+        //   window.open(newPageUrl, '_blank')
+        // }
       } else {
         setFelidData([])
       }
@@ -50,16 +50,16 @@ export default function MainRetainerAggHtml({ setApicall, close, openSignature, 
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apicall])
-  useEffect(() => {
-    if (openSignature === "yes") {
-      if ((agreementData.signature_status === "0" && !agreementData.initial) || (felidData.signature_status === "0" && !felidData.initial)) {
-        setOpenAddFeildsModal(true)
-      } else {
-        setOpenAddFeildsModal(false)
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  // useEffect(() => {
+  //   if (openSignature === "yes") {
+  //     if ((agreementData.signature_status === "0" && !agreementData.initial) || (felidData.signature_status === "0" && !felidData.initial)) {
+  //       setOpenAddFeildsModal(true)
+  //     } else {
+  //       setOpenAddFeildsModal(false)
+  //     }
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [])
   return (
     <div className='mb-12'>
       {/* <ToastContainer /> */}
@@ -76,10 +76,9 @@ export default function MainRetainerAggHtml({ setApicall, close, openSignature, 
           ? <HtmlAgreementTwo userData={userData} felidData={felidData} emp_user_type={emp_user_type} />
           : agreementData.type === "visitor"
             ? <HtmlAgreementThree /> :
-            agreementData.type === "study" ?
-              <HtmlAGreementFour />
-              : agreementData.type === "work permit"
-                ? <HtmlAgreementFive /> : null}
+            agreementData.type === "study"?
+            <HtmlAGreementFour/>
+            :agreementData.type === "Work permit	"?<HtmlAgreementFive/>:null}
       <button className={felidData.agreement_date ? "btn btn-primary" : "d-none"}
         onClick={async () => {
           if (openSignature === "yes") {
@@ -121,7 +120,7 @@ export default function MainRetainerAggHtml({ setApicall, close, openSignature, 
           felidData={felidData}
           emp_user_type={emp_user_type}
           user_id={user_id}
-          openSignature={openSignature}
+          // openSignature={openSignature}
           ViewPdfclose={close}
           folderId={folderId} />
         : null}

@@ -21,6 +21,7 @@ export default function RetauberAgreementList({
     const [openAddAgreementForm, setOpenAddAgreementForm] = useState(false);
     const [openAddAgreementFelids, setOpenAddAgreementFelids] = useState(false);
     const [openViewAgreement, setOpenViewAgreement] = useState(false);
+    const [openViewAgreementSign, setOpenViewAgreementSign] = useState("");
     const [agreementList, setAgreementList] = useState([]);
     const [agreementData, setAgreementData] = useState("");
     const [apicall, setApicall] = useState(false)
@@ -100,8 +101,7 @@ export default function RetauberAgreementList({
                                         className="text-gray"
                                     // title="Sort by id"
                                     > */}
-                                        S.NO.
-                                        {/* </Link> */}
+                                        S.No                                        {/* </Link> */}
                                     </th>
                                     <th scope="col" className="border-0 font-size-4 font-weight-normal">
                                         {/* <Link
@@ -190,6 +190,7 @@ export default function RetauberAgreementList({
                                                             onClick={() => {
                                                                 setOpenAgreement(true)
                                                                 setAgreementData(data)
+                                                                setOpenViewAgreementSign("")
                                                                 // navigate("/agreepreivew", {
                                                                 //     state: {
                                                                 //         user_id: user_id,
@@ -251,11 +252,18 @@ export default function RetauberAgreementList({
                 {openAddAgreementFelids ?
                     <AgreementOneForm
                         show={openAddAgreementFelids}
-                        close={() => setOpenAddAgreementFelids()}
+                        close={() => {
+                            setOpenAddAgreementFelids(false)
+                            setOpenViewAgreementSign("")
+                        }}
                         userData={userData}
                         setApicall={setApicall}
                         felidData={agreementData}
-                        emp_user_type={emp_user_type} />
+                        emp_user_type={emp_user_type}
+                        user_id={user_id}
+                        openSignature={openViewAgreementSign === "sign" ? "yes" : "no"}
+                        folderId={folderId}
+                    />
                     : null}
                 {openAddAgreementForm ?
                     <RetainerAgreement
@@ -276,6 +284,8 @@ export default function RetauberAgreementList({
                         setApicall={setApicall}
                         folderId={folderId}
                         user_id={user_id}
+                        setOpenAddAgreementFelids={setOpenAddAgreementFelids}
+                        setOpenViewAgreementSign={setOpenViewAgreementSign}
                     />
                     : null}
             </div>

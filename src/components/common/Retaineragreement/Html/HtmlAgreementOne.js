@@ -293,6 +293,12 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
             </thead>
 
             <tbody>
+            <tr>
+                <td style="text-align: center; border: 1px solid black">
+                  Professional Fees
+                </td>
+                <td style="border: 1px solid black">${felidData?.professional_fees || ""}</td>
+              </tr>
               <tr>
                 <td
                   rowspan="3"
@@ -324,7 +330,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
                 <td style="text-align: center; border: 1px solid black">
                   Balance (Paid at time of filing):
                 </td>
-                <td style="border: 1px solid black">${felidData?.balance_paid_at_time_of_filing || ""}</td>
+                <td style="border: 1px solid black">${felidData?.balance || ""}</td>
               </tr>
               <tr>
                 <td style="text-align: center; border: 1px solid black">
@@ -408,8 +414,8 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
           </table>
           <p>
             Total Amount: (Non-Refundable) (Paid at signing of contract and
-            sharing of checklist): $ Balance (Non-Refundable) (Paid at time of
-            filing): $
+            sharing of checklist): ${felidData?.total_amount_signing_of_contract||""} $<br> Balance (Non-Refundable) (Paid at time of
+            filing): ${felidData?.balance_paid_at_time_of_filing||""} $
           </p>
           <p>Note:</p>
           <spanl id="l5">
@@ -980,14 +986,14 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
       </ol>
       <p>Client Name</p>
       <p>
-        Given Name  <span class="para_gap">${(felidData && felidData.client_first_name ? felidData?.client_first_name : (emp_user_type === "employee" ? (userData?.name || "") : (userData?.company_name || ""))?.split(" ")[0])} </span>Family Name
+        Given Name :  <span class="para_gap">${(felidData && felidData.client_first_name ? felidData?.client_first_name : (emp_user_type === "employee" ? (userData?.name || "") : (userData?.company_name || ""))?.split(" ")[0])} </span>Family Name :
          <span class="para_gap">${(felidData.client_last_name ? felidData?.client_last_name : " ") ?? (emp_user_type === "employee" ? (userData?.name || "") : (userData?.company_name || ""))?.split(" ")[1]} </span>
-        Address  <span class="para_gap">${felidData && felidData.client_address ? felidData.client_address : emp_user_type === "employer" ? (userData?.address || "") : ((userData?.current_location || "") + " " + (userData?.currently_located_country || ""))} </span> Telephone Number  <span class="para_gap">${felidData && felidData.client_contact ? felidData.client_contact : (userData?.contact_no || "")}
+        Address :  <span class="para_gap">${felidData && felidData.client_address ? felidData.client_address : emp_user_type === "employer" ? (userData?.address || "") : ((userData?.current_location || "") + " " + (userData?.currently_located_country || ""))} </span> Telephone Number :  <span class="para_gap">${felidData && felidData.client_contact ? felidData.client_contact : (userData?.contact_no || "")}
         </span
-        >Cellphone Number
+        >Cellphone Number :
          <span class="para_gap">${(felidData.client_cellphone ? felidData?.client_cellphone : " ") || ""}</span>
-        Fax Number
-         <span class="para_gap">${(felidData.client_fax ? felidData?.client_fax : " ") || ""}</span>E-mail Address  <span class="para_gap">${felidData && felidData.client_email ? (felidData?.client_email || "") : (userData?.email || "")}</span>
+        Fax Number :
+         <span class="para_gap">${(felidData.client_fax ? felidData?.client_fax : " ") || ""}</span>E-mail Address :  <span class="para_gap">${felidData && felidData.client_email ? (felidData?.client_email || "") : (userData?.email || "")}</span>
       </p>
       <p>RCIC</p>
       <p>
