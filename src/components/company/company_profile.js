@@ -148,7 +148,7 @@ function CompanyProfileDetail(props) {
       <div
         className={
           user_type === "admin" || user_type === "agent"
-            ? "dashboard-main-container bg-light mt-12 mt-lg-12 mt-sm-22" 
+            ? "dashboard-main-container bg-light mt-12 mt-lg-12 mt-sm-22"
             : "bg-default-2 employer-detail-top-padding"
         }
       >
@@ -330,23 +330,29 @@ function CompanyProfileDetail(props) {
                       Documents
                     </Link>
                   </li>
-                  <li className="tab-menu-items nav-item ">
-                        <Link
-                          className={
-                            TabActive === "retaineragreement"
-                              ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
-                              : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
-                          }
-                          id="retaineragreementTab"
-                          data-toggle="tab"
-                          role="tab"
-                          aria-controls="retaineragreementTab"
-                          aria-selected="true"
-                          onClick={() => setTabActive("retaineragreement")}
-                        >
-                         Retainer Agreement
-                        </Link>
-                      </li>
+                  <li className={
+                    user_type === "company" ||
+                      user_type === "agent" ||
+                      user_type === "user"
+                      ? "d-none"
+                      :
+                      "tab-menu-items nav-item "}>
+                    <Link
+                      className={
+                        TabActive === "retaineragreement"
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
+                      }
+                      id="retaineragreementTab"
+                      data-toggle="tab"
+                      role="tab"
+                      aria-controls="retaineragreementTab"
+                      aria-selected="true"
+                      onClick={() => setTabActive("retaineragreement")}
+                    >
+                      Retainer Agreement
+                    </Link>
+                  </li>
                   <li
                     className={
                       user_type === "user"
@@ -372,7 +378,7 @@ function CompanyProfileDetail(props) {
                   </li>
                   <li
                     className={
-                      user_type === "admin" 
+                      user_type === "admin"
                         ? "tab-menu-items nav-item"
                         : "d-none"
                     }
@@ -833,7 +839,7 @@ function CompanyProfileDetail(props) {
                       page={"company_profile"}
                     />
                   ) : null} */}
-                 
+
                   {TabActive === "documents" ? (
                     // <DocumrentContainer
                     //   employee_id={cid}
@@ -963,26 +969,26 @@ function CompanyProfileDetail(props) {
                     <MainEmailPage email={employerData.email} />
                   ) : null}
                 </div>
-                 <div
-                      className={
-                        TabActive === "retaineragreement"
-                          ? "justify-content-center "
-                          : "d-none"
+                <div
+                  className={
+                    TabActive === "retaineragreement"
+                      ? "justify-content-center "
+                      : "d-none"
+                  }
+                >
+                  {TabActive === "retaineragreement" ? (
+                    <RetainerAgrementMainPage
+                      user_id={cid}
+                      emp_user_type={"employer"}
+                      folderId={
+                        // docId
+                        //   ? docParentId
+                        //   :
+                        employerData.documents_folder_id
                       }
-                    >
-                      {TabActive === "retaineragreement" ? (
-                        <RetainerAgrementMainPage 
-                        user_id={cid}
-                          emp_user_type={"employer"}
-                          folderId={
-                            // docId
-                            //   ? docParentId
-                            //   :
-                               employerData.documents_folder_id
-                          }
-                          userData={employerData}/>
-                      ) : null}
-                    </div>
+                      userData={employerData} />
+                  ) : null}
+                </div>
               </div>
             </div>
           </div>

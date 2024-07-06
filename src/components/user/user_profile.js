@@ -871,7 +871,12 @@ const NewUserProfile = (props) => {
                           Notes
                         </Link>
                       </li>
-                      <li className="tab-menu-items nav-item ">
+                      <li className={user_type === "company" ||
+                        user_type === "agent" ||
+                        user_type === "user"
+                        ? "d-none"
+                        :
+                        "tab-menu-items nav-item "}>
                         <Link
                           className={
                             TabActive === "retaineragreement"
@@ -885,7 +890,7 @@ const NewUserProfile = (props) => {
                           aria-selected="true"
                           onClick={() => setTabActive("retaineragreement")}
                         >
-                         Retainer Agreement
+                          Retainer Agreement
                         </Link>
                       </li>
                       <li
@@ -1956,16 +1961,16 @@ const NewUserProfile = (props) => {
                       }
                     >
                       {TabActive === "retaineragreement" ? (
-                        <RetainerAgrementMainPage 
-                        user_id={eid}
+                        <RetainerAgrementMainPage
+                          user_id={eid}
                           emp_user_type={"employee"}
                           folderId={
                             // docId
                             //   ? docParentId
                             //   :
-                               PersonalDetail.documents_folder_id
+                            PersonalDetail.documents_folder_id
                           }
-                          userData={PersonalDetail}/>
+                          userData={PersonalDetail} />
                       ) : null}
                     </div>
                     <div
