@@ -75,7 +75,7 @@ export default function ViewPdf({ show,
       </button>
       <div className="bg-white rounded h-100 px-11 pt-7">
         <h3 className='text-center'>
-          Preview Agreement
+          View Agreement Pdf
         </h3>
         {
         // openAddSignatureModal ?

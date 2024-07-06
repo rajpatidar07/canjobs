@@ -40,7 +40,6 @@ const AdobePDFViewer = ({
         },
         url,
         data,
-        selectedMentionAdmin,
         userType
       );
       const eventOptions = {

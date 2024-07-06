@@ -1043,7 +1043,7 @@ function JobResponse(props) {
                                       (props.response === "visa" ||
                                         props.response === "lmia") &&
                                         res.is_reserve === "1"
-                                        ? "btn btn-outline-info action_btn"
+                                        ? "btn btn-outline-info action_btn d-none"
                                         : "d-none"
                                     }
                                     onClick={() => AddDoucument(res)}

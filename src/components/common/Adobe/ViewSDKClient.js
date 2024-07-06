@@ -62,7 +62,6 @@ class ViewSDKClient {
     }
 
     this.adobeDCView = new window.AdobeDC.View(config);
-
     // Set viewer configuration with all options enabled for all file types
     viewerConfig = {
       ...viewerConfig,
