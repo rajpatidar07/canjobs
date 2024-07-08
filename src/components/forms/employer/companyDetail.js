@@ -541,12 +541,12 @@ function CompanyDetails(props) {
                     min={0}
                   />
                   {/*----ERROR MESSAGE FOR COMPANY SIZE----*/}
-                  {errors.company_size && (
+                  {errors.company_size_partTime && (
                     <span
-                      key={errors.company_size}
+                      key={errors.company_size_partTime}
                       className="text-danger font-size-3"
                     >
-                      {errors.company_size}
+                      {errors.company_size_partTime}
                     </span>
                   )}
                 </div>

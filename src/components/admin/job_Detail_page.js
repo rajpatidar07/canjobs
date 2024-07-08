@@ -131,11 +131,11 @@ function JobDetailpageAdmim(props) {
                       </CustomButton>
                     </h3>
                     <span>
-                      <b title="Operating Name">
+                      {/* <b title="Operating Name">
                         {jobData.franchise
                           ? jobData.franchise
                           : "Unknown Client"}
-                      </b>
+                      </b> */}
                     </span>
                     {/* {jobData.address ? (
                       <div
@@ -380,11 +380,11 @@ function JobDetailpageAdmim(props) {
                                   : ""} */}
                               </h3>
                               <h5 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center text-break">
-                                <b> {jobData.franchise}{" "}</b>
-                                <small>
+                                {/* <b> {jobData.franchise}{" "}</b> */}
+                               { /*<small>
                                   {jobData.company_name
                                     ? `(${jobData.company_name})`
-                                    : ""}</small>
+                                    : ""}</small>*/}
                               </h5>
 
                               <hr className={`my-3 ${!jobData.location &&

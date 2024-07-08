@@ -1,17 +1,11 @@
 import React, { useState } from "react";
-import {
-  EmployeeResetPasswordApi,
-  AdminResetPasswordApi,
-  EmployerResetPasswordApi,
-  ResetAgentPasswordApi,
+import {  EmployeeResetPasswordApi,  AdminResetPasswordApi,  EmployerResetPasswordApi,  ResetAgentPasswordApi,
 } from "../../api/api";
 import useValidation from "../common/useValidation";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 const API_URL = "https://canjobs.vercel.app/";
-// New AWS backend
 // const API_URL = "https://canpathwaysjobs.com/";
-/*Localhost*/
 // const API_URL = "http://localhost:3000/";
 export default function ResetPassword() {
   const location = useLocation();
@@ -40,9 +34,7 @@ export default function ResetPassword() {
   };
   /*----RESET PASSWORD ONCHANGE FUNCTION----*/
   const { state, onInputChange, setState, errors, validate } = useValidation(
-    initialFormState,
-    validators
-  );
+    initialFormState,validators);
   /*----RESET PASSWORD SUBMIT FUNCTION----*/
   const onUserResetPasswordClick = async (event) => {
     event.preventDefault();
@@ -135,24 +127,14 @@ export default function ResetPassword() {
       }
     }
   };
-
   // END USER RESET PASSWORD VALIDATION
   return (
     <>
       {/* <!-- RESET PASSWORD --> */}
       <link rel="stylesheet" href={`${API_URL}/css/bootstrap.css`} />
-      <link
-        rel="stylesheet"
-        href={`${API_URL}/fonts/icon-font/css/style.css`}
-      />
-      <link
-        rel="stylesheet"
-        href={`${API_URL}/fonts/fontawesome-5/css/all.css`}
-      />
-      <link
-        rel="stylesheet"
-        href={`${API_URL}/fonts/fontawesome-5/css/main.css`}
-      />
+      <link rel="stylesheet" href={`${API_URL}/fonts/icon-font/css/style.css`}/>
+      <link rel="stylesheet" href={`${API_URL}/fonts/fontawesome-5/css/all.css`}/>
+      <link rel="stylesheet" href={`${API_URL}/fonts/fontawesome-5/css/main.css`}/>
       <div className="d-flex justify-content-center pt-21">
         <ToastContainer />
         <div className="bg-white rounded-8 overflow-hidden pt-21">

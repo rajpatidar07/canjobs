@@ -96,7 +96,7 @@ export default function JobTable(props) {
           props.response === "self" ? "1" : "0",
           props.response === "lmia" ? "1" : "0",
           props.response === "lmia" ? "1" : "0",
-          props.company_id
+          location.state ? location.state.company_id : props.company_id
         );
       }
       if (

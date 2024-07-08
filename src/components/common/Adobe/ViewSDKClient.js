@@ -3,29 +3,21 @@
 const profile = {
   userProfile: {
     name:
-      //userType === "user"
-      //     ? localStorage.getItem("name").charAt(0).toUpperCase() + localStorage.getItem("name").slice(1) :
       localStorage.getItem("admin")
         ? localStorage.getItem("admin").charAt(0).toUpperCase() +
         localStorage.getItem("admin").slice(1)
         : "",
     firstName:
-      // userType === "user"
-      //     ? localStorage.getItem("name") :
       localStorage.getItem("admin"),
     email:
-      // userType === "user"
-      //     ? localStorage.getItem("email") :
       localStorage.getItem("admin_email"),
     id:
-      //userType === "user"
-      //     ? localStorage.getItem("employee_id") :
       localStorage.getItem("admin_id"),
     type: "Person",
   },
 };
 let client_id = "d9b36f468d7a4e4e8b275f13728f1132"//(vercel) 
-//let client_id = "713b22cf34e345c388e4490f9c9dc79b"//Canpathways
+// let client_id = "713b22cf34e345c388e4490f9c9dc79b"//Canpathways
 // let client_id = "d9e8b7bcb61b42b6a387bfa9cf16a75b"; //(Local)
 class ViewSDKClient {
   constructor() {

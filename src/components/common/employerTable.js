@@ -507,7 +507,7 @@ export default function EmployerTable(props) {
                             <button className="btn btn-outline-info action_btn">
                               <Link // onClick={() => Joblist(empdata.company_name)}
                                 to="/job"
-                                state={{ company_name: empdata.company_name }}
+                                state={{ company_name: empdata.company_name,company_id:empdata.company_id }}
                                 title="Jobs"
                               >
                                 <span className="text-gray px-1">

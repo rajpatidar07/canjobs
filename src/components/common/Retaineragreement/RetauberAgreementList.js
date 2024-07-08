@@ -1,15 +1,13 @@
-import React, { useEffect, useState }/*, { useEffect, useState } */ from 'react'
+import React, { useEffect, useState } from 'react'
 // import { Pagination } from 'react-bootstrap'
-// import ConvertTime from '../ConvertTime'
-// import Loader from "../../common/loader"
-// import { useNavigate } from 'react-router-dom'
 import RetainerAgreement from '../../forms/Agreement/RetainerAgreement';
 import AgreementOneForm from '../../forms/Agreement/AgreementOneForm';
 import { GetAgreement } from '../../../api/api';
 import { FaEye } from "react-icons/fa";
 import MainRetainerAggHtml from './MainRetainerAggHtml';
 import ViewPdf from './viewPdf';
-// import AggrementOne from './AgreementOne'
+import { CiMail } from "react-icons/ci";
+import SendEmailAgreement from '../../forms/Agreement/SendEmailAgreement';
 export default function RetauberAgreementList({
     user_id,
     emp_user_type,
@@ -17,6 +15,7 @@ export default function RetauberAgreementList({
     userData
 }) {
     // let [isLoading, setIsLoading] = useState(true);
+    const [openSendMail, setOpenSendMail] = useState(false);
     const [openAgreement, setOpenAgreement] = useState(false);
     const [openAddAgreementForm, setOpenAddAgreementForm] = useState(false);
     const [openAddAgreementFelids, setOpenAddAgreementFelids] = useState(false);
@@ -92,29 +91,12 @@ export default function RetauberAgreementList({
                             <thead>
                                 <tr>
                                     <th scope="col" className="border-0 font-size-4 font-weight-normal">
-                                        {/* <Link
-                                        // to={""}
-                                        // onClick={() => {
-                                        //     handleSort("id");
-                                        //     setCurrentPage(1);
-                                        // }}
-                                        className="text-gray"
-                                    // title="Sort by id"
-                                    > */}
-                                        S.No                                        {/* </Link> */}
+
+                                        S.No
                                     </th>
                                     <th scope="col" className="border-0 font-size-4 font-weight-normal">
-                                        {/* <Link
-                                        // to={""}
-                                        // onClick={() => {
-                                        //     handleSort("created_at");
-                                        //     setCurrentPage(1);
-                                        // }}
-                                        className="text-gray"
-                                    // title="Sort by Time"
-                                    >  */}
+
                                         Agreement
-                                        {/* </Link> */}
                                     </th>
                                     <th scope="col" className="border-0 font-size-4 font-weight-normal">
                                         Sent Date
@@ -221,7 +203,19 @@ export default function RetauberAgreementList({
                                                                 setOpenViewAgreement(true)
                                                                 setAgreementData(data)
                                                             }}
-                                                            title="View Pdf"><FaEye /></button>
+                                                            title="View Pdf"><FaEye />
+                                                        </button>
+                                                        <button
+                                                            className="btn btn-outline-info action_btn "
+                                                            style={{ fontSize: "10px" }}
+                                                            onClick={() => {
+                                                                setOpenSendMail(true)
+                                                                setAgreementData(data)
+                                                            }}
+                                                            title="Send Mail">
+                                                            <CiMail />
+                                                        </button>
+
                                                     </div>
                                                 </td>
                                             </tr>
@@ -240,15 +234,16 @@ export default function RetauberAgreementList({
                     count={interviewHistoryData.length}
                 />
             </div> */}
-                {/* {openAgreement ?
-             <AggrementOne
-                show={openAgreement}
-                close={setOpenAgreement(false)}
-                user_id={user_id}
-                emp_user_type={emp_user_type}
-                folderId={folderId}
-            />
-             : null} */}
+                {openSendMail ?
+                    <SendEmailAgreement
+                        show={openSendMail}
+                        close={()=>setOpenSendMail(false)}
+                        user_id={user_id}
+                        emp_user_type={emp_user_type}
+                        folderId={folderId}
+                        felidData={agreementData}
+                    />
+                    : null}
                 {openAddAgreementFelids ?
                     <AgreementOneForm
                         show={openAddAgreementFelids}

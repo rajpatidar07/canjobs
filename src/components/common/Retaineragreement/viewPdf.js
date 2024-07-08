@@ -19,7 +19,6 @@ export default function ViewPdf({ show,
   let [pdf, setPdf] = useState("")
   const GetAgreementPdf = async () => {
     try {
-      // if (folderID) {
       let res = await getSharePointParticularFolders(
         user_id,
         emp_user_type,

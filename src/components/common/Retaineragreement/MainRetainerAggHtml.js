@@ -71,6 +71,36 @@ export default function MainRetainerAggHtml({ setApicall, close, openSignature, 
   //   }
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [])
+  const GeneratePdf = async () => {
+    if (openSignature === "yes") {
+
+    } {
+      if (felidData.pdf_genrated_status === "0") {
+        let data = {
+          ...felidData,
+          pdf_genrated_status: "1"
+        }
+        console.log(data)
+        try {
+          await AddUpdateAgreement(data)
+          setApicall(true)
+        } catch (error) {
+          console.log(error)
+        }
+      }
+      const stateData = {
+        user_id: user_id,
+        emp_user_type: emp_user_type,
+        folderId: folderId,
+        felidData: felidData,
+      };
+      // Serialize the state data to pass as query parameters
+      const newPageUrl = `/agreeone`
+      localStorage.setItem('agreementStateData', JSON.stringify(stateData));
+      // Open the new page in a new tab
+      window.open(newPageUrl, '_blank')
+    }
+  }
   return (
     <div className='mb-12'>
       {/* <ToastContainer /> */}
@@ -105,35 +135,7 @@ export default function MainRetainerAggHtml({ setApicall, close, openSignature, 
         <div>
           <button className='btn btn-primary text-end m-2' onClick={() => setOpenAddFeildsModal(true)}>{openSignature === "yes" ? "Add Signature" : "Add Felids"}</button>
           <button className={felidData.agreement_date ? "btn btn-primary m-2" : "d-none"}
-            onClick={async () => {
-              if (openSignature === "yes") {
-
-              } {
-                if (agreementData.pdf_genrated_status === "0") {
-                  let data = {
-                    ...agreementData,
-                    pdf_genrated_status: "1"
-                  }
-                  try {
-                    await AddUpdateAgreement(data)
-                    setApicall(true)
-                  } catch (error) {
-                    console.log(error)
-                  }
-                }
-                const stateData = {
-                  user_id: user_id,
-                  emp_user_type: emp_user_type,
-                  folderId: folderId,
-                  felidData: felidData,
-                };
-                // Serialize the state data to pass as query parameters
-                const newPageUrl = `/agreeone`
-                localStorage.setItem('agreementStateData', JSON.stringify(stateData));
-                // Open the new page in a new tab
-                window.open(newPageUrl, '_blank')
-              }
-            }}
+            onClick={() => GeneratePdf()}
           >
             Generated Pdf</button>
         </div>
@@ -173,35 +175,7 @@ export default function MainRetainerAggHtml({ setApicall, close, openSignature, 
                                       : null
       }
       <button className={felidData.agreement_date ? "btn btn-primary" : "d-none"}
-        onClick={async () => {
-          if (openSignature === "yes") {
-
-          } {
-            if (agreementData.pdf_genrated_status === "0") {
-              let data = {
-                ...agreementData,
-                pdf_genrated_status: "1"
-              }
-              try {
-                await AddUpdateAgreement(data)
-                setApicall(true)
-              } catch (error) {
-                console.log(error)
-              }
-            }
-            const stateData = {
-              user_id: user_id,
-              emp_user_type: emp_user_type,
-              folderId: folderId,
-              felidData: felidData,
-            };
-            // Serialize the state data to pass as query parameters
-            const newPageUrl = `/agreeone`
-            localStorage.setItem('agreementStateData', JSON.stringify(stateData));
-            // Open the new page in a new tab
-            window.open(newPageUrl, '_blank')
-          }
-        }}
+        onClick={() => GeneratePdf()}
       >
         Generated Pdf</button>
       {openAddFeildsModal ?
