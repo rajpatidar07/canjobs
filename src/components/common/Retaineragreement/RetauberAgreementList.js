@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react'
 // import { Pagination } from 'react-bootstrap'
 import RetainerAgreement from '../../forms/Agreement/RetainerAgreement';
 import AgreementOneForm from '../../forms/Agreement/AgreementOneForm';
-import { GetAgreement } from '../../../api/api';
-import { FaEye } from "react-icons/fa";
+import { GetAgreement, getSharePointParticularFolders, DeleteAgreement } from '../../../api/api';
+import { FaFilePdf } from "react-icons/fa";
 import MainRetainerAggHtml from './MainRetainerAggHtml';
 import ViewPdf from './viewPdf';
-import { CiMail } from "react-icons/ci";
+import { IoMdMail } from "react-icons/io";
 import SendEmailAgreement from '../../forms/Agreement/SendEmailAgreement';
+import { RiDeleteBin5Line } from 'react-icons/ri';
+import SAlert from '../sweetAlert';
+import { toast } from 'react-toastify';
 export default function RetauberAgreementList({
     user_id,
     emp_user_type,
@@ -24,6 +27,12 @@ export default function RetauberAgreementList({
     const [agreementList, setAgreementList] = useState([]);
     const [agreementData, setAgreementData] = useState("");
     const [apicall, setApicall] = useState(false)
+    let [docLoader, setDocLoder] = useState(false)
+    let [pdf, setPdf] = useState("")
+    /*delete state */
+    const [deleteAlert, setDeleteAlert] = useState(false);
+    const [deleteId, setDeleteID] = useState();
+    const [deleteName, setDeleteName] = useState("");
     // let navigate = useNavigate()
     /*Pagination states */
     // const [totalData, setTotalData] = useState("");
@@ -48,7 +57,31 @@ export default function RetauberAgreementList({
             console.log(err)
         }
     }
-    // console.log(userData?)
+
+    const GetAgreementPdf = async (data) => {
+        setDocLoder(true)
+        try {
+            let res = await getSharePointParticularFolders(
+                user_id,
+                emp_user_type,
+                folderId
+            );
+            if (res.data.status === 1) {
+                setDocLoder(false);
+                if (res.data.data.find((item) => item.id === data.document_id)) {
+                    setPdf(res.data.data.find((item) => item.id === data.document_id))
+                    // console.log(res.data.data.find((item) => item.id === agreementData.document_id))
+                } else if (res.data.data === "No Documents Found") {
+                    setDocLoder(false);
+                } else {
+                    setDocLoder(false);
+                }
+            }
+        } catch (Err) {
+            console.log(Err);
+            setDocLoder(false);
+        }
+    }
     useEffect(() => {
         getAgreeFelidData()
         if (apicall === true) {
@@ -57,7 +90,32 @@ export default function RetauberAgreementList({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [apicall])
 
-
+    /*To Show the delete alert box */
+    const ShowDeleteAlert = (e) => {
+        setDeleteID(e.id);
+        setDeleteName(e.type);
+        setDeleteAlert(true);
+    };
+    /*To cancel the delete alert box */
+    const CancelDelete = () => {
+        setDeleteAlert(false);
+    };
+    /*To call Api to delete category */
+    async function deleteAdmin(e) {
+        try {
+            const responseData = await DeleteAgreement(e);
+            if (responseData.message ==="Agreement deleted successfully.") {
+                toast.error("Agreement deleted successfully.", {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 1000,
+                });
+                setApicall(true);
+                setDeleteAlert(false);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
 
     return (
@@ -202,8 +260,9 @@ export default function RetauberAgreementList({
                                                             onClick={() => {
                                                                 setOpenViewAgreement(true)
                                                                 setAgreementData(data)
+                                                                GetAgreementPdf(data)
                                                             }}
-                                                            title="View Pdf"><FaEye />
+                                                            title="View Pdf"><FaFilePdf />
                                                         </button>
                                                         <button
                                                             className="btn btn-outline-info action_btn "
@@ -211,11 +270,20 @@ export default function RetauberAgreementList({
                                                             onClick={() => {
                                                                 setOpenSendMail(true)
                                                                 setAgreementData(data)
+                                                                GetAgreementPdf(data)
                                                             }}
                                                             title="Send Mail">
-                                                            <CiMail />
+                                                            <IoMdMail />
                                                         </button>
-
+                                                        <button
+                                                            className="btn btn-outline-info action_btn"
+                                                            onClick={() => ShowDeleteAlert(data)}
+                                                            title="Delete"
+                                                        >
+                                                            <span className=" text-danger">
+                                                                <RiDeleteBin5Line />
+                                                            </span>
+                                                        </button>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -237,11 +305,12 @@ export default function RetauberAgreementList({
                 {openSendMail ?
                     <SendEmailAgreement
                         show={openSendMail}
-                        close={()=>setOpenSendMail(false)}
+                        close={() => setOpenSendMail(false)}
                         user_id={user_id}
                         emp_user_type={emp_user_type}
                         folderId={folderId}
                         felidData={agreementData}
+                        pdf={pdf}
                     />
                     : null}
                 {openAddAgreementFelids ?
@@ -281,8 +350,18 @@ export default function RetauberAgreementList({
                         user_id={user_id}
                         setOpenAddAgreementFelids={setOpenAddAgreementFelids}
                         setOpenViewAgreementSign={setOpenViewAgreementSign}
+                        docLoader={docLoader}
+                        pdf={pdf}
                     />
                     : null}
+                <SAlert
+                    show={deleteAlert}
+                    title={deleteName}
+                    text="Are you Sure you want to delete !"
+                    onConfirm={() => deleteAdmin(deleteId)}
+                    showCancelButton={true}
+                    onCancel={CancelDelete}
+                />
             </div>
         </div>
     )
