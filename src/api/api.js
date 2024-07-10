@@ -2575,7 +2575,7 @@ export const RemoveReservedEmployeeForJob = async (apply_id, employee_id) => {
   return response.data;
 };
 /*Api to Send email to the user and company*/
-export const SendEmail = async (data, FileList) => {
+export const SendEmail = async (data, FileList, url) => {
   // console.log(FileList);
   const response = await axios.post(
     `${API_URL}sendEmailTest`,
@@ -2591,6 +2591,7 @@ export const SendEmail = async (data, FileList) => {
       body: data.description,
       cc_email: data.adminemail,
       attachments: FileList || "",
+      attachments_url: url
     },
     {
       headers: {
@@ -3382,4 +3383,18 @@ export const AddUpdateAgreement = async (data) => {
     }
   );
   return response;
+};
+/*Delete Agreement Api */
+export const DeleteAgreement = async (id) => {
+  const response = await axios.post(
+    `${API_URL}api/Agreement_api/deleteAgreement`,
+    { agreement_id: id },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
 };

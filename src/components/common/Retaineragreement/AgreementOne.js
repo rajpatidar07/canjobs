@@ -1295,7 +1295,7 @@ const AggrementOne = () => {
                   <Text>
                     Given Name:{" "}
                     <Text style={styles.textunderline} className="para_gap">
-                      {felidData.client_first_name}
+                      {felidData.client_first_name || "_______________"}
                     </Text>
                   </Text>
                 </View>
@@ -1303,7 +1303,7 @@ const AggrementOne = () => {
                   <Text>
                     Family Name:
                     <Text style={styles.textunderline} className="para_gap">
-                      {felidData.client_last_name}
+                      {felidData.client_last_name || "_______________"}
                     </Text>
                   </Text>
                 </View>
@@ -1314,7 +1314,7 @@ const AggrementOne = () => {
                     {" "}
                     Address:{" "}
                     <Text style={styles.textunderline} className="para_gap">
-                      {felidData.client_address}
+                      {felidData.client_address || "_______________"}
                     </Text>
                   </Text>
                 </View>
@@ -1323,7 +1323,7 @@ const AggrementOne = () => {
                     {" "}
                     Telephone Number:{" "}
                     <Text style={styles.textunderline} className="para_gap">
-                      {felidData.client_telephone}
+                      {felidData.client_telephone || "_______________"}
                     </Text>
                   </Text>
                 </View>
@@ -1333,7 +1333,7 @@ const AggrementOne = () => {
                   <Text>
                     Cellphone Number:
                     <Text style={styles.textunderline} className="para_gap">
-                      {felidData.client_cellphone}
+                      {felidData.client_cellphone || "_______________"}
                     </Text>
                   </Text>
                 </View>
@@ -1341,7 +1341,7 @@ const AggrementOne = () => {
                   <Text>
                     E-mail Address:
                     <Text style={styles.textunderline} className="para_gap">
-                      {felidData.client_email}
+                      {felidData.client_email || "_______________"}
                     </Text>
                   </Text>
                 </View>
@@ -1393,7 +1393,7 @@ const AggrementOne = () => {
                     <Text style={styles.cell}>
                       Fax Number
                       <Text style={styles.textunderline} className="para_gap">
-                        {felidData.client_fax}
+                        {felidData.client_fax || "_______________"}
                       </Text>
                     </Text>
                   </Text>
@@ -1440,15 +1440,29 @@ const AggrementOne = () => {
               </View>
               <View style={styles.clientForm}>
                 <View style={styles.clientFormChild}>
-                  <Text className="para_gap" style={{ margin: 0 }}>
-                    {felidData.client_first_name +
-                      " " +
-                      felidData.client_last_name}
+                  <Text
+                    className="para_gap"
+                    style={[
+                      { margin: 0, marginBottom: 5 },
+                      styles.textunderline,
+                    ]}
+                  >
+                    {felidData.client_first_name && felidData.client_last_name
+                      ? felidData.client_first_name +
+                        " " +
+                        felidData.client_last_name
+                      : "_______________"}
                   </Text>
                   <Text style={{ margin: "0 0 30px 0" }}>Name of Client</Text>
                 </View>
                 <View style={styles.clientFormChild}>
-                  <Text className="para_gap" style={{ margin: 0 }}>
+                  <Text
+                    className="para_gap"
+                    style={[
+                      { margin: 0, marginBottom: 5 },
+                      styles.textunderline,
+                    ]}
+                  >
                     Harpreet Kaur
                   </Text>
                   <Text style={{ margin: "0 0 30px 0" }}>Name of RCIC</Text>
@@ -1456,14 +1470,26 @@ const AggrementOne = () => {
               </View>
               <View style={styles.clientForm}>
                 <View style={styles.clientFormChild}>
-                  <Text className="para_gap" style={{ margin: 0 }}>
-                    {felidData.date_signature_client}
+                  <Text
+                    className="para_gap"
+                    style={{ margin: 0, marginBottom: 5 }}
+                  >
+                    {!felidData.date_signature_client ||
+                    felidData.date_signature_client === "0000-00-00"
+                      ? "____________"
+                      : felidData.date_signature_client}
                   </Text>
                   <Text style={{ margin: "0 0 30px 0" }}>Date</Text>
                 </View>
                 <View style={styles.clientFormChild}>
-                  <Text className="para_gap" style={{ margin: 0 }}>
-                    {felidData.date_signature_rcic}
+                  <Text
+                    className="para_gap"
+                    style={{ margin: 0, marginBottom: 5 }}
+                  >
+                    {!felidData.date_signature_rcic ||
+                    felidData.date_signature_rcic === "0000-00-00"
+                      ? "____________"
+                      : felidData.date_signature_rcic}
                   </Text>
                   <Text style={{ margin: "0 0 30px 0" }}>Date</Text>
                 </View>
@@ -1474,6 +1500,19 @@ const AggrementOne = () => {
         <View>
           <Text style={[{ textAlign: "center" }, styles.definition]}>
             AUTHORIZATION
+          </Text>
+          <Text style={{ marginTop: 5 }}>
+            I
+            <Text style={styles.textunderline} className="para_gap">
+              {felidData.client_first_name && felidData.client_last_name
+                ? felidData.client_first_name + " " + felidData.client_last_name
+                : "_______________"}
+            </Text>
+            ( hereinafter referred to as the “client”), hereby authorize and
+            appoint Harpreet kaur (hereinafter referred to as the “RCIC” with a
+            CICC# R533393), of CAN Pathways Immigration consultancy
+            ltd.,(hereinafter referred to as the “firm”), to represent me in my
+            application to IRCC.
           </Text>
           <Text style={{ marginTop: 5 }}>
             I
@@ -1594,9 +1633,11 @@ const AggrementOne = () => {
             <View style={[styles.clientForm, { textAlign: "center" }]}>
               <View style={styles.clientFormChild}>
                 <Text className="para_gap" style={{ margin: 0 }}>
-                  {felidData.client_first_name +
-                    " " +
-                    felidData.client_last_name}
+                  {felidData.client_first_name && felidData.client_last_name
+                    ? felidData.client_first_name +
+                      " " +
+                      felidData.client_last_name
+                    : "_______________"}
                 </Text>
                 <Text style={{ margin: "0 0 30px 0" }}>Client’s full name</Text>
               </View>
@@ -1606,7 +1647,10 @@ const AggrementOne = () => {
               </View>
               <View style={styles.clientFormChild}>
                 <Text className="para_gap" style={{ margin: 0 }}>
-                  {felidData.date_signature_client}
+                  {!felidData.date_signature_client ||
+                  felidData.date_signature_client === "0000-00-00"
+                    ? "____________"
+                    : felidData.date_signature_client}
                 </Text>
                 <Text style={{ margin: "0 0 30px 0" }}>Date</Text>
               </View>
@@ -1616,7 +1660,6 @@ const AggrementOne = () => {
       </View>
     </View>
   );
-
   return (
     <BlobProvider
       document={

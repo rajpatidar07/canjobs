@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Modal } from 'react-bootstrap'
-import { getSharePointParticularFolders } from '../../../api/api';
 import AdobePDFViewer from '../Adobe/adobeFile';
 import Loader from "../../common/loader"
 // import MainRetainerAggHtml from './MainRetainerAggHtml';
@@ -13,37 +12,11 @@ export default function ViewPdf({ show,
   setApicall,
   folderId,
   user_id,
-  setOpenViewAgreementSign,setOpenAddAgreementFelids }) {
-  let [docLoader, setDocLoder] = useState(false)
-  // let [openAddSignatureModal, setOpenAddSignatureModal] = useState(false)
-  let [pdf, setPdf] = useState("")
-  const GetAgreementPdf = async () => {
-    try {
-      let res = await getSharePointParticularFolders(
-        user_id,
-        emp_user_type,
-        folderId
-      );
-      if (res.data.status === 1) {
-        setDocLoder(false);
-        if (res.data.data.find((item) => item.id === agreementData.document_id)) {
-          setPdf(res.data.data.find((item) => item.id === agreementData.document_id))
-          // console.log(res.data.data.find((item) => item.id === agreementData.document_id))
-        } else if (res.data.data === "No Documents Found") {
-          setDocLoder(false);
-        } else {
-          setDocLoder(false);
-        }
-      }
-    } catch (Err) {
-      console.log(Err);
-      setDocLoder(false);
-    }
-  }
-  useEffect(() => {
-    GetAgreementPdf()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  setOpenViewAgreementSign,
+  setOpenAddAgreementFelids,
+  docLoader,
+pdf }) {
+ 
   /*FUnction to open add signature modal */
   const addSignatureCLick = async () => {
     setOpenViewAgreementSign("sign")

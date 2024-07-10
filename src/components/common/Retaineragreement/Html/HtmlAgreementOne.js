@@ -49,7 +49,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
         <b>Client File Number: <span>${felidData?.client_file_no || ""}</span></b>
       </div>
       <p>
-        This Retainer Agreement is made this  <span class="para_gap">${(felidData?.client_file_no || "")} </span> day of <span class="para_gap"> ${(felidData && (felidData.agreement_date ? moment(new Date(felidData?.agreement_date)).format("Do") : " ")) || ""}</span> <span class="para_gap">${(felidData && (felidData.agreement_date ? moment(new Date(felidData?.agreement_date)).format("MMMM") : " ")) || ""} </span><span class="para_gap"> ${(felidData && (felidData.agreement_date ? moment(new Date(felidData?.agreement_date)).format("YYYY") : " ")) || ""}</span>
+        This Retainer Agreement is made this  <span class="para_gap">${(felidData?.client_file_no || "")} </span> day of <span class="para_gap"> ${!felidData.agreement_date || felidData.agreement_date === "0000-00-00" ? "" : (felidData && (felidData.agreement_date ? moment(new Date(felidData?.agreement_date)).format("Do") : " "))||""}</span> <span class="para_gap">${!felidData.agreement_date || felidData.agreement_date === "0000-00-00" ? "" :(felidData && (felidData.agreement_date ? moment(new Date(felidData?.agreement_date)).format("MMMM") : " ")) || ""} </span><span class="para_gap"> ${!felidData.agreement_date || felidData.agreement_date === "0000-00-00" ? "" :(felidData && (felidData.agreement_date ? moment(new Date(felidData?.agreement_date)).format("YYYY") : " ")) || ""}</span>
         between Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur
         (the “RCIC”), RCIC Membership Number <span>R533393</span>, phone number
         <span>4038885308</span>
@@ -414,8 +414,8 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
           </table>
           <p>
             Total Amount: (Non-Refundable) (Paid at signing of contract and
-            sharing of checklist): ${felidData?.total_amount_signing_of_contract||""} $<br> Balance (Non-Refundable) (Paid at time of
-            filing): ${felidData?.balance_paid_at_time_of_filing||""} $
+            sharing of checklist): ${felidData?.total_amount_signing_of_contract || ""} $<br> Balance (Non-Refundable) (Paid at time of
+            filing): ${felidData?.balance_paid_at_time_of_filing || ""} $
           </p>
           <p>Note:</p>
           <spanl id="l5">
@@ -1025,6 +1025,12 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
         </div>
         <div style="width: 50%">
           <p class="para_gap" style="margin: 0">
+           <img
+          src=${felidData.initial ? felidData?.initial : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"}
+          alt="${(felidData && (felidData.client_first_name || felidData.client_last_name) ? ((felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}"
+          style="max-width: 200px; float: right"
+          class=${felidData.initial ? "d-block" : "d-none"}
+        />
           </p>
           <p style="margin: 0 0 30px 0">Signature of RCIC</p>
         </div>
@@ -1037,11 +1043,11 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
           <p style="margin: 0 0 30px 0">Name of RCIC</p>
         </div>
         <div style="width: 50%">
-          <p class="para_gap" style="margin: 0">${felidData.date_signature_client ? felidData?.date_signature_client : ""}</p>
+          <p class="para_gap" style="margin: 0">${!felidData.date_signature_client || felidData.date_signature_client === "0000-00-00" ? "" : felidData?.date_signature_client}</p>
           <p style="margin: 0 0 30px 0">Date</p>
         </div>
         <div style="width: 50%">
-          <p class="para_gap" style="margin: 0">${felidData.date_signature_rcic ? felidData?.date_signature_rcic : ""}</p>
+          <p class="para_gap" style="margin: 0">${!felidData.date_signature_rcic || felidData.date_signature_rcic === "0000-00-00" ? "" : felidData?.date_signature_rcic}</p>
           <p style="margin: 0 0 30px 0">Date</p>
         </div>
       </div>
@@ -1172,7 +1178,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
           <p style="margin: 0 0 30px 0">Signatures</p>
         </div>
         <div style="width: 33.33%; text-align: center">
-          <p class="para_gap" style="margin: 0">${felidData.date_signature_client ? felidData?.date_signature_client : ""}</p>
+          <p class="para_gap" style="margin: 0">${!felidData.date_signature_client || felidData.date_signature_client === "0000-00-00" ? "" : felidData.date_signature_client}</p>
           <p style="margin: 0 0 30px 0">Date</p>
         </div>
       </div>
