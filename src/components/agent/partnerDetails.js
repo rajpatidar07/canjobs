@@ -26,7 +26,7 @@ export default function PartnerDetails({ setLoginCondition }) {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const partnerChat = searchParams.get("partner");
-  const notes = searchParams.get("note")
+  const notes = searchParams.get("note");
   let navigate = useNavigate();
   /*Show modal and data state */
   // const [lima, setLmia] = useState(false);
@@ -37,8 +37,7 @@ export default function PartnerDetails({ setLoginCondition }) {
   const [showPartnerInfoModal, setShowPartnerInfoModal] = useState(false);
   useState(false);
   const [TabActive, setTabActive] = useState(
-    partnerChat ? "support" : notes === "true"
-      ? "notes" : "profile"
+    partnerChat ? "support" : notes === "true" ? "notes" : "profile"
   );
   const [data, setData] = useState("");
   const [chartData, setChartData] = useState([]);
@@ -58,7 +57,7 @@ export default function PartnerDetails({ setLoginCondition }) {
         setData(userData.data.data[0]);
         setIsLoading(false);
         if (user_type === "agent") {
-          setLoginCondition(false)
+          setLoginCondition(false);
           localStorage.setItem("profile_photo", userData.data.data[0].logo);
           localStorage.setItem("name", userData.data.data[0].company_name);
         }
@@ -79,7 +78,7 @@ export default function PartnerDetails({ setLoginCondition }) {
       //   setPayment();
       setTabActive("payment");
     }
-    if(notes){
+    if (notes) {
       setTabActive("notes");
     }
     // eslint-disable-next-line
@@ -111,16 +110,21 @@ export default function PartnerDetails({ setLoginCondition }) {
                 className="d-flex align-items-center "
                 onClick={
                   user_type === "agent"
-                    ? null : () => {
-                      if (TabActive === "notes") {
-                        navigate(-1)
-                      } else {
-                        setAddNote(true)
+                    ? null
+                    : () => {
+                        if (TabActive === "notes") {
+                          navigate(-1);
+                        } else {
+                          setAddNote(true);
+                        }
                       }
-                    }
                 }
               >
-                <i className={`icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8 ${user_type === "agent" ? "d-none" : ""}`}></i>
+                <i
+                  className={`icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8 ${
+                    user_type === "agent" ? "d-none" : ""
+                  }`}
+                ></i>
                 <span className="text-uppercase font-size-3 font-weight-bold text-gray">
                   <h3 className="font-size-6 mb-0 text-capitalize">
                     {data.name + " (Partner)"}
@@ -144,8 +148,9 @@ export default function PartnerDetails({ setLoginCondition }) {
         }
       >
         <div
-          className={`container${user_type === "admin" || user_type === "agent" ? "-fluid" : ""
-            }`}
+          className={`container${
+            user_type === "admin" || user_type === "agent" ? "-fluid" : ""
+          }`}
         >
           <div className="row text-left mt-5 pt-0">
             <div className="col-12 order-2 order-xl-1">
@@ -160,8 +165,8 @@ export default function PartnerDetails({ setLoginCondition }) {
                     <Link
                       className={
                         TabActive === "profile"
-                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-7 active"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-7"
                       }
                       id="home-tab"
                       data-toggle="tab"
@@ -177,8 +182,8 @@ export default function PartnerDetails({ setLoginCondition }) {
                     <Link
                       className={
                         TabActive === "applicants"
-                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-7 active"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-7"
                       }
                       id="applicants"
                       data-toggle="tab"
@@ -194,8 +199,8 @@ export default function PartnerDetails({ setLoginCondition }) {
                     <Link
                       className={
                         TabActive === "support"
-                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-7 active"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-7"
                       }
                       id="support"
                       data-toggle="tab"
@@ -220,8 +225,8 @@ export default function PartnerDetails({ setLoginCondition }) {
                     <Link
                       className={
                         TabActive === "notes"
-                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
-                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-7 active"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-7"
                       }
                       id="notesTab"
                       data-toggle="tab"
@@ -237,8 +242,8 @@ export default function PartnerDetails({ setLoginCondition }) {
                     <Link
                       className={
                         TabActive === "activity"
-                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-7 active"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-7"
                       }
                       id="activity"
                       data-toggle="tab"
@@ -254,8 +259,8 @@ export default function PartnerDetails({ setLoginCondition }) {
                     <Link
                       className={
                         TabActive === "payment"
-                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-7 active"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-7"
                       }
                       id="payment"
                       data-toggle="tab"
@@ -271,8 +276,8 @@ export default function PartnerDetails({ setLoginCondition }) {
                     <Link
                       className={
                         TabActive === "email"
-                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-7 active"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-7"
                       }
                       id="email"
                       data-toggle="tab"
@@ -295,8 +300,8 @@ export default function PartnerDetails({ setLoginCondition }) {
                     <Link
                       className={
                         TabActive === "contact"
-                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-7 active"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-7"
                       }
                       id="activityTab"
                       data-toggle="tab"
@@ -344,8 +349,8 @@ export default function PartnerDetails({ setLoginCondition }) {
                                     className="company_logo"
                                     src={
                                       data.profile_image === null ||
-                                        !data.profile_image ||
-                                        data.profile_image === undefined
+                                      !data.profile_image ||
+                                      data.profile_image === undefined
                                         ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                         : data.profile_image
                                     }
@@ -399,21 +404,23 @@ export default function PartnerDetails({ setLoginCondition }) {
                                     {(data.address ||
                                       data.city ||
                                       data.state) && (
-                                        <span
-                                          className="font-size-3 text-smoke  mr-7 text-capitalize"
-                                          title="Current Location"
-                                        >
-                                          <img
-                                            className="mr-1"
-                                            height={"16px"}
-                                            src="image/icons/marker.svg"
-                                            alt="Location"
-                                          />
-                                          {`${data.address} ${data.city ? " , " + data.city : ""
-                                            } ${data.state ? " , " + data.state : ""
-                                            }`}
-                                        </span>
-                                      )}
+                                      <span
+                                        className="font-size-3 text-smoke  mr-7 text-capitalize"
+                                        title="Current Location"
+                                      >
+                                        <img
+                                          className="mr-1"
+                                          height={"16px"}
+                                          src="image/icons/marker.svg"
+                                          alt="Location"
+                                        />
+                                        {`${data.address} ${
+                                          data.city ? " , " + data.city : ""
+                                        } ${
+                                          data.state ? " , " + data.state : ""
+                                        }`}
+                                      </span>
+                                    )}
                                   </div>
                                   <hr className="my-3" />
                                   {!data.email || user_type === "user" ? (
@@ -601,7 +608,7 @@ export default function PartnerDetails({ setLoginCondition }) {
                     show={TabActive === "notes" || addNote}
                     page={TabActive === "notes" ? "no" : "yes"}
                     close={() => {
-                      setAddNote(false)
+                      setAddNote(false);
                     }}
                     skip={() => navigate(-1)}
                   />

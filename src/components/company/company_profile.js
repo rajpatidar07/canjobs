@@ -32,11 +32,11 @@ function CompanyProfileDetail(props) {
   const user_type = localStorage.getItem("userType");
   const company_id = localStorage.getItem("company_id");
   let cid = company_id;
-  let location = useLocation()
+  let location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const docId = searchParams.get("docId");
   const docParentId = searchParams.get("docParentId");
-  const notes = searchParams.get("note")
+  const notes = searchParams.get("note");
 
   let navigate = useNavigate();
   /*Show modal and data state */
@@ -48,11 +48,9 @@ function CompanyProfileDetail(props) {
   const [showCompanyInfoModal, setShowCompanyInfoModal] = useState(false);
   const [showKycComplainDetailsModal, setShowKycComplainDetailsModal] =
     useState(false);
-  const [TabActive, setTabActive] = useState(docId
-    ? "documents"
-    : notes === "true"
-      ? "notes"
-      : "profile");
+  const [TabActive, setTabActive] = useState(
+    docId ? "documents" : notes === "true" ? "notes" : "profile"
+  );
   const [addNote, setAddNote] = useState(false);
   const [employerData, setEmployerData] = useState("");
   const [employerKycData, setEmployerKycData] = useState("");
@@ -124,17 +122,18 @@ function CompanyProfileDetail(props) {
                 className="d-flex align-items-center "
                 onClick={() => {
                   if (TabActive === "notes") {
-                    navigate(-1)
+                    navigate(-1);
                   } else {
-                    setAddNote(true)
+                    setAddNote(true);
                   }
-                }
-                }
+                }}
               >
                 <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
                 <span className="text-uppercase font-size-3 font-weight-bold text-gray">
                   <h3 className="font-size-6 mb-0 text-capitalize">
-                    {employerData.company_name ? employerData.company_name + " (Company)" : ""}
+                    {employerData.company_name
+                      ? employerData.company_name + " (Company)"
+                      : ""}
                   </h3>
                 </span>
               </Link>
@@ -144,7 +143,9 @@ function CompanyProfileDetail(props) {
         </>
       )}
       <ToastContainer />
-      {user_type === "admin" || user_type === "agent" ? null : <EmployeeHeader />}
+      {user_type === "admin" || user_type === "agent" ? null : (
+        <EmployeeHeader />
+      )}
       <div
         className={
           user_type === "admin" || user_type === "agent"
@@ -152,7 +153,11 @@ function CompanyProfileDetail(props) {
             : "bg-default-2 employer-detail-top-padding"
         }
       >
-        <div className={`container${user_type === "admin" || user_type === "agent" ? "-fluid" : ""}`}>
+        <div
+          className={`container${
+            user_type === "admin" || user_type === "agent" ? "-fluid" : ""
+          }`}
+        >
           <div className="row text-left mt-5 pt-0">
             <div className="col-12 mb-1 d-none">
               <div className="bg-white shadow-9 d-flex">
@@ -162,9 +167,9 @@ function CompanyProfileDetail(props) {
                       className="company_logo"
                       src={
                         employerData.logo === null ||
-                          employerData.logo === null ||
-                          employerData.logo === undefined ||
-                          employerData.logo === "undefined"
+                        employerData.logo === null ||
+                        employerData.logo === undefined ||
+                        employerData.logo === "undefined"
                           ? "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
                           : employerData.logo
                       }
@@ -212,7 +217,7 @@ function CompanyProfileDetail(props) {
                         <CustomButton
                           title={"Send Custom Email"}
                           className="font-size-4 rounded-3 btn-primary py-0 d-none"
-                        /*Functionalities have to be done. */
+                          /*Functionalities have to be done. */
                         >
                           {/*Take off "d-none" when you Send Custom Email API or when you're told to remove it*/}
                           <RiMailSendLine />
@@ -266,8 +271,8 @@ function CompanyProfileDetail(props) {
                     <Link
                       className={
                         TabActive === "profile"
-                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
                       }
                       id="home-tab"
                       data-toggle="tab"
@@ -283,8 +288,8 @@ function CompanyProfileDetail(props) {
                     <Link
                       className={
                         TabActive === "jobs"
-                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
                       }
                       id="appliedJobs"
                       data-toggle="tab"
@@ -306,8 +311,8 @@ function CompanyProfileDetail(props) {
                     <Link
                       className={
                         TabActive === "documents"
-                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
                       }
                       id="docTab"
                       data-toggle="tab"
@@ -317,26 +322,28 @@ function CompanyProfileDetail(props) {
                       onClick={async () => {
                         if (!employerData.documents_folder_id) {
                           const responseData = await AddCompany(employerData);
-                          setApiCall(true)
+                          setApiCall(true);
                           if (responseData.status === 1) {
-                            setTabActive("documents")
+                            setTabActive("documents");
                           }
                         } else {
-                          setTabActive("documents")
+                          setTabActive("documents");
                         }
                       }}
-                    // onClick={() => setTabActive("documents")}
+                      // onClick={() => setTabActive("documents")}
                     >
                       Documents
                     </Link>
                   </li>
-                  <li className={
-                    user_type === "company" ||
+                  <li
+                    className={
+                      user_type === "company" ||
                       user_type === "agent" ||
                       user_type === "user"
-                      ? "d-none"
-                      :
-                      "tab-menu-items nav-item "}>
+                        ? "d-none"
+                        : "tab-menu-items nav-item "
+                    }
+                  >
                     <Link
                       className={
                         TabActive === "retaineragreement"
@@ -363,8 +370,8 @@ function CompanyProfileDetail(props) {
                     <Link
                       className={
                         TabActive === "interview"
-                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
                       }
                       id="interviewTab"
                       data-toggle="tab"
@@ -386,8 +393,8 @@ function CompanyProfileDetail(props) {
                     <Link
                       className={
                         TabActive === "notes"
-                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
                       }
                       id="notesTab"
                       data-toggle="tab"
@@ -404,8 +411,8 @@ function CompanyProfileDetail(props) {
                     <Link
                       className={
                         TabActive === "activity"
-                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
                       }
                       id="activityTab"
                       data-toggle="tab"
@@ -417,14 +424,20 @@ function CompanyProfileDetail(props) {
                       Activity History
                     </Link>
                   </li>
-                  <li className={user_type === "user" ? "d-none" : "tab-menu-items nav-item"}>
+                  <li
+                    className={
+                      user_type === "user"
+                        ? "d-none"
+                        : "tab-menu-items nav-item"
+                    }
+                  >
                     {/*Take off "d-none" when you use the activity log API or when you're told to remove it*/}
 
                     <Link
                       className={
                         TabActive === "payment"
-                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
                       }
                       id="activityTab"
                       data-toggle="tab"
@@ -447,8 +460,8 @@ function CompanyProfileDetail(props) {
                     <Link
                       className={
                         TabActive === "contact"
-                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
                       }
                       id="activityTab"
                       data-toggle="tab"
@@ -460,12 +473,18 @@ function CompanyProfileDetail(props) {
                       Contact Us
                     </Link>
                   </li>
-                  <li className={user_type === "user" ? "d-none" : "tab-menu-items nav-item"}>
+                  <li
+                    className={
+                      user_type === "user"
+                        ? "d-none"
+                        : "tab-menu-items nav-item"
+                    }
+                  >
                     <Link
                       className={
                         TabActive === "email"
-                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10 active"
-                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-10"
+                          ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8 active"
+                          : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-8"
                       }
                       id="docTab"
                       data-toggle="tab"
@@ -564,14 +583,14 @@ function CompanyProfileDetail(props) {
                                 <hr className="my-3" />
                                 <div className="position-relative">
                                   {!employerData.industry &&
-                                    !employerData.corporation &&
-                                    !employerData.company_size &&
-                                    !employerData.company_start_date &&
-                                    !employerData.website_url &&
-                                    !employerData.vacancy_for_post &&
-                                    !employerKycData.pan_no &&
-                                    !employerKycData.tan_number &&
-                                    !employerKycData.gstin ? (
+                                  !employerData.corporation &&
+                                  !employerData.company_size &&
+                                  !employerData.company_start_date &&
+                                  !employerData.website_url &&
+                                  !employerData.vacancy_for_post &&
+                                  !employerKycData.pan_no &&
+                                  !employerKycData.tan_number &&
+                                  !employerKycData.gstin ? (
                                     <div className="text-left row m-0">
                                       <div className="font-size-4 mb-8 text-center mr-10">
                                         No Data Found
@@ -621,7 +640,12 @@ function CompanyProfileDetail(props) {
                                           title="Est. Since"
                                         >
                                           <i className="fas fa-business-time mr-2"></i>
-                                          <ConvertTime _date={employerData.company_start_date} format={"YYYY"} />
+                                          <ConvertTime
+                                            _date={
+                                              employerData.company_start_date
+                                            }
+                                            format={"YYYY"}
+                                          />
                                           {/* {moment(
                                             employerData.company_start_date
                                           ).format("YYYY")} */}
@@ -652,7 +676,7 @@ function CompanyProfileDetail(props) {
                                         </div>
                                       ) : null}
                                       {employerKycData === "" ||
-                                        user_type === "user" ? null : (
+                                      user_type === "user" ? null : (
                                         <div className="d-none">
                                           {employerKycData.pan_no ? (
                                             <div
@@ -666,7 +690,7 @@ function CompanyProfileDetail(props) {
                                             </div>
                                           ) : null}
                                           {!employerKycData.tan_number ||
-                                            user_type === "user" ? null : (
+                                          user_type === "user" ? null : (
                                             <div
                                               className="font-size-3 mb-1 mr-10"
                                               title="TAN"
@@ -678,7 +702,7 @@ function CompanyProfileDetail(props) {
                                             </div>
                                           )}
                                           {!employerKycData.gstin ||
-                                            user_type === "user" ? null : (
+                                          user_type === "user" ? null : (
                                             <div
                                               className="font-size-3 mb-1 mr-10"
                                               title="GSTIN"
@@ -723,11 +747,11 @@ function CompanyProfileDetail(props) {
                                         {employerData.email}
                                       </Link>
                                       {user_type === "admin" ||
-                                        props.self === "no" ? (
+                                      props.self === "no" ? (
                                         <CustomButton
                                           title={"Send Custom Email"}
                                           className="font-size-4 rounded-3 btn-primary py-0 d-none"
-                                        /*Functionalities have to be done. */
+                                          /*Functionalities have to be done. */
                                         >
                                           {/*Take off "d-none" when you Send Custom Email API or when you're told to remove it*/}
                                           <RiMailSendLine />
@@ -812,7 +836,7 @@ function CompanyProfileDetail(props) {
                       setApiCall={setApiCall}
                       pageNo={jobPageNo}
                       setpageNo={setJobPageNO}
-                    // setLmiaStatusRejectComment={setLmiaStatusRejectComment}
+                      // setLmiaStatusRejectComment={setLmiaStatusRejectComment}
                     />
                   </div>
                   {/* <!-- Top Start --> */}
@@ -845,15 +869,16 @@ function CompanyProfileDetail(props) {
                     //   employee_id={cid}
                     //   emp_user_type={"employer"}
                     // />
-                    < SharePointDocument
+                    <SharePointDocument
                       user_id={cid}
                       emp_user_type={"employer"}
-                      folderId={docId ? docParentId : employerData.documents_folder_id}
+                      folderId={
+                        docId ? docParentId : employerData.documents_folder_id
+                      }
                       notification={docId ? "yes" : "no"}
                       docId={docId ? docId : ""}
                       user_name={employerData.company_name}
                     />
-
                   ) : null}
                 </div>
                 <div
@@ -896,7 +921,7 @@ function CompanyProfileDetail(props) {
                     show={TabActive === "notes" || addNote}
                     page={TabActive === "notes" ? "no" : "yes"}
                     close={() => {
-                      setAddNote(false)
+                      setAddNote(false);
                     }}
                     skip={() => navigate(-1)}
                   />
@@ -986,7 +1011,8 @@ function CompanyProfileDetail(props) {
                         //   :
                         employerData.documents_folder_id
                       }
-                      userData={employerData} />
+                      userData={employerData}
+                    />
                   ) : null}
                 </div>
               </div>

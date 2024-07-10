@@ -261,7 +261,10 @@ span.featured_tag {
   position: absolute;
   top: 0;
   left: 10%;
-  padding: 10px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  line-height: 1;
   font-size: 36px;
   line-height: 1;
   height: 100%;
@@ -1769,4 +1772,35 @@ li.placeholder span svg {
 
 .msg-color span {
   color: rgb(0, 114, 238);
+}
+
+.dashboard-sidebar-wrapper {
+  width: 125px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  /* background: var(--bg); */
+  background: #992b32;
+  transform: translateX(-100%);
+  /* transition: .4s transform; */
+  z-index: 800;
+  transition: all .2s;
+}
+
+.dashboard-sidebar-wrapper.show~.dashboard-main-container {
+  width: calc(100% - 125px);
+  margin-left: 125px;
+  transition: all .2s;
+}
+
+/*To set sidebar menu to show and hide on all screens*/
+@media (display-mode:fullscreen) {
+  .dashboard-sidebar-wrapper {
+    transform: none;
+  }
+}
+
+.dashboard-sidebar-wrapper.show {
+  transform: translateX(0%);
 }
