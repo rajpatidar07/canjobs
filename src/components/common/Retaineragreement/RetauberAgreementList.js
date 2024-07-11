@@ -240,8 +240,8 @@ export default function RetauberAgreementList({
                                                                 //     }
                                                                 // });
                                                             }}
-                                                            title="View Agreement"
-                                                        >                                         View Agreement
+                                                            title=" Update doc"
+                                                        >                                          Update doc
                                                         </button>
                                                         <button
                                                             className="btn btn-outline-info action_btn "

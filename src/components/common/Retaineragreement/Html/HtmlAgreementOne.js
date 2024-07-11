@@ -49,13 +49,25 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
         <b>Client File Number: <span>${felidData?.client_file_no || ""}</span></b>
       </div>
       <p>
-        This Retainer Agreement is made this  <span class="para_gap">${(felidData?.client_file_no || "")} </span> day of <span class="para_gap"> ${!felidData.agreement_date || felidData.agreement_date === "0000-00-00" ? "" : (felidData && (felidData.agreement_date ? moment(new Date(felidData?.agreement_date)).format("Do") : " "))||""}</span> <span class="para_gap">${!felidData.agreement_date || felidData.agreement_date === "0000-00-00" ? "" :(felidData && (felidData.agreement_date ? moment(new Date(felidData?.agreement_date)).format("MMMM") : " ")) || ""} </span><span class="para_gap"> ${!felidData.agreement_date || felidData.agreement_date === "0000-00-00" ? "" :(felidData && (felidData.agreement_date ? moment(new Date(felidData?.agreement_date)).format("YYYY") : " ")) || ""}</span>
+        This Retainer Agreement is made this  <span class="para_gap">${(felidData?.client_file_no || "")} </span> day of <span class="para_gap"> ${!felidData.agreement_date || felidData.agreement_date === "0000-00-00" ? "" : (felidData && (felidData.agreement_date ? moment(new Date(felidData?.agreement_date)).format("Do") : " ")) || ""}</span> <span class="para_gap">${!felidData.agreement_date || felidData.agreement_date === "0000-00-00" ? "" : (felidData && (felidData.agreement_date ? moment(new Date(felidData?.agreement_date)).format("MMMM") : " ")) || ""} </span><span class="para_gap"> ${!felidData.agreement_date || felidData.agreement_date === "0000-00-00" ? "" : (felidData && (felidData.agreement_date ? moment(new Date(felidData?.agreement_date)).format("YYYY") : " ")) || ""}</span>
         between Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur
         (the “RCIC”), RCIC Membership Number <span>R533393</span>, phone number
         <span>4038885308</span>
         , email <a href="mailto:info@canpathways.ca" class="a" target="_blank">info@canpathways.ca located at 2618 </a>
         <span>Hopewell Pl NE #310 Calgary, AB T1Y 7J7,</span> <span>Canada</span> and Client  <span class="para_gap">${(felidData && (felidData.client_first_name || felidData.client_last_name) ? ((felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}</span>(the “Client”)<span class="p">, located at  <span class="para_gap"> ${felidData && felidData.client_address ? (felidData.client_address) : emp_user_type === "employer" ? (userData?.address || "") : (((userData?.current_location || "") || "") + " " + ((userData?.currently_located_country || "") || ""))}</span> </span> , email  <span class="para_gap">${felidData && felidData.client_email ? felidData.client_email : (userData?.email || "")}</span>, contact number  <span class="para_gap"> ${felidData && felidData.client_contact ? felidData.client_contact : (userData?.contact_no || "")}</span>.
       </p>
+      <div>
+      <p>Details of Applicant's and dependents to added in this application</p>
+      <div>
+      <p>
+      <span>Principal Applicant <span class="para_gap"> </span> Date of birth <span class="para_gap"> </span> </span>
+      <span>Name of Spouse  <span class="para_gap"> </span> Date of birth <span class="para_gap"> </span> </span>
+      <span>Name of Dependent Child  <span class="para_gap"> </span> Date of birth <span class="para_gap"> </span> </span>
+      <span>Name of Dependent Child  <span class="para_gap"> </span> Date of birth <span class="para_gap"> </span> </span>
+      <span>Additional Dependent Child name  <span class="para_gap"> </span> Date of birth <span class="para_gap"> </span> </span>
+      </p>
+      </div>
+      </div>
       <p>
         WHEREAS the RCIC and the Client wish to enter into a written agreement
         which contains the agreed upon terms and conditions upon which the RCIC
@@ -1019,9 +1031,32 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
       <div style="display: flex; flex-wrap: wrap">
         <div style="width: 50%">
           <p class="para_gap" style="margin: 0">
-          
+          <span style="max-width: 200px; float: right"></span>
           </p>  
           <p style="margin: 0 0 30px 0">Signature of Client</p>
+        </div>
+        <div style="width: 50%">
+          <p class="para_gap" style="margin: 0">
+          <span style="max-width: 200px; float: right"></span>
+          </p>  
+          <p style="margin: 0 0 30px 0">Signature of Spouse</p>
+        </div>
+         <div style="width: 50%">
+          <p class="para_gap" style="margin: 0">
+         <span style="max-width: 200px;"> ${(felidData && (felidData.client_first_name || felidData.client_last_name) ? ((felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}
+         </span></p>
+          <p style="margin: 0 0 30px 0">Name of Client</p>
+        </div>
+         <div style="width: 50%">
+          <p class="para_gap" style="margin: 0"> 
+          <span style="max-width: 200px;"></span></p>
+          <p style="margin: 0 0 30px 0">Name of Spouse</p>
+        </div>
+            <div style="width: 50%">
+          <p class="para_gap" style="margin: 0">
+          <span style="max-width: 200px; float: right"></span>
+          </p>
+          <p style="margin: 0 0 30px 0">Signature of Dependent Child over 18 years of age</p>
         </div>
         <div style="width: 50%">
           <p class="para_gap" style="margin: 0">
@@ -1034,20 +1069,23 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
           </p>
           <p style="margin: 0 0 30px 0">Signature of RCIC</p>
         </div>
-        <div style="width: 50%">
-          <p class="para_gap" style="margin: 0">${(felidData && (felidData.client_first_name || felidData.client_last_name) ? ((felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}</p>
-          <p style="margin: 0 0 30px 0">Name of Client</p>
+       <div style="width: 50%">
+          <p class="para_gap" style="margin: 0" >
+          <span style="max-width: 200px;"> </span></p>
+          <p style="margin: 0 0 30px 0">Name of Dependent Child over 18 years of age</p>
         </div>
         <div style="width: 50%">
-          <p class="para_gap" style="margin: 0" >Harpreet Kaur</p>
+          <p class="para_gap" style="margin: 0" ><span style="max-width: 200px;">Harpreet Kaur</span></p>
           <p style="margin: 0 0 30px 0">Name of RCIC</p>
         </div>
         <div style="width: 50%">
-          <p class="para_gap" style="margin: 0">${!felidData.date_signature_client || felidData.date_signature_client === "0000-00-00" ? "" : felidData?.date_signature_client}</p>
+          <p class="para_gap" style="margin: 0"><span style="max-width: 200px;">
+          ${!felidData.date_signature_client || felidData.date_signature_client === "0000-00-00" ? "" : felidData?.date_signature_client}</span></p>
           <p style="margin: 0 0 30px 0">Date</p>
         </div>
         <div style="width: 50%">
-          <p class="para_gap" style="margin: 0">${!felidData.date_signature_rcic || felidData.date_signature_rcic === "0000-00-00" ? "" : felidData?.date_signature_rcic}</p>
+          <p class="para_gap" style="margin: 0"><span style="max-width: 200px;">
+          ${!felidData.date_signature_rcic || felidData.date_signature_rcic === "0000-00-00" ? "" : felidData?.date_signature_rcic}</span></p>
           <p style="margin: 0 0 30px 0">Date</p>
         </div>
       </div>

@@ -189,8 +189,9 @@ const AgreementOneForm = ({ folderId, user_id, openSignature, emp_user_type, sho
                   </label>
                   <input
                     type={type}
-                    className={errors[name] ? "form-control mx-5 border border-danger col" : "form-control col mx-5"}
+                    className={`${errors[name] ? "border border-danger" : ""} form-control mx-5 col ${type === "date" ? "coustam_datepicker" : ""}`}
                     value={state[name] || ""}
+                    onKeyDownCapture={type === "date" ? (e) => e.preventDefault() : ""}
                     onChange={onInputChange}
                     placeholder={label}
                     id={name}

@@ -154,7 +154,7 @@ const AggrementOne = () => {
               };
               let addDocId = AddUpdateAgreement(data);
               console.log(addDocId);
-            } catch (error) {}
+            } catch (error) { }
           }
           // console.log(res.data)
           if (
@@ -249,6 +249,31 @@ const AggrementOne = () => {
             </Text>
             .
           </Text>
+        </View>
+        <View style={{ marginTop: 15 }}>
+          <Text style={{marginBottom:5}}>Details of Applicant's and dependents to added in this application</Text>
+          <View>
+            <View>
+              <Text>Principal Applicant <Text style={styles.textunderline} >__________________ </Text> Date of birth <Text style={styles.textunderline} >__________________ </Text>
+              </Text>
+            </View>
+            <View>
+              <Text>Name of Spouse  <Text style={styles.textunderline} >__________________ </Text> Date of birth <Text style={styles.textunderline} >__________________ </Text>
+              </Text>
+            </View>
+            <View>
+              <Text>Name of Dependent Child  <Text style={styles.textunderline} >__________________ </Text> Date of birth <Text style={styles.textunderline} >__________________ </Text>
+              </Text>
+            </View>
+            <View>
+              <Text>Name of Dependent Child  <Text style={styles.textunderline} >__________________ </Text> Date of birth <Text style={styles.textunderline} >__________________ </Text>
+              </Text>
+            </View>
+            <View>
+              <Text>Additional Dependent Child name  <Text style={styles.textunderline} >__________________ </Text> Date of birth <Text style={styles.textunderline} >__________________ </Text>
+              </Text>
+            </View>
+          </View>
         </View>
         <View>
           <Text style={{ marginTop: 15 }}>
@@ -1416,79 +1441,101 @@ const AggrementOne = () => {
               IN WITNESS THEREOF this Agreement has been duly executed by the
               parties hereto on the date first above written.
             </Text>
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                width: "100%",
-                marginTop: 15,
-              }}
-            >
+            <View style={{ display: "flex", flexDirection: "column", width: "100%", marginTop: 15 }}>
               <View style={styles.clientForm}>
                 <View style={styles.clientFormChild}>
-                  <Text>________________</Text>
-                  <Text style={{ margin: "0 0 30px 0" }}>
-                    Signature of Client
+                  <Text style={[{ margin: 0, marginBottom: 5, maxWidth: 200, }, styles.textunderline]}>
+                    ___________________
                   </Text>
+                  <Text style={{ margin: "0 0 30px 0" }}>Signature of Client</Text>
                 </View>
                 <View style={styles.clientFormChild}>
-                  <Text>________________</Text>
-                  <Text style={{ margin: "0 0 30px 0" }}>
-                    Signature of RCIC
+                  <Text style={[{ margin: 0, marginBottom: 5, maxWidth: 200, }, styles.textunderline]}>
+                    ___________________
                   </Text>
+                  <Text style={{ margin: "0 0 30px 0" }}>Signature of Spouse</Text>
                 </View>
               </View>
               <View style={styles.clientForm}>
                 <View style={styles.clientFormChild}>
                   <Text
-                    className="para_gap"
-                    style={[
-                      { margin: 0, marginBottom: 5 },
-                      styles.textunderline,
-                    ]}
+                    style={[{ margin: 0, marginBottom: 5, maxWidth: 200 }, styles.textunderline]}
                   >
-                    {felidData.client_first_name && felidData.client_last_name
-                      ? felidData.client_first_name +
-                        " " +
-                        felidData.client_last_name
-                      : "_______________"}
+                    {felidData.client_first_name && felidData.client_last_name ? (felidData && (felidData.client_first_name || felidData.client_last_name)
+                      ? felidData.client_first_name + " " + felidData.client_last_name
+                      : "")
+                      : "___________________"}
                   </Text>
                   <Text style={{ margin: "0 0 30px 0" }}>Name of Client</Text>
                 </View>
                 <View style={styles.clientFormChild}>
                   <Text
-                    className="para_gap"
-                    style={[
-                      { margin: 0, marginBottom: 5 },
-                      styles.textunderline,
-                    ]}
-                  >
-                    Harpreet Kaur
+                    style={[{ margin: 0, marginBottom: 5, maxWidth: 200 }, styles.textunderline]}>
+                    ___________________
+                  </Text>
+                  <Text style={{ margin: "0 0 30px 0" }}>Name of Spouse</Text>
+                </View>
+              </View>
+              <View style={styles.clientForm}>
+                <View style={styles.clientFormChild}>
+                  <Text style={[{ margin: 0, marginBottom: 5, maxWidth: 200 }, styles.textunderline]}>
+                    ___________________
+                  </Text>
+                  <Text style={{ margin: "0 0 30px 0" }}>
+                    Signature of Dependent Child over 18 years of age
+                  </Text>
+                </View>
+                <View style={styles.clientFormChild}>
+                  <View style={[{ margin: 0, marginBottom: 5, maxWidth: 200 }, styles.textunderline]}>
+                    {felidData.initial ?
+                      <Image
+                        src={
+                          felidData.initial
+                            ? felidData.initial
+                            : ""
+                        }
+                        alt={
+                          (felidData.client_first_name && felidData.client_last_name ? felidData.client_first_name + " " + felidData.client_last_name
+                            : "")
+                        }
+
+                        style={{ width: "60%", height: "auto" }}
+                      /> : <Text>___________________</Text>}
+                  </View>
+                  <Text style={{ margin: "0 0 30px 0" }}>Signature of RCIC</Text>
+                </View>
+              </View>
+              <View style={[styles.clientForm, { marginTop: 25 }]}>
+                <View style={styles.clientFormChild}>
+                  <Text style={[{ margin: 0, marginBottom: 5, maxWidth: 200 }, styles.textunderline]}>
+                    ___________________
+                  </Text>
+                  <Text style={{ margin: "0 0 30px 0" }}>
+                    Name of Dependent Child over 18 years of age
+                  </Text>
+                </View>
+                <View style={styles.clientFormChild}>
+                  <Text style={[{ margin: 0, marginBottom: 5, maxWidth: 200 }, styles.textunderline]}>Harpreet Kaur
                   </Text>
                   <Text style={{ margin: "0 0 30px 0" }}>Name of RCIC</Text>
                 </View>
               </View>
               <View style={styles.clientForm}>
                 <View style={styles.clientFormChild}>
-                  <Text
-                    className="para_gap"
-                    style={{ margin: 0, marginBottom: 5 }}
-                  >
-                    {!felidData.date_signature_client ||
-                    felidData.date_signature_client === "0000-00-00"
-                      ? "____________"
+                  <Text style={[{ margin: 0, marginBottom: 5, maxWidth: 200 }, styles.textunderline]}>
+                    {!felidData.date_signature_client || felidData.date_signature_client === "0000-00-00"
+                      ? "___________________"
                       : felidData.date_signature_client}
                   </Text>
                   <Text style={{ margin: "0 0 30px 0" }}>Date</Text>
                 </View>
                 <View style={styles.clientFormChild}>
                   <Text
-                    className="para_gap"
-                    style={{ margin: 0, marginBottom: 5 }}
+                    style={[{ margin: 0, marginBottom: 5, maxWidth: 200 }, styles.textunderline]}
                   >
                     {!felidData.date_signature_rcic ||
-                    felidData.date_signature_rcic === "0000-00-00"
-                      ? "____________"
+                      felidData.date_signature_rcic === "0000-00-00"
+                      ? "___________________"
                       : felidData.date_signature_rcic}
                   </Text>
                   <Text style={{ margin: "0 0 30px 0" }}>Date</Text>
@@ -1635,8 +1682,8 @@ const AggrementOne = () => {
                 <Text className="para_gap" style={{ margin: 0 }}>
                   {felidData.client_first_name && felidData.client_last_name
                     ? felidData.client_first_name +
-                      " " +
-                      felidData.client_last_name
+                    " " +
+                    felidData.client_last_name
                     : "_______________"}
                 </Text>
                 <Text style={{ margin: "0 0 30px 0" }}>Client’s full name</Text>
@@ -1648,7 +1695,7 @@ const AggrementOne = () => {
               <View style={styles.clientFormChild}>
                 <Text className="para_gap" style={{ margin: 0 }}>
                   {!felidData.date_signature_client ||
-                  felidData.date_signature_client === "0000-00-00"
+                    felidData.date_signature_client === "0000-00-00"
                     ? "____________"
                     : felidData.date_signature_client}
                 </Text>
