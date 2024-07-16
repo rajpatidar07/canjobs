@@ -272,6 +272,7 @@ export default function RetauberAgreementList({
                                                                 setAgreementData(data)
                                                                 GetAgreementPdf(data)
                                                             }}
+                                                            disabled={!data.client_email}
                                                             title="Send Mail">
                                                             <IoMdMail />
                                                         </button>
