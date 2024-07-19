@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // // src/Newpdf.js
 // import React, { useState, useEffect, useRef } from 'react';
 
@@ -195,96 +196,220 @@
 
 // export default Newpdf;
 /*Crud to add country ,state and city to the local storage and get it from there in select box */
-  import React, { useState, useEffect } from 'react';
+  // import React, { useState, useEffect } from 'react';
 
-  const Newpdf = () => {
-    const [data, setData] = useState({});
-    const [progress, setProgress] = useState(0);
-    const [form, setForm] = useState({ country: '', state: '', city: '', selectedCountry: '', selectedState: '' });
+  // const Newpdf = () => {
+  //   const [data, setData] = useState({});
+  //   const [progress, setProgress] = useState(0);
+  //   const [form, setForm] = useState({ country: '', state: '', city: '', selectedCountry: '', selectedState: '' });
 
-    useEffect(() => {
-      const savedData = localStorage.getItem('countryStateCityData');
-      if (savedData) setData(JSON.parse(savedData));
-    }, []);
+  //   useEffect(() => {
+  //     const savedData = localStorage.getItem('countryStateCityData');
+  //     if (savedData) setData(JSON.parse(savedData));
+  //   }, []);
 
-    const saveData = (newData) => {
-      setData(newData);
-      localStorage.setItem('countryStateCityData', JSON.stringify(newData));
+  //   const saveData = (newData) => {
+  //     setData(newData);
+  //     localStorage.setItem('countryStateCityData', JSON.stringify(newData));
+  //   };
+
+  //   const handleSubmit = (e, type) => {
+  //     e.preventDefault();
+  //     const { country, state, city, selectedCountry, selectedState } = form;
+
+  //     let newData = {...data };
+  //     if (type === 'country') newData[country] = {};
+  //     if (type === 'state') newData[selectedCountry][state] = [];
+  //     if (type === 'city') newData[selectedCountry][selectedState].push(city);
+
+  //     saveData(newData);
+  //     setForm({...form, [type]: '' });
+
+  //     let newProgress = progress;
+  //     if (type === 'country') newProgress += 40;
+  //     else newProgress += 30;
+  //     setProgress(newProgress > 100? 100 : newProgress);
+  //   };
+
+  //   const handleChange = (e) => {
+  //     setForm({...form, [e.target.name]: e.target.value });
+  //   };
+
+  //   return (
+  //     <div>
+  //       <h1>Country, State, City</h1>
+
+  //       <form onSubmit={(e) => handleSubmit(e, 'country')}>
+  //         <input name="country" value={form.country} onChange={handleChange} placeholder="Add Country" required />
+  //         <button type="submit">Add Country</button>
+  //       </form>
+
+  //       <form onSubmit={(e) => handleSubmit(e, 'tate')}>
+  //         <select name="selectedCountry" value={form.selectedCountry} onChange={handleChange} required>
+  //           <option value="" disabled>Select Country</option>
+  //           {Object.keys(data).map((country) => (
+  //             <option key={country} value={country}>{country}</option>
+  //           ))}
+  //         </select>
+  //         <input name="state" value={form.state} onChange={handleChange} placeholder="Add State" required />
+  //         <button type="submit">Add State</button>
+  //       </form>
+
+  //       <form onSubmit={(e) => handleSubmit(e, 'city')}>
+  //         <select name="selectedCountry" value={form.selectedCountry} onChange={handleChange} required>
+  //           <option value="" disabled>Select Country</option>
+  //           {Object.keys(data).map((country) => (
+  //             <option key={country} value={country}>{country}</option>
+  //           ))}
+  //         </select>
+  //         <select name="selectedState" value={form.selectedState} onChange={handleChange} required>
+  //           <option value="" disabled>Select State</option>
+  //           {form.selectedCountry && Object.keys(data[form.selectedCountry] || {}).map((state) => (
+  //             <option key={state} value={state}>{state}</option>
+  //           ))}
+  //         </select>
+  //         <input name="city" value={form.city} onChange={handleChange} placeholder="Add City" required />
+  //         <button type="submit">Add City</button>
+  //       </form>
+
+  //       <div>
+  //         <h2>Data:</h2>
+  //         {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
+  //         <h2>Progress</h2>
+  //         {progress}%
+  //       </div>
+  //       <div className="progress" style={{ height: "20px" }}>
+  //         <div className="progress-bar" role="progressbar" aria-label="Example 20px high" style={{ width: `${progress}%` }} aria-valuenow={progress} aria-valuemin="0" aria-valuemax="100"></div>
+  //       </div>
+  //     </div>
+  //   );
+  // };
+
+  // export default Newpdf;
+  // import {useEffect,useRef}from "react"
+  // import PSPDFKit from "pspdfkit";
+  
+  // export default function Newpdf() {
+  //   const containerRef = useRef(null);
+  //   let document="https://morth.nic.in/sites/default/files/dd12-13_0.pdf";
+  
+  //   useEffect(() => {
+  //     const container = containerRef.current;
+  //     let instance;
+  
+  //     (async function () {
+  //       if (!document) {
+  //         console.error("Document prop is required.");
+  //         return;
+  //       }
+  
+  //       try {
+  //         if (instance) {
+  //           PSPDFKit.unload(container);
+  //         }
+  
+  //         instance = await PSPDFKit.load({
+  //           container,
+  //         license:
+  //           "zFV8P9YHvxGpBc0Tp-W4cg6Fl-zD9VyTWQGiJTi1A0pM18iMZUQDrARKsunUn4oFAuan32RJzCDR--1nglDFAeacyOumrQOdc7aLnh0zkUHLoL9ZIyYS885cFaZySBalYNU4cbnmdUaZUlte0UEfoF8wM-_lJnbFYTYyWvpuPQ7BICRjm9_SGVz9V8bQGEU3OjpqY_YsvjfyRw", // Replace with your actual license key
+  //         document: document,
+  //         baseUrl: `${window.location.protocol}//${window.location.host}/${process.env.PUBLIC_URL}`,
+  //         CommentMarkerAnnotation: true,
+  //         setOnCommentCreationStart: true,
+  //         toolbarItems: PSPDFKit.defaultToolbarItems.concat({
+  //           type: "annotate",
+  //         }),
+  //         // mentionableUsers: props.adminDetailsFOrMention,
+  //         autoSaveMode: PSPDFKit.AutoSaveMode.IMMEDIATE,
+  //         enableRichText: () => true,
+  //         instant: true,});
+  //       } catch (error) {
+  //         console.error("Error loading PSPDFKit or document:", error);
+  //       }
+  //     })();
+  
+  //     return () => {
+  //       if (instance) {
+  //         PSPDFKit.unload(container);
+  //       }
+  //     };
+  //   }, [document]);
+  
+  //   return <div ref={containerRef} style={{ width: "100%", height: "100vh" }} />;
+  // }
+  import { useEffect, useRef } from "react";
+import PSPDFKit from "pspdfkit";
+
+export default function Newpdf() {
+  const containerRef = useRef(null);
+  let document ="https://canpathways.sharepoint.com/sites/canpathwaysjobs/_layouts/15/download.aspx?UniqueId=5b0a89ad-71b6-4035-8daf-798df9ecc7a6&Translate=false&tempauth=v1.eyJzaXRlaWQiOiJjOTgxNDg4OS00NmIxLTQ1NTgtOWZhOS02NzUyNjJlNTJhYWQiLCJhcHBfZGlzcGxheW5hbWUiOiJHcmFwaCBQSFAgcXVpY2sgc3RhcnQiLCJhdWQiOiIwMDAwMDAwMy0wMDAwLTBmZjEtY2UwMC0wMDAwMDAwMDAwMDAvY2FucGF0aHdheXMuc2hhcmVwb2ludC5jb21ANDYzOTJiN2QtM2ZhNy00Y2M4LWI5ZGQtYjA1YTFkZjllNzQ1IiwiZXhwIjoiMTcyMTM5NDM1MSJ9.CgoKBHNuaWQSAjY0EgsI_vOZraX9kz0QBRoMNDAuMTI2LjUzLjI0KixEQi9GbDN6ckN2eVcxV3liaFNEbVYzVXh0cWVIdFFTZVJzRjhQM2J1U3pvPTCQATgBQhChPdDze6AAYBROKHYAUhkEShBoYXNoZWRwcm9vZnRva2VuegExugFAYWxsc2l0ZXMud3JpdGUgYWxsZmlsZXMud3JpdGUgYWxsZmlsZXMucmVhZCBhbGxzaXRlcy5mdWxsY29udHJvbMIBSWQxMDFjOGFkLWUyNjMtNGMwYS04ZGIzLTNiYTJhZDFmOGVhNkA0NjM5MmI3ZC0zZmE3LTRjYzgtYjlkZC1iMDVhMWRmOWU3NDXIAQE.sWBeFWNrwqQnpPszyT4gno_TX5kOFXXZ8xw-0GyZ8m8&ApiVersion=2.0"
+;
+  useEffect(() => {
+    const container = containerRef.current;
+    let instance;
+  
+    (async function () {
+      if (!document) {
+        console.error("Document prop is required.");
+        return;
+      }
+  
+      try {
+        if (instance) {
+          PSPDFKit.unload(container);
+        };
+        // if (!PSPDFKit.I18n) PSPDFKit.I18n = { messages: { en: {} } };
+        // if (!PSPDFKit.I18n.messages) PSPDFKit.I18n.messages = { en: {} };
+        // if (!PSPDFKit.I18n.messages.en) PSPDFKit.I18n.messages.en = {};
+
+        // // Add your localization line here
+        // PSPDFKit.I18n.messages.en.sign = "initials";
+        // const widget = new PSPDFKit.Annotations.WidgetAnnotation({
+        //   pageIndex: 0,
+        //   boundingBox: new PSPDFKit.Geometry.Rect({
+        //     left: 200,
+        //     top: 300,
+        //     width: 250,
+        //     height: 150
+        //   }),
+        //   formFieldName: "My signature form field",
+        //   id: PSPDFKit.generateInstantId()
+        // });
+        // const formField = new PSPDFKit.FormFields.SignatureFormField({
+        //   name: "My signature form field",
+        //   annotationIds: PSPDFKit.Immutable.List([widget.id])
+        // });
+        instance = await PSPDFKit.load({
+          container,
+          license: "zFV8P9YHvxGpBc0Tp-W4cg6Fl-zD9VyTWQGiJTi1A0pM18iMZUQDrARKsunUn4oFAuan32RJzCDR--1nglDFAeacyOumrQOdc7aLnh0zkUHLoL9ZIyYS885cFaZySBalYNU4cbnmdUaZUlte0UEfoF8wM-_lJnbFYTYyWvpuPQ7BICRjm9_SGVz9V8bQGEU3OjpqY_YsvjfyRw", // Replace with your actual license key
+  
+          document: document,
+          baseUrl: `${window.location.protocol}//${window.location.host}/${process.env.PUBLIC_URL}`,
+          // CommentMarkerAnnotation: true,
+          // setOnCommentCreationStart: true,
+          toolbarItems: PSPDFKit.defaultToolbarItems.concat({
+            type: "signature",
+          }),
+          autoSaveMode: PSPDFKit.AutoSaveMode.IMMEDIATE,
+          enableRichText: () => true,
+          instant: true,
+          mode: 'no-cors', // Add this line
+          electronicSignatures:SignaturePad,
+          // widget, formField
+        });
+      } catch (error) {
+        console.error("Error loading PSPDFKit or document:", error);
+      }
+    })();
+  
+    return () => {
+      if (instance) {
+        PSPDFKit.unload(container);
+      }
     };
-
-    const handleSubmit = (e, type) => {
-      e.preventDefault();
-      const { country, state, city, selectedCountry, selectedState } = form;
-
-      let newData = {...data };
-      if (type === 'country') newData[country] = {};
-      if (type === 'state') newData[selectedCountry][state] = [];
-      if (type === 'city') newData[selectedCountry][selectedState].push(city);
-
-      saveData(newData);
-      setForm({...form, [type]: '' });
-
-      let newProgress = progress;
-      if (type === 'country') newProgress += 40;
-      else newProgress += 30;
-      setProgress(newProgress > 100? 100 : newProgress);
-    };
-
-    const handleChange = (e) => {
-      setForm({...form, [e.target.name]: e.target.value });
-    };
-
-    return (
-      <div>
-        <h1>Country, State, City</h1>
-
-        <form onSubmit={(e) => handleSubmit(e, 'country')}>
-          <input name="country" value={form.country} onChange={handleChange} placeholder="Add Country" required />
-          <button type="submit">Add Country</button>
-        </form>
-
-        <form onSubmit={(e) => handleSubmit(e, 'tate')}>
-          <select name="selectedCountry" value={form.selectedCountry} onChange={handleChange} required>
-            <option value="" disabled>Select Country</option>
-            {Object.keys(data).map((country) => (
-              <option key={country} value={country}>{country}</option>
-            ))}
-          </select>
-          <input name="state" value={form.state} onChange={handleChange} placeholder="Add State" required />
-          <button type="submit">Add State</button>
-        </form>
-
-        <form onSubmit={(e) => handleSubmit(e, 'city')}>
-          <select name="selectedCountry" value={form.selectedCountry} onChange={handleChange} required>
-            <option value="" disabled>Select Country</option>
-            {Object.keys(data).map((country) => (
-              <option key={country} value={country}>{country}</option>
-            ))}
-          </select>
-          <select name="selectedState" value={form.selectedState} onChange={handleChange} required>
-            <option value="" disabled>Select State</option>
-            {form.selectedCountry && Object.keys(data[form.selectedCountry] || {}).map((state) => (
-              <option key={state} value={state}>{state}</option>
-            ))}
-          </select>
-          <input name="city" value={form.city} onChange={handleChange} placeholder="Add City" required />
-          <button type="submit">Add City</button>
-        </form>
-
-        <div>
-          <h2>Data:</h2>
-          {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
-          <h2>Progress</h2>
-          {progress}%
-        </div>
-        <div className="progress" style={{ height: "20px" }}>
-          <div className="progress-bar" role="progressbar" aria-label="Example 20px high" style={{ width: `${progress}%` }} aria-valuenow={progress} aria-valuemin="0" aria-valuemax="100"></div>
-        </div>
-      </div>
-    );
-  };
-
-  export default Newpdf;
+  }, [document]);
+  return <div ref={containerRef} style={{ width: "100%", height: "100vh" }} />;
+}
 
 /*List code with add update delete */
 // import React, { useState } from 'react';

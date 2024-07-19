@@ -132,7 +132,7 @@ const AggrementOne = () => {
           `${felidData?.type.replace(" ", "_")}.pdf`,
           { type: "application/pdf" }
         );
-        // console.log('file =>', file)
+        console.log('file = >', file)
         try {
           let res = await AddSharePointDOcument(
             user_id,
