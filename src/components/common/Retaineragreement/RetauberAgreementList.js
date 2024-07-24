@@ -11,6 +11,7 @@ import SendEmailAgreement from '../../forms/Agreement/SendEmailAgreement';
 import { RiDeleteBin5Line } from 'react-icons/ri';
 import SAlert from '../sweetAlert';
 import { toast } from 'react-toastify';
+import Newpdf from '../Adobe/newpdf';
 export default function RetauberAgreementList({
     user_id,
     emp_user_type,
@@ -23,6 +24,7 @@ export default function RetauberAgreementList({
     const [openAddAgreementForm, setOpenAddAgreementForm] = useState(false);
     const [openAddAgreementFelids, setOpenAddAgreementFelids] = useState(false);
     const [openViewAgreement, setOpenViewAgreement] = useState(false);
+    const [openSignfPspdfkit, setOpenSignfPspdfkit] = useState(false);
     const [openViewAgreementSign, setOpenViewAgreementSign] = useState("");
     const [agreementList, setAgreementList] = useState([]);
     const [agreementData, setAgreementData] = useState("");
@@ -104,7 +106,7 @@ export default function RetauberAgreementList({
     async function deleteAdmin(e) {
         try {
             const responseData = await DeleteAgreement(e);
-            if (responseData.message ==="Agreement deleted successfully.") {
+            if (responseData.message === "Agreement deleted successfully.") {
                 toast.error("Agreement deleted successfully.", {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 1000,
@@ -278,6 +280,18 @@ export default function RetauberAgreementList({
                                                         </button>
                                                         <button
                                                             className="btn btn-outline-info action_btn"
+                                                            onClick={() => {
+                                                                setOpenSignfPspdfkit(true)
+                                                                setAgreementData(data)
+                                                                GetAgreementPdf(data)
+                                                            }}
+                                                            disabled={!data.document_id}   
+                                                            title="Sign document with pspdfkit"
+                                                        >
+                                                            Sign document with pspdfkit
+                                                        </button>
+                                                        <button
+                                                            className="btn btn-outline-info action_btn"
                                                             onClick={() => ShowDeleteAlert(data)}
                                                             title="Delete"
                                                         >
@@ -355,6 +369,11 @@ export default function RetauberAgreementList({
                         pdf={pdf}
                     />
                     : null}
+                {openSignfPspdfkit ? <Newpdf
+                    document={pdf["@microsoft.graph.downloadUrl"]}
+                    show={openSignfPspdfkit}
+                    close={() => setOpenSignfPspdfkit(false)}
+                /> : null}
                 <SAlert
                     show={deleteAlert}
                     title={deleteName}
