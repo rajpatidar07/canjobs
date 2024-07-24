@@ -288,8 +288,8 @@
   // export default Newpdf;
 import { useEffect, useRef } from "react"
 import PSPDFKit from "pspdfkit";
-
-export default function Newpdf({document}) {
+import { Modal } from "react-bootstrap";
+export default function Newpdf({document,close,show}) {
   const containerRef = useRef(null);
   // let document = "https://canpathways.sharepoint.com/sites/canpathwaysjobs/_layouts/15/download.aspx?UniqueId=d4410fbf-3895-4b2c-80a1-c48948ddf0c4&Translate=false&tempauth=v1.eyJzaXRlaWQiOiJjOTgxNDg4OS00NmIxLTQ1NTgtOWZhOS02NzUyNjJlNTJhYWQiLCJhcHBfZGlzcGxheW5hbWUiOiJHcmFwaCBQSFAgcXVpY2sgc3RhcnQiLCJhdWQiOiIwMDAwMDAwMy0wMDAwLTBmZjEtY2UwMC0wMDAwMDAwMDAwMDAvY2FucGF0aHdheXMuc2hhcmVwb2ludC5jb21ANDYzOTJiN2QtM2ZhNy00Y2M4LWI5ZGQtYjA1YTFkZjllNzQ1IiwiZXhwIjoiMTcyMTc5ODQyMiJ9.CgoKBHNuaWQSAjY0EgsImpW0-77olT0QBRoLMjAuMjAuMzIuOTYqLFVEK24ybk9sbDZXU3d1Rm5pSWlDaGwxeUQ2UTVwRXhFR0RLdVF4M3NneDQ9MJABOAFCEKE_Uk2OgABgFE4h-XWA8lxKEGhhc2hlZHByb29mdG9rZW56ATG6AUBhbGxzaXRlcy53cml0ZSBhbGxmaWxlcy53cml0ZSBhbGxmaWxlcy5yZWFkIGFsbHNpdGVzLmZ1bGxjb250cm9swgFJZDEwMWM4YWQtZTI2My00YzBhLThkYjMtM2JhMmFkMWY4ZWE2QDQ2MzkyYjdkLTNmYTctNGNjOC1iOWRkLWIwNWExZGY5ZTc0NcgBAQ.wSEiu_A4kPGW9Xh_Y1rDvQ4o4QnXHDOl-C9Z6i-DYwA&ApiVersion=2.0";
   useEffect(() => {
@@ -335,7 +335,26 @@ export default function Newpdf({document}) {
     };
   }, [document]);
 
-  return <div ref={containerRef} style={{ width: "100%", height: "100vh" }} />;
+  return(
+  <Modal
+  show={show}
+  size="lg"
+  aria-labelledby="contained-modal-title-vcenter"
+  centered
+>
+  <button
+    type="button"
+    className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
+    data-dismiss="modal"
+    onClick={close}
+  >
+    <i className="fas fa-times"></i>
+  </button>
+  <div className="bg-white rounded h-100 px-11 pt-7">
+     <div ref={containerRef} style={{ width: "100%", height: "100vh" }} />
+     </div>
+     </Modal>
+     )
 }
   //02
 //   import { useEffect, useRef } from "react";
