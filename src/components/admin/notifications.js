@@ -270,41 +270,45 @@ function Notifications({
                   >
                     <Link
                       to={
-                        data.subject === "added_new_job"//New jobs
-                          ? "/job"
-                          : data.subject === "applied_on_job"//New job responses
-                            ? "/responses"
-                            : data.subject === "interview_scheduled"//Interview scheduled
-                              ? "/interview"
-                              : data.subject === "mention_document"//Mention documents
-                                ? data.document_user_type === "employer" //Mention documents for employer
-                                  ? `/client_detail?docId=${data.mention_id
-                                  }&docParentId=${data.notif_json
-                                    ? JSON.parse(data.notif_json).doc_parent_id
-                                    : ""
-                                  }`
-                                  ://Mention documents for employee
-                                  `/${data.employee_id}?docId=${data.mention_id
-                                  }&docParentId=${data.notif_json
-                                    ? JSON.parse(data.notif_json).doc_parent_id
-                                    : ""
-                                  }`
-                                : data.subject === "mention_partner"//Partner admin chat for employee
-                                  ? `/${data.employee_id}?partner=${data.from_id}`
-                                  : data.subject === "mention_partnerChat"//Partner admin chat for partner
-                                    ? `/partner_profile?partner=${data.employee_id}`
-                                    : data.subject === "assigned_admin_to_partner"
-                                      ?
-                                      "/partner_profile"
-                                      : data.subject === "mention_notes"//Notes for employer
-                                        ? data.document_user_type === "employer"
-                                          ? `/client_detail?note=true`
-                                          : data.document_user_type === "agent" && (window.location.pathname === "/partner_profile")//Notes for agent with same path as navigation
-                                            ?
-                                            `?note=true`
-                                            : data.document_user_type === "agent" ? `/partner_profile?note=true`//Notes for agent
-                                              : `/${data.employee_id}?note=true`//Notes for employee
+                        data.subject === "new_user_registered"
+                          ? "/selfemployee"
+                          : data.subject === "new_employer_registered"
+                            ? "/adminclient"
+                            : data.subject === "added_new_job"//New jobs
+                              ? "/job"
+                              : data.subject === "applied_on_job"//New job responses
+                                ? "/responses"
+                                : data.subject === "interview_scheduled"//Interview scheduled
+                                  ? "/interview"
+                                  : data.subject === "mention_document"//Mention documents
+                                    ? data.document_user_type === "employer" //Mention documents for employer
+                                      ? `/client_detail?docId=${data.mention_id
+                                      }&docParentId=${data.notif_json
+                                        ? JSON.parse(data.notif_json).doc_parent_id
                                         : ""
+                                      }`
+                                      ://Mention documents for employee
+                                      `/${data.employee_id}?docId=${data.mention_id
+                                      }&docParentId=${data.notif_json
+                                        ? JSON.parse(data.notif_json).doc_parent_id
+                                        : ""
+                                      }`
+                                    : data.subject === "mention_partner"//Partner admin chat for employee
+                                      ? `/${data.employee_id}?partner=${data.from_id}`
+                                      : data.subject === "mention_partnerChat"//Partner admin chat for partner
+                                        ? `/partner_profile?partner=${data.employee_id}`
+                                        : data.subject === "assigned_admin_to_partner"
+                                          ?
+                                          "/partner_profile"
+                                          : data.subject === "mention_notes"//Notes for employer
+                                            ? data.document_user_type === "employer"
+                                              ? `/client_detail?note=true`
+                                              : data.document_user_type === "agent" && (window.location.pathname === "/partner_profile")//Notes for agent with same path as navigation
+                                                ?
+                                                `?note=true`
+                                                : data.document_user_type === "agent" ? `/partner_profile?note=true`//Notes for agent
+                                                  : `/${data.employee_id}?note=true`//Notes for employee
+                                            : ""
                       }
                       onClick={() => {
                         try {

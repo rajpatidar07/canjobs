@@ -351,6 +351,7 @@ export default function Newpdf({document,close,show}) {
     <i className="fas fa-times"></i>
   </button>
   <div className="bg-white rounded h-100 px-11 pt-7">
+  {/* <iframe src="https://secure.na4.echosign.com/public/apiesign?pid=CBFCIBAA3AAABLblqZhD8qok13mGozwyksKBtLyYjmizM78xPFwxtUyCD9RREJofIX5fEzzVw3uKk18C1R4KbmcP1XQO6HaItIHdxKMNd&client_id=BGBQIIE7H253K6" width="100%" height="100%" frameborder="0" style={{border: "0", overflow: "hidden", minHeight: "100vh", minWidth: "600px",}}title="Agreement"></iframe> */}
      <div ref={containerRef} style={{ width: "100%", height: "100vh" }} />
      </div>
      </Modal>
