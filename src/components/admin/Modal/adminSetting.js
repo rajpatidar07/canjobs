@@ -18,6 +18,7 @@ function AdminSetting(props) {
     job: 0,
     interview: 0,
     visa: 0,
+    new_user_registered: 0,
   });
   const [notification, setNotiication] = useState({
     lmia: 0,
@@ -111,6 +112,7 @@ function AdminSetting(props) {
               : 0
             : email.interview,
         job: permissionName === "job" ? (email.job === 0 ? 1 : 0) : email.job,
+        new_user_registered: permissionName === "new_user_registered" ? (email.new_user_registered === 0 ? 1 : 0) : email.new_user_registered,
       },
     };
 
@@ -133,7 +135,9 @@ function AdminSetting(props) {
                     ? updatedPermissions.email_permission.interview === 1
                     : permissionName === "notification_job"
                       ? updatedPermissions.notification_permission.job === 1
-                      : updatedPermissions.email_permission.job === 1)
+                      : permissionName === "new_user_registered"
+                        ? updatedPermissions.email_permission.new_user_registered === 1
+                        : updatedPermissions.email_permission.job === 1)
       ) {
         toast.success("Permission granted successfully", {
           position: toast.POSITION.TOP_RIGHT,
@@ -157,7 +161,9 @@ function AdminSetting(props) {
                     ? updatedPermissions.email_permission.interview === 0
                     : permissionName === "notification_job"
                       ? updatedPermissions.notification_permission.job === 0
-                      : updatedPermissions.email_permission.job === 0)
+                      : permissionName === "new_user_registered"
+                        ? updatedPermissions.email_permission.new_user_registered === 0
+                        : updatedPermissions.email_permission.job === 0)
       ) {
         toast.error("Permission Denay successfully", {
           position: toast.POSITION.TOP_RIGHT,
@@ -260,6 +266,23 @@ function AdminSetting(props) {
                   </label>
                 </div>
               </li>
+              <li className="mb-3 col-6">
+                <div className="custom-control custom-switch">
+                  <input
+                    type="checkbox"
+                    className="custom-control-input"
+                    id="customSwitch10"
+                    checked={email.new_user_registered === 0 ? false : true}
+                    onChange={() => togglePermission("new_user_registered")}
+                  />
+                  <label
+                    className="custom-control-label"
+                    htmlFor="customSwitch10"
+                  >
+                    Applicant's Registration mail
+                  </label>
+                </div>
+              </li>
             </ul>
             <h6 className="text-start mt-4 text-grey">
               Admin's Notification Preferences
@@ -336,28 +359,28 @@ function AdminSetting(props) {
             </ul>
             <div className="mb-3">
               {
-              emailAauthenticationLink.is_already_authorized === "yes" ? (
-                <div>
-                  <h4 style={{ color: "#5be15b" }}>
-                    Mail already authorized !
-                  </h4>
-                </div>
-              ) : 
-              (
-                <button
-                  className="btn btn-secondary"
-                  onClick={() => {
-                    window.open(
-                      emailAauthenticationLink.data,
-                      "_blank",
-                      "height=500,width=500%"
-                    );
-                    props.close();
-                  }}
-                >
-                  Authenticate Mail
-                </button>
-              )}
+                emailAauthenticationLink.is_already_authorized === "yes" ? (
+                  <div>
+                    <h4 style={{ color: "#5be15b" }}>
+                      Mail already authorized !
+                    </h4>
+                  </div>
+                ) :
+                  (
+                    <button
+                      className="btn btn-secondary"
+                      onClick={() => {
+                        window.open(
+                          emailAauthenticationLink.data,
+                          "_blank",
+                          "height=500,width=500%"
+                        );
+                        props.close();
+                      }}
+                    >
+                      Authenticate Mail
+                    </button>
+                  )}
             </div>
             <div className="mb-3">
 
@@ -369,27 +392,27 @@ function AdminSetting(props) {
                     </h4>
                   </div>
                 ) :
-                (
-                  <button
-                    className="btn btn-secondary"
-                    onClick={async () => {
-                      try {
-                        let res = await RefreshPointData()
-                       if(res.messsage === "Success"){
-                        toast.success("Authoized successfully", {
-                          position: toast.POSITION.TOP_RIGHT,
-                          autoClose: 1000,
-                        });
-                        setApiCall(true)
-                       }
-                      } catch (err) {
-                        console.log(err)
-                      }
-                    }}
-                  >
-                    Authenticate Share point
-                  </button>
-                )}
+                  (
+                    <button
+                      className="btn btn-secondary"
+                      onClick={async () => {
+                        try {
+                          let res = await RefreshPointData()
+                          if (res.messsage === "Success") {
+                            toast.success("Authoized successfully", {
+                              position: toast.POSITION.TOP_RIGHT,
+                              autoClose: 1000,
+                            });
+                            setApiCall(true)
+                          }
+                        } catch (err) {
+                          console.log(err)
+                        }
+                      }}
+                    >
+                      Authenticate Share point
+                    </button>
+                  )}
             </div>
             <div className="mb-3">
               <ParentSetting />
