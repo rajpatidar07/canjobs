@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { GetParentSetting, AddChildPermission } from "../../api/api";
 import { toast } from "react-toastify";
-export default function ParentSetting() {
+export default function ParentSetting({ setopenAdminSettings, setApiCall }) {
   const [selectedOption, setSelectedOption] = useState("");
   const [child, setChild] = useState({
     lmia: 0,
@@ -14,16 +14,24 @@ export default function ParentSetting() {
   /*Function to get the child type to made chanages to there permissio */
   const handleSelectChange = async (e) => {
     const selectedValue = e.target.value;
-    setSelectedOption(selectedValue);
-    try {
-      let Response = await GetParentSetting(selectedValue);
-      if (Response.status === 1) {
-        const permissions = JSON.parse(Response.data[0].permission);
-        setChild(permissions);
+    if (selectedValue === "admin_setting") {
+      setApiCall(true)
+      setopenAdminSettings(true)
+      setSelectedOption("")
+    } else {
+      setSelectedOption(selectedValue);
+      try {
+        let Response = await GetParentSetting(selectedValue);
+        if (Response.status === 1) {
+          const permissions = JSON.parse(Response.data[0].permission);
+          setChild(permissions);
+        }
+        setopenAdminSettings(false)
+      } catch (err) {
+        console.log(err);
+        setChild([]);
+        setopenAdminSettings(false)
       }
-    } catch (err) {
-      console.log(err);
-      setChild([]);
     }
   };
   /*Funcion to select the permission opions */
@@ -123,6 +131,7 @@ export default function ParentSetting() {
         onChange={handleSelectChange}
       >
         <option value={""}>Select Type</option>
+        <option value={"admin_setting"}>Admin's Settings</option>
         <option value={"email_partner"}>Partners's email</option>
         <option value={"email_employee"}>Applicant's email</option>
         <option value={"email_employer"}>Client's email</option>
