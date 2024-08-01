@@ -71,7 +71,33 @@ const WebhookComponent = () => {
             }
         }
     }
+    const [webhookResponse, setWebhookResponse] = useState(null);
 
+    useEffect(() => {
+        const callWebhook = async () => {
+            try {
+                const response = await fetch('actual URL of the webhook', {
+                    method: 'POST', // Specify the method
+                    headers: {
+                        'Content-Type': 'application/json', // Set Content-Type header
+                        // Add other headers if required
+                    },
+                    // No body is specified since you want to make a POST request without a body
+                });
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                console.log(data)
+                setWebhookResponse(data);
+            } catch (error) {
+                console.error('Error fetching data: ', error);
+                setWebhookResponse(null);
+            }
+        };
+
+        callWebhook();
+    }, []); 
     return (
         <div className='d-flex justify-content-center mt-35'>
             <h1 className={`text-center ${success ? "text-shamrock" : errors ? "text-danger" : ""}`}>
