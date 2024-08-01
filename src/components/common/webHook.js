@@ -76,20 +76,21 @@ const WebhookComponent = () => {
     useEffect(() => {
         const callWebhook = async () => {
             try {
-                const response = await fetch('https://canjobs.vercel.app/outside_booking', {
-                    method: 'get', // Specify the method
+                const response = await fetch('/', {
+                    // method: 'get', // Specify the method
                     headers: {
                         'Content-Type': 'application/json', // Set Content-Type header
                         // Add other headers if required
                     },
                     // No body is specified since you want to make a POST request without a body
                 });
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-                console.log(data)
-                setWebhookResponse(data);
+                console.log(response,"pppppppp")
+                // if (!response.ok) {
+                //     throw new Error('Network response was not ok');
+                // }
+                // const data = await response.json();
+                // console.log(data)
+                // setWebhookResponse(data);
             } catch (error) {
                 console.error('Error fetching data: ', error);
                 setWebhookResponse(null);
