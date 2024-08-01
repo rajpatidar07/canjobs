@@ -68,6 +68,7 @@ import Newpdf from "./Adobe/newpdf";
 import AgreementOne from "./Retaineragreement/AgreementOne";
 import SignaturePadComponent from "./Retaineragreement/SignaturePadComponent";
 import HtmlAgreementOne from "./Retaineragreement/Html/HtmlAgreementOne";
+import WebhookComponent from "./webHook";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -109,6 +110,7 @@ function MainLayout() {
         <Route path="/rozarepay" element={<RazorPay />} />
         <Route path="/jobs" element={<JobSearch />} />
         <Route path="/jobdetail" element={<JobDetail />} />
+        <Route path="/outside_booking" element={<WebhookComponent />} />
         <Route path="/resetpassword/:id" element={<ResetPassword />} />
         <Route exact path="/linkedin" component={LinkedInCallback} />
         {/* <Route path="*" element={<NotFound userType={userType}/>} /> */}

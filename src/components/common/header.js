@@ -167,6 +167,64 @@ function EmployeeHeader() {
                       Partner
                     </Link>
                   </li>
+                  {/* <li className="drop-menu-item">
+                    <Link to={`/outside_booking?data=${ encodeURIComponent(JSON.stringify( {
+    id: "39",
+    booking_code: "4439JY7",
+    start_datetime: "2024-07-30T14:00:00-06:00",
+    end_datetime: "2024-07-30T14:30:00-06:00",
+    service_name: "Immigration Consultation",
+    duration: "30",
+    price: "CAD$200(5% tax included)",
+    subtotal_amount: 200,
+    total_amount: 200,
+    balance_due_amount: 200,
+    total_payments: 0,
+    payment_method: null,
+    payment_portion: "full",
+    customer_comment: "hello there",
+    status: "approved",
+    payment_status: "not_paid",
+    start_date: "07/30/2024",
+    start_time: "02:00pm",
+    timezone: "-06:00",
+    agent: {
+      id: "2",
+      full_name: "Harpreet Kaur",
+      email: "info@canpathways.ca",
+      phone: "+14038885308"
+    },
+    customer: {
+      id: "374",
+      full_name: "manu",
+      email: "manu@gmail.com",
+      phone: "+911235649875",
+      custom_fields: {
+        cf_wGKaYXI8: "Select"
+      }
+    },
+    transactions: [],
+    source_id: "",
+    source_url: `https://canpathways.ca/book-appointment/`,
+    created_datetime: "2024-07-25T04:10:17+00:00",
+    price_breakdown: {
+      line_items: {
+        "Immigration Consultation": 200
+      }
+    },
+    google_meet: {
+      google_meet_url: ""
+    },
+    location: {
+      id: "1",
+      name: "Calgary",
+      full_address: "2618 Hopewell Pl NE Suite 310, Calgary, AB T1Y 7J7, Canada",
+      category: []
+    }
+  }))}`} className="nav-link">
+                     Web Hook
+                    </Link>
+                  </li> */}
                   {/* <li className="nav-item">
                     <Link className="nav-link" to="/adminlogin">
                       Admin
