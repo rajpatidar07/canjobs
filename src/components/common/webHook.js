@@ -76,7 +76,7 @@ const WebhookComponent = () => {
     useEffect(() => {
         const callWebhook = async () => {
             try {
-                const response = await fetch('actual URL of the webhook', {
+                const response = await fetch('https://canjobs.vercel.app/outside_booking', {
                     method: 'POST', // Specify the method
                     headers: {
                         'Content-Type': 'application/json', // Set Content-Type header
