@@ -5,7 +5,7 @@ import Loader from './loader';
 
 const WebhookComponent = () => {
     const [success, setSuccess] = useState("");
-    const [errors, setErrors] = useState("");
+    const [errors, setErrors] = useState("No user data found !");
     const [loading, setLoading] = useState(false);
     const location = useLocation();
     const query = new URLSearchParams(location.search);
@@ -72,8 +72,8 @@ const WebhookComponent = () => {
     }
 
     return (
-        <div>
-            <h1>
+        <div className='d-flex justify-content-center mt-35'>
+            <h1 className={`text-center ${success ? "text-shamrock" : errors ? "text-danger" : ""}`}>
                 {loading ? <Loader /> : success ? success : errors}</h1>
         </div>
     );
