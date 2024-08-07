@@ -1,6 +1,5 @@
 import React /*, { useState }*/ from "react";
 // import CustomButton from "../common/button";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import AddAgent from "../forms/admin/addAgent";
 // import { GetFilter } from "../../api/api";
@@ -20,7 +19,7 @@ function ActivityLog(props) {
         <AdminHeader heading="Activity Log" />
         {/* <!-- navbar- --> */}
         <AdminSidebar heading="Activity Log" />
-        <ToastContainer />
+        
         {/* <!--Add Adgent Details Modal --> */}
 
         <div className={"dashboard-main-container mt-16"} id="dashboard-body">

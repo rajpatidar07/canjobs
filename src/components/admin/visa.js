@@ -4,7 +4,7 @@ import AdminSidebar from "./sidebar";
 // import CustomButton from "../common/button";
 // import { Link } from "react-router-dom";
 // import PersonalDetails from "../forms/user/personal";
-import { ToastContainer } from "react-toastify";
+// import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import UserProfile from "../user/profile";
 // import { GetFilter } from "../../api/api"
@@ -120,7 +120,7 @@ export default function Visa() {
           </>
         )}
 
-        <ToastContainer />
+         
         <div
           className={
             // showJobDetails === false?

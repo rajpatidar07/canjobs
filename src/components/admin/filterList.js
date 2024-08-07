@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { DeleteFilter, GetFilter } from "../../api/api";
-import { ToastContainer, toast } from "react-toastify";
+import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SAlert from "../common/sweetAlert";
 import AddFilter from "../forms/admin/FilterForm";
@@ -80,7 +80,7 @@ function FilterList() {
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Filter List"} />
         <div>
-          <ToastContainer />
+          
         </div>
         <div className="dashboard-main-container mt-16" id="dashboard-body">
           <div className="container-fluid">

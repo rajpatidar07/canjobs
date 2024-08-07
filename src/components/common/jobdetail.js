@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GetJobDetail, ApplyJob } from "../../api/api";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import Loader from "../common/loader";
 import ConvertTime from "./ConvertTime";
 
@@ -88,7 +88,7 @@ function JobDetailPage(props) {
         ) : (
           <div className=" bg-white rounded-4 border border-mercury shadow-9  overflow-y-scroll mt-9 mt-xl-0">
             <div className="pt-9 pl-sm-9 pl-5 pr-sm-9 pr-5 pb-8 border-bottom border-width-1 border-default-color light-mode-texts">
-              <ToastContainer />
+              
               <div className="row">
                 <div className="col-12">
                   {/* <!-- media start --> */}

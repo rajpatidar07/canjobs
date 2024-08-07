@@ -3,7 +3,7 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import CustomButton from "../common/button";
 import PersonalDetails from "../forms/user/personal";
-import { ToastContainer } from "react-toastify";
+// import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UserProfile from "../user/profile";
 import EmployeeTable from "../common/employeeTable";
@@ -79,7 +79,7 @@ function Employee(props) {
             <AdminSidebar heading={"Manage Applicants"} />
           </>
         ) : null}
-        <ToastContainer />
+          
         {/* <!--Add Employee Details Modal --> */}
         {showAddEmployeeModal ? (
           <PersonalDetails

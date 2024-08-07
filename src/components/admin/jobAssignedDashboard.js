@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
-import { ToastContainer } from "react-toastify";
 import { getallAdminData } from "../../api/api";
 import Loader from "../common/loader";
 import ManegerBox from "../common/managerBox";
@@ -79,7 +78,7 @@ export default function JobAssignedDashboard() {
         <AdminHeader heading={"Assigned Job's"} />
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Assigned Job's"} />
-        <ToastContainer />
+        
         <div className={"dashboard-main-container mt-16"} id="dashboard-body">
           <div className="container-fluid">
             <div className="mb-18">

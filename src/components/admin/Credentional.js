@@ -4,7 +4,7 @@ import AdminSidebar from "./sidebar";
 import { GetCredentialData } from "../../api/api";
 import CredentialTable from "../common/CredentialTable";
 import UpdateCredentialForm from "../forms/admin/UpdateCredentialForm";
-import { ToastContainer } from "react-toastify";
+// import { ToastContainer } from "react-toastify";
 export default function Credentional() {
   const [credentialData, setCredentialData] = useState([]);
   const [singleCredentialData, setSingleCredentialData] = useState([]);
@@ -36,7 +36,7 @@ export default function Credentional() {
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Credentials"} />
         <div className="dashboard-main-container mt-16" id="dashboard-body">
-          <ToastContainer />
+          
           <div className="container-fluid">
             <div className="mb-18">
               <div className="mb-4 align-items-center">

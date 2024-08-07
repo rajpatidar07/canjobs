@@ -9,7 +9,6 @@ import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
 import { EmployeeDetails, EmployeeAppliedJob } from "../../api/api";
 import moment from "moment";
-import { ToastContainer } from "react-toastify";
 import Loader from "../common/loader";
 import DocumentModal from "../forms/admin/EmployeeDocumentModal";
 import { PiPencilDuotone } from "react-icons/pi";
@@ -120,7 +119,7 @@ const UserProfile = (props) => {
       ) : (
         <>
           <EmployeeHeader />
-          <ToastContainer />
+          
         </>
       )}
 

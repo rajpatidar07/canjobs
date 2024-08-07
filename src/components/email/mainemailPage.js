@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import EmailList from "./emailList";
-import { ToastContainer } from "react-toastify";
 // import AdminHeader from "../admin/header";
 // import AdminSidebar from "../admin/sidebar";
 import {
@@ -142,7 +141,7 @@ const MainEmailPage = ({ email }) => {
         {/* <!-- navbar- --> */}
         {/* <AdminSidebar heading={"Email"} /> */}
 
-        <ToastContainer />
+        
         <div
           className={"container-fluid document_container bg-white px-0"}
           id="dashboard-body"

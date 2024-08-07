@@ -9,7 +9,7 @@ import {
   getAllJobsCategory,
   GetFilter,
 } from "../../api/api";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SAlert from "../common/sweetAlert";
 import Pagination from "../common/pagination";
@@ -231,7 +231,7 @@ function Category() {
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Manage Job Category"} />
         <div>
-          <ToastContainer />
+          
           {/* <!-- Modal- --> */}
           {showAddCategoryModal ? (
             <AddCategory

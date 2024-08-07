@@ -3,7 +3,7 @@ import {  EmployeeResetPasswordApi,  AdminResetPasswordApi,  EmployerResetPasswo
 } from "../../api/api";
 import useValidation from "../common/useValidation";
 import { useNavigate, useLocation } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 const API_URL = "https://canjobs.vercel.app/";
 // const API_URL = "https://canpathwaysjobs.com/";
 // const API_URL = "http://localhost:3000/";
@@ -136,7 +136,7 @@ export default function ResetPassword() {
       <link rel="stylesheet" href={`${API_URL}/fonts/fontawesome-5/css/all.css`}/>
       <link rel="stylesheet" href={`${API_URL}/fonts/fontawesome-5/css/main.css`}/>
       <div className="d-flex justify-content-center pt-21">
-        <ToastContainer />
+        
         <div className="bg-white rounded-8 overflow-hidden pt-21">
           <div className="bg-white-2 h-100 px-11 pt-11 pb-7 login_Modal_box ">
             <div className="pb-5 mb-5 text-center">

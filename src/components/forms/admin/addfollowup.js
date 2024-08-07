@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import useValidation from "../../common/useValidation";
 import { Modal } from "react-bootstrap";
 import {/* getSingleFollowup*/getAllUsersFollowUpData, AddAllUserFollowup /*AddFollowup*/ } from "../../../api/api";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 import TextEditor from "../../common/TextEditor";
@@ -162,7 +162,7 @@ function Addfollowup(props) {
   };
   let content =
     <>
-      <ToastContainer />
+      
       {/* <Modal
         show={props.show}
         size="lg"

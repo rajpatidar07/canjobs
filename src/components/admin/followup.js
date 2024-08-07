@@ -4,7 +4,6 @@ import JobDetailsBox from "../common/jobdetail";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { GetAllJobs, GetFilter } from "../../api/api";
-import { ToastContainer } from "react-toastify";
 import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
 import JobResponse from "./response";
@@ -143,7 +142,7 @@ function Followup() {
         <AdminHeader heading={"Manage Follow-ups"} />
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Manage Follow-ups"} />
-        <ToastContainer />
+        
         <div
           className={
             showJobDetails === false

@@ -6,7 +6,6 @@ import CustomButton from "../common/button";
 import CompanyDetailPage from "./companydetail";
 import CompanyDetails from "../forms/employer/companyDetail";
 import { EmployerDetails } from "../../api/api";
-import { ToastContainer } from "react-toastify";
 import Loader from "../common/loader";
 import { Link } from "react-router-dom";
 import EmployerDocumentModal from "../forms/admin/EmployerDocumetModal";
@@ -65,7 +64,7 @@ function CompanyProfile(props) {
 
   return (
     <div>
-      <ToastContainer />
+      
       {user_type !== "admin" ? <EmployeeHeader /> : null}
       <div
         className={

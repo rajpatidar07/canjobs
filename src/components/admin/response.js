@@ -18,7 +18,7 @@ import Pagination from "../common/pagination";
 import FilterJson from "../json/filterjson";
 import AddInterview from "../forms/admin/addInterview.js";
 import LmiaStatus from "../forms/admin/lmiastatus";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import ChangeJob from "../forms/admin/changeJobs";
 import Loader from "../common/loader";
 import VisaStatus from "../forms/user/visaStatus";
@@ -329,7 +329,7 @@ function JobResponse(props) {
           <AdminHeader heading={"Response"} />
           {/* <!-- navbar- --> */}
           <AdminSidebar heading={"Response"} />
-          <ToastContainer />
+          
         </>
       ) : null}
 

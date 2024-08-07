@@ -6,7 +6,6 @@ import CustomButton from "../common/button";
 import CompanyDetailPage from "./companydetail";
 import CompanyDetails from "../forms/employer/companyDetail";
 import { AddCompany, EmployerDetails } from "../../api/api";
-import { ToastContainer } from "react-toastify";
 import Loader from "../common/loader";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import EmployerDocumentModal from "../forms/admin/EmployerDocumetModal";
@@ -142,7 +141,7 @@ function CompanyProfileDetail(props) {
           <AdminSidebar />
         </>
       )}
-      <ToastContainer />
+      
       {user_type === "admin" || user_type === "agent" ? null : (
         <EmployeeHeader />
       )}

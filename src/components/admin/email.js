@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
-import { ToastContainer } from "react-toastify";
 import { GetAllEmailTemplate } from "../../api/api";
 import ManageEmail from "../forms/admin/manageemail";
 import TestMail from "../forms/admin/testMail";
@@ -55,8 +54,7 @@ function EmailTemplate() {
         {/* <!-- Header Area --> */}
         <AdminHeader heading={"Manage Email Template"} />
         {/* <!-- navbar- --> */}
-        <AdminSidebar heading={"Manage Email Template"} />
-        <ToastContainer />
+        <AdminSidebar heading={"Manage Email Template"} />     
         <div className="dashboard-main-container mt-16" id="dashboard-body">
           <div className="container-fluid">
             <div className="mb-18">

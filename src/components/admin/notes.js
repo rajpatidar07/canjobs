@@ -4,7 +4,6 @@ import AdminSidebar from "./sidebar";
 // import {
 //   GetFilter,
 // } from "../../api/api";
-import { ToastContainer /*, toast*/ } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import EmployeeNotesTable from "../common/employeeNotesTable";
 // import EmployerNotesTable from "../common/employerNotesTable";
@@ -244,7 +243,7 @@ function Notes() {
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Manage Notes"} />
         <div>
-          <ToastContainer />
+          
           {/* <!-- Modal- --> */}
           {/* {showAddCategoryModal ? (
             <AddCategory

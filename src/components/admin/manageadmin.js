@@ -4,7 +4,7 @@ import AdminSidebar from "./sidebar";
 import CustomButton from "../common/button";
 import Addadmin from "../forms/admin/addadmin";
 import { getallAdminData, DeleteAdmin, GetManagerTeam } from "../../api/api";
-import { ToastContainer, toast } from "react-toastify";
+import {  toast } from "react-toastify";
 import SAlert from "../common/sweetAlert";
 import FilterJson from "../json/filterjson";
 import Loader from "../common/loader";
@@ -199,7 +199,7 @@ function ManageAdmin() {
         <AdminHeader heading={"Manage Admin"} />
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Manage Admin"} />
-        <ToastContainer />
+        
         {showAddAdminModal ? (
           <Addadmin
             show={showAddAdminModal}

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { AdminForgotPasswordApi, AdminLogin } from "../../api/api";
 import useValidation from "../common/useValidation";
 import { useNavigate, Link } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import Loader from "../common/loader";
 import ForgotPasswordForm from "../forms/admin/ForgotPasswordForm";
 export default function AdminLoginFrom({ setAdminLoggedIn,setLoginCondition }) {
@@ -74,7 +74,6 @@ export default function AdminLoginFrom({ setAdminLoggedIn,setLoginCondition }) {
           setLoading(false);
           setIsLoading(false);
           navigate("/dashboard");
-          // console.log(updatedTodo);
           window.location.reload();
         } 
         if (updatedTodo.message === "Invalid Credentials") {
@@ -129,7 +128,7 @@ export default function AdminLoginFrom({ setAdminLoggedIn,setLoginCondition }) {
       {/* <!-- Login --> */}
 
       <div className="d-flex justify-content-center admin_login_page hv-100 overflow-auto align-items-center">
-        <ToastContainer />
+        
         <div
           className="bg-white rounded"
           style={{ maxWidth: "500px", width: "100%" }}

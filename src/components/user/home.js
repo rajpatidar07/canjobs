@@ -3,7 +3,6 @@ import EmployeeHeader from "../common/header";
 import EmployeeFooter from "../common/footer";
 import JobBox from "../common/jobbox";
 import SearchForm from "../common/search_form";
-import { ToastContainer } from "react-toastify";
 import { GetAllDataCount } from "../../api/api";
 import Loader from "../common/loader";
 import { Link } from "react-router-dom";
@@ -25,7 +24,7 @@ function EmployeeHomePage() {
   return (
     <div className="site-wrapper overflow-hidden ">
       <EmployeeHeader />
-      <ToastContainer /> {/* <!-- Hero Area --> */}
+       {/* <!-- Hero Area --> */}
       <div className="position-relative z-index-1 bg-home-banner pt-26 pb-26 dark-mode-texts">
         <div className="container position-static hero_container">
           <div className="row position-relative align-items-center justify-content-center position-static w-80">

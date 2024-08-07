@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { LoginAgent, ForgotAgentPasswordApi } from "../../api/api";
 import useValidation from "../common/useValidation";
 import { useNavigate, Link } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import Loader from "../common/loader";
 import AgentSignUp from "./agentSingup";
 import ForgotPasswordForm from "../forms/admin/ForgotPasswordForm";
@@ -146,7 +146,7 @@ export default function AgentLogin({setLoginCondition}) {
     <>
       {/* <!-- Login --> */}
       <div className="d-flex justify-content-center admin_login_page hv-100 overflow-auto align-items-center">
-        <ToastContainer />
+        
         <div
           className="bg-white rounded-8"
           style={{ maxWidth: "500px", width: "100%" }}

@@ -20,7 +20,7 @@ import {
 } from "../../api/api";
 import moment from "moment";
 import Addfollowup from "../forms/admin/addfollowup";
-import { ToastContainer, toast } from "react-toastify";
+import {  toast } from "react-toastify";
 import Loader from "../common/loader";
 import { PiPencilDuotone } from "react-icons/pi";
 import AdminHeader from "../admin/header";
@@ -326,7 +326,7 @@ const NewUserProfile = (props) => {
         }
         id="dashboard-body"
       >
-        <ToastContainer />
+        
         <div
           className={`container${
             user_type === "admin" || user_type === "agent" ? "-fluid" : ""

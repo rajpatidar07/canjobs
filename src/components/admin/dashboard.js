@@ -3,7 +3,7 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { Link } from "react-router-dom";
 // import EmployeeDetails from "../common/employeeDetail";
-import { ToastContainer /*,toast */ } from "react-toastify";
+// import { ToastContainer /*,toast */ } from "react-toastify";
 import Interview from "../common/interviewTable";
 import LimiaStatusTable from "../common/limiaStatusTable";
 // import JobResponse from "./response";
@@ -192,7 +192,7 @@ const AdminDashboard = ({setLoginCondition}) => {
         }
         id="dashboard-body"
       >
-        <ToastContainer />
+          
         <div className="container-fluid mt-5">
           {/* <!-- Summary count --> */}
           <div className="row mb-7 d-none">

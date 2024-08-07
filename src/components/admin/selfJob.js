@@ -6,7 +6,6 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import AddJobModal from "../forms/employer/job";
 import { GetFilter } from "../../api/api";
-import { ToastContainer } from "react-toastify";
 import FilterJson from "../json/filterjson";
 import JobTable from "../common/jobTable";
 
@@ -120,7 +119,7 @@ function SelfJob(props) {
             <AdminSidebar heading={"Manage Self Jobs"} />
           </>
         ) : null}
-        <ToastContainer />
+        
         <div
           className={
             showJobDetails === false

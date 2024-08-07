@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { ToastContainer } from "react-toastify";
 // import { useParams } from "react-router-dom";
 import { GetPaymentList } from "../../../api/api";
 import PayForm from "./PayForm";
@@ -47,7 +46,7 @@ export default function PayentForm({ data, user_id, user_type }) {
 
   return (
     <>
-      <ToastContainer />
+      
       <div className="bg-white rounded h-100 px-10 overflow-y-hidden">
         {/* <h5 className="text-center pt-2 mb-7">Follow Ups</h5> */}
         <div className="row">

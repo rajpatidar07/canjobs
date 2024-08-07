@@ -5,7 +5,6 @@ import EmployeeBox from "./employeeBox";
 import SearchForm from "../common/search_form";
 // import Filterbox from "../common/filterbox";
 // import filterjson from "../json/filterjson";
-import { ToastContainer } from "react-toastify";
 import { Link } from "react-router-dom";
 import Loader from '../common/loader';
 function EmployerHome({ setLoginCondition }) {
@@ -19,7 +18,7 @@ function EmployerHome({ setLoginCondition }) {
   return (
     <div>
       <EmployeeHeader />
-      <ToastContainer />
+      
       <div className="position-relative z-index-1 bg-home-banner pt-26 pb-26 dark-mode-texts">
         {/* <div className="pos-abs-tr h-100">
                     <img src="image/patterns/globe-pattern.png" alt="" className="h-100" />

@@ -5,7 +5,6 @@ import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
 import EmployerProfile from "../company/profile";
 import CompanyDetails from "../forms/employer/companyDetail";
-import { ToastContainer } from "react-toastify";
 import EmployerTable from "../common/employerTable";
 import { GetFilter } from "../../api/api";
 function Employer() {
@@ -90,7 +89,7 @@ function Employer() {
         <AdminHeader heading={"Manage Clients"} />
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Manage Clients"} />
-        <ToastContainer />
+        
         {/* <!-- Add Company Details Modal --> */}
         {showAddEmployerModal ? (
           <CompanyDetails

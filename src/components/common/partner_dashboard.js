@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import CustomButton from "../common/button";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AddAgent from "../forms/admin/addAgent";
 import {/*GetFilter*/DeleteAgent } from "../../api/api";
@@ -104,7 +103,7 @@ function PartnerDashboard() {
             user_type === "agent" ? "Partner Dashboard" : "Manage Partner"
           }
         />
-        <ToastContainer />
+        
         {/* <!--Add Adgent Details Modal --> */}
 
         <div className={"dashboard-main-container mt-16"} id="dashboard-body">

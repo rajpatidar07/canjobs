@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import CustomButton from "../common/button";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AddAgent from "../forms/admin/addAgent";
 // import { GetFilter } from "../../api/api";
@@ -82,7 +81,7 @@ function Agent() {
         <AdminSidebar
           heading={user_type === "agent" ? "Profile" : "Manage Partner"}
         />
-        <ToastContainer />
+        
         {/* <!--Add Agent Details Modal --> */}
 
         <div className={"dashboard-main-container mt-16"} id="dashboard-body">

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 // import CustomButton from "../common/button";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AdminSidebar from "../admin/sidebar";
 import AdminHeader from "../admin/header";
@@ -58,7 +57,7 @@ export default function Asiigned_admin() {
          "Assigned Admin"
         }
       />
-      <ToastContainer />
+      
       {/* <!--Add Adgent Details Modal --> */}
 
       <div className={"dashboard-main-container mt-16"} id="dashboard-body">

@@ -4,7 +4,6 @@ import Header from "../common/header";
 import SearchForm from "../common/search_form";
 import AddJobModal from "../forms/employer/job";
 import JobBox from "../common/jobbox";
-import { ToastContainer } from "react-toastify";
 import { GetFilter } from "../../api/api";
 import FilterJson from "../json/filterjson";
 import { Link } from "react-router-dom";
@@ -59,7 +58,7 @@ function ManageJobs() {
   return (
     <>
       <div>
-        <ToastContainer />
+        
         <Header />
         {/* <!-- Main Content Start --> */}
         <div className="bg-black-2 mt-15 mt-lg-18 pt-18 pt-lg-13 pb-13">

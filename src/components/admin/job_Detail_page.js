@@ -3,7 +3,6 @@ import AddJobModal from "../forms/employer/job";
 import EmployeeHeader from "../common/header";
 import CustomButton from "../common/button";
 import { GetJobDetail } from "../../api/api";
-import { ToastContainer } from "react-toastify";
 import Loader from "../common/loader";
 import { Link, useNavigate } from "react-router-dom";
 import { PiPencilDuotone } from "react-icons/pi";
@@ -91,7 +90,7 @@ function JobDetailpageAdmim(props) {
           <AdminSidebar />
         </>
       )}
-      <ToastContainer />
+      
       {user_type === "admin" || user_type === "agent" ? null : <EmployeeHeader />}
       <div
         className={

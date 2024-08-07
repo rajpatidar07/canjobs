@@ -69,6 +69,7 @@ import AgreementOne from "./Retaineragreement/AgreementOne";
 import SignaturePadComponent from "./Retaineragreement/SignaturePadComponent";
 import HtmlAgreementOne from "./Retaineragreement/Html/HtmlAgreementOne";
 import WebhookComponent from "./webHook";
+import { ToastContainer } from "react-toastify";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -98,6 +99,7 @@ function MainLayout() {
   };
   return (
     <BrowserRouter>
+        <ToastContainer/>
       {/* <CurrentRoute /> */}
       <Routes>
         {/* Employee */}

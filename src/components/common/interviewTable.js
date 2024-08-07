@@ -4,7 +4,6 @@ import { getInterview } from "../../api/api";
 import Pagination from "./pagination";
 import AddInterview from "../forms/admin/addInterview";
 import Loader from "../common/loader";
-import { ToastContainer } from "react-toastify";
 import { ImCalendar } from "react-icons/im";
 import ConvertTime from "./ConvertTime";
 function Interview(props) {
@@ -87,7 +86,7 @@ function Interview(props) {
   };
   return (
     <>
-      <ToastContainer />
+      
       {showAddInterviewModal ? (
         <AddInterview
           resData={resData}
