@@ -8,7 +8,7 @@ const WebhookComponent = () => {
     const [errors, setErrors] = useState("No user data found !");
     const [loading, setLoading] = useState(false);
     const location = useLocation();
-    const query = new URLSearchParams(location.search);
+    // const query = new URLSearchParams(location.search);
     console.log(decodeURIComponent(location.search))
     const data = decodeURIComponent(location.search).replace("?","")
     const hasCalledApi = useRef(false); // Track API call
@@ -71,7 +71,7 @@ const WebhookComponent = () => {
             }
         }
     }
-    const [webhookResponse, setWebhookResponse] = useState(null);
+    // const [webhookResponse, setWebhookResponse] = useState(null);
 
     useEffect(() => {
         const callWebhook = async () => {
@@ -93,7 +93,7 @@ const WebhookComponent = () => {
                 // setWebhookResponse(data);
             } catch (error) {
                 console.error('Error fetching data: ', error);
-                setWebhookResponse(null);
+                // setWebhookResponse(null);
             }
         };
 

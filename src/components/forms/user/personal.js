@@ -109,15 +109,15 @@ function PersonalDetails(props) {
     //       ? "Description should have 5 or more letter"
     //       : null,
     // ],
-    date_of_birth: [
-      (value) => (value === "" || value === null ? "Dob is required" : ""),
-    ],
-    gender: [
-      (value) => (value === "" || value === null ? "Gender is required" : null),
-    ],
-    marital_status: [
-      (value) => (value === "" || value === null ? "Status is required" : null),
-    ],
+    // date_of_birth: [
+    //   (value) => (value === "" || value === null ? "Dob is required" : ""),
+    // ],
+    // gender: [
+    //   (value) => (value === "" || value === null ? "Gender is required" : null),
+    // ],
+    // marital_status: [
+    //   (value) => (value === "" || value === null ? "Status is required" : null),
+    // ],
     // nationality: [
     //   (value) =>
     //     value === "" || value === null
@@ -130,18 +130,18 @@ function PersonalDetails(props) {
     //       ? "Nationality can not have a number."
     //       : "",
     // ],
-    current_location: [
-      (value) =>
-        value === "" || value === null || value.trim() === ""
-          ? "Location is required"
-          : /[^A-Za-z 0-9]/g.test(value)
-            ? "Cannot use special character "
-            : value.length < 3
-              ? "Location should have 3 or more letter"
-              : /[-]?\d+(\.\d+)?/.test(value)
-                ? "Location can not have a number."
-                : "",
-    ],
+    // current_location: [
+    //   (value) =>
+    //     value === "" || value === null || value.trim() === ""
+    //       ? "Location is required"
+    //       : /[^A-Za-z 0-9]/g.test(value)
+    //         ? "Cannot use special character "
+    //         : value.length < 3
+    //           ? "Location should have 3 or more letter"
+    //           : /[-]?\d+(\.\d+)?/.test(value)
+    //             ? "Location can not have a number."
+    //             : "",
+    // ],
     // currently_located_country: [
     //   (value) =>
     //     value === "" || value === null || value.trim() === ""
@@ -154,12 +154,12 @@ function PersonalDetails(props) {
     //       ? "Country can not have a number."
     //       : "",
     // ],
-    language: [
-      (value) =>
-        value === "" || value === null || value.trim() === ""
-          ? "Language is required"
-          : "",
-    ],
+    // language: [
+    //   (value) =>
+    //     value === "" || value === null || value.trim() === ""
+    //       ? "Language is required"
+    //       : "",
+    // ],
     // religion: [
     //   (value) =>
     //     value === "" || value === null || value.trim() === ""
@@ -175,17 +175,17 @@ function PersonalDetails(props) {
     interested_in: [
       (value) => (value === "" ? "Interested in is required" : null),
     ],
-    experience: [
-      (value) =>
-        value === "" || value === null ? "Experience is required" : null,
-    ],
-    resume: [
-      // (value) => (value === "" || value === null ? "Resume is required" : null),
-    ],
-    work_permit_canada: [
-      (value) =>
-        value === "" || value === null ? "Work Permit is required" : null,
-    ],
+    // experience: [
+    //   (value) =>
+    //     value === "" || value === null ? "Experience is required" : null,
+    // ],
+    // resume: [
+    //   // (value) => (value === "" || value === null ? "Resume is required" : null),
+    // ],
+    // work_permit_canada: [
+    //   (value) =>
+    //     value === "" || value === null ? "Work Permit is required" : null,
+    // ],
     // work_permit_other_country: [
     //   (value) =>
     //     value === "" || value === null || value.trim() === ""
@@ -196,13 +196,13 @@ function PersonalDetails(props) {
     //       ? "Other permit sholud have 2 or more letters"
     //       : "",
     // ],
-    reffer_by:
-      props.employeeId !== "0" || user_type === "user"
-        ? null
-        : [
-          (value) =>
-            value === "" || value === null ? "Refferer is required" : null,
-        ],
+    // reffer_by:
+    //   props.employeeId !== "0" || user_type === "user"
+    //     ? null
+    //     : [
+    //       (value) =>
+    //         value === "" || value === null ? "Refferer is required" : null,
+    //     ],
     // assigned_by: props.employeeId !== "0" || user_type === "user" || user_type === "agent"
     //   ? null
     //   : [
@@ -508,7 +508,7 @@ const close = () => {
                       htmlFor="name"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
-                      Full Name: <span className="text-danger">*</span>
+                      Full Name:<span className="text-danger">*</span>
                     </label>
                     <input
                       maxLength={60}
@@ -653,7 +653,7 @@ const close = () => {
                       htmlFor="date_of_birth"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
-                      Date Of Birth: <span className="text-danger">*</span>
+                      Date Of Birth: 
                     </label>
                     <input
                       // max={moment().format("DD-MM-YYYY")}
@@ -689,7 +689,7 @@ const close = () => {
                       htmlFor="gender"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
-                      Gender: <span className="text-danger">*</span>
+                      Gender: 
                     </label>
                     <select
                       name="gender"
@@ -722,7 +722,7 @@ const close = () => {
                       htmlFor="marital_status"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
-                      Marital Status: <span className="text-danger">*</span>
+                      Marital Status: 
                     </label>
                     <select
                       name="marital_status"
@@ -759,7 +759,7 @@ const close = () => {
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
                       Nationality / Citizenship:
-                      <span className="text-danger">*</span>
+                      
                     </label>
                     <input
                       maxLength={60}
@@ -790,7 +790,7 @@ const close = () => {
                       htmlFor="current_location"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
-                      Current Location: <span className="text-danger">*</span>
+                      Current Location: 
                     </label>
                     <input
                       maxLength={60}
@@ -862,7 +862,7 @@ const close = () => {
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
                       English level {/*(Max 3)*/}:
-                      <span className="text-danger">*</span>
+                      
                     </label>
                     <select
                       name="language"
@@ -902,7 +902,7 @@ const close = () => {
                   htmlFor="religion"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                  Religion: <span className="text-danger">*</span>
+                  Religion: 
                 </label>
                 <input
                   maxLength={20}
@@ -1021,7 +1021,7 @@ const close = () => {
                       htmlFor="experience"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
-                      Experience: <span className="text-danger">*</span>
+                      Experience:
                     </label>
                     <select
                       name="experience"
@@ -1058,7 +1058,7 @@ const close = () => {
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
                       If Candidate is Inside Canada
-                      <span className="text-danger">*</span>
+                     
                     </label>
                     <select
                       name="work_permit_canada"
@@ -1146,7 +1146,7 @@ const close = () => {
                       htmlFor="reffer_by"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
-                      Referred By:<span className="text-danger">*</span>
+                      Referred By:
                     </label>
                     {/* <Select
                       options={agentList || []} 
@@ -1212,7 +1212,7 @@ const close = () => {
                       htmlFor="assigned_by"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
-                      Assigned To:<span className="text-danger">*</span>
+                      Assigned To:
                     </label>
                     {/* <Select
                       options={"" || admiinList}
