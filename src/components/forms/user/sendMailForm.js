@@ -27,8 +27,8 @@ function SendMailForm({ email, setApiCall }) {
       (value) =>
         value === "" || value.trim() === ""
           ? "Subject is required"
-          : /[-]?\d+(\.\d+)?/.test(value)
-            ? "Subject can not have a number."
+          // : /[-]?\d+(\.\d+)?/.test(value)
+          //   ? "Subject can not have a number."
             : value.length < 2
               ? "Subject should have 2 or more letters"
               : /[^A-Za-z 0-9]/g.test(value)

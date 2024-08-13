@@ -71,7 +71,6 @@ function UserRegisterPage() {
     assigned_by: "1", //26
     permission: JSON.stringify(Permissions),
   };
-
   /* Functionality to close the modal */
   const close = () => {
     setState(initialFormStateuser);

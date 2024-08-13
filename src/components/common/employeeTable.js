@@ -766,7 +766,7 @@ export default function EmployeeTable(props) {
                                   )
                                 </p>
                               ) : null}
-                              {empdata.contact_no === null || !empdata.contact_no ? null : (
+                              {empdata.contact_no === null || !empdata.contact_no || empdata.contact_no === (0 || "0") ? null : (
                                 <p className="m-0" title={empdata.contact_no}>
                                   +
                                   <Link
@@ -930,8 +930,8 @@ export default function EmployeeTable(props) {
                               title={empdata.interested_in}>
                               <span
                                 className={
-                                  `p-1 ${ empdata.interested_in === "visitor visa"
-                                    ? "text-dark":"text-white"} text-center  border rounded-pill 
+                                  `p-1 ${empdata.interested_in === "visitor visa"
+                                    ? "text-dark" : "text-white"} text-center  border rounded-pill 
                                   ${empdata.interested_in === "business visa"
                                     ? "bg-eastern"
                                     : empdata.interested_in === "co-op"
