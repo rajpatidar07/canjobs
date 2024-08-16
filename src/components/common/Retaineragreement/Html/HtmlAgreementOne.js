@@ -1030,9 +1030,13 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
       <br /><br />
       <div style="display: flex; flex-wrap: wrap">
         <div style="width: 50%">
-          <p class="para_gap" style="margin: 0">
-          <span style="max-width: 200px; float: right"></span>
-          </p>  
+ <p class="para_gap" style="margin: 0">
+           <img
+          src=${felidData.client_signature ? felidData?.client_signature : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"}
+          alt=${(felidData && (felidData.client_first_name || felidData.client_last_name) ? ((felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}
+          style="max-width: 200px; float: right"
+          class=${felidData.client_signature ? "d-block" : "d-none"}
+        />        </p>  
           <p style="margin: 0 0 30px 0">Signature of Client</p>
         </div>
         <div style="width: 50%">
@@ -1061,10 +1065,10 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
         <div style="width: 50%">
           <p class="para_gap" style="margin: 0">
            <img
-          src=${felidData.initial ? felidData?.initial : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"}
-          alt="${(felidData && (felidData.client_first_name || felidData.client_last_name) ? ((felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}"
+          src=${felidData.rcic_signature ? felidData?.rcic_signature : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"}
+          alt="RCIC"
           style="max-width: 200px; float: right"
-          class=${felidData.initial ? "d-block" : "d-none"}
+          class=${felidData.rcic_signature ? "d-block" : "d-none"}
         />
           </p>
           <p style="margin: 0 0 30px 0">Signature of RCIC</p>
@@ -1211,7 +1215,12 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
         </div>
         <div style="width: 33.33%; text-align: center">
           <p class="para_gap" style="margin: 0">
-          
+           <img
+          src=${felidData.client_signature ? felidData?.client_signature : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"}
+          alt=${(felidData && (felidData.client_first_name || felidData.client_last_name) ? ((felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}
+          style="max-width: 200px; float: right"
+          class=${felidData.client_signature ? "d-block" : "d-none"}
+        />
           </p>
           <p style="margin: 0 0 30px 0">Signatures</p>
         </div>
@@ -1237,12 +1246,14 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
         "
       >
         Initial:
+         <p class="para_gap" style="margin: 0">
         <img
           src=${felidData.initial ? felidData?.initial : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"}
           alt="${(felidData && (felidData.client_first_name || felidData.client_last_name) ? ((felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}"
           style="max-width: 200px; float: right"
           class=${felidData.initial ? "d-block" : "d-none"}
         />
+        </p>
       </div>
     </div>
   </body>

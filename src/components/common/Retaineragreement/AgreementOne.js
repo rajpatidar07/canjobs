@@ -193,7 +193,7 @@ const AggrementOne = () => {
           }}
         >
           <Text style={{ fontWeight: 600 }}>
-            RCIC Membership Number: R533393{" "}
+            RCIC Membership Number: R533393
           </Text>
           <Text style={{ fontWeight: 600 }}>
             Client File Number: : {felidData.client_file_no}
@@ -201,57 +201,57 @@ const AggrementOne = () => {
         </View>
         <View>
           <Text>
-            This Retainer Agreement is made this {felidData.client_file_no}{" "}
+            This Retainer Agreement is made this {felidData.client_file_no}
             <Text style={styles.textunderline}>
               {moment(new Date(felidData.agreement_date)).format("Do")}
-            </Text>{" "}
-            day of{" "}
+            </Text>
+            day of
             <Text style={styles.textunderline}>
               {moment(new Date(felidData.agreement_date)).format("MMMM")}
-            </Text>{" "}
+            </Text>
             {moment(new Date(felidData.agreement_date)).format("YYYY")} between
             Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur (the
-            “RCIC”), RCIC Membership Number{" "}
-            <Text style={styles.textunderline}>R533393</Text>, phone number{" "}
+            “RCIC”), RCIC Membership Number
+            <Text style={styles.textunderline}>R533393</Text>, phone number
             <Text style={styles.textunderline}> 4038885308</Text>
             <Link
               src="mailto:info@canpathways.ca"
               className="a"
               target="_blank"
             >
-              , email{" "}
-            </Link>{" "}
+              , email
+            </Link>
             info@canpathways.ca located at
             <Text style={styles.textunderline}>
-              {" "}
+
               Hopewell Pl NE #310 Calgary, AB T1Y 7J7,
-            </Text>{" "}
-            <Text style={styles.textunderline}> Canada</Text> and Client{" "}
+            </Text>
+            <Text style={styles.textunderline}> Canada</Text> and Client
             <Text style={styles.textunderline} className="para_gap">
-              {" "}
+
               {felidData.client_first_name + " " + felidData.client_last_name}
-            </Text>{" "}
+            </Text>
             (the “Client”)
             <Text className="p">, located at</Text>
             <Text style={styles.textunderline} className="para_gap">
-              {" "}
+
               {felidData.client_address}
-            </Text>{" "}
-            , email{" "}
+            </Text>
+            , email
             <Text style={styles.textunderline} className="para_gap">
-              {" "}
+
               {felidData.client_email}
             </Text>
-            , contact number{" "}
+            , contact number
             <Text style={styles.textunderline} className="para_gap">
-              {" "}
+
               {felidData.client_contact}
             </Text>
             .
           </Text>
         </View>
         <View style={{ marginTop: 15 }}>
-          <Text style={{marginBottom:5}}>Details of Applicant's and dependents to added in this application</Text>
+          <Text style={{ marginBottom: 5 }}>Details of Applicant's and dependents to added in this application</Text>
           <View>
             <View>
               <Text>Principal Applicant <Text style={styles.textunderline} >__________________ </Text> Date of birth <Text style={styles.textunderline} >__________________ </Text>
@@ -325,7 +325,7 @@ const AggrementOne = () => {
             </Text>
             <View>
               <Text>
-                (a) [Summary of preliminary advice given to the client{" "}
+                (a) [Summary of preliminary advice given to the client
                 <Text style={styles.textunderline} className="para_gap">
                   {felidData.summary}
                 </Text>
@@ -488,7 +488,7 @@ const AggrementOne = () => {
                   <Text>Professional Fees</Text>
                 </View>
                 <View style={styles.cell}>
-                  {" "}
+
                   <Text>{felidData.professional_fees}</Text>
                 </View>
               </View>
@@ -528,7 +528,7 @@ const AggrementOne = () => {
                         },
                       ]}
                     >
-                      {" "}
+
                       <Text>{felidData.government_fees}</Text>
                     </View>
                   </View>
@@ -552,11 +552,11 @@ const AggrementOne = () => {
               </View>
               <View style={styles.row}>
                 <View style={styles.cell}>
-                  {" "}
+
                   <Text>Administrative fee [as required]</Text>
                 </View>
                 <View style={styles.cell}>
-                  {" "}
+
                   <Text>{felidData.administrative_fee}</Text>
                 </View>
               </View>
@@ -565,7 +565,7 @@ const AggrementOne = () => {
                   <Text>ApplicableTaxes: {felidData.gst || "0"}%</Text>
                 </View>
                 <View style={styles.cell}>
-                  {" "}
+
                   <Text>{felidData.applicable_taxes}</Text>
                 </View>
               </View>
@@ -574,7 +574,7 @@ const AggrementOne = () => {
                   <Text>Balance (Paid at time of filing):</Text>
                 </View>
                 <View style={styles.cell}>
-                  {" "}
+
                   <Text>{felidData.balance}</Text>
                 </View>
               </View>
@@ -583,7 +583,7 @@ const AggrementOne = () => {
                   <Text style={{ color: "red" }}>Total Cost</Text>
                 </View>
                 <View style={styles.cell}>
-                  {" "}
+
                   <Text>{felidData.total_cost}</Text>
                 </View>
               </View>
@@ -683,7 +683,7 @@ const AggrementOne = () => {
             <View style={{ marginTop: 15 }}>
               <View>
                 <Text style={{ fontWeight: "bold" }}>
-                  {" "}
+
                   TotalAmount (Non-Refundable) (Paid at signing of contract and
                   sharing of checklist)
                 </Text>
@@ -787,7 +787,7 @@ const AggrementOne = () => {
                     target="_blank"
                   >
                     – Please send the payment and the answer to the secret
-                    question to the following e-mail address:{" "}
+                    question to the following e-mail address:
                   </Link>
                   <Link
                     src="mailto:accounts@canpathways.com"
@@ -801,10 +801,10 @@ const AggrementOne = () => {
               <View data-list-text="o">
                 <Text>
                   <Text style={{ fontWeight: "bold" }}>
-                    {" "}
+
                     o Credit Card/PayPal:
                   </Text>
-                  Instructions will be shared, additional up to{" "}
+                  Instructions will be shared, additional up to
                   <Text style={{ fontWeight: "bold" }}>3%</Text>
                   charges will be applicable if the client is willing to pay by
                   this method.
@@ -819,14 +819,14 @@ const AggrementOne = () => {
                   <View style={{ marginTop: 15 }} data-list-text="o">
                     <Text>
                       <Text style={{ fontWeight: "bold" }}>
-                        {" "}
+
                         o Wire Transfer
                       </Text>
                       <Text className="p">
                         - Bank details will be provided once the contract is
                         being signed. (*Banks usually charge a processing fee
-                        for wire transfer, so please add{" "}
-                      </Text>{" "}
+                        for wire transfer, so please add
+                      </Text>
                       <Text style={{ fontWeight: "bold" }}>CAD $50</Text>
                       fee on top of your payment EVERY TIME you make a wire
                       transfer;
@@ -906,7 +906,7 @@ const AggrementOne = () => {
               </View>
               <View style={{ marginTop: 8 }} data-list-text="">
                 <Text>
-                  {" "}
+
                    Hiding information or submission of false documents
                 </Text>
               </View>
@@ -930,11 +930,11 @@ const AggrementOne = () => {
               , the
               <Text style={styles.textunderline}>
                 Client Account Regulation
-              </Text>{" "}
+              </Text>
               and the
               <Text style={styles.textunderline}>
                 Retainer Agreement Regulation
-              </Text>{" "}
+              </Text>
               and in the following manner:
             </Text>
             <Text>Cheque</Text>
@@ -1003,7 +1003,7 @@ const AggrementOne = () => {
                 website:
               </Text>
               <Link src="http://www.iccrc-crcic.ca/" target="_blank">
-                {" "}
+
               </Link>
               <Link src="http://www.iccrc-crcic.ca/" target="_blank">
                 www.iccrc-crcic.ca.
@@ -1318,7 +1318,7 @@ const AggrementOne = () => {
               <View style={styles.clientForm}>
                 <View style={styles.clientFormChild}>
                   <Text>
-                    Given Name:{" "}
+                    Given Name:
                     <Text style={styles.textunderline} className="para_gap">
                       {felidData.client_first_name || "_______________"}
                     </Text>
@@ -1336,8 +1336,8 @@ const AggrementOne = () => {
               <View style={styles.clientForm}>
                 <View style={styles.clientFormChild}>
                   <Text>
-                    {" "}
-                    Address:{" "}
+
+                    Address:
                     <Text style={styles.textunderline} className="para_gap">
                       {felidData.client_address || "_______________"}
                     </Text>
@@ -1345,8 +1345,8 @@ const AggrementOne = () => {
                 </View>
                 <View style={styles.clientFormChild}>
                   <Text>
-                    {" "}
-                    Telephone Number:{" "}
+
+                    Telephone Number:
                     <Text style={styles.textunderline} className="para_gap">
                       {felidData.client_telephone || "_______________"}
                     </Text>
@@ -1389,7 +1389,7 @@ const AggrementOne = () => {
                 </Text>
                 <Text style={styles.clientFormChild}>
                   <Text>
-                    Family Name:{" "}
+                    Family Name:
                     <Text style={styles.textunderline} className="para_gap">
                       Kaur
                     </Text>
@@ -1399,7 +1399,7 @@ const AggrementOne = () => {
               <View style={styles.clientForm}>
                 <Text style={styles.clientFormChild}>
                   <Text>
-                    Address:{" "}
+                    Address:
                     <Text style={styles.textunderline}>
                       2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7
                     </Text>
@@ -1444,9 +1444,17 @@ const AggrementOne = () => {
             <View style={{ display: "flex", flexDirection: "column", width: "100%", marginTop: 15 }}>
               <View style={styles.clientForm}>
                 <View style={styles.clientFormChild}>
-                  <Text style={[{ margin: 0, marginBottom: 5, maxWidth: 200, }, styles.textunderline]}>
-                    ___________________
-                  </Text>
+                  {felidData.client_signature ?
+                    <Image
+                      src={
+                        felidData.client_signature
+                          ? felidData.client_signature
+                          : ""
+                      }
+                      alt={felidData.client_first_name + " " + felidData.client_last_name}
+
+                      style={{ width: "60%", height: "auto" }}
+                    /> : <Text>___________________</Text>}
                   <Text style={{ margin: "0 0 30px 0" }}>Signature of Client</Text>
                 </View>
                 <View style={styles.clientFormChild}>
@@ -1487,19 +1495,16 @@ const AggrementOne = () => {
                 </View>
                 <View style={styles.clientFormChild}>
                   <View style={[{ margin: 0, marginBottom: 5, maxWidth: 200 }, styles.textunderline]}>
-                    {felidData.initial ?
+                    {felidData.rcic_signature ?
                       <Image
                         src={
-                          felidData.initial
-                            ? felidData.initial
+                          felidData.rcic_signature
+                            ? felidData.rcic_signature
                             : ""
                         }
-                        alt={
-                          (felidData.client_first_name && felidData.client_last_name ? felidData.client_first_name + " " + felidData.client_last_name
-                            : "")
-                        }
+                        alt="RCIC"
 
-                        style={{ width: "60%", height: "auto" }}
+                        style={{ width: "60%", height: "auto", textDecoration: "underline" }}
                       /> : <Text>___________________</Text>}
                   </View>
                   <Text style={{ margin: "0 0 30px 0" }}>Signature of RCIC</Text>
@@ -1679,7 +1684,7 @@ const AggrementOne = () => {
           >
             <View style={[styles.clientForm, { textAlign: "center" }]}>
               <View style={styles.clientFormChild}>
-                <Text className="para_gap" style={{ margin: 0 }}>
+                <Text className="para_gap" style={{ margin: 0, textDecoration: "underline" }}>
                   {felidData.client_first_name && felidData.client_last_name
                     ? felidData.client_first_name +
                     " " +
@@ -1689,11 +1694,21 @@ const AggrementOne = () => {
                 <Text style={{ margin: "0 0 30px 0" }}>Client’s full name</Text>
               </View>
               <View style={styles.clientFormChild}>
-                <Text>__________</Text>
+                {felidData.client_signature ?
+                  <Image
+                    src={
+                      felidData.client_signature
+                        ? felidData.client_signature
+                        : ""
+                    }
+                    alt={felidData.client_first_name + " " + felidData.client_last_name}
+
+                    style={{ width: "60%", height: "auto" }}
+                  /> : <Text>___________________</Text>}
                 <Text style={{ margin: "0 0 30px 0" }}>Signatures</Text>
               </View>
               <View style={styles.clientFormChild}>
-                <Text className="para_gap" style={{ margin: 0 }}>
+                <Text className="para_gap" style={{ margin: 0, textDecoration: "underline" }}>
                   {!felidData.date_signature_client ||
                     felidData.date_signature_client === "0000-00-00"
                     ? "____________"
@@ -1742,10 +1757,9 @@ const AggrementOne = () => {
                   src={felidData.initial}
                 />
               ) : (
-                <Text>__________</Text>
-              )}
+                null)}
               <View className="initial" fixed style={styles.initial}>
-                <Text>Initial:</Text>
+                <Text>Initial:{felidData.initial ? "" : "__________"}</Text>
               </View>
             </View>
           </Page>
@@ -1794,10 +1808,10 @@ const AggrementOne = () => {
                       src={felidData.initial}
                     />
                   ) : (
-                    <Text>__________</Text>
+                    null
                   )}
                   <View className="initial" fixed style={styles.initial}>
-                    <Text>Initial:</Text>
+                    <Text>Initial:{felidData.initial ? "" : "__________"}</Text>
                   </View>
                 </View>
               </Page>

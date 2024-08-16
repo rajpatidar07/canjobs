@@ -196,168 +196,168 @@
 
 // export default Newpdf;
 /*Crud to add country ,state and city to the local storage and get it from there in select box */
-  // import React, { useState, useEffect } from 'react';
+// import React, { useState, useEffect } from 'react';
 
-  // const Newpdf = () => {
-  //   const [data, setData] = useState({});
-  //   const [progress, setProgress] = useState(0);
-  //   const [form, setForm] = useState({ country: '', state: '', city: '', selectedCountry: '', selectedState: '' });
+// const Newpdf = () => {
+//   const [data, setData] = useState({});
+//   const [progress, setProgress] = useState(0);
+//   const [form, setForm] = useState({ country: '', state: '', city: '', selectedCountry: '', selectedState: '' });
 
-  //   useEffect(() => {
-  //     const savedData = localStorage.getItem('countryStateCityData');
-  //     if (savedData) setData(JSON.parse(savedData));
-  //   }, []);
+//   useEffect(() => {
+//     const savedData = localStorage.getItem('countryStateCityData');
+//     if (savedData) setData(JSON.parse(savedData));
+//   }, []);
 
-  //   const saveData = (newData) => {
-  //     setData(newData);
-  //     localStorage.setItem('countryStateCityData', JSON.stringify(newData));
-  //   };
+//   const saveData = (newData) => {
+//     setData(newData);
+//     localStorage.setItem('countryStateCityData', JSON.stringify(newData));
+//   };
 
-  //   const handleSubmit = (e, type) => {
-  //     e.preventDefault();
-  //     const { country, state, city, selectedCountry, selectedState } = form;
+//   const handleSubmit = (e, type) => {
+//     e.preventDefault();
+//     const { country, state, city, selectedCountry, selectedState } = form;
 
-  //     let newData = {...data };
-  //     if (type === 'country') newData[country] = {};
-  //     if (type === 'state') newData[selectedCountry][state] = [];
-  //     if (type === 'city') newData[selectedCountry][selectedState].push(city);
+//     let newData = {...data };
+//     if (type === 'country') newData[country] = {};
+//     if (type === 'state') newData[selectedCountry][state] = [];
+//     if (type === 'city') newData[selectedCountry][selectedState].push(city);
 
-  //     saveData(newData);
-  //     setForm({...form, [type]: '' });
+//     saveData(newData);
+//     setForm({...form, [type]: '' });
 
-  //     let newProgress = progress;
-  //     if (type === 'country') newProgress += 40;
-  //     else newProgress += 30;
-  //     setProgress(newProgress > 100? 100 : newProgress);
-  //   };
+//     let newProgress = progress;
+//     if (type === 'country') newProgress += 40;
+//     else newProgress += 30;
+//     setProgress(newProgress > 100? 100 : newProgress);
+//   };
 
-  //   const handleChange = (e) => {
-  //     setForm({...form, [e.target.name]: e.target.value });
-  //   };
+//   const handleChange = (e) => {
+//     setForm({...form, [e.target.name]: e.target.value });
+//   };
 
-  //   return (
-  //     <div>
-  //       <h1>Country, State, City</h1>
+//   return (
+//     <div>
+//       <h1>Country, State, City</h1>
 
-  //       <form onSubmit={(e) => handleSubmit(e, 'country')}>
-  //         <input name="country" value={form.country} onChange={handleChange} placeholder="Add Country" required />
-  //         <button type="submit">Add Country</button>
-  //       </form>
+//       <form onSubmit={(e) => handleSubmit(e, 'country')}>
+//         <input name="country" value={form.country} onChange={handleChange} placeholder="Add Country" required />
+//         <button type="submit">Add Country</button>
+//       </form>
 
-  //       <form onSubmit={(e) => handleSubmit(e, 'tate')}>
-  //         <select name="selectedCountry" value={form.selectedCountry} onChange={handleChange} required>
-  //           <option value="" disabled>Select Country</option>
-  //           {Object.keys(data).map((country) => (
-  //             <option key={country} value={country}>{country}</option>
-  //           ))}
-  //         </select>
-  //         <input name="state" value={form.state} onChange={handleChange} placeholder="Add State" required />
-  //         <button type="submit">Add State</button>
-  //       </form>
+//       <form onSubmit={(e) => handleSubmit(e, 'tate')}>
+//         <select name="selectedCountry" value={form.selectedCountry} onChange={handleChange} required>
+//           <option value="" disabled>Select Country</option>
+//           {Object.keys(data).map((country) => (
+//             <option key={country} value={country}>{country}</option>
+//           ))}
+//         </select>
+//         <input name="state" value={form.state} onChange={handleChange} placeholder="Add State" required />
+//         <button type="submit">Add State</button>
+//       </form>
 
-  //       <form onSubmit={(e) => handleSubmit(e, 'city')}>
-  //         <select name="selectedCountry" value={form.selectedCountry} onChange={handleChange} required>
-  //           <option value="" disabled>Select Country</option>
-  //           {Object.keys(data).map((country) => (
-  //             <option key={country} value={country}>{country}</option>
-  //           ))}
-  //         </select>
-  //         <select name="selectedState" value={form.selectedState} onChange={handleChange} required>
-  //           <option value="" disabled>Select State</option>
-  //           {form.selectedCountry && Object.keys(data[form.selectedCountry] || {}).map((state) => (
-  //             <option key={state} value={state}>{state}</option>
-  //           ))}
-  //         </select>
-  //         <input name="city" value={form.city} onChange={handleChange} placeholder="Add City" required />
-  //         <button type="submit">Add City</button>
-  //       </form>
+//       <form onSubmit={(e) => handleSubmit(e, 'city')}>
+//         <select name="selectedCountry" value={form.selectedCountry} onChange={handleChange} required>
+//           <option value="" disabled>Select Country</option>
+//           {Object.keys(data).map((country) => (
+//             <option key={country} value={country}>{country}</option>
+//           ))}
+//         </select>
+//         <select name="selectedState" value={form.selectedState} onChange={handleChange} required>
+//           <option value="" disabled>Select State</option>
+//           {form.selectedCountry && Object.keys(data[form.selectedCountry] || {}).map((state) => (
+//             <option key={state} value={state}>{state}</option>
+//           ))}
+//         </select>
+//         <input name="city" value={form.city} onChange={handleChange} placeholder="Add City" required />
+//         <button type="submit">Add City</button>
+//       </form>
 
-  //       <div>
-  //         <h2>Data:</h2>
-  //         {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
-  //         <h2>Progress</h2>
-  //         {progress}%
-  //       </div>
-  //       <div className="progress" style={{ height: "20px" }}>
-  //         <div className="progress-bar" role="progressbar" aria-label="Example 20px high" style={{ width: `${progress}%` }} aria-valuenow={progress} aria-valuemin="0" aria-valuemax="100"></div>
-  //       </div>
-  //     </div>
-  //   );
-  // };
+//       <div>
+//         <h2>Data:</h2>
+//         {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
+//         <h2>Progress</h2>
+//         {progress}%
+//       </div>
+//       <div className="progress" style={{ height: "20px" }}>
+//         <div className="progress-bar" role="progressbar" aria-label="Example 20px high" style={{ width: `${progress}%` }} aria-valuenow={progress} aria-valuemin="0" aria-valuemax="100"></div>
+//       </div>
+//     </div>
+//   );
+// };
 
-  // export default Newpdf;
-import { useEffect, useRef } from "react"
-import PSPDFKit from "pspdfkit";
-import { Modal } from "react-bootstrap";
-export default function Newpdf({document,close,show}) {
-  const containerRef = useRef(null);
-  // let document = "https://canpathways.sharepoint.com/sites/canpathwaysjobs/_layouts/15/download.aspx?UniqueId=d4410fbf-3895-4b2c-80a1-c48948ddf0c4&Translate=false&tempauth=v1.eyJzaXRlaWQiOiJjOTgxNDg4OS00NmIxLTQ1NTgtOWZhOS02NzUyNjJlNTJhYWQiLCJhcHBfZGlzcGxheW5hbWUiOiJHcmFwaCBQSFAgcXVpY2sgc3RhcnQiLCJhdWQiOiIwMDAwMDAwMy0wMDAwLTBmZjEtY2UwMC0wMDAwMDAwMDAwMDAvY2FucGF0aHdheXMuc2hhcmVwb2ludC5jb21ANDYzOTJiN2QtM2ZhNy00Y2M4LWI5ZGQtYjA1YTFkZjllNzQ1IiwiZXhwIjoiMTcyMTc5ODQyMiJ9.CgoKBHNuaWQSAjY0EgsImpW0-77olT0QBRoLMjAuMjAuMzIuOTYqLFVEK24ybk9sbDZXU3d1Rm5pSWlDaGwxeUQ2UTVwRXhFR0RLdVF4M3NneDQ9MJABOAFCEKE_Uk2OgABgFE4h-XWA8lxKEGhhc2hlZHByb29mdG9rZW56ATG6AUBhbGxzaXRlcy53cml0ZSBhbGxmaWxlcy53cml0ZSBhbGxmaWxlcy5yZWFkIGFsbHNpdGVzLmZ1bGxjb250cm9swgFJZDEwMWM4YWQtZTI2My00YzBhLThkYjMtM2JhMmFkMWY4ZWE2QDQ2MzkyYjdkLTNmYTctNGNjOC1iOWRkLWIwNWExZGY5ZTc0NcgBAQ.wSEiu_A4kPGW9Xh_Y1rDvQ4o4QnXHDOl-C9Z6i-DYwA&ApiVersion=2.0";
-  useEffect(() => {
-    const container = containerRef.current;
-    let instance;
+// export default Newpdf;
+// import { useEffect, useRef } from "react"
+// import PSPDFKit from "pspdfkit";
+// import { Modal } from "react-bootstrap";
+// export default function Newpdf({document,close,show}) {
+//   const containerRef = useRef(null);
+//   // let document = "https://canpathways.sharepoint.com/sites/canpathwaysjobs/_layouts/15/download.aspx?UniqueId=d4410fbf-3895-4b2c-80a1-c48948ddf0c4&Translate=false&tempauth=v1.eyJzaXRlaWQiOiJjOTgxNDg4OS00NmIxLTQ1NTgtOWZhOS02NzUyNjJlNTJhYWQiLCJhcHBfZGlzcGxheW5hbWUiOiJHcmFwaCBQSFAgcXVpY2sgc3RhcnQiLCJhdWQiOiIwMDAwMDAwMy0wMDAwLTBmZjEtY2UwMC0wMDAwMDAwMDAwMDAvY2FucGF0aHdheXMuc2hhcmVwb2ludC5jb21ANDYzOTJiN2QtM2ZhNy00Y2M4LWI5ZGQtYjA1YTFkZjllNzQ1IiwiZXhwIjoiMTcyMTc5ODQyMiJ9.CgoKBHNuaWQSAjY0EgsImpW0-77olT0QBRoLMjAuMjAuMzIuOTYqLFVEK24ybk9sbDZXU3d1Rm5pSWlDaGwxeUQ2UTVwRXhFR0RLdVF4M3NneDQ9MJABOAFCEKE_Uk2OgABgFE4h-XWA8lxKEGhhc2hlZHByb29mdG9rZW56ATG6AUBhbGxzaXRlcy53cml0ZSBhbGxmaWxlcy53cml0ZSBhbGxmaWxlcy5yZWFkIGFsbHNpdGVzLmZ1bGxjb250cm9swgFJZDEwMWM4YWQtZTI2My00YzBhLThkYjMtM2JhMmFkMWY4ZWE2QDQ2MzkyYjdkLTNmYTctNGNjOC1iOWRkLWIwNWExZGY5ZTc0NcgBAQ.wSEiu_A4kPGW9Xh_Y1rDvQ4o4QnXHDOl-C9Z6i-DYwA&ApiVersion=2.0";
+//   useEffect(() => {
+//     const container = containerRef.current;
+//     let instance;
 
-    (async function () {
-      if (!document) {
-        console.error("Document prop is required.");
-        return;
-      }
+//     (async function () {
+//       if (!document) {
+//         console.error("Document prop is required.");
+//         return;
+//       }
 
-      try {
-        if (instance) {
-          PSPDFKit.unload(container);
-        }
+//       try {
+//         if (instance) {
+//           PSPDFKit.unload(container);
+//         }
 
-        instance = await PSPDFKit.load({
-          container,
-          license:
-            "zFV8P9YHvxGpBc0Tp-W4cg6Fl-zD9VyTWQGiJTi1A0pM18iMZUQDrARKsunUn4oFAuan32RJzCDR--1nglDFAeacyOumrQOdc7aLnh0zkUHLoL9ZIyYS885cFaZySBalYNU4cbnmdUaZUlte0UEfoF8wM-_lJnbFYTYyWvpuPQ7BICRjm9_SGVz9V8bQGEU3OjpqY_YsvjfyRw", // Replace with your actual license key
-          document: document,
-          baseUrl: `${window.location.protocol}//${window.location.host}/${process.env.PUBLIC_URL}`,
-          CommentMarkerAnnotation: true,
-          setOnCommentCreationStart: true,
-          toolbarItems: PSPDFKit.defaultToolbarItems.concat({
-            type: "annotate",
-          }),
-          // mentionableUsers: props.adminDetailsFOrMention,
-          autoSaveMode: PSPDFKit.AutoSaveMode.IMMEDIATE,
-          enableRichText: () => true,
-          instant: true,
-        });
-      } catch (error) {
-        console.error("Error loading PSPDFKit or document:", error);
-      }
-    })();
+//         instance = await PSPDFKit.load({
+//           container,
+//           license:
+//             "zFV8P9YHvxGpBc0Tp-W4cg6Fl-zD9VyTWQGiJTi1A0pM18iMZUQDrARKsunUn4oFAuan32RJzCDR--1nglDFAeacyOumrQOdc7aLnh0zkUHLoL9ZIyYS885cFaZySBalYNU4cbnmdUaZUlte0UEfoF8wM-_lJnbFYTYyWvpuPQ7BICRjm9_SGVz9V8bQGEU3OjpqY_YsvjfyRw", // Replace with your actual license key
+//           document: document,
+//           baseUrl: `${window.location.protocol}//${window.location.host}/${process.env.PUBLIC_URL}`,
+//           CommentMarkerAnnotation: true,
+//           setOnCommentCreationStart: true,
+//           toolbarItems: PSPDFKit.defaultToolbarItems.concat({
+//             type: "annotate",
+//           }),
+//           // mentionableUsers: props.adminDetailsFOrMention,
+//           autoSaveMode: PSPDFKit.AutoSaveMode.IMMEDIATE,
+//           enableRichText: () => true,
+//           instant: true,
+//         });
+//       } catch (error) {
+//         console.error("Error loading PSPDFKit or document:", error);
+//       }
+//     })();
 
-    return () => {
-      if (instance) {
-        PSPDFKit.unload(container);
-      }
-    };
-  }, [document]);
+//     return () => {
+//       if (instance) {
+//         PSPDFKit.unload(container);
+//       }
+//     };
+//   }, [document]);
 
-  return(
-  <Modal
-  show={show}
-  size="lg"
-  aria-labelledby="contained-modal-title-vcenter"
-  centered
->
-  <button
-    type="button"
-    className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
-    data-dismiss="modal"
-    onClick={close}
-  >
-    <i className="fas fa-times"></i>
-  </button>
-  <div className="bg-white rounded h-100 px-11 pt-7">
-  {/* <iframe src="https://secure.na4.echosign.com/public/apiesign?pid=CBFCIBAA3AAABLblqZhD8qok13mGozwyksKBtLyYjmizM78xPFwxtUyCD9RREJofIX5fEzzVw3uKk18C1R4KbmcP1XQO6HaItIHdxKMNd&client_id=BGBQIIE7H253K6" width="100%" height="100%" frameborder="0" style={{border: "0", overflow: "hidden", minHeight: "100vh", minWidth: "600px",}}title="Agreement"></iframe> */}
-     <div ref={containerRef} style={{ width: "100%", height: "100vh" }} />
-     </div>
-     </Modal>
-     )
-}
-  //02
+//   return(
+//   <Modal
+//   show={show}
+//   size="lg"
+//   aria-labelledby="contained-modal-title-vcenter"
+//   centered
+// >
+//   <button
+//     type="button"
+//     className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
+//     data-dismiss="modal"
+//     onClick={close}
+//   >
+//     <i className="fas fa-times"></i>
+//   </button>
+//   <div className="bg-white rounded h-100 px-11 pt-7">
+//   {/* <iframe src="https://secure.na4.echosign.com/public/apiesign?pid=CBFCIBAA3AAABLblqZhD8qok13mGozwyksKBtLyYjmizM78xPFwxtUyCD9RREJofIX5fEzzVw3uKk18C1R4KbmcP1XQO6HaItIHdxKMNd&client_id=BGBQIIE7H253K6" width="100%" height="100%" frameborder="0" style={{border: "0", overflow: "hidden", minHeight: "100vh", minWidth: "600px",}}title="Agreement"></iframe> */}
+//      <div ref={containerRef} style={{ width: "100%", height: "100vh" }} />
+//      </div>
+//      </Modal>
+//      )
+// }
+//02
 //   import { useEffect, useRef } from "react";
 // import PSPDFKit from "pspdfkit";
 
@@ -682,13 +682,13 @@ export default function Newpdf({document,close,show}) {
 //   useEffect(() => {
 //     const container = containerRef.current;
 //     let instance;
-  
+
 //     (async function () {
 //       if (!document) {
 //         console.error("Document prop is required.");
 //         return;
 //       }
-  
+
 //       try {        
 //         if (instance) {
 //           PSPDFKit.unload(container);
@@ -716,7 +716,7 @@ export default function Newpdf({document,close,show}) {
 //         console.error("Error loading PSPDFKit or document:", error);
 //       }
 //     })();
-  
+
 //     return () => {
 //       if (instance) {
 //         PSPDFKit.unload(container);
@@ -888,3 +888,318 @@ export default function Newpdf({document,close,show}) {
 
 // export default Newpdf;
 
+import React, { useEffect, useState } from 'react';
+import SignaturePadComponent from '../../common/Retaineragreement/SignaturePadComponent';
+import { AddUpdateAgreement, GetAgreement } from "../../../api/api";
+import useValidation from '../../common/useValidation';
+import { toast } from 'react-toastify';
+
+const Newpdf = ({
+  folderId,
+  user_id,
+  openSignature,
+  emp_user_type,
+  show,
+  close,
+  userData,
+  setApicall,
+  felidData
+}) => {
+  const [loading, setLoading] = useState(false);
+  let SigningUserType = localStorage.getItem("userType");
+
+  const initialClientState = {
+    client_first_name: "",
+    client_last_name: "",
+    client_signature: "",
+    date_signature_client: "",
+  };
+
+  const initialFormState = {
+    type: "ppp",
+    rcic_membership_no: "",
+    matter: "",
+    summary: "",
+    initial: "",
+    professional_fees: "",
+    courier_charges: "",
+    government_fees: "",
+    application_fees: "",
+    biometrics_fees: "",
+    administrative_fee: "",
+    applicable_taxes: "",
+    balance: "",
+    total_cost: "",
+    applicable_retainer_fee_stape_1: "",
+    applicable_government_processing_fee_stape_1: "",
+    applicable_retainer_fee_stape_2: "",
+    applicable_government_processing_fee_stape_2: "",
+    total_amount_signing_of_contract: "",
+    balance_paid_at_time_of_filing: "",
+    rcic_first_name: "",
+    rcic_last_name: "",
+    rcic_signature: "",
+    date_signature_client: "",
+    date_signature_rcic: "",
+    sender: localStorage.getItem("admin_id"),
+    sender_type: localStorage.getItem("admin_type"),
+    receiver: "",
+    receiver_type: "",
+    assigned_by_id: "",
+    assigned_by_type: "",
+    signature_status: 0,
+    id: "",
+    client_file_no: "",
+    agreement_date: "",
+    client_email: "",
+    client_contact: "",
+    client_telephone: "",
+    client_cellphone: "",
+    client_fax: "",
+    client_address: "",
+    clients: [initialClientState]
+  };
+
+  const validators = {
+    clients: {
+      validateClientEmail: (value) =>
+        value === "" || value.trim() === "" ? "Client's Email is required" : /\S+@\S+\.\S+/.test(value) ? null : "Client's Email is invalid",
+    },
+  };
+
+  const { state, setState, onInputChange, errors } = useValidation(initialFormState, validators);
+
+  useEffect(() => {
+    if (felidData) {
+      const updatedState = { ...initialFormState };
+      for (const key in felidData) {
+        if (felidData[key] !== null && felidData[key] !== undefined) {
+          updatedState[key] = felidData[key];
+        }
+      }
+      setState(updatedState);
+    } else {
+      setState(initialFormState);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [felidData]);
+
+  const addClient = () => {
+    setState((prevState) => ({
+      ...prevState,
+      clients: [...prevState.clients, { ...initialClientState }]
+    }));
+  };
+
+  const removeClient = (index) => {
+    setState((prevState) => ({
+      ...prevState,
+      clients: prevState.clients.filter((_, i) => i !== index)
+    }));
+  };
+
+  const handleClientChange = (index, event) => {
+    const { name, value } = event.target;
+    setState((prevState) => {
+      const clients = [...prevState.clients];
+      clients[index] = { ...clients[index], [name]: value };
+      return { ...prevState, clients };
+    });
+  };
+
+  const onFormSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      let res = await AddUpdateAgreement(state);
+      if (res.data.status === 1 && res.data.message === "Agreement updated successfully.") {
+        setLoading(false);
+        setState(initialFormState);
+        toast.success("Fields added successfully.", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+
+        try {
+          let res = await GetAgreement("", user_id, emp_user_type, felidData.type);
+          const stateData = {
+            user_id: user_id,
+            emp_user_type: emp_user_type,
+            folderId: folderId,
+            felidData: res.data.data[0],
+          };
+          const newPageUrl = `/agreeone`;
+          localStorage.setItem('agreementStateData', JSON.stringify(stateData));
+          setApicall(true);
+          close();
+          window.open(newPageUrl, '_blank');
+        } catch (error) {
+          console.log(error);
+        }
+        close();
+        setApicall(true);
+      }
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (state.initial) {
+      setState({ ...state, signature_status: "1", pdf_genrated_status: "1" });
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.initial]);
+
+  const handleSignature = (signature, clientIndex) => {
+    const today = new Date().toISOString().split('T')[0];
+    setState((prevState) => {
+      const clients = [...prevState.clients];
+      clients[clientIndex] = { ...clients[clientIndex], client_signature: signature, date_signature_client: today };
+      return { ...prevState, clients };
+    });
+  };
+
+  return (
+    <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
+      <form onSubmit={onFormSubmit}>
+        <h5 className="text-center mb-7 pt-2">{openSignature === "yes" ? "Add Signature" : "Add Retainer Agreement Fields"}</h5>
+        <div className="row">
+          {openSignature === "yes" ? null :
+            (SigningUserType === "admin" ? [
+              { label: "Client Address", name: "client_address", type: "text" },
+              { label: "Client Email", name: "client_email", type: "email" },
+              { label: "Client Contact No", name: "client_contact", type: "number" },
+              { label: "The Client asked the RCIC, and the RCIC has agreed, to act for the Client in the matter of", name: "matter", type: "text" },
+              { label: "Summary of preliminary advice given to the client", name: "summary", type: "text" },
+              { label: "Client's Family Name", name: "client_last_name", type: "text" },
+              { label: "Client's Telephone Number", name: "client_telephone", type: "number" },
+              { label: "Client's Cellphone Number", name: "client_cellphone", type: "number" },
+              { label: "Client's Fax Number", name: "client_fax", type: "number" },
+              { label: "Client File Number", name: "client_file_no", type: "number" },
+              { label: "Agreement Creation Date", name: "agreement_date", type: "date" },
+              { label: "Professional Fees", name: "professional_fees", type: "number" },
+              { label: "Courier charges", name: "courier_charges", type: "number" },
+              { label: "Administrative Fee", name: "administrative_fee", type: "number" },
+              { label: "Government fees", name: "government_fees", type: "number" },
+              { label: "Applicable Taxes", name: "application_fees", type: "number" },
+              { label: "Balance (Paid at time of filing)", name: "balance", type: "number" },
+              { label: "Total Cost", name: "total_cost", type: "number" },
+              { label: "Applicable Retainer Fee for this stage (Non-Refundable) for Step 1", name: "applicable_retainer_fee_stape_1", type: "number" },
+              { label: "Applicable Government Processing Fee for Step 1", name: "applicable_government_processing_fee_stape_1", type: "number" },
+              { label: "Applicable Retainer Fee for this stage (Non-Refundable) for Step 2", name: "applicable_retainer_fee_stape_2", type: "number" },
+              { label: "Total Amount: (Non-Refundable) (Paid at signing of contract and sharing of checklist)", name: "total_amount_signing_of_contract", type: "number" },
+              { label: "Balance (Non-Refundable) (Paid at time of filing)", name: "balance_paid_at_time_of_filing", type: "number" },
+            ] : [
+              { label: "Client Address", name: "client_address", type: "text" },
+              { label: "Client Email", name: "client_email", type: "email" },
+              { label: "Client Contact No", name: "client_contact", type: "number" },
+              { label: "The Client asked the RCIC, and the RCIC has agreed, to act for the Client in the matter of", name: "matter", type: "text" },
+              { label: "Summary of preliminary advice given to the client", name: "summary", type: "text" },
+              { label: "Client's Family Name", name: "client_last_name", type: "text" },
+              { label: "Client's Telephone Number", name: "client_telephone", type: "number" },
+              { label: "Client's Cellphone Number", name: "client_cellphone", type: "number" },
+              { label: "Client's Fax Number", name: "client_fax", type: "number" },
+              { label: "Client File Number", name: "client_file_no", type: "number" },
+              { label: "Agreement Creation Date", name: "agreement_date", type: "date" },
+            ]).map(({ label, name, type,index }) => (
+              <div className="form-group col-md-6 mb-0 mt-4" key={index}>
+                <label htmlFor={name} className="font-size-4 text-black-2 line-height-reset">
+                  {label}
+                </label>
+                <input
+                  type={type}
+                  className={`${errors[name] ? "border border-danger" : ""} form-control mx-5 col ${type === "date" ? "coustam_datepicker" : ""}`}
+                  value={state?.[name] || ""}
+                  onKeyDownCapture={type === "date" ? (e) => e.preventDefault() : null}
+                  onChange={onInputChange}
+                  placeholder={label}
+                  id={name}
+                  name={name}
+                />
+                {errors[name] && <span className="text-danger font-size-3 mx-5">{errors[name]}</span>}
+              </div>
+            ))}
+
+
+          {/* Render client-specific fields */}
+          {state.clients.map((client, index) => (
+            <>
+              <div className="form-group col-md-6 mb-0 mt-4">
+                <label htmlFor={`client_first_name_${index}`} className="font-size-4 text-black-2 line-height-reset">
+                  Client's First Name
+                </label>
+                <input
+                  type="text"
+                  className="form-control mx-5 col"
+                  value={client.client_first_name}
+                  onChange={(e) => handleClientChange(index, e)}
+                  id={`client_first_name_${index}`}
+                  name="client_first_name"
+                  placeholder="Client's first name"
+                />
+              </div>
+              <div className="form-group col-md-6 mb-0 mt-4">
+                <label htmlFor={`client_last_name_${index}`} className="font-size-4 text-black-2 line-height-reset">
+                  Client's Last Name
+                </label>
+                <input
+                  type="text"
+                  className="form-control mx-5 col"
+                  value={client.client_last_name}
+                  onChange={(e) => handleClientChange(index, e)}
+                  id={`client_last_name_${index}`}
+                  name="client_last_name"
+                  placeholder="Client's last name"
+                />
+              </div>
+              <div className="form-group col-md-6 mb-0 mt-4">
+                <label htmlFor={`client_signature_${index}`} className="font-size-4 text-black-2 line-height-reset">
+                  Client Signature
+                </label>
+                <SignaturePadComponent
+                  signature={client.client_signature}
+                  onEnd={(signature) => handleSignature(signature, index)}
+                  canvasProps={{ className: 'form-control mx-5 col' }}
+                />
+              </div>
+
+              {index > 0 && (
+            <div className="col-3 mt-2 d-flex justify-content-end">
+              <button
+                type="button"
+                className="btn btn-danger mb-4"
+                onClick={() => removeClient(index)}
+                title='Remove Client'
+              >
+                Remove Client
+              </button>
+            </div>
+          )}
+            </>
+          ))}
+        <button
+          type="button"
+          className="btn btn-info mt-2"
+          onClick={addClient}
+          title='Add Client'
+        >
+        Add more client
+        </button>
+        </div>
+<div className='text-center d-flex justify-content-center'>
+        <button
+          type="submit"
+          className="btn btn-primary mt-4"
+          disabled={loading}
+        >
+          {loading ? "Saving..." : "Save Agreement"}
+        </button>
+        </div>
+      </form>
+    </div>
+  );
+};
+
+export default Newpdf;

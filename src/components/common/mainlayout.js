@@ -70,6 +70,7 @@ import SignaturePadComponent from "./Retaineragreement/SignaturePadComponent";
 import HtmlAgreementOne from "./Retaineragreement/Html/HtmlAgreementOne";
 import WebhookComponent from "./webHook";
 import { ToastContainer } from "react-toastify";
+import UserSigningPage from "./Retaineragreement/UserSigningPage";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -115,6 +116,7 @@ function MainLayout() {
         <Route path="/outside_booking" element={<WebhookComponent />} />
         <Route path="/resetpassword/:id" element={<ResetPassword />} />
         <Route exact path="/linkedin" component={LinkedInCallback} />
+        <Route exact path="/signagreement" element={<UserSigningPage/>} />
         {/* <Route path="*" element={<NotFound userType={userType}/>} /> */}
         {(userType === "user" && (token !== "" ||
           token !== null ||

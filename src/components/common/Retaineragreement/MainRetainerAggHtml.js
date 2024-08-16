@@ -134,7 +134,7 @@ export default function MainRetainerAggHtml({ setApicall, close, openSignature, 
         </div>
         <div>
           <button className='btn btn-primary text-end m-2' onClick={() => setOpenAddFeildsModal(true)}>{openSignature === "yes" ? "Add Signature" : "Add Felids"}</button>
-          <button className={felidData.agreement_date ? "btn btn-primary m-2" : "d-none"}
+          <button className={felidData.agreement_date ? "btn btn-primary m-2 d-none" : "d-none"}
             onClick={() => GeneratePdf()}
           >
             Generated Pdf</button>
@@ -174,7 +174,7 @@ export default function MainRetainerAggHtml({ setApicall, close, openSignature, 
                                       ? <HtmlAgreementsixteen />
                                       : null
       }
-      <button className={felidData.agreement_date ? "btn btn-primary" : "d-none"}
+      <button className={felidData.agreement_date ? "btn btn-primary d-none" : "d-none"}
         onClick={() => GeneratePdf()}
       >
         Generated Pdf</button>

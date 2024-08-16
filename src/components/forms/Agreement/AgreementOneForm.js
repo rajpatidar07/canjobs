@@ -4,7 +4,7 @@ import SignaturePadComponent from '../../common/Retaineragreement/SignaturePadCo
 import { AddUpdateAgreement, GetAgreement } from "../../../api/api"
 import useValidation from '../../common/useValidation';
 import { toast } from 'react-toastify';
-const AgreementOneForm = ({ folderId, user_id, openSignature, emp_user_type, show, close, userData, setApicall, felidData }) => {
+const AgreementOneForm = ({ GeneratePdf, folderId, user_id, openSignature, emp_user_type, show, close, userData, setApicall, felidData }) => {
   const [loading, setLoading] = useState(false);
   // USER CATEGORY TYPE VALIDATION
   // INITIAL STATE ASSIGNMENT
@@ -97,29 +97,29 @@ const AgreementOneForm = ({ folderId, user_id, openSignature, emp_user_type, sho
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        if (openSignature === "yes") {
+        // if (openSignature === "yes") {
           try {
             let res = await GetAgreement("", user_id, emp_user_type, felidData.type)
 
             /*FUnction to generate pdf after adding signature */
-            if (openSignature === "yes" && res.data.data[0].initial && res.data.data[0].signature_status === "1") {
-              const stateData = {
-                user_id: user_id,
-                emp_user_type: emp_user_type,
-                folderId: folderId,
-                felidData: res.data.data[0],
-              };
-              const newPageUrl = `/agreeone`
-              localStorage.setItem('agreementStateData', JSON.stringify(stateData));
-              // Open the new page in a new tab
-              setApicall(true)
-              close()
-              window.open(newPageUrl, '_blank')
-            }
+            // if (openSignature === "yes" && res.data.data[0].initial && res.data.data[0].signature_status === "1") {
+            const stateData = {
+              user_id: user_id,
+              emp_user_type: emp_user_type,
+              folderId: folderId,
+              felidData: res.data.data[0],
+            };
+            const newPageUrl = `/agreeone`
+            localStorage.setItem('agreementStateData', JSON.stringify(stateData));
+            // Open the new page in a new tab
+            setApicall(true)
+            close()
+            window.open(newPageUrl, '_blank')
+            // }
           } catch (error) {
             console.log(error)
           }
-        }
+        // }
         close()
         setApicall(true)
       }
@@ -179,9 +179,9 @@ const AgreementOneForm = ({ folderId, user_id, openSignature, emp_user_type, sho
                 { label: "Client's Telephone Number", name: "client_telephone", type: "number" },
                 { label: "Client's Cellphone Number", name: "client_cellphone", type: "number" },
                 { label: "Client's Fax Number", name: "client_fax", type: "number" },
-                // { label: "Date for Client", name: "date_signature_client", type: "date" },
-                // { label: "Date for RCIC", name: "date_signature_rcic", type: "date" },
-                // { label: "Authorization's Name", name: "authorizationName", type: "text" },
+                { label: "Date for Client", name: "date_signature_client", type: "date" },
+                { label: "Date for RCIC", name: "date_signature_rcic", type: "date" },
+                { label: "Authorization's Name", name: "authorizationName", type: "text" },
               ].map(({ label, name, type }) => (
                 <div className="form-group col-md-6 mb-0 mt-4" key={name}>
                   <label htmlFor={name} className="font-size-4 text-black-2 line-height-reset">
@@ -214,13 +214,13 @@ const AgreementOneForm = ({ folderId, user_id, openSignature, emp_user_type, sho
                 ))}
               </select>
             </div>
-            {/* <div className="form-group col-md-6 mb-0 mt-4">
+            <div className="form-group col-md-6 mb-0 mt-4">
               <SignaturePadComponent setState={setState} state={state} label="Signature of RCIC" name="rcic_signature" />
-            </div> */}
-            {/* <div className="form-group col-md-6 mb-0 mt-4">
+            </div>
+            <div className={localStorage.getItem("userType") === "admin" ? "d-none" : "form-group col-md-6 mb-0 mt-4"}>
               <SignaturePadComponent setState={setState} state={state} label="Client’s Signature" name="client_signature" />
-            </div> */}
-            <div className={openSignature === "yes" ? "form-group col-md-12 mb-0 mt-4" : "d-none"}>
+            </div>
+            <div className={localStorage.getItem("userType") === "admin" ? "d-none" : "form-group col-md-6 mb-0 mt-4"}>
               <SignaturePadComponent setState={setState} state={state} label="Initial" name="initial" />
             </div>
           </div>
