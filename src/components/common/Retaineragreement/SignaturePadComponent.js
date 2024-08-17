@@ -3,14 +3,23 @@ import React, { useEffect, useRef } from 'react';
 // import { useNavigate } from 'react-router-dom';
 import SignatureCanvas from 'react-signature-canvas';
 
-const SignaturePadComponent = ({ index, onSignature, setState, state, label, name }) => {
+const SignaturePadComponent = ({ index, onSignature, setState, state, label, name, signature }) => {
     const sigPad = useRef(null);
     // const [selectedImage, setSelectedImage] = useState(null);
     // let navigate = useNavigate();
 
     const clear = () => {
         sigPad.current.clear();
-        setState({ ...state, [name]: "" });
+        // setState({ ...state, [name]: "" });
+        setState((prevState) => {
+            if (Array.isArray(prevState.family_json)) {
+                const family_json = [...prevState.family_json];
+                family_json[index] = { ...family_json[index], [label]: "" };
+                return { ...prevState, family_json };
+            } else {
+                return { ...prevState, [label]: "" };
+            }
+        });
     };
 
     // const save = async () => {
@@ -31,7 +40,7 @@ const SignaturePadComponent = ({ index, onSignature, setState, state, label, nam
                     const ctx = sigPad.current.getCanvas().getContext("2d");
                     ctx.drawImage(img, 0, 0, sigPad.current.getCanvas().width, sigPad.current.getCanvas().height);
                     const signature = sigPad.current.getTrimmedCanvas().toDataURL('image/png');
-                    setState({ ...state, [name]: signature });
+                    setState({ ...state, [label]: signature });
                     // setSelectedImage(signature)
                     if (onSignature) onSignature(signature, index); // Call the onSignature callback with the signature
                 };
@@ -41,11 +50,22 @@ const SignaturePadComponent = ({ index, onSignature, setState, state, label, nam
         }
     };
     // useEffect(() => {
+    //     // Load existing signature onto the canvas if it exists
+    //     if (state && state[name]) {
+    //         const img = new Image();
+    //         img.onload = () => {
+    //             sigPad.current.clear();
+    //             const ctx = sigPad.current.getCanvas().getContext("2d");
+    //             ctx.drawImage(img, 0, 0, sigPad.current.getCanvas().width, sigPad.current.getCanvas().height);
+    //         };
+    //         img.src = state[name];
+    //     }
+
     //     const saveSignature = () => {
     //         if (sigPad.current) {
     //             const signature = sigPad.current.getTrimmedCanvas().toDataURL('image/png');
-    //             // console.log(signature);          
     //             setState({ ...state, [name]: signature });
+    //             if (onSignature) onSignature(signature, index); // Call the onSignature callback with the signature
     //         }
     //     };
 
@@ -57,7 +77,8 @@ const SignaturePadComponent = ({ index, onSignature, setState, state, label, nam
     //         canvas.removeEventListener('mouseup', saveSignature);
     //         canvas.removeEventListener('touchend', saveSignature);
     //     };
-    // }, [setState, state, name]);
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [setState, state, name, onSignature]);
     useEffect(() => {
         // Load existing signature onto the canvas if it exists
         if (state && state[name]) {
@@ -69,25 +90,25 @@ const SignaturePadComponent = ({ index, onSignature, setState, state, label, nam
             };
             img.src = state[name];
         }
-
-        const saveSignature = () => {
-            if (sigPad.current) {
-                const signature = sigPad.current.getTrimmedCanvas().toDataURL('image/png');
-                setState({ ...state, [name]: signature });
-                if (onSignature) onSignature(signature, index); // Call the onSignature callback with the signature
+        const handleBeforeUnload = (event) => {
+            if (!sigPad.current.isEmpty()) {
+                const signature = sigPad.current.toDataURL();
+                setState((prevState) => {
+                    if (Array.isArray(prevState.family_json)) {
+                        const family_json = [...prevState.family_json];
+                        family_json[index] = { ...family_json[index], [label]: signature };
+                        return { ...prevState, family_json };
+                    } else {
+                        return { ...prevState, [label]: signature };
+                    }
+                });
             }
         };
-
-        const canvas = sigPad.current.getCanvas();
-        canvas.addEventListener('mouseup', saveSignature);
-        canvas.addEventListener('touchend', saveSignature);
-
+        window.addEventListener('beforeunload', handleBeforeUnload);
         return () => {
-            canvas.removeEventListener('mouseup', saveSignature);
-            canvas.removeEventListener('touchend', saveSignature);
+            window.removeEventListener('beforeunload', handleBeforeUnload);
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [setState, state, name, onSignature]);
+    }, [index, label, setState]);
     return (
         // <>
         //     <div className="form-group">
@@ -157,7 +178,7 @@ const SignaturePadComponent = ({ index, onSignature, setState, state, label, nam
         //     </div>
         // </>
         <div className="form-group">
-            <label className="font-size-4 text-black-2 line-height-reset mb-3">{label}</label>
+            <label className="font-size-4 text-black-2 line-height-reset mb-3"></label>
 
             <div className="border border-dark mb-3 w-100" style={{ maxWidth: '300px' }}>
                 <SignatureCanvas

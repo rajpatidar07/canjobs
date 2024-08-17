@@ -893,7 +893,7 @@ import SignaturePadComponent from '../../common/Retaineragreement/SignaturePadCo
 import { AddUpdateAgreement, GetAgreement } from "../../../api/api";
 import useValidation from '../../common/useValidation';
 import { toast } from 'react-toastify';
-
+import { Modal } from "react-bootstrap"
 const Newpdf = ({
   folderId,
   user_id,
@@ -906,7 +906,7 @@ const Newpdf = ({
   felidData
 }) => {
   const [loading, setLoading] = useState(false);
-  let SigningUserType = localStorage.getItem("userType");
+  let SigningUserType = ""//localStorage.getItem("userType");
 
   const initialClientState = {
     client_first_name: "",
@@ -916,7 +916,7 @@ const Newpdf = ({
   };
 
   const initialFormState = {
-    type: "ppp",
+    type:"temporary resident visa",
     rcic_membership_no: "",
     matter: "",
     summary: "",
@@ -957,11 +957,11 @@ const Newpdf = ({
     client_cellphone: "",
     client_fax: "",
     client_address: "",
-    clients: [initialClientState]
+    family_json: [initialClientState]
   };
 
   const validators = {
-    clients: {
+    family_json: {
       validateClientEmail: (value) =>
         value === "" || value.trim() === "" ? "Client's Email is required" : /\S+@\S+\.\S+/.test(value) ? null : "Client's Email is invalid",
     },
@@ -969,41 +969,64 @@ const Newpdf = ({
 
   const { state, setState, onInputChange, errors } = useValidation(initialFormState, validators);
 
+  // useEffect(() => {
+  //   if (felidData) {
+  //     const updatedState = { ...initialFormState };
+  //     for (const key in felidData) {
+  //       if (felidData[key] !== null && felidData[key] !== undefined) {
+  //         updatedState[key] = felidData[key];
+  //       }
+  //     }
+  //     setState(updatedState);
+  //   } else {
+  //     setState(initialFormState);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [felidData]);
   useEffect(() => {
     if (felidData) {
       const updatedState = { ...initialFormState };
+  
+      // Parse the family_json field
+      if (felidData.family_json) {
+        try {
+          updatedState.family_json = JSON.parse(felidData.family_json);
+        } catch (error) {
+          console.error('Failed to parse family_json:', error);
+        }
+      }
+  
+      // Update the rest of the state with felidData
       for (const key in felidData) {
-        if (felidData[key] !== null && felidData[key] !== undefined) {
+        if (felidData[key] !== null && felidData[key] !== undefined && key !== 'family_json') {
           updatedState[key] = felidData[key];
         }
       }
+  
       setState(updatedState);
-    } else {
-      setState(initialFormState);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [felidData]);
-
+  
   const addClient = () => {
     setState((prevState) => ({
       ...prevState,
-      clients: [...prevState.clients, { ...initialClientState }]
+      family_json: [...prevState.family_json, { ...initialClientState }]
     }));
   };
 
   const removeClient = (index) => {
     setState((prevState) => ({
       ...prevState,
-      clients: prevState.clients.filter((_, i) => i !== index)
+      family_json: prevState.family_json.filter((_, i) => i !== index)
     }));
   };
 
   const handleClientChange = (index, event) => {
     const { name, value } = event.target;
     setState((prevState) => {
-      const clients = [...prevState.clients];
-      clients[index] = { ...clients[index], [name]: value };
-      return { ...prevState, clients };
+      const family_json = [...prevState.family_json];
+      family_json[index] = { ...family_json[index], [name]: value };
+      return { ...prevState, family_json };
     });
   };
 
@@ -1049,19 +1072,33 @@ const Newpdf = ({
     if (state.initial) {
       setState({ ...state, signature_status: "1", pdf_genrated_status: "1" });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.initial]);
 
   const handleSignature = (signature, clientIndex) => {
     const today = new Date().toISOString().split('T')[0];
     setState((prevState) => {
-      const clients = [...prevState.clients];
-      clients[clientIndex] = { ...clients[clientIndex], client_signature: signature, date_signature_client: today };
-      return { ...prevState, clients };
+      const family_json = [...prevState.family_json];
+      family_json[clientIndex] = { ...family_json[clientIndex], client_signature: signature, date_signature_client: today };
+      return { ...prevState, family_json };
     });
   };
 
   return (
+    <Modal
+    show={show}
+    size="lg"
+    aria-labelledby="contained-modal-title-vcenter"
+    centered
+  >
+    <button
+      type="button"
+      className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
+      data-dismiss="modal"
+      onClick={() => { close() }}
+    >
+      <i className="fas fa-times"></i>
+    </button>
     <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
       <form onSubmit={onFormSubmit}>
         <h5 className="text-center mb-7 pt-2">{openSignature === "yes" ? "Add Signature" : "Add Retainer Agreement Fields"}</h5>
@@ -1101,9 +1138,7 @@ const Newpdf = ({
               { label: "Client's Telephone Number", name: "client_telephone", type: "number" },
               { label: "Client's Cellphone Number", name: "client_cellphone", type: "number" },
               { label: "Client's Fax Number", name: "client_fax", type: "number" },
-              { label: "Client File Number", name: "client_file_no", type: "number" },
-              { label: "Agreement Creation Date", name: "agreement_date", type: "date" },
-            ]).map(({ label, name, type,index }) => (
+            ]).map(({ label, name, type, index }) => (
               <div className="form-group col-md-6 mb-0 mt-4" key={index}>
                 <label htmlFor={name} className="font-size-4 text-black-2 line-height-reset">
                   {label}
@@ -1121,10 +1156,8 @@ const Newpdf = ({
                 {errors[name] && <span className="text-danger font-size-3 mx-5">{errors[name]}</span>}
               </div>
             ))}
-
-
-          {/* Render client-specific fields */}
-          {state.clients.map((client, index) => (
+            {/* Render client-specific fields */}
+          {state.family_json.map((client, index) => (
             <>
               <div className="form-group col-md-6 mb-0 mt-4">
                 <label htmlFor={`client_first_name_${index}`} className="font-size-4 text-black-2 line-height-reset">
@@ -1159,46 +1192,53 @@ const Newpdf = ({
                   Client Signature
                 </label>
                 <SignaturePadComponent
-                  signature={client.client_signature}
+                  signature={state.family_json[index].client_signature}
                   onEnd={(signature) => handleSignature(signature, index)}
                   canvasProps={{ className: 'form-control mx-5 col' }}
+                  setState={setState}
+                  state={state}
+                  index={index}
+                  label={`client_signature_${index}`}
+                  name={`Client Signature`}
+                  onSignature={handleSignature}
                 />
               </div>
 
               {index > 0 && (
-            <div className="col-3 mt-2 d-flex justify-content-end">
-              <button
-                type="button"
-                className="btn btn-danger mb-4"
-                onClick={() => removeClient(index)}
-                title='Remove Client'
-              >
-                Remove Client
-              </button>
-            </div>
-          )}
+                <div className="col-3 mt-2 d-flex justify-content-end">
+                  <button
+                    type="button"
+                    className="btn btn-danger mb-4"
+                    onClick={() => removeClient(index)}
+                    title='Remove Client'
+                  >
+                    Remove Client
+                  </button>
+                </div>
+              )}
             </>
           ))}
-        <button
-          type="button"
-          className="btn btn-info mt-2"
-          onClick={addClient}
-          title='Add Client'
-        >
-        Add more client
-        </button>
+          <button
+            type="button"
+            className="btn btn-info mt-2"
+            onClick={addClient}
+            title='Add Client'
+          >
+            Add more client
+          </button>
         </div>
-<div className='text-center d-flex justify-content-center'>
-        <button
-          type="submit"
-          className="btn btn-primary mt-4"
-          disabled={loading}
-        >
-          {loading ? "Saving..." : "Save Agreement"}
-        </button>
+        <div className='text-center d-flex justify-content-center'>
+          <button
+            type="submit"
+            className="btn btn-primary mt-4"
+            disabled={loading}
+          >
+            {loading ? "Saving..." : "Save Agreement"}
+          </button>
         </div>
       </form>
     </div>
+    </Modal>
   );
 };
 
