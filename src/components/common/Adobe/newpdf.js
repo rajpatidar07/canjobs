@@ -913,10 +913,11 @@ const Newpdf = ({
     client_last_name: "",
     client_signature: "",
     date_signature_client: "",
+    client_date_of_birth:""
   };
 
   const initialFormState = {
-    type:"temporary resident visa",
+    type: "temporary resident visa",
     rcic_membership_no: "",
     matter: "",
     summary: "",
@@ -986,7 +987,7 @@ const Newpdf = ({
   useEffect(() => {
     if (felidData) {
       const updatedState = { ...initialFormState };
-  
+
       // Parse the family_json field
       if (felidData.family_json) {
         try {
@@ -995,18 +996,18 @@ const Newpdf = ({
           console.error('Failed to parse family_json:', error);
         }
       }
-  
+
       // Update the rest of the state with felidData
       for (const key in felidData) {
         if (felidData[key] !== null && felidData[key] !== undefined && key !== 'family_json') {
           updatedState[key] = felidData[key];
         }
       }
-  
+
       setState(updatedState);
     }
   }, [felidData]);
-  
+
   const addClient = () => {
     setState((prevState) => ({
       ...prevState,
@@ -1086,158 +1087,192 @@ const Newpdf = ({
 
   return (
     <Modal
-    show={show}
-    size="lg"
-    aria-labelledby="contained-modal-title-vcenter"
-    centered
-  >
-    <button
-      type="button"
-      className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
-      data-dismiss="modal"
-      onClick={() => { close() }}
+      show={show}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
     >
-      <i className="fas fa-times"></i>
-    </button>
-    <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
-      <form onSubmit={onFormSubmit}>
-        <h5 className="text-center mb-7 pt-2">{openSignature === "yes" ? "Add Signature" : "Add Retainer Agreement Fields"}</h5>
-        <div className="row">
-          {openSignature === "yes" ? null :
-            (SigningUserType === "admin" ? [
-              { label: "Client Address", name: "client_address", type: "text" },
-              { label: "Client Email", name: "client_email", type: "email" },
-              { label: "Client Contact No", name: "client_contact", type: "number" },
-              { label: "The Client asked the RCIC, and the RCIC has agreed, to act for the Client in the matter of", name: "matter", type: "text" },
-              { label: "Summary of preliminary advice given to the client", name: "summary", type: "text" },
-              { label: "Client's Family Name", name: "client_last_name", type: "text" },
-              { label: "Client's Telephone Number", name: "client_telephone", type: "number" },
-              { label: "Client's Cellphone Number", name: "client_cellphone", type: "number" },
-              { label: "Client's Fax Number", name: "client_fax", type: "number" },
-              { label: "Client File Number", name: "client_file_no", type: "number" },
-              { label: "Agreement Creation Date", name: "agreement_date", type: "date" },
-              { label: "Professional Fees", name: "professional_fees", type: "number" },
-              { label: "Courier charges", name: "courier_charges", type: "number" },
-              { label: "Administrative Fee", name: "administrative_fee", type: "number" },
-              { label: "Government fees", name: "government_fees", type: "number" },
-              { label: "Applicable Taxes", name: "application_fees", type: "number" },
-              { label: "Balance (Paid at time of filing)", name: "balance", type: "number" },
-              { label: "Total Cost", name: "total_cost", type: "number" },
-              { label: "Applicable Retainer Fee for this stage (Non-Refundable) for Step 1", name: "applicable_retainer_fee_stape_1", type: "number" },
-              { label: "Applicable Government Processing Fee for Step 1", name: "applicable_government_processing_fee_stape_1", type: "number" },
-              { label: "Applicable Retainer Fee for this stage (Non-Refundable) for Step 2", name: "applicable_retainer_fee_stape_2", type: "number" },
-              { label: "Total Amount: (Non-Refundable) (Paid at signing of contract and sharing of checklist)", name: "total_amount_signing_of_contract", type: "number" },
-              { label: "Balance (Non-Refundable) (Paid at time of filing)", name: "balance_paid_at_time_of_filing", type: "number" },
-            ] : [
-              { label: "Client Address", name: "client_address", type: "text" },
-              { label: "Client Email", name: "client_email", type: "email" },
-              { label: "Client Contact No", name: "client_contact", type: "number" },
-              { label: "The Client asked the RCIC, and the RCIC has agreed, to act for the Client in the matter of", name: "matter", type: "text" },
-              { label: "Summary of preliminary advice given to the client", name: "summary", type: "text" },
-              { label: "Client's Family Name", name: "client_last_name", type: "text" },
-              { label: "Client's Telephone Number", name: "client_telephone", type: "number" },
-              { label: "Client's Cellphone Number", name: "client_cellphone", type: "number" },
-              { label: "Client's Fax Number", name: "client_fax", type: "number" },
-            ]).map(({ label, name, type, index }) => (
-              <div className="form-group col-md-6 mb-0 mt-4" key={index}>
-                <label htmlFor={name} className="font-size-4 text-black-2 line-height-reset">
-                  {label}
-                </label>
-                <input
-                  type={type}
-                  className={`${errors[name] ? "border border-danger" : ""} form-control mx-5 col ${type === "date" ? "coustam_datepicker" : ""}`}
-                  value={state?.[name] || ""}
-                  onKeyDownCapture={type === "date" ? (e) => e.preventDefault() : null}
-                  onChange={onInputChange}
-                  placeholder={label}
-                  id={name}
-                  name={name}
-                />
-                {errors[name] && <span className="text-danger font-size-3 mx-5">{errors[name]}</span>}
-              </div>
-            ))}
-            {/* Render client-specific fields */}
-          {state.family_json.map((client, index) => (
-            <>
-              <div className="form-group col-md-6 mb-0 mt-4">
-                <label htmlFor={`client_first_name_${index}`} className="font-size-4 text-black-2 line-height-reset">
-                  Client's First Name
-                </label>
-                <input
-                  type="text"
-                  className="form-control mx-5 col"
-                  value={client.client_first_name}
-                  onChange={(e) => handleClientChange(index, e)}
-                  id={`client_first_name_${index}`}
-                  name="client_first_name"
-                  placeholder="Client's first name"
-                />
-              </div>
-              <div className="form-group col-md-6 mb-0 mt-4">
-                <label htmlFor={`client_last_name_${index}`} className="font-size-4 text-black-2 line-height-reset">
-                  Client's Last Name
-                </label>
-                <input
-                  type="text"
-                  className="form-control mx-5 col"
-                  value={client.client_last_name}
-                  onChange={(e) => handleClientChange(index, e)}
-                  id={`client_last_name_${index}`}
-                  name="client_last_name"
-                  placeholder="Client's last name"
-                />
-              </div>
-              <div className="form-group col-md-6 mb-0 mt-4">
-                <label htmlFor={`client_signature_${index}`} className="font-size-4 text-black-2 line-height-reset">
-                  Client Signature
-                </label>
-                <SignaturePadComponent
-                  signature={state.family_json[index].client_signature}
-                  onEnd={(signature) => handleSignature(signature, index)}
-                  canvasProps={{ className: 'form-control mx-5 col' }}
-                  setState={setState}
-                  state={state}
-                  index={index}
-                  label={`client_signature_${index}`}
-                  name={`Client Signature`}
-                  onSignature={handleSignature}
-                />
-              </div>
-
-              {index > 0 && (
-                <div className="col-3 mt-2 d-flex justify-content-end">
-                  <button
-                    type="button"
-                    className="btn btn-danger mb-4"
-                    onClick={() => removeClient(index)}
-                    title='Remove Client'
-                  >
-                    Remove Client
-                  </button>
+      <button
+        type="button"
+        className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
+        data-dismiss="modal"
+        onClick={() => { close() }}
+      >
+        <i className="fas fa-times"></i>
+      </button>
+      <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
+        <form onSubmit={onFormSubmit}>
+          <h5 className="text-center mb-7 pt-2">{openSignature === "yes" ? "Add Signature" : "Add Retainer Agreement Fields"}</h5>
+          <div className="row">
+            {openSignature === "yes" ? null :
+              (SigningUserType === "admin" ? [
+                { label: "Client Address", name: "client_address", type: "text" },
+                { label: "Client Email", name: "client_email", type: "email" },
+                { label: "Client Contact No", name: "client_contact", type: "number" },
+                { label: "The Client asked the RCIC, and the RCIC has agreed, to act for the Client in the matter of", name: "matter", type: "text" },
+                { label: "Summary of preliminary advice given to the client", name: "summary", type: "text" },
+                { label: "Client's Family Name", name: "client_last_name", type: "text" },
+                { label: "Client's Telephone Number", name: "client_telephone", type: "number" },
+                { label: "Client's Cellphone Number", name: "client_cellphone", type: "number" },
+                { label: "Client's Fax Number", name: "client_fax", type: "number" },
+                { label: "Client File Number", name: "client_file_no", type: "number" },
+                { label: "Agreement Creation Date", name: "agreement_date", type: "date" },
+                { label: "Professional Fees", name: "professional_fees", type: "number" },
+                { label: "Courier charges", name: "courier_charges", type: "number" },
+                { label: "Administrative Fee", name: "administrative_fee", type: "number" },
+                { label: "Government fees", name: "government_fees", type: "number" },
+                { label: "Applicable Taxes", name: "application_fees", type: "number" },
+                { label: "Balance (Paid at time of filing)", name: "balance", type: "number" },
+                { label: "Total Cost", name: "total_cost", type: "number" },
+                { label: "Applicable Retainer Fee for this stage (Non-Refundable) for Step 1", name: "applicable_retainer_fee_stape_1", type: "number" },
+                { label: "Applicable Government Processing Fee for Step 1", name: "applicable_government_processing_fee_stape_1", type: "number" },
+                { label: "Applicable Retainer Fee for this stage (Non-Refundable) for Step 2", name: "applicable_retainer_fee_stape_2", type: "number" },
+                { label: "Total Amount: (Non-Refundable) (Paid at signing of contract and sharing of checklist)", name: "total_amount_signing_of_contract", type: "number" },
+                { label: "Balance (Non-Refundable) (Paid at time of filing)", name: "balance_paid_at_time_of_filing", type: "number" },
+              ] : [
+                { label: "Client Address", name: "client_address", type: "text" },
+                { label: "Client Email", name: "client_email", type: "email" },
+                { label: "Client Contact No", name: "client_contact", type: "number" },
+                { label: "The Client asked the RCIC, and the RCIC has agreed, to act for the Client in the matter of", name: "matter", type: "text" },
+                { label: "Summary of preliminary advice given to the client", name: "summary", type: "text" },
+                { label: "Client's Family Name", name: "client_last_name", type: "text" },
+                { label: "Client's Telephone Number", name: "client_telephone", type: "number" },
+                { label: "Client's Cellphone Number", name: "client_cellphone", type: "number" },
+                { label: "Client's Fax Number", name: "client_fax", type: "number" },
+              ]).map(({ label, name, type, index }) => (
+                <div className="form-group col-md-6 mb-0 mt-4" key={index}>
+                  <label htmlFor={name} className="font-size-4 text-black-2 line-height-reset">
+                    {label}
+                  </label>
+                  <input
+                    type={type}
+                    className={`${errors[name] ? "border border-danger" : ""} form-control mx-5 col ${type === "date" ? "coustam_datepicker" : ""}`}
+                    value={state?.[name] || ""}
+                    onKeyDownCapture={type === "date" ? (e) => e.preventDefault() : null}
+                    onChange={onInputChange}
+                    placeholder={label}
+                    id={name}
+                    name={name}
+                  />
+                  {errors[name] && <span className="text-danger font-size-3 mx-5">{errors[name]}</span>}
                 </div>
-              )}
-            </>
-          ))}
-          <button
-            type="button"
-            className="btn btn-info mt-2"
-            onClick={addClient}
-            title='Add Client'
-          >
-            Add more client
-          </button>
-        </div>
-        <div className='text-center d-flex justify-content-center'>
-          <button
-            type="submit"
-            className="btn btn-primary mt-4"
-            disabled={loading}
-          >
-            {loading ? "Saving..." : "Save Agreement"}
-          </button>
-        </div>
-      </form>
-    </div>
+              ))}
+            {/* Render client-specific fields */}
+            {state.family_json.map((client, index) => (
+              <>
+                <div className="form-group col-md-6 mb-0 mt-4">
+                  <label htmlFor={`client_first_name_${index}`} className="font-size-4 text-black-2 line-height-reset">
+                    Client's First Name
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control mx-5 col"
+                    value={client.client_first_name}
+                    onChange={(e) => handleClientChange(index, e)}
+                    id={`client_first_name_${index}`}
+                    name="client_first_name"
+                    placeholder="Client's first name"
+                  />
+                </div>
+                <div className="form-group col-md-6 mb-0 mt-4">
+                  <label htmlFor={`client_last_name_${index}`} className="font-size-4 text-black-2 line-height-reset">
+                    Client's Last Name
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control mx-5 col"
+                    value={client.client_last_name}
+                    onChange={(e) => handleClientChange(index, e)}
+                    id={`client_last_name_${index}`}
+                    name="client_last_name"
+                    placeholder="Client's last name"
+                  />
+                </div>
+                <div className="form-group col-md-6 mb-0 mt-4">
+                  <label htmlFor={`client_last_name_${index}`} className="font-size-4 text-black-2 line-height-reset">
+                    Client's Date of Birth
+                  </label>
+                  <input
+                    type="date"
+                    className="coustam_datepicker form-control mx-5 col"
+                    value={client.client_last_name}
+                    onChange={(e) => handleClientChange(index, e)}
+                    onKeyDownCapture={(e) => e.preventDefault()}
+                    id={`client_date_of_birth_${index}`}
+                    name="client_date_of_birth"
+                    placeholder="Client's DOB"
+                  />
+                </div>
+                <div className="form-group col-md-6 mb-0 mt-4">
+                  <SignaturePadComponent
+                    signature={state.family_json[index].client_signature}
+                    onEnd={(signature) => handleSignature(signature, index)}
+                    canvasProps={{ className: 'form-control mx-5 col' }}
+                    setState={setState}
+                    state={state}
+                    index={index}
+                    label={`client_signature`}
+                    name={`Client Signature`}
+                    onSignature={handleSignature}
+                  />
+                </div>
+
+                {index > 0 && (
+                  <div className="col-3 mt-2 d-flex justify-content-end">
+                    <button
+                      type="button"
+                      className="btn btn-danger mb-4"
+                      onClick={() => removeClient(index)}
+                      title='Remove Client'
+                    >
+                      Remove Client
+                    </button>
+                  </div>
+                )}
+              </>
+            ))}
+            <div className={SigningUserType === "admin" ? "form-group col-md-6 mb-0 mt-4": "d-none" }>
+              <SignaturePadComponent
+                onEnd={(signature) => handleSignature(signature)}
+                canvasProps={{ className: 'form-control mx-5 col' }}
+                setState={setState}
+                state={state}
+                label={`rcic_signature`}
+                name={`RCIC Signature`}
+                onSignature={handleSignature} />
+            </div>
+            <div className="form-group col-md-6 mb-0 mt-4">
+              <SignaturePadComponent
+                onEnd={(signature) => handleSignature(signature)}
+                canvasProps={{ className: 'form-control mx-5 col' }}
+                setState={setState}
+                state={state}
+                label={`initial`}
+                name={`Initial`}
+                onSignature={handleSignature} />
+            </div>
+            <div className='d-flex justify-content-center'>
+              <button
+                type="button"
+                className="btn btn-info mt-2"
+                onClick={addClient}
+                title='Add Client'
+              >
+                Add more client
+              </button>
+            </div>
+          </div>
+          <div className='text-center d-flex justify-content-center'>
+            <button
+              type="submit"
+              className="btn btn-primary mt-4"
+              disabled={loading}
+            >
+              {loading ? "Saving..." : "Save Agreement"}
+            </button>
+          </div>
+        </form>
+      </div>
     </Modal>
   );
 };

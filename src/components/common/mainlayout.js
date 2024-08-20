@@ -117,6 +117,7 @@ function MainLayout() {
         <Route path="/resetpassword/:id" element={<ResetPassword />} />
         <Route exact path="/linkedin" component={LinkedInCallback} />
         <Route exact path="/signagreement" element={<UserSigningPage/>} />
+        <Route path="/agreeone" element={<AgreementOne />} />
         {/* <Route path="*" element={<NotFound userType={userType}/>} /> */}
         {(userType === "user" && (token !== "" ||
           token !== null ||
@@ -210,7 +211,7 @@ function MainLayout() {
             <Route path="/followup" element={<Followup />} />
             <Route path="/partner" element={<Agent />} />
             <Route path="/partner_dashboard" element={<PartnerDashboard />} />
-            <Route path="/agreeone" element={<AgreementOne />} />
+            
             <Route path="/agreepreivew" element={<HtmlAgreementOne />} />
             <Route path="/addsign" element={<SignaturePadComponent />} />
             <Route path="/assigned_admin" element={<AsiignedAdmin />} />

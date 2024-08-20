@@ -18,9 +18,9 @@ export default function UserSigningPage() {
     let document_id = data.get("documentId")
     let type= data.get("type")
     //http://localhost:3000/signagreement?id=1175&user=employee&folderId=01PMN6UKWBNI553364NFDZFRZKZUYIGV65&documentId=01PMN6UKUQQSVK67PIZRH2FJHBCTIETUEB
-    console.log( user_id,
-        emp_user_type,
-        folderId)
+    // console.log( user_id,
+    //     emp_user_type,
+    //     folderId)
         
     const GetAgreementPdf = async (data) => {
         setLoader(true)
@@ -36,7 +36,7 @@ export default function UserSigningPage() {
             } else {
               setFelidData([])
             }
-            if (res.data.status === 1) {
+             if (res.data.status === 1) {
                 setLoader(false);
                 if (res.data.data.find((item) => item.id === document_id)) {
                     setPdf(res.data.data.find((item) => item.id === document_id))

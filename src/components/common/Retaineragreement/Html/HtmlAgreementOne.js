@@ -14,6 +14,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
   //   return html;
   // };
   // JSX structure with potential tag replacements
+  const familyJsonArray = felidData.family_json ? JSON.parse(felidData.family_json) : [];
   const jsxContent = (
     `<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -54,17 +55,15 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
         (the “RCIC”), RCIC Membership Number <span>R533393</span>, phone number
         <span>4038885308</span>
         , email <a href="mailto:info@canpathways.ca" class="a" target="_blank">info@canpathways.ca located at 2618 </a>
-        <span>Hopewell Pl NE #310 Calgary, AB T1Y 7J7,</span> <span>Canada</span> and Client  <span class="para_gap">${(felidData && (felidData.client_first_name || felidData.client_last_name) ? ((felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}</span>(the “Client”)<span class="p">, located at  <span class="para_gap"> ${felidData && felidData.client_address ? (felidData.client_address) : emp_user_type === "employer" ? (userData?.address || "") : (((userData?.current_location || "") || "") + " " + ((userData?.currently_located_country || "") || ""))}</span> </span> , email  <span class="para_gap">${felidData && felidData.client_email ? felidData.client_email : (userData?.email || "")}</span>, contact number  <span class="para_gap"> ${felidData && felidData.client_contact ? felidData.client_contact : (userData?.contact_no || "")}</span>.
+        <span>Hopewell Pl NE #310 Calgary, AB T1Y 7J7,</span> <span>Canada</span> and Client  <span class="para_gap text-capitalize">${(felidData && (familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name) ? ((familyJsonArray[0]?.client_first_name + " " + (familyJsonArray[0]?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}</span>(the “Client”)<span class="p">, located at  <span class="para_gap"> ${felidData && felidData.client_address ? (felidData.client_address) : emp_user_type === "employer" ? (userData?.address || "") : (((userData?.current_location || "") || "") + " " + ((userData?.currently_located_country || "") || ""))}</span> </span> , email  <span class="para_gap">${felidData && felidData.client_email ? felidData.client_email : (userData?.email || "")}</span>, contact number  <span class="para_gap"> ${felidData && felidData.client_contact ? felidData.client_contact : (userData?.contact_no || "")}</span>.
       </p>
       <div>
       <p>Details of Applicant's and dependents to added in this application</p>
       <div>
       <p>
-      <span>Principal Applicant <span class="para_gap"> </span> Date of birth <span class="para_gap"> </span> </span>
-      <span>Name of Spouse  <span class="para_gap"> </span> Date of birth <span class="para_gap"> </span> </span>
-      <span>Name of Dependent Child  <span class="para_gap"> </span> Date of birth <span class="para_gap"> </span> </span>
-      <span>Name of Dependent Child  <span class="para_gap"> </span> Date of birth <span class="para_gap"> </span> </span>
-      <span>Additional Dependent Child name  <span class="para_gap"> </span> Date of birth <span class="para_gap"> </span> </span>
+      ${(familyJsonArray || []).map((item, index) => (
+      `<span key=${index}>Client Name ${index + 1}: <span class="para_gap text-capitalize">${item.client_first_name + " " + item.client_last_name} </span> Date of birth <span class="para_gap">${item.client_date_of_birth} </span> </span>`
+    ))}
       </p>
       </div>
       </div>
@@ -998,8 +997,8 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
       </ol>
       <p>Client Name</p>
       <p>
-        Given Name :  <span class="para_gap">${(felidData && felidData.client_first_name ? felidData?.client_first_name : (emp_user_type === "employee" ? (userData?.name || "") : (userData?.company_name || ""))?.split(" ")[0])} </span>Family Name :
-         <span class="para_gap">${(felidData.client_last_name ? felidData?.client_last_name : " ") ?? (emp_user_type === "employee" ? (userData?.name || "") : (userData?.company_name || ""))?.split(" ")[1]} </span>
+        Given Name :  <span class="para_gap">${(felidData && familyJsonArray[0]?.client_first_name ? familyJsonArray[0]?.client_first_name : (emp_user_type === "employee" ? (userData?.name || "") : (userData?.company_name || ""))?.split(" ")[0])} </span>Family Name :
+         <span class="para_gap">${(familyJsonArray[0]?.client_last_name ? familyJsonArray[0]?.client_last_name : " ") ?? (emp_user_type === "employee" ? (userData?.name || "") : (userData?.company_name || ""))?.split(" ")[1]} </span>
         Address :  <span class="para_gap">${felidData && felidData.client_address ? felidData.client_address : emp_user_type === "employer" ? (userData?.address || "") : ((userData?.current_location || "") + " " + (userData?.currently_located_country || ""))} </span> Telephone Number :  <span class="para_gap">${felidData && felidData.client_contact ? felidData.client_contact : (userData?.contact_no || "")}
         </span
         >Cellphone Number :
@@ -1028,75 +1027,63 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
         hereto on the date first above written.
       </p>
       <br /><br />
-      <div style="display: flex; flex-wrap: wrap">
-        <div style="width: 50%">
- <p class="para_gap" style="margin: 0">
-           <img
-          src=${felidData.client_signature ? felidData?.client_signature : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"}
-          alt=${(felidData && (felidData.client_first_name || felidData.client_last_name) ? ((felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}
-          style="max-width: 200px; float: right"
-          class=${felidData.client_signature ? "d-block" : "d-none"}
-        />        </p>  
-          <p style="margin: 0 0 30px 0">Signature of Client</p>
+<div style="display: flex; flex-wrap: wrap">
+    <!-- Client Signature -->
+    ${(familyJsonArray || []).map((item, index) => (
+      `<div style="width: 50%">
+            <p class="para_gap" style="margin: 0">
+                <img
+                    src="${item.client_signature ? item.client_signature : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s'}"
+                    alt="${item.client_first_name + " " + item.client_last_name}"
+                    style="max-width: 200px; float: right;"
+                    class="${item.client_signature ? 'd-block' : 'd-none'}"
+                />
+            </p>
+            <p style="margin: 0 0 30px 0">Signature of Client</p>
         </div>
         <div style="width: 50%">
-          <p class="para_gap" style="margin: 0">
-          <span style="max-width: 200px; float: right"></span>
-          </p>  
-          <p style="margin: 0 0 30px 0">Signature of Spouse</p>
-        </div>
-         <div style="width: 50%">
-          <p class="para_gap" style="margin: 0">
-         <span style="max-width: 200px;"> ${(felidData && (felidData.client_first_name || felidData.client_last_name) ? ((felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}
-         </span></p>
-          <p style="margin: 0 0 30px 0">Name of Client</p>
-        </div>
-         <div style="width: 50%">
-          <p class="para_gap" style="margin: 0"> 
-          <span style="max-width: 200px;"></span></p>
-          <p style="margin: 0 0 30px 0">Name of Spouse</p>
-        </div>
-            <div style="width: 50%">
-          <p class="para_gap" style="margin: 0">
-          <span style="max-width: 200px; float: right"></span>
-          </p>
-          <p style="margin: 0 0 30px 0">Signature of Dependent Child over 18 years of age</p>
+            <p class="para_gap text-capitalize" style="margin: 0">
+                <span style="max-width: 200px;">${item.client_first_name + " " + item.client_last_name}</span>
+            </p>
+            <p style="margin: 0 0 30px 0">Name of Client</p>
         </div>
         <div style="width: 50%">
-          <p class="para_gap" style="margin: 0">
-           <img
-          src=${felidData.rcic_signature ? felidData?.rcic_signature : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"}
-          alt="RCIC"
-          style="max-width: 200px; float: right"
-          class=${felidData.rcic_signature ? "d-block" : "d-none"}
-        />
-          </p>
-          <p style="margin: 0 0 30px 0">Signature of RCIC</p>
-        </div>
-       <div style="width: 50%">
-          <p class="para_gap" style="margin: 0" >
-          <span style="max-width: 200px;"> </span></p>
-          <p style="margin: 0 0 30px 0">Name of Dependent Child over 18 years of age</p>
-        </div>
-        <div style="width: 50%">
-          <p class="para_gap" style="margin: 0" ><span style="max-width: 200px;">Harpreet Kaur</span></p>
-          <p style="margin: 0 0 30px 0">Name of RCIC</p>
-        </div>
-        <div style="width: 50%">
-          <p class="para_gap" style="margin: 0"><span style="max-width: 200px;">
-          ${!felidData.date_signature_client || felidData.date_signature_client === "0000-00-00" ? "" : felidData?.date_signature_client}</span></p>
-          <p style="margin: 0 0 30px 0">Date</p>
-        </div>
-        <div style="width: 50%">
-          <p class="para_gap" style="margin: 0"><span style="max-width: 200px;">
-          ${!felidData.date_signature_rcic || felidData.date_signature_rcic === "0000-00-00" ? "" : felidData?.date_signature_rcic}</span></p>
-          <p style="margin: 0 0 30px 0">Date</p>
-        </div>
-      </div>
+            <p class="para_gap" style="margin: 0">
+                <span style="max-width: 200px;">${item.date_signature_client || ''}</span>
+            </p>
+            <p style="margin: 0 0 30px 0">Date</p>
+        </div>`
+    ))}
+
+    <!-- RCIC Signature -->
+    <div style="width: 50%">
+        <p class="para_gap" style="margin: 0">
+            <img
+                src="${felidData.rcic_signature ? felidData.rcic_signature : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s'}"
+                alt="RCIC"
+                style="max-width: 200px; float: right;"
+                class="${felidData.rcic_signature ? 'd-block' : 'd-none'}"
+            />
+        </p>
+        <p style="margin: 0 0 30px 0">Signature of RCIC</p>
+    </div>
+    <div style="width: 50%">
+        <p class="para_gap" style="margin: 0">
+            <span style="max-width: 200px;">Harpreet Kaur</span>
+        </p>
+        <p style="margin: 0 0 30px 0">Name of RCIC</p>
+    </div>
+    <div style="width: 50%">
+        <p class="para_gap" style="margin: 0">
+            <span class=${felidData.date_signature_rcic === "0000-00-00" ? "d-none" : ""} style="max-width: 200px;">${felidData.date_signature_rcic || ''}</span>
+        </p>
+        <p style="margin: 0 0 30px 0">Date</p>
+    </div>
+</div>
 
       <h3 style="text-align: center">AUTHORIZATION</h3>
       <p>
-        I  <span class="para_gap">${(felidData && (felidData.client_first_name || felidData.client_last_name) ? ((felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}</span>( here in after referred to as the “client”),
+        I  <span class="para_gap">${(felidData && (familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name) ? ((familyJsonArray[0]?.client_first_name + " " + (familyJsonArray[0]?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}</span>( here in after referred to as the “client”),
         hereby authorize and appoint Harpreet kaur (hereinafter referred to as
         the “RCIC” with a CICC# R533393), of CAN Pathways Immigration
         consultancy ltd.,(hereinafter referred to as the “firm”), to represent
@@ -1210,22 +1197,22 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
       <br /><br />
       <div style="display: flex; flex-wrap: wrap">
         <div style="width: 33.33%; text-align: center">
-          <p class="para_gap" style="margin: 0">${(felidData && (felidData.client_first_name || felidData.client_last_name) ? ((felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}</p>
+          <p class="para_gap" style="margin: 0">${(felidData && (familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name) ? ((familyJsonArray[0]?.client_first_name + " " + (familyJsonArray[0]?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}</p>
           <p style="margin: 0 0 30px 0">Client’s full name</p>
         </div>
         <div style="width: 33.33%; text-align: center">
           <p class="para_gap" style="margin: 0">
            <img
-          src=${felidData.client_signature ? felidData?.client_signature : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"}
-          alt=${(felidData && (felidData.client_first_name || felidData.client_last_name) ? ((felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}
+          src=${familyJsonArray[0]?.client_signature ? familyJsonArray[0]?.client_signature : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"}
+          alt=${(felidData && (familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name) ? ((familyJsonArray[0]?.client_first_name + " " + (familyJsonArray[0]?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}
           style="max-width: 200px; float: right"
-          class=${felidData.client_signature ? "d-block" : "d-none"}
+          class=${familyJsonArray[0]?.client_signature ? "d-block" : "d-none"}
         />
           </p>
           <p style="margin: 0 0 30px 0">Signatures</p>
         </div>
         <div style="width: 33.33%; text-align: center">
-          <p class="para_gap" style="margin: 0">${!felidData.date_signature_client || felidData.date_signature_client === "0000-00-00" ? "" : felidData.date_signature_client}</p>
+          <p class="para_gap" style="margin: 0">${!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client === "0000-00-00" ? "" : familyJsonArray[0]?.date_signature_client}</p>
           <p style="margin: 0 0 30px 0">Date</p>
         </div>
       </div>
@@ -1249,7 +1236,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
          <p class="para_gap" style="margin: 0">
         <img
           src=${felidData.initial ? felidData?.initial : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"}
-          alt="${(felidData && (felidData.client_first_name || felidData.client_last_name) ? ((felidData?.client_first_name + " " + (felidData?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}"
+          alt="${(felidData && (familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name) ? ((familyJsonArray[0]?.client_first_name + " " + (familyJsonArray[0]?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}"
           style="max-width: 200px; float: right"
           class=${felidData.initial ? "d-block" : "d-none"}
         />

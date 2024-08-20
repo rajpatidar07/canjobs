@@ -279,7 +279,7 @@ export default function RetauberAgreementList({
                                                             <IoMdMail />
                                                         </button>
                                                         <button
-                                                            className="btn btn-outline-info action_btn"
+                                                            className="btn btn-outline-info action_btn d-none"
                                                             onClick={() => {
                                                                 setOpenSignfPspdfkit(true)
                                                                 setAgreementData(data)

@@ -108,6 +108,7 @@ const AgreementOneForm = ({  folderId, user_id, openSignature, emp_user_type, sh
               emp_user_type: emp_user_type,
               folderId: folderId,
               felidData: res.data.data[0],
+              family_json: JSON.parse(res.data.data[0].family_json),
             };
             const newPageUrl = `/agreeone`
             localStorage.setItem('agreementStateData', JSON.stringify(stateData));
@@ -134,6 +135,14 @@ const AgreementOneForm = ({  folderId, user_id, openSignature, emp_user_type, sh
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.initial])
+  const handleSignature = (signature, clientIndex) => {
+    const today = new Date().toISOString().split('T')[0];
+    setState((prevState) => {
+      const family_json = [...prevState.family_json];
+      family_json[clientIndex] = { ...family_json[clientIndex], client_signature: signature, date_signature_client: today };
+      return { ...prevState, family_json };
+    });
+  };
   return (
     <Modal
       show={show}
@@ -215,14 +224,30 @@ const AgreementOneForm = ({  folderId, user_id, openSignature, emp_user_type, sh
               </select>
             </div>
             <div className="form-group col-md-6 mb-0 mt-4">
-              <SignaturePadComponent setState={setState} state={state} label="Signature of RCIC" name="rcic_signature" />
+              <SignaturePadComponent 
+               onEnd={(signature) => handleSignature(signature)}
+               canvasProps={{ className: 'form-control mx-5 col' }}
+               setState={setState}
+               state={state}
+               label={`rcic_signature`}
+               name={`RCIC Signature`}
+               onSignature={handleSignature}/>
             </div>
-            <div className={localStorage.getItem("userType") === "admin" ? "d-none" : "form-group col-md-6 mb-0 mt-4"}>
-              <SignaturePadComponent setState={setState} state={state} label="Client’s Signature" name="client_signature" />
+            {/* <div className={localStorage.getItem("userType") === "admin" ? "d-none" : "form-group col-md-6 mb-0 mt-4"}>
+              <SignaturePadComponent 
+                signature={state.client_signature}
+                onEnd={(signature) => handleSignature(signature)}
+                canvasProps={{ className: 'form-control mx-5 col' }}
+                setState={setState}
+                state={state}
+                label={`client_signature`}
+                name={`Client Signature`}
+                onSignature={handleSignature} />
+                
             </div>
             <div className={localStorage.getItem("userType") === "admin" ? "d-none" : "form-group col-md-6 mb-0 mt-4"}>
               <SignaturePadComponent setState={setState} state={state} label="Initial" name="initial" />
-            </div>
+            </div> */}
           </div>
           <div className="form-group text-center">
             {loading ? (

@@ -22,7 +22,10 @@ const AggrementOne = () => {
     user_id,
     emp_user_type,
     folderId: folderID /*, code*/,
+    family_json
   } = JSON.parse(data) || {};
+  // const familyJsonArray = felidData?.family_json ? JSON.parse(felidData.family_json) : [];
+console.log(family_json)
   // const latestCode = JSON.stringify(code)
   //   .replace('" <', "<")
   //   .replace('>"', ">")
@@ -250,7 +253,7 @@ const AggrementOne = () => {
             .
           </Text>
         </View>
-        <View style={{ marginTop: 15 }}>
+        {/* <View style={{ marginTop: 15 }}>
           <Text style={{ marginBottom: 5 }}>Details of Applicant's and dependents to added in this application</Text>
           <View>
             <View>
@@ -274,7 +277,28 @@ const AggrementOne = () => {
               </Text>
             </View>
           </View>
-        </View>
+        </View> */}
+        {/* <View style={{ marginTop: 15 }}>
+      <Text style={{ marginBottom: 5 }}>
+        Details of Applicant's and dependents to be added in this application
+      </Text>
+      <View>
+        {((felidData.family_json) || []).map((item, index) => (
+          <View key={index}>
+            <Text>
+              {`Client Name ${index + 1}: `}
+              <Text style={styles.textunderline}>
+                {item.client_first_name + " " + item.client_last_name}
+              </Text>
+              {` Date of birth `}
+              <Text style={styles.textunderline}>
+                {item.client_date_of_birth}
+              </Text>
+            </Text>
+          </View>
+        ))}
+      </View>
+    </View> */}
         <View>
           <Text style={{ marginTop: 15 }}>
             WHEREAS the RCIC and the Client wish to enter into a written
