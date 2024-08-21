@@ -12,6 +12,8 @@ import { RiDeleteBin5Line } from 'react-icons/ri';
 import SAlert from '../sweetAlert';
 import { toast } from 'react-toastify';
 import Newpdf from '../Adobe/newpdf';
+import { TiHtml5 } from "react-icons/ti";
+import { GrTableAdd } from "react-icons/gr";
 export default function RetauberAgreementList({
     user_id,
     emp_user_type,
@@ -243,7 +245,8 @@ export default function RetauberAgreementList({
                                                                 // });
                                                             }}
                                                             title=" Update doc"
-                                                        >                                          Update doc
+                                                        >                            
+                                                                     <TiHtml5 />
                                                         </button>
                                                         <button
                                                             className="btn btn-outline-info action_btn "
@@ -253,7 +256,7 @@ export default function RetauberAgreementList({
                                                                 setAgreementData(data)
                                                             }}
                                                             title="Add Felids"
-                                                        >                                         Add Felids
+                                                        >                                         <GrTableAdd />
                                                         </button>
                                                         <button
                                                             className="btn btn-outline-info action_btn "
