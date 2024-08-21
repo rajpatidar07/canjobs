@@ -22,10 +22,8 @@ const AggrementOne = () => {
     user_id,
     emp_user_type,
     folderId: folderID /*, code*/,
-    family_json
   } = JSON.parse(data) || {};
-  // const familyJsonArray = felidData?.family_json ? JSON.parse(felidData.family_json) : [];
-console.log(family_json)
+  const familyJsonArray = felidData?.family_json ? JSON.parse(felidData.family_json) : [];
   // const latestCode = JSON.stringify(code)
   //   .replace('" <', "<")
   //   .replace('>"', ">")
@@ -135,7 +133,7 @@ console.log(family_json)
           `${felidData?.type.replace(" ", "_")}.pdf`,
           { type: "application/pdf" }
         );
-        console.log('file = >', file)
+        // console.log('file = >', file)
         try {
           let res = await AddSharePointDOcument(
             user_id,
@@ -232,7 +230,7 @@ console.log(family_json)
             <Text style={styles.textunderline}> Canada</Text> and Client
             <Text style={styles.textunderline} className="para_gap">
 
-              {felidData.client_first_name + " " + felidData.client_last_name}
+              {familyJsonArray[0].client_first_name + " " + familyJsonArray[0].client_last_name}
             </Text>
             (the “Client”)
             <Text className="p">, located at</Text>
@@ -278,27 +276,27 @@ console.log(family_json)
             </View>
           </View>
         </View> */}
-        {/* <View style={{ marginTop: 15 }}>
-      <Text style={{ marginBottom: 5 }}>
-        Details of Applicant's and dependents to be added in this application
-      </Text>
-      <View>
-        {((felidData.family_json) || []).map((item, index) => (
-          <View key={index}>
-            <Text>
-              {`Client Name ${index + 1}: `}
-              <Text style={styles.textunderline}>
-                {item.client_first_name + " " + item.client_last_name}
-              </Text>
-              {` Date of birth `}
-              <Text style={styles.textunderline}>
-                {item.client_date_of_birth}
-              </Text>
-            </Text>
+        <View style={{ marginTop: 15 }}>
+          <Text style={{ marginBottom: 5 }}>
+            Details of Applicant's and dependents to be added in this application
+          </Text>
+          <View>
+            {(familyJsonArray || []).map((item, index) => (
+              <View key={index}>
+                <Text>
+                  {`${index + 1}.  Client Name : `}
+                  <Text style={styles.textunderline}>
+                    {item.client_first_name + " " + item.client_last_name}
+                  </Text>
+                  {` Date of birth `}
+                  <Text style={styles.textunderline}>
+                  {moment(item.client_date_of_birth).format("DD-MM-YYYY")}
+                  </Text>
+                </Text>
+              </View>
+            ))}
           </View>
-        ))}
-      </View>
-    </View> */}
+        </View>
         <View>
           <Text style={{ marginTop: 15 }}>
             WHEREAS the RCIC and the Client wish to enter into a written
@@ -1344,7 +1342,7 @@ console.log(family_json)
                   <Text>
                     Given Name:
                     <Text style={styles.textunderline} className="para_gap">
-                      {felidData.client_first_name || "_______________"}
+                      {familyJsonArray[0].client_first_name || "_______________"}
                     </Text>
                   </Text>
                 </View>
@@ -1352,7 +1350,7 @@ console.log(family_json)
                   <Text>
                     Family Name:
                     <Text style={styles.textunderline} className="para_gap">
-                      {felidData.client_last_name || "_______________"}
+                      {familyJsonArray[0].client_last_name || "_______________"}
                     </Text>
                   </Text>
                 </View>
@@ -1465,17 +1463,17 @@ console.log(family_json)
               IN WITNESS THEREOF this Agreement has been duly executed by the
               parties hereto on the date first above written.
             </Text>
-            <View style={{ display: "flex", flexDirection: "column", width: "100%", marginTop: 15 }}>
+            {/* <View style={{ display: "flex", flexDirection: "column", width: "100%", marginTop: 15 }}>
               <View style={styles.clientForm}>
                 <View style={styles.clientFormChild}>
-                  {felidData.client_signature ?
+                  {familyJsonArray[0].client_signature ?
                     <Image
                       src={
-                        felidData.client_signature
-                          ? felidData.client_signature
+                        familyJsonArray[0].client_signature
+                          ? familyJsonArray[0].client_signature
                           : ""
                       }
-                      alt={felidData.client_first_name + " " + felidData.client_last_name}
+                      alt={familyJsonArray[0].client_first_name + " " + familyJsonArray[0].client_last_name}
 
                       style={{ width: "60%", height: "auto" }}
                     /> : <Text>___________________</Text>}
@@ -1493,8 +1491,8 @@ console.log(family_json)
                   <Text
                     style={[{ margin: 0, marginBottom: 5, maxWidth: 200 }, styles.textunderline]}
                   >
-                    {felidData.client_first_name && felidData.client_last_name ? (felidData && (felidData.client_first_name || felidData.client_last_name)
-                      ? felidData.client_first_name + " " + felidData.client_last_name
+                    {familyJsonArray[0].client_first_name && familyJsonArray[0].client_last_name ? (felidData && (familyJsonArray[0].client_first_name || familyJsonArray[0].client_last_name)
+                      ? familyJsonArray[0].client_first_name + " " + familyJsonArray[0].client_last_name
                       : "")
                       : "___________________"}
                   </Text>
@@ -1570,7 +1568,66 @@ console.log(family_json)
                   <Text style={{ margin: "0 0 30px 0" }}>Date</Text>
                 </View>
               </View>
+            </View> */}
+            <View style={{ flexDirection: "row", flexWrap: "wrap", marginBottom: 20 }}>
+              {/* Mapping over the familyJsonArray to create the Client Signature section */}
+              {(familyJsonArray || []).map((item, index) => (
+                <React.Fragment key={index}>
+                  {/* Client Signature */}
+                  <View style={{ width: "50%", padding: 10 }}>
+                    {item.client_signature ? (
+                      <Image
+                        source={{ uri: item.client_signature }}
+                        alt={`${item.client_first_name} ${item.client_last_name}`}
+                        style={{ width: "30%", height: "auto" }}
+                      />
+                    ) : (
+                      <Text>___________________</Text>
+                    )}
+                    <Text>Signature of Client {index+1}</Text>
+                  </View>
+
+                  {/* Client Name */}
+                  <View style={{ width: "50%", padding: 10 }}>
+                    <Text style={[{ textTransform: "capitalize", marginBottom: 5 }, styles.textunderline]}>
+                      {item.client_first_name && item.client_last_name
+                        ? `${item.client_first_name} ${item.client_last_name}`
+                        : "_________________"}
+                    </Text>
+                    <Text >Name of Client {index+1}</Text>
+                    <Text style={[{ marginTop: 2 }, styles.textunderline]}>
+                      {item.date_signature_client === "0000-00-00" ? "________________" : moment(item.date_signature_client).format("DD-MM-YYYY")}
+                    </Text>
+                    <Text >Date</Text>
+                  </View>
+                </React.Fragment>
+              ))}
+
+              {/* RCIC Signature */}
+              <View style={{ width: "50%", padding: 10 }}>
+                {felidData.rcic_signature ? (
+                  <Image
+                    source={{ uri: felidData.rcic_signature }}
+                    alt="RCIC"
+                    style={{ width: "30%", height: "auto" }} />
+                ) : (
+                  <Text>___________________</Text>
+                )}
+                <Text>Signature of RCIC</Text>
+              </View>
+              {/* RCIC Name */}
+              <View style={{ width: "50%", padding: 10 }}>
+                <Text style={[{ textTransform: "capitalize", marginBottom: 5 }, styles.textunderline]}>
+                  Harpreet Kaur
+                </Text>
+                <Text >Name of Client</Text>
+                <Text style={[{ marginTop: 2 }, styles.textunderline]}>
+                  {felidData.date_signature_rcic === "0000-00-00" ? "________________" : moment(felidData.date_signature_rcic).format("DD-MM-YYYY")}
+                </Text>
+                <Text >Date</Text>
+              </View>
             </View>
+
           </View>
         </View>
         <View>
@@ -1580,20 +1637,7 @@ console.log(family_json)
           <Text style={{ marginTop: 5 }}>
             I
             <Text style={styles.textunderline} className="para_gap">
-              {felidData.client_first_name && felidData.client_last_name
-                ? felidData.client_first_name + " " + felidData.client_last_name
-                : "_______________"}
-            </Text>
-            ( hereinafter referred to as the “client”), hereby authorize and
-            appoint Harpreet kaur (hereinafter referred to as the “RCIC” with a
-            CICC# R533393), of CAN Pathways Immigration consultancy
-            ltd.,(hereinafter referred to as the “firm”), to represent me in my
-            application to IRCC.
-          </Text>
-          <Text style={{ marginTop: 5 }}>
-            I
-            <Text style={styles.textunderline} className="para_gap">
-              {felidData.client_first_name + " " + felidData.client_last_name}
+              {familyJsonArray[0].client_first_name + " " + familyJsonArray[0].client_last_name}
             </Text>
             ( hereinafter referred to as the “client”), hereby authorize and
             appoint Harpreet kaur (hereinafter referred to as the “RCIC” with a
@@ -1709,36 +1753,36 @@ console.log(family_json)
             <View style={[styles.clientForm, { textAlign: "center" }]}>
               <View style={styles.clientFormChild}>
                 <Text className="para_gap" style={{ margin: 0, textDecoration: "underline" }}>
-                  {felidData.client_first_name && felidData.client_last_name
-                    ? felidData.client_first_name +
+                  {familyJsonArray[0].client_first_name && familyJsonArray[0].client_last_name
+                    ? familyJsonArray[0].client_first_name +
                     " " +
-                    felidData.client_last_name
+                    familyJsonArray[0].client_last_name
                     : "_______________"}
                 </Text>
-                <Text style={{ margin: "0 0 30px 0" }}>Client’s full name</Text>
+                <Text style={{ margin: "10px 0 30px 0" }}>Client’s full name</Text>
               </View>
-              <View style={styles.clientFormChild}>
-                {felidData.client_signature ?
+              <View style={[styles.clientFormChild,{alignSelf:"center"}]}>
+                {familyJsonArray[0].client_signature ?
                   <Image
                     src={
-                      felidData.client_signature
-                        ? felidData.client_signature
+                      familyJsonArray[0].client_signature
+                        ? familyJsonArray[0].client_signature
                         : ""
                     }
-                    alt={felidData.client_first_name + " " + felidData.client_last_name}
+                    alt={familyJsonArray[0].client_first_name + " " + familyJsonArray[0].client_last_name}
 
-                    style={{ width: "60%", height: "auto" }}
+                    style={{ width: "40%", height: "auto" ,alignSelf:"center"}}
                   /> : <Text>___________________</Text>}
-                <Text style={{ margin: "0 0 30px 0" }}>Signatures</Text>
+                <Text style={{ margin: "10px 0 30px 0" }}>Signatures</Text>
               </View>
               <View style={styles.clientFormChild}>
                 <Text className="para_gap" style={{ margin: 0, textDecoration: "underline" }}>
-                  {!felidData.date_signature_client ||
-                    felidData.date_signature_client === "0000-00-00"
+                  {!familyJsonArray[0].date_signature_client ||
+                    familyJsonArray[0].date_signature_client === "0000-00-00"
                     ? "____________"
-                    : felidData.date_signature_client}
+                    : moment(familyJsonArray[0].date_signature_client).format("DD-MM-YYYY")}
                 </Text>
-                <Text style={{ margin: "0 0 30px 0" }}>Date</Text>
+                <Text style={{ margin: "10px 0 30px 0" }}>Date</Text>
               </View>
             </View>
           </View>

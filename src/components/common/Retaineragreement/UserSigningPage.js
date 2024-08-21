@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import AdobePDFViewer from '../Adobe/adobeFile'
 import { GetAgreement, getSharePointParticularFolders } from '../../../api/api'
-import { useLocation, useSearchParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import AgreementOneForm from '../../forms/Agreement/AgreementOneForm'
-import Newpdf from '../Adobe/newpdf'
+import Loader from '../loader'
 export default function UserSigningPage() {
     const [loader, setLoader] = useState(false)
     const [pdf, setPdf] = useState(false)
@@ -61,7 +61,9 @@ export default function UserSigningPage() {
     }, [apicall])
     return (
         <div className='d-flex p-5'>
-            <div className='col-10'>
+           {loader?
+           <Loader/>
+           : <div className='col-10'>
                 <AdobePDFViewer
                     url={pdf["@microsoft.graph.downloadUrl"]}
                     data={pdf}
@@ -73,13 +75,14 @@ export default function UserSigningPage() {
                     partnerList={[]}
                     setCommentsList={[]}
                     userType={""}
-                /></div>
+                />
+                </div>}
             <div className='col-4'>
               <button title='Add Flied' className='btn btn-primary'
               onClick={()=>setOpenAddFeildsModal(true)}> Add Flied's</button>
             </div>
             {openAddFeildsModal ?
-        <Newpdf
+        <AgreementOneForm
           show={openAddFeildsModal}
           close={() => setOpenAddFeildsModal()}
         //   userData={userData}

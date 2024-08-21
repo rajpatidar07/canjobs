@@ -277,7 +277,7 @@ const SignaturePadComponent = ({ index, onSignature, setState, state, label, nam
                             return { ...prevState, [label]: signature };
                         }
                     });
-                    if (onSignature) onSignature(signature, index);
+                    if (onSignature) onSignature(signature, index, label);
                 };
                 img.src = e.target.result;
             };
@@ -309,7 +309,7 @@ const SignaturePadComponent = ({ index, onSignature, setState, state, label, nam
                         return { ...prevState, [label]: signature };
                     }
                 });
-                if (onSignature) onSignature(signature, index);
+                if (onSignature) onSignature(signature, index, label);
             }
         };
 
