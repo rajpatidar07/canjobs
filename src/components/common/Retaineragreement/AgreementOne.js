@@ -391,7 +391,7 @@ const AggrementOne = () => {
               3. Client Responsibilities and Commitments
             </Text>
             <View>
-              <Text style={{ marginTop: 5 }}>
+              <Text style={{ marginTop: 10 }}>
                 3.1 The Client must provide, upon request from the RCIC:
               </Text>
               <View style={{ marginLeft: 18 }}>
@@ -401,7 +401,7 @@ const AggrementOne = () => {
                   or French translation
                 </Text>
               </View>
-              <Text style={{ marginTop: 5 }}>
+              <Text style={{ marginTop: 10 }}>
                 3.2 The Client understands that he/she must be accurate and
                 honest in the information he/she provides and that any
                 misrepresentations or omissions may void this Agreement, or
@@ -412,38 +412,38 @@ const AggrementOne = () => {
                 false material information. The Client’s financial obligations
                 remain.
               </Text>
-              <Text style={{ marginTop: 5 }}>
+              <Text style={{ marginTop: 10 }}>
                 3.3 Client is informed that RCIC might obtain assistance from
                 other professionals or services.
               </Text>
-              <Text style={{ marginTop: 5 }}>
+              <Text style={{ marginTop: 10 }}>
                 3.4 Client understands that RCIC should not be held responsible
                 for visa outcome as RCIC cannot guarantee the decision of IRCC.
                 If IRCC policy or rules changes before/during or after the
                 application submission and client deemed ineligible, RCIC should
                 not be held responsible for that.
               </Text>
-              <Text style={{ marginTop: 5 }}>
+              <Text style={{ marginTop: 10 }}>
                 3.5 In the event Immigration, Refugees and Citizenship Canada
                 (IRCC) or Employment and Social Development Canada (ESDC) or
                 Provincial Government Administrator or processing Visa Office
                 should contact the Client directly, the Client is instructed to
                 notify the RCIC immediately.
               </Text>
-              <Text style={{ marginTop: 5 }}>
+              <Text style={{ marginTop: 10 }}>
                 3.6 The Client is to immediately advise the RCIC of any change
                 in the marital, family, or civil status or change of physical
                 address or contact information for any person included in the
                 application.
               </Text>
-              <Text style={{ marginTop: 5 }}>
+              <Text style={{ marginTop: 10 }}>
                 3.7 In the event of a Joint Retainer Agreement, the Clients
                 agree that the RCIC must share information among all clients, as
                 required. Furthermore, if a conflict develops that cannot be
                 resolved, the RCIC cannot continue to act for both or all of the
                 Clients and may have to withdraw completely from representation.
               </Text>
-              <Text style={{ marginTop: 5 }}>
+              <Text style={{ marginTop: 10 }}>
                 3.8 All necessary information and documentation in English or
                 French, or with an English or French translation, if in any
                 other language, with a certified English translation, according
@@ -459,17 +459,17 @@ const AggrementOne = () => {
                 paid by client and if there is any unused money with RCIC, it
                 should be refunded to client if applicable.
               </Text>
-              <Text style={{ marginTop: 5 }}>
+              <Text style={{ marginTop: 10 }}>
                 3.9 Client has been explained by RCIC and is aware of high
                 chances of application refusal due to weak case and other
                 reasons as explained. Client still agrees to go ahead with the
                 application.
               </Text>
-              <Text style={{ marginTop: 5 }}>
+              <Text style={{ marginTop: 10 }}>
                 3.10 The client also allows the RCIC to use of digital
                 signatures for the purpose of this application on his/her behalf
               </Text>
-              <Text style={{ marginTop: 5 }}>
+              <Text style={{ marginTop: 10 }}>
                 3.11 Mode of communication should be email provided by client in
                 this retainer only, for all the correspondence between RCIC and
                 client and RCIC should be given minimum 7 working days to revert
@@ -478,7 +478,7 @@ const AggrementOne = () => {
                 sent by RCIC and did not communicate with RCIC in given timeline
                 or within 15 days of sent email.
               </Text>
-              <Text style={{ marginTop: 5 }}>
+              <Text style={{ marginTop: 10 }}>
                 3.12 Once client provide all the documents required as per
                 checklist, RCIC should be given minimum 3 weeks’ time from the
                 time all documents are reviewed by RCIC and deemed complete, to
@@ -565,8 +565,8 @@ const AggrementOne = () => {
                       ]}
                     >
                       <Text>
-                        {parseInt(felidData.courier_charges) +
-                          parseInt(felidData.government_fees)}
+                        {(felidData.courier_charges&&felidData.government_fee)?parseInt(felidData.courier_charges) +
+                          parseInt(felidData.government_fees):""}
                       </Text>
                     </View>
                   </View>
@@ -647,11 +647,13 @@ const AggrementOne = () => {
                 </View>
               </View>
               <View style={styles.row}>
-                <View style={styles.cell}>
+                <View style={[styles.cell,{height:"280px"}]}>
                   <Text>
+                  <Text style={{ marginTop: 10 }}>
                     Step 1 Completes upon signing the retainer and sharing the
                     checklists and intake sheet with client. Data gathering and
                     Creating Express Entry Profile
+                  </Text>
                   </Text>
                 </View>
                 <View style={styles.cell}>
@@ -673,7 +675,7 @@ const AggrementOne = () => {
               </View>
               <View style={styles.row}>
                 <View style={styles.cell}>
-                  <Text style={{ marginTop: 2 }}>
+                  <Text style={{ marginTop: 10 }}>
                     Step 2 Application preparation, filling out the forms,
                     information verification and completeness check, preparing
                     the application package Payment is due before final
@@ -855,7 +857,7 @@ const AggrementOne = () => {
                     </Text>
                   </View>
                   <View data-list-text="o">
-                    <Text style={{ marginTop: 5 }}>
+                    <Text style={{ marginTop: 10 }}>
                       <Text style={{ fontWeight: "bold" }}>o Paypal:</Text>
                       Instructions will be shared, additional up to
                       <Text style={{ fontWeight: "bold" }}> 5%</Text>
@@ -895,14 +897,14 @@ const AggrementOne = () => {
             >
               7. Refund Policy
             </Text>
-            <Text style={{ marginTop: 5 }}>
+            <Text style={{ marginTop: 10 }}>
               The Client acknowledges that the granting of a visa or status and
               the time required for processing this application is at the sole
               discretion of the government of Canada (or Government Authorities)
               and not the RCIC. Furthermore, the Client acknowledges that fees
               are not refundable in the event of an application refusal.
             </Text>
-            <Text style={{ marginTop: 5 }}>
+            <Text style={{ marginTop: 10 }}>
               If, however, the RCIC or professional staff do not complete the
               tasks identified under section 2 of this Agreement, the RCIC will
               refund part or all of the professional fees collected. The Client
@@ -959,12 +961,12 @@ const AggrementOne = () => {
               </Text>
               and in the following manner:
             </Text>
-            <Text>Cheque</Text>
+            <Text style={{marginTop:5}}>Cheque</Text>
             {/*<Text style={styles.textunderline}></Text>*/}
             <Text>
               [describe the manner of refund, including method and timeframe]
             </Text>
-            <Text style={{ marginTop: 5 }}>
+            <Text style={{ marginTop: 10 }}>
               There shall be no refund due if the application is not submitted,
               refused, returned, or cannot proceed due to reasons relating to
               government policy, a change in the selection criteria,
@@ -979,23 +981,23 @@ const AggrementOne = () => {
             </Text>
             <Text>The RCIC will provide invoices, which include:</Text>
             <View id="l9">
-              <View style={{ marginTop: 2 }} data-list-text="">
+              <View style={{ marginTop: 10 }} data-list-text="">
                 <Text>• the name and address of the Client,</Text>
               </View>
-              <View style={{ marginTop: 2 }} data-list-text="•">
+              <View style={{ marginTop: 10 }} data-list-text="•">
                 <Text>• a list of services rendered,</Text>
               </View>
-              <View style={{ marginTop: 2 }} data-list-text="•">
+              <View style={{ marginTop: 10 }} data-list-text="•">
                 <Text>• the date(s) the services were rendered, and</Text>
               </View>
-              <View style={{ marginTop: 2 }} data-list-text="•">
+              <View style={{ marginTop: 10 }} data-list-text="•">
                 <Text>
                   • the total fees and applicable taxes payable to the Member
                   for the services rendered.
                 </Text>
               </View>
             </View>
-            <View style={{ marginTop: 5 }}>
+            <View style={{ marginTop: 10 }}>
               Invoices must be provided to the Client in accordance with the
               payment terms and conditions, found in section 2 of this Retainer
               Agreement. Additionally, upon the RCIC withdrawing or being
@@ -1009,19 +1011,19 @@ const AggrementOne = () => {
             <Text style={[{ fontWeight: 600 }, styles.definition]}>
               9. Dispute Resolution Related to the Code of Professional Ethics
             </Text>
-            <Text style={{ marginTop: 5 }}>
+            <Text style={{ marginTop: 10 }}>
               In the event of a dispute related to the Professional Services
               provided by the RCIC, the Client and RCIC are to make every
               reasonable effort to resolve the matter between the two parties.
               In the event a resolution cannot be reached, the Client is to
               present the complaint in writing to the RCIC and allow the RCIC
             </Text>
-            <Text style={{ marginTop: 5 }}>
+            <Text style={{ marginTop: 10 }}>
               <Text style={styles.textunderline}>30</Text> days to respond to
               the Client. In the event the dispute is still unresolved, the
               Client may follow the complaint and discipline procedure outlined
               by the Council on their
-              <Text className="s17" style={{ marginTop: 2 }}>
+              <Text className="s17" style={{ marginTop: 10 }}>
                 website:
               </Text>
               <Link src="http://www.iccrc-crcic.ca/" target="_blank">
@@ -1032,11 +1034,11 @@ const AggrementOne = () => {
               </Link>
             </Text>
             <View style={{ marginTop: 8 }}>ICCRC Contact Information:</View>
-            <View style={{ marginTop: 2 }}>
+            <View style={{ marginTop: 10 }}>
               Immigration Consultants of Canada Regulatory Council (ICCRC) 5500
               North Service Rd., Suite 1002
             </View>
-            <Text style={{ marginTop: 2 }}>
+            <Text style={{ marginTop: 10 }}>
               Burlington, ON, L7L 6W6 Toll-free: 1-877-836-7543
             </Text>
           </View>
@@ -1044,7 +1046,7 @@ const AggrementOne = () => {
             <Text style={[{ fontWeight: 600 }, styles.definition]}>
               10. Confidentiality
             </Text>
-            <Text style={{ marginTop: 5 }}>
+            <Text style={{ marginTop: 10 }}>
               All information and documentation reviewed by the RCIC, required
               by IRCC and all other governing bodies, and used for the
               preparation of the application will not be divulged to any third
@@ -1061,7 +1063,7 @@ const AggrementOne = () => {
               best efforts to maintain a high degree of security for electronic
               communication and information storage.
             </Text>
-            <Text style={{ marginTop: 5 }}>
+            <Text style={{ marginTop: 10 }}>
               The client must file a written authorization with the RCIC, naming
               the person if client wishes another person or family member to be
               able to access information on a file.
@@ -1071,7 +1073,7 @@ const AggrementOne = () => {
             <Text style={[{ fontWeight: 600 }, styles.definition]}>
               11. Unplanned RCIC Absence
             </Text>
-            <Text style={{ marginTop: 2 }}>
+            <Text style={{ marginTop: 10 }}>
               In the event the Client is unable to contact the RCIC and has
               reason to believe the RCIC may be dead, incapacitated, or
               otherwise unable to fulfill his/her duties, the Client should
@@ -1082,7 +1084,7 @@ const AggrementOne = () => {
             <Text style={[{ fontWeight: 600 }, styles.definition]}>
               12. Force Majeure
             </Text>
-            <Text style={{ marginTop: 2 }}>
+            <Text style={{ marginTop: 10 }}>
               The RCIC’s failure to perform any term of this Retainer Agreement,
               as a result of conditions beyond his/her control such as, but not
               limited to, governmental restrictions or subsequent legislation,
@@ -1093,7 +1095,7 @@ const AggrementOne = () => {
           <View data-list-text="13.">
             <Text style={[styles.definition]}>13. Change Policy</Text>
 
-            <Text style={{ marginTop: 2 }}>
+            <Text style={{ marginTop: 10 }}>
               The Client acknowledges that if the RCIC is asked to act on the
               Client’s behalf on matters other than those outlined above in the
               scope of this Agreement, or because of a material change in the
@@ -1104,7 +1106,7 @@ const AggrementOne = () => {
               accordingly.
             </Text>
 
-            <Text style={{ marginTop: 2 }}>
+            <Text style={{ marginTop:15 }}>
               This Agreement may only be altered or amended when such changes
               are made in writing and executed by the parties hereto. All
               changes and/or edits must be initialed and dated by both the
@@ -1117,13 +1119,13 @@ const AggrementOne = () => {
               14. Termination
             </Text>
             <View id="l10">
-              <View data-list-text="14.1" style={{ marginTop: 2 }}>
+              <View data-list-text="14.1" style={{ marginTop: 10 }}>
                 <Text>
                   14.1 This Agreement is considered terminated upon completion
                   of tasks identified under section 2 of this agreement.
                 </Text>
               </View>
-              <View data-list-text="14.2" style={{ marginTop: 2 }}>
+              <View data-list-text="14.2" style={{ marginTop: 10 }}>
                 <Text>
                   14.2 This Agreement is considered terminated if material
                   changes occur to the Client’s application or eligibility,
@@ -1138,7 +1140,7 @@ const AggrementOne = () => {
               15. Discharge or Withdrawal of Representation
             </Text>
             <View id="l11">
-              <View data-list-text="15.1" style={{ marginTop: 2 }}>
+              <View data-list-text="15.1" style={{ marginTop: 10 }}>
                 <Text>
                   15.2 The Client may discharge representation and terminate
                   this Agreement, upon writing, at which time any outstanding or
@@ -1147,7 +1149,7 @@ const AggrementOne = () => {
                   be paid by the Client to the RCIC.
                 </Text>
               </View>
-              <View data-list-text="15.2" style={{ marginTop: 2 }}>
+              <View data-list-text="15.2" style={{ marginTop: 10 }}>
                 <Text>
                   15.2 Pursuant to Article 11 of the
                   <Text style={styles.textunderline}>
@@ -1161,7 +1163,7 @@ const AggrementOne = () => {
                   be paid by the Client to the RCIC.
                 </Text>
               </View>
-              <View data-list-text="15.3" style={{ marginTop: 2 }}>
+              <View data-list-text="15.3" style={{ marginTop: 10 }}>
                 <Text>
                   15.3 At the time of withdrawal or discharge, the RCIC must
                   provide the Client with an invoice detailing all services that
@@ -1175,7 +1177,7 @@ const AggrementOne = () => {
             <Text style={[{ fontWeight: 600 }, styles.definition]}>
               16. Governing Law
             </Text>
-            <Text style={{ marginTop: 2 }}>
+            <Text style={{ marginTop: 10 }}>
               This Agreement shall be governed by the laws in effect in the
               Province/Territory of Alberta, and the federal laws of Canada
               applicable therein and except for disputes pursuant to Section 9
@@ -1188,7 +1190,7 @@ const AggrementOne = () => {
             <Text style={[{ fontWeight: 600 }, styles.definition]}>
               17. Amendments to the Service Agreement
             </Text>
-            <Text style={{ marginTop: 2 }}>
+            <Text style={{ marginTop: 10 }}>
               This service agreement may only be altered or amended when such
               changes are made in writing with the consent of both parties,
               signed and dated by the RCIC and the client
@@ -1199,28 +1201,28 @@ const AggrementOne = () => {
               18. Miscellaneous
             </Text>
             <View id="l12">
-              <Text style={{ marginTop: 2 }}>
+              <Text style={{ marginTop: 10 }}>
                 18.1 The Client expressly authorizes the RCIC to act on his/her
                 behalf to the extent of the specific functions which the RCIC
                 was retained to perform, as per Section 2 hereof.
               </Text>
-              <Text style={{ marginTop: 2 }}>
+              <Text style={{ marginTop: 10 }}>
                 18.2 This Agreement constitutes the entire agreement between the
                 parties with respect to the subject matter hereof and supersedes
                 all prior agreements, understandings, warranties,
                 representations, negotiations and discussions, whether oral or
                 written, of the parties except as specifically set forth herein.
               </Text>
-              <Text style={{ marginTop: 2 }}>
+              <Text style={{ marginTop: 10 }}>
                 18.3 This Agreement shall be binding upon the parties hereto and
                 their respective heirs, administrators, successors and permitted
                 assigns.
               </Text>
-              <Text style={{ marginTop: 2 }}>
+              <Text style={{ marginTop: 10 }}>
                 18.4 The Costs enumerated in this Agreement are to be paid by
                 the Client.
               </Text>
-              <Text style={{ marginTop: 2 }}>
+              <Text style={{ marginTop: 10 }}>
                 18.5 This Agreement may only be altered or amended when such
                 changes are made in writing and executed by the parties hereto.
                 All changes and/or edits must be initialed and dated by both the
@@ -1228,41 +1230,41 @@ const AggrementOne = () => {
                 may require that the parties enter into a new Retainer
                 Agreement.
               </Text>
-              <Text style={{ marginTop: 2 }}>
-                15.6 The Client may, after a Retainer Agreement is signed,
+              <Text style={{ marginTop: 10 }}>
+                18.6 The Client may, after a Retainer Agreement is signed,
                 appoint a Designate to act on their behalf when dealing with the
                 RCIC. A Designate must not be compensated by the Client or the
                 RCIC for acting in the capacity of a Designate.
               </Text>
-              <Text style={{ marginTop: 2 }}>
+              <Text style={{ marginTop: 10 }}>
                 18.7 The provisions of this Agreement shall be deemed severable.
                 If any provision of this Agreement shall be held unenforceable
                 by any court of competent jurisdiction, such provision shall be
                 severed from this Agreement, and the remaining provisions shall
                 remain in full force and effect.
               </Text>
-              <Text style={{ marginTop: 2 }}>
+              <Text style={{ marginTop: 10 }}>
                 18.8 The headings utilized in this Agreement are for convenience
                 only and are not to be construed in any way as additions to or
                 limitations of the covenants and agreements contained in this
                 Agreement.
               </Text>
-              <Text style={{ marginTop: 2 }}>
+              <Text style={{ marginTop: 10 }}>
                 18.9 Each of the parties hereto must do and execute or cause to
                 be done or executed all such further and other
               </Text>
-              <Text style={{ marginTop: 2 }}>
+              <Text style={{ marginTop: 10 }}>
                 things, acts, deeds, documents and assurances as may be
                 necessary or reasonably required to carry out the intent and
                 purpose of this Agreement fully and effectively.
               </Text>
-              <Text style={{ marginTop: 2 }}>
+              <Text style={{ marginTop: 10 }}>
                 18.10 The Client acknowledges that he/she has had sufficient
                 time to review this Agreement and has been given an opportunity
                 to obtain independent legal advice and translation prior to the
                 execution and delivery of this Agreement.
               </Text>
-              <Text style={{ marginTop: 2 }}>
+              <Text style={{ marginTop: 10}}>
                 18.11 In the event the Client did not seek independent legal
                 advice prior to signing this Agreement, he/she did so
                 voluntarily without any undue pressure and agrees that the
@@ -1270,12 +1272,12 @@ const AggrementOne = () => {
                 defense to the enforcement of obligations created by this
                 Agreement.
               </Text>
-              <Text style={{ marginTop: 2 }}>
+              <Text style={{ marginTop: 10 }}>
                 18.12 Furthermore, the Client acknowledges that he/she has
                 received a copy of this Agreement and agrees to be bound by its
                 terms.
               </Text>
-              <Text style={{ marginTop: 2 }}>
+              <Text style={{ marginTop: 10 }}>
                 18.13 The Client acknowledges that RCIC is not responsible if
                 application was submitted on time as per IRCC before midnight
                 UTC but submission confirmation from IRCC received next day in
@@ -1283,12 +1285,12 @@ const AggrementOne = () => {
                 implication including but not limited to missing deadline,
                 status expiry due to this IRCC online system error.
               </Text>
-              <Text style={{ marginTop: 2 }}>
+              <Text style={{ marginTop: 10 }}>
                 18.14 The client is aware that IRCC processing time and
                 approvals are not in RCIC’s control and timeline frames provided
                 to the client is according to IRCC’s website.
               </Text>
-              <Text style={{ marginTop: 2 }}>
+              <Text style={{ marginTop: 10 }}>
                 18.15 The Client acknowledges that he/she has requested that the
                 Agreement be written in the English language and that English is
                 the binding language.
@@ -1595,7 +1597,7 @@ const AggrementOne = () => {
                         : "_________________"}
                     </Text>
                     <Text >Name of Client {index + 1}</Text>
-                    <Text style={[{ marginTop: 2 }, styles.textunderline]}>
+                    <Text style={[{ marginTop: 10 }, styles.textunderline]}>
                       {(!item.date_signature_client || item.date_signature_client === "0000-00-00") ? "________________" : moment(item.date_signature_client).format("DD-MM-YYYY")}
                     </Text>
                     <Text >Date</Text>
@@ -1617,11 +1619,11 @@ const AggrementOne = () => {
               </View>
               {/* RCIC Name */}
               <View style={{ width: "50%", padding: 10 }}>
-                <Text style={[{ textTransform: "capitalize", marginBottom: 5 }, styles.textunderline]}>
+                <Text style={[{ textTransform: "capitalize", marginBottom: 10 }, styles.textunderline]}>
                   Harpreet Kaur
                 </Text>
                 <Text >Name of Client</Text>
-                <Text style={[{ marginTop: 2 }, styles.textunderline]}>
+                <Text style={[{ marginTop: 10 }, styles.textunderline]}>
                   {felidData.date_signature_rcic === "0000-00-00" ? "________________" : moment(felidData.date_signature_rcic).format("DD-MM-YYYY")}
                 </Text>
                 <Text >Date</Text>
@@ -1630,11 +1632,11 @@ const AggrementOne = () => {
 
           </View>
         </View>
-        <View>
-          <Text style={[{ textAlign: "center" }, styles.definition]}>
+        <View style={{marginTop:25}}>
+          <Text style={[{ textAlign: "center", }, styles.definition]}>
             AUTHORIZATION
           </Text>
-          <Text style={{ marginTop: 5 }}>
+          <Text style={{ marginTop: 10 }}>
 
             <Text style={styles.textunderline} className="para_gap">
             I {familyJsonArray[0].client_first_name + " " + familyJsonArray[0].client_last_name}
@@ -1645,57 +1647,57 @@ const AggrementOne = () => {
             ltd.,(hereinafter referred to as the “firm”), to represent me in my
             application to IRCC.
           </Text>
-          <Text style={{ marginTop: 5 }}>
+          <Text style={{ marginTop: 10 }}>
             The RCIC and the firm are authorized to assign any of its staff
             members, associates, affiliates, lawyers or the agents to process
             any matters in whole or part related to above- mentioned subject as
             they deem appropriate.
           </Text>
-          <Text style={{ marginTop: 5 }}>
+          <Text style={{ marginTop: 10 }}>
             The RCIC and the firm are authorized to collect information and
             communicate with IRCC related to my immigration file. In case of
             Online application, I authorize RCIC Harpreet kaur to electronically
             sign and submit the application on my behalf.
           </Text>
-          <Text style={{ marginTop: 5 }}>
+          <Text style={{ marginTop: 10 }}>
             I also give permission to the RCIC and the firm to post photos on
             social media ensuring that my private information is redacted.
           </Text>
-          <Text style={{ marginTop: 5 }}>
+          <Text style={{ marginTop: 10 }}>
             In doing so, they my each receive or pay each other any pecuniary
             remuneration/benefits that may be acquired directly or indirectly
             including those from a third party for the purpose of obtaining a
             favorable and expeditious results.
           </Text>
-          <Text style={[{ marginTop: 5 }, styles.definition]}>Declaration</Text>
+          <Text style={[{ marginTop: 10 }, styles.definition]}>Declaration</Text>
           <View id="l13">
-            <Text style={{ marginTop: 5 }}>
+            <Text style={{ marginTop: 10 }}>
               1. I affirm that neither I nor any other family members included
               in my application have presented or will present at any future
               date, false and misleading information to either the consultant,
               the firm or to the government of Canada.
             </Text>
 
-            <Text style={{ marginTop: 2 }}>
+            <Text style={{ marginTop: 10 }}>
               2. I affirm that neither I nor any other family members included
               in my application have presented or will present at any future
               date, fraudulently obtained or forged documents to either the
               consultant, the firm or to the government of Canada.
             </Text>
 
-            <Text style={{ marginTop: 2 }}>
+            <Text style={{ marginTop: 10 }}>
               3. I affirm that it is my responsibility to ensure the
               co-operation of my relatives/employers/educational institutes as
               needed.
             </Text>
 
-            <Text style={{ marginTop: 2 }}>
+            <Text style={{ marginTop: 10 }}>
               4. In the event the Immigration office responsible should contact
               the Client directly, the Client is instructed to notify the RCIC
               immediately
             </Text>
 
-            <Text style={{ marginTop: 2 }}>
+            <Text style={{ marginTop: 10 }}>
               5. If a refusal of my application is due to medical or criminal
               issues additional services will have to be agreed on in a
               different retainer and new fees negotiated. The steps to resolve
@@ -1703,7 +1705,7 @@ const AggrementOne = () => {
               agreement.
             </Text>
 
-            <Text style={{ marginTop: 2 }}>
+            <Text style={{ marginTop: 10 }}>
               6. I undertake to inform the consultant, the firm or the
               Government of Canada of any change in marital or civic status or
               change of my physical address and contact information for myself
@@ -1712,7 +1714,7 @@ const AggrementOne = () => {
               will be agreed upon apart from this commitment.
             </Text>
 
-            <Text style={{ marginTop: 2 }}>
+            <Text style={{ marginTop: 12 }}>
               7. I understand that
               <Text style={{ color: "#010101" }}>
                 The RCIC’s obligations under the Engagement are null and void if
@@ -1722,20 +1724,20 @@ const AggrementOne = () => {
               </Text>
             </Text>
 
-            <Text style={{ marginTop: 2 }}>
+            <Text style={{ marginTop: 10 }}>
               8. I understand that the processing times are only an estimate
               given by the Government and that I will not hold the consultant,
               the firm or the Government of Canada responsible for any delays
               except where it is due to negligence from the firm.
             </Text>
 
-            <Text style={{ marginTop: 2 }}>
+            <Text style={{ marginTop: 10 }}>
               9. I agree that if my application is refused because I neglected
               to provide the required documents within the notified time frame
               the consultant, the firm or the Government of Canada will not be
               held responsible.
             </Text>
-            <Text style={{ marginTop: 2 }}>
+            <Text style={{ marginTop: 10 }}>
               10. I have read and understood all the terms and steps in the
               retainer letter above and I agree to all the terms mentioned And
               for so doing, this document shall constitute good and sufficient
