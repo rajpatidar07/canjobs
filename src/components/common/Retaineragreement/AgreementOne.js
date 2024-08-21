@@ -285,12 +285,12 @@ const AggrementOne = () => {
               <View key={index}>
                 <Text>
                   {`${index + 1}.  Client Name : `}
-                  <Text style={styles.textunderline}>
+                  <Text style={[styles.textunderline, { textTransform: "capitalize" }]}>
                     {item.client_first_name + " " + item.client_last_name}
                   </Text>
                   {` Date of birth `}
                   <Text style={styles.textunderline}>
-                  {moment(item.client_date_of_birth).format("DD-MM-YYYY")}
+                    {item.client_date_of_birth ? moment(item.client_date_of_birth).format("DD-MM-YYYY") : "__________"}
                   </Text>
                 </Text>
               </View>
@@ -1349,7 +1349,7 @@ const AggrementOne = () => {
                 <View style={styles.clientFormChild}>
                   <Text>
                     Family Name:
-                    <Text style={styles.textunderline} className="para_gap">
+                    <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
                       {familyJsonArray[0].client_last_name || "_______________"}
                     </Text>
                   </Text>
@@ -1584,7 +1584,7 @@ const AggrementOne = () => {
                     ) : (
                       <Text>___________________</Text>
                     )}
-                    <Text>Signature of Client {index+1}</Text>
+                    <Text>Signature of Client {index + 1}</Text>
                   </View>
 
                   {/* Client Name */}
@@ -1594,9 +1594,9 @@ const AggrementOne = () => {
                         ? `${item.client_first_name} ${item.client_last_name}`
                         : "_________________"}
                     </Text>
-                    <Text >Name of Client {index+1}</Text>
+                    <Text >Name of Client {index + 1}</Text>
                     <Text style={[{ marginTop: 2 }, styles.textunderline]}>
-                      {item.date_signature_client === "0000-00-00" ? "________________" : moment(item.date_signature_client).format("DD-MM-YYYY")}
+                      {(!item.date_signature_client || item.date_signature_client === "0000-00-00") ? "________________" : moment(item.date_signature_client).format("DD-MM-YYYY")}
                     </Text>
                     <Text >Date</Text>
                   </View>
@@ -1635,9 +1635,9 @@ const AggrementOne = () => {
             AUTHORIZATION
           </Text>
           <Text style={{ marginTop: 5 }}>
-            I
+
             <Text style={styles.textunderline} className="para_gap">
-              {familyJsonArray[0].client_first_name + " " + familyJsonArray[0].client_last_name}
+            I {familyJsonArray[0].client_first_name + " " + familyJsonArray[0].client_last_name}
             </Text>
             ( hereinafter referred to as the “client”), hereby authorize and
             appoint Harpreet kaur (hereinafter referred to as the “RCIC” with a
@@ -1761,7 +1761,7 @@ const AggrementOne = () => {
                 </Text>
                 <Text style={{ margin: "10px 0 30px 0" }}>Client’s full name</Text>
               </View>
-              <View style={[styles.clientFormChild,{alignSelf:"center"}]}>
+              <View style={[styles.clientFormChild, { alignSelf: "center" }]}>
                 {familyJsonArray[0].client_signature ?
                   <Image
                     src={
@@ -1771,7 +1771,7 @@ const AggrementOne = () => {
                     }
                     alt={familyJsonArray[0].client_first_name + " " + familyJsonArray[0].client_last_name}
 
-                    style={{ width: "40%", height: "auto" ,alignSelf:"center"}}
+                    style={{ width: "40%", height: "auto", alignSelf: "center" }}
                   /> : <Text>___________________</Text>}
                 <Text style={{ margin: "10px 0 30px 0" }}>Signatures</Text>
               </View>
