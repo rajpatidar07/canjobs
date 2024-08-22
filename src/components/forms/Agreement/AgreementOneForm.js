@@ -290,8 +290,8 @@ const AgreementOneForm = ({
   let SigningUserType = localStorage.getItem("userType");
 
   const initialClientState = {
-    client_first_name: (emp_user_type === "employee" ? userData?.name : userData?.company_name)?.split(" ")[0]||"",
-    client_last_name: (emp_user_type === "employee" ? userData?.name : userData?.company_name)?.split(" ")[1]||"",  
+    client_first_name: (emp_user_type === "employee" ? userData?.name : userData?.company_name)?.split(" ")[0] || "",
+    client_last_name: (emp_user_type === "employee" ? userData?.name : userData?.company_name)?.split(" ")[1] || "",
     client_signature: "",
     date_signature_client: "",
     client_date_of_birth: ""
@@ -333,14 +333,14 @@ const AgreementOneForm = ({
     id: "",
     client_file_no: "",
     agreement_date: "",
-    client_email: userData?.email||"",
-    client_contact: userData?.contact_no||"",
+    client_email: userData?.email || "",
+    client_contact: userData?.contact_no || "",
     client_telephone: "",
     client_cellphone: "",
     client_fax: "",
     client_address: emp_user_type === "employee" ? userData?.current_location + " " + userData?.currently_located_country : userData?.address,
     family_json: [initialClientState]
-    
+
   };
 
   const validators = {
@@ -421,48 +421,9 @@ const AgreementOneForm = ({
     });
   };
 
-  // const onFormSubmit = async (e) => {
-  //   e.preventDefault();
-  //   setLoading(true);
-  //   try {
-  //     let res = await AddUpdateAgreement(state);
-  //     if (res.data.status === 1 && res.data.message === "Agreement updated successfully.") {
-  //       setLoading(false);
-  //       setState(initialFormState);
-  //       toast.success("Fields added successfully.", {
-  //         position: toast.POSITION.TOP_RIGHT,
-  //         autoClose: 1000,
-  //       });
-
-  //       try {
-  //         let res = await GetAgreement("", user_id, emp_user_type, felidData.type);
-  //         const stateData = {
-  //           user_id: user_id,
-  //           emp_user_type: emp_user_type,
-  //           folderId: folderId,
-  //           felidData: res.data.data[0],
-  //         };
-  //         const newPageUrl = `/agreeone`;
-  //         localStorage.setItem('agreementStateData', JSON.stringify(stateData));
-  //         setApicall(true);
-  //         close();
-  //         window.open(newPageUrl, '_blank');
-  //       } catch (error) {
-  //         console.log(error);
-  //       }
-  //       close();
-  //       setApicall(true);
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //     setLoading(false);
-  //   }
-  // };
   const onFormSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const newPageUrl = `/agreeone`;
-   
     try {
       let res = await AddUpdateAgreement(state);
       if (res.data.status === 1 && res.data.message === "Agreement updated successfully.") {
@@ -472,7 +433,7 @@ const AgreementOneForm = ({
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-   
+
         try {
           let res = await GetAgreement("", user_id, emp_user_type, felidData.type);
           const stateData = {
@@ -481,13 +442,14 @@ const AgreementOneForm = ({
             folderId: folderId,
             felidData: res.data.data[0],
           };
+          const newPageUrl = `/agreeone`;
           localStorage.setItem('agreementStateData', JSON.stringify(stateData));
           setApicall(true);
           close();
+          window.open(newPageUrl, '_blank');
         } catch (error) {
           console.log(error);
         }
-        window.open(newPageUrl, '_blank'); // Move window.open outside async tasks
         close();
         setApicall(true);
       }
@@ -495,7 +457,8 @@ const AgreementOneForm = ({
       console.log(err);
       setLoading(false);
     }
-  }
+  };
+
   useEffect(() => {
     if (state.initial) {
       setState({ ...state, signature_status: "1", pdf_genrated_status: "1" });
@@ -639,7 +602,7 @@ const AgreementOneForm = ({
                 <div className="form-group col-md-6 mb-0 mt-4">
                   <SignaturePadComponent
                     signature={state.family_json[index].client_signature}
-                    onEnd={(signature) => handleSignature(signature, index,"client_signature")}
+                    onEnd={(signature) => handleSignature(signature, index, "client_signature")}
                     canvasProps={{ className: 'form-control mx-5 col' }}
                     setState={setState}
                     state={state}
@@ -696,6 +659,7 @@ const AgreementOneForm = ({
             </div>
           </div>
           <div className='form-group text-center'>
+            {SigningUserType === "admin" ? "" : "Note:Allow access to open a pop-up window!"}
             <button
               type="submit"
               className="btn btn-primary btn-small w-25 mt-5 rounded-5 text-uppercase p-8"
