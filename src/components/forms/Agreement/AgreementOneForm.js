@@ -287,7 +287,7 @@ const AgreementOneForm = ({
   felidData
 }) => {
   const [loading, setLoading] = useState(false);
-  let SigningUserType = "admin"//localStorage.getItem("userType");
+  let SigningUserType = localStorage.getItem("userType");
 
   const initialClientState = {
     client_first_name: "",
