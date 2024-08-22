@@ -658,15 +658,17 @@ const AgreementOneForm = ({
               </button>
             </div>
           </div>
-          <div className='form-group text-center'>
-            {SigningUserType === "admin" ? "" : "Note:Allow access to open a pop-up window!"}
-            <button
-              type="submit"
-              className="btn btn-primary btn-small w-25 mt-5 rounded-5 text-uppercase p-8"
-              disabled={loading}
-            >
-              {loading ? "Saving..." : "Save Agreement"}
-            </button>
+          <div className='form-group  d-flex flex-column'>
+            <p className='text-start'> {SigningUserType === "admin" ? "" : "Note: Allow access to open a pop-up window!"}</p>
+            <div className='text-center'>
+              <button
+                type="submit"
+                className="btn btn-primary btn-small w-25 mt-5 rounded-5 text-uppercase p-8"
+                disabled={loading}
+              >
+                {loading ? "Saving..." : "Save Agreement"}
+              </button>
+            </div>
           </div>
         </form>
       </div>
