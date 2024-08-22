@@ -87,12 +87,22 @@ export default function RetauberAgreementList({
         }
     }
     useEffect(() => {
-        getAgreeFelidData()
-        if (apicall === true) {
-            setApicall(false)
+        // Call the function when the component first renders
+        getAgreeFelidData();
+        let timer;
+        if (apicall) {
+            timer = setTimeout(() => {
+                // Function to be executed after 20 seconds when apicall is true because document update's take time 
+                getAgreeFelidData();
+                // Reset the state to false
+                setApicall(false);
+            }, 20000);
         }
+
+        // Cleanup function to clear the timer if the component unmounts or myState changes
+        return () => clearTimeout(timer);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [apicall])
+    }, [apicall]);
     /*To Show the delete alert box */
     const ShowDeleteAlert = (e) => {
         setDeleteID(e.id);

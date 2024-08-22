@@ -238,24 +238,24 @@
 // };
 
 // export default SignaturePadComponent;
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import SignatureCanvas from 'react-signature-canvas';
 
 const SignaturePadComponent = ({ index, onSignature, setState, state, label, name, signature }) => {
     const sigPad = useRef(null);
-
-    const clear = () => {
-        sigPad.current.clear();
-        setState((prevState) => {
-            if (Array.isArray(prevState.family_json) && label === "client_signature") {
-                const family_json = [...prevState.family_json];
-                family_json[index] = { ...family_json[index], [label]: "" };
-                return { ...prevState, family_json };
-            } else {
-                return { ...prevState, [label]: "" };
-            }
-        });
-    };
+const [isSign, setIsSign] = useState(false)
+    // const clear = () => {
+    //     sigPad.current.clear();
+    //     setState((prevState) => {
+    //         if (Array.isArray(prevState.family_json) && label === "client_signature") {
+    //             const family_json = [...prevState.family_json];
+    //             family_json[index] = { ...family_json[index], [label]: "" };
+    //             return { ...prevState, family_json };
+    //         } else {
+    //             return { ...prevState, [label]: "" };
+    //         }
+    //     });
+    // };
 
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
@@ -280,6 +280,7 @@ const SignaturePadComponent = ({ index, onSignature, setState, state, label, nam
                     if (onSignature) onSignature(signature, index, label);
                 };
                 img.src = e.target.result;
+                setIsSign(true)
             };
             reader.readAsDataURL(file);
         }
@@ -295,6 +296,7 @@ const SignaturePadComponent = ({ index, onSignature, setState, state, label, nam
                 ctx.drawImage(img, 0, 0, sigPad.current.getCanvas().width, sigPad.current.getCanvas().height);
             };
             img.src = signatureData;
+            setIsSign(true)
         }
 
         const saveSignature = () => {
@@ -313,31 +315,39 @@ const SignaturePadComponent = ({ index, onSignature, setState, state, label, nam
             }
         };
 
-        const canvas = sigPad.current.getCanvas();
-        canvas.addEventListener('mouseup', saveSignature);
-        canvas.addEventListener('touchend', saveSignature);
+        const canvas = sigPad.current?.getCanvas();
+        canvas?.addEventListener('mouseup', saveSignature);
+        canvas?.addEventListener('touchend', saveSignature);
 
         return () => {
-            canvas.removeEventListener('mouseup', saveSignature);
-            canvas.removeEventListener('touchend', saveSignature);
+            canvas?.removeEventListener('mouseup', saveSignature);
+            canvas?.removeEventListener('touchend', saveSignature);
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [index, setState, state, onSignature]);
 
     return (
         <div className="form-group">
-            <label className="font-size-4 text-black-2 line-height-reset mb-3">{name}</label>
-
-            <div className="border border-dark mb-3 w-100" style={{ maxWidth: '300px' }}>
+            <label className={`font-size-4 text-black-2 line-height-reset mb-3 ${isSign ? "" :"position-relative"}`}>{name}</label>
+            {isSign ? <div className="border border-dark mb-3 w-100 " >
                 <SignatureCanvas
                     ref={sigPad}
                     penColor="black"
-                    canvasProps={{ width: 300, height: 150, className: 'sigCanvas' }}
+                    canvasProps={{
+                        width: "auto", height: 100, className: 'sigCanvas', style: { pointerEvents: 'none' }
+                    }}
                 />
-            </div>
+                {/* {sigPad && (
+                    <div className="mb-3 d-flex justify-content-center">
+                        <div className="rounded overflow-hidden" style={{ width: '200px', height: '200px' }}>
+                            <img src={sigPad} alt="Selected" className="img-fluid" style={{ objectFit: 'cover' }} />
+                        </div>
+                    </div>
+                )} */}
+            </div> : null}
 
             <div className="d-flex flex-row">
-                <label className="btn btn-light mx-3 mt-3 d-flex flex-column justify-content-center rounded "
+                <label className="col btn btn-light mx-3 mt-3 d-flex flex-column justify-content-center rounded "
                     style={{
                         position: "relative",
                         color: "grey",
@@ -345,7 +355,7 @@ const SignaturePadComponent = ({ index, onSignature, setState, state, label, nam
                         fontSize: 40,
                         flexDirection: "row",
                         lineHeight: 1,
-                        left: "auto"
+                        left: 0
                     }}>
                     <input
                         type="file"
@@ -356,14 +366,14 @@ const SignaturePadComponent = ({ index, onSignature, setState, state, label, nam
                     <span style={{ fontSize: '24px' }}>+</span>
                     <p className="mb-0" style={{ fontWeight: 400, fontSize: 12 }}>Add Sign</p>
                 </label>
-                <button onClick={() => clear()} type='button' className="btn btn-secondary btn-sm  d-flex flex-column justify-content-center rounded"
+                {/* <button onClick={() => clear()} type='button' className="d-none btn btn-secondary btn-sm  d-flex flex-column justify-content-center rounded"
                     style={{
                         position: "relative",
                         minHeight: 50,
                         flexDirection: "row",
                         lineHeight: 1,
                         left: "auto"
-                    }}>Clear</button>
+                    }}>Clear</button> */}
             </div>
         </div>
     );
