@@ -290,8 +290,8 @@ const AgreementOneForm = ({
   let SigningUserType = localStorage.getItem("userType");
 
   const initialClientState = {
-    client_first_name: "",
-    client_last_name: "",
+    client_first_name: (emp_user_type === "employee" ? userData?.name : userData?.company_name)?.split(" ")[0]||"",
+    client_last_name: (emp_user_type === "employee" ? userData?.name : userData?.company_name)?.split(" ")[1]||"",  
     client_signature: "",
     date_signature_client: "",
     client_date_of_birth: ""
@@ -325,21 +325,22 @@ const AgreementOneForm = ({
     date_signature_rcic: "",
     sender: localStorage.getItem("admin_id"),
     sender_type: localStorage.getItem("admin_type"),
-    receiver: "",
-    receiver_type: "",
+    receiver: emp_user_type === "employee" ? userData?.employee_id : userData?.company_id,
+    receiver_type: emp_user_type === "employee" ? "employee" : "employer",
     assigned_by_id: "",
     assigned_by_type: "",
-    signature_status: 0,
+    signature_status: felidData.initial ? 1 : 0,
     id: "",
     client_file_no: "",
     agreement_date: "",
-    client_email: "",
-    client_contact: "",
+    client_email: userData?.email||"",
+    client_contact: userData?.contact_no||"",
     client_telephone: "",
     client_cellphone: "",
     client_fax: "",
-    client_address: "",
+    client_address: emp_user_type === "employee" ? userData?.current_location + " " + userData?.currently_located_country : userData?.address,
     family_json: [initialClientState]
+    
   };
 
   const validators = {
@@ -391,9 +392,16 @@ const AgreementOneForm = ({
   }, [felidData]);
 
   const addClient = () => {
+    const emptyClientState = {
+      client_first_name: "",
+      client_last_name: "",
+      client_signature: "",
+      date_signature_client: "",
+      client_date_of_birth: ""
+    };
     setState((prevState) => ({
       ...prevState,
-      family_json: [...prevState.family_json, { ...initialClientState }]
+      family_json: [...prevState.family_json, { ...emptyClientState }]
     }));
   };
 
@@ -500,7 +508,7 @@ const AgreementOneForm = ({
                 { label: "Client Contact No", name: "client_contact", type: "number" },
                 { label: "The Client asked the RCIC, and the RCIC has agreed, to act for the Client in the matter of", name: "matter", type: "text" },
                 { label: "Summary of preliminary advice given to the client", name: "summary", type: "text" },
-                { label: "Client's Family Name", name: "client_last_name", type: "text" },
+                // { label: "Client's Family Name", name: "client_last_name", type: "text" },
                 { label: "Client's Telephone Number", name: "client_telephone", type: "number" },
                 { label: "Client's Cellphone Number", name: "client_cellphone", type: "number" },
                 { label: "Client's Fax Number", name: "client_fax", type: "number" },
@@ -524,7 +532,7 @@ const AgreementOneForm = ({
                 { label: "Client Contact No", name: "client_contact", type: "number" },
                 { label: "The Client asked the RCIC, and the RCIC has agreed, to act for the Client in the matter of", name: "matter", type: "text" },
                 { label: "Summary of preliminary advice given to the client", name: "summary", type: "text" },
-                { label: "Client's Family Name", name: "client_last_name", type: "text" },
+                // { label: "Client's Family Name", name: "client_last_name", type: "text" },
                 { label: "Client's Telephone Number", name: "client_telephone", type: "number" },
                 { label: "Client's Cellphone Number", name: "client_cellphone", type: "number" },
                 { label: "Client's Fax Number", name: "client_fax", type: "number" },
@@ -620,16 +628,6 @@ const AgreementOneForm = ({
                 )}
               </>
             ))}
-            <div className={SigningUserType === "admin" ? "form-group col-md-6 mb-0 mt-4" : "d-none"}>
-              <SignaturePadComponent
-                onEnd={(signature) => handleSignature(signature, "", "rcic_signature")}
-                canvasProps={{ className: 'form-control mx-5 col' }}
-                setState={setState}
-                state={state}
-                label={`rcic_signature`}
-                name={`RCIC Signature`}
-                onSignature={handleSignature} />
-            </div>
             <div className="form-group col-md-6 mb-0 mt-4">
               <SignaturePadComponent
                 onEnd={(signature) => handleSignature(signature, "", "initial")}
@@ -638,6 +636,16 @@ const AgreementOneForm = ({
                 state={state}
                 label={`initial`}
                 name={`Initial`}
+                onSignature={handleSignature} />
+            </div>
+            <div className={SigningUserType === "admin" ? "form-group col-md-6 mb-0 mt-4" : "d-none"}>
+              <SignaturePadComponent
+                onEnd={(signature) => handleSignature(signature, "", "rcic_signature")}
+                canvasProps={{ className: 'form-control mx-5 col' }}
+                setState={setState}
+                state={state}
+                label={`rcic_signature`}
+                name={`RCIC Signature`}
                 onSignature={handleSignature} />
             </div>
             <div className='d-flex justify-content-center'>
@@ -651,10 +659,10 @@ const AgreementOneForm = ({
               </button>
             </div>
           </div>
-          <div className='text-center d-flex justify-content-center'>
+          <div className='form-group text-center'>
             <button
               type="submit"
-              className="btn btn-primary mt-4"
+              className="btn btn-primary btn-small w-25 mt-5 rounded-5 text-uppercase"
               disabled={loading}
             >
               {loading ? "Saving..." : "Save Agreement"}
