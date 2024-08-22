@@ -467,7 +467,6 @@ const AgreementOneForm = ({
   }, [state.initial]);
 
   const handleSignature = (signature, clientIndex, label) => {
-    console.log(label)
     const today = new Date().toISOString().split('T')[0];
     if (label === "rcic_signature") {
       setState({ ...state, rcic_signature: signature, date_signature_rcic: today });
@@ -556,7 +555,7 @@ const AgreementOneForm = ({
               ))}
             {/* Render client-specific fields */}
             {state.family_json.map((client, index) => (
-              <>
+              <React.Fragment key={index}>
                 <div className="form-group col-md-6 mb-0 mt-4">
                   <label htmlFor={`client_first_name_${index}`} className="font-size-4 text-black-2 line-height-reset">
                     Client's First Name
@@ -626,7 +625,7 @@ const AgreementOneForm = ({
                     </button>
                   </div>
                 )}
-              </>
+              </React.Fragment>
             ))}
             <div className="form-group col-md-6 mb-0 mt-4">
               <SignaturePadComponent
@@ -662,7 +661,7 @@ const AgreementOneForm = ({
           <div className='form-group text-center'>
             <button
               type="submit"
-              className="btn btn-primary btn-small w-25 mt-5 rounded-5 text-uppercase"
+              className="btn btn-primary btn-small w-25 mt-5 rounded-5 text-uppercase p-8"
               disabled={loading}
             >
               {loading ? "Saving..." : "Save Agreement"}

@@ -93,7 +93,6 @@ export default function RetauberAgreementList({
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [apicall])
-
     /*To Show the delete alert box */
     const ShowDeleteAlert = (e) => {
         setDeleteID(e.id);
