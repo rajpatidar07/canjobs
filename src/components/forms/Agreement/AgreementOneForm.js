@@ -421,9 +421,48 @@ const AgreementOneForm = ({
     });
   };
 
+  // const onFormSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+  //   try {
+  //     let res = await AddUpdateAgreement(state);
+  //     if (res.data.status === 1 && res.data.message === "Agreement updated successfully.") {
+  //       setLoading(false);
+  //       setState(initialFormState);
+  //       toast.success("Fields added successfully.", {
+  //         position: toast.POSITION.TOP_RIGHT,
+  //         autoClose: 1000,
+  //       });
+
+  //       try {
+  //         let res = await GetAgreement("", user_id, emp_user_type, felidData.type);
+  //         const stateData = {
+  //           user_id: user_id,
+  //           emp_user_type: emp_user_type,
+  //           folderId: folderId,
+  //           felidData: res.data.data[0],
+  //         };
+  //         const newPageUrl = `/agreeone`;
+  //         localStorage.setItem('agreementStateData', JSON.stringify(stateData));
+  //         setApicall(true);
+  //         close();
+  //         window.open(newPageUrl, '_blank');
+  //       } catch (error) {
+  //         console.log(error);
+  //       }
+  //       close();
+  //       setApicall(true);
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //     setLoading(false);
+  //   }
+  // };
   const onFormSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    const newPageUrl = `/agreeone`;
+   
     try {
       let res = await AddUpdateAgreement(state);
       if (res.data.status === 1 && res.data.message === "Agreement updated successfully.") {
@@ -433,7 +472,7 @@ const AgreementOneForm = ({
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-
+   
         try {
           let res = await GetAgreement("", user_id, emp_user_type, felidData.type);
           const stateData = {
@@ -442,14 +481,13 @@ const AgreementOneForm = ({
             folderId: folderId,
             felidData: res.data.data[0],
           };
-          const newPageUrl = `/agreeone`;
           localStorage.setItem('agreementStateData', JSON.stringify(stateData));
           setApicall(true);
           close();
-          window.open(newPageUrl, '_blank');
         } catch (error) {
           console.log(error);
         }
+        window.open(newPageUrl, '_blank'); // Move window.open outside async tasks
         close();
         setApicall(true);
       }
@@ -457,8 +495,7 @@ const AgreementOneForm = ({
       console.log(err);
       setLoading(false);
     }
-  };
-
+  }
   useEffect(() => {
     if (state.initial) {
       setState({ ...state, signature_status: "1", pdf_genrated_status: "1" });

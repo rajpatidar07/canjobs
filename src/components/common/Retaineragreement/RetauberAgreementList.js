@@ -268,6 +268,7 @@ export default function RetauberAgreementList({
                                                             }}
                                                             title="View Pdf"><FaFilePdf />
                                                         </button>
+                                                        {console.log(data.client_email,data.document_id)}
                                                         <button
                                                             className="btn btn-outline-info action_btn "
                                                             style={{ fontSize: "10px" }}
@@ -276,7 +277,7 @@ export default function RetauberAgreementList({
                                                                 setAgreementData(data)
                                                                 GetAgreementPdf(data)
                                                             }}
-                                                            disabled={!data.client_email}
+                                                            disabled={!data.client_email||!data.document_id}
                                                             title="Send Mail">
                                                             <IoMdMail />
                                                         </button>
