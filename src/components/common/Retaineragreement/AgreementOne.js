@@ -223,14 +223,14 @@ const AggrementOne = () => {
             <Text style={styles.textunderline}>
             {" "}   Hopewell Pl NE #310 Calgary, AB T1Y 7J7,
             </Text>
-            <Text style={styles.textunderline}> Canada</Text> and Client
-            <Text style={styles.textunderline} className="para_gap">
+            <Text style={styles.textunderline}></Text> Canada and Client
+            <Text style={[styles.textunderline,{textTransform:"capitalize"}]} className="para_gap">
 
               {" " + familyJsonArray[0].client_first_name + " " + familyJsonArray[0].client_last_name}
             </Text>
             {" "}(the “Client”)
             <Text className="p"> , located at </Text>
-            <Text style={styles.textunderline} className="para_gap">
+            <Text style={[styles.textunderline,{textTransform:"capitalize"}]} className="para_gap">
 
               {" " + felidData.client_address}
             </Text>
@@ -1147,7 +1147,7 @@ const AggrementOne = () => {
               </View>
               <View data-list-text="15.2" style={{ marginTop: 10 }}>
                 <Text>
-                  15.2 Pursuant to Article 11 of the
+                  15.2 Pursuant to Article 11 of the{" "}
                   <Text style={styles.textunderline}>
                     Code of Professional Ethics
                   </Text>
@@ -1743,7 +1743,7 @@ const AggrementOne = () => {
               marginTop: 15,
             }}
           >
-            <View style={[styles.clientForm, { textAlign: "center" }]}>
+            <View style={[styles.clientForm, { textAlign: "center",marginTop:10 }]}>
               <View style={styles.clientFormChild}>
                 <Text className="para_gap" style={{ margin: 0, textDecoration: "underline" ,textTransform:"capitalize"}}>
                   {familyJsonArray[0].client_first_name && familyJsonArray[0].client_last_name
