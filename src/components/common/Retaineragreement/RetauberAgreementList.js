@@ -258,6 +258,7 @@ export default function RetauberAgreementList({
                                                                 //     }
                                                                 // });
                                                             }}
+                                                            disabled={data.initial}
                                                             title=" View and update doc"
                                                         >
                                                             <span className='text-gray px-2'>
@@ -272,6 +273,7 @@ export default function RetauberAgreementList({
                                                                 setAgreementData(data)
                                                             }}
                                                             title="Add Felids"
+                                                            disabled={data.initial}
                                                         >
                                                             <span className='text-gray px-2'>
                                                                 <FaEdit />
@@ -312,7 +314,7 @@ export default function RetauberAgreementList({
                                                                 setAgreementData(data)
                                                                 GetAgreementPdf(data)
                                                             }}
-                                                            disabled={!data.client_email || !data.document_id}
+                                                            disabled={!data.client_email || !data.document_id ||data.rcic_signature}
                                                             title="Send Retainer Agreement">
                                                             <span className='text-gray px-2'>
                                                                 <IoMdMail />
@@ -337,8 +339,9 @@ export default function RetauberAgreementList({
                                                                 setAgreementData(data)
                                                                 GetAgreementPdf(data)
                                                             }}
-                                                            disabled={!data.initial}
+                                                            disabled={!data.initial||data.rcic_signature}
                                                             title="RCIC Sign"
+                                                            
                                                         >
                                                             <span className='text-gray px-2'>
                                                                 <FaFileSignature />

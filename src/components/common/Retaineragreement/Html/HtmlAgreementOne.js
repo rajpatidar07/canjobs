@@ -2,7 +2,7 @@ import moment from "moment"
 import { useEffect } from "react";
 // import { Link } from "react-router-dom";
 const HtmlAgreementOne = ({ felidData, userData, emp_user_type, addSign }) => {
-  // let loginuser = localStorage.getItem("userType")
+  let loginuser = localStorage.getItem("userType")
   // Function to replace tags
   // const replaceTags = (html) => {
   //   // Replace opening and closing div and ul tags with View tags
@@ -1047,7 +1047,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type, addSign }) => {
                       ${item.client_first_name + " " + item.client_last_name + " "}${item.date_signature_client}</span>
                   </small>
                       </div>`
-        :` <button class="btn btn-outline-secondary border-0  " 
+        : loginuser === "admin" ? "" : ` <button class="btn btn-outline-secondary border-0  " 
                   style="font-family:cursive;" 
                   id="add-signature-button-${index}"
                   ${!felidData.initial ? 'disabled' : ''}>
@@ -1065,7 +1065,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type, addSign }) => {
         </div>
         <div style="width: 50%">
             <p class="para_gap" style="margin: 0">
-                <span style="max-width: 200px;">${item.date_signature_client ?item.date_signature_client : ''}</span>
+                <span style="max-width: 200px;">${item.date_signature_client ? item.date_signature_client : ''}</span>
             </p>
             <p style="margin: 0 0 30px 0">Date</p>
         </div>`
@@ -1261,7 +1261,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type, addSign }) => {
           alt="${(felidData && (familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name) ? ((familyJsonArray[0]?.client_first_name + " " + (familyJsonArray[0]?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}"
           style="max-width: 200px; float: right"
           class=${felidData.initial ? "d-block" : "d-none"}
-        />`: `<button class="btn btn-outline-secondary border-0 col-12 text-decoration-none" 
+        />`: loginuser === "admin" ? "" : `<button class="btn btn-outline-secondary border-0 col-12 text-decoration-none" 
         style="font-family:cursive;" 
         id="add-signature-button-initial")>
   Add initial

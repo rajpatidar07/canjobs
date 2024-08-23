@@ -83,7 +83,7 @@ pdf }) {
                 userType={""}
               />}
             </div>
-            <div className={`"d-flex justify-content-between p-4`}>
+            <div className={`"d-flex justify-content-between p-4 d-none`}>
               <button className={agreementData.initial ? "d-none" :'btn btn-secondary'} onClick={() => addSignatureCLick()}>Add Signature</button>
               {/* <button className='btn btn-info' onClick={() => DownloadPdf(pdf)}>Download</button> */}
             </div>
