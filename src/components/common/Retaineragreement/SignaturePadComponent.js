@@ -291,9 +291,9 @@ const [isSign, setIsSign] = useState(false)
         if (signatureData) {
             const img = new Image();
             img.onload = () => {
-                sigPad.current.clear();
-                const ctx = sigPad.current.getCanvas().getContext("2d");
-                ctx.drawImage(img, 0, 0, sigPad.current.getCanvas().width, sigPad.current.getCanvas().height);
+                sigPad?.current?.clear();
+                const ctx = sigPad?.current?.getCanvas()?.getContext("2d");
+                ctx?.drawImage(img, 0, 0, sigPad.current.getCanvas().width, sigPad.current.getCanvas().height);
             };
             img.src = signatureData;
             setIsSign(true)

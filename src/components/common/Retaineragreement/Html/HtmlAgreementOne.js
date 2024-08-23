@@ -1,6 +1,8 @@
 import moment from "moment"
-const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
-
+import { useEffect } from "react";
+// import { Link } from "react-router-dom";
+const HtmlAgreementOne = ({ felidData, userData, emp_user_type, addSign }) => {
+  // let loginuser = localStorage.getItem("userType")
   // Function to replace tags
   // const replaceTags = (html) => {
   //   // Replace opening and closing div and ul tags with View tags
@@ -14,7 +16,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
   //   return html;
   // };
   // JSX structure with potential tag replacements
-  const familyJsonArray = felidData.family_json ? JSON.parse(felidData.family_json) : [];
+  const familyJsonArray = felidData?.family_json ? JSON.parse(felidData.family_json) : [];
   const jsxContent = (
     `<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -36,7 +38,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
     </style>
   </head>
   <body style="margin: 0 auto; max-width: 1024px">
-    <div class="header" style="padding: 10px 20px">
+    <div class="header" style="padding: 10px 20px;text-align: justify;">
       <img
         src="https://canpathwaysjobs.com/image/00logo-main-black.png"
         alt=""
@@ -315,7 +317,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
                   rowspan="3"
                   style="text-align: center; border: 1px solid black"
                 >
-                  Discount: Courier charges Government fees
+                  Discount:<br> Courier charges<br> Government fees
                 </td>
                 <td style="border: 1px solid black">${felidData?.courier_charges || ""}</td>
               </tr>
@@ -1032,12 +1034,26 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
     ${(familyJsonArray || []).map((item, index) => (
       `<div style="width: 50%">
             <p class="para_gap" style="margin: 0">
-                <img
-                    src="${item.client_signature ? item.client_signature : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s'}"
-                    alt="${item.client_first_name + " " + item.client_last_name}"
-                    style="max-width: 200px; float: right;"
-                    class="${item.client_signature ? 'd-block' : 'd-none'}"
-                />
+       ${item.client_signature ? `
+        <div class="d-flex flex-column">
+                        <img
+      src="${item.client_signature}"
+      alt="${item.client_first_name} ${item.client_last_name}"
+      style="max-width: 200px; float: right;"
+      class="${item.client_signature ? "d-block" : "d-none"}"
+    />
+                  <small class="row ">
+                    <span class="col text-capitalize" >
+                      ${item.client_first_name + " " + item.client_last_name + " "}${item.date_signature_client}</span>
+                  </small>
+                      </div>`
+        :` <button class="btn btn-outline-secondary border-0  " 
+                  style="font-family:cursive;" 
+                  id="add-signature-button-${index}"
+                  ${!felidData.initial ? 'disabled' : ''}>
+            Add Signature
+          </button>`
+      }
             </p>
             <p style="margin: 0 0 30px 0">Signature of Client</p>
         </div>
@@ -1049,7 +1065,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
         </div>
         <div style="width: 50%">
             <p class="para_gap" style="margin: 0">
-                <span style="max-width: 200px;">${item.date_signature_client ? moment(item.date_signature_client).format("DD-MM-YYYY") : ''}</span>
+                <span style="max-width: 200px;">${item.date_signature_client ?item.date_signature_client : ''}</span>
             </p>
             <p style="margin: 0 0 30px 0">Date</p>
         </div>`
@@ -1058,12 +1074,18 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
     <!-- RCIC Signature -->
     <div style="width: 50%">
         <p class="para_gap" style="margin: 0">
-            <img
+            <div class="d-flex flex-column">
+                       <img
                 src="${felidData.rcic_signature ? felidData.rcic_signature : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s'}"
                 alt="RCIC"
                 style="max-width: 200px; float: right;"
                 class="${felidData.rcic_signature ? 'd-block' : 'd-none'}"
             />
+                  <small class="row ">
+                    <span class="col text-capitalize" >
+                      Harpreet kaur ${felidData.date_signature_rcic}</span>
+                  </small>
+                      </div>
         </p>
         <p style="margin: 0 0 30px 0">Signature of RCIC</p>
     </div>
@@ -1075,7 +1097,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
     </div>
     <div style="width: 50%">
         <p class="para_gap" style="margin: 0">
-            <span class=${felidData.date_signature_rcic === "0000-00-00" ? "d-none" : ""} style="max-width: 200px;">${felidData.date_signature_rcic ? moment(felidData.date_signature_rcic).format("DD-MM-YYYY") : ''}</span>
+            <span class=${felidData.date_signature_rcic === "0000-00-00" ? "d-none" : ""} style="max-width: 200px;">${felidData.date_signature_rcic ? felidData.date_signature_rcic : ''}</span>
         </p>
         <p style="margin: 0 0 30px 0">Date</p>
     </div>
@@ -1234,22 +1256,73 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type }) => {
       >
         Initial:
          <p class="para_gap" style="margin: 0">
-        <img
+       ${felidData?.initial ? `<img
           src=${felidData.initial ? felidData?.initial : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"}
           alt="${(felidData && (familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name) ? ((familyJsonArray[0]?.client_first_name + " " + (familyJsonArray[0]?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}"
           style="max-width: 200px; float: right"
           class=${felidData.initial ? "d-block" : "d-none"}
-        />
+        />`: `<button class="btn btn-outline-secondary border-0 col-12 text-decoration-none" 
+        style="font-family:cursive;" 
+        id="add-signature-button-initial")>
+  Add initial
+</button>`}
         </p>
       </div>
     </div>
   </body>
-  </html>`
-  );
+  </html>`)
+  useEffect(() => {
+    // Event handler function
+    const handleClick = (e) => {
+      addSign(e, "initial"); // Call the addSign function with desired arguments
+    };
 
+    // Ensure the HTML is injected
+    const btn = document.getElementById('add-signature-button-initial');
+
+    if (btn) {
+      // Attach event listener
+      btn.addEventListener('click', handleClick);
+
+      // Clean up event listener
+      return () => {
+        btn.removeEventListener('click', handleClick);
+      };
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  useEffect((e) => {
+    // Attach event listeners after HTML is injected
+    familyJsonArray.forEach((_, index) => {
+      const button = document.getElementById(`add-signature-button-${index}`);
+      if (button) {
+        button.addEventListener('click', () => addSign(e, index));
+      }
+    });
+
+    // Clean up event listeners
+    return () => {
+      familyJsonArray.forEach((_, index) => {
+        const button = document.getElementById(`add-signature-button-${index}`);
+        if (button) {
+          button.removeEventListener('click', () => addSign(e, index));
+        }
+      });
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [familyJsonArray, felidData.initial]);
   return (
-    <div>
+    <div className="row"
+      style={{
+        maxWidth: "1024px",
+        margin: "0 auto",
+        background: "#fff",
+        padding: "30px",
+        height: "100vh",
+        overflow: "auto",
+      }}>
       <div dangerouslySetInnerHTML={{ __html: jsxContent }} />
+
     </div>
   );
 };

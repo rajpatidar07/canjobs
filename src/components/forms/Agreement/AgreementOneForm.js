@@ -284,7 +284,9 @@ const AgreementOneForm = ({
   close,
   userData,
   setApicall,
-  felidData
+  felidData,
+  index,
+  setFelidData,
 }) => {
   const [loading, setLoading] = useState(false);
   let SigningUserType = localStorage.getItem("userType");
@@ -421,41 +423,98 @@ const AgreementOneForm = ({
     });
   };
 
+  // const onFormSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setLoading(true);
+  //   try {
+  //     let res = await AddUpdateAgreement(state);
+  //     if (res.data.status === 1 && res.data.message === "Agreement updated successfully.") {
+  //       setLoading(false);
+  //       setState(initialFormState);
+  //       toast.success("Fields added successfully.", {
+  //         position: toast.POSITION.TOP_RIGHT,
+  //         autoClose: 1000,
+  //       });
+
+  //       try {
+  //         let res = await GetAgreement("", user_id, emp_user_type, felidData.type);
+  //         const stateData = {
+  //           user_id: user_id,
+  //           emp_user_type: emp_user_type,
+  //           folderId: folderId,
+  //           felidData: res.data.data[0],
+  //         };
+  //         const newPageUrl = `/agreeone`;
+  //         localStorage.setItem('agreementStateData', JSON.stringify(stateData));
+  //         setApicall(true);
+  //         close();
+  //         window.open(newPageUrl, '_blank');
+  //       } catch (error) {
+  //         console.log(error);
+  //       }
+  //       close();
+  //       setApicall(true);
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //     setLoading(false);
+  //   }
+  // };
   const onFormSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    try {
-      let res = await AddUpdateAgreement(state);
-      if (res.data.status === 1 && res.data.message === "Agreement updated successfully.") {
-        setLoading(false);
-        setState(initialFormState);
-        toast.success("Fields added successfully.", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
+    // console.log(state)
+    if ((openSignature === "yes" && (index === "rcic_signature" || index === "final")) || openSignature === "no") {
+      console.log(state.family_json)
+      try {
+        let res = await AddUpdateAgreement(state)
+        if (res.data.status === 1 && res.data.message === "Agreement updated successfully.") {
+          setLoading(false)
+          setState(initialFormState)
+          toast.success("Felids added successfully.", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          // if (openSignature === "yes") {
+          try {
+            let res = await GetAgreement("", user_id, emp_user_type, felidData.type)
 
-        try {
-          let res = await GetAgreement("", user_id, emp_user_type, felidData.type);
-          const stateData = {
-            user_id: user_id,
-            emp_user_type: emp_user_type,
-            folderId: folderId,
-            felidData: res.data.data[0],
-          };
-          const newPageUrl = `/agreeone`;
-          localStorage.setItem('agreementStateData', JSON.stringify(stateData));
-          setApicall(true);
-          close();
-          window.open(newPageUrl, '_blank');
-        } catch (error) {
-          console.log(error);
+            /*FUnction to generate pdf after adding signature */
+            if (openSignature === "yes" && res.data.data[0].initial && res.data.data[0].signature_status === "1") {
+              const stateData = {
+                user_id: user_id,
+                emp_user_type: emp_user_type,
+                folderId: folderId,
+                felidData: res.data.data[0],
+                family_json: res.data.data[0].family_json,
+              };
+              const newPageUrl = `/agreeone`
+              localStorage.setItem('agreementStateData', JSON.stringify(stateData));
+              // Open the new page in a new tab
+              setApicall(true)
+              close()
+              if (SigningUserType !== "admin") {
+                window.open(newPageUrl, '_blank')
+                window.close();
+              } else {
+                window.open(newPageUrl, '_blank')
+              }
+            }
+          } catch (error) {
+            console.log(error)
+          }
+          // }
+          close()
+          setApicall(true)
         }
-        close();
-        setApicall(true);
+      } catch (err) {
+        console.log(err)
+        setLoading(false)
       }
-    } catch (err) {
-      console.log(err);
-      setLoading(false);
+    } else {
+      setFelidData({ ...felidData, family_json: JSON.stringify(state.family_json),initial:state.initial });
+      setLoading(false)
+      close()
     }
   };
 
@@ -467,15 +526,18 @@ const AgreementOneForm = ({
   }, [state.initial]);
 
   const handleSignature = (signature, clientIndex, label) => {
-    const today = new Date().toISOString().split('T')[0];
+    const now = new Date();
+    const today = now.toISOString().split('T')[0]; // Date in YYYY-MM-DD format
+    const time = now.toTimeString().split(' ')[0]; // Time in HH:MM:SS format
+    const dateTime = `${today} ${time}`; // Combine date and time
     if (label === "rcic_signature") {
-      setState({ ...state, rcic_signature: signature, date_signature_rcic: today });
+      setState({ ...state, rcic_signature: signature, date_signature_rcic: dateTime });
     } else if (label === "initial") {
       setState({ ...state, initial: signature });
     } else {
       setState((prevState) => {
         const family_json = [...prevState.family_json];
-        family_json[clientIndex] = { ...family_json[clientIndex], client_signature: signature, date_signature_client: today };
+        family_json[clientIndex] = { ...family_json[clientIndex], client_signature: signature, date_signature_client: dateTime };
         return { ...prevState, family_json };
       });
     }
@@ -554,7 +616,7 @@ const AgreementOneForm = ({
                 </div>
               ))}
             {/* Render client-specific fields */}
-            {state.family_json.map((client, index) => (
+            {openSignature === "yes" ? null : state.family_json.map((client, index) => (
               <React.Fragment key={index}>
                 <div className="form-group col-md-6 mb-0 mt-4">
                   <label htmlFor={`client_first_name_${index}`} className="font-size-4 text-black-2 line-height-reset">
@@ -599,7 +661,7 @@ const AgreementOneForm = ({
                     placeholder="Client's DOB"
                   />
                 </div>
-                <div className="form-group col-md-6 mb-0 mt-4">
+                {/* <div className="form-group col-md-6 mb-0 mt-4">
                   <SignaturePadComponent
                     signature={state.family_json[index].client_signature}
                     onEnd={(signature) => handleSignature(signature, index, "client_signature")}
@@ -611,10 +673,10 @@ const AgreementOneForm = ({
                     name={`Client Signature`}
                     onSignature={handleSignature}
                   />
-                </div>
+                </div> */}
 
                 {index > 0 && (
-                  <div className="col-3 mt-2 d-flex justify-content-end">
+                  <div className="col-3 mt-2 d-flex justify-content-end mx-10">
                     <button
                       type="button"
                       className="btn btn-danger mb-4"
@@ -627,7 +689,8 @@ const AgreementOneForm = ({
                 )}
               </React.Fragment>
             ))}
-            <div className="form-group col-md-6 mb-0 mt-4">
+            {console.log(openSignature === "yes" , index === "initial")}
+            <div className={(openSignature === "yes" && index === "initial") ? "form-group col-md-12 mb-0 mt-4" : "d-none"}>
               <SignaturePadComponent
                 onEnd={(signature) => handleSignature(signature, "", "initial")}
                 canvasProps={{ className: 'form-control mx-5 col' }}
@@ -637,7 +700,21 @@ const AgreementOneForm = ({
                 name={`Initial`}
                 onSignature={handleSignature} />
             </div>
-            <div className={SigningUserType === "admin" ? "form-group col-md-6 mb-0 mt-4" : "d-none"}>
+            <div className={(felidData.initial && (index !== "initial" && index !== "rcic_signature" && index !== "final") && openSignature === "yes") ? "form-group col-md-12 mb-0 mt-4" : "d-none"}>
+              <SignaturePadComponent
+                signature={state?.family_json[index]?.client_signature}
+                onEnd={(signature) => handleSignature(signature, index, "client_signature")}
+                canvasProps={{ className: 'form-control mx-5 col' }}
+                setState={setState}
+                state={state}
+                index={index}
+                label={`client_signature`}
+                name={`Client Signature`}
+                onSignature={handleSignature}
+              />
+            </div>
+
+            <div className={(openSignature === "yes" && index === "rcic_signature" && SigningUserType === "admin") ? "form-group col-md-12 mb-0 mt-4" : "d-none"}>
               <SignaturePadComponent
                 onEnd={(signature) => handleSignature(signature, "", "rcic_signature")}
                 canvasProps={{ className: 'form-control mx-5 col' }}
@@ -647,7 +724,7 @@ const AgreementOneForm = ({
                 name={`RCIC Signature`}
                 onSignature={handleSignature} />
             </div>
-            <div className='d-flex justify-content-center'>
+            <div className={openSignature === "yes" ? "d-none" : 'd-flex justify-content-center'}>
               <button
                 type="button"
                 className="btn btn-info mt-2"
@@ -659,14 +736,16 @@ const AgreementOneForm = ({
             </div>
           </div>
           <div className='form-group  d-flex flex-column'>
-            <p className='text-start'> {SigningUserType === "admin" ? "" : "Note: Allow access to open a pop-up window!"}</p>
+            {index === "final" ? "Are you sure to confirm submission? This signature cannot be updated later!" : ""}
+            <p className={SigningUserType === "admin" ? "d-none" : ' text-start p-2'}
+              style={{ backgroundColor: SigningUserType === "admin" ?"": "#fdff00" }}> Note: Allow access to open a pop-up window</p>
             <div className='text-center'>
               <button
                 type="submit"
                 className="btn btn-primary btn-small w-25 mt-5 rounded-5 text-uppercase p-8"
                 disabled={loading}
               >
-                {loading ? "Saving..." : "Save Agreement"}
+                {loading ? "Saving..." : openSignature === "yes" ? "Save signature" : "Save Agreement"}
               </button>
             </div>
           </div>

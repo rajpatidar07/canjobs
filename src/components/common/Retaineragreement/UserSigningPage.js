@@ -1,14 +1,31 @@
 import React, { useEffect, useState } from 'react'
-import AdobePDFViewer from '../Adobe/adobeFile'
+// import AdobePDFViewer from '../Adobe/adobeFile'
 import { GetAgreement, getSharePointParticularFolders } from '../../../api/api'
-import { useLocation } from 'react-router-dom'
+import {useLocation } from 'react-router-dom'
 import AgreementOneForm from '../../forms/Agreement/AgreementOneForm'
 import Loader from '../loader'
+import HtmlAgreementOne from './Html/HtmlAgreementOne'
+import HtmlAgreementTwo from './Html/HtmlAgreementTwo'
+import HtmlAgreementThree from './Html/HtmlAgreementThree'
+import HtmlAGreementFour from './Html/HtmlAGreementFour'
+import HtmlAgreementFive from './Html/HtmlAgreementFive'
+import HtmlAgreementSix from './Html/HtmlAgreementSix'
+import HtmlAgreementSeven from './Html/HtmlAgreementSeven'
+import HtmlAgreementEight from './Html/HtmlAgreementEight'
+import HTmlAgreementNine from './Html/HTmlAgreementNine'
+import HtmlAgreementTen from './Html/HtmlAgreementTen'
+import HtmlAgreementEleven from './Html/HtmlAgreementEleven'
+import HtmlAgreementTwelve from './Html/HtmlAgreementTwelve'
+import HtmlAgreementThirteen from './Html/HtmlAgreementThirteen'
+import HtmlAgreementFourTeen from './Html/HtmlAgreementFourTeen'
+import HtmlAgreementFifteenth from './Html/HtmlAgreementFifteenth'
+import HtmlAgreementsixteen from './Html/HtmlAgreementsixteen'
 export default function UserSigningPage() {
     const [loader, setLoader] = useState(false)
-    const [pdf, setPdf] = useState(false)
+    const [/*pdf,*/ setPdf] = useState(false)
     const [apicall, setApicall] = useState(false)
     const [felidData, setFelidData] = useState([])
+    const [clientIndex, setClientIndex] = useState()
     let [openAddFeildsModal, setOpenAddFeildsModal] = useState(false)
     let location = useLocation()
     let data = new URLSearchParams(location.search)
@@ -55,26 +72,37 @@ export default function UserSigningPage() {
     useEffect(() => {
         // Call the function when the component first renders
         GetAgreementPdf();
-        let timer;
+        document.body.classList.remove("admin_body");
+
+        // let timer;
         if (apicall) {
-            timer = setTimeout(() => {
-                // Function to be executed after 20 seconds when apicall is true because document update's take time 
-                GetAgreementPdf();
-                // Reset the state to false
-                setApicall(false);
-            }, 20000);
+            // timer = setTimeout(() => {
+            //     // Function to be executed after 20 seconds when apicall is true because document update's take time 
+            //     GetAgreementPdf();
+            // Reset the state to false
+            setApicall(false);
+            // }, 20000);
         }
 
         // Cleanup function to clear the timer if the component unmounts or myState changes
-        return () => clearTimeout(timer);
+        // return () => clearTimeout(timer);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [apicall]);
+    /*Function to open sign form modal */
+    const addSign = (e,index) => {
+        // e.preventDefault()
+        setOpenAddFeildsModal(true)
+        setClientIndex(index)
+    }
+    const familyJsonArray = felidData.family_json ?
+        (typeof felidData.family_json === "object") ?
+            felidData.family_json : JSON.parse(felidData.family_json) : [];
     return (
-        <div className='d-flex p-5'>
+        <div className='d-flex p-5' style={{ backgroundColor: "#423f3f" }}>
             {loader ?
                 <Loader />
-                : <div className='col-10'>
-                    <AdobePDFViewer
+                : <div  style={{ margin: "auto" }}>
+                    {/* <AdobePDFViewer
                         url={pdf["@microsoft.graph.downloadUrl"]}
                         data={pdf}
                         // userId={user_id}
@@ -85,16 +113,75 @@ export default function UserSigningPage() {
                         partnerList={[]}
                         setCommentsList={[]}
                         userType={""}
-                    />
+                    /> */}
+                    {type === "temporary resident visa"
+                        ? <HtmlAgreementOne felidData={felidData} emp_user_type={emp_user_type} addSign={addSign} />
+                        : type === "ATIP"
+                            ? <HtmlAgreementTwo felidData={felidData} emp_user_type={emp_user_type} />
+                            : type === "visitor"
+                                ? <HtmlAgreementThree /> :
+                                type === "study" ?
+                                    <HtmlAGreementFour />
+                                    : type === "work permit"
+                                        ? <HtmlAgreementFive />
+                                        : type === "post graduation work permit"
+                                            ? <HtmlAgreementSix />
+                                            : type === "prospective workers"
+                                                ? <HtmlAgreementSeven />
+                                                : type === "express entry"
+                                                    ? <HtmlAgreementEight />
+                                                    : type === "PNP + express entry/federal PR"
+                                                        ? <HTmlAgreementNine />
+                                                        : type === "super visa application"
+                                                            ? <HtmlAgreementTen />
+                                                            : type === "spousal sponsorship"
+                                                                ? <HtmlAgreementEleven />
+                                                                : type === "citizenship"
+                                                                    ? <HtmlAgreementTwelve />
+                                                                    : type === "PR card renewal"
+                                                                        ? <HtmlAgreementThirteen />
+                                                                        : type === "permanent residency travel document"
+                                                                            ? <HtmlAgreementFourTeen />
+                                                                            : type === "employers"
+                                                                                ? <HtmlAgreementFifteenth />
+                                                                                : type === "LMIA exempt employers"
+                                                                                    ? <HtmlAgreementsixteen />
+                                                                                    : null
+                    }
+                    
+                <div className='d-flex justify-content-center'>
+                    <button className="btn btn-primary text-decoration-none" onClick={(e) => addSign(e, "final")}>
+                        Final Submit
+                    </button>
+                </div>
                 </div>}
-            <div className='col-4'>
-                <button title='Add Flied' className='btn btn-primary'
-                    onClick={() => setOpenAddFeildsModal(true)}> Add Flied's</button>
+            <div className={"d-none col-4 position-sticky bg-white h-100vh"}>
+                <div className='p-10'>
+                    <h3>Add{felidData.initial ? "" : " Initial and Client"} Signature</h3>
+                    <button className={felidData.initial ? "d-none" : "btn btn-primary text-decoration-none"} style={{ fontFamily: "cursive" }}
+                        onClick={(e) => addSign(e, "initial")}>
+                        Initial
+                    </button>
+                    {(familyJsonArray || []).map((item, index) => (
+                        item.client_signature ? null :
+                            <span key={index}>Client Name {index + 1}: <span className="text-capitalize">{item.client_first_name + " " + item.client_last_name + "   "} </span><br/>
+                                <button className="btn btn-primary text-decoration-none flex-end" disabled={felidData.initial ? false : true} style={{ fontFamily: "cursive" }}
+                                    onClick={(e) => addSign(e, index)}>
+                                    {" "}Add Signature
+                                </button>
+                            </span>
+                    ))}
+                </div>
             </div>
+            {/* <div className='col-4 d-none'>
+                <button title='Add Flied' className='btn btn-primary'
+                    onClick={(e) => addSign(e,"")}> Add Flied's</button>
+            </div> */}
             {openAddFeildsModal ?
                 <AgreementOneForm
                     show={openAddFeildsModal}
-                    close={() => setOpenAddFeildsModal()}
+                    setFelidData={setFelidData}
+                    close={() => setOpenAddFeildsModal(false)}
                     //   userData={userData}
                     setApicall={setApicall}
                     felidData={felidData}
@@ -102,7 +189,9 @@ export default function UserSigningPage() {
                     user_id={user_id}
                     // openSignature={openSignature}
                     //   ViewPdfclose={close}
-                    folderId={folderId} />
+                    openSignature={"yes"}
+                    folderId={folderId}
+                    index={clientIndex} />
                 : null}
         </div>
     )

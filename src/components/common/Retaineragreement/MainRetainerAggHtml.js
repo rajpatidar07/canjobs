@@ -104,8 +104,8 @@ export default function MainRetainerAggHtml({ setApicall, close, openSignature, 
   return (
     <div className='mb-12'>
       {/*  */}
-      <div className={`d-flex ${openSignature === "yes" ? "justify-content-end px-2" : "justify-content-space-between"} mt-5`}>
-        <div className="back_btn_div">
+      <div className={`  mt-5`}>
+        <div className="back_btn_div position-fixed">
           <Link
             className="rounded-circle back-btn"
             style={{
@@ -132,16 +132,16 @@ export default function MainRetainerAggHtml({ setApicall, close, openSignature, 
             <IoMdArrowBack />
           </Link>
         </div>
-        <div>
+        <div className="d-flex justify-content-end px-2 justify-content-space-between">
           <button className='btn btn-primary text-end m-2' onClick={() => setOpenAddFeildsModal(true)}>{openSignature === "yes" ? "Add Signature" : "Add Felids"}</button>
-          <button className={felidData.agreement_date ? "btn btn-primary m-2 d-none" : "d-none"}
+          <button className={felidData.agreement_date ? "btn btn-primary m-2" : "d-none"}
             onClick={() => GeneratePdf()}
           >
             Generated Pdf</button>
         </div>
       </div>
       {agreementData.type === "temporary resident visa"
-        ? <HtmlAgreementOne userData={userData} felidData={felidData} emp_user_type={emp_user_type} />
+        ? <HtmlAgreementOne userData={userData} felidData={felidData} emp_user_type={emp_user_type} addSign={""} />
         : agreementData.type === "ATIP"
           ? <HtmlAgreementTwo userData={userData} felidData={felidData} emp_user_type={emp_user_type} />
           : agreementData.type === "visitor"
@@ -174,7 +174,7 @@ export default function MainRetainerAggHtml({ setApicall, close, openSignature, 
                                       ? <HtmlAgreementsixteen />
                                       : null
       }
-      <button className={felidData.agreement_date ? "btn btn-primary d-none" : "d-none"}
+      <button className={felidData.agreement_date ? "btn btn-primary " : "d-none"}
         onClick={() => GeneratePdf()}
       >
         Generated Pdf</button>

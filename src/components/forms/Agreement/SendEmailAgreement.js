@@ -405,7 +405,7 @@ export default function SendEmailAgreement({ show, close, user_id, emp_user_type
                             onChange={handleInputChange}
                             placeholder="Enter email"
                             id="addmail"
-                            className="text-capitalize w-100"
+                            className="w-100"
                         />
                         <button
                             type="button"

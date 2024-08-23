@@ -23,7 +23,8 @@ const AggrementOne = () => {
     emp_user_type,
     folderId: folderID /*, code*/,
   } = JSON.parse(data) || {};
-  const familyJsonArray = felidData?.family_json ? JSON.parse(felidData.family_json) : [];
+  const familyJsonArray = felidData?.family_json ? JSON.parse(felidData?.family_json) : [];
+  // console.log( JSON.parse(felidData?.family_json))
   // const latestCode = JSON.stringify(code)
   //   .replace('" <', "<")
   //   .replace('>"', ">")
@@ -219,30 +220,30 @@ const AggrementOne = () => {
               src="mailto:info@canpathways.ca"
               className="a"
               target="_blank"
-            >   info@canpathways.ca </Link> located at 
+            >   info@canpathways.ca </Link> located at
             <Text style={styles.textunderline}>
-            {" "}   Hopewell Pl NE #310 Calgary, AB T1Y 7J7,
+              {" "}   Hopewell Pl NE #310 Calgary, AB T1Y 7J7,
             </Text>
             <Text style={styles.textunderline}></Text> Canada and Client
-            <Text style={[styles.textunderline,{textTransform:"capitalize"}]} className="para_gap">
+            <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
 
               {" " + familyJsonArray[0].client_first_name + " " + familyJsonArray[0].client_last_name}
             </Text>
             {" "}(the “Client”)
             <Text className="p"> , located at </Text>
-            <Text style={[styles.textunderline,{textTransform:"capitalize"}]} className="para_gap">
+            <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
 
               {" " + felidData.client_address}
             </Text>
-             , Email
+            , Email
             <Text style={styles.textunderline} className="para_gap">
 
               {" " + felidData.client_email}
             </Text>
-             , Contact number
+            , Contact number
             <Text style={styles.textunderline} className="para_gap">
 
-              {" "+felidData.client_contact}
+              {" " + felidData.client_contact}
             </Text>
             .
           </Text>
@@ -1339,7 +1340,7 @@ const AggrementOne = () => {
                 <View style={styles.clientFormChild}>
                   <Text>
                     Given Name:
-                    <Text style={[styles.textunderline,{textTransform: "capitalize",}]} className="para_gap">
+                    <Text style={[styles.textunderline, { textTransform: "capitalize", }]} className="para_gap">
                       {" " + familyJsonArray[0].client_first_name || "_______________"}
                     </Text>
                   </Text>
@@ -1347,7 +1348,7 @@ const AggrementOne = () => {
                 <View style={styles.clientFormChild}>
                   <Text>
                     Family Name:
-                    <Text style={[[styles.textunderline,{textTransform: "capitalize",}], { textTransform: "capitalize" }]} className="para_gap">
+                    <Text style={[[styles.textunderline, { textTransform: "capitalize", }], { textTransform: "capitalize" }]} className="para_gap">
                       {" " + familyJsonArray[0].client_last_name || "_______________"}
                     </Text>
                   </Text>
@@ -1358,7 +1359,7 @@ const AggrementOne = () => {
                   <Text>
 
                     Address:
-                    <Text style={[styles.textunderline,{textTransform: "capitalize",}]} className="para_gap">
+                    <Text style={[styles.textunderline, { textTransform: "capitalize", }]} className="para_gap">
                       {" " + felidData.client_address || "_______________"}
                     </Text>
                   </Text>
@@ -1385,7 +1386,7 @@ const AggrementOne = () => {
                 <View style={styles.clientFormChild}>
                   <Text>
                     E-mail Address:
-                    <Text style={[styles.textunderline,{textTransform: "capitalize",}]} className="para_gap">
+                    <Text style={[styles.textunderline, { textTransform: "capitalize", }]} className="para_gap">
                       {" " + felidData.client_email || "_______________"}
                     </Text>
                   </Text>
@@ -1543,7 +1544,8 @@ const AggrementOne = () => {
               <View style={styles.clientForm}>
                 <View style={styles.clientFormChild}>
                   <Text style={[{ margin: 0, marginBottom: 5, maxWidth: 200 }, styles.textunderline]}>
-                    {!felidData.date_signature_client || felidData.date_signature_client === "0000-00-00"
+                    {!felidData.date_signature_client || felidData.date_signature_client === 
+"0000-00-00 00:00:00"
                       ? "___________________"
                       : felidData.date_signature_client}
                   </Text>
@@ -1554,7 +1556,8 @@ const AggrementOne = () => {
                     style={[{ margin: 0, marginBottom: 5, maxWidth: 200 }, styles.textunderline]}
                   >
                     {!felidData.date_signature_rcic ||
-                      felidData.date_signature_rcic === "0000-00-00"
+                      felidData.date_signature_rcic === 
+"0000-00-00 00:00:00"
                       ? "___________________"
                       : felidData.date_signature_rcic}
                   </Text>
@@ -1569,11 +1572,28 @@ const AggrementOne = () => {
                   {/* Client Signature */}
                   <View style={{ width: "50%", padding: 10 }}>
                     {item.client_signature ? (
-                      <Image
-                        source={{ uri: item.client_signature }}
-                        alt={`${item.client_first_name} ${item.client_last_name}`}
-                        style={{ width: "30%", height: "auto" }}
-                      />
+                      <View style={{ display: "flex", flexDirection: "column" }}>
+                        <Image
+                          src={
+                            item.client_signature
+                              ? item.client_signature
+                              : ""
+                          }
+                          alt={item.client_first_name + " " + item.client_last_name}
+
+                          style={{ width: "40%", height: "auto" }}
+                        />
+                        <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7, flex: "row" }}>
+                          <Text style={{ textTransform: "capitalize", flex: "column" }}>
+                            {item.client_first_name +
+                              " " +
+                              item.client_last_name + " "
+                            }
+                          </Text>
+                          <Text style={{ flex: "column" }}>
+                            {item.date_signature_client}</Text>
+                        </Text>
+                      </View>
                     ) : (
                       <Text>___________________</Text>
                     )}
@@ -1589,7 +1609,8 @@ const AggrementOne = () => {
                     </Text>
                     <Text >Name of Client {index + 1}</Text>
                     <Text style={[{ marginTop: 10 }, styles.textunderline]}>
-                      {(!item.date_signature_client || item.date_signature_client === "0000-00-00") ? "________________" : moment(item.date_signature_client).format("DD-MM-YYYY")}
+                      {(!item.date_signature_client || item.date_signature_client ===
+                        "0000-00-00 00:00:00") ? "________________" : item.date_signature_client}
                     </Text>
                     <Text >Date</Text>
                   </View>
@@ -1599,10 +1620,20 @@ const AggrementOne = () => {
               {/* RCIC Signature */}
               <View style={{ width: "50%", padding: 10 }}>
                 {felidData.rcic_signature ? (
-                  <Image
-                    source={{ uri: felidData.rcic_signature }}
-                    alt="RCIC"
-                    style={{ width: "30%", height: "auto" }} />
+
+                  <View style={{ display: "flex", flexDirection: "column" }}>
+                    <Image
+                      source={{ uri: felidData.rcic_signature }}
+                      alt="RCIC"
+                      style={{ width: "30%", height: "auto" }} />
+                    <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7, flex: "row" }}>
+                      <Text style={{ textTransform: "capitalize", flex: "column" }}>
+                        Harpreet Kaur{" "}
+                      </Text>
+                      <Text style={{ flex: "column" }}>
+                        {felidData.date_signature_rcic}</Text>
+                    </Text>
+                  </View>
                 ) : (
                   <Text>___________________</Text>
                 )}
@@ -1615,7 +1646,8 @@ const AggrementOne = () => {
                 </Text>
                 <Text >Name of Client</Text>
                 <Text style={[{ marginTop: 10 }, styles.textunderline]}>
-                  {felidData.date_signature_rcic === "0000-00-00" ? "________________" : moment(felidData.date_signature_rcic).format("DD-MM-YYYY")}
+                  {felidData.date_signature_rcic ===
+                    "0000-00-00 00:00:00" ? "________________" : felidData.date_signature_rcic}
                 </Text>
                 <Text >Date</Text>
               </View>
@@ -1628,11 +1660,11 @@ const AggrementOne = () => {
             AUTHORIZATION
           </Text>
           <Text style={{ marginTop: 10 }}>
-          I {" "}
-            <Text style={[styles.textunderline,{textTransform:"capitalize"}]} className="para_gap">
-               {familyJsonArray[0].client_first_name + " " + familyJsonArray[0].client_last_name}
+            I {" "}
+            <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
+              {familyJsonArray[0].client_first_name + " " + familyJsonArray[0].client_last_name}
             </Text>
-           {" "} ( hereinafter referred to as the “client”), hereby authorize and
+            {" "} ( hereinafter referred to as the “client”), hereby authorize and
             appoint Harpreet kaur (hereinafter referred to as the “RCIC” with a
             CICC# R533393), of CAN Pathways Immigration consultancy
             ltd.,(hereinafter referred to as the “firm”), to represent me in my
@@ -1743,9 +1775,9 @@ const AggrementOne = () => {
               marginTop: 15,
             }}
           >
-            <View style={[styles.clientForm, { textAlign: "center",marginTop:10 }]}>
+            <View style={[styles.clientForm, { textAlign: "center", marginTop: 30 }]}>
               <View style={styles.clientFormChild}>
-                <Text className="para_gap" style={{ margin: 0, textDecoration: "underline" ,textTransform:"capitalize"}}>
+                <Text className="para_gap" style={{ margin: 0, textDecoration: "underline", textTransform: "capitalize" }}>
                   {familyJsonArray[0].client_first_name && familyJsonArray[0].client_last_name
                     ? familyJsonArray[0].client_first_name +
                     " " +
@@ -1756,24 +1788,38 @@ const AggrementOne = () => {
               </View>
               <View style={[styles.clientFormChild, { alignSelf: "center" }]}>
                 {familyJsonArray[0].client_signature ?
-                  <Image
-                    src={
-                      familyJsonArray[0].client_signature
-                        ? familyJsonArray[0].client_signature
-                        : ""
-                    }
-                    alt={familyJsonArray[0].client_first_name + " " + familyJsonArray[0].client_last_name}
+                  <View style={{ display: "flex", flexDirection: "column" }}>
+                    <Image
+                      src={
+                        familyJsonArray[0].client_signature
+                          ? familyJsonArray[0].client_signature
+                          : ""
+                      }
+                      alt={familyJsonArray[0].client_first_name + " " + familyJsonArray[0].client_last_name}
 
-                    style={{ width: "40%", height: "auto", alignSelf: "center" }}
-                  /> : <Text>___________________</Text>}
-                <Text style={{ margin: "10px 0 30px 0" }}>Signatures</Text>
+                      style={{ width: "40%", height: "auto", alignSelf: "center" }}
+                    />
+                    <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7, flex: "row" }}>
+                      <Text style={{ textTransform: "capitalize", flex: "column" }}>
+                        {familyJsonArray[0].client_first_name +
+                          " " +
+                          familyJsonArray[0].client_last_name + " "
+                        }
+                      </Text>
+                      <Text style={{ flex: "column" }}>
+                        {familyJsonArray[0].date_signature_client}</Text>
+                    </Text>
+                  </View>
+                  : <Text>___________________</Text>}
+                <Text style={{ margin: "0 0 30px 0" }}>Signatures</Text>
               </View>
               <View style={styles.clientFormChild}>
                 <Text className="para_gap" style={{ margin: 0, textDecoration: "underline" }}>
                   {!familyJsonArray[0].date_signature_client ||
-                    familyJsonArray[0].date_signature_client === "0000-00-00"
+                    familyJsonArray[0].date_signature_client ===
+                    "0000-00-00 00:00:00"
                     ? "____________"
-                    : moment(familyJsonArray[0].date_signature_client).format("DD-MM-YYYY")}
+                    : familyJsonArray[0].date_signature_client}
                 </Text>
                 <Text style={{ margin: "10px 0 30px 0" }}>Date</Text>
               </View>

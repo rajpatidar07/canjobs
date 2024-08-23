@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import RetainerAgreement from '../../forms/Agreement/RetainerAgreement';
 import AgreementOneForm from '../../forms/Agreement/AgreementOneForm';
 import { GetAgreement, getSharePointParticularFolders, DeleteAgreement } from '../../../api/api';
-import { FaFilePdf } from "react-icons/fa";
+import { FaFilePdf, FaFileSignature, FaPlus } from "react-icons/fa";
 import MainRetainerAggHtml from './MainRetainerAggHtml';
 import ViewPdf from './viewPdf';
 import { IoMdMail } from "react-icons/io";
@@ -12,8 +12,9 @@ import { RiDeleteBin5Line } from 'react-icons/ri';
 import SAlert from '../sweetAlert';
 import { toast } from 'react-toastify';
 import Newpdf from '../Adobe/newpdf';
-import { TiHtml5 } from "react-icons/ti";
-import { GrTableAdd } from "react-icons/gr";
+import { IoDocumentTextSharp } from "react-icons/io5";
+import { FaEdit } from "react-icons/fa";
+import AddClientForm from '../../forms/Agreement/AddClientForm';
 export default function RetauberAgreementList({
     user_id,
     emp_user_type,
@@ -25,6 +26,7 @@ export default function RetauberAgreementList({
     const [openAgreement, setOpenAgreement] = useState(false);
     const [openAddAgreementForm, setOpenAddAgreementForm] = useState(false);
     const [openAddAgreementFelids, setOpenAddAgreementFelids] = useState(false);
+    const [openAddClientFeilds, setOpenAddClientFeilds] = useState(false);
     const [openViewAgreement, setOpenViewAgreement] = useState(false);
     const [openSignfPspdfkit, setOpenSignfPspdfkit] = useState(false);
     const [openViewAgreementSign, setOpenViewAgreementSign] = useState("");
@@ -129,7 +131,10 @@ export default function RetauberAgreementList({
             console.log(err);
         }
     }
-
+    const addSignatureCLick = async () => {
+        setOpenViewAgreementSign("sign")
+        setOpenAddAgreementFelids(true)
+    }
 
     return (
 
@@ -239,7 +244,7 @@ export default function RetauberAgreementList({
                                                     <div className="btn-group button_group" role="group">
                                                         <button
                                                             className="btn btn-outline-info action_btn "
-                                                            style={{ fontSize: "10px" }}
+
                                                             onClick={() => {
                                                                 setOpenAgreement(true)
                                                                 setAgreementData(data)
@@ -253,43 +258,65 @@ export default function RetauberAgreementList({
                                                                 //     }
                                                                 // });
                                                             }}
-                                                            title=" Update doc"
-                                                        >                            
-                                                                     <TiHtml5 />
+                                                            title=" View and update doc"
+                                                        >
+                                                            <span className='text-gray px-2'>
+                                                                <IoDocumentTextSharp />
+                                                            </span>
                                                         </button>
                                                         <button
                                                             className="btn btn-outline-info action_btn "
-                                                            style={{ fontSize: "10px" }}
+
                                                             onClick={() => {
                                                                 setOpenAddAgreementFelids(true)
                                                                 setAgreementData(data)
                                                             }}
                                                             title="Add Felids"
-                                                        >                                         <GrTableAdd />
+                                                        >
+                                                            <span className='text-gray px-2'>
+                                                                <FaEdit />
+                                                            </span>
+                                                        </button>
+                                                        <button
+                                                            className="btn btn-outline-info action_btn d-none"
+
+                                                            onClick={() => {
+                                                                setOpenAddClientFeilds(true)
+                                                                setAgreementData(data)
+                                                            }}
+                                                            title="Add Client"
+                                                        >
+                                                            <span className='text-gray px-2'>
+                                                                <FaPlus />
+                                                            </span>
                                                         </button>
                                                         <button
                                                             className="btn btn-outline-info action_btn "
-                                                            style={{ fontSize: "10px" }}
+
                                                             disabled={!data.document_id}
                                                             onClick={() => {
                                                                 setOpenViewAgreement(true)
                                                                 setAgreementData(data)
                                                                 GetAgreementPdf(data)
                                                             }}
-                                                            title="View Pdf"><FaFilePdf />
+                                                            title="View Retainer Agreement">
+                                                            <span className='text-gray px-2'>
+                                                                <FaFilePdf />
+                                                            </span>
                                                         </button>
-                                                        {console.log(data.client_email,data.document_id)}
                                                         <button
                                                             className="btn btn-outline-info action_btn "
-                                                            style={{ fontSize: "10px" }}
+
                                                             onClick={() => {
                                                                 setOpenSendMail(true)
                                                                 setAgreementData(data)
                                                                 GetAgreementPdf(data)
                                                             }}
-                                                            disabled={!data.client_email||!data.document_id}
-                                                            title="Send Mail">
-                                                            <IoMdMail />
+                                                            disabled={!data.client_email || !data.document_id}
+                                                            title="Send Retainer Agreement">
+                                                            <span className='text-gray px-2'>
+                                                                <IoMdMail />
+                                                            </span>
                                                         </button>
                                                         <button
                                                             className="btn btn-outline-info action_btn d-none"
@@ -298,17 +325,31 @@ export default function RetauberAgreementList({
                                                                 setAgreementData(data)
                                                                 GetAgreementPdf(data)
                                                             }}
-                                                            disabled={!data.document_id}   
+                                                            disabled={!data.document_id}
                                                             title="Sign document with pspdfkit"
                                                         >
                                                             Sign document with pspdfkit
+                                                        </button>
+                                                        <button
+                                                            className="btn btn-outline-info action_btn "
+                                                            onClick={() => {
+                                                                addSignatureCLick()
+                                                                setAgreementData(data)
+                                                                GetAgreementPdf(data)
+                                                            }}
+                                                            disabled={!data.initial}
+                                                            title="RCIC Sign"
+                                                        >
+                                                            <span className='text-gray px-2'>
+                                                                <FaFileSignature />
+                                                            </span>
                                                         </button>
                                                         <button
                                                             className="btn btn-outline-info action_btn"
                                                             onClick={() => ShowDeleteAlert(data)}
                                                             title="Delete"
                                                         >
-                                                            <span className=" text-danger">
+                                                            <span className="px-2 text-danger">
                                                                 <RiDeleteBin5Line />
                                                             </span>
                                                         </button>
@@ -346,6 +387,23 @@ export default function RetauberAgreementList({
                         show={openAddAgreementFelids}
                         close={() => {
                             setOpenAddAgreementFelids(false)
+                            setOpenViewAgreementSign("")
+                        }}
+                        userData={userData}
+                        setApicall={setApicall}
+                        felidData={agreementData}
+                        emp_user_type={emp_user_type}
+                        user_id={user_id}
+                        openSignature={openViewAgreementSign === "sign" ? "yes" : "no"}
+                        folderId={folderId}
+                        index={openViewAgreementSign === "sign" ? "rcic_signature":null}
+                    />
+                    : null}
+                {openAddClientFeilds ?
+                    <AddClientForm
+                        show={openAddClientFeilds}
+                        close={() => {
+                            setOpenAddClientFeilds(false)
                             setOpenViewAgreementSign("")
                         }}
                         userData={userData}
