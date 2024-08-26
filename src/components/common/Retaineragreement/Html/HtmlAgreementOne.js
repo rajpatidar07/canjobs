@@ -52,7 +52,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type, addSign }) => {
         <b>Client File Number: <span>${felidData?.client_file_no || ""}</span></b>
       </div>
       <p>
-        This Retainer Agreement is made this  <span class="para_gap">${(felidData?.client_file_no || "")} </span> day of <span class="para_gap"> ${!felidData.agreement_date || felidData.agreement_date === "0000-00-00" ? "" : (felidData && (felidData.agreement_date ? moment(new Date(felidData?.agreement_date)).format("Do") : " ")) || ""}</span> <span class="para_gap">${!felidData.agreement_date || felidData.agreement_date === "0000-00-00" ? "" : (felidData && (felidData.agreement_date ? moment(new Date(felidData?.agreement_date)).format("MMMM") : " ")) || ""} </span><span class="para_gap"> ${!felidData.agreement_date || felidData.agreement_date === "0000-00-00" ? "" : (felidData && (felidData.agreement_date ? moment(new Date(felidData?.agreement_date)).format("YYYY") : " ")) || ""}</span>
+        This Retainer Agreement is made this  <span class="para_gap">${(felidData?.client_file_no || "")} </span> day of <span class="para_gap"> ${!felidData.agreement_date || felidData.agreement_date === "0000-00-00 00:00:00" ? "" : (felidData && (felidData.agreement_date ? moment(new Date(felidData?.agreement_date)).format("Do") : " ")) || ""}</span> <span class="para_gap">${!felidData.agreement_date || felidData.agreement_date === "0000-00-00 00:00:00" ? "" : (felidData && (felidData.agreement_date ? moment(new Date(felidData?.agreement_date)).format("MMMM") : " ")) || ""} </span><span class="para_gap"> ${!felidData.agreement_date || felidData.agreement_date === "0000-00-00 00:00:00" ? "" : (felidData && (felidData.agreement_date ? moment(new Date(felidData?.agreement_date)).format("YYYY") : " ")) || ""}</span>
         between Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur
         (the “RCIC”), RCIC Membership Number <span>R533393</span>, phone number
         <span>4038885308</span>
@@ -1097,7 +1097,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type, addSign }) => {
     </div>
     <div style="width: 50%">
         <p class="para_gap" style="margin: 0">
-            <span class=${felidData.date_signature_rcic === "0000-00-00" ? "d-none" : ""} style="max-width: 200px;">${felidData.date_signature_rcic ? felidData.date_signature_rcic : ''}</span>
+            <span class=${felidData.date_signature_rcic === "0000-00-00 00:00:00" ? "d-none" : ""} style="max-width: 200px;">${felidData.date_signature_rcic ? felidData.date_signature_rcic : ''}</span>
         </p>
         <p style="margin: 0 0 30px 0">Date</p>
     </div>
@@ -1234,7 +1234,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type, addSign }) => {
           <p style="margin: 0 0 30px 0">Signatures</p>
         </div>
         <div style="width: 33.33%; text-align: center">
-          <p class="para_gap" style="margin: 0">${(!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client === "0000-00-00") ? "" : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</p>
+          <p class="para_gap" style="margin: 0">${(!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00") ? "" : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</p>
           <p style="margin: 0 0 30px 0">Date</p>
         </div>
       </div>

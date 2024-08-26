@@ -314,7 +314,12 @@ export default function RetauberAgreementList({
                                                                 setAgreementData(data)
                                                                 GetAgreementPdf(data)
                                                             }}
-                                                            disabled={!data.client_email || !data.document_id ||data.rcic_signature}
+                                                            disabled={(!data.client_email && !data.document_id)
+                                                                || (data.initial ?
+                                                                    data.rcic_signature ?
+                                                                        true :
+                                                                        false :
+                                                                    false)}
                                                             title="Send Retainer Agreement">
                                                             <span className='text-gray px-2'>
                                                                 <IoMdMail />
@@ -339,9 +344,9 @@ export default function RetauberAgreementList({
                                                                 setAgreementData(data)
                                                                 GetAgreementPdf(data)
                                                             }}
-                                                            disabled={!data.initial||data.rcic_signature}
+                                                            disabled={!data.initial || data.rcic_signature}
                                                             title="RCIC Sign"
-                                                            
+
                                                         >
                                                             <span className='text-gray px-2'>
                                                                 <FaFileSignature />
@@ -399,7 +404,7 @@ export default function RetauberAgreementList({
                         user_id={user_id}
                         openSignature={openViewAgreementSign === "sign" ? "yes" : "no"}
                         folderId={folderId}
-                        index={openViewAgreementSign === "sign" ? "rcic_signature":null}
+                        index={openViewAgreementSign === "sign" ? "rcic_signature" : null}
                     />
                     : null}
                 {openAddClientFeilds ?

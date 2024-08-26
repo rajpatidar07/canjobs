@@ -1777,7 +1777,7 @@ const AggrementOne = () => {
           >
             <View style={[styles.clientForm, { textAlign: "center", marginTop: 30 }]}>
               <View style={styles.clientFormChild}>
-                <Text className="para_gap" style={{ margin: 0, textDecoration: "underline", textTransform: "capitalize" }}>
+                <Text className="para_gap" style={{ margin: 0,marginBottom:15, textDecoration: "underline", textTransform: "capitalize" }}>
                   {familyJsonArray[0].client_first_name && familyJsonArray[0].client_last_name
                     ? familyJsonArray[0].client_first_name +
                     " " +

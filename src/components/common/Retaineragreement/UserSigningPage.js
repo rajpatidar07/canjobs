@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 // import AdobePDFViewer from '../Adobe/adobeFile'
-import { GetAgreement, getSharePointParticularFolders } from '../../../api/api'
+import { GetAgreement/*, getSharePointParticularFolders*/ } from '../../../api/api'
 import {useLocation } from 'react-router-dom'
 import AgreementOneForm from '../../forms/Agreement/AgreementOneForm'
 import Loader from '../loader'
@@ -22,7 +22,7 @@ import HtmlAgreementFifteenth from './Html/HtmlAgreementFifteenth'
 import HtmlAgreementsixteen from './Html/HtmlAgreementsixteen'
 export default function UserSigningPage() {
     const [loader, setLoader] = useState(false)
-    const [/*pdf,*/ setPdf] = useState(false)
+    // const [pdf, setPdf] = useState(false)
     const [apicall, setApicall] = useState(false)
     const [felidData, setFelidData] = useState([])
     const [clientIndex, setClientIndex] = useState()
@@ -32,7 +32,7 @@ export default function UserSigningPage() {
     let user_id = data.get("id")
     let emp_user_type = data.get("user")
     let folderId = data.get("folderId")
-    let document_id = data.get("documentId")
+    // let document_id = data.get("documentId")
     let type = data.get("type")
     //http://localhost:3000/signagreement?id=1175&user=employee&folderId=01PMN6UKWBNI553364NFDZFRZKZUYIGV65&documentId=01PMN6UKUQQSVK67PIZRH2FJHBCTIETUEB
     // console.log( user_id,
@@ -42,28 +42,29 @@ export default function UserSigningPage() {
     const GetAgreementPdf = async (data) => {
         setLoader(true)
         try {
-            let res = await getSharePointParticularFolders(
-                user_id,
-                emp_user_type,
-                folderId
-            );
+            // let res = await getSharePointParticularFolders(
+            //     user_id,
+            //     emp_user_type,
+            //     folderId
+            // );
             let Agreeres = await GetAgreement("", user_id, emp_user_type, type)
-            if (res.data.data) {
+            if (Agreeres.data.data) {
                 setFelidData(Agreeres.data.data[0])
+                setLoader(false);
             } else {
                 setFelidData([])
             }
-            if (res.data.status === 1) {
-                setLoader(false);
-                if (res.data.data.find((item) => item.id === document_id)) {
-                    setPdf(res.data.data.find((item) => item.id === document_id))
-                    // console.log(res.data.data.find((item) => item.id === agreementdocument_id))
-                } else if (res.data.data === "No Documents Found") {
-                    setLoader(false);
-                } else {
-                    setLoader(false);
-                }
-            }
+            // if (res.data.status === 1) {
+            //     setLoader(false);
+            //     if (res.data.data.find((item) => item.id === document_id)) {
+            //         setPdf(res.data.data.find((item) => item.id === document_id))
+            //         // console.log(res.data.data.find((item) => item.id === agreementdocument_id))
+            //     } else if (res.data.data === "No Documents Found") {
+            //         setLoader(false);
+            //     } else {
+            //         setLoader(false);
+            //     }
+            // }
         } catch (Err) {
             console.log(Err);
             setLoader(false);
@@ -72,7 +73,7 @@ export default function UserSigningPage() {
     useEffect(() => {
         // Call the function when the component first renders
         GetAgreementPdf();
-        document.body.classList.remove("admin_body");
+        // document.body.classList.remove("admin_body");
 
         // let timer;
         if (apicall) {
@@ -94,7 +95,8 @@ export default function UserSigningPage() {
         setOpenAddFeildsModal(true)
         setClientIndex(index)
     }
-    const familyJsonArray = felidData.family_json ? JSON.parse(felidData.family_json) : [];
+    const familyJsonArray = felidData?.family_json ? JSON.parse(felidData.family_json) : [];
+    console.log((felidData),familyJsonArray)
     return (
         <div className='d-flex p-5' style={{ backgroundColor: "#423f3f" }}>
             {loader ?

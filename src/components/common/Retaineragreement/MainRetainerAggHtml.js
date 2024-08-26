@@ -189,7 +189,9 @@ export default function MainRetainerAggHtml({ setApicall, close, openSignature, 
           user_id={user_id}
           // openSignature={openSignature}
           ViewPdfclose={close}
-          folderId={folderId} />
+          folderId={folderId}
+          openSignature={"no"}
+          index={null} />
         : null}
     </div>
   )

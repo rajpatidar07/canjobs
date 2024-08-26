@@ -463,9 +463,7 @@ const AgreementOneForm = ({
   const onFormSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    // console.log(state)
     if ((openSignature === "yes" && (index === "rcic_signature" || index === "final")) || openSignature === "no") {
-      console.log(state.family_json)
       try {
         let res = await AddUpdateAgreement(state)
         if (res.data.status === 1 && res.data.message === "Agreement updated successfully.") {
@@ -512,7 +510,7 @@ const AgreementOneForm = ({
         setLoading(false)
       }
     } else {
-      setFelidData({ ...felidData, family_json: JSON.stringify(state.family_json),initial:state.initial });
+      setFelidData({ ...felidData, family_json: JSON.stringify(state.family_json), initial: state.initial });
       setLoading(false)
       close()
     }
@@ -689,7 +687,6 @@ const AgreementOneForm = ({
                 )}
               </React.Fragment>
             ))}
-            {console.log(openSignature === "yes" , index === "initial")}
             <div className={(openSignature === "yes" && index === "initial") ? "form-group col-md-12 mb-0 mt-4" : "d-none"}>
               <SignaturePadComponent
                 onEnd={(signature) => handleSignature(signature, "", "initial")}
@@ -738,14 +735,18 @@ const AgreementOneForm = ({
           <div className='form-group  d-flex flex-column'>
             {index === "final" ? "Are you sure to confirm submission? This signature cannot be updated later!" : ""}
             <p className={SigningUserType === "admin" ? "d-none" : ' text-start p-2'}
-              style={{ backgroundColor: SigningUserType === "admin" ?"": "#fdff00" }}> Note: Allow access to open a pop-up window</p>
+              style={{ backgroundColor: SigningUserType === "admin" ? "" : "#fdff00" }}> Note: Allow access to open a pop-up window</p>
             <div className='text-center'>
               <button
                 type="submit"
                 className="btn btn-primary btn-small w-25 mt-5 rounded-5 text-uppercase p-8"
                 disabled={loading}
               >
-                {loading ? "Saving..." : openSignature === "yes" ? "Save signature" : "Save Agreement"}
+                {loading
+                  ? "Saving..."
+                  : openSignature === "yes" && index !== "final"
+                    ? "Save signature"
+                    : "Save Agreement"}
               </button>
             </div>
           </div>
