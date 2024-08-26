@@ -77,10 +77,11 @@ export default function MainRetainerAggHtml({ setApicall, close, openSignature, 
     } {
       if (felidData.pdf_genrated_status === "0") {
         let data = {
-          ...felidData,
+          id: felidData.id,
+          type: felidData.type,
           pdf_genrated_status: "1"
         }
-        console.log(data)
+        console.log(data.family_json)
         try {
           await AddUpdateAgreement(data)
           setApicall(true)

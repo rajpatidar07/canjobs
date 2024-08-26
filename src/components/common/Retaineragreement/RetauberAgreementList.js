@@ -344,7 +344,13 @@ export default function RetauberAgreementList({
                                                                 setAgreementData(data)
                                                                 GetAgreementPdf(data)
                                                             }}
-                                                            disabled={!data.initial || data.rcic_signature}
+                                                            disabled={data.initial ?
+                                                                data.rcic_signature
+                                                                    ? true
+                                                                    : false
+                                                                : data.initial
+                                                                    ? false
+                                                                    : true}
                                                             title="RCIC Sign"
 
                                                         >
