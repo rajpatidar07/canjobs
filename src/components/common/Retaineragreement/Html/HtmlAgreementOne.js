@@ -1083,7 +1083,8 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type, addSign }) => {
             />
                   <small class="row ">
                     <span class="col text-capitalize" >
-                      Harpreet kaur ${felidData.date_signature_rcic}</span>
+                      Harpreet kaur ${felidData.date_signature_rcic === "0000-00-00 00:00:00" ? '' : felidData.date_signature_rcic}</span>
+
                   </small>
                       </div>
         </p>
