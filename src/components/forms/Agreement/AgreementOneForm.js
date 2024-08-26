@@ -540,7 +540,6 @@ const AgreementOneForm = ({
       });
     }
   };
-  const familyJsonArray = state?.family_jso? JSON.parse(state?.family_json) : [];
   return (
     <Modal
       show={show}
@@ -614,7 +613,7 @@ const AgreementOneForm = ({
                 </div>
               ))}
             {/* Render client-specific fields */}
-            {openSignature === "yes"  ? null : familyJsonArray.map((client, index) => (
+            {openSignature === "yes" ? null : state.family_json.map((client, index) => (
               <React.Fragment key={index}>
                 <div className="form-group col-md-6 mb-0 mt-4">
                   <label htmlFor={`client_first_name_${index}`} className="font-size-4 text-black-2 line-height-reset">
