@@ -62,8 +62,7 @@ class ViewSDKClient {
        userType === "admin" ||
          userType === "agent"
           ? true
-          :
-          false, // Show annotation tools
+          : false, // Show annotation tools
       showDownloadPDF: true, // Show download PDF option
       showPrintPDF: true, // Show print PDF option
       enableFormFilling: true, // Enable form filling

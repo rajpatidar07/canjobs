@@ -1,6 +1,7 @@
 import React, { useEffect, useState /*, useRef */ } from "react";
 import ViewSDKClient from "./ViewSDKClient.js";
 import CommentSection from "./commentSection.js";
+import $ from 'jquery';
 const AdobePDFViewer = ({
   url,
   data,
@@ -119,7 +120,37 @@ const AdobePDFViewer = ({
       // viewSDKClient.registerSaveApiHandler(userId, annotationId, DocUserType);
       viewSDKClient.registerGetUserProfileApiHandler();
     });
+   
+    let timer;
+        timer = setTimeout(() => {
+          console.log("call timeout===================");
+          // const iframe = document.querySelector('#iframe-pdf-div'); // Use the actual id or selector of the iframe
+// console.log("iframe===="+iframe);
+          // Step 2: Access the document inside the iframe
+          //  const iframeDocument = iframe.document;
+          // console.log("iframeDoc=="+iframeDocument);
+          // // Step 3: Select the li element using data-test-id
+          // var dt = $("#iframe-pdf-div").attr("data-test-id");
+          // console.log("dt==="+dt);
+          // const element = iframe.querySelector('[data-test-id="qt-verb-comment-stickynote"]');
+          // console.log("element==================="+element);
+         
+          var iframeContent = $('#iframe-pdf-div').contents();
+console.log("iframeContent"+iframeContent);
+          // Phir specific li element ko select karke hide kar dete hain
+          console.log("======"+ JSON.stringify(iframeContent.find('li[data-test-id="qt-verb-comment-stickynote"]')));
+          var elements = iframeContent.find('li[data-test-id="qt-verb-comment-stickynote"]');
 
+          // Ab in elements pe koi bhi jQuery method apply kar sakte hain, jaise hide
+          elements.css("display","none  !important");
+          // // Step 4: Hide the element
+          // if (element) {
+          //     element.style.display = 'none';
+          // }
+        }, 10000);
+
+    // Cleanup function to clear the timer if the component unmounts or myState changes
+    return () => clearTimeout(timer);
     // eslint-disable-next-line
   }, [url]);
   /*Render method to Highlight the annotation from clicking it */
