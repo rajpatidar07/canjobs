@@ -278,7 +278,7 @@ const AggrementOne = () => {
             Details of Applicant's and dependents to be added in this application
           </Text>
           <View>
-            {(familyJsonArray || []).map((item, index) => (
+            {(familyJsonArray.slice(1) || []).map((item, index) => (
               <View key={index}>
                 <Text>
                   {`${index + 1}.  Client Name : `}
@@ -1566,8 +1566,56 @@ const AggrementOne = () => {
               </View>
             </View> */}
             <View style={{ flexDirection: "row", flexWrap: "wrap", marginBottom: 20 }}>
+
+            <React.Fragment >
+                  {/* Client Signature */}
+                  <View style={{ width: "50%", padding: 10 }}>
+                    {familyJsonArray?.[0].client_signature ? (
+                      <View style={{ display: "flex", flexDirection: "column" }}>
+                        <Image
+                          src={
+                            familyJsonArray?.[0].client_signature
+                              ? familyJsonArray?.[0].client_signature
+                              : ""
+                          }
+                          alt={familyJsonArray?.[0].client_first_name + " " + familyJsonArray?.[0].client_last_name}
+
+                          style={{ width: "40%", height: "auto" }}
+                        />
+                        <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7, flex: "row" }}>
+                          <Text style={{ textTransform: "capitalize", flex: "column" }}>
+                            {familyJsonArray?.[0].client_first_name +
+                              " " +
+                              familyJsonArray?.[0].client_last_name + " "
+                            }
+                          </Text>
+                          <Text style={{ flex: "column" }}>
+                            {familyJsonArray?.[0].date_signature_client}</Text>
+                        </Text>
+                      </View>
+                    ) : (
+                      <Text>___________________</Text>
+                    )}
+                    <Text>Signature of Client </Text>
+                  </View>
+
+                  {/* Client Name */}
+                  <View style={{ width: "50%", padding: 10 }}>
+                    <Text style={[{ textTransform: "capitalize", marginBottom: 5 }, styles.textunderline]}>
+                      {familyJsonArray?.[0].client_first_name && familyJsonArray?.[0].client_last_name
+                        ? `${familyJsonArray?.[0].client_first_name} ${familyJsonArray?.[0].client_last_name}`
+                        : "_________________"}
+                    </Text>
+                    <Text >Name of Client </Text>
+                    <Text style={[{ marginTop: 10 }, styles.textunderline]}>
+                      {(!familyJsonArray?.[0].date_signature_client || familyJsonArray?.[0].date_signature_client ===
+                        "0000-00-00 00:00:00") ? "________________" : familyJsonArray?.[0].date_signature_client}
+                    </Text>
+                    <Text >Date</Text>
+                  </View>
+                </React.Fragment>
               {/* Mapping over the familyJsonArray to create the Client Signature section */}
-              {(familyJsonArray || []).map((item, index) => (
+              {(familyJsonArray.slice(1) || []).map((item, index) => (
                 <React.Fragment key={index}>
                   {/* Client Signature */}
                   <View style={{ width: "50%", padding: 10 }}>
@@ -1597,7 +1645,7 @@ const AggrementOne = () => {
                     ) : (
                       <Text>___________________</Text>
                     )}
-                    <Text>Signature of Client {index + 1}</Text>
+                    <Text>Signature of Family member {index + 1}</Text>
                   </View>
 
                   {/* Client Name */}
@@ -1607,7 +1655,7 @@ const AggrementOne = () => {
                         ? `${item.client_first_name} ${item.client_last_name}`
                         : "_________________"}
                     </Text>
-                    <Text >Name of Client {index + 1}</Text>
+                    <Text >Name of Family member {index + 1}</Text>
                     <Text style={[{ marginTop: 10 }, styles.textunderline]}>
                       {(!item.date_signature_client || item.date_signature_client ===
                         "0000-00-00 00:00:00") ? "________________" : item.date_signature_client}

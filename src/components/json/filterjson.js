@@ -348,6 +348,7 @@ const filterjson = {
     "apprenticeship",
     "internship",
     "freelance",
+    "local",
     "swep",
     "other",
   ],

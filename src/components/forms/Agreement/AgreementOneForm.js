@@ -393,26 +393,26 @@ const AgreementOneForm = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [felidData]);
 
-  const addClient = () => {
-    const emptyClientState = {
-      client_first_name: "",
-      client_last_name: "",
-      client_signature: "",
-      date_signature_client: "",
-      client_date_of_birth: ""
-    };
-    setState((prevState) => ({
-      ...prevState,
-      family_json: [...prevState.family_json, { ...emptyClientState }]
-    }));
-  };
+  // const addClient = () => {
+  //   const emptyClientState = {
+  //     client_first_name: "",
+  //     client_last_name: "",
+  //     client_signature: "",
+  //     date_signature_client: "",
+  //     client_date_of_birth: ""
+  //   };
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     family_json: [...prevState.family_json, { ...emptyClientState }]
+  //   }));
+  // };
 
-  const removeClient = (index) => {
-    setState((prevState) => ({
-      ...prevState,
-      family_json: prevState.family_json.filter((_, i) => i !== index)
-    }));
-  };
+  // const removeClient = (index) => {
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     family_json: prevState.family_json.filter((_, i) => i !== index)
+  //   }));
+  // };
 
   const handleClientChange = (index, event) => {
     const { name, value } = event.target;
@@ -559,6 +559,80 @@ const AgreementOneForm = ({
         <form onSubmit={onFormSubmit}>
           <h5 className="text-center mb-7 pt-2">{openSignature === "yes" ? "Add Signature" : "Add Retainer Agreement Fields"}</h5>
           <div className="row">
+             {/* Render client-specific fields */}
+             {openSignature === "yes" ? null : state?.family_json[0] &&(
+              <React.Fragment key={index}>
+                <div className="form-group col-md-6 mb-0 mt-4">
+                  <label htmlFor={`client_first_name_0`} className="font-size-4 text-black-2 line-height-reset">
+                    Client's First Name
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control mx-5 col"
+                    value={state?.family_json[0]?.client_first_name}
+                    onChange={(e) => handleClientChange(0, e)}
+                    id={`client_first_name_0`}
+                    name="client_first_name"
+                    placeholder="Client's first name"
+                  />
+                </div>
+                <div className="form-group col-md-6 mb-0 mt-4">
+                  <label htmlFor={`client_last_name_0`} className="font-size-4 text-black-2 line-height-reset">
+                    Client's Last Name
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control mx-5 col"
+                    value={state?.family_json[0]?.client_last_name}
+                    onChange={(e) => handleClientChange(0, e)}
+                    id={`client_last_name_0`}
+                    name="client_last_name"
+                    placeholder="Client's last name"
+                  />
+                </div>
+                <div className="form-group col-md-6 mb-0 mt-4">
+                  <label htmlFor={`client_date_of_birth_0`} className="font-size-4 text-black-2 line-height-reset">
+                    Client's Date of Birth
+                  </label>
+                  <input
+                    type="date"
+                    className="coustam_datepicker form-control mx-5 col"
+                    value={state?.family_json[0]?.client_date_of_birth}
+                    onChange={(e) => handleClientChange(0, e)}
+                    onKeyDownCapture={(e) => e.preventDefault()}
+                    id={`client_date_of_birth_0`}
+                    name="client_date_of_birth"
+                    placeholder="Client's DOB"
+                  />
+                </div>
+                {/* <div className="form-group col-md-6 mb-0 mt-4">
+                  <SignaturePadComponent
+                    signature={state.family_json[index].client_signature}
+                    onEnd={(signature) => handleSignature(signature, index, "client_signature")}
+                    canvasProps={{ className: 'form-control mx-5 col' }}
+                    setState={setState}
+                    state={state}
+                    index={index}
+                    label={`client_signature`}
+                    name={`Client Signature`}
+                    onSignature={handleSignature}
+                  />
+                </div> */}
+
+                {/*index > 0 && (
+                  <div className="col-3 mt-2 d-flex justify-content-end mx-10">
+                    <button
+                      type="button"
+                      className="btn btn-danger mb-4"
+                      onClick={() => removeClient(index)}
+                      title='Remove Client'
+                    >
+                      Remove Client
+                    </button>
+                  </div>
+                )*/}
+              </React.Fragment>
+            )}
             {openSignature === "yes" ? null :
               (SigningUserType === "admin" ? [
                 { label: "Client Address", name: "client_address", type: "text" },
@@ -612,80 +686,7 @@ const AgreementOneForm = ({
                   {errors[name] && <span className="text-danger font-size-3 mx-5">{errors[name]}</span>}
                 </div>
               ))}
-            {/* Render client-specific fields */}
-            {openSignature === "yes" ? null : state.family_json.map((client, index) => (
-              <React.Fragment key={index}>
-                <div className="form-group col-md-6 mb-0 mt-4">
-                  <label htmlFor={`client_first_name_${index}`} className="font-size-4 text-black-2 line-height-reset">
-                    Client's First Name
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control mx-5 col"
-                    value={client.client_first_name}
-                    onChange={(e) => handleClientChange(index, e)}
-                    id={`client_first_name_${index}`}
-                    name="client_first_name"
-                    placeholder="Client's first name"
-                  />
-                </div>
-                <div className="form-group col-md-6 mb-0 mt-4">
-                  <label htmlFor={`client_last_name_${index}`} className="font-size-4 text-black-2 line-height-reset">
-                    Client's Last Name
-                  </label>
-                  <input
-                    type="text"
-                    className="form-control mx-5 col"
-                    value={client.client_last_name}
-                    onChange={(e) => handleClientChange(index, e)}
-                    id={`client_last_name_${index}`}
-                    name="client_last_name"
-                    placeholder="Client's last name"
-                  />
-                </div>
-                <div className="form-group col-md-6 mb-0 mt-4">
-                  <label htmlFor={`client_date_of_birth_${index}`} className="font-size-4 text-black-2 line-height-reset">
-                    Client's Date of Birth
-                  </label>
-                  <input
-                    type="date"
-                    className="coustam_datepicker form-control mx-5 col"
-                    value={client.client_date_of_birth}
-                    onChange={(e) => handleClientChange(index, e)}
-                    onKeyDownCapture={(e) => e.preventDefault()}
-                    id={`client_date_of_birth_${index}`}
-                    name="client_date_of_birth"
-                    placeholder="Client's DOB"
-                  />
-                </div>
-                {/* <div className="form-group col-md-6 mb-0 mt-4">
-                  <SignaturePadComponent
-                    signature={state.family_json[index].client_signature}
-                    onEnd={(signature) => handleSignature(signature, index, "client_signature")}
-                    canvasProps={{ className: 'form-control mx-5 col' }}
-                    setState={setState}
-                    state={state}
-                    index={index}
-                    label={`client_signature`}
-                    name={`Client Signature`}
-                    onSignature={handleSignature}
-                  />
-                </div> */}
-
-                {index > 0 && (
-                  <div className="col-3 mt-2 d-flex justify-content-end mx-10">
-                    <button
-                      type="button"
-                      className="btn btn-danger mb-4"
-                      onClick={() => removeClient(index)}
-                      title='Remove Client'
-                    >
-                      Remove Client
-                    </button>
-                  </div>
-                )}
-              </React.Fragment>
-            ))}
+           
             <div className={(openSignature === "yes" && index === "initial") ? "form-group col-md-12 mb-0 mt-4" : "d-none"}>
               <SignaturePadComponent
                 onEnd={(signature) => handleSignature(signature, "", "initial")}
@@ -720,7 +721,7 @@ const AgreementOneForm = ({
                 name={`RCIC Signature`}
                 onSignature={handleSignature} />
             </div>
-            <div className={openSignature === "yes" ? "d-none" : 'd-flex justify-content-center'}>
+            {/* <div className={openSignature === "yes" ? "d-none" : 'd-flex justify-content-center'}>
               <button
                 type="button"
                 className="btn btn-info mt-2"
@@ -729,7 +730,7 @@ const AgreementOneForm = ({
               >
                 Add more client
               </button>
-            </div>
+            </div> */}
           </div>
           <div className='form-group  d-flex flex-column'>
             {index === "final" ? "Are you sure to confirm submission? This signature cannot be updated later!" : ""}

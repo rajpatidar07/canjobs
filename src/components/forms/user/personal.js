@@ -1327,7 +1327,37 @@ const close = () => {
                                   : "0",
                             })
                           }
-                        />
+                        /> <span className="pb-2">Featured</span>
+                      </label>
+                    </div>
+                  ) : null}
+                   {user_type === "admin" ? (
+                    <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser"
+                      || props.pageNameForForm === "ApplicantType"
+                      || props.pageNameForForm === "Category"
+                      || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ? "d-none" : ""}`}>
+                      <label
+                        htmlFor="local"
+                        className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                      >
+
+                        <input
+                          type="checkbox"
+                          id="local"
+                          name="local"
+                          checked={state.is_local === "1"}
+                          value={state.is_local}
+                          onChange={(e) =>
+                            setState({
+                              ...state,
+                              is_local:
+                                state.is_local === "" ||
+                                  state.is_local === "0"
+                                  ? "1"
+                                  : "0",
+                            })
+                          }
+                        /> <span className="pb-2">Local</span>
                       </label>
                     </div>
                   ) : null}

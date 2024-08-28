@@ -286,7 +286,8 @@ export const getallEmployeeData = async (
   candian,
   agentId,
   assignedadminId,
-  subType
+  subType,
+  localFilterValue,
   // agent_u_id
 ) => {
   const response = await axios.post(
@@ -311,6 +312,7 @@ export const getallEmployeeData = async (
       assigned_by: assignedadminId,
       category: "",
       employee_id: subType,
+      local:localFilterValue
     },
     {
       headers: {

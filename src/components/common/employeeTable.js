@@ -130,7 +130,8 @@ export default function EmployeeTable(props) {
     props.agentFilterValue,
     props.adminFilterValue,
     props.interestFilterValue,
-    props.categoryFilterValue
+    props.categoryFilterValue,
+    props.localFilterValue,
   ]);
 
   /* Function to show the single data to update Employee*/

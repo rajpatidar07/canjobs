@@ -26,6 +26,7 @@ function Employee(props) {
   const [adminFilterValue, setAdminFilterValue] = useState("");
   const [interestFilterValue, setinterestFilterValue] = useState("");
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
+  const [localFilterValue, setLocalFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
   let user_type = localStorage.getItem("userType");
@@ -70,8 +71,8 @@ function Employee(props) {
         }
       >
         {props.skill === null ||
-        props.skill === undefined ||
-        Object.keys(props.skill).length === 0 ? (
+          props.skill === undefined ||
+          Object.keys(props.skill).length === 0 ? (
           <>
             {/* <!-- Header Area --> */}
             <AdminHeader heading={"Manage Applicants"} />
@@ -79,7 +80,7 @@ function Employee(props) {
             <AdminSidebar heading={"Manage Applicants"} />
           </>
         ) : null}
-          
+
         {/* <!--Add Employee Details Modal --> */}
         {showAddEmployeeModal ? (
           <PersonalDetails
@@ -133,10 +134,12 @@ function Employee(props) {
                     setSearchError={setSearchError}
                     skill={props.skill}
                     pageName={"employee"}
+                    localFilterValue={localFilterValue}
+                    setLocalFilterValue={setLocalFilterValue}
                   />
                   {props.skill === null ||
-                  props.skill === undefined ||
-                  Object.keys(props.skill).length === 0 ? (
+                    props.skill === undefined ||
+                    Object.keys(props.skill).length === 0 ? (
                     <div className="col px-1 form_group mt-4 text-right">
                       <CustomButton
                         className="font-size-3 rounded-3 btn btn-primary border-0"
@@ -171,6 +174,7 @@ function Employee(props) {
                 adminFilterValue={adminFilterValue}
                 interestFilterValue={interestFilterValue}
                 categoryFilterValue={categoryFilterValue}
+                localFilterValue={localFilterValue}
               />
             </div>
           </div>
@@ -180,8 +184,8 @@ function Employee(props) {
           <div
             className={
               props.skill === null ||
-              props.skill === undefined ||
-              Object.keys(props.skill).length === 0
+                props.skill === undefined ||
+                Object.keys(props.skill).length === 0
                 ? "dashboard-main-container mt-16"
                 : ""
             }

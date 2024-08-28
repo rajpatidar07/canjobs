@@ -63,8 +63,10 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type, addSign }) => {
       <p>Details of Applicant's and dependents to added in this application</p>
       <div>
       <p>
-      ${(familyJsonArray || []).map((item, index) => (
-      `<span key=${index}>Client Name ${index + 1}: <span class="para_gap text-capitalize">${item.client_first_name + " " + item.client_last_name} </span> Date of birth <span class="para_gap">${item.client_date_of_birth ? moment(item.client_date_of_birth).format("DD-MM-YYYY") : ""} </span> </span>`
+      <b>Family member</b>
+      <br>
+      ${(familyJsonArray.slice(1) || []).map((item, index) => (
+      `<span key=${index}> Name ${index + 1}: <span class="para_gap text-capitalize">${item.client_first_name + " " + item.client_last_name} </span> Date of birth : <span class="para_gap">${item.client_date_of_birth ? moment(item.client_date_of_birth).format("DD-MM-YYYY") : ""} </span> </span>`
     ))}
       </p>
       </div>
@@ -1031,7 +1033,44 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type, addSign }) => {
       <br /><br />
 <div style="display: flex; flex-wrap: wrap">
     <!-- Client Signature -->
-    ${(familyJsonArray || []).map((item, index) => (
+    <div style="width: 50%">
+            <p class="para_gap" style="margin: 0">
+       ${familyJsonArray[0]?.client_signature ? `
+        <div class="d-flex flex-column">
+                        <img
+      src="${familyJsonArray[0]?.client_signature}"
+      alt="${familyJsonArray[0]?.client_first_name} ${familyJsonArray[0]?.client_last_name}"
+      style="max-width: 200px; float: right;"
+      class="${familyJsonArray[0]?.client_signature ? "d-block" : "d-none"}"
+    />
+                  <small class="row ">
+                    <span class="col text-capitalize" >
+                      ${familyJsonArray[0]?.client_first_name + " " + familyJsonArray[0]?.client_last_name + " "}${familyJsonArray[0]?.date_signature_client}</span>
+                  </small>
+                      </div>`
+      : loginuser === "admin" ? "" : ` <button class="btn btn-outline-secondary border-0  " 
+                  style="font-family:cursive;" 
+                  id="add-signature-button-0"
+                  ${!felidData.initial ? 'disabled' : ''}>
+            Add Signature
+          </button>`
+    }
+            </p>
+            <p style="margin: 0 0 30px 0">Signature of Client</p>
+        </div>
+        <div style="width: 50%">
+            <p class="para_gap text-capitalize" style="margin: 0">
+                <span style="max-width: 200px;">${familyJsonArray[0]?.client_first_name + " " + familyJsonArray[0]?.client_last_name}</span>
+            </p>
+            <p style="margin: 0 0 30px 0">Name of Client</p>
+        </div>
+        <div style="width: 50%">
+            <p class="para_gap" style="margin: 0">
+                <span style="max-width: 200px;">${familyJsonArray[0]?.date_signature_client ? familyJsonArray[0]?.date_signature_client : ''}</span>
+            </p>
+            <p style="margin: 0 0 30px 0">Date</p>
+        </div>
+    ${(familyJsonArray.slice(1) || []).map((item, index) => (
       `<div style="width: 50%">
             <p class="para_gap" style="margin: 0">
        ${item.client_signature ? `
@@ -1055,13 +1094,13 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type, addSign }) => {
           </button>`
       }
             </p>
-            <p style="margin: 0 0 30px 0">Signature of Client</p>
+            <p style="margin: 0 0 30px 0">Signature of family member</p>
         </div>
         <div style="width: 50%">
             <p class="para_gap text-capitalize" style="margin: 0">
                 <span style="max-width: 200px;">${item.client_first_name + " " + item.client_last_name}</span>
             </p>
-            <p style="margin: 0 0 30px 0">Name of Client</p>
+            <p style="margin: 0 0 30px 0">Name of family member</p>
         </div>
         <div style="width: 50%">
             <p class="para_gap" style="margin: 0">

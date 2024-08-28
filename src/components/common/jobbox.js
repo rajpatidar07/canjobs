@@ -25,7 +25,9 @@ function JobBox({
   setJobCount,
   jobsNo,
   setTotalJob,
-  featured
+  featured,
+  column,
+  sort_order,
 }) {
   /*States */
   let [ApiCall, setApiCall] = useState(false);
@@ -70,8 +72,8 @@ function JobBox({
         jobSwapFilterValue,
         1,
         jobsNo,
-        "",
-        "",
+        column,
+        sort_order,
         "",
         "",
         "",
@@ -323,10 +325,16 @@ function JobBox({
                   <div className="col-md-12 text-left text-capitalize text-break">
                     {/* <p>{job.job_description}</p> */}
                     <div
-                      dangerouslySetInnerHTML={{
-                        __html: job.job_description,
+                      style={{
+                        display: '-webkit-box',
+                        WebkitLineClamp: 2, /* Limits the content to 2 lines */
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis'
                       }}
+                      dangerouslySetInnerHTML={{ __html: job.job_description }}
                     />
+
                   </div>
                   <div className="col-md-8">
                     <ul className="d-flex list-unstyled mr-n3 flex-wrap">

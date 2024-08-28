@@ -25,6 +25,8 @@ export default function ApplicantsFilter({
   pageName,
   setCategoryFilterValue,
   categoryFilterValue,
+  localFilterValue,
+  setLocalFilterValue
 }) {
   // let [SkillList, setSkillList] = useState([]);
   // let [EducationList, setEducationList] = useState([]);
@@ -34,10 +36,11 @@ export default function ApplicantsFilter({
   let [AdminList, setAdmintList] = useState([]);
   /*Function to get thejSon */
   const SearchCandidate = () => {
-    if(candidateSearch === ""){
+    if (candidateSearch === "") {
       setSearchError("The search field cannot be empty.");
-    }else{
-    onSearch(candidateSearch);}
+    } else {
+      onSearch(candidateSearch);
+    }
   };
   /*Render method to get Partner data */
   // useEffect(() => {
@@ -312,11 +315,10 @@ export default function ApplicantsFilter({
               setinterestFilterValue(e.target.value);
               setpageNo(1);
             }}
-            className={` form-control ${
-              interestFilterValue === "pnp"
+            className={` form-control ${interestFilterValue === "pnp"
                 ? `text-uppercase`
                 : "text-capitalize"
-            }`}
+              }`}
           >
             <option value="" data-display="Product Designer">
               Candidate's Application type
@@ -338,7 +340,7 @@ export default function ApplicantsFilter({
       <div
         className={
           (skill === null || skill === undefined) &&
-          (pageName === "pnp" || pageName === "employee")
+            (pageName === "pnp" || pageName === "employee")
             ? "col p-1 form_group mb-3"
             : "d-none"
         }
@@ -358,6 +360,29 @@ export default function ApplicantsFilter({
             }}
           />
         </div>
+      </div>
+      <div className={
+        (skill === null || skill === undefined) &&
+          (pageName === "local" || pageName === "employee")
+          ? "col form_group mt-8"
+          : "d-none"
+      }>
+        <label
+          htmlFor="local"
+          className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+        >
+
+          <input
+            type="checkbox"
+            id="local"
+            name="local"
+            checked={localFilterValue === 1}
+            value={localFilterValue}
+            onChange={(e) =>
+              setLocalFilterValue(1)
+            }
+          /> <span >Local</span>
+        </label>
       </div>
       {/* <div
                 className={

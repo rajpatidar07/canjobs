@@ -3,15 +3,44 @@ import EmployeeHeader from "../common/header";
 import EmployeeFooter from "../common/footer";
 import JobBox from "../common/jobbox";
 import SearchForm from "../common/search_form";
-import { GetAllDataCount } from "../../api/api";
+import { GetAllDataCount, getJson } from "../../api/api";
 import Loader from "../common/loader";
 import { Link } from "react-router-dom";
+import CustomButton from "../common/button";
+import filterjson from "../json/filterjson";
 function EmployeeHomePage() {
   const [Count, setCount] = useState([]);
   const [jobsNo, setJobsNo] = useState(10);
   const [jobCount, setJobCount] = useState();
   const [totaljob, setTotalJob] = useState();
-  let token = localStorage.getItem("token");
+  // let token = localStorage.getItem("token");
+  /*Filter states */
+  const [categoryFilterValue, setCategoryFilterValue] = useState("");
+  const [SkillFilterValue, setSkillFilterValue] = useState("");
+  const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
+  const [jobLocation, setJobLocation] = useState("");
+  let [Json, setJson] = useState([]);
+  /*Function to get thejSon */
+  const JsonData = async () => {
+    try {
+      let Json = await getJson();
+      setJson(Json);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  /*Render Method */
+  useEffect(() => {
+    JsonData();
+  }, [categoryFilterValue, SkillFilterValue, jobSwapFilterValue, jobLocation]);
+  // eslint-disable-next-line no-use-before-define
+  /*Function to Rest the feilds */
+  let onReset = () => {
+    setCategoryFilterValue("");
+    setSkillFilterValue("");
+    setJobSwapFilterValue("");
+    setJobLocation("");
+  };
   const CountData = async () => {
     const res = await GetAllDataCount();
     setCount(res.data);
@@ -24,7 +53,7 @@ function EmployeeHomePage() {
   return (
     <div className="site-wrapper overflow-hidden ">
       <EmployeeHeader />
-       {/* <!-- Hero Area --> */}
+      {/* <!-- Hero Area --> */}
       <div className="position-relative z-index-1 bg-home-banner pt-26 pb-26 dark-mode-texts">
         <div className="container position-static hero_container">
           <div className="row position-relative align-items-center justify-content-center position-static w-80">
@@ -34,33 +63,82 @@ function EmployeeHomePage() {
             </div>
             {/* <!-- End Hero Form --> */}{" "}
           </div>
+
         </div>
       </div>
       {/* <!-- Hero Area --> */}
       {/* <!-- featuredJobOne Area --> */}
       <section className="bg-athens pt-12 pt-lg-25 pb-7 pb-lg-25 ">
         <div className="container ">
-          {/* <!-- Section Title --> */}
-          <div className="row justify-content-center mb-lg-16 mb-11">
-            <div className="col-xxl-5 col-xl-6 col-lg-7 col-md-10 text-center">
-              <h2 className="mb-6 mb-lg-7 text-black-2 font-size-10">
-                Featured Jobs
-              </h2>
-              <p className="px-xs-3 px-md-12 px-lg-8 px-xl-8 px-xxl-6 font-size-5 mb-0">
-                Leverage agile frameworks to provide a robust synopsis for high
-                level overviews to start.
-              </p>
+          <div className="row ">
+            <div className="col-12 col-lg-10 col-xl-12 text-center">
+              <form className="mb-8" action="/">
+                <div className="search-filter from-group d-flex align-items-center justify-content-center job_search_filter">
+                  <div className="col-md-2 col-lg-2 mb-5">
+                    <select
+                      name="skill"
+                      id="skill"
+                      value={SkillFilterValue}
+                      /*Skill Onchange function to filter the data */
+                      onChange={(e) => setSkillFilterValue(e.target.value)}
+                      className="form-control text-capitalize font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                    >
+                      <option value="">Select Skill</option>
+                      {(Json.Skill || []).map((data) => {
+                        return (
+                          <option value={data.value} key={data.id}>
+                            {data.value}
+                          </option>
+                        );
+                      })}
+                    </select>
+                  </div>
+                  <div className="col-md-2 col-lg-2 mb-5">
+                    <select
+                      name="job_type"
+                      id="job_type"
+                      value={jobSwapFilterValue}
+                      /*Job Onchange function to filter the data */
+                      onChange={(e) => setJobSwapFilterValue(e.target.value)}
+                      className="form-control text-capitalize font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                    >
+                      <option value="">Select Job type</option>
+                      {(filterjson.job_type || []).map((job_type) => (
+                        <option key={job_type} value={job_type}>
+                          {job_type}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="col-md-2 col-lg-2 mb-5">
+                    <CustomButton
+                      className="font-size-3 rounded-3 btn btn-primary border-0"
+                      onClick={() => onReset()}
+                      title="Reset"
+                      type="button"
+                    >
+                      Reset
+                    </CustomButton>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
           {/* <!-- Section Title End --> */}
           {<JobBox /> ? (
-            <div className="row justify-content-center">
+            <div className="row justify-content-center mb-lg-16 mb-11">
               <JobBox
                 setJobCount={setJobCount}
                 jobsNo={jobsNo}
                 setTotalJob={setTotalJob}
-                SkillFilterValue={""}
+                SkillFilterValue={SkillFilterValue}
                 featured={"1"}
+                column="created_at"
+                sort_order="ASC"
+                categoryFilterValue={categoryFilterValue}
+                jobSwapFilterValue={jobSwapFilterValue}
+                jobLocation={jobLocation}
+                setJobLocation={setJobLocation}
               />
             </div>
           ) : (
@@ -80,8 +158,48 @@ function EmployeeHomePage() {
             </div>
           ) : null}
         </div>
-        {token && <div className="container ">
-          {/* <!-- Section Title --> */}
+        {/* <!-- featuredJobOne Area --> */}
+        {/* <!-- Section Title --> */}
+        <div className="row justify-content-center mb-lg-16 mb-11">
+          <div className="col-xxl-5 col-xl-6 col-lg-7 col-md-10 text-center">
+            <h2 className="mb-6 mb-lg-7 text-black-2 font-size-10">
+              Featured Jobs
+            </h2>
+            <p className="px-xs-3 px-md-12 px-lg-8 px-xl-8 px-xxl-6 font-size-5 mb-0">
+              Leverage agile frameworks to provide a robust synopsis for high
+              level overviews to start.
+            </p>
+          </div>
+        </div>
+        {/* <!-- Section Title End --> */}
+        {<JobBox /> ? (
+          <div className="row justify-content-center">
+            <JobBox
+              setJobCount={setJobCount}
+              jobsNo={jobsNo}
+              setTotalJob={setTotalJob}
+              SkillFilterValue={""}
+              featured={"1"}
+            />
+          </div>
+        ) : (
+          <div className="table-responsive main_table_div">
+            <Loader />
+          </div>
+        )}
+        {jobsNo <= totaljob ? (
+          <div className="text-center pt-5 pt-lg-13">
+            <Link
+              className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
+              onClick={() => setJobsNo(jobCount + 10)}
+            >
+              Load More
+              <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
+            </Link>
+          </div>
+        ) : null}
+        {/* {token && <div className="container ">
+          <!-- Section Title -->
           <div className="row justify-content-center mb-lg-16 mb-11">
             <div className="col-xxl-5 col-xl-6 col-lg-7 col-md-10 text-center">
               <h2 className="mb-6 mb-lg-7 text-black-2 font-size-10">
@@ -93,7 +211,7 @@ function EmployeeHomePage() {
               </p>
             </div>
           </div>
-          {/* <!-- Section Title End --> */}
+          <!-- Section Title End -->
           {
             <JobBox /> ? (
               <div className="row justify-content-center">
@@ -120,83 +238,83 @@ function EmployeeHomePage() {
               </Link>
             </div>
           ) : null}
-        </div>}
-      </section>
-      {/* <!-- featuredJobOne Area --> */}
-      {/* <!-- Category Area --> */}
-      <div
-        className="pt-11 pt-lg-26 pb-lg-16"
-        data-aos="fade-left"
-        data-aos-duration="800"
-        data-aos-delay="400"
-        data-aos-once="true"
-      >
-        <div className="container">
-          {/* <!-- Section Top --> */}
-          <div className="row m-0 align-items-center pb-14">
-            {/* <!-- Section Title --> */}
-            {/* <div className="col-12 col-lg-6">
+        </div>} */}
+      </section >
+    {/* <!-- featuredJobOne Area --> */ }
+  {/* <!-- Category Area --> */ }
+  <div
+    className="pt-11 pt-lg-26 pb-lg-16"
+    data-aos="fade-left"
+    data-aos-duration="800"
+    data-aos-delay="400"
+    data-aos-once="true"
+  >
+    <div className="container">
+      {/* <!-- Section Top --> */}
+      <div className="row m-0 align-items-center pb-14">
+        {/* <!-- Section Title --> */}
+        {/* <div className="col-12 col-lg-6">
               <div className="text-center text-lg-left mb-13 mb-lg-0">
                 <h2 className="font-size-9 font-weight-bold">
                   Explore by category
                 </h2>
               </div>
             </div> */}
-            {/* <!-- Section Button --> */}
-            {/* <div className="col-12 col-lg-6">
+        {/* <!-- Section Button --> */}
+        {/* <div className="col-12 col-lg-6">
                             <div className="text-center text-lg-right">
                                 <a className="btn btn-outline-green text-uppercase" href="http://localhost:3000/">Explore All</a>
                             </div>
                         </div> */}
-            {/* <!-- Section Button End --> */}{" "}
-          </div>
-          {/* <!-- End Section Top --> */}
-          <div className="row justify-content-center">
-            {/* <!-- Single Category --> */}
-            <div className="category_box col-12 col-xl-4 col-lg-4 ">
-              <a
-                href="/"
-                className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
-              >
-                <div className="text-blue bg-blue-opacity-1 square-70 rounded-4 mb-7 font-size-7">
-                  <i className="fa fa-briefcase"></i>
-                </div>
-
-                <div className="text-left category_text_box">
-                  <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">
-                    Total Job Posted
-                  </h5>
-                  <p className="font-size-4 font-weight-bold text-secondary">
-                    <span>{Count.posted_jobs}</span>
-                    Vacancy
-                  </p>
-                </div>
-              </a>
+        {/* <!-- Section Button End --> */}{" "}
+      </div>
+      {/* <!-- End Section Top --> */}
+      <div className="row justify-content-center">
+        {/* <!-- Single Category --> */}
+        <div className="category_box col-12 col-xl-4 col-lg-4 ">
+          <a
+            href="/"
+            className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
+          >
+            <div className="text-blue bg-blue-opacity-1 square-70 rounded-4 mb-7 font-size-7">
+              <i className="fa fa-briefcase"></i>
             </div>
-            {/* <!-- End Single Category --> */}
-            {/* <!-- Single Category --> */}
-            <div className="category_box col-12 col-xl-4 col-lg-4 ">
-              <a
-                href="/"
-                className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
-              >
-                <div className="text-spray bg-spray-opacity-1 square-70 rounded-4 mb-7 font-size-7">
-                  <i className="fa fa-users"></i>
-                </div>
 
-                <div className="text-left category_text_box">
-                  <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">
-                    Total Registered Applicants
-                  </h5>
-                  <p className="font-size-4 font-weight-bold text-secondary">
-                    <span>{Count.total_applicants}</span>
-                  </p>
-                </div>
-              </a>
+            <div className="text-left category_text_box">
+              <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">
+                Total Job Posted
+              </h5>
+              <p className="font-size-4 font-weight-bold text-secondary">
+                <span>{Count.posted_jobs}</span>
+                Vacancy
+              </p>
             </div>
-            {/* <!-- End Single Category --> */}
-            {/* <!-- Single Category --> */}
-            {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
+          </a>
+        </div>
+        {/* <!-- End Single Category --> */}
+        {/* <!-- Single Category --> */}
+        <div className="category_box col-12 col-xl-4 col-lg-4 ">
+          <a
+            href="/"
+            className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
+          >
+            <div className="text-spray bg-spray-opacity-1 square-70 rounded-4 mb-7 font-size-7">
+              <i className="fa fa-users"></i>
+            </div>
+
+            <div className="text-left category_text_box">
+              <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">
+                Total Registered Applicants
+              </h5>
+              <p className="font-size-4 font-weight-bold text-secondary">
+                <span>{Count.total_applicants}</span>
+              </p>
+            </div>
+          </a>
+        </div>
+        {/* <!-- End Single Category --> */}
+        {/* <!-- Single Category --> */}
+        {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
               <a
                 href="/"
                 className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
@@ -215,30 +333,30 @@ function EmployeeHomePage() {
                 </div>
               </a>
             </div> */}
-            {/* <!-- End Single Category --> */}
-            {/* <!-- Single Category --> */}
-            <div className="category_box col-12 col-xl-4 col-lg-4 ">
-              <a
-                href="/"
-                className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
-              >
-                <div className="text-red bg-red-opacity-1 square-70 rounded-4 mb-7 font-size-7">
-                  <i className="fa fa-building"></i>
-                </div>
-
-                <div className="text-left category_text_box">
-                  <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">
-                    Total Registered Client's
-                  </h5>
-                  <p className="font-size-4 font-weight-bold text-secondary">
-                    <span>{Count.total_company}</span>
-                  </p>
-                </div>
-              </a>
+        {/* <!-- End Single Category --> */}
+        {/* <!-- Single Category --> */}
+        <div className="category_box col-12 col-xl-4 col-lg-4 ">
+          <a
+            href="/"
+            className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
+          >
+            <div className="text-red bg-red-opacity-1 square-70 rounded-4 mb-7 font-size-7">
+              <i className="fa fa-building"></i>
             </div>
-            {/* <!-- End Single Category --> */}
-            {/* <!-- Single Category --> */}
-            {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
+
+            <div className="text-left category_text_box">
+              <h5 className="font-size-5 font-weight-semibold text-black-2 line-height-1">
+                Total Registered Client's
+              </h5>
+              <p className="font-size-4 font-weight-bold text-secondary">
+                <span>{Count.total_company}</span>
+              </p>
+            </div>
+          </a>
+        </div>
+        {/* <!-- End Single Category --> */}
+        {/* <!-- Single Category --> */}
+        {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
               <a
                 href="/"
                 className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
@@ -257,9 +375,9 @@ function EmployeeHomePage() {
                 </div>
               </a>
             </div> */}
-            {/* <!-- End Single Category --> */}
-            {/* <!-- Single Category --> */}
-            {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
+        {/* <!-- End Single Category --> */}
+        {/* <!-- Single Category --> */}
+        {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
               <a
                 href="/"
                 className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
@@ -278,9 +396,9 @@ function EmployeeHomePage() {
                 </div>
               </a>
             </div> */}
-            {/* <!-- End Single Category --> */}
-            {/* <!-- Single Category --> */}
-            {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
+        {/* <!-- End Single Category --> */}
+        {/* <!-- Single Category --> */}
+        {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
               <a
                 href="/"
                 className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
@@ -299,9 +417,9 @@ function EmployeeHomePage() {
                 </div>
               </a>
             </div> */}
-            {/* <!-- End Single Category --> */}
-            {/* <!-- Single Category --> */}
-            {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
+        {/* <!-- End Single Category --> */}
+        {/* <!-- Single Category --> */}
+        {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
               <a
                 href="/"
                 className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
@@ -320,9 +438,9 @@ function EmployeeHomePage() {
                 </div>
               </a>
             </div> */}
-            {/* <!-- End Single Category --> */}
-            {/* <!-- Single Category --> */}
-            {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
+        {/* <!-- End Single Category --> */}
+        {/* <!-- Single Category --> */}
+        {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
               <a
                 href="/"
                 className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
@@ -341,9 +459,9 @@ function EmployeeHomePage() {
                 </div>
               </a>
             </div> */}
-            {/* <!-- End Single Category --> */}
-            {/* <!-- Single Category --> */}
-            {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
+        {/* <!-- End Single Category --> */}
+        {/* <!-- Single Category --> */}
+        {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
               <a
                 href="/"
                 className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
@@ -362,9 +480,9 @@ function EmployeeHomePage() {
                 </div>
               </a>
             </div> */}
-            {/* <!-- End Single Category --> */}
-            {/* <!-- Single Category --> */}
-            {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
+        {/* <!-- End Single Category --> */}
+        {/* <!-- Single Category --> */}
+        {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
               <a
                 href="/"
                 className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
@@ -383,9 +501,9 @@ function EmployeeHomePage() {
                 </div>
               </a>
             </div> */}
-            {/* <!-- End Single Category --> */}
-            {/* <!-- Single Category --> */}
-            {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
+        {/* <!-- End Single Category --> */}
+        {/* <!-- Single Category --> */}
+        {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
               <a
                 href="/"
                 className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
@@ -404,9 +522,9 @@ function EmployeeHomePage() {
                 </div>
               </a>
             </div> */}
-            {/* <!-- End Single Category --> */}
-            {/* <!-- Single Category --> */}
-            {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
+        {/* <!-- End Single Category --> */}
+        {/* <!-- Single Category --> */}
+        {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
               <a
                 href="/"
                 className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
@@ -425,9 +543,9 @@ function EmployeeHomePage() {
                 </div>
               </a>
             </div> */}
-            {/* <!-- End Single Category --> */}
-            {/* <!-- Single Category --> */}
-            {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
+        {/* <!-- End Single Category --> */}
+        {/* <!-- Single Category --> */}
+        {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
               <a
                 href="/"
                 className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
@@ -446,9 +564,9 @@ function EmployeeHomePage() {
                 </div>
               </a>
             </div> */}
-            {/* <!-- End Single Category --> */}
-            {/* <!-- Single Category --> */}
-            {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
+        {/* <!-- End Single Category --> */}
+        {/* <!-- Single Category --> */}
+        {/* <div className="category_box col-12 col-xl-4 col-lg-4 ">
               <a
                 href="/"
                 className="bg-white border border-color-2 rounded-4 pl-9 pt-10 pb-3 pr-7 hover-shadow-1 mb-9 d-block w-100"
@@ -471,269 +589,269 @@ function EmployeeHomePage() {
                 </div>
               </a>
             </div> */}
-            {/* <!-- End Single Category --> */}{" "}
-          </div>
-        </div>
+        {/* <!-- End Single Category --> */}{" "}
       </div>
-      {/* <!-- End Category Area --> */}
-      {/* <!-- Blog area function start --> */}
-      <div className="pt-11 pt-lg-24 pb-11 pb-lg-24">
-        <div className="container">
-          <div className="row justify-content-center">
-            <div
-              className="col-xl-7 col-lg-8 col-md-10"
-              data-aos="fade-in"
-              data-aos-duration="1000"
-              data-aos-once="true"
-            >
-              {/* <!-- section-title start --> */}
-              <div className="section-title text-center pb-lg-15 pb-8 px-xxl-10">
-                <h2 className="mb-9 font-size-10">Quick career tips</h2>
-                <p className="text-default-color font-size-5">
-                  Collaboratively administrate empowered markets via
-                  plug-and-play networks. Dynamically procrastinate
-                </p>
-              </div>
-              {/* <!-- section-title end --> */}{" "}
-            </div>
-          </div>
-          <div className="row justify-content-center d-none">
-            {/* <!-- single blog start --> */}
-            <div
-              className="col-xl-4 col-md-6 mb-xl-0 mb-13"
-              data-aos="fade-right"
-              data-aos-duration="500"
-              data-aos-once="true"
-            >
-              {/* <!-- card start --> */}
-              <div className="card bg-transparent border-0 text-left">
-                {/* <!-- card img start --> */}
-                <img
-                  src="image/l2/png/blog-img1.png"
-                  className="card-img-top"
-                  alt="..."
-                />{" "}
-                {/* <!-- card img end --> */}
-                {/* <!-- card-body start --> */}
-                <div className="card-body pt-11 px-0 pb-0">
-                  <a
-                    href="http://localhost:3000/"
-                    className="badge badge-dodger text-uppercase font-size-3 font-weight-bold px-4 py-1"
-                  >
-                    CV Writing
-                  </a>
-                  <h4>
-                    <a
-                      className="card-title font-size-7 mt-8 mb-6 heading-default-color"
-                      href="http://localhost:3000/"
-                    >
-                      How to make a perfect CV that attracts the attention
-                    </a>
-                  </h4>
-                  <p className="card-text mb-9 font-size-4">
-                    Collaboratively administrate empowered markets via
-                    plug-and-play networks. Dynamically procrastinate B2C users
-                    after installed base.
-                  </p>
-                  {/* <!-- media start --> */}
-                  <div className="media mb-5 pr-9">
-                    {/* <!-- media img start --> */}
-                    <a href="http://localhost:3000/">
-                      <img
-                        src="image/l2/png/blog-user-img1.png"
-                        className="align-self-center circle-54 mr-3 mt-2"
-                        alt=""
-                      />
-                    </a>
-                    {/* <!-- media img start --> */}
-                    {/* <!-- media body start --> */}
-                    <div className="media-body pl-4 pt-2">
-                      <h6 className="mb-0">
-                        <a
-                          className="mb-0 font-size-4 font-weight-semibold heading-default-color line-height-reset"
-                          href="http://localhost:3000/"
-                        >
-                          Anna Frank
-                        </a>
-                      </h6>
-                      <p className="mb-0">
-                        <a
-                          className="font-size-3 text-default-color"
-                          href="http://localhost:3000/"
-                        >
-                          Creative Director
-                        </a>
-                      </p>
-                    </div>
-                    {/* <!-- media body start --> */}{" "}
-                  </div>
-                  {/* <!-- media end --> */}{" "}
-                </div>
-                {/* <!-- card-body end --> */}{" "}
-              </div>
-              {/* <!-- card end --> */}{" "}
-            </div>
-            {/* <!-- single blog end --> */}
-            {/* <!-- single blog start --> */}
-            <div
-              className="col-xl-4 col-md-6 mb-xl-0 mb-13"
-              data-aos="fade-up"
-              data-aos-duration="700"
-              data-aos-once="true"
-            >
-              {/* <!-- card start --> */}
-              <div className="card bg-transparent border-0 text-left">
-                {/* <!-- card img start --> */}
-                <a href="http://localhost:3000/">
-                  <img
-                    src="image/l2/png/blog-img2.png"
-                    className="card-img-top"
-                    alt="..."
-                  />
-                </a>
-                {/* <!-- card img end --> */}
-                {/* <!-- card-body start --> */}
-                <div className="card-body pt-11 px-0 pb-0">
-                  <a
-                    href="http://localhost:3000/"
-                    className="badge badge-dodger text-uppercase font-size-3 font-weight-bold px-4 py-1"
-                  >
-                    Marketing
-                  </a>
-                  <h4>
-                    <a
-                      className="card-title font-size-7 mt-8 mb-6 heading-default-color"
-                      href="http://localhost:3000/"
-                    >
-                      Out bound marketing to get the job you want within 72 days
-                    </a>
-                  </h4>
-                  <p className="card-text mb-9 font-size-4">
-                    Collaboratively administrate empowered markets via
-                    plug-and-play networks. Dynamically procrastinate B2C users
-                    after installed base.
-                  </p>
-                  {/* <!-- media start --> */}
-                  <div className="media mb-5 pr-9">
-                    {/* <!-- media img start --> */}
-                    <a href="http://localhost:3000/">
-                      <img
-                        src="image/l2/png/blog-user-img2.png"
-                        className="align-self-center circle-54 mr-3 mt-2"
-                        alt=""
-                      />
-                    </a>
-                    {/* <!-- media img start --> */}
-                    {/* <!-- media body start --> */}
-                    <div className="media-body pl-4 pt-2">
-                      <h6 className="mb-0">
-                        <a
-                          className="font-size-4 font-weight-semibold heading-default-color line-height-reset"
-                          href="http://localhost:3000/"
-                        >
-                          David Herison
-                        </a>
-                      </h6>
-                      <p className="mb-0">
-                        <a
-                          className="font-size-3 text-default-color"
-                          href="http://localhost:3000/"
-                        >
-                          UX Designer
-                        </a>
-                      </p>
-                    </div>
-                    {/* <!-- media body start --> */}{" "}
-                  </div>
-                  {/* <!-- media end --> */}{" "}
-                </div>
-                {/* <!-- card-body end --> */}{" "}
-              </div>
-              {/* <!-- card end --> */}{" "}
-            </div>
-            {/* <!-- single blog end --> */}
-            {/* <!-- single blog start --> */}
-            <div
-              className="col-xl-4 col-md-6"
-              data-aos="fade-left"
-              data-aos-duration="500"
-              data-aos-once="true"
-            >
-              {/* <!-- card start --> */}
-              <div className="card bg-transparent border-0 text-left">
-                {/* <!-- card img start --> */}
-                <a href="http://localhost:3000/">
-                  <img
-                    src="image/l2/png/blog-img3.png"
-                    className="card-img-top"
-                    alt="..."
-                  />
-                </a>
-                {/* <!-- card img end --> */}
-                {/* <!-- card-body start --> */}
-                <div className="card-body pt-11 px-0 pb-0">
-                  <a
-                    href="http://localhost:3000/"
-                    className="badge badge-dodger text-uppercase font-size-3 font-weight-bold px-4 py-1"
-                  >
-                    Social media
-                  </a>
-                  <h4>
-                    <a
-                      className="card-title font-size-7 mt-8 mb-6 heading-default-color"
-                      href="http://localhost:3000/"
-                    >
-                      Your social media accounts will be your new CV
-                    </a>
-                  </h4>
-                  <p className="card-text mb-9 font-size-4">
-                    Leverage agile frameworks to provide a robust synopsis for
-                    high level overviews. Iterative approaches to corporate
-                    strategy foster,
-                  </p>
-                  {/* <!-- media start --> */}
-                  <div className="media mb-5 pr-9 align-items-center">
-                    {/* <!-- media img start --> */}
-                    <img
-                      src="image/l2/png/blog-user-img3.png"
-                      className="align-self-center circle-54 mr-3"
-                      alt=""
-                    />{" "}
-                    {/* <!-- media img start --> */}
-                    {/* <!-- media body start --> */}
-                    <div className="media-body pl-4 pt-2">
-                      <h6 className="mb-0">
-                        <a
-                          className="mb-0 font-size-4 font-weight-semibold heading-default-color line-height-reset"
-                          href="http://localhost:3000/"
-                        >
-                          Benjamin Linkon
-                        </a>
-                      </h6>
-                      <p className="mb-0">
-                        <a
-                          className="font-size-3 text-default-color line-height-reset"
-                          href="http://localhost:3000/"
-                        >
-                          JavaScript Developer
-                        </a>
-                      </p>
-                    </div>
-                    {/* <!-- media body start --> */}{" "}
-                  </div>
-                  {/* <!-- media end --> */}{" "}
-                </div>
-                {/* <!-- card-body end --> */}{" "}
-              </div>
-              {/* <!-- card end --> */}{" "}
-            </div>
-            {/* <!-- single blog end --> */}{" "}
-          </div>
-        </div>
-      </div>
-      {/* <!-- Blog area function end --> */}
-      <EmployeeFooter />
     </div>
+  </div>
+  {/* <!-- End Category Area --> */ }
+  {/* <!-- Blog area function start --> */ }
+  <div className="pt-11 pt-lg-24 pb-11 pb-lg-24">
+    <div className="container">
+      <div className="row justify-content-center">
+        <div
+          className="col-xl-7 col-lg-8 col-md-10"
+          data-aos="fade-in"
+          data-aos-duration="1000"
+          data-aos-once="true"
+        >
+          {/* <!-- section-title start --> */}
+          <div className="section-title text-center pb-lg-15 pb-8 px-xxl-10">
+            <h2 className="mb-9 font-size-10">Quick career tips</h2>
+            <p className="text-default-color font-size-5">
+              Collaboratively administrate empowered markets via
+              plug-and-play networks. Dynamically procrastinate
+            </p>
+          </div>
+          {/* <!-- section-title end --> */}{" "}
+        </div>
+      </div>
+      <div className="row justify-content-center d-none">
+        {/* <!-- single blog start --> */}
+        <div
+          className="col-xl-4 col-md-6 mb-xl-0 mb-13"
+          data-aos="fade-right"
+          data-aos-duration="500"
+          data-aos-once="true"
+        >
+          {/* <!-- card start --> */}
+          <div className="card bg-transparent border-0 text-left">
+            {/* <!-- card img start --> */}
+            <img
+              src="image/l2/png/blog-img1.png"
+              className="card-img-top"
+              alt="..."
+            />{" "}
+            {/* <!-- card img end --> */}
+            {/* <!-- card-body start --> */}
+            <div className="card-body pt-11 px-0 pb-0">
+              <a
+                href="http://localhost:3000/"
+                className="badge badge-dodger text-uppercase font-size-3 font-weight-bold px-4 py-1"
+              >
+                CV Writing
+              </a>
+              <h4>
+                <a
+                  className="card-title font-size-7 mt-8 mb-6 heading-default-color"
+                  href="http://localhost:3000/"
+                >
+                  How to make a perfect CV that attracts the attention
+                </a>
+              </h4>
+              <p className="card-text mb-9 font-size-4">
+                Collaboratively administrate empowered markets via
+                plug-and-play networks. Dynamically procrastinate B2C users
+                after installed base.
+              </p>
+              {/* <!-- media start --> */}
+              <div className="media mb-5 pr-9">
+                {/* <!-- media img start --> */}
+                <a href="http://localhost:3000/">
+                  <img
+                    src="image/l2/png/blog-user-img1.png"
+                    className="align-self-center circle-54 mr-3 mt-2"
+                    alt=""
+                  />
+                </a>
+                {/* <!-- media img start --> */}
+                {/* <!-- media body start --> */}
+                <div className="media-body pl-4 pt-2">
+                  <h6 className="mb-0">
+                    <a
+                      className="mb-0 font-size-4 font-weight-semibold heading-default-color line-height-reset"
+                      href="http://localhost:3000/"
+                    >
+                      Anna Frank
+                    </a>
+                  </h6>
+                  <p className="mb-0">
+                    <a
+                      className="font-size-3 text-default-color"
+                      href="http://localhost:3000/"
+                    >
+                      Creative Director
+                    </a>
+                  </p>
+                </div>
+                {/* <!-- media body start --> */}{" "}
+              </div>
+              {/* <!-- media end --> */}{" "}
+            </div>
+            {/* <!-- card-body end --> */}{" "}
+          </div>
+          {/* <!-- card end --> */}{" "}
+        </div>
+        {/* <!-- single blog end --> */}
+        {/* <!-- single blog start --> */}
+        <div
+          className="col-xl-4 col-md-6 mb-xl-0 mb-13"
+          data-aos="fade-up"
+          data-aos-duration="700"
+          data-aos-once="true"
+        >
+          {/* <!-- card start --> */}
+          <div className="card bg-transparent border-0 text-left">
+            {/* <!-- card img start --> */}
+            <a href="http://localhost:3000/">
+              <img
+                src="image/l2/png/blog-img2.png"
+                className="card-img-top"
+                alt="..."
+              />
+            </a>
+            {/* <!-- card img end --> */}
+            {/* <!-- card-body start --> */}
+            <div className="card-body pt-11 px-0 pb-0">
+              <a
+                href="http://localhost:3000/"
+                className="badge badge-dodger text-uppercase font-size-3 font-weight-bold px-4 py-1"
+              >
+                Marketing
+              </a>
+              <h4>
+                <a
+                  className="card-title font-size-7 mt-8 mb-6 heading-default-color"
+                  href="http://localhost:3000/"
+                >
+                  Out bound marketing to get the job you want within 72 days
+                </a>
+              </h4>
+              <p className="card-text mb-9 font-size-4">
+                Collaboratively administrate empowered markets via
+                plug-and-play networks. Dynamically procrastinate B2C users
+                after installed base.
+              </p>
+              {/* <!-- media start --> */}
+              <div className="media mb-5 pr-9">
+                {/* <!-- media img start --> */}
+                <a href="http://localhost:3000/">
+                  <img
+                    src="image/l2/png/blog-user-img2.png"
+                    className="align-self-center circle-54 mr-3 mt-2"
+                    alt=""
+                  />
+                </a>
+                {/* <!-- media img start --> */}
+                {/* <!-- media body start --> */}
+                <div className="media-body pl-4 pt-2">
+                  <h6 className="mb-0">
+                    <a
+                      className="font-size-4 font-weight-semibold heading-default-color line-height-reset"
+                      href="http://localhost:3000/"
+                    >
+                      David Herison
+                    </a>
+                  </h6>
+                  <p className="mb-0">
+                    <a
+                      className="font-size-3 text-default-color"
+                      href="http://localhost:3000/"
+                    >
+                      UX Designer
+                    </a>
+                  </p>
+                </div>
+                {/* <!-- media body start --> */}{" "}
+              </div>
+              {/* <!-- media end --> */}{" "}
+            </div>
+            {/* <!-- card-body end --> */}{" "}
+          </div>
+          {/* <!-- card end --> */}{" "}
+        </div>
+        {/* <!-- single blog end --> */}
+        {/* <!-- single blog start --> */}
+        <div
+          className="col-xl-4 col-md-6"
+          data-aos="fade-left"
+          data-aos-duration="500"
+          data-aos-once="true"
+        >
+          {/* <!-- card start --> */}
+          <div className="card bg-transparent border-0 text-left">
+            {/* <!-- card img start --> */}
+            <a href="http://localhost:3000/">
+              <img
+                src="image/l2/png/blog-img3.png"
+                className="card-img-top"
+                alt="..."
+              />
+            </a>
+            {/* <!-- card img end --> */}
+            {/* <!-- card-body start --> */}
+            <div className="card-body pt-11 px-0 pb-0">
+              <a
+                href="http://localhost:3000/"
+                className="badge badge-dodger text-uppercase font-size-3 font-weight-bold px-4 py-1"
+              >
+                Social media
+              </a>
+              <h4>
+                <a
+                  className="card-title font-size-7 mt-8 mb-6 heading-default-color"
+                  href="http://localhost:3000/"
+                >
+                  Your social media accounts will be your new CV
+                </a>
+              </h4>
+              <p className="card-text mb-9 font-size-4">
+                Leverage agile frameworks to provide a robust synopsis for
+                high level overviews. Iterative approaches to corporate
+                strategy foster,
+              </p>
+              {/* <!-- media start --> */}
+              <div className="media mb-5 pr-9 align-items-center">
+                {/* <!-- media img start --> */}
+                <img
+                  src="image/l2/png/blog-user-img3.png"
+                  className="align-self-center circle-54 mr-3"
+                  alt=""
+                />{" "}
+                {/* <!-- media img start --> */}
+                {/* <!-- media body start --> */}
+                <div className="media-body pl-4 pt-2">
+                  <h6 className="mb-0">
+                    <a
+                      className="mb-0 font-size-4 font-weight-semibold heading-default-color line-height-reset"
+                      href="http://localhost:3000/"
+                    >
+                      Benjamin Linkon
+                    </a>
+                  </h6>
+                  <p className="mb-0">
+                    <a
+                      className="font-size-3 text-default-color line-height-reset"
+                      href="http://localhost:3000/"
+                    >
+                      JavaScript Developer
+                    </a>
+                  </p>
+                </div>
+                {/* <!-- media body start --> */}{" "}
+              </div>
+              {/* <!-- media end --> */}{" "}
+            </div>
+            {/* <!-- card-body end --> */}{" "}
+          </div>
+          {/* <!-- card end --> */}{" "}
+        </div>
+        {/* <!-- single blog end --> */}{" "}
+      </div>
+    </div>
+  </div>
+  {/* <!-- Blog area function end --> */ }
+  <EmployeeFooter />
+    </div >
   );
 }
 export default EmployeeHomePage;

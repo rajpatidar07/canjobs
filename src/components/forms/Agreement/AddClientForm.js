@@ -91,6 +91,7 @@ const AddClientForm = ({
                 toast.success("Family updated successfully", { position: toast.POSITION.TOP_RIGHT, autoClose: 1000 });
                 setApicall(true)
                 setLoading(false)
+                close()
             }
         } catch (error) {
             console.log(error)
@@ -140,7 +141,7 @@ const AddClientForm = ({
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {clients.map((client, index) => (
+                                    {clients.slice(1).map((client, index) => (
                                         <tr key={index}>
                                             <td>
                                                 {index + 1}
