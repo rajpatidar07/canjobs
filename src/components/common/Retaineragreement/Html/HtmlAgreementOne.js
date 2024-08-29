@@ -1050,8 +1050,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type, addSign }) => {
                       </div>`
       : loginuser === "admin" ? "" : ` <button class="btn btn-outline-secondary border-0  " 
                   style="font-family:cursive;" 
-                  id="add-signature-button-0"
-                  ${!felidData.initial ? 'disabled' : ''}>
+                  id="add-signature-button-0">
             Add Signature
           </button>`
     }
@@ -1089,7 +1088,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type, addSign }) => {
         : loginuser === "admin" ? "" : ` <button class="btn btn-outline-secondary border-0  " 
                   style="font-family:cursive;" 
                   id="add-signature-button-${index}"
-                  ${!felidData.initial ? 'disabled' : ''}>
+                  ${!familyJsonArray[0]?.client_signature ? 'disabled' : ''}>
             Add Signature
           </button>`
       }
@@ -1296,41 +1295,41 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type, addSign }) => {
       >
         Initial:
          <p class="para_gap" style="margin: 0">
-       ${felidData?.initial ? `<img
-          src=${felidData.initial ? felidData?.initial : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"}
-          alt="${(felidData && (familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name) ? ((familyJsonArray[0]?.client_first_name + " " + (familyJsonArray[0]?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}"
-          style="max-width: 200px; float: right"
-          class=${felidData.initial ? "d-block" : "d-none"}
-        />`: loginuser === "admin" ? "" : `<button class="btn btn-outline-secondary border-0 col-12 text-decoration-none" 
-        style="font-family:cursive;" 
-        id="add-signature-button-initial")>
-  Add initial
-</button>`}
+       ${familyJsonArray[0]?.client_signature ? `  <img
+      src="${familyJsonArray[0]?.client_signature}"
+      alt="${familyJsonArray[0]?.client_first_name} ${familyJsonArray[0]?.client_last_name}"
+      style="max-width: 200px; float: right;"
+      class="${familyJsonArray[0]?.client_signature ? "d-block" : "d-none"}"
+    />`: loginuser === "admin" ? "" : ` <button class="btn btn-outline-secondary border-0  " 
+                  style="font-family:cursive;" 
+                  id="add-signature-button-0">
+            Add Initial
+          </button>`}
         </p>
       </div>
     </div>
   </body>
   </html>`)
-  useEffect(() => {
-    // Event handler function
-    const handleClick = (e) => {
-      addSign(e, "initial"); // Call the addSign function with desired arguments
-    };
+  // useEffect(() => {
+  //   // Event handler function
+  //   const handleClick = (e) => {
+  //     addSign(e, "initial"); // Call the addSign function with desired arguments
+  //   };
 
-    // Ensure the HTML is injected
-    const btn = document.getElementById('add-signature-button-initial');
+  //   // Ensure the HTML is injected
+  //   const btn = document.getElementById('add-signature-button-initial');
 
-    if (btn) {
-      // Attach event listener
-      btn.addEventListener('click', handleClick);
+  //   if (btn) {
+  //     // Attach event listener
+  //     btn.addEventListener('click', handleClick);
 
-      // Clean up event listener
-      return () => {
-        btn.removeEventListener('click', handleClick);
-      };
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  //     // Clean up event listener
+  //     return () => {
+  //       btn.removeEventListener('click', handleClick);
+  //     };
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
   useEffect((e) => {
     // Attach event listeners after HTML is injected
     familyJsonArray.forEach((_, index) => {
@@ -1350,7 +1349,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type, addSign }) => {
       });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [familyJsonArray, felidData.initial]);
+  }, [familyJsonArray, familyJsonArray[0]?.client_signature]);
   return (
     <div className="row"
       style={{

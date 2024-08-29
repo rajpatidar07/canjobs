@@ -82,7 +82,8 @@ export default function EmployeeTable(props) {
         "",
         user_type === "agent" ? agentId : props.agentFilterValue,
         props.adminFilterValue,
-        props.categoryFilterValue
+        props.categoryFilterValue,
+        props.localFilterValue,
       );
       if (userData.data.length === 0) {
         setemployeeData([]);

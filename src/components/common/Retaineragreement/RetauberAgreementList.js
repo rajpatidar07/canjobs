@@ -280,7 +280,7 @@ export default function RetauberAgreementList({
                                                             </span>
                                                         </button>
                                                         <button
-                                                            className="btn btn-outline-info action_btn d-none"
+                                                            className="btn btn-outline-info action_btn "
 
                                                             onClick={() => {
                                                                 setOpenAddClientFeilds(true)

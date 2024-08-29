@@ -312,7 +312,7 @@ export const getallEmployeeData = async (
       assigned_by: assignedadminId,
       category: "",
       employee_id: subType,
-      local:localFilterValue
+      is_local:localFilterValue
     },
     {
       headers: {

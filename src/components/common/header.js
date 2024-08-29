@@ -167,6 +167,11 @@ function EmployeeHeader() {
                       Partner
                     </Link>
                   </li>
+                  <li className="drop-menu-item">
+                    <Link to={"/aboutus"} className="nav-link">
+                      About us
+                    </Link>
+                  </li>
                   {/* <li className="drop-menu-item">
                     <Link to={`/outside_booking?data=${ encodeURIComponent(JSON.stringify( {
     id: "39",

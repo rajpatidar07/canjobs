@@ -316,8 +316,8 @@ export default function ApplicantsFilter({
               setpageNo(1);
             }}
             className={` form-control ${interestFilterValue === "pnp"
-                ? `text-uppercase`
-                : "text-capitalize"
+              ? `text-uppercase`
+              : "text-capitalize"
               }`}
           >
             <option value="" data-display="Product Designer">
@@ -379,7 +379,7 @@ export default function ApplicantsFilter({
             checked={localFilterValue === 1}
             value={localFilterValue}
             onChange={(e) =>
-              setLocalFilterValue(1)
+              setLocalFilterValue(localFilterValue === 1 ? 0 : 1)
             }
           /> <span >Local</span>
         </label>

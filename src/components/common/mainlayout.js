@@ -71,6 +71,7 @@ import HtmlAgreementOne from "./Retaineragreement/Html/HtmlAgreementOne";
 import WebhookComponent from "./webHook";
 import { ToastContainer } from "react-toastify";
 import UserSigningPage from "./Retaineragreement/UserSigningPage";
+import AboutUs from "../user/AboutUs";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -118,6 +119,7 @@ function MainLayout() {
         <Route exact path="/linkedin" component={LinkedInCallback} />
         <Route exact path="/signagreement" element={<UserSigningPage/>} />
         <Route path="/agreeone" element={<AgreementOne />} />
+        <Route path="/aboutus" element={<AboutUs />} />
         {/* <Route path="*" element={<NotFound userType={userType}/>} /> */}
         {(userType === "user" && (token !== "" ||
           token !== null ||
