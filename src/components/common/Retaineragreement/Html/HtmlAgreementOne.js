@@ -59,15 +59,13 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type, addSign }) => {
         , email <a href="mailto:info@canpathways.ca" class="a" target="_blank">info@canpathways.ca located at 2618 </a>
         <span>Hopewell Pl NE #310 Calgary, AB T1Y 7J7,</span> <span>Canada</span> and Client  <span class="para_gap text-capitalize">${(felidData && (familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name) ? ((familyJsonArray[0]?.client_first_name + " " + (familyJsonArray[0]?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}</span>(the “Client”)<span class="p">, located at  <span class="para_gap"> ${felidData && felidData.client_address ? (felidData.client_address) : emp_user_type === "employer" ? (userData?.address || "") : (((userData?.current_location || "") || "") + " " + ((userData?.currently_located_country || "") || ""))}</span> </span> , email  <span class="para_gap">${felidData && felidData.client_email ? felidData.client_email : (userData?.email || "")}</span>, contact number  <span class="para_gap"> ${felidData && felidData.client_contact ? felidData.client_contact : (userData?.contact_no || "")}</span>.
       </p>
-      <div>
-      <p>Details of Applicant's and dependents to added in this application</p>
-      <div>
       <p>
-      <b>Family member</b>
+      ${familyJsonArray.slice(1).length !== 0
+      ? `<div><p>Details of Family member and dependents to added in this application</p><div>` : ''}
       <br>
       ${(familyJsonArray.slice(1) || []).map((item, index) => (
-      `<span key=${index}> Name ${index + 1}: <span class="para_gap text-capitalize">${item.client_first_name + " " + item.client_last_name} </span> Date of birth : <span class="para_gap">${item.client_date_of_birth ? moment(item.client_date_of_birth).format("DD-MM-YYYY") : ""} </span> </span>`
-    ))}
+        `<span key=${index}> Name ${index + 1}: <span class="para_gap text-capitalize">${item.client_first_name + " " + item.client_last_name} </span> Date of birth : <span class="para_gap">${item.client_date_of_birth ? moment(item.client_date_of_birth).format("DD-MM-YYYY") : ""} </span> </span>`
+      ))}
       </p>
       </div>
       </div>
@@ -1034,7 +1032,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type, addSign }) => {
 <div style="display: flex; flex-wrap: wrap">
     <!-- Client Signature -->
     <div style="width: 50%">
-            <p class="para_gap" style="margin: 0">
+           
        ${familyJsonArray[0]?.client_signature ? `
         <div class="d-flex flex-column">
                         <img
@@ -1043,6 +1041,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type, addSign }) => {
       style="max-width: 200px; float: right;"
       class="${familyJsonArray[0]?.client_signature ? "d-block" : "d-none"}"
     />
+     <p class="para_gap" style="margin: 0"></p>
                   <small class="row ">
                     <span class="col text-capitalize" >
                       ${familyJsonArray[0]?.client_first_name + " " + familyJsonArray[0]?.client_last_name + " "}${familyJsonArray[0]?.date_signature_client}</span>
@@ -1054,7 +1053,6 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type, addSign }) => {
             Add Signature
           </button>`
     }
-            </p>
             <p style="margin: 0 0 30px 0">Signature of Client</p>
         </div>
         <div style="width: 50%">
@@ -1087,7 +1085,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type, addSign }) => {
                       </div>`
         : loginuser === "admin" ? "" : ` <button class="btn btn-outline-secondary border-0  " 
                   style="font-family:cursive;" 
-                  id="add-signature-button-${index}"
+                  id="add-signature-button-${index + 1}"
                   ${!familyJsonArray[0]?.client_signature ? 'disabled' : ''}>
             Add Signature
           </button>`
@@ -1300,11 +1298,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type, addSign }) => {
       alt="${familyJsonArray[0]?.client_first_name} ${familyJsonArray[0]?.client_last_name}"
       style="max-width: 200px; float: right;"
       class="${familyJsonArray[0]?.client_signature ? "d-block" : "d-none"}"
-    />`: loginuser === "admin" ? "" : ` <button class="btn btn-outline-secondary border-0  " 
-                  style="font-family:cursive;" 
-                  id="add-signature-button-0">
-            Add Initial
-          </button>`}
+    />`: loginuser === "admin" ? "" : ``}
         </p>
       </div>
     </div>
@@ -1349,7 +1343,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type, addSign }) => {
       });
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [familyJsonArray, familyJsonArray[0]?.client_signature]);
+  }, [familyJsonArray,]);
   return (
     <div className="row"
       style={{

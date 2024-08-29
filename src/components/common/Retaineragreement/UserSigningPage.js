@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 // import AdobePDFViewer from '../Adobe/adobeFile'
 import { GetAgreement/*, getSharePointParticularFolders*/ } from '../../../api/api'
-import {useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import AgreementOneForm from '../../forms/Agreement/AgreementOneForm'
 import Loader from '../loader'
 import HtmlAgreementOne from './Html/HtmlAgreementOne'
@@ -27,6 +27,7 @@ export default function UserSigningPage() {
     const [felidData, setFelidData] = useState([])
     const [clientIndex, setClientIndex] = useState()
     let [openAddFeildsModal, setOpenAddFeildsModal] = useState(false)
+    let [showDetailsOption, setShowDetailsOption] = useState(false)
     let location = useLocation()
     let data = new URLSearchParams(location.search)
     let user_id = data.get("id")
@@ -74,7 +75,6 @@ export default function UserSigningPage() {
         // Call the function when the component first renders
         GetAgreementPdf();
         // document.body.classList.remove("admin_body");
-
         // let timer;
         if (apicall) {
             // timer = setTimeout(() => {
@@ -90,18 +90,19 @@ export default function UserSigningPage() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [apicall]);
     /*Function to open sign form modal */
-    const addSign = (e,index) => {
+    const addSign = (e, index) => {
         // e.preventDefault()
         setOpenAddFeildsModal(true)
         setClientIndex(index)
+        setShowDetailsOption(false)
     }
     const familyJsonArray = felidData?.family_json ? JSON.parse(felidData.family_json) : [];
-    console.log((felidData),familyJsonArray)
     return (
         <div className='d-flex p-5' style={{ backgroundColor: "#423f3f" }}>
+               
             {loader ?
                 <Loader />
-                : <div  style={{ margin: "auto" }}>
+                : <div style={{ margin: "auto" }}>
                     {/* <AdobePDFViewer
                         url={pdf["@microsoft.graph.downloadUrl"]}
                         data={pdf}
@@ -148,13 +149,17 @@ export default function UserSigningPage() {
                                                                                     ? <HtmlAgreementsixteen />
                                                                                     : null
                     }
-                    
-                <div className='d-flex justify-content-center'>
-                    <button className="btn btn-primary text-decoration-none" onClick={(e) => addSign(e, "final")}>
-                        Final Submit
-                    </button>
-                </div>
+
+                    <div className='d-flex justify-content-center'>
+                        <button className="btn btn-primary text-decoration-none" onClick={(e) => addSign(e, "final")}>
+                            Final Submit
+                        </button>
+                    </div>
                 </div>}
+                <button className='btn btn-primary text-end m-2' onClick={() => {
+                    setOpenAddFeildsModal(true)
+                    setShowDetailsOption(true)
+                }}>Add Details</button>
             <div className={"d-none col-4 position-sticky bg-white h-100vh"}>
                 <div className='p-10'>
                     <h3>Add{felidData.initial ? "" : " Initial and Client"} Signature</h3>
@@ -164,7 +169,7 @@ export default function UserSigningPage() {
                     </button>
                     {(familyJsonArray || []).map((item, index) => (
                         item.client_signature ? null :
-                            <span key={index}>Client Name {index + 1}: <span className="text-capitalize">{item.client_first_name + " " + item.client_last_name + "   "} </span><br/>
+                            <span key={index}>Client Name {index + 1}: <span className="text-capitalize">{item.client_first_name + " " + item.client_last_name + "   "} </span><br />
                                 <button className="btn btn-primary text-decoration-none flex-end" disabled={felidData.initial ? false : true} style={{ fontFamily: "cursive" }}
                                     onClick={(e) => addSign(e, index)}>
                                     {" "}Add Signature
@@ -189,7 +194,7 @@ export default function UserSigningPage() {
                     user_id={user_id}
                     // openSignature={openSignature}
                     //   ViewPdfclose={close}
-                    openSignature={"yes"}
+                    openSignature={showDetailsOption ? "no" : "yes"}
                     folderId={folderId}
                     index={clientIndex} />
                 : null}

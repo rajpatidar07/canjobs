@@ -274,9 +274,9 @@ const AggrementOne = () => {
           </View>
         </View> */}
         <View style={{ marginTop: 15 }}>
-          <Text style={{ marginBottom: 5 }}>
-            Details of Applicant's and dependents to be added in this application
-          </Text>
+          {familyJsonArray.slice(1).length !== 0 ? <Text style={{ marginBottom: 5 }}>
+            Details of Family members and dependents to be added in this application
+          </Text> : null}
           <View>
             {(familyJsonArray.slice(1) || []).map((item, index) => (
               <View key={index}>
@@ -1567,53 +1567,53 @@ const AggrementOne = () => {
             </View> */}
             <View style={{ flexDirection: "row", flexWrap: "wrap", marginBottom: 20 }}>
 
-            <React.Fragment >
-                  {/* Client Signature */}
-                  <View style={{ width: "50%", padding: 10 }}>
-                    {familyJsonArray?.[0].client_signature ? (
-                      <View style={{ display: "flex", flexDirection: "column" }}>
-                        <Image
-                          src={
-                            familyJsonArray?.[0].client_signature
-                              ? familyJsonArray?.[0].client_signature
-                              : ""
+              <React.Fragment >
+                {/* Client Signature */}
+                <View style={{ width: "50%", padding: 10 }}>
+                  {familyJsonArray?.[0].client_signature ? (
+                    <View style={{ display: "flex", flexDirection: "column" }}>
+                      <Image
+                        src={
+                          familyJsonArray?.[0].client_signature
+                            ? familyJsonArray?.[0].client_signature
+                            : ""
+                        }
+                        alt={familyJsonArray?.[0].client_first_name + " " + familyJsonArray?.[0].client_last_name}
+
+                        style={{ width: "40%", height: "auto" }}
+                      />
+                      <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7, flex: "row" }}>
+                        <Text style={{ textTransform: "capitalize", flex: "column" }}>
+                          {familyJsonArray?.[0].client_first_name +
+                            " " +
+                            familyJsonArray?.[0].client_last_name + " "
                           }
-                          alt={familyJsonArray?.[0].client_first_name + " " + familyJsonArray?.[0].client_last_name}
-
-                          style={{ width: "40%", height: "auto" }}
-                        />
-                        <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7, flex: "row" }}>
-                          <Text style={{ textTransform: "capitalize", flex: "column" }}>
-                            {familyJsonArray?.[0].client_first_name +
-                              " " +
-                              familyJsonArray?.[0].client_last_name + " "
-                            }
-                          </Text>
-                          <Text style={{ flex: "column" }}>
-                            {familyJsonArray?.[0].date_signature_client}</Text>
                         </Text>
-                      </View>
-                    ) : (
-                      <Text>___________________</Text>
-                    )}
-                    <Text>Signature of Client </Text>
-                  </View>
+                        <Text style={{ flex: "column" }}>
+                          {familyJsonArray?.[0].date_signature_client}</Text>
+                      </Text>
+                    </View>
+                  ) : (
+                    <Text>___________________</Text>
+                  )}
+                  <Text>Signature of Client </Text>
+                </View>
 
-                  {/* Client Name */}
-                  <View style={{ width: "50%", padding: 10 }}>
-                    <Text style={[{ textTransform: "capitalize", marginBottom: 5 }, styles.textunderline]}>
-                      {familyJsonArray?.[0].client_first_name && familyJsonArray?.[0].client_last_name
-                        ? `${familyJsonArray?.[0].client_first_name} ${familyJsonArray?.[0].client_last_name}`
-                        : "_________________"}
-                    </Text>
-                    <Text >Name of Client </Text>
-                    <Text style={[{ marginTop: 10 }, styles.textunderline]}>
-                      {(!familyJsonArray?.[0].date_signature_client || familyJsonArray?.[0].date_signature_client ===
-                        "0000-00-00 00:00:00") ? "________________" : familyJsonArray?.[0].date_signature_client}
-                    </Text>
-                    <Text >Date</Text>
-                  </View>
-                </React.Fragment>
+                {/* Client Name */}
+                <View style={{ width: "50%", padding: 10 }}>
+                  <Text style={[{ textTransform: "capitalize", marginBottom: 5 }, styles.textunderline]}>
+                    {familyJsonArray?.[0].client_first_name && familyJsonArray?.[0].client_last_name
+                      ? `${familyJsonArray?.[0].client_first_name} ${familyJsonArray?.[0].client_last_name}`
+                      : "_________________"}
+                  </Text>
+                  <Text >Name of Client </Text>
+                  <Text style={[{ marginTop: 10 }, styles.textunderline]}>
+                    {(!familyJsonArray?.[0].date_signature_client || familyJsonArray?.[0].date_signature_client ===
+                      "0000-00-00 00:00:00") ? "________________" : familyJsonArray?.[0].date_signature_client}
+                  </Text>
+                  <Text >Date</Text>
+                </View>
+              </React.Fragment>
               {/* Mapping over the familyJsonArray to create the Client Signature section */}
               {(familyJsonArray.slice(1) || []).map((item, index) => (
                 <React.Fragment key={index}>
@@ -1825,7 +1825,7 @@ const AggrementOne = () => {
           >
             <View style={[styles.clientForm, { textAlign: "center", marginTop: 30 }]}>
               <View style={styles.clientFormChild}>
-                <Text className="para_gap" style={{ margin: 0,marginBottom:15, textDecoration: "underline", textTransform: "capitalize" }}>
+                <Text className="para_gap" style={{ margin: 0, marginBottom: 15, textDecoration: "underline", textTransform: "capitalize" }}>
                   {familyJsonArray[0].client_first_name && familyJsonArray[0].client_last_name
                     ? familyJsonArray[0].client_first_name +
                     " " +
@@ -1902,19 +1902,19 @@ const AggrementOne = () => {
                   Email: info@canpathways.ca | Website: www.canpathways.ca
                 </Text>
               </View>
-              {felidData.initial ? (
+              {familyJsonArray?.[0].client_signature ? (
                 <Image
                   fixed
                   style={[
                     styles.textunderline,
                     { width: "20%", left: 450, height: "auto" },
                   ]}
-                  src={felidData.initial}
+                  src={familyJsonArray?.[0].client_signature}
                 />
               ) : (
                 null)}
               <View className="initial" fixed style={styles.initial}>
-                <Text>Initial:{felidData.initial ? "" : "__________"}</Text>
+                <Text>Initial:{familyJsonArray?.[0].client_signature ? "" : "__________"}</Text>
               </View>
             </View>
           </Page>
@@ -1953,20 +1953,20 @@ const AggrementOne = () => {
                       Email: info@canpathways.ca | Website: www.canpathways.ca
                     </Text>
                   </View>
-                  {felidData.initial ? (
+                  {familyJsonArray?.[0].client_signature ? (
                     <Image
                       fixed
                       style={[
                         styles.textunderline,
                         { width: "20%", left: 450, height: "auto" },
                       ]}
-                      src={felidData.initial}
+                      src={familyJsonArray?.[0].client_signature}
                     />
                   ) : (
                     null
                   )}
                   <View className="initial" fixed style={styles.initial}>
-                    <Text>Initial:{felidData.initial ? "" : "__________"}</Text>
+                    <Text>Initial:{familyJsonArray?.[0].client_signature ? "" : "__________"}</Text>
                   </View>
                 </View>
               </Page>

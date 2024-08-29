@@ -275,6 +275,7 @@ import { AddUpdateAgreement, GetAgreement } from "../../../api/api";
 import useValidation from '../../common/useValidation';
 import { toast } from 'react-toastify';
 import { Modal } from "react-bootstrap"
+import ClietFamilyFeilds from "../../common/Retaineragreement/clietFamilyFeilds"
 const AgreementOneForm = ({
   folderId,
   user_id,
@@ -331,7 +332,7 @@ const AgreementOneForm = ({
     receiver_type: emp_user_type === "employee" ? "employee" : "employer",
     assigned_by_id: "",
     assigned_by_type: "",
-    signature_status: felidData.initial ? 1 : 0,
+    signature_status: felidData.family_json[0].client_signature ? 1 : 0,
     id: "",
     client_file_no: "",
     agreement_date: "",
@@ -354,20 +355,6 @@ const AgreementOneForm = ({
 
   const { state, setState, onInputChange, errors } = useValidation(initialFormState, validators);
 
-  // useEffect(() => {
-  //   if (felidData) {
-  //     const updatedState = { ...initialFormState };
-  //     for (const key in felidData) {
-  //       if (felidData[key] !== null && felidData[key] !== undefined) {
-  //         updatedState[key] = felidData[key];
-  //       }
-  //     }
-  //     setState(updatedState);
-  //   } else {
-  //     setState(initialFormState);
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [felidData]);
   useEffect(() => {
     if (felidData) {
       const updatedState = { ...initialFormState };
@@ -392,28 +379,56 @@ const AgreementOneForm = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [felidData]);
+  /*Function and states for the family member */
+  const [newClient, setNewClient] = useState({
+    client_first_name: "",
+    client_last_name: "",
+    client_signature: "",
+    date_signature_client: "",
+    client_date_of_birth: "",
+  });
 
-  // const addClient = () => {
-  //   const emptyClientState = {
-  //     client_first_name: "",
-  //     client_last_name: "",
-  //     client_signature: "",
-  //     date_signature_client: "",
-  //     client_date_of_birth: ""
-  //   };
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     family_json: [...prevState.family_json, { ...emptyClientState }]
-  //   }));
-  // };
+  const [editIndex, setEditIndex] = useState(null);
 
-  // const removeClient = (index) => {
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     family_json: prevState.family_json.filter((_, i) => i !== index)
-  //   }));
-  // };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewClient({ ...newClient, [name]: value });
+  };
 
+  const addClient = () => {
+    if (editIndex !== null) {
+      const updatedClients = state?.family_json.map((client, index) =>
+        index === editIndex ? { ...newClient, id: client.id } : client
+      );
+      setState({ ...state, family_json: updatedClients });
+      setEditIndex(null);
+    } else {
+      // Assuming state.family_json is an array
+      const updatedClients = [...(state?.family_json || []), { ...newClient, id: Date.now() }];
+      setState({ ...state, family_json: updatedClients });
+    }
+    setNewClient({
+      client_first_name: "",
+      client_last_name: "",
+      client_signature: "",
+      date_signature_client: "",
+      client_date_of_birth: "",
+    });
+  };
+
+  const removeClient = (indexToDelete) => {
+    if (window.confirm("Are you sure you want to delete this client?")) {
+      let newjson =state?.family_json.filter((_, index) => index  !== indexToDelete)
+      setState({...state,family_json:newjson});
+    }
+  };
+  const editClient = (index) => {
+    const clientToEdit = state?.family_json[index];
+    setNewClient(clientToEdit);
+    setEditIndex(index);
+  };
+
+  /*on change function for the main client */
   const handleClientChange = (index, event) => {
     const { name, value } = event.target;
     setState((prevState) => {
@@ -423,43 +438,7 @@ const AgreementOneForm = ({
     });
   };
 
-  // const onFormSubmit = async (e) => {
-  //   e.preventDefault();
-  //   setLoading(true);
-  //   try {
-  //     let res = await AddUpdateAgreement(state);
-  //     if (res.data.status === 1 && res.data.message === "Agreement updated successfully.") {
-  //       setLoading(false);
-  //       setState(initialFormState);
-  //       toast.success("Fields added successfully.", {
-  //         position: toast.POSITION.TOP_RIGHT,
-  //         autoClose: 1000,
-  //       });
-
-  //       try {
-  //         let res = await GetAgreement("", user_id, emp_user_type, felidData.type);
-  //         const stateData = {
-  //           user_id: user_id,
-  //           emp_user_type: emp_user_type,
-  //           folderId: folderId,
-  //           felidData: res.data.data[0],
-  //         };
-  //         const newPageUrl = `/agreeone`;
-  //         localStorage.setItem('agreementStateData', JSON.stringify(stateData));
-  //         setApicall(true);
-  //         close();
-  //         window.open(newPageUrl, '_blank');
-  //       } catch (error) {
-  //         console.log(error);
-  //       }
-  //       close();
-  //       setApicall(true);
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //     setLoading(false);
-  //   }
-  // };
+  /*Function to submit the form */
   const onFormSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -476,9 +455,8 @@ const AgreementOneForm = ({
           // if (openSignature === "yes") {
           try {
             let res = await GetAgreement("", user_id, emp_user_type, felidData.type)
-
             /*FUnction to generate pdf after adding signature */
-            if (openSignature === "yes" && res.data.data[0].initial && res.data.data[0].signature_status === "1") {
+            if (openSignature === "yes" && res.data.data[0].signature_status === "1") {
               const stateData = {
                 user_id: user_id,
                 emp_user_type: emp_user_type,
@@ -510,7 +488,7 @@ const AgreementOneForm = ({
         setLoading(false)
       }
     } else {
-      setFelidData({ ...felidData, family_json: JSON.stringify(state.family_json), initial: state.initial });
+      setFelidData({ ...felidData, family_json: JSON.stringify(state.family_json), signature_status: state.signature_status });
       setLoading(false)
       close()
     }
@@ -523,22 +501,33 @@ const AgreementOneForm = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.initial]);
 
+  /*Function to add signature */
   const handleSignature = (signature, clientIndex, label) => {
     const now = new Date();
     const today = now.toISOString().split('T')[0]; // Date in YYYY-MM-DD format
     const time = now.toTimeString().split(' ')[0]; // Time in HH:MM:SS format
     const dateTime = `${today} ${time}`; // Combine date and time
-    if (label === "rcic_signature") {
-      setState({ ...state, rcic_signature: signature, date_signature_rcic: dateTime });
-    } else if (label === "initial") {
-      setState({ ...state, initial: signature });
-    } else {
-      setState((prevState) => {
+
+    setState((prevState) => {
+      const updatedState = { ...prevState };
+
+      if (label === "rcic_signature") {
+        updatedState.rcic_signature = signature;
+        updatedState.date_signature_rcic = dateTime;
+      } else if (label === "initial") {
+        updatedState.initial = signature;
+      } else {
         const family_json = [...prevState.family_json];
-        family_json[clientIndex] = { ...family_json[clientIndex], client_signature: signature, date_signature_client: dateTime };
-        return { ...prevState, family_json };
-      });
-    }
+        family_json[clientIndex] = {
+          ...family_json[clientIndex],
+          client_signature: signature,
+          date_signature_client: dateTime,
+        };
+        updatedState.family_json = family_json;
+        updatedState.signature_status = family_json[0].client_signature ? 1 : 0;
+      }
+      return updatedState;
+    });
   };
   return (
     <Modal
@@ -559,8 +548,8 @@ const AgreementOneForm = ({
         <form onSubmit={onFormSubmit}>
           <h5 className="text-center mb-7 pt-2">{openSignature === "yes" ? "Add Signature" : "Add Retainer Agreement Fields"}</h5>
           <div className="row">
-             {/* Render client-specific fields */}
-             {openSignature === "yes" ? null : state?.family_json[0] &&(
+            {/* Render client-specific fields */}
+            {openSignature === "yes" ? null : state?.family_json[0] && (
               <React.Fragment key={index}>
                 <div className="form-group col-md-6 mb-0 mt-4">
                   <label htmlFor={`client_first_name_0`} className="font-size-4 text-black-2 line-height-reset">
@@ -590,7 +579,7 @@ const AgreementOneForm = ({
                     placeholder="Client's last name"
                   />
                 </div>
-                <div className="form-group col-md-6 mb-0 mt-4">
+                {/* <div className="form-group col-md-6 mb-0 mt-4">
                   <label htmlFor={`client_date_of_birth_0`} className="font-size-4 text-black-2 line-height-reset">
                     Client's Date of Birth
                   </label>
@@ -604,7 +593,7 @@ const AgreementOneForm = ({
                     name="client_date_of_birth"
                     placeholder="Client's DOB"
                   />
-                </div>
+                </div> */}
                 {/* <div className="form-group col-md-6 mb-0 mt-4">
                   <SignaturePadComponent
                     signature={state.family_json[index].client_signature}
@@ -662,9 +651,6 @@ const AgreementOneForm = ({
                 { label: "Client Address", name: "client_address", type: "text" },
                 { label: "Client Email", name: "client_email", type: "email" },
                 { label: "Client Contact No", name: "client_contact", type: "number" },
-                { label: "The Client asked the RCIC, and the RCIC has agreed, to act for the Client in the matter of", name: "matter", type: "text" },
-                { label: "Summary of preliminary advice given to the client", name: "summary", type: "text" },
-                // { label: "Client's Family Name", name: "client_last_name", type: "text" },
                 { label: "Client's Telephone Number", name: "client_telephone", type: "number" },
                 { label: "Client's Cellphone Number", name: "client_cellphone", type: "number" },
                 { label: "Client's Fax Number", name: "client_fax", type: "number" },
@@ -686,8 +672,32 @@ const AgreementOneForm = ({
                   {errors[name] && <span className="text-danger font-size-3 mx-5">{errors[name]}</span>}
                 </div>
               ))}
-           
-            <div className={(openSignature === "yes" && index === "initial") ? "form-group col-md-12 mb-0 mt-4" : "d-none"}>
+            {/* <div className={openSignature === "yes" ? "d-none" : 'form-group col-md-6 mb-0 mt-4 '}>
+              <button
+                type="button"
+                className="btn btn-info  form-control mx-5 col "
+                onClick={addFamilyMember}
+                title='Add Family member'
+              >
+                Add Family member
+              </button>
+            </div> */}
+            <div className={openSignature === "yes" ? "d-none" :"form-group col-md-12 mb-0 mt-4"}>
+              <label className="font-size-4 text-black-2 line-height-reset">
+                Family member
+              </label>
+              <div className='mx-5'>
+                <ClietFamilyFeilds
+                  handleInputChange={handleInputChange}
+                  newClient={newClient}
+                  removeClient={removeClient}
+                  editClient={editClient}
+                  clients={state?.family_json}
+                  addClient={addClient}
+                />
+              </div>
+            </div>
+            {/* <div className={(openSignature === "yes" && index === "initial") ? "form-group col-md-12 mb-0 mt-4" : "d-none"}>
               <SignaturePadComponent
                 onEnd={(signature) => handleSignature(signature, "", "initial")}
                 canvasProps={{ className: 'form-control mx-5 col' }}
@@ -696,8 +706,8 @@ const AgreementOneForm = ({
                 label={`initial`}
                 name={`Initial`}
                 onSignature={handleSignature} />
-            </div>
-            <div className={(felidData.initial && (index !== "initial" && index !== "rcic_signature" && index !== "final") && openSignature === "yes") ? "form-group col-md-12 mb-0 mt-4" : "d-none"}>
+            </div> */}
+            <div className={((index !== "rcic_signature" && index !== "final") && openSignature === "yes") ? "form-group col-md-12 mb-0 mt-4" : "d-none"}>
               <SignaturePadComponent
                 signature={state?.family_json[index]?.client_signature}
                 onEnd={(signature) => handleSignature(signature, index, "client_signature")}
@@ -721,16 +731,7 @@ const AgreementOneForm = ({
                 name={`RCIC Signature`}
                 onSignature={handleSignature} />
             </div>
-            {/* <div className={openSignature === "yes" ? "d-none" : 'd-flex justify-content-center'}>
-              <button
-                type="button"
-                className="btn btn-info mt-2"
-                onClick={addClient}
-                title='Add Client'
-              >
-                Add more client
-              </button>
-            </div> */}
+
           </div>
           <div className='form-group  d-flex flex-column'>
             {index === "final" ? "Are you sure to confirm submission? This signature cannot be updated later!" : ""}

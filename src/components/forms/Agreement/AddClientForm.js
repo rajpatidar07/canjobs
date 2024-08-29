@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Modal } from 'react-bootstrap';
-import { FaEdit, FaPlus, FaTrash } from 'react-icons/fa';
+// import { FaEdit, FaPlus, FaTrash } from 'react-icons/fa';
 import { AddUpdateAgreement } from '../../../api/api';
 import { toast } from 'react-toastify';
-import moment from 'moment';
-
+// import moment from 'moment';
+import ClietFamilyFeilds from "../../common/Retaineragreement/clietFamilyFeilds"
 const AddClientForm = ({
     folderId,
     user_id,
@@ -29,7 +29,6 @@ const AddClientForm = ({
             }
         ]
     );
-
     const [newClient, setNewClient] = useState({
         client_first_name: "",
         client_last_name: "",
@@ -119,7 +118,7 @@ const AddClientForm = ({
                 <form onSubmit={onFormSubmit}>
                     <div>
                         <h2 className="text-center">Family List</h2>
-                        <div className='table-responsive main_table_div w-100'>
+                        {/* <div className='table-responsive main_table_div w-100'>
                             <table className="table table-striped main_data_table">
                                 <thead>
                                     <tr>
@@ -225,7 +224,15 @@ const AddClientForm = ({
 
                                 </tbody>
                             </table>
-                        </div>
+                        </div> */}
+                        <ClietFamilyFeilds 
+                        handleInputChange={handleInputChange}
+                        newClient={newClient}
+                        removeClient={removeClient}
+                        editClient={editClient}
+                        clients={clients}
+                        addClient={addClient}
+                        />
                         <div className='text-center mb-5'>
                             <button
                                 type="submit"

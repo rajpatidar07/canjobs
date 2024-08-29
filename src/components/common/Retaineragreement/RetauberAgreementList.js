@@ -91,18 +91,18 @@ export default function RetauberAgreementList({
     useEffect(() => {
         // Call the function when the component first renders
         getAgreeFelidData();
-        let timer;
-        if (apicall) {
-            timer = setTimeout(() => {
-                // Function to be executed after 20 seconds when apicall is true because document update's take time 
-                getAgreeFelidData();
-                // Reset the state to false
-                setApicall(false);
-            }, 20000);
-        }
+        // let timer;
+        // if (apicall) {
+        //     timer = setTimeout(() => {
+        //         // Function to be executed after 20 seconds when apicall is true because document update's take time 
+        //         getAgreeFelidData();
+        //         // Reset the state to false
+        //         setApicall(false);
+        //     }, 20000);
+        // }
 
-        // Cleanup function to clear the timer if the component unmounts or myState changes
-        return () => clearTimeout(timer);
+        // // Cleanup function to clear the timer if the component unmounts or myState changes
+        // return () => clearTimeout(timer);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [apicall]);
     /*To Show the delete alert box */
@@ -344,11 +344,11 @@ export default function RetauberAgreementList({
                                                                 setAgreementData(data)
                                                                 GetAgreementPdf(data)
                                                             }}
-                                                            disabled={data.initial ?
+                                                            disabled={data.family_json[0].client_signature ?
                                                                 data.rcic_signature
                                                                     ? true
                                                                     : false
-                                                                : data.initial
+                                                                : data.family_json[0].client_signature
                                                                     ? false
                                                                     : true}
                                                             title="RCIC Sign"

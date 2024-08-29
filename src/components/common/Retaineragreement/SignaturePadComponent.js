@@ -243,7 +243,7 @@ import SignatureCanvas from 'react-signature-canvas';
 
 const SignaturePadComponent = ({ index, onSignature, setState, state, label, name, signature }) => {
     const sigPad = useRef(null);
-const [isSign, setIsSign] = useState(false)
+    const [isSign, setIsSign] = useState(false)
     // const clear = () => {
     //     sigPad.current.clear();
     //     setState((prevState) => {
@@ -328,7 +328,7 @@ const [isSign, setIsSign] = useState(false)
 
     return (
         <div className="form-group">
-            <label className={`font-size-4 text-black-2 line-height-reset mb-3 ${isSign ? "" :"position-relative"}`}>{name}</label>
+            <label className={`font-size-4 text-black-2 line-height-reset mb-3 ${isSign ? "" : "position-relative"}`}>{index === 0 ? "Client signature" : "Family memeber signature"}</label>
             {isSign ? <div className="border border-dark mb-3 w-100 " >
                 <SignatureCanvas
                     ref={sigPad}
