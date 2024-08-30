@@ -50,7 +50,13 @@ export default function EmployeeTable(props) {
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
   /*Pagination states */
-  const [status, setStatus] = useState(StatusTab ? StatusTab : props.self === "yes" ? -1 : 4);
+  const [status, setStatus] = useState(StatusTab
+    ? StatusTab
+    : props.pageName === "local_candidate"
+      ? ""
+      : props.self === "yes"
+        ? -1
+        : 4);
   const [totalData, setTotalData] = useState("");
   const [recordsPerPage] = useState(10);
   /*Shorting states */
@@ -58,7 +64,6 @@ export default function EmployeeTable(props) {
     props.heading === "Dashboard" ? "created_at" : "employee_id"
   );
   const [sortOrder, setSortOrder] = useState("DESC");
-
   /* Function to get Employee data*/
   const EmpData = async () => {
     // const params = useParams();
@@ -427,44 +432,50 @@ export default function EmployeeTable(props) {
                   Dead
                 </button>
               </>
-            ) : (
-              <>
-                <button
-                  type="button"
-                  className={
-                    status === "4" || status === 4 ? "btn btn-primary" : "btn btn-outline-primary"
-                  }
-                  onClick={() => setStatus(4)}
-                  title="Retained"
-                >
-                  Retained
-                </button>
-                <button
-                  type="button"
-                  className={
-                    status === "7" || status === 7 ? "btn btn-primary" : "btn btn-outline-primary"
-                  }
-                  onClick={() => setStatus(7)}
-                  title="Working on"
-                >
-                  Working on
-                </button>
-                <button
-                  type="button"
-                  className={
-                    status === "8" || status === 8 ? "btn btn-primary" : "btn btn-outline-primary"
-                  }
-                  onClick={() => setStatus(8)}
-                  title="Submitted"
-                >
-                  Submitted
-                </button>
-              </>
-            )}
+            ) : props.pageName === "local_candidate"
+              ? null
+              : (
+                <>
+                  <button
+                    type="button"
+                    className={
+                      status === "4" || status === 4 ? "btn btn-primary" : "btn btn-outline-primary"
+                    }
+                    onClick={() => setStatus(4)}
+                    title="Retained"
+                  >
+                    Retained
+                  </button>
+                  <button
+                    type="button"
+                    className={
+                      status === "7" || status === 7 ? "btn btn-primary" : "btn btn-outline-primary"
+                    }
+                    onClick={() => setStatus(7)}
+                    title="Working on"
+                  >
+                    Working on
+                  </button>
+                  <button
+                    type="button"
+                    className={
+                      status === "8" || status === 8 ? "btn btn-primary" : "btn btn-outline-primary"
+                    }
+                    onClick={() => setStatus(8)}
+                    title="Submitted"
+                  >
+                    Submitted
+                  </button>
+                </>
+              )}
             <button
               type="button"
               className={
-                status === "" || status === "00" ? "btn btn-primary" : "btn btn-outline-primary"
+                props.pageName === "local_candidate"
+                  ? "d-none"
+                  : status === "" || status === "00"
+                    ? "btn btn-primary"
+                    : "btn btn-outline-primary"
               }
               onClick={() => setStatus("")}
               title="All"

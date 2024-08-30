@@ -1,8 +1,7 @@
 import moment from "moment"
 import { useEffect } from "react";
 // import { Link } from "react-router-dom";
-const HtmlAgreementOne = ({ felidData, userData, emp_user_type, addSign }) => {
-  let loginuser = localStorage.getItem("userType")
+const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign }) => {
   // Function to replace tags
   // const replaceTags = (html) => {
   //   // Replace opening and closing div and ul tags with View tags
@@ -1047,7 +1046,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type, addSign }) => {
                       ${familyJsonArray[0]?.client_first_name + " " + familyJsonArray[0]?.client_last_name + " "}${familyJsonArray[0]?.date_signature_client}</span>
                   </small>
                       </div>`
-      : loginuser === "admin" ? "" : ` <button class="btn btn-outline-secondary border-0  " 
+      : page === "admin" ? "" : ` <button class="btn btn-outline-secondary border-0  " 
                   style="font-family:cursive;" 
                   id="add-signature-button-0">
             Add Signature
@@ -1069,7 +1068,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type, addSign }) => {
         </div>
     ${(familyJsonArray.slice(1) || []).map((item, index) => (
       `<div style="width: 50%">
-            <p class="para_gap" style="margin: 0">
+           
        ${item.client_signature ? `
         <div class="d-flex flex-column">
                         <img
@@ -1078,19 +1077,19 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type, addSign }) => {
       style="max-width: 200px; float: right;"
       class="${item.client_signature ? "d-block" : "d-none"}"
     />
+    <p class="para_gap" style="margin: 0"></p>
                   <small class="row ">
                     <span class="col text-capitalize" >
                       ${item.client_first_name + " " + item.client_last_name + " "}${item.date_signature_client}</span>
                   </small>
                       </div>`
-        : loginuser === "admin" ? "" : ` <button class="btn btn-outline-secondary border-0  " 
+        : page === "admin" ? "" : ` <button class="btn btn-outline-secondary border-0  " 
                   style="font-family:cursive;" 
                   id="add-signature-button-${index + 1}"
                   ${!familyJsonArray[0]?.client_signature ? 'disabled' : ''}>
             Add Signature
           </button>`
       }
-            </p>
             <p style="margin: 0 0 30px 0">Signature of family member</p>
         </div>
         <div style="width: 50%">
@@ -1298,7 +1297,7 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type, addSign }) => {
       alt="${familyJsonArray[0]?.client_first_name} ${familyJsonArray[0]?.client_last_name}"
       style="max-width: 200px; float: right;"
       class="${familyJsonArray[0]?.client_signature ? "d-block" : "d-none"}"
-    />`: loginuser === "admin" ? "" : ``}
+    />`: page === "admin" ? "" : ``}
         </p>
       </div>
     </div>
@@ -1355,7 +1354,6 @@ const HtmlAgreementOne = ({ felidData, userData, emp_user_type, addSign }) => {
         overflow: "auto",
       }}>
       <div dangerouslySetInnerHTML={{ __html: jsxContent }} />
-
     </div>
   );
 };

@@ -142,7 +142,7 @@ export default function MainRetainerAggHtml({ setApicall, close, openSignature, 
         </div>
       </div>
       {agreementData.type === "temporary resident visa"
-        ? <HtmlAgreementOne userData={userData} felidData={felidData} emp_user_type={emp_user_type} addSign={""} />
+        ? <HtmlAgreementOne page={"admin"} userData={userData} felidData={felidData} emp_user_type={emp_user_type} addSign={""} />
         : agreementData.type === "ATIP"
           ? <HtmlAgreementTwo userData={userData} felidData={felidData} emp_user_type={emp_user_type} />
           : agreementData.type === "visitor"

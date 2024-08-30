@@ -116,7 +116,7 @@ export default function UserSigningPage() {
                         userType={""}
                     /> */}
                     {type === "temporary resident visa"
-                        ? <HtmlAgreementOne felidData={felidData} emp_user_type={emp_user_type} addSign={addSign} />
+                        ? <HtmlAgreementOne page={"user"} felidData={felidData} emp_user_type={emp_user_type} addSign={addSign} />
                         : type === "ATIP"
                             ? <HtmlAgreementTwo felidData={felidData} emp_user_type={emp_user_type} />
                             : type === "visitor"

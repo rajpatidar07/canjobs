@@ -24,6 +24,7 @@ function SelfApplicat(props) {
   const [skillFilterValue, setSkillFilterValue] = useState(
     props ? props.skill : ""
   );
+  const [localFilterValue, setLocalFilterValue] = useState("");
   const [agentFilterValue, setAgentFilterValue] = useState("");
   const [adminFilterValue, setAdminFilterValue] = useState("");
   const [educationFilterValue, setEducationFilterValue] = useState("");
@@ -134,6 +135,8 @@ let user_type = localStorage.getItem("userType")
                     setSearchError={setSearchError}
                     skill={props.skill}
                     pageName={"employee"}
+                    setLocalFilterValue={setLocalFilterValue}
+                    localFilterValue={localFilterValue}
                   />
                   {props.skill === null ||
                   props.skill === undefined ||
@@ -171,6 +174,7 @@ let user_type = localStorage.getItem("userType")
                 adminFilterValue={adminFilterValue}
                 interestFilterValue={interestFilterValue}
                 categoryFilterValue={categoryFilterValue}
+                localFilterValue={localFilterValue}
 
               />
             </div>

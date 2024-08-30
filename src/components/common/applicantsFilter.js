@@ -26,7 +26,7 @@ export default function ApplicantsFilter({
   setCategoryFilterValue,
   categoryFilterValue,
   localFilterValue,
-  setLocalFilterValue
+  setLocalFilterValue,
 }) {
   // let [SkillList, setSkillList] = useState([]);
   // let [EducationList, setEducationList] = useState([]);
@@ -363,7 +363,7 @@ export default function ApplicantsFilter({
       </div>
       <div className={
         (skill === null || skill === undefined) &&
-          (pageName === "local" || pageName === "employee")
+          (pageName === "employee")
           ? "col form_group mt-8"
           : "d-none"
       }>

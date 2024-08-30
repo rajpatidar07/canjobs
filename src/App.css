@@ -1804,6 +1804,7 @@ li.placeholder span svg {
 .dashboard-sidebar-wrapper.show {
   transform: translateX(0%);
 }
+
 /* src/components/AboutUs.css */
 .about-section {
   background-color: #f8f9fa;
@@ -1861,4 +1862,40 @@ li.placeholder span svg {
 
 .about-section .mb-3 {
   margin-bottom: 15px;
+}
+
+.new-job-box {
+  border: 1px solid #e3e3e3;
+  border-radius: 8px;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.new-job-box:hover {
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.new-job-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.company-name {
+  font-size: 1rem;
+  color: #555;
+}
+
+.location-date {
+  font-size: 0.875rem;
+  color: #777;
+}
+
+.new-job-description {
+  font-size: 0.875rem;
+  color: #333;
+}
+
+@media (min-width :768px) {
+  .card.new-job-box.my-3.p-3.light-mode-texts.bg-white.rounded.hover-shadow-3.hover-border-green {
+    min-height: 424px;
+  }
 }

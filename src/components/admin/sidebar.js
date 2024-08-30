@@ -19,6 +19,7 @@ import { TiBusinessCard } from "react-icons/ti";
 import { SiExpress } from "react-icons/si";
 import { IoLogoPinterest } from "react-icons/io";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
+import { FaPersonShelter } from "react-icons/fa6";
 const AdminSidebar = (props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(
     localStorage.getItem("isMenuOpen")
@@ -421,6 +422,24 @@ const AdminSidebar = (props) => {
           >
             <LuFileKey className="sidebar_icon" />
             Credentials
+          </Link>
+        </li>
+        <li
+          className={
+            user_type === "agent"
+              ? "d-none"
+              : props.heading === "Local Candidate"
+              ? "active"
+              : ""
+          }
+        >
+          <Link
+            to="/localcandidates"
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+          >
+            {/* <i className="fas fa-filter mr-5"></i> */}
+            <FaPersonShelter className="sidebar_icon" />
+            Local Candidate
           </Link>
         </li>
         <li

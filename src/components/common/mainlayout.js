@@ -72,6 +72,7 @@ import WebhookComponent from "./webHook";
 import { ToastContainer } from "react-toastify";
 import UserSigningPage from "./Retaineragreement/UserSigningPage";
 import AboutUs from "../user/AboutUs";
+import LocalCandidate from "../admin/localCandidate";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -235,6 +236,7 @@ function MainLayout() {
             <Route path="/expressentry" element={<ExpressEntry />} />
             <Route path="/visitorsvisa" element={<VisitorVisa />} />
             <Route path="/pnp" element={<Pnp />} />
+            <Route path="/localcandidates" element={<LocalCandidate />} />
             <Route path="/Newpdf" element={<Newpdf />} />
             <Route path="/federal_pr" element={<Federalpr />} />
             <Route path="*" element={<Loader load={"yes"} />} />

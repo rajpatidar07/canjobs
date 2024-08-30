@@ -127,6 +127,7 @@ function EmployeeHomePage() {
           {/* <!-- Section Title End --> */}
           {<JobBox /> ? (
             <div className="row justify-content-center mb-lg-16 mb-11">
+              
               <JobBox
                 setJobCount={setJobCount}
                 jobsNo={jobsNo}
