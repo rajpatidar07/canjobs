@@ -293,8 +293,8 @@ const AgreementOneForm = ({
   let SigningUserType = localStorage.getItem("userType");
 
   const initialClientState = {
-    client_first_name: (emp_user_type === "employee" ? userData?.name : userData?.company_name)?.split(" ")[0] || "",
-    client_last_name: (emp_user_type === "employee" ? userData?.name : userData?.company_name)?.split(" ")[1] || "",
+    client_first_name: (emp_user_type === "employee" ? userData?.name : "") || "",
+    client_last_name: (emp_user_type === "employee" ? userData?.name : "") || "",
     client_signature: "",
     date_signature_client: "",
     client_date_of_birth: ""
@@ -332,7 +332,7 @@ const AgreementOneForm = ({
     receiver_type: emp_user_type === "employee" ? "employee" : "employer",
     assigned_by_id: "",
     assigned_by_type: "",
-    signature_status: felidData.family_json[0].client_signature ? 1 : 0,
+    signature_status: felidData?.family_json ? (felidData.family_json[0]?.client_signature ? 1 : 0) : 0,
     id: "",
     client_file_no: "",
     agreement_date: "",
@@ -345,7 +345,6 @@ const AgreementOneForm = ({
     family_json: [initialClientState]
 
   };
-
   const validators = {
     family_json: {
       validateClientEmail: (value) =>
@@ -360,9 +359,9 @@ const AgreementOneForm = ({
       const updatedState = { ...initialFormState };
 
       // Parse the family_json field
-      if (felidData.family_json) {
+      if (felidData?.family_json) {
         try {
-          updatedState.family_json = JSON.parse(felidData.family_json);
+          updatedState.family_json = JSON.parse(felidData?.family_json);
         } catch (error) {
           console.error('Failed to parse family_json:', error);
         }
@@ -418,8 +417,8 @@ const AgreementOneForm = ({
 
   const removeClient = (indexToDelete) => {
     if (window.confirm("Are you sure you want to delete this client?")) {
-      let newjson =state?.family_json.filter((_, index) => index  !== indexToDelete)
-      setState({...state,family_json:newjson});
+      let newjson = state?.family_json.filter((_, index) => index !== indexToDelete)
+      setState({ ...state, family_json: newjson });
     }
   };
   const editClient = (index) => {
@@ -456,7 +455,7 @@ const AgreementOneForm = ({
           try {
             let res = await GetAgreement("", user_id, emp_user_type, felidData.type)
             /*FUnction to generate pdf after adding signature */
-            if (openSignature === "yes" && res.data.data[0].signature_status === "1") {
+            if (openSignature === "yes" && (res.data.data[0].signature_status === "1" || index === "rcic_signature")) {
               const stateData = {
                 user_id: user_id,
                 emp_user_type: emp_user_type,
@@ -469,7 +468,7 @@ const AgreementOneForm = ({
               // Open the new page in a new tab
               setApicall(true)
               close()
-              if (SigningUserType !== "admin") {
+              if (index === "final") {
                 window.open(newPageUrl, '_blank')
                 window.close();
               } else {
@@ -493,7 +492,6 @@ const AgreementOneForm = ({
       close()
     }
   };
-
   useEffect(() => {
     if (state.initial) {
       setState({ ...state, signature_status: "1", pdf_genrated_status: "1" });
@@ -546,12 +544,14 @@ const AgreementOneForm = ({
       </button>
       <div className="bg-white rounded h-100 px-11 pt-7 overflow-y-hidden">
         <form onSubmit={onFormSubmit}>
-          <h5 className="text-center mb-7 pt-2">{openSignature === "yes" ? "Add Signature" : "Add Retainer Agreement Fields"}</h5>
+          <h5 className="text-center mb-7 pt-2">
+            {openSignature === "yes" ? "Add Signature" : "Add Retainer Agreement Fields"}
+          </h5>
           <div className="row">
             {/* Render client-specific fields */}
             {openSignature === "yes" ? null : state?.family_json[0] && (
               <React.Fragment key={index}>
-                <div className="form-group col-md-6 mb-0 mt-4">
+                <div className="form-group col-md-6 ">
                   <label htmlFor={`client_first_name_0`} className="font-size-4 text-black-2 line-height-reset">
                     Client's First Name
                   </label>
@@ -565,7 +565,7 @@ const AgreementOneForm = ({
                     placeholder="Client's first name"
                   />
                 </div>
-                <div className="form-group col-md-6 mb-0 mt-4">
+                <div className="form-group col-md-6 ">
                   <label htmlFor={`client_last_name_0`} className="font-size-4 text-black-2 line-height-reset">
                     Client's Last Name
                   </label>
@@ -579,57 +579,14 @@ const AgreementOneForm = ({
                     placeholder="Client's last name"
                   />
                 </div>
-                {/* <div className="form-group col-md-6 mb-0 mt-4">
-                  <label htmlFor={`client_date_of_birth_0`} className="font-size-4 text-black-2 line-height-reset">
-                    Client's Date of Birth
-                  </label>
-                  <input
-                    type="date"
-                    className="coustam_datepicker form-control mx-5 col"
-                    value={state?.family_json[0]?.client_date_of_birth}
-                    onChange={(e) => handleClientChange(0, e)}
-                    onKeyDownCapture={(e) => e.preventDefault()}
-                    id={`client_date_of_birth_0`}
-                    name="client_date_of_birth"
-                    placeholder="Client's DOB"
-                  />
-                </div> */}
-                {/* <div className="form-group col-md-6 mb-0 mt-4">
-                  <SignaturePadComponent
-                    signature={state.family_json[index].client_signature}
-                    onEnd={(signature) => handleSignature(signature, index, "client_signature")}
-                    canvasProps={{ className: 'form-control mx-5 col' }}
-                    setState={setState}
-                    state={state}
-                    index={index}
-                    label={`client_signature`}
-                    name={`Client Signature`}
-                    onSignature={handleSignature}
-                  />
-                </div> */}
-
-                {/*index > 0 && (
-                  <div className="col-3 mt-2 d-flex justify-content-end mx-10">
-                    <button
-                      type="button"
-                      className="btn btn-danger mb-4"
-                      onClick={() => removeClient(index)}
-                      title='Remove Client'
-                    >
-                      Remove Client
-                    </button>
-                  </div>
-                )*/}
               </React.Fragment>
             )}
+
             {openSignature === "yes" ? null :
               (SigningUserType === "admin" ? [
                 { label: "Client Address", name: "client_address", type: "text" },
                 { label: "Client Email", name: "client_email", type: "email" },
                 { label: "Client Contact No", name: "client_contact", type: "number" },
-                { label: "The Client asked the RCIC, and the RCIC has agreed, to act for the Client in the matter of", name: "matter", type: "text" },
-                { label: "Summary of preliminary advice given to the client", name: "summary", type: "text" },
-                // { label: "Client's Family Name", name: "client_last_name", type: "text" },
                 { label: "Client's Telephone Number", name: "client_telephone", type: "number" },
                 { label: "Client's Cellphone Number", name: "client_cellphone", type: "number" },
                 { label: "Client's Fax Number", name: "client_fax", type: "number" },
@@ -642,6 +599,8 @@ const AgreementOneForm = ({
                 { label: "Applicable Taxes", name: "application_fees", type: "number" },
                 { label: "Balance (Paid at time of filing)", name: "balance", type: "number" },
                 { label: "Total Cost", name: "total_cost", type: "number" },
+                { label: "The Client asked the RCIC, and the RCIC has agreed, to act for the Client in the matter of", name: "matter", type: "text" },
+                { label: "Summary of preliminary advice given to the client", name: "summary", type: "text" },
                 { label: "Applicable Retainer Fee for this stage (Non-Refundable) for Step 1", name: "applicable_retainer_fee_stape_1", type: "number" },
                 { label: "Applicable Government Processing Fee for Step 1", name: "applicable_government_processing_fee_stape_1", type: "number" },
                 { label: "Applicable Retainer Fee for this stage (Non-Refundable) for Step 2", name: "applicable_retainer_fee_stape_2", type: "number" },
@@ -655,7 +614,7 @@ const AgreementOneForm = ({
                 { label: "Client's Cellphone Number", name: "client_cellphone", type: "number" },
                 { label: "Client's Fax Number", name: "client_fax", type: "number" },
               ]).map(({ label, name, type, index }) => (
-                <div className="form-group col-md-6 mb-0 mt-4" key={index}>
+                <div className={`form-group ${label.split(" ").length > 6 ? "col-md-12" : "col-md-6"} `} key={index}>
                   <label htmlFor={name} className="font-size-4 text-black-2 line-height-reset">
                     {label}
                   </label>
@@ -671,18 +630,10 @@ const AgreementOneForm = ({
                   />
                   {errors[name] && <span className="text-danger font-size-3 mx-5">{errors[name]}</span>}
                 </div>
-              ))}
-            {/* <div className={openSignature === "yes" ? "d-none" : 'form-group col-md-6 mb-0 mt-4 '}>
-              <button
-                type="button"
-                className="btn btn-info  form-control mx-5 col "
-                onClick={addFamilyMember}
-                title='Add Family member'
-              >
-                Add Family member
-              </button>
-            </div> */}
-            <div className={openSignature === "yes" ? "d-none" :"form-group col-md-12 mb-0 mt-4"}>
+              ))
+            }
+
+            <div className={openSignature === "yes" ? "d-none" : "form-group col-md-12 "}>
               <label className="font-size-4 text-black-2 line-height-reset">
                 Family member
               </label>
@@ -697,17 +648,8 @@ const AgreementOneForm = ({
                 />
               </div>
             </div>
-            {/* <div className={(openSignature === "yes" && index === "initial") ? "form-group col-md-12 mb-0 mt-4" : "d-none"}>
-              <SignaturePadComponent
-                onEnd={(signature) => handleSignature(signature, "", "initial")}
-                canvasProps={{ className: 'form-control mx-5 col' }}
-                setState={setState}
-                state={state}
-                label={`initial`}
-                name={`Initial`}
-                onSignature={handleSignature} />
-            </div> */}
-            <div className={((index !== "rcic_signature" && index !== "final") && openSignature === "yes") ? "form-group col-md-12 mb-0 mt-4" : "d-none"}>
+
+            <div className={openSignature === "yes" && index !== "final" && index !== "rcic_signature" ? "form-group col-md-12 " : "d-none"}>
               <SignaturePadComponent
                 signature={state?.family_json[index]?.client_signature}
                 onEnd={(signature) => handleSignature(signature, index, "client_signature")}
@@ -720,8 +662,7 @@ const AgreementOneForm = ({
                 onSignature={handleSignature}
               />
             </div>
-
-            <div className={(openSignature === "yes" && index === "rcic_signature" && SigningUserType === "admin") ? "form-group col-md-12 mb-0 mt-4" : "d-none"}>
+            <div className={index === "rcic_signature" && SigningUserType === "admin" && openSignature === "yes" ? "form-group col-md-12 mb-0 mt-4" : "d-none"}>
               <SignaturePadComponent
                 onEnd={(signature) => handleSignature(signature, "", "rcic_signature")}
                 canvasProps={{ className: 'form-control mx-5 col' }}
@@ -729,20 +670,18 @@ const AgreementOneForm = ({
                 state={state}
                 label={`rcic_signature`}
                 name={`RCIC Signature`}
-                onSignature={handleSignature} />
+                onSignature={handleSignature}
+                index={index}
+              />
             </div>
-
           </div>
-          <div className='form-group  d-flex flex-column'>
+          <div className='form-group d-flex flex-column'>
             {index === "final" ? "Are you sure to confirm submission? This signature cannot be updated later!" : ""}
-            <p className={SigningUserType === "admin" ? "d-none" : ' text-start p-2'}
-              style={{ backgroundColor: SigningUserType === "admin" ? "" : "#fdff00" }}> Note: Allow access to open a pop-up window</p>
+            <p className={index === "final" ? 'text-start p-2' : "d-none"} style={{ backgroundColor: SigningUserType === "admin" ? "" : "#fdff00" }}>
+              Note: Allow access to open a pop-up window
+            </p>
             <div className='text-center'>
-              <button
-                type="submit"
-                className="btn btn-primary btn-small w-25 mt-5 rounded-5 text-uppercase p-8"
-                disabled={loading}
-              >
+              <button type="submit" className="btn btn-primary btn-small w-25 mt-5 rounded-5 text-uppercase p-8" disabled={loading}>
                 {loading
                   ? "Saving..."
                   : openSignature === "yes" && index !== "final"
@@ -753,6 +692,8 @@ const AgreementOneForm = ({
           </div>
         </form>
       </div>
+
+
     </Modal>
   );
 };

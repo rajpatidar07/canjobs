@@ -92,14 +92,14 @@ export default function RetauberAgreementList({
         // Call the function when the component first renders
         getAgreeFelidData();
         // let timer;
-        // if (apicall) {
+        if (apicall) {
         //     timer = setTimeout(() => {
         //         // Function to be executed after 20 seconds when apicall is true because document update's take time 
         //         getAgreeFelidData();
         //         // Reset the state to false
-        //         setApicall(false);
+                setApicall(false);
         //     }, 20000);
-        // }
+        }
 
         // // Cleanup function to clear the timer if the component unmounts or myState changes
         // return () => clearTimeout(timer);

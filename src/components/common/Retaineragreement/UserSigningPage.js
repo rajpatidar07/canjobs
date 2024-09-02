@@ -74,7 +74,7 @@ export default function UserSigningPage() {
     useEffect(() => {
         // Call the function when the component first renders
         GetAgreementPdf();
-        // document.body.classList.remove("admin_body");
+        document.body.classList.remove("admin_body");
         // let timer;
         if (apicall) {
             // timer = setTimeout(() => {

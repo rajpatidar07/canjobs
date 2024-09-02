@@ -24,11 +24,12 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
     <title>Retainer Agreement - Client 1 column - Copy (3) (1).docx</title>
     <meta name="author" content="Admin" />
     <style type="text/css">
+    body {font-family: Century;
+}
       .para_gap {
-        min-width: 200px;
+        min-width: auto;
         border-bottom: 1px solid grey;
         display: inline-block;
-        margin-right: 15px;
       }
       td {
         border: 1px solid #333;
@@ -36,35 +37,84 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
       }
     </style>
   </head>
-  <body style="margin: 0 auto; max-width: 1024px">
+  <body style="margin: 0 auto; max-width: 1024px;color:"black;">
     <div class="header" style="padding: 10px 20px;text-align: justify;">
       <img
         src="https://canpathwaysjobs.com/image/00logo-main-black.png"
-        alt=""
+        alt="Canpathways logo"
         style="max-width: 200px"
       />
     </div>
     <div class="main_div" style="padding: 10px 20px">
       <h1 style="text-align: center">RETAINER AGREEMENT</h1>
       <div style="display: flex; justify-content: space-between">
-        <b>RCIC Membership Number<span> : R533393 </span></b>
-        <b>Client File Number: <span>${felidData?.client_file_no || ""}</span></b>
+        <b>RCIC Membership Number<span class="para_gap"> : R533393 </span></b>
+        <b>Client File Number: <span class="${felidData?.client_file_no ? "para_gap" : ""}">${felidData?.client_file_no || "_________"}</span></b>
       </div>
-      <p>
-        This Retainer Agreement is made this  <span class="para_gap">${(felidData?.client_file_no || "")} </span> day of <span class="para_gap"> ${!felidData.agreement_date || felidData.agreement_date === "0000-00-00 00:00:00" ? "" : (felidData && (felidData.agreement_date ? moment(new Date(felidData?.agreement_date)).format("Do") : " ")) || ""}</span> <span class="para_gap">${!felidData.agreement_date || felidData.agreement_date === "0000-00-00 00:00:00" ? "" : (felidData && (felidData.agreement_date ? moment(new Date(felidData?.agreement_date)).format("MMMM") : " ")) || ""} </span><span class="para_gap"> ${!felidData.agreement_date || felidData.agreement_date === "0000-00-00 00:00:00" ? "" : (felidData && (felidData.agreement_date ? moment(new Date(felidData?.agreement_date)).format("YYYY") : " ")) || ""}</span>
-        between Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur
-        (the “RCIC”), RCIC Membership Number <span>R533393</span>, phone number
-        <span>4038885308</span>
-        , email <a href="mailto:info@canpathways.ca" class="a" target="_blank">info@canpathways.ca located at 2618 </a>
-        <span>Hopewell Pl NE #310 Calgary, AB T1Y 7J7,</span> <span>Canada</span> and Client  <span class="para_gap text-capitalize">${(felidData && (familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name) ? ((familyJsonArray[0]?.client_first_name + " " + (familyJsonArray[0]?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}</span>(the “Client”)<span class="p">, located at  <span class="para_gap"> ${felidData && felidData.client_address ? (felidData.client_address) : emp_user_type === "employer" ? (userData?.address || "") : (((userData?.current_location || "") || "") + " " + ((userData?.currently_located_country || "") || ""))}</span> </span> , email  <span class="para_gap">${felidData && felidData.client_email ? felidData.client_email : (userData?.email || "")}</span>, contact number  <span class="para_gap"> ${felidData && felidData.client_contact ? felidData.client_contact : (userData?.contact_no || "")}</span>.
-      </p>
+     <p>
+  This Retainer Agreement is made this
+  <span class="${felidData?.client_file_no ? "para_gap" : ""}">
+    ${felidData?.client_file_no || "_________"}
+  </span>
+  day of
+ 
+    ${felidData.agreement_date && felidData.agreement_date !== "0000-00-00 00:00:00"
+      ? `<span class="para_gap">${moment(new Date(felidData.agreement_date)).format("Do")}</span>`
+      : ""}
+    ${felidData.agreement_date && felidData.agreement_date !== "0000-00-00 00:00:00"
+      ? ` <span class="para_gap">${moment(new Date(felidData.agreement_date)).format("MMMM")}</span>`
+      : ""}
+ 
+    ${felidData.agreement_date && felidData.agreement_date !== "0000-00-00 00:00:00"
+      ? ` <span class="para_gap">${moment(new Date(felidData.agreement_date)).format("YYYY")}`
+      : "____________"}
+  </span>
+  between Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur (the
+  “RCIC”), RCIC Membership Number
+  <span>R533393</span>, phone number
+  <span>4038885308</span>, email
+  <a href="mailto:info@canpathways.ca" class="contact_email" target="_blank">
+    info@canpathways.ca
+  </a>, located at 2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7,
+  <span>Canada</span> and Client ${familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name
+      ? ` <span class="para_gap text-capitalize">${familyJsonArray[0]?.client_first_name} ${familyJsonArray[0]?.client_last_name || ""}</span>`
+      : emp_user_type === "employee"
+        ? ` <span class="para_gap text-capitalize">${userData?.name}</span>` || ""
+        : "_____________________"}
+
+  (the “Client”),
+  located at
+ 
+    ${felidData?.client_address
+      ? ` <span class="para_gap">${felidData.client_address}</span>`
+      : emp_user_type === "employer"
+        ? userData?.address || "________________"
+        : `<span class="para_gap">${userData?.current_location || "________"} ${userData?.currently_located_country || "____________"}</span>`}
+  </span>
+  , email
+  <span class="${felidData?.client_email || userData?.email ? "para_gap" : ""}">
+    ${felidData?.client_email || userData?.email || "_______________"}
+  </span>
+  , contact number
+  <span class="${felidData?.client_contact || userData?.contact_no ? "para_gap" : ""}">
+    ${felidData?.client_contact || userData?.contact_no || "____________________"}
+  </span>.
+</p>
+
       <p>
       ${familyJsonArray.slice(1).length !== 0
       ? `<div><p>Details of Family member and dependents to added in this application</p><div>` : ''}
-      <br>
+      <div class="row w-100">
       ${(familyJsonArray.slice(1) || []).map((item, index) => (
-        `<span key=${index}> Name ${index + 1}: <span class="para_gap text-capitalize">${item.client_first_name + " " + item.client_last_name} </span> Date of birth : <span class="para_gap">${item.client_date_of_birth ? moment(item.client_date_of_birth).format("DD-MM-YYYY") : ""} </span> </span>`
+        `<span class="col-10 row" key=${index}> 
+        <span class="col-6">Name ${index + 1}: 
+        <span class="para_gap text-capitalize">${item.client_first_name + " " + item.client_last_name} </span>
+        </span>
+        <span class="col-6">
+         Date of birth : ${item.client_date_of_birth ? ` <span class="para_gap"> ${moment(item.client_date_of_birth).format("DD-MM-YYYY")}  </span>` : "___________"} </span>
+         </span>`
       ))}
+      </div>
       </p>
       </div>
       </div>
@@ -85,7 +135,7 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
       <ol id="l1">
         <br />
         <li data-list-text="1." style="font-size: 18px">
-          <p style="font-weight: 600">Definitions</p>
+          <h5 style="font-weight: 600">Definitions</h5>
           <p>
             The terms set out in this Retainer Agreement, have the meaning given
             to such terms in the Retainer Agreement Regulation and By-law of the
@@ -94,41 +144,40 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
         </li>
         <br />
         <li data-list-text="2." style="font-size: 18px">
-          <p style="font-weight: 600">RCIC Responsibilities and Commitments</p>
+          <h5 style="font-weight: 600">RCIC Responsibilities and Commitments</h5>
           <p>
             The Client asked the RCIC, and the RCIC has agreed, to act for the
             Client in the matter of
-          </p>
-          <p>
-             <span class="para_gap">${felidData?.matter || ""} </span>. In consideration of the fees paid and the
+          
+          ${felidData?.matter ? `<span class="para_gap">${felidData?.matter} </span>` : "_______________________________________________________________________________"}.
+          </p> 
+          <p>In consideration of the fees paid and the
             matter stated above, the RCIC agrees to do the following:
           </p>
+          <p>
           <ol id="l2">
             <li data-list-text="a)">
-              <p>
                 [Summary of preliminary advice given to the client
-                 <span class="para_gap">${felidData?.summary || ""}</span>]
-              </p>
+                 ${felidData?.summary ? `<span class="para_gap">${felidData?.summary || ""}</span>` : "_____________________________"}]
             </li>
             <li data-list-text="b)">
-              <p>
                 [Consultation and providing document checklists and intake
                 sheet, file opening]
-              </p>
             </li>
             <li data-list-text="c)">
-              <p>[Data gathering, filling out forms]</p>
+              [Data gathering, filling out forms]
             </li>
             <li data-list-text="d)">
-              <p>[Information verification, completeness check]</p>
+              [Information verification, completeness check]
             </li>
             <li data-list-text="e)">
-              <p>[Application submission]</p>
+              [Application submission]
             </li>
             <li data-list-text="f)">
-              <p>[File maintenance and correspondence with client and IRCC]</p>
+              [File maintenance and correspondence with client and IRCC]
             </li>
           </ol>
+          </p>
           <p>
             The RCIC shall provide the Client with a finalized, signed copy of
             this Retainer Agreement. RCIC is not responsible for any
@@ -153,137 +202,96 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
         </li>
         <br />
         <li data-list-text="3." style="font-size: 18px">
-          <p style="font-weight: 600">
+          <h5 style="font-weight: 600">
             Client Responsibilities and Commitments
-          </p>
-          <ol id="l3">
-            <li data-list-text="3.1">
-              <p>The Client must provide, upon request from the RCIC:</p>
-              <span id="l4">
-                <div data-list-text="">
-                  <p> All necessary documentation</p>
-                </div>
-                <div data-list-text="">
-                  <p>
-                     All documentation in English or French, or with an English
-                    or French translation
-                  </p>
-                </div>
-              </span>
-            </li>
-            <li data-list-text="3.2">
-              <p>
-                The Client understands that he/she must be accurate and honest
-                in the information he/she provides and that any
-                misrepresentations or omissions may void this Agreement, or
-                seriously affect the outcome of the application or the retention
-                of any immigration status he/she may obtain. The RCIC’s
-                obligations under the Retainer Agreement are null and void if
-                the Client knowingly provides any inaccurate, misleading or
-                false material information. The Client’s financial obligations
-                remain.
-              </p>
-            </li>
-            <li data-list-text="3.3">
-              <p>
-                Client is informed that RCIC might obtain assistance from other
-                professionals or services.
-              </p>
-            </li>
-            <li data-list-text="3.4">
-              <p>
-                Client understands that RCIC should not be held responsible for
-                visa outcome as RCIC cannot guarantee the decision of IRCC. If
-                IRCC policy or rules changes before/during or after the
-                application submission and client deemed ineligible, RCIC should
-                not be held responsible for that.
-              </p>
-            </li>
-            <li data-list-text="3.5">
-              <p>
-                In the event Immigration, Refugees and Citizenship Canada (IRCC)
-                or Employment and Social Development Canada (ESDC) or Provincial
-                Government Administrator or processing Visa Office should
-                contact the Client directly, the Client is instructed to notify
-                the RCIC immediately.
-              </p>
-            </li>
-            <li data-list-text="3.6">
-              <p>
-                The Client is to immediately advise the RCIC of any change in
-                the marital, family, or civil status or change of physical
-                address or contact information for any person included in the
-                application.
-              </p>
-            </li>
-            <li data-list-text="3.7">
-              <p>
-                In the event of a Joint Retainer Agreement, the Clients agree
-                that the RCIC must share information among all clients, as
-                required. Furthermore, if a conflict develops that cannot be
-                resolved, the RCIC cannot continue to act for both or all of the
-                Clients and may have to withdraw completely from representation.
-              </p>
-            </li>
-            <li data-list-text="3.8">
-              <p>
-                All necessary information and documentation in English or
-                French, or with an English or French translation, if in any
-                other language, with a certified English translation, according
-                to the timeline recommended by RCIC. In the event documents are
-                not provided or client fails to contact the RCIC in spite of
-                request made by RCIC on email provided by client in the retainer
-                agreement, before the due date mentioned ( which is within 30
-                days from the retainer signed, or earlier also depending upon
-                the requirements of the case ) the RCIC can close the file after
-                notifying the client in advance about the non-responsiveness. An
-                administrative fee of CAD$ 300.00 plus taxes should be paid by
-                client to close the file. All pending fees are due and are to be
-                paid by client and if there is any unused money with RCIC, it
-                should be refunded to client if applicable.
-              </p>
-            </li>
-            <li data-list-text="3.9">
-              <p>
-                Client has been explained by RCIC and is aware of high chances
-                of application refusal due to weak case and other reasons as
-                explained. Client still agrees to go ahead with the application.
-              </p>
-            </li>
-            <li data-list-text="3.10">
-              <p>
-                The client also allows the RCIC to use of digital signatures for
-                the purpose of this application on his/her behalf
-              </p>
-            </li>
-            <li data-list-text="3.11">
-              <p>
-                Mode of communication should be email provided by client in this
-                retainer only, for all the correspondence between RCIC and
-                client and RCIC should be given minimum 7 working days to revert
-                to any queries from client. RCIC is not responsible for
-                communication/ consequences if client does not receive email
-                sent by RCIC and did not communicate with RCIC in given timeline
-                or within 15 days of sent email.
-              </p>
-            </li>
-            <li data-list-text="3.12">
-              <p>
-                Once client provide all the documents required as per checklist,
-                RCIC should be given minimum 3 weeks’ time from the time all
-                documents are reviewed by RCIC and deemed complete, to submit
-                the file to IRCC.
-              </p>
-            </li>
-          </ol>
+          </h5>
+         <ol id="l3" style="list-style-type:none; padding-left: 0;">
+  <li data-list-text="3.1">
+    <p style="position:relative;">
+      <span style="position:absolute; left:0;">3.1</span>
+      <span style="margin-left:40px;">The Client must provide, upon request from the RCIC:</span>
+      <ul id="l4" style="list-style-type:disc; padding-left: 60px;">
+        <li>All necessary documentation</li>
+        <li>All documentation in English or French, or with an English or French translation</li>
+      </ul>
+    </p>
+  </li>
+  <li data-list-text="3.2">
+    <p style="position:relative;">
+      <span style="position:absolute; left:0;">3.2</span>
+      <span style="margin-left:40px;">The Client understands that he/she must be accurate and honest in the information he/she provides and that any misrepresentations or omissions may void this Agreement, or seriously affect the outcome of the application or the retention of any immigration status he/she may obtain. The RCIC’s obligations under the Retainer Agreement are null and void if the Client knowingly provides any inaccurate, misleading, or false material information. The Client’s financial obligations remain.</span>
+    </p>
+  </li>
+  <li data-list-text="3.3">
+    <p style="position:relative;">
+      <span style="position:absolute; left:0;">3.3</span>
+      <span style="margin-left:40px;">Client is informed that RCIC might obtain assistance from other professionals or services.</span>
+    </p>
+  </li>
+  <li data-list-text="3.4">
+    <p style="position:relative;">
+      <span style="position:absolute; left:0;">3.4</span>
+      <span style="margin-left:40px;">Client understands that RCIC should not be held responsible for visa outcome as RCIC cannot guarantee the decision of IRCC. If IRCC policy or rules change before/during or after the application submission and the client is deemed ineligible, RCIC should not be held responsible for that.</span>
+    </p>
+  </li>
+  <li data-list-text="3.5">
+    <p style="position:relative;">
+      <span style="position:absolute; left:0;">3.5</span>
+      <span style="margin-left:40px;">In the event Immigration, Refugees and Citizenship Canada (IRCC) or Employment and Social Development Canada (ESDC) or Provincial Government Administrator or processing Visa Office should contact the Client directly, the Client is instructed to notify the RCIC immediately.</span>
+    </p>
+  </li>
+  <li data-list-text="3.6">
+    <p style="position:relative;">
+      <span style="position:absolute; left:0;">3.6</span>
+      <span style="margin-left:40px;">The Client is to immediately advise the RCIC of any change in the marital, family, or civil status or change of physical address or contact information for any person included in the application.</span>
+    </p>
+  </li>
+  <li data-list-text="3.7">
+    <p style="position:relative;">
+      <span style="position:absolute; left:0;">3.7</span>
+      <span style="margin-left:40px;">In the event of a Joint Retainer Agreement, the Clients agree that the RCIC must share information among all clients, as required. Furthermore, if a conflict develops that cannot be resolved, the RCIC cannot continue to act for both or all of the Clients and may have to withdraw completely from representation.</span>
+    </p>
+  </li>
+  <li data-list-text="3.8">
+    <p style="position:relative;">
+      <span style="position:absolute; left:0;">3.8</span>
+      <span style="margin-left:40px;">All necessary information and documentation in English or French, or with an English or French translation, if in any other language, with a certified English translation, according to the timeline recommended by RCIC. In the event documents are not provided or the client fails to contact the RCIC in spite of the request made by RCIC on the email provided by the client in the retainer agreement, before the due date mentioned (which is within 30 days from the retainer signed, or earlier also depending upon the requirements of the case) the RCIC can close the file after notifying the client in advance about the non-responsiveness. An administrative fee of CAD$ 300.00 plus taxes should be paid by the client to close the file. All pending fees are due and are to be paid by the client and if there is any unused money with RCIC, it should be refunded to the client if applicable.</span>
+    </p>
+  </li>
+  <li data-list-text="3.9">
+    <p style="position:relative;">
+      <span style="position:absolute; left:0;">3.9</span>
+      <span style="margin-left:40px;">The Client has been explained by RCIC and is aware of the high chances of application refusal due to a weak case and other reasons as explained. The Client still agrees to go ahead with the application.</span>
+    </p>
+  </li>
+  <li data-list-text="3.10">
+    <p style="position:relative;">
+      <span style="position:absolute; left:0;">3.10</span>
+      <span style="margin-left:40px;">The Client also allows the RCIC to use digital signatures for the purpose of this application on his/her behalf.</span>
+    </p>
+  </li>
+  <li data-list-text="3.11">
+    <p style="position:relative;">
+      <span style="position:absolute; left:0;">3.11</span>
+      <span style="margin-left:40px;">Mode of communication should be the email provided by the client in this retainer only, for all the correspondence between RCIC and the client, and RCIC should be given a minimum of 7 working days to revert to any queries from the client. RCIC is not responsible for communication/consequences if the client does not receive an email sent by RCIC and did not communicate with RCIC in the given timeline or within 15 days of the sent email.</span>
+    </p>
+  </li>
+  <li data-list-text="3.12">
+    <p style="position:relative;">
+      <span style="position:absolute; left:0;">3.12</span>
+      <span style="margin-left:40px;">Once the client provides all the documents required as per the checklist, RCIC should be given a minimum of 3 weeks from the time all documents are reviewed by RCIC and deemed complete, to submit the file to IRCC.</span>
+    </p>
+  </li>
+</ol>
+
         </li>
         <br />
         <li data-list-text="4." style="font-size: 18px">
-          <p style="font-weight: 600">Payment Schedule</p>
+          <h5 style="font-weight: 600">Payment Schedule</h5>
 
-          <p>
-            Billing method: The Client will be billed by [flat fee with payment
-            by milestones]. Payment Terms and Conditions
+          <p style="font-weight: 400">
+           <b> Billing method: The Client will be billed by [flat fee with payment by milestones].</b><br>
+           <b> Payment Terms and Conditions</b>
           </p>
 
           <table style="border-collapse: collapse; width: 100%">
@@ -291,15 +299,15 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
               <tr>
                 <th
                   scope="col"
-                  style="text-align: center; border: 1px solid black"
+                  style="text-align: center; border: 1px solid black;color:#0c5fa6 "
                 >
-                  Fees details
+                 <b> Fees details</b>
                 </th>
                 <th
                   scope="col"
-                  style="text-align: left; border: 1px solid black"
+                  style="text-align: center; border: 1px solid black;color:#0c5fa6"
                 >
-                  Amount (CAD)
+                  <b>Amount (CAD)</b>
                 </th>
               </tr>
             </thead>
@@ -324,7 +332,7 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
                 <td style="border: 1px solid black">${felidData?.government_fees || ""}</td>
               </tr>
               <tr>
-                <td style="border: 1px solid black"></td>
+                <td style="border: 1px solid black;height:42px"></td>
               </tr>
               <tr>
                 <td style="text-align: center; border: 1px solid black">
@@ -345,15 +353,15 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
                 <td style="border: 1px solid black">${felidData?.balance || ""}</td>
               </tr>
               <tr>
-                <td style="text-align: center; border: 1px solid black">
-                  Total Cost
+                <td style="text-align: center; border: 1px solid black;color:red">
+                  <b>Total Cost</b>
                 </td>
                 <td style="border: 1px solid black">${felidData?.total_cost || ""}</td>
               </tr>
             </tbody>
           </table>
 
-          <p>
+          <p class="mt-8">
             Invoice Frequency: The RCIC must provide an Invoice to the Client
           </p>
           <p>
@@ -363,37 +371,38 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
 
           <table style="border-collapse: collapse" cellspacing="0">
             <tr>
-              <td>
-                <p>RCIC Service Milestone</p>
+              <td class="text-center" style="color:#0c5fa6">
+              RCIC Service Milestone
               </td>
-              <td>
-                <p>Estimated</p>
-                <p>date of Completion</p>
+              <td class="text-center" style="color:#0c5fa6">
+              Estimated date of Completion
               </td>
-              <td>
-                <p>Professional Fees (Non-Refundable)</p>
+              <td class="text-center" style="color:#0c5fa6">
+              Professional Fees (Non-Refundable)
               </td>
-              <td>
-                <p>Applicable Retainer Fee for</p>
-                <p>this stage (Non- Refundable)</p>
+              <td class="text-center" style="color:#0c5fa6">
+              Applicable Retainer Fee for
+                this stage (Non- Refundable)
               </td>
-              <td>
-                <p>Applicable Government Processing Fee</p>
+              <td class="text-center" style="color:#0c5fa6">
+                Applicable Government Processing Fee
               </td>
             </tr>
             <tr>
               <td>
                 <p>
-                  Step 1Completes upon signing the retainer and sharing the
+                <small>
+                  Step 1 Completes upon signing the retainer and sharing the
                   checklists and intake sheet with client. Data gathering and
                   Creating Express Entry Profile
+                </small>
                 </p>
               </td>
               <td>
                 <p><br /></p>
               </td>
               <td>
-                <p>Non-refundable</p>
+                <p><small>Non-refundable</small></p>
               </td>
               <td>${felidData?.applicable_retainer_fee_stape_1 || ""}</td>
               <td>${felidData?.applicable_government_processing_fee_stape_1 || ""}</td>
@@ -401,36 +410,41 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
             <tr>
               <td>
                 <p>
+                <small>
                   Step 2 Application preparation, filling out the forms,
                   information verification and completeness check, preparing the
                   application package
+                  </small>
                 </p>
-                <p>Payment is due before final submission of application.</p>
-                <p>Provide proof of submission to the client</p>
+                <p><small>Payment is due before final submission of application.</small></p>
+                <p><small>Provide proof of submission to the client</small></p>
               </td>
               <td></td>
               <td>
-                <p>Non-refundable</p>
+                <p><small>Non-refundable<small></p>
                 <p>
+                <small>
                   All payments made are non- refundable and total service
                   charges to be collected regardless, whether the client/ s
                   withdraw from the file at this stage. The government fee and
                   courier charges must be paid apart from professional fees
-                  payment
+                  payment scheduled at this stage
+                  </small>
                 </p>
-                <p>scheduled at this stage</p>
               </td>
               <td>${felidData?.applicable_retainer_fee_stape_2 || ""}</td>
               <td>${felidData?.applicable_government_processing_fee_stape_2 || ""}</td>
             </tr>
           </table>
-          <p>
-            Total Amount: (Non-Refundable) (Paid at signing of contract and
-            sharing of checklist): ${felidData?.total_amount_signing_of_contract || ""} $<br> Balance (Non-Refundable) (Paid at time of
+          <p class="mt-8">
+           <b> Total Amount: (Non-Refundable) (Paid at signing of contract and
+            sharing of checklist): ${felidData?.total_amount_signing_of_contract || ""} $<br> 
+            Balance (Non-Refundable) (Paid at time of
             filing): ${felidData?.balance_paid_at_time_of_filing || ""} $
-          </p>
+           </b>       
+            </p>
           <p>Note:</p>
-          <spanl id="l5">
+          <ul id="l5"  style="list-style-type:disc;">
             <li data-list-text="•">
               <p>
                 There will be an additional fee, or a new fee arrangement will
@@ -481,83 +495,66 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
                 has to be paid by client.
               </p>
             </li>
-          </spanl>
+          </ul>
         </li>
         <br />
         <li data-list-text="5." style="font-size: 18px">
-          <p>
+          <h5 style="font-weight:600">
             Methods of Payment: We DO NOT accept cheques.
-          </p>
+          </h5>
           <p>
-            For Clients Located INSIDE Canada, we receive the following payment
-            options:
+            <b>
+              <u>
+                For Clients Located INSIDE Canada, we receive the following payment
+                options:
+              </u>
+            </b>
           </p>
 
-          <spanl id="l6">
+          <ul id="l6">
             <li data-list-text="o">
-                In-person Cash Drop-Off
-                <span class="p"
-                  >– Please contact us to arrange a time to drop off your
-                  payment in cash. We will provide you with a receipt.</span
-                >
+               <b> In-person Cash Drop-Off</b>– Please contact us to arrange a time to drop off your
+                  payment in cash. We will provide you with a receipt.
             </li>
             <li data-list-text="o">
-                E-transfer
-                <a
-                  href="mailto:accounts@canpathways.com"
-                  class="a"
-                  target="_blank"
-                  >– Please send the payment and the answer to the secret
-                  question to the following e-mail address: </a
-                ><a
+               <b> E-transfer</b>– Please send the payment and the answer to the secret
+                  question to the following e-mail address: <a
                   href="mailto:accounts@canpathways.com"
                   class="s15"
                   target="_blank"
-                  >accounts@canpathways.com</a
-                >
+                  >accounts@canpathways.com</a                >
             </li>
             <li data-list-text="o">
-                Credit Card/PayPal:
-                <span class="p"
-                  >Instructions will be shared, additional up to </span
-                >3%
-                <span class="p"
-                  >charges will be applicable if the client is willing to pay by
-                  this method.</span
-                >
+               <b> Credit Card/PayPal: </b>Instructions will be shared, additional up to<b> 3% </b>charges will be applicable if the client is willing to pay by
+                  this method.
+                </li>
+                </ul>
               <p>
-                For Clients Located OUTSIDE Canada, we receive the following
-                payment options:
+               <b>
+                 <u>
+                  For Clients Located OUTSIDE Canada, we receive the following
+                   payment options:
+                  </u>
+               </b>
               </p>
-              <spanl id="l7">
+              <ul id="l7">
                 <li data-list-text="o">
-                    Wire Transfer<span class="p"
-                      >- Bank details will be provided once the contract is
+                    <b>Wire Transfer</b>- Bank details will be provided once the contract is
                       being signed. (*Banks usually charge a processing fee for
-                      wire transfer, so please add </span
-                    >CAD $50
-                    <span class="p"
-                      >fee on top of your payment EVERY TIME you make a wire
-                      transfer;</span
-                    >
+                      wire transfer, so please add <b> CAD $50 </b>fee on top of your payment EVERY TIME you make a wire
+                      transfer;
                 </li>
                 <li data-list-text="o">
-                    Paypal:
-                    <span class="p"
-                      >Instructions will be shared, additional up to </span
-                    >5%
-                    <span class="p"
-                      >charges will be applicable if the client is willing to
-                      pay by this method.</span
-                    >
+                    <b>Paypal:</b>Instructions will be shared, additional up to <b>5 % </b>charges will be applicable if the client is willing to
+                      pay by this method.
                 </li>
-              </spanl>
+              </ul>
             </li>
           </ul>
         </li>
         <br />
         <li data-list-text="6." style="font-size: 18px">
-          <p style="font-weight: 600">Interest</p>
+          <h5 style="font-weight: 600">Interest</h5>
           <p>
             Payment is due on all of the consultant’s accounts when rendered. If
             any account is not paid within 30 days, interest will be charged on
@@ -573,7 +570,7 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
         </li>
         <br />
         <li data-list-text="7." style="font-size: 18px">
-          <p style="font-weight: 600">Refund Policy</p>
+          <h5 style="font-weight: 600">Refund Policy</h5>
           <p>
             The Client acknowledges that the granting of a visa or status and
             the time required for processing this application is at the sole
@@ -590,7 +587,7 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
             professional fees paid.
           </p>
           <p>RCIC will not refund any fee paid by the client if</p>
-          <spanl id="l8">
+          <ul id="l8"  style="list-style-type:disc">
             <li data-list-text="">
               <p>
                 Cancellation by the applicant of the immigration application for
@@ -612,20 +609,17 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
             <li data-list-text="">
               <p>Not providing required documents within given time frame</p>
             </li>
-          </spanl>
+          </ul>
 
           <p>
             If application is refused because of an error or omission on the
             part of the RCIC or the professional staff, Unused and/or unearned
             fees will be refunded in accordance with the
-            <span>Client File Management Regulation</span>, the
-            <span>Client Account Regulation</span> and the
-            <span>Retainer Agreement Regulation</span> and in the following manner:
-          </p>
-          <p>Cheque</p>
-
-          <p>[describe the manner of refund, including method and time frame]</p>
-          <p>
+            <u>Client File Management Regulation</u>, the
+            <u>Client Account Regulation</u> and the
+            <u>Retainer Agreement Regulation</u> and in the following manner:
+          <br>
+          <u>Cheque</u> ___________________________________________________________________________________<br>[describe the manner of refund, including method and time frame]<br>
             There shall be no refund due if the application is not submitted,
             refused, returned, or cannot proceed due to reasons relating to
             government policy, a change in the selection criteria,
@@ -636,9 +630,9 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
         </li>
         <br />
         <li data-list-text="8." style="font-size: 18px">
-          <p style="font-weight: 600">Invoicing</p>
+          <h5 style="font-weight: 600">Invoicing</h5>
           <p>The RCIC will provide invoices, which include:</p>
-          <spanl id="l9">
+          <ul id="l9" style="list-style-type:disc">
             <li data-list-text="">
               <p>the name and address of the Client,</p>
             </li>
@@ -654,7 +648,7 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
                 the services rendered.
               </p>
             </li>
-          </spanl>
+          </ul>
           <p>
             Invoices must be provided to the Client in accordance with the
             payment terms and conditions, found in section 5 of this Retainer
@@ -669,18 +663,16 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
           </p>
         </li>
         <li data-list-text="9." style="font-size: 18px">
-          <p style="font-weight: 600">
+          <h5 style="font-weight: 600">
             Dispute Resolution Related to the Code of Professional Ethics
-          </p>
+          </h5>
           <p>
             In the event of a dispute related to the Professional Services
             provided by the RCIC, the Client and RCIC are to make every
             reasonable effort to resolve the matter between the two parties. In
             the event a resolution cannot be reached, the Client is to present
-            the complaint in writing to the RCIC and allow the RCIC
-          </p>
-          <p>
-            <span>30</span> days to respond to the Client. In the event the dispute is
+            the complaint in writing to the RCIC and allow the RCIC<br>
+            <u>30</u> days to respond to the Client. In the event the dispute is
             still unresolved, the Client may follow the complaint and discipline
             procedure outlined by the Council on their
             <span class="s17">website:</span
@@ -691,14 +683,13 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
           </p>
           <h6>ICCRC Contact Information:</h6>
           <p>
-            Immigration Consultants of Canada Regulatory Council (ICCRC) 5500
-            North Service Rd., Suite 1002
-          </p>
-          <p>Burlington, ON, L7L 6W6 Toll-free: 1-877-836-7543</p>
+            Immigration Consultants of Canada Regulatory Council (ICCRC)<br>
+            5500 North Service Rd., Suite 1002
+          <br>Burlington, ON, L7L 6W6 <br>Toll-free: 1-877-836-7543</p>
         </li>
         <br />
         <li data-list-text="10." style="font-size: 18px">
-          <p style="font-weight: 600">Confidentiality</p>
+          <h5 style="font-weight: 600">Confidentiality</h5>
           <p>
             All information and documentation reviewed by the RCIC, required by
             IRCC and all other governing bodies, and used for the preparation of
@@ -715,8 +706,7 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
             of confidential information. The RCIC will use his/her best efforts
             to maintain a high degree of security for electronic communication
             and information storage.
-          </p>
-          <p>
+          <br>
             The client must file a written authorization with the RCIC, naming
             the person if client wishes another person or family member to be
             able to access information on a file.
@@ -724,7 +714,7 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
         </li>
         <br />
         <li data-list-text="11." style="font-size: 18px">
-          <p style="font-weight: 600">Unplanned RCIC Absence</p>
+          <h5 style="font-weight: 600">Unplanned RCIC Absence</h5>
           <p>
             In the event the Client is unable to contact the RCIC and has reason
             to believe the RCIC may be dead, incapacitated, or otherwise unable
@@ -733,7 +723,7 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
         </li>
         <br />
         <li data-list-text="12." style="font-size: 18px">
-          <p style="font-weight: 600">Force Majeure</p>
+          <h5 style="font-weight: 600">Force Majeure</h5>
           <p>
             The RCIC’s failure to perform any term of this Retainer Agreement,
             as a result of conditions beyond his/her control such as, but not
@@ -744,7 +734,7 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
         </li>
         <br />
         <li data-list-text="13." style="font-size: 18px">
-          <p style="font-weight: 600">Change Policy</p>
+          <h5 style="font-weight: 600">Change Policy</h5>
 
           <p>
             The Client acknowledges that if the RCIC is asked to act on the
@@ -767,64 +757,59 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
         </li>
         <br />
         <li data-list-text="14." style="font-size: 18px">
-          <p style="font-weight: 600">Termination</p>
-          <ol id="l10">
-            <li data-list-text="14.1">
-              <p>
-                This Agreement is considered terminated upon completion of tasks
-                identified under section 2 of this agreement.
-              </p>
-            </li>
-            <li data-list-text="14.2">
-              <p>
-                This Agreement is considered terminated if material changes
-                occur to the Client’s application or eligibility, which make it
-                impossible to proceed with services detailed in section 2 of
-                this Agreement.
-              </p>
-            </li>
+          <h5 style="font-weight: 600">Termination</h5>
+          <ol id="l10" style="list-style-type:none; padding-left: 0;">
+  <li data-list-text="14.1">
+     <p style="position:relative;">
+      <span style="position:absolute; left:0;">14.1</span>
+      <span style="margin-left:40px;">This Agreement is considered terminated upon completion of tasks identified under section 2 of this agreement</span>
+    </p>
+  </li>
+  <li data-list-text="14.2">
+    <p style="position:relative;">
+      <span style="position:absolute; left:0;">14.2</span>
+      <span style="margin-left:40px;">This Agreement is considered terminated if material changes occur to the Client’s application or
+eligibility, which make it impossible to proceed with services detailed in section 2 of this
+Agreement.</span>
+    </p>
+  </li>
           </ol>
         </li>
         <br />
         <li data-list-text="15." style="font-size: 18px">
-          <p style="font-weight: 600">
+          <h5 style="font-weight: 600">
             Discharge or Withdrawal of Representation
-          </p>
-          <ol id="l11">
-            <li data-list-text="15.1">
-              <p>
-                The Client may discharge representation and terminate this
-                Agreement, upon writing, at which time any outstanding or
-                unearned fees or Disbursements will be refunded by the RCIC to
-                the Client and/or any outstanding fees or Disbursements will be
-                paid by the Client to the RCIC.
-              </p>
-            </li>
-            <li data-list-text="15.2">
-              <p>
-                Pursuant to Article 11 of the
-                <span>Code of Professional Ethics</span>, the RCIC may withdraw
-                representation and terminate this Agreement, upon writing,
-                provided withdrawal does not cause prejudice to the Client, at
-                which time any outstanding or unearned fees or Disbursements
-                will be refunded by the RCIC to the Client and/or any
-                outstanding fees or Disbursements will be paid by the Client to
-                the RCIC.
-              </p>
-            </li>
-            <li data-list-text="15.3">
-              <p>
-                At the time of withdrawal or discharge, the RCIC must provide
-                the Client with an invoice detailing all services that have been
-                rendered or accounting for the time that has been spent on the
-                Client’s file.
-              </p>
-            </li>
+          </h5>
+          <ol id="l11"style="list-style-type:none; padding-left: 0;">
+  <li data-list-text="15.1">
+     <p style="position:relative;">
+      <span style="position:absolute; left:0;">15.1</span>
+      <span style="margin-left:40px;">The Client may discharge representation and terminate this Agreement, upon writing, at which time
+any outstanding or unearned fees or Disbursements will be refunded by the RCIC to the Client and/or any outstanding fees or Disbursements will be paid by the Client to the RCIC.
+</span>
+    </p>
+  </li>
+  <li data-list-text="15.2">
+    <p style="position:relative;">
+      <span style="position:absolute; left:0;">15.2</span>
+      <span style="margin-left:40px;">Pursuant to Article 11 of the <u> Code of Professional Ethics </u>, the RCIC may withdraw representation and
+terminate this Agreement, upon writing, provided withdrawal does not cause prejudice to the Client, at
+which time any outstanding or unearned fees or Disbursements will be refunded by the RCIC to the
+Client and/or any outstanding fees or Disbursements will be paid by the Client to the RCIC.</span>
+    </p>
+  </li>
+  <li data-list-text="15.3">
+    <p style="position:relative;">
+      <span style="position:absolute; left:0;">15.3</span>
+      <span style="margin-left:40px;">At the time of withdrawal or discharge, the RCIC must provide the Client with an invoice detailing all
+services that have been rendered or accounting for the time that has been spent on the Client’s fil.</span>
+    </p>
+  </li>
           </ol>
         </li>
         <br />
         <li data-list-text="16." style="font-size: 18px">
-          <p style="font-weight: 600">Governing Law</p>
+          <h5 style="font-weight: 600">Governing Law</h5>
 
           <p>
             This Agreement shall be governed by the laws in effect in the
@@ -837,7 +822,7 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
         </li>
         <br />
         <li data-list-text="17." style="font-size: 18px">
-          <p style="font-weight: 600">Amendments to the Service Agreement</p>
+          <h5 style="font-weight: 600">Amendments to the Service Agreement</h5>
           <p>
             This service agreement may only be altered or amended when such
             changes are made in writing with the consent of both parties, signed
@@ -846,131 +831,100 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
         </li>
         <br />
         <li data-list-text="18." style="font-size: 18px">
-          <p style="font-weight: 600">Miscellaneous</p>
-          <ol id="l12">
-            <li data-list-text="18.1">
-              <p>
-                The Client expressly authorizes the RCIC to act on his/her
-                behalf to the extent of the specific functions which the RCIC
-                was retained to perform, as per Section 2 hereof.
-              </p>
-            </li>
-            <li data-list-text="18.2">
-              <p>
-                This Agreement constitutes the entire agreement between the
-                parties with respect to the subject matter hereof and supersedes
-                all prior agreements, understandings, warranties,
-                representations, negotiations and discussions, whether oral or
-                written, of the parties except as specifically set forth herein.
-              </p>
-            </li>
-            <li data-list-text="18.3">
-              <p>
-                This Agreement shall be binding upon the parties hereto and
-                their respective heirs, administrators, successors and permitted
-                assigns.
-              </p>
-            </li>
-            <li data-list-text="18.4">
-              <p>
-                The Costs enumerated in this Agreement are to be paid by the
-                Client.
-              </p>
-            </li>
-            <li data-list-text="18.5">
-              <p>
-                This Agreement may only be altered or amended when such changes
-                are made in writing and executed by the parties hereto. All
-                changes and/or edits must be initialed and dated by both the
-                Member and the Client. Any substantial changes to this Agreement
-                may require that the parties enter into a new Retainer
-                Agreement.
-              </p>
-            </li>
-            <li data-list-text="18.6">
-              <p>
-                The Client may, after a Retainer Agreement is signed, appoint a
-                Designate to act on their behalf when dealing with the RCIC. A
-                Designate must not be compensated by the Client or the RCIC for
-                acting in the capacity of a Designate.
-              </p>
-            </li>
-            <li data-list-text="18.7">
-              <p>
-                The provisions of this Agreement shall be deemed severable. If
-                any provision of this Agreement shall be held unenforceable by
-                any court of competent jurisdiction, such provision shall be
-                severed from this Agreement, and the remaining provisions shall
-                remain in full force and effect.
-              </p>
-            </li>
-            <li data-list-text="18.8">
-              <p>
-                The headings utilized in this Agreement are for convenience only
-                and are not to be construed in any way as additions to or
-                limitations of the covenants and agreements contained in this
-                Agreement.
-              </p>
-            </li>
-            <li data-list-text="18.9">
-              <p>
-                Each of the parties hereto must do and execute or cause to be
-                done or executed all such further and other
-              </p>
-              <p>
-                things, acts, deeds, documents and assurances as may be
-                necessary or reasonably required to carry out the intent and
-                purpose of this Agreement fully and effectively.
-              </p>
-            </li>
-            <li data-list-text="18.10">
-              <p>
-                The Client acknowledges that he/she has had sufficient time to
-                review this Agreement and has been given an opportunity to
-                obtain independent legal advice and translation prior to the
-                execution and delivery of this Agreement.
-              </p>
-            </li>
-            <li data-list-text="18.11">
-              <p>
-                In the event the Client did not seek independent legal advice
-                prior to signing this Agreement, he/she did so voluntarily
-                without any undue pressure and agrees that the failure to obtain
-                independent legal advice must not be used as a defense to the
-                enforcement of obligations created by this Agreement.
-              </p>
-            </li>
-            <li data-list-text="18.12">
-              <p>
-                Furthermore, the Client acknowledges that he/she has received a
-                copy of this Agreement and agrees to be bound by its terms.
-              </p>
-            </li>
-            <li data-list-text="18.13">
-              <p>
-                The Client acknowledges that RCIC is not responsible if
-                application was submitted on time as per IRCC before midnight
-                UTC but submission confirmation from IRCC received next day in
-                UTC. RCIC must not be held accountable for any further
-                implication including but not limited to missing deadline,
-                status expiry due to this IRCC online system error.
-              </p>
-            </li>
-            <li data-list-text="18.14">
-              <p>
-                The client is aware that IRCC processing time and approvals are
-                not in RCIC’s control and timeline frames provided to the client
-                is according to IRCC’s website.
-              </p>
-            </li>
-            <li data-list-text="18.15">
-              <p>
-                The Client acknowledges that he/she has requested that the
-                Agreement be written in the English language and that English is
-                the binding language.
-              </p>
-            </li>
-          </ol>
+          <h5 style="font-weight: 600">Miscellaneous</h5>
+        <ol id="l12" style="list-style-type:none; padding-left: 0;">
+  <li data-list-text="18.1">
+    <p style="position:relative;">
+      <span style="position:absolute; left:0;">18.1</span>
+      <span style="margin-left:40px;">The Client expressly authorizes the RCIC to act on his/her behalf to the extent of the specific functions which the RCIC was retained to perform, as per Section 2 hereof.</span>
+    </p>
+  </li>
+  <li data-list-text="18.2">
+    <p style="position:relative;">
+      <span style="position:absolute; left:0;">18.2</span>
+      <span style="margin-left:40px;">This Agreement constitutes the entire agreement between the parties with respect to the subject matter hereof and supersedes all prior agreements, understandings, warranties, representations, negotiations and discussions, whether oral or written, of the parties except as specifically set forth herein.</span>
+    </p>
+  </li>
+  <li data-list-text="18.3">
+    <p style="position:relative;">
+      <span style="position:absolute; left:0;">18.3</span>
+      <span style="margin-left:40px;">This Agreement shall be binding upon the parties hereto and their respective heirs, administrators, successors, and permitted assigns.</span>
+    </p>
+  </li>
+  <li data-list-text="18.4">
+    <p style="position:relative;">
+      <span style="position:absolute; left:0;">18.4</span>
+      <span style="margin-left:40px;">The Costs enumerated in this Agreement are to be paid by the Client.</span>
+    </p>
+  </li>
+  <li data-list-text="18.5">
+    <p style="position:relative;">
+      <span style="position:absolute; left:0;">18.5</span>
+      <span style="margin-left:40px;">This Agreement may only be altered or amended when such changes are made in writing and executed by the parties hereto. All changes and/or edits must be initialed and dated by both the Member and the Client. Any substantial changes to this Agreement may require that the parties enter into a new Retainer Agreement.</span>
+    </p>
+  </li>
+  <li data-list-text="18.6">
+    <p style="position:relative;">
+      <span style="position:absolute; left:0;">18.6</span>
+      <span style="margin-left:40px;">The Client may, after a Retainer Agreement is signed, appoint a Designate to act on their behalf when dealing with the RCIC. A Designate must not be compensated by the Client or the RCIC for acting in the capacity of a Designate.</span>
+    </p>
+  </li>
+  <li data-list-text="18.7">
+    <p style="position:relative;">
+      <span style="position:absolute; left:0;">18.7</span>
+      <span style="margin-left:40px;">The provisions of this Agreement shall be deemed severable. If any provision of this Agreement shall be held unenforceable by any court of competent jurisdiction, such provision shall be severed from this Agreement, and the remaining provisions shall remain in full force and effect.</span>
+    </p>
+  </li>
+  <li data-list-text="18.8">
+    <p style="position:relative;">
+      <span style="position:absolute; left:0;">18.8</span>
+      <span style="margin-left:40px;">The headings utilized in this Agreement are for convenience only and are not to be construed in any way as additions to or limitations of the covenants and agreements contained in this Agreement.</span>
+    </p>
+  </li>
+  <li data-list-text="18.9">
+    <p style="position:relative;">
+      <span style="position:absolute; left:0;">18.9</span>
+      <span style="margin-left:40px;">Each of the parties hereto must do and execute or cause to be done or executed all such further and other things, acts, deeds, documents, and assurances as may be necessary or reasonably required to carry out the intent and purpose of this Agreement fully and effectively.</span>
+    </p>
+  </li>
+  <li data-list-text="18.10">
+    <p style="position:relative;">
+      <span style="position:absolute; left:0;">18.10</span>
+      <span style="margin-left:45px;"> The Client acknowledges that he/she has had sufficient time to review this Agreement and has been given an opportunity to obtain independent legal advice and translation prior to the execution and delivery of this Agreement.</span>
+    </p>
+  </li>
+  <li data-list-text="18.11">
+    <p style="position:relative;">
+      <span style="position:absolute; left:0;">18.11</span>
+      <span style="margin-left:45px;"> In the event the Client did not seek independent legal advice prior to signing this Agreement, he/she did so voluntarily without any undue pressure and agrees that the failure to obtain independent legal advice must not be used as a defense to the enforcement of obligations created by this Agreement.</span>
+    </p>
+  </li>
+  <li data-list-text="18.12">
+    <p style="position:relative;">
+      <span style="position:absolute; left:0;">18.12</span>
+      <span style="margin-left:45px;"> Furthermore, the Client acknowledges that he/she has received a copy of this Agreement and agrees to be bound by its terms.</span>
+    </p>
+  </li>
+  <li data-list-text="18.13">
+    <p style="position:relative;">
+      <span style="position:absolute; left:0;">18.13</span>
+      <span style="margin-left:45px;"> The Client acknowledges that RCIC is not responsible if the application was submitted on time as per IRCC before midnight UTC but submission confirmation from IRCC was received the next day in UTC. RCIC must not be held accountable for any further implications including but not limited to missing deadlines or status expiry due to this IRCC online system error.</span>
+    </p>
+  </li>
+  <li data-list-text="18.14">
+    <p style="position:relative;">
+      <span style="position:absolute; left:0;">18.14</span>
+      <span style="margin-left:45px;"> The client is aware that IRCC processing time and approvals are not in RCIC’s control, and timeline frames provided to the client are according to IRCC’s website.</span>
+    </p>
+  </li>
+  <li data-list-text="18.15">
+    <p style="position:relative;">
+      <span style="position:absolute; left:0;">18.15</span>
+      <span style="margin-left:45px;"> The Client acknowledges that he/she has requested that the Agreement be written in the English language and that English is the binding language.</span>
+    </p>
+  </li>
+</ol>
+
         </li>
         <br />
         <li data-list-text="19.">
@@ -993,45 +947,115 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
         </li>
         <br />
         <li data-list-text="21." style="font-size: 18px">
-          <p style="font-weight: 600">Contact Information</p>
+          <h5 style="font-weight: 600">Contact Information</h5>
         </li>
       </ol>
       <p>Client Name</p>
-      <p>
-        Given Name :  <span class="para_gap">${(felidData && familyJsonArray[0]?.client_first_name ? familyJsonArray[0]?.client_first_name : (emp_user_type === "employee" ? (userData?.name || "") : (userData?.company_name || ""))?.split(" ")[0])} </span>Family Name :
-         <span class="para_gap">${(familyJsonArray[0]?.client_last_name ? familyJsonArray[0]?.client_last_name : " ") ?? (emp_user_type === "employee" ? (userData?.name || "") : (userData?.company_name || ""))?.split(" ")[1]} </span>
-        Address :  <span class="para_gap">${felidData && felidData.client_address ? felidData.client_address : emp_user_type === "employer" ? (userData?.address || "") : ((userData?.current_location || "") + " " + (userData?.currently_located_country || ""))} </span> Telephone Number :  <span class="para_gap">${felidData && felidData.client_contact ? felidData.client_contact : (userData?.contact_no || "")}
-        </span
-        >Cellphone Number :
-         <span class="para_gap">${(felidData.client_cellphone ? felidData?.client_cellphone : " ") || ""}</span>
-        Fax Number :
-         <span class="para_gap">${(felidData.client_fax ? felidData?.client_fax : " ") || ""}</span>E-mail Address :  <span class="para_gap">${felidData && felidData.client_email ? (felidData?.client_email || "") : (userData?.email || "")}</span>
-      </p>
+      <div class="row">
+        <p class="col-6 text-capitalize">
+        Given Name :  
+        <span style=" min-width: 150px;
+        border-bottom: 1px solid grey;
+        display: inline-block;">${(felidData && familyJsonArray[0]?.client_first_name ? familyJsonArray[0]?.client_first_name : (emp_user_type === "employee" ? (userData?.name || "") : (""))?.split(" ")[0])} 
+        </span>
+        </p>
+        <p class="col-6 text-capitalize">
+        Family Name :  
+         <span style=" min-width: 150px;
+        border-bottom: 1px solid grey;
+        display: inline-block;">${(familyJsonArray[0]?.client_last_name ? familyJsonArray[0]?.client_last_name : " ") ?? (emp_user_type === "employee" ? (userData?.name || "") : (""))?.split(" ")[1]} 
+         </span>
+         </p>
+        <p class="col-6 text-capitalize">
+        Address :  <span style=" min-width: 150px;
+        border-bottom: 1px solid grey;
+        display: inline-block;">${felidData && felidData.client_address ? felidData.client_address : emp_user_type === "employer" ? (userData?.address || "") : ((userData?.current_location || "") + " " + (userData?.currently_located_country || ""))} 
+        </span>
+        </p> 
+        <p class="col-6">
+        Telephone Number :  <span style=" min-width: 150px;
+        border-bottom: 1px solid grey;
+        display: inline-block;">${felidData && felidData.client_contact ? felidData.client_contact : (userData?.contact_no || "")}
+        </span>
+        </p>
+        <p class="col-6">
+        Cellphone Number :  
+         <span style=" min-width: 150px;
+        border-bottom: 1px solid grey;
+        display: inline-block;">${(felidData.client_cellphone ? felidData?.client_cellphone : " ") || ""}
+         </span>
+         </p>
+        <p class="col-6">
+        Fax Number :  
+         <span style=" min-width: 150px;
+        border-bottom: 1px solid grey;
+        display: inline-block;">${(felidData.client_fax ? felidData?.client_fax : " ") || ""}</span>
+         </p>
+         <p class="col-6">
+         E-mail Address :  <span style=" min-width: 150px;
+        border-bottom: 1px solid grey;
+        display: inline-block;">${felidData && felidData.client_email ? (felidData?.client_email || "") : (userData?.email || "")}
+         </span>
+         </p>
+      </div>
       <p>RCIC</p>
-      <p>
-        Given Name: <span> Harpreet </span>   Family Name :<span> Kaur </span>
-        Address:<span>2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7</span> Telephone
-        Number<span> 403-888-5308</span>
-      </p>
-      <p>Fax Number</p>
-      <p>
-        E-mail Address: <a
-          href="mailto:info@canpathways.ca"
-          class="s19"
-          target="_blank"
-        >
-          info@canpathways.ca
-        </a>
-      </p>
-      <p>
-        IN WITNESS THERE OF this Agreement has been duly executed by the parties
-        hereto on the date first above written.
-      </p>
+      <div class="row">
+  <p class="col-6 text-capitalize">
+    Given Name:
+    <span
+      style="min-width: 150px; border-bottom: 1px solid grey; display: inline-block;"
+    >
+      Harpreet
+    </span>
+  </p>
+  <p class="col-6 text-capitalize">
+    Family Name:
+    <span
+      style="min-width: 150px; border-bottom: 1px solid grey; display: inline-block;"
+    >
+      Kaur
+    </span>
+  </p>
+  <p class="col-6 text-capitalize">
+    Address:
+    <span
+      style="min-width: 150px; border-bottom: 1px solid grey; display: inline-block;"
+    >
+      2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7
+    </span>
+  </p>
+  <p class="col-6">
+    Telephone Number:
+    <span
+      style="min-width: 150px; border-bottom: 1px solid grey; display: inline-block;"
+    >
+      403-888-5308
+    </span>
+  </p>
+  <p class="col-6">
+    Fax Number:
+    <span
+      style="min-width: 150px; border-bottom: 1px solid grey; display: inline-block;"
+    >
+      <!-- Leave blank or insert fax number here -->
+    </span>
+  </p>
+  <p class="col-6">
+    E-mail Address:
+    <span
+      style="min-width: 150px; border-bottom: 1px solid grey; display: inline-block;"
+    >
+      <a href="mailto:info@canpathways.ca" class="s19" target="_blank">
+        info@canpathways.ca
+      </a>
+    </span>
+  </p>
+</div>
+
       <br /><br />
 <div style="display: flex; flex-wrap: wrap">
     <!-- Client Signature -->
     <div style="width: 50%">
-           
        ${familyJsonArray[0]?.client_signature ? `
         <div class="d-flex flex-column">
                         <img
@@ -1040,13 +1064,13 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
       style="max-width: 200px; float: right;"
       class="${familyJsonArray[0]?.client_signature ? "d-block" : "d-none"}"
     />
-     <p class="para_gap" style="margin: 0"></p>
+     <p style="margin: 0">______________________________</p>
                   <small class="row ">
                     <span class="col text-capitalize" >
                       ${familyJsonArray[0]?.client_first_name + " " + familyJsonArray[0]?.client_last_name + " "}${familyJsonArray[0]?.date_signature_client}</span>
                   </small>
                       </div>`
-      : page === "admin" ? "" : ` <button class="btn btn-outline-secondary border-0  " 
+      : page === "admin" ? "___________________________" : ` <button class="btn btn-outline-secondary border-0  " 
                   style="font-family:cursive;" 
                   id="add-signature-button-0">
             Add Signature
@@ -1061,13 +1085,14 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
             <p style="margin: 0 0 30px 0">Name of Client</p>
         </div>
         <div style="width: 50%">
-            <p class="para_gap" style="margin: 0">
-                <span style="max-width: 200px;">${familyJsonArray[0]?.date_signature_client ? familyJsonArray[0]?.date_signature_client : ''}</span>
+            <p class="" style="margin: 0">
+                 ${familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00" || !familyJsonArray[0]?.date_signature_client ? '_____________________'
+      : `<span  class="para_gap" style="max-width: 200px;">${familyJsonArray[0]?.date_signature_client}</span>`}
             </p>
             <p style="margin: 0 0 30px 0">Date</p>
         </div>
     ${(familyJsonArray.slice(1) || []).map((item, index) => (
-      `<div style="width: 50%">
+        `<div style="width: 50%">
            
        ${item.client_signature ? `
         <div class="d-flex flex-column">
@@ -1077,19 +1102,20 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
       style="max-width: 200px; float: right;"
       class="${item.client_signature ? "d-block" : "d-none"}"
     />
-    <p class="para_gap" style="margin: 0"></p>
+    <p style="margin: 0">______________________________</p>
                   <small class="row ">
                     <span class="col text-capitalize" >
                       ${item.client_first_name + " " + item.client_last_name + " "}${item.date_signature_client}</span>
                   </small>
                       </div>`
-        : page === "admin" ? "" : ` <button class="btn btn-outline-secondary border-0  " 
+          : page === "admin" ? `<p style="margin: 0">______________________________</p>`
+            : ` <button class="btn btn-outline-secondary border-0  " 
                   style="font-family:cursive;" 
                   id="add-signature-button-${index + 1}"
                   ${!familyJsonArray[0]?.client_signature ? 'disabled' : ''}>
             Add Signature
           </button>`
-      }
+        }
             <p style="margin: 0 0 30px 0">Signature of family member</p>
         </div>
         <div style="width: 50%">
@@ -1099,16 +1125,17 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
             <p style="margin: 0 0 30px 0">Name of family member</p>
         </div>
         <div style="width: 50%">
-            <p class="para_gap" style="margin: 0">
-                <span style="max-width: 200px;">${item.date_signature_client ? item.date_signature_client : ''}</span>
+            <p style="margin: 0">
+               ${item.date_signature_client === "0000-00-00 00:00:00" || !item.date_signature_client ? '_____________________'
+          : `<span  class="para_gap" style="max-width: 200px;">${item.date_signature_client}</span>`}
             </p>
             <p style="margin: 0 0 30px 0">Date</p>
         </div>`
-    ))}
+      ))}
 
     <!-- RCIC Signature -->
     <div style="width: 50%">
-        <p class="para_gap" style="margin: 0">
+        
             <div class="d-flex flex-column">
                        <img
                 src="${felidData.rcic_signature ? felidData.rcic_signature : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s'}"
@@ -1116,13 +1143,13 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
                 style="max-width: 200px; float: right;"
                 class="${felidData.rcic_signature ? 'd-block' : 'd-none'}"
             />
+            <p  style="margin: 0">______________________________</p>
                   <small class="row ">
                     <span class="col text-capitalize" >
                       Harpreet kaur ${felidData.date_signature_rcic === "0000-00-00 00:00:00" ? '' : felidData.date_signature_rcic}</span>
 
                   </small>
                       </div>
-        </p>
         <p style="margin: 0 0 30px 0">Signature of RCIC</p>
     </div>
     <div style="width: 50%">
@@ -1132,8 +1159,9 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
         <p style="margin: 0 0 30px 0">Name of RCIC</p>
     </div>
     <div style="width: 50%">
-        <p class="para_gap" style="margin: 0">
-            <span class=${felidData.date_signature_rcic === "0000-00-00 00:00:00" ? "d-none" : ""} style="max-width: 200px;">${felidData.date_signature_rcic ? felidData.date_signature_rcic : ''}</span>
+        <p style="margin: 0">
+            ${felidData.date_signature_rcic === "0000-00-00 00:00:00" || !felidData.date_signature_rcic ? '_____________________'
+      : `<span  class="para_gap" style="max-width: 200px;">${felidData.date_signature_rcic}</span>`}
         </p>
         <p style="margin: 0 0 30px 0">Date</p>
     </div>
@@ -1141,7 +1169,7 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
 
       <h3 style="text-align: center">AUTHORIZATION</h3>
       <p>
-        I  <span class="para_gap text-capitalize">${(felidData && (familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name) ? ((familyJsonArray[0]?.client_first_name + " " + (familyJsonArray[0]?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}</span>( here in after referred to as the “client”),
+        I  <span class="para_gap text-capitalize">${(felidData && (familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name) ? ((familyJsonArray[0]?.client_first_name + " " + (familyJsonArray[0]?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : (("") || "")))}</span>( here in after referred to as the “client”),
         hereby authorize and appoint Harpreet kaur (hereinafter referred to as
         the “RCIC” with a CICC# R533393), of CAN Pathways Immigration
         consultancy ltd.,(hereinafter referred to as the “firm”), to represent
@@ -1220,13 +1248,10 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
         </li>
         <li data-list-text="7.">
           <p>
-            I understand that
-            <span style="color: #010101"
-              >The RCIC’s obligations under the Engagement are null and void if
+            I understand that the RCIC’s obligations under the Engagement are null and void if
               the Client knowingly provides any inaccurate, misleading or false
               material information. The Client’s financial obligations
-              remain</span
-            >
+              remain
           </p>
         </li>
         <li data-list-text="8.">
@@ -1255,22 +1280,24 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
       <br /><br />
       <div style="display: flex; flex-wrap: wrap">
         <div style="width: 33.33%; text-align: center">
-          <p class="para_gap text-capitalize" style="margin: 0">${(felidData && (familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name) ? ((familyJsonArray[0]?.client_first_name + " " + (familyJsonArray[0]?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}</p>
+          <p class="${felidData && (familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name) ? "para_gap" : ""} text-capitalize" style="margin: 0">${(felidData && (familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name) ? ((familyJsonArray[0]?.client_first_name + " " + (familyJsonArray[0]?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "________________") || "") : "_______________"))}</p>
           <p style="margin: 0 0 30px 0">Client’s full name</p>
         </div>
-        <div style="width: 33.33%; text-align: center">
-          <p class="para_gap" style="margin: 0">
+        <div style="width: 33.33%; text-align: center;
+   ${familyJsonArray[0]?.client_signature ? "position: relative; bottom: 40px;" : ""}">
+          <p class=${familyJsonArray[0]?.client_signature ? "para_gap" : ""} style="margin: 0">
            <img
           src=${familyJsonArray[0]?.client_signature ? familyJsonArray[0]?.client_signature : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"}
-          alt=${(felidData && (familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name) ? ((familyJsonArray[0]?.client_first_name + " " + (familyJsonArray[0]?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : ((userData?.company_name || "") || "")))}
+          alt=${(felidData && (familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name) ? ((familyJsonArray[0]?.client_first_name + " " + (familyJsonArray[0]?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : (("") || "")))}
           style="max-width: 200px; float: right"
           class=${familyJsonArray[0]?.client_signature ? "d-block" : "d-none"}
         />
+        ${familyJsonArray[0]?.client_signature ? " " : "__________________"}
           </p>
           <p style="margin: 0 0 30px 0">Signatures</p>
         </div>
         <div style="width: 33.33%; text-align: center">
-          <p class="para_gap" style="margin: 0">${(!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00") ? "" : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</p>
+          <p class=${(!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00") ? "" : "para_gap"} style="margin: 0">${(!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00") ? "_______________" : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</p>
           <p style="margin: 0 0 30px 0">Date</p>
         </div>
       </div>

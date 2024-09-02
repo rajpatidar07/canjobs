@@ -325,10 +325,10 @@ const SignaturePadComponent = ({ index, onSignature, setState, state, label, nam
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [index, setState, state, onSignature]);
-
+console.log(index)
     return (
         <div className="form-group">
-            <label className={`font-size-4 text-black-2 line-height-reset mb-3 ${isSign ? "" : "position-relative"}`}>{index === 0 ? "Client signature" : "Family memeber signature"}</label>
+            <label className={`font-size-4 text-black-2 line-height-reset mb-3 ${isSign ? "" : "position-relative"}`}>{index === 0 ? "Client signature" : index === "rcic_signature" ? "RCIC Signature" : "Family memeber signature"}</label>
             {isSign ? <div className="border border-dark mb-3 w-100 " >
                 <SignatureCanvas
                     ref={sigPad}

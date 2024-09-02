@@ -1337,13 +1337,13 @@ const close = () => {
                       || props.pageNameForForm === "Category"
                       || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ? "d-none" : ""}`}>
                       <label
-                        htmlFor="local"
+                        htmlFor="addlocal"
                         className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                       >
 
                         <input
                           type="checkbox"
-                          id="local"
+                          id="addlocal"
                           name="local"
                           checked={state.is_local === "1"}
                           value={state.is_local}
