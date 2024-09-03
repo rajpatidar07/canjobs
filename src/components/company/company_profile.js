@@ -36,6 +36,7 @@ function CompanyProfileDetail(props) {
   const docId = searchParams.get("docId");
   const docParentId = searchParams.get("docParentId");
   const notes = searchParams.get("note");
+  const agreement = searchParams.get("agreement");
 
   let navigate = useNavigate();
   /*Show modal and data state */
@@ -48,7 +49,7 @@ function CompanyProfileDetail(props) {
   const [showKycComplainDetailsModal, setShowKycComplainDetailsModal] =
     useState(false);
   const [TabActive, setTabActive] = useState(
-    docId ? "documents" : notes === "true" ? "notes" : "profile"
+    docId ? "documents" : notes === "true" ? "notes" : agreement === "true" ? "retaineragreement" : "profile"
   );
   const [addNote, setAddNote] = useState(false);
   const [employerData, setEmployerData] = useState("");
@@ -108,6 +109,9 @@ function CompanyProfileDetail(props) {
     if (notes) {
       setTabActive("notes");
     }
+    if (agreement) {
+      setTabActive("retaineragreement");
+    }
     // eslint-disable-next-line
   }, [apiCall, company_id, notes]);
 
@@ -141,7 +145,7 @@ function CompanyProfileDetail(props) {
           <AdminSidebar />
         </>
       )}
-      
+
       {user_type === "admin" || user_type === "agent" ? null : (
         <EmployeeHeader />
       )}
@@ -153,9 +157,8 @@ function CompanyProfileDetail(props) {
         }
       >
         <div
-          className={`container${
-            user_type === "admin" || user_type === "agent" ? "-fluid" : ""
-          }`}
+          className={`container${user_type === "admin" || user_type === "agent" ? "-fluid" : ""
+            }`}
         >
           <div className="row text-left mt-5 pt-0">
             <div className="col-12 mb-1 d-none">
@@ -166,9 +169,9 @@ function CompanyProfileDetail(props) {
                       className="company_logo"
                       src={
                         employerData.logo === null ||
-                        employerData.logo === null ||
-                        employerData.logo === undefined ||
-                        employerData.logo === "undefined"
+                          employerData.logo === null ||
+                          employerData.logo === undefined ||
+                          employerData.logo === "undefined"
                           ? "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
                           : employerData.logo
                       }
@@ -216,7 +219,7 @@ function CompanyProfileDetail(props) {
                         <CustomButton
                           title={"Send Custom Email"}
                           className="font-size-4 rounded-3 btn-primary py-0 d-none"
-                          /*Functionalities have to be done. */
+                        /*Functionalities have to be done. */
                         >
                           {/*Take off "d-none" when you Send Custom Email API or when you're told to remove it*/}
                           <RiMailSendLine />
@@ -329,7 +332,7 @@ function CompanyProfileDetail(props) {
                           setTabActive("documents");
                         }
                       }}
-                      // onClick={() => setTabActive("documents")}
+                    // onClick={() => setTabActive("documents")}
                     >
                       Documents
                     </Link>
@@ -337,8 +340,8 @@ function CompanyProfileDetail(props) {
                   <li
                     className={
                       user_type === "company" ||
-                      user_type === "agent" ||
-                      user_type === "user"
+                        user_type === "agent" ||
+                        user_type === "user"
                         ? "d-none"
                         : "tab-menu-items nav-item "
                     }
@@ -582,14 +585,14 @@ function CompanyProfileDetail(props) {
                                 <hr className="my-3" />
                                 <div className="position-relative">
                                   {!employerData.industry &&
-                                  !employerData.corporation &&
-                                  !employerData.company_size &&
-                                  !employerData.company_start_date &&
-                                  !employerData.website_url &&
-                                  !employerData.vacancy_for_post &&
-                                  !employerKycData.pan_no &&
-                                  !employerKycData.tan_number &&
-                                  !employerKycData.gstin ? (
+                                    !employerData.corporation &&
+                                    !employerData.company_size &&
+                                    !employerData.company_start_date &&
+                                    !employerData.website_url &&
+                                    !employerData.vacancy_for_post &&
+                                    !employerKycData.pan_no &&
+                                    !employerKycData.tan_number &&
+                                    !employerKycData.gstin ? (
                                     <div className="text-left row m-0">
                                       <div className="font-size-4 mb-8 text-center mr-10">
                                         No Data Found
@@ -675,7 +678,7 @@ function CompanyProfileDetail(props) {
                                         </div>
                                       ) : null}
                                       {employerKycData === "" ||
-                                      user_type === "user" ? null : (
+                                        user_type === "user" ? null : (
                                         <div className="d-none">
                                           {employerKycData.pan_no ? (
                                             <div
@@ -689,7 +692,7 @@ function CompanyProfileDetail(props) {
                                             </div>
                                           ) : null}
                                           {!employerKycData.tan_number ||
-                                          user_type === "user" ? null : (
+                                            user_type === "user" ? null : (
                                             <div
                                               className="font-size-3 mb-1 mr-10"
                                               title="TAN"
@@ -701,7 +704,7 @@ function CompanyProfileDetail(props) {
                                             </div>
                                           )}
                                           {!employerKycData.gstin ||
-                                          user_type === "user" ? null : (
+                                            user_type === "user" ? null : (
                                             <div
                                               className="font-size-3 mb-1 mr-10"
                                               title="GSTIN"
@@ -746,11 +749,11 @@ function CompanyProfileDetail(props) {
                                         {employerData.email}
                                       </Link>
                                       {user_type === "admin" ||
-                                      props.self === "no" ? (
+                                        props.self === "no" ? (
                                         <CustomButton
                                           title={"Send Custom Email"}
                                           className="font-size-4 rounded-3 btn-primary py-0 d-none"
-                                          /*Functionalities have to be done. */
+                                        /*Functionalities have to be done. */
                                         >
                                           {/*Take off "d-none" when you Send Custom Email API or when you're told to remove it*/}
                                           <RiMailSendLine />
@@ -835,7 +838,7 @@ function CompanyProfileDetail(props) {
                       setApiCall={setApiCall}
                       pageNo={jobPageNo}
                       setpageNo={setJobPageNO}
-                      // setLmiaStatusRejectComment={setLmiaStatusRejectComment}
+                    // setLmiaStatusRejectComment={setLmiaStatusRejectComment}
                     />
                   </div>
                   {/* <!-- Top Start --> */}

@@ -293,13 +293,12 @@ const AgreementOneForm = ({
   let SigningUserType = localStorage.getItem("userType");
 
   const initialClientState = {
-    client_first_name: (emp_user_type === "employee" ? userData?.name : "") || "",
-    client_last_name: (emp_user_type === "employee" ? userData?.name : "") || "",
+    client_first_name: emp_user_type === "employee" ?( userData?.name )?.split(" ")[0]: "",
+    client_last_name: emp_user_type === "employee" ?( userData?.name )?.split(" ")[1]: "",
     client_signature: "",
     date_signature_client: "",
     client_date_of_birth: ""
   };
-
   const initialFormState = {
     type: "temporary resident visa",
     rcic_membership_no: "",
@@ -456,7 +455,7 @@ const AgreementOneForm = ({
           try {
             let res = await GetAgreement("", user_id, emp_user_type, felidData.type)
             /*FUnction to generate pdf after adding signature */
-            if (openSignature === "yes" && (res.data.data[0].signature_status === ("1" || "2") || index === "rcic_signature")) {
+            if (openSignature === "yes" && ((res.data.data[0].signature_status ===  "2"||res.data.data[0].signature_status ===  "1") || index === "rcic_signature")) {
               const stateData = {
                 user_id: user_id,
                 emp_user_type: emp_user_type,
@@ -584,7 +583,15 @@ const AgreementOneForm = ({
             )}
 
             {openSignature === "yes" ? null :
-              (SigningUserType === "admin" ? [
+              (index === "update details" ? 
+                [
+                  { label: "Client Address", name: "client_address", type: "text" },
+                  { label: "Client Email", name: "client_email", type: "email" },
+                  { label: "Client Contact No", name: "client_contact", type: "number" },
+                  { label: "Client's Telephone Number", name: "client_telephone", type: "number" },
+                  { label: "Client's Cellphone Number", name: "client_cellphone", type: "number" },
+                  { label: "Client's Fax Number", name: "client_fax", type: "number" },
+                ]:[
                 { label: "Client Address", name: "client_address", type: "text" },
                 { label: "Client Email", name: "client_email", type: "email" },
                 { label: "Client Contact No", name: "client_contact", type: "number" },
@@ -607,14 +614,7 @@ const AgreementOneForm = ({
                 { label: "Applicable Retainer Fee for this stage (Non-Refundable) for Step 2", name: "applicable_retainer_fee_stape_2", type: "number" },
                 { label: "Total Amount: (Non-Refundable) (Paid at signing of contract and sharing of checklist)", name: "total_amount_signing_of_contract", type: "number" },
                 { label: "Balance (Non-Refundable) (Paid at time of filing)", name: "balance_paid_at_time_of_filing", type: "number" },
-              ] : [
-                { label: "Client Address", name: "client_address", type: "text" },
-                { label: "Client Email", name: "client_email", type: "email" },
-                { label: "Client Contact No", name: "client_contact", type: "number" },
-                { label: "Client's Telephone Number", name: "client_telephone", type: "number" },
-                { label: "Client's Cellphone Number", name: "client_cellphone", type: "number" },
-                { label: "Client's Fax Number", name: "client_fax", type: "number" },
-              ]).map(({ label, name, type, index }) => (
+              ] ).map(({ label, name, type, index }) => (
                 <div className={`form-group ${label.split(" ").length > 6 ? "col-md-12" : "col-md-6"} `} key={index}>
                   <label htmlFor={name} className="font-size-4 text-black-2 line-height-reset">
                     {label}
@@ -633,7 +633,6 @@ const AgreementOneForm = ({
                 </div>
               ))
             }
-
             <div className={openSignature === "yes" ? "d-none" : "form-group col-md-12 "}>
               <label className="font-size-4 text-black-2 line-height-reset">
                 Family member
@@ -649,7 +648,6 @@ const AgreementOneForm = ({
                 />
               </div>
             </div>
-
             <div className={openSignature === "yes" && index !== "final" && index !== "rcic_signature" ? "form-group col-md-12 " : "d-none"}>
               <SignaturePadComponent
                 signature={state?.family_json[index]?.client_signature}
@@ -678,7 +676,7 @@ const AgreementOneForm = ({
           </div>
           <div className='form-group d-flex flex-column'>
             {index === "final" ? "Are you sure to confirm submission? This signature cannot be updated later!" : ""}
-            <p className={index === "final" ? 'text-start p-2' : "d-none"} style={{ backgroundColor: SigningUserType === "admin" ? "" : "#fdff00" }}>
+            <p className={index === "final" ? 'text-start p-2' : "d-none"} style={{ backgroundColor: index === "final" ?  "#fdff00" :""}}>
               Note: Allow access to open a pop-up window
             </p>
             <div className='text-center'>

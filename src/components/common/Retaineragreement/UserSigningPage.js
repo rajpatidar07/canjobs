@@ -159,6 +159,7 @@ export default function UserSigningPage() {
                 <button className='btn btn-primary text-end m-2' onClick={() => {
                     setOpenAddFeildsModal(true)
                     setShowDetailsOption(true)
+                    setClientIndex("update details")
                 }}>Update Details</button>
             <div className={"d-none col-4 position-sticky bg-white h-100vh"}>
                 <div className='p-10'>

@@ -178,7 +178,6 @@ const AggrementOne = () => {
     convertBlob();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blobData]);
-  console.log(data)
   let components = (
     <View style={{ height: "auto" }}>
       <View style={{ padding: "10px 20px" }}>
@@ -507,7 +506,7 @@ const AggrementOne = () => {
             <Text style={[styles.definition, { fontWeight: 600 }]}>
               4. Payment Schedule
             </Text>
-            <View style={{ marginTop: 15 ,paddingLeft: 10}}>
+            <View style={{ marginTop: 15, paddingLeft: 10 }}>
               Billing method: The Client will be billed by [flat fee with
               payment by milestones]. Payment Terms and Conditions
             </View>
@@ -627,10 +626,10 @@ const AggrementOne = () => {
                 </View>
               </View>
             </View>
-            <Text style={{ marginTop: 15,paddingLeft: 10 }}>
+            <Text style={{ marginTop: 15, paddingLeft: 10 }}>
               Invoice Frequency: The RCIC must provide an Invoice to the Client
             </Text>
-            <Text style={{ marginTop: 15,paddingLeft: 10 }}>
+            <Text style={{ marginTop: 15, paddingLeft: 10 }}>
               Note: The courier charges and Government fees based on current
               rates and may change anytime on or before submission.
             </Text>
@@ -721,7 +720,7 @@ const AggrementOne = () => {
                 </View>
               </View>
             </View>
-            <View style={{ marginTop: 15 ,paddingLeft: 10}}>
+            <View style={{ marginTop: 15, paddingLeft: 10 }}>
               <View>
                 <Text style={{ fontWeight: "bold" }}>
 
@@ -743,7 +742,7 @@ const AggrementOne = () => {
                 </Text>
               </View>
             </View>
-            <View id="l5" style={{paddingLeft: 10}}>
+            <View id="l5" style={{ paddingLeft: 10 }}>
               <Text style={{ marginTop: 15 }}>Note:</Text>
               <View style={{ marginTop: 10 }}>
                 <View style={{ marginTop: 20, flexDirection: 'row' }}>
@@ -1564,7 +1563,7 @@ const AggrementOne = () => {
                 </Text>
                 <Text>Name of Client</Text>
                 <Text style={[styles.textunderline, { marginTop: 10 }]}>
-                  {(!familyJsonArray[0]?.date_signature_client ||familyJsonArray[0]?.date_signature_client ===
+                  {(!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client ===
                     "0000-00-00 00:00:00")
                     ? "________________"
                     : familyJsonArray[0]?.date_signature_client}
@@ -1605,7 +1604,7 @@ const AggrementOne = () => {
                     </Text>
                     <Text>Name of Family member {index + 1}</Text>
                     <Text style={[styles.textunderline, { marginTop: 10 }]}>
-                      {(!item.date_signature_client||item.date_signature_client === "0000-00-00 00:00:00")
+                      {(!item.date_signature_client || item.date_signature_client === "0000-00-00 00:00:00")
                         ? "________________"
                         : item.date_signature_client}
                     </Text>
@@ -1791,7 +1790,7 @@ const AggrementOne = () => {
               </View>
               <View style={[styles.clientFormChild, { alignSelf: "center" }]}>
                 {familyJsonArray[0].client_signature ?
-                  <View style={{ display: "flex", flexDirection: "column" }}>
+                  <View style={{ display: "flex", flexDirection: "column", marginBottom: 15 }}>
                     <Image
                       src={
                         familyJsonArray[0].client_signature

@@ -55,6 +55,7 @@ const NewUserProfile = (props) => {
   const docParentId = searchParams.get("docParentId");
   const partnerChat = searchParams.get("partner");
   const notes = searchParams.get("note");
+  const agreement = searchParams.get("agreement");
   let navigate = useNavigate();
   const [apiCall, setApiCall] = useState(false);
   const [status, setStatus] = useState("");
@@ -74,7 +75,9 @@ const NewUserProfile = (props) => {
         ? "agent conversation"
         : notes === "true"
           ? "notes"
-          : "profile"
+          : agreement === "true"
+            ? "retaineragreement"
+            : "profile"
   );
   const [userDetail, setuserDetail] = useState([]);
   const [userFound, setuserFound] = useState([]);
@@ -222,8 +225,11 @@ const NewUserProfile = (props) => {
     if (notes) {
       setTabActive("notes");
     }
+     if (agreement) {
+      setTabActive("retaineragreement");
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apiCall, eid, docId, docParentId, notes]);
+  }, [apiCall, eid, docId, docParentId, notes,agreement]);
   /*Function to See uploaded resume */
   const handleViewResume = (pdfUrl) => {
     window.open(`/userpdf?pdfUrl=${encodeURIComponent(pdfUrl)}`, "_blank");

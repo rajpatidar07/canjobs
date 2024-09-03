@@ -308,65 +308,70 @@ function Notifications({
                                                 `?note=true`
                                                 : data.document_user_type === "agent" ? `/partner_profile?note=true`//Notes for agent
                                                   : `/${data.employee_id}?note=true`//Notes for employee
-                                            : ""
+                                            : data.subject === "signed_agreement"
+                                              ? data.document_user_type === "employer"//AGREEMENT FOR EMPLOYER
+                                                ? `/client_detail?agreement=true`
+                                                : `/${data.employee_id}?agreement=true`//AGREEMENT FOR EMPLOYEE
+                                              : ""
+                                               
                       }
-                      onClick={() => {
-                        try {
-                          setshow(false);
-                          ReadNotification(data.id);
-                          setApicall(true);
-                          window.history.replaceState({}, document.title, "/");
-                          if (data.subject === "mention_partnerChat") {
-                            localStorage.setItem("agent_id", data.employee_id);
-                          } else if (data.subject === "assigned_admin_to_partner" || (data.document_user_type === "agent" && data.subject === "mention_notes")) {
-                            localStorage.setItem("agent_id",
-                              data.document_user_type === "agent" ? data.employee_id : data.action_id);
-                          } else if ((data.subject === "mention_document" || data.subject === "mention_notes")
-                            && data.document_user_type === "employer") {
-                            localStorage.setItem("company_id", data.employee_id);
-                          }
-                        } catch (err) {
-                          console.log(err);
-                        }
+                    onClick={() => {
+                      try {
+                        setshow(false);
+                        ReadNotification(data.id);
                         setApicall(true);
-                      }}
-                      className="text-dark text-decoration-none d-flex justify-content-between"
+                        window.history.replaceState({}, document.title, "/");
+                        if (data.subject === "mention_partnerChat") {
+                          localStorage.setItem("agent_id", data.employee_id);
+                        } else if (data.subject === "assigned_admin_to_partner" || (data.document_user_type === "agent" && data.subject === "mention_notes")) {
+                          localStorage.setItem("agent_id",
+                            data.document_user_type === "agent" ? data.employee_id : data.action_id);
+                        } else if ((data.subject === "mention_document" || data.subject === "mention_notes"||data.subject === "signed_agreement")
+                          && data.document_user_type === "employer") {
+                          localStorage.setItem("company_id", data.employee_id);
+                        }
+                      } catch (err) {
+                        console.log(err);
+                      }
+                      setApicall(true);
+                    }}
+                    className="text-dark text-decoration-none d-flex justify-content-between"
                     >
-                      <div className="d-flex align-items-center">
+                    <div className="d-flex align-items-center">
+                      <div
+                        className={`circle-48 mx-2 text-center text-capitalize  text-white font-weight-bold  ${determineBackgroundColor(
+                          data
+                        )}`}
+                      >
+                        {data.receiver_name ? data.receiver_name.charAt(0) : ""}
+                      </div>
+                      <div className="flex-grow-1">
+                        <div className="d-flex align-items-center justify-content-between">
+                          <div className="font-weight-bold text-truncate w-60 intervire-msg">
+                            {data.receiver_name ? data.receiver_name : ""}
+                          </div>
+                        </div>
                         <div
-                          className={`circle-48 mx-2 text-center text-capitalize  text-white font-weight-bold  ${determineBackgroundColor(
-                            data
-                          )}`}
+                          className="text-muted mw-80"
+                          style={{ fontSize: "14px" }}
                         >
-                          {data.receiver_name ? data.receiver_name.charAt(0) : ""}
-                        </div>
-                        <div className="flex-grow-1">
-                          <div className="d-flex align-items-center justify-content-between">
-                            <div className="font-weight-bold text-truncate w-60 intervire-msg">
-                              {data.receiver_name ? data.receiver_name : ""}
-                            </div>
-                          </div>
-                          <div
-                            className="text-muted mw-80"
-                            style={{ fontSize: "14px" }}
-                          >
-                            <div dangerouslySetInnerHTML={{ __html: data.message }} />
-                          </div>
+                          <div dangerouslySetInnerHTML={{ __html: data.message }} />
                         </div>
                       </div>
-                      <div className="text-muted font-size-2 line-height-1 ml-2">
-                        <ConvertTime _date={data.created_at} format={'LLL'} />
-                        {/* {moment(data.created_at).format("HH:mm")} */}
-                      </div>
-                    </Link>
+                    </div>
+                    <div className="text-muted font-size-2 line-height-1 ml-2">
+                      <ConvertTime _date={data.created_at} format={'LLL'} />
+                      {/* {moment(data.created_at).format("HH:mm")} */}
+                    </div>
+                  </Link>
                   </li>
-                ))}
-              </ul>
+            ))}
+          </ul>
             )}
-          </div>
         </div>
       </div>
     </div>
+    </div >
   );
 }
 

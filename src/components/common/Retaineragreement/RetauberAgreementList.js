@@ -345,19 +345,14 @@ export default function RetauberAgreementList({
                                                                 GetAgreementPdf(data)
                                                             }}
 
-                                                            disabled={
-                                                                data?.family_json.length > 0 &&JSON.parse(data.family_json)[0].client_signature ? false : data.rcic_signature
-                                                                    ? true
-                                                                    : true
+                                                            disabled={data?.signature_status === "2" ? false : data?.rcic_signature ? true : true
                                                             }
 
                                                             title="RCIC Sign"
 
-                                                            
-                                                        > 
-                                                        {console.log(data?.family_json.length > 0 &&JSON.parse(data.family_json)[0].client_signature ? false +"----"
-                                                                    : true)}
-       <span className='text-gray px-2'>
+
+                                                        >
+                                                            <span className='text-gray px-2'>
                                                                 <FaFileSignature />
                                                             </span>
                                                         </button>
@@ -369,6 +364,7 @@ export default function RetauberAgreementList({
                                                             <span className="px-2 text-danger">
                                                                 <RiDeleteBin5Line />
                                                             </span>
+
                                                         </button>
                                                     </div>
                                                 </td>
