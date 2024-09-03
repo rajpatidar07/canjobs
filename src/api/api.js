@@ -2298,7 +2298,7 @@ export const GetAllEmailPagination = async (email, search) => {
 /*Api to update email template */
 export const AddUpdateEmailTemplate = async (props) => {
   const response = await axios.put(
-    `${API_URL}/common/addUpdateEmailTemplate`,
+    `${API_URL}common/addUpdateEmailTemplate`,
     {
       id: props.id,
       email_type: props.email_type,

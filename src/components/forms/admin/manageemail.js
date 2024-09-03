@@ -70,6 +70,13 @@ function ManageEmail(props) {
           });
           return close();
         }
+        if(responseData.message === "Failed to update data"){
+          toast.error("Something wen wrong", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setLoading(false);
+        }
       } catch (err) {
         console.log(err);
         setLoading(false);

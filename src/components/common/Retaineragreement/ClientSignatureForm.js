@@ -80,7 +80,7 @@ export default function ClientSignatureForm() {
                 setState(res.data.data[0]);
             }
             /*FUnction to generate pdf after adding signature */
-            if (clientSignature === "done" && res.data.data[0].client_signature && res.data.data[0].signature_status === "1") {
+            if (clientSignature === "done" && res.data.data[0].client_signature && (res.data.data[0].signature_status === "1"||res.data.data[0].signature_status === "2")) {
                 const stateData = {
                     // user_id: user_id,
                     // emp_user_type: emp_user_type,

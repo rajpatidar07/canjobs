@@ -50,7 +50,7 @@ function clietFamilyFeilds({ handleInputChange,
                                     <button
                                         type="button"
                                         className="btn btn-outline-info action_btn"
-                                        onClick={() => editClient(index+1)}
+                                        onClick={() => editClient(index + 1)}
                                     >
                                         <span className="text-gray px-5">
                                             <FaEdit />
@@ -59,7 +59,7 @@ function clietFamilyFeilds({ handleInputChange,
                                     <button
                                         type="button"
                                         className="btn btn-outline-danger action_btn"
-                                        onClick={() => removeClient(index+1)}
+                                        onClick={() => removeClient(index + 1)}
                                     >
                                         <span className="text-danger px-5">
                                             <FaTrash />
@@ -94,6 +94,8 @@ function clietFamilyFeilds({ handleInputChange,
                                 </div>
                                 <div className="col-md-3 mb-2">
                                     <input
+                                        min={moment().subtract(84, 'years').format("YYYY-MM-DD")}
+                                        max={moment().subtract(1, 'year').endOf('year').format("YYYY-MM-DD")}
                                         type="date"
                                         className="form-control coustam_datepicker"
                                         value={newClient.client_date_of_birth}

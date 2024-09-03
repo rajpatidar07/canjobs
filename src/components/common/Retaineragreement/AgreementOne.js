@@ -150,8 +150,8 @@ const AggrementOne = () => {
             // });
             try {
               let data = {
-                id: felidData.id,
-                type: felidData.type,
+                id: felidData?.id,
+                type: felidData?.type,
                 document_id: res.data.data[0][0].document_id,
               };
               let addDocId = AddUpdateAgreement(data);
@@ -178,6 +178,7 @@ const AggrementOne = () => {
     convertBlob();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blobData]);
+  console.log(data)
   let components = (
     <View style={{ height: "auto" }}>
       <View style={{ padding: "10px 20px" }}>
@@ -198,20 +199,20 @@ const AggrementOne = () => {
             RCIC Membership Number: R533393
           </Text>
           <Text style={{ fontWeight: 600 }}>
-            Client File Number: : {felidData.client_file_no}
+            Client File Number: : {felidData?.client_file_no}
           </Text>
         </View>
         <View>
           <Text>
-            This Retainer Agreement is made this {felidData.client_file_no}
+            This Retainer Agreement is made this {felidData?.client_file_no}
             <Text style={styles.textunderline}>
-              {" " + moment(new Date(felidData.agreement_date)).format("Do") + " "}
+              {" " + moment(new Date(felidData?.agreement_date)).format("Do") + " "}
             </Text>
             day of
             <Text style={styles.textunderline}>
-              {" " + moment(new Date(felidData.agreement_date)).format("MMMM") + " "}
+              {" " + moment(new Date(felidData?.agreement_date)).format("MMMM") + " "}
             </Text>
-            {" " + moment(new Date(felidData.agreement_date)).format("YYYY")} between
+            {" " + moment(new Date(felidData?.agreement_date)).format("YYYY")} between
             Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur (the
             “RCIC”), RCIC Membership Number
             <Text style={styles.textunderline}> R533393</Text>, Phone number
@@ -233,17 +234,17 @@ const AggrementOne = () => {
             <Text className="p"> , located at </Text>
             <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
 
-              {" " + felidData.client_address}
+              {" " + felidData?.client_address}
             </Text>
             , Email
             <Text style={styles.textunderline} className="para_gap">
 
-              {" " + felidData.client_email}
+              {" " + felidData?.client_email}
             </Text>
             , Contact number
             <Text style={styles.textunderline} className="para_gap">
 
-              {" " + felidData.client_contact}
+              {" " + felidData?.client_contact}
             </Text>
             .
           </Text>
@@ -356,8 +357,8 @@ const AggrementOne = () => {
               </Text>
             </View>
             <View style={{ paddingLeft: 10 }}>
-              {felidData.matter ? <Text style={styles.textunderline} >
-                {felidData.matter}
+              {felidData?.matter ? <Text style={styles.textunderline} >
+                {felidData?.matter}
               </Text> : <Text>__________________________________________________________________</Text>}
             </View>
             <Text style={{ paddingLeft: 10 }}>
@@ -367,8 +368,8 @@ const AggrementOne = () => {
             <View style={{ paddingLeft: 10 }}>
               <Text>
                 (a) [Summary of preliminary advice given to the client
-                {felidData.summary ? <Text style={styles.textunderline} >
-                  {felidData.summary}
+                {felidData?.summary ? <Text style={styles.textunderline} >
+                  {felidData?.summary}
                 </Text> : <Text>_____________________________________</Text>}
                 ]
               </Text>
@@ -527,7 +528,7 @@ const AggrementOne = () => {
                 </View>
                 <View style={styles.cell}>
 
-                  <Text>{felidData.professional_fees}</Text>
+                  <Text>{felidData?.professional_fees}</Text>
                 </View>
               </View>
               <View style={styles.row}>
@@ -553,7 +554,7 @@ const AggrementOne = () => {
                         },
                       ]}
                     >
-                      <Text>{felidData.courier_charges}</Text>
+                      <Text>{felidData?.courier_charges}</Text>
                     </View>
                   </View>
                   <View style={styles.row}>
@@ -567,7 +568,7 @@ const AggrementOne = () => {
                       ]}
                     >
 
-                      <Text>{felidData.government_fees}</Text>
+                      <Text>{felidData?.government_fees}</Text>
                     </View>
                   </View>
                   <View style={styles.row}>
@@ -581,8 +582,8 @@ const AggrementOne = () => {
                       ]}
                     >
                       <Text>
-                        {(felidData.courier_charges && felidData.government_fee) ? parseInt(felidData.courier_charges) +
-                          parseInt(felidData.government_fees) : ""}
+                        {(felidData?.courier_charges && felidData?.government_fee) ? parseInt(felidData?.courier_charges) +
+                          parseInt(felidData?.government_fees) : ""}
                       </Text>
                     </View>
                   </View>
@@ -595,16 +596,16 @@ const AggrementOne = () => {
                 </View>
                 <View style={styles.cell}>
 
-                  <Text>{felidData.administrative_fee}</Text>
+                  <Text>{felidData?.administrative_fee}</Text>
                 </View>
               </View>
               <View style={styles.row}>
                 <View style={styles.cell}>
-                  <Text>ApplicableTaxes: {felidData.gst || "0"}%</Text>
+                  <Text>ApplicableTaxes: {felidData?.gst || "0"}%</Text>
                 </View>
                 <View style={styles.cell}>
 
-                  <Text>{felidData.applicable_taxes}</Text>
+                  <Text>{felidData?.applicable_taxes}</Text>
                 </View>
               </View>
               <View style={styles.row}>
@@ -613,7 +614,7 @@ const AggrementOne = () => {
                 </View>
                 <View style={styles.cell}>
 
-                  <Text>{felidData.balance}</Text>
+                  <Text>{felidData?.balance}</Text>
                 </View>
               </View>
               <View style={styles.row}>
@@ -622,7 +623,7 @@ const AggrementOne = () => {
                 </View>
                 <View style={styles.cell}>
 
-                  <Text>{felidData.total_cost}</Text>
+                  <Text>{felidData?.total_cost}</Text>
                 </View>
               </View>
             </View>
@@ -681,11 +682,11 @@ const AggrementOne = () => {
                   <Text>Non-refundable</Text>
                 </View>
                 <View style={[styles.cell, { fontSize: "10px" }]}>
-                  <Text>{felidData.applicable_retainer_fee_stape_1}</Text>
+                  <Text>{felidData?.applicable_retainer_fee_stape_1}</Text>
                 </View>
                 <View style={[styles.cell, { fontSize: "10px" }]}>
                   <Text>
-                    {felidData.applicable_government_processing_fee_stape_1}
+                    {felidData?.applicable_government_processing_fee_stape_1}
                   </Text>
                 </View>
               </View>
@@ -711,11 +712,11 @@ const AggrementOne = () => {
                   </Text>
                 </View>
                 <View style={[styles.cell, { fontSize: "10px" }]}>
-                  <Text>{felidData.applicable_retainer_fee_stape_2}</Text>
+                  <Text>{felidData?.applicable_retainer_fee_stape_2}</Text>
                 </View>
                 <View style={[styles.cell, { fontSize: "10px" }]}>
                   <Text>
-                    {felidData.applicable_government_processing_fee_stape_2}
+                    {felidData?.applicable_government_processing_fee_stape_2}
                   </Text>
                 </View>
               </View>
@@ -729,7 +730,7 @@ const AggrementOne = () => {
                 </Text>
                 :
                 <Text style={styles.textunderline}>
-                  {felidData.total_amount_signing_of_contract} $
+                  {felidData?.total_amount_signing_of_contract} $
                 </Text>
               </View>
               <View>
@@ -738,7 +739,7 @@ const AggrementOne = () => {
                 </Text>
                 :
                 <Text style={styles.textunderline}>
-                  {felidData.balance_paid_at_time_of_filing} $
+                  {felidData?.balance_paid_at_time_of_filing} $
                 </Text>
               </View>
             </View>
@@ -1427,7 +1428,7 @@ const AggrementOne = () => {
                         { textTransform: "capitalize", marginLeft: 5 },
                       ]}
                     >
-                      {felidData.client_address || "_______________"}
+                      {felidData?.client_address || "_______________"}
                     </Text>
                   </Text>
                 </View>
@@ -1435,7 +1436,7 @@ const AggrementOne = () => {
                   <Text>
                     Telephone Number:{" "}
                     <Text style={[styles.textunderline, { marginLeft: 5 }]}>
-                      {felidData.client_telephone || "_______________"}
+                      {felidData?.client_telephone || "_______________"}
                     </Text>
                   </Text>
                 </View>
@@ -1446,7 +1447,7 @@ const AggrementOne = () => {
                   <Text>
                     Cellphone Number:{" "}
                     <Text style={[styles.textunderline, { marginLeft: 5 }]}>
-                      {felidData.client_cellphone || "_______________"}
+                      {felidData?.client_cellphone || "_______________"}
                     </Text>
                   </Text>
                 </View>
@@ -1459,7 +1460,7 @@ const AggrementOne = () => {
                         { textTransform: "capitalize", marginLeft: 5 },
                       ]}
                     >
-                      {felidData.client_email || "_______________"}
+                      {felidData?.client_email || "_______________"}
                     </Text>
                   </Text>
                 </View>
@@ -1508,7 +1509,7 @@ const AggrementOne = () => {
                   <Text>
                     Fax Number:{" "}
                     <Text style={[styles.textunderline, { marginLeft: 5 }]}>
-                      {felidData.client_fax || "_______________"}
+                      {felidData?.client_fax || "_______________"}
                     </Text>
                   </Text>
                 </View>
@@ -1563,8 +1564,8 @@ const AggrementOne = () => {
                 </Text>
                 <Text>Name of Client</Text>
                 <Text style={[styles.textunderline, { marginTop: 10 }]}>
-                  {familyJsonArray[0]?.date_signature_client ===
-                    "0000-00-00 00:00:00"
+                  {(!familyJsonArray[0]?.date_signature_client ||familyJsonArray[0]?.date_signature_client ===
+                    "0000-00-00 00:00:00")
                     ? "________________"
                     : familyJsonArray[0]?.date_signature_client}
                 </Text>
@@ -1604,7 +1605,7 @@ const AggrementOne = () => {
                     </Text>
                     <Text>Name of Family member {index + 1}</Text>
                     <Text style={[styles.textunderline, { marginTop: 10 }]}>
-                      {item.date_signature_client === "0000-00-00 00:00:00"
+                      {(!item.date_signature_client||item.date_signature_client === "0000-00-00 00:00:00")
                         ? "________________"
                         : item.date_signature_client}
                     </Text>
@@ -1615,17 +1616,17 @@ const AggrementOne = () => {
 
               {/* RCIC Signature */}
               <View style={{ width: "50%", padding: 10 }}>
-                {felidData.rcic_signature ? (
+                {felidData?.rcic_signature ? (
                   <View style={{ display: "flex", flexDirection: "column" }}>
                     <Image
-                      source={{ uri: felidData.rcic_signature }}
+                      source={{ uri: felidData?.rcic_signature }}
                       style={{ width: "40%", height: "auto" }}
                     />
                     <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7 }}>
                       <Text style={{ textTransform: "capitalize" }}>
                         Harpreet Kaur{" "}
                       </Text>
-                      <Text>{felidData.date_signature_rcic}</Text>
+                      <Text>{felidData?.date_signature_rcic}</Text>
                     </Text>
                   </View>
                 ) : (
@@ -1641,9 +1642,9 @@ const AggrementOne = () => {
                 </Text>
                 <Text>Name of RCIC</Text>
                 <Text style={[styles.textunderline, { marginTop: 10 }]}>
-                  {felidData.date_signature_rcic === "0000-00-00 00:00:00"
+                  {felidData?.date_signature_rcic === "0000-00-00 00:00:00"
                     ? "________________"
-                    : felidData.date_signature_rcic}
+                    : felidData?.date_signature_rcic}
                 </Text>
                 <Text>Date</Text>
               </View>
@@ -1813,7 +1814,7 @@ const AggrementOne = () => {
                     </Text>
                   </View>
                   : <Text>___________________</Text>}
-                <Text style={{ margin: "0 0 30px 0" }}>Signatures</Text>
+                <Text style={{ margin: "0 0 50px 0" }}>Signatures</Text>
               </View>
               <View style={styles.clientFormChild}>
                 <Text className="para_gap" style={{ margin: 0, textDecoration: "underline" }}>

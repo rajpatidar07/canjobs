@@ -1377,7 +1377,7 @@ services that have been rendered or accounting for the time that has been spent 
         margin: "0 auto",
         background: "#fff",
         padding: "30px",
-        height: "100vh",
+        height: "calc(100vh - 75px)",
         overflow: "auto",
       }}>
       <div dangerouslySetInnerHTML={{ __html: jsxContent }} />

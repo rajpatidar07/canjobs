@@ -93,12 +93,12 @@ export default function RetauberAgreementList({
         getAgreeFelidData();
         // let timer;
         if (apicall) {
-        //     timer = setTimeout(() => {
-        //         // Function to be executed after 20 seconds when apicall is true because document update's take time 
-        //         getAgreeFelidData();
-        //         // Reset the state to false
-                setApicall(false);
-        //     }, 20000);
+            //     timer = setTimeout(() => {
+            //         // Function to be executed after 20 seconds when apicall is true because document update's take time 
+            //         getAgreeFelidData();
+            //         // Reset the state to false
+            setApicall(false);
+            //     }, 20000);
         }
 
         // // Cleanup function to clear the timer if the component unmounts or myState changes
@@ -229,7 +229,7 @@ export default function RetauberAgreementList({
                                                 </td>
                                                 <td className="text-center py-5">
                                                     <p className="font-size-2 font-weight-normal text-black-2 mb-0">
-                                                        {data.signature_status === "1" ?
+                                                        {data.signature_status === "2" ?
                                                             (<span className="p-1 bg-primary-opacity-8 text-white text-center  border rounded-pill">
                                                                 Complete
                                                             </span>
@@ -344,20 +344,20 @@ export default function RetauberAgreementList({
                                                                 setAgreementData(data)
                                                                 GetAgreementPdf(data)
                                                             }}
+
                                                             disabled={
-                                                                data.family_json && data.family_json.length > 0 && data.family_json[0].client_signature 
-                                                                    ? data.rcic_signature
-                                                                        ? true
-                                                                        : false
-                                                                    : data.family_json && data.family_json.length > 0 
-                                                                        ? false
-                                                                        : true
+                                                                data?.family_json.length > 0 &&JSON.parse(data.family_json)[0].client_signature ? false : data.rcic_signature
+                                                                    ? true
+                                                                    : true
                                                             }
-                                                            
+
                                                             title="RCIC Sign"
 
-                                                        >
-                                                            <span className='text-gray px-2'>
+                                                            
+                                                        > 
+                                                        {console.log(data?.family_json.length > 0 &&JSON.parse(data.family_json)[0].client_signature ? false +"----"
+                                                                    : true)}
+       <span className='text-gray px-2'>
                                                                 <FaFileSignature />
                                                             </span>
                                                         </button>

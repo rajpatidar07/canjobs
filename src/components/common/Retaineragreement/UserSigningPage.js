@@ -150,7 +150,7 @@ export default function UserSigningPage() {
                                                                                     : null
                     }
 
-                    <div className='d-flex justify-content-center'>
+                    <div className='d-flex justify-content-center mt-5'>
                         <button className="btn btn-primary text-decoration-none" onClick={(e) => addSign(e, "final")}>
                             Final Submit
                         </button>
@@ -159,7 +159,7 @@ export default function UserSigningPage() {
                 <button className='btn btn-primary text-end m-2' onClick={() => {
                     setOpenAddFeildsModal(true)
                     setShowDetailsOption(true)
-                }}>Add Details</button>
+                }}>Update Details</button>
             <div className={"d-none col-4 position-sticky bg-white h-100vh"}>
                 <div className='p-10'>
                     <h3>Add{felidData.initial ? "" : " Initial and Client"} Signature</h3>

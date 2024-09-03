@@ -332,7 +332,7 @@ const AgreementOneForm = ({
     receiver_type: emp_user_type === "employee" ? "employee" : "employer",
     assigned_by_id: "",
     assigned_by_type: "",
-    signature_status: felidData?.family_json ? (felidData.family_json[0]?.client_signature ? 1 : 0) : 0,
+    signature_status: "",
     id: "",
     client_file_no: "",
     agreement_date: "",
@@ -342,7 +342,8 @@ const AgreementOneForm = ({
     client_cellphone: "",
     client_fax: "",
     client_address: emp_user_type === "employee" ? userData?.current_location + " " + userData?.currently_located_country : userData?.address,
-    family_json: [initialClientState]
+    family_json: [initialClientState],
+    client_first_name: (emp_user_type === "employee" ? userData?.name : userData?.company_name)
 
   };
   const validators = {
@@ -455,7 +456,7 @@ const AgreementOneForm = ({
           try {
             let res = await GetAgreement("", user_id, emp_user_type, felidData.type)
             /*FUnction to generate pdf after adding signature */
-            if (openSignature === "yes" && (res.data.data[0].signature_status === "1" || index === "rcic_signature")) {
+            if (openSignature === "yes" && (res.data.data[0].signature_status === ("1" || "2") || index === "rcic_signature")) {
               const stateData = {
                 user_id: user_id,
                 emp_user_type: emp_user_type,
