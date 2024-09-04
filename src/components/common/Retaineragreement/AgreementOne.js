@@ -23,7 +23,7 @@ const AggrementOne = () => {
     emp_user_type,
     folderId: folderID /*, code*/,
   } = JSON.parse(data) || {};
-  const familyJsonArray = felidData?.family_json ? JSON.parse(felidData?.family_json) : [];
+  const familyJsonArray = felidData?.family_json //? JSON.parse(felidData?.family_json) : [];
   // console.log( JSON.parse(felidData?.family_json))
   // const latestCode = JSON.stringify(code)
   //   .replace('" <', "<")

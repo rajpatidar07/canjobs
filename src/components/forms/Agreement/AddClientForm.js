@@ -18,7 +18,7 @@ const AddClientForm = ({
 }) => {
     const [loading, setLoading] = useState(false)
     const [clients, setClients] = useState(
-        JSON.parse(felidData.family_json) || [
+        felidData.family_json || [
             {
                 client_first_name: (emp_user_type === "employee" ? userData?.name : "")?.split(" ")[0] || "",
                 client_last_name: (emp_user_type === "employee" ? userData?.name : "")?.split(" ")[1] || "",

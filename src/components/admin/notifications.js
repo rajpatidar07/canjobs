@@ -183,7 +183,7 @@ function Notifications({
           <div
             className="row global_search_result notofications_list  px-5 "
             onScroll={handelScroll}
-            style={{ overflowY: "scroll", height: "590px" }}
+            style={{ overflowY: "scroll", height: "750px" }}
           >
             {notification.length > 0 && (
               <ul className="w-100 col p-0 ">

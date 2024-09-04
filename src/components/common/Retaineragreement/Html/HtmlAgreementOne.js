@@ -15,7 +15,7 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
   //   return html;
   // };
   // JSX structure with potential tag replacements
-  const familyJsonArray = felidData?.family_json ? JSON.parse(felidData.family_json) : [];
+  const familyJsonArray = felidData?.family_json || [] //? JSON.parse(felidData.family_json) : [];
   const jsxContent = (
     `<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -45,7 +45,7 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
         style="max-width: 200px"
       />
     </div>
-    <div class="main_div" style="padding: 10px 20px">
+    <div class="main_div" style="padding: 10px">
       <h1 style="text-align: center">RETAINER AGREEMENT</h1>
       <div style="display: flex; justify-content: space-between">
         <b>RCIC Membership Number<span class="para_gap"> : R533393 </span></b>
@@ -100,12 +100,11 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
     ${felidData?.client_contact || userData?.contact_no || "____________________"}
   </span>.
 </p>
-
-      <p>
-      ${familyJsonArray.slice(1).length !== 0
+ <p>
+      ${familyJsonArray && familyJsonArray.slice(1).length !== 0
       ? `<div><p>Details of Family member and dependents to added in this application</p><div>` : ''}
       <div class="row w-100">
-      ${(familyJsonArray.slice(1) || []).map((item, index) => (
+      ${((familyJsonArray && familyJsonArray.slice(1)) || []).map((item, index) => (
         `<span class="col-10 row" key=${index}> 
         <span class="col-6">Name ${index + 1}: 
         <span class="para_gap text-capitalize">${item.client_first_name + " " + item.client_last_name} </span>

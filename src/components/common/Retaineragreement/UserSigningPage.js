@@ -96,7 +96,7 @@ export default function UserSigningPage() {
         setClientIndex(index)
         setShowDetailsOption(false)
     }
-    const familyJsonArray = felidData?.family_json ? JSON.parse(felidData.family_json) : [];
+    const familyJsonArray = felidData?.family_json //? JSON.parse(felidData.family_json) : [];
     return (
         <div className='d-flex p-5' style={{ backgroundColor: "#423f3f" }}>
                

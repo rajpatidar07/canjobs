@@ -47,6 +47,7 @@ export default function RetainerAgreement(props) {
     setLoading(true);
     try {
       let res = await AddUpdateAgreement(state)
+      console.log(res)
       if (res.data.status === 1 && res.data.message === "Agreement added successfully.") {
         setLoading(false)
         setState(initialFormStateuser)
