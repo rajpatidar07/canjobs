@@ -9,10 +9,10 @@ const NewJobBox = ({ skill, job, token, user_type, OnApplyClick, setShowAddJobsM
   <div className="card-body">
     {/* Job Title and Company Name */}
     <div className="mb-4">
-      <h4 className="text-2xl font-bold text-gray-800 capitalize mb-1">
+      <h4 className="text-2xl font-bold text-gray-800 text-capitalize mb-1">
         {job.job_title}
       </h4>
-      <h6 className="text-gray-600 capitalize">
+      <h6 className="text-gray-600 text-capitalize">
         {job.company_name}
       </h6>
     </div>
@@ -23,19 +23,19 @@ const NewJobBox = ({ skill, job, token, user_type, OnApplyClick, setShowAddJobsM
         {job.industry_type && (
           <li className="mb-2 flex items-center placeholder">
             <span className="text-gray-500 text-sm mr-2">Industry:</span>
-            <span className="font-semibold capitalize">{job.industry_type}</span>
+            <span className="font-semibold text-capitalize">{job.industry_type}</span>
           </li>
         )}
         {job.location && (
           <li className="mb-2 flex items-center placeholder">
             <span className="text-gray-500 text-sm mr-2">Location:</span>
-            <span className="font-semibold capitalize">{job.location}</span>
+            <span className="font-semibold text-capitalize">{job.location}</span>
           </li>
         )}
         {job.employment && (
           <li className="mb-2 flex items-center placeholder">
             <span className="text-gray-500 text-sm mr-2">Type:</span>
-            <span className="font-semibold capitalize">{job.employment}</span>
+            <span className="font-semibold text-capitalize">{job.employment}</span>
           </li>
         )}
         {job.created_at && (
