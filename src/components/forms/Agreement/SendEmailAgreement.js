@@ -303,7 +303,7 @@ export default function SendEmailAgreement({ show, close, user_id, emp_user_type
                     Please fill in your details to sign the agreement.
                 </div>
                 <div style="margin-bottom: 15px;display:flex;justify-content:center;">
-                    <a href=${`http://localhost:3000/signagreement?id=${user_id}&user=${emp_user_type}&folderId=${folderId}&documentId=${felidData.document_id}&type=${felidData.type.replaceAll(" ","%20")}`} style="width: 100%; padding: 10px; background-color: #28a745; border: none; border-radius: 5px; color: #fff; font-size: 18px; font-weight: bold; cursor: pointer;text-align: center;">
+                    <a href=${`https://canjobs.vercel.app/signagreement?id=${user_id}&user=${emp_user_type}&folderId=${folderId}&documentId=${felidData.document_id}&type=${felidData.type.replaceAll(" ","%20")}`} style="width: 100%; padding: 10px; background-color: #28a745; border: none; border-radius: 5px; color: #fff; font-size: 18px; font-weight: bold; cursor: pointer;text-align: center;">
                         Sign Agreement
                     </a>
                 </div>
