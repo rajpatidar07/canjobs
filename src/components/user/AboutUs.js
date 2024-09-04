@@ -29,7 +29,7 @@ export default function AboutUs() {
                 <div className="bg-default-1 pt-9 pb-13 pb-xl-30 pb-13 position-relative overflow-hidden">
                     <div className="container">
                         <div className="row ">
-                            <div className="col-12 col-lg-10 col-xl-12 text-center">
+                            <div className="col-12 col-lg-12 col-xl-12 text-center">
                                 <div className="container about-section">
                                     <div className="row">
                                         <div className="col-md-12 text-center">
