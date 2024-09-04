@@ -341,7 +341,7 @@ function Addadmin(props) {
                 </span>
               )}
             </div>
-              <div className={state.admin_id ? "d-none" : "form-group "}>
+              <div className={state.admin_id ? "form-group d-none" : "form-group "}>
                 <label
                   htmlFor="password"
                   className="font-size-4 text-black-2  line-height-reset"
