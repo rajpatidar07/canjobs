@@ -133,9 +133,8 @@ function EmployeeHomePage() {
                 jobsNo={jobsNo}
                 setTotalJob={setTotalJob}
                 SkillFilterValue={SkillFilterValue}
-                featured={"1"}
-                column="created_at"
-                sort_order="ASC"
+                column="job_id"
+                // sort_order="ASC"
                 categoryFilterValue={categoryFilterValue}
                 jobSwapFilterValue={jobSwapFilterValue}
                 jobLocation={jobLocation}
@@ -178,6 +177,7 @@ function EmployeeHomePage() {
             <JobBox
               setJobCount={setJobCount}
               jobsNo={jobsNo}
+              column="job_id"
               setTotalJob={setTotalJob}
               SkillFilterValue={""}
               featured={"1"}
