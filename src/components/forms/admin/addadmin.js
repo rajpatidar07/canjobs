@@ -57,32 +57,32 @@ function Addadmin(props) {
         value === "" || value.trim() === ""
           ? "Admin name is required"
           : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Admin name can not have a number."
-          : value.length < 2
-          ? "Admin name should have 2 or more letters"
-          : // : /[^A-Za-z 0-9]/g.test(value)
-            // ? "Cannot use special character "
-            "",
+            ? "Admin name can not have a number."
+            : value.length < 2
+              ? "Admin name should have 2 or more letters"
+              : // : /[^A-Za-z 0-9]/g.test(value)
+              // ? "Cannot use special character "
+              "",
     ],
     email: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? null
+            : "Email is invalid",
     ],
     password: [
       (value) =>
         state.admin_id
           ? value === ""
           : value === ""
-          ? "Password is required"
-          : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(
+            ? "Password is required"
+            : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(
               value
             )
-          ? null
-          : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
+              ? null
+              : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
     ],
     admin_type: [
       (value) =>
@@ -93,10 +93,10 @@ function Addadmin(props) {
         value === "" || value === null || value.trim() === ""
           ? "Contact no is required"
           : value.length < 10
-          ? "Contact no can not be less than 10 digit"
-          : value.length > 13
-          ? "Contact no can not be more than 13 digit"
-          : "",
+            ? "Contact no can not be less than 10 digit"
+            : value.length > 13
+              ? "Contact no can not be more than 13 digit"
+              : "",
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
@@ -341,8 +341,7 @@ function Addadmin(props) {
                 </span>
               )}
             </div>
-            {state.admin_id ? null : (
-              <div className="form-group ">
+              <div className={state.admin_id ? "d-none" : "form-group "}>
                 <label
                   htmlFor="password"
                   className="font-size-4 text-black-2  line-height-reset"
@@ -376,7 +375,6 @@ function Addadmin(props) {
                   </span>
                 )}
               </div>
-            )}
             <div className="form-group ">
               <label
                 htmlFor="admin_type"
