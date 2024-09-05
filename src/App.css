@@ -1530,7 +1530,7 @@ li.placeholder {
   text-shadow: 0 0 6px #333; */
 }
 
-li.placeholder span {
+/* li.placeholder span {
   color: transparent !important;
   text-shadow: 0 0 5px #828282;
   font-weight: 400;
@@ -1538,7 +1538,7 @@ li.placeholder span {
 
 li.placeholder span svg {
   color: #333 !important;
-}
+} */
 
 /* USER TIMELINE CSS*/
 .timeline_box {
@@ -1898,4 +1898,9 @@ li.placeholder span svg {
   .card.new-job-box.my-3.p-3.light-mode-texts.bg-white.rounded.hover-shadow-3.hover-border-green {
     min-height: 424px;
   }
+}
+.prevent-select {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
 }

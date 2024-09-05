@@ -1145,7 +1145,9 @@ services that have been rendered or accounting for the time that has been spent 
             <p  style="margin: 0">______________________________</p>
                   <small class="row ">
                     <span class="col text-capitalize" >
-                      Harpreet kaur ${felidData.date_signature_rcic === "0000-00-00 00:00:00" ? '' : felidData.date_signature_rcic}</span>
+                      Harpreet kaur ${(!felidData?.date_signature_rcic || felidData?.date_signature_rcic === "0000-00-00" || felidData?.date_signature_rcic === "0000-00-00 00:00:00")
+                    ? ""
+                    : felidData?.date_signature_rcic}</span>
 
                   </small>
                       </div>
@@ -1159,8 +1161,8 @@ services that have been rendered or accounting for the time that has been spent 
     </div>
     <div style="width: 50%">
         <p style="margin: 0">
-            ${felidData.date_signature_rcic === "0000-00-00 00:00:00" || !felidData.date_signature_rcic ? '_____________________'
-      : `<span  class="para_gap" style="max-width: 200px;">${felidData.date_signature_rcic}</span>`}
+            ${(!felidData?.date_signature_rcic || felidData?.date_signature_rcic === "0000-00-00" || felidData?.date_signature_rcic === "0000-00-00 00:00:00")? '_____________________'
+      : `<span  class="para_gap" style="max-width: 200px;">${felidData?.date_signature_rcic}</span>`}
         </p>
         <p style="margin: 0 0 30px 0">Date</p>
     </div>

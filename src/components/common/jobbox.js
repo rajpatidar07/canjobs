@@ -195,7 +195,7 @@ function JobBox({
             }
             return (
               <>
-                <div className="col-lg-4 col-xl-4 col-md-6 col-xs-12" key={i}>
+                <div className="col-lg-4 col-xl-4 col-md-6 col-xs-12 mb-8" key={i}>
                   <NewJobBox
                     job={job}
                     token={token}

@@ -23,7 +23,8 @@ const AggrementOne = () => {
     emp_user_type,
     folderId: folderID /*, code*/,
   } = JSON.parse(data) || {};
-  const familyJsonArray = felidData?.family_json //? JSON.parse(felidData?.family_json) : [];
+  console.log(felidData?.family_json, "<=========== Testing data =======>", data)
+  const familyJsonArray = felidData?.family_json || [] //? JSON.parse(felidData?.family_json) : [];
   // console.log( JSON.parse(felidData?.family_json))
   // const latestCode = JSON.stringify(code)
   //   .replace('" <', "<")
@@ -1604,7 +1605,7 @@ const AggrementOne = () => {
                     </Text>
                     <Text>Name of Family member {index + 1}</Text>
                     <Text style={[styles.textunderline, { marginTop: 10 }]}>
-                      {(!item.date_signature_client || item.date_signature_client === "0000-00-00 00:00:00")
+                      {(!item.date_signature_client || felidData?.date_signature_rcic === "0000-00-00" || item.date_signature_client === "0000-00-00 00:00:00")
                         ? "________________"
                         : item.date_signature_client}
                     </Text>
@@ -1625,7 +1626,9 @@ const AggrementOne = () => {
                       <Text style={{ textTransform: "capitalize" }}>
                         Harpreet Kaur{" "}
                       </Text>
-                      <Text>{felidData?.date_signature_rcic}</Text>
+                      <Text> {(!felidData?.date_signature_rcic || felidData?.date_signature_rcic === "0000-00-00" || felidData?.date_signature_rcic === "0000-00-00 00:00:00")
+                        ? "________________"
+                        : felidData?.date_signature_rcic}</Text>
                     </Text>
                   </View>
                 ) : (
@@ -1641,7 +1644,7 @@ const AggrementOne = () => {
                 </Text>
                 <Text>Name of RCIC</Text>
                 <Text style={[styles.textunderline, { marginTop: 10 }]}>
-                  {felidData?.date_signature_rcic === "0000-00-00 00:00:00"
+                  {(!felidData?.date_signature_rcic || felidData?.date_signature_rcic === "0000-00-00" || felidData?.date_signature_rcic === "0000-00-00 00:00:00")
                     ? "________________"
                     : felidData?.date_signature_rcic}
                 </Text>

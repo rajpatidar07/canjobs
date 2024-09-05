@@ -291,7 +291,7 @@ export default function SendEmailAgreement({ show, close, user_id, emp_user_type
     const [input, setInput] = useState('');
     const [fileBase, setFileBase] = useState('');
     const [loading, setLoading] = useState(false);
-    
+
     const initialFormState = {
         subject: felidData.type,
         email: felidData.client_email,
@@ -303,19 +303,21 @@ export default function SendEmailAgreement({ show, close, user_id, emp_user_type
                     Please fill in your details to sign the agreement.
                 </div>
                 <div style="margin-bottom: 15px;display:flex;justify-content:center;">
-                    <a href=${`https://canjobs.vercel.app/signagreement?id=${user_id}&user=${emp_user_type}&folderId=${folderId}&documentId=${felidData.document_id}&type=${felidData.type.replaceAll(" ","%20")}`} style="width: 100%; padding: 10px; background-color: #28a745; border: none; border-radius: 5px; color: #fff; font-size: 18px; font-weight: bold; cursor: pointer;text-align: center;">
+                    <a href=${`https://canjobs.vercel.app/signagreement?id=${user_id}&user=${emp_user_type}&folderId=${folderId}&documentId=${felidData.document_id}&type=${felidData.type.replaceAll(" ", "%20")}`} style="width: 100%; padding: 10px; background-color: #28a745; border: none; border-radius: 5px; color: #fff; font-size: 18px; font-weight: bold; cursor: pointer;text-align: center;">
                         Sign Agreement
                     </a>
                 </div>
             </div>
         </form>`
     };
-
+    //Aws: https://canpathwaysjobs.com
+    //Vercel: https://canjobs.vercel.app
+    //local:http://localhost:3000
     const { state, setState } = useValidation(initialFormState);
 
     useEffect(() => {
         convertPdfToBase64();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const handleInputChange = (e) => {
