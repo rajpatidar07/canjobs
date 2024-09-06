@@ -1095,6 +1095,7 @@ function JobResponse(props) {
                                     }
                                     onClick={() => OpenChangeJob(res)}
                                     title="Change Job"
+                                    disabled={res.interested_in === "pgwp"}
                                   // disabled={
                                   //   props.total_applicants >=
                                   //   props.role_category

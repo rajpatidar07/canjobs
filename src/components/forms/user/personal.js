@@ -406,12 +406,12 @@ function PersonalDetails(props) {
     setState({ ...state, profile_photo: base64Name });
   };
   /* Functionality to close the modal */
-const close = () => {
-  setState(initialFormStateuser);
-  setErrors("");
-  setLoading(false);
-  props.close();
-};
+  const close = () => {
+    setState(initialFormStateuser);
+    setErrors("");
+    setLoading(false);
+    props.close();
+  };
   // Calculate min and max dates dynamically
   // const currentYear = moment().year();
   // const minDate = moment().subtract(10, 'years').format("YYYY-MM-DD");
@@ -653,7 +653,7 @@ const close = () => {
                       htmlFor="date_of_birth"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
-                      Date Of Birth: 
+                      Date Of Birth:
                     </label>
                     <input
                       // max={moment().format("DD-MM-YYYY")}
@@ -689,7 +689,7 @@ const close = () => {
                       htmlFor="gender"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
-                      Gender: 
+                      Gender:
                     </label>
                     <select
                       name="gender"
@@ -722,7 +722,7 @@ const close = () => {
                       htmlFor="marital_status"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
-                      Marital Status: 
+                      Marital Status:
                     </label>
                     <select
                       name="marital_status"
@@ -790,7 +790,7 @@ const close = () => {
                       htmlFor="current_location"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
-                      Current Location: 
+                      Current Location:
                     </label>
                     <input
                       maxLength={60}
@@ -862,7 +862,7 @@ const close = () => {
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
                       English level {/*(Max 3)*/}:
-                      
+
                     </label>
                     <select
                       name="language"
@@ -941,7 +941,7 @@ const close = () => {
                       className={`${errors.interested_in
                         ? "form-control  border border-danger "
                         : "form-control "}
-                          ${state.interested_in === "pnp" ?
+                          ${state.interested_in === "pnp" || state.interested_in === "pgwp" ?
                           `text-uppercase` :
                           "text-capitalize"}`
                       }
@@ -951,9 +951,9 @@ const close = () => {
                       onChange={onInputChange}
                     >
                       <option value={""}>Select</option>
-                      {(FilterJson.interested || []).map((interest,index) => (
+                      {(FilterJson.interested || []).map((interest, index) => (
                         <option key={index} value={interest}
-                          className={interest === "pnp" ?
+                          className={interest === "pnp" || interest === "pgwp" ?
                             `text-uppercase` :
                             "text-capitalize"}>
                           {interest}
@@ -973,7 +973,7 @@ const close = () => {
                       </span>
                     )}
                   </div>
-                  {(state.interested_in === "pnp"||state.interested_in === "PNP") &&
+                  {(state.interested_in === "pnp" || state.interested_in === "PNP") &&
                     <div className={`form-group 
                     ${props.user_of_page === "assignedUser" ||
                         props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned"
@@ -1058,7 +1058,7 @@ const close = () => {
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
                       If Candidate is Inside Canada
-                     
+
                     </label>
                     <select
                       name="work_permit_canada"
@@ -1169,7 +1169,7 @@ const close = () => {
                       disabled={user_type === "agent"}
                     >
                       <option value={""}>Select partner </option>
-                      {agentList.map((item,index) => <option value={item.id} key={index}>{item.u_id} </option>)}
+                      {agentList.map((item, index) => <option value={item.id} key={index}>{item.u_id} </option>)}
                     </select>
                     <span
                       className={user_type === "agent" ? "d-none" : "btn btn-sm btn-secondary"}
@@ -1238,10 +1238,10 @@ const close = () => {
                       id="assigned_by"
                     >
                       <option value={""}>Select Admin </option>
-                      {(admiinList || []).map((item,index) =>
-                         <option value={item.admin_id} key={index}>
-                          {item.name} 
-                          </option>)}
+                      {(admiinList || []).map((item, index) =>
+                        <option value={item.admin_id} key={index}>
+                          {item.name}
+                        </option>)}
                     </select>
                     {/* <span
                       className="btn btn-sm btn-secondary"
@@ -1331,7 +1331,7 @@ const close = () => {
                       </label>
                     </div>
                   ) : null}
-                   {user_type === "admin" ? (
+                  {user_type === "admin" ? (
                     <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser"
                       || props.pageNameForForm === "ApplicantType"
                       || props.pageNameForForm === "Category"

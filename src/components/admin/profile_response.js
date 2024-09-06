@@ -938,7 +938,7 @@ function JobProfileResponse(props) {
                                 }
                                 onClick={() => editJob(res)}
                                 title="Change Job"
-                              // disabled={
+                                disabled={res.interested_in === "pgwp"}
                               //   props.total_applicants >= props.role_category
                               //     ? true
                               //     : false

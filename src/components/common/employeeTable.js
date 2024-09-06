@@ -95,7 +95,12 @@ export default function EmployeeTable(props) {
         setIsLoading(false);
         setTotalData(0);
       } else {
-        setemployeeData(userData.data);
+        /*Condition for candidate with PGWP applicant type can not able to apply  for the job */
+        if (props.skill) {
+          setemployeeData(userData.data.filter((item) => item.interested_in !== "pgwp"))
+        } else {
+          setemployeeData(userData.data);
+        }
         setTotalData(userData.total_rows);
         setIsLoading(false);
         localStorage.setItem("StatusTab", "")
@@ -937,7 +942,7 @@ export default function EmployeeTable(props) {
                           {empdata.interested_in === null || !empdata.interested_in ? (
                             <p className="font-size-3 mb-0" title="N/A">N/A</p>
                           ) : (
-                            <p className={`font-size-2 font-weight-normal text-black-2 mb-0 ${empdata.interested_in === "pnp" ?
+                            <p className={`font-size-2 font-weight-normal text-black-2 mb-0 ${empdata.interested_in === "pnp" || empdata.interested_in === "pgwp" ?
                               `text-uppercase` :
                               "text-capitalize"}`}
                               title={empdata.interested_in}>
@@ -1220,7 +1225,7 @@ export default function EmployeeTable(props) {
                                     className="btn btn-outline-info action_btn text-gray"
                                     onClick={() => editJob(empdata)}
                                     title="All jobs "
-                                  // disabled={empdata.skill ? false : true}
+                                    disabled={empdata.interested_in === "pgwp"}
                                   >
                                     <span className="text-gray px-2">
                                       <PiBriefcaseLight />
@@ -1244,6 +1249,7 @@ export default function EmployeeTable(props) {
                               <button
                                 className="btn btn-outline-info action_btn"
                                 // disabled={alredyApplied ? false : true}
+                                disabled={empdata.interested_in === "pgwp"}
                                 onClick={() =>
                                   onApplyJobClick(empdata.employee_id)
                                 }

@@ -3,9 +3,8 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import EmployeeTable from "../common/employeeTable";
 import ApplicantsFilter from "../common/applicantsFilter";
-
-export default function BusinessVIsa() {
-
+// import { ToastContainer } from "react-toastify";
+export default function PGWP() {
   /*Filter and search state */
   const [experienceFilterValue, setExperienceFilterValue] = useState("");
   const [skillFilterValue, setSkillFilterValue] = useState("");
@@ -14,6 +13,7 @@ export default function BusinessVIsa() {
   const [agentFilterValue, setAgentFilterValue] = useState("");
   const [adminFilterValue, setAdminFilterValue] = useState("");
   const [interestFilterValue, setinterestFilterValue] = useState("");
+  const [categoryFilterValue, setCategoryFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
   let user_type = localStorage.getItem("userType")
@@ -39,17 +39,18 @@ export default function BusinessVIsa() {
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
         {/* <!-- Header Area --> */}
-        <AdminHeader heading={"Business Visa"} />
+        <AdminHeader heading={"PGWP"} />
+        {/* <ToastContainer/> */}
         {/* <!-- navbar- --> */}
-        <AdminSidebar heading={"Business VIsa"} />
+        <AdminSidebar heading={"PGWP"} />
         <div className="dashboard-main-container mt-16" id="dashboard-body">
           <div className="container-fluid">
             <div className="mb-18">
               <div className="mb-4 align-items-center">
                 <div className="page___heading">
-                  <h3 className="font-size-6 mb-0">Business visa</h3>
+                  <h3 className="font-size-6 mb-0">PGWP</h3>
                 </div>
-                {/*<-- Search Busniness visa -->*/}
+                {/*<-- Search PGWP -->*/}
                 <div className="row m-0 align-items-center">
                   {/* Employees filter's */}
                   <ApplicantsFilter
@@ -70,13 +71,15 @@ export default function BusinessVIsa() {
                     interestFilterValue={interestFilterValue}
                     setinterestFilterValue={setinterestFilterValue}
                     setSearchError={setSearchError}
+                    categoryFilterValue={categoryFilterValue}
+                    setCategoryFilterValue={setCategoryFilterValue}
                     // skill={props.skill}
-                    pageName={"busniess_visa"}
+                    pageName={"pgwp"}
                   />
                 </div>
                 <small className="text-danger">{searcherror}</small>
               </div>
-              {/*<-- Business visa Table -->*/}
+              {/*<-- PGWP Table -->*/}
               <EmployeeTable
                 // showEmployeeProfile={showEmployeeProfile}
                 // employeeDetails={employeeDetails}
@@ -95,7 +98,9 @@ export default function BusinessVIsa() {
                 status={"-1"}
                 pageNo={pageNo}
                 setpageNo={setpageNo}
-                ApplicantType={"business visa"}
+                ApplicantType={"pgwp"}
+                categoryFilterValue={categoryFilterValue}
+
               />
             </div>
           </div>

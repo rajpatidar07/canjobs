@@ -604,7 +604,8 @@ const filterjson = {
     "working visa",
     "express entry",
     "business visa",
-    "federal PR"
+    "federal PR",
+    "pgwp",// new Applicant type added asked by jayant 
     // "swep",
     // "internship",
     // "co-op",

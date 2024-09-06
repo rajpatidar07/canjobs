@@ -523,7 +523,7 @@ function UserRegisterPage() {
                     htmlFor="date_of_birth"
                     className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                   >
-                    Date Of Birth: 
+                    Date Of Birth:
                   </label>
                   <input
                     // max={moment().format("DD-MM-YYYY")}
@@ -661,7 +661,7 @@ function UserRegisterPage() {
                     htmlFor="current_location"
                     className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                   >
-                    Current Location: 
+                    Current Location:
                   </label>
                   <input
                     maxLength={60}
@@ -793,10 +793,10 @@ function UserRegisterPage() {
                   </label>
                   <select
                     className={`${errors.interested_in
-                        ? "form-control  border border-danger "
-                        : "form-control "
+                      ? "form-control  border border-danger "
+                      : "form-control "
                       }
-                      ${state.interested_in === "pnp"
+                      ${state.interested_in === "pnp" || state.interest === "pgwp"
                         ? `text-uppercase`
                         : "text-capitalize"
                       }`}
@@ -811,7 +811,7 @@ function UserRegisterPage() {
                         key={interest}
                         value={interest}
                         className={
-                          interest === "pnp"
+                          interest === "pnp" || interest === "pgwp"
                             ? `text-uppercase`
                             : "text-capitalize"
                         }

@@ -1904,3 +1904,297 @@ li.placeholder span svg {
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; /* Standard syntax */
 }
+@keyframes fadeOutAnimationKeyframes {
+  from {
+  opacity: 1;
+}
+to {
+  opacity: 0;
+}
+}
+
+@keyframes fadeInAnimationKeyframes {
+  from {
+  opacity: 0;
+}
+to {
+  opacity: 1;
+}
+}
+
+@keyframes moveUpAnimationKeyframes {
+  from {
+  transform: translateY(0);
+}
+to {
+  transform: translateY(-0px);
+}
+}
+
+@keyframes moveDownAnimationKeyframes {
+  from {
+  transform: translateY(-0px);
+}
+to {
+  transform: translateY(0);
+}
+}
+
+@keyframes embeddedViewJobMoveUpAnimationKeyframes {
+  from {
+  margin-top: 0px;
+}
+to {
+  margin-top: -15px
+}
+}
+
+@keyframes jobTitleMoveUpAnimationKeyframes {
+  from {
+  transform: scale(1) translateY(0px);
+transform-origin: 0 0;
+}
+to {
+  transform: scale(0.9) translateY(-0px);
+transform-origin: 0 0;
+}
+}
+
+@keyframes jobTitleMoveDownAnimationKeyframes {
+  from {
+  transform: scale(0.9) translateY(-0px);
+transform-origin: 0 0;
+}
+to {
+  transform: scale(1) translateY(0px);
+transform-origin: 0 0;
+}
+}
+/* General Layout */
+.jobsearch-RightPane {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#jobsearch-ViewjobPaneWrapper {
+  outline: none;
+}
+
+button.visible-on-focus-only {
+  background-color: #0073e6;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+h2.css-1h510g5 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Close Button */
+button.jobsearch-ClosableViewJobPage-button-close {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.jobsearch-JobComponent {
+  margin-bottom: 20px;
+}
+
+/* Header Image and Logo */
+.jobsearch-JobInfoHeader-headerImageContainerEji {
+  position: relative;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.jobsearch-JobInfoHeader-headerImage {
+  width: 100%;
+  height: 95px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.jobsearch-JobInfoHeader-logo {
+  position: absolute;
+  top: 65px;
+  left: 20px;
+  border: 2px solid #fff;
+  border-radius: 17%;
+  width: 75px;
+  height: 75px;
+}
+
+.jobsearch-JobInfoHeader-title-container {
+  margin-top: 30px;
+}
+
+h2.jobsearch-JobInfoHeader-title {
+  font-size: 22px;
+  font-weight: bold;
+  color: #333;
+}
+
+.css-1b6omqv {
+  font-weight: normal;
+  color: #999;
+}
+
+.css-1qz04qx {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.css-1unnuiz {
+  display: flex;
+  align-items: center;
+}
+
+.css-ppxtlp {
+  font-size: 18px;
+  color: #333;
+  margin-right: 10px;
+}
+
+/* Company Information */
+.css-1toufe4 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.css-hon9z8 {
+  font-size: 16px;
+  color: #0073e6;
+}
+
+.css-waniwe {
+  font-size: 14px;
+  color: #777;
+  margin-top: 10px;
+}
+
+.css-kyg8or {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #333;
+}
+
+.css-1x54ou6 {
+  background-color: #f8f9fa;
+  padding: 10px 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #333;
+}
+
+/* Apply Button */
+button.css-1234qe1 {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button.css-1234qe1:hover {
+  background-color: #218838;
+}
+
+/* Job Description */
+
+h2.jobsearch-JobComponent-description {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+p {
+  line-height: 1.5;
+  margin-bottom: 20px;
+  color: #666;
+}
+
+ul {
+  list-style: disc;
+  padding-left: 20px;
+  color: #666;
+}
+
+ul li {
+  margin-bottom: 10px;
+}
+
+/* Location Section */
+#jobLocationSectionWrapper {
+  margin-top: 30px;
+}
+
+#jobLocationWrapper {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: #666;
+}
+
+#jobLocationWrapper svg {
+  margin-right: 10px;
+}
+
+h2.css-1yytfzy {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+/* Benefits Section */
+#benefits {
+  margin-top: 30px;
+}
+
+h2.css-gfuqm7 {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.css-1opnqdm {
+  font-size: 14px;
+  color: #999;
+}
+
+ul.css-8tnble {
+  margin-top: 10px;
+}
+
+ul.css-8tnble li {
+  margin-bottom: 5px;
+  font-size: 16px;
+  color: #666;
+}
+
+/* Separator */
+.role-separator {
+  width: 100%;
+  height: 1px;
+  background-color: #eaeaea;
+  margin: 20px 0;
+}

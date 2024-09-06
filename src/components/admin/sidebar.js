@@ -12,7 +12,7 @@ import { BsBuildings, BsQrCodeScan } from "react-icons/bs";
 import { PiApplePodcastsLogoThin } from "react-icons/pi";
 import { AiOutlineUserAdd /*, AiOutlineMail*/ } from "react-icons/ai";
 import { TbFilterPlus } from "react-icons/tb";
-import { FaNotesMedical } from "react-icons/fa";
+import { FaGraduationCap, FaNotesMedical } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
 import { GrVisa } from "react-icons/gr";
 import { TiBusinessCard } from "react-icons/ti";
@@ -458,6 +458,24 @@ const AdminSidebar = (props) => {
             {/* <i className="fas fa-filter mr-5"></i> */}
             <IoLogoPinterest className="sidebar_icon" />
             PNP
+          </Link>
+        </li>
+        <li
+          className={
+            user_type === "agent"
+              ? "d-none"
+              : props.heading === "PGWP"
+              ? "active"
+              : ""
+          }
+        >
+          <Link
+            to="/pgwp"
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+          >
+            {/* <i className="fas fa-filter mr-5"></i> */}
+            <FaGraduationCap className="sidebar_icon" />
+            PGWP
           </Link>
         </li>
         <li

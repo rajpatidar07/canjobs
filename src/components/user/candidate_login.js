@@ -85,6 +85,7 @@ export default function CandidateLoginForm(props) {
           localStorage.setItem("name", updatedTodo.name);
           localStorage.setItem("skill", updatedTodo.skill);
           localStorage.setItem("profile_photo", updatedTodo.profile_photo);
+          localStorage.setItem("applicant_type", updatedTodo.interested_in);
           toast.success("Logged In Successfully", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
