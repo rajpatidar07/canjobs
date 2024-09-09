@@ -23,7 +23,7 @@ const AggrementOne = () => {
     emp_user_type,
     folderId: folderID /*, code*/,
   } = JSON.parse(data) || {};
-  console.log(felidData?.family_json, "<=========== Testing data =======>", data)
+  // console.log(felidData?.family_json, "<=========== Testing data =======>", data)
   const familyJsonArray = felidData?.family_json || [] //? JSON.parse(felidData?.family_json) : [];
   // console.log( JSON.parse(felidData?.family_json))
   // const latestCode = JSON.stringify(code)
@@ -149,15 +149,18 @@ const AggrementOne = () => {
             //   position: toast.POSITION.TOP_RIGHT,
             //   autoClose: 1000,
             // });
+            console.log(res.data.data[0][0].document_id)
             try {
               let data = {
                 id: felidData?.id,
                 type: felidData?.type,
                 document_id: res.data.data[0][0].document_id,
               };
-              let addDocId = AddUpdateAgreement(data);
+              let addDocId = await AddUpdateAgreement(data);
               console.log(addDocId);
-            } catch (error) { }
+            } catch (error) {
+              console.log(error)
+             }
           }
           // console.log(res.data)
           // if (
@@ -228,7 +231,7 @@ const AggrementOne = () => {
             <Text style={styles.textunderline}></Text> Canada and Client
             <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
 
-              {" " + familyJsonArray[0].client_first_name + " " + familyJsonArray[0].client_last_name}
+              {" " + familyJsonArray[0]?.client_first_name + " " + familyJsonArray[0]?.client_last_name}
             </Text>
             {" "}(the “Client”)
             <Text className="p"> , located at </Text>
@@ -1661,7 +1664,7 @@ const AggrementOne = () => {
           <Text style={{ marginTop: 15 }}>
             I {" "}
             <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
-              {familyJsonArray[0].client_first_name + " " + familyJsonArray[0].client_last_name}
+              {familyJsonArray[0]?.client_first_name + " " + familyJsonArray[0]?.client_last_name}
             </Text>
             {" "} ( hereinafter referred to as the “client”), hereby authorize and
             appoint Harpreet kaur (hereinafter referred to as the “RCIC” with a
@@ -1783,36 +1786,36 @@ const AggrementOne = () => {
             <View style={[styles.clientForm, { textAlign: "center", marginTop: 30 }]}>
               <View style={styles.clientFormChild}>
                 <Text className="para_gap" style={{ margin: 0, marginBottom: 15, textDecoration: "underline", textTransform: "capitalize" }}>
-                  {familyJsonArray[0].client_first_name || familyJsonArray[0].client_last_name
-                    ? familyJsonArray[0].client_first_name +
+                  {familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name
+                    ? familyJsonArray[0]?.client_first_name +
                     " " +
-                    familyJsonArray[0].client_last_name
+                    familyJsonArray[0]?.client_last_name
                     : "_______________"}
                 </Text>
                 <Text style={{ margin: "10px 0 30px 0" }}>Client’s full name</Text>
               </View>
               <View style={[styles.clientFormChild, { alignSelf: "center" }]}>
-                {familyJsonArray[0].client_signature ?
+                {familyJsonArray[0]?.client_signature ?
                   <View style={{ display: "flex", flexDirection: "column", marginBottom: 15 }}>
                     <Image
                       src={
-                        familyJsonArray[0].client_signature
-                          ? familyJsonArray[0].client_signature
+                        familyJsonArray[0]?.client_signature
+                          ? familyJsonArray[0]?.client_signature
                           : ""
                       }
-                      alt={familyJsonArray[0].client_first_name + " " + familyJsonArray[0].client_last_name}
+                      alt={familyJsonArray[0]?.client_first_name + " " + familyJsonArray[0]?.client_last_name}
 
                       style={{ width: "40%", height: "auto", alignSelf: "center" }}
                     />
                     <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7, flex: "row" }}>
                       <Text style={{ textTransform: "capitalize", flex: "column" }}>
-                        {familyJsonArray[0].client_first_name +
+                        {familyJsonArray[0]?.client_first_name +
                           " " +
-                          familyJsonArray[0].client_last_name + " "
+                          familyJsonArray[0]?.client_last_name + " "
                         }
                       </Text>
                       <Text style={{ flex: "column" }}>
-                        {familyJsonArray[0].date_signature_client}</Text>
+                        {familyJsonArray[0]?.date_signature_client}</Text>
                     </Text>
                   </View>
                   : <Text>___________________</Text>}
@@ -1820,11 +1823,11 @@ const AggrementOne = () => {
               </View>
               <View style={styles.clientFormChild}>
                 <Text className="para_gap" style={{ margin: 0, textDecoration: "underline" }}>
-                  {!familyJsonArray[0].date_signature_client ||
-                    familyJsonArray[0].date_signature_client ===
+                  {!familyJsonArray[0]?.date_signature_client ||
+                    familyJsonArray[0]?.date_signature_client ===
                     "0000-00-00 00:00:00"
                     ? "____________"
-                    : familyJsonArray[0].date_signature_client}
+                    : familyJsonArray[0]?.date_signature_client}
                 </Text>
                 <Text style={{ margin: "10px 0 30px 0" }}>Date</Text>
               </View>

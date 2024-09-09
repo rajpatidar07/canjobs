@@ -464,6 +464,7 @@ const AgreementOneForm = ({
                 felidData: res.data.data[0],
                 family_json: res.data.data[0].family_json,
               };
+              console.log(stateData)
               const newPageUrl = `/agreeone`
               localStorage.setItem('agreementStateData', JSON.stringify(stateData));
               // Open the new page in a new tab
