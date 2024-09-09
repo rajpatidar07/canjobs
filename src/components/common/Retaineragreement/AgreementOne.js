@@ -1863,19 +1863,19 @@ const AggrementOne = () => {
                   Email: info@canpathways.ca | Website: www.canpathways.ca
                 </Text>
               </View>
-              {familyJsonArray?.[0].client_signature ? (
+              {familyJsonArray?.[0]?.client_signature ? (
                 <Image
                   fixed
                   style={[
                     styles.textunderline,
                     { width: "20%", left: 450, height: "auto" },
                   ]}
-                  src={familyJsonArray?.[0].client_signature}
+                  src={familyJsonArray?.[0]?.client_signature}
                 />
               ) : (
                 null)}
               <View className="initial" fixed style={styles.initial}>
-                <Text>Initial:{familyJsonArray?.[0].client_signature ? "" : "__________"}</Text>
+                <Text>Initial:{familyJsonArray?.[0]?.client_signature ? "" : "__________"}</Text>
               </View>
             </View>
           </Page>
@@ -1914,20 +1914,20 @@ const AggrementOne = () => {
                       Email: info@canpathways.ca | Website: www.canpathways.ca
                     </Text>
                   </View>
-                  {familyJsonArray?.[0].client_signature ? (
+                  {familyJsonArray?.[0]?.client_signature ? (
                     <Image
                       fixed
                       style={[
                         styles.textunderline,
                         { width: "20%", left: 450, height: "auto" },
                       ]}
-                      src={familyJsonArray?.[0].client_signature}
+                      src={familyJsonArray?.[0]?.client_signature}
                     />
                   ) : (
                     null
                   )}
                   <View className="initial" fixed style={styles.initial}>
-                    <Text>Initial:{familyJsonArray?.[0].client_signature ? "" : "__________"}</Text>
+                    <Text>Initial:{familyJsonArray?.[0]?.client_signature ? "" : "__________"}</Text>
                   </View>
                 </View>
               </Page>
