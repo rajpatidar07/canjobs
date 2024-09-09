@@ -8,7 +8,7 @@ import Loader from "../common/loader";
 import { Link } from "react-router-dom";
 import CustomButton from "../common/button";
 import filterjson from "../json/filterjson";
-import DetailedMainJobComponent from "../common/New job box/detailedMainJobComponent";
+// import DetailedMainJobComponent from "../common/New job box/detailedMainJobComponent";
 function EmployeeHomePage() {
   const [Count, setCount] = useState([]);
   const [jobsNo, setJobsNo] = useState(6);
@@ -129,9 +129,9 @@ function EmployeeHomePage() {
               </form>
             </div>
           </div>
-          <div className="row justify-content-center mb-lg-16 mb-11">
+          {/* <div className="row justify-content-center mb-lg-16 mb-11">
           <DetailedMainJobComponent/>
-          </div>
+          </div> */}
           {/* <!-- Section Title End --> */}
           {<JobBox /> ? (
             <div className="row justify-content-center mb-lg-16 mb-11">
