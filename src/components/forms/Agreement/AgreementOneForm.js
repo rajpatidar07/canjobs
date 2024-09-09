@@ -472,7 +472,7 @@ const AgreementOneForm = ({
               close()
               if (index === "final") {
                 window.open(newPageUrl, '_blank')
-                window.close();
+                // window.close();
               } else {
                 window.open(newPageUrl, '_blank')
               }
