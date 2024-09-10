@@ -1999,12 +1999,14 @@ h2.css-1h510g5 {
 
 /* Close Button */
 button.jobsearch-ClosableViewJobPage-button-close {
-  background-color: transparent;
+  background-color: white;
   border: none;
   cursor: pointer;
   position: absolute;
   top: 20px;
   right: 20px;
+  border-radius: 50px;
+  z-index: 1;
 }
 
 .jobsearch-JobComponent {
@@ -2019,7 +2021,7 @@ button.jobsearch-ClosableViewJobPage-button-close {
 }
 
 .jobsearch-JobInfoHeader-headerImage {
-  width: 500px;
+  width: 450px;
   height: 85px;
   object-fit: cover;
   border-radius: 5px;

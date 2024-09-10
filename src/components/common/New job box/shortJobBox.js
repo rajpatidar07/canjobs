@@ -1,42 +1,51 @@
+import moment from 'moment'
 import React from 'react'
+import { Link } from 'react-router-dom'
 
-export default function ShortJobBox() {
+export default function ShortJobBox(
+    {
+        setJobId,
+        job,
+        token,
+        user_type,
+        OnApplyClick,
+        setShowAddJobsModal,
+        setShowDataForm,
+        skill,
+        i
+    }
+) {
     return (
         <div className='mt-5'>
-            <div className="card p-2">
+            <div className="card ">
                 {/* Job Title and Company Name */}
-                <div className="card-body mb-4">
-                    <h4 className="text-2xl font-bold text-gray-800 text-capitalize mb-1 hover:underline"
-                    style={{
+                <div className="card-body ">
+                    {job.job_title && <Link onClick={() => setJobId(i)}>
+                        <h4 className="text-2xl font-bold text-gray-800 text-capitalize mb-1 hover:underline"
+                            style={{
+                                display: '-webkit-box',
+                                WebkitLineClamp: 2,
+                                WebkitBoxOrient: 'vertical',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                            }}>
+                            {job.job_title}
+                        </h4>
+                    </Link>}
+                    <p className="text-gray-600 text-capitalize">
+                        {job.company_name && job.company_name}<br />
+                        {job.job_type && <span>{job.job_type} </span>}
+                    </p>
+                    {job.job_description && <p className="card-text" style={{
                         display: '-webkit-box',
-                        WebkitLineClamp: 2,
+                        WebkitLineClamp: 4,
                         WebkitBoxOrient: 'vertical',
                         overflow: 'hidden',
                         textOverflow: 'ellipsis',
-                    }}>
-                        Card title Lorem ipsum is typically a corrupted version of De finibus bonorum et malorum, a 1st-century BC tex
-                    </h4>
-                    <p className="text-gray-600 text-capitalize">
-                        Company<br />
-                        <span>job type at location </span>
-                    </p>
-                        <p className="card-text" style={{
-                            display: '-webkit-box',
-                            WebkitLineClamp: 4,
-                            WebkitBoxOrient: 'vertical',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                        }}>
-                          
-                            <ul style={{listStyleType:"circle"}}>
-                                <li>
-                                    Lorem ipsum is typically a corrupted version of De finibus bonorum et malorum, a 1st-century BC text by the Roman.</li>
-                                <li>
-                                    Versions of the Lorem ipsum text have been used in typesetting at least since the 1960s, when it was popularized by advertisements for Letraset transfer sheets.[1] Lorem ipsum was introduced to the digital world in the mid-1980s, when Aldus employed it in graphic and word-processing templates for its desktop publishing program PageMaker. Other popular word processors, including Pages and Microsoft Word, have since adopted Lorem ipsum,[2] as have many LaTeX packages,[3][4][5] web content managers such as Joomla! and WordPress, and CSS libraries such as Semantic UI.
-                                </li>
-                            </ul>
-                        </p>
-                        <p>Posted 4 days ago</p>
+                    }}
+                        dangerouslySetInnerHTML={{ __html: job.job_description }}
+                    />}
+                    <p className='text-capitalize'>posted {moment(job.created_at).fromNow()}</p>
                 </div>
             </div>
         </div>
