@@ -38,7 +38,7 @@ const JobDetailLeftCardBox = ({
 
               <div className={`jobsearch-HeaderContainer css-n78gek eu4oa1w0 border-bottom pb-5 shadow-sm `}>
                 <div className="jobsearch-InfoHeaderContainer css-1toufe4 eu4oa1w0">
-                  <div className={`"jobsearch-JobInfoHeader-headerImageContainerEji jobsearch-JobInfoHeader-headerImageContainerEjiFull css-l73gvc eu4oa1w0"${isVisible ? "visible" : "hidden"
+                  {/* <div className={`"jobsearch-JobInfoHeader-headerImageContainerEji jobsearch-JobInfoHeader-headerImageContainerEjiFull css-l73gvc eu4oa1w0"${isVisible ? "visible" : "hidden"
                     }`}
                     style={{
                       position: "absolute",
@@ -50,29 +50,29 @@ const JobDetailLeftCardBox = ({
                     }} data-testid="jobsearch-HeaderImageContainer">
                     <img src="image/00logo-main-black.png" alt="National Bank of Canada logo" className="jobsearch-JobInfoHeader-headerImage css-p96z1s eu4oa1w0" />
                     <img src={jobData?.logo ? jobData?.logo : "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"} alt="National Bank of Canada logo" className="bg-white jobsearch-JobInfoHeader-logo jobsearch-JobInfoHeader-logo-overlay-lower css-1er9dh7 eu4oa1w0 " data-testid="jobsearch-JobInfoHeader-logo-overlay-lower" />
-                  </div>
-                  <div className="mx-5" style={{ fontSize: !isVisible ? "15px" : "inherit", marginTop: isVisible ? "100px" : 0, transition: "0.5s", }}>
+                  </div> */}
+                  <div className="mx-5" style={{ fontSize: !isVisible ? "15px" : "inherit", transition: "0.5s", }}>
                     <div className={` ${isVisible ? "jobsearch-JobInfoHeader-title-container " : "mt-5"} jobsearch-JobInfoHeader-title-containerEji css-82ysm6 eu4oa1w0 `}>
                       {jobData?.job_title && <h2
                         className={`jobsearch-JobInfoHeader-title css-1t78hkx text-capitalize`}
                         lang="en"
                         dir="ltr"
                         data-testid="jobsearch-JobInfoHeader-title"
-                        style={{ fontSize: !isVisible ? "18px" : "inherit" }} // Example for specific elements
+                        style={{ fontSize: !isVisible ? "18px" : "", transition: "0.5s", }} // Example for specific elements
                       >
                         <span>{jobData?.job_title}</span>
                       </h2>}
                       <p>
-                        {jobData?.company_name && <u className="lead text-capitalize" style={{ fontSize: !isVisible ? "15px" : "inherit" }}>{jobData?.company_name}</u>}
+                        {jobData?.company_name && <u className="lead text-capitalize" style={{ fontSize: !isVisible ? "15px" : "", transition: "0.5s", }}>{jobData?.company_name}</u>}
                         {/* {isVisible && (
                           <span style={{ fontSize: "inherit" }}>
                             3.9 <FaStar className="mb-2" />
                           </span>
                         )} */}
                         <br />
-                        {jobData?.location && <span style={{ fontSize: !isVisible ? "15px" : "inherit" }} className="text-capitalize">{jobData?.industry_type ? jobData?.industry_type + " ," + jobData?.location : jobData?.location}</span>}
+                        {jobData?.location && <span style={{ fontSize: !isVisible ? "15px" : "", transition: "0.5s", }} className="text-capitalize">{jobData?.industry_type ? jobData?.industry_type + " ," + jobData?.location : jobData?.location}</span>}
                         {jobData?.job_type && <><br />
-                          <span className="text-capitalize" style={{ fontSize: !isVisible ? "15px" : "inherit" }}>{jobData?.job_type}</span></>}
+                          <span className="text-capitalize" style={{ fontSize: !isVisible ? "15px" : "", transition: "0.5s", }}>{jobData?.job_type}</span></>}
                       </p>
                       <button
                         aria-haspopup="dialog"
@@ -80,24 +80,20 @@ const JobDetailLeftCardBox = ({
                         contenthtml="Apply now"
                         disclaimer="You must create an Indeed account before continuing to the company website to apply"
                         aria-label="Apply now (opens in a new tab)"
-                        style={{ fontSize: !isVisible ? "15px" : "inherit" }}
-                        className={
-                          jobData?.is_applied === "0"
-                            ? "btn btn-secondary text-uppercase rounded"
-                            : "btn btn-info text-uppercase rounded"
-                        }
+                        style={{ fontSize: isVisible ? "15px" : "", transition: "0.5s", }}
+                        className={` ${jobData?.is_applied === "0"
+                          ? "btn btn-secondary"
+                          : "btn btn-info "} text-uppercase rounded `}
                         onClick={() =>
                           token && user_type === "user"
                             ? OnApplyClick(0, jobData?.job_id)
                             : Navigate("/candidate_login")
                         }
-                        disabled={jobData?.is_applied !== "0"}
-                      >
+                        disabled={jobData?.is_applied !== "0"}>
                         {jobData?.is_applied === "0" ? "Apply now" : "Applied"}
                       </button>
                     </div>
                   </div>
-
                 </div>
               </div>
               {/* Detail part */}
@@ -105,9 +101,9 @@ const JobDetailLeftCardBox = ({
                 <div tabindex="0">
                   <div>
                     <div style={{
-                      maxHeight: isVisible ? "220px" : "330px",
+                      maxHeight: isVisible ? "320px" : "330px",
                       overflow: "scroll",
-                      transition: "0.5s", 
+                      transition: "0.5s",
                     }}
                       onScroll={(e) => handleScroll(e)}>
                       <div className="mt-3">
