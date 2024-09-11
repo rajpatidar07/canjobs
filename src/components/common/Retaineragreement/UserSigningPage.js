@@ -96,7 +96,7 @@ export default function UserSigningPage() {
         setClientIndex(index)
         setShowDetailsOption(false)
     }
-    const familyJsonArray = felidData?.family_json //? JSON.parse(felidData.family_json) : [];
+    // const familyJsonArray = felidData?.family_json //? JSON.parse(felidData.family_json) : [];
     return (
         <div className='d-flex p-5' style={{ backgroundColor: "#423f3f" }}>
                
@@ -161,24 +161,24 @@ export default function UserSigningPage() {
                     setShowDetailsOption(true)
                     setClientIndex("update details")
                 }}>Update Details</button>
-            <div className={"d-none col-4 position-sticky bg-white h-100vh"}>
-                <div className='p-10'>
-                    <h3>Add{felidData.initial ? "" : " Initial and Client"} Signature</h3>
-                    <button className={felidData.initial ? "d-none" : "btn btn-primary text-decoration-none"} style={{ fontFamily: "cursive" }}
-                        onClick={(e) => addSign(e, "initial")}>
-                        Initial
-                    </button>
-                    {(familyJsonArray || []).map((item, index) => (
-                        item.client_signature ? null :
-                            <span key={index}>Client Name {index + 1}: <span className="text-capitalize">{item.client_first_name + " " + item.client_last_name + "   "} </span><br />
-                                <button className="btn btn-primary text-decoration-none flex-end" disabled={felidData.initial ? false : true} style={{ fontFamily: "cursive" }}
-                                    onClick={(e) => addSign(e, index)}>
-                                    {" "}Add Signature
-                                </button>
-                            </span>
-                    ))}
-                </div>
-            </div>
+                {/* <div className={"d-none col-4 position-sticky bg-white h-100vh"}>
+                    <div className='p-10'>
+                        <h3>Add{felidData.initial ? "" : " Initial and Client"} Signature</h3>
+                        <button className={felidData.initial ? "d-none" : "btn btn-primary text-decoration-none"} style={{ fontFamily: "cursive" }}
+                            onClick={(e) => addSign(e, "initial")}>
+                            Initial
+                        </button>
+                        {(familyJsonArray || []).map((item, index) => (
+                            item.client_signature ? null :
+                                <span key={index}>Client Name {index + 1}: <span className="text-capitalize">{item.client_first_name + " " + item.client_last_name + "   "} </span><br />
+                                    <button className="btn btn-primary text-decoration-none flex-end" disabled={felidData.initial ? false : true} style={{ fontFamily: "cursive" }}
+                                        onClick={(e) => addSign(e, index)}>
+                                        {" "}Add Signature
+                                    </button>
+                                </span>
+                        ))}
+                    </div>
+                </div> */}
             {/* <div className='col-4 d-none'>
                 <button title='Add Flied' className='btn btn-primary'
                     onClick={(e) => addSign(e,"")}> Add Flied's</button>

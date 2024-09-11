@@ -15,7 +15,7 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
   //   return html;
   // };
   // JSX structure with potential tag replacements
-  const familyJsonArray = felidData?.family_json || [] //? JSON.parse(felidData.family_json) : [];
+  const familyJsonArray = felidData?.family_json || [] //? JSON.parse(felidData?.family_json) : [];
   const jsxContent = (
     `<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -58,15 +58,15 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
   </span>
   day of
  
-    ${felidData.agreement_date && felidData.agreement_date !== "0000-00-00 00:00:00"
-      ? `<span class="para_gap">${moment(new Date(felidData.agreement_date)).format("Do")}</span>`
+    ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00 00:00:00"
+      ? `<span class="para_gap">${moment(new Date(felidData?.agreement_date)).format("Do")}</span>`
       : ""}
-    ${felidData.agreement_date && felidData.agreement_date !== "0000-00-00 00:00:00"
-      ? ` <span class="para_gap">${moment(new Date(felidData.agreement_date)).format("MMMM")}</span>`
+    ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00 00:00:00"
+      ? ` <span class="para_gap">${moment(new Date(felidData?.agreement_date)).format("MMMM")}</span>`
       : ""}
  
-    ${felidData.agreement_date && felidData.agreement_date !== "0000-00-00 00:00:00"
-      ? ` <span class="para_gap">${moment(new Date(felidData.agreement_date)).format("YYYY")}`
+    ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00 00:00:00"
+      ? ` <span class="para_gap">${moment(new Date(felidData?.agreement_date)).format("YYYY")}`
       : "____________"}
   </span>
   between Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur (the
@@ -86,7 +86,7 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
   located at
  
     ${felidData?.client_address
-      ? ` <span class="para_gap">${felidData.client_address}</span>`
+      ? ` <span class="para_gap">${felidData?.client_address}</span>`
       : emp_user_type === "employer"
         ? userData?.address || "________________"
         : `<span class="para_gap">${userData?.current_location || "________"} ${userData?.currently_located_country || "____________"}</span>`}
@@ -968,32 +968,32 @@ services that have been rendered or accounting for the time that has been spent 
         <p class="col-6 text-capitalize">
         Address :  <span style=" min-width: 150px;
         border-bottom: 1px solid grey;
-        display: inline-block;">${felidData && felidData.client_address ? felidData.client_address : emp_user_type === "employer" ? (userData?.address || "") : ((userData?.current_location || "") + " " + (userData?.currently_located_country || ""))} 
+        display: inline-block;">${felidData && felidData?.client_address ? felidData?.client_address : emp_user_type === "employer" ? (userData?.address || "") : ((userData?.current_location || "") + " " + (userData?.currently_located_country || ""))} 
         </span>
         </p> 
         <p class="col-6">
         Telephone Number :  <span style=" min-width: 150px;
         border-bottom: 1px solid grey;
-        display: inline-block;">${felidData && felidData.client_contact ? felidData.client_contact : (userData?.contact_no || "")}
+        display: inline-block;">${felidData && felidData?.client_contact ? felidData?.client_contact : (userData?.contact_no || "")}
         </span>
         </p>
         <p class="col-6">
         Cellphone Number :  
          <span style=" min-width: 150px;
         border-bottom: 1px solid grey;
-        display: inline-block;">${(felidData.client_cellphone ? felidData?.client_cellphone : " ") || ""}
+        display: inline-block;">${(felidData?.client_cellphone ? felidData?.client_cellphone : " ") || ""}
          </span>
          </p>
         <p class="col-6">
         Fax Number :  
          <span style=" min-width: 150px;
         border-bottom: 1px solid grey;
-        display: inline-block;">${(felidData.client_fax ? felidData?.client_fax : " ") || ""}</span>
+        display: inline-block;">${(felidData?.client_fax ? felidData?.client_fax : " ") || ""}</span>
          </p>
          <p class="col-6">
          E-mail Address :  <span style=" min-width: 150px;
         border-bottom: 1px solid grey;
-        display: inline-block;">${felidData && felidData.client_email ? (felidData?.client_email || "") : (userData?.email || "")}
+        display: inline-block;">${felidData && felidData?.client_email ? (felidData?.client_email || "") : (userData?.email || "")}
          </span>
          </p>
       </div>
@@ -1079,7 +1079,7 @@ services that have been rendered or accounting for the time that has been spent 
         </div>
         <div style="width: 50%">
             <p class="para_gap text-capitalize" style="margin: 0">
-                <span style="max-width: 200px;">${familyJsonArray[0]?.client_first_name + " " + familyJsonArray[0]?.client_last_name}</span>
+                <span style="max-width: 200px;">${(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || "")}</span>
             </p>
             <p style="margin: 0 0 30px 0">Name of Client</p>
         </div>
@@ -1137,17 +1137,17 @@ services that have been rendered or accounting for the time that has been spent 
         
             <div class="d-flex flex-column">
                        <img
-                src="${felidData.rcic_signature ? felidData.rcic_signature : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s'}"
+                src="${felidData?.rcic_signature ? felidData?.rcic_signature : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s'}"
                 alt="RCIC"
                 style="max-width: 200px; float: right;"
-                class="${felidData.rcic_signature ? 'd-block' : 'd-none'}"
+                class="${felidData?.rcic_signature ? 'd-block' : 'd-none'}"
             />
             <p  style="margin: 0">______________________________</p>
                   <small class="row ">
                     <span class="col text-capitalize" >
                       Harpreet kaur ${(!felidData?.date_signature_rcic || felidData?.date_signature_rcic === "0000-00-00" || felidData?.date_signature_rcic === "0000-00-00 00:00:00")
-                    ? ""
-                    : felidData?.date_signature_rcic}</span>
+      ? ""
+      : felidData?.date_signature_rcic}</span>
 
                   </small>
                       </div>
@@ -1161,7 +1161,7 @@ services that have been rendered or accounting for the time that has been spent 
     </div>
     <div style="width: 50%">
         <p style="margin: 0">
-            ${(!felidData?.date_signature_rcic || felidData?.date_signature_rcic === "0000-00-00" || felidData?.date_signature_rcic === "0000-00-00 00:00:00")? '_____________________'
+            ${(!felidData?.date_signature_rcic || felidData?.date_signature_rcic === "0000-00-00" || felidData?.date_signature_rcic === "0000-00-00 00:00:00") ? '_____________________'
       : `<span  class="para_gap" style="max-width: 200px;">${felidData?.date_signature_rcic}</span>`}
         </p>
         <p style="margin: 0 0 30px 0">Date</p>

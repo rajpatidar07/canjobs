@@ -74,6 +74,7 @@ import UserSigningPage from "./Retaineragreement/UserSigningPage";
 import AboutUs from "../user/AboutUs";
 import LocalCandidate from "../admin/localCandidate";
 import PGWP from "../admin/pgwp";
+import DemoJob from "../user/demoJob";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -122,6 +123,8 @@ function MainLayout() {
         <Route exact path="/signagreement" element={<UserSigningPage/>} />
         <Route path="/agreeone" element={<AgreementOne />} />
         <Route path="/aboutus" element={<AboutUs />} />
+        <Route path="/demojob" element={<DemoJob />} />
+        
         {/* <Route path="*" element={<NotFound userType={userType}/>} /> */}
         {(userType === "user" && (token !== "" ||
           token !== null ||
