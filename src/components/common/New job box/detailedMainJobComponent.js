@@ -140,8 +140,12 @@ export default function DetailedMainJobComponent({
 
   return (
     <div className='border-top'>
-      <div className='row mt-5'>
-        <div className='col-6'>
+      <div className='row mt-5 mb-10'>
+        <div className='col-6'
+          style={{
+            maxHeight: 'calc(100vh - 100px)', // Adjust according to header/footer height
+            overflowY: 'auto', // Enable scrolling for the left column
+          }}>
           {noData === 0 || noData === "" || jobData.length === 0 ? (
             <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 text-center">
               <h4>
@@ -179,15 +183,22 @@ export default function DetailedMainJobComponent({
               )
             }))}
         </div>
-        {JobId === "" ? null : <div className='col-6 '>
-          <JobDetailLeftCardBox
-            token={token}
-            OnApplyClick={OnApplyClick}
-            jobData={jobData[JobId]}
-            setJobId={setJobId}
-            user_type={user_type}
-          />
-        </div>}
+        {JobId === "" || jobData.length === 0 ? null :
+          <div className='col-6 '
+            style={{
+              position: 'sticky', // Makes the right column sticky
+              top: '100px', // Adjust based on the height of your header
+              // maxHeight: 'calc(100vh - 200px)', // Adjust for header/footer spacing
+              overflowY: 'auto', // Enable scrolling within the right column
+            }}>
+            <JobDetailLeftCardBox
+              token={token}
+              OnApplyClick={OnApplyClick}
+              jobData={jobData[JobId]}
+              setJobId={setJobId}
+              user_type={user_type}
+            />
+          </div>}
       </div>
     </div>
   )
