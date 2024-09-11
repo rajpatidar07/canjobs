@@ -24,7 +24,7 @@ const JobDetailLeftCardBox = ({
       setIsVisible(true);
     }
   };
-  let skills = jobData?.keyskill.split(",")
+  let skills = jobData?.keyskill?.split(",")
   return (
     <div className="jobsearch-RightPane">
       <div>
@@ -98,7 +98,7 @@ const JobDetailLeftCardBox = ({
               </div>
               {/* Detail part */}
               <div className="mx-5" >
-                <div tabindex="0">
+                <div tabIndex="0">
                   <div>
                     <div style={{
                       maxHeight: isVisible ? "320px" : "330px",
@@ -134,9 +134,9 @@ const JobDetailLeftCardBox = ({
                         </div>
                       </div>}
                       {/* Job description */}
-                      <div className="border-top">
-                        <h4 tabindex="-1" id="jobDescriptionTitleHeading" className="css-wpzt8u mt-5">Full job description</h4>
-                      </div>
+                      {jobData?.job_description && <div className="border-top">
+                        <h4 tabIndex="-1" id="jobDescriptionTitleHeading" className="css-wpzt8u mt-5">Full job description</h4>
+                      </div>}
                       <div id="jobDescriptionText" className="jobsearch-JobComponent-description css-16y4thd eu4oa1w0">
                         <div>
                           {jobData?.job_description && <p className="card-text mx-5"
@@ -148,24 +148,24 @@ const JobDetailLeftCardBox = ({
                             <p>CARE support-technical non-student (Full stack software developer)</p>
                           </p> */}
                           {/* Created date */}
-                          <p>
+                          <div>
                             <h4 id="" className="css-wpzt8u ">Posting period</h4>
                             <p className="mx-5">{moment(jobData?.created_at).format('MMMM Do YYYY, h:mm:ss a')}</p>
-                          </p>
+                          </div>
                           {/* Pay */}
-                          {jobData?.salary && <p>
+                          {jobData?.salary && <div>
                             <h4 id="" className="css-wpzt8u ">Pay range</h4>
                             <p className="mx-5">${jobData?.salary} per hour</p>
-                          </p>}
+                          </div>}
                           {/* Languages */}
-                          {jobData?.language && <p>
+                          {jobData?.language && <div>
                             <h4 id="" className="css-wpzt8u ">Languages</h4>
                             <p className="mx-5">{jobData?.language} required</p>
-                          </p>}
+                          </div>}
                           {/* Qualifications  experience and skills */}
-                          {(jobData?.requirement || jobData?.experience) && <p>
+                          {(jobData?.requirement || jobData?.experience) && <div>
                             <h4 id="" className="css-wpzt8u ">Qualifications</h4>
-                            <p className="mx-5">
+                            <div className="mx-5">
                               {jobData?.requirement && <p>
                                 <b>Requirement</b>
                                 <span className="mx-5" dangerouslySetInnerHTML={{ __html: jobData?.requirement }} />
@@ -177,23 +177,23 @@ const JobDetailLeftCardBox = ({
                                   <span className="mx-5">{jobData?.experience_required} years</span>
                                 </p>}
                               {jobData?.keyskill &&
-                                <p>
+                                <div>
                                   <b>Required Skills</b>
                                   <ul className="mx-5">
                                     {(skills || []).map((item, index) =>
                                       <li key={index}>{item}</li>
                                     )}
                                   </ul>
-                                </p>}
-                            </p>
-                          </p>}
+                                </div>}
+                            </div>
+                          </div>}
                           {/* About company of the job */}
-                          <p>
+                          <div>
                             <h4 id="" className="css-wpzt8u ">Information about {jobData?.company_name}</h4>
                             <p className="mx-5"
                               dangerouslySetInnerHTML={{ __html: jobData?.about }}
                             />
-                          </p>
+                          </div>
                           {/* Acknowledge */}
                           {/* <p>
                             <b>We're putting people first</b>

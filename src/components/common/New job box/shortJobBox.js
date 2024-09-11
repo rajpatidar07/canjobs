@@ -17,7 +17,7 @@ export default function ShortJobBox(
 ) {
     return (
         <div className='mt-5'>
-            <div className="card ">
+            <div className="card  " onClick={() => setJobId(i)}>
                 {/* Job Title and Company Name */}
                 <div className="card-body ">
                     {job.job_title && <Link onClick={() => setJobId(i)}>
