@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import EmployeeHeader from "../common/header";
 import EmployeeFooter from "../common/footer";
 import SearchForm from "../common/search_form";
-import { GetAllDataCount, getJson } from "../../api/api";
+import { getJson } from "../../api/api";
 import CustomButton from "../common/button";
 import filterjson from "../json/filterjson";
 import DetailedMainJobComponent from "../common/New job box/detailedMainJobComponent";
@@ -126,9 +126,12 @@ function DemoJob() {
                             categoryFilterValue={categoryFilterValue}
                             jobSwapFilterValue={jobSwapFilterValue}
                             jobLocation={jobLocation}
-                            setJobLocation={setJobLocation} />
-                    </div>
+                            setJobLocation={setJobLocation}
+                            setJobsNo={setJobsNo}
+                            totaljob={totaljob}
+                            jobCount={jobCount} />
 
+                    </div>
                 </div>
 
             </section >

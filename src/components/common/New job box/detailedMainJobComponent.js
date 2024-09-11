@@ -3,7 +3,7 @@ import ShortJobBox from './shortJobBox'
 import JobDetailLeftCardBox from './jobDetailLeftCard'
 import { toast } from 'react-toastify';
 import { ApplyJob, GetAllJobs } from '../../../api/api';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export default function DetailedMainJobComponent({
   showAddJobModal,
@@ -19,6 +19,9 @@ export default function DetailedMainJobComponent({
   featured,
   column,
   sort_order,
+  setJobsNo,
+  totaljob,
+  jobCount
 }) {
   /*States */
   let [ApiCall, setApiCall] = useState(false);
@@ -179,9 +182,21 @@ export default function DetailedMainJobComponent({
                     skill={skill}
                     i={i}
                   />
+
                 </React.Fragment>
               )
             }))}
+          {jobsNo <= totaljob ? (
+            <div className="text-center pt-5 pt-lg-13">
+              <Link
+                className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
+                onClick={() => setJobsNo(jobCount + 6)}
+              >
+                Load More
+                <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
+              </Link>
+            </div>
+          ) : null}
         </div>
         {JobId === "" || jobData.length === 0 ? null :
           <div className='col-6 '
