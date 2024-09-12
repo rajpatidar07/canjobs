@@ -225,11 +225,11 @@ const NewUserProfile = (props) => {
     if (notes) {
       setTabActive("notes");
     }
-     if (agreement) {
+    if (agreement) {
       setTabActive("retaineragreement");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apiCall, eid, docId, docParentId, notes,agreement]);
+  }, [apiCall, eid, docId, docParentId, notes, agreement]);
   /*Function to See uploaded resume */
   const handleViewResume = (pdfUrl) => {
     window.open(`/userpdf?pdfUrl=${encodeURIComponent(pdfUrl)}`, "_blank");
@@ -794,7 +794,7 @@ const NewUserProfile = (props) => {
                         aria-controls="docTab"
                         aria-selected="true"
                         onClick={async () => {
-                          if (!PersonalDetail.documents_folder_id) {
+                          if (!PersonalDetail.documents_folder_id && PersonalDetail.name) {
                             const responseData = await AddEmployeeDetails(
                               PersonalDetail
                             );
@@ -858,7 +858,7 @@ const NewUserProfile = (props) => {
                     <li
                       className={
                         user_type === "company" ||
-                          user_type === "agent" 
+                          user_type === "agent"
                           //|| user_type === "user"
                           ? "d-none"
                           : "tab-menu-items nav-item"
@@ -936,7 +936,7 @@ const NewUserProfile = (props) => {
                     <li
                       className={
                         // user_type === "user" ||
-                         user_type === "company"
+                        user_type === "company"
                           ? "d-none"
                           : "tab-menu-items nav-item "
                       }

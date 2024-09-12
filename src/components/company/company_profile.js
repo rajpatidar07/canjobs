@@ -322,7 +322,7 @@ function CompanyProfileDetail(props) {
                       aria-controls="docTab"
                       aria-selected="true"
                       onClick={async () => {
-                        if (!employerData.documents_folder_id) {
+                        if (!employerData.documents_folder_id && employerData.company_name) {
                           const responseData = await AddCompany(employerData);
                           setApiCall(true);
                           if (responseData.status === 1) {

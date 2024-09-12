@@ -16,7 +16,13 @@ const profile = {
     type: "Person",
   },
 };
-let client_id = "d9b36f468d7a4e4e8b275f13728f1132"//(vercel) 
+let client_id = (window.location.origin === "http://localhost:3000"
+  ? "d9e8b7bcb61b42b6a387bfa9cf16a75b" //(Local))
+  : window.location.origin === "https://canjobs.vercel.app/"
+    ? "d9b36f468d7a4e4e8b275f13728f1132"//(vercel) 
+    : "d9e8b7bcb61b42b6a387bfa9cf16a75b" //(Local)
+);
+// let client_id = "d9b36f468d7a4e4e8b275f13728f1132"//(vercel) 
 // let client_id = "713b22cf34e345c388e4490f9c9dc79b"//Canpathways
 // let client_id = "d9e8b7bcb61b42b6a387bfa9cf16a75b"; //(Local)
 class ViewSDKClient {
@@ -43,7 +49,7 @@ class ViewSDKClient {
     });
   }
 
-  previewFile(divId, viewerConfig, url, data ,userType) {
+  previewFile(divId, viewerConfig, url, data, userType) {
     const fileExtension = data?.name?.split(".").pop().toLowerCase();
     const config = {
       clientId: client_id,
@@ -59,8 +65,8 @@ class ViewSDKClient {
       ...viewerConfig,
       embedMode: window.AdobeDC.View.Enum.EmbedMode.INLINE, // Display inline
       showAnnotationTools:
-       userType === "admin" ||
-         userType === "agent"
+        userType === "admin" ||
+          userType === "agent"
           ? true
           : false, // Show annotation tools
       showDownloadPDF: true, // Show download PDF option

@@ -1,5 +1,6 @@
 import axios from "axios";
-const API_URL = "https://apnaorganicstore.in/canjobs/";
+const API_URL = window.location.origin === "https://canpathwaysjobs.com"
+  ? "https://api.canpathwaysjobs.com/canjobs/" : "https://apnaorganicstore.in/canjobs/";
 //Local
 // const API_URL ="http://192.168.29.51/canjobs/"
 // New AWS backend
@@ -312,7 +313,7 @@ export const getallEmployeeData = async (
       assigned_by: assignedadminId,
       category: "",
       employee_id: subType,
-      is_local:localFilterValue
+      is_local: localFilterValue
     },
     {
       headers: {
