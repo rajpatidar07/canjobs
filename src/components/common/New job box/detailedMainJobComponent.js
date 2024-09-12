@@ -144,7 +144,7 @@ export default function DetailedMainJobComponent({
   return (
     <div className='border-top'>
       <div className='row mt-5 mb-10'>
-        <div className='col-6'
+        <div className='col-5'
           style={{
             maxHeight: 'calc(100vh - 100px)', // Adjust according to header/footer height
             overflowY: 'auto', // Enable scrolling for the left column
@@ -199,7 +199,7 @@ export default function DetailedMainJobComponent({
           ) : null}
         </div>
         {JobId === "" || jobData.length === 0 ? null :
-          <div className='col-6 '
+          <div className='col-7 '
             style={{
               position: 'sticky', // Makes the right column sticky
               top: '100px', // Adjust based on the height of your header

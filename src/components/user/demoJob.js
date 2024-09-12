@@ -65,8 +65,9 @@ function DemoJob() {
                         <div className="col-12 col-lg-12 col-xl-12 text-center">
                             <form className="mb-8" action="/">
                                 <div className="search-filter from-group d-flex align-items-center justify-content-center job_search_filter">
-                                    <div className="col-md-5 col-lg-4 mb-5">
+                                    <div className="col-md-5 col-lg-5 mb-5">
                                         <select
+                                        style={{height:"4rem"}}
                                             name="skill"
                                             id="skill"
                                             value={SkillFilterValue}
@@ -84,8 +85,9 @@ function DemoJob() {
                                             })}
                                         </select>
                                     </div>
-                                    <div className="col-md-5 col-lg-4 mb-5">
+                                    <div className="col-md-5 col-lg-5 mb-5">
                                         <select
+                                        style={{height:"4rem"}}
                                             name="job_type"
                                             id="job_type"
                                             value={jobSwapFilterValue}
