@@ -59,13 +59,13 @@ function DemoJob() {
             </div>
             {/* <!-- Hero Area --> */}
             {/* <!-- featuredJobOne Area --> */}
-            <section className="bg-athens pt-12 pt-lg-25">
+            <section className="bg-athens pt-12 pt-lg-10">
                 <div className="container ">
                     <div className="row ">
                         <div className="col-12 col-lg-12 col-xl-12 text-center">
                             <form className="mb-8" action="/">
                                 <div className="search-filter from-group d-flex align-items-center justify-content-center job_search_filter">
-                                    <div className="col-md-5 col-lg-5 mb-5">
+                                    <div className="col-md-4 col-lg-4 mb-5">
                                         <select
                                         style={{height:"4rem"}}
                                             name="skill"
@@ -85,7 +85,7 @@ function DemoJob() {
                                             })}
                                         </select>
                                     </div>
-                                    <div className="col-md-5 col-lg-5 mb-5">
+                                    <div className="col-md-4 col-lg-4 mb-5">
                                         <select
                                         style={{height:"4rem"}}
                                             name="job_type"
@@ -103,9 +103,9 @@ function DemoJob() {
                                             ))}
                                         </select>
                                     </div>
-                                    <div className="col-md-2 col-lg-2 mb-5">
+                                    <div className="col-md-4 col-lg-4 mb-5">
                                         <CustomButton
-                                            className="font-size-3 rounded-3 btn btn-primary border-0"
+                                            className="w-100 font-size-4 p-9 rounded-3 btn btn-primary border-0"
                                             onClick={() => onReset()}
                                             title="Reset"
                                             type="button"

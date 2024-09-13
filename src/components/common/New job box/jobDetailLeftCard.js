@@ -181,7 +181,7 @@ const JobDetailLeftCardBox = ({
                                   <b>Required Skills</b>
                                   <ul className="mx-5">
                                     {(skills || []).map((item, index) =>
-                                      <li key={index}>{item}</li>
+                                      <li key={index}  style={{marginBottom:0}}>{item}</li>
                                     )}
                                   </ul>
                                 </div>}
