@@ -5,7 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Filterbox from "./filterbox";
 import states from "../json/states";
 import { getJson } from "../../api/api";
-function SearchForm() {
+function SearchForm({ setSearch, setJobLocation, setCategoryFilterValue }) {
   const location = useLocation();
   const path = location.pathname;
   const searchParams = new URLSearchParams(location.search);
@@ -59,12 +59,17 @@ function SearchForm() {
         search: "",
       });
     } else {
-      navigate(`/jobs?search=${state.search}&country=${state.country_value}`);
-      setState({
-        ...state,
-        search: "",
-        country: "",
-      });
+      if (window.location.pathname === "/") {
+        setJobLocation(state.country_value)
+        setSearch(state.search)
+      } else {
+        navigate(`/jobs?search=${state.search}&country=${state.country_value}`);
+        setState({
+          ...state,
+          search: "",
+          country: "",
+        });
+      }
     }
   };
   return (
@@ -136,9 +141,9 @@ function SearchForm() {
           </button>
         </div>
         {path === "/jobs" ||
-        path === "/managejobs" ||
-        path === "/response" ||
-        user_type === "company" ? null : (
+          path === "/managejobs" ||
+          path === "/response" ||
+          user_type === "company" ? null : (
           <div className="row m-0 job_filter_block mt-5">
             {/* <Filterbox
             name="country"
@@ -151,6 +156,7 @@ function SearchForm() {
               filterheading=" Jobs by Category"
               filterjson={Json.Category}
               type={"category"}
+              setCategoryFilterValue={setCategoryFilterValue}
             />
           </div>
         )}{" "}

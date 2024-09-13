@@ -8,7 +8,8 @@ import Loader from "../common/loader";
 import { Link } from "react-router-dom";
 import CustomButton from "../common/button";
 import filterjson from "../json/filterjson";
-// import DetailedMainJobComponent from "../common/New job box/detailedMainJobComponent";
+import states from "../json/states";
+import DetailedMainJobComponent from "../common/New job box/detailedMainJobComponent";
 function EmployeeHomePage() {
   const [Count, setCount] = useState([]);
   const [jobsNo, setJobsNo] = useState(6);
@@ -17,7 +18,7 @@ function EmployeeHomePage() {
   const [featherJobCount, setFeaturedJobCount] = useState();
   const [totaljob, setTotalJob] = useState();
   const [totalFeaturedJob, setTotalFeaturedJob] = useState();
-
+  const [search, setSearch] = useState()
   // let token = localStorage.getItem("token");
   /*Filter states */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
@@ -45,6 +46,7 @@ function EmployeeHomePage() {
     setSkillFilterValue("");
     setJobSwapFilterValue("");
     setJobLocation("");
+    setSearch("")
   };
   const CountData = async () => {
     const res = await GetAllDataCount();
@@ -64,7 +66,9 @@ function EmployeeHomePage() {
           <div className="row position-relative align-items-center justify-content-center position-static w-80">
             {/* <!-- Hero Form --> */}
             <div className="col-lg-12 col-12 translateY-25 pt-lg-12 pb-lg-33 pb-md-28 pb-xs-26 pb-29 pt-md-20">
-              <SearchForm />
+              <SearchForm setJobLocation={setJobLocation} setCategoryFilterValue={setCategoryFilterValue}
+                setSearch={setSearch}
+              />
             </div>
             {/* <!-- End Hero Form --> */}{" "}
           </div>
@@ -73,51 +77,75 @@ function EmployeeHomePage() {
       </div>
       {/* <!-- Hero Area --> */}
       {/* <!-- featuredJobOne Area --> */}
-      <section className="bg-athens pt-12 pt-lg-25 pb-7 pb-lg-25 ">
+      <section className="bg-athens pt-12 pt-lg-10 pb-7 pb-lg-25 ">
         <div className="container ">
           <div className="row ">
-            <div className="col-12 col-lg-12 col-xl-12 text-center">
+            <div >
+              {/* //className="col-12 col-lg-12 col-xl-12 text-center"> */}
               <form className="mb-8" action="/">
                 <div className="search-filter from-group d-flex align-items-center justify-content-center job_search_filter">
-                  <div className="col-md-5 col-lg-4 mb-5">
-                    <select
-                      name="skill"
-                      id="skill"
-                      value={SkillFilterValue}
-                      /*Skill Onchange function to filter the data */
-                      onChange={(e) => setSkillFilterValue(e.target.value)}
-                      className="form-control text-capitalize font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
-                    >
-                      <option value="">Select Skill</option>
-                      {(Json.Skill || []).map((data) => {
-                        return (
-                          <option value={data.value} key={data.id}>
-                            {data.value}
+                  <div className="col-md-3 col-lg-3 mb-5 position-relative">
+                    <div className="set-arrow ">
+                      <select
+                        name="skill"
+                        id="skill"
+                        value={SkillFilterValue}
+                        /*Skill Onchange function to filter the data */
+                        onChange={(e) => setSkillFilterValue(e.target.value)}
+                        className="form-control text-capitalize font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                      >
+                        <option value="">Select Skill</option>
+                        {(Json.Skill || []).map((data) => {
+                          return (
+                            <option value={data.value} key={data.id}>
+                              {data.value}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="col-md-3 col-lg-3 mb-5">
+                    <div className="set-arrow ">
+                      <select
+                        name="job_type"
+                        id="job_type"
+                        value={jobSwapFilterValue}
+                        /*Job Onchange function to filter the data */
+                        onChange={(e) => setJobSwapFilterValue(e.target.value)}
+                        className="form-control text-capitalize font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                      >
+                        <option value="">Select Job type</option>
+                        {(filterjson.job_type || []).map((job_type) => (
+                          <option key={job_type} value={job_type}>
+                            {job_type}
                           </option>
-                        );
-                      })}
-                    </select>
+                        ))}
+                      </select>
+                    </div>
                   </div>
-                  <div className="col-md-5 col-lg-4 mb-5">
-                    <select
-                      name="job_type"
-                      id="job_type"
-                      value={jobSwapFilterValue}
-                      /*Job Onchange function to filter the data */
-                      onChange={(e) => setJobSwapFilterValue(e.target.value)}
-                      className="form-control text-capitalize font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
-                    >
-                      <option value="">Select Job type</option>
-                      {(filterjson.job_type || []).map((job_type) => (
-                        <option key={job_type} value={job_type}>
-                          {job_type}
-                        </option>
-                      ))}
-                    </select>
+                  <div className="col-md-3 col-lg-3 mb-5">
+                    <div className="set-arrow ">
+                      <select
+                        name="job_location"
+                        id="job_location"
+                        value={jobLocation}
+                        /*Job Onchange function to filter the data */
+                        onChange={(e) => setJobLocation(e.target.value)}
+                        className="form-control text-capitalize font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
+                      >
+                        <option value="">Select Job Location</option>
+                        {(Object.keys(states) || []).map((job) => (
+                          <option key={job} value={job}>
+                            {job}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
-                  <div className="col-md-2 col-lg-2 mb-5">
+                  <div className="col-md-3 col-lg-3 mb-5">
                     <CustomButton
-                      className="font-size-3 rounded-3 btn btn-primary border-0"
+                      className="w-100 p-7 pb-8 font-size-3 rounded-3 btn btn-primary border-0"
                       onClick={() => onReset()}
                       title="Reset"
                       type="button"
@@ -129,22 +157,27 @@ function EmployeeHomePage() {
               </form>
             </div>
           </div>
-          {/* <div className="row justify-content-center mb-lg-16 mb-11">
-          <DetailedMainJobComponent
-           setJobCount={setJobCount}
-           jobsNo={jobsNo}
-           setTotalJob={setTotalJob}
-           SkillFilterValue={SkillFilterValue}
-           column="job_id"
-           // sort_order="ASC"
-           categoryFilterValue={categoryFilterValue}
-           jobSwapFilterValue={jobSwapFilterValue}
-           jobLocation={jobLocation}
-           setJobLocation={setJobLocation}/>
-          </div> */}
+          <div className="row px-5">
+            <DetailedMainJobComponent
+              setJobCount={setJobCount}
+              jobsNo={jobsNo}
+              setTotalJob={setTotalJob}
+              SkillFilterValue={SkillFilterValue}
+              column="job_id"
+              // sort_order="ASC"
+              categoryFilterValue={categoryFilterValue}
+              jobSwapFilterValue={jobSwapFilterValue}
+              jobLocation={jobLocation}
+              setJobLocation={setJobLocation}
+              setJobsNo={setJobsNo}
+              totaljob={totaljob}
+              jobCount={jobCount}
+              Search={search} />
+
+          </div>
           {/* <!-- Section Title End --> */}
           {<JobBox /> ? (
-            <div className="row justify-content-center mb-lg-16 mb-11">
+            <div className="w-100 mb-lg-16 mb-11">
 
               <JobBox
                 setJobCount={setJobCount}
@@ -157,6 +190,7 @@ function EmployeeHomePage() {
                 jobSwapFilterValue={jobSwapFilterValue}
                 jobLocation={jobLocation}
                 setJobLocation={setJobLocation}
+                Search={search}
               />
             </div>
           ) : (
@@ -175,51 +209,50 @@ function EmployeeHomePage() {
               </Link>
             </div>
           ) : null}
-        </div>
-        {/* <!-- featuredJobOne Area --> */}
-        {/* <!-- Section Title --> */}
-        <div className="row justify-content-center mb-lg-16 mb-11">
-          <div className="col-xxl-5 col-xl-6 col-lg-7 col-md-10 text-center">
-            <h2 className="mb-6 mb-lg-7 text-black-2 font-size-10">
-              Featured Jobs
-            </h2>
-            <p className="px-xs-3 px-md-12 px-lg-8 px-xl-8 px-xxl-6 font-size-5 mb-0">
-              Leverage agile frameworks to provide a robust synopsis for high
-              level overviews to start.
-            </p>
+          {/* <!-- featuredJobOne Area --> */}
+          {/* <!-- Section Title --> */}
+          <div className="row justify-content-center mb-lg-16 mb-11">
+            <div className="col-xxl-5 col-xl-6 col-lg-7 col-md-10 text-center">
+              <h2 className="mb-6 mb-lg-7 text-black-2 font-size-10">
+                Featured Jobs
+              </h2>
+              <p className="px-xs-3 px-md-12 px-lg-8 px-xl-8 px-xxl-6 font-size-5 mb-0">
+                Leverage agile frameworks to provide a robust synopsis for high
+                level overviews to start.
+              </p>
+            </div>
           </div>
-        </div>
-        {/* <!-- Section Title End --> */}
-        {/* Featured Jobs Section */}
-        {<JobBox /> ? (
-          <div className="row justify-content-center">
-            <JobBox
-              setJobCount={setFeaturedJobCount}
-              jobsNo={featuredJobsNo}
-              setTotalJob={setTotalFeaturedJob}
-              SkillFilterValue={""}
-              featured={"1"}
-              column="job_id"
-            />
-          </div>
-        ) : (
-          <div className="table-responsive main_table_div">
-            <Loader />
-          </div>
-        )}
+          {/* <!-- Section Title End --> */}
+          {/* Featured Jobs Section */}
+          {<JobBox /> ? (
+            <div className="w-100 mb-lg-16 mb-11">
+              <JobBox
+                setJobCount={setFeaturedJobCount}
+                jobsNo={featuredJobsNo}
+                setTotalJob={setTotalFeaturedJob}
+                SkillFilterValue={""}
+                featured={"1"}
+                column="job_id"
+              />
+            </div>
+          ) : (
+            <div className="table-responsive main_table_div">
+              <Loader />
+            </div>
+          )}
 
-        {featuredJobsNo <= totalFeaturedJob ? (
-          <div className="text-center pt-5 pt-lg-13">
-            <Link
-              className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
-              onClick={() => setFeaturedJobsNo(featherJobCount + 6)}
-            >
-              Load More
-              <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
-            </Link>
-          </div>
-        ) : null}
-
+          {featuredJobsNo <= totalFeaturedJob ? (
+            <div className="text-center pt-5 pt-lg-13">
+              <Link
+                className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
+                onClick={() => setFeaturedJobsNo(featherJobCount + 6)}
+              >
+                Load More
+                <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
+              </Link>
+            </div>
+          ) : null}
+        </div>
         {/* {token && <div className="container ">
           <!-- Section Title -->
           <div className="row justify-content-center mb-lg-16 mb-11">

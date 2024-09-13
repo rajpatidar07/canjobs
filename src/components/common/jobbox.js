@@ -28,6 +28,7 @@ function JobBox({
   setTotalJob,
   featured,
   column,
+  Search,
   sort_order,
 }) {
   /*States */
@@ -48,7 +49,7 @@ function JobBox({
   /*Functionality to get the data to search the jobs */
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const search = searchParams.get("search");
+  const search = searchParams.get("search")||Search;
   const country = searchParams.get("country");
   const category = searchParams.get("category");
   const path = location.pathname;
@@ -167,20 +168,22 @@ function JobBox({
   return (
     <>
       <div
-        className="col-xxl-12 col-xl-12 col-lg-12 mb-8 pb-5 job_box row"
+        className="mb-8 pb-5 job_box row"
+        // className="col-xxl-12 col-xl-12 col-lg-12 mb-8 pb-5 job_box row"
         data-aos="fade-right"
         data-aos-duration="800"
         data-aos-once="true"
       >
         {/* <!-- Maped Job --> */}
         {noData === 0 || noData === "" || jobData.length === 0 ? (
-          <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 text-center">
-            <h4>
-              {SkillFilterValue
-                ? "No jobs found for your skills"
-                : "No jobs found"}
-            </h4>
-          </div>
+          null
+          // <div className="pt-9 px-xl-9 px-lg-7 px-7 pb-7 text-center">
+          //   <h4>
+          //     {SkillFilterValue
+          //       ? "No jobs found for your skills"
+          //       : "No jobs found"}
+          //   </h4>
+          // </div>
         ) : (
           (jobData || []).map((job, i) => {
             // Convert the skill string to an array

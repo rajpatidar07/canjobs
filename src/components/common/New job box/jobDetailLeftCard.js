@@ -122,7 +122,7 @@ const JobDetailLeftCardBox = ({
                           </span>
                         </div>}
                       </div>
-                      {jobData?.location && <div className="border-top ">
+                      {jobData?.location && <div className="border-top  pb-5">
                         <h2 className="css-1yytfzy mt-5">Location</h2>
                         <div id="jobLocationWrapper" className="css-1u9px01 mx-5">
                           <FaLocationDot />

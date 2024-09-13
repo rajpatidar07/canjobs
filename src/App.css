@@ -1899,77 +1899,90 @@ li.placeholder span svg {
     min-height: 424px;
   }
 }
+
 .prevent-select {
-  -webkit-user-select: none; /* Safari */
-  -ms-user-select: none; /* IE 10 and IE 11 */
-  user-select: none; /* Standard syntax */
+  -webkit-user-select: none;
+  /* Safari */
+  -ms-user-select: none;
+  /* IE 10 and IE 11 */
+  user-select: none;
+  /* Standard syntax */
 }
+
 @keyframes fadeOutAnimationKeyframes {
   from {
-  opacity: 1;
-}
-to {
-  opacity: 0;
-}
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
 }
 
 @keyframes fadeInAnimationKeyframes {
   from {
-  opacity: 0;
-}
-to {
-  opacity: 1;
-}
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes moveUpAnimationKeyframes {
   from {
-  transform: translateY(0);
-}
-to {
-  transform: translateY(-0px);
-}
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-0px);
+  }
 }
 
 @keyframes moveDownAnimationKeyframes {
   from {
-  transform: translateY(-0px);
-}
-to {
-  transform: translateY(0);
-}
+    transform: translateY(-0px);
+  }
+
+  to {
+    transform: translateY(0);
+  }
 }
 
 @keyframes embeddedViewJobMoveUpAnimationKeyframes {
   from {
-  margin-top: 0px;
-}
-to {
-  margin-top: -15px
-}
+    margin-top: 0px;
+  }
+
+  to {
+    margin-top: -15px
+  }
 }
 
 @keyframes jobTitleMoveUpAnimationKeyframes {
   from {
-  transform: scale(1) translateY(0px);
-transform-origin: 0 0;
-}
-to {
-  transform: scale(0.9) translateY(-0px);
-transform-origin: 0 0;
-}
+    transform: scale(1) translateY(0px);
+    transform-origin: 0 0;
+  }
+
+  to {
+    transform: scale(0.9) translateY(-0px);
+    transform-origin: 0 0;
+  }
 }
 
 @keyframes jobTitleMoveDownAnimationKeyframes {
   from {
-  transform: scale(0.9) translateY(-0px);
-transform-origin: 0 0;
+    transform: scale(0.9) translateY(-0px);
+    transform-origin: 0 0;
+  }
+
+  to {
+    transform: scale(1) translateY(0px);
+    transform-origin: 0 0;
+  }
 }
-to {
-  transform: scale(1) translateY(0px);
-transform-origin: 0 0;
-}
-}
+
 /* General Layout */
 .jobsearch-RightPane {
   background-color: #fff;
@@ -2201,4 +2214,28 @@ ul.css-8tnble li {
   height: 1px;
   background-color: #eaeaea;
   margin: 20px 0;
+}
+
+/*Manage select box style for arrow at home page*/
+/* Remove default appearance and hide the native arrow */
+
+/* Add custom dropdown arrow */
+.set-arrow select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance:none
+}
+
+.set-arrow::after {
+  content: '\276F';
+  position: absolute;
+  color: black;
+  top: 30%;
+  right: 30px;
+  /* z-index: 9999999; */
+  font-family: fotawesome;
+  transform: rotate(90deg);
+  font-size: small;
+  font-weight: bold;
+  overflow: hidden;
 }

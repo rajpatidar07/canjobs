@@ -2,9 +2,11 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 function Filterbox(props) {
   const user_type = localStorage.getItem("userType");
-
   let navigate = useNavigate();
   let OnFIlterClick = (data) => {
+    if(window.location.pathname === "/"){
+      props.setCategoryFilterValue(data)
+    }else{
     if (user_type === " ") {
       if (props.filterheading === "Jobs by Location") {
         navigate(`/managejobs?country=${data}`);
@@ -17,7 +19,7 @@ function Filterbox(props) {
       } else if (props.filterheading === " Jobs by Category") {
         navigate(`/jobs?category=${data}`);
       }
-    }
+    }}
   };
   return (
     <div className="job_filter_card job_filter_card_home">

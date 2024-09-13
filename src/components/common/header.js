@@ -148,13 +148,13 @@ function EmployeeHeader() {
                       Home
                     </Link>
                   </li>
-                  <li className="nav-item nav-item" >
+                  {/* <li className="nav-item nav-item" >
                     <Link className="nav-link" to={'/demojob'}
                     >
 
                       Demo job
                     </Link>
-                  </li>
+                  </li> */}
                   <li>
                     <Link className="nav-link" to="/jobs">
                       Jobs

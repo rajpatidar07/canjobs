@@ -21,7 +21,8 @@ export default function DetailedMainJobComponent({
   sort_order,
   setJobsNo,
   totaljob,
-  jobCount
+  jobCount,
+  Search
 }) {
   /*States */
   let [ApiCall, setApiCall] = useState(false);
@@ -39,11 +40,12 @@ export default function DetailedMainJobComponent({
   /*Functionality to get the data to search the jobs */
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const search = searchParams.get("search");
+  const search = searchParams.get("search")||Search;
   const country = searchParams.get("country");
   const category = searchParams.get("category");
   const path = location.pathname;
   // const name = localStorage.getItem("name");
+  console.log(jobLocation, "category =>", categoryFilterValue)
   /* Function to get Job data*/
   const JobData = async () => {
     try {
@@ -143,82 +145,82 @@ export default function DetailedMainJobComponent({
 
   return (
     <div className="border-top w-100">
-    {noData === 0 || noData === "" || jobData.length === 0 ? (
-      <div className=" text-center mt-5 mb-10">
-        <h4>
-          {SkillFilterValue
-            ? "No jobs found for your skills"
-            : "No jobs found"}
-        </h4>
-      </div>
-    ) : (
-      <div className="row mt-5 mb-10">
-        <div
-          className="col-5"
-          style={{
-            maxHeight: "calc(100vh - 100px)", // Adjust according to header/footer height
-            overflowY: "auto", // Enable scrolling for the left column
-          }}
-        >
-          {(jobData || []).map((job, i) => {
-            // Convert the skill string to an array
-            let skill = [];
-            if (job !== "") {
-              skill =
-                job.keyskill === null ||
-                job.keyskill === undefined ||
-                job.keyskill === "undefined"
-                  ? []
-                  : job.keyskill.split(",");
-            }
-            return (
-              <React.Fragment key={i}>
-                <ShortJobBox
-                  setJobId={setJobId}
-                  job={job}
-                  token={token}
-                  user_type={user_type}
-                  OnApplyClick={OnApplyClick}
-                  setShowAddJobsModal={setShowAddJobsModal}
-                  skill={skill}
-                  i={i}
-                />
-              </React.Fragment>
-            );
-          })}
-          {jobsNo <= totaljob ? (
-            <div className="text-center pt-5 pt-lg-13">
-              <Link
-                className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
-                onClick={() => setJobsNo(jobCount + 6)}
-              >
-                Load More
-                <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
-              </Link>
-            </div>
-          ) : null}
+      {noData === 0 || noData === "" || jobData.length === 0 ? (
+        <div className=" text-center mt-15 mb-10">
+          <h4>
+            {SkillFilterValue
+              ? "No jobs found for your skills"
+              : "No jobs found"}
+          </h4>
         </div>
-        {JobId !== "" && jobData.length > 0 && (
+      ) : (
+        <div className="row  mb-10">
           <div
-            className="col-7"
+            className="col-5"
             style={{
-              position: "sticky", // Makes the right column sticky
-              top: "100px", // Adjust based on the height of your header
-              overflowY: "auto", // Enable scrolling within the right column
+              maxHeight: "calc(100vh + 50px)", // Adjust according to header/footer height
+              overflowY: "auto", // Enable scrolling for the left column
             }}
           >
-            <JobDetailLeftCardBox
-              token={token}
-              OnApplyClick={OnApplyClick}
-              jobData={jobData[JobId]}
-              setJobId={setJobId}
-              user_type={user_type}
-            />
+            {(jobData || []).map((job, i) => {
+              // Convert the skill string to an array
+              let skill = [];
+              if (job !== "") {
+                skill =
+                  job.keyskill === null ||
+                    job.keyskill === undefined ||
+                    job.keyskill === "undefined"
+                    ? []
+                    : job.keyskill.split(",");
+              }
+              return (
+                <React.Fragment key={i}>
+                  <ShortJobBox
+                    setJobId={setJobId}
+                    job={job}
+                    token={token}
+                    user_type={user_type}
+                    OnApplyClick={OnApplyClick}
+                    setShowAddJobsModal={setShowAddJobsModal}
+                    skill={skill}
+                    i={i}
+                  />
+                </React.Fragment>
+              );
+            })}
+            {jobsNo <= totaljob ? (
+              <div className="text-center pt-5 pt-lg-13">
+                <Link
+                  className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
+                  onClick={() => setJobsNo(jobCount + 6)}
+                >
+                  Load More
+                  <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
+                </Link>
+              </div>
+            ) : null}
           </div>
-        )}
-      </div>
-    )}
-  </div>
-  
+          {JobId !== "" && jobData.length > 0 && (
+            <div
+              className="col-7"
+              style={{
+                position: "sticky", // Makes the right column sticky
+                top: "100px", // Adjust based on the height of your header
+                overflowY: "auto", // Enable scrolling within the right column
+              }}
+            >
+              <JobDetailLeftCardBox
+                token={token}
+                OnApplyClick={OnApplyClick}
+                jobData={jobData[JobId]}
+                setJobId={setJobId}
+                user_type={user_type}
+              />
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+
   )
 }
