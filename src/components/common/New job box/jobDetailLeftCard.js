@@ -102,7 +102,7 @@ const JobDetailLeftCardBox = ({
                   <div>
                     <div style={{
                       maxHeight: isVisible ? "320px" : "330px",
-                      overflow: "scroll",
+                      overflowY: "scroll",
                       transition: "0.5s",
                     }}
                       onScroll={(e) => handleScroll(e)}>

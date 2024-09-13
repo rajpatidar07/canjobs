@@ -79,12 +79,12 @@ function EmployeeHomePage() {
       {/* <!-- featuredJobOne Area --> */}
       <section className="bg-athens pt-12 pt-lg-10 pb-7 pb-lg-25 ">
         <div className="container ">
-          <div className="row ">
+          <div className="">
             <div >
               {/* //className="col-12 col-lg-12 col-xl-12 text-center"> */}
               <form className="mb-8" action="/">
                 <div className="search-filter from-group d-flex align-items-center justify-content-center job_search_filter">
-                  <div className="col-md-3 col-lg-3 mb-5 position-relative">
+                  <div className="pr-0 pl-0 col-md-3 col-lg-3 mb-5 position-relative">
                     <div className="set-arrow ">
                       <select
                         name="skill"
@@ -105,7 +105,7 @@ function EmployeeHomePage() {
                       </select>
                     </div>
                   </div>
-                  <div className="col-md-3 col-lg-3 mb-5">
+                  <div className="pr-0 pl-0 col-md-3 col-lg-3 mb-5">
                     <div className="set-arrow ">
                       <select
                         name="job_type"
@@ -124,7 +124,7 @@ function EmployeeHomePage() {
                       </select>
                     </div>
                   </div>
-                  <div className="col-md-3 col-lg-3 mb-5">
+                  <div className="pr-0 pl-0 col-md-3 col-lg-3 mb-5">
                     <div className="set-arrow ">
                       <select
                         name="job_location"
@@ -143,7 +143,7 @@ function EmployeeHomePage() {
                       </select>
                     </div>
                   </div>
-                  <div className="col-md-3 col-lg-3 mb-5">
+                  <div className="pr-0 pl-0 col-md-3 col-lg-3 mb-5">
                     <CustomButton
                       className="w-100 p-7 pb-8 font-size-3 rounded-3 btn btn-primary border-0"
                       onClick={() => onReset()}
@@ -157,7 +157,7 @@ function EmployeeHomePage() {
               </form>
             </div>
           </div>
-          <div className="row px-5">
+          <div className="row px-6">
             <DetailedMainJobComponent
               setJobCount={setJobCount}
               jobsNo={jobsNo}

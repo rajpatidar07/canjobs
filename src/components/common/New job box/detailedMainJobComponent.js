@@ -40,7 +40,7 @@ export default function DetailedMainJobComponent({
   /*Functionality to get the data to search the jobs */
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const search = searchParams.get("search")||Search;
+  const search = searchParams.get("search") || Search;
   const country = searchParams.get("country");
   const category = searchParams.get("category");
   const path = location.pathname;
@@ -58,6 +58,7 @@ export default function DetailedMainJobComponent({
           ? jobLocation
           : country,
         path === "/jobs" ||
+          path === "/" ||
           path === "/managejobs" ||
           (path === "/response" && !category)
           ? categoryFilterValue
@@ -158,7 +159,7 @@ export default function DetailedMainJobComponent({
           <div
             className="col-5"
             style={{
-              maxHeight: "calc(100vh + 50px)", // Adjust according to header/footer height
+              maxHeight: "calc(520px)", // Adjust according to header/footer height
               overflowY: "auto", // Enable scrolling for the left column
             }}
           >
@@ -202,7 +203,7 @@ export default function DetailedMainJobComponent({
           </div>
           {JobId !== "" && jobData.length > 0 && (
             <div
-              className="col-7"
+              className="col-7 mt-5"
               style={{
                 position: "sticky", // Makes the right column sticky
                 top: "100px", // Adjust based on the height of your header
