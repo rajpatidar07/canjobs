@@ -138,8 +138,9 @@ function GlobalSearch() {
                         mobile={data.contact_no}
                         email={data.email}
                         company={data.company_name}
-                        to={`/client_detail/${data.company_id}`}
                         id={data.company_id}
+                        to={`/client_detail`}
+                        title="Client Details"
                       />
                     ))}
                   </div>
@@ -151,10 +152,13 @@ function GlobalSearch() {
                     </h5>
                     {searchData["agent"].map((data) => (
                       <GlobalSearchCard
-                        key={data.agent_id} // Use a unique key
+                        key={data.id} // Use a unique key
                         name={data.name}
                         mobile={data.contact_no}
                         email={data.email}
+                        to={`/partner_profile`}
+                        title="Partner Profile"
+                        id={data.id}
                       />
                     ))}
                   </div>

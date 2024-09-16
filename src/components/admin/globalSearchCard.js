@@ -7,7 +7,12 @@ function GlobalSearchCard(props) {
     <Link
       className="py-1 border-bottom w-100"
       to={props.to}
-      onClick={() => localStorage.setItem("company_id", props.id)}
+      title={props.title}
+      onClick={props.title === "Client Details"
+        ? () => localStorage.setItem("company_id", props.id)
+        : props.title === "Partner Profile"
+          ? () =>
+            localStorage.setItem("agent_id", props.id) : null}
     >
       <div className="d-flex profile_box gx-2 justify-content-between">
         <div className=" mb-0">

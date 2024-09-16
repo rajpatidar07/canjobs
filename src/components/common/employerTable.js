@@ -287,7 +287,7 @@ export default function EmployerTable(props) {
                 {/* Map function to show the data in the list*/}
                 {totalData === 0 || employerData.length === 0 ? (
                   <tr>
-                    <th colSpan={7} className="bg-white text-center">
+                    <th colSpan={8} className="bg-white text-center">
                       No Data Found
                     </th>
                   </tr>

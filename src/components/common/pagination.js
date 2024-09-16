@@ -4,8 +4,9 @@ import { Link } from "react-router-dom";
 function Pagination({ nPages, currentPage, setCurrentPage, total, count }) {
   // Create state to manage visible page numbers
   const [visiblePageNumbers, setVisiblePageNumbers] = React.useState([]);
-
+  let PreviousPageNo = localStorage.getItem("PageNo")
   useEffect(() => {
+
     // Calculate the start and end index for visible page numbers
     const pageSize = 10;
     const start = Math.max(1, currentPage - Math.floor(pageSize / 2));
@@ -17,8 +18,8 @@ function Pagination({ nPages, currentPage, setCurrentPage, total, count }) {
       (_, i) => start + i
     );
     setVisiblePageNumbers(newVisiblePageNumbers);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, nPages]);
-
   return (
     <div>
       {nPages > 1 ? (
@@ -27,7 +28,10 @@ function Pagination({ nPages, currentPage, setCurrentPage, total, count }) {
             <ul className="pagination pagination-hover-primary rounded-0 ml-n2  ">
               <li className="page-item px-1">
                 <Link
-                  onClick={() => setCurrentPage(currentPage - 1)}
+                  onClick={() => {
+                    setCurrentPage(currentPage - 1)
+                    localStorage.setItem("PageNo", " ")
+                  }}
                   className={
                     currentPage === 1
                       ? "disabled-link page-link  font-size-3 py-2 font-weight-semibold px-3"
@@ -41,8 +45,11 @@ function Pagination({ nPages, currentPage, setCurrentPage, total, count }) {
               {visiblePageNumbers.map((pgNumber) => (
                 <li className="page-item px-1" key={pgNumber}>
                   <Link
-                    onClick={() => setCurrentPage(pgNumber)}
-                    className={`page-link  font-size-3 py-2 font-weight-semibold px-3 ${currentPage === pgNumber ? "active " : ""
+                    onClick={() => {
+                      setCurrentPage(pgNumber)
+                      localStorage.setItem("PageNo", " ")
+                    }}
+                    className={`page-link  font-size-3 py-2 font-weight-semibold px-3 ${currentPage === pgNumber || PreviousPageNo === pgNumber ? "active " : ""
                       } `}
                   >
                     {pgNumber}
@@ -51,7 +58,10 @@ function Pagination({ nPages, currentPage, setCurrentPage, total, count }) {
               ))}
               <li className="page-item px-1">
                 <Link
-                  onClick={() => setCurrentPage(currentPage + 1)}
+                  onClick={() => {
+                    setCurrentPage(currentPage + 1)
+                    localStorage.setItem("PageNo", " ")
+                  }}
                   className={
                     currentPage === nPages
                       ? "disabled-link page-link  font-size-3 py-2 font-weight-semibold px-3"

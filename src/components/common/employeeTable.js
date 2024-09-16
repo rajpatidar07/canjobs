@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import PersonalDetails from "../forms/user/personal";
 import Education from "../forms/user/education";
 import Skills from "../forms/user/skills";
-import { getallEmployeeData, DeleteJobEmployee, ApplyJob } from "../../api/api";
+import { getallEmployeeData, DeleteJobEmployee, ApplyJob, getallAdminData } from "../../api/api";
 import moment from "moment";
 import { BiSolidCategory } from "react-icons/bi";
 import SAlert from "../common/sweetAlert";
@@ -39,7 +39,7 @@ export default function EmployeeTable(props) {
   let [showEducationModal, setShowEducationModal] = useState(false);
   let [showSkillsModal, setShowSkillsModal] = useState(false);
   let [pageNameForForm, setPageNameForForm] = useState(false);
-  // let [documentModal, setDocumentModal] = useState(false);
+  let [admintList, setAdmintList] = useState([]);
   let [showStatusChangeModal, setShowStatusChange] = useState(false);
   /*data and id states */
   const [employeeData, setemployeeData] = useState([]);
@@ -109,6 +109,16 @@ export default function EmployeeTable(props) {
     } catch (err) {
       console.log(err);
       setIsLoading(false);
+    }
+    try {
+      let adminJson = await getallAdminData();
+      if (adminJson.data.length === 0) {
+        setAdmintList([]);
+      } else {
+        setAdmintList(adminJson.data);
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -528,22 +538,42 @@ export default function EmployeeTable(props) {
                       Name
                     </Link>
                   </th>
-                  {/* <th
+                  <th
                     scope="col"
                     className="border-0 font-size-4 font-weight-normal"
                   >
                     <Link
                       to={""}
                       onClick={() => {
-                        handleSort("contact_no");
+                        handleSort("created_by_admin");
                         props.setpageNo(1);
                       }}
                       className="text-gray"
-                      title="Sort by Contact"
+                      title="Sort by created by "
                     >
-                      Contact
+                      Created by
                     </Link>
-                  </th> */}
+                  </th>
+                  {props.heading === "Dashboard" ? (
+                    ""
+                  ) : (
+                    <th
+                      scope="col"
+                      className="border-0 font-size-4 font-weight-normal"
+                    >
+                      <Link
+                        to={""}
+                        onClick={() => {
+                          handleSort("updated_at");
+                          props.setpageNo(1);
+                        }}
+                        className="text-gray"
+                        title="Sort by Last Modified"
+                      >
+                        Last Modified
+                      </Link>
+                    </th>
+                  )}
                   {props.heading === "Dashboard" ? (
                     ""
                   ) : (
@@ -704,8 +734,10 @@ export default function EmployeeTable(props) {
                             <div className="media  align-items-center">
                               <Link
                                 to={`/${empdata.employee_id}`}
-                                onClick={() =>
+                                onClick={() => {
                                   localStorage.setItem("StatusTab", status === "" ? "00" : status)
+                                  localStorage.setItem("PageNo", props.pageNo)
+                                }
                                   //   empdata.name !== null
                                   //     ? () => employeeDetails(empdata.employee_id)
                                   //     : null
@@ -739,8 +771,10 @@ export default function EmployeeTable(props) {
 
                                 <Link
                                   to={`/${empdata.employee_id}`}
-                                  onClick={() =>
+                                  onClick={() => {
                                     localStorage.setItem("StatusTab", status === "" ? "00" : status)
+                                    localStorage.setItem("PageNo", props.pageNo)
+                                  }
                                     //   empdata.name !== null
                                     //     ? () => employeeDetails(empdata.employee_id)
                                     //     : null
@@ -827,29 +861,36 @@ export default function EmployeeTable(props) {
                           </span>
                         ) : null}
                       </td>
-                      {/* <td className="py-5 ">
-                        {empdata.contact_no === null ? null : (
-                          <p className="m-0">
-                            +
-                            <Link
-                              className="text-dark"
-                              to={`tel:${empdata.contact_no}`}
+                      {props.heading === "Dashboard" ? (
+                        ""
+                      ) :
+                        <td className="py-5 ">
+                          {empdata.created_by_admin === null || !empdata.created_by_admin || empdata.created_by_admin === ("0" || 0) ? (
+                            <p className="font-size-3  mb-0">N/A</p>
+                          ) : (
+                            <p
+                              className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate text-capitalize"
+                              title={admintList?.find((item) => item.admin_id === empdata?.created_by_admin)?.name}
                             >
-                              {empdata.contact_no}
-                            </Link>
-                          </p>
-                        )}
-                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                          <p className="text-gray font-size-2 m-0">
-                            <Link
-                              className="text-dark"
-                              to={`mailto:${empdata.email}`}
+                              {admintList?.find((item) => item.admin_id === empdata?.created_by_admin)?.name}
+                            </p>
+                          )}
+                        </td>}
+                      {props.heading === "Dashboard" ? (
+                        ""
+                      ) :
+                        <td className="py-5 ">
+                          {empdata.updated_at === null || !empdata.updated_at || empdata.updated_at === "0000-00-00 00:00:00" ? (
+                            <p className="font-size-3  mb-0">N/A</p>
+                          ) : (
+                            <p
+                              className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate text-capitalize"
+                              title={moment(empdata?.updated_at).fromNow()}
                             >
-                              {empdata.email}
-                            </Link>
-                          </p>
-                        </h3>
-                      </td> */}
+                              {moment(empdata?.updated_at).fromNow()}
+                            </p>
+                          )}
+                        </td>}
                       {props.heading === "Dashboard" ? (
                         ""
                       ) : (

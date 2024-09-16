@@ -37,6 +37,7 @@ export default function CandidateSignup(props) {
 
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
+    name: "",
     email: "",
     password: "",
     resume: "",
@@ -51,26 +52,26 @@ export default function CandidateSignup(props) {
         value === "" || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? null
+            : "Email is invalid",
     ],
     password: [
       (value) =>
         value === ""
           ? "Password is required"
           : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(
-              value
-            )
-          ? null
-          : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
+            value
+          )
+            ? null
+            : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
     ],
     resume: [
       // (value) => (value === "" || value === null ? "Resume is required" : null),
     ],
-    // reffer_by: [
-    //   (value) =>
-    //     value === "" || value === null ? "Refferer is required" : null,
-    // ],
+    name: [
+      (value) =>
+        value === "" || value === null ? "Name is required" : null,
+    ],
   };
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, onInputChange, setErrors, errors, validate } =
@@ -242,9 +243,9 @@ export default function CandidateSignup(props) {
           }
           if (
             res.data.message ===
-              "The token used in the request has been revoked by the user" ||
+            "The token used in the request has been revoked by the user" ||
             decode.error_description ===
-              "Unable to retrieve access token: appid/redirect uri/code verifier does not match authorization code. Or authorization code expired. Or external member binding exists"
+            "Unable to retrieve access token: appid/redirect uri/code verifier does not match authorization code. Or authorization code expired. Or external member binding exists"
           ) {
             toast.error("Token Expired", {
               position: toast.POSITION.TOP_RIGHT,
@@ -425,6 +426,36 @@ export default function CandidateSignup(props) {
               {/* FORM FIELDS */}
               <div className="form-group">
                 <label
+                  htmlFor="name"
+                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                >
+                  Name<span className="text-danger"> *</span>:
+                </label>
+                <input
+                  name="name"
+                  value={state.name || ""}
+                  onChange={onInputChange}
+                  type="text"
+                  className={
+                    errors.name
+                      ? "form-control border border-danger"
+                      : "form-control"
+                  }
+                  placeholder="Name"
+                  id="name"
+                />
+                {/* ERROR MSG FOR name */}
+                {errors.name && (
+                  <span
+                    key={errors.name}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.name}
+                  </span>
+                )}
+              </div>
+              <div className="form-group">
+                <label
                   htmlFor="email"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
@@ -487,28 +518,28 @@ export default function CandidateSignup(props) {
                         ></Link> */}
                 </div>
               </div>
-                <div className={"form-group d-none"}>
-                  <label
-                    htmlFor="reffer_by"
-                    className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                  >
-                    Reffered by:{/*<span className="text-danger">*</span>*/}
-                  </label>
-                  <select
-                    name="reffer_by"
-                    value={state.reffer_by || ""}
-                    onChange={onInputChange}
-                    className={
-                      errors.reffer_by
-                        ? "form-control text-capitalize border border-danger"
-                        : "form-control text-capitalize"
-                    }
-                    id="reffer_by"
-                  >
-                    <option value={""}>Selct Partner </option>
-                    {agentList.map((item) => <option value={item.id}>{item.u_id + " " + item.name} </option>)}
-                  </select>
-                  {/* <Select
+              <div className={"form-group d-none"}>
+                <label
+                  htmlFor="reffer_by"
+                  className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                >
+                  Reffered by:{/*<span className="text-danger">*</span>*/}
+                </label>
+                <select
+                  name="reffer_by"
+                  value={state.reffer_by || ""}
+                  onChange={onInputChange}
+                  className={
+                    errors.reffer_by
+                      ? "form-control text-capitalize border border-danger"
+                      : "form-control text-capitalize"
+                  }
+                  id="reffer_by"
+                >
+                  <option value={""}>Selct Partner </option>
+                  {agentList.map((item) => <option value={item.id}>{item.u_id + " " + item.name} </option>)}
+                </select>
+                {/* <Select
                           options={"" || agentList}
                           name="reffer_by"
                           id="reffer_by"
@@ -519,16 +550,16 @@ export default function CandidateSignup(props) {
                               : "form-control px-0 pt-4 border-0"
                           }
                         /> */}
-                  {/* ERROR MSG FOR REFFER BY */}
-                  {errors.reffer_by && (
-                    <span
-                      key={errors.reffer_by}
-                      className="text-danger font-size-3"
-                    >
-                      {errors.reffer_by}
-                    </span>
-                  )}
-                </div>
+                {/* ERROR MSG FOR REFFER BY */}
+                {errors.reffer_by && (
+                  <span
+                    key={errors.reffer_by}
+                    className="text-danger font-size-3"
+                  >
+                    {errors.reffer_by}
+                  </span>
+                )}
+              </div>
               <div className="form-group">
                 <label
                   htmlFor="resume"

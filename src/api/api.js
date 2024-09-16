@@ -155,7 +155,7 @@ export const EmployeeSignUp = async (props, permission) => {
   formData.append("resume", props.resume);
   formData.append("reffer_by", props.reffer_by);
   formData.append("name", props.name);
-  formData.append("contact_no", props.contact_no);
+  // formData.append("contact_no", props.contact_no);
   formData.append("permission", JSON.stringify(permission));
   const response = await axios.post(`${API_URL}employee_signup`, formData);
   return response.data;
