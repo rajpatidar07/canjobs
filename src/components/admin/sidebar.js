@@ -37,16 +37,21 @@ const AdminSidebar = (props) => {
     localStorage.setItem("isMenuOpen", isMenuOpen);
   }
 
+  const clearPageNo = () => {
+    localStorage.removeItem("PageNo");
+  };
   return (
     <div
-      className={`dashboard-sidebar-wrapper pt-5 sidebar_parent ${
-        isMenuOpen ? "show" : ""
-      }`}
+      className={`dashboard-sidebar-wrapper pt-5 sidebar_parent ${isMenuOpen ? "show" : ""
+        }`}
       id="sidebar"
     >
       <Link
         to={""}
-        onClick={sideBar}
+        onClick={() => {
+          sideBar()
+          clearPageNo()
+        }}
         className="sidebar-mobile-button"
         data-toggle="collapse"
         role="button"
@@ -82,6 +87,7 @@ const AdminSidebar = (props) => {
             }
           >
             <Link
+              onClick={() => clearPageNo()}
               to="/partner_profile"
               className={
                 "px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
@@ -97,11 +103,12 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Dashboard"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
+            onClick={() => clearPageNo()}
             to="/dashboard"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -115,6 +122,7 @@ const AdminSidebar = (props) => {
           className={`${props.heading === "Manage Applicants" ? "active" : ""}`}
         >
           <Link
+            onClick={() => clearPageNo()}
             to="/employee"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -125,6 +133,7 @@ const AdminSidebar = (props) => {
         </li>
         <li className={`${props.heading === "New Applicants" ? "active" : ""}`}>
           <Link
+            onClick={() => clearPageNo()}
             to="/selfemployee"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -141,6 +150,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
+            onClick={() => clearPageNo()}
             to="/adminclient"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -154,11 +164,12 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Manage Jobs"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
+            onClick={() => clearPageNo()}
             to="/job"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -169,15 +180,15 @@ const AdminSidebar = (props) => {
         </li>
         <li
           className={`d-none 
-             ${
-               user_type === "agent"
-                 ? "d-none"
-                 : props.heading === "Manage Self Jobs"
-                 ? "active"
-                 : ""
-             }`}
+             ${user_type === "agent"
+              ? "d-none"
+              : props.heading === "Manage Self Jobs"
+                ? "active"
+                : ""
+            }`}
         >
           <Link
+            onClick={() => clearPageNo()}
             to="/selfjob"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -191,11 +202,12 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Working Visa"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
+            onClick={() => clearPageNo()}
             to="/visa"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -206,6 +218,7 @@ const AdminSidebar = (props) => {
         </li>
         {/* <li className={user_type === "agent"?"d-none":props.heading === "Document Upload & Verification" ? "active" : ""}>
             <Link
+            onClick={()=>clearPageNo()}
               to="/document"
               className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
             >
@@ -217,11 +230,12 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "LMIA status"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
+            onClick={() => clearPageNo()}
             to="/lmia"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -232,6 +246,7 @@ const AdminSidebar = (props) => {
         </li>
         {/* <li className={user_type === "agent"?"d-none":props.heading === "Response" ? "active" : ""}>
             <Link
+            onClick={()=>clearPageNo()}
               to="/responses"
               className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
             >
@@ -240,6 +255,7 @@ const AdminSidebar = (props) => {
           </li> */}
         {/* <li className={user_type === "agent"?"d-none":props.heading === "Manage Follow-ups" ? "active" : ""}>
             <Link
+            onClick={()=>clearPageNo()}
               to="/followup"
               className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
             >
@@ -251,11 +267,12 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Interview"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
+            onClick={() => clearPageNo()}
             to="/interview"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -269,11 +286,12 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Manage Notes"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
+            onClick={() => clearPageNo()}
             to="/notes"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -291,6 +309,7 @@ const AdminSidebar = (props) => {
               }
             >
               <Link
+              onClick={()=>clearPageNo()}
                 to="/partner_dashboard"
                 className={
                   "px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
@@ -306,11 +325,12 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Assigned Job's"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
+            onClick={() => clearPageNo()}
             to="/assignedjobs"
             className={
               "px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
@@ -326,11 +346,12 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Manage Admin"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
+            onClick={() => clearPageNo()}
             to="/adminprofile"
             className={
               "px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
@@ -350,6 +371,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
+            onClick={() => clearPageNo()}
             to="/partner_dashboard"
             className={
               "px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
@@ -361,6 +383,7 @@ const AdminSidebar = (props) => {
         </li>
         {/* <li className={user_type === "agent"?"d-none":props.heading === "Email" ? "active" : ""}>
             <Link
+            onClick={()=>clearPageNo()}
               to="/email"
               className={
                 "px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
@@ -376,11 +399,12 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Manage Job Category"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
+            onClick={() => clearPageNo()}
             to="/category"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -394,11 +418,12 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Filter List"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
+            onClick={() => clearPageNo()}
             to="/filter"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -417,6 +442,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
+            onClick={() => clearPageNo()}
             to="/credentials"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -429,11 +455,12 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Local Candidate"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
+            onClick={() => clearPageNo()}
             to="/localcandidates"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -447,11 +474,12 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "PNP"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
+            onClick={() => clearPageNo()}
             to="/pnp"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -465,11 +493,12 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "PGWP"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
+            onClick={() => clearPageNo()}
             to="/pgwp"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -483,11 +512,12 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Visitors Visa"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
+            onClick={() => clearPageNo()}
             to="/visitorsvisa"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -501,11 +531,12 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Express Entry"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
+            onClick={() => clearPageNo()}
             to="/expressentry"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -519,11 +550,12 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Business VIsa"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
+            onClick={() => clearPageNo()}
             to="/businessvisa
               "
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
@@ -538,11 +570,12 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Federal PR"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
+            onClick={() => clearPageNo()}
             to="/federal_pr
               "
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"

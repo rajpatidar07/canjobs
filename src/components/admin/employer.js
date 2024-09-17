@@ -13,7 +13,7 @@ function Employer() {
   let [showAddEmployerModal, setShowEmployerMOdal] = useState(false);
   let [showEmployerDetails, setShowEmployerDetails] = useState(false);
   const [employerId, setEmployerID] = useState();
-  const [pageNo, setpageNo] = useState(1);
+  const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
   /*Filter and search state */
   const [industryFilterValue, setIndutryFilterValue] = useState("");
   const [corporationFilterValue, setcorporationFilterValue] = useState("");

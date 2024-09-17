@@ -27,7 +27,7 @@ function PartnerDashboard() {
   //   const [skillFilterValue, setSkillFilterValue] = useState(
   //     /*props ? props.skill : */ ""
   //   );
-  const [pageNo, setpageNo] = useState(1);
+  const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
   //   const [educationFilterValue, setEducationFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");

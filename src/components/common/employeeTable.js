@@ -305,6 +305,10 @@ export default function EmployeeTable(props) {
   function isTimeWithin24Hours(createdTime) {
     return Date.now() - new Date(createdTime).getTime() <= 86400000;
   }
+  const clearPageNo = () => {
+    localStorage.removeItem("PageNo");
+    props.setpageNo(1);
+  };
   return (
     <>
       {showAddEmployeeModal ? (
@@ -401,7 +405,10 @@ export default function EmployeeTable(props) {
                       ? "btn btn-primary"
                       : "btn btn-outline-primary"
                   }
-                  onClick={() => setStatus(-1)}
+                  onClick={() => {
+                    setStatus(-1)
+                    clearPageNo()
+                  }}
                   title="New"
                 >
                   New
@@ -411,7 +418,10 @@ export default function EmployeeTable(props) {
                   className={
                     status === 2 || status === "2" ? "btn btn-primary" : "btn btn-outline-primary"
                   }
-                  onClick={() => setStatus(2)}
+                  onClick={() => {
+                    setStatus(2)
+                    clearPageNo()
+                  }}
                   title="Prospect"
                 >
                   Prospect
@@ -421,7 +431,10 @@ export default function EmployeeTable(props) {
                   className={
                     status === 3 || status === "3" ? "btn btn-primary" : "btn btn-outline-primary"
                   }
-                  onClick={() => setStatus(3)}
+                  onClick={() => {
+                    setStatus(3)
+                    clearPageNo()
+                  }}
                   title="Lead"
                 >
                   Lead
@@ -431,7 +444,10 @@ export default function EmployeeTable(props) {
                   className={
                     status === "5" || status === 5 ? "btn btn-primary" : "btn btn-outline-primary"
                   }
-                  onClick={() => setStatus(5)}
+                  onClick={() => {
+                    setStatus(5)
+                    clearPageNo()
+                  }}
                   title="Lost"
                 >
                   Lost
@@ -441,7 +457,10 @@ export default function EmployeeTable(props) {
                   className={
                     status === "6" || status === 6 ? "btn btn-primary" : "btn btn-outline-primary"
                   }
-                  onClick={() => setStatus(6)}
+                  onClick={() => {
+                    setStatus(6)
+                    clearPageNo()
+                  }}
                   title="Dead"
                 >
                   Dead
@@ -456,7 +475,10 @@ export default function EmployeeTable(props) {
                     className={
                       status === "4" || status === 4 ? "btn btn-primary" : "btn btn-outline-primary"
                     }
-                    onClick={() => setStatus(4)}
+                    onClick={() => {
+                      setStatus(4)
+                      clearPageNo()
+                    }}
                     title="Retained"
                   >
                     Retained
@@ -466,7 +488,10 @@ export default function EmployeeTable(props) {
                     className={
                       status === "7" || status === 7 ? "btn btn-primary" : "btn btn-outline-primary"
                     }
-                    onClick={() => setStatus(7)}
+                    onClick={() => {
+                      setStatus(7)
+                      clearPageNo()
+                    }}
                     title="Working on"
                   >
                     Working on
@@ -476,7 +501,10 @@ export default function EmployeeTable(props) {
                     className={
                       status === "8" || status === 8 ? "btn btn-primary" : "btn btn-outline-primary"
                     }
-                    onClick={() => setStatus(8)}
+                    onClick={() => {
+                      setStatus(8)
+                      clearPageNo()
+                    }}
                     title="Submitted"
                   >
                     Submitted
@@ -492,7 +520,10 @@ export default function EmployeeTable(props) {
                     ? "btn btn-primary"
                     : "btn btn-outline-primary"
               }
-              onClick={() => setStatus("")}
+              onClick={() => {
+                setStatus("")
+                clearPageNo()
+              }}
               title="All"
             >
               All
@@ -736,7 +767,6 @@ export default function EmployeeTable(props) {
                                 to={`/${empdata.employee_id}`}
                                 onClick={() => {
                                   localStorage.setItem("StatusTab", status === "" ? "00" : status)
-                                  localStorage.setItem("PageNo", props.pageNo)
                                 }
                                   //   empdata.name !== null
                                   //     ? () => employeeDetails(empdata.employee_id)

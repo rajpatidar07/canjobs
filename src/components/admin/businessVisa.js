@@ -9,7 +9,7 @@ export default function BusinessVIsa() {
   /*Filter and search state */
   const [experienceFilterValue, setExperienceFilterValue] = useState("");
   const [skillFilterValue, setSkillFilterValue] = useState("");
-  const [pageNo, setpageNo] = useState(1);
+  const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
   const [educationFilterValue, setEducationFilterValue] = useState("");
   const [agentFilterValue, setAgentFilterValue] = useState("");
   const [adminFilterValue, setAdminFilterValue] = useState("");

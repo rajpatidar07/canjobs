@@ -32,8 +32,8 @@ function SelfApplicat(props) {
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
-  let [pageNo, setpageNo] = useState(1);
-let user_type = localStorage.getItem("userType")
+  let [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
+  let user_type = localStorage.getItem("userType")
 
   /* Function to show the single data to update Employee*/
   const employeeDetails = (e) => {
@@ -72,8 +72,8 @@ let user_type = localStorage.getItem("userType")
         }
       >
         {props.skill === null ||
-        props.skill === undefined ||
-        Object.keys(props.skill).length === 0 ? (
+          props.skill === undefined ||
+          Object.keys(props.skill).length === 0 ? (
           <>
             {/* <!-- Header Area --> */}
             <AdminHeader heading={"New Applicants"} />
@@ -81,7 +81,7 @@ let user_type = localStorage.getItem("userType")
             <AdminSidebar heading={"New Applicants"} />
           </>
         ) : null}
-        
+
         {/* <!--Add Employee Details Modal --> */}
         {showAddEmployeeModal ? (
           <PersonalDetails
@@ -112,8 +112,8 @@ let user_type = localStorage.getItem("userType")
                 </div>
                 {/* <!-- Employee Search and Filter- --> */}
                 <div className="row m-0 align-items-center">
-                 {/* Employees filter's */}
-                 <ApplicantsFilter
+                  {/* Employees filter's */}
+                  <ApplicantsFilter
                     user_type={user_type}
                     search={search}
                     onSearch={onSearch}
@@ -139,8 +139,8 @@ let user_type = localStorage.getItem("userType")
                     localFilterValue={localFilterValue}
                   />
                   {props.skill === null ||
-                  props.skill === undefined ||
-                  Object.keys(props.skill).length === 0 ? (
+                    props.skill === undefined ||
+                    Object.keys(props.skill).length === 0 ? (
                     <div className="col px-1 form_group mt-4 text-right">
                       <CustomButton
                         className="font-size-3 rounded-3 btn btn-primary border-0"
@@ -185,8 +185,8 @@ let user_type = localStorage.getItem("userType")
           <div
             className={
               props.skill === null ||
-              props.skill === undefined ||
-              Object.keys(props.skill).length === 0
+                props.skill === undefined ||
+                Object.keys(props.skill).length === 0
                 ? "dashboard-main-container mt-16"
                 : ""
             }

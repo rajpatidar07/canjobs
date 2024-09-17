@@ -15,7 +15,7 @@ function LimaContainer(props) {
   let [showAddJobsModal, setShowAddJobsModal] = useState(false);
   let [showJobDetails, setShowJobDetails] = useState(false);
   const [JobId, setJobId] = useState([]);
-  const [pageNo, setpageNo] = useState(1);
+  const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
   /*Filter and search state */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
   const [SkillFilterValue, setSkillFilterValue] = useState(

@@ -27,7 +27,7 @@ function JobDetailpageAdmim(props) {
   const [showJobEditModal, setShowJobEditModal] = useState(false);
   const [TabActive, setTabActive] = useState("detail");
   const [jobData, setJobData] = useState("");
-  const [pageNo, setpageNo] = useState(1);
+  const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
   // const [employerKycData, setEmployrKycData] = useState("");
 
   /*Function to get employer data */

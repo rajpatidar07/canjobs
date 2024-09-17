@@ -13,7 +13,7 @@ export default function EmployeeNotesTable({ search, userType }) {
   let [apiCall, setApiCall] = useState(false);
   const [data, setData] = useState([]);
   const [totalData, setTotalData] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(localStorage.getItem("PageNo") || 1);
   const [recordsPerPage] = useState(10);
   /* Shorting states */
   const [columnName, setcolumnName] = useState("id");
@@ -31,7 +31,7 @@ export default function EmployeeNotesTable({ search, userType }) {
       //   search
       // );
       const res = await getAllUsersFollowUpData("", userType, columnName, sortOrder, search, currentPage,
-        recordsPerPage,)
+        recordsPerPage, 1)
 
       if (res.status === 1) {
         setTotalData(res.data.total_rows);
@@ -48,7 +48,7 @@ export default function EmployeeNotesTable({ search, userType }) {
       setApiCall(false);
     }
     // eslint-disable-next-line
-  }, [apiCall, sortOrder, search]);
+  }, [apiCall, sortOrder, search, currentPage]);
 
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
@@ -114,7 +114,7 @@ export default function EmployeeNotesTable({ search, userType }) {
                     <Link
                       to={""}
                       onClick={() => {
-                        handleSort(userType === "employee" ?"name":"company_name");
+                        handleSort(userType === "employee" ? "name" : "company_name");
                       }}
                       className="text-gray"
                       title="Sort by name"
@@ -170,7 +170,7 @@ export default function EmployeeNotesTable({ search, userType }) {
                   <th
                     scope="col"
                     className="border-0 font-size-4 font-weight-normal"
-                  title="status"
+                    title="status"
                   >
                     status
                   </th>
@@ -190,7 +190,7 @@ export default function EmployeeNotesTable({ search, userType }) {
                       <tr className="text-capitalize" >
                         <th className=" py-5">
                           <p className="font-size-3 font-weight-normal text-black-2 mb-0"
-                          title={data.user_id}>
+                            title={data.user_id}>
                             {data.user_id}
                           </p>
                         </th>
@@ -288,8 +288,8 @@ export default function EmployeeNotesTable({ search, userType }) {
                         </th>
                         <th className="py-5">
                           <div className="font-size-3 mb-0 font-weight-semibold text-black-2"
-                          title={ConvertTime({_date:data.created_at,format:"DD MMMM, YYYY"})}>
-                          <ConvertTime _date={data.created_at} format={"DD MMMM, YYYY"} />
+                            title={ConvertTime({ _date: data.created_at, format: "DD MMMM, YYYY" })}>
+                            <ConvertTime _date={data.created_at} format={"DD MMMM, YYYY"} />
                             {/* {moment(data.created_at).format("DD MMMM, YYYY")} */}
                           </div>
                         </th>
@@ -338,7 +338,7 @@ export default function EmployeeNotesTable({ search, userType }) {
                           className="font-size-3 font-weight-normal text-black-2 mb-0text-truncate text-break"
                         >
                           <div className=" d-flex">
-                            <b className=""title="Description">Description: { }</b>
+                            <b className="" title="Description">Description: { }</b>
                             <span
                               className="px-2"
                               dangerouslySetInnerHTML={{

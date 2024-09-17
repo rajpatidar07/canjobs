@@ -2197,7 +2197,10 @@ export const getAllUsersFollowUpData = async (
   userType,
   column,
   sort,
-  search
+  search,
+  page,
+  limit,
+  status
 ) => {
   const response = await axios.post(
     `${API_URL}admin/getFollowUp`,
@@ -2207,6 +2210,9 @@ export const getAllUsersFollowUpData = async (
       column_name: column,
       sort_order: sort,
       search: search,
+      limit: limit,
+      status: status,
+      page: page
     },
     {
       headers: {

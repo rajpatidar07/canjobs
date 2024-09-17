@@ -12,7 +12,7 @@ export default function Asiigned_admin() {
   /*data and id states */
   // let [agentId, setAgentId] = useState();
   /*Filter and search state */
-  const [pageNo, setpageNo] = useState(1);
+  const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
   //   const [educationFilterValue, setEducationFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");

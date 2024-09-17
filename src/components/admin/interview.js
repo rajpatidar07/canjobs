@@ -8,7 +8,7 @@ export default function ManageInterview() {
   let [search, setSearch] = useState("");
   let [statusFilterValue, setStatusFilterValue] = useState("");
   const [searcherror, setSearchError] = useState("");
-  const [pageNo, setpageNo] = useState(1);
+  const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
   
   useEffect(() => {
     if ((search === "") === true) {

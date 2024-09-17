@@ -486,206 +486,206 @@ export default function CommentSection({
   };
   return (
     <div className="col-md-4 col-lg-4 col-sm-3 py-2 bg-light comments_and_replies">
-      {annotationDrawBox ? ( //condition for imm pdf
+      {/* //condition for imm pdf
         // (docData.name && docData.name.toLowerCase().includes("imm")
         //   ? replyCommentClick === undefined ||
         //   replyCommentClick === "" ||
         //   replyCommentClick === null
-        //   : addCommentFlag === true) ?
-        <div
-          style={
-            {
-              // position: "absolute",
-              // left: selectedAnnotation.x_axis + 10,
-              // top: selectedAnnotation.y_axis + 20,
-              // zIndex: 1,
-            }
+        //   : addCommentFlag === true) ? */}
+      <div
+        style={
+          {
+            // position: "absolute",
+            // left: selectedAnnotation.x_axis + 10,
+            // top: selectedAnnotation.y_axis + 20,
+            // zIndex: 1,
           }
-          className="pt-0 pb-5"
+        }
+        className="pt-0 pb-5"
+      >
+        <form
+          className="comment-form p-5 rounded bg-white"
+        // onSubmit={(e) => {
+        //   e.preventDefault();
+        //   addAnnotation(annotationDrawBox);
+        // }}
         >
-          <form
-            className="comment-form p-5 rounded bg-white"
-          // onSubmit={(e) => {
-          //   e.preventDefault();
-          //   addAnnotation(annotationDrawBox);
-          // }}
-          >
-            <div className="comment-input-container m-0">
-              <label className="input_label m-0">Add new comment:</label>
-              {/* <input
+          <div className="comment-input-container m-0">
+            <label className="input_label m-0">Add new comment:</label>
+            {/* <input
                 type="text"
                 value={comments || ""}
                 onChange={handleInputChange}
                 placeholder="Comments or add others with @"
                 className="comment-input"
               /> */}
-              <textarea
-                type="text"
-                value={comments || ""}
-                onChange={handleInputChange}
-                placeholder="Comments or add others with @"
-                className="comment-input border-0 bg-light"
-                rows={4}
-                style={{ outline: 0 }}
-              ></textarea>
-              {filteredEmails.length > 0 && (
-                <ul
-                  className="email-suggestions"
-                  style={{ maxHeight: 400, overflowY: "auto" }}
-                >
-                  {filteredEmails.map((email, index) => (
-                    <li
-                      key={index}
-                      onClick={() => handleEmailClick(email)}
-                      // onMouseOver={() => handleEmailMouseOver(email.email)}
-                      className="email-suggestion-item"
-                    >
-                      <strong>{email.name + (email.u_id ? " (Partner)" : "") + "(" + email.email + ")"}</strong>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-            {comments === "" ? null : (
-              <div
-                className="button-container mx-0 w-100"
-                style={{
-                  display: "flex",
-                  justifyContent: "end",
-                  gap: 15,
-                  alignItems: "center",
+            <textarea
+              type="text"
+              value={comments || ""}
+              onChange={handleInputChange}
+              placeholder="Comments or add others with @"
+              className="comment-input border-0 bg-light"
+              rows={4}
+              style={{ outline: 0 }}
+            ></textarea>
+            {filteredEmails.length > 0 && (
+              <ul
+                className="email-suggestions"
+                style={{ maxHeight: 400, overflowY: "auto" }}
+              >
+                {filteredEmails.map((email, index) => (
+                  <li
+                    key={index}
+                    onClick={() => handleEmailClick(email)}
+                    // onMouseOver={() => handleEmailMouseOver(email.email)}
+                    className="email-suggestion-item"
+                  >
+                    <strong>{email.name + (email.u_id ? " (Partner)" : "") + "(" + email.email + ")"}</strong>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+          {comments === "" ? null : (
+            <div
+              className="button-container mx-0 w-100"
+              style={{
+                display: "flex",
+                justifyContent: "end",
+                gap: 15,
+                alignItems: "center",
+              }}
+            >
+              <Link
+                className="btn_cancel text-muted"
+                onClick={() => {
+                  setComments("");
+                  setCommentToApi("")
+                  setAnnotationDrawBox("");
                 }}
               >
-                <Link
-                  className="btn_cancel text-muted"
-                  onClick={() => {
-                    setComments("");
-                    setCommentToApi("")
-                    setAnnotationDrawBox("");
+                Cancel
+              </Link>
+              <Link
+                type="submit"
+                className="save-comment-btn text-muted"
+                onClick={(e) => {
+                  e.preventDefault()
+                  addAnnotation(annotationDrawBox)
+                }}
+                style={{ fontSize: 30, lineHeight: 1 }}
+              >
+                <CiPaperplane />
+              </Link>
+            </div>
+          )}
+        </form>
+      </div>
+      <div>
+        <div style={{ marginTop: "0px" }}>
+          <div className="row m-0 px-2">
+            <div className="col mr-2 p-0 form_group">
+              <p className="input_label ">Filter by Admin:</p>
+              <div className="select_div">
+                <select
+                  name="admin"
+                  id="admin"
+                  // value={adminid}
+                  onChange={(e) => {
+                    // setAdminId(e.target.value)
+                    Getcomments("", e.target.value);
                   }}
+                  className="text-capitalize form-control"
                 >
-                  Cancel
-                </Link>
-                <Link
-                  type="submit"
-                  className="save-comment-btn text-muted"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    addAnnotation(annotationDrawBox)
-                  }}
-                  style={{ fontSize: 30, lineHeight: 1 }}
-                >
-                  <CiPaperplane />
-                </Link>
-              </div>
-            )}
-          </form>
-        </div>
-      ) : (
-        <div>
-          <div style={{ marginTop: "0px" }}>
-            <div className="row m-0 px-2">
-              <div className="col mr-2 p-0 form_group">
-                <p className="input_label ">Filter by Admin:</p>
-                <div className="select_div">
-                  <select
-                    name="admin"
-                    id="admin"
-                    // value={adminid}
-                    onChange={(e) => {
-                      // setAdminId(e.target.value)
-                      Getcomments("", e.target.value);
-                    }}
-                    className="text-capitalize form-control"
-                  >
-                    <option value={""}>Filter by Admin</option>
-                    {(allAdmin || []).map((data, index) => {
-                      return (
-                        <option value={data.admin_id} key={index}>
-                          {data.name}
-                        </option>
-                      );
-                    })}
-                  </select>
-                </div>
-              </div>
-              <div className="col ml-2 p-0 form_group">
-                <p className="input_label ">Filter by Status:</p>
-                <div className="select_div">
-                  <select
-                    name="status"
-                    id="status"
-                    onClick={(e) => {
-                      // setAnnotationStatus(e.target.value)
-                      Getcomments(e.target.value);
-                    }}
-                    className="text-capitalize form-control"
-                  >
-                    <option value={""}>Filter by Status</option>
-                    <option value={"1"}>Done</option>
-                    <option value={"0"}>Pending</option>
-                  </select>
-                </div>
+                  <option value={""}>Filter by Admin</option>
+                  {(allAdmin || []).map((data, index) => {
+                    return (
+                      <option value={data.admin_id} key={index}>
+                        {data.name}
+                      </option>
+                    );
+                  })}
+                </select>
               </div>
             </div>
-            <div className="row m-0 p-2 flex-column">
-              {commentsList.length === 0 ? (
-                <div className="col text-center">
-                  <h5>No comments</h5>
-                </div>
-              ) : (
-                (commentsList || []).map((commentItem, index) => (
-                  <div
-                    className={`card col-12 mb-3 p-0 comment_box_card bg-white
-                  ${annotationId === JSON.parse(commentItem.doctaskjson).id
-                        ? "highlighted-comment"
-                        : ""
-                      }`}
+            <div className="col ml-2 p-0 form_group">
+              <p className="input_label ">Filter by Status:</p>
+              <div className="select_div">
+                <select
+                  name="status"
+                  id="status"
+                  onClick={(e) => {
+                    // setAnnotationStatus(e.target.value)
+                    Getcomments(e.target.value);
+                  }}
+                  className="text-capitalize form-control"
+                >
+                  <option value={""}>Filter by Status</option>
+                  <option value={"1"}>Done</option>
+                  <option value={"0"}>Pending</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div className="row m-0 p-2 flex-column">
+            {commentsList.length === 0 ? (
+              <div className="col text-center">
+                <h5>No comments</h5>
+              </div>
+            ) : (
+              (commentsList || []).map((commentItem, index) => (
+                <div
+                  className={`card col-12 mb-3 p-0 comment_box_card bg-white
+                  ${(annotationId === JSON.parse(commentItem?.doctaskjson).id && (annotationId && JSON.parse(commentItem?.doctaskjson)))
+                      ? "highlighted-comment"
+                      : ""
+                    }`}
+                  style={{
+                    backgroundColor: "#fff",
+                    color: "white",
+                  }}
+                  onClick={() => {
+                    setAnnotationId(JSON.parse(commentItem?.doctaskjson).id || "");
+                    setReplyCommentClick(commentItem.id);
+                    getCommentsReplyList();
+                    setFilteredEmails([]);
+                    setComments("")
+                    setCommentToApi("")
+                    setSelectedAdmin("")
+                    // setSelectedAdminReplye("")
+                  }}
+                  key={index}
+                >
+                  <span
+                    className="comment_status_update "
                     style={{
-                      backgroundColor: "#fff",
-                      color: "white",
+                      cursor: "pointer",
+                      color: commentItem.status === "0" ? "blue" : "white",
+                      border:
+                        commentItem.status === "0" ? "solid 1px blue" : "",
+                      backgroundColor: commentItem.status === "1" && "green",
                     }}
-                    onClick={() => {
-                      setAnnotationId(JSON.parse(commentItem.doctaskjson).id);
-                      setReplyCommentClick(commentItem.id);
-                      getCommentsReplyList();
+                    onClick={(e) => {
+                      OnHandleUpdateComment(commentItem);
                       setFilteredEmails([]);
-                      setComments("")
-                      setCommentToApi("")
-                      setSelectedAdmin("")
-                      // setSelectedAdminReplye("")
+                      setAnnotationDrawBox("");
                     }}
-                    key={index}
                   >
-                    <span
-                      className="comment_status_update "
-                      style={{
-                        cursor: "pointer",
-                        color: commentItem.status === "0" ? "blue" : "white",
-                        border:
-                          commentItem.status === "0" ? "solid 1px blue" : "",
-                        backgroundColor: commentItem.status === "1" && "green",
-                      }}
-                      onClick={(e) => {
-                        OnHandleUpdateComment(commentItem);
-                        setFilteredEmails([]);
-                        setAnnotationDrawBox("");
-                      }}
-                    >
-                      &#x2713; {/* Checkmark symbol */}
-                    </span>
-                    <div className="card-body p-2">
-                      <div className="text-dark">
-                        <div className="d-flex profile_box gx-2 mb-1">
-                          <div className="media  align-items-center">
-                            <div
-                              className={`circle-24 mx-auto overflow-hidden text-capitalize text-white ${determineBackgroundColor(
-                                commentItem
-                              )}`}
-                              style={{ fontSize: "16px", fontWeight: 700 }}
-                            >
-                              {commentItem.task_creator_user_name.charAt(0)}
-                              {/* {commentItem.task_creator_user_id
+                    &#x2713; {/* Checkmark symbol */}
+                  </span>
+                  
+                  <div className="card-body p-2">
+                    <div className="text-dark">
+                      <div className="d-flex profile_box gx-2 mb-1">
+                        <div className="media  align-items-center">
+                          <div
+                            className={`circle-24 mx-auto overflow-hidden text-capitalize text-white ${determineBackgroundColor(
+                              commentItem
+                            )}`}
+                            style={{ fontSize: "16px", fontWeight: 700 }}
+                          >
+                            {commentItem.task_creator_user_name.charAt(0)}
+                            {/* {commentItem.task_creator_user_id
                                 ? allAdmin.find(
                                   (item) =>
                                     item.admin_id ===
@@ -700,11 +700,11 @@ export default function CommentSection({
                                     .name.charAt(0)
                                   : ""
                                 : ""} */}
-                            </div>
                           </div>
-                          <div className=" mb-0">
-                            <div className="font-size-3 font-weight-bold text-capitalize">
-                              {/* {commentItem.task_creator_user_id
+                        </div>
+                        <div className=" mb-0">
+                          <div className="font-size-3 font-weight-bold text-capitalize">
+                            {/* {commentItem.task_creator_user_id
                                 ? allAdmin.find(
                                   (item) =>
                                     item.admin_id ===
@@ -717,22 +717,22 @@ export default function CommentSection({
                                   ).name
                                   : ""
                                 : ""} */}
-                              {commentItem.task_creator_user_name}
-                            </div>
-                            <div className="text-gray font-size-2 font-weight-normal m-0 text-capitalize">
-                              <ConvertTime _date={commentItem.created_on} format={"HH:mm D MMM"} />
-                              {/* {moment(commentItem.created_on).format("HH:mm D MMM")} */}
-                            </div>
+                            {commentItem.task_creator_user_name}
+                          </div>
+                          <div className="text-gray font-size-2 font-weight-normal m-0 text-capitalize">
+                            <ConvertTime _date={commentItem.created_on} format={"HH:mm D MMM"} />
+                            {/* {moment(commentItem.created_on).format("HH:mm D MMM")} */}
                           </div>
                         </div>
                       </div>
+                    </div>
 
-                      {commentItem.subject_description && (
-                        <span className="card-title text-break text-dark m-0 font-size-3">
-                          <div className="msg-color" dangerouslySetInnerHTML={{ __html: commentItem.subject_description.replace(" @ ", " ") }} />
-                        </span>
-                      )}
-                      {/* {commentItem.assigned_to && (
+                    {commentItem.subject_description && (
+                      <span className="card-title text-break text-dark m-0 font-size-3">
+                        <div className="msg-color" dangerouslySetInnerHTML={{ __html: commentItem.subject_description.replace(" @ ", " ") }} />
+                      </span>
+                    )}
+                    {/* {commentItem.assigned_to && (
                     <span
                       className="text-break font-size-3 text-primary"
                       to={`mailto:${commentItem.assigned_to}`}
@@ -741,42 +741,42 @@ export default function CommentSection({
                       {`${commentItem.assigned_to}`}
                     </span>
                   )} */}
-                    </div>
-                    {
-                      replyCommentClick === commentItem.id ? (
-                        //Reply box
-                        <CommentReplyBox
-                          commentsReplyList={commentsReplyList}
-                          replyComment={replyComment}
-                          handleInputChange={handleInputChange}
-                          filteredEmails={filteredEmails}
-                          handleEmailClick={handleEmailClick}
-                          // handleEmailMouseOver={handleEmailMouseOver}
-                          ReplyAnnotation={ReplyAnnotation}
-                          setReplyCommentClick={setReplyCommentClick}
-                          commentItem={commentItem}
-                          allAdmin={allAdmin}
-                          determineBackgroundColor={determineBackgroundColor}
-                        />
-                      ) : null
-                      // <Link
-                      //   className="mx-5 mr-0 ml-auto font-size-3 "
-                      //   onClick={() => {
-                      //     setReplyCommentClick(commentItem.id);
-                      //     getCommentsReplyList();
-                      //     setFilteredEmails([]);
-                      //   }}
-                      // >
-                      //   Reply <FaReplyAll />
-                      // </Link>
-                    }
                   </div>
-                ))
-              )}
-            </div>
+                  {
+                    replyCommentClick === commentItem.id ? (
+                      //Reply box
+                      <CommentReplyBox
+                        commentsReplyList={commentsReplyList}
+                        replyComment={replyComment}
+                        handleInputChange={handleInputChange}
+                        filteredEmails={filteredEmails}
+                        handleEmailClick={handleEmailClick}
+                        // handleEmailMouseOver={handleEmailMouseOver}
+                        ReplyAnnotation={ReplyAnnotation}
+                        setReplyCommentClick={setReplyCommentClick}
+                        commentItem={commentItem}
+                        allAdmin={allAdmin}
+                        determineBackgroundColor={determineBackgroundColor}
+                      />
+                    ) : null
+                    // <Link
+                    //   className="mx-5 mr-0 ml-auto font-size-3 "
+                    //   onClick={() => {
+                    //     setReplyCommentClick(commentItem.id);
+                    //     getCommentsReplyList();
+                    //     setFilteredEmails([]);
+                    //   }}
+                    // >
+                    //   Reply <FaReplyAll />
+                    // </Link>
+                  }
+                </div>
+              ))
+            )}
           </div>
         </div>
-      )}
+      </div>
+
     </div>
   );
 }

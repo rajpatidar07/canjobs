@@ -34,7 +34,7 @@ export default function Visa() {
   const [IntrestedFilterValue, setIntrestedFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
-  const [pageNo, setpageNo] = useState(1);
+  const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
   //  const [categoryFilterValue, setCategoryFilterValue] = useState("");
   //  const [locationFilterValue, setLocationFilterValue] = useState("");
   //  const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");

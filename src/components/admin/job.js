@@ -25,7 +25,7 @@ function Job(props) {
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
   // const [company, setCompany] = useState("");
-  const [pageNo, setpageNo] = useState(1);
+  const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
   let [Json, setJson] = useState([]);
   // let location = useLocation();
   /*Function to get the jSon */
