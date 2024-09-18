@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import UserProfile from "../user/profile";
 import EmployeeTable from "../common/employeeTable";
 import ApplicantsFilter from "../common/applicantsFilter";
+import ExportExcelButton from "../common/exportExcelButton";
 function Employee(props) {
   /*Show modal states */
   let [apiCall, setApiCall] = useState(false);
@@ -140,15 +141,20 @@ function Employee(props) {
                   {props.skill === null ||
                     props.skill === undefined ||
                     Object.keys(props.skill).length === 0 ? (
-                    <div className="col px-1 form_group mt-4 text-right">
-                      <CustomButton
-                        className="font-size-3 rounded-3 btn btn-primary border-0"
-                        onClick={() => editEmployee("0")}
-                        title="Add Candidate"
-                      >
-                        Add Candidate
-                      </CustomButton>
-                    </div>
+                    <>
+                      <div className="col px-1 form_group mt-4 text-right">
+                        <CustomButton
+                          className="font-size-3 rounded-3 btn btn-primary border-0"
+                          onClick={() => editEmployee("0")}
+                          title="Add Candidate"
+                        >
+                          Add Candidate
+                        </CustomButton>
+                      </div>
+                      <div className="form_group mt-4 text-right">
+                        <ExportExcelButton type={"employee"} />
+                      </div>
+                    </>
                   ) : null}
                 </div>
                 <small className="text-danger">{searcherror}</small>

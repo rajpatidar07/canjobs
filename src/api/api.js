@@ -3407,3 +3407,17 @@ export const DeleteAgreement = async (id) => {
   );
   return response.data;
 };
+/* Export excel Api */
+export const ExportExcelApi = async (type) => {
+  const response = await axios.post(
+    `${API_URL}common/getDataForExcel`,
+    { type: type },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+}

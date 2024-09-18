@@ -11,6 +11,7 @@ import {
   UpdateDocuentcommentAssign,
 } from "../../../api/api";
 import ConvertTime from "../ConvertTime";
+import { FaEdit } from "react-icons/fa";
 export default function CommentSection({
   commentsList,
   docData,
@@ -26,6 +27,7 @@ export default function CommentSection({
   partnerList
 }) {
   const [comments, setComments] = useState();
+  const [commntData, setCommentData] = useState();
   const [commentToApi, setCommentToApi] = useState();
   const [replyCommentToApi, setReplyCommentToApi] = useState();
   const [replyComment, setReplyComment] = useState();
@@ -441,16 +443,70 @@ export default function CommentSection({
     }
   };
   /* Function to update comment and assign */
-  const OnHandleUpdateComment = async (originalData) => {
+  const OnHandleUpdateCommentStatus = async (originalData, status) => {
     let updatedData;
     //Condtion to update x and y axis on documet update
-
+    let boldComment = commentToApi.replace(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi, '<b>$1</b>')
+    let removeBTage = boldComment.replace(/title="(<b>)(.*?)(<\/b>)"/g, 'title="$2"')
+    const comment = removeBTage || originalData.subject_description
+    let IspartnerList = selectedPartner ? partnerList : []
+    let newAssinList = [...allAdmin, ...IspartnerList]
+    // let sender =
+    //   AdminType === "agent"
+    //     ? admin_name
+    //     : newAssinList.find((item) => item.admin_id === admin_id)
+    //       ? newAssinList.find((item) => item.admin_id === admin_id).name
+    //       : admin_name;
+    // let senderEmail =
+    //   AdminType === "agent"
+    //     ? admin_email
+    //     : newAssinList.find((item) => item.admin_id === admin_id)
+    //       ? newAssinList.find((item) => item.admin_id === admin_id).email
+    //       : "";
+    // Variables for mentioning admins
+    const email = selectedAdmin// (selectedAdmin + `${selectedPartner && "," + selectedPartner.email}`) || ""; ///\S+@\S+\.\S+/.test(comments) ? comments : "";
+    let assignedAdminName = (((newAssinList).filter((item) =>
+      selectedAdmin?.includes(item.email)
+    )
+      ? newAssinList
+        .filter((item) => selectedAdmin?.includes(item.email))
+        .map((admin) => admin.name)
+        .join(",")
+      : ""))
+    const assignedUserId = (newAssinList.filter((item) =>
+      selectedAdmin?.includes(item.email)
+    )
+      ? newAssinList
+        .filter((item) => selectedAdmin?.includes(item.email))
+        .map((admin) => admin.u_id ? admin.id : admin.admin_id)
+        .join(",")
+      : "")
+    // eslint-disable-next-line no-useless-concat
+    const assignedUserType = ((newAssinList.filter((item) =>
+      selectedAdmin?.includes(item.email)
+    )
+      ? newAssinList
+        .filter((item) => selectedAdmin?.includes(item.email))
+        .map((admin) => admin.u_id ? "agent" : admin.admin_type)
+        .join(",")
+      : ""))
     updatedData = { ...originalData };
     updatedData = {
       doc_id: originalData.doc_id,
-      status: originalData.status === "1" ? "0" : "1",
+      status: status,
       id: originalData.id,
       is_status_update: true,
+      subject_description: (comment === originalData.subject_description
+        ? originalData.subject_description : comment),
+        task_creator_user_id: admin_id,
+      task_creator_user_type: localStorage.getItem("userType") === "admin" ? "admin" : "agent",
+      assined_to_user_id: assignedUserId,
+      assigned_user_type: assignedUserType,
+      // type: "document",
+      doc_parent_id: originalData.doc_parent_id,
+      assigned_to: email,
+      assigned_to_name: assignedAdminName,
+
     }; //.status = originalData.status === "1" ? "0" : "1";
 
     try {
@@ -461,6 +517,7 @@ export default function CommentSection({
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        setCommentData()
         setComments("");
         setCommentToApi("")
         Getcomments();
@@ -483,6 +540,58 @@ export default function CommentSection({
         CommentRes.data.data.data.map((item) => JSON.parse(item.doctaskjson))
       );
     }
+  };
+  const extractEmailsFromHtml = (html) => {
+    // Extract static text and email titles
+    const staticTextMatch = html.match(/^[^<]*/); // Extract text before the first HTML tag
+    const staticText = staticTextMatch ? staticTextMatch[0] : '';
+
+    const emailRegex = /title="([^"]+)"/g;
+    let match;
+    const extractedEmails = [];
+    while ((match = emailRegex.exec(html)) !== null) {
+        extractedEmails.push(match[1]);
+    }
+
+    // Initialize variables to hold new values
+    let newSelectedAdmin = "";
+    let newComments = staticText; // Start with static text
+    let newCommentToApi = "";
+
+    // Iterate over extracted emails and find corresponding admin details
+    extractedEmails.forEach(email => {
+        const admin = allAdmin.find(admin => admin.email === email);
+        if (admin) {
+            newSelectedAdmin += admin.email + ",";
+            newComments += " " + admin.name; // Add space between names
+            newCommentToApi += ` <span title="${admin.email}" > <b>${admin.name}</b></span> `;
+        } else {
+            console.warn(`Admin not found for email: ${email}`);
+        }
+    });
+
+    // Remove trailing comma from newSelectedAdmin
+    if (newSelectedAdmin.endsWith(',')) {
+        newSelectedAdmin = newSelectedAdmin.slice(0, -1);
+    }
+
+    // Update state with new values
+    setSelectedAdmin(newSelectedAdmin);
+    setComments(newComments.trim()); // Trim to remove extra space at the end
+    setCommentToApi(newCommentToApi);
+
+    // Log the results for debugging
+    console.log('Selected Admin:', newSelectedAdmin);
+    console.log('Comments:', newComments);
+    console.log('Comment To API:', newCommentToApi);
+};
+
+
+  // Handler for link click
+  const handleLinkClick = (commentItem) => {
+    // setComments(commentItem.subject_description.replace(/<[^>]*>/g, ''));
+    setCommentData(commentItem);
+    extractEmailsFromHtml(commentItem.subject_description);
   };
   return (
     <div className="col-md-4 col-lg-4 col-sm-3 py-2 bg-light comments_and_replies">
@@ -562,6 +671,7 @@ export default function CommentSection({
                   setComments("");
                   setCommentToApi("")
                   setAnnotationDrawBox("");
+                  setCommentData()
                 }}
               >
                 Cancel
@@ -571,7 +681,11 @@ export default function CommentSection({
                 className="save-comment-btn text-muted"
                 onClick={(e) => {
                   e.preventDefault()
-                  addAnnotation(annotationDrawBox)
+                  if (commntData) {
+                    OnHandleUpdateCommentStatus(commntData)
+                  } else {
+                    addAnnotation(annotationDrawBox)
+                  }
                 }}
                 style={{ fontSize: 30, lineHeight: 1 }}
               >
@@ -649,31 +763,42 @@ export default function CommentSection({
                     setReplyCommentClick(commentItem.id);
                     getCommentsReplyList();
                     setFilteredEmails([]);
-                    setComments("")
+                    // setComments("")
                     setCommentToApi("")
                     setSelectedAdmin("")
                     // setSelectedAdminReplye("")
                   }}
                   key={index}
                 >
-                  <span
-                    className="comment_status_update "
-                    style={{
-                      cursor: "pointer",
-                      color: commentItem.status === "0" ? "blue" : "white",
-                      border:
-                        commentItem.status === "0" ? "solid 1px blue" : "",
-                      backgroundColor: commentItem.status === "1" && "green",
-                    }}
-                    onClick={(e) => {
-                      OnHandleUpdateComment(commentItem);
-                      setFilteredEmails([]);
-                      setAnnotationDrawBox("");
-                    }}
-                  >
-                    &#x2713; {/* Checkmark symbol */}
-                  </span>
-                  
+                  <div className="comment_status_update d-flex mr-10">
+                    <Link className="text-gray pr-2" title="Update Comment" onClick={() => {
+                      handleLinkClick(commentItem);
+                    }}>  <FaEdit /></Link>
+                    <Link
+                      className=""
+                      style={{
+                        cursor: "pointer",
+                        color: commentItem.status === "0" ? "blue" : "white",
+                        border:
+                          commentItem.status === "0" ? "solid 1px blue" : "",
+                        backgroundColor: commentItem.status === "1" && "green",
+                        borderRadius: "15px",
+                        padding: "13px 3px 8px 4px",
+                        textAlign: "center",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        marginTop: "1px",
+                      }}
+                      onClick={(e) => {
+                        OnHandleUpdateCommentStatus(commentItem, commentItem.status === "1" ? "0" : "1");
+                        setFilteredEmails([]);
+                        setAnnotationDrawBox("");
+                      }}
+                    >
+                      &#x2713; {/* Checkmark symbol */}
+                    </Link>
+                  </div>
                   <div className="card-body p-2">
                     <div className="text-dark">
                       <div className="d-flex profile_box gx-2 mb-1">
@@ -684,6 +809,7 @@ export default function CommentSection({
                             )}`}
                             style={{ fontSize: "16px", fontWeight: 700 }}
                           >
+                            {/* {console.log(comments,"pppppp",commntData)} */}
                             {commentItem.task_creator_user_name.charAt(0)}
                             {/* {commentItem.task_creator_user_id
                                 ? allAdmin.find(

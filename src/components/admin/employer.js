@@ -7,6 +7,7 @@ import EmployerProfile from "../company/profile";
 import CompanyDetails from "../forms/employer/companyDetail";
 import EmployerTable from "../common/employerTable";
 import { GetFilter } from "../../api/api";
+import ExportExcelButton from "../common/exportExcelButton";
 function Employer() {
   /*show modal and data, id state */
   let [apiCall, setApiCall] = useState(false);
@@ -69,17 +70,17 @@ function Employer() {
   const Corporation =
     Json && Json.Corporation
       ? Json.Corporation.filter(
-          (thing, index, self) =>
-            index === self.findIndex((t) => t.value === thing.value)
-        )
+        (thing, index, self) =>
+          index === self.findIndex((t) => t.value === thing.value)
+      )
       : [];
   /*Industry Json for not having same data */
   const Industry =
     Json && Json.Industry
       ? Json.Industry.filter(
-          (thing, index, self) =>
-            index === self.findIndex((t) => t.value === thing.value)
-        )
+        (thing, index, self) =>
+          index === self.findIndex((t) => t.value === thing.value)
+      )
       : [];
 
   return (
@@ -89,7 +90,7 @@ function Employer() {
         <AdminHeader heading={"Manage Clients"} />
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Manage Clients"} />
-        
+
         {/* <!-- Add Company Details Modal --> */}
         {showAddEmployerModal ? (
           <CompanyDetails
@@ -143,7 +144,7 @@ function Employer() {
                         className="text-capitalize nice-select pl-7 h-100 arrow-3 arrow-3-black form-control text-black-2 w-100"
                       >
                         <option value={""}>Client Corporation</option>
-                        {(Corporation || []).map((corporation,i) => (
+                        {(Corporation || []).map((corporation, i) => (
                           <option
                             key={i}
                             value={corporation.value}
@@ -168,7 +169,7 @@ function Employer() {
                         className="text-capitalize nice-select pl-7 h-100 arrow-3 arrow-3-black form-control text-black-2 w-100"
                       >
                         <option value={""}>Client Industry</option>
-                        {(Industry || []).map((industry,i) => (
+                        {(Industry || []).map((industry, i) => (
                           <option key={i} value={industry.value}>
                             {industry.value}
                           </option>
@@ -176,13 +177,18 @@ function Employer() {
                       </select>
                     </div>
                   </div>
-                  <div className="col px-1 form_group mt-4 text-right">
-                    <CustomButton
-                      className="font-size-3 rounded-3 btn btn-primary border-0"
-                      onClick={() => editEmployer("0")}
-                    >
-                      Add Client
-                    </CustomButton>
+                  <div className="col d-flex justify-content-evenly text-center">
+                    <div className="px-1 form_group mt-4 text-right">
+                      <CustomButton
+                        className="font-size-3 rounded-3 btn btn-primary border-0"
+                        onClick={() => editEmployer("0")}
+                      >
+                        Add Client
+                      </CustomButton>
+                    </div>
+                    <div className=" px-1 form_group mt-4 text-right">
+                      <ExportExcelButton type={"employer"} />
+                    </div>
                   </div>
                 </div>
                 <small className="text-danger">{searcherror}</small>
