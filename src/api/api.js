@@ -282,7 +282,7 @@ export const getallEmployeeData = async (
   jobSkill,
   status,
   job_id,
-  categorye,
+  employee_id,
   inserted,
   candian,
   agentId,
@@ -311,8 +311,8 @@ export const getallEmployeeData = async (
       interested_in: inserted,
       agent_id: agentId,
       assigned_by: assignedadminId,
-      category: "",
-      employee_id: subType,
+      category: subType,
+      employee_id: employee_id,
       is_local: localFilterValue
     },
     {
@@ -883,11 +883,13 @@ export const SendReplyCommit = async (
   senderType,
   employee_id,
   parent_id,
-  DocUserType
+  DocUserType,
+  id
 ) => {
   const response = await axios.post(
-    `${API_URL}/admin/sendMsg?document_user_type=${DocUserType}`,
+    `${API_URL}admin/sendMsg?document_user_type=${DocUserType}`,
     {
+      id: id,
       doc_id: data.doc_id,
       task_id: data.id,
       sender_id: senderId,

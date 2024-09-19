@@ -2145,7 +2145,7 @@ h2.jobsearch-JobComponent-description {
   font-weight: bold;
 }
 
-p {
+/* p {
   line-height: 1.5;
   margin-bottom: 20px;
   color: #666;
@@ -2159,7 +2159,7 @@ ul {
 
 ul li {
   margin-bottom: 10px;
-}
+} */
 
 /* Location Section */
 #jobLocationSectionWrapper {

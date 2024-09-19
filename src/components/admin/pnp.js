@@ -14,6 +14,7 @@ export default function Pnp() {
   const [adminFilterValue, setAdminFilterValue] = useState("");
   const [interestFilterValue, setinterestFilterValue] = useState("");
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
+  const [filterByEmployeeId, setFilterByEmployeeId] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
   let user_type = localStorage.getItem("userType")
@@ -73,6 +74,8 @@ export default function Pnp() {
                     setSearchError={setSearchError}
                     categoryFilterValue={categoryFilterValue}
                     setCategoryFilterValue={setCategoryFilterValue}
+                    setFilterByEmployeeId={setFilterByEmployeeId}
+                    filterByEmployeeId={filterByEmployeeId}
                     // skill={props.skill}
                     pageName={"pnp"}
                   />
@@ -100,6 +103,7 @@ export default function Pnp() {
                 setpageNo={setpageNo}
                 ApplicantType={"pnp"}
                 categoryFilterValue={categoryFilterValue}
+                filterByEmployeeId={filterByEmployeeId}
 
               />
             </div>

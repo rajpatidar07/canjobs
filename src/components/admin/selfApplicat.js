@@ -30,6 +30,7 @@ function SelfApplicat(props) {
   const [educationFilterValue, setEducationFilterValue] = useState("");
   const [interestFilterValue, setinterestFilterValue] = useState("");
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
+  const [filterByEmployeeId, setFilterByEmployeeId] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
   let [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
@@ -137,6 +138,8 @@ function SelfApplicat(props) {
                     pageName={"employee"}
                     setLocalFilterValue={setLocalFilterValue}
                     localFilterValue={localFilterValue}
+                    filterByEmployeeId={filterByEmployeeId}
+                    setFilterByEmployeeId={setFilterByEmployeeId}
                   />
                   {props.skill === null ||
                     props.skill === undefined ||
@@ -175,7 +178,7 @@ function SelfApplicat(props) {
                 interestFilterValue={interestFilterValue}
                 categoryFilterValue={categoryFilterValue}
                 localFilterValue={localFilterValue}
-
+                filterByEmployeeId={filterByEmployeeId}
               />
             </div>
           </div>

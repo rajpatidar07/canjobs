@@ -275,6 +275,7 @@ function LmiaStatus(props) {
             lmia={state.lmia_status}
             job={props.job}
             location={location.pathname}
+            selectedStatus={selectedStatus}
           />
           <form onSubmit={onLmiaUpdateClick}>
             {expandedStatus && (

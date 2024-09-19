@@ -208,6 +208,7 @@ export default function CommentSection({
       setReplyComment(prevValue => `${prevValue}${email.name} `);
       setReplyCommentToApi(prevValue => `${prevValue} <span title="${email.email}" > <b>${email.name}</b></span> `);
     } else {
+      console.log(selectedAdmin)
       setSelectedAdmin(prevValue => prevValue + email.email + ",");
       setComments(prevValue => `${prevValue}${email.name + (email.u_id ? " (Partner)" : "")}`);
       setCommentToApi(prevValue => `${prevValue} <span title="${email.email}" > <b>${email.name}</b></span> `);
@@ -498,7 +499,7 @@ export default function CommentSection({
       is_status_update: true,
       subject_description: (comment === originalData.subject_description
         ? originalData.subject_description : comment),
-        task_creator_user_id: admin_id,
+      task_creator_user_id: admin_id,
       task_creator_user_type: localStorage.getItem("userType") === "admin" ? "admin" : "agent",
       assined_to_user_id: assignedUserId,
       assigned_user_type: assignedUserType,
@@ -541,57 +542,83 @@ export default function CommentSection({
       );
     }
   };
-  const extractEmailsFromHtml = (html) => {
-    // Extract static text and email titles
-    const staticTextMatch = html.match(/^[^<]*/); // Extract text before the first HTML tag
-    const staticText = staticTextMatch ? staticTextMatch[0] : '';
+  // const extractEmailsFromHtml = (html) => {
+  //   // Extract static text and email titles
+  //   const staticTextMatch = html.match(/^[^<]*/); // Extract text before the first HTML tag
+  //   const staticText = staticTextMatch ? staticTextMatch[0] : '';
 
-    const emailRegex = /title="([^"]+)"/g;
-    let match;
-    const extractedEmails = [];
-    while ((match = emailRegex.exec(html)) !== null) {
-        extractedEmails.push(match[1]);
-    }
+  //   const emailRegex = /title="([^"]+)"/g;
+  //   let match;
+  //   const extractedEmails = [];
+  //   while ((match = emailRegex.exec(html)) !== null) {
+  //     extractedEmails.push(match[1]);
+  //   }
 
-    // Initialize variables to hold new values
-    let newSelectedAdmin = "";
-    let newComments = staticText; // Start with static text
-    let newCommentToApi = "";
+  //   // Initialize variables to hold new values
+  //   let newSelectedAdmin = "";
+  //   let newComments = staticText; // Start with static text
+  //   let newCommentToApi = "";
 
-    // Iterate over extracted emails and find corresponding admin details
-    extractedEmails.forEach(email => {
-        const admin = allAdmin.find(admin => admin.email === email);
-        if (admin) {
-            newSelectedAdmin += admin.email + ",";
-            newComments += " " + admin.name; // Add space between names
-            newCommentToApi += ` <span title="${admin.email}" > <b>${admin.name}</b></span> `;
-        } else {
-            console.warn(`Admin not found for email: ${email}`);
-        }
-    });
+  //   // Iterate over extracted emails and find corresponding admin details
+  //   console.log(extractedEmails, "pppp")
+  //   extractedEmails.forEach(email => {
+  //   const admin = allAdmin.find(admin => admin.email === email);
+  //   if (admin) {
+  //     newSelectedAdmin += admin.email + ",";
+  //     newComments += " " + admin.name; // Add space between names
+  //     newCommentToApi += ` <span title="${admin.email}" > <b>${admin.name}</b></span> `;
+  //   } else {
+  //     console.warn(`Admin not found for email: ${email}`);
+  //   }
+  // });
+  //   // Remove trailing comma from newSelectedAdmin
+  //   if (newSelectedAdmin.endsWith(',')) {
+  //     newSelectedAdmin = newSelectedAdmin.slice(0, -1);
+  //   }
 
-    // Remove trailing comma from newSelectedAdmin
-    if (newSelectedAdmin.endsWith(',')) {
-        newSelectedAdmin = newSelectedAdmin.slice(0, -1);
-    }
+  //   // Update state with new values
+  // setSelectedAdmin(newSelectedAdmin);
+  // setComments(newComments.trim()); // Trim to remove extra space at the end
+  // setCommentToApi(newCommentToApi);
 
-    // Update state with new values
-    setSelectedAdmin(newSelectedAdmin);
-    setComments(newComments.trim()); // Trim to remove extra space at the end
-    setCommentToApi(newCommentToApi);
+  //   // Log the results for debugging
+  //   console.log('Selected Admin:', newSelectedAdmin);
+  //   console.log('Comments:', newComments);
+  //   console.log('Comment To API:', newCommentToApi);
+  // };
+  // Function to extract names after '@' and get their corresponding emails
+  function extractEmailsFromComment(commentItem) {
+    // Extract assigned_to and assigned_to_name from commentItem
+    const { assigned_to, subject_description, assigned_to_name } = commentItem;
+    console.log(assigned_to, "subject_description =>", subject_description, "assigned_to_name =>", assigned_to_name)
+    // Split assigned_to into an array of emails and assigned_to_name into an array of names
+    const emailsArray = assigned_to?.split(',').map(email => email.trim());
+    const namesArray = assigned_to_name?.split(',').map(name => name.trim());
+    let newCommentToApi = subject_description;
 
-    // Log the results for debugging
-    console.log('Selected Admin:', newSelectedAdmin);
-    console.log('Comments:', newComments);
-    console.log('Comment To API:', newCommentToApi);
-};
 
+    // Iterate over the emailsArray and namesArray
+    emailsArray?.forEach((email, index) => {
+      const name = namesArray[index]; // Get the corresponding name for each email
+      const admin = allAdmin.find(admin => admin.email === email); // Find the admin by email
 
+      if (admin) {
+        // Append the <span> with the admin's email and name to the newCommentToApi
+        newCommentToApi += ` <span title="${email}"><b>${name}</b></span> `;
+      } else {
+        console.warn(`Admin not found for email: ${email}`);
+      }
+    })
+    setCommentToApi(newCommentToApi)
+    setSelectedAdmin(assigned_to)
+  }
+console.log(commentToApi,selectedAdmin)
   // Handler for link click
   const handleLinkClick = (commentItem) => {
-    // setComments(commentItem.subject_description.replace(/<[^>]*>/g, ''));
+    setComments(commentItem.subject_description.replace(/<[^>]*>/g, ''));
     setCommentData(commentItem);
-    extractEmailsFromHtml(commentItem.subject_description);
+    extractEmailsFromComment(commentItem, [...allAdmin, ...partnerList]);
+
   };
   return (
     <div className="col-md-4 col-lg-4 col-sm-3 py-2 bg-light comments_and_replies">

@@ -27,6 +27,7 @@ function Employee(props) {
   const [adminFilterValue, setAdminFilterValue] = useState("");
   const [interestFilterValue, setinterestFilterValue] = useState("");
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
+  const [filterByEmployeeId, setFilterByEmployeeId] = useState("");
   const [localFilterValue, setLocalFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
@@ -137,6 +138,8 @@ function Employee(props) {
                     pageName={"employee"}
                     localFilterValue={localFilterValue}
                     setLocalFilterValue={setLocalFilterValue}
+                    filterByEmployeeId={filterByEmployeeId}
+                    setFilterByEmployeeId={setFilterByEmployeeId}
                   />
                   {props.skill === null ||
                     props.skill === undefined ||
@@ -181,6 +184,7 @@ function Employee(props) {
                 interestFilterValue={interestFilterValue}
                 categoryFilterValue={categoryFilterValue}
                 localFilterValue={localFilterValue}
+                filterByEmployeeId={filterByEmployeeId}
               />
             </div>
           </div>

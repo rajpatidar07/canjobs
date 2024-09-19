@@ -159,7 +159,7 @@ const NewUserProfile = (props) => {
               LmiaCommentArray.push(subStageRes.data.data[index]);
               if (
                 subStageRes.data.data.filter(
-                  (item) => item.lmia_substage === "reject"
+                  (item) => item.lmia_substage === "refused"
                 ).length > 0
               ) {
                 LmiaData = LmiaData.filter(

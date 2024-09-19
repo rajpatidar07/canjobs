@@ -14,6 +14,7 @@ export default function PGWP() {
   const [adminFilterValue, setAdminFilterValue] = useState("");
   const [interestFilterValue, setinterestFilterValue] = useState("");
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
+  const [filterByEmployeeId, setFilterByEmployeeId] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
   let user_type = localStorage.getItem("userType")
@@ -73,6 +74,8 @@ export default function PGWP() {
                     setSearchError={setSearchError}
                     categoryFilterValue={categoryFilterValue}
                     setCategoryFilterValue={setCategoryFilterValue}
+                    filterByEmployeeId={filterByEmployeeId}
+                    setFilterByEmployeeId={setFilterByEmployeeId}
                     // skill={props.skill}
                     pageName={"pgwp"}
                   />
@@ -90,6 +93,7 @@ export default function PGWP() {
                 agentFilterValue={agentFilterValue}
                 adminFilterValue={adminFilterValue}
                 interestFilterValue={interestFilterValue}
+                filterByEmployeeId={filterByEmployeeId}
                 apiCall={apiCall}
                 setApiCall={setApiCall}
                 // skill={props.skill}

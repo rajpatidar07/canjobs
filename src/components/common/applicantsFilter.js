@@ -27,6 +27,8 @@ export default function ApplicantsFilter({
   categoryFilterValue,
   localFilterValue,
   setLocalFilterValue,
+  setFilterByEmployeeId,
+  filterByEmployeeId
 }) {
   // let [SkillList, setSkillList] = useState([]);
   // let [EducationList, setEducationList] = useState([]);
@@ -352,14 +354,41 @@ export default function ApplicantsFilter({
             type="text"
             className="form-control"
             placeholder={"Search by ID"}
-            value={categoryFilterValue}
+            value={filterByEmployeeId}
             id="sub type"
             name="sub type"
+            onChange={(e) => {
+              setFilterByEmployeeId(e.target.value);
+              setpageNo(1);
+            }}
+          />
+        </div>
+      </div>
+      <div
+        className={
+          (skill === null || skill === undefined) && (
+            pageName === "pnp" || pageName === "employee")
+            ? "col p-1 form_group mb-3"
+            : "d-none"
+        }
+      >
+        <p className="input_label">Filter by Sub Type:</p>
+        <div className="select_div">
+          <select
+            name="sub type"
+            value={categoryFilterValue}
+            id="sub type"
             onChange={(e) => {
               setCategoryFilterValue(e.target.value);
               setpageNo(1);
             }}
-          />
+            className="text-capitalize form-control"
+          >
+            <option value={""}>Candidate's sub type</option>
+            <option value={"aos"}>AOS</option>
+            <option value={"rrs"}>RRS</option>
+            <option value={"tech pathway"}>Tech Pathway</option>
+          </select>
         </div>
       </div>
       <div className={
@@ -385,33 +414,7 @@ export default function ApplicantsFilter({
           /> <span >Local</span>
         </label>
       </div>
-      {/* <div
-                className={
-                    (skill === null || skill === undefined) && (
-                        pageName === "pnp" || pageName === "employee")
-                        ? "col p-1 form_group mb-3"
-                        : "d-none"
-                }
-            >
-                <p className="input_label">Filter by Sub Type:</p>
-                <div className="select_div">
-                    <select
-                        name="sub type"
-                        value={categoryFilterValue}
-                        id="sub type"
-                        onChange={(e) => {
-                            setCategoryFilterValue(e.target.value);
-                            setpageNo(1);
-                        }}
-                        className="text-capitalize form-control"
-                    >
-                        <option value={""}>Candidate's sub type</option>
-                        <option value={"aos"}>AOS</option>
-                        <option value={"rrs"}>RRS</option>
-                        <option value={"tech pathway"}>Tech Pathway</option>
-                    </select>
-                </div>
-            </div> */}
+
     </>
   );
 }

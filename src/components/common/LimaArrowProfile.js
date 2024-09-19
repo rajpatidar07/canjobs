@@ -42,7 +42,7 @@ export default function LimaArrowProfile({ lmia, lmiaStatusRejectComment }) {
                           }`
                         : `d-none`
                     }`}
-                  >
+                  >{console.log(status)}
                     <span>onboarding</span>
                   </div>
                   <div
