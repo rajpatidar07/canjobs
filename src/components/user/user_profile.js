@@ -255,6 +255,8 @@ const NewUserProfile = (props) => {
     let data = {
       employee_id: eid,
       status: e,
+      documents_folder_id: PersonalDetail.documents_folder_id,
+      name: PersonalDetail.name,
     };
     try {
       let response = await AddEmployeeDetails(data);

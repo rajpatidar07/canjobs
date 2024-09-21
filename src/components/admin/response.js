@@ -12,6 +12,7 @@ import {
   // AddUpdateVisa,
   RemoveReservedEmployeeForJob,
   DeletRespone,
+  GetLimaSubStages,
 } from "../../api/api";
 import moment from "moment";
 import Pagination from "../common/pagination";
@@ -63,6 +64,7 @@ function JobResponse(props) {
   const [jobId, setJobId] = useState(props.responseId);
   const user_type = localStorage.getItem("userType");
   let [changeJob, setChangeJob] = useState(false);
+  const [lmiaSubStages, setLmiaSubStages] = useState(); // State to store LMIA substage data
 
   /*Function to get the jSon */
   const JsonData = async () => {
@@ -123,6 +125,7 @@ function JobResponse(props) {
         //   }
         // }
         setResponseData(userData.data.data);
+
         setTotalData(userData.data.total_rows);
         setIsLoading(false);
       }
@@ -137,6 +140,7 @@ function JobResponse(props) {
     JsonData();
     setApiCall(false);
     setChangeJob(false);
+
     // eslint-disable-next-line
   }, [
     skillFilterValue,
@@ -150,6 +154,27 @@ function JobResponse(props) {
     props.apiCall,
     apiCall,
   ]);
+  useEffect(() => {
+    const fetchLmiaSubStages = async () => {
+      if (response) {
+        try {
+          const subStagePromises = response.map(async (res) => {
+            const limiaSubRes = await GetLimaSubStages(res.id); // Fetch substage data from API
+            return limiaSubRes.data.data;
+          });
+
+          // Resolve all promises and set the result to lmiaSubStages
+          const allLmiaSubStages = await Promise.all(subStagePromises);
+          setLmiaSubStages(allLmiaSubStages.flat()); // Flatten and set the state
+
+        } catch (error) {
+          console.error("Error fetching LMIA substage:", error);
+        }
+      }
+    };
+
+    fetchLmiaSubStages(); // Call the function to fetch data only once when the response changes
+  }, [response]);
 
   /*Search Onchange function to Search REsponse data */
   const onSearch = (e) => {
@@ -329,7 +354,7 @@ function JobResponse(props) {
           <AdminHeader heading={"Response"} />
           {/* <!-- navbar- --> */}
           <AdminSidebar heading={"Response"} />
-          
+
         </>
       ) : null}
 
@@ -748,12 +773,12 @@ function JobResponse(props) {
                                         />
                                       </div>
                                     </div>
-                                        <div className=" mb-0" title=" N/A">
-                                          <p className="m-0 text-black-2 font-weight-bold text-capitalize"
-                                          >
-                                            N/A
-                                          </p>
-                                        </div>
+                                    <div className=" mb-0" title=" N/A">
+                                      <p className="m-0 text-black-2 font-weight-bold text-capitalize"
+                                      >
+                                        N/A
+                                      </p>
+                                    </div>
                                   </div>
                                 )}
                               </h3>
@@ -868,8 +893,17 @@ function JobResponse(props) {
                                       Submission
                                     </span>
                                   ) : res.lmia_status === "decision" ? (
-                                    <span className="px-3 py-2 badge badge-pill badge-gray">
-                                      Decision
+                                    <span
+                                      className={`px-3 py-2 badge badge-pill text-capitalize ${lmiaSubStages.find(stage => stage.lmia_status === "decision")?.lmia_substage === "approved"
+                                          ? "badge-shamrock"
+                                          : lmiaSubStages.find(stage => stage.lmia_status === "decision")?.lmia_substage === "refused"
+                                            ? "badge-danger"
+                                            : "badge-warning"
+                                        }`}
+                                    >
+                                      {
+                                        lmiaSubStages.find(stage => stage.lmia_status === "decision")?.lmia_substage || 'Awaiting decision'
+                                      }
                                     </span>
                                   ) : (
                                     //

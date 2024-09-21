@@ -37,44 +37,44 @@ function ContactInfo(props) {
         value === "" || value === null || value.trim() === ""
           ? "Comapny name is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : value.length < 2
-          ? "Comapny name should have 2 or more letter"
-          : "",
+            ? "Cannot use special character "
+            : value.length < 2
+              ? "Comapny name should have 2 or more letter"
+              : "",
     ],
     email: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? null
+            : "Email is invalid",
     ],
     contact_no: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Phone no is required"
           : value.length < 10
-          ? "Mobile number should be more than 10 digits"
-          : value.length > 13
-          ? "Mobile no should be of 13 digits"
-          : "",
+            ? "Mobile number should be more than 10 digits"
+            : value.length > 13
+              ? "Mobile no should be of 13 digits"
+              : "",
     ],
     designation: [
       (value) =>
         value === "" || value === null
           ? "Designation is required"
           : value.length < 2
-          ? "Designation should have 2 or more letter"
-          : "",
+            ? "Designation should have 2 or more letter"
+            : "",
     ],
     pin_code: [
       (value) =>
         value === "" || value === null
           ? ""
           : value.length > 6 || value.length < 6
-          ? "Pincode should be of 6 digit"
-          : "",
+            ? "Pincode should be of 6 digit"
+            : "",
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
@@ -101,7 +101,7 @@ function ContactInfo(props) {
     props.employerId === undefined || props.employerId === "0"
       ? setState(initialFormState)
       : EmployerData();
-      // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [props]);
 
   // COMPANY PERSONAL INFO SUBMIT BUTTON
@@ -118,6 +118,16 @@ function ContactInfo(props) {
           });
           props.setApiCall(true);
           return close();
+        }
+        if (responseData.message === "Email already exists") {
+          toast.error("Email already exists", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setErrors({ ...errors, email: "Email already exists" })
+          setLoading(false);
+          // props.setApiCall(true);
+          // return close();
         }
       } catch (err) {
         console.log(err);

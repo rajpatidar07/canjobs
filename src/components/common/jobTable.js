@@ -686,13 +686,79 @@ export default function JobTable(props) {
                                   <span className="px-3 py-2 badge badge-pill badge-warning">
                                     Submission
                                   </span>
-                                ) : job.lmia_status === "decision" ? (
-                                  <span className="px-3 py-2 badge badge-pill badge-dark">
-                                    Decision
-                                  </span>
-                                ) : (
-                                  <span>N/A</span>
-                                )
+                                ) : job.lmia_status === "decision" ?
+                                  job.lmia_status === "decision" &&
+                                    lmiaStatusRejectComment ? (
+                                    lmiaStatusRejectComment[0] !==
+                                    undefined &&
+                                    (lmiaStatusRejectComment || []).map(
+                                      (item, i) => {
+                                        return (
+                                          item === undefined ||
+                                            item === "undefined" ||
+                                            item === null ||
+                                            item === ""
+                                            ? null
+                                            : item.job_id === job.job_id
+                                        ) ? (
+                                          <div
+                                            key={i + 6}
+                                            className={`px-3 py-2 badge badge-pill ${item.lmia_substage ===
+                                              "approved"
+                                              ? " badge-shamrock"
+                                              : item.lmia_substage ===
+                                                "refused"
+                                                ? " badge-danger"
+                                                : " badge-waring"
+                                              }`}
+                                          >
+                                            <span>
+                                              {item.lmia_substage ===
+                                                "approved"
+                                                ? "Approved"
+                                                : item.lmia_substage ===
+                                                  "refused"
+                                                  ? "Refused"
+                                                  : "Awaiting Decision"}
+                                            </span>
+                                          </div>
+                                        ) : // <small className="mx-10" key={i}>
+                                          // {item.lmia_substage === "approved"
+                                          //   ? "Congratulation your Limia is Approved"
+                                          //   : item.lmia_substage === "awaiting decision"
+                                          //   ? "Your Limia status is in progress"
+                                          //   : item.lmia_substage === "reject"
+                                          //   ? "Sorry to inform you your Limia got rejected."
+                                          //   : ""}
+                                          // </small>
+                                          null;
+                                      }
+                                    )
+                                  ) : (
+                                    null
+                                  )
+                                    (
+                                    // <span className={`px-3 py-2 badge badge-pill ${job.lmia_substage ===
+                                    //   "approved"
+                                    //   ? " badge-shamrock"
+                                    //   : job.lmia_substage ===
+                                    //     "refused"
+                                    //     ? " badge-danger"
+                                    //     : " badge-waring"
+                                    //   }`}>
+                                    //   {
+                                    //     job.lmia_substage ===
+                                    //       "approved"
+                                    //       ? "Approved"
+                                    //       : job.lmia_substage ===
+                                    //         "refused"
+                                    //         ? "Refused"
+                                    //         : "Awaiting Decision"
+                                    //   }
+                                    // </span>
+                                  ) : (
+                                    <span>N/A</span>
+                                  )
                                 // ) : (job.lmia_status === "application submitted" ? (
                                 //   <span className="px-3 py-2 badge badge-pill badge-info">
                                 //     Application submitted
@@ -1057,7 +1123,7 @@ export default function JobTable(props) {
                                                 "approved"
                                                 ? "approved"
                                                 : item.lmia_substage ===
-                                                  "rejected"
+                                                  "refused"
                                                   ? "reject"
                                                   : "pending"
                                                 }`}
@@ -1067,8 +1133,8 @@ export default function JobTable(props) {
                                                   "approved"
                                                   ? "Approved"
                                                   : item.lmia_substage ===
-                                                    "rejected"
-                                                    ? "Rejected"
+                                                    "refused"
+                                                    ? "Refused"
                                                     : "Awaiting Decision"}
                                               </span>
                                             </div>

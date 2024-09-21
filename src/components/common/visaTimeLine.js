@@ -1,7 +1,7 @@
 import React from 'react';
 import FilterJson from '../json/filterjson';
 
-export default function VisaTimeLine({ visa}) {
+export default function VisaTimeLine({ visa, substage }) {
     /*function to get the stage of lmia */
     const currentIndex = FilterJson.visa_status.findIndex(
         (status) => status === visa
@@ -14,8 +14,18 @@ export default function VisaTimeLine({ visa}) {
                         const isDone = currentIndex > -1 && i <= currentIndex;
                         return (
                             <div key={i}
-                                className={`step m-2 text-capitalize ${isDone ? 'approved ' : 'text-capitalize'}`}> 
-                                <span>{status}</span>
+                                className={`step m-2 text-capitalize ${isDone ? 'approved ' : 'text-capitalize'} ${status === "file decision"
+                                    ?  substage === "rejected"
+                                            ? "reject"
+                                            : substage === "awaiting decision"
+                                                ? "pending"
+                                                : ""
+                                    : ""}
+                                  `}>
+                                <span className='text-capitalize'>
+                                    {status === "file decision"
+                                        ? substage !== "false" && substage ? substage : "file decision"
+                                        : status}</span>
                             </div>
                         )
                     })}

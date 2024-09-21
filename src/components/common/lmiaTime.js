@@ -15,19 +15,25 @@ export default function LmiaTime({ lmia, job, doc, selectedStatus }) {
             const isDone = currentIndex > -1 && i <= currentIndex;
             return (
               job === 'yes' ? (
-                <div
-                  key={i}
-                  className={`step m-2 text-capitalize ${isDone ?
-                    'approved ' :
-                    ''}`}
-                >
-                  <span>{status}</span>
+                <div key={i}
+                  className={`step m-2 text-capitalize ${isDone ? 'approved ' : ''} ${(selectedStatus.find((item) => item.lmia_substage === "refused") && status === "decision") ? " reject" : ""}`}>
+                  <span>{
+                    status === "decision"
+                      ? selectedStatus.find((item) => item.lmia_substage === "refused")
+                        ? "Refused"
+                        : "Approved"
+                      : status}</span>
                 </div>
               ) : (
                 i > 2 && (
                   <div key={i}
                     className={`step m-2 text-capitalize ${isDone ? 'approved ' : ''} ${(selectedStatus.find((item) => item.lmia_substage === "refused") && status === "decision") ? " reject" : ""}`}>
-                    <span>{status}</span>
+                    <span>{
+                      status === "decision"
+                        ? selectedStatus.find((item) => item.lmia_substage === "refused")
+                          ? "Refused"
+                          : "Approved"
+                        : status}</span>
                   </div>
                 )
               )

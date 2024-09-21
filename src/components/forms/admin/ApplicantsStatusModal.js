@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 export default function ApplicantsStatusModal(props) {
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
+  console.log(props.data)
   /*function to change applicants status */
   const OnStatusChangesClick = async (e) => {
     e.preventDefault();
@@ -13,7 +14,8 @@ export default function ApplicantsStatusModal(props) {
     let data = {
       employee_id: props.data.employee_id,
       status: status,
-      name: props.data.name
+      name: props.data.name,
+      documents_folder_id: props.data.documents_folder_id
     };
     try {
       let response = await AddEmployeeDetails(data);

@@ -24,6 +24,7 @@ import { AiOutlineFilePdf } from "react-icons/ai";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { PiBriefcaseLight } from "react-icons/pi";
 import ConvertTime from "./ConvertTime";
+import { FaForwardStep } from "react-icons/fa6";
 // import ApplicantCategory from "../forms/user/ApplicantCategory";
 export default function EmployeeTable(props) {
   let agentId = localStorage.getItem("agent_id");
@@ -174,10 +175,10 @@ export default function EmployeeTable(props) {
   // };
 
   /* Function to show the single data to update Employee*/
-  // const editVisa = (e) => {
-  // setVisaModal(true);
-  // setemployeeId(e);
-  // };
+  const editVisa = (e) => {
+    setVisaModal(true);
+    setemployeeId(e);
+  };
 
   /* Function to show the single data to update Employee Skills*/
   // const editEmployeeSkills = (e) => {
@@ -329,6 +330,8 @@ export default function EmployeeTable(props) {
           apiCall={apiCall}
           setApiCall={setApiCall}
           close={() => setVisaModal(false)}
+          type={props.ApplicantType}
+          substag={""}
         />
       ) : null}
       {showEducationModal ? (
@@ -1151,13 +1154,15 @@ export default function EmployeeTable(props) {
                             {props.skill === null ||
                               props.skill === undefined ? (
                               <>
-                                {/* <button
-      className="btn btn-outline-info action_btn"
-      onClick={() => editVisa(empdata.employee_id)}
-      title="Update Visa status"
-    >
-      <span className="fab fa-cc-visa text-gray px-2"></span>
-    </button> */}
+                                <button
+                                  className={!props.ApplicantType ? "d-none" : `"btn btn-outline-info action_btn"`}
+                                  onClick={() => editVisa(empdata)}
+                                  title={`Add/Update ${props.ApplicantType} status`}
+                                >
+                                  <span className="text-gray px-2">
+                                    <FaForwardStep />
+                                  </span>
+                                </button>
                                 {/* {props.visa === "yes" ? (
       <button
         className="btn btn-outline-info action_btn"

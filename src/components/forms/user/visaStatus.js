@@ -16,21 +16,22 @@ export default function VisaStatus(props) {
   const [loading, setLoading] = useState(false);
   const [apiCall, setApiCall] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState([]);
+  const [selectedSubStage, setSelectedSubStage] = useState(props.employeeData.substag);
   const [expandedStatus, setExpandedStatus] = useState(
-    props.employeeData.visa_status
+    props.employeeData?.visa_status
   );
   // eslint-disable-next-line
   let isExpanded = false;
   // USER PERSONAL DETAIL VALIDATION
   // INITIAL STATE ASSIGNMENT
   const initialFormStateuser = {
-    status: props.employeeData.visa_status,
-    country: props.employeeData.visa_country,
+    status: props.employeeData?.visa_status,
+    country: props.employeeData?.visa_country,
   };
   /*Function to get Visa sub stage */
   const GetVIsaSubSTage = async () => {
     try {
-      let Response = await GetVisaSubStages(props.employeeData.visa_id, "visa");
+      let Response = await GetVisaSubStages(props.employeeData?.visa_id, props.type);
       setSelectedStatus(Response.data.data.data);
     } catch (err) {
       console.log(err);
@@ -87,20 +88,20 @@ export default function VisaStatus(props) {
       setLoading(true);
       try {
         const responseData = await AddUpdateVisa(
-          props.employeeData.employee_id,
+          props.employeeData?.employee_id,
           state,
-          props.employeeData.visa_id
+          props.employeeData?.visa_id
         );
-        if (responseData.data.message === "visa inserted successfully") {
-          toast.success("Visa created successfully", {
+        if (responseData.data.message === `visa stage inserted successfully`) {
+          toast.success(`${props.type} stage created successfully`, {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
           setLoading(false);
           close();
         }
-        if (responseData.data.message === "visa updated successfully") {
-          toast.success("Visa status Updated successfully", {
+        if (responseData.data.message === `visa updated successfully`) {
+          toast.success(`${props.type} stage status Updated successfully`, {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
@@ -135,7 +136,7 @@ export default function VisaStatus(props) {
       data = {
         id: RemoveSubStage.id,
         misc_id: RemoveSubStage.misc_id,
-        type: "visa",
+        type: props.type,
         status: RemoveSubStage.status,
         substage: "false",
       };
@@ -146,8 +147,8 @@ export default function VisaStatus(props) {
       ]);
       /*Employee Visa sub stages */
       data = {
-        misc_id: props.employeeData.visa_id,
-        type: "visa",
+        misc_id: props.employeeData?.visa_id,
+        type: props.type,
         status: status,
         substage: subStage,
       };
@@ -156,33 +157,35 @@ export default function VisaStatus(props) {
       let Response = await AddUpdateEmployeeVisaSubStage(data);
       /*Removed sub stage response */
       if (Response.message === "updated successfully") {
-        toast.success("Visa Sub Stage Removed successfully", {
+        toast.success(`${props.type} Sub Stage Removed successfully`, {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
         // props.setApiCall(true);
-        // if (state.status !== props.employeeData.status && status !== state.status) {
+        // if (state.status !== props.employeeData?.status && status !== state.status) {
         //   setState({ ...state, status: status })
         //   if (typeof onVisaUpdateClick === 'function') {
         //     onVisaUpdateClick("sub");
         //   }
         // }
         setApiCall(true);
+        props.setApiCall(true);
       }
       /*Added sub stage response */
       if (Response.message === "created successfully") {
-        toast.success("Visa Sub Stage Added successfully", {
+        toast.success(`${props.type} Sub Stage Added successfully`, {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
         // props.setApiCall(true);
-        // if (state.status !== props.employeeData.status && status !== state.status) {
+        // if (state.status !== props.employeeData?.status && status !== state.status) {
         //   setState({ ...state, status: status })
         //   if (typeof onVisaUpdateClick === 'function') {
         //     onVisaUpdateClick("sub");
         //   }
         // }
         setApiCall(true);
+        props.setApiCall(true);
       }
     } catch (err) {
       console.log(err);
@@ -207,14 +210,15 @@ export default function VisaStatus(props) {
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form>
-            <h5 className="text-center pt-2 mb-7">Update Visa status</h5>
-            <VisaTimeLine visa={state.status} />
+            <h5 className="text-center pt-2 mb-7 text-capitalize">Update {props.type} status</h5>
+            <VisaTimeLine visa={state.status} substage={selectedSubStage} />
             {expandedStatus && (
               <VisaSubStageSelector
                 expandedStatus={expandedStatus}
                 selectedStatus={selectedStatus}
                 FilterJson={FilterJson}
                 handleSubStageSelection={handleSubStageSelection}
+                setSelectedSubStage={setSelectedSubStage}
               />
             )}
             <div className="form-group col mt-5">
@@ -256,7 +260,7 @@ export default function VisaStatus(props) {
                 </span>
               )}
             </div>
-            <div className="form-group col">
+            <div className={props.type === "visa" ? "form-group col" : "d-none"}>
               <label
                 htmlFor="country"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -268,7 +272,7 @@ export default function VisaStatus(props) {
                 value={state.country || ""}
                 onChange={onInputChange}
                 className={"form-control text-capitalize"}
-                // disabled={props.employeeData.visa_country}
+                // disabled={props.employeeData?.visa_country}
                 id="country"
               >
                 <option value={""}>Select visa Country </option>

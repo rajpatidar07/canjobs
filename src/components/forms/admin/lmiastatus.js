@@ -33,7 +33,6 @@ function LmiaStatus(props) {
   // const [company] = useState([]);
   // eslint-disable-next-line
   let isExpanded = false;
-
   /*Function to get lima sub stage */
   const GetSubSTage = async () => {
     try {
@@ -43,7 +42,7 @@ function LmiaStatus(props) {
       } else {
         Response = await GetLimaSubStages(props.resData.id);
       }
-      if (Response.data.data) {
+      if (Response.data.data) {                                                                                                                          
         setSelectedStatus(Response.data.data);
       } else setSelectedStatus([]);
     } catch (err) {
@@ -159,7 +158,7 @@ function LmiaStatus(props) {
     // eslint-disable-next-line
   }, [apiCall, lmia_status]);
 
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     lmia_status: "",
