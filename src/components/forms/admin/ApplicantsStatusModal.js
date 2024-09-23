@@ -29,7 +29,8 @@ export default function ApplicantsStatusModal(props) {
           try {
             let VisaResponse = await AddUpdateVisa(
               props.data.employee_id,
-              state
+              state, "",
+              "visa"
             );
             if (VisaResponse.data.message === "visa inserted successfully") {
               props.setApiCall(true);

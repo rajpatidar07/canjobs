@@ -393,63 +393,6 @@ const AdminSidebar = (props) => {
               Manage Email
             </Link>
           </li> */}
-
-        <li
-          className={
-            user_type === "agent"
-              ? "d-none"
-              : props.heading === "Manage Job Category"
-                ? "active"
-                : ""
-          }
-        >
-          <Link
-            onClick={() => clearPageNo()}
-            to="/category"
-            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
-          >
-            {/* <i className="fas fa-qrcode mr-5"></i> */}
-            <BsQrCodeScan className="sidebar_icon" />
-            Job Category
-          </Link>
-        </li>
-        <li
-          className={
-            user_type === "agent"
-              ? "d-none"
-              : props.heading === "Filter List"
-                ? "active"
-                : ""
-          }
-        >
-          <Link
-            onClick={() => clearPageNo()}
-            to="/filter"
-            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
-          >
-            {/* <i className="fas fa-filter mr-5"></i> */}
-            <TbFilterPlus className="sidebar_icon" />
-            Filter List
-          </Link>
-        </li>
-        <li
-          className={
-            admin_type === "super-admin"
-              ? props.heading === "Credentials"
-                ? "active"
-                : ""
-              : "d-none"
-          }
-        >
-          <Link
-            onClick={() => clearPageNo()}
-            to="/credentials"
-            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
-          >
-            <LuFileKey className="sidebar_icon" />
-            Credentials
-          </Link>
-        </li>
         <li
           className={
             user_type === "agent"
@@ -585,6 +528,63 @@ const AdminSidebar = (props) => {
             Federal PR
           </Link>
         </li>
+        <li
+          className={
+            user_type === "agent"
+              ? "d-none"
+              : props.heading === "Manage Job Category"
+                ? "active"
+                : ""
+          }
+        >
+          <Link
+            onClick={() => clearPageNo()}
+            to="/category"
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+          >
+            {/* <i className="fas fa-qrcode mr-5"></i> */}
+            <BsQrCodeScan className="sidebar_icon" />
+            Job Category
+          </Link>
+        </li>
+        <li
+          className={
+            user_type === "agent"
+              ? "d-none"
+              : props.heading === "Filter List"
+                ? "active"
+                : ""
+          }
+        >
+          <Link
+            onClick={() => clearPageNo()}
+            to="/filter"
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+          >
+            {/* <i className="fas fa-filter mr-5"></i> */}
+            <TbFilterPlus className="sidebar_icon" />
+            Filter List
+          </Link>
+        </li>
+        <li
+          className={
+            admin_type === "super-admin"
+              ? props.heading === "Credentials"
+                ? "active"
+                : ""
+              : "d-none"
+          }
+        >
+          <Link
+            onClick={() => clearPageNo()}
+            to="/credentials"
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+          >
+            <LuFileKey className="sidebar_icon" />
+            Credentials
+          </Link>
+        </li>
+
       </ul>
     </div>
   );

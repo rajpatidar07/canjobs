@@ -268,7 +268,7 @@ const NewUserProfile = (props) => {
         if (data.status === "4" && visaStatus.length === 0) {
           let state = { status: "onboard" };
           try {
-            let VisaResponse = await AddUpdateVisa(data.employee_id, state);
+            let VisaResponse = await AddUpdateVisa(data.employee_id, state, "", "visa");
             if (VisaResponse.data.message === "visa inserted successfully") {
               setApiCall(true);
             }

@@ -981,7 +981,7 @@ export const GetReplyCommit = async (doc_id) => {
 };
 
 /*Api to Add update visa */
-export const AddUpdateVisa = async (employee_id, state, id) => {
+export const AddUpdateVisa = async (employee_id, state, id, type) => {
   // /job_detail(employee_id, state, id)
   const response = await axios.put(
     `${API_URL}addUpdateVisa `,
@@ -989,6 +989,7 @@ export const AddUpdateVisa = async (employee_id, state, id) => {
       employee_id: employee_id,
       id: id,
       country: state.country,
+      type: type,
       status: state.status,
     },
     {

@@ -16,7 +16,7 @@ import Loader from "../common/loader";
 import JobModal from "../admin/Modal/jobModal";
 import VisaStatus from "../forms/user/visaStatus";
 import ApplicantsStatusModal from "../forms/admin/ApplicantsStatusModal";
-import {/* MdOutlineCastForEducation,*/MdTypeSpecimen, MdRealEstateAgent } from "react-icons/md";
+import {/* MdOutlineCastForEducation,*/MdTypeSpecimen, MdRealEstateAgent, MdEditNote } from "react-icons/md";
 // import { LiaUserEditSolid, LiaUserTieSolid } from "react-icons/lia";
 import { GoTasklist } from "react-icons/go";
 // import { GiSkills } from "react-icons/gi";
@@ -24,7 +24,7 @@ import { AiOutlineFilePdf } from "react-icons/ai";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { PiBriefcaseLight } from "react-icons/pi";
 import ConvertTime from "./ConvertTime";
-import { FaForwardStep } from "react-icons/fa6";
+import VisaTimeLine from "./visaTimeLine";
 // import ApplicantCategory from "../forms/user/ApplicantCategory";
 export default function EmployeeTable(props) {
   let agentId = localStorage.getItem("agent_id");
@@ -326,12 +326,11 @@ export default function EmployeeTable(props) {
       {showVisaModal ? (
         <VisaStatus
           show={showVisaModal}
-          employeeId={employeeId}
+          employeeData={employeeId}
           apiCall={apiCall}
           setApiCall={setApiCall}
           close={() => setVisaModal(false)}
           type={props.ApplicantType}
-          substag={""}
         />
       ) : null}
       {showEducationModal ? (
@@ -669,26 +668,26 @@ export default function EmployeeTable(props) {
                       </Link>
                     </th>
                   )} */}
-                  {/* {props.heading === "Dashboard" ? (
+                  {props.heading === "Dashboard" || !props.ApplicantType ? (
                     ""
                   ) : (
                     <th
                       scope="col"
                       className="border-0 font-size-4 font-weight-normal"
                     >
-                      <Link
+                      {/* <Link
                         to={""}
                         onClick={() => {
-                          handleSort("skill");
+                          handleSort("applicant_process_status");
                           props.setpageNo(1);
                         }}
                         className="text-gray"
-                        title="Sort by Skill"
-                      >
-                        Skills
-                      </Link>
+                        title="Sort by Applicant Stage"
+                      > */}
+                        Applicant Stage
+                      {/* </Link> */}
                     </th>
-                  )} */}
+                  )}
                   {props.heading === "Dashboard" ? (
                     ""
                   ) : (
@@ -750,223 +749,224 @@ export default function EmployeeTable(props) {
                 {/* Map function to show the data in the list*/}
                 {totalData === 0 || employeeData.length === 0 ? (
                   <tr>
-                    <th colSpan={11} className="bg-white text-center">
+                    <th colSpan={12} className="bg-white text-center">
                       No Data Found
                     </th>
                   </tr>
                 ) : (
                   (employeeData || []).map((empdata) => (
-                    <tr className="applicant_row" key={empdata.employee_id}>
-                      <td className=" py-5" title={empdata.employee_id}>
-                        <p className="font-size-3 font-weight-normal text-black-2 mb-0">
-                          {empdata.employee_id}
-                        </p>
-                      </td>
-                      <td className=" py-5">
-                        <div
-                        >
-                          <div className="d-flex profile_box gx-2">
-                            <div className="media  align-items-center">
-                              <Link
-                                to={`/${empdata.employee_id}`}
-                                onClick={() => {
-                                  localStorage.setItem("StatusTab", status === "" ? "00" : status)
-                                }
-                                  //   empdata.name !== null
-                                  //     ? () => employeeDetails(empdata.employee_id)
-                                  //     : null
-                                }
-                                title="Candidate Details">
-                                <div className="circle-30 mx-auto overflow-hidden">
-                                  {empdata.profile_photo === null ? (
-                                    <img
-                                      src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                                      alt=""
-                                      className="w-100"
-                                    />
-                                  ) : (
-                                    <img
-                                      src={empdata.profile_photo}
-                                      alt=""
-                                      className="w-100"
-                                    />
-                                  )}
-                                </div>
-                              </Link>
-                            </div>
-
-                            <div className=" mb-0">
-                              {empdata.name === null ||
-                                empdata.name === undefined ||
-                                empdata.name === "undefined" ||
-                                empdata.name === "" ? (
-                                <p className="font-size-3  mb-0">N/A</p>
-                              ) : (
-
+                    <>
+                      <tr className="applicant_row" key={empdata.employee_id}>
+                        <td className=" py-5" title={empdata.employee_id}>
+                          <p className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            {empdata.employee_id}
+                          </p>
+                        </td>
+                        <td className=" py-5">
+                          <div
+                          >
+                            <div className="d-flex profile_box gx-2">
+                              <div className="media  align-items-center">
                                 <Link
                                   to={`/${empdata.employee_id}`}
                                   onClick={() => {
                                     localStorage.setItem("StatusTab", status === "" ? "00" : status)
-                                    localStorage.setItem("PageNo", props.pageNo)
                                   }
                                     //   empdata.name !== null
                                     //     ? () => employeeDetails(empdata.employee_id)
                                     //     : null
                                   }
                                   title="Candidate Details">
-                                  <p
-                                    className="m-0 text-black-2 font-weight-bold text-capitalize text-truncate"
-                                    title={empdata.name}
-                                  >
-                                    {empdata.name}
-                                  </p>
+                                  <div className="circle-30 mx-auto overflow-hidden">
+                                    {empdata.profile_photo === null ? (
+                                      <img
+                                        src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                                        alt=""
+                                        className="w-100"
+                                      />
+                                    ) : (
+                                      <img
+                                        src={empdata.profile_photo}
+                                        alt=""
+                                        className="w-100"
+                                      />
+                                    )}
+                                  </div>
                                 </Link>
-                              )}
-                              {empdata.gender || empdata.marital_status ? (
-                                <p className="text-gray font-size-2 m-0 text-capitalize" title={(empdata.gender === "female"
-                                  ? "F"
-                                  : empdata.gender === "male"
-                                    ? "M"
-                                    : "O") + (empdata.marital_status ||
+                              </div>
+
+                              <div className=" mb-0">
+                                {empdata.name === null ||
+                                  empdata.name === undefined ||
+                                  empdata.name === "undefined" ||
+                                  empdata.name === "" ? (
+                                  <p className="font-size-3  mb-0">N/A</p>
+                                ) : (
+
+                                  <Link
+                                    to={`/${empdata.employee_id}`}
+                                    onClick={() => {
+                                      localStorage.setItem("StatusTab", status === "" ? "00" : status)
+                                      localStorage.setItem("PageNo", props.pageNo)
+                                    }
+                                      //   empdata.name !== null
+                                      //     ? () => employeeDetails(empdata.employee_id)
+                                      //     : null
+                                    }
+                                    title="Candidate Details">
+                                    <p
+                                      className="m-0 text-black-2 font-weight-bold text-capitalize text-truncate"
+                                      title={empdata.name}
+                                    >
+                                      {empdata.name}
+                                    </p>
+                                  </Link>
+                                )}
+                                {empdata.gender || empdata.marital_status ? (
+                                  <p className="text-gray font-size-2 m-0 text-capitalize" title={(empdata.gender === "female"
+                                    ? "F"
+                                    : empdata.gender === "male"
+                                      ? "M"
+                                      : "O") + (empdata.marital_status ||
+                                        empdata.date_of_birth
+                                        ? `${empdata.marital_status
+                                        },${moment().diff(
+                                          empdata.date_of_birth,
+                                          "years"
+                                        )} Y`
+                                        : null)}>
+                                    {empdata.gender === "female"
+                                      ? "F"
+                                      : empdata.gender === "male"
+                                        ? "M"
+                                        : "O"}
+                                    {/*Calculation of age from date of birth*/}(
+                                    {empdata.marital_status ||
                                       empdata.date_of_birth
                                       ? `${empdata.marital_status
                                       },${moment().diff(
                                         empdata.date_of_birth,
                                         "years"
                                       )} Y`
-                                      : null)}>
-                                  {empdata.gender === "female"
-                                    ? "F"
-                                    : empdata.gender === "male"
-                                      ? "M"
-                                      : "O"}
-                                  {/*Calculation of age from date of birth*/}(
-                                  {empdata.marital_status ||
-                                    empdata.date_of_birth
-                                    ? `${empdata.marital_status
-                                    },${moment().diff(
-                                      empdata.date_of_birth,
-                                      "years"
-                                    )} Y`
-                                    : null}
-                                  )
-                                </p>
-                              ) : null}
-                              {empdata.contact_no === null || !empdata.contact_no || empdata.contact_no === (0 || "0") ? null : (
-                                <p className="m-0" title={empdata.contact_no}>
-                                  +
-                                  <Link
-                                    className="text-dark font-size-2"
-                                    to={`tel:${empdata.contact_no}`}
-                                  >
-                                    {empdata.contact_no}
-                                  </Link>
-                                </p>
-                              )}
-                              <h3 className=" font-weight-normal text-black-2 mb-0">
-                                <p className="text-gray font-size-2 m-0" title={empdata.email}>
-                                  <Link
-                                    className="text-dark"
-                                    to={`mailto:${empdata.email}`}
-                                  >
-                                    {empdata.email}
-                                  </Link>
-                                </p>
-                              </h3>
-                              {empdata.is_featured === "1" ||
-                                empdata.is_featured === 1 ? (
-                                <span className="bg-orange text-white featured_tag">
-                                  Featured
-                                </span>
-                              ) : null}
-                              {empdata.created_by_admin === "0" ||
-                                empdata.created_by_admin === 0 ? (
-                                <span className="bg-info text-white web_tag">
-                                  Web
-                                </span>
-                              ) : null}
+                                      : null}
+                                    )
+                                  </p>
+                                ) : null}
+                                {empdata.contact_no === null || !empdata.contact_no || empdata.contact_no === (0 || "0") ? null : (
+                                  <p className="m-0" title={empdata.contact_no}>
+                                    +
+                                    <Link
+                                      className="text-dark font-size-2"
+                                      to={`tel:${empdata.contact_no}`}
+                                    >
+                                      {empdata.contact_no}
+                                    </Link>
+                                  </p>
+                                )}
+                                <h3 className=" font-weight-normal text-black-2 mb-0">
+                                  <p className="text-gray font-size-2 m-0" title={empdata.email}>
+                                    <Link
+                                      className="text-dark"
+                                      to={`mailto:${empdata.email}`}
+                                    >
+                                      {empdata.email}
+                                    </Link>
+                                  </p>
+                                </h3>
+                                {empdata.is_featured === "1" ||
+                                  empdata.is_featured === 1 ? (
+                                  <span className="bg-orange text-white featured_tag">
+                                    Featured
+                                  </span>
+                                ) : null}
+                                {empdata.created_by_admin === "0" ||
+                                  empdata.created_by_admin === 0 ? (
+                                  <span className="bg-info text-white web_tag">
+                                    Web
+                                  </span>
+                                ) : null}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                        {empdata.is_featured === "1" ||
-                          empdata.is_featured === 1 ? (
-                          <span className="bg-orange text-white featured_tag">
-                            Featured
-                          </span>
-                        ) : null}
-                      </td>
-                      {props.heading === "Dashboard" ? (
-                        ""
-                      ) :
-                        <td className="py-5 ">
-                          {empdata.created_by_admin === null || !empdata.created_by_admin || empdata.created_by_admin === ("0" || 0) ? (
-                            <p className="font-size-3  mb-0">N/A</p>
-                          ) : (
-                            <p
-                              className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate text-capitalize"
-                              title={admintList?.find((item) => item.admin_id === empdata?.created_by_admin)?.name}
-                            >
-                              {admintList?.find((item) => item.admin_id === empdata?.created_by_admin)?.name}
-                            </p>
-                          )}
-                        </td>}
-                      {props.heading === "Dashboard" ? (
-                        ""
-                      ) :
-                        <td className="py-5 ">
-                          {empdata.updated_at === null || !empdata.updated_at || empdata.updated_at === "0000-00-00 00:00:00" ? (
-                            <p className="font-size-3  mb-0">N/A</p>
-                          ) : (
-                            <p
-                              className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate text-capitalize"
-                              title={moment(empdata?.updated_at).fromNow()}
-                            >
-                              {moment(empdata?.updated_at).fromNow()}
-                            </p>
-                          )}
-                        </td>}
-                      {props.heading === "Dashboard" ? (
-                        ""
-                      ) : (
-                        <td className=" py-5">
-                          {empdata.language === null ? (
-                            <p className="font-size-3  mb-0">N/A</p>
-                          ) : (
-                            <p className="font-size-3 font-weight-normal text-black-2 mb-0" title={ConvertTime({ _date: empdata.created_at, format: "DD MMMM, YYYY" })}>
-                              {/* {empdata.language} */}
-                              <ConvertTime _date={empdata.created_at} format={"DD MMMM, YYYY"} />
-                              {/* {moment(empdata.created_at).format(
+                          {empdata.is_featured === "1" ||
+                            empdata.is_featured === 1 ? (
+                            <span className="bg-orange text-white featured_tag">
+                              Featured
+                            </span>
+                          ) : null}
+                        </td>
+                        {props.heading === "Dashboard" ? (
+                          ""
+                        ) :
+                          <td className="py-5 ">
+                            {empdata.created_by_admin === null || !empdata.created_by_admin || empdata.created_by_admin === ("0" || 0) ? (
+                              <p className="font-size-3  mb-0">N/A</p>
+                            ) : (
+                              <p
+                                className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate text-capitalize"
+                                title={admintList?.find((item) => item.admin_id === empdata?.created_by_admin)?.name}
+                              >
+                                {admintList?.find((item) => item.admin_id === empdata?.created_by_admin)?.name}
+                              </p>
+                            )}
+                          </td>}
+                        {props.heading === "Dashboard" ? (
+                          ""
+                        ) :
+                          <td className="py-5 ">
+                            {empdata.updated_at === null || !empdata.updated_at || empdata.updated_at === "0000-00-00 00:00:00" ? (
+                              <p className="font-size-3  mb-0">N/A</p>
+                            ) : (
+                              <p
+                                className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate text-capitalize"
+                                title={moment(empdata?.updated_at).fromNow()}
+                              >
+                                {moment(empdata?.updated_at).fromNow()}
+                              </p>
+                            )}
+                          </td>}
+                        {props.heading === "Dashboard" ? (
+                          ""
+                        ) : (
+                          <td className=" py-5">
+                            {empdata.language === null ? (
+                              <p className="font-size-3  mb-0">N/A</p>
+                            ) : (
+                              <p className="font-size-3 font-weight-normal text-black-2 mb-0" title={ConvertTime({ _date: empdata.created_at, format: "DD MMMM, YYYY" })}>
+                                {/* {empdata.language} */}
+                                <ConvertTime _date={empdata.created_at} format={"DD MMMM, YYYY"} />
+                                {/* {moment(empdata.created_at).format(
                                 "DD MMMM, YYYY"
                               )} */}
-                            </p>
-                          )}
-                        </td>
-                      )}
-                      {props.heading === "Dashboard" || user_type === "agent" ? (
-                        ""
-                      ) : (
-                        <td className=" py-5">
-                          {empdata.agent_name === null ? (
-                            <p className="font-size-3  mb-0">N/A</p>
-                          ) : (
-                            <Link
-                              to={`/partner_profile`}
-                              onClick={localStorage.setItem("agent_id", empdata.reffer_by)}
-                            >
-                              <p
-                                className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
-                                title={
-                                  empdata.agent_u_id + " " + empdata.agent_name
-                                }
-                              >
-                                {empdata.agent_u_id + " "}
-                                {empdata.agent_name}
                               </p>
-                            </Link>
-                          )}
-                        </td>
-                      )}
-                      {/* {props.heading === "Dashboard" ? (
+                            )}
+                          </td>
+                        )}
+                        {props.heading === "Dashboard" || user_type === "agent" ? (
+                          ""
+                        ) : (
+                          <td className=" py-5">
+                            {empdata.agent_name === null ? (
+                              <p className="font-size-3  mb-0">N/A</p>
+                            ) : (
+                              <Link
+                                to={`/partner_profile`}
+                                onClick={localStorage.setItem("agent_id", empdata.reffer_by)}
+                              >
+                                <p
+                                  className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
+                                  title={
+                                    empdata.agent_u_id + " " + empdata.agent_name
+                                  }
+                                >
+                                  {empdata.agent_u_id + " "}
+                                  {empdata.agent_name}
+                                </p>
+                              </Link>
+                            )}
+                          </td>
+                        )}
+                        {/* {props.heading === "Dashboard" ? (
                         ""
                       ) : (
                         <td className=" py-5">
@@ -982,132 +982,147 @@ export default function EmployeeTable(props) {
                           )}
                         </td>
                       )} */}
-                      {/* {props.heading === "Dashboard" ? (
-                        ""
-                      ) : (
-                        <td className=" py-5">
-                          {empdata.skill === null ? (
-                            <p className="font-size-3  mb-0">N/A</p>
-                          ) : (
-                            <p className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate">
-                              {empdata.skill}
-                            </p>
-                          )}
-                        </td>
-                      )} */}
-                      {props.heading === "Dashboard" ? (
-                        ""
-                      ) : (
-                        // <td className=" py-5">
-                        //   {empdata.experience === null ? (
-                        //     <p className="font-size-3 mb-0">N/A</p>
-                        //   ) : (
-                        //     <p className="font-size-3 font-weight-normal text-black-2 mb-0">
-                        //       {empdata.experience === "1-3 " ||
-                        //         empdata.experience === "1-2 " ||
-                        //         empdata.experience === "3-5 " ||
-                        //         empdata.experience === "5-7 " ||
-                        //         empdata.experience === "7+ "
-                        //         ? empdata.experience + "years"
-                        //         : empdata.experience}
-                        //     </p>
-                        //   )}
-                        // </td>
-                        <td className="text-center ">
-                          {empdata.interested_in === null || !empdata.interested_in ? (
-                            <p className="font-size-3 mb-0" title="N/A">N/A</p>
-                          ) : (
-                            <p className={`font-size-2 font-weight-normal text-black-2 mb-0 ${empdata.interested_in === "pnp" || empdata.interested_in === "pgwp" ?
-                              `text-uppercase` :
-                              "text-capitalize"}`}
-                              title={empdata.interested_in}>
-                              <span
-                                className={
-                                  `p-1 ${empdata.interested_in === "visitor visa"
-                                    ? "text-dark" : "text-white"} text-center  border rounded-pill 
-                                  ${empdata.interested_in === "business visa"
-                                    ? "bg-eastern"
-                                    : empdata.interested_in === "co-op"
-                                      ? "bg-secondary"
-                                      : empdata.interested_in === "express entry"
-                                        ? "bg-violet"
-                                        : empdata.interested_in === "full-time"
-                                          ? "bg-info"
-                                          : empdata.interested_in === "pnp"
-                                            ? "bg-warning"
-                                            : empdata.interested_in === "spousal open work permit"
-                                              ? "bg-coral-opacity-visible"
-                                              : empdata.interested_in === "super visa"
-                                                ? "bg-allports"
-                                                : empdata.interested_in === "visitor visa"
-                                                  ? "bg-conch"
-                                                  : empdata.interested_in === "work permit extension"
-                                                    ? "bg-pink"
-                                                    : empdata.interested_in === "working visa"
-                                                      ? "bg-poppy"
-                                                      : empdata.interested_in === "workpermit application"
-                                                        ? "bg-success"
-                                                        : empdata.interested_in === "federal PR"
-                                                          ? "bg-poppy" : empdata.interested_in === "visitor record" ?
-                                                            "bg-helio"
-                                                            : "bg-primary"
-                                  }`
-                                }
-                              >
-                                {empdata.interested_in}
+                        <td className={!props.ApplicantType ? "d-none" : ""}>
+                          <p className="font-size-2 font-weight-normal text-black-2 mb-0"
+                            title={empdata.applicant_process_status || "N/A"}>
+                            {empdata.applicant_process_status === "onboard" ? (
+                              <span className="p-1 bg-coral-opacity-visible text-white text-center w-100 border rounded-pill">
+                                On Board
                               </span>
-                            </p>
-                          )}
-                        </td>
-                      )}
-                      {props.ApplicantType === "pnp" && (
-                        <td className="text-center">
-                          {empdata.category === null || !empdata.category ? (
-                            <p className="font-size-3 mb-0" title="N/A">N/A</p>
-                          ) : (
-                            <p className={`font-size-2 font-weight-normal text-black-2 mb-0 
-                            ${(empdata.category === "tech pathway" || empdata.category === "Tech Pathway") ? "text-capitalize" : `text-uppercase`
-                              }`}
-                              title={empdata.category}>
-                              <span
-                                className={`p-1 text-white text-center border rounded-pill ${(empdata.category === "tech pathway" || empdata.category === "Tech Pathway") ? "bg-info " : (empdata.category === "rrs" || empdata.category === "RRS") ?
-                                  "bg-warning" : (empdata.category === "aos" || empdata.category === "AOS") ?
-                                    "bg-coral-opacity-visible" : ""
+                            ) : empdata.applicant_process_status === "documentation" ? (
+                              <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
+                                Documentation
+                              </span>
+                            ) : empdata.applicant_process_status === "file preparation" ? (
+                              <span className="p-1 bg-info text-white text-center w-100 border rounded-pill">
+                                File Preparation
+                              </span>
+                            ) : empdata.applicant_process_status === "file review" ? (
+                              <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
+                                File Review
+                              </span>
+                            ) : empdata.applicant_process_status === "file submission" ? (
+                              <span className="p-1 bg-dark text-white text-center w-100 border rounded-pill">
+                                File Submission
+                              </span>
+                            ) : empdata.applicant_process_status === "file decision" ? (
+                              <div
+                                className={`px-3 py-2 badge badge-pill ${empdata.applicant_process_substages ===
+                                  "approved"
+                                  ? " badge-shamrock"
+                                  : empdata.applicant_process_substages ===
+                                    "rejected"
+                                    ? " badge-danger"
+                                    : " badge-warning text-white"
                                   }`}
                               >
-                                {empdata.category}
+                                <span>
+                                  {empdata.applicant_process_substages ===
+                                    "approved"
+                                    ? "Approved"
+                                    : empdata.applicant_process_substages ===
+                                      "rejected"
+                                      ? "Rejected"
+                                      : "Awaiting Decision"}
+                                </span>
+                              </div>
+                            ) : (
+                              <span className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                N/A
                               </span>
-                            </p>
-                          )}
+                            )}
+                          </p>
                         </td>
-                      )}
-                      {props.visa === "yes" ? null : (
-                        <td className="text-center ">
-                          <p className="font-size-2 font-weight-normal text-black-2 mb-0"
-                            title={empdata.status === "1" || empdata.status === "0" ?
-                              "New" : empdata.status === "2" ?
-                                "Prospect" : empdata.status === "3" ?
-                                  "Lead" : empdata.status === "4" ?
-                                    "Retained" : empdata.status === "5" ?
-                                      "Lost" : empdata.status === "6" ?
-                                        "Dead" : empdata.status === "7" ?
-                                          "Working on" : empdata.status === "8" ?
-                                            "Submitted" : "N/A"}>
-                            <span
-                              className={`p-1 text-white text-center  border rounded-pill ${empdata.status === "1" || empdata.status === "0" ? (
-                                !isTimeWithin24Hours(empdata.created_at)
-                                  ? "bg-danger "
-                                  : "bg-info ") : empdata.status === "2" ?
-                                "bg-warning" : empdata.status === "3" ?
-                                  "bg-coral-opacity-visible" : empdata.status === "4" ?
-                                    "bg-secondary" : empdata.status === "5" ?
-                                      "bg-spray" : empdata.status === "6" ?
-                                        "bg-dark" : empdata.status === "7" ?
-                                          "bg-primary-opacity-8" : empdata.status === "8" ?
-                                            "bg-eastern" : ""
+                        {props.heading === "Dashboard" ? (
+                          ""
+                        ) : (
+                          // <td className=" py-5">
+                          //   {empdata.experience === null ? (
+                          //     <p className="font-size-3 mb-0">N/A</p>
+                          //   ) : (
+                          //     <p className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          //       {empdata.experience === "1-3 " ||
+                          //         empdata.experience === "1-2 " ||
+                          //         empdata.experience === "3-5 " ||
+                          //         empdata.experience === "5-7 " ||
+                          //         empdata.experience === "7+ "
+                          //         ? empdata.experience + "years"
+                          //         : empdata.experience}
+                          //     </p>
+                          //   )}
+                          // </td>
+                          <td className="text-center ">
+                            {empdata.interested_in === null || !empdata.interested_in ? (
+                              <p className="font-size-3 mb-0" title="N/A">N/A</p>
+                            ) : (
+                              <p className={`font-size-2 font-weight-normal text-black-2 mb-0 ${empdata.interested_in === "pnp" || empdata.interested_in === "pgwp" ?
+                                `text-uppercase` :
+                                "text-capitalize"}`}
+                                title={empdata.interested_in}>
+                                <span
+                                  className={
+                                    `p-1 ${empdata.interested_in === "visitor visa"
+                                      ? "text-dark" : "text-white"} text-center  border rounded-pill 
+                                  ${empdata.interested_in === "business visa"
+                                      ? "bg-eastern"
+                                      : empdata.interested_in === "co-op"
+                                        ? "bg-secondary"
+                                        : empdata.interested_in === "express entry"
+                                          ? "bg-violet"
+                                          : empdata.interested_in === "full-time"
+                                            ? "bg-info"
+                                            : empdata.interested_in === "pnp"
+                                              ? "bg-warning"
+                                              : empdata.interested_in === "spousal open work permit"
+                                                ? "bg-coral-opacity-visible"
+                                                : empdata.interested_in === "super visa"
+                                                  ? "bg-allports"
+                                                  : empdata.interested_in === "visitor visa"
+                                                    ? "bg-conch"
+                                                    : empdata.interested_in === "work permit extension"
+                                                      ? "bg-pink"
+                                                      : empdata.interested_in === "working visa"
+                                                        ? "bg-poppy"
+                                                        : empdata.interested_in === "workpermit application"
+                                                          ? "bg-success"
+                                                          : empdata.interested_in === "federal PR"
+                                                            ? "bg-poppy" : empdata.interested_in === "visitor record" ?
+                                                              "bg-helio"
+                                                              : "bg-primary"
+                                    }`
+                                  }
+                                >
+                                  {empdata.interested_in}
+                                </span>
+                              </p>
+                            )}
+                          </td>
+                        )}
+                        {props.ApplicantType === "pnp" && (
+                          <td className="text-center">
+                            {empdata.category === null || !empdata.category ? (
+                              <p className="font-size-3 mb-0" title="N/A">N/A</p>
+                            ) : (
+                              <p className={`font-size-2 font-weight-normal text-black-2 mb-0 
+                            ${(empdata.category === "tech pathway" || empdata.category === "Tech Pathway") ? "text-capitalize" : `text-uppercase`
                                 }`}
-                            >
-                              {empdata.status === "1" || empdata.status === "0" ?
+                                title={empdata.category}>
+                                <span
+                                  className={`p-1 text-white text-center border rounded-pill ${(empdata.category === "tech pathway" || empdata.category === "Tech Pathway") ? "bg-info " : (empdata.category === "rrs" || empdata.category === "RRS") ?
+                                    "bg-warning" : (empdata.category === "aos" || empdata.category === "AOS") ?
+                                      "bg-coral-opacity-visible" : ""
+                                    }`}
+                                >
+                                  {empdata.category}
+                                </span>
+                              </p>
+                            )}
+                          </td>
+                        )}
+                        {props.visa === "yes" ? null : (
+                          <td className="text-center ">
+                            <p className="font-size-2 font-weight-normal text-black-2 mb-0"
+                              title={empdata.status === "1" || empdata.status === "0" ?
                                 "New" : empdata.status === "2" ?
                                   "Prospect" : empdata.status === "3" ?
                                     "Lead" : empdata.status === "4" ?
@@ -1115,55 +1130,78 @@ export default function EmployeeTable(props) {
                                         "Lost" : empdata.status === "6" ?
                                           "Dead" : empdata.status === "7" ?
                                             "Working on" : empdata.status === "8" ?
-                                              "Submitted" : ""}
-                            </span>
+                                              "Submitted" : "N/A"}>
+                              <span
+                                className={`p-1 text-white text-center  border rounded-pill ${empdata.status === "1" || empdata.status === "0" ? (
+                                  !isTimeWithin24Hours(empdata.created_at)
+                                    ? "bg-danger "
+                                    : "bg-info ") : empdata.status === "2" ?
+                                  "bg-warning" : empdata.status === "3" ?
+                                    "bg-coral-opacity-visible" : empdata.status === "4" ?
+                                      "bg-secondary" : empdata.status === "5" ?
+                                        "bg-spray" : empdata.status === "6" ?
+                                          "bg-dark" : empdata.status === "7" ?
+                                            "bg-primary-opacity-8" : empdata.status === "8" ?
+                                              "bg-eastern" : ""
+                                  }`}
+                              >
+                                {empdata.status === "1" || empdata.status === "0" ?
+                                  "New" : empdata.status === "2" ?
+                                    "Prospect" : empdata.status === "3" ?
+                                      "Lead" : empdata.status === "4" ?
+                                        "Retained" : empdata.status === "5" ?
+                                          "Lost" : empdata.status === "6" ?
+                                            "Dead" : empdata.status === "7" ?
+                                              "Working on" : empdata.status === "8" ?
+                                                "Submitted" : ""}
+                              </span>
 
+                            </p>
+                          </td>
+                        )}
+                        <td className="text-center py-5">
+                          <p className="font-size-2 font-weight-normal text-black-2 mb-0"
+                            title={empdata.profile_complete === "100.00" ? "Complete" :
+                              "Incomplete"}>
+                            {empdata.profile_complete === "100.00" ? (
+                              <span className="p-1 bg-primary-opacity-8 text-white text-center  border rounded-pill">
+                                Complete
+                              </span>
+                            ) : (
+                              <span className="p-1 bg-warning text-white text-center  border rounded-pill">
+                                Incomplete
+                              </span>
+                            )}
                           </p>
                         </td>
-                      )}
-                      <td className="text-center py-5">
-                        <p className="font-size-2 font-weight-normal text-black-2 mb-0"
-                          title={empdata.profile_complete === "100.00" ? "Complete" :
-                            "Incomplete"}>
-                          {empdata.profile_complete === "100.00" ? (
-                            <span className="p-1 bg-primary-opacity-8 text-white text-center  border rounded-pill">
-                              Complete
-                            </span>
-                          ) : (
-                            <span className="p-1 bg-warning text-white text-center  border rounded-pill">
-                              Incomplete
-                            </span>
-                          )}
-                        </p>
-                      </td>
-                      {/* Calculation to get user is new or retained */}
-                      {/* <td className=" py-5">
+                        {/* Calculation to get user is new or retained */}
+                        {/* <td className=" py-5">
           <p className="font-size-3 font-weight-normal text-black-2 mb-0">
             {(new Date(empdata.created_at) >= oneMonthAgo && new Date(empdata.created_at) <= currentDate) === true ? "New" : "Retained"}          
             </p>
         </td> */}
-                      {props.heading === "Dashboard" ? (
-                        ""
-                      ) : (
-                        <td className=" py-5 min-width-px-100">
-                          <div
-                            className="btn-group button_group"
-                            role="group"
-                            aria-label="Basic example"
-                          >
-                            {props.skill === null ||
-                              props.skill === undefined ? (
-                              <>
-                                <button
-                                  className={!props.ApplicantType ? "d-none" : `"btn btn-outline-info action_btn"`}
-                                  onClick={() => editVisa(empdata)}
-                                  title={`Add/Update ${props.ApplicantType} status`}
-                                >
-                                  <span className="text-gray px-2">
-                                    <FaForwardStep />
-                                  </span>
-                                </button>
-                                {/* {props.visa === "yes" ? (
+                        {props.heading === "Dashboard" ? (
+                          ""
+                        ) : (
+                          <td className=" py-5 min-width-px-100">
+                            <div
+                              className="btn-group button_group"
+                              role="group"
+                              aria-label="Basic example"
+                            >
+                              {props.skill === null ||
+                                props.skill === undefined ? (
+                                <>
+                                  <button
+                                    className={!props.ApplicantType ? "d-none" : "btn btn-outline-info action_btn"}
+                                    onClick={() => editVisa(empdata)}
+                                    title={`Add/Update ${props.ApplicantType} status`}
+                                  >
+                                    <span className="text-gray px-2">
+                                      <MdEditNote />
+                                    </span>
+                                  </button>
+                                  {/* {props.visa === "yes" ? (
       <button
         className="btn btn-outline-info action_btn"
         onClick={() =>
@@ -1176,73 +1214,73 @@ export default function EmployeeTable(props) {
       </button>
     ) :
      ( */}
-                                <>
-                                  <button
-                                    className={
-                                      props.ApplicantType === "pnp"
-                                        ? "btn btn-outline-info action_btn"
-                                        : "d-none"
+                                  <>
+                                    <button
+                                      className={
+                                        props.ApplicantType === "pnp"
+                                          ? "btn btn-outline-info action_btn"
+                                          : "d-none"
 
-                                    }
-                                    // disabled={empdata.interested_in !== "pnp"}
-                                    onClick={() =>
-                                      ChangeApplicantsCategory(empdata.employee_id)
-                                    }
-                                    title="Change Applicant's Category"
-                                  >
-                                    <span className="text-gray px-2">
-                                      <BiSolidCategory />
-                                    </span>
-                                  </button>
-                                  <button
-                                    className="btn btn-outline-info action_btn"
-                                    onClick={() =>
-                                      ChangeApplicantsType(empdata.employee_id)
-                                    }
-                                    title="Change Applicant's Type"
-                                  >
-                                    <span className="text-gray px-2">
-                                      <MdTypeSpecimen />
-                                    </span>
-                                  </button>
-                                  <button
-                                    className="btn btn-outline-info action_btn"
-                                    onClick={() =>
-                                      ChangeApplicantsStatus(empdata)
-                                    }
-                                    title="Change status"
-                                  >
-                                    <span className="text-gray px-2">
-                                      <GoTasklist />
-                                    </span>
-                                    {/* <i className="fas fa-stream text-gray"></i> */}
-                                  </button>
-                                  <button
-                                    className={user_type === "admin" ? "btn btn-outline-info action_btn" : " d-none"}
-                                    onClick={() =>
-                                      ChangeApplicantsAgent(empdata.employee_id)
-                                    }
-                                    title="Change partner"
-                                  >
-                                    <span className="text-gray px-2">
-                                      <MdRealEstateAgent />
-                                    </span>
-                                    {/* <i className="fas fa-stream text-gray"></i> */}
-                                  </button>
-                                  <Link
-                                    style={{
-                                      padding: "0 5px",
-                                      minWidth: "auto",
-                                      height: "auto",
-                                    }}
-                                    className="btn btn-sm btn-outline-info action_btn text-center"
-                                    to={`/${empdata.employee_id}`}
-                                    title="Candidate Details"
-                                    onClick={() => localStorage.setItem("StatusTab", status === "" ? "00" : status)}
-                                  >
-                                    Update
-                                  </Link>
-                                  {/* <button
+                                      }
+                                      // disabled={empdata.interested_in !== "pnp"}
+                                      onClick={() =>
+                                        ChangeApplicantsCategory(empdata.employee_id)
+                                      }
+                                      title="Change Applicant's Category"
+                                    >
+                                      <span className="text-gray px-2">
+                                        <BiSolidCategory />
+                                      </span>
+                                    </button>
+                                    <button
+                                      className="btn btn-outline-info action_btn"
+                                      onClick={() =>
+                                        ChangeApplicantsType(empdata.employee_id)
+                                      }
+                                      title="Change Applicant's Type"
+                                    >
+                                      <span className="text-gray px-2">
+                                        <MdTypeSpecimen />
+                                      </span>
+                                    </button>
+                                    <button
+                                      className="btn btn-outline-info action_btn"
+                                      onClick={() =>
+                                        ChangeApplicantsStatus(empdata)
+                                      }
+                                      title="Change status"
+                                    >
+                                      <span className="text-gray px-2">
+                                        <GoTasklist />
+                                      </span>
+                                      {/* <i className="fas fa-stream text-gray"></i> */}
+                                    </button>
+                                    <button
+                                      className={user_type === "admin" ? "btn btn-outline-info action_btn" : " d-none"}
+                                      onClick={() =>
+                                        ChangeApplicantsAgent(empdata.employee_id)
+                                      }
+                                      title="Change partner"
+                                    >
+                                      <span className="text-gray px-2">
+                                        <MdRealEstateAgent />
+                                      </span>
+                                      {/* <i className="fas fa-stream text-gray"></i> */}
+                                    </button>
+                                    <Link
+                                      style={{
+                                        padding: "0 5px",
+                                        minWidth: "auto",
+                                        height: "auto",
+                                      }}
+                                      className="btn btn-sm btn-outline-info action_btn text-center"
+                                      to={`/${empdata.employee_id}`}
+                                      title="Candidate Details"
+                                      onClick={() => localStorage.setItem("StatusTab", status === "" ? "00" : status)}
+                                    >
+                                      Update
+                                    </Link>
+                                    {/* <button
         className="btn btn-outline-info action_btn"
         onClick={() =>
           editEmployee(empdata.employee_id)
@@ -1286,59 +1324,59 @@ export default function EmployeeTable(props) {
           <LiaUserTieSolid />
         </span>
       </button> */}
-                                  <button
-                                    className="btn btn-outline-info action_btn text-center"
-                                    onClick={() =>
-                                      ResumeClick(empdata.employee_id)
-                                    }
-                                    title="View Resume"
-                                  >
-                                    <span className="text-gray px-2">
-                                      <AiOutlineFilePdf />
-                                    </span>
-                                    {/* <span className="fas fa-file text-gray"></span> */}
-                                  </button>
-                                  <button
-                                    className="btn btn-outline-info action_btn text-gray"
-                                    onClick={() => editJob(empdata)}
-                                    title="All jobs "
-                                    disabled={empdata.interested_in === "pgwp"}
-                                  >
-                                    <span className="text-gray px-2">
-                                      <PiBriefcaseLight />
-                                    </span>
-                                    {/* <i className="fas fa-briefcase"></i> */}
-                                  </button>
-                                  <button
-                                    className="btn btn-outline-info action_btn"
-                                    onClick={() => ShowDeleteAlert(empdata)}
-                                    title="Delete"
-                                  >
-                                    <span className="px-2 text-danger">
-                                      <RiDeleteBin5Line />
-                                      {/* <i className="fa fa-trash "></i> */}
-                                    </span>
-                                  </button>
+                                    <button
+                                      className="btn btn-outline-info action_btn text-center"
+                                      onClick={() =>
+                                        ResumeClick(empdata.employee_id)
+                                      }
+                                      title="View Resume"
+                                    >
+                                      <span className="text-gray px-2">
+                                        <AiOutlineFilePdf />
+                                      </span>
+                                      {/* <span className="fas fa-file text-gray"></span> */}
+                                    </button>
+                                    <button
+                                      className="btn btn-outline-info action_btn text-gray"
+                                      onClick={() => editJob(empdata)}
+                                      title="All jobs "
+                                      disabled={empdata.interested_in === "pgwp"}
+                                    >
+                                      <span className="text-gray px-2">
+                                        <PiBriefcaseLight />
+                                      </span>
+                                      {/* <i className="fas fa-briefcase"></i> */}
+                                    </button>
+                                    <button
+                                      className="btn btn-outline-info action_btn"
+                                      onClick={() => ShowDeleteAlert(empdata)}
+                                      title="Delete"
+                                    >
+                                      <span className="px-2 text-danger">
+                                        <RiDeleteBin5Line />
+                                        {/* <i className="fa fa-trash "></i> */}
+                                      </span>
+                                    </button>
+                                  </>
+                                  {/* )} */}
                                 </>
-                                {/* )} */}
-                              </>
-                            ) : (
-                              <button
-                                className="btn btn-outline-info action_btn"
-                                // disabled={alredyApplied ? false : true}
-                                disabled={empdata.interested_in === "pgwp"}
-                                onClick={() =>
-                                  onApplyJobClick(empdata.employee_id)
-                                }
-                                title="Apply For job"
-                              >
-                                {alredyApplied ? "Already Applied" : "Apply"}
-                              </button>
-                            )}
-                          </div>
-                        </td>
-                      )}
-                      {/* {props.self === "yes" ? (
+                              ) : (
+                                <button
+                                  className="btn btn-outline-info action_btn"
+                                  // disabled={alredyApplied ? false : true}
+                                  disabled={empdata.interested_in === "pgwp"}
+                                  onClick={() =>
+                                    onApplyJobClick(empdata.employee_id)
+                                  }
+                                  title="Apply For job"
+                                >
+                                  {alredyApplied ? "Already Applied" : "Apply"}
+                                </button>
+                              )}
+                            </div>
+                          </td>
+                        )}
+                        {/* {props.self === "yes" ? (
           <td>
             <button
 className="btn btn-outline-info action_btn"
@@ -1353,7 +1391,17 @@ title="Approve Applicant"
         ) : (
           ""
         )} */}
-                    </tr>
+                      </tr>
+                      {props.ApplicantType ? <tr>
+                        <td
+                          colSpan="12"
+                          className={
+                            empdata.applicant_process_status ? "bg-white text-center" : "d-none"
+                          }
+                        ><VisaTimeLine visa={empdata.applicant_process_status} substage={empdata.applicant_process_substages} />
+                        </td>
+                      </tr> : null}
+                    </>
                   ))
                 )}
               </tbody>

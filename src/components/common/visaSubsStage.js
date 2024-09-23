@@ -5,7 +5,9 @@ const VisaSubStageSelector = ({
   selectedStatus,
   FilterJson,
   handleSubStageSelection,
-  setSelectedSubStage
+  setSelectedSubStage,
+  id,
+  onVisaUpdateClick
 }) => {
   return (
     <div className="bg-white text-dark p-2 sub-stages-container row">
@@ -17,10 +19,14 @@ const VisaSubStageSelector = ({
               : ""
             }`}
           onClick={() => {
-            handleSubStageSelection(expandedStatus, subStage)
-            if (expandedStatus === "file decision") {
-              setSelectedSubStage(subStage)
-            }
+            if(!id){
+              onVisaUpdateClick()
+              handleSubStageSelection(expandedStatus, subStage)
+            }else{
+              handleSubStageSelection(expandedStatus, subStage)
+              if (expandedStatus === "file decision") {
+                setSelectedSubStage(subStage)
+              }}
           }}
         >
           <input

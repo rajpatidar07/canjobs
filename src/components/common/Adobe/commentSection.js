@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import CommentReplyBox from "../CommentReplyBox";
 import { toast } from "react-toastify";
 import { CiPaperplane } from "react-icons/ci";
 import {
   ADocAnnotation,
+  DeleteCommentsAndAssign,
   GetCommentsAndAssign,
   GetReplyCommit,
   SendReplyCommit,
-  UpdateDocuentcommentAssign,
+  // UpdateDocuentcommentAssign,
 } from "../../../api/api";
 import ConvertTime from "../ConvertTime";
 import { FaEdit } from "react-icons/fa";
@@ -100,43 +101,11 @@ export default function CommentSection({
 
     return colorClasses[index];
   };
-  // /*onchange Function to set email or any other comment  */
-  // const handleInputChange = (event, type) => {
-  //   const inputValue = event.target.value;
-  //   // Update the input value
-  //   if (type === "reply") {
-  //     setReplyComment(inputValue);
-  //   } else {
-  //     setComments(inputValue);
-  //   }
-
-  //   let lastChar = inputValue.slice(-1);
-  //   const atIndex = inputValue.indexOf("@");
-
-  //   if (lastChar === "@" || inputValue.includes("@")) {
-  //     if (allAdmin) {
-  //       // Filter admin emails based on input
-  //       let filteredAdminEmails = allAdmin.filter(
-  //         (admin) =>
-  //           admin.email.toLowerCase().includes(
-  //             String(inputValue)
-  //               .substring(atIndex + 1)
-  //               .toLowerCase()
-  //           ) ||
-  //           admin.name.toLowerCase().includes(
-  //             String(inputValue)
-  //               .substring(atIndex + 1)
-  //               .toLowerCase()
-  //           )
-  //       );
-
-  //       // Update the filtered emails
-  //       setFilteredEmails(filteredAdminEmails);
-  //     }
-  //   } else {
-  //     setFilteredEmails([]);
-  //   }
-  // };
+  // Handler for link click
+  const handleLinkClick = (commentItem) => {
+    setComments(commentItem.subject_description.replace(/<[^>]*>/g, ''));
+    setCommentData(commentItem);
+  };
   /* Function to handle input change and set email or other comments */
   const handleInputChange = (event, type) => {
     const inputValue = event.target.value;
@@ -197,65 +166,6 @@ export default function CommentSection({
       setFilteredEmails([]);
     }
   };
-  // const handleInputChange = (event, type) => {
-  //   const inputValue = event.target.value;
-  //   let AddPartnersList = selectedPartner
-  //     ? [] : partnerList//.map((partner) => ({ ...partner, name: partner.name + " (Partner)" }));
-  //   let newAssignList = allAdmin
-  //   AddPartnersList = [...AddPartnersList, ...newAssignList];
-  //   const replacedStr = inputValue.replace(/@([^\s]+)/g, (match, name) => {
-  //     const foundEmail = AddPartnersList.find(email => email.name.toLowerCase() === name.toLowerCase());
-  //     if (foundEmail) {
-  //       return `<span title="${foundEmail.email}"><b>${foundEmail.name}</b></span>`;
-  //     } else {
-  //       return match; // Keep the original text if email not found
-  //     }
-  //   });
-  //   // Update the input value based on the type
-  //   if (type === "reply") {
-  //     setReplyComment(inputValue);
-  //     setReplyCommentToApi(replacedStr)
-  //   } else {
-  //     setComments(inputValue);
-  //     setCommentToApi(replacedStr)
-  //   }
-
-  //   const cursorPosition = event.target.selectionStart;
-  //   const textBeforeCursor = inputValue.substring(0, cursorPosition);
-  //   const lastWord = textBeforeCursor.split(' ').pop();
-  //   if (lastWord.startsWith('@')) {
-  //     // const query = lastWord.substring(1);
-  //     // if (query && allAdmin) {
-  //     //   // Filter admin emails based on input
-  //     //   const filteredAdminEmails = allAdmin.filter(
-  //     //     (admin) =>
-  //     //       admin.email.toLowerCase().includes(query.toLowerCase()) ||
-  //     //       admin.name.toLowerCase().includes(query.toLowerCase())
-  //     //   );
-
-  //     //   // Update the filtered emails
-  //     //   setFilteredEmails(filteredAdminEmails);
-  //     // } else {
-  //     //   setFilteredEmails(allAdmin);
-  //     // }
-  //     const query = lastWord.substring(1);
-  //     if (query && allAdmin) {
-
-  //       // Filter admin emails based on input
-  //       const filteredAdminEmails = AddPartnersList.filter(
-  //         (admin) =>
-  //           admin.email.toLowerCase().includes(query.toLowerCase()) ||
-  //           admin.name.toLowerCase().includes(query.toLowerCase())
-  //       );
-  //       // Update the filtered emails
-  //       setFilteredEmails(filteredAdminEmails);
-  //     } else {
-  //       setFilteredEmails(AddPartnersList);
-  //     }
-  //   } else {
-  //     setFilteredEmails([]);
-  //   }
-  // }
   /*Function to get the email to assign */
   const handleEmailClick = (email, type) => {
     if (email.u_id) {
@@ -278,79 +188,6 @@ export default function CommentSection({
 
     setFilteredEmails([]); // Clear filtered emails
   };
-
-
-  // const handleInputChange = (event, type) => {
-  //   const inputValue = event.target.value;
-  //   // List of partners and admins combined
-  //   let AddPartnersList = selectedPartner
-  //     ? [] 
-  //     : partnerList;
-  //   let newAssignList = allAdmin;
-  //   AddPartnersList = [...AddPartnersList, ...newAssignList];
-
-  //   // Function to add partner designation if applicable
-  //   const getDisplayName = (user) => {
-  //     return user.u_id ? `${user.name} (Partner)` : user.name;
-  //   };
-
-  //   // Replace only the text seen by the user, but also prepare API data
-  //   let apiReadyStr = inputValue.replace(/@([^\s]+)/g, (match, name) => {
-  //     const foundUser = AddPartnersList.find(user => user.name.toLowerCase() === name.toLowerCase());
-  //     if (foundUser) {
-  //       return `<span title="${foundUser.email}"><b>${getDisplayName(foundUser)}</b></span>`;
-  //     }
-  //     return match; // Keep the original text if no match found
-  //   });
-
-  //   // Handle updating the state for input and API-ready values
-  //   if (type === "reply") {
-  //     setReplyComment(inputValue);
-  //     setReplyCommentToApi(apiReadyStr);
-  //   } else {
-  //     setComments(inputValue);
-  //     setCommentToApi(apiReadyStr);
-  //   }
-
-  //   // Handle suggestions when typing '@'
-  //   const cursorPosition = event.target.selectionStart;
-  //   const textBeforeCursor = inputValue.substring(0, cursorPosition);
-  //   const lastWord = textBeforeCursor.split(' ').pop();
-
-  //   if (lastWord.startsWith('@')) {
-  //     const query = lastWord.substring(1);
-  //     if (query) {
-  //       // Filter users based on the query for suggestions
-  //       const filteredUsers = AddPartnersList.filter(user =>
-  //         user.email.toLowerCase().includes(query.toLowerCase()) ||
-  //         user.name.toLowerCase().includes(query.toLowerCase())
-  //       );
-  //       setFilteredEmails(filteredUsers);
-  //     } else {
-  //       setFilteredEmails(AddPartnersList);
-  //     }
-  //   } else {
-  //     setFilteredEmails([]);
-  //   }
-  // };
-
-  // /* Function to handle email click for selecting admin or partner */
-  // const handleEmailClick = (email, type) => {
-  //   const displayName = email.name + (email.u_id ? " (Partner)" : "");
-  //   const emailSpan = `<span title="${email.email}"><b>${displayName}</b></span>`;
-
-  //   if (type === "reply") {
-  //     setSelectedAdminReplye(prevValue => prevValue + email.email + ",");
-  //     setReplyComment(prevValue => `${prevValue}@${displayName} `);  // This is what shows in the input field
-  //     setReplyCommentToApi(prevValue => `${prevValue}${emailSpan} `);  // This goes to the API
-  //   } else {
-  //     setSelectedAdmin(prevValue => prevValue + email.email + ",");
-  //     setComments(prevValue => `${prevValue}@${displayName} `);  // Displayed in the input
-  //     setCommentToApi(prevValue => `${prevValue}${emailSpan} `);  // Sent to API
-  //   }
-
-  //   setFilteredEmails([]); // Clear the filtered list after selection
-  // };
 
   /*Function to get the email to input on hover */
   // const handleEmailMouseOver = (email, type) => {
@@ -610,89 +447,232 @@ export default function CommentSection({
     }
   };
   /* Function to update comment and assign */
+  // const OnHandleUpdateCommentStatus = async (originalData, status) => {
+  //   const { assigned_to, subject_description, assigned_to_name, assigned_user_type, assined_to_user_id } = originalData;
+  //   let newAssinList = [...allAdmin, ...partnerList]
+  //   const assignedUserId = (newAssinList.filter((item) =>
+  //     selectedAdmin?.includes(item.email)
+  //   )
+  //     ? newAssinList
+  //       .filter((item) => selectedAdmin?.includes(item.email))
+  //       .map((admin) => admin.u_id ? admin.id : admin.admin_id)
+  //       .join(",")
+  //     : "")
+  //   const email = selectedAdmin
+  //   /*Comment */
+  //   // Step 1: Bold email addresses but avoid interfering with name replacements
+  //   let boldComment = commentToApi.replace(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi, '<b>$1</b>');
+
+  //   // Step 2: Ensure title attributes do not have bold tags inside them
+  //   let removeBTage = boldComment.replace(/title="(<b>)(.*?)(<\/b>)"/g, 'title="$2"');
+
+  //   // Start with the cleaned comment
+  //   let comment = removeBTage;
+  //   let assignedAdminName = ((newAssinList.filter((item) =>
+  //     selectedAdmin?.includes(item.email)
+  //   )
+  //     ? newAssinList
+  //       .filter((item) => selectedAdmin?.includes(item.email))
+  //       .map((admin) => admin.name)
+  //       .join(",")
+  //     : ""))
+  //   // Step 3: Split names and emails for replacing names with <span> elements
+  //   let updatedComment = comment; // Start with the original comment
+  //   const assignedUserType = ((newAssinList.filter((item) =>
+  //     selectedAdmin?.includes(item.email)
+  //   )
+  //     ? newAssinList
+  //       .filter((item) => selectedAdmin?.includes(item.email))
+  //       .map((admin) => admin.u_id ? "agent" : admin.admin_type)
+  //       .join(",")
+  //     : ""))
+  //   // Split assigned_to into an array of emails and assigned_to_name into an array of names
+  //   const emailsArray = assigned_to?.split(',').map(email => email.trim()) || [];
+  //   const namesArray = assigned_to_name?.split(',').map(name => name.trim()) || [];
+
+  //   //new Create a copy of subject_description to modify
+  //   let updatedCommentToApi = subject_description;
+
+  //   // Iterate over the emailsArray and namesArray
+  //   emailsArray.forEach((email, index) => {
+  //     const name = (namesArray + assignedAdminName)[index]; // Get the corresponding name for each email
+
+  //     // Check if the name is already inside a <span> tag before replacing
+  //     const spanRegex = new RegExp(`<span[^>]*>\\s*<b>${name}</b>\\s*</span>`, 'g');
+
+  //     if (!spanRegex.test(updatedCommentToApi)) {
+  //       // Replace the name in the comment with a <span> element if not already wrapped
+  //       const nameRegex = new RegExp(`\\b${name}\\b`, 'g'); // Only match plain names
+  //       const spanTag = `<span title="${email}"><b>${name}</b></span>`;
+  //       updatedCommentToApi = updatedCommentToApi.replace(nameRegex, spanTag);
+  //     }
+  //   });
+  //   let updatedData = { ...originalData };
+  //   updatedData = {
+  //     doc_id: originalData.doc_id,
+  //     status: status,
+  //     id: originalData.id,
+  //     is_status_update: true,
+  //     subject_description: (updatedCommentToApi === originalData.subject_description
+  //       ? originalData.subject_description : updatedCommentToApi),
+  //     task_creator_user_id: admin_id,
+  //     task_creator_user_type: localStorage.getItem("userType") === "admin" ? "admin" : "agent",
+  //     assined_to_user_id: assined_to_user_id + assined_to_user_id,
+  //     assigned_user_type: assigned_user_type + assignedUserType,
+  //     // type: "document",
+  //     doc_parent_id: originalData.doc_parent_id,
+  //     assigned_to: assigned_to,
+  //     assigned_to_name: assigned_to_name + assigned_to_name,
+
+  //   }; //.status = originalData.status === "1" ? "0" : "1";
+  //   console.log(assigned_user_type
+  //     , " ------- assigned_user_type ----------",
+  //     assignedUserType)
+  //   console.log(assined_to_user_id
+  //     , " ------- assined_to_user_id ----------",
+  //     assignedUserId)
+  //   console.log(assigned_to_name
+  //     , " ------- assigned_to_name ----------",
+  //     assignedAdminName)
+  //   console.log(assigned_to
+  //     , " ------- assigned_to ----------",
+  //     email)
+  //   console.log(updatedCommentToApi
+  //     , " ------- comment ----------",
+  //     updatedComment)
+  //     console.log("updatedData =>",updatedData)
+  //   // try {
+  //   //   // Call the API with the updated data
+  //   //   let res = await UpdateDocuentcommentAssign(updatedData);
+  //   //   if (res.message === "Task updated successfully!1") {
+  //   //     toast.success("Task completed Successfully", {
+  //   //       position: toast.POSITION.TOP_RIGHT,
+  //   //       autoClose: 1000,
+  //   //     });
+  //   //     setCommentData()
+  //   //     setComments("");
+  //   //     setCommentToApi("")
+  //   //     Getcomments();
+  //   //   }
+  //   // } catch (err) {
+  //   //   console.log(err);
+  //   // }
+  // };
   const OnHandleUpdateCommentStatus = async (originalData, status) => {
-    let updatedData;
-    //Condtion to update x and y axis on documet update
-    let boldComment = commentToApi.replace(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi, '<b>$1</b>')
-    let removeBTage = boldComment.replace(/title="(<b>)(.*?)(<\/b>)"/g, 'title="$2"')
-    const comment = removeBTage || originalData.subject_description
-    let IspartnerList = selectedPartner ? partnerList : []
-    let newAssinList = [...allAdmin, ...IspartnerList]
-    // let sender =
-    //   AdminType === "agent"
-    //     ? admin_name
-    //     : newAssinList.find((item) => item.admin_id === admin_id)
-    //       ? newAssinList.find((item) => item.admin_id === admin_id).name
-    //       : admin_name;
-    // let senderEmail =
-    //   AdminType === "agent"
-    //     ? admin_email
-    //     : newAssinList.find((item) => item.admin_id === admin_id)
-    //       ? newAssinList.find((item) => item.admin_id === admin_id).email
-    //       : "";
-    // Variables for mentioning admins
-    const email = selectedAdmin// (selectedAdmin + `${selectedPartner && "," + selectedPartner.email}`) || ""; ///\S+@\S+\.\S+/.test(comments) ? comments : "";
-    let assignedAdminName = (((newAssinList).filter((item) =>
-      selectedAdmin?.includes(item.email)
-    )
-      ? newAssinList
-        .filter((item) => selectedAdmin?.includes(item.email))
-        .map((admin) => admin.name)
-        .join(",")
-      : ""))
-    const assignedUserId = (newAssinList.filter((item) =>
-      selectedAdmin?.includes(item.email)
-    )
-      ? newAssinList
-        .filter((item) => selectedAdmin?.includes(item.email))
-        .map((admin) => admin.u_id ? admin.id : admin.admin_id)
-        .join(",")
-      : "")
-    // eslint-disable-next-line no-useless-concat
-    const assignedUserType = ((newAssinList.filter((item) =>
-      selectedAdmin?.includes(item.email)
-    )
-      ? newAssinList
-        .filter((item) => selectedAdmin?.includes(item.email))
-        .map((admin) => admin.u_id ? "agent" : admin.admin_type)
-        .join(",")
-      : ""))
-    updatedData = { ...originalData };
-    updatedData = {
+    const {
+      assigned_to,
+      subject_description,
+      assigned_to_name,
+      assigned_user_type,
+      assined_to_user_id,
+    } = originalData;
+  
+    // Collect all available admins and partners
+    let newAssinList = [...allAdmin, ...partnerList];
+  
+    // Filter selected admins based on their emails
+    const selectedAdmins = newAssinList.filter(item => selectedAdmin?.includes(item.email));
+  
+    // Extract assigned user ID
+    const assignedUserId = selectedAdmins
+      .map(admin => admin.u_id ? admin.id : admin.admin_id)
+      .join(",");
+  
+    // Extract assigned user names
+    const assignedAdminName = selectedAdmins
+      .map(admin => admin.name)
+      .join(",");
+  
+    // Extract assigned user types
+    const assignedUserType = selectedAdmins
+      .map(admin => admin.u_id ? "agent" : admin.admin_type)
+      .join(",");
+  
+    // Extract email addresses
+    const newAdminEmails = selectedAdmins.map(admin => admin.email).join(",");
+  
+    /* Comment Manipulation */
+    // Step 1: Bold email addresses
+    let boldComment = commentToApi.replace(
+      /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi,
+      '<b>$1</b>'
+    );
+  
+    // Step 2: Remove bold tags from inside the title attribute
+    let cleanedComment = boldComment.replace(
+      /title="(<b>)(.*?)(<\/b>)"/g,
+      'title="$2"'
+    );
+  
+    // Step 3: Update the comment with <span> replacements for names and emails
+    let updatedCommentToApi = subject_description || cleanedComment;
+  
+    // Split existing emails and names
+    const emailsArray = assigned_to?.split(',').map(email => email.trim()) || [];
+    const namesArray = assigned_to_name?.split(',').map(name => name.trim()) || [];
+  
+    // Iterate over the emailsArray and namesArray to replace names with <span> tags
+    emailsArray.forEach((email, index) => {
+      const name = namesArray[index] || assignedAdminName;
+  
+      // Only replace the name if it's not already wrapped in a <span> tag
+      const spanRegex = new RegExp(
+        `<span[^>]*>\\s*<b>${name}</b>\\s*</span>`,
+        'g'
+      );
+  
+      if (!spanRegex.test(updatedCommentToApi)) {
+        const nameRegex = new RegExp(`\\b${name}\\b`, 'g'); // Only match plain names
+        const spanTag = `<span title="${email}"><b>${name}</b></span>`;
+        updatedCommentToApi = updatedCommentToApi.replace(nameRegex, spanTag);
+      }
+    });
+  
+    // Prepare updated data to send to API
+    let updatedData = {
+      ...originalData,
       doc_id: originalData.doc_id,
       status: status,
-      id: originalData.id,
       is_status_update: true,
-      subject_description: (comment === originalData.subject_description
-        ? originalData.subject_description : comment),
+      subject_description: updatedCommentToApi === originalData.subject_description
+        ? originalData.subject_description
+        : updatedCommentToApi,
       task_creator_user_id: admin_id,
       task_creator_user_type: localStorage.getItem("userType") === "admin" ? "admin" : "agent",
-      assined_to_user_id: assignedUserId,
-      assigned_user_type: assignedUserType,
-      // type: "document",
+      assined_to_user_id: `${assined_to_user_id},${assignedUserId}`,
+      assigned_user_type: `${assigned_user_type},${assignedUserType}`,
       doc_parent_id: originalData.doc_parent_id,
-      assigned_to: email,
-      assigned_to_name: assignedAdminName,
-
-    }; //.status = originalData.status === "1" ? "0" : "1";
-    console.log(updatedData)
+      assigned_to: `${assigned_to},${newAdminEmails}`, // Add new emails
+      assigned_to_name: `${assigned_to_name},${assignedAdminName}`, // Add new names
+    };
+  
+    // Log for debugging
+    console.log("Assigned User Type: ", assigned_user_type, assignedUserType);
+    console.log("Assigned User ID: ", assined_to_user_id, assignedUserId);
+    console.log("Assigned To Name: ", assigned_to_name, assignedAdminName);
+    console.log("Assigned To: ", assigned_to, newAdminEmails);
+    console.log("Updated Comment: ", updatedCommentToApi);
+    console.log("Updated Data: ", updatedData);
+  
+    // API call to update the document
+    // Uncomment this when ready to send to the API
     // try {
-    //   // Call the API with the updated data
-    //   let res = await UpdateDocuentcommentAssign(updatedData);
-    //   if (res.message === "Task updated successfully!1") {
+    //   let res = await UpdateDocumentCommentAssign(updatedData);
+    //   if (res.message === "Task updated successfully!") {
     //     toast.success("Task completed Successfully", {
     //       position: toast.POSITION.TOP_RIGHT,
     //       autoClose: 1000,
     //     });
-    //     setCommentData()
+    //     setCommentData();
     //     setComments("");
-    //     setCommentToApi("")
+    //     setCommentToApi("");
     //     Getcomments();
     //   }
     // } catch (err) {
     //   console.log(err);
     // }
   };
+  
   /*FUnction to get comment list */
   const Getcomments = async (annotStatus, adminfilter) => {
     let CommentRes = await GetCommentsAndAssign(
@@ -708,93 +688,14 @@ export default function CommentSection({
       );
     }
   };
-  // const extractEmailsFromHtml = (html) => {
-  //   // Extract static text and email titles
-  //   const staticTextMatch = html.match(/^[^<]*/); // Extract text before the first HTML tag
-  //   const staticText = staticTextMatch ? staticTextMatch[0] : '';
-
-  //   const emailRegex = /title="([^"]+)"/g;
-  //   let match;
-  //   const extractedEmails = [];
-  //   while ((match = emailRegex.exec(html)) !== null) {
-  //     extractedEmails.push(match[1]);
-  //   }
-
-  //   // Initialize variables to hold new values
-  //   let newSelectedAdmin = "";
-  //   let newComments = staticText; // Start with static text
-  //   let newCommentToApi = "";
-
-  //   // Iterate over extracted emails and find corresponding admin details
-  //   console.log(extractedEmails, "pppp")
-  //   extractedEmails.forEach(email => {
-  //   const admin = allAdmin.find(admin => admin.email === email);
-  //   if (admin) {
-  //     newSelectedAdmin += admin.email + ",";
-  //     newComments += " " + admin.name; // Add space between names
-  //     newCommentToApi += ` <span title="${admin.email}" > <b>${admin.name}</b></span> `;
-  //   } else {
-  //     console.warn(`Admin not found for email: ${email}`);
-  //   }
-  // });
-  //   // Remove trailing comma from newSelectedAdmin
-  //   if (newSelectedAdmin.endsWith(',')) {
-  //     newSelectedAdmin = newSelectedAdmin.slice(0, -1);
-  //   }
-
-  //   // Update state with new values
-  // setSelectedAdmin(newSelectedAdmin);
-  // setComments(newComments.trim()); // Trim to remove extra space at the end
-  // setCommentToApi(newCommentToApi);
-
-  //   // Log the results for debugging
-  //   console.log('Selected Admin:', newSelectedAdmin);
-  //   console.log('Comments:', newComments);
-  //   console.log('Comment To API:', newCommentToApi);
-  // };
-  // Function to extract names after '@' and get their corresponding emails
-  function extractEmailsFromComment(commentItem) {
-    const { assigned_to, subject_description, assigned_to_name } = commentItem;
-
-    // Split assigned_to into an array of emails and assigned_to_name into an array of names
-    const emailsArray = assigned_to?.split(',').map(email => email.trim()) || [];
-    const namesArray = assigned_to_name?.split(',').map(name => name.trim()) || [];
-
-    // Create a copy of subject_description to modify
-    let updatedCommentToApi = subject_description;
-
-    // Iterate over the emailsArray and namesArray
-    emailsArray.forEach((email, index) => {
-      const name = namesArray[index]; // Get the corresponding name for each email
-      const admin = allAdmin.find(admin => admin.email === email); // Find the admin by email
-
-      if (admin && name) {
-        // Replace the name in the comment with a <span> element
-        const spanTag = `<span title="${email}"><b>${name}</b></span>`;
-        updatedCommentToApi = updatedCommentToApi.replace(new RegExp(`\\b${name}\\b`, 'g'), spanTag);
-      } else {
-        console.warn(`Admin not found for email: ${email} or invalid name.`);
-      }
-    });
-
-    // Ensure that state update is triggered
-    return {
-      updatedCommentToApi
-      , assigned_to
+  const OnDeleteComment = async (docId, id) => {
+    try {
+      let res = await DeleteCommentsAndAssign(docId, id);
+      console.log(res);
+    } catch (err) {
+      console.log(err);
     }
-  }
-
-  // Handler for link click
-  const handleLinkClick = (commentItem) => {
-    setComments(commentItem.subject_description.replace(/<[^>]*>/g, ''));
-    setCommentData(commentItem);
-    let newData = extractEmailsFromComment(commentItem, [...allAdmin, ...partnerList]);
-    setSelectedAdmin(newData.assigned_to); // Set the new value
   };
-  useEffect(() => {
-    console.log("Updated selectedAdmin:", selectedAdmin);
-  }, [selectedAdmin]);  // This will log selectedAdmin whenever it changes
-
   return (
     <div className="col-md-4 col-lg-4 col-sm-3 py-2 bg-light comments_and_replies">
       {/* //condition for imm pdf

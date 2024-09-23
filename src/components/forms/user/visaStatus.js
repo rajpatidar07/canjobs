@@ -16,22 +16,23 @@ export default function VisaStatus(props) {
   const [loading, setLoading] = useState(false);
   const [apiCall, setApiCall] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState([]);
-  const [selectedSubStage, setSelectedSubStage] = useState(props.employeeData.substag);
+  const [selectedSubStage, setSelectedSubStage] = useState(props.employeeData?.substag);
   const [expandedStatus, setExpandedStatus] = useState(
-    props.employeeData?.visa_status
+    props.employeeData?.[props.type === "visa" ? "visa_status" : "applicant_process_status"]
   );
+
   // eslint-disable-next-line
   let isExpanded = false;
   // USER PERSONAL DETAIL VALIDATION
   // INITIAL STATE ASSIGNMENT
   const initialFormStateuser = {
-    status: props.employeeData?.visa_status,
+    status: props.employeeData?.[props.type === "visa" ? "visa_status" : "applicant_process_status"],
     country: props.employeeData?.visa_country,
   };
   /*Function to get Visa sub stage */
   const GetVIsaSubSTage = async () => {
     try {
-      let Response = await GetVisaSubStages(props.employeeData?.visa_id, props.type);
+      let Response = await GetVisaSubStages(props.employeeData?.[props.type === "visa" ? "visa_id" : "applicant_process_type_id"], props.type);
       setSelectedStatus(Response.data.data.data);
     } catch (err) {
       console.log(err);
@@ -57,7 +58,7 @@ export default function VisaStatus(props) {
 
   const validators = {
     status: [
-      (value) => (value === "" || value === null ? "Visa is required" : null),
+      (value) => (value === "" || value === null ? `${props.type} is required` : null),
     ],
   };
 
@@ -90,9 +91,10 @@ export default function VisaStatus(props) {
         const responseData = await AddUpdateVisa(
           props.employeeData?.employee_id,
           state,
-          props.employeeData?.visa_id
+          props.employeeData?.[props.type === "visa" ? "visa_id" : "applicant_process_type_id"],
+          props.type
         );
-        if (responseData.data.message === `visa stage inserted successfully`) {
+        if (responseData.data.message === "visa inserted successfully") {
           toast.success(`${props.type} stage created successfully`, {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
@@ -147,13 +149,14 @@ export default function VisaStatus(props) {
       ]);
       /*Employee Visa sub stages */
       data = {
-        misc_id: props.employeeData?.visa_id,
+        misc_id: props.employeeData?.[props.type === "visa" ? "visa_id" : "applicant_process_type_id"],
         type: props.type,
         status: status,
         substage: subStage,
       };
     }
     try {
+      console.log(data)
       let Response = await AddUpdateEmployeeVisaSubStage(data);
       /*Removed sub stage response */
       if (Response.message === "updated successfully") {
@@ -212,21 +215,13 @@ export default function VisaStatus(props) {
           <form>
             <h5 className="text-center pt-2 mb-7 text-capitalize">Update {props.type} status</h5>
             <VisaTimeLine visa={state.status} substage={selectedSubStage} />
-            {expandedStatus && (
-              <VisaSubStageSelector
-                expandedStatus={expandedStatus}
-                selectedStatus={selectedStatus}
-                FilterJson={FilterJson}
-                handleSubStageSelection={handleSubStageSelection}
-                setSelectedSubStage={setSelectedSubStage}
-              />
-            )}
+
             <div className="form-group col mt-5">
               <label
                 htmlFor="status"
-                className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                className="font-size-4 text-black-2 font-weight-semibold line-height-reset text-capitalize"
               >
-                Work Permit : <span className="text-danger">*</span>
+                {props.type === "visa" ? "Work Permit" : `${props.type} status`}  : <span className="text-danger">*</span>
               </label>
               <select
                 name="status"
@@ -243,7 +238,7 @@ export default function VisaStatus(props) {
                 }
                 id="status"
               >
-                <option value={""}>Select Visa Status </option>
+                <option value={""} className="text-capitalize">Select {props.type} Status </option>
                 {(FilterJson.visa_status || []).map((item, index) => {
                   isExpanded = expandedStatus === item;
                   return (
@@ -283,6 +278,19 @@ export default function VisaStatus(props) {
                 ))}
               </select>
             </div>
+            {expandedStatus && (
+              <VisaSubStageSelector
+                expandedStatus={expandedStatus}
+                selectedStatus={selectedStatus}
+                FilterJson={FilterJson}
+                handleSubStageSelection={handleSubStageSelection}
+                setSelectedSubStage={setSelectedSubStage}
+                stage={props.employeeData?.[props.type === "visa" ? "visa_status" : "applicant_process_status"]
+                }
+                id={props.employeeData?.[props.type === "visa" ? "visa_id" : "applicant_process_type_id"]}
+                onVisaUpdateClick={onVisaUpdateClick}
+              />
+            )}
             <div className="form-group text-center">
               {loading === true ? (
                 <button
