@@ -177,6 +177,10 @@ button.btn.action_btn {
   border-spacing: 0px;
 }
 
+/* .main_data_table tbody tr.applicant_row.applicant_row_status {
+  border-bottom: 0 solid #f4f5f8;
+} */
+
 .main_data_table {
   border: none;
   border-radius: 0;
@@ -2223,7 +2227,7 @@ ul.css-8tnble li {
 .set-arrow select {
   -webkit-appearance: none;
   -moz-appearance: none;
-  appearance:none
+  appearance: none
 }
 
 .set-arrow::after {
