@@ -16,9 +16,9 @@ export default function LmiaTime({ lmia, job, doc, selectedStatus }) {
             return (
               job === 'yes' ? (
                 <div key={i}
-                  className={`step m-2 text-capitalize ${isDone ? 'approved ' : ''} ${(selectedStatus.find((item) => item.lmia_substage === "refused") && status === "decision") ? " reject" : ""}`}>
+                  className={`step m-2 text-capitalize ${isDone ? 'approved ' : ''} ${status === "decision" && lmia === "decision" && selectedStatus.find((item) => item.lmia_substage === "refused") ? " reject" : ""}`}>
                   <span>{
-                    status === "decision"
+                    status === "decision" && lmia === "decision"
                       ? selectedStatus.find((item) => item.lmia_substage === "refused")
                         ? "Refused"
                         : "Approved"
@@ -27,9 +27,9 @@ export default function LmiaTime({ lmia, job, doc, selectedStatus }) {
               ) : (
                 i > 2 && (
                   <div key={i}
-                    className={`step m-2 text-capitalize ${isDone ? 'approved ' : ''} ${(selectedStatus.find((item) => item.lmia_substage === "refused") && status === "decision") ? " reject" : ""}`}>
+                    className={`step m-2 text-capitalize ${isDone ? 'approved ' : ''} ${status === "decision" && lmia === "decision" && selectedStatus.find((item) => item.lmia_substage === "refused") ? " reject" : ""}`}>
                     <span>{
-                      status === "decision"
+                      status === "decision" && lmia === "decision"
                         ? selectedStatus.find((item) => item.lmia_substage === "refused")
                           ? "Refused"
                           : "Approved"

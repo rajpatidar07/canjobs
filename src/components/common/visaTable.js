@@ -52,7 +52,8 @@ export default function VisaTable(props) {
         recordsPerPage,
         columnName,
         sortOrder,
-        props.employee_id
+        props.employee_id,
+        "visa"
       );
       if (userData.data.data.length === 0) {
         setemployeeData([]);
@@ -369,8 +370,21 @@ export default function VisaTable(props) {
                   </tr>
                 ) : (
                   (employeeData || []).map((empdata, i) => (
-                    <>
-                      <tr className="applicant_row" key={i}>
+                    <React.Fragment key={i}>
+                      {props.heading === "Dashboard" ||
+                        props.detail === "job_detail" ||
+                        user_type === "user" ? null :
+                        <tr style={{ border: "0" }}>
+                          <td
+                            style={{ paddingBottom: "0!important" }}
+                            colSpan="10"
+                            className={
+                              empdata.visa_status ? "bg-white text-center" : "d-none"
+                            }
+                          ><VisaTimeLine visa={empdata.visa_status} substage={empdata.substage} />
+                          </td>
+                        </tr>}
+                      <tr className="applicant_row" >
                         <td className=" py-5">
                           <p className="font-size-3 font-weight-normal text-black-2 mb-0"
                             title={empdata.employee_id}
@@ -695,19 +709,7 @@ export default function VisaTable(props) {
                           </div>
                         </td>
                       </tr>
-                      {props.heading === "Dashboard" ||
-                        props.detail === "job_detail" ||
-                        user_type === "user" ? null :
-                        <tr>
-                          <td
-                            colSpan="10"
-                            className={
-                              empdata.visa_status ? "bg-white text-center" : "d-none"
-                            }
-                          ><VisaTimeLine visa={empdata.visa_status} substage={empdata.substage} />
-                          </td>
-                        </tr>}
-                    </>
+                    </React.Fragment>
                   ))
                 )}
               </tbody>

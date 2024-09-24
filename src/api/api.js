@@ -1012,7 +1012,8 @@ export const GetEmployeeVisaList = async (
   limit,
   column,
   sort,
-  id
+  id,
+  type
 ) => {
   const response = await axios.post(
     `${API_URL}getVisa`,
@@ -1026,6 +1027,7 @@ export const GetEmployeeVisaList = async (
       limit: limit,
       column_name: column,
       sort_order: sort,
+      type:type
     },
     {
       headers: {

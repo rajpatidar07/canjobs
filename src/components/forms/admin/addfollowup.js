@@ -162,7 +162,7 @@ function Addfollowup(props) {
   };
   let content =
     <>
-      
+
       {/* <Modal
         show={props.show}
         size="lg"
@@ -179,11 +179,11 @@ function Addfollowup(props) {
         </button> */}
 
       {props.userId !== "" ? (
-        <div className={`bg-white rounded ${props.page === "yes" ? "" : "h-100vh"}  px-11 py-7 overflow-y-hidden`}>
+        <div className={`bg-white rounded ${props.page === "yes" ? "" : "h-100vh"}  px-11 py-7 overflow-y-scroll`}>
           {props.page === "yes" ? <h5 className="text-center pt-2 mb-7">Add Notes</h5> : null}
-          <div className="row">
+          <div className="row pb-15">
             <div
-              className={`activity_container pr-10 ${user_type === "admin" || user_type === "agent" ? "col-md-8 border-right" : "col-md-12"
+              className={`activity_container pr-10  ${user_type === "admin" || user_type === "agent" ? "col-md-8 border-right" : "col-md-12"
                 } ${props.page === "yes" ? "d-none" : ""}`}
             >
               {/* {console.log(response)} */}
@@ -198,7 +198,7 @@ function Addfollowup(props) {
                   <div className="single_note mb-5" key={res.id}>
                     <div className="card p-2">
                       <div className="m-0 d-flex justify-content-between align-items-center">
-                        <b className="font-size-4 font-weight-bold text-dark">
+                        <b className="font-size-4 font-weight-bold text-dark text-break">
                           {res.subject}
                         </b>
                         <i className="font-size-2">
@@ -223,8 +223,9 @@ function Addfollowup(props) {
             <div
               className={
                 ((user_type === "admin" || user_type === "agent") && props.page === "yes")
-                  ? "px-10 py-5 col-md-12" : user_type === "admin" || user_type === "agent" ? "px-10 py-5 col-md-4" : "d-none"
+                  ? "px-10 py-5 col-md-12 position-fixed" : user_type === "admin" || user_type === "agent" ? "px-10 py-5 col-md-4 position-fixed" : "d-none"
               }
+              style={{ right: 0 }}
             >
               <form>
                 <div className="form-group col px-0 pr-3">
@@ -236,7 +237,7 @@ function Addfollowup(props) {
                   </label>
                   <div className="position-relative">
                     <input
-                      maxLength={60}
+                      // maxLength={60}
                       name="subject"
                       value={state.subject || ""}
                       onChange={onInputChange}
@@ -315,20 +316,6 @@ function Addfollowup(props) {
                         setState={setState}
                         state={state}
                         page={"FollowUp"} />
-                      {/* <textarea
-                        name="remark"
-                        value={state.remark}
-                        onChange={onInputChange}
-                        rows={8}
-                        style={{ height: "140px" }}
-                        className={
-                          errors.remark
-                            ? "form-control border border-danger"
-                            : "form-control"
-                        }
-                        id="remark"
-                        placeholder="Add Note here"
-                      ></textarea> */}
                     </div>
                     {/*----ERROR MESSAGE FOR DESRIPTION----*/}
                     {errors.remark && (

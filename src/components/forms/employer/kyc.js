@@ -160,7 +160,7 @@ function KycComplianceDetails(props) {
     props.employerId === undefined
       ? setState(initialFormState)
       : EmployerData();
-      // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [props]);
 
   // COMPANY KYC DETAIL SUBMIT BUTTON

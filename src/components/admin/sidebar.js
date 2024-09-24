@@ -244,6 +244,141 @@ const AdminSidebar = (props) => {
             Manage LMIA
           </Link>
         </li>
+        <li
+          className={
+            user_type === "agent"
+              ? "d-none"
+              : props.heading === "Local Candidate"
+                ? "active"
+                : ""
+          }
+        >
+          <Link
+            onClick={() => clearPageNo()}
+            to="/localcandidates"
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+          >
+            {/* <i className="fas fa-filter mr-5"></i> */}
+            <FaPersonShelter className="sidebar_icon" />
+            Local Candidate
+          </Link>
+        </li>
+        <li
+          className={
+            user_type === "agent"
+              ? "d-none"
+              : props.heading === "PNP"
+                ? "active"
+                : ""
+          }
+        >
+          <Link
+            onClick={() => clearPageNo()}
+            to="/pnp"
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+          >
+            {/* <i className="fas fa-filter mr-5"></i> */}
+            <IoLogoPinterest className="sidebar_icon" />
+            PNP
+          </Link>
+        </li>
+        <li
+          className={
+            user_type === "agent"
+              ? "d-none"
+              : props.heading === "PGWP"
+                ? "active"
+                : ""
+          }
+        >
+          <Link
+            onClick={() => clearPageNo()}
+            to="/pgwp"
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+          >
+            {/* <i className="fas fa-filter mr-5"></i> */}
+            <FaGraduationCap className="sidebar_icon" />
+            PGWP
+          </Link>
+        </li>
+        <li
+          className={
+            user_type === "agent"
+              ? "d-none"
+              : props.heading === "Visitors Visa"
+                ? "active"
+                : ""
+          }
+        >
+          <Link
+            onClick={() => clearPageNo()}
+            to="/visitorsvisa"
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+          >
+            {/* <i className="fas fa-filter mr-5"></i> */}
+            <GrVisa className="sidebar_icon" />
+            Visitors Visa
+          </Link>
+        </li>
+        <li
+          className={
+            user_type === "agent"
+              ? "d-none"
+              : props.heading === "Express Entry"
+                ? "active"
+                : ""
+          }
+        >
+          <Link
+            onClick={() => clearPageNo()}
+            to="/expressentry"
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+          >
+            {/* <i className="fas fa-filter mr-5"></i> */}
+            <SiExpress className="sidebar_icon" />
+            Express Entry
+          </Link>
+        </li>
+        <li
+          className={
+            user_type === "agent"
+              ? "d-none"
+              : props.heading === "Business VIsa"
+                ? "active"
+                : ""
+          }
+        >
+          <Link
+            onClick={() => clearPageNo()}
+            to="/businessvisa
+              "
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+          >
+            {/* <i className="fas fa-filter mr-5"></i> */}
+            <TiBusinessCard className="sidebar_icon" />
+            Business Visa
+          </Link>
+        </li>
+        <li
+          className={
+            user_type === "agent"
+              ? "d-none"
+              : props.heading === "Federal PR"
+                ? "active"
+                : ""
+          }
+        >
+          <Link
+            onClick={() => clearPageNo()}
+            to="/federal_pr
+              "
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+          >
+            {/* <i className="fas fa-filter mr-5"></i> */}
+            <TiBusinessCard className="sidebar_icon" />
+            Federal PR
+          </Link>
+        </li>
         {/* <li className={user_type === "agent"?"d-none":props.heading === "Response" ? "active" : ""}>
             <Link
             onClick={()=>clearPageNo()}
@@ -393,141 +528,7 @@ const AdminSidebar = (props) => {
               Manage Email
             </Link>
           </li> */}
-        <li
-          className={
-            user_type === "agent"
-              ? "d-none"
-              : props.heading === "Local Candidate"
-                ? "active"
-                : ""
-          }
-        >
-          <Link
-            onClick={() => clearPageNo()}
-            to="/localcandidates"
-            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
-          >
-            {/* <i className="fas fa-filter mr-5"></i> */}
-            <FaPersonShelter className="sidebar_icon" />
-            Local Candidate
-          </Link>
-        </li>
-        <li
-          className={
-            user_type === "agent"
-              ? "d-none"
-              : props.heading === "PNP"
-                ? "active"
-                : ""
-          }
-        >
-          <Link
-            onClick={() => clearPageNo()}
-            to="/pnp"
-            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
-          >
-            {/* <i className="fas fa-filter mr-5"></i> */}
-            <IoLogoPinterest className="sidebar_icon" />
-            PNP
-          </Link>
-        </li>
-        <li
-          className={
-            user_type === "agent"
-              ? "d-none"
-              : props.heading === "PGWP"
-                ? "active"
-                : ""
-          }
-        >
-          <Link
-            onClick={() => clearPageNo()}
-            to="/pgwp"
-            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
-          >
-            {/* <i className="fas fa-filter mr-5"></i> */}
-            <FaGraduationCap className="sidebar_icon" />
-            PGWP
-          </Link>
-        </li>
-        <li
-          className={
-            user_type === "agent"
-              ? "d-none"
-              : props.heading === "Visitors Visa"
-                ? "active"
-                : ""
-          }
-        >
-          <Link
-            onClick={() => clearPageNo()}
-            to="/visitorsvisa"
-            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
-          >
-            {/* <i className="fas fa-filter mr-5"></i> */}
-            <GrVisa className="sidebar_icon" />
-            Visitors Visa
-          </Link>
-        </li>
-        <li
-          className={
-            user_type === "agent"
-              ? "d-none"
-              : props.heading === "Express Entry"
-                ? "active"
-                : ""
-          }
-        >
-          <Link
-            onClick={() => clearPageNo()}
-            to="/expressentry"
-            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
-          >
-            {/* <i className="fas fa-filter mr-5"></i> */}
-            <SiExpress className="sidebar_icon" />
-            Express Entry
-          </Link>
-        </li>
-        <li
-          className={
-            user_type === "agent"
-              ? "d-none"
-              : props.heading === "Business VIsa"
-                ? "active"
-                : ""
-          }
-        >
-          <Link
-            onClick={() => clearPageNo()}
-            to="/businessvisa
-              "
-            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
-          >
-            {/* <i className="fas fa-filter mr-5"></i> */}
-            <TiBusinessCard className="sidebar_icon" />
-            Business Visa
-          </Link>
-        </li>
-        <li
-          className={
-            user_type === "agent"
-              ? "d-none"
-              : props.heading === "Federal PR"
-                ? "active"
-                : ""
-          }
-        >
-          <Link
-            onClick={() => clearPageNo()}
-            to="/federal_pr
-              "
-            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
-          >
-            {/* <i className="fas fa-filter mr-5"></i> */}
-            <TiBusinessCard className="sidebar_icon" />
-            Federal PR
-          </Link>
-        </li>
+
         <li
           className={
             user_type === "agent"

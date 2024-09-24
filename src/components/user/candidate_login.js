@@ -203,7 +203,7 @@ export default function CandidateLoginForm(props) {
     )}&scope=${encodeURIComponent(scope)}`;
   };
   useEffect(() => {
-    // eslint-disable-next-line
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     i = i + 1;
     if (
       (code !== "" ||
