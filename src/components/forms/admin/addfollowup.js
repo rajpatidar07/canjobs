@@ -223,9 +223,13 @@ function Addfollowup(props) {
             <div
               className={
                 ((user_type === "admin" || user_type === "agent") && props.page === "yes")
-                  ? "px-10 py-5 col-md-12 position-fixed" : user_type === "admin" || user_type === "agent" ? "px-10 py-5 col-md-4 position-fixed" : "d-none"
+                  ? "px-10 py-5 col-md-12 "
+                  : user_type === "admin" || user_type === "agent"
+                    ? "px-10 py-5 col-md-4 position-fixed"
+                    : "d-none"
+                //  props.page === "yes"?"":"position-fixed"
               }
-              style={{ right: 0 }}
+              style={{ right: 0,}}
             >
               <form>
                 <div className="form-group col px-0 pr-3">

@@ -57,15 +57,15 @@ const HtmlAgreementOne = ({ page, felidData, userData, emp_user_type, addSign })
     ${felidData?.client_file_no || "_________"}
   </span>
   day of
- 
-    ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00 00:00:00"
+  ${felidData?.agreement_date}
+    ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00 00:00:00" && felidData?.agreement_date !== "0000-00-00"
       ? `<span class="para_gap">${moment(new Date(felidData?.agreement_date)).format("Do")}</span>`
       : ""}
-    ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00 00:00:00"
+    ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00 00:00:00" && felidData?.agreement_date !== "0000-00-00"
       ? ` <span class="para_gap">${moment(new Date(felidData?.agreement_date)).format("MMMM")}</span>`
       : ""}
  
-    ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00 00:00:00"
+    ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00 00:00:00" && felidData?.agreement_date !== "0000-00-00"
       ? ` <span class="para_gap">${moment(new Date(felidData?.agreement_date)).format("YYYY")}`
       : "____________"}
   </span>
@@ -1079,13 +1079,13 @@ services that have been rendered or accounting for the time that has been spent 
         </div>
         <div style="width: 50%">
             <p class="para_gap text-capitalize" style="margin: 0">
-                <span style="max-width: 200px;">${(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || "")}</span>
+                <span class="para_gap text-capitalize">${(felidData && (familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name) ? ((familyJsonArray[0]?.client_first_name + " " + (familyJsonArray[0]?.client_last_name || ""))) : (emp_user_type === "employee" ? ((userData?.name || "") || "") : (("") || "")))}</span>
             </p>
             <p style="margin: 0 0 30px 0">Name of Client</p>
         </div>
         <div style="width: 50%">
             <p class="" style="margin: 0">
-                 ${familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00" || !familyJsonArray[0]?.date_signature_client ? '_____________________'
+                 ${familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00" || !familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client === "0000-00-00" ? '_____________________'
       : `<span  class="para_gap" style="max-width: 200px;">${familyJsonArray[0]?.date_signature_client}</span>`}
             </p>
             <p style="margin: 0 0 30px 0">Date</p>
@@ -1125,7 +1125,7 @@ services that have been rendered or accounting for the time that has been spent 
         </div>
         <div style="width: 50%">
             <p style="margin: 0">
-               ${item.date_signature_client === "0000-00-00 00:00:00" || !item.date_signature_client ? '_____________________'
+               ${item.date_signature_client === "0000-00-00 00:00:00" || item.date_signature_client === "0000-00-00" || !item.date_signature_client ? '_____________________'
           : `<span  class="para_gap" style="max-width: 200px;">${item.date_signature_client}</span>`}
             </p>
             <p style="margin: 0 0 30px 0">Date</p>
@@ -1298,7 +1298,7 @@ services that have been rendered or accounting for the time that has been spent 
           <p style="margin: 0 0 30px 0">Signatures</p>
         </div>
         <div style="width: 33.33%; text-align: center">
-          <p class=${(!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00") ? "" : "para_gap"} style="margin: 0">${(!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00") ? "_______________" : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</p>
+          <p class=${(!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00" || familyJsonArray[0]?.date_signature_client === "0000-00-00") ? "" : "para_gap"} style="margin: 0">${(!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00" || familyJsonArray[0]?.date_signature_client === "0000-00-00") ? "_______________" : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</p>
           <p style="margin: 0 0 30px 0">Date</p>
         </div>
       </div>

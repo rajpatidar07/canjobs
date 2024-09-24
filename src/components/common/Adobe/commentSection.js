@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { CiPaperplane } from "react-icons/ci";
 import {
   ADocAnnotation,
-  DeleteCommentsAndAssign,
+  // DeleteCommentsAndAssign,
   GetCommentsAndAssign,
   GetReplyCommit,
   SendReplyCommit,
@@ -688,14 +688,14 @@ export default function CommentSection({
       );
     }
   };
-  const OnDeleteComment = async (docId, id) => {
-    try {
-      let res = await DeleteCommentsAndAssign(docId, id);
-      console.log(res);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const OnDeleteComment = async (docId, id) => {
+  //   try {
+  //     let res = await DeleteCommentsAndAssign(docId, id);
+  //     console.log(res);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
   return (
     <div className="col-md-4 col-lg-4 col-sm-3 py-2 bg-light comments_and_replies">
       {/* //condition for imm pdf
@@ -875,7 +875,7 @@ export default function CommentSection({
                   key={index}
                 >
                   <div className="comment_status_update d-flex mr-10">
-                    <Link className="text-gray pr-2" title="Update Comment" onClick={() => {
+                    <Link className="text-gray pr-2 d-none" title="Update Comment" onClick={() => {
                       handleLinkClick(commentItem);
                     }}>  <FaEdit /></Link>
                     <Link

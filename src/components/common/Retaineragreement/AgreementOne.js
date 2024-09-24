@@ -160,7 +160,7 @@ const AggrementOne = () => {
               console.log(addDocId);
             } catch (error) {
               console.log(error)
-             }
+            }
           }
           // console.log(res.data)
           // if (
@@ -209,13 +209,13 @@ const AggrementOne = () => {
           <Text>
             This Retainer Agreement is made this {felidData?.client_file_no}
             <Text style={styles.textunderline}>
-              {" " + moment(new Date(felidData?.agreement_date)).format("Do") + " "}
+              {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "_______" : " " + moment(new Date(felidData?.agreement_date)).format("Do") + " "}
             </Text>
             day of
             <Text style={styles.textunderline}>
-              {" " + moment(new Date(felidData?.agreement_date)).format("MMMM") + " "}
+              {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "_______" : " " + moment(new Date(felidData?.agreement_date)).format("MMMM") + " "}
             </Text>
-            {" " + moment(new Date(felidData?.agreement_date)).format("YYYY")} between
+            {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "_______" : " " + moment(new Date(felidData?.agreement_date)).format("YYYY")} between
             Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur (the
             “RCIC”), RCIC Membership Number
             <Text style={styles.textunderline}> R533393</Text>, Phone number
@@ -231,23 +231,23 @@ const AggrementOne = () => {
             <Text style={styles.textunderline}></Text> Canada and Client
             <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
 
-              {" " + familyJsonArray[0]?.client_first_name + " " + familyJsonArray[0]?.client_last_name}
+              {" " + (familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")}
             </Text>
             {" "}(the “Client”)
             <Text className="p"> , located at </Text>
             <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
 
-              {" " + felidData?.client_address}
+              {" " + (felidData?.client_address || "        ")}
             </Text>
             , Email
             <Text style={styles.textunderline} className="para_gap">
 
-              {" " + felidData?.client_email}
+              {" " + (felidData?.client_email || "     ")}
             </Text>
             , Contact number
             <Text style={styles.textunderline} className="para_gap">
 
-              {" " + felidData?.client_contact}
+              {" " + (felidData?.client_contact || "     ")}
             </Text>
             .
           </Text>
@@ -301,7 +301,7 @@ const AggrementOne = () => {
                       textTransform: 'capitalize',
                     }}
                   >
-                    {item.client_first_name + ' ' + item.client_last_name}
+                    {(item.client_first_name || "") + ' ' + (item.client_last_name || "")}
                   </Text>
                 </Text>
                 <Text style={{ flex: 1 }}>
@@ -1402,7 +1402,7 @@ const AggrementOne = () => {
                         { textTransform: "capitalize", marginLeft: 5 },
                       ]}
                     >
-                      {familyJsonArray[0]?.client_first_name || "_______________"}
+                      {familyJsonArray[0]?.client_first_name || "" || "_______________"}
                     </Text>
                   </Text>
                 </View>
@@ -1547,10 +1547,14 @@ const AggrementOne = () => {
                     />
                     <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7 }}>
                       <Text style={{ textTransform: "capitalize" }}>
-                        {familyJsonArray[0]?.client_first_name}{" "}
-                        {familyJsonArray[0]?.client_last_name}{" "}
+                        {familyJsonArray[0]?.client_first_name || ""}{" "}
+                        {familyJsonArray[0]?.client_last_name || ""}{" "}
                       </Text>
-                      <Text>{familyJsonArray[0]?.date_signature_client}</Text>
+                      <Text> {!familyJsonArray[0]?.date_signature_client ||
+                        familyJsonArray[0]?.date_signature_client ===
+                        "0000-00-00 00:00:00"
+                        ? "____________"
+                        : familyJsonArray[0]?.date_signature_client}</Text>
                     </Text>
                   </View>
                 ) : (
@@ -1562,7 +1566,7 @@ const AggrementOne = () => {
               {/* Client Name */}
               <View style={{ width: "50%", padding: 10 }}>
                 <Text style={[styles.textunderline, { textTransform: "capitalize" }]}>
-                  {familyJsonArray[0]?.client_first_name}{" "}
+                  {familyJsonArray[0]?.client_first_name || ""}{" "}
                   {familyJsonArray[0]?.client_last_name || "_________________"}
                 </Text>
                 <Text>Name of Client</Text>
@@ -1588,9 +1592,15 @@ const AggrementOne = () => {
                         />
                         <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7 }}>
                           <Text style={{ textTransform: "capitalize" }}>
-                            {item.client_first_name} {item.client_last_name}{" "}
+                            {item.client_first_name || ""} {item.client_last_name || ""}{" "}
                           </Text>
-                          <Text>{item.date_signature_client}</Text>
+                          <Text>
+                            {!item.date_signature_client ||
+                              item.date_signature_client ===
+                              "0000-00-00 00:00:00"
+                              ? "____________"
+                              : item.date_signature_client}
+                          </Text>
                         </Text>
                       </View>
                     ) : (
@@ -1602,8 +1612,8 @@ const AggrementOne = () => {
                   {/* Family Member Name */}
                   <View style={{ width: "50%", padding: 10 }}>
                     <Text style={[styles.textunderline, { textTransform: "capitalize" }]}>
-                      {item.client_first_name && item.client_last_name
-                        ? `${item.client_first_name} ${item.client_last_name}`
+                      {item.client_first_name && (item.client_last_name)
+                        ? `${item.client_first_name || ""} ${(item.client_last_name || "")}`
                         : "_________________"}
                     </Text>
                     <Text>Name of Family member {index + 1}</Text>
@@ -1664,7 +1674,7 @@ const AggrementOne = () => {
           <Text style={{ marginTop: 15 }}>
             I {" "}
             <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
-              {familyJsonArray[0]?.client_first_name + " " + familyJsonArray[0]?.client_last_name}
+              {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")}
             </Text>
             {" "} ( hereinafter referred to as the “client”), hereby authorize and
             appoint Harpreet kaur (hereinafter referred to as the “RCIC” with a
@@ -1786,10 +1796,10 @@ const AggrementOne = () => {
             <View style={[styles.clientForm, { textAlign: "center", marginTop: 30 }]}>
               <View style={styles.clientFormChild}>
                 <Text className="para_gap" style={{ margin: 0, marginBottom: 15, textDecoration: "underline", textTransform: "capitalize" }}>
-                  {familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name
-                    ? familyJsonArray[0]?.client_first_name +
+                  {familyJsonArray[0]?.client_first_name || "" || familyJsonArray[0]?.client_last_name
+                    ? familyJsonArray[0]?.client_first_name || "" +
                     " " +
-                    familyJsonArray[0]?.client_last_name
+                    (familyJsonArray[0]?.client_last_name || " ")
                     : "_______________"}
                 </Text>
                 <Text style={{ margin: "10px 0 30px 0" }}>Client’s full name</Text>
@@ -1803,19 +1813,23 @@ const AggrementOne = () => {
                           ? familyJsonArray[0]?.client_signature
                           : ""
                       }
-                      alt={familyJsonArray[0]?.client_first_name + " " + familyJsonArray[0]?.client_last_name}
+                      alt={(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || "")}
 
                       style={{ width: "40%", height: "auto", alignSelf: "center" }}
                     />
                     <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7, flex: "row" }}>
                       <Text style={{ textTransform: "capitalize", flex: "column" }}>
-                        {familyJsonArray[0]?.client_first_name +
+                        {familyJsonArray[0]?.client_first_name || "" +
                           " " +
                           familyJsonArray[0]?.client_last_name + " "
                         }
                       </Text>
                       <Text style={{ flex: "column" }}>
-                        {familyJsonArray[0]?.date_signature_client}</Text>
+                        {!familyJsonArray[0]?.date_signature_client ||
+                          familyJsonArray[0]?.date_signature_client ===
+                          "0000-00-00 00:00:00"
+                          ? "____________"
+                          : familyJsonArray[0]?.date_signature_client}</Text>
                     </Text>
                   </View>
                   : <Text>___________________</Text>}
