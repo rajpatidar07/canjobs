@@ -177,9 +177,9 @@ button.btn.action_btn {
   border-spacing: 0px;
 }
 
-/* .main_data_table tbody tr.applicant_row.applicant_row_status {
-  border-bottom: 0 solid #f4f5f8;
-} */
+.main_data_table tbody tr.applicant_row.applicant_row_status td {
+  padding-top: 0 !important;
+}
 
 .main_data_table {
   border: none;
