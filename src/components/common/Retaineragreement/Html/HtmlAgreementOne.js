@@ -1066,7 +1066,7 @@ services that have been rendered or accounting for the time that has been spent 
      <p style="margin: 0">______________________________</p>
                   <small class="row ">
                     <span class="col text-capitalize" >
-                      ${familyJsonArray[0]?.client_first_name + " " + familyJsonArray[0]?.client_last_name + " "}${familyJsonArray[0]?.date_signature_client}</span>
+                      ${familyJsonArray[0]?.client_first_name + " " + (familyJsonArray[0]?.client_last_name || "") + " "}${familyJsonArray[0]?.date_signature_client}</span>
                   </small>
                       </div>`
       : page === "admin" ? "___________________________" : ` <button class="btn btn-outline-secondary border-0  " 

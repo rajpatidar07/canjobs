@@ -33,7 +33,7 @@ const ExportExcelButton = ({ type }) => {
                 // Step 3: Create a link and trigger the download as .xls
                 const link = document.createElement('a');
                 link.href = URL.createObjectURL(blob);
-                link.download = `${type}.xls`; // Set the file extension to .xls
+                link.download = `${type === "employee" ? `Applicant ${new Date()}` : `Client ${new Date()}`}.xls`; // Set the file extension to .xls
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
