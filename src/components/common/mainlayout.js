@@ -75,6 +75,7 @@ import AboutUs from "../user/AboutUs";
 import LocalCandidate from "../admin/localCandidate";
 import PGWP from "../admin/pgwp";
 import DemoJob from "../user/demoJob";
+import StudyPermit from "../admin/studyPermit";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -239,6 +240,7 @@ function MainLayout() {
             <Route path="/businessvisa" element={<BusinessVIsa />} />
             <Route path="/expressentry" element={<ExpressEntry />} />
             <Route path="/visitorsvisa" element={<VisitorVisa />} />
+            <Route path="/studypermit" element={<StudyPermit />} />
             <Route path="/pnp" element={<Pnp />} />
             <Route path="/pgwp" element={<PGWP />} />
             <Route path="/localcandidates" element={<LocalCandidate />} />

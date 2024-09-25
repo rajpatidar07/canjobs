@@ -65,7 +65,7 @@ const HtmlAgreementOne = ({
     ${felidData?.client_file_no || "_________"}
   </span>
   day of
-  ${felidData?.agreement_date}
+
     ${
       felidData?.agreement_date &&
       felidData?.agreement_date !== "0000-00-00 00:00:00" &&
@@ -120,15 +120,15 @@ const HtmlAgreementOne = ({
       felidData?.client_address
         ? ` <span class="para_gap">${felidData?.client_address}</span>`
         : emp_user_type === "employer"
-        ? userData?.address || "________________"
-        : `<span class="para_gap">${userData?.current_location || "________"} ${
-            userData?.currently_located_country || "____________"
+        ? userData?.address || "     "
+        : `<span class="para_gap">${userData?.current_location || "   "} ${
+            userData?.currently_located_country || "    "
           }</span>`
     }
   </span>
   , email
   <span class="${felidData?.client_email || userData?.email ? "para_gap" : ""}">
-    ${felidData?.client_email || userData?.email || "_______________"}
+    ${felidData?.client_email || userData?.email || "     "}
   </span>
   , contact number
   <span class="${
@@ -137,7 +137,7 @@ const HtmlAgreementOne = ({
     ${
       felidData?.client_contact ||
       userData?.contact_no ||
-      "____________________"
+      "      "
     }
   </span>.
 </p>

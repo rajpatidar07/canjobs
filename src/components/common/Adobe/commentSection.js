@@ -9,7 +9,7 @@ import {
   GetCommentsAndAssign,
   GetReplyCommit,
   SendReplyCommit,
-  // UpdateDocuentcommentAssign,
+  UpdateDocuentcommentAssign,
 } from "../../../api/api";
 import ConvertTime from "../ConvertTime";
 import { FaEdit } from "react-icons/fa";
@@ -559,118 +559,126 @@ export default function CommentSection({
   //   // }
   // };
   const OnHandleUpdateCommentStatus = async (originalData, status) => {
-    const {
-      assigned_to,
-      subject_description,
-      assigned_to_name,
-      assigned_user_type,
-      assined_to_user_id,
-    } = originalData;
+    // const {
+    //   assigned_to,
+    //   subject_description,
+    //   assigned_to_name,
+    //   assigned_user_type,
+    //   assined_to_user_id,
+    // } = originalData;
   
-    // Collect all available admins and partners
-    let newAssinList = [...allAdmin, ...partnerList];
+    // // Collect all available admins and partners
+    // let newAssinList = [...allAdmin, ...partnerList];
   
-    // Filter selected admins based on their emails
-    const selectedAdmins = newAssinList.filter(item => selectedAdmin?.includes(item.email));
+    // // Filter selected admins based on their emails
+    // const selectedAdmins = newAssinList.filter(item => selectedAdmin?.includes(item.email));
   
-    // Extract assigned user ID
-    const assignedUserId = selectedAdmins
-      .map(admin => admin.u_id ? admin.id : admin.admin_id)
-      .join(",");
+    // // Extract assigned user ID
+    // const assignedUserId = selectedAdmins
+    //   .map(admin => admin.u_id ? admin.id : admin.admin_id)
+    //   .join(",");
   
-    // Extract assigned user names
-    const assignedAdminName = selectedAdmins
-      .map(admin => admin.name)
-      .join(",");
+    // // Extract assigned user names
+    // const assignedAdminName = selectedAdmins
+    //   .map(admin => admin.name)
+    //   .join(",");
   
-    // Extract assigned user types
-    const assignedUserType = selectedAdmins
-      .map(admin => admin.u_id ? "agent" : admin.admin_type)
-      .join(",");
+    // // Extract assigned user types
+    // const assignedUserType = selectedAdmins
+    //   .map(admin => admin.u_id ? "agent" : admin.admin_type)
+    //   .join(",");
   
-    // Extract email addresses
-    const newAdminEmails = selectedAdmins.map(admin => admin.email).join(",");
+    // // Extract email addresses
+    // const newAdminEmails = selectedAdmins.map(admin => admin.email).join(",");
   
-    /* Comment Manipulation */
-    // Step 1: Bold email addresses
-    let boldComment = commentToApi.replace(
-      /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi,
-      '<b>$1</b>'
-    );
+    // /* Comment Manipulation */
+    // // Step 1: Bold email addresses
+    // let boldComment = commentToApi.replace(
+    //   /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi,
+    //   '<b>$1</b>'
+    // );
   
-    // Step 2: Remove bold tags from inside the title attribute
-    let cleanedComment = boldComment.replace(
-      /title="(<b>)(.*?)(<\/b>)"/g,
-      'title="$2"'
-    );
+    // // Step 2: Remove bold tags from inside the title attribute
+    // let cleanedComment = boldComment.replace(
+    //   /title="(<b>)(.*?)(<\/b>)"/g,
+    //   'title="$2"'
+    // );
   
-    // Step 3: Update the comment with <span> replacements for names and emails
-    let updatedCommentToApi = subject_description || cleanedComment;
+    // // Step 3: Update the comment with <span> replacements for names and emails
+    // let updatedCommentToApi = subject_description || cleanedComment;
   
-    // Split existing emails and names
-    const emailsArray = assigned_to?.split(',').map(email => email.trim()) || [];
-    const namesArray = assigned_to_name?.split(',').map(name => name.trim()) || [];
+    // // Split existing emails and names
+    // const emailsArray = assigned_to?.split(',').map(email => email.trim()) || [];
+    // const namesArray = assigned_to_name?.split(',').map(name => name.trim()) || [];
   
-    // Iterate over the emailsArray and namesArray to replace names with <span> tags
-    emailsArray.forEach((email, index) => {
-      const name = namesArray[index] || assignedAdminName;
+    // // Iterate over the emailsArray and namesArray to replace names with <span> tags
+    // emailsArray.forEach((email, index) => {
+    //   const name = namesArray[index] || assignedAdminName;
   
-      // Only replace the name if it's not already wrapped in a <span> tag
-      const spanRegex = new RegExp(
-        `<span[^>]*>\\s*<b>${name}</b>\\s*</span>`,
-        'g'
-      );
+    //   // Only replace the name if it's not already wrapped in a <span> tag
+    //   const spanRegex = new RegExp(
+    //     `<span[^>]*>\\s*<b>${name}</b>\\s*</span>`,
+    //     'g'
+    //   );
   
-      if (!spanRegex.test(updatedCommentToApi)) {
-        const nameRegex = new RegExp(`\\b${name}\\b`, 'g'); // Only match plain names
-        const spanTag = `<span title="${email}"><b>${name}</b></span>`;
-        updatedCommentToApi = updatedCommentToApi.replace(nameRegex, spanTag);
-      }
-    });
+    //   if (!spanRegex.test(updatedCommentToApi)) {
+    //     const nameRegex = new RegExp(`\\b${name}\\b`, 'g'); // Only match plain names
+    //     const spanTag = `<span title="${email}"><b>${name}</b></span>`;
+    //     updatedCommentToApi = updatedCommentToApi.replace(nameRegex, spanTag);
+    //   }
+    // });
   
-    // Prepare updated data to send to API
-    let updatedData = {
-      ...originalData,
+    // // Prepare updated data to send to API
+    // let updatedData = {
+    //   ...originalData,
+    //   doc_id: originalData.doc_id,
+    //   status: status,
+    //   is_status_update: true,
+    //   subject_description: updatedCommentToApi === originalData.subject_description
+    //     ? originalData.subject_description
+    //     : updatedCommentToApi,
+    //   task_creator_user_id: admin_id,
+    //   task_creator_user_type: localStorage.getItem("userType") === "admin" ? "admin" : "agent",
+    //   assined_to_user_id: `${assined_to_user_id},${assignedUserId}`,
+    //   assigned_user_type: `${assigned_user_type},${assignedUserType}`,
+    //   doc_parent_id: originalData.doc_parent_id,
+    //   assigned_to: `${assigned_to},${newAdminEmails}`, // Add new emails
+    //   assigned_to_name: `${assigned_to_name},${assignedAdminName}`, // Add new names
+    // };
+  
+    // // Log for debugging
+    // console.log("Assigned User Type: ", assigned_user_type, assignedUserType);
+    // console.log("Assigned User ID: ", assined_to_user_id, assignedUserId);
+    // console.log("Assigned To Name: ", assigned_to_name, assignedAdminName);
+    // console.log("Assigned To: ", assigned_to, newAdminEmails);
+    // console.log("Updated Comment: ", updatedCommentToApi);
+    // console.log("Updated Data: ", updatedData);
+  
+    let updatedData = { ...originalData };
+    updatedData = {
       doc_id: originalData.doc_id,
-      status: status,
+      status: originalData.status === "1" ? "0" : "1",
+      id: originalData.id,
       is_status_update: true,
-      subject_description: updatedCommentToApi === originalData.subject_description
-        ? originalData.subject_description
-        : updatedCommentToApi,
-      task_creator_user_id: admin_id,
-      task_creator_user_type: localStorage.getItem("userType") === "admin" ? "admin" : "agent",
-      assined_to_user_id: `${assined_to_user_id},${assignedUserId}`,
-      assigned_user_type: `${assigned_user_type},${assignedUserType}`,
-      doc_parent_id: originalData.doc_parent_id,
-      assigned_to: `${assigned_to},${newAdminEmails}`, // Add new emails
-      assigned_to_name: `${assigned_to_name},${assignedAdminName}`, // Add new names
-    };
-  
-    // Log for debugging
-    console.log("Assigned User Type: ", assigned_user_type, assignedUserType);
-    console.log("Assigned User ID: ", assined_to_user_id, assignedUserId);
-    console.log("Assigned To Name: ", assigned_to_name, assignedAdminName);
-    console.log("Assigned To: ", assigned_to, newAdminEmails);
-    console.log("Updated Comment: ", updatedCommentToApi);
-    console.log("Updated Data: ", updatedData);
-  
+    }; //.status = originalData.status === "1" ? "0" : "1";
+
     // API call to update the document
     // Uncomment this when ready to send to the API
-    // try {
-    //   let res = await UpdateDocumentCommentAssign(updatedData);
-    //   if (res.message === "Task updated successfully!") {
-    //     toast.success("Task completed Successfully", {
-    //       position: toast.POSITION.TOP_RIGHT,
-    //       autoClose: 1000,
-    //     });
-    //     setCommentData();
-    //     setComments("");
-    //     setCommentToApi("");
-    //     Getcomments();
-    //   }
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    try {
+      let res = await UpdateDocuentcommentAssign(updatedData);
+      if (res.message === "Task updated successfully!") {
+        toast.success("Task completed Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setCommentData();
+        setComments("");
+        setCommentToApi("");
+        Getcomments();
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
   
   /*FUnction to get comment list */

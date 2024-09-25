@@ -68,6 +68,7 @@ export default function DocSaveForm({
                     marginRight: "auto",
                     marginLeft: "auto",
                   }}
+                  type="button"
                 >
                   Save Documents
                 </button>
@@ -82,6 +83,7 @@ export default function DocSaveForm({
                     marginRight: "auto",
                     marginLeft: "auto",
                   }}
+                  type="button"
                 >
                   Cancel
                 </button>

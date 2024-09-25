@@ -16,7 +16,7 @@ import { FaGraduationCap, FaNotesMedical } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
 import { GrVisa } from "react-icons/gr";
 import { TiBusinessCard } from "react-icons/ti";
-import { SiExpress } from "react-icons/si";
+import { SiExpress, SiStudyverse } from "react-icons/si";
 import { IoLogoPinterest } from "react-icons/io";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 import { FaPersonShelter } from "react-icons/fa6";
@@ -318,6 +318,24 @@ const AdminSidebar = (props) => {
             {/* <i className="fas fa-filter mr-5"></i> */}
             <GrVisa className="sidebar_icon" />
             Visitors Visa
+          </Link>
+        </li>
+        <li
+          className={
+            user_type === "agent"
+              ? "d-none"
+              : props.heading === "Study Permit"
+                ? "active"
+                : ""
+          }
+        >
+          <Link
+            onClick={() => clearPageNo()}
+            to="/studypermit"
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+          >
+            <SiStudyverse className="sidebar_icon"/>
+            Study Permit
           </Link>
         </li>
         <li

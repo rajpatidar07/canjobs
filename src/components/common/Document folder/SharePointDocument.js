@@ -325,64 +325,149 @@ export default function SharePointDocument({
   /*On change fnction to upload bulk document in 1 array*/
   const handleBulkFileChange = async (event, id) => {
     const files = event.target.files;
-    {
-      // Check the number of files selected
-      if (files.length > 30) {
-        toast.error("You can only upload a maximum of 30 files at a time", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
+
+    // Check the number of files selected
+    if (files.length > 30) {
+      toast.error("You can only upload a maximum of 30 files at a time", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+      return;
+    }
+
+    const allowedTypes = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
+    const maxSize = 1024 * 8000; // 8 MB
+
+    const filebseList = [];
+    for (let i = 0; i < files.length; i++) {
+      let file = files[i];
+
+      // Extract the filename and extension
+      const lastDotIndex = file.name.lastIndexOf(".");
+      let fileName = file.name.substring(0, lastDotIndex); // Get the name part before the last dot
+      const fileExtension = file.name.substring(lastDotIndex + 1); // Get the extension part after the last dot
+
+      // Remove all extra dots in the fileName part
+      fileName = fileName.replace(/\.+/g, ""); // Remove any extra dots
+
+      const finalFileName = `${fileName}.${fileExtension}`; // Form the new file name
+
+      // Create a new File object with the updated name, preserving the file's content and metadata
+      const updatedFile = new File([file], finalFileName, { type: file.type, lastModified: file.lastModified });
+
+      // Check file type
+      const fileType = `.${fileExtension.toLowerCase()}`;
+      if (!allowedTypes.includes(fileType)) {
+        toast.error(
+          `Invalid document type for file '${updatedFile.name}'. Allowed types: PDF, DOC, DOCX, JPG, JPEG, PNG`,
+          {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          }
+        );
         return;
       }
 
-      // Continue with file validation and processing
-      const allowedTypes = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
-      const maxSize = 1024 * 8000; // 8 MB
-
-      const filebseList = [];
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        // Check file type
-        const fileType = `.${file.name.split(".").pop()}`;
-        if (!allowedTypes.includes(fileType.toLowerCase())) {
-          toast.error(
-            `Invalid document type for file '${file.name}'. Allowed types: PDF, DOC, DOCX, JPG, JPEG, PNG`,
-            {
-              position: toast.POSITION.TOP_RIGHT,
-              autoClose: 1000,
-            }
-          );
-          return;
-        }
-
-        // Check file size
-        if (file.size > maxSize) {
-          toast.error(
-            `Document size can't be more than 8 MB for file '${file.name}'`,
-            {
-              position: toast.POSITION.TOP_RIGHT,
-              autoClose: 1000,
-            }
-          );
-          return;
-        }
-
-        // Read file as data URL
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        //For drive uploade
-        filebseList.push(file);
+      // Check file size
+      if (updatedFile.size > maxSize) {
+        toast.error(
+          `Document size can't be more than 8 MB for file '${updatedFile.name}'`,
+          {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          }
+        );
+        return;
       }
-      // Store the object of files
-      setDocFileBase(filebseList);
-      setSaveBtn(true);
-      //   bulkUpload === "no" ? setDocName(DocRealName) : setDocName("");
+
+      // Read file as data URL
+      const reader = new FileReader();
+      reader.readAsDataURL(updatedFile);
+
+      // Add the updated file to the file list
+      filebseList.push(updatedFile);
     }
+
+    // Store the object of files
+    setDocFileBase(filebseList);
+    setSaveBtn(true);
   };
+
+  // const handleBulkFileChange = async (event, id) => {
+  //   const files = event.target.files;
+
+  //   // Check the number of files selected
+  //   if (files.length > 30) {
+  //     toast.error("You can only upload a maximum of 30 files at a time", {
+  //       position: toast.POSITION.TOP_RIGHT,
+  //       autoClose: 1000,
+  //     });
+  //     return;
+  //   }
+
+  //   // Continue with file validation and processing
+  //   const allowedTypes = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
+  //   const maxSize = 1024 * 8000; // 8 MB
+
+  //   const filebseList = [];
+  //   for (let i = 0; i < files.length; i++) {
+  //     let file = files[i];
+  //     // Extract the filename and extension
+  //     const lastDotIndex = file.name.lastIndexOf(".");
+  //     let fileName = file.name.substring(0, lastDotIndex); // Get the name part before the last dot
+  //     const fileExtension = file.name.substring(lastDotIndex + 1); // Get the extension part after the last dot
+
+  //     // Remove all dots from the filename part, except the last one before the extension
+  //     fileName = fileName.replace(/\./g, ""); // Remove all dots in the fileName part
+  //     const finalFileName = `${fileName}.${fileExtension}`; // Form the cleaned file name
+
+  //     // Assign the cleaned file name back to the file object
+  //     Object.defineProperty(file, 'name', { writable: true });
+  //     file.name = finalFileName; // Update the file name
+
+  //     // Check file type
+  //     const fileType = `.${fileExtension.toLowerCase()}`;
+  //     if (!allowedTypes.includes(fileType)) {
+  //       toast.error(
+  //         `Invalid document type for file '${file.name}'. Allowed types: PDF, DOC, DOCX, JPG, JPEG, PNG`,
+  //         {
+  //           position: toast.POSITION.TOP_RIGHT,
+  //           autoClose: 1000,
+  //         }
+  //       );
+  //       return;
+  //     }
+
+  //     // Check file size
+  //     if (file.size > maxSize) {
+  //       toast.error(
+  //         `Document size can't be more than 8 MB for file '${file.name}'`,
+  //         {
+  //           position: toast.POSITION.TOP_RIGHT,
+  //           autoClose: 1000,
+  //         }
+  //       );
+  //       return;
+  //     }
+
+  //     // Read file as data URL
+  //     const reader = new FileReader();
+  //     reader.readAsDataURL(file);
+  //     // For drive upload
+  //     filebseList.push(file);
+  //   }
+
+  //   // Store the object of files
+  //   setDocFileBase(filebseList);
+  //   setSaveBtn(true);
+  // };
+
   //Document Save Function
   const SaveBulkDocument = async () => {
-    setLoadingBtn(true);
+    // setLoadingBtn(true);
     setShowDropDown(false);
+    console.log(
+      docFileBase)
     try {
       let res = await AddSharePointDOcument(
         user_id,

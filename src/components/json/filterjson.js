@@ -606,6 +606,7 @@ const filterjson = {
     "business visa",
     "federal PR",
     "pgwp",// new Applicant type added asked by jayant 
+    "study permit",// new Applicant type added asked by jayant 
     // "swep",
     // "internship",
     // "co-op",

@@ -17,6 +17,7 @@ export default function ActivityTable(props) {
   const [activityData, setactivityData] = useState([]);
   /*Pagination states */
   // const [status, setStatus] = useState(props.self === "yes" ? -1 : 4);
+  const [callapi, setCallApi] = useState(false);
   const [page, setpage] = useState(1);
   const [totalData, setTotalData] = useState("");
   const [recordsPerPage] = useState(10);
@@ -57,6 +58,20 @@ export default function ActivityTable(props) {
     31: "Category updated",
     32: "Category type inserted",
     33: "Category type updated",
+    34: "Miscellaneous Substage inserted",
+    35: "Miscellaneous Substage updated",
+    36: "interview complete",
+    37: "Delete Employee",
+    38: "Employee career delete",
+    39: "Employee Education delete",
+    40: "Employee Skills delete",
+    41: "Admin Document upload on sharepoint",
+    42: "Employee password update",
+    43: "Employee document delete",
+    44: "Employee visa delete",
+    45: "Employee reserve add",
+    46: "Employee reserve remove",
+    47: "Employee setting update",
   };
   //   let activityData;
   /* Function to get Activity data*/
@@ -87,8 +102,11 @@ export default function ActivityTable(props) {
   /*Render function to get the employer*/
   useEffect(() => {
     ActivityLog();
+    if (callapi === true) {
+      setCallApi(false)
+    }
     // eslint-disable-next-line
-  }, [page]);
+  }, [page, callapi]);
   return (
     <>
       <div className="table-responsive main_table_div">
@@ -96,6 +114,7 @@ export default function ActivityTable(props) {
           <Loader />
         ) : (
           <table className="table table-striped main_data_table">
+            {/* <button onClick={() => setCallApi(true)}>call</button> */}
             <thead>
               <tr className="">
                 {hide ? null : <th>User ID</th>}
@@ -125,7 +144,7 @@ export default function ActivityTable(props) {
                           ? "Candidate"
                           : data.employee_name}
                       </Link>{" "}
-                      {activity_json[`${data.status}`]}
+                      <span className="text-capitalize">{activity_json[`${data.status}`]?.replace("Miscellaneous", data.action_type)}</span>
                       {/* {" for "} */}
                       {" by "}
                       {data.user_type === "agent"
@@ -133,9 +152,9 @@ export default function ActivityTable(props) {
                         : data.user_type + " " + data.created_by}
                     </td>
                     <td>
-                    <ConvertTime _date={data.created_at} format={'MMMM Do YYYY, h:mm:ss a'}/>
+                      <ConvertTime _date={data.created_at} format={'MMMM Do YYYY, h:mm:ss a'} />
                       {/* {moment(data.created_at).format("lll")} */}
-                      </td>
+                    </td>
                   </tr>
                 ))
               )}

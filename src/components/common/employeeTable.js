@@ -889,34 +889,34 @@ export default function EmployeeTable(props) {
                                   <p
                                     className="text-gray font-size-2 m-0 text-capitalize"
                                     title={
-                                      (empdata.gender === "female"
+                                      (empdata.gender ? empdata.gender === "female"
                                         ? "F"
                                         : empdata.gender === "male"
                                           ? "M"
-                                          : "O") +
+                                          : "O" : "") +
                                       (empdata.marital_status ||
                                         empdata.date_of_birth
                                         ? `${empdata.marital_status
-                                        },${moment().diff(
-                                          empdata.date_of_birth,
+                                        },${empdata.date_of_birth ? moment().diff(
+                                          empdata.date_of_birth + " Y",
                                           "years"
-                                        )} Y`
+                                        ) : ""}`
                                         : null)
                                     }
                                   >
-                                    {empdata.gender === "female"
+                                    {empdata.gender ? empdata.gender === "female"
                                       ? "F"
                                       : empdata.gender === "male"
                                         ? "M"
-                                        : "O"}
+                                        : "O" : ""}
                                     {/*Calculation of age from date of birth*/}(
                                     {empdata.marital_status ||
                                       empdata.date_of_birth
                                       ? `${empdata.marital_status
-                                      },${moment().diff(
+                                      },${empdata.date_of_birth ? moment().diff(
                                         empdata.date_of_birth,
                                         "years"
-                                      )} Y`
+                                      ) + " Y" : ""}`
                                       : null}
                                     )
                                   </p>

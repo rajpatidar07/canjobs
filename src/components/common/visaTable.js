@@ -434,14 +434,14 @@ export default function VisaTable(props) {
                                     </Link>
                                   </p>
                                   <p className="text-gray font-size-2 m-0 text-capitalize"
-                                    title={(empdata.gender === "female"
+                                    title={(empdata.gender ? empdata.gender === "female"
                                       ? "F"
                                       : empdata.gender === "male"
                                         ? "M"
-                                        : "O") + (empdata.marital_status ||
+                                        : "O" : "") + (empdata.marital_status ||
                                           empdata.date_of_birth
                                           ? `(${empdata.marital_status
-                                          }${((moment().diff(
+                                          }${empdata.date_of_birth ? ((moment().diff(
                                             empdata.date_of_birth,
                                             "years"
                                           )) === 0
@@ -449,22 +449,22 @@ export default function VisaTable(props) {
                                             : (`,${(moment().diff(
                                               empdata.date_of_birth,
                                               "years"
-                                            ))}Y`))})`
+                                            ))}Y`)) : ""})`
                                           : null)}>
-                                    {empdata.gender === "female"
+                                    {empdata.gender ? empdata.gender === "female"
                                       ? "F"
                                       : empdata.gender === "male"
                                         ? "M"
-                                        : "O"}
+                                        : "O" : ""}
                                     ({empdata.marital_status}
                                     {/*Calculation of age from date of birth*/}
-                                    {((moment().diff(
+                                    {empdata.date_of_birth ? ((moment().diff(
                                       empdata.date_of_birth,
                                       "years"
                                     )) === 0 ? "" : (`,${(moment().diff(
                                       empdata.date_of_birth,
                                       "years"
-                                    ))}Y`))})
+                                    ))}Y`)) : ""})
                                     {empdata.is_featured === "1" ? (
                                       <span className="bg-orange text-white featured_tag">
                                         Featured
