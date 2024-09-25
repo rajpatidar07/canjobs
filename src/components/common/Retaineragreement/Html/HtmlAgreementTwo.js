@@ -1,7 +1,7 @@
-import React from 'react'
+import React from "react";
 
 export default function HtmlAgreementTwo() {
-  let htmlCOntent= `<!DOCTYPE html>
+  let htmlCOntent = `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -67,10 +67,10 @@ export default function HtmlAgreementTwo() {
     </div>
 </body>
 </html>
-`
+`;
   return (
     <div>
-      <div dangerouslySetInnerHTML={{__html:htmlCOntent}}/>
+      <div dangerouslySetInnerHTML={{ __html: htmlCOntent }} />
     </div>
-  )
+  );
 }
