@@ -40,7 +40,7 @@ function PersonalDetails(props) {
   let [agentId /*, setAgentId*/] = useState();
 
   let user_type = localStorage.getItem("userType");
-  // let admin_id = localStorage.getItem("admin_id");
+  let admin_id = user_type === "agent" ? localStorage.getItem("agent_id") : localStorage.getItem("admin_id");
   // USER PERSONAL DETAIL VALIDATION
   // INITIAL STATE ASSIGNMENT
   const initialFormStateuser = {
@@ -66,8 +66,9 @@ function PersonalDetails(props) {
     status: props.employeeId === "0" ? "1" : "",
     reffer_by: user_type === "agent" ? localStorage.getItem("agent_id") : "",
     permission: props.employeeId === "0" ? JSON.stringify(Permissions) : null,
-    assigned_by: ""
+    assigned_by: "",
   };
+
   // VALIDATION CONDITIONS
 
   const validators = {
@@ -225,7 +226,12 @@ function PersonalDetails(props) {
       if (userData.data.employee.length === 0) {
         setState([]);
       } else {
-        setState(userData.data.employee[0]);
+        setState((prevState) => ({
+          ...prevState,
+          ...userData.data.employee[0],
+          last_updated_by: user_type === "user" ? localStorage.getItem("employee_id") : admin_id,
+          last_updated_by_type: user_type === "user" ? "employee" : user_type
+        }));
       }
     } catch (err) {
       console.log(err);

@@ -5,14 +5,14 @@ import { toast } from "react-toastify";
 import { CiPaperplane } from "react-icons/ci";
 import {
   ADocAnnotation,
-  // DeleteCommentsAndAssign,
+  DeleteCommentsAndAssign,
   GetCommentsAndAssign,
   GetReplyCommit,
   SendReplyCommit,
   UpdateDocuentcommentAssign,
 } from "../../../api/api";
 import ConvertTime from "../ConvertTime";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit, FaTrash } from "react-icons/fa";
 export default function CommentSection({
   commentsList,
   docData,
@@ -129,7 +129,16 @@ export default function CommentSection({
       setComments(inputValue);
       setCommentToApi(replacedStr)
     }
-
+    if (inputValue.includes((allAdmin.filter((item) =>
+      selectedAdmin?.includes(item.email)
+    )
+      ? allAdmin
+        .filter((item) => selectedAdmin?.includes(item.email))
+        .map((admin) => admin.name)
+        .join(",")
+      : ""))) {
+      setSelectedAdmin()
+    }
     const cursorPosition = event.target.selectionStart;
     const textBeforeCursor = inputValue.substring(0, cursorPosition);
     const lastWord = textBeforeCursor.split(' ').pop();
@@ -161,6 +170,7 @@ export default function CommentSection({
         setFilteredEmails(filteredAdminEmails);
       } else {
         setFilteredEmails(AddPartnersList);
+
       }
     } else {
       setFilteredEmails([]);
@@ -279,9 +289,6 @@ export default function CommentSection({
     });
 
     // Now updatedComment will have properly formatted <span> elements without nested bold tags
-
-
-    console.log(updatedComment)
     // Send data to the API
     if (
       ((comment === "" || comment.trim() === "") && email === "")
@@ -558,112 +565,222 @@ export default function CommentSection({
   //   //   console.log(err);
   //   // }
   // };
-  const OnHandleUpdateCommentStatus = async (originalData, status) => {
-    // const {
-    //   assigned_to,
-    //   subject_description,
-    //   assigned_to_name,
-    //   assigned_user_type,
-    //   assined_to_user_id,
-    // } = originalData;
-  
-    // // Collect all available admins and partners
-    // let newAssinList = [...allAdmin, ...partnerList];
-  
-    // // Filter selected admins based on their emails
-    // const selectedAdmins = newAssinList.filter(item => selectedAdmin?.includes(item.email));
-  
-    // // Extract assigned user ID
-    // const assignedUserId = selectedAdmins
-    //   .map(admin => admin.u_id ? admin.id : admin.admin_id)
-    //   .join(",");
-  
-    // // Extract assigned user names
-    // const assignedAdminName = selectedAdmins
-    //   .map(admin => admin.name)
-    //   .join(",");
-  
-    // // Extract assigned user types
-    // const assignedUserType = selectedAdmins
-    //   .map(admin => admin.u_id ? "agent" : admin.admin_type)
-    //   .join(",");
-  
-    // // Extract email addresses
-    // const newAdminEmails = selectedAdmins.map(admin => admin.email).join(",");
-  
-    // /* Comment Manipulation */
-    // // Step 1: Bold email addresses
-    // let boldComment = commentToApi.replace(
-    //   /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi,
-    //   '<b>$1</b>'
-    // );
-  
-    // // Step 2: Remove bold tags from inside the title attribute
-    // let cleanedComment = boldComment.replace(
-    //   /title="(<b>)(.*?)(<\/b>)"/g,
-    //   'title="$2"'
-    // );
-  
-    // // Step 3: Update the comment with <span> replacements for names and emails
-    // let updatedCommentToApi = subject_description || cleanedComment;
-  
-    // // Split existing emails and names
-    // const emailsArray = assigned_to?.split(',').map(email => email.trim()) || [];
-    // const namesArray = assigned_to_name?.split(',').map(name => name.trim()) || [];
-  
-    // // Iterate over the emailsArray and namesArray to replace names with <span> tags
-    // emailsArray.forEach((email, index) => {
-    //   const name = namesArray[index] || assignedAdminName;
-  
-    //   // Only replace the name if it's not already wrapped in a <span> tag
-    //   const spanRegex = new RegExp(
-    //     `<span[^>]*>\\s*<b>${name}</b>\\s*</span>`,
-    //     'g'
-    //   );
-  
-    //   if (!spanRegex.test(updatedCommentToApi)) {
-    //     const nameRegex = new RegExp(`\\b${name}\\b`, 'g'); // Only match plain names
-    //     const spanTag = `<span title="${email}"><b>${name}</b></span>`;
-    //     updatedCommentToApi = updatedCommentToApi.replace(nameRegex, spanTag);
-    //   }
-    // });
-  
-    // // Prepare updated data to send to API
-    // let updatedData = {
-    //   ...originalData,
-    //   doc_id: originalData.doc_id,
-    //   status: status,
-    //   is_status_update: true,
-    //   subject_description: updatedCommentToApi === originalData.subject_description
-    //     ? originalData.subject_description
-    //     : updatedCommentToApi,
-    //   task_creator_user_id: admin_id,
-    //   task_creator_user_type: localStorage.getItem("userType") === "admin" ? "admin" : "agent",
-    //   assined_to_user_id: `${assined_to_user_id},${assignedUserId}`,
-    //   assigned_user_type: `${assigned_user_type},${assignedUserType}`,
-    //   doc_parent_id: originalData.doc_parent_id,
-    //   assigned_to: `${assigned_to},${newAdminEmails}`, // Add new emails
-    //   assigned_to_name: `${assigned_to_name},${assignedAdminName}`, // Add new names
-    // };
-  
-    // // Log for debugging
-    // console.log("Assigned User Type: ", assigned_user_type, assignedUserType);
-    // console.log("Assigned User ID: ", assined_to_user_id, assignedUserId);
-    // console.log("Assigned To Name: ", assigned_to_name, assignedAdminName);
-    // console.log("Assigned To: ", assigned_to, newAdminEmails);
-    // console.log("Updated Comment: ", updatedCommentToApi);
-    // console.log("Updated Data: ", updatedData);
-  
-    let updatedData = { ...originalData };
-    updatedData = {
-      doc_id: originalData.doc_id,
-      status: originalData.status === "1" ? "0" : "1",
-      id: originalData.id,
-      is_status_update: true,
-    }; //.status = originalData.status === "1" ? "0" : "1";
+  //   const OnHandleUpdateCommentStatus = async (originalData, status) => {
+  //     const {
+  //       assigned_to,
+  //       subject_description,
+  //       assigned_to_name,
+  //       assigned_user_type,
+  //       assined_to_user_id,
+  //     } = originalData;
+  // console.log(comments)
+  //     // Collect all available admins and partners
+  //     let newAssinList = [...allAdmin, ...partnerList];
 
-    // API call to update the document
-    // Uncomment this when ready to send to the API
+  //     // Filter selected admins based on their emails
+  //     const selectedAdmins = newAssinList.filter(item => selectedAdmin?.includes(item.email));
+
+  //     // Extract assigned user ID
+  //     const assignedUserId = selectedAdmins
+  //       .map(admin => admin.u_id ? admin.id : admin.admin_id)
+  //       .join(",");
+
+  //     // Extract assigned user names
+  //     const assignedAdminName = selectedAdmins
+  //       .map(admin => admin.name)
+  //       .join(",");
+
+  //     // Extract assigned user types
+  //     const assignedUserType = selectedAdmins
+  //       .map(admin => admin.u_id ? "agent" : admin.admin_type)
+  //       .join(",");
+
+  //     // Extract email addresses
+  //     const newAdminEmails = selectedAdmins.map(admin => admin.email).join(",");
+
+  //     /* Comment Manipulation */
+  //     // Step 1: Bold email addresses
+  //     let boldComment = commentToApi.replace(
+  //       /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi,
+  //       '<b>$1</b>'
+  //     );
+
+  //     // Step 2: Remove bold tags from inside the title attribute
+  //     let cleanedComment = boldComment.replace(
+  //       /title="(<b>)(.*?)(<\/b>)"/g,
+  //       'title="$2"'
+  //     );
+
+  //     // Step 3: Update the comment with <span> replacements for names and emails
+  //     let updatedCommentToApi = subject_description || cleanedComment;
+
+  //     // Split existing emails and names
+  //     const emailsArray = assigned_to?.split(',').map(email => email.trim()) || [];
+  //     const namesArray = assigned_to_name?.split(',').map(name => name.trim()) || [];
+
+  //     // Iterate over the emailsArray and namesArray to replace names with <span> tags
+  //     emailsArray.forEach((email, index) => {
+  //       const name = namesArray[index] || assignedAdminName;
+
+  //       // Only replace the name if it's not already wrapped in a <span> tag
+  //       const spanRegex = new RegExp(
+  //         `<span[^>]*>\\s*<b>${name}</b>\\s*</span>`,
+  //         'g'
+  //       );
+
+  //       if (!spanRegex.test(updatedCommentToApi)) {
+  //         const nameRegex = new RegExp(`\\b${name}\\b`, 'g'); // Only match plain names
+  //         const spanTag = `<span title="${email}"><b>${name}</b></span>`;
+  //         updatedCommentToApi = updatedCommentToApi.replace(nameRegex, spanTag);
+  //       }
+  //     });
+
+  //     // Prepare updated data to send to API
+  //     let updatedData = {
+  //       ...originalData,
+  //       doc_id: originalData.doc_id,
+  //       status: status,
+  //       is_status_update: true,
+  //       subject_description: updatedCommentToApi === originalData.subject_description
+  //         ? originalData.subject_description
+  //         : updatedCommentToApi,
+  //       task_creator_user_id: admin_id,
+  //       task_creator_user_type: localStorage.getItem("userType") === "admin" ? "admin" : "agent",
+  //       assined_to_user_id: `${assined_to_user_id}${"," + assignedUserId || ""}`,
+  //       assigned_user_type: `${assigned_user_type}${"," + assignedUserType || ""}`,
+  //       doc_parent_id: originalData.doc_parent_id,
+  //       assigned_to: `${assigned_to}${"," + newAdminEmails || ""}`, // Add new emails
+  //       assigned_to_name: `${assigned_to_name}${"," + assignedAdminName || ""}`, // Add new names
+  //     };
+
+  //     // Log for debugging
+  //     console.log("Assigned User Type: ", assigned_user_type, assignedUserType);
+  //     console.log("Assigned User ID: ", assined_to_user_id, assignedUserId);
+  //     console.log("Assigned To Name: ", assigned_to_name, assignedAdminName);
+  //     console.log("Assigned To: ", assigned_to, newAdminEmails);
+  //     console.log("Updated Comment: ", updatedCommentToApi);
+  //     console.log("Updated Data: ", updatedData);
+
+  //     // let updatedData = { ...originalData };
+  //     // updatedData = {
+  //     //   doc_id: originalData.doc_id,
+  //     //   status: originalData.status === "1" ? "0" : "1",
+  //     //   id: originalData.id,
+  //     //   is_status_update: true,
+  //     // }; //.status = originalData.status === "1" ? "0" : "1";
+
+  //     // // API call to update the document
+  //     // // Uncomment this when ready to send to the API
+  //     // try {
+  //     //   let res = await UpdateDocuentcommentAssign(updatedData);
+  //     //   if (res.message === "Task updated successfully!") {
+  //     //     toast.success("Task completed Successfully", {
+  //     //       position: toast.POSITION.TOP_RIGHT,
+  //     //       autoClose: 1000,
+  //     //     });
+  //     //     setCommentData();
+  //     //     setComments("");
+  //     //     setCommentToApi("");
+  //     //     Getcomments();
+  //     //   }
+  //     // } catch (err) {
+  //     //   console.log(err);
+  //     // }
+  //   };
+  const OnHandleUpdateCommentStatus = async (originalData, status) => {
+    const {
+      assigned_to,
+      subject_description,
+      assigned_to_name,
+      assigned_user_type,
+      assined_to_user_id,
+    } = originalData;
+
+    let updatedCommentToApi = comments || subject_description;
+
+    // Parse the original admin details
+    let emailsArray = assigned_to?.split(',') || [];
+    let namesArray = assigned_to_name?.split(',') || [];
+    let userIdArray = assined_to_user_id?.split(',') || [];
+    let userTypeArray = assigned_user_type?.split(',') || [];
+
+    // Create new arrays for users who should remain after removal
+    const newEmailsArray = [];
+    const newNamesArray = [];
+    const newUserIdArray = [];
+    const newUserTypeArray = [];
+
+    // Iterate through names to determine which ones to keep
+    namesArray.forEach((name, index) => {
+      const nameRegex = new RegExp(`\\b${name}\\b`, 'g');
+
+      if (nameRegex.test(updatedCommentToApi)) {
+        // If the name is still in the updated comment, keep its corresponding details
+        newEmailsArray.push(emailsArray[index]);
+        newNamesArray.push(namesArray[index]);
+        newUserIdArray.push(userIdArray[index]);
+        newUserTypeArray.push(userTypeArray[index]);
+      }
+    });
+
+    // Handle newly added admins
+    const newAssinList = [...allAdmin, ...partnerList];
+    const selectedAdmins = newAssinList.filter(item => selectedAdmin?.includes(item.email));
+
+    selectedAdmins.forEach(admin => {
+      if (!newEmailsArray.includes(admin.email)) {
+        // Add new admin's details to the arrays
+        newEmailsArray.push(admin.email);
+        newNamesArray.push(admin.name);
+        newUserIdArray.push(admin.u_id ? admin.id : admin.admin_id);
+        newUserTypeArray.push(admin.u_id ? "agent" : admin.admin_type);
+      }
+    });
+
+    // Update the comment by ensuring all existing names are wrapped in <span> tags
+    updatedCommentToApi = newNamesArray.reduce((comment, name, index) => {
+      const email = newEmailsArray[index];
+      const nameRegex = new RegExp(`\\b${name}\\b`, 'g');
+
+      // Replace names with <span> tags if they aren't already wrapped
+      if (!comment.includes(`<span title="${email}"><b>${name}</b></span>`)) {
+        const spanTag = `<span title="${email}"><b>${name}</b></span>`;
+        comment = comment.replace(nameRegex, spanTag);
+      }
+      return comment;
+    }, updatedCommentToApi);
+
+    // Prepare updated strings for each array
+    const updatedEmails = newEmailsArray.join(',');
+    const updatedNames = newNamesArray.join(',');
+    const updatedUserIds = newUserIdArray.join(',');
+    const updatedUserTypes = newUserTypeArray.join(',');
+
+    // Construct the final data to send to the API
+    const updatedData = {
+      // ...originalData,
+      doc_id: originalData.doc_id,
+      status: status,
+      is_status_update: true,
+      subject_description: updatedCommentToApi,
+      task_creator_user_id: admin_id,
+      task_creator_user_type: localStorage.getItem("userType") === "admin" ? "admin" : "agent",
+      assined_to_user_id: updatedUserIds,
+      assigned_user_type: updatedUserTypes,
+      doc_parent_id: originalData.doc_parent_id,
+      assigned_to: updatedEmails,
+      assigned_to_name: updatedNames,
+    };
+
+    // Debug logs to verify the updated values
+    console.log("Assigned User Type: ", updatedUserTypes);
+    console.log("Assigned User ID: ", updatedUserIds);
+    console.log("Assigned To Name: ", updatedNames);
+    console.log("Assigned To: ", updatedEmails);
+    console.log("Updated Comment: ", updatedCommentToApi);
+    console.log("Updated Data: ", updatedData);
+
+    // Call the API to update the document
     try {
       let res = await UpdateDocuentcommentAssign(updatedData);
       if (res.message === "Task updated successfully!") {
@@ -680,7 +797,120 @@ export default function CommentSection({
       console.log(err);
     }
   };
-  
+
+  // const OnHandleUpdateCommentStatus = async (originalData, status) => {
+  //   const {
+  //     assigned_to,
+  //     subject_description,
+  //     assigned_to_name,
+  //     assigned_user_type,
+  //     assined_to_user_id,
+  //   } = originalData;
+
+  //   let updatedCommentToApi = comments || subject_description;
+
+  //   // Parse the original admin details
+  //   let emailsArray = assigned_to?.split(',') || [];
+  //   let namesArray = assigned_to_name?.split(',') || [];
+  //   let userIdArray = assined_to_user_id?.split(',') || [];
+  //   let userTypeArray = assigned_user_type?.split(',') || [];
+
+  //   // Initialize an array to track indices of admins to be removed
+  //   let removedAdmins = [];
+
+  //   // Find admins that were removed from the comment
+  //   namesArray.forEach((name, index) => {
+  //     const nameRegex = new RegExp(`\\b${name}\\b`, 'g');
+  //     if (!nameRegex.test(updatedCommentToApi)) {
+  //       // If the admin's name is not found in the comment, mark it for removal
+  //       removedAdmins.push(index);
+  //     }
+  //   });
+
+  //   // Remove corresponding entries from all arrays
+  //   removedAdmins.forEach(index => {
+  //     emailsArray.splice(index, 1);
+  //     namesArray.splice(index, 1);
+  //     userIdArray.splice(index, 1);
+  //     userTypeArray.splice(index, 1);
+  //   });
+
+  //   // Handle newly added admins
+  //   const newAssinList = [...allAdmin, ...partnerList];
+  //   const selectedAdmins = newAssinList.filter(item => selectedAdmin?.includes(item.email));
+
+  //   selectedAdmins.forEach(admin => {
+  //     if (!emailsArray.includes(admin.email)) {
+  //       // Add new admin's details to the arrays
+  //       emailsArray.push(admin.email);
+  //       namesArray.push(admin.name);
+  //       userIdArray.push(admin.u_id ? admin.id : admin.admin_id);
+  //       userTypeArray.push(admin.u_id ? "agent" : admin.admin_type);
+  //     }
+  //   });
+
+  //   // Update the comment by ensuring all existing names are wrapped in <span> tags
+  //   emailsArray.forEach((email, index) => {
+  //     const name = namesArray[index];
+  //     const spanRegex = new RegExp(`<span[^>]*>\\s*<b>${name}</b>\\s*</span>`, 'g');
+  //     const nameRegex = new RegExp(`\\b${name}\\b`, 'g');
+
+  //     // Replace names with <span> tags if they aren't already wrapped
+  //     if (!spanRegex.test(updatedCommentToApi)) {
+  //       const spanTag = `<span title="${email}"><b>${name}</b></span>`;
+  //       updatedCommentToApi = updatedCommentToApi.replace(nameRegex, spanTag);
+  //     }
+  //   });
+
+  //   // Prepare updated strings for each array
+  //   const updatedEmails = emailsArray.join(',');
+  //   const updatedNames = namesArray.join(',');
+  //   const updatedUserIds = userIdArray.join(',');
+  //   const updatedUserTypes = userTypeArray.join(',');
+
+  //   // Construct the final data to send to the API
+  //   const updatedData = {
+  //     ...originalData,
+  //     doc_id: originalData.doc_id,
+  //     status: status,
+  //     is_status_update: true,
+  //     subject_description: updatedCommentToApi,
+  //     task_creator_user_id: admin_id,
+  //     task_creator_user_type: localStorage.getItem("userType") === "admin" ? "admin" : "agent",
+  //     assined_to_user_id: updatedUserIds,
+  //     assigned_user_type: updatedUserTypes,
+  //     doc_parent_id: originalData.doc_parent_id,
+  //     assigned_to: updatedEmails,
+  //     assigned_to_name: updatedNames,
+  //   };
+
+  //   // Debug logs to verify the updated values
+  //   console.log("Assigned User Type: ", updatedUserTypes);
+  //   console.log("Assigned User ID: ", updatedUserIds);
+  //   console.log("Assigned To Name: ", updatedNames);
+  //   console.log("Assigned To: ", updatedEmails);
+  //   console.log("Updated Comment: ", updatedCommentToApi);
+  //   console.log("Updated Data: ", updatedData);
+
+  //   // Call the API to update the document
+  //   // try {
+  //   //   let res = await UpdateDocuentcommentAssign(updatedData);
+  //   //   if (res.message === "Task updated successfully!") {
+  //   //     toast.success("Task completed Successfully", {
+  //   //       position: toast.POSITION.TOP_RIGHT,
+  //   //       autoClose: 1000,
+  //   //     });
+  //   //     setCommentData();
+  //   //     setComments("");
+  //   //     setCommentToApi("");
+  //   //     Getcomments();
+  //   //   }
+  //   // } catch (err) {
+  //   //   console.log(err);
+  //   // }
+  // };
+
+
   /*FUnction to get comment list */
   const Getcomments = async (annotStatus, adminfilter) => {
     let CommentRes = await GetCommentsAndAssign(
@@ -696,14 +926,23 @@ export default function CommentSection({
       );
     }
   };
-  // const OnDeleteComment = async (docId, id) => {
-  //   try {
-  //     let res = await DeleteCommentsAndAssign(docId, id);
-  //     console.log(res);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  const OnDeleteComment = async (docId, id) => {
+    try {
+      let res = await DeleteCommentsAndAssign(docId, id);
+      if (res.data.message === "Task deleted successfully!") {
+        toast.success("Task Deleted Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setCommentData();
+        setComments("");
+        setCommentToApi("");
+        Getcomments();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <div className="col-md-4 col-lg-4 col-sm-3 py-2 bg-light comments_and_replies">
       {/* //condition for imm pdf
@@ -883,11 +1122,11 @@ export default function CommentSection({
                   key={index}
                 >
                   <div className="comment_status_update d-flex mr-10">
-                    <Link className="text-gray pr-2 d-none" title="Update Comment" onClick={() => {
+                    <Link className="text-gray pr-2" title="Update Comment" onClick={() => {
                       handleLinkClick(commentItem);
                     }}>  <FaEdit /></Link>
                     <Link
-                      className=""
+                      className="pr-2 "
                       style={{
                         cursor: "pointer",
                         color: commentItem.status === "0" ? "blue" : "white",
@@ -910,6 +1149,10 @@ export default function CommentSection({
                     >
                       &#x2713; {/* Checkmark symbol */}
                     </Link>
+                    <Link className="text-danger pr-2" title="Delete Comment" onClick={() => {
+                      OnDeleteComment(commentItem.doc_id, commentItem.id);
+                    }}>  <FaTrash /></Link>
+
                   </div>
                   <div className="card-body p-2">
                     <div className="text-dark">

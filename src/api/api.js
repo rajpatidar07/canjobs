@@ -252,6 +252,7 @@ export const EmployeeAppliedJob = async (props) => {
 
 /* Add Employee detail api */
 export const AddEmployeeDetails = async (props) => {
+  // console.log(props)
   const headers = Token
     ? {
       "Content-Type": "application/json",

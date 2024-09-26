@@ -63,11 +63,12 @@ export default function EmployeeTable(props) {
   const [status, setStatus] = useState(
     StatusTab
       ? StatusTab
-      : props.pageName === "local_candidate" || props.ApplicantType
+      : props.pageName === "local_candidate"
         ? ""
-        : props.self === "yes"
-          ? -1
-          : 4
+        : props.ApplicantType ? "4,7,8"
+          : props.self === "yes"
+            ? -1
+            : 4
   );
   const [totalData, setTotalData] = useState("");
   const [recordsPerPage] = useState(10);
@@ -545,12 +546,12 @@ export default function EmployeeTable(props) {
               className={
                 props.pageName === "local_candidate"
                   ? "d-none"
-                  : status === "" || status === "00"
+                  : status === "" || status === "00" || status === "0,1,2,3,5,6" || status === "4,7,8"
                     ? "btn btn-primary"
                     : "btn btn-outline-primary"
               }
               onClick={() => {
-                setStatus("");
+                setStatus(props.self === "yes" ? "0,1,2,3,5,6" : "4,7,8");
                 clearPageNo();
               }}
               title="All"
@@ -1003,16 +1004,15 @@ export default function EmployeeTable(props) {
                           ""
                         ) : (
                           <td className="py-5 ">
-                            {empdata.updated_at === null ||
-                              !empdata.updated_at ||
-                              empdata.updated_at === "0000-00-00 00:00:00" ? (
+                            {empdata.last_updated_by_name === null ||
+                              !empdata.last_updated_by_name ? (
                               <p className="font-size-3  mb-0">N/A</p>
                             ) : (
                               <p
                                 className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate text-capitalize"
-                                title={moment(empdata?.updated_at).fromNow()}
+                                title={empdata?.last_updated_by_name}
                               >
-                                {moment(empdata?.updated_at).fromNow()}
+                                {empdata?.last_updated_by_name}
                               </p>
                             )}
                           </td>
