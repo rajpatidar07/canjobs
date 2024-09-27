@@ -14,7 +14,7 @@ export default function LimaArrowProfile({ lmia, lmiaStatusRejectComment }) {
               status.lmia_status === "undefined" ? null : (
               <div
                 className={
-                  "arrow-steps p-1 px-7 col-md-12 d-flex border-right border-bottom "
+                  "arrow-steps p-1 pl-2 pr-6 col-md-12 d-flex border-right border-bottom "
                 }
                 key={i}
               >
@@ -42,7 +42,8 @@ export default function LimaArrowProfile({ lmia, lmiaStatusRejectComment }) {
                           }`
                         : `d-none`
                     }`}
-                  >{console.log(status)}
+                  >
+                    {console.log(status)}
                     <span>onboarding</span>
                   </div>
                   <div

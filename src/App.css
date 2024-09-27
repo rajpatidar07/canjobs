@@ -2220,6 +2220,11 @@ ul.css-8tnble li {
   margin: 20px 0;
 }
 
+/*Notes*/
+.single_note p {
+  margin: 0;
+}
+
 /*Manage select box style for arrow at home page*/
 /* Remove default appearance and hide the native arrow */
 
