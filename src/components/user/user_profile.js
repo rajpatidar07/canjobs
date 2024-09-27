@@ -44,7 +44,7 @@ import InterviewHistoryTable from "../common/InterviewHistoryTable";
 import SharePointDocument from "../common/Document folder/SharePointDocument";
 import NotFound from "../common/notfound";
 import RetainerAgrementMainPage from "../common/Retaineragreement/RetainerAgrementMainPage";
-// import VisaTimeLine from "../common/visaTimeLine";
+import VisaTimeLine from "../common/visaTimeLine";
 // import useSessionCheck from "../common/user_session";
 // import AdobePDFViewer from "../common/Adobe/adobeFile";
 const NewUserProfile = (props) => {
@@ -720,7 +720,7 @@ const NewUserProfile = (props) => {
                   />
                 ) : null}
               </div>
-              {/* <div
+              <div
                 className={
                   // noLima==="1"?"d-none":
                   "visa_lmia_status_div px-6"
@@ -728,10 +728,10 @@ const NewUserProfile = (props) => {
               >
                 {(PersonalDetail.applicant_process_type && user_type === "admin") ||
                   user_type === "agent" ? (
-                    <VisaTimeLine visa={PersonalDetail.applicant_process_status} substage={PersonalDetail.applicant_process_substages}
-                      type={PersonalDetail.applicant_process_type} />
+                  <VisaTimeLine visa={PersonalDetail.applicant_process_status} substage={PersonalDetail.applicant_process_substages}
+                    type={PersonalDetail.applicant_process_type} />
                 ) : null}
-              </div> */}
+              </div>
 
               <div className=" col-12 order-2 order-xl-1">
                 <div className="bg-white">
