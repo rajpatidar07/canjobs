@@ -104,6 +104,13 @@ const AddClientForm = ({
       setLoading(false);
     }
   };
+  const IsFamilyFelidsEmpty = JSON.stringify(newClient) === JSON.stringify({
+    "client_first_name": "",
+    "client_last_name": "",
+    "client_signature": "",
+    "date_signature_client": "",
+    "client_date_of_birth": ""
+  });
 
   return (
     <Modal
@@ -136,7 +143,7 @@ const AddClientForm = ({
               <button
                 type="submit"
                 className="btn btn-primary btn-small w-25 mt-5 rounded-5 text-uppercase p-8"
-                disabled={loading}
+                disabled={loading || !IsFamilyFelidsEmpty}
               >
                 {loading ? "Saving..." : "Save"}
               </button>

@@ -21,18 +21,6 @@ const AdobePDFViewer = ({
   );
   const [annotationManager, setAnnotationManager] = useState(null);
   const [adobeViewer, setAdobeViewer] = useState(null);
-  // const annotationId ="1a94b3cc-c5a0-8bda-8bh6-8a7b78aa996"
-  // !commentsList || commentsList.length === 0 ? "" : commentsList[0].id;
-  console.log(data?.name.includes(1295))
-//   const newiframeurl = `<!DOCTYPE html>
-// <html>
-// <head>
-//   <title>Display PDF in Iframe</title>
-// </head>
-// <body>
-//   <iframe src=${url} width="800" height="600"></iframe>
-// </body>
-// </html>`
   /*REnder document method */
   useEffect(() => {
     if (!data?.name.includes(1295)) {
@@ -77,10 +65,10 @@ const AdobePDFViewer = ({
                   // console.log(annotationManager)
                   annotationManager
                     .addAnnotations(annotationData)
-                  //   .then(() => 
-                  //     console.log("Success")
-                  // )
-                  //   .catch((error) => console.log(error));
+                    .then(() => 
+                      console.log("Success")
+                  )
+                    .catch((error) => console.log(error));
                 }
                 annotationManager
                   .getAnnotations()

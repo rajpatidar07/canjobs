@@ -291,7 +291,7 @@ export default function RetauberAgreementList({
                               //     }
                               // });
                             }}
-                            disabled={data.initial}
+                            // disabled={data.initial}
                             title=" View and update doc"
                           >
                             <span className="text-gray px-2">
@@ -305,7 +305,7 @@ export default function RetauberAgreementList({
                               setAgreementData(data);
                             }}
                             title="Add Felids"
-                            disabled={data.initial}
+                            // disabled={data.initial}
                           >
                             <span className="text-gray px-2">
                               <FaEdit />
@@ -484,6 +484,7 @@ export default function RetauberAgreementList({
             setOpenViewAgreementSign={setOpenViewAgreementSign}
             docLoader={docLoader}
             pdf={pdf}
+            type={"modal"}
           />
         ) : null}
         {openSignfPspdfkit ? (

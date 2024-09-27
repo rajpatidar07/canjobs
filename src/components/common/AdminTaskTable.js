@@ -7,9 +7,9 @@ export default function AdminTaskTable(props) {
   const [taskData, setTaskData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [taskStatus/*, setTaskStatus*/] = useState("");
-  const [columnName, setcolumnName] = useState("");
-  const [sortOrder, setSortOrder] = useState("ASC");
-  let adminEmail = localStorage.getItem("admin_id");
+  const [columnName, setcolumnName] = useState("updated_on");
+  const [sortOrder, setSortOrder] = useState("DESC");
+  // let adminEmail = localStorage.getItem("admin_id");
 
   /*Pagination states */
   const [totalData, setTotalData] = useState(true);
@@ -23,7 +23,7 @@ export default function AdminTaskTable(props) {
     try {
       let res = await GetCommentsAndAssign(
         "",
-        adminEmail,
+        "",//adminEmail,
         taskStatus,
         "document",
         currentPage,
@@ -197,10 +197,10 @@ export default function AdminTaskTable(props) {
                       <td className=" py-5">
                         <p className="font-size-3 font-weight-normal text-black-2 mb-0">
                           {data.task_creator_user_name === null ||
-                          data.task_creator_user_name === undefined ||
-                          data.task_creator_user_name === "undefined" ||
-                          data.task_creator_user_name === "" ||
-                          data.task_creator_user_name === "0" ? (
+                            data.task_creator_user_name === undefined ||
+                            data.task_creator_user_name === "undefined" ||
+                            data.task_creator_user_name === "" ||
+                            data.task_creator_user_name === "0" ? (
                             <span className="font-size-3  mb-0">N/A</span>
                           ) : (
                             data.task_creator_user_name
@@ -210,10 +210,10 @@ export default function AdminTaskTable(props) {
                       <td className=" py-5">
                         <p className="font-size-3 font-weight-normal text-black-2 mb-0">
                           {data.assigned_to_name === null ||
-                          data.assigned_to_name === undefined ||
-                          data.assigned_to_name === "undefined" ||
-                          data.assigned_to_name === "" ||
-                          data.assigned_to_name === "0" ? (
+                            data.assigned_to_name === undefined ||
+                            data.assigned_to_name === "undefined" ||
+                            data.assigned_to_name === "" ||
+                            data.assigned_to_name === "0" ? (
                             <span className="font-size-3  mb-0">N/A</span>
                           ) : (
                             data.assigned_to_name
@@ -222,17 +222,17 @@ export default function AdminTaskTable(props) {
                       </td>
                       <td className="py-5 ">
                         {data.subject_description === null ||
-                        data.subject_description === undefined ||
-                        data.subject_description === "undefined" ||
-                        data.subject_description === "" ||
-                        data.subject_description === "0" ? (
+                          data.subject_description === undefined ||
+                          data.subject_description === "undefined" ||
+                          data.subject_description === "" ||
+                          data.subject_description === "0" ? (
                           <p className="font-size-3  mb-0">N/A</p>
                         ) : (
                           <div className="m-0">
                             <div className="text-gray font-size-2 m-0"
-                            dangerouslySetInnerHTML={{__html:data.subject_description}}/>
-                              {/* {data.subject_description.replace(/@/g, "")} */}
-                            
+                              dangerouslySetInnerHTML={{ __html: data.subject_description }} />
+                            {/* {data.subject_description.replace(/@/g, "")} */}
+
                           </div>
                         )}
                       </td>
@@ -255,9 +255,9 @@ export default function AdminTaskTable(props) {
 
                       <td className=" py-5">
                         {data.status === null ||
-                        data.status === undefined ||
-                        data.status === "undefined" ||
-                        data.status === "" ? (
+                          data.status === undefined ||
+                          data.status === "undefined" ||
+                          data.status === "" ? (
                           <p className="font-size-3  mb-0">N/A</p>
                         ) : (
                           <p

@@ -99,7 +99,7 @@ export default function FolderList({
                   {item.file &&
                     (item.file.mimeType === "application/msword" ||
                       item.file.mimeType ===
-                        "application/vnd.openxmlformats-officedocument.wordprocessingml.document") && (
+                      "application/vnd.openxmlformats-officedocument.wordprocessingml.document") && (
                       <BsFiletypeDocx
                         // className="file-icon"
                         style={{
@@ -118,7 +118,7 @@ export default function FolderList({
                       {item.name.replace("_", " ")}
                     </p>
                     <p className="modified-time m-0">
-                    <ConvertTime _date={item.lastModifiedDateTime} format={".fromNow()"}/>
+                      <ConvertTime _date={item.lastModifiedDateTime} format={".fromNow()"} />
                       {/* {moment(item.lastModifiedDateTime).fromNow()} */}
                     </p>
                   </div>
@@ -140,6 +140,14 @@ export default function FolderList({
                     <Link onClick={() => ShowDeleteAlert(item)}>
                       {" "}
                       Delete {item.folder ? "Folder" : "File"}
+                    </Link>
+                  </li>
+                  <li className="list-group-item text-darger">
+                    <Link onClick={() => {
+                      window.open(item["@microsoft.graph.downloadUrl"], '_blank')
+                    }}>
+                      {" "}
+                      Open in new tab {item.folder ? "Folder" : "File"}
                     </Link>
                   </li>
                 </ul>

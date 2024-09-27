@@ -328,22 +328,25 @@ const SignaturePadComponent = ({ index, onSignature, setState, state, label, nam
     return (
         <div className="form-group">
             <label className={`font-size-4 text-black-2 line-height-reset mb-3 ${isSign ? "" : "position-relative"}`}>{index === 0 ? "Client signature" : index === "rcic_signature" ? "RCIC Signature" : "Family memeber signature"}</label>
-            {isSign ? <div className="border border-dark mb-3 w-100 " >
-                <SignatureCanvas
-                    ref={sigPad}
-                    penColor="black"
-                    canvasProps={{
-                        width: "auto", height: 100, className: 'sigCanvas', style: { pointerEvents: 'none' }
-                    }}
-                />
-                {/* {sigPad && (
+            {
+                // isSign ?
+                <div className="border border-dark mb-3 w-100 " >
+                    <SignatureCanvas
+                        ref={sigPad}
+                        penColor="black"
+                        canvasProps={{
+                            width: 385, height: 100, className: 'sigCanvas', style: { pointerEvents: 'auto' }
+                        }}
+                    />
+                    {/* {sigPad && (
                     <div className="mb-3 d-flex justify-content-center">
                         <div className="rounded overflow-hidden" style={{ width: '200px', height: '200px' }}>
                             <img src={sigPad} alt="Selected" className="img-fluid" style={{ objectFit: 'cover' }} />
                         </div>
                     </div>
                 )} */}
-            </div> : null}
+                </div> //: null
+            }
 
             <div className="d-flex flex-row">
                 <label className="col btn btn-light mx-3 mt-3 d-flex flex-column justify-content-center rounded "

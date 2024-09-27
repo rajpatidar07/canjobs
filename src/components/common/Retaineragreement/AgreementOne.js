@@ -1877,19 +1877,26 @@ const AggrementOne = () => {
                   Email: info@canpathways.ca | Website: www.canpathways.ca
                 </Text>
               </View>
-              {familyJsonArray?.[0]?.client_signature ? (
-                <Image
-                  fixed
-                  style={[
-                    styles.textunderline,
-                    { width: "20%", left: 450, height: "auto" },
-                  ]}
-                  src={familyJsonArray?.[0]?.client_signature}
-                />
+              {/* {felidData?.initial ? (
+                felidData?.initial?.split(' ')               // Split the string by spaces
+                  ?.filter(word => word)      // Filter out empty strings (caused by multiple spaces)
+                  ?.map(word => word[0])      // Map each word to its first letter
+                  ?.join(' ')
+                // <Image
+                //   fixed
+                //   style={[
+                //     styles.textunderline,
+                //     { width: "20%", left: 450, height: "auto" },
+                //   ]}
+                //   src={familyJsonArray?.[0]?.client_signature}
+                // />
               ) : (
-                null)}
+                null)} */}
               <View className="initial" fixed style={styles.initial}>
-                <Text>Initial:{familyJsonArray?.[0]?.client_signature ? "" : "__________"}</Text>
+                <Text>Initial:<Text style={[styles.textunderline, { textTransform: 'uppercase' }]}>{felidData?.initial ? felidData?.initial?.split(' ')               // Split the string by spaces
+                  ?.filter(word => word)      // Filter out empty strings (caused by multiple spaces)
+                  ?.map(word => word[0])      // Map each word to its first letter
+                  ?.join(' ') : "        "}</Text></Text>
               </View>
             </View>
           </Page>
@@ -1928,7 +1935,7 @@ const AggrementOne = () => {
                       Email: info@canpathways.ca | Website: www.canpathways.ca
                     </Text>
                   </View>
-                  {familyJsonArray?.[0]?.client_signature ? (
+                  {/* {familyJsonArray?.[0]?.client_signature ? (
                     <Image
                       fixed
                       style={[
@@ -1939,9 +1946,12 @@ const AggrementOne = () => {
                     />
                   ) : (
                     null
-                  )}
+                  )} */}
                   <View className="initial" fixed style={styles.initial}>
-                    <Text>Initial:{familyJsonArray?.[0]?.client_signature ? "" : "__________"}</Text>
+                    <Text>Initial:<Text style={[styles.textunderline, { textTransform: 'uppercase' }]}>{felidData?.initial ? felidData?.initial?.split(' ')               // Split the string by spaces
+                      ?.filter(word => word)      // Filter out empty strings (caused by multiple spaces)
+                      ?.map(word => word[0])      // Map each word to its first letter
+                      ?.join(' ') : "        "}</Text></Text>
                   </View>
                 </View>
               </Page>

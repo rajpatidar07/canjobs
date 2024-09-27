@@ -17,13 +17,14 @@ export default function ViewPdf({
   setOpenAddAgreementFelids,
   docLoader,
   pdf,
+  type
 }) {
   /*FUnction to open add signature modal */
-  const addSignatureCLick = async () => {
-    setOpenViewAgreementSign("sign");
-    setOpenAddAgreementFelids(true);
-    close();
-  };
+  // const addSignatureCLick = async () => {
+  //   setOpenViewAgreementSign("sign");
+  //   setOpenAddAgreementFelids(true);
+  //   close();
+  // };
   //   const DownloadPdf = (pdf) => {
   //     const pdfUrl = pdf["@microsoft.graph.downloadUrl"];
   //     const link = document.createElement("a");
@@ -87,7 +88,7 @@ export default function ViewPdf({
                 />
               )}
             </div>
-            <div className={`"d-flex justify-content-between p-4 d-none`}>
+            {/* <div className={`"d-flex justify-content-between p-4 d-none`}>
               <button
                 className={
                   agreementData.initial ? "d-none" : "btn btn-secondary"
@@ -96,8 +97,8 @@ export default function ViewPdf({
               >
                 Add Signature
               </button>
-              {/* <button className='btn btn-info' onClick={() => DownloadPdf(pdf)}>Download</button> */}
-            </div>
+              <button className='btn btn-info' onClick={() => DownloadPdf(pdf)}>Download</button>
+            </div> */}
           </div>
         }
       </div>
