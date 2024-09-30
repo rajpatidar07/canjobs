@@ -17,13 +17,13 @@ const AdobePDFViewer = ({
   let [annotationDrawBox, setAnnotationDrawBox] = useState("");
   let [annotationId, setAnnotationId] = useState("");
   let [annotationData, setAnnotationData] = useState(
-    commentsList.map((item) => JSON.parse(item.doctaskjson)) || ""
+    commentsList.map((item) => JSON.parse(item?.doctaskjson)) || ""
   );
   const [annotationManager, setAnnotationManager] = useState(null);
   const [adobeViewer, setAdobeViewer] = useState(null);
   /*REnder document method */
   useEffect(() => {
-    if (!data?.name.includes(1295)) {
+    if (!data?.name?.includes(1295)) {
       const viewSDKClient = new ViewSDKClient();
       viewSDKClient.ready().then(() => {
         const previewFilePromise = viewSDKClient.previewFile(
@@ -65,9 +65,9 @@ const AdobePDFViewer = ({
                   // console.log(annotationManager)
                   annotationManager
                     .addAnnotations(annotationData)
-                    .then(() => 
+                    .then(() =>
                       console.log("Success")
-                  )
+                    )
                     .catch((error) => console.log(error));
                 }
                 annotationManager
@@ -153,7 +153,7 @@ const AdobePDFViewer = ({
   }, [url]);
   /*Render method to Highlight the annotation from clicking it */
   useEffect(() => {
-    if (!data?.name.includes(1295)) {
+    if (!data?.name?.includes(1295)) {
       if (annotationId && annotationManager && adobeViewer) {
         annotationManager
           .getAnnotations()

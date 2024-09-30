@@ -106,9 +106,9 @@ class ViewSDKClient {
       viewerConfig
     );
 
+    console.log("fileExtension",fileExtension,"url",url,"data",data)
     return previewFilePromise;
   }
-
   previewFileUsingFilePromise(divId, filePromise, data) {
     this.adobeDCView = new window.AdobeDC.View({
       clientId: client_id,

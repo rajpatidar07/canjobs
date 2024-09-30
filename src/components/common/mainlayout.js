@@ -76,6 +76,7 @@ import LocalCandidate from "../admin/localCandidate";
 import PGWP from "../admin/pgwp";
 import DemoJob from "../user/demoJob";
 import StudyPermit from "../admin/studyPermit";
+import ViewPdf from "./Retaineragreement/viewPdf";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -246,6 +247,7 @@ function MainLayout() {
             <Route path="/localcandidates" element={<LocalCandidate />} />
             <Route path="/Newpdf" element={<Newpdf />} />
             <Route path="/federal_pr" element={<Federalpr />} />
+            <Route path="/view_pdf_Agreement" element={<ViewPdf />} />
             <Route path="*" element={<Loader load={"yes"} />} />
           </>
         )}

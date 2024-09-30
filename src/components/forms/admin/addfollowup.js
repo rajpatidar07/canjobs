@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 import TextEditor from "../../common/TextEditor";
 import ConvertTime from "../../common/ConvertTime";
+import { FaEdit } from "react-icons/fa";
 
 function Addfollowup(props) {
   let [response, setResponseData] = useState([]);
@@ -101,16 +102,16 @@ function Addfollowup(props) {
         value === "" || value === null || value.trim() === ""
           ? "subject required"
           : value.length < 2
-          ? "subjectz should have 2 or more letters."
-          : "",
+            ? "subjectz should have 2 or more letters."
+            : "",
     ],
     remark: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Discription required"
           : value.length < 2
-          ? "Discription should have 2 or more letters."
-          : "",
+            ? "Discription should have 2 or more letters."
+            : "",
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
@@ -169,6 +170,7 @@ function Addfollowup(props) {
       setLoading(false);
     }
   };
+
   // END USER FOLLOW UP PROFILE UPDATE VALIDATION
   const moment = require("moment");
   /*Sorting Function */
@@ -196,20 +198,18 @@ function Addfollowup(props) {
 
       {props.userId !== "" ? (
         <div
-          className={`bg-white rounded ${
-            props.page === "yes" ? "" : "h-100vh"
-          } overflow-y-auto`}
+          className={`bg-white rounded ${props.page === "yes" ? "" : "h-100vh"
+            } overflow-y-auto`}
         >
           {props.page === "yes" ? (
             <h5 className="text-center pt-2 mb-7">Add Notes</h5>
           ) : null}
           <div className="row pb-5 m-0">
             <div
-              className={`activity_container px-8 py-6 ${
-                user_type === "admin" || user_type === "agent"
-                  ? "col-md-8 border-right"
-                  : "col-md-12"
-              } ${props.page === "yes" ? "d-none" : ""}`}
+              className={`activity_container px-8 py-6 ${user_type === "admin" || user_type === "agent"
+                ? "col-md-8 border-right"
+                : "col-md-12"
+                } ${props.page === "yes" ? "d-none" : ""}`}
             >
               {/* {console.log(response)} */}
               <div className="single_note bg-light p-5 rounded">
@@ -227,6 +227,10 @@ function Addfollowup(props) {
                         <div className="d-flex flex-column align-items-end">
                           <p className="m-0 text-capitalize font-size-3 mb-1">
                             <b>Created by: {res.created_by_name}</b>
+                            <Link className="text-gray px-8" title="Update notes" onClick={() => {
+                              setState(res);
+                            }}>  <FaEdit />
+                            </Link>
                           </p>
                           <i className="font-size-2">
                             Created on:
@@ -255,11 +259,11 @@ function Addfollowup(props) {
             <div
               className={
                 (user_type === "admin" || user_type === "agent") &&
-                props.page === "yes"
+                  props.page === "yes"
                   ? "px-6 py-7 col-md-12 "
                   : user_type === "admin" || user_type === "agent"
-                  ? "px-6 py-7 col-md-4"
-                  : "d-none"
+                    ? "px-6 py-7 col-md-4"
+                    : "d-none"
                 //  props.page === "yes"?"":"position-fixed"
               }
               style={{ right: 0 }}
@@ -449,7 +453,7 @@ function Addfollowup(props) {
                   <Link
                     to={""}
                     onClick={() => {
-                      handleSort("employee_name");
+                      handleSort("name");
                     }}
                     className="text-gray"
                     title="Sort by Description"
@@ -551,8 +555,8 @@ function Addfollowup(props) {
                                   <img
                                     src={
                                       res.profile_photo === "" ||
-                                      res.profile_photo === null ||
-                                      res.profile_photo === undefined
+                                        res.profile_photo === null ||
+                                        res.profile_photo === undefined
                                         ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                         : res.profile_photo
                                     }
@@ -563,9 +567,9 @@ function Addfollowup(props) {
                               </div>
                               <div className=" mb-0">
                                 {res.name === "" ||
-                                res.name === "null" ||
-                                res.name === null ||
-                                res.name === undefined ? (
+                                  res.name === "null" ||
+                                  res.name === null ||
+                                  res.name === undefined ? (
                                   <p className="font-size-3 mb-0">N/A</p>
                                 ) : (
                                   <p
@@ -581,9 +585,9 @@ function Addfollowup(props) {
                         </td>
                         <td>
                           {res.subject === "" ||
-                          res.subject === "null" ||
-                          res.subject === null ||
-                          res.subject === undefined ? (
+                            res.subject === "null" ||
+                            res.subject === null ||
+                            res.subject === undefined ? (
                             <p className="font-size-3 mb-0">N/A</p>
                           ) : (
                             <p
@@ -596,9 +600,9 @@ function Addfollowup(props) {
                         </td>
                         <td>
                           {res.remark === "" ||
-                          res.remark === "null" ||
-                          res.remark === null ||
-                          res.remark === undefined ? (
+                            res.remark === "null" ||
+                            res.remark === null ||
+                            res.remark === undefined ? (
                             <p className="font-size-3 mb-0">N/A</p>
                           ) : (
                             <p
@@ -611,9 +615,9 @@ function Addfollowup(props) {
                         </td>
                         <td>
                           {res.created_at === "" ||
-                          res.created_at === "null" ||
-                          res.created_at === null ||
-                          res.created_at === undefined ? (
+                            res.created_at === "null" ||
+                            res.created_at === null ||
+                            res.created_at === undefined ? (
                             <p className="font-size-3 mb-0">N/A</p>
                           ) : (
                             <small>
@@ -627,9 +631,9 @@ function Addfollowup(props) {
                         </td>
                         <td>
                           {res.next_followup_date === "" ||
-                          res.next_followup_date === "null" ||
-                          res.next_followup_date === null ||
-                          res.next_followup_date === undefined ? (
+                            res.next_followup_date === "null" ||
+                            res.next_followup_date === null ||
+                            res.next_followup_date === undefined ? (
                             <p className="font-size-3 mb-0">N/A</p>
                           ) : (
                             <small>
@@ -641,9 +645,9 @@ function Addfollowup(props) {
                         </td>
                         <td>
                           {res.status === "" ||
-                          res.status === "null" ||
-                          res.status === null ||
-                          res.status === undefined ? (
+                            res.status === "null" ||
+                            res.status === null ||
+                            res.status === undefined ? (
                             <p className="font-size-3 mb-0"></p>
                           ) : (
                             <small>{res.status === "1" ? "Private" : ""}</small>

@@ -63,7 +63,7 @@ const JobDetailLeftCardBox = ({
                         <span>{jobData?.job_title}</span>
                       </h2>}
                       <p>
-                        {jobData?.company_name && <u className="lead text-capitalize" style={{ fontSize: !isVisible ? "15px" : "", transition: "0.5s", }}>{jobData?.company_name}</u>}
+                        {jobData?.company_name && <u className="lead text-capitalize" style={{ fontSize: !isVisible ? "15px" : "", transition: "0.5s", filter: 'blur(5px)' }}>{jobData?.company_name}</u>}
                         {/* {isVisible && (
                           <span style={{ fontSize: "inherit" }}>
                             3.9 <FaStar className="mb-2" />
@@ -181,7 +181,7 @@ const JobDetailLeftCardBox = ({
                                   <b>Required Skills</b>
                                   <ul className="mx-5">
                                     {(skills || []).map((item, index) =>
-                                      <li key={index}  style={{marginBottom:0}}>{item}</li>
+                                      <li key={index} style={{ marginBottom: 0 }}>{item}</li>
                                     )}
                                   </ul>
                                 </div>}
@@ -189,7 +189,9 @@ const JobDetailLeftCardBox = ({
                           </div>}
                           {/* About company of the job */}
                           <div>
-                            <h4 id="" className="css-wpzt8u ">Information about {jobData?.company_name}</h4>
+                            <h4 id="" className="css-wpzt8u ">Information about {/*jobData?.company_name*/}
+
+                            </h4>
                             <p className="mx-5"
                               dangerouslySetInnerHTML={{ __html: jobData?.about }}
                             />

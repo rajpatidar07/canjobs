@@ -887,12 +887,31 @@ export const SendReplyCommit = async (
   DocUserType,
   id
 ) => {
+  // console.log("  id =>", id,
+  //   "doc_id =>", data.doc_id,
+  //   "task_id =>", data.task_id,
+  //   "sender_id =>", senderId,
+  //   "sender_email =>", senderEmail,
+  //   "sender_name =>", SenderName,
+  //   "sender_type =>", senderType,
+  //   "receiver_id =>", recid,
+  //   "receiver_type =>", adminType,
+  //   "mention =>", email,
+  //   "receiver_name =>", assignName,
+  //   "document_url =>", "",
+  //   "next_followup_date =>", "",
+  //   "followup_status =>", "",
+  //   "subject =>", "",
+  //   "msg =>", msg,
+  //   "type =>", type,
+  //   "employee_id =>", employee_id,
+  //   "doc_parent_id =>", parent_id)
   const response = await axios.post(
     `${API_URL}admin/sendMsg?document_user_type=${DocUserType}`,
     {
       id: id,
       doc_id: data.doc_id,
-      task_id: data.id,
+      task_id: data.task_id,
       sender_id: senderId,
       sender_email: senderEmail,
       sender_name: SenderName,
@@ -1028,7 +1047,7 @@ export const GetEmployeeVisaList = async (
       limit: limit,
       column_name: column,
       sort_order: sort,
-      type:type
+      type: type
     },
     {
       headers: {

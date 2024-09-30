@@ -2,6 +2,8 @@ import React from "react";
 // import { Link } from "react-router-dom";
 import { CiPaperplane } from "react-icons/ci";
 import ConvertTime from "./ConvertTime";
+import { Link } from "react-router-dom";
+import { FaEdit } from "react-icons/fa";
 export default function CommentReplyBox({
   commentsReplyList,
   commentItem,
@@ -11,7 +13,11 @@ export default function CommentReplyBox({
   handleEmailClick,
   // handleEmailMouseOver,
   ReplyAnnotation,
-  determineBackgroundColor
+  determineBackgroundColor,
+  handleUpdateReplyLinkClick,
+  type,
+  replyCommentData,
+  OnHandleUpdateCommentReply
 }) {
   return (
     <div className="reply_box_container mx-2 fade show">
@@ -67,6 +73,9 @@ export default function CommentReplyBox({
                       <div className="msg-color" dangerouslySetInnerHTML={{ __html: replyItem.msg.replace(" @ ", " ") }} />
                     </span>
                   )}
+                  <Link className="text-gray pr-2" title="Update Comment" onClick={() => {
+                    handleUpdateReplyLinkClick(replyItem);
+                  }}>  <FaEdit /></Link>
                   {/* Display mention */}
                   {/* {replyItem.mention && (
                     <span
@@ -105,7 +114,12 @@ export default function CommentReplyBox({
             <button
               type="button"
               onClick={() => {
-                ReplyAnnotation(commentItem);
+                if (replyCommentData) {
+                  OnHandleUpdateCommentReply(replyCommentData)
+                } else {
+                   ReplyAnnotation(commentItem)
+                }
+
               }}
               className="btn reply_btn doc_btn m-0"
               style={{ fontSize: 30 }}
@@ -120,7 +134,7 @@ export default function CommentReplyBox({
               cancel
             </a> */}
           </div>
-          {filteredEmails.length > 0 && (
+          {(filteredEmails.length > 0 && type === "reply") ? (
             <ul
               className="email-suggestions overflow-scroll"
               style={{
@@ -138,7 +152,7 @@ export default function CommentReplyBox({
                 </li>
               ))}
             </ul>
-          )}
+          ) : null}
         </div>
       </form>
     </div>
