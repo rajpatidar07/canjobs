@@ -9111,7 +9111,8 @@ html .ui-button.ui-state-disabled:active {
 }
 
 .text-truncate {
-  width: 100px;
+  /* width: 100px; */
+  max-width: 150px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
