@@ -26,6 +26,16 @@ function Addfollowup(props) {
       ? localStorage.getItem("agent_id")
       : localStorage.getItem("admin_id");
   // USER FOLLOW UP PROFILE UPDATE VALIDATION
+  let assigned_id = user_type === "user"
+    ? localStorage.getItem("employee_id")
+    : user_type === "company"
+      ? localStorage.getItem("company_id")
+      : adminId
+  let assigned_by_type = user_type === "user"
+    ? "employee"
+    : user_type === "company"
+      ? "employer"
+      : adminType
 
   /* Function to get the Response data*/
   const ResponseData = async () => {
@@ -92,8 +102,8 @@ function Addfollowup(props) {
     next_date: "",
     subject: "",
     status: "",
-    assigned_by_id: props.assigned_by_id,
-    assigned_by_type: adminType,
+    assigned_by_id: assigned_id,
+    assigned_by_type: assigned_by_type,
   };
   // VALIDATION CONDITIONS
   const validators = {
@@ -140,32 +150,32 @@ function Addfollowup(props) {
     event.preventDefault();
     if (validate()) {
       setLoading(true);
-      if (!props.assigned_by_id) {
-        toast.error("Please assign the admin first!", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 2000,
-        });
-        setLoading(false);
-        setState(initialFormState);
-      } else {
-        try {
-          /*only for employee*/
-          // let responseData = await AddFollowup(state);
-          /*For all user*/
-          let responseData = await AddAllUserFollowup(state);
-          if (responseData.message === "follow up updated successfully") {
-            toast.success("Followup Updated successfully", {
-              position: toast.POSITION.TOP_RIGHT,
-              autoClose: 1000,
-            });
-            props.setApiCall(true);
-            return close();
-          }
-        } catch (err) {
-          console.log(err);
-          setLoading(false);
+      // if (!props.assigned_by_id) {
+      //   toast.error("Please assign the admin first!", {
+      //     position: toast.POSITION.TOP_RIGHT,
+      //     autoClose: 2000,
+      //   });
+      //   setLoading(false);
+      //   setState(initialFormState);
+      // } else {
+      try {
+        /*only for employee*/
+        // let responseData = await AddFollowup(state);
+        /*For all user*/
+        let responseData = await AddAllUserFollowup(state);
+        if (responseData.message === "follow up updated successfully") {
+          toast.success("Followup Updated successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true);
+          return close();
         }
+      } catch (err) {
+        console.log(err);
+        setLoading(false);
       }
+      // }
     } else {
       setLoading(false);
     }
@@ -181,20 +191,6 @@ function Addfollowup(props) {
   };
   let content = (
     <>
-      {/* <Modal
-        show={props.show}
-        size="lg"
-        aria-labelledby="contained-modal-title-vcenter"
-        centered
-      >
-        <button
-          type="button"
-          className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper "
-          data-dismiss="modal"
-          onClick={close}
-        >
-          <i className="fas fa-times"></i>
-        </button> */}
 
       {props.userId !== "" ? (
         <div
@@ -206,10 +202,7 @@ function Addfollowup(props) {
           ) : null}
           <div className="row pb-5 m-0">
             <div
-              className={`activity_container px-8 py-6 ${user_type === "admin" || user_type === "agent"
-                ? "col-md-8 border-right"
-                : "col-md-12"
-                } ${props.page === "yes" ? "d-none" : ""}`}
+              className={`activity_container px-8 py-6 col-md-8 border-right ${props.page === "yes" ? "d-none" : ""}`}
             >
               {/* {console.log(response)} */}
               <div className="single_note bg-light p-5 rounded">
@@ -227,7 +220,7 @@ function Addfollowup(props) {
                         <div className="d-flex flex-column align-items-end">
                           <p className="m-0 text-capitalize font-size-3 mb-1">
                             <b>Created by: {res.created_by_name}</b>
-                            <Link className="text-gray px-8" title="Update notes" onClick={() => {
+                            <Link className={res.created_by === assigned_id && res.type === assigned_by_type ? "text-gray px-8" : "d-none"} title="Update notes" onClick={() => {
                               setState(res);
                             }}>  <FaEdit />
                             </Link>
@@ -258,13 +251,9 @@ function Addfollowup(props) {
             </div>
             <div
               className={
-                (user_type === "admin" || user_type === "agent") &&
-                  props.page === "yes"
+                props.page === "yes"
                   ? "px-6 py-7 col-md-12 "
-                  : user_type === "admin" || user_type === "agent"
-                    ? "px-6 py-7 col-md-4"
-                    : "d-none"
-                //  props.page === "yes"?"":"position-fixed"
+                  : "px-6 py-7 col-md-4"
               }
               style={{ right: 0 }}
             >
@@ -666,7 +655,6 @@ function Addfollowup(props) {
         </div>
       )}
 
-      {/* </Modal> */}
     </>
   );
   return props.page === "yes" ? (

@@ -999,7 +999,22 @@ export const GetReplyCommit = async (doc_id) => {
   );
   return response;
 };
-
+/*Api to delete document comments replyes */
+export const DeleteReplyCommentsAndAssign = async ( id) => {
+  const response = await axios.post(
+    `${API_URL}admin/deleteThreadMsg`,
+    {
+      id: id,
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+};
 /*Api to Add update visa */
 export const AddUpdateVisa = async (employee_id, state, id, type) => {
   // /job_detail(employee_id, state, id)

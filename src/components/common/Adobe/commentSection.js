@@ -6,6 +6,7 @@ import { CiPaperplane } from "react-icons/ci";
 import {
   ADocAnnotation,
   DeleteCommentsAndAssign,
+  DeleteReplyCommentsAndAssign,
   GetCommentsAndAssign,
   GetReplyCommit,
   SendReplyCommit,
@@ -768,6 +769,26 @@ export default function CommentSection({
       console.log(err);
     }
   };
+  /*Function to delete comment Replies*/
+  const OnDeleteCommentReplies = async (id) => {
+    try {
+      let res = await DeleteReplyCommentsAndAssign(id);
+      console.log(res)
+      if (res.data.message === "deleted successfully!") {
+        toast.success("Reply Deleted Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setReplyComment()
+        setReplyCommentData();
+        setReplyCommentToApi("");
+        getCommentsReplyList();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="col-md-4 col-lg-4 col-sm-3 py-2 bg-light comments_and_replies">
       {/* //condition for imm pdf
@@ -1073,7 +1094,9 @@ export default function CommentSection({
                         OnHandleUpdateCommentReply={OnHandleUpdateCommentReply}
                         type={type}
                         replyCommentData={replyCommentData}
+                        OnDeleteCommentReplies={OnDeleteCommentReplies}
                       />
+
                     ) : null
                     // <Link
                     //   className="mx-5 mr-0 ml-auto font-size-3 "

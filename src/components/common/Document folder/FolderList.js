@@ -24,53 +24,7 @@ export default function FolderList({
   setCommentsList,
   emp_user_type,
   user_id,
-  convertUrlToPDF,
-  convertToPDF,
-  convertedDoc,
-  setConvertedDoc
 }) {
-  // Assuming you have the following imports and state setters
-  // import { useState } from 'react';
-  // const [convertedDoc, setConvertedDoc] = useState(null);
-
-  const OnGetPdfUrl = async (data) => {
-    try {
-      // Check the MIME type and perform appropriate conversion
-      if (
-        data.file.mimeType === "image/jpeg" ||
-        data.file.mimeType === "image/png" ||
-        data.file.mimeType === "image/jpg"
-      ) {
-        // Await the conversion if convertUrlToPDF is asynchronous
-        convertUrlToPDF(data["@microsoft.graph.downloadUrl"]);
-      } else if (
-        data.file.mimeType ===
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-      ) {
-        // Await the conversion if convertToPDF is asynchronous
-        convertToPDF(data);
-      } else {
-        setConvertedDoc(data["@microsoft.graph.downloadUrl"]); // Update state if necessary
-      }
-
-      // Ensure that emp_user_type and user_id are defined
-      // Replace the following with your actual logic to retrieve these values
-
-      console.log(emp_user_type, user_id)
-      // Set session storage items
-      localStorage.setItem("new_pdf_url", convertedDoc);
-      localStorage.setItem("new_pdf", JSON.stringify(data));
-      localStorage.setItem("new_emp_user_type", emp_user_type);
-      localStorage.setItem("new_user_id", user_id);
-
-      // Open the PDF viewer in a new tab/window
-      window.open("/view_pdf_Agreement", "_blank");
-    } catch (error) {
-      // Handle errors gracefully
-      console.error("Error in OnGetPdfUrl:", error);
-      // Optionally, display a user-friendly message or take other actions
-    }
-  };
 
   return (
     <div
@@ -196,13 +150,8 @@ export default function FolderList({
                     </Link>
                   </li>
                   <li className="list-group-item text-darger">
-                    <Link onClick={() => {
-                      OnGetPdfUrl(item)
-                      // sessionStorage.setItem("new_pdf", JSON.stringify(item));
-                      // sessionStorage.setItem("new_emp_user_type", emp_user_type);
-                      // sessionStorage.setItem("new_user_id", user_id);
-                      // window.open("/view_pdf_Agreement", "_blank");
-                    }}>
+                    <Link
+                      to={`/view_pdf_Agreement?new_emp_user_type=${emp_user_type}&new_user_id=${user_id}&folderId=${item.parentReference.id}&document_id=${item.id}`} target="_blank">
                       {" "}
                       Open in new tab {item.folder ? "Folder" : "File"}
                     </Link>

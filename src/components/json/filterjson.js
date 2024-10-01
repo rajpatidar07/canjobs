@@ -607,6 +607,9 @@ const filterjson = {
     "federal PR",
     "pgwp",// new Applicant type added asked by jayant 
     "study permit",// new Applicant type added asked by jayant 
+    "temporary resident (visiting , studying , working)",// new Applicant type added asked in doc of Can-46
+    "economic immigration",// new Applicant type added asked in doc of Can-46
+    "family sponsorship",// new Applicant type added asked in doc Can-46
     // "swep",
     // "internship",
     // "co-op",
@@ -615,6 +618,51 @@ const filterjson = {
     // "contract",
     // "all",
   ],
+  interested_sub_type: {
+    "pnp": [
+      "aos",
+      "rrs",
+      "tech pathway"
+    ],
+    "temporary resident (visiting , studying , working)": [
+      "visitor visa (from outside canada)",
+      "visitor visa (from inside canada)",
+      "visitor extension (visitor record)",
+      "super visa (parents or grandparents)",
+      "study permit (from outside canada)",
+      "study permit (from inside canada)",
+      "study permit extension",
+      "work permit from outside canada",
+      "work permit from inside canada (initial and extension)",
+    ],
+    "economic immigration": [
+      "atlantic immigration program",
+      "canadian experience class",
+      "caregivers",
+      "provincial nominees",
+      "self-employed persons (federal)",
+      "quebec business class",
+      "skilled workers (federal)",
+      "skilled trades (federal)",
+      "skilled workers (quebec)",
+      "start-up visa",
+    ],
+    "family sponsorship": [
+      "spouse or common-law partner living inside canada",
+      "spouse, common-law or conjugal partner living outside canada",
+      "dependent child",
+      "parents or grandparents",
+      "adopted child or other relative"
+    ]
+  },
+  interested_sub_type_of_sub_type: {
+    "economic immigration": {
+      "caregivers": [
+        "home child care provider pilat",
+        "home support worker pilot"
+      ]
+    }
+  },
   lmia_status: [
     // "need to start",
     // "job bank requested",

@@ -3,7 +3,7 @@ import React from "react";
 import { CiPaperplane } from "react-icons/ci";
 import ConvertTime from "./ConvertTime";
 import { Link } from "react-router-dom";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit, FaTrash } from "react-icons/fa";
 export default function CommentReplyBox({
   commentsReplyList,
   commentItem,
@@ -17,7 +17,8 @@ export default function CommentReplyBox({
   handleUpdateReplyLinkClick,
   type,
   replyCommentData,
-  OnHandleUpdateCommentReply
+  OnHandleUpdateCommentReply,
+  OnDeleteCommentReplies
 }) {
   return (
     <div className="reply_box_container mx-2 fade show">
@@ -76,6 +77,9 @@ export default function CommentReplyBox({
                   <Link className="text-gray pr-2" title="Update Comment" onClick={() => {
                     handleUpdateReplyLinkClick(replyItem);
                   }}>  <FaEdit /></Link>
+                  <Link className="text-danger pr-2" title="Delete Comment" onClick={() => {
+                      OnDeleteCommentReplies(replyItem.id);
+                    }}>  <FaTrash /></Link>
                   {/* Display mention */}
                   {/* {replyItem.mention && (
                     <span

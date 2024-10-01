@@ -67,6 +67,7 @@ function PersonalDetails(props) {
     reffer_by: user_type === "agent" ? localStorage.getItem("agent_id") : "",
     permission: props.employeeId === "0" ? JSON.stringify(Permissions) : null,
     assigned_by: "",
+    other_contact_no: ""
   };
 
   // VALIDATION CONDITIONS
@@ -604,54 +605,40 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
-
-                  <div className={`form-group col-md-12 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ? "d-none" : ""}`}>
+                  <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ? "d-none" : ""}`}>
                     <label
-                      htmlFor="description"
+                      htmlFor="other_contact_no"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
-                      style={{ top: "-12px" }}
                     >
-                      About:
+                      Alternate  Mobile Number:{/* <span className="text-danger">*</span>*/}
                     </label>
-                    <TextEditor
-                      state={state}
-                      setState={setState}
-                      page={"description"}
-                    />
-
-                    {/* <textarea
-                      name="description"
-                      value={state.description || ""}
+                    <input
+                      type="number"
+                      min={0}
+                      placeholder="Alternate Mobile Number"
+                      name="other_contact_no"
+                      value={state.other_contact_no || ""}
                       onChange={onInputChange}
                       className={
-                        errors.description
+                        errors.other_contact_no
                           ? "form-control border border-danger"
                           : "form-control"
                       }
-                      id="description"
-                      placeholder="Description"
-                    ></textarea> */}
-                    {/* <FroalaEditor
-                      model={state.description}
-                      onModelChange={(newContent) =>
-                        setState({ ...state, description: newContent })
-                      }
-                      className={
-                        errors.description
-                          ? "form-control border border-danger"
-                          : "form-control"
-                      }
-                    /> */}
-                    {/*----ERROR MESSAGE FOR GENDER----*/}
-                    {errors.description && (
+                      id="other_contact_no"
+                      maxLength={13}
+                    />
+                    {/*----ERROR MESSAGE FOR MOBILENO----*/}
+                    {errors.other_contact_no && (
                       <span
-                        key={errors.description}
+                        key={errors.other_contact_no}
                         className="text-danger font-size-3"
                       >
-                        {errors.description}
+                        {errors.other_contact_no}
                       </span>
                     )}
                   </div>
+
+
 
                   {/* SECOND LINE */}
                   <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ? "d-none" : ""}`}>
@@ -720,6 +707,53 @@ function PersonalDetails(props) {
                         className="text-danger font-size-3"
                       >
                         {errors.gender}
+                      </span>
+                    )}
+                  </div>
+                  <div className={`form-group col-md-12 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ? "d-none" : ""}`}>
+                    <label
+                      htmlFor="description"
+                      className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                      style={{ top: "-12px" }}
+                    >
+                      About:
+                    </label>
+                    <TextEditor
+                      state={state}
+                      setState={setState}
+                      page={"description"}
+                    />
+
+                    {/* <textarea
+                      name="description"
+                      value={state.description || ""}
+                      onChange={onInputChange}
+                      className={
+                        errors.description
+                          ? "form-control border border-danger"
+                          : "form-control"
+                      }
+                      id="description"
+                      placeholder="Description"
+                    ></textarea> */}
+                    {/* <FroalaEditor
+                      model={state.description}
+                      onModelChange={(newContent) =>
+                        setState({ ...state, description: newContent })
+                      }
+                      className={
+                        errors.description
+                          ? "form-control border border-danger"
+                          : "form-control"
+                      }
+                    /> */}
+                    {/*----ERROR MESSAGE FOR GENDER----*/}
+                    {errors.description && (
+                      <span
+                        key={errors.description}
+                        className="text-danger font-size-3"
+                      >
+                        {errors.description}
                       </span>
                     )}
                   </div>
@@ -979,15 +1013,16 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
-                  {(state.interested_in === "pnp" || state.interested_in === "PNP") &&
+                  {["study permit", "temporary resident (visiting , studying , working)", "economic immigration", "family sponsorship", "pnp"].includes(state.interested_in.toLowerCase()) &&
+                    state.interested_in && FilterJson.interested_sub_type[state.interested_in.toLowerCase()] &&
                     <div className={`form-group 
-                    ${props.user_of_page === "assignedUser" ||
+  ${props.user_of_page === "assignedUser" ||
                         props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned"
                         || props.pageNameForForm === "ApplicantType"
                         ? "d-none"
                         : `${props.pageNameForForm === "Category" ?
-                          "col-md-12" : "col-md-4"}
-                        `}`}>
+                          "col-md-12" : "col-md-4"}`}
+  `}>
                       <label
                         htmlFor="category"
                         className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -998,17 +1033,19 @@ function PersonalDetails(props) {
                         name="category"
                         value={state.category || ""}
                         onChange={onInputChange}
-                        className={
-                          errors.category
-                            ? "form-control border border-danger"
-                            : "form-control"
+                        className={`form-control
+                          ${errors.category
+                            ? " border border-danger"
+                            : ""}`
                         }
                         id="category"
                       >
-                        <option value={""}>Select user type</option>
-                        <option value={"aos"}>AOS</option>
-                        <option value={"rrs"}>RRS</option>
-                        <option value={"tech pathway"}>Tech Pathway</option>
+                        <option value={""}>Select Sub Type</option>
+                        {(FilterJson.interested_sub_type[state.interested_in.toLowerCase()] || []).map((subType, index) => (
+                          <option key={index} value={subType} className={`${subType === "aos" || subType === "rrs" ? "text-uppercase" : "text-capitalize"}`}>
+                            {subType}
+                          </option>
+                        ))}
                       </select>
                       {/* ----ERROR MESSAGE FOR category---- */}
                       {errors.category && (
@@ -1019,7 +1056,8 @@ function PersonalDetails(props) {
                           {errors.category}
                         </span>
                       )}
-                    </div>}
+                    </div>
+                  }
                   <div className={`form-group col-md-4
                   ${props.user_of_page === "assignedUser" || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned"
                       || props.pageNameForForm === "ApplicantType" || props.pageNameForForm === "Category" ? "d-none" : ""}`}>

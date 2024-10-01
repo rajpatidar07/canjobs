@@ -105,11 +105,13 @@
 //     </Modal>
 //   );
 // }
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import AdobePDFViewer from "../Adobe/adobeFile";
 import Loader from "../../common/loader";
-
+import { useLocation } from "react-router-dom";
+import { GetDocConvertToken, getSharePointParticularFolders } from "../../../api/api";
+import { jsPDF } from "jspdf";
 export default function ViewPdf({
   show,
   close,
@@ -125,14 +127,126 @@ export default function ViewPdf({
   pdf,
   type
 }) {
+  let location = useLocation()
+  const queryParams = new URLSearchParams(location.search);
+  const new_emp_user_type = queryParams.get("new_emp_user_type");
+  const new_user_id = queryParams.get("new_user_id");
+  const new_folderId = queryParams.get("folderId");
+  const new_document_id = queryParams.get("document_id");
+  let [newPdf, setNewPdf] = useState()
+  let [newPdfUrl, setNewPdfUrl] = useState()
+  let [newDocLoder, setNewDocLoder] = useState(false)
+  let GetPdfDocument = async () => {
+    try {
+      let res = await getSharePointParticularFolders(
+        new_user_id,
+        new_emp_user_type,
+        new_folderId
+      );
+      if (res.data.status === 1) {
+        setNewDocLoder(false);
+        if (res.data.data.find((item) => item.id === new_document_id)) {
+          let data = res.data.data.find((item) => item.id === new_document_id)
+          setNewPdf(data);
+          if (
+            data.file.mimeType === "image/jpeg" ||
+            data.file.mimeType === "image/png" ||
+            data.file.mimeType === "image/jpg"
+          ) {
+            // Await the conversion if convertUrlToPDF is asynchronous
+            convertUrlToPDF(data["@microsoft.graph.downloadUrl"]);
+          } else if (
+            data.file.mimeType ===
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          ) {
+            // Await the conversion if convertToPDF is asynchronous
+            convertToPDF(data);
+          } else {
+            setNewPdfUrl(data["@microsoft.graph.downloadUrl"]); // Update state if necessary
+          }
+        } else if (res.data.data === "No Documents Found") {
+          setNewDocLoder(false);
+        } else {
+          setNewDocLoder(false);
+        }
+      }
+    } catch (Err) {
+      console.log(Err);
+      setNewDocLoder(false);
+    }
+  }
+  /*Function to convert the Image into pdf */
+  const convertUrlToPDF = (imageUrl) => {
+    const img = new Image();
+    img.crossOrigin = "anonymous"; // Enable cross-origin resource sharing (CORS) for the image
+    img.src = imageUrl;
+    img.onload = () => {
+      const doc = new jsPDF();
+      const pdfWidth = doc.internal.pageSize.getWidth();
+      const pdfHeight = doc.internal.pageSize.getHeight();
+      let imgWidth, imgHeight;
+      const imgAspectRatio = img.width / img.height;
+      const pdfAspectRatio = pdfWidth / pdfHeight;
+      if (imgAspectRatio > pdfAspectRatio) {
+        // Image is wider than the PDF page
+        imgWidth = pdfWidth;
+        imgHeight = imgWidth / imgAspectRatio;
+      } else {
+        // Image is taller than or equal to the PDF page
+        imgHeight = pdfHeight;
+        imgWidth = imgHeight * imgAspectRatio;
+      }
+      const xPosition = (pdfWidth - imgWidth) / 2;
+      const yPosition = (pdfHeight - imgHeight) / 2;
+      doc.addImage(img, "JPEG", xPosition, yPosition, imgWidth, imgHeight); // Set the image dimensions to fit the PDF page
+      // Convert PDF to Blob
+      const pdfBlob = doc.output("blob");
+      // Convert PDF Blob to base64
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result;
+        setNewPdfUrl(base64String);
+        // if (base64String) {
+        //   setImgConRes("imageConverted");
+        // }
+      };
+      reader.readAsDataURL(pdfBlob);
+    };
+  };
+  // Function to convert a docx to pdf
+  const convertToPDF = async (data) => {
+    try {
+      let response = await GetDocConvertToken();
+      const myHeaders = new Headers();
+      myHeaders.append("Authorization", `Bearer ${response.data.data}`);
+      myHeaders.append("Content-type", "application/json");
 
-  // Parse query parameters
-  const new_pdf = JSON.parse(localStorage.getItem("new_pdf"));
-  const new_emp_user_type = localStorage.getItem("new_emp_user_type");
-  const new_user_id = localStorage.getItem("new_user_id");
-  const new_pdf_url = localStorage.getItem("new_pdf_url");
-  
-  console.log(new_pdf_url,new_pdf, new_emp_user_type, new_user_id)
+      const requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        redirect: "follow",
+      };
+      fetch(
+        `https://graph.microsoft.com/v1.0${data.parentReference.path}/${data.name}:/content?format=pdf`,
+        requestOptions
+      )
+        .then(function (resp) {
+          return resp.blob();
+        })
+        .then(function (blob) {
+          setNewPdfUrl(window.URL.createObjectURL(blob));
+        })
+        .catch((error) => console.error(error));
+    } catch (error) {
+      console.error("Error downloading or parsing the file:", error);
+    }
+
+    return; // Return the base64 PDF data
+  };
+  useEffect(() => {
+    GetPdfDocument()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   if (type === "modal") {
     return (
       <Modal
@@ -177,15 +291,15 @@ export default function ViewPdf({
     );
   } else {
     return (
-      docLoader ? (
+      newDocLoder ? (
         <div className="table-responsive main_table_div">
-          <Loader />
+          Token Expire
         </div>
       ) : (
         <AdobePDFViewer
-          url={new_pdf_url || ""}
-          data={new_pdf || ""}
-          userId={new_user_id || ""}
+          url={newPdfUrl}
+          data={newPdf}
+          userId={new_user_id}
           commentsList={[]}
           selectedMentionAdmin={[]}
           DocUserType={new_emp_user_type}

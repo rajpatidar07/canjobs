@@ -387,7 +387,7 @@ function CompanyProfileDetail(props) {
                   </li>
                   <li
                     className={
-                      user_type === "admin"
+                      user_type === "admin" || user_type ==="company"
                         ? "tab-menu-items nav-item"
                         : "d-none"
                     }

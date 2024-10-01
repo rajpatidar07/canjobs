@@ -965,10 +965,6 @@ export default function SharePointDocument({
                     getCommentsList={getCommentsList}
                     emp_user_type={emp_user_type}
                     user_id={user_id}
-                    convertUrlToPDF={convertUrlToPDF}
-                    convertToPDF={convertToPDF}
-                    convertedDoc={convertedDoc}
-                    setConvertedDoc={setConvertedDoc}
                   />
                 )}
               </div>
