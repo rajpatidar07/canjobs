@@ -34,6 +34,7 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import { PiBriefcaseLight } from "react-icons/pi";
 import ConvertTime from "./ConvertTime";
 import VisaTimeLine from "./visaTimeLine";
+import filterjson from "../json/filterjson";
 // import ApplicantCategory from "../forms/user/ApplicantCategory";
 export default function EmployeeTable(props) {
   let agentId = localStorage.getItem("agent_id");
@@ -64,12 +65,12 @@ export default function EmployeeTable(props) {
     StatusTab
       ? StatusTab
       : props.pageName === "local_candidate"
-      ? ""
-      : props.ApplicantType
-      ? "4,7,8"
-      : props.self === "yes"
-      ? -1
-      : 4
+        ? ""
+        : props?.ApplicantType
+          ? "4,7,8"
+          : props.self === "yes"
+            ? -1
+            : 4
   );
   const [totalData, setTotalData] = useState("");
   const [recordsPerPage] = useState(10);
@@ -99,12 +100,13 @@ export default function EmployeeTable(props) {
           : status,
         props.job_id ? props.job_id : "",
         props.filterByEmployeeId,
-        props.ApplicantType ? props.ApplicantType : props.interestFilterValue,
+        props?.ApplicantType ? props?.ApplicantType : props.interestFilterValue,
         "",
         user_type === "agent" ? agentId : props.agentFilterValue,
         props.adminFilterValue,
         props.categoryFilterValue,
-        props.localFilterValue
+        props.localFilterValue,
+        // props.subCategoryFilterValue
       );
       if (userData.data.length === 0) {
         setemployeeData([]);
@@ -327,6 +329,53 @@ export default function EmployeeTable(props) {
     localStorage.removeItem("PageNo");
     props.setpageNo(1);
   };
+  const determineBackgroundColor = (commentItem) => {
+    const colorClasses = [
+      "bg-primary-opacity-7",
+      "bg-warning-opacity-7",
+      "bg-orange-opacity-6",
+      "bg-info-opacity-7",
+      "bg-secondary-opacity-7",
+      "bg-danger-opacity-6",
+      "bg-info-opacity-visible",
+      "bg-eastern",
+      "bg-secondary",
+      "bg-violet",
+      "bg-info",
+      "bg-coral-opacity-visible",
+      "bg-warning",
+      "bg-allports",
+      "bg-conch",
+      "bg-pink",
+      "bg-poppy",
+      "bg-success",
+      "bg-helio",
+      "bg-gray"
+    ];
+
+
+    // Instead of using an ID, use the comment type or text to determine the color
+    const commentType = commentItem || ""; // Use 'type' or fallback to 'text'
+
+    // Function to generate a hash code from the string (type or text)
+    const hashCode = (str) => {
+      let hash = 0;
+      for (let i = 0; i < str.length; i++) {
+        const char = str.charCodeAt(i);
+        hash = (hash << 5) - hash + char;
+      }
+      return hash;
+    };
+
+    // Generate a hash based on the comment type or text
+    const hash = Math.abs(hashCode(commentType));
+
+    // Use the hash to select a color class
+    const index = hash % colorClasses.length;
+
+    return colorClasses[index];
+  };
+
   return (
     <>
       {showAddEmployeeModal ? (
@@ -346,7 +395,7 @@ export default function EmployeeTable(props) {
           apiCall={apiCall}
           setApiCall={setApiCall}
           close={() => setVisaModal(false)}
-          type={props.ApplicantType}
+          type={props?.ApplicantType}
         />
       ) : null}
       {showEducationModal ? (
@@ -411,9 +460,8 @@ export default function EmployeeTable(props) {
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5 ">
         {props.heading === "Dashboard" ? null : (
           <div
-            className={`btn-group mb-5 ${
-              props.skill || props.ApplicantType ? "d-none" : ""
-            }`}
+            className={`btn-group mb-5 ${props.skill || props?.ApplicantType ? "d-none" : ""
+              }`}
             role="group"
             aria-label="Basic example"
           >
@@ -553,8 +601,8 @@ export default function EmployeeTable(props) {
                     status === "00" ||
                     status === "0,1,2,3,5,6" ||
                     status === "4,7,8"
-                  ? "btn btn-primary"
-                  : "btn btn-outline-primary"
+                    ? "btn btn-primary"
+                    : "btn btn-outline-primary"
               }
               onClick={() => {
                 setStatus(props.self === "yes" ? "0,1,2,3,5,6" : "4,7,8");
@@ -701,7 +749,7 @@ export default function EmployeeTable(props) {
                       </Link>
                     </th>
                   )} */}
-                  {props.heading === "Dashboard" || !props.ApplicantType ? (
+                  {props.heading === "Dashboard" || !props?.ApplicantType ? (
                     ""
                   ) : (
                     <th
@@ -741,7 +789,7 @@ export default function EmployeeTable(props) {
                       </Link>
                     </th>
                   )}
-                  {props.ApplicantType === "pnp" && (
+                  {[ "temporary resident (visiting , studying , working)", "economic immigration", "family sponsorship", "pnp"].includes(props?.ApplicantType?.toLowerCase()) && (
                     <th
                       scope="col"
                       className="border-0 font-size-4 font-weight-normal"
@@ -790,7 +838,7 @@ export default function EmployeeTable(props) {
                 ) : (
                   (employeeData || []).map((empdata) => (
                     <>
-                      {props.ApplicantType ? (
+                      {props?.ApplicantType ? (
                         <tr style={{ border: "0" }}>
                           <td
                             style={{ paddingBottom: "0!important" }}
@@ -861,9 +909,9 @@ export default function EmployeeTable(props) {
 
                               <div className=" mb-0">
                                 {empdata.name === null ||
-                                empdata.name === undefined ||
-                                empdata.name === "undefined" ||
-                                empdata.name === "" ? (
+                                  empdata.name === undefined ||
+                                  empdata.name === "undefined" ||
+                                  empdata.name === "" ? (
                                   <p className="font-size-3  mb-0">N/A</p>
                                 ) : (
                                   <Link
@@ -902,19 +950,18 @@ export default function EmployeeTable(props) {
                                         ? empdata.gender === "female"
                                           ? "F"
                                           : empdata.gender === "male"
-                                          ? "M"
-                                          : "O"
+                                            ? "M"
+                                            : "O"
                                         : "") +
                                       (empdata.marital_status ||
-                                      empdata.date_of_birth
-                                        ? `${empdata.marital_status},${
-                                            empdata.date_of_birth
-                                              ? moment().diff(
-                                                  empdata.date_of_birth + " Y",
-                                                  "years"
-                                                )
-                                              : ""
-                                          }`
+                                        empdata.date_of_birth
+                                        ? `${empdata.marital_status},${empdata.date_of_birth
+                                          ? moment().diff(
+                                            empdata.date_of_birth + " Y",
+                                            "years"
+                                          )
+                                          : ""
+                                        }`
                                         : null)
                                     }
                                   >
@@ -922,27 +969,26 @@ export default function EmployeeTable(props) {
                                       ? empdata.gender === "female"
                                         ? "F"
                                         : empdata.gender === "male"
-                                        ? "M"
-                                        : "O"
+                                          ? "M"
+                                          : "O"
                                       : ""}
                                     {/*Calculation of age from date of birth*/}(
                                     {empdata.marital_status ||
-                                    empdata.date_of_birth
-                                      ? `${empdata.marital_status},${
-                                          empdata.date_of_birth
-                                            ? moment().diff(
-                                                empdata.date_of_birth,
-                                                "years"
-                                              ) + " Y"
-                                            : ""
-                                        }`
+                                      empdata.date_of_birth
+                                      ? `${empdata.marital_status},${empdata.date_of_birth
+                                        ? moment().diff(
+                                          empdata.date_of_birth,
+                                          "years"
+                                        ) + " Y"
+                                        : ""
+                                      }`
                                       : null}
                                     )
                                   </p>
                                 ) : null}
                                 {empdata.contact_no === null ||
-                                !empdata.contact_no ||
-                                empdata.contact_no === (0 || "0") ? null : (
+                                  !empdata.contact_no ||
+                                  empdata.contact_no === (0 || "0") ? null : (
                                   <p className="m-0" title={empdata.contact_no}>
                                     +
                                     <Link
@@ -967,13 +1013,13 @@ export default function EmployeeTable(props) {
                                   </p>
                                 </h3>
                                 {empdata.is_featured === "1" ||
-                                empdata.is_featured === 1 ? (
+                                  empdata.is_featured === 1 ? (
                                   <span className="bg-orange text-white featured_tag">
                                     Featured
                                   </span>
                                 ) : null}
                                 {empdata.created_by_admin === "0" ||
-                                empdata.created_by_admin === 0 ? (
+                                  empdata.created_by_admin === 0 ? (
                                   <span className="bg-info text-white web_tag">
                                     Web
                                   </span>
@@ -982,7 +1028,7 @@ export default function EmployeeTable(props) {
                             </div>
                           </div>
                           {empdata.is_featured === "1" ||
-                          empdata.is_featured === 1 ? (
+                            empdata.is_featured === 1 ? (
                             <span className="bg-orange text-white featured_tag">
                               Featured
                             </span>
@@ -993,8 +1039,8 @@ export default function EmployeeTable(props) {
                         ) : (
                           <td className="py-5 ">
                             {empdata.created_by_admin === null ||
-                            !empdata.created_by_admin ||
-                            empdata.created_by_admin === ("0" || 0) ? (
+                              !empdata.created_by_admin ||
+                              empdata.created_by_admin === ("0" || 0) ? (
                               <p className="font-size-3  mb-0">N/A</p>
                             ) : (
                               <p
@@ -1023,7 +1069,7 @@ export default function EmployeeTable(props) {
                         ) : (
                           <td className="py-5 ">
                             {empdata.last_updated_by_name === null ||
-                            !empdata.last_updated_by_name ? (
+                              !empdata.last_updated_by_name ? (
                               <p className="font-size-3  mb-0">N/A</p>
                             ) : (
                               <p
@@ -1062,7 +1108,7 @@ export default function EmployeeTable(props) {
                           </td>
                         )}
                         {props.heading === "Dashboard" ||
-                        user_type === "agent" ? (
+                          user_type === "agent" ? (
                           ""
                         ) : (
                           <td className=" py-5">
@@ -1107,7 +1153,7 @@ export default function EmployeeTable(props) {
                           )}
                         </td>
                       )} */}
-                        <td className={!props.ApplicantType ? "d-none" : ""}>
+                        <td className={!props?.ApplicantType ? "d-none" : ""}>
                           <p
                             className="font-size-2 font-weight-normal text-black-2 mb-0"
                             title={empdata.applicant_process_status || "N/A"}
@@ -1139,24 +1185,23 @@ export default function EmployeeTable(props) {
                             ) : empdata.applicant_process_status ===
                               "file decision" ? (
                               <div
-                                className={`px-3 py-2 badge badge-pill ${
-                                  empdata.applicant_process_substages ===
+                                className={`px-3 py-2 badge badge-pill ${empdata.applicant_process_substages ===
                                   "approved"
-                                    ? " badge-shamrock"
-                                    : empdata.applicant_process_substages ===
-                                      "rejected"
+                                  ? " badge-shamrock"
+                                  : empdata.applicant_process_substages ===
+                                    "rejected"
                                     ? " badge-danger"
                                     : " badge-warning text-white"
-                                }`}
+                                  }`}
                               >
                                 <span>
                                   {empdata.applicant_process_substages ===
-                                  "approved"
+                                    "approved"
                                     ? "Approved"
                                     : empdata.applicant_process_substages ===
                                       "rejected"
-                                    ? "Rejected"
-                                    : "Awaiting Decision"}
+                                      ? "Rejected"
+                                      : "Awaiting Decision"}
                                 </span>
                               </div>
                             ) : (
@@ -1186,60 +1231,25 @@ export default function EmployeeTable(props) {
                           // </td>
                           <td className="text-center ">
                             {empdata.interested_in === null ||
-                            !empdata.interested_in ? (
+                              !empdata.interested_in ? (
                               <p className="font-size-3 mb-0" title="N/A">
                                 N/A
                               </p>
                             ) : (
                               <p
-                                className={`font-size-2 font-weight-normal text-black-2 mb-0 ${
-                                  empdata.interested_in === "pnp" ||
+                                className={`font-size-2 font-weight-normal text-black-2 mb-0 ${empdata.interested_in === "pnp" ||
                                   empdata.interested_in === "pgwp"
-                                    ? `text-uppercase`
-                                    : "text-capitalize"
-                                }`}
+                                  ? `text-uppercase`
+                                  : "text-capitalize"
+                                  }`}
                                 title={empdata.interested_in}
                               >
                                 <span
-                                  className={`p-1 ${
-                                    empdata.interested_in === "visitor visa"
-                                      ? "text-dark"
-                                      : "text-white"
-                                  } text-center  border rounded-pill 
-                                  ${
-                                    empdata.interested_in === "business visa"
-                                      ? "bg-eastern"
-                                      : empdata.interested_in === "co-op"
-                                      ? "bg-secondary"
-                                      : empdata.interested_in ===
-                                        "express entry"
-                                      ? "bg-violet"
-                                      : empdata.interested_in === "full-time"
-                                      ? "bg-info"
-                                      : empdata.interested_in === "pnp"
-                                      ? "bg-warning"
-                                      : empdata.interested_in ===
-                                        "spousal open work permit"
-                                      ? "bg-coral-opacity-visible"
-                                      : empdata.interested_in === "super visa"
-                                      ? "bg-allports"
-                                      : empdata.interested_in === "visitor visa"
-                                      ? "bg-conch"
-                                      : empdata.interested_in ===
-                                        "work permit extension"
-                                      ? "bg-pink"
-                                      : empdata.interested_in === "working visa"
-                                      ? "bg-poppy"
-                                      : empdata.interested_in ===
-                                        "workpermit application"
-                                      ? "bg-success"
-                                      : empdata.interested_in === "federal PR"
-                                      ? "bg-poppy"
-                                      : empdata.interested_in ===
-                                        "visitor record"
-                                      ? "bg-helio"
-                                      : "bg-primary"
-                                  }`}
+                                  className={`p-3 ${empdata.interested_in === "visitor visa"
+                                    ? "text-dark"
+                                    : "text-white"
+                                    } text-center  border rounded-pill 
+                                  ${determineBackgroundColor(empdata.interested_in)}`}
                                 >
                                   {empdata.interested_in}
                                 </span>
@@ -1247,43 +1257,38 @@ export default function EmployeeTable(props) {
                             )}
                           </td>
                         )}
-                        {props.ApplicantType === "pnp" && (
+                        {[ "temporary resident (visiting , studying , working)", "economic immigration", "family sponsorship", "pnp"].includes(props?.ApplicantType?.toLowerCase()) && (
                           <td className="text-center">
-                            {empdata.category === null || !empdata.category ? (
+                            {(!(filterjson.interested_sub_type[props?.ApplicantType?.toLowerCase()] || []).find((subType) => (
+                              subType === empdata.category))) ? (
                               <p className="font-size-3 mb-0" title="N/A">
                                 N/A
                               </p>
                             ) : (
-                              <p
-                                className={`font-size-2 font-weight-normal text-black-2 mb-0 
-                            ${
-                              empdata.category === "tech pathway" ||
-                              empdata.category === "Tech Pathway"
-                                ? "text-capitalize"
-                                : `text-uppercase`
-                            }`}
-                                title={empdata.category}
-                              >
-                                <span
-                                  className={`p-1 text-white text-center border rounded-pill ${
-                                    empdata.category === "tech pathway" ||
-                                    empdata.category === "Tech Pathway"
-                                      ? "bg-info "
-                                      : empdata.category === "rrs" ||
-                                        empdata.category === "RRS"
-                                      ? "bg-warning"
-                                      : empdata.category === "aos" ||
-                                        empdata.category === "AOS"
-                                      ? "bg-coral-opacity-visible"
-                                      : ""
-                                  }`}
+                              <>
+                                <p
+                                  className={`font-size-2 font-weight-normal text-black-2 mb-0 
+            ${empdata.category === "rrs" || empdata.category === "aos" ? "text-uppercase" : "text-capitalize"}
+          `}
+                                  title={(filterjson.interested_sub_type[props?.ApplicantType?.toLowerCase()] || []).find((subType) => (
+                                    subType === empdata.category ? subType : ""
+                                  ))}
                                 >
-                                  {empdata.category}
-                                </span>
-                              </p>
+                                  <span
+                                    className={`p-1 text-white text-center border rounded-pill                                       ${determineBackgroundColor(
+                                      empdata.category
+                                    )}`}
+                                  >
+                                    {(filterjson.interested_sub_type[props?.ApplicantType?.toLowerCase()] || []).find((subType) => (
+                                      subType === empdata.category ? subType : ""
+                                    ))}
+                                  </span>
+                                </p>
+                              </>
                             )}
                           </td>
                         )}
+
                         {props.visa === "yes" ? null : (
                           <td className="text-center ">
                             <p
@@ -1292,64 +1297,63 @@ export default function EmployeeTable(props) {
                                 empdata.status === "1" || empdata.status === "0"
                                   ? "New"
                                   : empdata.status === "2"
-                                  ? "Prospect"
-                                  : empdata.status === "3"
-                                  ? "Lead"
-                                  : empdata.status === "4"
-                                  ? "Retained"
-                                  : empdata.status === "5"
-                                  ? "Lost"
-                                  : empdata.status === "6"
-                                  ? "Dead"
-                                  : empdata.status === "7"
-                                  ? "Working on"
-                                  : empdata.status === "8"
-                                  ? "Submitted"
-                                  : "N/A"
+                                    ? "Prospect"
+                                    : empdata.status === "3"
+                                      ? "Lead"
+                                      : empdata.status === "4"
+                                        ? "Retained"
+                                        : empdata.status === "5"
+                                          ? "Lost"
+                                          : empdata.status === "6"
+                                            ? "Dead"
+                                            : empdata.status === "7"
+                                              ? "Working on"
+                                              : empdata.status === "8"
+                                                ? "Submitted"
+                                                : "N/A"
                               }
                             >
                               <span
-                                className={`p-1 text-white text-center  border rounded-pill ${
-                                  empdata.status === "1" ||
+                                className={`p-1 text-white text-center  border rounded-pill ${empdata.status === "1" ||
                                   empdata.status === "0"
-                                    ? !isTimeWithin24Hours(empdata.created_at)
-                                      ? "bg-danger "
-                                      : "bg-info "
-                                    : empdata.status === "2"
+                                  ? !isTimeWithin24Hours(empdata.created_at)
+                                    ? "bg-danger "
+                                    : "bg-info "
+                                  : empdata.status === "2"
                                     ? "bg-warning"
                                     : empdata.status === "3"
-                                    ? "bg-coral-opacity-visible"
-                                    : empdata.status === "4"
-                                    ? "bg-secondary"
-                                    : empdata.status === "5"
-                                    ? "bg-spray"
-                                    : empdata.status === "6"
-                                    ? "bg-dark"
-                                    : empdata.status === "7"
-                                    ? "bg-primary-opacity-8"
-                                    : empdata.status === "8"
-                                    ? "bg-eastern"
-                                    : ""
-                                }`}
+                                      ? "bg-coral-opacity-visible"
+                                      : empdata.status === "4"
+                                        ? "bg-secondary"
+                                        : empdata.status === "5"
+                                          ? "bg-spray"
+                                          : empdata.status === "6"
+                                            ? "bg-dark"
+                                            : empdata.status === "7"
+                                              ? "bg-primary-opacity-8"
+                                              : empdata.status === "8"
+                                                ? "bg-eastern"
+                                                : ""
+                                  }`}
                               >
                                 {empdata.status === "1" ||
-                                empdata.status === "0"
+                                  empdata.status === "0"
                                   ? "New"
                                   : empdata.status === "2"
-                                  ? "Prospect"
-                                  : empdata.status === "3"
-                                  ? "Lead"
-                                  : empdata.status === "4"
-                                  ? "Retained"
-                                  : empdata.status === "5"
-                                  ? "Lost"
-                                  : empdata.status === "6"
-                                  ? "Dead"
-                                  : empdata.status === "7"
-                                  ? "Working on"
-                                  : empdata.status === "8"
-                                  ? "Submitted"
-                                  : ""}
+                                    ? "Prospect"
+                                    : empdata.status === "3"
+                                      ? "Lead"
+                                      : empdata.status === "4"
+                                        ? "Retained"
+                                        : empdata.status === "5"
+                                          ? "Lost"
+                                          : empdata.status === "6"
+                                            ? "Dead"
+                                            : empdata.status === "7"
+                                              ? "Working on"
+                                              : empdata.status === "8"
+                                                ? "Submitted"
+                                                : ""}
                               </span>
                             </p>
                           </td>
@@ -1390,16 +1394,16 @@ export default function EmployeeTable(props) {
                               aria-label="Basic example"
                             >
                               {props.skill === null ||
-                              props.skill === undefined ? (
+                                props.skill === undefined ? (
                                 <>
                                   <button
                                     className={
-                                      !props.ApplicantType
+                                      !props?.ApplicantType
                                         ? "d-none"
                                         : "btn btn-outline-info action_btn"
                                     }
                                     onClick={() => editVisa(empdata)}
-                                    title={`Add/Update ${props.ApplicantType} status`}
+                                    title={`Add/Update ${props?.ApplicantType} status`}
                                   >
                                     <span className="text-gray px-2">
                                       <MdEditNote />
@@ -1421,7 +1425,7 @@ export default function EmployeeTable(props) {
                                   <>
                                     <button
                                       className={
-                                        props.ApplicantType === "pnp"
+                                        ["study permit", "temporary resident (visiting , studying , working)", "economic immigration", "family sponsorship", "pnp"].includes(props?.ApplicantType?.toLowerCase())
                                           ? "btn btn-outline-info action_btn"
                                           : "d-none"
                                       }
@@ -1431,7 +1435,7 @@ export default function EmployeeTable(props) {
                                           empdata.employee_id
                                         )
                                       }
-                                      title="Change Applicant's Category"
+                                      title="Change Applicant's Sub Type"
                                     >
                                       <span className="text-gray px-2">
                                         <BiSolidCategory />

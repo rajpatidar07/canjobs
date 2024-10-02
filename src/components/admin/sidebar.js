@@ -5,13 +5,14 @@ import {
   MdOutlinePhotoFilter,
   MdAssignmentAdd,
   MdRealEstateAgent,
+  MdFamilyRestroom,
 } from "react-icons/md";
 import { LuFileKey } from "react-icons/lu";
 import { LiaUsersSolid, LiaAddressCardSolid, LiaCcVisa } from "react-icons/lia";
 import { BsBuildings, BsQrCodeScan } from "react-icons/bs";
 import { PiApplePodcastsLogoThin } from "react-icons/pi";
 import { AiOutlineUserAdd /*, AiOutlineMail*/ } from "react-icons/ai";
-import { TbFilterPlus } from "react-icons/tb";
+import { TbFilterPlus, TbUserDollar } from "react-icons/tb";
 import { FaGraduationCap, FaNotesMedical } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
 import { GrVisa } from "react-icons/gr";
@@ -20,6 +21,7 @@ import { SiExpress, SiStudyverse } from "react-icons/si";
 import { IoLogoPinterest } from "react-icons/io";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 import { FaPersonShelter } from "react-icons/fa6";
+import { GiTemporaryShield } from "react-icons/gi";
 const AdminSidebar = (props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(
     localStorage.getItem("isMenuOpen")
@@ -334,10 +336,65 @@ const AdminSidebar = (props) => {
             to="/studypermit"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
-            <SiStudyverse className="sidebar_icon"/>
+            <SiStudyverse className="sidebar_icon" />
             Study Permit
           </Link>
         </li>
+        <li
+          className={
+            user_type === "agent"
+              ? "d-none"
+              : props.heading === "Temporary Resident (Visiting , Studying , Working)"
+                ? "active"
+                : ""
+          }
+        >
+          <Link
+            onClick={() => clearPageNo()}
+            to="/temporaryresident"
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+          >
+            <GiTemporaryShield className="sidebar_icon" />
+            Temporary Resident (Visiting , Studying , Working)
+          </Link>
+        </li>
+        <li
+          className={
+            user_type === "agent"
+              ? "d-none"
+              : props.heading === "Economic Immigration"
+                ? "active"
+                : ""
+          }
+        >
+          <Link
+            onClick={() => clearPageNo()}
+            to="/economicimmigration"
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+          >
+            <TbUserDollar className="sidebar_icon" />
+            Economic Immigration
+          </Link>
+        </li>
+        <li
+          className={
+            user_type === "agent"
+              ? "d-none"
+              : props.heading === "Family Sponsorship"
+                ? "active"
+                : ""
+          }
+        >
+          <Link
+            onClick={() => clearPageNo()}
+            to="/familysponsorship"
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+          >
+            <MdFamilyRestroom className="sidebar_icon" />
+            Family Sponsorship
+          </Link>
+        </li>
+
         <li
           className={
             user_type === "agent"

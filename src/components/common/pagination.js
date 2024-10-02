@@ -41,8 +41,9 @@ function Pagination({ nPages, currentPage, setCurrentPage, total, count }) {
                   <i className="fas fa-chevron-left"></i>
                 </Link>
               </li>
-              {visiblePageNumbers.map((pgNumber) => (
-                <Link
+              {visiblePageNumbers.map((pgNumber,index) => (
+                <Link 
+                key={index}
                   onClick={() => {
                     setCurrentPage(pgNumber);
                     localStorage.setItem("PageNo", pgNumber);  // Store the current page number

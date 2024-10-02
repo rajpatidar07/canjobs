@@ -790,7 +790,7 @@ export default function CommentSection({
   };
 
   return (
-    <div className="col-md-4 col-lg-4 col-sm-3 py-2 bg-light comments_and_replies">
+    <div className="col-md-2 col-lg-2 col-sm-1 py-2 bg-light comments_and_replies">
       {/* //condition for imm pdf
         // (docData.name && docData.name.toLowerCase().includes("imm")
         //   ? replyCommentClick === undefined ||

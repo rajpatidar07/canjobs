@@ -290,6 +290,7 @@ export const getallEmployeeData = async (
   assignedadminId,
   subType,
   localFilterValue,
+  // subSubtype
   // agent_u_id
 ) => {
   const response = await axios.post(
@@ -314,7 +315,8 @@ export const getallEmployeeData = async (
       assigned_by: assignedadminId,
       category: subType,
       employee_id: employee_id,
-      is_local: localFilterValue
+      is_local: localFilterValue,
+      sub_category: ""
     },
     {
       headers: {
@@ -887,31 +889,34 @@ export const SendReplyCommit = async (
   DocUserType,
   id
 ) => {
-  // console.log("  id =>", id,
-  //   "doc_id =>", data.doc_id,
-  //   "task_id =>", data.task_id,
-  //   "sender_id =>", senderId,
-  //   "sender_email =>", senderEmail,
-  //   "sender_name =>", SenderName,
-  //   "sender_type =>", senderType,
-  //   "receiver_id =>", recid,
-  //   "receiver_type =>", adminType,
-  //   "mention =>", email,
-  //   "receiver_name =>", assignName,
-  //   "document_url =>", "",
-  //   "next_followup_date =>", "",
-  //   "followup_status =>", "",
-  //   "subject =>", "",
-  //   "msg =>", msg,
-  //   "type =>", type,
-  //   "employee_id =>", employee_id,
-  //   "doc_parent_id =>", parent_id)
+  console.log("  id =>", id,
+    //   "doc_id =>", data.doc_id,
+    "task_id =>", data.task_id,
+    //   "sender_id =>", senderId,
+    //   "sender_email =>", senderEmail,
+    //   "sender_name =>", SenderName,
+    //   "sender_type =>", senderType,
+    //   "receiver_id =>", recid,
+    //   "receiver_type =>", adminType,
+    //   "mention =>", email,
+    //   "receiver_name =>", assignName,
+    //   "document_url =>", "",
+    //   "next_followup_date =>", "",
+    //   "followup_status =>", "",
+    //   "subject =>", "",
+    //   "msg =>", msg,
+    //   "type =>", type,
+    //   "employee_id =>", employee_id,
+    //   "doc_parent_id =>", parent_id,
+    //    "data =>", data
+    data.task_id ? "fff" : "mmmm"
+  )
   const response = await axios.post(
     `${API_URL}admin/sendMsg?document_user_type=${DocUserType}`,
     {
       id: id,
       doc_id: data.doc_id,
-      task_id: data.task_id,
+      task_id: data.task_id ? data.task_id : data.id,
       sender_id: senderId,
       sender_email: senderEmail,
       sender_name: SenderName,
@@ -1000,7 +1005,7 @@ export const GetReplyCommit = async (doc_id) => {
   return response;
 };
 /*Api to delete document comments replyes */
-export const DeleteReplyCommentsAndAssign = async ( id) => {
+export const DeleteReplyCommentsAndAssign = async (id) => {
   const response = await axios.post(
     `${API_URL}admin/deleteThreadMsg`,
     {

@@ -367,11 +367,12 @@ export default function ApplicantsFilter({
       <div
         className={
           (skill === null || skill === undefined) && (
-            pageName === "pnp" || pageName === "employee")
+            ["temporary_resident_(visiting_,_studying_,_working)", "economic_immigration", "family_sponsorship", "pnp"].includes(pageName.toLowerCase()) || pageName === "employee")
             ? "col p-1 form_group mb-3"
             : "d-none"
         }
       >
+        {console.log(FilterJson.interested_sub_type[pageName.replaceAll("_", " ")])}
         <p className="input_label">Filter by Sub Type:</p>
         <div className="select_div">
           <select
@@ -385,12 +386,15 @@ export default function ApplicantsFilter({
             className="text-capitalize form-control"
           >
             <option value={""}>Candidate's sub type</option>
-            <option value={"aos"}>AOS</option>
-            <option value={"rrs"}>RRS</option>
-            <option value={"tech pathway"}>Tech Pathway</option>
+            {((FilterJson.interested_sub_type[pageName.replaceAll("_", " ")]) || Object.values(FilterJson.interested_sub_type).flat()).map((subType, index) => (
+              <option key={index} value={subType} className={`${subType === "aos" || subType === "rrs" ? "text-uppercase" : "text-capitalize"}`}>
+                {subType}
+              </option>
+            ))}
           </select>
         </div>
       </div>
+
       <div className={
         (skill === null || skill === undefined) &&
           (pageName === "employee")

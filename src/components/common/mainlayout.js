@@ -77,6 +77,9 @@ import PGWP from "../admin/pgwp";
 import DemoJob from "../user/demoJob";
 import StudyPermit from "../admin/studyPermit";
 import ViewPdf from "./Retaineragreement/viewPdf";
+import TemporaryResident from "../admin/TemporaryResident";
+import EconomicImmigration from "../admin/EcomonicImmigration";
+import FamilySponsorship from "../admin/FamilySponsorship";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -242,6 +245,9 @@ function MainLayout() {
             <Route path="/expressentry" element={<ExpressEntry />} />
             <Route path="/visitorsvisa" element={<VisitorVisa />} />
             <Route path="/studypermit" element={<StudyPermit />} />
+            <Route path="/temporaryresident" element={<TemporaryResident />} />
+            <Route path="/economicimmigration" element={<EconomicImmigration />} />
+            <Route path="/familysponsorship" element={<FamilySponsorship />} />
             <Route path="/pnp" element={<Pnp />} />
             <Route path="/pgwp" element={<PGWP />} />
             <Route path="/localcandidates" element={<LocalCandidate />} />

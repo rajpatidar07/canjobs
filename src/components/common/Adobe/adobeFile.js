@@ -204,7 +204,7 @@ const AdobePDFViewer = ({
           id="pdf-div"
           className={`${userType === "admin" ||
             userType === "agent"
-            ? "col-md-8 col-lg-8 col-sm-9"
+            ? "col-md-10 col-lg-10 col-sm-11"
             : "col-md-12 col-lg-12 col-sm-12"
             } full-window-div`}
           style={{ maxHeight: "calc(100vh - 130px)" }}

@@ -67,7 +67,8 @@ function PersonalDetails(props) {
     reffer_by: user_type === "agent" ? localStorage.getItem("agent_id") : "",
     permission: props.employeeId === "0" ? JSON.stringify(Permissions) : null,
     assigned_by: "",
-    other_contact_no: ""
+    other_contact_no: "",
+    
   };
 
   // VALIDATION CONDITIONS
@@ -1013,7 +1014,7 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
-                  {["study permit", "temporary resident (visiting , studying , working)", "economic immigration", "family sponsorship", "pnp"].includes(state.interested_in.toLowerCase()) &&
+                  {["temporary resident (visiting , studying , working)", "economic immigration", "family sponsorship", "pnp"].includes(state.interested_in.toLowerCase()) &&
                     state.interested_in && FilterJson.interested_sub_type[state.interested_in.toLowerCase()] &&
                     <div className={`form-group 
   ${props.user_of_page === "assignedUser" ||
@@ -1033,10 +1034,10 @@ function PersonalDetails(props) {
                         name="category"
                         value={state.category || ""}
                         onChange={onInputChange}
-                        className={`form-control
+                        className={`form-control te
                           ${errors.category
                             ? " border border-danger"
-                            : ""}`
+                            : ""} ${state.category  === "aos" || state.category  === "rrs" ? "text-uppercase" : "text-capitalize"}`
                         }
                         id="category"
                       >
@@ -1058,6 +1059,49 @@ function PersonalDetails(props) {
                       )}
                     </div>
                   }
+                  {["economic immigration"].includes(state.interested_in.toLowerCase()) &&
+                    state.interested_in &&
+                    FilterJson.interested_sub_type[state.interested_in.toLowerCase()] &&
+                    ["caregivers"].includes(state.category.toLowerCase()) &&
+                    state.category && (
+                      <div className={`form-group 
+      ${props.user_of_page === "assignedUser" ||
+                          props.user_of_page === "agentAssigned" ||
+                          props.pageNameForForm === "agentAssigned" ||
+                          props.pageNameForForm === "ApplicantType"
+                          ? "d-none"
+                          : `${props.pageNameForForm === "Category" ? "col-md-12" : "col-md-4"}`}`}>
+                        <label
+                          htmlFor="sub_category"
+                          className="font-size-4 text-black-2 font-weight-semibold text-capitalize line-height-reset"
+                        >
+                          {state.category} Sub Type:
+                        </label>
+                        <select
+                          name="sub_category"
+                          value={state.sub_category || ""}
+                          onChange={onInputChange}
+                          className={`form-control text-capitalize ${errors.sub_category ? "border border-danger" : ""}`}
+                          id="sub_category"
+                        >
+                          <option value={""}>Select Sub Type</option>
+                          {((FilterJson.interested_sub_type_of_sub_type[state.interested_in.toLowerCase()] &&
+                            FilterJson.interested_sub_type_of_sub_type[state.interested_in.toLowerCase()][state.category.toLowerCase()]) || []).map((subType, index) => (
+                              <option key={index} value={subType} className="text-capitalize">
+                                {subType}
+                              </option>
+                            ))}
+                        </select>
+
+                        {/* ----ERROR MESSAGE FOR sub_category---- */}
+                        {errors.sub_category && (
+                          <span key={errors.sub_category} className="text-danger font-size-3">
+                            {errors.sub_category}
+                          </span>
+                        )}
+                      </div>
+                    )}
+
                   <div className={`form-group col-md-4
                   ${props.user_of_page === "assignedUser" || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned"
                       || props.pageNameForForm === "ApplicantType" || props.pageNameForForm === "Category" ? "d-none" : ""}`}>
