@@ -262,8 +262,8 @@ function Followup() {
                         <option value="">Select Location</option>
                         {(FilterJson.location || []).map((data, i) => {
                           return (
-                            <option value={data} key={i}>
-                              {data}
+                            <option value={data.country} key={i}>
+                              {data.country}
                             </option>
                           );
                         })}

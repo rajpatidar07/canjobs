@@ -171,8 +171,8 @@ export default function Visa() {
                       >
                         <option value={""}>Candidate's Country</option>
                         {(FilterJson.location || []).map((item, i) => (
-                          <option value={item} key={i}>
-                            {item}
+                          <option value={item.country} key={i}>
+                            {item.country}
                           </option>
                         ))}
                       </select>

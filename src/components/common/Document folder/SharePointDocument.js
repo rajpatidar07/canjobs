@@ -625,6 +625,7 @@ export default function SharePointDocument({
 
     return; // Return the base64 PDF data
   };
+  console.log(docPreview)
   return (
     <>
       {folderId ? (
@@ -793,7 +794,6 @@ export default function SharePointDocument({
                       )}
 
                   </div>
-                  { }
                   {
 
                     // docTypePage === "adobe"

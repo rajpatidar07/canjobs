@@ -272,8 +272,8 @@ export default function VisaStatus(props) {
               >
                 <option value={""}>Select visa Country </option>
                 {(FilterJson.location || []).map((item, index) => (
-                  <option value={item} key={index}>
-                    {item}
+                  <option value={item.country} key={index}>
+                    {item.country}
                   </option>
                 ))}
               </select>

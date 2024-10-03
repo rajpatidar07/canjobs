@@ -289,8 +289,8 @@ function SelfJob(props) {
                         <option value="">Job Location</option>
                         {(FilterJson.location || []).map((data) => {
                           return (
-                            <option value={data} key={data}>
-                              {data}
+                            <option value={data.country} key={data.code}>
+                              {data.country}
                             </option>
                           );
                         })}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   MdOutlineDashboardCustomize,
@@ -42,6 +42,17 @@ const AdminSidebar = (props) => {
   const clearPageNo = () => {
     localStorage.removeItem("PageNo");
   };
+  const liRefs = useRef([]);
+
+  useEffect(() => {
+    if (props.heading) {
+      const activityLi = liRefs.current[props.heading]
+      if (activityLi) {
+        activityLi.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [props.heading]);
+
   return (
     <div
       className={`dashboard-sidebar-wrapper pt-5 sidebar_parent ${isMenuOpen ? "show" : ""
@@ -82,6 +93,7 @@ const AdminSidebar = (props) => {
       >
         {user_type === "agent" ? (
           <li
+            ref={(el) => (liRefs.current["Partner Dashboard"] = el)}
             className={
               user_type === "agent" && props.heading === "Partner Dashboard"
                 ? "active"
@@ -101,6 +113,7 @@ const AdminSidebar = (props) => {
           </li>
         ) : null}
         <li
+          ref={(el) => (liRefs.current["Dashboard"] = el)}
           className={
             user_type === "agent"
               ? "d-none"
@@ -121,6 +134,7 @@ const AdminSidebar = (props) => {
         </li>
 
         <li
+          ref={(el) => (liRefs.current["Manage Applicants"] = el)}
           className={`${props.heading === "Manage Applicants" ? "active" : ""}`}
         >
           <Link
@@ -133,7 +147,9 @@ const AdminSidebar = (props) => {
             {/* <i className="far fa-user mr-5"></i>Manage Applicants */}
           </Link>
         </li>
-        <li className={`${props.heading === "New Applicants" ? "active" : ""}`}>
+        <li
+          ref={(el) => (liRefs.current["New Applicants"] = el)}
+          className={`${props.heading === "New Applicants" ? "active" : ""}`}>
           <Link
             onClick={() => clearPageNo()}
             to="/selfemployee"
@@ -145,6 +161,7 @@ const AdminSidebar = (props) => {
           </Link>
         </li>
         <li
+          ref={(el) => (liRefs.current["Manage Clients"] = el)}
           className={
             user_type === "agent"
               ? "d-none"
@@ -162,6 +179,7 @@ const AdminSidebar = (props) => {
           </Link>
         </li>
         <li
+          ref={(el) => (liRefs.current["Manage Jobs"] = el)}
           className={
             user_type === "agent"
               ? "d-none"
@@ -181,6 +199,7 @@ const AdminSidebar = (props) => {
           </Link>
         </li>
         <li
+          ref={(el) => (liRefs.current["Manage Self Jobs"] = el)}
           className={`d-none 
              ${user_type === "agent"
               ? "d-none"
@@ -200,6 +219,7 @@ const AdminSidebar = (props) => {
           </Link>
         </li>
         <li
+          ref={(el) => (liRefs.current["Working Visa"] = el)}
           className={
             user_type === "agent"
               ? "d-none"
@@ -228,6 +248,7 @@ const AdminSidebar = (props) => {
             </Link>
           </li> */}
         <li
+          ref={(el) => (liRefs.current["LMIA status"] = el)}
           className={
             user_type === "agent"
               ? "d-none"
@@ -247,6 +268,7 @@ const AdminSidebar = (props) => {
           </Link>
         </li>
         <li
+          ref={(el) => (liRefs.current["Local Candidate"] = el)}
           className={
             user_type === "agent"
               ? "d-none"
@@ -266,6 +288,7 @@ const AdminSidebar = (props) => {
           </Link>
         </li>
         <li
+          ref={(el) => (liRefs.current["PNP"] = el)}
           className={
             user_type === "agent"
               ? "d-none"
@@ -285,6 +308,7 @@ const AdminSidebar = (props) => {
           </Link>
         </li>
         <li
+          ref={(el) => (liRefs.current["PGWP"] = el)}
           className={
             user_type === "agent"
               ? "d-none"
@@ -304,6 +328,7 @@ const AdminSidebar = (props) => {
           </Link>
         </li>
         <li
+          ref={(el) => (liRefs.current["Visitors Visa"] = el)}
           className={
             user_type === "agent"
               ? "d-none"
@@ -323,6 +348,7 @@ const AdminSidebar = (props) => {
           </Link>
         </li>
         <li
+          ref={(el) => (liRefs.current["Study Permit"] = el)}
           className={
             user_type === "agent"
               ? "d-none"
@@ -341,6 +367,7 @@ const AdminSidebar = (props) => {
           </Link>
         </li>
         <li
+          ref={(el) => (liRefs.current["Temporary Resident (Visiting , Studying , Working)"] = el)}
           className={
             user_type === "agent"
               ? "d-none"
@@ -359,6 +386,7 @@ const AdminSidebar = (props) => {
           </Link>
         </li>
         <li
+          ref={(el) => (liRefs.current["Economic Immigration"] = el)}
           className={
             user_type === "agent"
               ? "d-none"
@@ -377,6 +405,7 @@ const AdminSidebar = (props) => {
           </Link>
         </li>
         <li
+          ref={(el) => (liRefs.current["Family Sponsorship"] = el)}
           className={
             user_type === "agent"
               ? "d-none"
@@ -396,6 +425,7 @@ const AdminSidebar = (props) => {
         </li>
 
         <li
+          ref={(el) => (liRefs.current["Express Entry"] = el)}
           className={
             user_type === "agent"
               ? "d-none"
@@ -415,6 +445,7 @@ const AdminSidebar = (props) => {
           </Link>
         </li>
         <li
+          ref={(el) => (liRefs.current["Business VIsa"] = el)}
           className={
             user_type === "agent"
               ? "d-none"
@@ -435,6 +466,7 @@ const AdminSidebar = (props) => {
           </Link>
         </li>
         <li
+          ref={(el) => (liRefs.current["Federal PR"] = el)}
           className={
             user_type === "agent"
               ? "d-none"
@@ -473,6 +505,7 @@ const AdminSidebar = (props) => {
             </Link>
           </li> */}
         <li
+          ref={(el) => (liRefs.current["Interview"] = el)}
           className={
             user_type === "agent"
               ? "d-none"
@@ -492,6 +525,7 @@ const AdminSidebar = (props) => {
           </Link>
         </li>
         <li
+          ref={(el) => (liRefs.current["Manage Notes"] = el)}
           className={
             user_type === "agent"
               ? "d-none"
@@ -531,6 +565,7 @@ const AdminSidebar = (props) => {
             </li>
           ) : null} */}
         <li
+          ref={(el) => (liRefs.current["Assigned Job's"] = el)}
           className={
             user_type === "agent"
               ? "d-none"
@@ -552,6 +587,7 @@ const AdminSidebar = (props) => {
         </li>
 
         <li
+          ref={(el) => (liRefs.current["Manage Admin"] = el)}
           className={
             user_type === "agent"
               ? "d-none"
@@ -573,6 +609,7 @@ const AdminSidebar = (props) => {
           </Link>
         </li>
         <li
+          ref={(el) => (liRefs.current["Manage Partner"] = el)}
           className={
             user_type === "admin"
               ? `
@@ -605,6 +642,7 @@ const AdminSidebar = (props) => {
           </li> */}
 
         <li
+          ref={(el) => (liRefs.current["Manage Job Category"] = el)}
           className={
             user_type === "agent"
               ? "d-none"
@@ -624,6 +662,7 @@ const AdminSidebar = (props) => {
           </Link>
         </li>
         <li
+          ref={(el) => (liRefs.current["Filter List"] = el)}
           className={
             user_type === "agent"
               ? "d-none"
@@ -643,6 +682,7 @@ const AdminSidebar = (props) => {
           </Link>
         </li>
         <li
+          ref={(el) => (liRefs.current["Credentials"] = el)}
           className={
             admin_type === "super-admin"
               ? props.heading === "Credentials"

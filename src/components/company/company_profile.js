@@ -29,14 +29,15 @@ import RetainerAgrementMainPage from "../common/Retaineragreement/RetainerAgreme
 // import LimaArrowProfile from "../common/LimaArrowProfile";
 function CompanyProfileDetail(props) {
   const user_type = localStorage.getItem("userType");
-  const company_id = localStorage.getItem("company_id");
-  let cid = company_id;
   let location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const docId = searchParams.get("docId");
+  const CompanyId = searchParams.get("cId");
   const docParentId = searchParams.get("docParentId");
   const notes = searchParams.get("note");
   const agreement = searchParams.get("agreement");
+  const company_id = localStorage.getItem("company_id");
+  let cid = CompanyId ? CompanyId : company_id;
 
   let navigate = useNavigate();
   /*Show modal and data state */
@@ -103,14 +104,20 @@ function CompanyProfileDetail(props) {
     if (transactionId) {
       setTabActive("payment");
     }
-    if (docId) {
-      setTabActive("documents");
-    }
+
     if (notes) {
       setTabActive("notes");
     }
     if (agreement) {
       setTabActive("retaineragreement");
+    }
+    if (CompanyId) {
+      localStorage.setItem("company_id", CompanyId)
+      if (docId && company_id) {
+        setTabActive("documents");
+      }
+    } else if (docId) {
+      setTabActive("documents");
     }
     // eslint-disable-next-line
   }, [apiCall, company_id, notes]);
@@ -387,7 +394,7 @@ function CompanyProfileDetail(props) {
                   </li>
                   <li
                     className={
-                      user_type === "admin" || user_type ==="company"
+                      user_type === "admin" || user_type === "company"
                         ? "tab-menu-items nav-item"
                         : "d-none"
                     }

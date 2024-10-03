@@ -309,7 +309,7 @@ export default function CommentSection({
         updatedComment = updatedComment.replace(new RegExp(`\\b${name}\\b(?!</b>)`, 'g'), spanTag);
       }
     });
-    console.log(commentToApi)
+    console.log((comment === "" || comment.trim() === "") && email === "")
     // Now updatedComment will have properly formatted <span> elements without nested bold tags
     // Send data to the API
     if (

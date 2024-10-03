@@ -36,11 +36,11 @@ export default function ActivityTable(props) {
     9: "Candidate document updated",
     10: "Candidate visa inserted",
     11: "Candidate visa updated",
-    12: "Employer details updated",
-    13: "Employer details inserted",
-    14: "Employer contact details updated",
-    15: "Employer kyc details inserted",
-    16: "Employer kyc details updated",
+    12: "Client details updated",
+    13: "Client details inserted",
+    14: "Client contact details updated",
+    15: "Client kyc details inserted",
+    16: "Client kyc details updated",
     17: "Job details updated",
     18: "Job details inserted",
     19: "Job switch",
@@ -48,10 +48,10 @@ export default function ActivityTable(props) {
     21: "Interview schedule",
     22: "Lmia updated",
     23: "Lmia inserted",
-    24: "Employer document inserted",
-    25: "Employer document updated",
-    26: "Employee lmia substage added",
-    27: "Employee lmia substage updated",
+    24: "Client document inserted",
+    25: "Client document updated",
+    26: "Candidate lmia substage added",
+    27: "Candidate lmia substage updated",
     28: "Job lmia substage inserted",
     29: "Job lmia substage updated",
     30: "Category inserted",
@@ -61,17 +61,24 @@ export default function ActivityTable(props) {
     34: "Miscellaneous Substage inserted",
     35: "Miscellaneous Substage updated",
     36: "interview complete",
-    37: "Delete Employee",
-    38: "Employee career delete",
-    39: "Employee Education delete",
-    40: "Employee Skills delete",
+    37: "Delete Candidate",
+    38: "Candidate career delete",
+    39: "Candidate Education delete",
+    40: "Candidate Skills delete",
     41: "Admin Document upload on sharepoint",
-    42: "Employee password update",
-    43: "Employee document delete",
-    44: "Employee visa delete",
-    45: "Employee reserve add",
-    46: "Employee reserve remove",
-    47: "Employee setting update",
+    42: "Candidate password update",
+    43: "Candidate document delete",
+    44: "Candidate visa delete",
+    45: "Candidate reserve add",
+    46: "Candidate reserve remove",
+    47: "Candidate setting update",
+    48: "Job post delete",
+    49: "Client delete",
+    50: "Job category delete",
+    51: "Job delete",
+    52: "Client password update",
+    53: "Client document delete",
+    54: "Client setting update"
   };
   //   let activityData;
   /* Function to get Activity data*/
@@ -99,7 +106,7 @@ export default function ActivityTable(props) {
   //     const markup = { __html: htmll };
   //     return { markup };
   //   };
-  /*Render function to get the employer*/
+  /*Render function to get the Client*/
   useEffect(() => {
     ActivityLog();
     if (callapi === true) {
@@ -114,7 +121,7 @@ export default function ActivityTable(props) {
           <Loader />
         ) : (
           <table className="table table-striped main_data_table">
-            {/* <button onClick={() => setCallApi(true)}>call</button> */}
+            <button onClick={() => setCallApi(true)}>call</button>
             <thead>
               <tr className="">
                 {hide ? null : <th>User ID</th>}
@@ -138,11 +145,10 @@ export default function ActivityTable(props) {
                     {hide ? null : <td>{data.user_type}</td>}
                     {hide ? null : <td>{data.created_by}</td>}
                     <td>
-                      {/* {data.msg} */}
                       <Link to={"/" + data.action_id}>
-                        {data.employee_name === ("" || undefined || null)
+                        {data.Candidate_name === ("" || undefined || null)
                           ? "Candidate"
-                          : data.employee_name}
+                          : data.Candidate_name}
                       </Link>{" "}
                       <span className="text-capitalize">{activity_json[`${data.status}`]?.replace("Miscellaneous", data.action_type)}</span>
                       {/* {" for "} */}
@@ -153,7 +159,6 @@ export default function ActivityTable(props) {
                     </td>
                     <td>
                       <ConvertTime _date={data.created_at} format={'MMMM Do YYYY, h:mm:ss a'} />
-                      {/* {moment(data.created_at).format("lll")} */}
                     </td>
                   </tr>
                 ))

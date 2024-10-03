@@ -68,7 +68,7 @@ function PersonalDetails(props) {
     permission: props.employeeId === "0" ? JSON.stringify(Permissions) : null,
     assigned_by: "",
     other_contact_no: "",
-    
+
   };
 
   // VALIDATION CONDITIONS
@@ -420,6 +420,18 @@ function PersonalDetails(props) {
     setLoading(false);
     props.close();
   };
+  const [selectedCountry, setSelectedCountry] = useState('');
+  const [countryCode, setCountryCode] = useState('');
+  const [showDropdown, setShowDropdown] = useState(false); // Controls the visibility of the dropdown
+  const handleSpanClick = () => {
+    setShowDropdown(true); // Show the dropdown when span is clicked
+  };
+
+  const handleCountryChange = (country, code) => {
+    setSelectedCountry(country);
+    setCountryCode(code);
+    setShowDropdown(false); // Close dropdown after selection
+  };
   // Calculate min and max dates dynamically
   // const currentYear = moment().year();
   // const minDate = moment().subtract(10, 'years').format("YYYY-MM-DD");
@@ -575,27 +587,70 @@ function PersonalDetails(props) {
                     )}
                   </div>
                   <div className={`form-group col-md-4 ${props.user_of_page === "assignedUser" || props.pageNameForForm === "Category" || props.pageNameForForm === "ApplicantType" || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ? "d-none" : ""}`}>
+
+
+
+
                     <label
                       htmlFor="contact_no"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
                       Mobile Number: <span className="text-danger">*</span>
                     </label>
-                    <input
-                      type="number"
-                      min={0}
-                      placeholder="Mobile Number"
-                      name="contact_no"
-                      value={state.contact_no || ""}
-                      onChange={onInputChange}
-                      className={
-                        errors.contact_no
-                          ? "form-control border border-danger"
-                          : "form-control"
-                      }
-                      id="contact_no"
-                      maxLength={13}
-                    />
+                    <div className="input-group">
+                      {/* Country Code Selector */}
+                      <span
+                        style={{
+                          cursor: 'pointer',
+                          borderTopLeftRadius: 0,
+                          borderBottomLeftRadius: 0,
+                          backgroundColor: '#f1f1f1',
+                          padding: '0.5rem',
+                        }}
+                        onClick={handleSpanClick} // Open/close the dropdown on click
+                      >
+                        {countryCode || 'Code'}
+                      </span>
+
+                      {/* Country Dropdown (visible when span is clicked) */}
+                      {showDropdown && (
+                        <ul className="dropdown-menu show" style={{ position: 'absolute', top: '100%', left: 0 }}>
+                          {(FilterJson.location || []).map((item, index) => (
+                            <li key={index}>
+                              <a
+                                href="#"
+                                className="dropdown-item"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  handleCountryChange(item.country, item.code);
+                                }}
+                              >
+                                {item.country} ({item.code})
+                              </a>
+                            </li>
+                          ))}
+                          <li><hr className="dropdown-divider" /></li>
+                          <li><a className="dropdown-item" href="#">Separated link</a></li>
+                        </ul>
+                      )}
+                      <input
+                        type="tel"
+                        min={0}
+                        placeholder="Mobile Number"
+                        name="contact_no"
+                        value={state.contact_no || ""}
+                        onChange={onInputChange}
+                        className={
+                          errors.contact_no
+                            ? "form-control border border-danger"
+                            : "form-control"
+                        }
+                        id="contact_no"
+                        maxLength={13}
+                        style={{ marginLeft: '5px', flex: 1 }} // Allow input to take available space
+                      />
+                      {/* Country Code Display */}
+                    </div>
                     {/*----ERROR MESSAGE FOR MOBILENO----*/}
                     {errors.contact_no && (
                       <span
@@ -880,8 +935,8 @@ function PersonalDetails(props) {
                     >
                       <option value={""}>Select Country</option>
                       {(FilterJson.location || []).map((item, i) => (
-                        <option value={item} key={i}>
-                          {item}
+                        <option value={item.country} key={i}>
+                          {item.country}
                         </option>
                       ))}
                     </select>
@@ -1037,7 +1092,7 @@ function PersonalDetails(props) {
                         className={`form-control te
                           ${errors.category
                             ? " border border-danger"
-                            : ""} ${state.category  === "aos" || state.category  === "rrs" ? "text-uppercase" : "text-capitalize"}`
+                            : ""} ${state.category === "aos" || state.category === "rrs" ? "text-uppercase" : "text-capitalize"}`
                         }
                         id="category"
                       >
