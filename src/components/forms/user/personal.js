@@ -1108,7 +1108,7 @@ function PersonalDetails(props) {
                   {["economic immigration"].includes(state.interested_in.toLowerCase()) &&
                     state.interested_in &&
                     FilterJson.interested_sub_type[state.interested_in.toLowerCase()] &&
-                    ["caregivers"].includes(state.category.toLowerCase()) &&
+                    ["caregivers"].includes(state?.category?.toLowerCase()) &&
                     state.category && (
                       <div className={`form-group 
       ${props.user_of_page === "assignedUser" ||

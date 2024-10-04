@@ -466,8 +466,7 @@ export default function SharePointDocument({
   const SaveBulkDocument = async () => {
     // setLoadingBtn(true);
     setShowDropDown(false);
-    console.log(
-      docFileBase)
+
     try {
       let res = await AddSharePointDOcument(
         user_id,

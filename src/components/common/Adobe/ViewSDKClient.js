@@ -106,7 +106,7 @@ class ViewSDKClient {
       viewerConfig
     );
 
-    console.log("fileExtension",fileExtension,"url",url,"data",data)
+    console.log("data",data)
     return previewFilePromise;
   }
   previewFileUsingFilePromise(divId, filePromise, data) {

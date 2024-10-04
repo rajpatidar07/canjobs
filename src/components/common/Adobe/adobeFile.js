@@ -206,7 +206,7 @@ const AdobePDFViewer = ({
         id="pdf-div"
         className={`${(userType === "admin" ||
           userType === "agent") && openAnnotationBox
-          ? "col-md-10 col-lg-10 col-sm-11"
+          ? "col-md-9 col-lg-9 col-sm-11"
           : "col-md-12 col-lg-12 col-sm-12"
           } full-window-div`}
         style={{ maxHeight: "calc(100vh - 130px)", }}
@@ -216,7 +216,8 @@ const AdobePDFViewer = ({
         onClick={() => {
           setOpenAnnotationBox(openAnnotationBox ? false : true)
         }}
-        className="annotation-mobile-button"
+        className={(userType === "admin" ||
+          userType === "agent") ? "annotation-mobile-button" : "d-none"}
         data-toggle="collapse"
         role="button"
         aria-expanded="false"

@@ -59,6 +59,9 @@ export default function CommentSection({
         if (res.data.status === (1 || "1")) {
           setCommentsReplyList(res.data.data);
         }
+        if (res.data.status === (0 || "0")) {
+          setCommentsReplyList([]);
+        }
       } catch (err) {
         console.log(err);
         setCommentsReplyList([]);
@@ -213,7 +216,6 @@ export default function CommentSection({
     } else {
       setSelectedAdmin(prevValue => {
         const updatedAdmin = prevValue + email.email + ",";
-        console.log("Updated selectedAdmin:", updatedAdmin); // Logs the updated value
         return updatedAdmin.replace("undefined", "");
       });
       setComments(prevValue => `${prevValue}${email.name + (email.u_id ? " (Partner)" : "")}`);
@@ -311,7 +313,6 @@ export default function CommentSection({
         updatedComment = updatedComment.replace(new RegExp(`\\b${name}\\b(?!</b>)`, 'g'), spanTag);
       }
     });
-    console.log((comment === "" || comment.trim() === "") && email === "")
     // Now updatedComment will have properly formatted <span> elements without nested bold tags
     // Send data to the API
     if (
@@ -562,8 +563,6 @@ export default function CommentSection({
       assigned_to_name: updatedNames,
       id: originalData.id,
     };
-    console.log(updatedData)
-
     // Debug logs to verify the updated values
     // console.log("Assigned User Type: ", updatedUserTypes);
     // console.log("Assigned User ID: ", updatedUserIds);
@@ -768,7 +767,7 @@ export default function CommentSection({
   };
 
   return (
-    <div className={`${openAnnotationBox ? "col-md-2 col-lg-2 col-sm-1 py-2 bg-light comments_and_replies" : "d-none"} `} style={{ transition: "0.5s", }}>
+    <div className={`${openAnnotationBox ? "col-md-3 col-lg-3 col-sm-2 py-2 bg-light comments_and_replies" : "d-none"} `} style={{ transition: "0.5s", }}>
       {/* //condition for imm pdf
         // (docData.name && docData.name.toLowerCase().includes("imm")
         //   ? replyCommentClick === undefined ||
@@ -951,11 +950,15 @@ export default function CommentSection({
                   key={index}
                 >
                   <div className="comment_status_update d-flex mr-10">
-                    <Link className="text-gray pr-2" title="Update Comment" onClick={() => {
+                    <Link className="text-gray pr-1" style={{ fontSize: "13px" }} title="Update Comment" onClick={() => {
                       handleUpdateCommentLinkClick(commentItem);
                     }}>  <FaEdit /></Link>
+                    <Link className="text-danger pr-1" style={{ fontSize: "13px" }} title="Delete Comment" onClick={() => {
+                      OnDeleteComment(commentItem.doc_id, commentItem.id);
+                    }}>  <FaTrash /></Link>
+
                     <Link
-                      className="pr-2 "
+                      className=" "
                       style={{
                         cursor: "pointer",
                         color: commentItem.status === "0" ? "blue" : "white",
@@ -969,7 +972,9 @@ export default function CommentSection({
                         justifyContent: "center",
                         alignItems: "center",
                         marginTop: "1px",
+                        fontSize: "13px"
                       }}
+                      title="Update status"
                       onClick={(e) => {
                         OnHandleUpdateCommentStatus(commentItem, commentItem.status === "1" ? "0" : "1");
                         setFilteredEmails([]);
@@ -979,9 +984,6 @@ export default function CommentSection({
                     >
                       &#x2713; {/* Checkmark symbol */}
                     </Link>
-                    <Link className="text-danger pr-2" title="Delete Comment" onClick={() => {
-                      OnDeleteComment(commentItem.doc_id, commentItem.id);
-                    }}>  <FaTrash /></Link>
 
                   </div>
                   <div className="card-body p-2">
@@ -994,7 +996,6 @@ export default function CommentSection({
                             )}`}
                             style={{ fontSize: "16px", fontWeight: 700 }}
                           >
-                            {/* {console.log(comments,"pppppp",commntData)} */}
                             {commentItem.task_creator_user_name.charAt(0)}
                             {/* {commentItem.task_creator_user_id
                                 ? allAdmin.find(

@@ -58,7 +58,6 @@ const NewUserProfile = (props) => {
   const notes = searchParams.get("note");
   const agreement = searchParams.get("agreement");
   let navigate = useNavigate();
-  console.log(location)
 
   const [apiCall, setApiCall] = useState(false);
   const [status, setStatus] = useState("");
