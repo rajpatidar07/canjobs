@@ -1,6 +1,8 @@
 import React, { useEffect, useState /*, useRef */ } from "react";
 import ViewSDKClient from "./ViewSDKClient.js";
 import CommentSection from "./commentSection.js";
+import { FaComments } from "react-icons/fa";
+import { Link } from "react-router-dom";
 // import $ from 'jquery';
 const AdobePDFViewer = ({
   url,
@@ -14,6 +16,7 @@ const AdobePDFViewer = ({
   partnerList,
   userType
 }) => {
+  let [openAnnotationBox, setOpenAnnotationBox] = useState(false);
   let [annotationDrawBox, setAnnotationDrawBox] = useState("");
   let [annotationId, setAnnotationId] = useState("");
   let [annotationData, setAnnotationData] = useState(
@@ -189,27 +192,39 @@ const AdobePDFViewer = ({
 
   return (
     <div style={{ height: "calc(100vh - 130px)" }} className="row m-0">
-      {
-        // data?.name.includes(1295) ?
-        //   <>
-        //     {/* <div className="text-break">{data.name + url}</div> */}
-        //     {/* <iframe width={400} height={400} content="indication/pdf" src={newiframeurl} title={data?.name}></iframe> */}
-        //     <object data={newiframeurl} width="300" height="200" content="indication/pdf"></object>
-        //     {/* <div
-        //       dangerouslySetInnerHTML={{ __html: newiframeurl }} /> */}
 
-        //   </>
-        // :
-        <div
-          id="pdf-div"
-          className={`${userType === "admin" ||
-            userType === "agent"
-            ? "col-md-10 col-lg-10 col-sm-11"
-            : "col-md-12 col-lg-12 col-sm-12"
-            } full-window-div`}
-          style={{ maxHeight: "calc(100vh - 130px)" }}
-        ></div>
-      }
+      {/*  data?.name.includes(1295) ?
+           <>
+              <div className="text-break">{data.name + url}</div>
+              <iframe width={400} height={400} content="indication/pdf" src={newiframeurl} title={data?.name}></iframe>
+             <object data={newiframeurl} width="300" height="200" content="indication/pdf"></object>
+              <div
+               dangerouslySetInnerHTML={{ __html: newiframeurl }} />
+           </>
+         : */}
+      <div
+        id="pdf-div"
+        className={`${(userType === "admin" ||
+          userType === "agent") && openAnnotationBox
+          ? "col-md-10 col-lg-10 col-sm-11"
+          : "col-md-12 col-lg-12 col-sm-12"
+          } full-window-div`}
+        style={{ maxHeight: "calc(100vh - 130px)", }}
+      ></div>
+      <Link
+        to={""}
+        onClick={() => {
+          setOpenAnnotationBox(openAnnotationBox ? false : true)
+        }}
+        className="annotation-mobile-button"
+        data-toggle="collapse"
+        role="button"
+        aria-expanded="false"
+        aria-controls="sidebar"
+        title="Comments"
+      >
+        <FaComments />
+      </Link>
       {
         (userType === "admin" ||
           userType === "agent")
@@ -226,6 +241,7 @@ const AdobePDFViewer = ({
           setAnnotationId={setAnnotationId}
           setAnnotationData={setAnnotationData}
           setCommentsList={setCommentsList}
+          openAnnotationBox={openAnnotationBox}
         />
       }
     </div>

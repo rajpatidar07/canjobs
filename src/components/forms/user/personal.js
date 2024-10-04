@@ -25,6 +25,7 @@ import FilterJson from "../../json/filterjson";
 import AddNewAgent from "../admin/add_agent";
 import Permissions from "../../json/emailPermisionJson";
 import TextEditor from "../../common/TextEditor";
+// import ContactNoWithCountryCode from "../../common/ContactNoWithCountryCode";
 
 function PersonalDetails(props) {
   let encoded;
@@ -420,18 +421,7 @@ function PersonalDetails(props) {
     setLoading(false);
     props.close();
   };
-  const [selectedCountry, setSelectedCountry] = useState('');
-  const [countryCode, setCountryCode] = useState('');
-  const [showDropdown, setShowDropdown] = useState(false); // Controls the visibility of the dropdown
-  const handleSpanClick = () => {
-    setShowDropdown(true); // Show the dropdown when span is clicked
-  };
 
-  const handleCountryChange = (country, code) => {
-    setSelectedCountry(country);
-    setCountryCode(code);
-    setShowDropdown(false); // Close dropdown after selection
-  };
   // Calculate min and max dates dynamically
   // const currentYear = moment().year();
   // const minDate = moment().subtract(10, 'years').format("YYYY-MM-DD");
@@ -598,8 +588,7 @@ function PersonalDetails(props) {
                       Mobile Number: <span className="text-danger">*</span>
                     </label>
                     <div className="input-group">
-                      {/* Country Code Selector */}
-                      <span
+                      {/* <span
                         style={{
                           cursor: 'pointer',
                           borderTopLeftRadius: 0,
@@ -612,27 +601,24 @@ function PersonalDetails(props) {
                         {countryCode || 'Code'}
                       </span>
 
-                      {/* Country Dropdown (visible when span is clicked) */}
                       {showDropdown && (
                         <ul className="dropdown-menu show" style={{ position: 'absolute', top: '100%', left: 0 }}>
                           {(FilterJson.location || []).map((item, index) => (
                             <li key={index}>
-                              <a
-                                href="#"
-                                className="dropdown-item"
+                              <Link
+                                to=""
+                                className="dropdown-item text-dark"
                                 onClick={(e) => {
                                   e.preventDefault();
-                                  handleCountryChange(item.country, item.code);
+                                  handleCountryChange(item.code);
                                 }}
                               >
                                 {item.country} ({item.code})
-                              </a>
+                              </Link>
                             </li>
                           ))}
-                          <li><hr className="dropdown-divider" /></li>
-                          <li><a className="dropdown-item" href="#">Separated link</a></li>
                         </ul>
-                      )}
+                      )}*/}
                       <input
                         type="tel"
                         min={0}
@@ -649,8 +635,13 @@ function PersonalDetails(props) {
                         maxLength={13}
                         style={{ marginLeft: '5px', flex: 1 }} // Allow input to take available space
                       />
-                      {/* Country Code Display */}
                     </div>
+                    {/* <ContactNoWithCountryCode
+                      id={"contact_no"}
+                      name={"contact_no"}
+                      value={state.contact_no}
+                      feildError={errors.contact_no}
+                      onInputChange={onInputChange} /> */}
                     {/*----ERROR MESSAGE FOR MOBILENO----*/}
                     {errors.contact_no && (
                       <span

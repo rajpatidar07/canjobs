@@ -845,8 +845,8 @@ export const GetCommentsAndAssign = async (
   return response;
 };
 /*Api to update Documentcomment assign */
-export const UpdateDocuentcommentAssign = async (json) => {
-  const response = await axios.put(`${API_URL}admin/updateDocTask`, json, {
+export const UpdateDocuentcommentAssign = async (json,docUserType) => {
+  const response = await axios.put(`${API_URL}admin/updateDocTask?document_user_type=${docUserType}`, json, {
     headers: {
       "Content-Type": "application/json",
       Authorization: Token,

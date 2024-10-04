@@ -104,10 +104,6 @@ function CompanyProfileDetail(props) {
     if (transactionId) {
       setTabActive("payment");
     }
-
-    if (notes) {
-      setTabActive("notes");
-    }
     if (agreement) {
       setTabActive("retaineragreement");
     }
@@ -115,9 +111,15 @@ function CompanyProfileDetail(props) {
       localStorage.setItem("company_id", CompanyId)
       if (docId && company_id) {
         setTabActive("documents");
+      } else if (notes) {
+        if (notes && company_id) {
+          setTabActive("notes");
+        }
       }
     } else if (docId) {
       setTabActive("documents");
+    } else if (notes) {
+      setTabActive("notes");
     }
     // eslint-disable-next-line
   }, [apiCall, company_id, notes]);

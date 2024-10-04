@@ -6,7 +6,7 @@ const PDFViewer = () => {
   const urlSearchParams = new URLSearchParams(location.search);
   const pdfUrl = urlSearchParams.get("pdfUrl");
   const fileExtension = pdfUrl ? pdfUrl.split(".").pop().toLowerCase() : null;
-  console.log(pdfUrl)
+  // console.log(pdfUrl)
   /*Functio to Download pdf */
   const downloadPDF = () => {
     const link = document.createElement("a");

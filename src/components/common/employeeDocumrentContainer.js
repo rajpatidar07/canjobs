@@ -787,7 +787,7 @@ export default function DocumrentContainer(props) {
         setLoadingBtn(false);
         setEditName(false);
         setDocId(docData[0] === docTypData ? docTypData.document_id : docId);
-        console.log(docTypData.document_id, " ss ");
+        // console.log(docTypData.document_id, " ss ");
         setShowMoreDocType(false);
         setOtherDoc(false);
         setApiCall(true);

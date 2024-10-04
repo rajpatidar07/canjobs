@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 export default function ApplicantsStatusModal(props) {
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
-  console.log(props.data)
+  // console.log(props.data)
   /*function to change applicants status */
   const OnStatusChangesClick = async (e) => {
     e.preventDefault();

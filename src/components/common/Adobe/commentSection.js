@@ -26,7 +26,8 @@ export default function CommentSection({
   setCommentsList,
   setAnnotationData,
   setAnnotationDrawBox,
-  partnerList
+  partnerList,
+  openAnnotationBox
 }) {
   const [comments, setComments] = useState();
   const [commntData, setCommentData] = useState();
@@ -136,6 +137,7 @@ export default function CommentSection({
     } else {
       setComments(inputValue);
       setCommentToApi(replacedStr)
+      setType()
     }
     if (type === "reply")
       if (replyCommentData && inputValue.includes((allAdmin.filter((item) =>
@@ -544,7 +546,6 @@ export default function CommentSection({
     const updatedNames = newNamesArray.join(',');
     const updatedUserIds = newUserIdArray.join(',');
     const updatedUserTypes = newUserTypeArray.join(',');
-
     // Construct the final data to send to the API
     const updatedData = {
       // ...originalData,
@@ -556,11 +557,12 @@ export default function CommentSection({
       task_creator_user_type: localStorage.getItem("userType") === "admin" ? "admin" : "agent",
       assined_to_user_id: updatedUserIds,
       assigned_user_type: updatedUserTypes,
-      doc_parent_id: originalData.doc_parent_id,
+      doc_parent_id: docData.parentReference.id,
       assigned_to: updatedEmails,
       assigned_to_name: updatedNames,
       id: originalData.id,
     };
+    console.log(updatedData)
 
     // Debug logs to verify the updated values
     // console.log("Assigned User Type: ", updatedUserTypes);
@@ -572,7 +574,7 @@ export default function CommentSection({
 
     // Call the API to update the document
     try {
-      let res = await UpdateDocuentcommentAssign(updatedData);
+      let res = await UpdateDocuentcommentAssign(updatedData, DocUserType);
       if (res.message === "Task updated successfully!") {
         toast.success("Task completed Successfully", {
           position: toast.POSITION.TOP_RIGHT,
@@ -673,29 +675,6 @@ export default function CommentSection({
     const updatedUserIds = newUserIdArray.join(',');
     const updatedUserTypes = newUserTypeArray.join(',');
 
-    // Construct the final data to send to the API
-    // const updatedData = {
-    //   // ...originalData,
-    //   doc_id: originalData.doc_id,
-    //   msg: updatedCommentToApi,
-    //   sender_id: admin_id,
-    //   sender_type: localStorage.getItem("userType") === "admin" ? "admin" : "agent",
-    //   receiver_id: updatedUserIds,
-    //   receiver_type: updatedUserTypes,
-    //   // doc_parent_id: originalData.doc_parent_id,
-    //   receiver_email: updatedEmails,
-    //   receiver_name: updatedNames,
-    //   id: originalData.id,
-    // };
-
-    // Debug logs to verify the updated values
-    // console.log("Assigned User Type: ", updatedUserTypes);
-    // console.log("Assigned User ID: ", updatedUserIds);
-    // console.log("Assigned To Name: ", updatedNames);
-    // console.log("Assigned To: ", updatedEmails);
-    // console.log("Updated Comment: ", updatedCommentToApi);
-    // console.log("Updated Data: ", updatedData);
-
     // Call the API to update the document
     try {
       let res = await SendReplyCommit(
@@ -773,7 +752,6 @@ export default function CommentSection({
   const OnDeleteCommentReplies = async (id) => {
     try {
       let res = await DeleteReplyCommentsAndAssign(id);
-      console.log(res)
       if (res.data.message === "deleted successfully!") {
         toast.success("Reply Deleted Successfully", {
           position: toast.POSITION.TOP_RIGHT,
@@ -790,7 +768,7 @@ export default function CommentSection({
   };
 
   return (
-    <div className="col-md-2 col-lg-2 col-sm-1 py-2 bg-light comments_and_replies">
+    <div className={`${openAnnotationBox ? "col-md-2 col-lg-2 col-sm-1 py-2 bg-light comments_and_replies" : "d-none"} `} style={{ transition: "0.5s", }}>
       {/* //condition for imm pdf
         // (docData.name && docData.name.toLowerCase().includes("imm")
         //   ? replyCommentClick === undefined ||

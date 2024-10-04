@@ -20,13 +20,14 @@ import Addfollowup from "../forms/admin/addfollowup";
 import MainEmailPage from "../email/mainemailPage";
 export default function PartnerDetails({ setLoginCondition }) {
   const user_type = localStorage.getItem("userType");
-  const agent_id = localStorage.getItem("agent_id");
-  let Pid = agent_id;
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const partnerChat = searchParams.get("partner");
   const notes = searchParams.get("note");
+  const PartnerId = searchParams.get("PartnerId");
   let navigate = useNavigate();
+  const agent_id = localStorage.getItem("agent_id");
+  let Pid = PartnerId ? PartnerId : agent_id;
   /*Show modal and data state */
   // const [lima, setLmia] = useState(false);
   let [apiCall, setApiCall] = useState(false);
@@ -36,7 +37,7 @@ export default function PartnerDetails({ setLoginCondition }) {
   const [showPartnerInfoModal, setShowPartnerInfoModal] = useState(false);
   useState(false);
   const [TabActive, setTabActive] = useState(
-    partnerChat ? "support" : notes === "true" ? "notes" : "profile"
+    partnerChat ? "support" : PartnerId === "true" ? "notes" : "profile"
   );
   const [data, setData] = useState("");
   const [chartData, setChartData] = useState([]);
@@ -77,9 +78,15 @@ export default function PartnerDetails({ setLoginCondition }) {
       //   setPayment();
       setTabActive("payment");
     }
-    if (notes) {
-      setTabActive("notes");
+    if (PartnerId) {
+      localStorage.setItem("agent_id", PartnerId)
+      if (PartnerId && notes) {
+        setTabActive("notes");
+      } else if (notes) {
+        setTabActive("notes");
+      }
     }
+
     // eslint-disable-next-line
   }, [apiCall, agent_id, notes]);
   const GetChartData = async () => {
@@ -111,18 +118,17 @@ export default function PartnerDetails({ setLoginCondition }) {
                   user_type === "agent"
                     ? null
                     : () => {
-                        if (TabActive === "notes") {
-                          navigate(-1);
-                        } else {
-                          setAddNote(true);
-                        }
+                      if (TabActive === "notes") {
+                        navigate(-1);
+                      } else {
+                        setAddNote(true);
                       }
+                    }
                 }
               >
                 <i
-                  className={`icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8 ${
-                    user_type === "agent" ? "d-none" : ""
-                  }`}
+                  className={`icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8 ${user_type === "agent" ? "d-none" : ""
+                    }`}
                 ></i>
                 <span className="text-uppercase font-size-3 font-weight-bold text-gray">
                   <h3 className="font-size-6 mb-0 text-capitalize">
@@ -135,7 +141,7 @@ export default function PartnerDetails({ setLoginCondition }) {
           <AdminSidebar heading={"Partner Dashboard"} />
         </>
       ) : null}
-      
+
       {user_type === "admin" || user_type === "agent" ? null : (
         <EmployeeHeader />
       )}
@@ -147,9 +153,8 @@ export default function PartnerDetails({ setLoginCondition }) {
         }
       >
         <div
-          className={`container${
-            user_type === "admin" || user_type === "agent" ? "-fluid" : ""
-          }`}
+          className={`container${user_type === "admin" || user_type === "agent" ? "-fluid" : ""
+            }`}
         >
           <div className="row text-left mt-5 pt-0">
             <div className="col-12 order-2 order-xl-1">
@@ -348,8 +353,8 @@ export default function PartnerDetails({ setLoginCondition }) {
                                     className="company_logo"
                                     src={
                                       data.profile_image === null ||
-                                      !data.profile_image ||
-                                      data.profile_image === undefined
+                                        !data.profile_image ||
+                                        data.profile_image === undefined
                                         ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                         : data.profile_image
                                     }
@@ -403,23 +408,21 @@ export default function PartnerDetails({ setLoginCondition }) {
                                     {(data.address ||
                                       data.city ||
                                       data.state) && (
-                                      <span
-                                        className="font-size-3 text-smoke  mr-7 text-capitalize"
-                                        title="Current Location"
-                                      >
-                                        <img
-                                          className="mr-1"
-                                          height={"16px"}
-                                          src="image/icons/marker.svg"
-                                          alt="Location"
-                                        />
-                                        {`${data.address} ${
-                                          data.city ? " , " + data.city : ""
-                                        } ${
-                                          data.state ? " , " + data.state : ""
-                                        }`}
-                                      </span>
-                                    )}
+                                        <span
+                                          className="font-size-3 text-smoke  mr-7 text-capitalize"
+                                          title="Current Location"
+                                        >
+                                          <img
+                                            className="mr-1"
+                                            height={"16px"}
+                                            src="image/icons/marker.svg"
+                                            alt="Location"
+                                          />
+                                          {`${data.address} ${data.city ? " , " + data.city : ""
+                                            } ${data.state ? " , " + data.state : ""
+                                            }`}
+                                        </span>
+                                      )}
                                   </div>
                                   <hr className="my-3" />
                                   {!data.email || user_type === "user" ? (

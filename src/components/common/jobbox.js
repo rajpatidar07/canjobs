@@ -54,7 +54,7 @@ function JobBox({
   const category = searchParams.get("category");
   const path = location.pathname;
   // const name = localStorage.getItem("name");
-  console.log(path, categoryFilterValue)
+  // console.log(path, categoryFilterValue)
   /* Function to get Job data*/
   const JobData = async () => {
     try {
