@@ -18,7 +18,7 @@ export default function ActivityTable(props) {
   /*Pagination states */
   // const [status, setStatus] = useState(props.self === "yes" ? -1 : 4);
   const [callapi, setCallApi] = useState(false);
-  const [page, setpage] = useState(1);
+  const [page, setpage] = useState(props.pageNo || 1);
   const [totalData, setTotalData] = useState("");
   const [recordsPerPage] = useState(10);
   /*Pagination Calculation */
@@ -92,7 +92,13 @@ export default function ActivityTable(props) {
         user_type,
         action_id,
         action_type,
-        recordsPerPage //data  per page
+        recordsPerPage, //data  per page
+        "",
+        "",
+        "",
+        "",
+        "",
+        props.filter_by_time
       );
       setactivityData(adata.data.data);
       setTotalData(adata.data.total_rows);
@@ -113,7 +119,7 @@ export default function ActivityTable(props) {
       setCallApi(false)
     }
     // eslint-disable-next-line
-  }, [page, callapi]);
+  }, [page, callapi, props.filter_by_time]);
   return (
     <>
       <div className="table-responsive main_table_div">
@@ -121,7 +127,7 @@ export default function ActivityTable(props) {
           <Loader />
         ) : (
           <table className="table table-striped main_data_table">
-            <button onClick={() => setCallApi(true)}>call</button>
+            {/* <button onClick={() => setCallApi(true)}>call</button> */}
             <thead>
               <tr className="">
                 {hide ? null : <th>User ID</th>}

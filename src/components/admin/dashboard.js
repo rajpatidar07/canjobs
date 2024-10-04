@@ -21,8 +21,9 @@ import { BsUsbMiniFill } from "react-icons/bs";
 import AdminTaskTable from "../common/AdminTaskTable";
 import DataChart from "../common/DataChart";
 import Loader from "../common/loader";
+import ActivityTable from "../common/activity_table";
 // import SessionCheck from "../common/session";
-const AdminDashboard = ({setLoginCondition}) => {
+const AdminDashboard = ({ setLoginCondition }) => {
   // useEffect(() => {
   //   SessionCheck();
   // }, []);
@@ -35,6 +36,7 @@ const AdminDashboard = ({setLoginCondition}) => {
   let [job, setJob] = useState("");
   let [employee, setEmployee] = useState("");
   let [task, setTask] = useState("");
+  let [activity, setActivity] = useState("");
   let [lima, setLima] = useState("");
   let [employer, setEmployer] = useState("");
   let [interview, setInterview] = useState("");
@@ -47,6 +49,7 @@ const AdminDashboard = ({setLoginCondition}) => {
   const [lmiaPageNo, setLmiaPageNo] = useState(1);
   const [interviewPageNo, setInterviewPageNo] = useState(1);
   const [taskPageNo, setTaskPageNo] = useState(1);
+  const [activityNo, setActivityNo] = useState(1);
   const [openTable, setOpenTable] = useState(null);
   const [applicantStatusChartData, setApplicantStatusData] = useState([]);
   const [loadingStatus, setLoadingStatus] = useState(true);
@@ -192,7 +195,7 @@ const AdminDashboard = ({setLoginCondition}) => {
         }
         id="dashboard-body"
       >
-          
+
         <div className="container-fluid mt-5">
           {/* <!-- Summary count --> */}
           <div className="row mb-7 d-none">
@@ -511,9 +514,8 @@ const AdminDashboard = ({setLoginCondition}) => {
                       </Link>
                     </div>
                     <Link
-                      className={`text-dark mx-5 ${
-                        openTable === 1 ? "open" : ""
-                      }`}
+                      className={`text-dark mx-5 ${openTable === 1 ? "open" : ""
+                        }`}
                       to=""
                       onClick={() => toggleTable(1)}
                       title={openTable === 1 ? "Minimize" : "Maximize"}
@@ -575,9 +577,8 @@ const AdminDashboard = ({setLoginCondition}) => {
                       </Link>
                     </div>
                     <Link
-                      className={`text-dark mx-5 ${
-                        openTable === 4 ? "open" : ""
-                      }`}
+                      className={`text-dark mx-5 ${openTable === 4 ? "open" : ""
+                        }`}
                       to=""
                       onClick={() => toggleTable(4)}
                       title={openTable === 4 ? "Minimize" : "Maximize"}
@@ -638,9 +639,8 @@ const AdminDashboard = ({setLoginCondition}) => {
                       </Link>
                     </div>
                     <Link
-                      className={`text-dark mx-5 ${
-                        openTable === 2 ? "open" : ""
-                      }`}
+                      className={`text-dark mx-5 ${openTable === 2 ? "open" : ""
+                        }`}
                       to=""
                       onClick={() => toggleTable(2)}
                       title={openTable === 2 ? "Minimize" : "Maximize"}
@@ -735,9 +735,8 @@ const AdminDashboard = ({setLoginCondition}) => {
                       </Link>
                     </div>
                     <Link
-                      className={`text-dark mx-5 ${
-                        openTable === 5 ? "open" : ""
-                      }`}
+                      className={`text-dark mx-5 ${openTable === 5 ? "open" : ""
+                        }`}
                       to=""
                       onClick={() => toggleTable(5)}
                       title={openTable === 5 ? "Minimize" : "Maximize"}
@@ -798,9 +797,8 @@ const AdminDashboard = ({setLoginCondition}) => {
                       </Link>
                     </div>
                     <Link
-                      className={`text-dark mx-5 ${
-                        openTable === 3 ? "open" : ""
-                      }`}
+                      className={`text-dark mx-5 ${openTable === 3 ? "open" : ""
+                        }`}
                       to=""
                       onClick={() => toggleTable(3)}
                       title={openTable === 3 ? "Minimize" : "Maximize"}
@@ -829,9 +827,8 @@ const AdminDashboard = ({setLoginCondition}) => {
                 <div className="d-flex justify-content-between p-5 align-items-center">
                   <h3 className="font-size-5 px-3 m-0">Candidate's Alerts</h3>
                   <Link
-                    className={`text-dark mx-5 ${
-                      openTable === 6 ? "open" : ""
-                    }`}
+                    className={`text-dark mx-5 ${openTable === 6 ? "open" : ""
+                      }`}
                     to=""
                     onClick={() => toggleTable(6)}
                     title={openTable === 6 ? "Minimize" : "Maximize"}
@@ -891,9 +888,9 @@ const AdminDashboard = ({setLoginCondition}) => {
                   <div className="d-flex justify-content-between p-0">
                     <div className="select_div mr-5">
                       <select
-                        name="employee"
+                        name="task"
                         value={task}
-                        id="employee"
+                        id="task"
                         onChange={(e) => {
                           setTask(e.target.value);
                           setTaskPageNo(1);
@@ -918,9 +915,8 @@ const AdminDashboard = ({setLoginCondition}) => {
                       </Link>
                     </div> */}
                     <Link
-                      className={`text-dark mx-5 ${
-                        openTable === 7 ? "open" : ""
-                      }`}
+                      className={`text-dark mx-5 ${openTable === 7 ? "open" : ""
+                        }`}
                       to=""
                       onClick={() => toggleTable(7)}
                       title={openTable === 7 ? "Minimize" : "Maximize"}
@@ -934,6 +930,56 @@ const AdminDashboard = ({setLoginCondition}) => {
                   filter_by_time={task}
                   setpageNo={setTaskPageNo}
                   pageNo={taskPageNo}
+                  apiCall={apiCall}
+                  setApiCall={setApiCall}
+                />
+              </div>
+            </div>
+            <div
+              id="table8"
+              className={openTable === 8 ? "col-md-12" : "col-md-6"}
+            >
+              <div className="bg-white dashboard_card mb-7">
+                <div className="d-flex justify-content-between p-5 align-items-center">
+                  <h3 className="font-size-5 px-3 m-0  ">
+                    Recently Added Activity
+                  </h3>
+                  <div className="d-flex justify-content-between p-0">
+                    <div className="select_div mr-5">
+                      <select
+                        name="activity"
+                        value={activity}
+                        id="activity"
+                        onChange={(e) => {
+                          setActivity(e.target.value);
+                          setActivityNo(1);
+                        }}
+                        className="form-control-sm bg-white dashboard_select rounded-3"
+                      >
+                        <option value={""}>Time Duration</option>
+                        <option value={"today"}>Today </option>
+                        <option value={"this_week"}>This Week </option>
+                        <option value={"last_week"}>Last Week</option>
+                        <option value={"last_month"}>Last Month</option>
+                        <option value={"current_month"}>Current Month</option>
+                      </select>
+                    </div>
+                    <Link
+                      className={`text-dark mx-5 ${openTable === 8 ? "open" : ""
+                        }`}
+                      to=""
+                      onClick={() => toggleTable(8)}
+                      title={openTable === 8 ? "Minimize" : "Maximize"}
+                    >
+                      {getIcon(8)}
+                    </Link>
+                  </div>
+                </div>
+                <ActivityTable
+                  heading={openTable === 8 ? "" : "Dashboard"}
+                  filter_by_time={activity}
+                  setpageNo={setActivityNo}
+                  pageNo={activityNo}
                   apiCall={apiCall}
                   setApiCall={setApiCall}
                 />

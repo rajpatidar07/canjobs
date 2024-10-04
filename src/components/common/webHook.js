@@ -9,7 +9,6 @@ const WebhookComponent = () => {
     const [loading, setLoading] = useState(false);
     const location = useLocation();
     // const query = new URLSearchParams(location.search);
-    console.log(decodeURIComponent(location.search))
     const data = decodeURIComponent(location.search).replace("?","")
     const hasCalledApi = useRef(false); // Track API call
 

@@ -845,7 +845,7 @@ export const GetCommentsAndAssign = async (
   return response;
 };
 /*Api to update Documentcomment assign */
-export const UpdateDocuentcommentAssign = async (json,docUserType) => {
+export const UpdateDocuentcommentAssign = async (json, docUserType) => {
   const response = await axios.put(`${API_URL}admin/updateDocTask?document_user_type=${docUserType}`, json, {
     headers: {
       "Content-Type": "application/json",
@@ -3118,7 +3118,8 @@ export const getActivityLog = async (
   stackHolder_type,
   pagetype,
   sort,
-  columnName
+  columnName,
+  time
 ) => {
   // console.log("Props" + props.user_id + props.user_type);
   const response = await axios.post(
@@ -3132,6 +3133,7 @@ export const getActivityLog = async (
       column_name: "created_at",
       sort_order: sort ? sort : "sort",
       limit: limit,
+      filter_by_time:time,
       stackHolder_id: stackHolder_id,
       stackHolder_type: stackHolder_type,
       status: pagetype === "interviewHistory" ? "21,36" : "",
