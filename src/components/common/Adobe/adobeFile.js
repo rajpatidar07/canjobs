@@ -14,7 +14,8 @@ const AdobePDFViewer = ({
   adminList,
   setCommentsList,
   partnerList,
-  userType
+  userType,
+  docsection,
 }) => {
   let [openAnnotationBox, setOpenAnnotationBox] = useState(false);
   let [annotationDrawBox, setAnnotationDrawBox] = useState("");
@@ -68,9 +69,7 @@ const AdobePDFViewer = ({
                   // console.log(annotationManager)
                   annotationManager
                     .addAnnotations(annotationData)
-                    .then(() =>
-                      console.log("Success")
-                    )
+                    .then(() => console.log("Success"))
                     .catch((error) => console.log(error));
                 }
                 annotationManager
@@ -108,12 +107,10 @@ const AdobePDFViewer = ({
                     );
                   }
                 }, eventOptions);
-
               })
               .catch((e) => {
                 console.log("Error getting Annotation Manager:", e);
               });
-
           })
           .catch((e) => {
             console.log("Error in previewFilePromise:", e);
@@ -177,7 +174,9 @@ const AdobePDFViewer = ({
                         });
                       }
                     })
-                    .catch((error) => console.log("Error getting APIs:", error));
+                    .catch((error) =>
+                      console.log("Error getting APIs:", error)
+                    );
                 })
                 .catch((error) =>
                   console.log("Error selecting annotation:", error)
@@ -191,8 +190,10 @@ const AdobePDFViewer = ({
   }, [annotationId, annotationManager, adobeViewer]);
 
   return (
-    <div style={{ height: "calc(100vh - 130px)" }} className="row m-0">
-
+    <div
+      style={{ height: docsection ? "100vh" : "calc(100vh - 130px)" }}
+      className="row m-0"
+    >
       {/*  data?.name.includes(1295) ?
            <>
               <div className="text-break">{data.name + url}</div>
@@ -204,20 +205,26 @@ const AdobePDFViewer = ({
          : */}
       <div
         id="pdf-div"
-        className={`${(userType === "admin" ||
-          userType === "agent") && openAnnotationBox
-          ? "col-md-9 col-lg-9 col-sm-11"
-          : "col-md-12 col-lg-12 col-sm-12"
-          } full-window-div`}
-        style={{ maxHeight: "calc(100vh - 130px)", }}
+        className={`${
+          (userType === "admin" || userType === "agent") && openAnnotationBox
+            ? "col-md-9 col-lg-9 col-sm-11"
+            : "col-md-12 col-lg-12 col-sm-12"
+        } full-window-div`}
+        style={{
+          maxHeight: docsection ? "100vh" : "calc(100vh - 130px)",
+          transition: "all .3s",
+        }}
       ></div>
       <Link
         to={""}
         onClick={() => {
-          setOpenAnnotationBox(openAnnotationBox ? false : true)
+          setOpenAnnotationBox(openAnnotationBox ? false : true);
         }}
-        className={(userType === "admin" ||
-          userType === "agent") ? "annotation-mobile-button" : "d-none"}
+        className={
+          userType === "admin" || userType === "agent"
+            ? "annotation-mobile-button"
+            : "d-none"
+        }
         data-toggle="collapse"
         role="button"
         aria-expanded="false"
@@ -226,10 +233,8 @@ const AdobePDFViewer = ({
       >
         <FaComments />
       </Link>
-      {
-        (userType === "admin" ||
-          userType === "agent")
-        && <CommentSection
+      {(userType === "admin" || userType === "agent") && (
+        <CommentSection
           docData={data}
           allAdmin={adminList}
           partnerList={partnerList}
@@ -243,8 +248,9 @@ const AdobePDFViewer = ({
           setAnnotationData={setAnnotationData}
           setCommentsList={setCommentsList}
           openAnnotationBox={openAnnotationBox}
+          docsection
         />
-      }
+      )}
     </div>
   );
 };

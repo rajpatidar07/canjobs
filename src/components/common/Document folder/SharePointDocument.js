@@ -36,7 +36,7 @@ export default function SharePointDocument({
   docId,
   docTypePage,
   user_name,
-  partnerId
+  partnerId,
 }) {
   const [docTypeName, setDocTypeName] = useState("");
   const [newType, setNewType] = useState("");
@@ -75,11 +75,13 @@ export default function SharePointDocument({
     try {
       const userData = await getallAdminData();
       if (window.location.pathname === `/${user_id}`) {
-        const Partnerdata = await GetAgent()
-        let newPartnerList = Partnerdata.data.data.filter((item) => item.id === partnerId);
+        const Partnerdata = await GetAgent();
+        let newPartnerList = Partnerdata.data.data.filter(
+          (item) => item.id === partnerId
+        );
         // let otherPartners = Partnerdata.data.data.filter((item) => item.id!== partnerId);
         // newPartnerList = [...newPartnerList,...otherPartners];
-        setPartnerist(newPartnerList)
+        setPartnerist(newPartnerList);
       }
       if (userData.data.length === 0) {
         setAdminList([]);
@@ -177,48 +179,48 @@ export default function SharePointDocument({
   const DocTypeData =
     emp_user_type === "employer"
       ? [
-        "Business T2",
-        "Recent PD7A",
-        "Business T4",
-        "Business Incorporation Certificate",
-        "Employment Contract",
-        "Schedule A",
-        "Signed Job Offer",
-        "PD7A of year",
-        "T2 Schedule 100 and 125",
-        "Certificate of incorporation",
-        "Business license",
-        "T4 summary of year",
-        "Request for Exception from English Language Requirement for LMIA Application",
-        "CPA Attestation Letter",
-        "Representative Submission Letter",
-      ]
+          "Business T2",
+          "Recent PD7A",
+          "Business T4",
+          "Business Incorporation Certificate",
+          "Employment Contract",
+          "Schedule A",
+          "Signed Job Offer",
+          "PD7A of year",
+          "T2 Schedule 100 and 125",
+          "Certificate of incorporation",
+          "Business license",
+          "T4 summary of year",
+          "Request for Exception from English Language Requirement for LMIA Application",
+          "CPA Attestation Letter",
+          "Representative Submission Letter",
+        ]
       : [
-        "passport",
-        "drivers_license",
-        "photograph",
-        "immigration_status",
-        "lmia",
-        "job_offer_letter",
-        "provincial_nominee_letter",
-        "proof_of_funds",
-        "proof_of_employment",
-        "marriage_certificate",
-        "education_metric",
-        "education_higher_secondary",
-        "education_graduation",
-        "education_post_graduation",
-        "resume_or_cv",
-        "ielts",
-        "medical",
-        "police_clearance",
-        "refusal_letter",
-        "Employment Contract",
-        "Reference Letters",
-        "Client Info",
-        "Representative Submission Letter",
-        "Bank Statement",
-      ];
+          "passport",
+          "drivers_license",
+          "photograph",
+          "immigration_status",
+          "lmia",
+          "job_offer_letter",
+          "provincial_nominee_letter",
+          "proof_of_funds",
+          "proof_of_employment",
+          "marriage_certificate",
+          "education_metric",
+          "education_higher_secondary",
+          "education_graduation",
+          "education_post_graduation",
+          "resume_or_cv",
+          "ielts",
+          "medical",
+          "police_clearance",
+          "refusal_letter",
+          "Employment Contract",
+          "Reference Letters",
+          "Client Info",
+          "Representative Submission Letter",
+          "Bank Statement",
+        ];
 
   /*Function to call api to get all folders list of employees documnet from sharepoint */
   const AllShareType = async () => {
@@ -272,27 +274,33 @@ export default function SharePointDocument({
       if (res.data.status === (1 || "1")) {
         setBreadcrumbData(res.data.data);
         /*Api calling to changes employee_id or employer_id  to as per the user name */
-        if (res.data.data[0].name === `${emp_user_type}_${user_id}`
-          || res.data.data[0].name !== `${user_name}_${user_id}`) {
+        if (
+          res.data.data[0].name === `${emp_user_type}_${user_id}` ||
+          res.data.data[0].name !== `${user_name}_${user_id}`
+        ) {
           // console.log("matched")
           try {
             // let MainFolderNameRes =
-            await ChangeFolderNameSharpoint(user_id, emp_user_type, `${user_name}_${user_id}`, res.data.data[0].id)
+            await ChangeFolderNameSharpoint(
+              user_id,
+              emp_user_type,
+              `${user_name}_${user_id}`,
+              res.data.data[0].id
+            );
             // if (MainFolderNameRes.data.message === "Folder name updated successfully!") {
             //   setApiCall(true)
             // }
           } catch (Err) {
-            console.log(Err)
+            console.log(Err);
           }
         }
         setShowDropDown(false);
         setBreadCrumbLoder(false);
       } else {
-        setBreadcrumbData([])
+        setBreadcrumbData([]);
         setShowDropDown(false);
         setBreadCrumbLoder(false);
       }
-
     } catch (err) {
       setBreadcrumbData([]);
       console.log(err);
@@ -353,7 +361,10 @@ export default function SharePointDocument({
       const finalFileName = `${fileName}.${fileExtension}`; // Form the new file name
 
       // Create a new File object with the updated name, preserving the file's content and metadata
-      const updatedFile = new File([file], finalFileName, { type: file.type, lastModified: file.lastModified });
+      const updatedFile = new File([file], finalFileName, {
+        type: file.type,
+        lastModified: file.lastModified,
+      });
 
       // Check file type
       const fileType = `.${fileExtension.toLowerCase()}`;
@@ -624,27 +635,37 @@ export default function SharePointDocument({
 
     return; // Return the base64 PDF data
   };
-  console.log(docPreview)
+  console.log(docPreview);
   return (
     <>
       {folderId ? (
         <div className="document_section">
           {docPreview ? (
-            <div className="App-viewer">
+            <div
+              className="App-viewer document_preview_full_screen"
+              style={{
+                position: "fixed",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                zIndex: 999,
+              }}
+            >
               <div
                 className="row m-0 bg-white document_preview_box overflow-hidden"
-                style={{ height: "calc(100vh - 100px)" }}
+                style={{ height: "100vh" }}
               >
                 <div className={`px-2 col-md-12 col-lg-12 col-sm-12`}>
                   <div className="back_btn_div">
                     <Link
-                      className="rounded-circle back-btn"
+                      className="rounded back-btn px-3"
                       style={{
                         position: "absolute",
                         top: 5,
                         left: 5,
                         background: "#fff",
-                        width: 35,
+                        // width: 35,
                         height: 35,
                         fontSize: 24,
                         zIndex: 99,
@@ -667,12 +688,13 @@ export default function SharePointDocument({
                         setMentionAdminShowDropDown(false);
                       }}
                     >
-                      <IoMdArrowBack />
+                      <IoMdArrowBack />{" "}
+                      <span style={{ fontSize: 18 }}>Back to Profile</span>
                     </Link>
                     {/* Mention admin code */}
-                    {((1 === 2) &&
+                    {1 === 2 &&
                       (localStorage.getItem("userType") === "admin" ||
-                        localStorage.getItem("userType") === "agent")) && (
+                        localStorage.getItem("userType") === "agent") && (
                         <div
                           className="mention_div"
                           style={{
@@ -688,7 +710,6 @@ export default function SharePointDocument({
                             maxWidth: 200,
                           }}
                         >
-
                           <Link
                             className="rounded-circle add-person-btn" // Changed class name for clarity
                             to=""
@@ -729,8 +750,8 @@ export default function SharePointDocument({
                               //   </span>
                               // </div>
                               user.profile_image === null ||
-                                user.profile_image === "" ||
-                                user.profile_image === undefined ? (
+                              user.profile_image === "" ||
+                              user.profile_image === undefined ? (
                                 <span
                                   className="rounded-circle"
                                   data-toggle="tooltip"
@@ -762,8 +783,8 @@ export default function SharePointDocument({
                                   }}
                                   src={
                                     user.profile_image === null ||
-                                      user.profile_image === "" ||
-                                      user.profile_image === undefined
+                                    user.profile_image === "" ||
+                                    user.profile_image === undefined
                                       ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                       : user.profile_image
                                   }
@@ -791,10 +812,8 @@ export default function SharePointDocument({
                           {/* ) : null} */}
                         </div>
                       )}
-
                   </div>
                   {
-
                     // docTypePage === "adobe"
                     (docSingleDate.file.mimeType === "application/pdf" ||
                       ((docSingleDate.file.mimeType === "image/jpeg" ||
@@ -802,8 +821,8 @@ export default function SharePointDocument({
                         docSingleDate.file.mimeType === "image/jpg") &&
                         imgConRes === "imageConverted") ||
                       docSingleDate.file.mimeType ===
-                      "application/vnd.openxmlformats-officedocument.wordprocessingml.document") &&
-                      convertedDoc ? (
+                        "application/vnd.openxmlformats-officedocument.wordprocessingml.document") &&
+                    convertedDoc ? (
                       // <PreviewDocument
                       //   docData={docSingleDate}
                       //   docId={docId ? docId : folderID}
@@ -826,6 +845,7 @@ export default function SharePointDocument({
                           partnerList={partnerList}
                           setCommentsList={setCommentsList}
                           userType={localStorage.getItem("userType")}
+                          docsection={true}
                         />
                       ) : null
                     ) : (
@@ -998,7 +1018,8 @@ export default function SharePointDocument({
       ) : (
         <div className="chat_box_container bg-white row m-0">
           <div className="chat-container d-flex justify-content-center align-items-center w-100">
-            Update the {emp_user_type === "employee" ? "user" : "client"} profile to get a folder
+            Update the {emp_user_type === "employee" ? "user" : "client"}{" "}
+            profile to get a folder
           </div>
         </div>
       )}

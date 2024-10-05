@@ -1250,20 +1250,16 @@ select.form-control.select_document_type {
   position: relative;
 }
 
-.comment_box_card .comment_status_update {
+/* .comment_box_card .comment_status_update {
   position: absolute;
   top: 4px;
   right: 4px;
-  width: 24px;
-  height: 24px;
-  line-height: 24px;
-  text-align: center;
-  border-radius: 50%;
-  border: 1px solid #f5f5f5;
-}
+  /* width: 24px;
+  height: 24px; */
+/* line-height: 24px; */
+/* } */
 
-
-.highlighted-comment.comment_box_card {
+*/ .highlighted-comment.comment_box_card {
   border: 2px solid blue;
   background-color: #f5f5f5 !important;
   z-index: 99;

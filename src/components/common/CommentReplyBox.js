@@ -3,7 +3,7 @@ import React from "react";
 import { CiPaperplane } from "react-icons/ci";
 import ConvertTime from "./ConvertTime";
 import { Link } from "react-router-dom";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { CiEdit, CiTrash } from "react-icons/ci";
 export default function CommentReplyBox({
   commentsReplyList,
   commentItem,
@@ -18,7 +18,7 @@ export default function CommentReplyBox({
   type,
   replyCommentData,
   OnHandleUpdateCommentReply,
-  OnDeleteCommentReplies
+  OnDeleteCommentReplies,
 }) {
   return (
     <div className="reply_box_container mx-2 fade show">
@@ -30,8 +30,41 @@ export default function CommentReplyBox({
             <div key={replyIndex}>
               {/* Display reply message */}
               {
-                <div className="p-2 bg-white rounded mb-1">
+                <div
+                  className="p-2 bg-white  mb-1 border-top position-relative"
+                  style={{ borderColor: "#f5f5f5" }}
+                >
                   <div className="d-flex justify-content-between align-items-center text-dark">
+                    <div
+                      style={{
+                        position: "absolute",
+                        right: 0,
+                        display: "flex",
+                        gap: 3,
+                        top: 0,
+                      }}
+                    >
+                      <Link
+                        className="text-gray pr-2"
+                        title="Update Comment"
+                        onClick={() => {
+                          handleUpdateReplyLinkClick(replyItem);
+                        }}
+                      >
+                        {" "}
+                        <CiEdit />
+                      </Link>
+                      <Link
+                        className="text-danger pr-2"
+                        title="Delete Comment"
+                        onClick={() => {
+                          OnDeleteCommentReplies(replyItem.id);
+                        }}
+                      >
+                        {" "}
+                        <CiTrash />
+                      </Link>
+                    </div>
                     <div className="d-flex profile_box gx-2 mb-1">
                       <div className="media  align-items-center">
                         <div
@@ -47,11 +80,15 @@ export default function CommentReplyBox({
                         <div className="font-size-3 font-weight-bold text-capitalize">
                           {replyItem.sender_name}
                         </div>
-                        <div className="text-gray font-size-2 font-weight-normal m-0 text-capitalize">
-                          <i className="font-size-2">
-                            <ConvertTime _date={replyItem.updated_at} format={"HH:mm D MMM"} />
-                            {/* {moment(replyItem.updated_at).format("HH:mm D MMM")} */}
-                          </i>
+                        <div
+                          className="text-gray font-weight-light m-0 text-capitalize"
+                          style={{ fontSize: 10, fontStyle: "italic" }}
+                        >
+                          <ConvertTime
+                            _date={replyItem.updated_at}
+                            format={"HH:mm D MMM"}
+                          />
+                          {/* {moment(replyItem.updated_at).format("HH:mm D MMM")} */}
                         </div>
                       </div>
                     </div>
@@ -71,15 +108,15 @@ export default function CommentReplyBox({
                   {replyItem.msg && (
                     <span className="m-0 font-size-3 text-dark text-break">
                       {/* {replyItem.msg} */}
-                      <div className="msg-color" dangerouslySetInnerHTML={{ __html: replyItem.msg.replace(" @ ", " ") }} />
+                      <div
+                        className="msg-color"
+                        dangerouslySetInnerHTML={{
+                          __html: replyItem.msg.replace(" @ ", " "),
+                        }}
+                      />
                     </span>
                   )}
-                  <Link className="text-gray pr-2" title="Update Comment" onClick={() => {
-                    handleUpdateReplyLinkClick(replyItem);
-                  }}>  <FaEdit /></Link>
-                  <Link className="text-danger pr-2" title="Delete Comment" onClick={() => {
-                      OnDeleteCommentReplies(replyItem.id);
-                    }}>  <FaTrash /></Link>
+
                   {/* Display mention */}
                   {/* {replyItem.mention && (
                     <span
@@ -103,14 +140,14 @@ export default function CommentReplyBox({
         }}
       >
         <div className="comment-input-container">
-          <div className="reply_box position-relative d-flex rounded bg-white">
+          <div className="reply_box position-relative d-flex rounded">
             <input
               type="text"
               value={replyComment || ""}
               onChange={(e) => handleInputChange(e, "reply")}
               placeholder="Comments or add others with @"
-              className="comment-input border-0"
-              style={{ outline: 0 }}
+              className="comment-input border-0 bg-light"
+              style={{ outline: 0, fontSize: 14, height: "auto" }}
               onSubmit={() => {
                 ReplyAnnotation(commentItem);
               }}
@@ -119,11 +156,10 @@ export default function CommentReplyBox({
               type="button"
               onClick={() => {
                 if (replyCommentData) {
-                  OnHandleUpdateCommentReply(replyCommentData)
+                  OnHandleUpdateCommentReply(replyCommentData);
                 } else {
-                   ReplyAnnotation(commentItem)
+                  ReplyAnnotation(commentItem);
                 }
-
               }}
               className="btn reply_btn doc_btn m-0"
               style={{ fontSize: 30 }}
@@ -138,7 +174,7 @@ export default function CommentReplyBox({
               cancel
             </a> */}
           </div>
-          {(filteredEmails.length > 0 && type === "reply") ? (
+          {filteredEmails.length > 0 && type === "reply" ? (
             <ul
               className="email-suggestions overflow-scroll"
               style={{
@@ -152,7 +188,13 @@ export default function CommentReplyBox({
                   // onMouseOver={() => handleEmailMouseOver(email.email, "reply")}
                   className="email-suggestion-item text-dark"
                 >
-                  <strong>{email.name + (email.u_id ? " (Partner)" : "") + "(" + email.email + ")"}</strong>
+                  <strong>
+                    {email.name +
+                      (email.u_id ? " (Partner)" : "") +
+                      "(" +
+                      email.email +
+                      ")"}
+                  </strong>
                 </li>
               ))}
             </ul>
