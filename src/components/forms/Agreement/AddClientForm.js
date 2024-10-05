@@ -86,6 +86,7 @@ const AddClientForm = ({
     let data = {
       id: felidData.id,
       type: felidData.type,
+      receiver_type: felidData.receiver_type,
       family_json: clients,
     };
     try {

@@ -147,6 +147,7 @@ function Addfollowup(props) {
 
   // USER FOLLOW UP PROFILE UPDATE SUBMIT BUTTON
   const onAminFollowClick = async (event) => {
+    console.log(state)
     event.preventDefault();
     if (validate()) {
       setLoading(true);
@@ -221,7 +222,12 @@ function Addfollowup(props) {
                           <p className="m-0 text-capitalize font-size-3 mb-1">
                             <b>Created by: {res.created_by_name}</b>
                             <Link className={res.created_by === assigned_id && res.type === assigned_by_type ? "text-gray px-8" : "d-none"} title="Update notes" onClick={() => {
-                              setState(res);
+                              // Merge current state with res and admin_id
+                              setState(prevState => ({
+                                ...prevState,        // Spread the existing state
+                                admin_id: adminId,   // Add or update admin_id
+                                ...res               // Spread the properties from res into state
+                              }));
                             }}>  <FaEdit />
                             </Link>
                           </p>
@@ -257,7 +263,7 @@ function Addfollowup(props) {
               }
               style={{ right: 0 }}
             >
-              <form>
+              <form className="">
                 <div className="form-group col px-0 pr-3">
                   <label
                     htmlFor="subject"
@@ -394,15 +400,7 @@ function Addfollowup(props) {
                   </div>
                 </div>
                 <div className="form-group text-center">
-                  {props.page === "yes" && (
-                    <button
-                      onClick={() => props.skip()}
-                      className="btn btn-sendory btn-small w-25 rounded-5 text-uppercase"
-                      type="button"
-                    >
-                      Skip
-                    </button>
-                  )}
+
                   {loading === true ? (
                     <button
                       className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
@@ -425,6 +423,13 @@ function Addfollowup(props) {
                       Submit
                     </button>
                   )}
+                  {(state.subject || props.page === "yes") && <button
+                    onClick={() => props.page === "yes" ? props.skip() : setState(initialFormState)}
+                    className={`btn btn-small w-25 rounded-5 ${props.page === "yes" ? " mx-2 " : " mt-2 "}text-uppercase`}
+                    type="button"
+                  >
+                    {props.page === "yes" ? "Skip" : "Cancel"}
+                  </button>}
                 </div>
               </form>
             </div>

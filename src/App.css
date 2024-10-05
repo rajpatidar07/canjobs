@@ -1259,7 +1259,7 @@ select.form-control.select_document_type {
 /* line-height: 24px; */
 /* } */
 
-*/ .highlighted-comment.comment_box_card {
+.highlighted-comment.comment_box_card {
   border: 2px solid blue;
   background-color: #f5f5f5 !important;
   z-index: 99;
@@ -2217,6 +2217,11 @@ ul.css-8tnble li {
 }
 
 /*Notes*/
+.single_note {
+  height: 95vh;
+  overflow-y: scroll;
+}
+
 .single_note p {
   margin: 0;
 }

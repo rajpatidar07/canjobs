@@ -212,7 +212,7 @@ const AdobePDFViewer = ({
         } full-window-div`}
         style={{
           maxHeight: docsection ? "100vh" : "calc(100vh - 130px)",
-          transition: "all .3s",
+          // transition: "all .3s",
         }}
       ></div>
       <Link

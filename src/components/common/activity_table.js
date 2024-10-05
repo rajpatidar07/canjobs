@@ -78,7 +78,15 @@ export default function ActivityTable(props) {
     51: "Job delete",
     52: "Client password update",
     53: "Client document delete",
-    54: "Client setting update"
+    54: "Client setting update",
+    55: " Partner updated",
+    56: " Partner delete",
+    57: "Created comment's on document",
+    58: " Notes Created",
+    59: "Reply for document's comment",
+    60: " Agreement added",
+    61: " Agreement updated",
+    62: "Agreement deleted",
   };
   //   let activityData;
   /* Function to get Activity data*/
