@@ -13,6 +13,7 @@ export default function FolderList({
   setShowDropDown,
   docTypeList,
   setFolderID,
+  setFileID,
   setDocTypeName,
   handleBulkFileChange,
   saveBtn,
@@ -52,7 +53,7 @@ export default function FolderList({
                   } else {
                     setDocPreview(true);
                     setDocSingleDate(item);
-                    setFolderID(item.id);
+                    setFileID(item.id);
                     getCommentsList(item);
                   }
                 }}
@@ -149,7 +150,7 @@ export default function FolderList({
                       Delete {item.folder ? "Folder" : "File"}
                     </Link>
                   </li>
-                  <li className="list-group-item text-darger">
+                  <li className={item.folder ? "d-none" : "list-group-item text-darger"}>
                     <Link
                       to={`/view_pdf_Agreement?new_emp_user_type=${emp_user_type}&new_user_id=${user_id}&folderId=${item.parentReference.id}&document_id=${item.id}`} target="_blank">
                       {" "}

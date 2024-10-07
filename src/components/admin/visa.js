@@ -114,9 +114,9 @@ export default function Visa() {
         ) : (
           <>
             {/* <!-- Header Area --> */}
-            <AdminHeader heading={"Working Visa"} />
+            <AdminHeader heading={"Visa"} />
             {/* <!-- navbar- --> */}
-            <AdminSidebar heading={"Working Visa"} />
+            <AdminSidebar heading={"Visa"} />
           </>
         )}
 

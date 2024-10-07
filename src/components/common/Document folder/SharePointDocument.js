@@ -42,6 +42,7 @@ export default function SharePointDocument({
   const [newType, setNewType] = useState("");
   const [docFileBase, setDocFileBase] = useState("");
   const [folderID, setFolderID] = useState(folderId);
+  const [fileID, setFileID] = useState("");
   const [apiCall, setApiCall] = useState(false);
   const [saveBtn, setSaveBtn] = useState(false);
   const [loadingBtn, setLoadingBtn] = useState(false);
@@ -234,7 +235,7 @@ export default function SharePointDocument({
         docId ? folderId : folderID
       );
       if (res.data.status === 1) {
-        // console.log(notification, "first")
+        console.log(folderId, "01PMN6UKVTO5J7EHVKK5EJMWOKU5ACQO74",res.data.data)
         // if (notification === "no") { setDocPreview(false); }
         setDocTypeList(res.data.data);
         setShowDropDown(false);
@@ -279,7 +280,6 @@ export default function SharePointDocument({
           res.data.data[0].name === `${emp_user_type}_${user_id}` ||
           res.data.data[0].name !== `${user_name}_${user_id}`
         ) {
-          // console.log("matched")
           try {
             // let MainFolderNameRes =
             await ChangeFolderNameSharpoint(
@@ -288,9 +288,6 @@ export default function SharePointDocument({
               `${user_name}_${user_id}`,
               res.data.data[0].id
             );
-            // if (MainFolderNameRes.data.message === "Folder name updated successfully!") {
-            //   setApiCall(true)
-            // }
           } catch (Err) {
             console.log(Err);
           }
@@ -329,7 +326,7 @@ export default function SharePointDocument({
     //   )
     // );
     // eslint-disable-next-line
-  }, [folderID, apiCall, docId]);
+  }, [folderID, apiCall, docId, fileID]);
 
   /*On change fnction to upload bulk document in 1 array*/
   const handleBulkFileChange = async (event, id) => {
@@ -741,16 +738,6 @@ export default function SharePointDocument({
                             : taggedadmin
                           ).map(
                             (user, index) =>
-                              // <div
-                              //   key={index}
-                              //   className="badgebadge badge-pill badge-info"
-                              //   style={{ fontSize: 12 }}
-                              // >
-                              //   {user.name}
-                              //   <span className="d-none">
-                              //     {user.email} {user.admin_id} {user.admin_type}
-                              //   </span>
-                              // </div>
                               user.profile_image === null ||
                                 user.profile_image === "" ||
                                 user.profile_image === undefined ? (
@@ -793,9 +780,7 @@ export default function SharePointDocument({
                                   alt={user.name}
                                 />
                               )
-                            // {user.name.charAt(0).toUpperCase()}
                           )}
-                          {/* {showMentionAdminDropDown === true ? ( */}
                           <MentionAdminInDoc
                             adminList={adminList}
                             setMentionAdminShowDropDown={
@@ -811,7 +796,6 @@ export default function SharePointDocument({
                             DocUserType={emp_user_type}
                             showMentionAdminDropDown={showMentionAdminDropDown}
                           />
-                          {/* ) : null} */}
                         </div>
                       )}
                   </div>
@@ -825,20 +809,11 @@ export default function SharePointDocument({
                       docSingleDate.file.mimeType ===
                       "application/vnd.openxmlformats-officedocument.wordprocessingml.document") &&
                       convertedDoc ? (
-                      // <PreviewDocument
-                      //   docData={docSingleDate}
-                      //   docId={docId ? docId : folderID}
-                      //   userId={user_id}
-                      //   docFile={docSingleDate["@microsoft.graph.downloadUrl"]}
-                      //   setDocPreview={setDocPreview}
-                      //   setDocSingleDate={setDocSingleDate}
-                      //   setFolderID={setFolderID}
-                      //   commentsList={commentsList}
-                      // />
                       commentsRes ? (
                         <AdobePDFViewer
                           url={convertedDoc}
                           data={docSingleDate}
+                          setDocSingleDate={setDocSingleDate}
                           userId={user_id}
                           commentsList={commentsList}
                           selectedMentionAdmin={selectedMentionAdmin}
@@ -848,21 +823,16 @@ export default function SharePointDocument({
                           setCommentsList={setCommentsList}
                           userType={localStorage.getItem("userType")}
                           docsection={true}
+                          docTypeList={docTypeList}
+                          fileId={fileID}
+                          setFileID={setFileID}
+                          setConvertedDoc={setConvertedDoc}
+                          getCommentsList={getCommentsList}
                         />
                       ) : null
                     ) : (
                       <Loader />
                     )
-                    // :
-                    // commentsRes ? (
-                    //   <PdfViewerComponent
-                    //     document={docSingleDate["@microsoft.graph.downloadUrl"]}
-                    //     adminDetailsFOrMention={adminList}
-                    //     data={docSingleDate}
-                    //     userId={user_id}
-                    //     commentsList={commentsList}
-                    //   />
-                    // ) : null
                   }
                 </div>
               </div>
@@ -969,6 +939,7 @@ export default function SharePointDocument({
                   <FolderList
                     docTypeList={docTypeList}
                     setFolderID={setFolderID}
+                    setFileID={setFileID}
                     setDocTypeName={setDocTypeName}
                     folderID={folderID}
                     showDropDown={showDropDown}

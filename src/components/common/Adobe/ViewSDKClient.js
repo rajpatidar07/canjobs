@@ -106,7 +106,7 @@ class ViewSDKClient {
       viewerConfig
     );
 
-    console.log("data",data)
+    // console.log("data",data)
     return previewFilePromise;
   }
   previewFileUsingFilePromise(divId, filePromise, data) {

@@ -3,6 +3,7 @@ import ViewSDKClient from "./ViewSDKClient.js";
 import CommentSection from "./commentSection.js";
 import { FaComments } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { GrNext, GrPrevious } from "react-icons/gr";
 // import $ from 'jquery';
 const AdobePDFViewer = ({
   url,
@@ -16,6 +17,12 @@ const AdobePDFViewer = ({
   partnerList,
   userType,
   docsection,
+  docTypeList,
+  fileId,
+  setDocSingleDate,
+  setFileID,
+  setConvertedDoc,
+  getCommentsList
 }) => {
   let [openAnnotationBox, setOpenAnnotationBox] = useState(false);
   let [annotationDrawBox, setAnnotationDrawBox] = useState("");
@@ -25,6 +32,44 @@ const AdobePDFViewer = ({
   );
   const [annotationManager, setAnnotationManager] = useState(null);
   const [adobeViewer, setAdobeViewer] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(docTypeList.findIndex(item => item.id === fileId));
+  // Handler for Previous button
+  const handlePreviousClick = () => {
+    if (currentIndex > 0) {
+      const newIndex = currentIndex - 1;
+      //condition for not navigating to the folder or no file found
+      if (docTypeList[newIndex] || !docTypeList[newIndex]?.folder) {
+        setConvertedDoc("")
+        setCurrentIndex(newIndex);
+        setDocSingleDate(docTypeList[newIndex]);
+        setFileID(docTypeList[newIndex].id);
+        getCommentsList(docTypeList[newIndex])
+      }
+    }
+  };
+
+  // Handler for Next button
+  const handleNextClick = () => {
+    if (currentIndex < docTypeList.length - 1) {
+      const newIndex = currentIndex + 1;
+      //condition for not navigating to the folder or no file found
+      if (docTypeList[newIndex] || !docTypeList[newIndex]?.folder) {
+        setConvertedDoc("")
+        setCurrentIndex(newIndex);
+        setDocSingleDate(docTypeList[newIndex]);
+        setFileID(docTypeList[newIndex].id);
+        getCommentsList(docTypeList[newIndex])
+      }
+    }
+  };
+
+  // Optional: Update state if documents array changes
+  // useEffect(() => {
+  //   setDocSingleDate(docTypeList[currentIndex]);
+  //   setFileID(docTypeList[currentIndex]?.id);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [currentIndex]);
+
   /*REnder document method */
   useEffect(() => {
     if (!data?.name?.includes(1295)) {
@@ -203,13 +248,25 @@ const AdobePDFViewer = ({
                dangerouslySetInnerHTML={{ __html: newiframeurl }} />
            </>
          : */}
+      <div style={{
+        width: openAnnotationBox ? "63%" : "88%",
+        display: "flex",
+        left: "40px",
+        justifyContent: "space-between",
+        position: "absolute",
+        zIndex: "999",
+        top: "50%",
+        transform: "translateY(-50%)",
+      }}>
+        <button className=" btn-light rounded-circle" onClick={handlePreviousClick} disabled={(!docTypeList[currentIndex - 1] || docTypeList[currentIndex - 1]?.folder) ? true : false}><GrPrevious /></button>
+        <button className=" btn-light rounded-circle" onClick={handleNextClick} disabled={(!docTypeList[currentIndex + 1] || docTypeList[currentIndex + 1]?.folder) ? true : false}><GrNext /></button>
+      </div>
       <div
         id="pdf-div"
-        className={`${
-          (userType === "admin" || userType === "agent") && openAnnotationBox
-            ? "col-md-9 col-lg-9 col-sm-11"
-            : "col-md-12 col-lg-12 col-sm-12"
-        } full-window-div`}
+        className={`${(userType === "admin" || userType === "agent") && openAnnotationBox
+          ? "col-md-9 col-lg-9 col-sm-11"
+          : "col-md-12 col-lg-12 col-sm-12"
+          } full-window-div`}
         style={{
           maxHeight: docsection ? "100vh" : "calc(100vh - 130px)",
           // transition: "all .3s",

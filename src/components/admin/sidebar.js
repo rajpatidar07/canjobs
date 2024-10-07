@@ -219,11 +219,11 @@ const AdminSidebar = (props) => {
           </Link>
         </li>
         <li
-          ref={(el) => (liRefs.current["Working Visa"] = el)}
+          ref={(el) => (liRefs.current["Visa"] = el)}
           className={
             user_type === "agent"
               ? "d-none"
-              : props.heading === "Working Visa"
+              : props.heading === "Visa"
                 ? "active"
                 : ""
           }
@@ -235,7 +235,7 @@ const AdminSidebar = (props) => {
           >
             {/* <i className="fab fa-cc-visa mr-5"></i> */}
             <LiaCcVisa className="sidebar_icon" />
-            Working Visa
+            Visa
           </Link>
         </li>
         {/* <li className={user_type === "agent"?"d-none":props.heading === "Document Upload & Verification" ? "active" : ""}>
