@@ -22,7 +22,7 @@ const AdobePDFViewer = ({
   setDocSingleDate,
   setFileID,
   setConvertedDoc,
-  getCommentsList
+  getCommentsList,
 }) => {
   let [openAnnotationBox, setOpenAnnotationBox] = useState(false);
   let [annotationDrawBox, setAnnotationDrawBox] = useState("");
@@ -32,18 +32,20 @@ const AdobePDFViewer = ({
   );
   const [annotationManager, setAnnotationManager] = useState(null);
   const [adobeViewer, setAdobeViewer] = useState(null);
-  const [currentIndex, setCurrentIndex] = useState(docTypeList.findIndex(item => item.id === fileId));
+  const [currentIndex, setCurrentIndex] = useState(
+    docTypeList.findIndex((item) => item.id === fileId)
+  );
   // Handler for Previous button
   const handlePreviousClick = () => {
     if (currentIndex > 0) {
       const newIndex = currentIndex - 1;
       //condition for not navigating to the folder or no file found
       if (docTypeList[newIndex] || !docTypeList[newIndex]?.folder) {
-        setConvertedDoc("")
+        setConvertedDoc("");
         setCurrentIndex(newIndex);
         setDocSingleDate(docTypeList[newIndex]);
         setFileID(docTypeList[newIndex].id);
-        getCommentsList(docTypeList[newIndex])
+        getCommentsList(docTypeList[newIndex]);
       }
     }
   };
@@ -54,11 +56,11 @@ const AdobePDFViewer = ({
       const newIndex = currentIndex + 1;
       //condition for not navigating to the folder or no file found
       if (docTypeList[newIndex] || !docTypeList[newIndex]?.folder) {
-        setConvertedDoc("")
+        setConvertedDoc("");
         setCurrentIndex(newIndex);
         setDocSingleDate(docTypeList[newIndex]);
         setFileID(docTypeList[newIndex].id);
-        getCommentsList(docTypeList[newIndex])
+        getCommentsList(docTypeList[newIndex]);
       }
     }
   };
@@ -237,7 +239,7 @@ const AdobePDFViewer = ({
   return (
     <div
       style={{ height: docsection ? "100vh" : "calc(100vh - 130px)" }}
-      className="row m-0"
+      className="row m-0 position-relative"
     >
       {/*  data?.name.includes(1295) ?
            <>
@@ -248,30 +250,90 @@ const AdobePDFViewer = ({
                dangerouslySetInnerHTML={{ __html: newiframeurl }} />
            </>
          : */}
-      <div style={{
-        width: openAnnotationBox ? "63%" : "88%",
-        display: "flex",
-        left: "40px",
-        justifyContent: "space-between",
-        position: "absolute",
-        zIndex: "999",
-        top: "50%",
-        transform: "translateY(-50%)",
-      }}>
-        <button className=" btn-light rounded-circle" onClick={handlePreviousClick} disabled={(!docTypeList[currentIndex - 1] || docTypeList[currentIndex - 1]?.folder) ? true : false}><GrPrevious /></button>
-        <button className=" btn-light rounded-circle" onClick={handleNextClick} disabled={(!docTypeList[currentIndex + 1] || docTypeList[currentIndex + 1]?.folder) ? true : false}><GrNext /></button>
-      </div>
       <div
-        id="pdf-div"
-        className={`${(userType === "admin" || userType === "agent") && openAnnotationBox
-          ? "col-md-9 col-lg-9 col-sm-11"
-          : "col-md-12 col-lg-12 col-sm-12"
-          } full-window-div`}
+        className={`${
+          (userType === "admin" || userType === "agent") && openAnnotationBox
+            ? "col-md-9 col-lg-9 col-sm-11"
+            : "col-md-12 col-lg-12 col-sm-12"
+        } full-window-div position-relative`}
         style={{
           maxHeight: docsection ? "100vh" : "calc(100vh - 130px)",
           // transition: "all .3s",
         }}
-      ></div>
+      >
+        <button
+          className={
+            // eslint-disable-next-line no-undef
+            !docTypeList[currentIndex - 1] ||
+            docTypeList[currentIndex - 1]?.folder
+              ? "rounded-circle btn-light font-size-4"
+              : "rounded-circle btn-primary font-size-4"
+          }
+          onClick={handlePreviousClick}
+          disabled={
+            !docTypeList[currentIndex - 1] ||
+            docTypeList[currentIndex - 1]?.folder
+              ? true
+              : false
+          }
+          style={{
+            position: "absolute",
+            top: "48%",
+            left: 10,
+            bottom: "auto",
+            zIndex: 99,
+            border: "none",
+            lineHeight: 1,
+            padding: 10,
+            width: 45,
+            height: 45,
+          }}
+        >
+          <GrPrevious />
+        </button>
+        <button
+          className={
+            // eslint-disable-next-line no-undef
+            !docTypeList[currentIndex - 1] ||
+            docTypeList[currentIndex - 1]?.folder
+              ? "rounded-circle btn-light font-size-4"
+              : "rounded-circle btn-primary font-size-4"
+          }
+          onClick={handleNextClick}
+          disabled={
+            !docTypeList[currentIndex + 1] ||
+            docTypeList[currentIndex + 1]?.folder
+              ? true
+              : false
+          }
+          style={{
+            position: "absolute",
+            top: "48%",
+            right: 10,
+            bottom: "auto",
+            zIndex: 99,
+            border: "none",
+            lineHeight: 1,
+            padding: 10,
+            width: 45,
+            height: 45,
+          }}
+        >
+          <GrNext />
+        </button>
+        <div
+          id="pdf-div"
+          className={`${
+            (userType === "admin" || userType === "agent") && openAnnotationBox
+              ? "w-100"
+              : "w-100"
+          } full-window-div`}
+          style={{
+            height: docsection ? "100vh" : "calc(100vh - 130px)",
+            // transition: "all .3s",
+          }}
+        ></div>
+      </div>
       <Link
         to={""}
         onClick={() => {
