@@ -1068,7 +1068,7 @@ export default function CommentSection({
                             )}`}
                             style={{ fontSize: "16px", fontWeight: 700 }}
                           >
-                            {commentItem.task_creator_user_name.charAt(0)}
+                            {commentItem.task_creator_user_name?.charAt(0)}
                             {/* {commentItem.task_creator_user_id
                                 ? allAdmin.find(
                                   (item) =>

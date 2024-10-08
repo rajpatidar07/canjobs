@@ -47,8 +47,8 @@ export default function CandidateLoginForm(props) {
         value === null || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? null
+            : "Email is invalid",
     ],
     password: [(value) => (value === "" ? "Password is required" : null)],
     forget_email: [
@@ -56,10 +56,10 @@ export default function CandidateLoginForm(props) {
         state.email
           ? ""
           : value === null || value.trim() === ""
-          ? "Email is required"
-          : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? "Email is required"
+            : /\S+@\S+\.\S+/.test(value)
+              ? null
+              : "Email is invalid",
     ],
   };
   /*----LOGIN ONCHANGE FUNCTION----*/
@@ -112,7 +112,7 @@ export default function CandidateLoginForm(props) {
   // END USER LOGIN VALIDATION
   const onForgoteClick = async (event) => {
     event.preventDefault();
-    if (validate()) {
+    if (state.forget_email) {
       // setLoading(true)
       setLoading(true);
       try {
@@ -241,9 +241,9 @@ export default function CandidateLoginForm(props) {
           }
           if (
             res.data.message ===
-              "The token used in the request has been revoked by the user" ||
+            "The token used in the request has been revoked by the user" ||
             decode.error_description ===
-              "Unable to retrieve access token: appid/redirect uri/code verifier does not match authorization code. Or authorization code expired. Or external member binding exists"
+            "Unable to retrieve access token: appid/redirect uri/code verifier does not match authorization code. Or authorization code expired. Or external member binding exists"
           ) {
             toast.error("Token Expired", {
               position: toast.POSITION.TOP_RIGHT,

@@ -223,7 +223,7 @@ export default function SharePointDocument({
         "Bank Statement",
       ];
 
-  /*Function to call api to get all folders list of employees documnet from sharepoint */
+  /*Function to call api to get all folders list of employees document from sharepoint */
   const AllShareType = async () => {
     setDocLoder(true);
     setBreadCrumbLoder(true);
@@ -235,7 +235,6 @@ export default function SharePointDocument({
         docId ? folderId : folderID
       );
       if (res.data.status === 1) {
-        console.log(folderId, "01PMN6UKVTO5J7EHVKK5EJMWOKU5ACQO74",res.data.data)
         // if (notification === "no") { setDocPreview(false); }
         setDocTypeList(res.data.data);
         setShowDropDown(false);

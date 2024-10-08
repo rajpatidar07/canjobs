@@ -28,9 +28,11 @@ const AdobePDFViewer = ({
   let [annotationDrawBox, setAnnotationDrawBox] = useState("");
   let [annotationId, setAnnotationId] = useState("");
   let [annotationData, setAnnotationData] = useState(
-    commentsList.map((item) => JSON.parse(item?.doctaskjson)) || ""
-  );
-  const [annotationManager, setAnnotationManager] = useState(null);
+    commentsList
+    .map((item) => JSON.parse(item?.doctaskjson))
+    .filter((item) => item !== "") || []  );
+
+ const [annotationManager, setAnnotationManager] = useState(null);
   const [adobeViewer, setAdobeViewer] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(
     docTypeList.findIndex((item) => item.id === fileId)
@@ -71,7 +73,6 @@ const AdobePDFViewer = ({
   //   setFileID(docTypeList[currentIndex]?.id);
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [currentIndex]);
-
   /*REnder document method */
   useEffect(() => {
     if (!data?.name?.includes(1295)) {
@@ -110,10 +111,10 @@ const AdobePDFViewer = ({
             adobeViewer
               .getAnnotationManager()
               .then((annotationManager) => {
-                setAnnotationManager(annotationManager);
+                setAnnotationManager(annotationManager);             
                 if (annotationData.length === 0) {
                 } else {
-                  // console.log(annotationManager)
+                  
                   annotationManager
                     .addAnnotations(annotationData)
                     .then(() => console.log("Success"))
@@ -251,28 +252,26 @@ const AdobePDFViewer = ({
            </>
          : */}
       <div
-        className={`${
-          (userType === "admin" || userType === "agent") && openAnnotationBox
-            ? "col-md-9 col-lg-9 col-sm-11"
-            : "col-md-12 col-lg-12 col-sm-12"
-        } full-window-div position-relative`}
+        className={`${(userType === "admin" || userType === "agent") && openAnnotationBox
+          ? "col-md-9 col-lg-9 col-sm-11"
+          : "col-md-12 col-lg-12 col-sm-12"
+          } full-window-div position-relative`}
         style={{
           maxHeight: docsection ? "100vh" : "calc(100vh - 130px)",
           // transition: "all .3s",
         }}
       >
         <button
-          className={
-            // eslint-disable-next-line no-undef
-            !docTypeList[currentIndex - 1] ||
-            docTypeList[currentIndex - 1]?.folder
-              ? "rounded-circle btn-light font-size-4"
-              : "rounded-circle btn-primary font-size-4"
-          }
+          className={`rounded-circle font-size-4
+            ${!docTypeList[currentIndex - 1] ||
+              docTypeList[currentIndex - 1]?.folder
+              ? "btn-light"
+              : "btn-primary"}
+          `}
           onClick={handlePreviousClick}
           disabled={
             !docTypeList[currentIndex - 1] ||
-            docTypeList[currentIndex - 1]?.folder
+              docTypeList[currentIndex - 1]?.folder
               ? true
               : false
           }
@@ -292,17 +291,16 @@ const AdobePDFViewer = ({
           <GrPrevious />
         </button>
         <button
-          className={
-            // eslint-disable-next-line no-undef
-            !docTypeList[currentIndex - 1] ||
-            docTypeList[currentIndex - 1]?.folder
-              ? "rounded-circle btn-light font-size-4"
-              : "rounded-circle btn-primary font-size-4"
-          }
+          className={`rounded-circle font-size-4
+          ${!docTypeList[currentIndex + 1] ||
+              docTypeList[currentIndex + 1]?.folder
+              ? "btn-light"
+              : "btn-primary"}
+        `}
           onClick={handleNextClick}
           disabled={
             !docTypeList[currentIndex + 1] ||
-            docTypeList[currentIndex + 1]?.folder
+              docTypeList[currentIndex + 1]?.folder
               ? true
               : false
           }
@@ -323,11 +321,10 @@ const AdobePDFViewer = ({
         </button>
         <div
           id="pdf-div"
-          className={`${
-            (userType === "admin" || userType === "agent") && openAnnotationBox
-              ? "w-100"
-              : "w-100"
-          } full-window-div`}
+          className={`${(userType === "admin" || userType === "agent") && openAnnotationBox
+            ? "w-100"
+            : "w-100"
+            } full-window-div`}
           style={{
             height: docsection ? "100vh" : "calc(100vh - 130px)",
             // transition: "all .3s",

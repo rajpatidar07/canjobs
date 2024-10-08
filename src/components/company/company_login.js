@@ -109,7 +109,7 @@ function CompanyLoginForm(props) {
 
   const onCompanyForgotPasswordClick = async (event) => {
     event.preventDefault();
-    if (validate()) {
+    if (state.forget_email) {
       setLoading(true);
       try {
         let Response = await EmployerForgotPassword(state);

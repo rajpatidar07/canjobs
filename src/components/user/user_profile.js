@@ -301,8 +301,8 @@ const NewUserProfile = (props) => {
     <div className="site-wrapper overflow-hidden bg-default-2">
       {/* <!-- Header Area --> */}
       {user_type === "admin" || user_type === "agent" ? (
-        <>
-          <AdminHeader
+        (docId || notes ? (docId || notes) && userFound.length !== 0 : userFound.length !== 0) && <>
+          <AdminHeader 
             heading={
               <Link
                 className="d-flex align-items-center "
@@ -413,8 +413,8 @@ const NewUserProfile = (props) => {
                   {/*----Profile Header----*/}
                   <ul
                     className={`nav border-top border-bottom border-mercury user_profile_tab ${user_type === "admin" || user_type === "agent"
-                        ? ""
-                        : "mt-md-13"
+                      ? ""
+                      : "mt-md-13"
                       }`}
                     id="myTab"
                     role="tablist"
@@ -438,8 +438,8 @@ const NewUserProfile = (props) => {
                     </li>
                     <li
                       className={`${user_type === "company"
-                          ? "d-none"
-                          : "tab-menu-items nav-item"
+                        ? "d-none"
+                        : "tab-menu-items nav-item"
                         }`}
                     >
                       <Link
@@ -460,8 +460,8 @@ const NewUserProfile = (props) => {
                     </li>
                     <li
                       className={`${user_type === "company"
-                          ? "d-none"
-                          : "tab-menu-items nav-item"
+                        ? "d-none"
+                        : "tab-menu-items nav-item"
                         } `}
                     >
                       <Link
@@ -497,8 +497,8 @@ const NewUserProfile = (props) => {
                     </li>
                     <li
                       className={`${user_type === "company"
-                          ? "d-none"
-                          : "tab-menu-items nav-item"
+                        ? "d-none"
+                        : "tab-menu-items nav-item"
                         } d-none`}
                     >
                       <Link

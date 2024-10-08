@@ -5,12 +5,16 @@ import { Link, useLocation } from "react-router-dom";
 const NotFound = (props) => {
   let token = localStorage.getItem("token")
   let location = useLocation()
+  const searchParams = new URLSearchParams(location.search);
+  const docId = searchParams.get("docId");
+  const notes = searchParams.get("note");
+
   return (
     token && (location.pathname === "/partner_profile"
       || location.pathname === "/dashboard"
       || location.pathname === "/client"
       || props.userType === "user"
-      ? location.pathname === `/${localStorage.getItem("employee_id")}` 
+      ? location.pathname === `/${localStorage.getItem("employee_id")}`
       : location.pathname === "/")
       ? <Loader />
       :
@@ -21,9 +25,11 @@ const NotFound = (props) => {
           ? "/client"
           : props.userType === "agent"
             ? "/partner_profile"
-            : props.userType === "admin"
-              ? "/dashboard"
-              : "/"}>
+            : props.userType === "admin" ?
+              "/dashboard"
+              : (docId || notes)
+                ? "/adminlogin"
+                : "/"}>
           Go to Home
         </Link>
       </div>
