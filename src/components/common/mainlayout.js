@@ -80,6 +80,7 @@ import ViewPdf from "./Retaineragreement/viewPdf";
 import TemporaryResident from "../admin/TemporaryResident";
 import EconomicImmigration from "../admin/EcomonicImmigration";
 import FamilySponsorship from "../admin/FamilySponsorship";
+import ManageTask from "../admin/manageTask";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -109,7 +110,7 @@ function MainLayout() {
   };
   return (
     <BrowserRouter>
-        <ToastContainer/>
+      <ToastContainer />
       {/* <CurrentRoute /> */}
       <Routes>
         {/* Employee */}
@@ -125,11 +126,11 @@ function MainLayout() {
         <Route path="/outside_booking" element={<WebhookComponent />} />
         <Route path="/resetpassword/:id" element={<ResetPassword />} />
         <Route exact path="/linkedin" component={LinkedInCallback} />
-        <Route exact path="/signagreement" element={<UserSigningPage/>} />
+        <Route exact path="/signagreement" element={<UserSigningPage />} />
         <Route path="/agreeone" element={<AgreementOne />} />
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/demojob" element={<DemoJob />} />
-        
+
         {/* <Route path="*" element={<NotFound userType={userType}/>} /> */}
         {(userType === "user" && (token !== "" ||
           token !== null ||
@@ -182,8 +183,8 @@ function MainLayout() {
             {/* <Route path="*" element={<NotFound userType={userType}/>} /> */}
           </>
         )}
-         {/* Agent */}
-         <Route path="/partnerlogin" element={<AgentLogin setLoginCondition={setLoginCondition} />} />
+        {/* Agent */}
+        <Route path="/partnerlogin" element={<AgentLogin setLoginCondition={setLoginCondition} />} />
         {/* Admin */}
         <Route path="/adminlogin" element={<AdminLoginFrom setLoginCondition={setLoginCondition} />} />
         {(userType === "company" ||
@@ -216,6 +217,7 @@ function MainLayout() {
             {/* <Route path="/:eid" element={<NewUserProfile />} /> */}
             <Route path="/:eid" element={<ValidateRoute />} />
             <Route path="/userpdf" element={<PDFViewer />} />
+            <Route path="/managetasks" element={<ManageTask />} />
             <Route path="/sharepoint_document" element={<SharePointDocument />} />
             <Route path="/job_detail" element={<JobDetailpageAdmim />} />
             <Route path="/client_detail" element={<CompanyProfileDetail />} />
@@ -223,7 +225,7 @@ function MainLayout() {
             <Route path="/followup" element={<Followup />} />
             <Route path="/partner" element={<Agent />} />
             <Route path="/partner_dashboard" element={<PartnerDashboard />} />
-            
+
             <Route path="/agreepreivew" element={<HtmlAgreementOne />} />
             <Route path="/addsign" element={<SignaturePadComponent />} />
             <Route path="/assigned_admin" element={<AsiignedAdmin />} />
@@ -257,7 +259,7 @@ function MainLayout() {
             <Route path="*" element={<Loader load={"yes"} />} />
           </>
         )}
-       
+
         {loginCondition === true ? null : <Route path="*" element={<NotFound userType={userType} />} />}
       </Routes>
     </BrowserRouter>

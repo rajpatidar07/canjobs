@@ -222,7 +222,8 @@ export default function SharePointDocument({
         "Representative Submission Letter",
         "Bank Statement",
       ];
-
+      /*Variable to set the data according to next previous file or doc id from the mail or notification */
+  let newdocId = fileID ? fileID : docId
   /*Function to call api to get all folders list of employees document from sharepoint */
   const AllShareType = async () => {
     setDocLoder(true);
@@ -240,10 +241,12 @@ export default function SharePointDocument({
         setShowDropDown(false);
         setDocLoder(false);
         if (notification === "yes") {
-          if (res.data.data.find((item) => item.id === docId)) {
+          if (res.data.data.find((item) => item.id === newdocId)) {
             setDocPreview(true);
-            setDocSingleDate(res.data.data.find((item) => item.id === docId));
-            getCommentsList(res.data.data.find((item) => item.id === docId));
+            // console.log(res.data.data.find((item) => item.id === newdocId))
+            setDocSingleDate(res.data.data.find((item) => item.id === newdocId));
+            getCommentsList(res.data.data.find((item) => item.id === newdocId));
+            setFileID(res.data.data.find((item) => item.id === newdocId).id);
             const newUrl = window.location.pathname;
             window.history.replaceState({}, document.title, newUrl);
           }

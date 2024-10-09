@@ -807,7 +807,8 @@ export const GetCommentsAndAssign = async (
   column,
   time,
   assigned_user_type,
-  employeeId
+  employeeId,
+  userType,
 ) => {
   // console.log( "idi"+id,
   // "userid"+userid,
@@ -833,6 +834,7 @@ export const GetCommentsAndAssign = async (
       type: type,
       assigned_user_type: assigned_user_type,
       employee_id: employeeId,
+      employee_type:userType
       // id:"",task_creator_user_id:""
     },
     {

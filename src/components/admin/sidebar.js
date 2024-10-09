@@ -13,7 +13,7 @@ import { BsBuildings, BsQrCodeScan } from "react-icons/bs";
 import { PiApplePodcastsLogoThin } from "react-icons/pi";
 import { AiOutlineUserAdd /*, AiOutlineMail*/ } from "react-icons/ai";
 import { TbFilterPlus, TbUserDollar } from "react-icons/tb";
-import { FaGraduationCap, FaNotesMedical } from "react-icons/fa";
+import { FaGraduationCap, FaNotesMedical, FaTasks } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
 import { GrVisa } from "react-icons/gr";
 import { TiBusinessCard } from "react-icons/ti";
@@ -247,6 +247,26 @@ const AdminSidebar = (props) => {
               <i className="fas fa-file mr-5"></i>Manage Documents
             </Link>
           </li> */}
+          <li
+          ref={(el) => (liRefs.current["Manage Task"] = el)}
+          className={
+            user_type === "agent"
+              ? "d-none"
+              : props.heading === "Manage Task"
+                ? "active"
+                : ""
+          }
+        >
+          <Link
+            onClick={() => clearPageNo()}
+            to="/managetasks"
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+          >
+            {/* <i className="fas fa-filter mr-5"></i> */}
+            <FaTasks className="sidebar_icon" />
+            Manage Task
+          </Link>
+        </li>
         <li
           ref={(el) => (liRefs.current["LMIA status"] = el)}
           className={

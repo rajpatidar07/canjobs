@@ -23,19 +23,26 @@ export default function AdminTaskTable(props) {
     try {
       let res = await GetCommentsAndAssign(
         "",
-        "",//adminEmail,
+        props.adminId,//adminEmail,
         taskStatus,
         "document",
         currentPage,
         recordsPerPage,
         sortOrder,
         columnName,
-        props.filter_by_time
+        props.filter_by_time,
+        props.adminType,
+        props.employeeId,
+        props.TaskUserType,
+        
       );
       if (res.data.status === (1 || "1")) {
         setTaskData(res.data.data.data);
         setIsLoading(false);
         setTotalData(res.data.data.total_rows);
+        if (window.location.pathname === "/managetasks") {
+          props.setCount(res.data.employee_task_count[0])
+        }
       } else if (res.data.message === "Task data not found") {
         setIsLoading(false);
         setTaskData([]);
@@ -49,7 +56,7 @@ export default function AdminTaskTable(props) {
   useEffect(() => {
     getCommentsList();
     // eslint-disable-next-line
-  }, [taskStatus, props.filter_by_time, currentPage, sortOrder, columnName]);
+  }, [taskStatus, props.adminId, props.employeeId, props.filter_by_time, currentPage, sortOrder, columnName]);
   /*Sorting Function */
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
@@ -264,17 +271,17 @@ export default function AdminTaskTable(props) {
                             className="font-size-2 font-weight-normal text-black-2 mb-0 text-truncate"
                             title={
                               data.status === (0 || "0")
-                                ? "Pending"
+                                ? "Incomplete"
                                 : "Completed"
                             }
                           >
                             {data.status === (0 || "0") ? (
-                              <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
-                                Complete
+                              <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
+                                Incomplete
                               </span>
                             ) : (
-                              <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
-                                Pending
+                              <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
+                                Complete
                               </span>
                             )}
                           </p>
