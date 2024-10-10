@@ -4,6 +4,7 @@ import AdminHeader from './header'
 import TaskCount from '../common/taskCount'
 import AdminTaskTable from '../common/AdminTaskTable'
 import { getallAdminData, getallEmployeeData } from '../../api/api'
+import AdminListTaskTable from '../common/AdminListTaskTabel'
 
 export default function ManageTask() {
     const [apiCall, setApiCall] = useState(false)
@@ -11,9 +12,10 @@ export default function ManageTask() {
     const [adminId, setAdminId] = useState()
     const [userType, setUserType] = useState()
     const [adminType, setAdminType] = useState()
+    const [status, setStatus] = useState()
     const [count, setCount] = useState()
     const [employeeList, setEmployeeList] = useState([])
-    const [employerList, setEmployerList] = useState([])
+    // const [employerList, setEmployerList] = useState([])
     const [adminList, setAdminList] = useState([])
     /*FUnction to get all user data */
     const GetAllUserData = async () => {
@@ -52,38 +54,75 @@ export default function ManageTask() {
         <>
             <div className="site-wrapper overflow-hidden bg-default-2">
                 {/* <!-- Header Area --> */}
-                <AdminHeader heading={"Manage Task"} />
+                <AdminHeader heading={"Task Dashboard"} />
                 {/* <!-- navbar- --> */}
-                <AdminSidebar heading={"Manage Task"} />
-                <div>
-                </div>
+                <AdminSidebar heading={"Task Dashboard"} />
+
                 <div className="dashboard-main-container mt-16" id="dashboard-body">
                     <div className="container-fluid ">
 
-                        <div className="row">
-                            <div className="col-6 mb-18">
-                                <div className=" p-1 form_group mb-3">
-                                    <p className="input_label">Filter by user:</p>
-                                    <select
-                                        name="userId"
-                                        value={userId + "," + userType}
-                                        id="userId"
-                                        onChange={(e) => {
-                                            // console.log(e.target.value.split(",")[0])
-                                            setUserId(e.target.value.split(",")[0]);
-                                            setUserType(e.target.value.split(",")[1])
-                                        }}
-                                        className="form-control bg-white dashboard_select rounded-3"
-                                    >
-                                        <option value={""}>Select user</option>
-                                        {(employeeList || []).map((item, index) => {
-                                            return <option key={index} value={item.employee_id + "," + userType}>{item.name}</option>
-                                        })}                                    </select>
-                                    {/* <small className="text-danger">{searcherror}</small> */}
-                                </div>
-                                <h3 className="font-size-5 mb-0">Candidate's Task</h3>
-                                <div>
-                                    <TaskCount count={count} />
+                        <div className='row'>
+                            <div className="col p-1 form_group mb-3">
+                                <p className="input_label">Search by admin:</p>
+                                <select
+                                    name="adminId"
+                                    value={adminId + "," + adminType}
+                                    id="adminId"
+                                    onChange={(e) => {
+                                        setAdminId(e.target.value.split(",")[0]);
+                                        setAdminType(e.target.value.split(",")[1])
+                                    }}
+                                    className="form-control bg-white dashboard_select rounded-3"
+                                >
+                                    <option value={""}>Select Admin</option>
+                                    {(adminList || []).map((item, index) => {
+                                        return <option key={index} value={item.admin_id + "," + item.admin_type}>{item.name}</option>
+                                    })}
+                                </select>
+                            </div>
+                            <div className="col p-1 form_group mb-3">
+                                <p className="input_label">Filter by user:</p>
+                                <select
+                                    name="userId"
+                                    value={userId + "," + userType}
+                                    id="userId"
+                                    onChange={(e) => {
+                                        // console.log(e.target.value.split(",")[0])
+                                        setUserId(e.target.value.split(",")[0]);
+                                        setUserType(e.target.value.split(",")[1])
+                                    }}
+                                    className="form-control bg-white dashboard_select rounded-3"
+                                >
+                                    <option value={""}>Select user</option>
+                                    {(employeeList || []).map((item, index) => {
+                                        return <option key={index} value={item.employee_id + ",employee"}>{item.name}</option>
+                                    })}                                    </select>
+                                {/* <small className="text-danger">{searcherror}</small> */}
+                            </div>
+                            <div className="col p-1 form_group mb-3">
+                                <p className="input_label">Filter by Status:</p>
+                                <select
+                                    name="status"
+                                    value={status}
+                                    id="status"
+                                    onChange={(e) => {
+                                        // console.log(e.target.value.split(",")[0])
+                                        setStatus(e.target.value.split(",")[0]);
+                                    }}
+                                    className="form-control bg-white dashboard_select rounded-3"
+                                >
+                                    <option value={""}>Select status</option>
+                                    <option value={"1"}>Completed Tasks</option>
+                                    <option value={"0"}>Incomplete Tasks</option>
+                                    <option value={"2"}>Overdue Tasks</option>
+                                </select>
+                                {/* <small className="text-danger">{searcherror}</small> */}
+                            </div>
+                        </div>
+                        <div>
+                            <TaskCount count={count} />
+                            <div className="row">
+                                <div className="col-6 mb-18">
                                     <AdminTaskTable
                                         heading={""}
                                         filter_by_time={""}
@@ -92,41 +131,24 @@ export default function ManageTask() {
                                         employeeId={userId}
                                         TaskUserType={userType}
                                         setCount={setCount}
+                                        status={status}
+                                        adminId={adminId}
                                     />
                                 </div>
-                            </div>
-                            <div className="col-6 mb-18">
-                                <div className="col p-1 form_group mb-3">
-                                    <p className="input_label">Search by admin:</p>
-                                    <select
-                                        name="adminId"
-                                        value={adminId}
-                                        id="adminId"
-                                        onChange={(e) => {
-                                            setAdminId(e.target.value.split(",")[0]);
-                                            setAdminType(e.target.value.split(",")[1])
-                                        }}
-                                        className="form-control bg-white dashboard_select rounded-3"
-                                    >
-                                        <option value={""}>Select Admin</option>
-                                        {(adminList || []).map((item, index) => {
-                                            return <option key={index} value={item.admin_id + "," + item.admin_type}>{item.name}</option>
-                                        })}
-                                    </select>
-                                </div>
-                                <h3 className="font-size-5 mb-0">Admin's task</h3>
-                                <div>
-                                    <TaskCount />
-                                    <AdminTaskTable
+                                <div className="col-6 mb-18">
+                                    <AdminListTaskTable
                                         heading={""}
                                         filter_by_time={""}
                                         apiCall={apiCall}
                                         setApiCall={setApiCall}
+                                        employeeId={userId}
+                                        TaskUserType={userType}
+                                        setCount={setCount}
                                         adminId={adminId}
                                         adminType={adminType}
+
                                     />
                                 </div>
-
                             </div>
                         </div>
                     </div>

@@ -247,12 +247,12 @@ const AdminSidebar = (props) => {
               <i className="fas fa-file mr-5"></i>Manage Documents
             </Link>
           </li> */}
-          <li
-          ref={(el) => (liRefs.current["Manage Task"] = el)}
+        <li
+          ref={(el) => (liRefs.current["Task Dashboard"] = el)}
           className={
             user_type === "agent"
               ? "d-none"
-              : props.heading === "Manage Task"
+              : props.heading === "Task Dashboard"
                 ? "active"
                 : ""
           }
@@ -264,7 +264,7 @@ const AdminSidebar = (props) => {
           >
             {/* <i className="fas fa-filter mr-5"></i> */}
             <FaTasks className="sidebar_icon" />
-            Manage Task
+            Task Dashboard
           </Link>
         </li>
         <li

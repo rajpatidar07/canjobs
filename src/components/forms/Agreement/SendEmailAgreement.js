@@ -303,26 +303,85 @@ export default function SendEmailAgreement({
     subject: felidData.type,
     email: felidData.client_email,
     adminemail: emails,
-    description: `<form style="font-family: Arial, sans-serif; background-color: #f7f7f7; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh;">
-            <div style="background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); max-width: 400px; width: 100%;">
-                <div style="font-size: 24px; font-weight: bold; margin-bottom: 20px; text-align: center;">Sign Agreement</div>
-                <div style="font-size: 16px; color: #666; margin-bottom: 15px; text-align: center;">
-                    Please fill in your details to sign the agreement.
-                </div>
-                <div style="margin-bottom: 15px;display:flex;justify-content:center;">
-                    <a href=${`${
-                      window.location.origin
-                    }/signagreement?id=${user_id}&user=${emp_user_type}&folderId=${folderId}&documentId=${
-                      felidData.document_id
-                    }&type=${felidData.type.replaceAll(
-                      " ",
-                      "%20"
-                    )}`} style="width: 100%; padding: 10px; background-color: #28a745; border: none; border-radius: 5px; color: #fff; font-size: 18px; font-weight: bold; cursor: pointer;text-align: center;">
-                        Sign Agreement
-                    </a>
-                </div>
-            </div>
-        </form>`,
+    description: `<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agreement Email</title>
+</head>
+
+<body>
+    <div style="margin:0;width:100%;background-color:#f3f2f0;padding:0;padding-top:8px;font-family:-apple-system,system-ui,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue','Fira Sans',Ubuntu,Oxygen,'Oxygen Sans',Cantarell,'Droid Sans','Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Lucida Grande',Helvetica,Arial,sans-serif">
+        <div style="height:0;max-height:0;width:0;overflow:hidden;opacity:0;padding: 20px;text-transform: capitalize;">
+             Sign Your Agreement
+        </div>
+        <table role="presentation" valign="top" border="0" cellspacing="0" cellpadding="0" width="512" align="center" style="margin:auto;width:512px;max-width:512px;padding:0;">
+            <tbody>
+                <tr>
+                    <td>
+                        <table role="presentation" valign="top" border="0" cellspacing="0" cellpadding="0" width="100%" style="min-width:100%;background:transparent;">
+                            <tbody>
+                                <tr>
+                                    <td align="left" valign="middle" style="padding: 5px 0;">
+                                        <a href="" style="display:inline-block;text-decoration:none;" target="_blank">
+                                            <img alt="Canpathways" src="https://canpathwaysjobs.com/image/00logo-main-black.png" style="outline:none;text-decoration:none;display:block" width="200" height="auto">
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding:24px;background-color:white;border-radius:5px;">
+                        <div style="color:black;font-size:medium;">
+                            <p>Dear <b>${felidData.name || "user"}</b>,</p>
+                            <p>
+                                We are pleased to inform you that your agreement is now ready for signing. To complete the process, please review and fill in the required details by following the link below:
+                            </p>
+                            <p style="text-align:center;">
+                                <a href=${`${window.location.origin
+      }/signagreement?id=${user_id}&user=${emp_user_type}&folderId=${folderId}&documentId=${felidData.document_id
+      }&type=${felidData.type.replaceAll(
+        " ",
+        "%20"
+      )}`} style="background-color:#0a66c2;color:white;padding:10px 20px;border-radius:5px;text-decoration:none;font-weight:bold;">Sign the Agreement</a>
+                            </p>
+                            <p>
+                                Please ensure all necessary information is provided before submitting your signature. Should you have any questions or require assistance, feel free to reach out to our support team.
+                            </p>
+                            <p>
+                                Thank you for your prompt attention to this matter.
+                            </p>
+                            <p>Best regards,<br><b>Canpathways Team</b></p>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="background-color:#f3f2f0;padding:24px;">
+                        <table role="presentation" valign="top" border="0" cellspacing="0" cellpadding="0" width="100%" style="font-size:16px;text-align:center;">
+                            <tbody>
+                                <tr>
+                                    <td style="padding-bottom:8px;font-size:x-small;">
+                                        <i>If you did not initiate this request, please disregard this email. For any concerns, contact us at <b>jobportal@canpathways.com</b>.</i>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size:x-small;">&copy; 2023 Canpathways</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
+`,
   };
   //Aws: https://canpathwaysjobs.com
   //Vercel: https://canjobs.vercel.app

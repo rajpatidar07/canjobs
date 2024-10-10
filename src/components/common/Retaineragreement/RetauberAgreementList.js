@@ -60,6 +60,8 @@ export default function RetauberAgreementList({
       let res = await GetAgreement("", user_id, emp_user_type);
       if (res.data.data) {
         setAgreementList(res.data.data);
+        const newUrl = window.location.pathname;
+        window.history.replaceState({}, document.title, newUrl);
       } else {
         setAgreementList([]);
       }

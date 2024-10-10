@@ -11,6 +11,7 @@ import UserProfile from "../user/profile";
 import EmployeeTable from "../common/employeeTable";
 import CustomButton from "../common/button";
 import ApplicantsFilter from "../common/applicantsFilter";
+import ExportExcelButton from "../common/exportExcelButton";
 
 function SelfApplicat(props) {
   /*Show modal states */
@@ -144,6 +145,7 @@ function SelfApplicat(props) {
                   {props.skill === null ||
                     props.skill === undefined ||
                     Object.keys(props.skill).length === 0 ? (
+                      <>
                     <div className="col px-1 form_group mt-4 text-right">
                       <CustomButton
                         className="font-size-3 rounded-3 btn btn-primary border-0"
@@ -153,6 +155,10 @@ function SelfApplicat(props) {
                         Add Candidate
                       </CustomButton>
                     </div>
+                    <div className="form_group mt-4 text-right">
+                        <ExportExcelButton type={"employee"} />
+                      </div>
+                    </>
                   ) : null}
                 </div>
                 <small className="text-danger">{searcherror}</small>

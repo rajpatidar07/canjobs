@@ -846,6 +846,57 @@ export const GetCommentsAndAssign = async (
   );
   return response;
 };
+/*Api to get document task admin list  */
+export const GetAdminsTasks = async (
+  id,
+  userid,
+  status,
+  type,
+  page,
+  limit,
+  sort,
+  column,
+  time,
+  assigned_user_type,
+  employeeId,
+  userType,
+) => {
+  console.log( "idi"+id,
+  "userid"+userid,
+  "status"+status,
+    "type"+type,
+    "page"+page,
+    "limit"+limit,
+    "sort"+sort,
+    "column"+column,
+    "time"+time,
+   "assigned_user_type" +assigned_user_type)
+  const response = await axios.post(
+    `${API_URL}admin/getDocTaskByAssignedType`,
+    {
+      page: page,
+      limit: limit,
+      sort_order: sort,
+      column_name: column,
+      filter_by_time: time,
+      doc_id: id,
+      assined_to_user_id: userid,
+      status: status,
+      type: type,
+      assigned_user_type: assigned_user_type,
+      employee_id: employeeId,
+      employee_type:userType
+      // id:"",task_creator_user_id:""
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+};
 /*Api to update Documentcomment assign */
 export const UpdateDocuentcommentAssign = async (json, docUserType) => {
   const response = await axios.put(`${API_URL}admin/updateDocTask?document_user_type=${docUserType}`, json, {

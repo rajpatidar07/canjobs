@@ -837,7 +837,7 @@ export default function EmployeeTable(props) {
                   </tr>
                 ) : (
                   (employeeData || []).map((empdata) => (
-                    <>
+                    <React.Fragment key={empdata.id}>
                       {props?.ApplicantType ? (
                         <tr style={{ border: "0" }}>
                           <td
@@ -1245,7 +1245,7 @@ export default function EmployeeTable(props) {
                                 title={empdata.interested_in}
                               >
                                 <span
-                                  className={`p-3 ${empdata.interested_in === "visitor visa"
+                                  className={`p-3 ${empdata.interested_in === "pnp"||empdata.interested_in === "study permit"
                                     ? "text-dark"
                                     : "text-white"
                                     } text-center  border rounded-pill 
@@ -1616,7 +1616,7 @@ title="Approve Applicant"
           ""
         )} */}
                       </tr>
-                    </>
+                    </React.Fragment>
                   ))
                 )}
               </tbody>

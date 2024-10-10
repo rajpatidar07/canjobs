@@ -3,6 +3,7 @@ import { IoCheckmarkDoneCircle } from "react-icons/io5";
 import { MdOutlineDoNotDisturbOff } from 'react-icons/md';
 import { FaTasks } from 'react-icons/fa';
 import { RiPassExpiredFill } from 'react-icons/ri';
+import { Link } from 'react-router-dom';
 export default function TaskCount({ count }) {
     return (
         <div className="container-fluid mt-5">
@@ -10,8 +11,7 @@ export default function TaskCount({ count }) {
             <div className="row mb-7 ">
                 <div className="col-xxl-6 col-xl-6 col-md-6 col-6 col-sm-6">
                     {/* <!-- Single Category --> */}
-                    <a
-                        href="/job"
+                    <Link to={""}
                         className="media bg-white rounded-4 pl-3 pt-3 pb-3 pr-3 hover-shadow-1 mb-3 shadow-8"
                     >
                         <div className="text-blue bg-blue-opacity-1 circle-36 font-size-3 mr-3">
@@ -25,16 +25,16 @@ export default function TaskCount({ count }) {
                                 </span>
                             </h5>
                             <p className="font-size-3 text-center font-weight-normal text-gray mb-0">
-                                Total Task
+                                Total Tasks
                             </p>
                         </div>
-                    </a>
+                    </Link>
                     {/* <!-- End Single Category --> */}
                 </div>
                 <div className="col-xxl-6 col-xl-6 col-md-6 col-6 col-sm-6">
                     {/* <!-- Single Category --> */}
-                    <a
-                        href="/employee"
+                    <Link
+                        to=""
                         className="media bg-white rounded-4 pl-3 pt-3 pb-3 pr-3 hover-shadow-1 mb-3 shadow-8"
                     >
                         <div className="text-shamrock bg-green-opacity-1 circle-36 font-size-3 mr-3">
@@ -51,13 +51,13 @@ export default function TaskCount({ count }) {
                                 Completed Tasks
                             </p>
                         </div>
-                    </a>
+                    </Link>
                     {/* <!-- End Single Category --> */}
                 </div>
                 <div className="col-xxl-6 col-xl-6 col-md-6 col-6 col-sm-6">
                     {/* <!-- Single Category --> */}
-                    <a
-                        href="/job"
+                    <Link
+                        to=""
                         className="media bg-white rounded-4 pl-3 pt-3 pb-3 pr-3 hover-shadow-1 mb-3 shadow-8"
                     >
                         <div className="text-danger bg-danger-opacity-1 circle-36 font-size-3 mr-3">
@@ -71,16 +71,16 @@ export default function TaskCount({ count }) {
                                 </span>
                             </h5>
                             <p className="font-size-3 text-center font-weight-normal text-gray mb-0">
-                                Incommoded Task
+                                Incomplete Task
                             </p>
                         </div>
-                    </a>
+                    </Link>
                     {/* <!-- End Single Category --> */}
                 </div>
                 <div className="col-xxl-6 col-xl-6 col-md-6 col-6 col-sm-6">
                     {/* <!-- Single Category --> */}
-                    <a
-                        href="/employee"
+                    <Link
+                        to=""
                         className="media bg-white rounded-4 pl-3 pt-3 pb-3 pr-3 hover-shadow-1 mb-3 shadow-8"
                     >
                         <div className="text-warning bg-warning-opacity-1 circle-36 font-size-3 mr-3">
@@ -93,10 +93,10 @@ export default function TaskCount({ count }) {
                                 </span>
                             </h5>
                             <p className="font-size-3 text-center font-weight-normal text-gray mb-0">
-                                Over due Tasks
+                                Overdue Tasks
                             </p>
                         </div>
-                    </a>
+                    </Link>
                     {/* <!-- End Single Category --> */}
                 </div>
             </div>

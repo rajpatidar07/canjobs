@@ -24,9 +24,9 @@ export default function AdminTaskTable(props) {
       let res = await GetCommentsAndAssign(
         "",
         props.adminId,//adminEmail,
-        taskStatus,
+        props.status ? props.status : taskStatus,
         "document",
-        currentPage,
+        window.location.pathname === "/dashboard" ? props.pageNo : currentPage,
         recordsPerPage,
         sortOrder,
         columnName,
@@ -34,7 +34,7 @@ export default function AdminTaskTable(props) {
         props.adminType,
         props.employeeId,
         props.TaskUserType,
-        
+
       );
       if (res.data.status === (1 || "1")) {
         setTaskData(res.data.data.data);
@@ -56,7 +56,7 @@ export default function AdminTaskTable(props) {
   useEffect(() => {
     getCommentsList();
     // eslint-disable-next-line
-  }, [taskStatus, props.adminId, props.employeeId, props.filter_by_time, currentPage, sortOrder, columnName]);
+  }, [taskStatus, props.adminType, props.status, props.adminId, props.employeeId, props.filter_by_time, currentPage, sortOrder, columnName]);
   /*Sorting Function */
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
@@ -79,7 +79,7 @@ export default function AdminTaskTable(props) {
                     to={""}
                     onClick={() => {
                       handleSort("task_creator_user_name");
-                      props.setpageNo(1);
+                      window.location.pathname === "/dashboard" ? props.setpageNo(1) : setCurrentPage(1)
                     }}
                     className="text-gray"
                     title="Sort by Assigned From"
@@ -95,7 +95,7 @@ export default function AdminTaskTable(props) {
                     to={""}
                     onClick={() => {
                       handleSort("assigned_to_name");
-                      props.setpageNo(1);
+                      window.location.pathname === "/dashboard" ? props.setpageNo(1) : setCurrentPage(1)
                     }}
                     className="text-gray"
                     title="Sort by Assigned To"
@@ -111,7 +111,7 @@ export default function AdminTaskTable(props) {
                     to={""}
                     onClick={() => {
                       handleSort("subject_description");
-                      props.setpageNo(1);
+                      window.location.pathname === "/dashboard" ? props.setpageNo(1) : setCurrentPage(1)
                     }}
                     className="text-gray"
                     title="Sort by Description"
@@ -130,7 +130,7 @@ export default function AdminTaskTable(props) {
                         to={""}
                         onClick={() => {
                           handleSort("type");
-                          props.setpageNo(1);
+                           window.location.pathname === "/dashboard"?props.setpageNo(1):setCurrentPage(1)
                         }}
                         className="text-gray"
                         title="Sort by Type"
@@ -148,7 +148,7 @@ export default function AdminTaskTable(props) {
                       to={""}
                       onClick={() => {
                         handleSort("status");
-                        props.setpageNo(1);
+                        window.location.pathname === "/dashboard" ? props.setpageNo(1) : setCurrentPage(1)
                       }}
                       className="text-gray"
                       title="Sort by Status"
@@ -168,7 +168,7 @@ export default function AdminTaskTable(props) {
                       to={""}
                       // onClick={() => {
                       //   handleSort("country");
-                      //   props.setpageNo(1);
+                      //    window.location.pathname === "/dashboard"?props.setpageNo(1):setCurrentPage(1)
                       // }}
                       className="text-gray"
                       title="Sort by Country"
@@ -368,8 +368,8 @@ export default function AdminTaskTable(props) {
       <div className="pt-2">
         <Pagination
           nPages={nPages}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
+          currentPage={window.location.pathname === "/dashboard" ? props.pageNo : currentPage}
+          setCurrentPage={window.location.pathname === "/dashboard" ? props.setpageNo : setCurrentPage}
           total={totalData}
           count={taskData.length}
         />

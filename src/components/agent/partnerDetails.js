@@ -37,7 +37,7 @@ export default function PartnerDetails({ setLoginCondition }) {
   const [showPartnerInfoModal, setShowPartnerInfoModal] = useState(false);
   useState(false);
   const [TabActive, setTabActive] = useState(
-    partnerChat ? "support" : PartnerId === "true" ? "notes" : "profile"
+    partnerChat ? "support" : notes === "true" ? "notes" : "profile"
   );
   const [data, setData] = useState("");
   const [chartData, setChartData] = useState([]);

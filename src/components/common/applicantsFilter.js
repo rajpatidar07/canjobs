@@ -372,7 +372,6 @@ export default function ApplicantsFilter({
             : "d-none"
         }
       >
-        {console.log(FilterJson.interested_sub_type[pageName.replaceAll("_", " ")])}
         <p className="input_label">Filter by Sub Type:</p>
         <div className="select_div">
           <select
