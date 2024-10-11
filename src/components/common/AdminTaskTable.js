@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Loader from "./loader";
 import { Link } from "react-router-dom";
-import { GetCommentsAndAssign } from "../../api/api";
+import { GetCommentsAndAssign, UpdateDocuentcommentAssign } from "../../api/api";
 import Pagination from "./pagination";
+import { Dropdown, DropdownButton } from "react-bootstrap";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import { toast } from "react-toastify";
 export default function AdminTaskTable(props) {
   const [taskData, setTaskData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -56,11 +59,62 @@ export default function AdminTaskTable(props) {
   useEffect(() => {
     getCommentsList();
     // eslint-disable-next-line
-  }, [taskStatus, props.adminType, props.status, props.adminId, props.employeeId, props.filter_by_time, currentPage, sortOrder, columnName]);
+  }, [taskStatus, props.apiCall, props.adminType, props.status, props.adminId, props.employeeId, props.filter_by_time, currentPage, sortOrder, columnName]);
   /*Sorting Function */
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
     setcolumnName(columnName);
+  };
+  /*function to change task status */
+  const OnStatusChange = async (originalData, status) => {
+    const {
+      assigned_to,
+      // subject_description,
+      assigned_to_name,
+      assigned_user_type,
+      assined_to_user_id,
+    } = originalData;
+
+    // ;
+    // Construct the final data to send to the API
+    const updatedData = {
+      // ...originalData,
+      doc_id: originalData.doc_id,
+      status: status,
+      is_status_update: true,
+      // subject_description: updatedCommentToApi,
+      task_creator_user_id: localStorage.getItem(localStorage.getItem("userType") === "admin" ? "admin_id" : "agent_id"),
+      task_creator_user_type:
+        localStorage.getItem("userType") === "admin" ? "admin" : "agent",
+      assined_to_user_id: assined_to_user_id,
+      assigned_user_type: assigned_user_type,
+      doc_parent_id: originalData.doc_parent_id,
+      assigned_to: assigned_to,
+      assigned_to_name: assigned_to_name,
+      id: originalData.id,
+    };
+    // Debug logs to verify the updated values
+    // console.log("Assigned User Type: ", updatedUserTypes);
+    // console.log("Assigned User ID: ", updatedUserIds);
+    // console.log("Assigned To Name: ", updatedNames);
+    // console.log("Assigned To: ", updatedEmails);
+    // console.log("Updated Comment: ", updatedCommentToApi);
+    console.log("Updated Data: ", updatedData);
+
+    // Call the API to update the document
+    try {
+      let res = await UpdateDocuentcommentAssign(updatedData, props.TaskUserType);
+      if (res.message === "Task updated successfully!") {
+        toast.success("Task completed Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        if (window.location.pathname === "/managetasks") { props.setApiCall(true) }
+      }
+    } catch (err) {
+      if (window.location.pathname === "/managetasks") { props.setApiCall(true) }
+      console.log(err);
+    }
   };
   return (
     <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
@@ -267,24 +321,71 @@ export default function AdminTaskTable(props) {
                           data.status === "" ? (
                           <p className="font-size-3  mb-0">N/A</p>
                         ) : (
-                          <p
-                            className="font-size-2 font-weight-normal text-black-2 mb-0 text-truncate"
-                            title={
-                              data.status === (0 || "0")
-                                ? "Incomplete"
-                                : "Completed"
-                            }
-                          >
-                            {data.status === (0 || "0") ? (
-                              <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
-                                Incomplete
-                              </span>
-                            ) : (
-                              <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
+                          <>
+                            {window.location.pathname === "/managetasks" ? <DropdownButton
+                              as={ButtonGroup}
+                              title={
+                                data.status === "1"
+                                  ? "Completed"
+                                  : data.status === "2"
+                                    ? "OverDue"
+                                    : "Incomplete"
+                              }
+                              variant={data.status === ("1" || 1)
+                                ? "shamrock"
+                                : data.status === ("2" || 2)
+                                  ? "warning"
+                                  : "danger"}
+                              size="xs"
+                              className={`user_status_btn btn-xs ${data.status === "1"
+                                ? "btn-shamrock"
+                                : data.status === "2"
+                                  ? "btn-warning"
+                                  : "btn-danger"
+                                } rounded-pill font-size-1 px-1 text-white mr-2`}
+                              onSelect={(eventKey, e) => OnStatusChange(data, eventKey)}                          >
+                              <Dropdown.Item
+                                value={1}
+                                eventKey={1}
+                                className="text-capitalize"
+                              >
                                 Complete
-                              </span>
-                            )}
-                          </p>
+                              </Dropdown.Item>
+                              <Dropdown.Item
+                                value={0}
+                                eventKey={0}
+                                className="text-capitalize"
+                              >
+                                Incomplete
+                              </Dropdown.Item>
+                              <Dropdown.Item
+                                value={2}
+                                eventKey={2}
+                                className="text-capitalize"
+                              >
+                                Overdue
+                              </Dropdown.Item>
+                            </DropdownButton>
+                              :
+                              <p
+                                className="font-size-2 font-weight-normal text-black-2 mb-0 text-truncate"
+                                title={
+                                  data.status === (0 || "0")
+                                    ? "Incomplete"
+                                    : "Completed"
+                                }
+                              >
+                                {data.status === (0 || "0") ? (
+                                  <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
+                                    Incomplete
+                                  </span>
+                                ) : (
+                                  <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
+                                    Complete
+                                  </span>
+                                )}
+                              </p>}
+                          </>
                         )}
                       </td>
 

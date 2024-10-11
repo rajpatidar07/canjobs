@@ -51,16 +51,22 @@ export default function AdminListTaskTable(props) {
                     setIsLoading(false);
                     setTotalData(res.data.data.total_rows);
                 }
+            } else if (res.data.status === (0 || "0") || res.data.message === "Task data not found") {
+                setIsLoading(false);
+                setAdminTaskData([]);
+                setTotalData(0);
             }
         } catch (err) {
             console.log(err);
             setIsLoading(false);
+            setAdminTaskData([]);
+            setTotalData(0);
         }
     };
     useEffect(() => {
         getAdminList();
         // eslint-disable-next-line
-    }, [taskStatus, props.TaskUserType, props.adminId, props.employeeId, props.filter_by_time, currentPage, sortOrder, columnName]);
+    }, [taskStatus,props.status, props.TaskUserType, props.adminId, props.employeeId, props.filter_by_time, currentPage, sortOrder, columnName]);
     /*Sorting Function */
     const handleSort = (columnName) => {
         setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
@@ -84,7 +90,7 @@ export default function AdminListTaskTable(props) {
                                             <Link
                                                 to={""}
                                                 onClick={() => {
-                                                    handleSort("task_creator_user_name");
+                                                    handleSort("assigned_to_name");
                                                     setCurrentPage(1);
                                                 }}
                                                 className="text-gray"
@@ -116,7 +122,7 @@ export default function AdminListTaskTable(props) {
                                             <Link
                                                 to={""}
                                                 onClick={() => {
-                                                    handleSort("subject_description");
+                                                    handleSort("assigned_user_type");
                                                     setCurrentPage(1);
                                                 }}
                                                 className="text-gray"
@@ -135,7 +141,7 @@ export default function AdminListTaskTable(props) {
                                                 <Link
                                                     to={""}
                                                     onClick={() => {
-                                                        handleSort("Total task");
+                                                        handleSort("total_tasks");
                                                         setCurrentPage(1);
                                                     }}
                                                     className="text-gray"
@@ -153,7 +159,7 @@ export default function AdminListTaskTable(props) {
                                                 <Link
                                                     to={""}
                                                     onClick={() => {
-                                                        handleSort("status");
+                                                        handleSort("total_completed_task");
                                                         setCurrentPage(1);
                                                     }}
                                                     className="text-gray"
@@ -172,10 +178,10 @@ export default function AdminListTaskTable(props) {
                                             >
                                                 <Link
                                                     to={""}
-                                                    // onClick={() => {
-                                                    //   handleSort("country");
-                                                    //   setCurrentPage(1);
-                                                    // }}
+                                                    onClick={() => {
+                                                        handleSort("total_uncompleted_task");
+                                                        setCurrentPage(1);
+                                                    }}
                                                     className="text-gray"
                                                     title="Sort by Incomplete tasks"
                                                 >
@@ -192,10 +198,10 @@ export default function AdminListTaskTable(props) {
                                             >
                                                 <Link
                                                     to={""}
-                                                    // onClick={() => {
-                                                    //   handleSort("country");
-                                                    //   setCurrentPage(1);
-                                                    // }}
+                                                    onClick={() => {
+                                                        handleSort("total_overdue_task");
+                                                        setCurrentPage(1);
+                                                    }}
                                                     className="text-gray"
                                                     title="Sort by Overdue tasks"
                                                 >
@@ -214,7 +220,7 @@ export default function AdminListTaskTable(props) {
                                             </th>
                                         </tr>
                                     ) : (
-                                        (AdminTaskData || []).map((data,index) => (
+                                        (AdminTaskData || []).map((data, index) => (
                                             <React.Fragment key={index}>
                                                 <tr className="text-capitalize applicant_row">
                                                     <td className=" py-5">

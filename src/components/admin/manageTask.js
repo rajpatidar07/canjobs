@@ -5,6 +5,7 @@ import TaskCount from '../common/taskCount'
 import AdminTaskTable from '../common/AdminTaskTable'
 import { getallAdminData, getallEmployeeData } from '../../api/api'
 import AdminListTaskTable from '../common/AdminListTaskTabel'
+import CustomButton from '../common/button'
 
 export default function ManageTask() {
     const [apiCall, setApiCall] = useState(false)
@@ -48,6 +49,9 @@ export default function ManageTask() {
     useEffect(() => {
 
         GetAllUserData();
+        if (apiCall === true) {
+            setApiCall(false)
+        }
     }, [apiCall])
     return (
 
@@ -118,6 +122,18 @@ export default function ManageTask() {
                                 </select>
                                 {/* <small className="text-danger">{searcherror}</small> */}
                             </div>
+                            <div className="col p-1 form_group mb-3 mt-3 ">
+
+                                <CustomButton
+                                    className="font-size-3 rounded-3 btn btn-primary border-0"
+                                    onClick={() => {
+                                        setStatus("")
+                                        setUserId();
+                                        setUserType()
+                                        setAdminId();
+                                        setAdminType()
+                                    }}>Reset</CustomButton>
+                            </div>
                         </div>
                         <div>
                             <TaskCount count={count} />
@@ -146,6 +162,7 @@ export default function ManageTask() {
                                         setCount={setCount}
                                         adminId={adminId}
                                         adminType={adminType}
+                                        status={status}
 
                                     />
                                 </div>

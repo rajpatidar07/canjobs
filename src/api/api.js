@@ -861,16 +861,16 @@ export const GetAdminsTasks = async (
   employeeId,
   userType,
 ) => {
-  console.log( "idi"+id,
-  "userid"+userid,
-  "status"+status,
-    "type"+type,
-    "page"+page,
-    "limit"+limit,
-    "sort"+sort,
-    "column"+column,
-    "time"+time,
-   "assigned_user_type" +assigned_user_type)
+  // console.log( "idi"+id,
+  // "userid"+userid,
+  // "status"+status,
+  //   "type"+type,
+  //   "page"+page,
+  //   "limit"+limit,
+  //   "sort"+sort,
+  //   "column"+column,
+  //   "time"+time,
+  //  "assigned_user_type" +assigned_user_type)
   const response = await axios.post(
     `${API_URL}admin/getDocTaskByAssignedType`,
     {

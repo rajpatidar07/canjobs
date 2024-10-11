@@ -132,7 +132,26 @@ const AdminSidebar = (props) => {
             {/* <i className="fab fa-blackberry mr-5"></i>Dashboard */}
           </Link>
         </li>
-
+        <li
+          ref={(el) => (liRefs.current["Task Dashboard"] = el)}
+          className={
+            user_type === "agent"
+              ? "d-none"
+              : props.heading === "Task Dashboard"
+                ? "active"
+                : ""
+          }
+        >
+          <Link
+            onClick={() => clearPageNo()}
+            to="/managetasks"
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+          >
+            {/* <i className="fas fa-filter mr-5"></i> */}
+            <FaTasks className="sidebar_icon" />
+            Task Dashboard
+          </Link>
+        </li>
         <li
           ref={(el) => (liRefs.current["Manage Applicants"] = el)}
           className={`${props.heading === "Manage Applicants" ? "active" : ""}`}
@@ -247,26 +266,7 @@ const AdminSidebar = (props) => {
               <i className="fas fa-file mr-5"></i>Manage Documents
             </Link>
           </li> */}
-        <li
-          ref={(el) => (liRefs.current["Task Dashboard"] = el)}
-          className={
-            user_type === "agent"
-              ? "d-none"
-              : props.heading === "Task Dashboard"
-                ? "active"
-                : ""
-          }
-        >
-          <Link
-            onClick={() => clearPageNo()}
-            to="/managetasks"
-            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
-          >
-            {/* <i className="fas fa-filter mr-5"></i> */}
-            <FaTasks className="sidebar_icon" />
-            Task Dashboard
-          </Link>
-        </li>
+       
         <li
           ref={(el) => (liRefs.current["LMIA status"] = el)}
           className={
