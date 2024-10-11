@@ -69,7 +69,6 @@ export default function AdminTaskTable(props) {
   const OnStatusChange = async (originalData, status) => {
     const {
       assigned_to,
-      // subject_description,
       assigned_to_name,
       assigned_user_type,
       assined_to_user_id,
@@ -93,13 +92,6 @@ export default function AdminTaskTable(props) {
       assigned_to_name: assigned_to_name,
       id: originalData.id,
     };
-    // Debug logs to verify the updated values
-    // console.log("Assigned User Type: ", updatedUserTypes);
-    // console.log("Assigned User ID: ", updatedUserIds);
-    // console.log("Assigned To Name: ", updatedNames);
-    // console.log("Assigned To: ", updatedEmails);
-    // console.log("Updated Comment: ", updatedCommentToApi);
-    console.log("Updated Data: ", updatedData);
 
     // Call the API to update the document
     try {
@@ -334,15 +326,16 @@ export default function AdminTaskTable(props) {
                               variant={data.status === ("1" || 1)
                                 ? "shamrock"
                                 : data.status === ("2" || 2)
-                                  ? "warning"
-                                  : "danger"}
+                                  ? "danger"
+                                  : "warning"}
                               size="xs"
                               className={`user_status_btn btn-xs ${data.status === "1"
                                 ? "btn-shamrock"
                                 : data.status === "2"
-                                  ? "btn-warning"
-                                  : "btn-danger"
+                                  ? "btn-danger"
+                                  : "btn-warning"
                                 } rounded-pill font-size-1 px-1 text-white mr-2`}
+                              disabled={data.status === (2 || "2")}
                               onSelect={(eventKey, e) => OnStatusChange(data, eventKey)}                          >
                               <Dropdown.Item
                                 value={1}
@@ -358,13 +351,13 @@ export default function AdminTaskTable(props) {
                               >
                                 Incomplete
                               </Dropdown.Item>
-                              <Dropdown.Item
+                              {/* <Dropdown.Item
                                 value={2}
                                 eventKey={2}
                                 className="text-capitalize"
                               >
                                 Overdue
-                              </Dropdown.Item>
+                              </Dropdown.Item> */}
                             </DropdownButton>
                               :
                               <p

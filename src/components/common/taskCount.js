@@ -1,8 +1,8 @@
 import React from 'react'
-import { IoCheckmarkDoneCircle } from "react-icons/io5";
-import { MdOutlineDoNotDisturbOff } from 'react-icons/md';
+import {  MdOutlinePendingActions } from 'react-icons/md';
 import { FaTasks } from 'react-icons/fa';
 import { BiTaskX } from "react-icons/bi";import { Link } from 'react-router-dom';
+import { AiOutlineFileDone } from 'react-icons/ai';
 export default function TaskCount({ count }) {
     const cardData = [
         {
@@ -16,7 +16,7 @@ export default function TaskCount({ count }) {
         {
             title: 'Completed Tasks',
             count: count?.total_completed_task || 'N/A',
-            icon: <IoCheckmarkDoneCircle />,
+            icon: <AiOutlineFileDone />,
             bgColor: '#e9f7ec', // Light green background
             iconColor: '#28a745', // Bootstrap green
             textColor: '#333',
@@ -24,17 +24,17 @@ export default function TaskCount({ count }) {
         {
             title: 'Incomplete Tasks',
             count: count?.total_uncompleted_task || 'N/A',
-            icon: <MdOutlineDoNotDisturbOff />,
-            bgColor: '#fcebe9', // Light red background
-            iconColor: '#dc3545', // Bootstrap danger red
+            icon: <MdOutlinePendingActions />,
+            bgColor: '#fff8e1', // Light red background
+            iconColor:  '#ffc107', // Bootstrap danger red
             textColor: '#333',
         },
         {
             title: 'Overdue Tasks',
             count: count?.total_overdue_task || 'N/A',
             icon: <BiTaskX />,
-            bgColor: '#fff8e1', // Light yellow background
-            iconColor: '#ffc107', // Bootstrap yellow
+            bgColor: '#fcebe9', // Light yellow background
+            iconColor: '#dc3545', // Bootstrap yellow
             textColor: '#333',
         },
     ];
