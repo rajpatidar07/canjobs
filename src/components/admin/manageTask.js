@@ -3,7 +3,7 @@ import AdminSidebar from './sidebar'
 import AdminHeader from './header'
 import TaskCount from '../common/taskCount'
 import AdminTaskTable from '../common/AdminTaskTable'
-import { getallAdminData, getallEmployeeData } from '../../api/api'
+import { getallAdminData, getallEmployeeData, getAllEmployer } from '../../api/api'
 import AdminListTaskTable from '../common/AdminListTaskTabel'
 import CustomButton from '../common/button'
 
@@ -23,6 +23,7 @@ export default function ManageTask() {
         try {
             const userData = await getallEmployeeData();
             const AdminData = await getallAdminData();
+            const CompanyData = await getAllEmployer()
             //   if (window.location.pathname === `/${user_id}`) {
             //     const Partnerdata = await GetAgent();
             //     let newPartnerList = Partnerdata.data.data.filter(
@@ -32,11 +33,15 @@ export default function ManageTask() {
             //     // newPartnerList = [...newPartnerList,...otherPartners];
             //     setPartnerist(newPartnerList);
             //   }
-            if (userData.data.length === 0) {
+            let allUserData = [];
+
+            if (userData?.data?.length === 0 && CompanyData?.data?.length === 0) {
                 setEmployeeList([]);
             } else {
-                setEmployeeList(userData.data);
+                allUserData = [...userData.data, ...CompanyData.data]; // Merge the arrays
+                setEmployeeList(allUserData);
             }
+
             if (AdminData.data.length === 0) {
                 setAdminList([]);
             } else {
@@ -99,7 +104,7 @@ export default function ManageTask() {
                                 >
                                     <option value={""}>Select user</option>
                                     {(employeeList || []).map((item, index) => {
-                                        return <option key={index} value={item.employee_id + ",employee"}>{item.name}</option>
+                                        return <option className='text-capitalize' key={index} value={item.employee_id ? item.employee_id : item.company_id + `,${item.employee_id ? "employee" : "employer"}`}>{(item.employee_id ? item.name : item.company_name) || "unknown user"}</option>
                                     })}                                    </select>
                                 {/* <small className="text-danger">{searcherror}</small> */}
                             </div>

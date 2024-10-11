@@ -154,9 +154,9 @@ export default function CommentSection({
         inputValue.includes(
           allAdmin.filter((item) => selectedAdminReply?.includes(item.email))
             ? allAdmin
-                .filter((item) => selectedAdminReply?.includes(item.email))
-                .map((admin) => admin.name)
-                .join(",")
+              .filter((item) => selectedAdminReply?.includes(item.email))
+              .map((admin) => admin.name)
+              .join(",")
             : ""
         )
       ) {
@@ -167,9 +167,9 @@ export default function CommentSection({
           inputValue.includes(
             allAdmin.filter((item) => selectedAdmin?.includes(item.email))
               ? allAdmin
-                  .filter((item) => selectedAdmin?.includes(item.email))
-                  .map((admin) => admin.name)
-                  .join(",")
+                .filter((item) => selectedAdmin?.includes(item.email))
+                .map((admin) => admin.name)
+                .join(",")
               : ""
           )
         ) {
@@ -268,40 +268,40 @@ export default function CommentSection({
       AdminType === "agent"
         ? admin_name
         : newAssinList.find((item) => item.admin_id === admin_id)
-        ? newAssinList.find((item) => item.admin_id === admin_id).name
-        : admin_name;
+          ? newAssinList.find((item) => item.admin_id === admin_id).name
+          : admin_name;
     let senderEmail =
       AdminType === "agent"
         ? admin_email
         : newAssinList.find((item) => item.admin_id === admin_id)
-        ? newAssinList.find((item) => item.admin_id === admin_id).email
-        : "";
+          ? newAssinList.find((item) => item.admin_id === admin_id).email
+          : "";
     // Variables for mentioning admins
     const email = selectedAdmin; // (selectedAdmin + `${selectedPartner && "," + selectedPartner.email}`) || ""; ///\S+@\S+\.\S+/.test(comments) ? comments : "";
     let assignedAdminName = newAssinList.filter((item) =>
       selectedAdmin?.includes(item.email)
     )
       ? newAssinList
-          .filter((item) => selectedAdmin?.includes(item.email))
-          .map((admin) => admin.name)
-          .join(",")
+        .filter((item) => selectedAdmin?.includes(item.email))
+        .map((admin) => admin.name)
+        .join(",")
       : "";
     const assignedUserId = newAssinList.filter((item) =>
       selectedAdmin?.includes(item.email)
     )
       ? newAssinList
-          .filter((item) => selectedAdmin?.includes(item.email))
-          .map((admin) => (admin.u_id ? admin.id : admin.admin_id))
-          .join(",")
+        .filter((item) => selectedAdmin?.includes(item.email))
+        .map((admin) => (admin.u_id ? admin.id : admin.admin_id))
+        .join(",")
       : "";
     // eslint-disable-next-line no-useless-concat
     const assignedUserType = newAssinList.filter((item) =>
       selectedAdmin?.includes(item.email)
     )
       ? newAssinList
-          .filter((item) => selectedAdmin?.includes(item.email))
-          .map((admin) => (admin.u_id ? "agent" : admin.admin_type))
-          .join(",")
+        .filter((item) => selectedAdmin?.includes(item.email))
+        .map((admin) => (admin.u_id ? "agent" : admin.admin_type))
+        .join(",")
       : "";
 
     /*Comment */
@@ -421,8 +421,8 @@ export default function CommentSection({
       AdminType === "agent"
         ? admin_name
         : newAssinList.find((item) => item.admin_id === admin_id)
-        ? newAssinList.find((item) => item.admin_id === admin_id).name
-        : "";
+          ? newAssinList.find((item) => item.admin_id === admin_id).name
+          : "";
     let senderId = newAssinList.find((item) => item.admin_id === admin_id)
       ? newAssinList.find((item) => item.admin_id === admin_id).admin_id
       : "";
@@ -430,38 +430,38 @@ export default function CommentSection({
       AdminType === "agent"
         ? admin_email
         : newAssinList.find((item) => item.admin_id === admin_id)
-        ? newAssinList.find((item) => item.admin_id === admin_id).email
-        : "";
+          ? newAssinList.find((item) => item.admin_id === admin_id).email
+          : "";
     let senderType =
       AdminType === "agent"
         ? "agent"
         : newAssinList.find((item) => item.admin_id === admin_id)
-        ? newAssinList.find((item) => item.admin_id === admin_id).admin_type
-        : "";
+          ? newAssinList.find((item) => item.admin_id === admin_id).admin_type
+          : "";
     // Variables for mentioning admins
     const email = selectedAdminReply || ""; ///\S+@\S+\.\S+/.test(comments) ? comments : "";
     let assignedAdminName = newAssinList.filter((item) =>
       selectedAdminReply?.includes(item.email)
     )
       ? newAssinList
-          .filter((item) => selectedAdminReply?.includes(item.email))
-          .map((admin) => admin.name)
-          .join(",")
+        .filter((item) => selectedAdminReply?.includes(item.email))
+        .map((admin) => admin.name)
+        .join(",")
       : "";
     const assignedUserId = newAssinList.filter((item) =>
       selectedAdminReply?.includes(item.email)
     )
       ? newAssinList
-          .filter((item) => selectedAdminReply?.includes(item.email))
-          .map((admin) => (admin.u_id ? admin.id : admin.admin_id))
-          .join(",")
+        .filter((item) => selectedAdminReply?.includes(item.email))
+        .map((admin) => (admin.u_id ? admin.id : admin.admin_id))
+        .join(",")
       : "";
     const Rec_Admin_Type = //localStorage.getItem("admin_type");
       newAssinList.filter((item) => selectedAdminReply?.includes(item.email))
         ? newAssinList
-            .filter((item) => selectedAdminReply?.includes(item.email))
-            .map((admin) => (admin.u_id ? "agent" : admin.admin_type))
-            .join(",")
+          .filter((item) => selectedAdminReply?.includes(item.email))
+          .map((admin) => (admin.u_id ? "agent" : admin.admin_type))
+          .join(",")
         : "";
     /*Reply comment */
     let BoldComment = replyCommentToApi?.replace(
@@ -672,20 +672,20 @@ export default function CommentSection({
       AdminType === "agent"
         ? admin_email
         : newAssinList.find((item) => item.admin_id === admin_id)
-        ? newAssinList.find((item) => item.admin_id === admin_id).email
-        : "";
+          ? newAssinList.find((item) => item.admin_id === admin_id).email
+          : "";
     let senderType =
       AdminType === "agent"
         ? "agent"
         : newAssinList.find((item) => item.admin_id === admin_id)
-        ? newAssinList.find((item) => item.admin_id === admin_id).admin_type
-        : "";
+          ? newAssinList.find((item) => item.admin_id === admin_id).admin_type
+          : "";
     let sender =
       AdminType === "agent"
         ? admin_name
         : newAssinList.find((item) => item.admin_id === admin_id)
-        ? newAssinList.find((item) => item.admin_id === admin_id).name
-        : "";
+          ? newAssinList.find((item) => item.admin_id === admin_id).name
+          : "";
     selectedAdmins.forEach((admin) => {
       if (!newEmailsArray.includes(admin.email)) {
         // Add new admin's details to the arrays
@@ -809,11 +809,10 @@ export default function CommentSection({
 
   return (
     <div
-      className={`${
-        openAnnotationBox
-          ? "col-md-3 col-lg-3 col-sm-2 py-2 bg-light comments_and_replies"
-          : "col-md-3 col-lg-3 col-sm-2 py-2 bg-light comments_and_replies d-none"
-      } `}
+      className={`${openAnnotationBox
+        ? "col-md-3 col-lg-3 col-sm-2 py-2 bg-light comments_and_replies"
+        : "col-md-3 col-lg-3 col-sm-2 py-2 bg-light comments_and_replies d-none"
+        } `}
       style={{
         transition: "all .3s",
         maxHeight: docsection ? "100vh" : "calc(100vh - 130px)",
@@ -837,10 +836,10 @@ export default function CommentSection({
       >
         <form
           className="comment-form p-5 rounded bg-white"
-          // onSubmit={(e) => {
-          //   e.preventDefault();
-          //   addAnnotation(annotationDrawBox);
-          // }}
+        // onSubmit={(e) => {
+        //   e.preventDefault();
+        //   addAnnotation(annotationDrawBox);
+        // }}
         >
           <div className="comment-input-container m-0">
             <label className="input_label m-0">Add new comment:</label>
@@ -967,8 +966,9 @@ export default function CommentSection({
                   style={{ fontSize: 13 }}
                 >
                   <option value={""}>Filter by Status</option>
-                  <option value={"1"}>Done</option>
-                  <option value={"0"}>Pending</option>
+                  <option value={"1"}>Complete</option>
+                  <option value={"0"}>Incomplete</option>
+                  <option value={"2"}>Overdue</option>
                 </select>
               </div>
             </div>
@@ -982,13 +982,12 @@ export default function CommentSection({
               (commentsList || []).map((commentItem, index) => (
                 <div
                   className={`card col-12 mb-2 p-0 comment_box_card bg-white
-                  ${
-                    annotationId === JSON.parse(commentItem?.doctaskjson).id &&
-                    annotationId &&
-                    JSON.parse(commentItem?.doctaskjson)
+                  ${annotationId === JSON.parse(commentItem?.doctaskjson).id &&
+                      annotationId &&
+                      JSON.parse(commentItem?.doctaskjson)
                       ? "highlighted-comment"
                       : ""
-                  }`}
+                    }`}
                   style={{
                     backgroundColor: "#fff",
                     color: "white",
@@ -1029,20 +1028,22 @@ export default function CommentSection({
 
                     <Link
                       className=""
-                      title="Update status to complete"
+                      title={commentItem.status === "2" ? "Task overdue" : "Update status to complete"}
                       onClick={(e) => {
-                        OnHandleUpdateCommentStatus(
-                          commentItem,
-                          commentItem.status === "1" ? "0" : "1"
-                        );
-                        setFilteredEmails([]);
-                        setAnnotationDrawBox("");
+                        if (commentItem.status !== "2") {
+                          OnHandleUpdateCommentStatus(
+                            commentItem,
+                            commentItem.status === "1" ? "0" : "1"
+                          );
+                          setFilteredEmails([]);
+                          setAnnotationDrawBox("");
+                        }
                       }}
                     >
                       <IoIosCheckmarkCircle
                         style={{
                           cursor: "pointer",
-                          color: commentItem.status === "0" ? "#ccc" : "green",
+                          color: commentItem.status === "1" ? "green" : "#ccc",
                           fontSize: 18,
                         }}
                       />
@@ -1054,7 +1055,6 @@ export default function CommentSection({
                         OnDeleteComment(commentItem.doc_id, commentItem.id);
                       }}
                     >
-                      {" "}
                       <CiTrash />
                     </Link>
                   </div>
@@ -1111,7 +1111,6 @@ export default function CommentSection({
                               _date={commentItem.created_on}
                               format={"HH:mm D MMM"}
                             />
-                            {/* {moment(commentItem.created_on).format("HH:mm D MMM")} */}
                           </div>
                         </div>
                       </div>

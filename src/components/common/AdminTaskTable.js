@@ -335,7 +335,7 @@ export default function AdminTaskTable(props) {
                                   ? "btn-danger"
                                   : "btn-warning"
                                 } rounded-pill font-size-1 px-1 text-white mr-2`}
-                              disabled={data.status === (2 || "2")}
+                              disabled={data.status === "2"}
                               onSelect={(eventKey, e) => OnStatusChange(data, eventKey)}                          >
                               <Dropdown.Item
                                 value={1}

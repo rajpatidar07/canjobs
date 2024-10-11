@@ -7,7 +7,7 @@ export default function TaskCount({ count }) {
     const cardData = [
         {
             title: 'Total Tasks',
-            count: count?.total_tasks || 'N/A',
+            count: count?.total_tasks || 0,
             icon: <FaTasks />,
             bgColor: '#f0f8ff', // Light background color
             iconColor: '#007bff', // Bootstrap primary blue for the icon
@@ -15,7 +15,7 @@ export default function TaskCount({ count }) {
         },
         {
             title: 'Completed Tasks',
-            count: count?.total_completed_task || 'N/A',
+            count: count?.total_completed_task || 0,
             icon: <AiOutlineFileDone />,
             bgColor: '#e9f7ec', // Light green background
             iconColor: '#28a745', // Bootstrap green
@@ -23,7 +23,7 @@ export default function TaskCount({ count }) {
         },
         {
             title: 'Incomplete Tasks',
-            count: count?.total_uncompleted_task || 'N/A',
+            count: count?.total_uncompleted_task || 0,
             icon: <MdOutlinePendingActions />,
             bgColor: '#fff8e1', // Light red background
             iconColor:  '#ffc107', // Bootstrap danger red
@@ -31,7 +31,7 @@ export default function TaskCount({ count }) {
         },
         {
             title: 'Overdue Tasks',
-            count: count?.total_overdue_task || 'N/A',
+            count: count?.total_overdue_task || 0,
             icon: <BiTaskX />,
             bgColor: '#fcebe9', // Light yellow background
             iconColor: '#dc3545', // Bootstrap yellow
