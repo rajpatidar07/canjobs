@@ -1,5 +1,5 @@
 import React from 'react'
-import {  MdOutlinePendingActions } from 'react-icons/md';
+import { MdOutlinePendingActions } from 'react-icons/md';
 import { FaTasks } from 'react-icons/fa';
 import { BiTaskX } from "react-icons/bi";
 import { AiOutlineFileDone } from 'react-icons/ai';
@@ -23,10 +23,10 @@ export default function TaskCount({ count }) {
         },
         {
             title: 'Incomplete Tasks',
-            count: count?.total_uncompleted_task || 0,
+            count: parseInt(count?.total_uncompleted_task) + parseInt(count?.total_overdue_task) || 0,
             icon: <MdOutlinePendingActions />,
             bgColor: '#fff8e1', // Light red background
-            iconColor:  '#ffc107', // Bootstrap danger red
+            iconColor: '#ffc107', // Bootstrap danger red
             textColor: '#333',
         },
         {

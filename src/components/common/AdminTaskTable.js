@@ -371,18 +371,24 @@ export default function AdminTaskTable(props) {
                                 title={
                                   data.status === (0 || "0")
                                     ? "Incomplete"
-                                    : "Completed"
+                                    : data.status === (1 || "1") ?
+                                      "Completed" :
+                                      "Overdue"
                                 }
                               >
                                 {data.status === (0 || "0") ? (
                                   <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
                                     Incomplete
                                   </span>
-                                ) : (
-                                  <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
-                                    Complete
+                                ) : data.status ===  "2" ?
+                                  <span className="p-1 bg-danger text-white text-center w-100 border rounded-pill">
+                                    Overdue
                                   </span>
-                                )}
+                                  : (
+                                    <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
+                                      Complete
+                                    </span>
+                                  )}
                               </p>}
                           </>
                         )}
