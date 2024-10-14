@@ -15,6 +15,8 @@ export default function ManageTask() {
     const [adminType, setAdminType] = useState()
     const [status, setStatus] = useState()
     const [count, setCount] = useState()
+    const [taskPage, setTaskPage] = useState(1)
+    const [adminPage, setAdminPage] = useState(1)
     const [employeeList, setEmployeeList] = useState([])
     // const [employerList, setEmployerList] = useState([])
     const [adminList, setAdminList] = useState([])
@@ -80,6 +82,8 @@ export default function ManageTask() {
                                     onChange={(e) => {
                                         setAdminId(e.target.value.split(",")[0]);
                                         setAdminType(e.target.value.split(",")[1])
+                                        setAdminPage(1)
+                                        setTaskPage(1)
                                     }}
                                     className="form-control bg-white dashboard_select rounded-3"
                                 >
@@ -99,12 +103,15 @@ export default function ManageTask() {
                                         // console.log(e.target.value.split(",")[0])
                                         setUserId(e.target.value.split(",")[0]);
                                         setUserType(e.target.value.split(",")[1])
+                                        setAdminPage(1)
+                                        setTaskPage(1)
                                     }}
                                     className="form-control bg-white dashboard_select rounded-3"
                                 >
                                     <option value={""}>Select user</option>
                                     {(employeeList || []).map((item, index) => {
-                                        return <option className='text-capitalize' key={index} value={item.employee_id ? item.employee_id : item.company_id + `,${item.employee_id ? "employee" : "employer"}`}>{(item.employee_id ? item.name : item.company_name) || "unknown user"}</option>
+                                        return <option className='text-capitalize' key={index} value={item.employee_id ? `${item.employee_id},employee` : `${item.company_id},employer`}
+                                        >{(item.employee_id ? item.name : item.company_name) || "unknown user"}</option>
                                     })}                                    </select>
                                 {/* <small className="text-danger">{searcherror}</small> */}
                             </div>
@@ -117,6 +124,8 @@ export default function ManageTask() {
                                     onChange={(e) => {
                                         // console.log(e.target.value.split(",")[0])
                                         setStatus(e.target.value.split(",")[0]);
+                                        setAdminPage(1)
+                                        setTaskPage(1)
                                     }}
                                     className="form-control bg-white dashboard_select rounded-3"
                                 >
@@ -137,6 +146,8 @@ export default function ManageTask() {
                                         setUserType()
                                         setAdminId();
                                         setAdminType()
+                                        setAdminPage(1)
+                                        setTaskPage(1)
                                     }}>Reset</CustomButton>
                             </div>
                         </div>
@@ -154,6 +165,8 @@ export default function ManageTask() {
                                         setCount={setCount}
                                         status={status}
                                         adminId={adminId}
+                                        pageNo={taskPage}
+                                        setpageNo={setTaskPage}
                                     />
                                 </div>
                                 <div className="col-6 mb-18">
@@ -168,7 +181,8 @@ export default function ManageTask() {
                                         adminId={adminId}
                                         adminType={adminType}
                                         status={status}
-
+                                        pageNo={adminPage}
+                                        setpageNo={setAdminPage}
                                     />
                                 </div>
                             </div>

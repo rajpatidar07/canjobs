@@ -14,7 +14,7 @@ export default function AdminListTaskTable(props) {
     /*Pagination states */
     const [totalData, setTotalData] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
-    const [recordsPerPage] = useState(10);
+    const [recordsPerPage] = useState(2);
     /*Pagination Calculation */
     const nPages = Math.ceil(totalData / recordsPerPage);
 
@@ -26,7 +26,7 @@ export default function AdminListTaskTable(props) {
                 props.adminId,//adminEmail,
                 props.status ? props.status : taskStatus,
                 "document",
-                currentPage,
+                props.adminId || props.employeeId || props.status ? props.pageNo : currentPage,
                 recordsPerPage,
                 sortOrder,
                 columnName,
@@ -41,7 +41,6 @@ export default function AdminListTaskTable(props) {
                 // if (window.location.pathname === "/managetasks") {
                 //     props.setCount(res.data.employee_task_count[0])
                 // }
-                console.log(res.data.data.data.length)
                 if (res.data.data.data.length === 0) {
                     setIsLoading(false);
                     setAdminTaskData([]);
@@ -66,7 +65,7 @@ export default function AdminListTaskTable(props) {
     useEffect(() => {
         getAdminList();
         // eslint-disable-next-line
-    }, [taskStatus,props.status, props.TaskUserType, props.adminId, props.employeeId, props.filter_by_time, currentPage, sortOrder, columnName]);
+    }, [taskStatus, props.pageNo, props.status, props.TaskUserType, props.adminId, props.employeeId, props.filter_by_time, currentPage, sortOrder, columnName]);
     /*Sorting Function */
     const handleSort = (columnName) => {
         setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
@@ -298,8 +297,8 @@ export default function AdminListTaskTable(props) {
             <div className="pt-2">
                 <Pagination
                     nPages={nPages}
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
+                    currentPage={props.status || props.adminId || props.employeeId ? props.pageNo : currentPage}
+                    setCurrentPage={props.status || props.adminId || props.employeeId ? props.setpageNo : setCurrentPage}
                     total={totalData}
                     count={AdminTaskData.length}
                 />

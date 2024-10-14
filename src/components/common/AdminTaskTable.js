@@ -29,7 +29,7 @@ export default function AdminTaskTable(props) {
         props.adminId,//adminEmail,
         props.status ? props.status : taskStatus,
         "document",
-        window.location.pathname === "/dashboard" ? props.pageNo : currentPage,
+        window.location.pathname === "/dashboard" || props.status || props.adminId || props.employeeId ? props.pageNo : currentPage,
         recordsPerPage,
         sortOrder,
         columnName,
@@ -59,7 +59,7 @@ export default function AdminTaskTable(props) {
   useEffect(() => {
     getCommentsList();
     // eslint-disable-next-line
-  }, [taskStatus, props.apiCall, props.adminType, props.status, props.adminId, props.employeeId, props.filter_by_time, currentPage, sortOrder, columnName]);
+  }, [taskStatus, props.pageNo, props.apiCall, props.adminType, props.status, props.adminId, props.employeeId, props.filter_by_time, currentPage, sortOrder, columnName]);
   /*Sorting Function */
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
@@ -462,8 +462,8 @@ export default function AdminTaskTable(props) {
       <div className="pt-2">
         <Pagination
           nPages={nPages}
-          currentPage={window.location.pathname === "/dashboard" ? props.pageNo : currentPage}
-          setCurrentPage={window.location.pathname === "/dashboard" ? props.setpageNo : setCurrentPage}
+          currentPage={window.location.pathname === "/dashboard" || props.status || props.adminId || props.employeeId ? props.pageNo : currentPage}
+          setCurrentPage={window.location.pathname === "/dashboard" || props.adminId || props.employeeId ? props.setpageNo : setCurrentPage}
           total={totalData}
           count={taskData.length}
         />
