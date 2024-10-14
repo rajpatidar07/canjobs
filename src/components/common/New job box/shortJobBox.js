@@ -33,7 +33,7 @@ export default function ShortJobBox(
                         </h4>
                     </Link>}
                     <p className="text-gray-600 text-capitalize">
-                        {job.company_name && job.company_name}<br />
+                        <span style={{ filter: 'blur(5px)' }}> {job.company_name && job.company_name}</span><br />
                         {job.job_type && <span>{job.job_type} </span>}
                     </p>
                     {job.job_description && <p className="card-text" style={{

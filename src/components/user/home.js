@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import EmployeeHeader from "../common/header";
 import EmployeeFooter from "../common/footer";
-import JobBox from "../common/jobbox";
+// import JobBox from "../common/jobbox";
 import SearchForm from "../common/search_form";
 import { GetAllDataCount, getJson } from "../../api/api";
-import Loader from "../common/loader";
-import { Link } from "react-router-dom";
+// import Loader from "../common/loader";
+// import { Link } from "react-router-dom";
 import CustomButton from "../common/button";
 import filterjson from "../json/filterjson";
 import states from "../json/states";
@@ -13,11 +13,11 @@ import DetailedMainJobComponent from "../common/New job box/detailedMainJobCompo
 function EmployeeHomePage() {
   const [Count, setCount] = useState([]);
   const [jobsNo, setJobsNo] = useState(6);
-  const [featuredJobsNo, setFeaturedJobsNo] = useState(6);
+  // const [featuredJobsNo, setFeaturedJobsNo] = useState(6);
   const [jobCount, setJobCount] = useState();
-  const [featherJobCount, setFeaturedJobCount] = useState();
+  // const [featherJobCount, setFeaturedJobCount] = useState();
   const [totaljob, setTotalJob] = useState();
-  const [totalFeaturedJob, setTotalFeaturedJob] = useState();
+  // const [totalFeaturedJob, setTotalFeaturedJob] = useState();
   const [search, setSearch] = useState()
   // let token = localStorage.getItem("token");
   /*Filter states */
@@ -176,7 +176,7 @@ function EmployeeHomePage() {
 
           </div>
           {/* <!-- Section Title End --> */}
-          {<JobBox /> ? (
+          {/* {<JobBox /> ? (
             <div className="w-100 mb-lg-16 mb-11">
 
               <JobBox
@@ -197,8 +197,8 @@ function EmployeeHomePage() {
             <div className="table-responsive main_table_div">
               <Loader />
             </div>
-          )}
-          {jobsNo <= totaljob ? (
+          )} */}
+          {/* {jobsNo <= totaljob ? (
             <div className="text-center pt-5 pt-lg-13">
               <Link
                 className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
@@ -208,10 +208,10 @@ function EmployeeHomePage() {
                 <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
               </Link>
             </div>
-          ) : null}
+          ) : null} */}
           {/* <!-- featuredJobOne Area --> */}
           {/* <!-- Section Title --> */}
-          <div className="row justify-content-center mb-lg-16 mb-11">
+          {/* <div className="row justify-content-center mb-lg-16 mb-11">
             <div className="col-xxl-5 col-xl-6 col-lg-7 col-md-10 text-center">
               <h2 className="mb-6 mb-lg-7 text-black-2 font-size-10">
                 Featured Jobs
@@ -221,10 +221,10 @@ function EmployeeHomePage() {
                 level overviews to start.
               </p>
             </div>
-          </div>
+          </div> */}
           {/* <!-- Section Title End --> */}
           {/* Featured Jobs Section */}
-          {<JobBox /> ? (
+          {/* {<JobBox /> ? (
             <div className="w-100 mb-lg-16 mb-11">
               <JobBox
                 setJobCount={setFeaturedJobCount}
@@ -239,9 +239,9 @@ function EmployeeHomePage() {
             <div className="table-responsive main_table_div">
               <Loader />
             </div>
-          )}
+          )} */}
 
-          {featuredJobsNo <= totalFeaturedJob ? (
+          {/* {featuredJobsNo <= totalFeaturedJob ? (
             <div className="text-center pt-5 pt-lg-13">
               <Link
                 className="text-green font-weight-bold text-uppercase font-size-3 d-flex align-items-center justify-content-center"
@@ -251,7 +251,7 @@ function EmployeeHomePage() {
                 <i className="fas fa-sort-down ml-3 mt-n2 font-size-4"></i>
               </Link>
             </div>
-          ) : null}
+          ) : null} */}
         </div>
         {/* {token && <div className="container ">
           <!-- Section Title -->

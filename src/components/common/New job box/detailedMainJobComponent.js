@@ -45,7 +45,6 @@ export default function DetailedMainJobComponent({
   const category = searchParams.get("category");
   const path = location.pathname;
   // const name = localStorage.getItem("name");
-  console.log(jobLocation, "category =>", categoryFilterValue)
   /* Function to get Job data*/
   const JobData = async () => {
     try {
