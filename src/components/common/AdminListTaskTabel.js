@@ -13,8 +13,8 @@ export default function AdminListTaskTable(props) {
 
     /*Pagination states */
     const [totalData, setTotalData] = useState(true);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [recordsPerPage] = useState(2);
+    // const [currentPage,  props.setpageNo] = useState(1);
+    const [recordsPerPage] = useState(10);
     /*Pagination Calculation */
     const nPages = Math.ceil(totalData / recordsPerPage);
 
@@ -26,7 +26,7 @@ export default function AdminListTaskTable(props) {
                 props.adminId,//adminEmail,
                 props.status ? props.status : taskStatus,
                 "document",
-                props.adminId || props.employeeId || props.status ? props.pageNo : currentPage,
+                props.pageNo,
                 recordsPerPage,
                 sortOrder,
                 columnName,
@@ -65,7 +65,7 @@ export default function AdminListTaskTable(props) {
     useEffect(() => {
         getAdminList();
         // eslint-disable-next-line
-    }, [taskStatus, props.pageNo, props.status, props.TaskUserType, props.adminId, props.employeeId, props.filter_by_time, currentPage, sortOrder, columnName]);
+    }, [taskStatus, props.pageNo, props.status, props.TaskUserType, props.adminId, props.employeeId, props.filter_by_time,  sortOrder, columnName]);
     /*Sorting Function */
     const handleSort = (columnName) => {
         setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
@@ -90,7 +90,7 @@ export default function AdminListTaskTable(props) {
                                                 to={""}
                                                 onClick={() => {
                                                     handleSort("assigned_to_name");
-                                                    setCurrentPage(1);
+                                                    props.setpageNo(1);
                                                 }}
                                                 className="text-gray"
                                                 title="Sort by Name"
@@ -106,7 +106,7 @@ export default function AdminListTaskTable(props) {
                                         to={""}
                                         onClick={() => {
                                             handleSort("assigned_to_name");
-                                            setCurrentPage(1);
+                                             props.setpageNo(1);
                                         }}
                                         className="text-gray"
                                         title="Sort by Email"
@@ -122,7 +122,7 @@ export default function AdminListTaskTable(props) {
                                                 to={""}
                                                 onClick={() => {
                                                     handleSort("assigned_user_type");
-                                                    setCurrentPage(1);
+                                                    props.setpageNo(1);
                                                 }}
                                                 className="text-gray"
                                                 title="Sort by Type"
@@ -141,7 +141,7 @@ export default function AdminListTaskTable(props) {
                                                     to={""}
                                                     onClick={() => {
                                                         handleSort("total_tasks");
-                                                        setCurrentPage(1);
+                                                        props.setpageNo(1);
                                                     }}
                                                     className="text-gray"
                                                     title="Sort by Type"
@@ -159,7 +159,7 @@ export default function AdminListTaskTable(props) {
                                                     to={""}
                                                     onClick={() => {
                                                         handleSort("total_completed_task");
-                                                        setCurrentPage(1);
+                                                        props.setpageNo(1);
                                                     }}
                                                     className="text-gray"
                                                     title="Sort by Completed task"
@@ -179,7 +179,7 @@ export default function AdminListTaskTable(props) {
                                                     to={""}
                                                     onClick={() => {
                                                         handleSort("total_uncompleted_task");
-                                                        setCurrentPage(1);
+                                                        props.setpageNo(1);
                                                     }}
                                                     className="text-gray"
                                                     title="Sort by Incomplete tasks"
@@ -199,7 +199,7 @@ export default function AdminListTaskTable(props) {
                                                     to={""}
                                                     onClick={() => {
                                                         handleSort("total_overdue_task");
-                                                        setCurrentPage(1);
+                                                        props.setpageNo(1);
                                                     }}
                                                     className="text-gray"
                                                     title="Sort by Overdue tasks"
@@ -297,8 +297,8 @@ export default function AdminListTaskTable(props) {
             <div className="pt-2">
                 <Pagination
                     nPages={nPages}
-                    currentPage={props.status || props.adminId || props.employeeId ? props.pageNo : currentPage}
-                    setCurrentPage={props.status || props.adminId || props.employeeId ? props.setpageNo : setCurrentPage}
+                    currentPage={props.pageNo}
+                    setCurrentPage={props.setpageNo}
                     total={totalData}
                     count={AdminTaskData.length}
                 />

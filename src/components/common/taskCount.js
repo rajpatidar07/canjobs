@@ -1,7 +1,7 @@
 import React from 'react'
 import {  MdOutlinePendingActions } from 'react-icons/md';
 import { FaTasks } from 'react-icons/fa';
-import { BiTaskX } from "react-icons/bi";import { Link } from 'react-router-dom';
+import { BiTaskX } from "react-icons/bi";
 import { AiOutlineFileDone } from 'react-icons/ai';
 export default function TaskCount({ count }) {
     const cardData = [
@@ -40,12 +40,12 @@ export default function TaskCount({ count }) {
     ];
 
     return (
-        <div className="container mt-4">
+        <div className="mt-4">
             <div className="row">
                 {cardData.map((card, index) => (
                     <div key={index} className="col-md-3 col-sm-6 mb-4">
-                        <Link
-                            to="#"
+                        <p
+                            // to="#"
                             className="d-block text-center border rounded shadow-sm p-4"
                             style={{
                                 backgroundColor: card.bgColor,
@@ -59,7 +59,7 @@ export default function TaskCount({ count }) {
                             </div>
                             <h5 style={{ fontSize: '1.25rem', fontWeight: '900' }}>{card.count}</h5>
                             <p style={{ fontSize: '1rem', fontWeight: '400', color: '#6c757d' }}>{card.title}</p>
-                        </Link>
+                        </p>
                     </div>
                 ))}
             </div>

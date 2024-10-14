@@ -72,7 +72,7 @@ export default function ManageTask() {
                 <div className="dashboard-main-container mt-16" id="dashboard-body">
                     <div className="container-fluid ">
 
-                        <div className='row'>
+                        <div className='row m-0'>
                             <div className="col p-1 form_group mb-3">
                                 <p className="input_label">Search by admin:</p>
                                 <select
@@ -139,7 +139,7 @@ export default function ManageTask() {
                             <div className="col p-1 form_group mb-3 mt-3 ">
 
                                 <CustomButton
-                                    className="font-size-3 rounded-3 btn btn-primary border-0"
+                                    className="col font-size-3 rounded-3 btn btn-primary border-0"
                                     onClick={() => {
                                         setStatus("")
                                         setUserId();
@@ -155,6 +155,9 @@ export default function ManageTask() {
                             <TaskCount count={count} />
                             <div className="row">
                                 <div className="col-6 mb-18">
+                                    <h3 className="font-size-5 px-3 m-0  ">
+                                        Tasks
+                                    </h3>
                                     <AdminTaskTable
                                         heading={""}
                                         filter_by_time={""}
@@ -169,7 +172,11 @@ export default function ManageTask() {
                                         setpageNo={setTaskPage}
                                     />
                                 </div>
+
                                 <div className="col-6 mb-18">
+                                    <h3 className="font-size-5 px-3 m-0  ">
+                                        Admin tasks
+                                    </h3>
                                     <AdminListTaskTable
                                         heading={""}
                                         filter_by_time={""}

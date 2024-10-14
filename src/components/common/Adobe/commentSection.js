@@ -1030,14 +1030,12 @@ export default function CommentSection({
                       className=""
                       title={commentItem.status === "2" ? "Task overdue" : "Update status to complete"}
                       onClick={(e) => {
-                        if (commentItem.status !== "2") {
                           OnHandleUpdateCommentStatus(
                             commentItem,
                             commentItem.status === "1" ? "0" : "1"
                           );
                           setFilteredEmails([]);
                           setAnnotationDrawBox("");
-                        }
                       }}
                     >
                       <IoIosCheckmarkCircle

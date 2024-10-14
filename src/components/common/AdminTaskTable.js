@@ -10,13 +10,13 @@ export default function AdminTaskTable(props) {
   const [taskData, setTaskData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [taskStatus/*, setTaskStatus*/] = useState("");
-  const [columnName, setcolumnName] = useState("updated_on");
+  const [columnName, setcolumnName] = useState("status");
   const [sortOrder, setSortOrder] = useState("DESC");
   // let adminEmail = localStorage.getItem("admin_id");
 
   /*Pagination states */
   const [totalData, setTotalData] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage] = useState(10);
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
@@ -29,7 +29,7 @@ export default function AdminTaskTable(props) {
         props.adminId,//adminEmail,
         props.status ? props.status : taskStatus,
         "document",
-        window.location.pathname === "/dashboard" || props.status || props.adminId || props.employeeId ? props.pageNo : currentPage,
+        props.pageNo,
         recordsPerPage,
         sortOrder,
         columnName,
@@ -59,7 +59,7 @@ export default function AdminTaskTable(props) {
   useEffect(() => {
     getCommentsList();
     // eslint-disable-next-line
-  }, [taskStatus, props.pageNo, props.apiCall, props.adminType, props.status, props.adminId, props.employeeId, props.filter_by_time, currentPage, sortOrder, columnName]);
+  }, [taskStatus, props.pageNo, props.apiCall, props.adminType, props.status, props.adminId, props.employeeId, props.filter_by_time, sortOrder, columnName]);
   /*Sorting Function */
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
@@ -125,7 +125,7 @@ export default function AdminTaskTable(props) {
                     to={""}
                     onClick={() => {
                       handleSort("task_creator_user_name");
-                      window.location.pathname === "/dashboard" ? props.setpageNo(1) : setCurrentPage(1)
+                      props.setpageNo(1)
                     }}
                     className="text-gray"
                     title="Sort by Assigned From"
@@ -141,7 +141,7 @@ export default function AdminTaskTable(props) {
                     to={""}
                     onClick={() => {
                       handleSort("assigned_to_name");
-                      window.location.pathname === "/dashboard" ? props.setpageNo(1) : setCurrentPage(1)
+                      props.setpageNo(1)
                     }}
                     className="text-gray"
                     title="Sort by Assigned To"
@@ -157,7 +157,7 @@ export default function AdminTaskTable(props) {
                     to={""}
                     onClick={() => {
                       handleSort("subject_description");
-                      window.location.pathname === "/dashboard" ? props.setpageNo(1) : setCurrentPage(1)
+                      props.setpageNo(1)
                     }}
                     className="text-gray"
                     title="Sort by Description"
@@ -194,7 +194,7 @@ export default function AdminTaskTable(props) {
                       to={""}
                       onClick={() => {
                         handleSort("status");
-                        window.location.pathname === "/dashboard" ? props.setpageNo(1) : setCurrentPage(1)
+                        props.setpageNo(1)
                       }}
                       className="text-gray"
                       title="Sort by Status"
@@ -246,8 +246,8 @@ export default function AdminTaskTable(props) {
               ) : (
                 (taskData || []).map((data) => (
                   <React.Fragment key={data.id}>
-                    <tr className="text-capitalize applicant_row">
-                      <td className=" py-5">
+                    <tr className=" applicant_row">
+                      <td className="text-capitalize py-5">
                         <p className="font-size-3 font-weight-normal text-black-2 mb-0">
                           {data.task_creator_user_name === null ||
                             data.task_creator_user_name === undefined ||
@@ -260,7 +260,7 @@ export default function AdminTaskTable(props) {
                           )}
                         </p>
                       </td>
-                      <td className=" py-5">
+                      <td className="text-capitalize py-5">
                         <p className="font-size-3 font-weight-normal text-black-2 mb-0">
                           {data.assigned_to_name === null ||
                             data.assigned_to_name === undefined ||
@@ -273,7 +273,7 @@ export default function AdminTaskTable(props) {
                           )}
                         </p>
                       </td>
-                      <td className="py-5 ">
+                      <td className="py-5 text-capitalize">
                         {data.subject_description === null ||
                           data.subject_description === undefined ||
                           data.subject_description === "undefined" ||
@@ -314,51 +314,57 @@ export default function AdminTaskTable(props) {
                           <p className="font-size-3  mb-0">N/A</p>
                         ) : (
                           <>
-                            {window.location.pathname === "/managetasks" ? <DropdownButton
-                              as={ButtonGroup}
-                              title={
-                                data.status === "1"
-                                  ? "Completed"
-                                  : data.status === "2"
-                                    ? "OverDue"
-                                    : "Incomplete"
-                              }
-                              variant={data.status === ("1" || 1)
-                                ? "shamrock"
-                                : data.status === ("2" || 2)
-                                  ? "danger"
-                                  : "warning"}
-                              size="xs"
-                              className={`user_status_btn btn-xs ${data.status === "1"
-                                ? "btn-shamrock"
-                                : data.status === "2"
-                                  ? "btn-danger"
-                                  : "btn-warning"
-                                } rounded-pill font-size-1 px-1 text-white mr-2`}
-                              disabled={data.status === "2"}
-                              onSelect={(eventKey, e) => OnStatusChange(data, eventKey)}                          >
-                              <Dropdown.Item
-                                value={1}
-                                eventKey={1}
-                                className="text-capitalize"
-                              >
-                                Complete
-                              </Dropdown.Item>
-                              <Dropdown.Item
-                                value={0}
-                                eventKey={0}
-                                className="text-capitalize"
-                              >
-                                Incomplete
-                              </Dropdown.Item>
-                              {/* <Dropdown.Item
+                            {window.location.pathname === "/managetasks" ?
+                              (<div style={{ display: "table-caption" }}>
+                                <DropdownButton
+                                  as={ButtonGroup}
+                                  title={
+                                    data.status === "1"
+                                      ? "Completed"
+                                      : data.status === "2"
+                                        ? "Overdue"
+                                        : "Incomplete"
+                                  }
+                                  variant={data.status === ("1" || 1)
+                                    ? "shamrock"
+                                    : data.status === ("2" || 2)
+                                      ? "danger"
+                                      : "warning"}
+                                  size="xs"
+                                  className={`user_status_btn btn-xs ${data.status === "1"
+                                    ? "btn-shamrock"
+                                    : data.status === "2"
+                                      ? "btn-danger"
+                                      : "btn-warning"
+                                    } rounded-pill font-size-1 px-1 text-white mr-2`}
+                                  // disabled={data.status === "2"}
+                                  onSelect={(eventKey, e) => OnStatusChange(data, eventKey)}                          >
+                                  <Dropdown.Item
+                                    value={1}
+                                    eventKey={1}
+                                    className="text-capitalize"
+                                  >
+                                    Complete
+                                  </Dropdown.Item>
+                                  <Dropdown.Item
+                                    value={0}
+                                    eventKey={0}
+                                    className="text-capitalize"
+                                  >
+                                    Incomplete
+                                  </Dropdown.Item>
+                                  {/* <Dropdown.Item
                                 value={2}
                                 eventKey={2}
                                 className="text-capitalize"
                               >
                                 Overdue
                               </Dropdown.Item> */}
-                            </DropdownButton>
+                                </DropdownButton>
+                                {data.status === ("2" || 2) &&
+                                  <small className="font-size-1"
+                                  >Pending for more than 30 days.</small>}
+                              </div>)
                               :
                               <p
                                 className="font-size-2 font-weight-normal text-black-2 mb-0 text-truncate"
@@ -462,8 +468,8 @@ export default function AdminTaskTable(props) {
       <div className="pt-2">
         <Pagination
           nPages={nPages}
-          currentPage={window.location.pathname === "/dashboard" || props.status || props.adminId || props.employeeId ? props.pageNo : currentPage}
-          setCurrentPage={window.location.pathname === "/dashboard" || props.adminId || props.employeeId ? props.setpageNo : setCurrentPage}
+          currentPage={props.pageNo}
+          setCurrentPage={props.setpageNo}
           total={totalData}
           count={taskData.length}
         />
