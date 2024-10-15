@@ -170,6 +170,7 @@ export default function ManageTask() {
                                         adminId={adminId}
                                         pageNo={taskPage}
                                         setpageNo={setTaskPage}
+                                        adminType={adminType}
                                     />
                                 </div>
 

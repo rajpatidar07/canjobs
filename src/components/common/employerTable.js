@@ -31,7 +31,7 @@ export default function EmployerTable(props) {
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
   /*Pagination states */
-  const [totalData, setTotalData] = useState("");
+  const [totalData, setTotalData] = useState(0);
   // const [currentPage, setCurrentPage] = useState(props.pageNo);
   const [recordsPerPage] = useState(10);
   /*Shorting states */
@@ -53,6 +53,7 @@ export default function EmployerTable(props) {
       );
       if (userData.data.length === 0) {
         setemployerData([]);
+        setTotalData(0)
         setIsLoading(false);
       } else {
         setemployerData(userData.data);
