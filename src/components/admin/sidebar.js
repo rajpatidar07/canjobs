@@ -402,7 +402,7 @@ const AdminSidebar = (props) => {
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <GiTemporaryShield className="sidebar_icon" />
-            Temporary Resident (Visiting , Studying , Working)
+            Temporary Resident 
           </Link>
         </li>
         <li

@@ -67,7 +67,7 @@ export default function SharePointDocument({
     : [];
   const [taggedadmin, setTaggedAdmin] = useState([]);
   const [commentsList, setCommentsList] = useState([]);
-  const [commentsRes, setCommentsRes] = useState();
+  // const [commentsRes, setCommentsRes] = useState();
   const [imgConRes, setImgConRes] = useState();
   const [convertedDoc, setConvertedDoc] = useState("");
 
@@ -135,7 +135,7 @@ export default function SharePointDocument({
           //   );
           // }
           setCommentsList(res.data.data.data);
-          setCommentsRes(res.data.status);
+          // setCommentsRes(res.data.status);
           // if (res.data.data.data[0]?.assined_to_user_id) {
           //   setMentionAdminShowDropDown(true);
           // }
@@ -147,24 +147,28 @@ export default function SharePointDocument({
         console.log(err);
         setCommentsList([]);
       }
-      if (
-        data.file.mimeType === "image/jpeg" ||
-        data.file.mimeType === "image/png" ||
-        data.file.mimeType === "image/jpg"
-      ) {
-        convertUrlToPDF(data["@microsoft.graph.downloadUrl"]);
-      } else if (
-        data.file.mimeType ===
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-      ) {
-        convertToPDF(data);
-      } else {
-        setConvertedDoc(data["@microsoft.graph.downloadUrl"]);
-      }
+
     } else {
       setCommentsList([]);
     }
   };
+  /*Function to set the image and docx to pdf */
+  const SetPdfDocUrl = (data) => {
+    if (
+      data.file.mimeType === "image/jpeg" ||
+      data.file.mimeType === "image/png" ||
+      data.file.mimeType === "image/jpg"
+    ) {
+      convertUrlToPDF(data["@microsoft.graph.downloadUrl"]);
+    } else if (
+      data.file.mimeType ===
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    ) {
+      convertToPDF(data);
+    } else {
+      setConvertedDoc(data["@microsoft.graph.downloadUrl"]);
+    }
+  }
   // const documentID = "YOUR_DOCUMENT_ID"; // Replace YOUR_DOCUMENT_ID with the actual document ID
 
   /*To Show the delete alert box */
@@ -222,7 +226,7 @@ export default function SharePointDocument({
         "Representative Submission Letter",
         "Bank Statement",
       ];
-      /*Variable to set the data according to next previous file or doc id from the mail or notification */
+  /*Variable to set the data according to next previous file or doc id from the mail or notification */
   let newdocId = fileID ? fileID : docId
   /*Function to call api to get all folders list of employees document from sharepoint */
   const AllShareType = async () => {
@@ -245,7 +249,7 @@ export default function SharePointDocument({
             setDocPreview(true);
             // console.log(res.data.data.find((item) => item.id === newdocId))
             setDocSingleDate(res.data.data.find((item) => item.id === newdocId));
-            getCommentsList(res.data.data.find((item) => item.id === newdocId));
+            SetPdfDocUrl(res.data.data.find((item) => item.id === newdocId));
             setFileID(res.data.data.find((item) => item.id === newdocId).id);
             const newUrl = window.location.pathname;
             window.history.replaceState({}, document.title, newUrl);
@@ -680,7 +684,7 @@ export default function SharePointDocument({
                         // console.log("first")
                         setDocSingleDate("");
                         setDocPreview(false);
-                        setCommentsRes("");
+                        // setCommentsRes("");
                         setFolderID(docSingleDate.parentReference.id);
                         setConvertedDoc("");
                         setShowDropDown("");
@@ -811,7 +815,7 @@ export default function SharePointDocument({
                       docSingleDate.file.mimeType ===
                       "application/vnd.openxmlformats-officedocument.wordprocessingml.document") &&
                       convertedDoc ? (
-                      commentsRes ? (
+                      // commentsRes ? (
                         <AdobePDFViewer
                           url={convertedDoc}
                           data={docSingleDate}
@@ -830,8 +834,9 @@ export default function SharePointDocument({
                           setFileID={setFileID}
                           setConvertedDoc={setConvertedDoc}
                           getCommentsList={getCommentsList}
+                          SetPdfDocUrl={SetPdfDocUrl}
                         />
-                      ) : null
+                      // ) : null
                     ) : (
                       <Loader />
                     )
@@ -956,7 +961,7 @@ export default function SharePointDocument({
                     SaveBulkDocument={SaveBulkDocument}
                     setSaveBtn={setSaveBtn}
                     setDocFileBase={setDocFileBase}
-                    getCommentsList={getCommentsList}
+                    SetPdfDocUrl={SetPdfDocUrl}
                     emp_user_type={emp_user_type}
                     user_id={user_id}
                   />

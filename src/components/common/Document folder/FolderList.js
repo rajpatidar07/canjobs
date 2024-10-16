@@ -21,7 +21,7 @@ export default function FolderList({
   SaveBulkDocument,
   setSaveBtn,
   setDocFileBase,
-  getCommentsList,
+  SetPdfDocUrl,
   setCommentsList,
   emp_user_type,
   user_id,
@@ -54,7 +54,7 @@ export default function FolderList({
                     setDocPreview(true);
                     setDocSingleDate(item);
                     setFileID(item.id);
-                    getCommentsList(item);
+                    SetPdfDocUrl(item);
                   }
                 }}
                 onContextMenu={(e) => {

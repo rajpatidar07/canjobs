@@ -302,7 +302,7 @@ const NewUserProfile = (props) => {
       {/* <!-- Header Area --> */}
       {user_type === "admin" || user_type === "agent" ? (
         (docId || notes ? (docId || notes) && userFound.length !== 0 : userFound.length !== 0) && <>
-          <AdminHeader 
+          <AdminHeader
             heading={
               <Link
                 className="d-flex align-items-center "
@@ -348,6 +348,7 @@ const NewUserProfile = (props) => {
           ) : (
             ""
           )}
+
           {isLoading ? (
             <div className="table-responsive main_table_div">
               <Loader />
@@ -355,50 +356,50 @@ const NewUserProfile = (props) => {
           ) : userFound === eid ? (
             <div className="row text-left mt-5 pt-0 flex-wrap">
               <div className="d-flex flex-wrap">
-                <div
-                  className={
-                    // noLima==="1"?"d-none":
-                    "visa_lmia_status_div pl-6 pr-2"
-                  }
-                >
-                  {(lima && user_type === "admin") || user_type === "agent" ? (
+                {lima.length !== 0 && (user_type === "admin" || user_type === "agent") ? (
+                  <div
+                    className={
+                      // noLima==="1"?"d-none":
+                      "visa_lmia_status_div pl-6 pr-2"
+                    }
+                  >
                     <LimaArrowProfile
                       lmia={lima}
                       lmiaStatusRejectComment={lmiaStatusRejectComment}
                     />
-                  ) : null}
-                </div>
-                <div
-                  className={
-                    // noLima==="1"?"d-none":
-                    "visa_lmia_status_div pl-6 pr-2"
-                  }
-                >
-                  {(visaStatus && user_type === "admin") ||
-                    user_type === "agent" ? (
+                  </div>
+                ) : null}
+                {visaStatus.length!==0 && (user_type === "admin" ||
+                  user_type === "agent") ? (<div
+                    className={
+                      // noLima==="1"?"d-none":
+                      "visa_lmia_status_div pl-6 pr-2"
+                    }
+                  >
+
                     <VisaArrowProfile
                       visaStatus={visaStatus}
                       visaStatusRejectComment={visaStatusRejectComment}
                       apiCall={apiCall}
                     />
-                  ) : null}
-                </div>
-                <div
-                  className={
-                    // noLima==="1"?"d-none":
-                    "visa_lmia_status_div pl-6 pr-2"
-                  }
-                >
-                  {(PersonalDetail.applicant_process_type &&
-                    user_type === "admin") ||
-                    user_type === "agent" ? (
-                    <VisaTimeLine
-                      visa={PersonalDetail.applicant_process_status}
-                      substage={PersonalDetail.applicant_process_substages}
-                      type={PersonalDetail.applicant_process_type}
-                    />
-                  ) : null}
-                </div>
+                  </div>
+                ) : null}
+                {PersonalDetail.applicant_process_type &&
+                  (user_type === "admin" ||
+                    user_type === "agent") ? (<div
+                      className={
+                        // noLima==="1"?"d-none":
+                        "visa_lmia_status_div pl-6 pr-2"
+                      }
+                    >
+
+                      <VisaTimeLine
+                        visa={PersonalDetail.applicant_process_status}
+                        substage={PersonalDetail.applicant_process_substages}
+                        type={PersonalDetail.applicant_process_type}
+                      />
+                    </div>
+                ) : null}
               </div>
               <div className=" col-12 order-2 order-xl-1">
                 <div className="bg-white">

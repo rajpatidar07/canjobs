@@ -219,9 +219,9 @@ function Addfollowup(props) {
                           {res.subject}
                         </b>
                         <div className="d-flex flex-column align-items-end">
-                          <p className="m-0 text-capitalize font-size-3 mb-1">
+                          <p className="m-0 text-capitalize font-size-3 mb-1 d-flex justify-content-between align-items-center w-100">
                             <b>Created by: {res.created_by_name}</b>
-                            <Link className={res.created_by === assigned_id && res.type === assigned_by_type ? "text-gray px-8" : "d-none"} title="Update notes" onClick={() => {
+                            <Link className={res.created_by === assigned_id && res.type === assigned_by_type ? "text-gray mb-1 pl-8" : "d-none"} title="Update notes" onClick={() => {
                               // Merge current state with res and admin_id
                               setState(prevState => ({
                                 ...prevState,        // Spread the existing state

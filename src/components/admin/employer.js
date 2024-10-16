@@ -177,10 +177,10 @@ function Employer() {
                       </select>
                     </div>
                   </div>
-                  <div className="col d-flex justify-content-evenly text-center">
-                    <div className="px-1 form_group mt-4 text-right">
+                  <div className="col w-100 d-flex justify-content-evenly text-center">
+                    <div className=" w-100 form_group mt-4 text-right">
                       <CustomButton
-                        className="font-size-3 rounded-3 btn btn-primary border-0"
+                        className="font-size-3 btn-block rounded-3 btn btn-primary border-0"
                         onClick={() => editEmployer("0")}
                       >
                         Add Client

@@ -6,6 +6,7 @@ import Pagination from "./pagination";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { toast } from "react-toastify";
+import ConvertTime from "./ConvertTime";
 export default function AdminTaskTable(props) {
   const [taskData, setTaskData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -361,9 +362,10 @@ export default function AdminTaskTable(props) {
                                 Overdue
                               </Dropdown.Item> */}
                                 </DropdownButton>
-                                {data.status === ("2" || 2) &&
-                                  <small className="font-size-1"
-                                  >Pending for more than 30 days.</small>}
+                                {data.status === ("1" || 1) &&
+                                  <small className="font-size-1 d-flex justify-content-center mt-2"
+                                  >
+                                    <ConvertTime _date={data.task_complete_date} format={".fromNow()"}/></small>}
                               </div>)
                               :
                               <p

@@ -58,7 +58,11 @@ export default function TaskCount({ count }) {
                                 {card.icon}
                             </div>
                             <h5 style={{ fontSize: '1.25rem', fontWeight: '900' }}>{card.count}</h5>
-                            <p style={{ fontSize: '1rem', fontWeight: '400', color: '#6c757d' }}>{card.title}</p>
+                            <p style={{ display: "flex",flexDirection:"column", fontSize: '1rem', fontWeight: '400', color: '#6c757d' }}>
+                                <span>{card.title}</span>
+                                {card.title === "Overdue Tasks" && <small className="font-size-2"
+                                >(Pending for more than 30 days)</small>}
+                            </p>
                         </p>
                     </div>
                 ))}

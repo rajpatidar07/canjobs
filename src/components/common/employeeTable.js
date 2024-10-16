@@ -35,6 +35,8 @@ import { PiBriefcaseLight } from "react-icons/pi";
 import ConvertTime from "./ConvertTime";
 import VisaTimeLine from "./visaTimeLine";
 import filterjson from "../json/filterjson";
+import CustomButton from "./button";
+import ExportExcelButton from "./exportExcelButton";
 // import ApplicantCategory from "../forms/user/ApplicantCategory";
 export default function EmployeeTable(props) {
   let agentId = localStorage.getItem("agent_id");
@@ -459,159 +461,179 @@ export default function EmployeeTable(props) {
         : null} */}
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5 ">
         {props.heading === "Dashboard" ? null : (
-          <div
-            className={`btn-group mb-5 ${props.skill || props?.ApplicantType ? "d-none" : ""
-              }`}
-            role="group"
-            aria-label="Basic example"
-          >
-            {props.self === "yes" ? (
-              <>
-                <button
-                  type="button"
-                  className={
-                    status === -1 || status === "-1" || status === "1"
-                      ? "btn btn-primary"
-                      : "btn btn-outline-primary"
-                  }
-                  onClick={() => {
-                    setStatus(-1);
-                    clearPageNo();
-                  }}
-                  title="New"
-                >
-                  New
-                </button>
-                <button
-                  type="button"
-                  className={
-                    status === 2 || status === "2"
-                      ? "btn btn-primary"
-                      : "btn btn-outline-primary"
-                  }
-                  onClick={() => {
-                    setStatus(2);
-                    clearPageNo();
-                  }}
-                  title="Prospect"
-                >
-                  Prospect
-                </button>
-                <button
-                  type="button"
-                  className={
-                    status === 3 || status === "3"
-                      ? "btn btn-primary"
-                      : "btn btn-outline-primary"
-                  }
-                  onClick={() => {
-                    setStatus(3);
-                    clearPageNo();
-                  }}
-                  title="Lead"
-                >
-                  Lead
-                </button>
-                <button
-                  type="button"
-                  className={
-                    status === "5" || status === 5
-                      ? "btn btn-primary"
-                      : "btn btn-outline-primary"
-                  }
-                  onClick={() => {
-                    setStatus(5);
-                    clearPageNo();
-                  }}
-                  title="Lost"
-                >
-                  Lost
-                </button>
-                <button
-                  type="button"
-                  className={
-                    status === "6" || status === 6
-                      ? "btn btn-primary"
-                      : "btn btn-outline-primary"
-                  }
-                  onClick={() => {
-                    setStatus(6);
-                    clearPageNo();
-                  }}
-                  title="Dead"
-                >
-                  Dead
-                </button>
-              </>
-            ) : props.pageName === "local_candidate" ? null : (
-              <>
-                <button
-                  type="button"
-                  className={
-                    status === "4" || status === 4
-                      ? "btn btn-primary"
-                      : "btn btn-outline-primary"
-                  }
-                  onClick={() => {
-                    setStatus(4);
-                    clearPageNo();
-                  }}
-                  title="Retained"
-                >
-                  Retained
-                </button>
-                <button
-                  type="button"
-                  className={
-                    status === "7" || status === 7
-                      ? "btn btn-primary"
-                      : "btn btn-outline-primary"
-                  }
-                  onClick={() => {
-                    setStatus(7);
-                    clearPageNo();
-                  }}
-                  title="Working on"
-                >
-                  Working on
-                </button>
-                <button
-                  type="button"
-                  className={
-                    status === "8" || status === 8
-                      ? "btn btn-primary"
-                      : "btn btn-outline-primary"
-                  }
-                  onClick={() => {
-                    setStatus(8);
-                    clearPageNo();
-                  }}
-                  title="Submitted"
-                >
-                  Submitted
-                </button>
-              </>
-            )}
-            <button
-              type="button"
-              className={
-                props.pageName === "local_candidate"
-                  ? "d-none"
-                  : status === "" ||
-                    status === "00" ||
-                    status === "0,1,2,3,5,6" ||
-                    status === "4,7,8"
-                    ? "btn btn-primary"
-                    : "btn btn-outline-primary"
-              }
-              onClick={() => {
-                setStatus(props.self === "yes" ? "0,1,2,3,5,6" : "4,7,8");
-                clearPageNo();
-              }}
-              title="All"
+          <div className="d-flex justify-content-between align-items-center w-100">
+            <div
+              className={`btn-group mb-5 ${props.skill || props?.ApplicantType ? "d-none" : ""
+                }`}
+              role="group"
+              aria-label="Basic example"
             >
-              All
-            </button>
+              {props.self === "yes" ? (
+                <>
+                  <button
+                    type="button"
+                    className={
+                      status === -1 || status === "-1" || status === "1"
+                        ? "btn btn-primary"
+                        : "btn btn-outline-primary"
+                    }
+                    onClick={() => {
+                      setStatus(-1);
+                      clearPageNo();
+                    }}
+                    title="New"
+                  >
+                    New
+                  </button>
+                  <button
+                    type="button"
+                    className={
+                      status === 2 || status === "2"
+                        ? "btn btn-primary"
+                        : "btn btn-outline-primary"
+                    }
+                    onClick={() => {
+                      setStatus(2);
+                      clearPageNo();
+                    }}
+                    title="Prospect"
+                  >
+                    Prospect
+                  </button>
+                  <button
+                    type="button"
+                    className={
+                      status === 3 || status === "3"
+                        ? "btn btn-primary"
+                        : "btn btn-outline-primary"
+                    }
+                    onClick={() => {
+                      setStatus(3);
+                      clearPageNo();
+                    }}
+                    title="Lead"
+                  >
+                    Lead
+                  </button>
+                  <button
+                    type="button"
+                    className={
+                      status === "5" || status === 5
+                        ? "btn btn-primary"
+                        : "btn btn-outline-primary"
+                    }
+                    onClick={() => {
+                      setStatus(5);
+                      clearPageNo();
+                    }}
+                    title="Lost"
+                  >
+                    Lost
+                  </button>
+                  <button
+                    type="button"
+                    className={
+                      status === "6" || status === 6
+                        ? "btn btn-primary"
+                        : "btn btn-outline-primary"
+                    }
+                    onClick={() => {
+                      setStatus(6);
+                      clearPageNo();
+                    }}
+                    title="Dead"
+                  >
+                    Dead
+                  </button>
+                </>
+              ) : props.pageName === "local_candidate" ? null : (
+                <>
+                  <button
+                    type="button"
+                    className={
+                      status === "4" || status === 4
+                        ? "btn btn-primary"
+                        : "btn btn-outline-primary"
+                    }
+                    onClick={() => {
+                      setStatus(4);
+                      clearPageNo();
+                    }}
+                    title="Retained"
+                  >
+                    Retained
+                  </button>
+                  <button
+                    type="button"
+                    className={
+                      status === "7" || status === 7
+                        ? "btn btn-primary"
+                        : "btn btn-outline-primary"
+                    }
+                    onClick={() => {
+                      setStatus(7);
+                      clearPageNo();
+                    }}
+                    title="Working on"
+                  >
+                    Working on
+                  </button>
+                  <button
+                    type="button"
+                    className={
+                      status === "8" || status === 8
+                        ? "btn btn-primary"
+                        : "btn btn-outline-primary"
+                    }
+                    onClick={() => {
+                      setStatus(8);
+                      clearPageNo();
+                    }}
+                    title="Submitted"
+                  >
+                    Submitted
+                  </button>
+                </>
+              )}
+              <button
+                type="button"
+                className={
+                  props.pageName === "local_candidate"
+                    ? "d-none"
+                    : status === "" ||
+                      status === "00" ||
+                      status === "0,1,2,3,5,6" ||
+                      status === "4,7,8"
+                      ? "btn btn-primary"
+                      : "btn btn-outline-primary"
+                }
+                onClick={() => {
+                  setStatus(props.self === "yes" ? "0,1,2,3,5,6" : "4,7,8");
+                  clearPageNo();
+                }}
+                title="All"
+              >
+                All
+              </button>
+            </div>
+            {console.log(props.pageName,props.pageName==="employee")}
+            { props.pageName === "employee"
+              ? (
+                <>
+                  <div className="col mb-5 px-1 form_group text-right">
+                    <CustomButton
+                      className="font-size-3 rounded-3 btn btn-primary border-0"
+                      onClick={() => props.editEmployee("0")}
+                      title="Add Candidate"
+                    >
+                      Add Candidate
+                    </CustomButton>
+                  </div>
+                  <div className="form_group text-right">
+                    <ExportExcelButton type={"employee"} />
+                  </div>
+                </>
+              ) : null}
           </div>
         )}
         <div className="table-responsive main_table_div">
@@ -789,7 +811,7 @@ export default function EmployeeTable(props) {
                       </Link>
                     </th>
                   )}
-                  {[ "temporary resident (visiting , studying , working)", "economic immigration", "family sponsorship", "pnp"].includes(props?.ApplicantType?.toLowerCase()) && (
+                  {["temporary resident (visiting , studying , working)", "economic immigration", "family sponsorship", "pnp"].includes(props?.ApplicantType?.toLowerCase()) && (
                     <th
                       scope="col"
                       className="border-0 font-size-4 font-weight-normal"
@@ -1245,19 +1267,19 @@ export default function EmployeeTable(props) {
                                 title={empdata.interested_in}
                               >
                                 <span
-                                  className={`p-3 ${empdata.interested_in === "pnp"||empdata.interested_in === "study permit"
+                                  className={`p-3 ${empdata.interested_in === "pnp" || empdata.interested_in === "study permit"
                                     ? "text-dark"
                                     : "text-white"
                                     } text-center  border rounded-pill 
                                   ${determineBackgroundColor(empdata.interested_in)}`}
                                 >
-                                  {empdata.interested_in}
+                                  {empdata.interested_in === "temporary resident (visiting , studying , working)" ? "temporary resident" : empdata.interested_in}
                                 </span>
                               </p>
                             )}
                           </td>
                         )}
-                        {[ "temporary resident (visiting , studying , working)", "economic immigration", "family sponsorship", "pnp"].includes(props?.ApplicantType?.toLowerCase()) && (
+                        {["temporary resident (visiting , studying , working)", "economic immigration", "family sponsorship", "pnp"].includes(props?.ApplicantType?.toLowerCase()) && (
                           <td className="text-center">
                             {(!(filterjson.interested_sub_type[props?.ApplicantType?.toLowerCase()] || []).find((subType) => (
                               subType === empdata.category))) ? (
@@ -1403,7 +1425,7 @@ export default function EmployeeTable(props) {
                                         : "btn btn-outline-info action_btn"
                                     }
                                     onClick={() => editVisa(empdata)}
-                                    title={`Add/Update ${props?.ApplicantType} status`}
+                                    title={`Add/Update ${props?.ApplicantType === "temporary resident (visiting , studying , working)" ? "Temporary Resident" : props?.ApplicantType} status`}
                                   >
                                     <span className="text-gray px-2">
                                       <MdEditNote />

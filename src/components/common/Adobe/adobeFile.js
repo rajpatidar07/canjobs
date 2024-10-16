@@ -23,16 +23,17 @@ const AdobePDFViewer = ({
   setFileID,
   setConvertedDoc,
   getCommentsList,
+  SetPdfDocUrl
 }) => {
   let [openAnnotationBox, setOpenAnnotationBox] = useState(false);
   let [annotationDrawBox, setAnnotationDrawBox] = useState("");
   let [annotationId, setAnnotationId] = useState("");
   let [annotationData, setAnnotationData] = useState(
-    commentsList
-    .map((item) => JSON.parse(item?.doctaskjson))
-    .filter((item) => item !== "") || []  );
+    commentsList.length !== 0 ? commentsList
+      ?.map((item) => JSON.parse(item?.doctaskjson))
+      ?.filter((item) => item !== "") : []);
 
- const [annotationManager, setAnnotationManager] = useState(null);
+  const [annotationManager, setAnnotationManager] = useState(null);
   const [adobeViewer, setAdobeViewer] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(
     docTypeList.findIndex((item) => item.id === fileId)
@@ -47,7 +48,8 @@ const AdobePDFViewer = ({
         setCurrentIndex(newIndex);
         setDocSingleDate(docTypeList[newIndex]);
         setFileID(docTypeList[newIndex].id);
-        getCommentsList(docTypeList[newIndex]);
+        SetPdfDocUrl(docTypeList[newIndex]);
+        setOpenAnnotationBox(false)
       }
     }
   };
@@ -62,7 +64,8 @@ const AdobePDFViewer = ({
         setCurrentIndex(newIndex);
         setDocSingleDate(docTypeList[newIndex]);
         setFileID(docTypeList[newIndex].id);
-        getCommentsList(docTypeList[newIndex]);
+        SetPdfDocUrl(docTypeList[newIndex]);
+        setOpenAnnotationBox(false)
       }
     }
   };
@@ -111,10 +114,10 @@ const AdobePDFViewer = ({
             adobeViewer
               .getAnnotationManager()
               .then((annotationManager) => {
-                setAnnotationManager(annotationManager);             
+                setAnnotationManager(annotationManager);
                 if (annotationData.length === 0) {
                 } else {
-                  
+
                   annotationManager
                     .addAnnotations(annotationData)
                     .then(() => console.log("Success"))
@@ -335,6 +338,9 @@ const AdobePDFViewer = ({
         to={""}
         onClick={() => {
           setOpenAnnotationBox(openAnnotationBox ? false : true);
+          if (openAnnotationBox === false) {
+            getCommentsList(data)
+          }
         }}
         className={
           userType === "admin" || userType === "agent"
