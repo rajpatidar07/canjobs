@@ -41,7 +41,7 @@ export default function Pnp() {
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
         {/* <!-- Header Area --> */}
-        <AdminHeader heading={"PNP"} />
+        <AdminHeader heading={"Alberta PNP"} />
         {/* <ToastContainer/> */}
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"PNP"} />

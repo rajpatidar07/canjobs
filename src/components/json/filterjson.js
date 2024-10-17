@@ -609,6 +609,10 @@ const filterjson = {
     "temporary resident (visiting , studying , working)",// new Applicant type added asked in doc of Can-46
     "economic immigration",// new Applicant type added asked in doc of Can-46
     "family sponsorship",// new Applicant type added asked in doc Can-46
+    "humanitarian and compassionate cases",// new Applicant type added asked in doc Can-46
+    "passport",// new Applicant type added asked in doc Can-46
+    "citizenship",// new Applicant type added asked in doc Can-46
+    "permanent resident cards",// new Applicant type added asked in doc Can-46
     // "swep",
     // "internship",
     // "co-op",
@@ -621,6 +625,7 @@ const filterjson = {
     "pnp": [
       "aos",
       "rrs",
+      "tourism and hospitality",
       "tech pathway"
     ],
     "temporary resident (visiting , studying , working)": [

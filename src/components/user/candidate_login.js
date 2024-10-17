@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import {
   EmployeeLogin,
   EmployeeForgotPassword,
@@ -21,6 +21,7 @@ export default function CandidateLoginForm(props) {
   // let [facebook, setFacebook] = useState(false);
   let i = 0;
   const [searchParams] = useSearchParams();
+  let location = useLocation()
   let code = searchParams.get("code");
   if (props.show === true) {
     localStorage.setItem("linkedin", "employeeLogin");
@@ -92,7 +93,7 @@ export default function CandidateLoginForm(props) {
           });
           setLoading(false);
           Close();
-          navigate(`/${updatedTodo.employee_id}`);
+          navigate(location.state.page === "study" ? "/student_profile" : `/${updatedTodo.employee_id}`);
           window.location.reload();
         }
         if (updatedTodo.message === "Invalid credentials !") {
@@ -236,7 +237,7 @@ export default function CandidateLoginForm(props) {
               autoClose: 1000,
             });
             Close();
-            navigate(`/${data.employee_id}`);
+            navigate(location.state.page === "study" ? "/student_profile" : `/${data.employee_id}`);
             window.location.reload();
           }
           if (
@@ -351,7 +352,7 @@ export default function CandidateLoginForm(props) {
                     </div> */}
           </div>
           <div className="brand-logo mb-10 text-center">
-            <Link to="/">
+            <Link to={location.state.page === "study" ? "/student_home" : "/"}>
               <img
                 src="image/00logo-main-black.png"
                 alt=""

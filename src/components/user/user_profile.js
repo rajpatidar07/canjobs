@@ -1733,6 +1733,7 @@ const NewUserProfile = (props) => {
                         partnerChatNav={partnerChat}
                         reffer_by={PersonalDetail.reffer_by}
                         type={"partner"}
+                        emp_user_type={"employee"}
                         page={"employeeProfile"}
                       />
                     ) : null}

@@ -616,8 +616,7 @@ export default function EmployeeTable(props) {
                 All
               </button>
             </div>
-            {console.log(props.pageName,props.pageName==="employee")}
-            { props.pageName === "employee"
+            {props.pageName === "employee"
               ? (
                 <>
                   <div className="col mb-5 px-1 form_group text-right">
@@ -1259,10 +1258,9 @@ export default function EmployeeTable(props) {
                               </p>
                             ) : (
                               <p
-                                className={`font-size-2 font-weight-normal text-black-2 mb-0 ${empdata.interested_in === "pnp" ||
-                                  empdata.interested_in === "pgwp"
-                                  ? `text-uppercase`
-                                  : "text-capitalize"
+                                className={`font-size-2 font-weight-normal text-black-2 mb-0 ${empdata.interested_in === "pgwp"
+                                    ? `text-uppercase`
+                                    : "text-capitalize"
                                   }`}
                                 title={empdata.interested_in}
                               >
@@ -1273,7 +1271,7 @@ export default function EmployeeTable(props) {
                                     } text-center  border rounded-pill 
                                   ${determineBackgroundColor(empdata.interested_in)}`}
                                 >
-                                  {empdata.interested_in === "temporary resident (visiting , studying , working)" ? "temporary resident" : empdata.interested_in}
+                                  {empdata.interested_in === "temporary resident (visiting , studying , working)" ? "temporary resident" : empdata.interested_in === "pnp" ? "Alberta PNP" : empdata.interested_in}
                                 </span>
                               </p>
                             )}
@@ -1297,7 +1295,7 @@ export default function EmployeeTable(props) {
                                   ))}
                                 >
                                   <span
-                                    className={`p-1 text-white text-center border rounded-pill                                       ${determineBackgroundColor(
+                                    className={`p-1 text-white text-center border rounded-pill ${determineBackgroundColor(
                                       empdata.category
                                     )}`}
                                   >
@@ -1425,7 +1423,7 @@ export default function EmployeeTable(props) {
                                         : "btn btn-outline-info action_btn"
                                     }
                                     onClick={() => editVisa(empdata)}
-                                    title={`Add/Update ${props?.ApplicantType === "temporary resident (visiting , studying , working)" ? "Temporary Resident" : props?.ApplicantType} status`}
+                                    title={`Add/Update ${props?.ApplicantType === "temporary resident (visiting , studying , working)" ? "Temporary Resident" : props?.ApplicantType === "pnp" ? "Alberta PNP" : props?.ApplicantType} status`}
                                   >
                                     <span className="text-gray px-2">
                                       <MdEditNote />

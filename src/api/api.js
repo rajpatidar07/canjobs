@@ -727,7 +727,8 @@ export const ADocAnnotation = async (
   annotationId,
   DocUserType
 ) => {
-  // console.log( "1. task_creator_user_id =>", id,
+  console.log( 
+    //"1. task_creator_user_id =>", id,
   //   "2. task_creator_user_type =>", user_type === "admin" ? "admin" : "agent",
   //   "3. doc_id =>", docId,
   //   "4. user_admin_assigned =>", type === "partner" || "partnerChat" ? assigned_by_id : "",
@@ -741,9 +742,9 @@ export const ADocAnnotation = async (
   //   '12. type =>', type,
   //   '13. employee_id =>', employee_id,
   //   '14. doc_parent_id =>',docPartentId,
-  // '15. DocUserType =>',DocUserType,
+  '15. DocUserType =>',DocUserType,
   // '16. assign_to =>',email
-  // )
+  )
   const response = await axios.post(
     `${API_URL}admin/docTaskAdd?document_user_type=${DocUserType}`,
     //Old json {

@@ -816,7 +816,7 @@ function UserRegisterPage() {
                             : "text-capitalize"
                         }
                       >
-                        {interest}
+                        {interest === "pnp" ? "Alberta PNP" : interest}
                       </option>
                     ))}
                     {/* <option value={"swap"}>SWEP</option>

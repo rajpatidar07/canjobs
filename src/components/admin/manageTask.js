@@ -136,9 +136,10 @@ export default function ManageTask() {
                                 </select>
                                 {/* <small className="text-danger">{searcherror}</small> */}
                             </div>
-                            <div className="col p-1 form_group mb-3 mt-3 ">
+                            <div className="col p-1 form_group mt-7 ">
 
                                 <CustomButton
+                                    style={{ height: "29px" }}
                                     className="col font-size-3 rounded-3 btn btn-primary border-0"
                                     onClick={() => {
                                         setStatus("")

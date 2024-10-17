@@ -557,6 +557,7 @@ export default function PartnerDetails({ setLoginCondition }) {
                       assigned_by_id={data.assigned_by}
                       partnerChatNav={partnerChat}
                       reffer_by={Pid}
+                      emp_user_type={"agent"}
                       page={"agentProfile"}
                     />
                   ) : null}

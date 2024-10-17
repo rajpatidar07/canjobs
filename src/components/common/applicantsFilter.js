@@ -307,7 +307,7 @@ export default function ApplicantsFilter({
             : "d-none"
         }
       >
-        <p className="input_label">Filter by Application type:</p>
+        <p className="input_label">Filter by type:</p>
         <div className="select_div">
           <select
             name="interest"
@@ -348,7 +348,7 @@ export default function ApplicantsFilter({
             : "d-none"
         }
       >
-        <p className="input_label">Search by Candidate ID:</p>
+        <p className="input_label">Search by ID:</p>
         <div className="select_div">
           <input
             type="text"

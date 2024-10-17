@@ -81,6 +81,12 @@ import TemporaryResident from "../admin/TemporaryResident";
 import EconomicImmigration from "../admin/EcomonicImmigration";
 import FamilySponsorship from "../admin/FamilySponsorship";
 import ManageTask from "../admin/manageTask";
+import Humanitarian from "../admin/humanitarian";
+import TypePassport from "../admin/typePassport";
+import TypeCitizenship from "../admin/typeCitizenship";
+import ParmanentResidentCard from "../admin/ParmanentResidentCard";
+import StudyHome from "../Study/studyHome";
+import StudentProfile from "../Study/studentProfile";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -115,6 +121,8 @@ function MainLayout() {
       <Routes>
         {/* Employee */}
         <Route path="/" element={<EmployeeHomePage />} />
+        <Route path="/student_home" element={<StudyHome />} />
+        <Route path="/student_profile" element={<StudentProfile />} />
         <Route path="/signup" element={<SinUpPage />} />
         <Route path="/candidate_login" element={<CandidateLoginForm setLoginCondition={setLoginCondition} />} />
         <Route path="/candidate_signup" element={<CandidateSignup />} />
@@ -251,6 +259,10 @@ function MainLayout() {
             <Route path="/economicimmigration" element={<EconomicImmigration />} />
             <Route path="/familysponsorship" element={<FamilySponsorship />} />
             <Route path="/pnp" element={<Pnp />} />
+            <Route path="/passport" element={<TypePassport />} />
+            <Route path="/citizenship" element={<TypeCitizenship />} />
+            <Route path="/humanitarian_and_Compassionate" element={<Humanitarian />} />
+            <Route path="/permanent_resident_cards" element={<ParmanentResidentCard />} />
             <Route path="/pgwp" element={<PGWP />} />
             <Route path="/localcandidates" element={<LocalCandidate />} />
             <Route path="/Newpdf" element={<Newpdf />} />

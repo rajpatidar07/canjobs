@@ -335,7 +335,7 @@ export default function AdminTaskTable(props) {
                                   className={`user_status_btn btn-xs ${data.status === "1"
                                     ? "btn-shamrock"
                                     : data.status === "2"
-                                      ? "btn-danger"
+                                      ? "btn-danger px-4"
                                       : "btn-warning"
                                     } rounded-pill font-size-1 px-1 text-white mr-2`}
                                   // disabled={data.status === "2"}
@@ -362,10 +362,10 @@ export default function AdminTaskTable(props) {
                                 Overdue
                               </Dropdown.Item> */}
                                 </DropdownButton>
-                                {data.status === ("1" || 1) &&
-                                  <small className="font-size-1 d-flex justify-content-center mt-2"
+                                {(data.status === ("1" || 1) && data.task_complete_date) ?
+                                  <small className="font-size-1 d-flex justify-content-center mt-2 text-capitalize"
                                   >
-                                    <ConvertTime _date={data.task_complete_date} format={".fromNow()"}/></small>}
+                                    <ConvertTime _date={data.task_complete_date} format={".fromNow()"} /></small> : null}
                               </div>)
                               :
                               <p
@@ -382,7 +382,7 @@ export default function AdminTaskTable(props) {
                                   <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
                                     Incomplete
                                   </span>
-                                ) : data.status ===  "2" ?
+                                ) : data.status === "2" ?
                                   <span className="p-1 bg-danger text-white text-center w-100 border rounded-pill">
                                     Overdue
                                   </span>

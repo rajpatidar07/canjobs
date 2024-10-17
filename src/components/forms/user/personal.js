@@ -1028,7 +1028,7 @@ function PersonalDetails(props) {
                       className={`${errors.interested_in
                         ? "form-control  border border-danger "
                         : "form-control "}
-                          ${state.interested_in === "pnp" || state.interested_in === "pgwp" ?
+                          ${state.interested_in === "pgwp" ?
                           `text-uppercase` :
                           "text-capitalize"}`
                       }
@@ -1040,10 +1040,10 @@ function PersonalDetails(props) {
                       <option value={""}>Select</option>
                       {(FilterJson.interested || []).map((interest, index) => (
                         <option key={index} value={interest}
-                          className={interest === "pnp" || interest === "pgwp" ?
+                          className={interest === "pgwp" ?
                             `text-uppercase` :
                             "text-capitalize"}>
-                          {interest}
+                          {interest === "pnp" ? "Alberta PNP" : interest}
                         </option>
                       ))}
                       {/* <option value={"swap"}>SWEP</option>
@@ -1080,7 +1080,7 @@ function PersonalDetails(props) {
                         name="category"
                         value={state.category || ""}
                         onChange={onInputChange}
-                        className={`form-control te
+                        className={`form-control 
                           ${errors.category
                             ? " border border-danger"
                             : ""} ${state.category === "aos" || state.category === "rrs" ? "text-uppercase" : "text-capitalize"}`

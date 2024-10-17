@@ -18,13 +18,12 @@ export default function VisaTimeLine({ visa, substage, type }) {
         {type && (
           <div className="job_name text-dark">
             <span
-              className={`m-2 font-size-2 d-block mb-1 ${
-                type === "pnp" || type === "pgwp"
+              className={`m-2 font-size-2 d-block mb-1 ${  type === "pgwp"
                   ? "text-uppercase"
                   : "text-capitalize"
-              }`}
+                }`}
             >
-              {type}
+              {type === "pnp" ? "Alberta PNP" : type}
             </span>
           </div>
         )}
@@ -34,17 +33,15 @@ export default function VisaTimeLine({ visa, substage, type }) {
             return (
               <div
                 key={i}
-                className={`step text-capitalize ${
-                  isDone ? "approved " : "text-capitalize"
-                } ${
-                  status === "file decision"
+                className={`step text-capitalize ${isDone ? "approved " : "text-capitalize"
+                  } ${status === "file decision"
                     ? substage === "rejected"
                       ? "reject"
                       : substage === "awaiting decision"
-                      ? "pending"
-                      : ""
+                        ? "pending"
+                        : ""
                     : ""
-                }
+                  }
                                   `}
               >
                 <span className="text-capitalize">

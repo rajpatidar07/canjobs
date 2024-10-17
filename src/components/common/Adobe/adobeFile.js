@@ -36,7 +36,7 @@ const AdobePDFViewer = ({
   const [annotationManager, setAnnotationManager] = useState(null);
   const [adobeViewer, setAdobeViewer] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(
-    docTypeList.findIndex((item) => item.id === fileId)
+    docTypeList?.findIndex((item) => item.id === fileId)
   );
   // Handler for Previous button
   const handlePreviousClick = () => {
@@ -78,7 +78,7 @@ const AdobePDFViewer = ({
   // }, [currentIndex]);
   /*REnder document method */
   useEffect(() => {
-    if (!data?.name?.includes(1295)) {
+    // if (!data?.name?.includes(1295)) {
       const viewSDKClient = new ViewSDKClient();
       viewSDKClient.ready().then(() => {
         const previewFilePromise = viewSDKClient.previewFile(
@@ -169,7 +169,7 @@ const AdobePDFViewer = ({
         // viewSDKClient.registerSaveApiHandler(userId, annotationId, DocUserType);
         viewSDKClient.registerGetUserProfileApiHandler();
       });
-    }
+    // }
     //     let timer;
     //         timer = setTimeout(() => {
     //           console.log("call timeout===================");
@@ -204,7 +204,7 @@ const AdobePDFViewer = ({
   }, [url]);
   /*Render method to Highlight the annotation from clicking it */
   useEffect(() => {
-    if (!data?.name?.includes(1295)) {
+    // if (!data?.name?.includes(1295)) {
       if (annotationId && annotationManager && adobeViewer) {
         annotationManager
           .getAnnotations()
@@ -236,10 +236,9 @@ const AdobePDFViewer = ({
           })
           .catch((error) => console.log("Error getting annotations:", error));
       }
-    }
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [annotationId, annotationManager, adobeViewer]);
-
   return (
     <div
       style={{ height: docsection ? "100vh" : "calc(100vh - 130px)" }}
@@ -264,7 +263,7 @@ const AdobePDFViewer = ({
           // transition: "all .3s",
         }}
       >
-        <button
+        {docTypeList && <button
           className={`rounded-circle font-size-4
             ${!docTypeList[currentIndex - 1] ||
               docTypeList[currentIndex - 1]?.folder
@@ -292,8 +291,8 @@ const AdobePDFViewer = ({
           }}
         >
           <GrPrevious />
-        </button>
-        <button
+        </button>}
+        {docTypeList && <button
           className={`rounded-circle font-size-4
           ${!docTypeList[currentIndex + 1] ||
               docTypeList[currentIndex + 1]?.folder
@@ -321,7 +320,7 @@ const AdobePDFViewer = ({
           }}
         >
           <GrNext />
-        </button>
+        </button>}
         <div
           id="pdf-div"
           className={`${(userType === "admin" || userType === "agent") && openAnnotationBox

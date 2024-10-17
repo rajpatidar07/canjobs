@@ -7,20 +7,20 @@ import {
   MdRealEstateAgent,
   MdFamilyRestroom,
 } from "react-icons/md";
-import { LuFileKey } from "react-icons/lu";
+import { LuAmpersand, LuFileKey } from "react-icons/lu";
 import { LiaUsersSolid, LiaAddressCardSolid, LiaCcVisa } from "react-icons/lia";
 import { BsBuildings, BsQrCodeScan } from "react-icons/bs";
 import { PiApplePodcastsLogoThin } from "react-icons/pi";
 import { AiOutlineUserAdd /*, AiOutlineMail*/ } from "react-icons/ai";
-import { TbFilterPlus, TbUserDollar } from "react-icons/tb";
-import { FaGraduationCap, FaNotesMedical, FaTasks } from "react-icons/fa";
+import { TbFilterPlus, TbLetterC, TbLetterH, TbUserDollar } from "react-icons/tb";
+import { FaGraduationCap, FaNotesMedical, FaPassport, FaRegCreditCard, FaTasks } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
 import { GrVisa } from "react-icons/gr";
 import { TiBusinessCard } from "react-icons/ti";
 import { SiExpress, SiStudyverse } from "react-icons/si";
 import { IoLogoPinterest } from "react-icons/io";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
-import { FaPersonShelter } from "react-icons/fa6";
+import { FaPersonShelter, FaUsersBetweenLines } from "react-icons/fa6";
 import { GiTemporaryShield } from "react-icons/gi";
 const AdminSidebar = (props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(
@@ -266,7 +266,7 @@ const AdminSidebar = (props) => {
               <i className="fas fa-file mr-5"></i>Manage Documents
             </Link>
           </li> */}
-       
+
         <li
           ref={(el) => (liRefs.current["LMIA status"] = el)}
           className={
@@ -324,7 +324,7 @@ const AdminSidebar = (props) => {
           >
             {/* <i className="fas fa-filter mr-5"></i> */}
             <IoLogoPinterest className="sidebar_icon" />
-            PNP
+            Alberta PNP
           </Link>
         </li>
         <li
@@ -402,7 +402,7 @@ const AdminSidebar = (props) => {
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <GiTemporaryShield className="sidebar_icon" />
-            Temporary Resident 
+            Temporary Resident
           </Link>
         </li>
         <li
@@ -504,6 +504,94 @@ const AdminSidebar = (props) => {
             {/* <i className="fas fa-filter mr-5"></i> */}
             <TiBusinessCard className="sidebar_icon" />
             Federal PR
+          </Link>
+        </li>
+        <li
+          ref={(el) => (liRefs.current["Humanitarian and Compassionate Cases"] = el)}
+          className={
+            user_type === "agent"
+              ? "d-none"
+              : props.heading === "Humanitarian and Compassionate Cases"
+                ? "active"
+                : ""
+          }
+        >
+          <Link
+            onClick={() => clearPageNo()}
+            to="/humanitarian_and_Compassionate
+              "
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+          >
+            <span className="sidebar_icon">
+              <TbLetterH className="pl-2"/><LuAmpersand className="pr-2 pl-2"/><TbLetterC className="pr-2"/>
+            </span>
+            Humanitarian and Compassionate Cases
+          </Link>
+        </li>
+        <li
+          ref={(el) => (liRefs.current["Passport"] = el)}
+          className={
+            user_type === "agent"
+              ? "d-none"
+              : props.heading === "Passport"
+                ? "active"
+                : ""
+          }
+        >
+          <Link
+            onClick={() => clearPageNo()}
+            to="/passport
+              "
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+          >
+            <span className="sidebar_icon">
+              <FaPassport />
+            </span>
+            Passport
+          </Link>
+        </li>
+        <li
+          ref={(el) => (liRefs.current["Citizenship"] = el)}
+          className={
+            user_type === "agent"
+              ? "d-none"
+              : props.heading === "Citizenship"
+                ? "active"
+                : ""
+          }
+        >
+          <Link
+            onClick={() => clearPageNo()}
+            to="/citizenship
+              "
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+          >
+            <span className="sidebar_icon">
+              <FaUsersBetweenLines />
+            </span>
+            Citizenship
+          </Link>
+        </li>
+        <li
+          ref={(el) => (liRefs.current["Permanent Resident Cards"] = el)}
+          className={
+            user_type === "agent"
+              ? "d-none"
+              : props.heading === "Permanent Resident Cards"
+                ? "active"
+                : ""
+          }
+        >
+          <Link
+            onClick={() => clearPageNo()}
+            to="/permanent_resident_cards
+              "
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+          >
+            <span className="sidebar_icon">
+              <FaRegCreditCard />
+            </span>
+            Permanent Resident Cards
           </Link>
         </li>
         {/* <li className={user_type === "agent"?"d-none":props.heading === "Response" ? "active" : ""}>

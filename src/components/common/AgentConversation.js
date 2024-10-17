@@ -14,7 +14,8 @@ export default function AgentConversation({
   reffer_by,
   type,
   assigned_by_id,
-  page
+  page,
+  emp_user_type
 }) {
   const [allData, setAllData] = useState([]);
   const [apicall, setApiCall] = useState([]);
@@ -110,7 +111,8 @@ export default function AgentConversation({
         "created_on",
         "",
         "",
-        userId
+        userId,
+        emp_user_type
       );
       if (res.data.status === 1 || res.data.status === "1") {
         setAllData(res.data.data.data.reverse());
@@ -152,7 +154,11 @@ export default function AgentConversation({
         state.DocUrl,
         user_type === "admin" ? admin_email : user_email, //Sender email,
         userId,//employee id
-        assigned_by_id//user admin assigned id
+        assigned_by_id,//user admin assigned id
+        "",
+        "",
+        "",
+        emp_user_type
       );
       if (res.data.message === "task inserted successfully!") {
         // toast.success("Message sent Successfully", {
