@@ -88,7 +88,9 @@ import ParmanentResidentCard from "../admin/ParmanentResidentCard";
 import StudyHome from "../Study/studyHome";
 import StudentProfile from "../Study/studentProfile";
 import StudentDocument from "../Study/studentDocument";
-import MainHomePage from "../Study/StudyComman/mainHomePage";
+import MainHomePage from "../Study/mainHomePage";
+import Programs from "../Study/programs";
+import Loans from "../Study/loans";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -126,8 +128,6 @@ function MainLayout() {
         <Route path="/" element={<EmployeeHomePage />} />
         <Route path="/main_home" element={<MainHomePage />} />
         <Route path="/study_home" element={<StudyHome />} />
-        <Route path="/student_profile" element={<StudentProfile setLoginCondition={setLoginCondition} />} />
-        <Route path="/student_document" element={<StudentDocument />} />
         <Route path="/signup" element={<SinUpPage />} />
         <Route path="/candidate_login" element={<CandidateLoginForm setLoginCondition={setLoginCondition} />} />
         <Route path="/candidate_signup" element={<CandidateSignup />} />
@@ -151,6 +151,10 @@ function MainLayout() {
           token !== "null" ||
           token !== "undefined")) ? (
           <>
+            <Route path="/student_profile" element={<StudentProfile setLoginCondition={setLoginCondition} />} />
+            <Route path="/student_document" element={<StudentDocument />} />
+            <Route path="/programs" element={<Programs />} />
+            <Route path="/loan" element={<Loans />} />
             <Route path="/" element={<EmployeeHomePage setLoginCondition={setLoginCondition} />} />
             <Route path="/jobs" element={<JobSearch />} />
             <Route path="/jobdetail" element={<JobDetail />} />

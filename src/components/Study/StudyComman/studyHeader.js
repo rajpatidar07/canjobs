@@ -25,8 +25,8 @@ function StudyHeader() {
             <div className="container">
                 <nav className="navbar site-navbar offcanvas-active navbar-expand-lg p-0 px-0 py-0">
                     {/* <!-- Brand Logo--> */}
-                    <div className="brand-logo">
-                        <Link to="/study_home">
+                    <div className="brand-logo mt-5">
+                        <Link to={userType ? "/study_home" : "/main_home"}>
                             {/* <!-- light version logo (logo must be black // eslint-disable-next-line)--> */}
                             <img
                                 src="image/00logo-main-black.png"
@@ -62,21 +62,22 @@ function StudyHeader() {
                     {
                         userType === "user" ? <div className="header-btns header-btn-devider ml-auto pr-2 ml-lg-6 d-none d-xs-flex">
                             <Link
-                                className="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset"
-                                to={
-                                    `/student_profile`}
-                            >
-                                Profile
-                            </Link>
-
+                                className="btn btn-transparent text-uppercase font-size-2 heading-default-color focus-reset"
+                                to={`/study_home`}
+                            >Home</Link>
+                               <Link
+                                className="btn btn-transparent text-uppercase font-size-2 heading-default-color focus-reset"
+                                to={`/programs`}
+                            >Programs</Link>
+                            
                             <Link
-                                className="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset"
-                                to={
-                                    "/student_document"
-                                }
-                            >
-                                Documents
-                            </Link>
+                                className="btn btn-transparent text-uppercase font-size-2 heading-default-color focus-reset"
+                                to={`/student_profile`}
+                            >Profile</Link>
+                            <Link
+                                className="btn btn-transparent text-uppercase font-size-2 heading-default-color focus-reset"
+                                to={"/student_document"}
+                            >Documents</Link>
                         </div> : null
                         //  : (
                         //     <div className="header-btns header-btn-devider ml-auto pr-2 ml-lg-6 d-none d-xs-flex">
@@ -104,7 +105,7 @@ function StudyHeader() {
                             <div className="dropdown show-gr-dropdown py-5">
                                 <Link
                                     className="proile media ml-7 flex-y-center"
-                                    to="/study_home"
+                                    to="/main_home"
                                     role="button"
                                     id="dropdownMenuLink"
                                     data-toggle="dropdown"

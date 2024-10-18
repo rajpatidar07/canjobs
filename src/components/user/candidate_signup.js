@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useSearchParams, useNavigate } from "react-router-dom";
+import { Link, useSearchParams, useNavigate, useLocation } from "react-router-dom";
 import {
   EmployeeSignUp,
   SendOtp,
@@ -24,6 +24,7 @@ export default function CandidateSignup(props) {
   let [loading, setLoading] = useState(false);
   let [otpBox, setOtpBox] = useState(false);
   // let [facebook, setFacebook] = useState(false);
+  let location = useLocation()
   const [searchParams] = useSearchParams();
   let code = searchParams.get("code");
   let navigate = useNavigate();
@@ -350,7 +351,7 @@ export default function CandidateSignup(props) {
             You have successfully registered your account. Please login to
             continue
             <br />
-            <Link to="/candidate_login" className="btn btn-primary mt-12">
+            <Link to="/candidate_login" className="btn btn-primary mt-12" state={{ page: location?.state?.page }}>
               Login
             </Link>
           </div>
@@ -697,7 +698,7 @@ export default function CandidateSignup(props) {
               </div>
               <p className="font-size-4 text-center heading-default-color">
                 Already have an account?
-                <Link to={"/candidate_login"} className="text-primary ml-2">
+                <Link to={"/candidate_login"} state={{ page: location?.state?.page }} className="text-primary ml-2">
                   Login
                 </Link>
               </p>

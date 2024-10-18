@@ -1,5 +1,5 @@
 import React from 'react'
-import StudyHeader from './studyHeader'
+import StudyHeader from './StudyComman/studyHeader'
 import { Link } from 'react-router-dom'
 
 export default function MainHomePage() {

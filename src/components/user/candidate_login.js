@@ -94,7 +94,7 @@ export default function CandidateLoginForm(props) {
           });
           setLoading(false);
           Close();
-          navigate(location.state.page === "study" ? "/student_profile" : `/${updatedTodo.employee_id}`);
+          navigate(location?.state?.page === "study" ? "/study_home" : `/${updatedTodo.employee_id}`);
           window.location.reload();
         }
         if (updatedTodo.message === "Invalid credentials !") {
@@ -238,7 +238,7 @@ export default function CandidateLoginForm(props) {
               autoClose: 1000,
             });
             Close();
-            navigate(location.state.page === "study" ? "/student_profile" : `/${data.employee_id}`);
+            navigate(location?.state?.page === "study" ? "/student_profile" : `/${data.employee_id}`);
             window.location.reload();
           }
           if (
@@ -353,7 +353,7 @@ export default function CandidateLoginForm(props) {
                     </div> */}
           </div>
           <div className="brand-logo mb-10 text-center">
-            <Link to={location.state.page === "study" ? "/study_home" : "/"}>
+            <Link to={location?.state?.page === "study" ? "/study_home" : "/"}>
               <img
                 src="image/00logo-main-black.png"
                 alt=""
@@ -504,7 +504,7 @@ export default function CandidateLoginForm(props) {
             </div>
             <p className="font-size-4 text-center heading-default-color">
               Don’t have an account?
-              <Link className="text-primary ml-2" to={"/candidate_signup"}>
+              <Link className="text-primary ml-2" to={"/candidate_signup"} state={{page:location?.state?.page}}>
                 Create a free account
               </Link>
             </p>
