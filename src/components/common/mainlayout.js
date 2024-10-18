@@ -121,7 +121,7 @@ function MainLayout() {
       <Routes>
         {/* Employee */}
         <Route path="/" element={<EmployeeHomePage />} />
-        <Route path="/student_home" element={<StudyHome />} />
+        <Route path="/study_home" element={<StudyHome />} />
         <Route path="/student_profile" element={<StudentProfile />} />
         <Route path="/signup" element={<SinUpPage />} />
         <Route path="/candidate_login" element={<CandidateLoginForm setLoginCondition={setLoginCondition} />} />

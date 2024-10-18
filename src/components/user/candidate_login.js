@@ -352,7 +352,7 @@ export default function CandidateLoginForm(props) {
                     </div> */}
           </div>
           <div className="brand-logo mb-10 text-center">
-            <Link to={location.state.page === "study" ? "/student_home" : "/"}>
+            <Link to={location.state.page === "study" ? "/study_home" : "/"}>
               <img
                 src="image/00logo-main-black.png"
                 alt=""

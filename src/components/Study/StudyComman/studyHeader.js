@@ -26,11 +26,11 @@ function StudyHeader() {
                 <nav className="navbar site-navbar offcanvas-active navbar-expand-lg p-3 px-0 py-0">
                     {/* <!-- Brand Logo--> */}
                     <div className="brand-logo">
-                        <Link to="/student_home">
+                        <Link to="/study_home">
                             {/* <!-- light version logo (logo must be black // eslint-disable-next-line)--> */}
                             <img
                                 src="image/00logo-main-black.png"
-                                alt="" 
+                                alt=""
                                 className="light-version-logo default-logo"
                                 style={{ maxWidth: "160px" }}
                             />
@@ -59,13 +59,13 @@ function StudyHeader() {
                             <i className="gr-cross-icon"></i>
                         </button>
                     </div>
-                    {userType === "company" || userType === "user" ? null : (
+                    {userType === "company" || userType === "user" || window.location.pathname === "/study_home" ? null : (
                         <div className="header-btns header-btn-devider ml-auto pr-2 ml-lg-6 d-none d-xs-flex">
                             {/* <!-- Modal for Login--> */}
                             <Link
                                 className="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset"
                                 to={"/candidate_login"}
-                                state={{page:"study"}}
+                                state={{ page: "study" }}
                             >
                                 Log in
                             </Link>
@@ -84,7 +84,7 @@ function StudyHeader() {
                             <div className="dropdown show-gr-dropdown py-5">
                                 <Link
                                     className="proile media ml-7 flex-y-center"
-                                    to="/student_home"
+                                    to="/study_home"
                                     role="button"
                                     id="dropdownMenuLink"
                                     data-toggle="dropdown"
@@ -142,7 +142,7 @@ function StudyHeader() {
                                                 position: toast.POSITION.TOP_RIGHT,
                                                 autoClose: 1000,
                                             });
-                                            navigate("/student_home");
+                                            navigate("/study_home");
                                             window.location.reload();
                                         }}
                                     >
