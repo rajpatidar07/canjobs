@@ -23,7 +23,7 @@ function StudyHeader() {
     return (
         <header className="site-header site-header--menu-right bg-default py-7 py-lg-0 site-header--absolute site-header--sticky">
             <div className="container">
-                <nav className="navbar site-navbar offcanvas-active navbar-expand-lg p-3 px-0 py-0">
+                <nav className="navbar site-navbar offcanvas-active navbar-expand-lg p-0 px-0 py-0">
                     {/* <!-- Brand Logo--> */}
                     <div className="brand-logo">
                         <Link to="/study_home">
@@ -59,27 +59,47 @@ function StudyHeader() {
                             <i className="gr-cross-icon"></i>
                         </button>
                     </div>
-                    {userType === "company" || userType === "user" || window.location.pathname === "/study_home" ? null : (
-                        <div className="header-btns header-btn-devider ml-auto pr-2 ml-lg-6 d-none d-xs-flex">
-                            {/* <!-- Modal for Login--> */}
+                    {
+                        userType === "user" ? <div className="header-btns header-btn-devider ml-auto pr-2 ml-lg-6 d-none d-xs-flex">
                             <Link
                                 className="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset"
-                                to={"/candidate_login"}
-                                state={{ page: "study" }}
+                                to={
+                                    `/student_profile`}
                             >
-                                Log in
+                                Profile
                             </Link>
 
-                            {/* <!-- Modal for SingUp--> */}
                             <Link
-                                className="btn btn-primary"
-                                to={"/candidate_signup"}
+                                className="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset"
+                                to={
+                                    "/student_document"
+                                }
                             >
-                                Sign up
+                                Documents
                             </Link>
-                        </div>
-                    )}
-                    {userType === "company" || userType === "user" ? (
+                        </div> : null
+                        //  : (
+                        //     <div className="header-btns header-btn-devider ml-auto pr-2 ml-lg-6 d-none d-xs-flex">
+                        //         {/* <!-- Modal for Login--> */}
+                        //         <Link
+                        //             className="btn btn-transparent text-uppercase font-size-3 heading-default-color focus-reset"
+                        //             to={"/candidate_login"}
+                        //             state={{ page: "study" }}
+                        //         >
+                        //             Log in
+                        //         </Link>
+
+                        //         {/* <!-- Modal for SingUp--> */}
+                        //         <Link
+                        //             className="btn btn-primary"
+                        //             to={"/candidate_signup"}
+                        //         >
+                        //             Sign up
+                        //         </Link>
+                        //     </div>
+                        // )
+                    }
+                    {userType === "user" ? (
                         <div>
                             <div className="dropdown show-gr-dropdown py-5">
                                 <Link
@@ -117,22 +137,7 @@ function StudyHeader() {
                                     aria-labelledby="dropdownMenuLink"
                                 >
 
-                                    <Link
-                                        className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                                        to={
-                                            `/student_profile`}
-                                    >
-                                        Profile
-                                    </Link>
 
-                                    <Link
-                                        className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                                        to={
-                                            "/student_document"
-                                        }
-                                    >
-                                        Documents
-                                    </Link>
                                     <Link
                                         className="dropdown-item py-2 text-red font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
                                         to=""

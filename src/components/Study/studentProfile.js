@@ -8,7 +8,7 @@ import FilterJson from "../json/filterjson";
 import CustomButton from "../common/button";
 // import LimaArrowProfile from "../common/LimaArrowProfile";
 // import ContactPage from "../common/contactPage";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
     EmployeeDetails,
     // EmployeeAppliedJob,
@@ -38,7 +38,7 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 // import AgentConversation from "../common/AgentConversation";
 // import UserTimline from "../common/UserTimline";
 // import InterviewHistoryTable from "../common/InterviewHistoryTable";
-import SharePointDocument from "../common/Document folder/SharePointDocument";
+// import SharePointDocument from "../common/Document folder/SharePointDocument";
 import NotFound from "../common/notfound";
 // import RetainerAgrementMainPage from "../common/Retaineragreement/RetainerAgrementMainPage";
 // import VisaTimeLine from "../common/visaTimeLine";
@@ -49,13 +49,13 @@ import StudyHeader from "./StudyComman/studyHeader";
 const StudentProfile = (props) => {
     // useSessionCheck();
     const  eid  = localStorage.getItem("employee_id");
-    const location = useLocation();
-    const searchParams = new URLSearchParams(location.search);
-    const docId = searchParams.get("docId");
-    const docParentId = searchParams.get("docParentId");
+    // const location = useLocation();
+    // const searchParams = new URLSearchParams(location.search);
+    // const docId = searchParams.get("docId");
+    // const docParentId = searchParams.get("docParentId");
     // const partnerChat = searchParams.get("partner");
-    const notes = searchParams.get("note");
-    const agreement = searchParams.get("agreement");
+    // const notes = searchParams.get("note");
+    // const agreement = searchParams.get("agreement");
     // let navigate = useNavigate();
 
     const [apiCall, setApiCall] = useState(false);
@@ -69,18 +69,18 @@ const StudentProfile = (props) => {
     const [showEducation, setShowEducation] = useState(false);
     const [showItSkills, setShowItSkills] = useState(false);
     //   const [addNote, setAddNote] = useState(false);
-    const [TabActive, setTabActive] = useState(
-        // docId
-        //   ? "documents" /*"sharepoint" */
-        //   : partnerChat
-        //     ? "agent conversation"
-        //     : notes === "true"
-        //       ? "notes"
-        //       : agreement === "true"
-        //         ? "retaineragreement"
-        //         :
-        "profile"
-    );
+    // const [TabActive, setTabActive] = useState(
+    //     docId
+    //       ? "documents" /*"sharepoint" */
+    //       : partnerChat
+    //         ? "agent conversation"
+    //         : notes === "true"
+    //           ? "notes"
+    //           : agreement === "true"
+    //             ? "retaineragreement"
+    //             :
+    //     "profile"
+    // );
     const [userDetail, setuserDetail] = useState([]);
     const [userFound, setuserFound] = useState([]);
     const [PersonalDetail, setPersonalDetail] = useState([]);
@@ -231,7 +231,7 @@ const StudentProfile = (props) => {
         //   setTabActive("retaineragreement");
         // }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [apiCall, eid, docId, docParentId, notes, agreement]);
+    }, [apiCall, eid, /*docId, docParentId, notes, agreement*/]);
     /*Function to See uploaded resume */
     const handleViewResume = (pdfUrl) => {
         window.open(`/userpdf?pdfUrl=${encodeURIComponent(pdfUrl)}`, "_blank");
@@ -325,11 +325,11 @@ const StudentProfile = (props) => {
                             <Loader />
                         </div>
                     ) : userFound === eid ? (
-                        <div className="row text-left mt-5 pt-0 flex-wrap">
+                        <div className="row text-left mt-18 pt-0 flex-wrap">
                             <div className=" col-12 order-2 order-xl-1">
                                 <div className="bg-white">
                                     {/*----Profile Header----*/}
-                                    <ul
+                                    {/* <ul
                                         className={`nav border-top border-bottom border-mercury user_profile_tab ${user_type === "admin" || user_type === "agent"
                                             ? ""
                                             : "mt-md-13"
@@ -354,7 +354,7 @@ const StudentProfile = (props) => {
                                                 Profile
                                             </Link>
                                         </li>
-                                        {/* <li
+                                        <li
                       className={`${user_type === "company"
                         ? "d-none"
                         : "tab-menu-items nav-item"
@@ -375,7 +375,7 @@ const StudentProfile = (props) => {
                       >
                         Applied Jobs
                       </Link>
-                    </li> */}
+                    </li>
                                         <li
                                             className={`${user_type === "company"
                                                 ? "d-none"
@@ -435,7 +435,7 @@ const StudentProfile = (props) => {
                                                 Documents
                                             </Link>
                                         </li>
-                                        {/* <li
+                                        <li
                       className={
                         user_type === "user" || user_type === "company"
                           ? "d-none"
@@ -457,8 +457,8 @@ const StudentProfile = (props) => {
                       >
                         Visa
                       </Link>
-                    </li> */}
-                                        {/* <li
+                    </li>
+                                        <li
                       className={
                         user_type === "company"
                           ? //|| user_type === "user"
@@ -481,8 +481,8 @@ const StudentProfile = (props) => {
                       >
                         Notes
                       </Link>
-                    </li> */}
-                                        {/* <li
+                    </li>
+                                        <li
                       className={
                         user_type === "company" ||
                           user_type === "agent" ||
@@ -506,8 +506,8 @@ const StudentProfile = (props) => {
                       >
                         Retainer Agreement
                       </Link>
-                    </li> */}
-                                        {/* <li
+                    </li>
+                                        <li
                       className={`tab-menu-items nav-item ${user_type === "company" ? "d-none" : ""
                         }`}
                     >
@@ -526,16 +526,16 @@ const StudentProfile = (props) => {
                       >
                         Payments
                       </Link>
-                    </li> */}
-                                        {/* <li className="tab-menu-items nav-item pr-12">
+                    </li>
+                                        <li className="tab-menu-items nav-item pr-12">
                       <CustomButton
                         className=" font-size-4 rounded-3 btn-primary border-0 mt-2"
                         onClick={() => setShowDoc(true)}
                       >
                         {user_type === "user" ? "Add Document" : "Documents"}
                       </CustomButton>
-                    </li> */}
-                                        {/* <li
+                    </li>
+                                        <li
                       className={
                         // user_type === "user" ||
                         user_type === "company"
@@ -558,8 +558,8 @@ const StudentProfile = (props) => {
                       >
                         Contact Us
                       </Link>
-                    </li> */}
-                                        {/* <li
+                    </li>
+                                        <li
                       className={
                         user_type === "user" || user_type === "company"
                           ? "d-none"
@@ -581,8 +581,8 @@ const StudentProfile = (props) => {
                       >
                         TimeLine
                       </Link>
-                    </li> */}
-                                        {/* <li
+                    </li>
+                                        <li
                       className={
                         user_type === "company" ||
                           // user_type === "user" ||
@@ -606,8 +606,8 @@ const StudentProfile = (props) => {
                       >
                         Email
                       </Link>
-                    </li> */}
-                                        {/* <li
+                    </li>
+                                        <li
                       className={
                         user_type === "company" || user_type === "user"
                           ? "d-none"
@@ -629,8 +629,8 @@ const StudentProfile = (props) => {
                       >
                         Partner
                       </Link>
-                    </li> */}
-                                        {/* <li
+                    </li>
+                                        <li
                       className={
                         user_type === "company" //|| user_type === "user"
                           ? "d-none"
@@ -652,12 +652,14 @@ const StudentProfile = (props) => {
                       >
                         Interview
                       </Link>
-                    </li> */}
-                                    </ul>
+                    </li>
+                                    </ul> */}
                                     {/*---Profile Details----*/}
                                     <div
                                         className={
-                                            TabActive === "profile" ? "tab-content" : "d-none"
+                                            // TabActive === "profile" ?
+                                             "tab-content"
+                                            //   : "d-none"
                                         }
                                         id="myTabContent"
                                     >
@@ -1255,7 +1257,7 @@ const StudentProfile = (props) => {
                     ) : null}
                    
                   </div> */}
-                                    <div
+                                    {/* <div
                                         className={
                                             TabActive === "documents"
                                                 ? "justify-content-center"
@@ -1281,7 +1283,7 @@ const StudentProfile = (props) => {
                                                 partnerId={PersonalDetail.reffer_by}
                                             />
                                         ) : null}
-                                    </div>
+                                    </div> */}
 
                                     {/* <div
                     className={

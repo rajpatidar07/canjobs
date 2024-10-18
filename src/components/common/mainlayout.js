@@ -87,6 +87,8 @@ import TypeCitizenship from "../admin/typeCitizenship";
 import ParmanentResidentCard from "../admin/ParmanentResidentCard";
 import StudyHome from "../Study/studyHome";
 import StudentProfile from "../Study/studentProfile";
+import StudentDocument from "../Study/studentDocument";
+import MainHomePage from "../Study/StudyComman/mainHomePage";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -113,6 +115,7 @@ function MainLayout() {
     } else {
       return <NotFound userType={userType} />;
     }
+
   };
   return (
     <BrowserRouter>
@@ -121,8 +124,10 @@ function MainLayout() {
       <Routes>
         {/* Employee */}
         <Route path="/" element={<EmployeeHomePage />} />
+        <Route path="/main_home" element={<MainHomePage />} />
         <Route path="/study_home" element={<StudyHome />} />
-        <Route path="/student_profile" element={<StudentProfile />} />
+        <Route path="/student_profile" element={<StudentProfile setLoginCondition={setLoginCondition} />} />
+        <Route path="/student_document" element={<StudentDocument />} />
         <Route path="/signup" element={<SinUpPage />} />
         <Route path="/candidate_login" element={<CandidateLoginForm setLoginCondition={setLoginCondition} />} />
         <Route path="/candidate_signup" element={<CandidateSignup />} />

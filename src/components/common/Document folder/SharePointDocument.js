@@ -694,7 +694,7 @@ export default function SharePointDocument({
                       }}
                     >
                       <IoMdArrowBack />{" "}
-                      <span style={{ fontSize: 18 }}>Back to Profile</span>
+                      <span style={{ fontSize: 18 }}>Back to Folder</span>
                     </Link>
                     {/* Mention admin code */}
                     {1 === 2 &&
