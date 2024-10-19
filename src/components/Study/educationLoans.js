@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React/*, { useState }*/ from 'react'
 import StudyHeader from './StudyComman/studyHeader'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 
-export default function Loans() {
-    let [tabActive, setTabActive] = useState("education")
+export default function EducationLoans() {
+    // let [tabActive, setTabActive] = useState("education")
     return (
         <div className="site-wrapper overflow-hidden ">
             <StudyHeader />
@@ -12,7 +12,7 @@ export default function Loans() {
                     <div className=" col-12 order-2 order-xl-1">
                         <div className="bg-white">
                             {/*----Profile Header----*/}
-                            <ul
+                            {/* <ul
                                 className={`nav border-mercury user_profile_tab d-flex justify-content-center `}
                                 id="myTab"
                                 role="tablist"
@@ -51,7 +51,7 @@ export default function Loans() {
                                         Personal Loan
                                     </Link>
                                 </li>
-                            </ul>
+                            </ul> */}
                         </div>
                     </div>
                 </div>

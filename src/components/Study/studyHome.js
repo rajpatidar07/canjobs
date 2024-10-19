@@ -82,8 +82,11 @@ export default function StudyHome() {
 
                                     }}>
 
-                                    <Link to="/loan" className="btn btn-success btn-lg" state={{ page: "study" }}>
-                                        Apply for loan
+                                    <Link to="/education_loan" className="btn btn-success btn-sm m-1 pt-8 pb-8">
+                                        Apply for  Education Loan
+                                    </Link>
+                                    <Link to="/personal_loan" className="btn btn-success btn-sm m-1 pt-8 pb-8">
+                                        Apply for  Personal Loan
                                     </Link>
                                 </div>
                             </>}

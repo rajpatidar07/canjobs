@@ -60,16 +60,16 @@ function StudyHeader() {
                         </button>
                     </div>
                     {
-                        userType === "user" ? <div className="header-btns header-btn-devider ml-auto pr-2 ml-lg-6 d-none d-xs-flex">
+                        userType === "user" ? <div className="header-btns header-btn-devider p-0 m-0 d-none d-xs-flex">
                             <Link
                                 className="btn btn-transparent text-uppercase font-size-2 heading-default-color focus-reset"
                                 to={`/study_home`}
                             >Home</Link>
-                               <Link
+                            <Link
                                 className="btn btn-transparent text-uppercase font-size-2 heading-default-color focus-reset"
                                 to={`/programs`}
                             >Programs</Link>
-                            
+
                             <Link
                                 className="btn btn-transparent text-uppercase font-size-2 heading-default-color focus-reset"
                                 to={`/student_profile`}
@@ -78,6 +78,12 @@ function StudyHeader() {
                                 className="btn btn-transparent text-uppercase font-size-2 heading-default-color focus-reset"
                                 to={"/student_document"}
                             >Documents</Link>
+                            <Link to="/education_loan" className="btn btn-transparent text-uppercase font-size-2 heading-default-color focus-reset">
+                                Education Loan
+                            </Link>
+                            <Link to="/personal_loan" className="btn btn-transparent text-uppercase font-size-2 heading-default-color focus-reset">
+                                Personal Loan
+                            </Link>
                         </div> : null
                         //  : (
                         //     <div className="header-btns header-btn-devider ml-auto pr-2 ml-lg-6 d-none d-xs-flex">
