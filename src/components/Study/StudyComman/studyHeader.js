@@ -58,33 +58,81 @@ function StudyHeader() {
                         >
                             <i className="gr-cross-icon"></i>
                         </button>
+                        {userType === "user" ?
+                            <ul className="navbar-nav main-menu">
+                                <li>
+                                    <Link style={{ fontSize: "10px" }}
+                                        className="nav-link"
+                                        to={`/study_home`}
+                                    >Home</Link>
+                                </li>
+                                <li>
+                                    <Link style={{ fontSize: "10px" }}
+                                        className="nav-link"
+                                        to={`/programs`}
+                                    >Programs</Link>
+                                </li>
+
+                                <li>
+                                    <Link style={{ fontSize: "10px" }}
+                                        className="nav-link"
+                                        to={`/student_profile`}
+                                    >Profile</Link>
+                                </li>
+                                <li>
+                                    <Link style={{ fontSize: "10px" }}
+                                        className="nav-link"
+                                        to={"/student_document"}
+                                    >Documents</Link>
+                                </li>
+                                <li>
+                                    <Link to="/education_loan" style={{ fontSize: "10px" }} className="nav-link">
+                                        Education Loan
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="/personal_loan" style={{ fontSize: "10px" }} className="nav-link">
+                                        Personal Loan
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="/accommodation" style={{ fontSize: "10px" }} className="nav-link">
+                                        Accommodation
+                                    </Link>
+                                </li>
+                            </ul> : null}
                     </div>
                     {
-                        userType === "user" ? <div className="header-btns header-btn-devider p-0 m-0 d-none d-xs-flex">
-                            <Link
-                                className="btn btn-transparent text-uppercase font-size-2 heading-default-color focus-reset"
-                                to={`/study_home`}
-                            >Home</Link>
-                            <Link
-                                className="btn btn-transparent text-uppercase font-size-2 heading-default-color focus-reset"
-                                to={`/programs`}
-                            >Programs</Link>
+                        // userType === "user" ?
+                        //     <div className="  p-0 m-0 d-none d-xs-flex"
+                        //         style={{ minWidth: "124px", height: "40px", fontSize: "10px", letterSpacing: "0.20px" }}>
+                        //         <Link
+                        //             className="btn btn-transparent text-uppercase font-size-2 heading-default-color focus-reset"
+                        //             to={`/study_home`}
+                        //         >Home</Link>
+                        //         <Link
+                        //             className="btn btn-transparent text-uppercase font-size-2 heading-default-color focus-reset"
+                        //             to={`/programs`}
+                        //         >Programs</Link>
 
-                            <Link
-                                className="btn btn-transparent text-uppercase font-size-2 heading-default-color focus-reset"
-                                to={`/student_profile`}
-                            >Profile</Link>
-                            <Link
-                                className="btn btn-transparent text-uppercase font-size-2 heading-default-color focus-reset"
-                                to={"/student_document"}
-                            >Documents</Link>
-                            <Link to="/education_loan" className="btn btn-transparent text-uppercase font-size-2 heading-default-color focus-reset">
-                                Education Loan
-                            </Link>
-                            <Link to="/personal_loan" className="btn btn-transparent text-uppercase font-size-2 heading-default-color focus-reset">
-                                Personal Loan
-                            </Link>
-                        </div> : null
+                        //         <Link
+                        //             className="btn btn-transparent text-uppercase font-size-2 heading-default-color focus-reset"
+                        //             to={`/student_profile`}
+                        //         >Profile</Link>
+                        //         <Link
+                        //             className="btn btn-transparent text-uppercase font-size-2 heading-default-color focus-reset"
+                        //             to={"/student_document"}
+                        //         >Documents</Link>
+                        //         <Link to="/education_loan" className="btn btn-transparent text-uppercase font-size-2 heading-default-color focus-reset">
+                        //             Education Loan
+                        //         </Link>
+                        //         <Link to="/personal_loan" className="btn btn-transparent text-uppercase font-size-2 heading-default-color focus-reset">
+                        //             Personal Loan
+                        //         </Link>
+                        //         <Link to="/accommodation" className="btn btn-transparent text-uppercase font-size-2 heading-default-color focus-reset">
+                        //             Accommodation
+                        //         </Link>
+                        //     </div> : null
                         //  : (
                         //     <div className="header-btns header-btn-devider ml-auto pr-2 ml-lg-6 d-none d-xs-flex">
                         //         {/* <!-- Modal for Login--> */}
@@ -154,6 +202,7 @@ function StudyHeader() {
                                                 position: toast.POSITION.TOP_RIGHT,
                                                 autoClose: 1000,
                                             });
+                                            localStorage.setItem("portal", "study")
                                             navigate("/study_home");
                                             window.location.reload();
                                         }}
@@ -166,7 +215,7 @@ function StudyHeader() {
                     ) : null}
                     {/* <!-- Mobile Menu Hamburger--> */}
                     <button
-                        className={`navbar-toggler btn-close-off-canvas  hamburger-icon border-0 ${userType === "user" ? " d-none" : ""}`}
+                        className={`navbar-toggler btn-close-off-canvas  hamburger-icon border-0 ${userType === "user" ? "" : "d-none"}`}
                         type="button"
                         data-toggle="collapse"
                         data-target="#mobile-menu"

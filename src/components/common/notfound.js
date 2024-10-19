@@ -8,7 +8,7 @@ const NotFound = (props) => {
   const searchParams = new URLSearchParams(location.search);
   const docId = searchParams.get("docId");
   const notes = searchParams.get("note");
-
+  const portal = localStorage.getItem("portal")
   return (
     token && (location.pathname === "/partner_profile"
       || location.pathname === "/dashboard"
@@ -21,15 +21,18 @@ const NotFound = (props) => {
       <div className="page_not_found p-6 text-center">
         <h1>404</h1>
         <h5>Ooops! Page Not Found</h5>
-        <Link className="btn btn-primary mt-5" to={props.userType === "company"
-          ? "/client"
-          : props.userType === "agent"
-            ? "/partner_profile"
-            : props.userType === "admin" ?
-              "/dashboard"
-              : (docId || notes)
-                ? "/adminlogin"
-                : "/"}>
+        <Link className="btn btn-primary mt-5"
+          to={props.userType === "company"
+            ? "/client"
+            : props.userType === "agent"
+              ? "/partner_profile"
+              : props.userType === "admin" ?
+                "/dashboard"
+                : (docId || notes)
+                  ? "/adminlogin"
+                  : portal === "study"
+                    ? "/study_home"
+                    : "/"}>
           Go to Home
         </Link>
       </div>

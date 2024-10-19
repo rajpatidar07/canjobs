@@ -57,6 +57,7 @@ export default function MainHomePage() {
                 <button
                   type="button"
                   className="btn btn-primary line-height-reset text-uppercase main_search_button_home"
+                  onClick={()=>localStorage.setItem("portal","study")}
                 >
                   Start Now
                 </button>
@@ -109,6 +110,7 @@ export default function MainHomePage() {
                 <button
                   type="button"
                   className="btn btn-primary line-height-reset text-uppercase main_search_button_home"
+                  onClick={()=>localStorage.setItem("portal","job")}
                 >
                   Start Now
                 </button>

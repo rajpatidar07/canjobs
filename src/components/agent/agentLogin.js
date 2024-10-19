@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { LoginAgent, ForgotAgentPasswordApi } from "../../api/api";
 import useValidation from "../common/useValidation";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loader from "../common/loader";
 import AgentSignUp from "./agentSingup";
 import ForgotPasswordForm from "../forms/admin/ForgotPasswordForm";
-export default function AgentLogin({setLoginCondition}) {
+export default function AgentLogin({ setLoginCondition }) {
   let navigate = useNavigate();
   let [loading, setLoading] = useState(false);
   let [isLoading, setIsLoading] = useState(false);
   let [singupApi, setSingupApi] = useState(false);
   let [showForgotPassword, setShowForgotPassword] = useState(false);
-
+  let location = useLocation()
   /*----USER LOGIN VALIDATION----*/
   const initialFormState = {
     email: "",
@@ -27,8 +27,8 @@ export default function AgentLogin({setLoginCondition}) {
         value === null || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? null
+            : "Email is invalid",
     ],
     password: [(value) => (value === "" ? "Password is required" : null)],
     forget_email: [
@@ -36,10 +36,10 @@ export default function AgentLogin({setLoginCondition}) {
         state.email
           ? ""
           : value === null || value.trim() === ""
-          ? "Email is required"
-          : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? "Email is required"
+            : /\S+@\S+\.\S+/.test(value)
+              ? null
+              : "Email is invalid",
     ],
   };
   /*----LOGIN ONCHANGE FUNCTION----*/
@@ -69,6 +69,7 @@ export default function AgentLogin({setLoginCondition}) {
           localStorage.setItem("admin_type", updatedTodo.user_type);
           localStorage.setItem("email", updatedTodo.email);
           localStorage.setItem("agent_u_id", updatedTodo.agent_u_id);
+          localStorage.setItem("portal", location?.state?.page)
 
           toast.success("Logged In Successfully", {
             position: toast.POSITION.TOP_RIGHT,
@@ -146,7 +147,7 @@ export default function AgentLogin({setLoginCondition}) {
     <>
       {/* <!-- Login --> */}
       <div className="d-flex justify-content-center admin_login_page hv-100 overflow-auto align-items-center">
-        
+
         <div
           className="bg-white rounded-8"
           style={{ maxWidth: "500px", width: "100%" }}
@@ -169,8 +170,8 @@ export default function AgentLogin({setLoginCondition}) {
                 {singupApi === true
                   ? "Partner Signup"
                   : showForgotPassword === true
-                  ? "Fogot Password"
-                  : "Partner Login"}
+                    ? "Fogot Password"
+                    : "Partner Login"}
               </h5>
               {singupApi === true ? (
                 <AgentSignUp login={() => setSingupApi(false)} />

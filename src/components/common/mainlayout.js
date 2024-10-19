@@ -92,6 +92,7 @@ import MainHomePage from "../Study/mainHomePage";
 import Programs from "../Study/programs";
 import EducationLoan from "../Study/educationLoans";
 import PersonalLoan from "../Study/personalLoan";
+import Accommodation from "../Study/accommodation";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -157,6 +158,7 @@ function MainLayout() {
             <Route path="/programs" element={<Programs />} />
             <Route path="/education_loan" element={<EducationLoan />} />
             <Route path="/personal_loan" element={<PersonalLoan />} />
+            <Route path="/accommodation" element={<Accommodation />} />
             <Route path="/" element={<EmployeeHomePage setLoginCondition={setLoginCondition} />} />
             <Route path="/jobs" element={<JobSearch />} />
             <Route path="/jobdetail" element={<JobDetail />} />
