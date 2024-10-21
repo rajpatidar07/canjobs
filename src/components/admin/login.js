@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { AdminForgotPasswordApi, AdminLogin } from "../../api/api";
 import useValidation from "../common/useValidation";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loader from "../common/loader";
 import ForgotPasswordForm from "../forms/admin/ForgotPasswordForm";
-export default function AdminLoginFrom({ setAdminLoggedIn,setLoginCondition }) {
+export default function AdminLoginFrom({ setAdminLoggedIn, setLoginCondition }) {
   let navigate = useNavigate();
   let [loading, setLoading] = useState(false);
   let [isLoading, setIsLoading] = useState(false);
   let [showForgotPassword, setShowForgotPassword] = useState(false);
-
+  let location = useLocation()
   /*----USER LOGIN VALIDATION----*/
   const initialFormState = {
     email: "",
@@ -25,8 +25,8 @@ export default function AdminLoginFrom({ setAdminLoggedIn,setLoginCondition }) {
         value === null || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? null
+            : "Email is invalid",
     ],
     password: [(value) => (value === "" ? "Password is required" : null)],
     forget_email: [
@@ -34,10 +34,10 @@ export default function AdminLoginFrom({ setAdminLoggedIn,setLoginCondition }) {
         state.email
           ? ""
           : value === null || value.trim() === ""
-          ? "Email is required"
-          : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? "Email is required"
+            : /\S+@\S+\.\S+/.test(value)
+              ? null
+              : "Email is invalid",
     ],
   };
   /*----LOGIN ONCHANGE FUNCTION----*/
@@ -73,9 +73,9 @@ export default function AdminLoginFrom({ setAdminLoggedIn,setLoginCondition }) {
           });
           setLoading(false);
           setIsLoading(false);
-          navigate("/dashboard");
+          navigate(location?.state?.page === "study" ? "/study_dashboard" : "/dashboard");
           window.location.reload();
-        } 
+        }
         if (updatedTodo.message === "Invalid Credentials") {
           setLoading(false);
           setIsLoading(false);
@@ -128,12 +128,12 @@ export default function AdminLoginFrom({ setAdminLoggedIn,setLoginCondition }) {
       {/* <!-- Login --> */}
 
       <div className="d-flex justify-content-center admin_login_page hv-100 overflow-auto align-items-center">
-        
+
         <div
           className="bg-white rounded"
           style={{ maxWidth: "500px", width: "100%" }}
         >
-          {isLoading ===true ? (
+          {isLoading === true ? (
             <Loader />
           ) : (
             <div className="bg-white-2 h-100 p-9 login_Modal_box border shadow">
@@ -177,7 +177,7 @@ export default function AdminLoginFrom({ setAdminLoggedIn,setLoginCondition }) {
                   {/*----ERROR MESSAGE FOR EMAIL----*/}
                   {errors.email && (
                     <span>
-                      {errors.email.map((error,i) => (
+                      {errors.email.map((error, i) => (
                         <span key={i} className="text-danger font-size-3">
                           {error}
                         </span>
@@ -209,7 +209,7 @@ export default function AdminLoginFrom({ setAdminLoggedIn,setLoginCondition }) {
                     {/*----ERROR MESSAGE FOR PASSWORD----*/}
                     {errors.password && (
                       <span>
-                        {errors.password.map((error,i) => (
+                        {errors.password.map((error, i) => (
                           <span key={i} className="text-danger font-size-3">
                             {error}
                           </span>
@@ -219,7 +219,7 @@ export default function AdminLoginFrom({ setAdminLoggedIn,setLoginCondition }) {
                   </div>
                   {errors.Credentials && (
                     <span>
-                      {errors.Credentials.map((error,i) => (
+                      {errors.Credentials.map((error, i) => (
                         <span key={i} className="text-danger font-size-3">
                           {error}
                         </span>

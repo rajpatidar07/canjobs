@@ -45,6 +45,7 @@ export default function CandidateSignup(props) {
     otp: "",
     reffer_by: "",
     Credentials: "",
+    interested_in: location?.state?.page === "study" ? "study permit" : ""
   };
   // VALIDATION CONDITIONS termsErr
   const validators = {

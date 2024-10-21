@@ -85,14 +85,16 @@ import Humanitarian from "../admin/humanitarian";
 import TypePassport from "../admin/typePassport";
 import TypeCitizenship from "../admin/typeCitizenship";
 import ParmanentResidentCard from "../admin/ParmanentResidentCard";
-import StudyHome from "../Study/studyHome";
-import StudentProfile from "../Study/studentProfile";
-import StudentDocument from "../Study/studentDocument";
+import StudyHome from "../Study/StudyComman/studyHome";
+import StudentProfile from "../Study/student/studentProfile";
+import StudentDocument from "../Study/student/studentDocument";
 import MainHomePage from "../Study/mainHomePage";
-import Programs from "../Study/programs";
-import EducationLoan from "../Study/educationLoans";
-import PersonalLoan from "../Study/personalLoan";
-import Accommodation from "../Study/accommodation";
+import Programs from "../Study/student/programs";
+import EducationLoan from "../Study/student/educationLoans";
+import PersonalLoan from "../Study/student/personalLoan";
+import Accommodation from "../Study/student/accommodation";
+import StudyDashboard from "../Study/Study admin/studyDashboard";
+import StudentList from "../Study/Study admin/studentsList";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -281,6 +283,11 @@ function MainLayout() {
             <Route path="/Newpdf" element={<Newpdf />} />
             <Route path="/federal_pr" element={<Federalpr />} />
             <Route path="/view_pdf_Agreement" element={<ViewPdf />} />
+            {/* Study pages as for admin */}
+            <Route path="/study_dashboard" element={<StudyDashboard />} />
+            <Route path="/programs" element={<Programs />} />
+            <Route path="/students" element={<StudentList />} />
+            <Route path="/student_profile" element={<StudentProfile />} />
             <Route path="*" element={<Loader load={"yes"} />} />
           </>
         )}

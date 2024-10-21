@@ -1,5 +1,5 @@
 import React/*, { useState }*/ from 'react'
-import StudyHeader from './StudyComman/studyHeader'
+import StudyHeader from '../StudyComman/studyHeader'
 // import { Link } from 'react-router-dom'
 
 export default function EducationLoans() {

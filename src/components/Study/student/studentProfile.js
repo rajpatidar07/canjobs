@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 // import EmployeeFooter from "../common/footer";
-import EmployementDetails from "../forms/user/employement";
-import PersonalDetails from "../forms/user/personal";
-import EducationDetails from "../forms/user/education";
-import ItSkills from "../forms/user/skills";
-import FilterJson from "../json/filterjson";
-import CustomButton from "../common/button";
+import EmployementDetails from "../../forms/user/employement";
+import PersonalDetails from "../../forms/user/personal";
+import EducationDetails from "../../forms/user/education";
+import ItSkills from "../../forms/user/skills";
+import FilterJson from "../../json/filterjson";
+import CustomButton from "../../common/button";
 // import LimaArrowProfile from "../common/LimaArrowProfile";
 // import ContactPage from "../common/contactPage";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
     EmployeeDetails,
     // EmployeeAppliedJob,
@@ -17,11 +17,11 @@ import {
     // GetLimaSubStages,
     // AddUpdateVisa,
     // AddPaymentToDataBase,
-} from "../../api/api";
+} from "../../../api/api";
 import moment from "moment";
 // import Addfollowup from "../forms/admin/addfollowup";
 import { toast } from "react-toastify";
-import Loader from "../common/loader";
+import Loader from "../../common/loader";
 import { PiPencilDuotone } from "react-icons/pi";
 // import DocumrentContainer from "../common/employeeDocumrentContainer";
 import { BiPhoneCall } from "react-icons/bi";
@@ -39,24 +39,27 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 // import UserTimline from "../common/UserTimline";
 // import InterviewHistoryTable from "../common/InterviewHistoryTable";
 // import SharePointDocument from "../common/Document folder/SharePointDocument";
-import NotFound from "../common/notfound";
+import NotFound from "../../common/notfound";
 // import RetainerAgrementMainPage from "../common/Retaineragreement/RetainerAgrementMainPage";
 // import VisaTimeLine from "../common/visaTimeLine";
-import StudyFooter from "./StudyComman/studyFooter";
-import StudyHeader from "./StudyComman/studyHeader";
+import StudyFooter from "../StudyComman/studyFooter";
+import StudyHeader from "../StudyComman/studyHeader";
+import StudyAdminHeader from "../StudyComman/studyAdminHeader";
+import StudyAdminSidebar from "../StudyComman/studySiderbar";
+import SharePointDocument from "../../common/Document folder/SharePointDocument";
 // import useSessionCheck from "../common/user_session";
 // import AdobePDFViewer from "../common/Adobe/adobeFile";
 const StudentProfile = (props) => {
     // useSessionCheck();
-    const  eid  = localStorage.getItem("employee_id");
-    // const location = useLocation();
-    // const searchParams = new URLSearchParams(location.search);
-    // const docId = searchParams.get("docId");
-    // const docParentId = searchParams.get("docParentId");
+    const eid = localStorage.getItem("employee_id");
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const docId = searchParams.get("docId");
+    const docParentId = searchParams.get("docParentId");
     // const partnerChat = searchParams.get("partner");
     // const notes = searchParams.get("note");
     // const agreement = searchParams.get("agreement");
-    // let navigate = useNavigate();
+    let navigate = useNavigate();
 
     const [apiCall, setApiCall] = useState(false);
     const [status, setStatus] = useState("");
@@ -69,18 +72,18 @@ const StudentProfile = (props) => {
     const [showEducation, setShowEducation] = useState(false);
     const [showItSkills, setShowItSkills] = useState(false);
     //   const [addNote, setAddNote] = useState(false);
-    // const [TabActive, setTabActive] = useState(
-    //     docId
-    //       ? "documents" /*"sharepoint" */
-    //       : partnerChat
-    //         ? "agent conversation"
-    //         : notes === "true"
-    //           ? "notes"
-    //           : agreement === "true"
-    //             ? "retaineragreement"
-    //             :
-    //     "profile"
-    // );
+    const [TabActive, setTabActive] = useState(
+        docId
+            ? "documents" /*"sharepoint" */
+            //   : partnerChat
+            //     ? "agent conversation"
+            //     : notes === "true"
+            //       ? "notes"
+            //       : agreement === "true"
+            //         ? "retaineragreement"
+            :
+            "profile"
+    );
     const [userDetail, setuserDetail] = useState([]);
     const [userFound, setuserFound] = useState([]);
     const [PersonalDetail, setPersonalDetail] = useState([]);
@@ -218,9 +221,9 @@ const StudentProfile = (props) => {
         //   //   setPayment();
         //   setTabActive("payment");
         // }
-        // if (docId) {
-        //   setTabActive("documents");
-        // }
+        if (docId) {
+            setTabActive("documents");
+        }
         // if (partnerChat) {
         //   setTabActive("agent conversation");
         // }
@@ -300,8 +303,38 @@ const StudentProfile = (props) => {
         /*---- Employee Profile Details Page ----*/
         <div className="site-wrapper overflow-hidden bg-default-2">
             {/* <!-- Header Area --> */}
-            <StudyHeader />
 
+            {user_type === "admin" || user_type === "agent" ? (
+                (docId ? (docId) && userFound.length !== 0 : userFound.length !== 0) && <>
+                    <StudyAdminHeader
+                        heading={
+                            <Link
+                                className="d-flex align-items-center "
+                                onClick={() => {
+                                    //   if (TabActive === "notes") {
+                                    navigate(-1);
+                                    //   } else {
+                                    //     setAddNote(true);
+                                    //   }
+                                }}
+                            >
+                                <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
+                                <span className="text-uppercase font-size-3 font-weight-bold text-gray">
+                                    <h3 className="font-size-6 mb-0 text-capitalize">
+                                        {PersonalDetail.name
+                                            ? PersonalDetail.name + " (Candidate)"
+                                            : ""}
+                                    </h3>
+                                </span>
+                            </Link>
+                        }
+                    />
+                    {/* <!-- navbar- --> */}
+                    <StudyAdminSidebar heading={"User Profile"} />
+                </>
+            ) : (
+                <StudyHeader />
+            )}
             <div
                 className={
                     user_type === "admin" || user_type === "agent"
@@ -325,14 +358,14 @@ const StudentProfile = (props) => {
                             <Loader />
                         </div>
                     ) : userFound === eid ? (
-                        <div className="row text-left mt-18 pt-0 flex-wrap">
+                        <div className={`row text-left ${user_type === "admin" || user_type === "agent" ? "mt-5" : "mt-18"} pt-0 flex-wrap`}>
                             <div className=" col-12 order-2 order-xl-1">
                                 <div className="bg-white">
                                     {/*----Profile Header----*/}
-                                    {/* <ul
+                                    <ul
                                         className={`nav border-top border-bottom border-mercury user_profile_tab ${user_type === "admin" || user_type === "agent"
                                             ? ""
-                                            : "mt-md-13"
+                                            : "mt-md-13 d-none"
                                             }`}
                                         id="myTab"
                                         role="tablist"
@@ -354,7 +387,7 @@ const StudentProfile = (props) => {
                                                 Profile
                                             </Link>
                                         </li>
-                                        <li
+                                        {/* <li
                       className={`${user_type === "company"
                         ? "d-none"
                         : "tab-menu-items nav-item"
@@ -375,7 +408,7 @@ const StudentProfile = (props) => {
                       >
                         Applied Jobs
                       </Link>
-                    </li>
+                    </li> */}
                                         <li
                                             className={`${user_type === "company"
                                                 ? "d-none"
@@ -413,7 +446,7 @@ const StudentProfile = (props) => {
                                                 Documents
                                             </Link>
                                         </li>
-                                        <li
+                                        {/* <li
                                             className={`${user_type === "company"
                                                 ? "d-none"
                                                 : "tab-menu-items nav-item"
@@ -434,8 +467,8 @@ const StudentProfile = (props) => {
                                             >
                                                 Documents
                                             </Link>
-                                        </li>
-                                        <li
+                                        </li> */}
+                                        {/* <li
                       className={
                         user_type === "user" || user_type === "company"
                           ? "d-none"
@@ -457,8 +490,8 @@ const StudentProfile = (props) => {
                       >
                         Visa
                       </Link>
-                    </li>
-                                        <li
+                    </li> */}
+                                        {/* <li
                       className={
                         user_type === "company"
                           ? //|| user_type === "user"
@@ -481,8 +514,8 @@ const StudentProfile = (props) => {
                       >
                         Notes
                       </Link>
-                    </li>
-                                        <li
+                    </li> */}
+                                        {/* <li
                       className={
                         user_type === "company" ||
                           user_type === "agent" ||
@@ -506,8 +539,8 @@ const StudentProfile = (props) => {
                       >
                         Retainer Agreement
                       </Link>
-                    </li>
-                                        <li
+                    </li> */}
+                                        {/* <li
                       className={`tab-menu-items nav-item ${user_type === "company" ? "d-none" : ""
                         }`}
                     >
@@ -534,8 +567,8 @@ const StudentProfile = (props) => {
                       >
                         {user_type === "user" ? "Add Document" : "Documents"}
                       </CustomButton>
-                    </li>
-                                        <li
+                    </li> */}
+                                        {/* <li
                       className={
                         // user_type === "user" ||
                         user_type === "company"
@@ -558,8 +591,8 @@ const StudentProfile = (props) => {
                       >
                         Contact Us
                       </Link>
-                    </li>
-                                        <li
+                    </li> */}
+                                        {/* <li
                       className={
                         user_type === "user" || user_type === "company"
                           ? "d-none"
@@ -581,8 +614,8 @@ const StudentProfile = (props) => {
                       >
                         TimeLine
                       </Link>
-                    </li>
-                                        <li
+                    </li> */}
+                                        {/* <li
                       className={
                         user_type === "company" ||
                           // user_type === "user" ||
@@ -606,8 +639,8 @@ const StudentProfile = (props) => {
                       >
                         Email
                       </Link>
-                    </li>
-                                        <li
+                    </li> */}
+                                        {/* <li
                       className={
                         user_type === "company" || user_type === "user"
                           ? "d-none"
@@ -629,8 +662,8 @@ const StudentProfile = (props) => {
                       >
                         Partner
                       </Link>
-                    </li>
-                                        <li
+                    </li> */}
+                                        {/* <li
                       className={
                         user_type === "company" //|| user_type === "user"
                           ? "d-none"
@@ -652,14 +685,14 @@ const StudentProfile = (props) => {
                       >
                         Interview
                       </Link>
-                    </li>
-                                    </ul> */}
+                    </li> */}
+                                    </ul>
                                     {/*---Profile Details----*/}
                                     <div
                                         className={
-                                            // TabActive === "profile" ?
-                                             "tab-content"
-                                            //   : "d-none"
+                                            TabActive === "profile" ?
+                                                "tab-content"
+                                                : "d-none"
                                         }
                                         id="myTabContent"
                                     >
@@ -1257,7 +1290,7 @@ const StudentProfile = (props) => {
                     ) : null}
                    
                   </div> */}
-                                    {/* <div
+                                    <div
                                         className={
                                             TabActive === "documents"
                                                 ? "justify-content-center"
@@ -1283,7 +1316,7 @@ const StudentProfile = (props) => {
                                                 partnerId={PersonalDetail.reffer_by}
                                             />
                                         ) : null}
-                                    </div> */}
+                                    </div>
 
                                     {/* <div
                     className={

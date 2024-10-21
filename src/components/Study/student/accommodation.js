@@ -1,5 +1,5 @@
 import React from 'react'
-import StudyHeader from './StudyComman/studyHeader'
+import StudyHeader from '../StudyComman/studyHeader'
 
 export default function Accommodation() {
     return (

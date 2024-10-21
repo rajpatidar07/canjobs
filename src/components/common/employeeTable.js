@@ -857,8 +857,8 @@ export default function EmployeeTable(props) {
                     </th>
                   </tr>
                 ) : (
-                  (employeeData || []).map((empdata) => (
-                    <React.Fragment key={empdata.id}>
+                  (employeeData || []).map((empdata, index) => (
+                    <React.Fragment key={index}>
                       {props?.ApplicantType ? (
                         <tr style={{ border: "0" }}>
                           <td
@@ -892,17 +892,29 @@ export default function EmployeeTable(props) {
                         </td>
                         <td className=" py-5">
                           <div>
+                            {console.log(localStorage.getItem("portal") === "study"
+                              ? "/student_profile"
+                              : `/${empdata.employee_id}`)}
                             <div className="d-flex profile_box gx-2">
                               <div className="media  align-items-center">
                                 <Link
-                                  to={`/${empdata.employee_id}`}
+                                  to={localStorage.getItem("portal") === "study"
+                                    ? `/student_profile`
+                                    : `/${empdata.employee_id}`}
                                   onClick={
-                                    () => {
-                                      localStorage.setItem(
-                                        "StatusTab",
-                                        status === "" ? "00" : status
-                                      );
-                                    }
+                                    () =>
+                                      localStorage.getItem("portal") === "study"
+                                        ? localStorage.setItem(
+                                          "employee_id",
+                                          empdata.employee_id
+                                        )
+                                        : () => {
+
+                                          localStorage.setItem(
+                                            "StatusTab",
+                                            status === "" ? "00" : status
+                                          );
+                                        }
                                     //   empdata.name !== null
                                     //     ? () => employeeDetails(empdata.employee_id)
                                     //     : null
@@ -936,18 +948,23 @@ export default function EmployeeTable(props) {
                                   <p className="font-size-3  mb-0">N/A</p>
                                 ) : (
                                   <Link
-                                    to={`/${empdata.employee_id}`}
+                                    to={localStorage.getItem("portal") === "study"
+                                      ? `/student_profile`
+                                      : `/${empdata.employee_id}`}
                                     onClick={
-                                      () => {
-                                        localStorage.setItem(
-                                          "StatusTab",
-                                          status === "" ? "00" : status
-                                        );
-                                        localStorage.setItem(
-                                          "PageNo",
-                                          props.pageNo
-                                        );
-                                      }
+                                      () =>
+                                        localStorage.getItem("portal") === "study"
+                                          ? localStorage.setItem(
+                                            "employee_id",
+                                            empdata.employee_id
+                                          )
+                                          : () => {
+
+                                            localStorage.setItem(
+                                              "StatusTab",
+                                              status === "" ? "00" : status
+                                            );
+                                          }
                                       //   empdata.name !== null
                                       //     ? () => employeeDetails(empdata.employee_id)
                                       //     : null
@@ -1259,8 +1276,8 @@ export default function EmployeeTable(props) {
                             ) : (
                               <p
                                 className={`font-size-2 font-weight-normal text-black-2 mb-0 ${empdata.interested_in === "pgwp"
-                                    ? `text-uppercase`
-                                    : "text-capitalize"
+                                  ? `text-uppercase`
+                                  : "text-capitalize"
                                   }`}
                                 title={empdata.interested_in}
                               >
@@ -1604,19 +1621,37 @@ export default function EmployeeTable(props) {
                                   </>
                                   {/* )} */}
                                 </>
-                              ) : (
-                                <button
-                                  className="btn btn-outline-info action_btn"
-                                  // disabled={alredyApplied ? false : true}
-                                  disabled={empdata.interested_in === "pgwp"}
+                              ) : localStorage.getItem("portal") === "study" ?
+                                <Link
+                                  style={{
+                                    padding: "0 5px",
+                                    minWidth: "auto",
+                                    height: "auto",
+                                  }}
+                                  className="btn btn-sm btn-outline-info action_btn text-center"
+                                  to={`/student_profile`}
+                                  title="Candidate Details"
                                   onClick={() =>
-                                    onApplyJobClick(empdata.employee_id)
+                                    localStorage.setItem(
+                                      "employee_id",
+                                      empdata.employee_id
+                                    )
                                   }
-                                  title="Apply For job"
                                 >
-                                  {alredyApplied ? "Already Applied" : "Apply"}
-                                </button>
-                              )}
+                                  Update
+                                </Link> : (
+                                  <button
+                                    className="btn btn-outline-info action_btn"
+                                    // disabled={alredyApplied ? false : true}
+                                    disabled={empdata.interested_in === "pgwp"}
+                                    onClick={() =>
+                                      onApplyJobClick(empdata.employee_id)
+                                    }
+                                    title="Apply For job"
+                                  >
+                                    {alredyApplied ? "Already Applied" : "Apply"}
+                                  </button>
+                                )}
                             </div>
                           </td>
                         )}

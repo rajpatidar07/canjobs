@@ -1,5 +1,5 @@
 import React from 'react'
-import StudyHeader from './StudyComman/studyHeader'
+import StudyHeader from '../StudyComman/studyHeader'
 import { Link } from 'react-router-dom'
 
 export default function StudyHome() {
@@ -40,6 +40,19 @@ export default function StudyHome() {
                                     Consultant
                                 </Link>
                             </div>
+                            {/* Admin Section */}
+                            <div className="col text-center p-2 rounded shadow-sm mx-2 study_home_banner"
+                                style={{
+
+                                    backgroundPosition: "center 42%",
+                                    backgroundImage:
+                                        "linear-gradient(45deg, rgba(0, 0, 0, 0.50), rgba(0, 0, 0, 0.50)),url('https://images.pexels.com/photos/4427430/pexels-photo-4427430.jpeg?auto=compress&cs=tinysrgb&w=400')",
+                                }}>
+
+                                <Link to="/adminlogin" className="btn btn-success btn-lg" state={{ page: "study" }}>
+                                    Admin
+                                </Link>
+                            </div>
                         </> :
                             <>
                                 {/* Student Section */}
@@ -48,7 +61,7 @@ export default function StudyHome() {
 
                                         backgroundImage:
                                             "linear-gradient(45deg, rgba(0, 0, 0, 0.50), rgba(0, 0, 0, 0.50)),url('https://images.pexels.com/photos/7972506/pexels-photo-7972506.jpeg?auto=compress&cs=tinysrgb&w=400')",
-                                            backgroundSize:"cover"
+                                        backgroundSize: "cover"
 
                                     }}>
 
@@ -62,7 +75,7 @@ export default function StudyHome() {
 
                                         backgroundImage:
                                             "linear-gradient(45deg, rgba(0, 0, 0, 0.50), rgba(0, 0, 0, 0.50)),url('https://images.pexels.com/photos/5137963/pexels-photo-5137963.jpeg?auto=compress&cs=tinysrgb&w=400')",
-                                            backgroundSize:"cover"
+                                        backgroundSize: "cover"
 
                                     }}>
 
@@ -78,7 +91,7 @@ export default function StudyHome() {
                                         backgroundPosition: "center 42%",
                                         backgroundImage:
                                             "linear-gradient(45deg, rgba(0, 0, 0, 0.50), rgba(0, 0, 0, 0.50)),url('https://static.vecteezy.com/system/resources/thumbnails/046/323/439/small_2x/loan-flat-style-illustration-design-vector.jpg')",
-                                            backgroundSize:"cover"
+                                        backgroundSize: "cover"
 
                                     }}>
 

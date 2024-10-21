@@ -305,7 +305,7 @@ function PersonalDetails(props) {
 
   // USER PERSONAL DETAIL SUBMIT BUTTON
   async function onUserPersonalDetailClick(event) {
-    // console.log(errors,validate() ,imgError)
+    // console.log(errors,validate(),imgError)
     event.preventDefault();
     if (validate() && imgError === "") {
       setLoading(true);
@@ -1060,8 +1060,8 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
-                  {["temporary resident (visiting , studying , working)", "economic immigration", "family sponsorship", "pnp"].includes(state.interested_in.toLowerCase()) &&
-                    state.interested_in && FilterJson.interested_sub_type[state.interested_in.toLowerCase()] &&
+                  {["temporary resident (visiting , studying , working)", "economic immigration", "family sponsorship", "pnp"].includes(state.interested_in?.toLowerCase()) &&
+                    state.interested_in && FilterJson.interested_sub_type[state.interested_in?.toLowerCase()] &&
                     <div className={`form-group 
   ${props.user_of_page === "assignedUser" ||
                         props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned"
@@ -1088,7 +1088,7 @@ function PersonalDetails(props) {
                         id="category"
                       >
                         <option value={""}>Select Sub Type</option>
-                        {(FilterJson.interested_sub_type[state.interested_in.toLowerCase()] || []).map((subType, index) => (
+                        {(FilterJson.interested_sub_type[state.interested_in?.toLowerCase()] || []).map((subType, index) => (
                           <option key={index} value={subType} className={`${subType === "aos" || subType === "rrs" ? "text-uppercase" : "text-capitalize"}`}>
                             {subType}
                           </option>
@@ -1105,9 +1105,9 @@ function PersonalDetails(props) {
                       )}
                     </div>
                   }
-                  {["economic immigration"].includes(state.interested_in.toLowerCase()) &&
+                  {["economic immigration"].includes(state.interested_in?.toLowerCase()) &&
                     state.interested_in &&
-                    FilterJson.interested_sub_type[state.interested_in.toLowerCase()] &&
+                    FilterJson.interested_sub_type[state.interested_in?.toLowerCase()] &&
                     ["caregivers"].includes(state?.category?.toLowerCase()) &&
                     state.category && (
                       <div className={`form-group 
@@ -1131,8 +1131,8 @@ function PersonalDetails(props) {
                           id="sub_category"
                         >
                           <option value={""}>Select Sub Type</option>
-                          {((FilterJson.interested_sub_type_of_sub_type[state.interested_in.toLowerCase()] &&
-                            FilterJson.interested_sub_type_of_sub_type[state.interested_in.toLowerCase()][state.category.toLowerCase()]) || []).map((subType, index) => (
+                          {((FilterJson.interested_sub_type_of_sub_type[state.interested_in?.toLowerCase()] &&
+                            FilterJson.interested_sub_type_of_sub_type[state.interested_in?.toLowerCase()][state.category.toLowerCase()]) || []).map((subType, index) => (
                               <option key={index} value={subType} className="text-capitalize">
                                 {subType}
                               </option>

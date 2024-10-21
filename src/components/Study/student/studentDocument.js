@@ -1,7 +1,7 @@
 import React from 'react'
-import SharePointDocument from '../common/Document folder/SharePointDocument'
+import SharePointDocument from '../../common/Document folder/SharePointDocument'
 import { useLocation } from 'react-router-dom';
-import StudyHeader from './StudyComman/studyHeader';
+import StudyHeader from '../StudyComman/studyHeader';
 
 export default function StudentDocument() {
     let eId = localStorage.getItem("employee_id")
