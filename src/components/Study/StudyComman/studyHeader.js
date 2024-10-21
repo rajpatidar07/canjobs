@@ -43,7 +43,7 @@ function StudyHeader() {
                         </Link>
                     </div>
                     <div
-                        className={`collapse navbar-collapse ${isMenuOpen ? "show" : ""}`}
+                        className={`collapse navbar-collapse flex-row-reverse ${isMenuOpen ? "show" : ""}`}
                         id="mobile-menu"
                     >
                         <button
@@ -61,42 +61,25 @@ function StudyHeader() {
                         {userType === "user" ?
                             <ul className="navbar-nav main-menu">
                                 <li>
-                                    <Link style={{ fontSize: "10px" }}
+                                    <Link
                                         className="nav-link"
                                         to={`/study_home`}
                                     >Home</Link>
                                 </li>
                                 <li>
-                                    <Link style={{ fontSize: "10px" }}
+                                    <Link
                                         className="nav-link"
                                         to={`/programs`}
                                     >Programs</Link>
                                 </li>
-
                                 <li>
-                                    <Link style={{ fontSize: "10px" }}
-                                        className="nav-link"
-                                        to={`/student_profile`}
-                                    >Profile</Link>
-                                </li>
-                                <li>
-                                    <Link style={{ fontSize: "10px" }}
+                                    <Link
                                         className="nav-link"
                                         to={"/student_document"}
                                     >Documents</Link>
                                 </li>
                                 <li>
-                                    <Link to="/education_loan" style={{ fontSize: "10px" }} className="nav-link">
-                                        Education Loan
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link to="/personal_loan" style={{ fontSize: "10px" }} className="nav-link">
-                                        Personal Loan
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link to="/accommodation" style={{ fontSize: "10px" }} className="nav-link">
+                                    <Link to="/accommodation" className="nav-link">
                                         Accommodation
                                     </Link>
                                 </li>
@@ -159,7 +142,7 @@ function StudyHeader() {
                             <div className="dropdown show-gr-dropdown py-5">
                                 <Link
                                     className="proile media ml-7 flex-y-center"
-                                    to="/main_home"
+                                    to="/student_profile"
                                     role="button"
                                     id="dropdownMenuLink"
                                     data-toggle="dropdown"
