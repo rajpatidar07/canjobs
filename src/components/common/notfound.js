@@ -31,7 +31,7 @@ const NotFound = (props) => {
                 : (docId || notes)
                   ? "/adminlogin"
                   : portal === "study"
-                    ? "/study_home"
+                    ? "/study"
                     : "/"}>
           Go to Home
         </Link>

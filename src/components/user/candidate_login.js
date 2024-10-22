@@ -94,7 +94,7 @@ export default function CandidateLoginForm(props) {
           });
           setLoading(false);
           Close();
-          navigate(location?.state?.page === "study" ? "/study_home" : `/${updatedTodo.employee_id}`);
+          navigate(location?.state?.page === "study" ? "/study" : `/${updatedTodo.employee_id}`);
           window.location.reload();
         }
         if (updatedTodo.message === "Invalid credentials !") {
@@ -353,7 +353,7 @@ export default function CandidateLoginForm(props) {
                     </div> */}
           </div>
           <div className="brand-logo mb-10 text-center">
-            <Link to={location?.state?.page === "study" ? "/study_home" : "/"}>
+            <Link to={location?.state?.page === "study" ? "/study" : "/"}>
               <img
                 src="image/00logo-main-black.png"
                 alt=""

@@ -13,7 +13,7 @@ export default function MainHomePage() {
         <div className="row ">
           <div className="col-md-6 mx-5 mx-md-0 pl-md-7 p-3 mb-4">
             <Link
-              to="/study_home"
+              to="/study"
               className="card text-white "
               style={{
                 backgroundImage:

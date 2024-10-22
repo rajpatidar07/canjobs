@@ -125,7 +125,7 @@ const StudyAdminHeader = (props) => {
                   )} */}
                                     {/*<--Logout Functionality-->*/}
                                     <Link
-                                        to={"/study_home"}
+                                        to={"/study_admin_login"}
                                         onClick={() => {
                                             localStorage.clear(); // clear the local storage
                                             toast.error("Log Out Successfully", {

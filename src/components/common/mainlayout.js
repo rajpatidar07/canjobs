@@ -95,6 +95,7 @@ import PersonalLoan from "../Study/student/personalLoan";
 import Accommodation from "../Study/student/accommodation";
 import StudyDashboard from "../Study/Study admin/studyDashboard";
 import StudentList from "../Study/Study admin/studentsList";
+import StudyAdminLoginFrom from "../Study/Study admin/studyAdminLogin";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -131,7 +132,7 @@ function MainLayout() {
         {/* Employee */}
         <Route path="/" element={<EmployeeHomePage />} />
         <Route path="/main_home" element={<MainHomePage />} />
-        <Route path="/study_home" element={<StudyHome />} />
+        <Route path="/study" element={<StudyHome />} />
         <Route path="/signup" element={<SinUpPage />} />
         <Route path="/candidate_login" element={<CandidateLoginForm setLoginCondition={setLoginCondition} />} />
         <Route path="/candidate_signup" element={<CandidateSignup />} />
@@ -210,6 +211,7 @@ function MainLayout() {
         <Route path="/partnerlogin" element={<AgentLogin setLoginCondition={setLoginCondition} />} />
         {/* Admin */}
         <Route path="/adminlogin" element={<AdminLoginFrom setLoginCondition={setLoginCondition} />} />
+        <Route path="/study_admin_login" element={<StudyAdminLoginFrom setLoginCondition={setLoginCondition} />} />
         {(userType === "company" ||
           userType === "user" ||
           userType === "" ||

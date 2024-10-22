@@ -94,13 +94,14 @@ export default function StudyHome() {
                                         backgroundSize: "cover"
 
                                     }}>
-
-                                    <Link to="/education_loan" className="btn btn-success btn-sm m-1 pt-8 pb-8">
-                                        Apply for  Education Loan
-                                    </Link>
-                                    <Link to="/personal_loan" className="btn btn-success btn-sm m-1 pt-8 pb-8">
-                                        Apply for  Personal Loan
-                                    </Link>
+                                    <div className='d-flex flex-column'>
+                                        <Link to="/education_loan" className=" btn btn-success btn-sm m-1">
+                                            Apply for  Education Loan
+                                        </Link>
+                                        <Link to="/personal_loan" className=" btn btn-success btn-sm m-1">
+                                            Apply for  Personal Loan
+                                        </Link>
+                                    </div>
                                 </div>
                             </>}
                         {/* <!-- End Hero Form --> */}{" "}

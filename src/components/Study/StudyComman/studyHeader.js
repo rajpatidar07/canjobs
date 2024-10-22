@@ -26,7 +26,7 @@ function StudyHeader() {
                 <nav className="navbar site-navbar offcanvas-active navbar-expand-lg p-0 px-0 py-0">
                     {/* <!-- Brand Logo--> */}
                     <div className="brand-logo mt-5">
-                        <Link to={userType ? "/study_home" : "/main_home"}>
+                        <Link to={userType ? "/study" : "/main_home"}>
                             {/* <!-- light version logo (logo must be black // eslint-disable-next-line)--> */}
                             <img
                                 src="image/00logo-main-black.png"
@@ -186,7 +186,7 @@ function StudyHeader() {
                                                 autoClose: 1000,
                                             });
                                             localStorage.setItem("portal", "study")
-                                            navigate("/study_home");
+                                            navigate("/study");
                                             window.location.reload();
                                         }}
                                     >
