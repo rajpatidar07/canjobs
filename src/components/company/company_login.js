@@ -476,7 +476,7 @@ function CompanyLoginForm(props) {
               <p className="font-size-4 text-center heading-default-color">
                 Don’t have an account?
                 <Link className="text-primary ml-2" to={"/client_singup"}>
-                  Create a free account
+                  Create an account
                 </Link>
               </p>
             </form>

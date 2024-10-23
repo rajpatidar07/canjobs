@@ -319,7 +319,7 @@ export default function AgentLogin({ setLoginCondition }) {
                       setErrors("");
                     }}
                   >
-                    Create a free account
+                    Create an account
                   </Link>
                   {/* <p className="font-size-4 text-center heading-default-color m-0">
                     Are you an admin?

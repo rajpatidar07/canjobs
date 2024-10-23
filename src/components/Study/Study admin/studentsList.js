@@ -4,44 +4,62 @@ import EmployeeTable from "../../common/employeeTable";
 import ApplicantsFilter from "../../common/applicantsFilter";
 import StudyAdminHeader from "../StudyComman/studyAdminHeader";
 import StudyAdminSidebar from "../StudyComman/studySiderbar";
+import AdminHeader from "../../admin/header";
+import AdminSidebar from "../../admin/sidebar";
+import PersonalDetails from "../../forms/user/personal";
 export default function StudentList() {
- /*Filter and search state */
- const [experienceFilterValue, setExperienceFilterValue] = useState("");
- const [skillFilterValue, setSkillFilterValue] = useState("");
- const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
- const [educationFilterValue, setEducationFilterValue] = useState("");
- const [agentFilterValue, setAgentFilterValue] = useState("");
- const [adminFilterValue, setAdminFilterValue] = useState("");
- const [interestFilterValue, setinterestFilterValue] = useState("");
- const [search, setSearch] = useState("");
- const [searcherror, setSearchError] = useState("");
- let user_type = localStorage.getItem("userType")
- let [apiCall, setApiCall] = useState(false);
-/*Function to search the employee */
-const onSearch = (e) => {
- const inputValue = e.target.value;
- setSearch(inputValue);
- setpageNo(1);
- if (inputValue.length > 0) {
-   if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
-     setSearchError("Candidate Name cannot start with a number.");
-   } else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
-     setSearchError("Cannot use special characters.");
-   } else {
-     setSearchError("");
-   }
- } else {
-   setSearchError("");
- }
-};
- 
+  /*Filter and search state */
+  const [experienceFilterValue, setExperienceFilterValue] = useState("");
+  const [skillFilterValue, setSkillFilterValue] = useState("");
+  const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
+  const [educationFilterValue, setEducationFilterValue] = useState("");
+  const [agentFilterValue, setAgentFilterValue] = useState("");
+  const [adminFilterValue, setAdminFilterValue] = useState("");
+  const [interestFilterValue, setinterestFilterValue] = useState("");
+  const [search, setSearch] = useState("");
+  const [searcherror, setSearchError] = useState("");
+  let [showAddEmployeeModal, setShowEmployeeMOdal] = useState(false);
+  let [employeeId, setemployeeId] = useState();
+  let user_type = localStorage.getItem("userType")
+  let [apiCall, setApiCall] = useState(false);
+  /*Function to search the employee */
+  const onSearch = (e) => {
+    const inputValue = e.target.value;
+    setSearch(inputValue);
+    setpageNo(1);
+    if (inputValue.length > 0) {
+      if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
+        setSearchError("Candidate Name cannot start with a number.");
+      } else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
+        setSearchError("Cannot use special characters.");
+      } else {
+        setSearchError("");
+      }
+    } else {
+      setSearchError("");
+    }
+  };
+  /* Function to show the single data to update Employee*/
+  const editEmployee = (e) => {
+    setShowEmployeeMOdal(true);
+    setemployeeId(e);
+  };
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
         {/* <!-- Header Area --> */}
-        <StudyAdminHeader heading={"Students"} />
-        {/* <!-- navbar- --> */}
-        <StudyAdminSidebar heading={"Students"} />
+        {user_type === "agent" ? <AdminHeader heading={"Students"} /> : <StudyAdminHeader heading={"Students"} />}
+        {user_type === "agent" ? <AdminSidebar heading={"Students"} /> : <StudyAdminSidebar heading={"Students"} />}
+        {/* <!--Add Employee Details Modal --> */}
+        {showAddEmployeeModal ? (
+          <PersonalDetails
+            show={showAddEmployeeModal}
+            employeeId={employeeId}
+            apiCall={apiCall}
+            setApiCall={setApiCall}
+            close={() => setShowEmployeeMOdal(false)}
+          />
+        ) : null}
         <div className="dashboard-main-container mt-16" id="dashboard-body">
           <div className="container-fluid">
             <div className="mb-18">
@@ -50,8 +68,8 @@ const onSearch = (e) => {
                   <h3 className="font-size-6 mb-0">Students</h3>
                 </div>
                 {/*<-- Search Students -->*/}
-                 <div className="row m-0 align-items-center">
-                {/* Employees filter's */}
+                <div className="row m-0 align-items-center">
+                  {/* Employees filter's */}
                   <ApplicantsFilter
                     user_type={user_type}
                     search={search}
@@ -73,12 +91,12 @@ const onSearch = (e) => {
                     // skill={props.skill}
                     pageName={"study_permit"}
                   />
-            </div> 
+                </div>
                 <small className="text-danger">{searcherror}</small>
               </div>
               {/*<-- Students for study permit Table -->*/}
               <EmployeeTable
-               // showEmployeeProfile={showEmployeeProfile}
+                // showEmployeeProfile={showEmployeeProfile}
                 // employeeDetails={employeeDetails}
                 search={search}
                 experienceFilterValue={experienceFilterValue}
@@ -96,6 +114,8 @@ const onSearch = (e) => {
                 pageNo={pageNo}
                 setpageNo={setpageNo}
                 ApplicantType={"study permit"}
+                pageName={"employee"}
+                editEmployee={editEmployee}
               />
             </div>
           </div>

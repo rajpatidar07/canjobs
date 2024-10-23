@@ -41,6 +41,7 @@ function PersonalDetails(props) {
   let [agentId /*, setAgentId*/] = useState();
 
   let user_type = localStorage.getItem("userType");
+  let portal = localStorage.getItem("portal");
   let admin_id = user_type === "agent" ? localStorage.getItem("agent_id") : localStorage.getItem("admin_id");
   // USER PERSONAL DETAIL VALIDATION
   // INITIAL STATE ASSIGNMENT
@@ -57,7 +58,7 @@ function PersonalDetails(props) {
     currently_located_country: "",
     language: "",
     religion: "",
-    interested_in: "",
+    interested_in: portal === "study" ? "study permit" : "",
     experience: "",
     work_permit_canada: "",
     work_permit_other_country: "",
@@ -1015,7 +1016,7 @@ function PersonalDetails(props) {
                 )}
               </div> */}
                   <div className={`form-group  ${props.user_of_page === "assignedUser" ||
-                    props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" || props.pageNameForForm === "Category"
+                    props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" || props.pageNameForForm === "Category" || portal === "study"
                     ? "d-none"
                     : `${props.pageNameForForm === "ApplicantType" ?
                       "col-md-12" : "col-md-4"}

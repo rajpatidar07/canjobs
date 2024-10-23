@@ -505,7 +505,7 @@ export default function CandidateLoginForm(props) {
             <p className="font-size-4 text-center heading-default-color">
               Don’t have an account?
               <Link className="text-primary ml-2" to={"/candidate_signup"} state={{page:location?.state?.page}}>
-                Create a free account
+                Create an account
               </Link>
             </p>
           </form>

@@ -892,9 +892,7 @@ export default function EmployeeTable(props) {
                         </td>
                         <td className=" py-5">
                           <div>
-                            {console.log(localStorage.getItem("portal") === "study"
-                              ? "/student_profile"
-                              : `/${empdata.employee_id}`)}
+
                             <div className="d-flex profile_box gx-2">
                               <div className="media  align-items-center">
                                 <Link
@@ -919,7 +917,8 @@ export default function EmployeeTable(props) {
                                     //     ? () => employeeDetails(empdata.employee_id)
                                     //     : null
                                   }
-                                  title="Candidate Details"
+                                  title={localStorage.getItem("portal") === "study"
+                                        ?"Student Details":"Candidate Details"}
                                   className="w-100"
                                 >
                                   <div className="circle-30 mx-auto overflow-hidden">

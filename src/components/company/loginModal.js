@@ -529,7 +529,7 @@ export default function CompanyLogin(props) {
                           setErrors("");
                         }}
                       >
-                        Create a free account
+                        Create an account
                       </Link>
                     </p>
                   </form>

@@ -553,7 +553,7 @@ export default function EmployeeLoginModal(props) {
                         to={""}
                         onClick={props.signUpClick}
                       >
-                        Create a free account
+                        Create an account
                       </Link>
                     </p>
                   </form>

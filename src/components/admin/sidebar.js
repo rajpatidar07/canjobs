@@ -92,25 +92,42 @@ const AdminSidebar = (props) => {
         }}
       >
         {user_type === "agent" ? (
-          <li
-            ref={(el) => (liRefs.current["Partner Dashboard"] = el)}
-            className={
-              user_type === "agent" && props.heading === "Partner Dashboard"
-                ? "active"
-                : ""
-            }
-          >
-            <Link
-              onClick={() => clearPageNo()}
-              to="/partner_profile"
+          <>
+            <li
+              ref={(el) => (liRefs.current["Partner Dashboard"] = el)}
               className={
-                "px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+                user_type === "agent" && props.heading === "Partner Dashboard"
+                  ? "active"
+                  : ""
               }
             >
-              <FaRegUser className="sidebar_icon" />
-              Partner Dashboard
-            </Link>
-          </li>
+              <Link
+                onClick={() => clearPageNo()}
+                to="/partner_profile"
+                className={
+                  "px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+                }
+              >
+                <FaRegUser className="sidebar_icon" />
+                Partner Dashboard
+              </Link>
+            </li>
+            <li
+              ref={(el) => (liRefs.current["Students"] = el)}
+              className={localStorage.getItem("portal") === "study"
+                ? `${props.heading === "Students" ? "active" : ""}`
+                : "d-none"}
+            >
+              <Link
+                onClick={() => clearPageNo()}
+                to="/students"
+                className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+              >
+                <SiStudyverse className="sidebar_icon" />
+                Students
+              </Link>
+            </li>
+          </>
         ) : null}
         <li
           ref={(el) => (liRefs.current["Dashboard"] = el)}
@@ -154,7 +171,9 @@ const AdminSidebar = (props) => {
         </li>
         <li
           ref={(el) => (liRefs.current["Manage Applicants"] = el)}
-          className={`${props.heading === "Manage Applicants" ? "active" : ""}`}
+          className={localStorage.getItem("portal") === "study"
+            ? "d-none"
+            : `${props.heading === "Manage Applicants" ? "active" : ""}`}
         >
           <Link
             onClick={() => clearPageNo()}
@@ -168,7 +187,11 @@ const AdminSidebar = (props) => {
         </li>
         <li
           ref={(el) => (liRefs.current["New Applicants"] = el)}
-          className={`${props.heading === "New Applicants" ? "active" : ""}`}>
+          className={
+            localStorage.getItem("portal") === "study"
+              ? "d-none"
+              : `
+          ${props.heading === "New Applicants" ? "active" : ""}`}>
           <Link
             onClick={() => clearPageNo()}
             to="/selfemployee"
@@ -523,7 +546,7 @@ const AdminSidebar = (props) => {
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <span className="sidebar_icon">
-              <TbLetterH className="pl-2"/><LuAmpersand className="pr-2 pl-2"/><TbLetterC className="pr-2"/>
+              <TbLetterH className="pl-2" /><LuAmpersand className="pr-2 pl-2" /><TbLetterC className="pr-2" />
             </span>
             Humanitarian and Compassionate Cases
           </Link>

@@ -295,7 +295,7 @@ export default function AgentSignUp(props) {
               <div className="pt-10 pb-6 pl-11 pr-12 bg-black-2 h-100 d-flex flex-column dark-mode-texts">
                 <div className="pb-9">
                   <h3 className="font-size-8 text-white line-height-reset pb-4 line-height-1p4">
-                    Create a free account today
+                    Create an account today
                   </h3>
                   <p className="mb-0 font-size-4 text-white">
                     Create your account to continue and explore new jobs.

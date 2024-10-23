@@ -108,8 +108,9 @@ function AgentsEmployee(props) {
         "", //limiaFilterValue,
         "", //props.status,
         "", // props.employee_id,
-        "", // props.response === "lmia" ? "1" : ""
         "",
+        localStorage.getItem("portal") === "study"
+          ? "study permit" : "", // props.response === "lmia" ? "1" : ""
         "",
         props.Agentid,
         props.AdminId
@@ -500,7 +501,7 @@ function AgentsEmployee(props) {
                             title="Sort by Id"
                           >
                             EID
-                            </Link>
+                          </Link>
                         </th>
                         <th
                           scope="col"
@@ -654,13 +655,23 @@ function AgentsEmployee(props) {
                             </td>
                             <td className=" py-2">
                               <Link
-                                to={`/${empdata.employee_id}`}
-                                // onClick={
-                                //   empdata.name !== null
-                                //     ? () => employeeDetails(empdata.employee_id)
-                                //     : null
-                                // }
-                                title="Candidate Details"
+                                to={localStorage.getItem("portal") === "study"
+                                  ? `/student_profile`
+                                  : `/${empdata.employee_id}`}
+                                onClick={
+                                  () =>
+                                    localStorage.getItem("portal") === "study"
+                                      ? localStorage.setItem(
+                                        "employee_id",
+                                        empdata.employee_id
+                                      )
+                                      : null
+                                  //   empdata.name !== null
+                                  //     ? () => employeeDetails(empdata.employee_id)
+                                  //     : null
+                                }
+                                title={localStorage.getItem("portal") === "study"
+                                  ? "Student Details" : "Candidate Details"}
                               >
                                 <div className="d-flex profile_box gx-2">
                                   <div className="media  align-items-center">
@@ -766,7 +777,7 @@ function AgentsEmployee(props) {
                                       empdata.created_at,
                                       "YYYY-MM-DD HH:mm:ss"
                                     ).fromNow()} */}
-                                    <ConvertTime _date={empdata.created_at} format={"DD MMMM, YYYY"}/>
+                                    <ConvertTime _date={empdata.created_at} format={"DD MMMM, YYYY"} />
                                     {/* {moment(empdata.created_at).format(
                                       "DD MMMM, YYYY"
                                     )} */}

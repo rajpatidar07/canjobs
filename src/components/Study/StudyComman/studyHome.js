@@ -3,7 +3,7 @@ import StudyHeader from '../StudyComman/studyHeader'
 import { Link } from 'react-router-dom'
 
 export default function StudyHome() {
-    let token = localStorage.getItem("token")
+    let user_type = localStorage.getItem("userType")
     return (
         <div className="site-wrapper overflow-hidden ">
             <StudyHeader />
@@ -11,7 +11,7 @@ export default function StudyHome() {
             <div className="position-relative z-index-1  pt-26 pb-26 dark-mode-texts">
                 <div className="container ">
                     <div className="row ">
-                        {!token ? <>
+                        {user_type !== "user" ? <>
                             {/* Student Section */}
                             <div className="col text-center p-2 rounded shadow-sm mx-2 study_home_banner"
                                 style={{

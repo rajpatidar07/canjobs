@@ -47,6 +47,8 @@ import StudyHeader from "../StudyComman/studyHeader";
 import StudyAdminHeader from "../StudyComman/studyAdminHeader";
 import StudyAdminSidebar from "../StudyComman/studySiderbar";
 import SharePointDocument from "../../common/Document folder/SharePointDocument";
+import AdminSidebar from "../../admin/sidebar";
+import AdminHeader from "../../admin/header";
 // import useSessionCheck from "../common/user_session";
 // import AdobePDFViewer from "../common/Adobe/adobeFile";
 const StudentProfile = (props) => {
@@ -306,7 +308,27 @@ const StudentProfile = (props) => {
 
             {user_type === "admin" || user_type === "agent" ? (
                 (docId ? (docId) && userFound.length !== 0 : userFound.length !== 0) && <>
-                    <StudyAdminHeader
+                    {user_type === "agent" ? <AdminHeader heading={
+                        <Link
+                            className="d-flex align-items-center "
+                            onClick={() => {
+                                //   if (TabActive === "notes") {
+                                navigate(-1);
+                                //   } else {
+                                //     setAddNote(true);
+                                //   }
+                            }}
+                        >
+                            <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
+                            <span className="text-uppercase font-size-3 font-weight-bold text-gray">
+                                <h3 className="font-size-6 mb-0 text-capitalize">
+                                    {PersonalDetail.name
+                                        ? PersonalDetail.name + " (Candidate)"
+                                        : ""}
+                                </h3>
+                            </span>
+                        </Link>
+                    } /> : <StudyAdminHeader
                         heading={
                             <Link
                                 className="d-flex align-items-center "
@@ -328,9 +350,10 @@ const StudentProfile = (props) => {
                                 </span>
                             </Link>
                         }
-                    />
+                    />}
                     {/* <!-- navbar- --> */}
-                    <StudyAdminSidebar heading={"User Profile"} />
+
+                    {user_type === "agent" ? <AdminSidebar heading={"User Profile"} /> : <StudyAdminSidebar heading={"User Profile"} />}
                 </>
             ) : (
                 <StudyHeader />
