@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 // import { Link } from "react-router-dom";
 // import SAlert from "../common/sweetAlert";
 // import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+// import "react-toastify/dist/ReactToastify.css";
 import Pagination from "../common/pagination";
 import Loader from "../common/loader";
 // import { LiaUserEditSolid } from "react-icons/lia";

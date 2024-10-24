@@ -728,23 +728,23 @@ export const ADocAnnotation = async (
   annotationId,
   DocUserType
 ) => {
-  console.log( 
+  console.log(
     //"1. task_creator_user_id =>", id,
-  //   "2. task_creator_user_type =>", user_type === "admin" ? "admin" : "agent",
-  //   "3. doc_id =>", docId,
-  //   "4. user_admin_assigned =>", type === "partner" || "partnerChat" ? assigned_by_id : "",
-  //   "5. json =>", AdobeAnnotation,
-  //   "6. assined_to_user_id =>", assineduserid,
-  //   "7. assigned_user_type =>", AssignUserType,
-  //   "8. document_url =>", type === "partner" || "partnerChat" ? DocUrl : "",
-  //   '9. subject_description =>', comment,
-  //   '10. x_axis =>', x,
-  //   '11. y_axis =>', y,
-  //   '12. type =>', type,
-  //   '13. employee_id =>', employee_id,
-  //   '14. doc_parent_id =>',docPartentId,
-  '15. DocUserType =>',DocUserType,
-  // '16. assign_to =>',email
+    //   "2. task_creator_user_type =>", user_type === "admin" ? "admin" : "agent",
+    //   "3. doc_id =>", docId,
+    //   "4. user_admin_assigned =>", type === "partner" || "partnerChat" ? assigned_by_id : "",
+    //   "5. json =>", AdobeAnnotation,
+    //   "6. assined_to_user_id =>", assineduserid,
+    //   "7. assigned_user_type =>", AssignUserType,
+    //   "8. document_url =>", type === "partner" || "partnerChat" ? DocUrl : "",
+    //   '9. subject_description =>', comment,
+    //   '10. x_axis =>', x,
+    //   '11. y_axis =>', y,
+    //   '12. type =>', type,
+    //   '13. employee_id =>', employee_id,
+    //   '14. doc_parent_id =>',docPartentId,
+    '15. DocUserType =>', DocUserType,
+    // '16. assign_to =>',email
   )
   const response = await axios.post(
     `${API_URL}admin/docTaskAdd?document_user_type=${DocUserType}`,
@@ -836,7 +836,7 @@ export const GetCommentsAndAssign = async (
       type: type,
       assigned_user_type: assigned_user_type,
       employee_id: employeeId,
-      employee_type:userType
+      employee_type: userType
       // id:"",task_creator_user_id:""
     },
     {
@@ -887,7 +887,7 @@ export const GetAdminsTasks = async (
       type: type,
       assigned_user_type: assigned_user_type,
       employee_id: employeeId,
-      employee_type:userType
+      employee_type: userType
       // id:"",task_creator_user_id:""
     },
     {
@@ -3188,7 +3188,7 @@ export const getActivityLog = async (
       column_name: "created_at",
       sort_order: sort ? sort : "sort",
       limit: limit,
-      filter_by_time:time,
+      filter_by_time: time,
       stackHolder_id: stackHolder_id,
       stackHolder_type: stackHolder_type,
       status: pagetype === "interviewHistory" ? "21,36" : "",
@@ -3514,6 +3514,46 @@ export const ExportExcelApi = async (type) => {
   const response = await axios.post(
     `${API_URL}common/getDataForExcel`,
     { type: type },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+}
+/* Api to apply for program */
+export const ApplyProgram = async (data) => {
+  const response = await axios.post(
+    `${API_URL}addUpdateAppliedPrograms`,
+    data
+    ,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+}
+/* Api to get apply program */
+export const GetApplyProgram = async (employerId, employee_type, limit, sort, page, applied_user_id, applied_user_type, program_id) => {
+  const response = await axios.post(
+    `${API_URL}getAppliedPrograms`,
+    {
+      column_name: "created_at",
+      sort_order: sort,
+      limit: limit,
+      page: page,
+      employee_id: employerId,
+      applied_user_id: applied_user_id,
+      employee_type: employee_type,
+      applied_user_type: applied_user_type,
+      program_id: program_id,
+    }
+    ,
     {
       headers: {
         "Content-Type": "application/json",

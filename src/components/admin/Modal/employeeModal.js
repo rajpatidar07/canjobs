@@ -1,6 +1,7 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 import Employee from "../employee";
+import StudentList from "../../Study/Study admin/studentsList";
 
 export default function EmployeeModal(props) {
   return (
@@ -20,11 +21,17 @@ export default function EmployeeModal(props) {
       </button>
       <div className="bg-white rounded h-100 px-11  overflow-y-hidden">
         <h5 className="text-center mt-5">Matching Candidates</h5>
-        <Employee
+        {props.page === "program" ? <StudentList
           skill={"props.data.keyskill"}
-          job_id={props.data.job_id}
-          EmployeeCall={props.setApiCall}
-        />
+          page={props.page}
+          OnProgramApplyClick={props.OnProgramApplyClick}
+        /> :
+          <Employee
+            skill={"props.data.keyskill"}
+            job_id={props.data.job_id}
+            EmployeeCall={props.setApiCall}
+            page={props.page}
+          />}
       </div>
     </Modal>
   );

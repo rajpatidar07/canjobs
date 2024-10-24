@@ -7,11 +7,11 @@ import StudyAdminSidebar from "../StudyComman/studySiderbar";
 import AdminHeader from "../../admin/header";
 import AdminSidebar from "../../admin/sidebar";
 import PersonalDetails from "../../forms/user/personal";
-export default function StudentList() {
+export default function StudentList(props) {
   /*Filter and search state */
   const [experienceFilterValue, setExperienceFilterValue] = useState("");
   const [skillFilterValue, setSkillFilterValue] = useState("");
-  const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
+  const [pageNo, setpageNo] = useState(props.page === "program" ? 1 : localStorage.getItem("PageNo") || 1);
   const [educationFilterValue, setEducationFilterValue] = useState("");
   const [agentFilterValue, setAgentFilterValue] = useState("");
   const [adminFilterValue, setAdminFilterValue] = useState("");
@@ -46,10 +46,23 @@ export default function StudentList() {
   };
   return (
     <>
-      <div className="site-wrapper overflow-hidden bg-default-2">
+      <div className={
+        props.skill === null || props.skill === undefined
+          ? "site-wrapper overflow-hidden bg-default-2"
+          : "site-wrapper overflow-hidden "
+      }>
         {/* <!-- Header Area --> */}
-        {user_type === "agent" ? <AdminHeader heading={"Students"} /> : <StudyAdminHeader heading={"Students"} />}
-        {user_type === "agent" ? <AdminSidebar heading={"Students"} /> : <StudyAdminSidebar heading={"Students"} />}
+        {props.skill === null ||
+          props.skill === undefined ||
+          Object.keys(props.skill).length === 0 ? (
+          <>
+            {/* <!-- Header Area --> */}
+            {user_type === "agent" ? <AdminHeader heading={"Students"} /> : <StudyAdminHeader heading={"Students"} />}
+            {/* <!-- navbar- --> */}
+            {user_type === "agent" ? <AdminSidebar heading={"Students"} /> : <StudyAdminSidebar heading={"Students"} />}          </>
+        ) : null}
+
+
         {/* <!--Add Employee Details Modal --> */}
         {showAddEmployeeModal ? (
           <PersonalDetails
@@ -60,7 +73,13 @@ export default function StudentList() {
             close={() => setShowEmployeeMOdal(false)}
           />
         ) : null}
-        <div className="dashboard-main-container mt-16" id="dashboard-body">
+        <div className={props.skill === null ||
+          props.skill === undefined ||
+          Object.keys(props.skill).length === 0
+          ? "dashboard-main-container mt-16"
+          : ""
+
+        } id="dashboard-body">
           <div className="container-fluid">
             <div className="mb-18">
               <div className="mb-4 align-items-center">
@@ -74,6 +93,7 @@ export default function StudentList() {
                     user_type={user_type}
                     search={search}
                     onSearch={onSearch}
+                    skill={props.skill}
                     experienceFilterValue={experienceFilterValue}
                     setExperienceFilterValue={setExperienceFilterValue}
                     skillFilterValue={skillFilterValue}
@@ -107,15 +127,16 @@ export default function StudentList() {
                 interestFilterValue={interestFilterValue}
                 apiCall={apiCall}
                 setApiCall={setApiCall}
-                skill={"props.skill"}
+                skill={props.skill}
                 // job_id={props.job_id}
                 // self={"no"}
                 status={"-1"}
                 pageNo={pageNo}
                 setpageNo={setpageNo}
                 ApplicantType={"study permit"}
-                pageName={"employee"}
+                pageName={props.skill ? "" : "employee"}
                 editEmployee={editEmployee}
+                OnProgramApplyClick={props.OnProgramApplyClick}
               />
             </div>
           </div>

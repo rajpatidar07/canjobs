@@ -96,6 +96,7 @@ import Accommodation from "../Study/student/accommodation";
 import StudyDashboard from "../Study/Study admin/studyDashboard";
 import StudentList from "../Study/Study admin/studentsList";
 import StudyAdminLoginFrom from "../Study/Study admin/studyAdminLogin";
+import AppliedPrograms from "../Study/Study admin/appliedPrograms";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -290,6 +291,7 @@ function MainLayout() {
             <Route path="/programs" element={<Programs />} />
             <Route path="/students" element={<StudentList />} />
             <Route path="/student_profile" element={<StudentProfile />} />
+            <Route path="/applied_programs" element={<AppliedPrograms />} />
             <Route path="*" element={<Loader load={"yes"} />} />
           </>
         )}

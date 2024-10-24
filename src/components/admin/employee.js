@@ -148,7 +148,7 @@ function Employee(props) {
                 showEmployeeProfile={showEmployeeProfile}
                 employeeDetails={employeeDetails}
                 search={search}
-                pageName={"employee"}
+                pageName={props.job_id ? "" : "employee"}
                 experienceFilterValue={experienceFilterValue}
                 educationFilterValue={educationFilterValue}
                 skillFilterValue={skillFilterValue}

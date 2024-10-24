@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import filterjson from '../../json/filterjson';
 import Pagination from '../../common/pagination';
-
+import { ApplyProgram } from "../../../api/api"
+import { toast } from 'react-toastify';
+import EmployeeModal from '../../admin/Modal/employeeModal';
 function ProgramListSection() {
     // State variables
     const [state, setState] = useState('');
@@ -24,7 +26,12 @@ function ProgramListSection() {
     const [uniqueStates, setUniqueStates] = useState([]);
     const [uniqueCities, setUniqueCities] = useState([]);
     const [uniqueColleges, setUniqueColleges] = useState([]);
+    const [programData, setProgramData] = useState();
 
+    let [showCandidateModal, setShowCandidateModal] = useState(false);
+    let employee_id = localStorage.getItem("employee_id")
+    let UserType = localStorage.getItem("userType");//login user type
+    let applyUserId = localStorage.getItem(UserType === "admin" ? "admin_id" : "agent_id");
     // Effect to fetch programs and filters on component mount and when dependencies change
     useEffect(() => {
         getData();
@@ -98,6 +105,46 @@ function ProgramListSection() {
         setCollege(event.target.value);
     };
 
+    /*Function to apply for the program */
+    const OnProgramApplyClick = async (data, empId) => {
+        try {
+            let newData = {
+                program_id: data ? data.id : programData.id,
+                state: data ? data.state : programData.state,
+                city: data ? data.city : programData.city,
+                college_name: data ? data.college_name : programData.college_name,
+                programs: data ? data.programs : programData.programs,
+                program_discipline_category: data ? data.program_discipline_category : programData.program_discipline_category,
+                program_sub_category: data ? data.program_sub_category : programData.program_sub_category,
+                course_duration: data ? data.course_duration : programData.course_duration,
+                course_intake_season: data ? data.course_intake_season : programData.course_intake_season,
+                ilets_entry_criteria: data ? data.ilets_entry_criteria : programData.ilets_entry_criteria,
+                gpa_entry_criteria: data ? data.gpa_entry_criteria : programData.gpa_entry_criteria,
+                education_entry_criteria: data ? data.education_entry_criteria : programData.education_entry_criteria,
+                math_requirement: data ? data.math_requirement : programData.math_requirement,
+                english_requirement: data ? data.english_requirement : programData.english_requirement,
+                application_fee_cad: data ? data.application_fee_cad : programData.application_fee_cad,
+                program_details_fee: data ? data.program_details_fee : programData.program_details_fee,
+                intake_avl: data ? data.intake_avl : programData.intake_avl,
+                program_created_at: data ? data.created_at : programData.created_at,
+                employee_id: (UserType === "admin" || UserType === "agent") ? empId : employee_id,
+                employee_type: "employee",
+                applied_user_id: (UserType === "admin" || UserType === "agent") ? applyUserId : "",
+                applied_user_type: (UserType === "admin" || UserType === "agent") ? UserType : ""
+
+            }
+            // console.log(newData)
+            let res = await ApplyProgram(newData)
+            if (res.message === "successfully") {
+                toast.success("Applied Successfully", {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 1000,
+                });
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
     return (
         <>
             <style>
@@ -204,12 +251,15 @@ function ProgramListSection() {
     }
                 `}
             </style>
-            <div className="section p-2 program_list_section mt-10"
-            // style={{
-            //     maxHeight: "1024px",
-            //     overflow: "hidden"
-            // }}
-            >
+            <div className="section p-2 program_list_section mt-10">
+                {showCandidateModal ? (
+                    <EmployeeModal
+                        show={showCandidateModal}
+                        close={() => setShowCandidateModal(false)}
+                        OnProgramApplyClick={OnProgramApplyClick}
+                        page={"program"}
+                    />
+                ) : null}
                 <div className="container-fluid content_row">
                     <div className="card">
                         <div className="row main_row m-0 overflow-hidden">
@@ -380,15 +430,15 @@ function ProgramListSection() {
                                                 <div className="row">
                                                     <div className="heading_col_9 px-5">
                                                         <h6 className="fw-normal m-0">
-                                                            <span className="fw-bold college_name">{program.college_name}</span>
+                                                            <span className="fw-bold college_name">{program.college_name || "N/A"}</span>
                                                             <span className="location mx-lg-14  ms-4">
                                                                 <i className="fa fa-map-marker mr-4" ></i>
-                                                                <span className='text-dark '> {program.city}, {program.state}
+                                                                <span className='text-dark '> {program.city || "N/A"}, {program.state || "N/A"}
                                                                 </span>
                                                             </span>
                                                         </h6>
                                                         <h4 className="card-title">
-                                                            {program.programs}
+                                                            {program.programs || "N/A"}
                                                         </h4>
                                                     </div>
                                                 </div>
@@ -396,19 +446,19 @@ function ProgramListSection() {
                                                 <div>
                                                     {program.program_sub_category.split(',').map((subCat, idx) => (
                                                         <span key={idx} className="badge text-bg-primary fw-normal m-1">{subCat}</span>
-                                                    ))}
+                                                    )) || "N/A"}
                                                 </div>
                                                 <div className="row mt-3">
                                                     <div className="col-md-3 mb-2">
                                                         <p className="criteria_label m-0">Course Duration (Year)</p>
-                                                        <p className="criteria_value m-0">{program.course_duration} year</p>
+                                                        <p className="criteria_value m-0">{program.course_duration + " year" || "N/A"} </p>
                                                     </div>
                                                     <div className="col-md-9 mb-2">
                                                         <p className="criteria_label m-0">Course Intake Season</p>
                                                         <p className="criteria_value m-0">
                                                             {program.course_intake_season.split(',').map((month, idx) => (
                                                                 <span key={idx} className="badge fw-normal me-1 mt-1 btn-outline-info">{month}</span>
-                                                            ))}
+                                                            )) || "N/A"}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -418,13 +468,14 @@ function ProgramListSection() {
                                                         <div className="row flex-wrap mt-1 fee_box">
                                                             <div className="col-12 mb-3">
                                                                 <p className="criteria_label m-0">Application Fee (CAD $)</p>
-                                                                <p className="criteria_value m-0">${program.application_fee_cad}</p>
+                                                                <p className="criteria_value m-0">{"$" + program.application_fee_cad || "N/A"}</p>
                                                             </div>
                                                             <div className="col-12 mb-3">
                                                                 <p className="criteria_label m-0">Program Details Fee (CAD / Year) (approx.)</p>
-                                                                <p className="criteria_value m-0">{program.program_details_fee}</p>
+                                                                <p className="criteria_value m-0">{program.program_details_fee || "N/A"}</p>
                                                             </div>
                                                         </div>
+
                                                         <div className="row flex-wrap mt-1 fee_box d-none">
                                                             <div className="col-md-8 mb-3">
                                                                 <h6 className="card-title mb-0 mt-3">Scholarships:</h6>
@@ -442,25 +493,37 @@ function ProgramListSection() {
                                                         <div className="row flex-wrap mt-1 criteria_box">
                                                             <div className="col-3 mb-3">
                                                                 <p className="criteria_label m-0">ILETS Entry</p>
-                                                                <p className="criteria_value m-0">6.5</p>
+                                                                <p className="criteria_value m-0">{program.ilets_entry_criteria || "N/A"}</p>
                                                             </div>
                                                             <div className="col-3 mb-3">
                                                                 <p className="criteria_label m-0">GPA Entry</p>
-                                                                <p className="criteria_value m-0">70</p>
+                                                                <p className="criteria_value m-0">{program.gpa_entry_criteria || "N/A"}</p>
                                                             </div>
                                                             <div className="col-6 mb-3">
                                                                 <p className="criteria_label m-0">GPA Entry</p>
-                                                                <p className="criteria_value m-0">Grade 12 / High School</p>
+                                                                <p className="criteria_value m-0">{program.education_entry_criteria || "N/A"}</p>
                                                             </div>
                                                             <div className="col-6 mb-3">
                                                                 <p className="criteria_label m-0">Math Requirement</p>
-                                                                <p className="criteria_value m-0">N/A</p>
+                                                                <p className="criteria_value m-0">{program.math_requirement || "N/A"}</p>
                                                             </div>
                                                             <div className="col-6 mb-3">
                                                                 <p className="criteria_label m-0">English Requirement</p>
-                                                                <p className="criteria_value m-0">N/A</p>
+                                                                <p className="criteria_value m-0">{program.english_requirement || "N/A"}</p>
                                                             </div>
                                                         </div>
+                                                    </div>
+                                                    <div className={'mx-5 mb-2 mt-2'}>
+                                                        <button className='btn btn-primary'
+                                                            onClick={() => {
+                                                                if (UserType === "admin" || UserType === "agent") {
+                                                                    setShowCandidateModal(true);
+                                                                    setProgramData(program);
+                                                                } else {
+                                                                    OnProgramApplyClick(program);
+                                                                }
+                                                            }}
+                                                        >Apply</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -470,15 +533,15 @@ function ProgramListSection() {
                                     </div>
                                 </div>
                             </div>
-                                    <div className="pt-2 mx-auto">
-                                        <Pagination
-                                            nPages={nPages}
-                                            currentPage={pageNo}
-                                            setCurrentPage={setPageNo}
-                                            total={totalData}
-                                            count={programs.length}
-                                        />
-                                    </div>
+                            <div className="pt-2 mx-auto">
+                                <Pagination
+                                    nPages={nPages}
+                                    currentPage={pageNo}
+                                    setCurrentPage={setPageNo}
+                                    total={totalData}
+                                    count={programs.length}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>

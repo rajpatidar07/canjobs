@@ -63,7 +63,7 @@ function StudyHeader() {
                                 <li>
                                     <Link
                                         className="nav-link"
-                                        to={`/study_home`}
+                                        to={`/study`}
                                     >Home</Link>
                                 </li>
                                 <li>
@@ -91,7 +91,7 @@ function StudyHeader() {
                         //         style={{ minWidth: "124px", height: "40px", fontSize: "10px", letterSpacing: "0.20px" }}>
                         //         <Link
                         //             className="btn btn-transparent text-uppercase font-size-2 heading-default-color focus-reset"
-                        //             to={`/study_home`}
+                        //             to={`/study`}
                         //         >Home</Link>
                         //         <Link
                         //             className="btn btn-transparent text-uppercase font-size-2 heading-default-color focus-reset"

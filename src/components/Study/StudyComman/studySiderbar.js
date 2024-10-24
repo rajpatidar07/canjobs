@@ -4,6 +4,7 @@ import {
     MdOutlineDashboardCustomize,
 
 } from "react-icons/md";
+import { VscGitStashApply } from "react-icons/vsc";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { SiStudyverse } from "react-icons/si";
 import { RiMiniProgramFill } from "react-icons/ri";
@@ -127,6 +128,23 @@ const StudyAdminSidebar = (props) => {
                     >
                         <SiStudyverse className="sidebar_icon" />
                         Students
+                    </Link>
+                </li>
+                <li
+                    ref={(el) => (liRefs.current["Applied Programs"] = el)}
+                    className={
+                        props.heading === "Applied Programs"
+                            ? "active"
+                            : ""
+                    }
+                >
+                    <Link
+                        onClick={() => clearPageNo()}
+                        to="/applied_programs"
+                        className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+                    >
+                        <VscGitStashApply className="sidebar_icon" />
+                        Applied Programs
                     </Link>
                 </li>
             </ul>

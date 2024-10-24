@@ -146,7 +146,7 @@ export default function ActivityTable(props) {
               </tr>
             </thead>
             <tbody>
-              {totalData === 0 || activityData.length === 0 ? (
+              {totalData === 0 || activityData?.length === 0 ? (
                 <tr>
                   <th colSpan={5} className="bg-white text-center font-size-3">
                     No Data Found
@@ -187,7 +187,7 @@ export default function ActivityTable(props) {
           currentPage={page}
           setCurrentPage={setpage}
           total={totalData}
-          count={activityData.length}
+          count={activityData?.length}
         />
       </div>
     </>
