@@ -18,7 +18,7 @@ const profile = {
 };
 let client_id = (window.location.origin === "http://localhost:3000"
   ? "d9e8b7bcb61b42b6a387bfa9cf16a75b" //(Local))
-  : window.location.origin === "https://canjobs.vercel.app/"
+  : window.location.origin === "https://canjobs.vercel.app"
     ? "d9b36f468d7a4e4e8b275f13728f1132"//(vercel) 
     : "713b22cf34e345c388e4490f9c9dc79b"//Canpathways
 );

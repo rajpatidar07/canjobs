@@ -49,7 +49,7 @@ export default function StudyHome() {
                                         "linear-gradient(45deg, rgba(0, 0, 0, 0.50), rgba(0, 0, 0, 0.50)),url('https://images.pexels.com/photos/4427430/pexels-photo-4427430.jpeg?auto=compress&cs=tinysrgb&w=400')",
                                 }}>
 
-                                <Link to="/adminlogin" className="btn btn-success btn-lg" state={{ page: "study" }}>
+                                <Link to="/study_admin_login" className="btn btn-success btn-lg" state={{ page: "study" }}>
                                     Admin
                                 </Link>
                             </div>
