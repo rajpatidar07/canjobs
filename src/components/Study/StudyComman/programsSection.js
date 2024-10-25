@@ -27,7 +27,7 @@ function ProgramListSection() {
     const [uniqueCities, setUniqueCities] = useState([]);
     const [uniqueColleges, setUniqueColleges] = useState([]);
     const [programData, setProgramData] = useState();
-
+    let [loading, setLoading] = useState(false);
     let [showCandidateModal, setShowCandidateModal] = useState(false);
     let employee_id = localStorage.getItem("employee_id")
     let UserType = localStorage.getItem("userType");//login user type
@@ -107,6 +107,7 @@ function ProgramListSection() {
 
     /*Function to apply for the program */
     const OnProgramApplyClick = async (data, empId) => {
+        setLoading(true)
         try {
             let newData = {
                 program_id: data ? data.id : programData.id,
@@ -140,6 +141,8 @@ function ProgramListSection() {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 1000,
                 });
+                setLoading(false)
+                setShowCandidateModal(false)
             }
         } catch (error) {
             console.log(error)
@@ -514,7 +517,20 @@ function ProgramListSection() {
                                                         </div>
                                                     </div>
                                                     <div className={'mx-5 mb-2 mt-2'}>
-                                                        <button className='btn btn-primary'
+                                                        {loading === true ? (
+                                                            <button
+                                                                className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                                                                type="button"
+                                                                disabled
+                                                            >
+                                                                <span
+                                                                    className="spinner-border spinner-border-sm "
+                                                                    role="status"
+                                                                    aria-hidden="true"
+                                                                ></span>
+                                                                <span className="sr-only">Loading...</span>
+                                                            </button>
+                                                        ) : <button className='btn btn-primary'
                                                             onClick={() => {
                                                                 if (UserType === "admin" || UserType === "agent") {
                                                                     setShowCandidateModal(true);
@@ -523,7 +539,7 @@ function ProgramListSection() {
                                                                     OnProgramApplyClick(program);
                                                                 }
                                                             }}
-                                                        >Apply</button>
+                                                        >Apply</button>}
                                                     </div>
                                                 </div>
                                             </div>

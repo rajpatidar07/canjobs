@@ -311,7 +311,7 @@ export const getallEmployeeData = async (
       filter_status: status,
       job_id: job_id,
       work_permit_canada: candian,
-      interested_in: inserted,
+      interested_in: localStorage.getItem("portal") === "study" ? "study permit" : inserted,
       agent_id: agentId,
       assigned_by: assignedadminId,
       category: subType,
@@ -728,7 +728,7 @@ export const ADocAnnotation = async (
   annotationId,
   DocUserType
 ) => {
-  console.log(
+  // console.log(
     //"1. task_creator_user_id =>", id,
     //   "2. task_creator_user_type =>", user_type === "admin" ? "admin" : "agent",
     //   "3. doc_id =>", docId,
@@ -743,9 +743,9 @@ export const ADocAnnotation = async (
     //   '12. type =>', type,
     //   '13. employee_id =>', employee_id,
     //   '14. doc_parent_id =>',docPartentId,
-    '15. DocUserType =>', DocUserType,
+    // '15. DocUserType =>', DocUserType,
     // '16. assign_to =>',email
-  )
+  // )
   const response = await axios.post(
     `${API_URL}admin/docTaskAdd?document_user_type=${DocUserType}`,
     //Old json {
@@ -3513,7 +3513,10 @@ export const DeleteAgreement = async (id) => {
 export const ExportExcelApi = async (type) => {
   const response = await axios.post(
     `${API_URL}common/getDataForExcel`,
-    { type: type },
+    {
+      type: type,
+      interested_in: localStorage.getItem("portal") === "study" ? "study permit" : ""
+    },
     {
       headers: {
         "Content-Type": "application/json",
@@ -3539,11 +3542,12 @@ export const ApplyProgram = async (data) => {
   return response.data;
 }
 /* Api to get apply program */
-export const GetApplyProgram = async (employerId, employee_type, limit, sort, page, applied_user_id, applied_user_type, program_id) => {
+export const GetApplyProgram = async (search, employerId, employee_type, limit, sort, column, page, applied_user_id, applied_user_type, program_id) => {
   const response = await axios.post(
     `${API_URL}getAppliedPrograms`,
     {
-      column_name: "created_at",
+      search: search,
+      column_name: column,
       sort_order: sort,
       limit: limit,
       page: page,

@@ -98,7 +98,7 @@ export default function EmployeeTable(props) {
         sortOrder,
         props.filter_by_time,
         "",
-        props.skill || props.heading === "Dashboard" || status === "00"
+        props.skill || props.heading === "Dashboard" || status === "00" || portal === "study"
           ? ""
           : status,
         props.job_id ? props.job_id : "",
@@ -630,7 +630,7 @@ export default function EmployeeTable(props) {
                     </CustomButton>
                   </div>
                   <div className="form_group text-right">
-                    <ExportExcelButton type={"employee"} />
+                    <ExportExcelButton type={"employee"} portal={portal} />
                   </div>
                 </>
               ) : null}

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { AdminForgotPasswordApi, AdminLogin } from "../../api/api";
 import useValidation from "../common/useValidation";
-import { useNavigate, Link, useLocation } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loader from "../common/loader";
 import ForgotPasswordForm from "../forms/admin/ForgotPasswordForm";
@@ -10,7 +10,6 @@ export default function AdminLoginFrom({ setAdminLoggedIn, setLoginCondition }) 
   let [loading, setLoading] = useState(false);
   let [isLoading, setIsLoading] = useState(false);
   let [showForgotPassword, setShowForgotPassword] = useState(false);
-  let location = useLocation()
   /*----USER LOGIN VALIDATION----*/
   const initialFormState = {
     email: "",
@@ -67,13 +66,14 @@ export default function AdminLoginFrom({ setAdminLoggedIn, setLoginCondition }) 
           localStorage.setItem("admin_id", updatedTodo.admin_id);
           localStorage.setItem("admin_type", updatedTodo.user_type);
           localStorage.setItem("admin_email", updatedTodo.email);
+          localStorage.setItem("portal", "job")
           toast.success("Logged In Successfully", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
           setLoading(false);
           setIsLoading(false);
-          navigate(location?.state?.page === "study" ? "/study_dashboard" : "/dashboard");
+          navigate("/dashboard");
           window.location.reload();
         }
         if (updatedTodo.message === "Invalid Credentials") {

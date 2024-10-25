@@ -36,6 +36,7 @@ export default function ApplicantsFilter({
   const [candidateSearch, setcandidateSearch] = useState("");
   let [AgentList, setAgentList] = useState([]);
   let [AdminList, setAdmintList] = useState([]);
+  let portal = localStorage.getItem("portal")
   /*Function to get thejSon */
   const SearchCandidate = () => {
     if (candidateSearch === "") {
@@ -106,13 +107,13 @@ export default function ApplicantsFilter({
           // : "d-none"
         }
       >
-        <p className="input_label">Search Candidate:</p>
+        <p className="input_label">Search {portal === "study" ? "Student" : "Candidate"}:</p>
         <div className="input-group ">
           <input
             required
             type="text"
             className="form-control"
-            placeholder="Search Candidate"
+            placeholder={`Search ${portal === "study" ? "Student" : "Candidate"}`}
             name="Employee_name"
             onChange={(e) => setcandidateSearch(e)}
             onKeyPress={handleKeyPress}
@@ -256,7 +257,7 @@ export default function ApplicantsFilter({
             className="text-capitalize form-control"
           >
             <option value="" data-display="Product Designer">
-              Candidate's partner
+              {portal === "study" ? "Student" : "Candidate"}'s partner
             </option>
             {(AgentList || []).map((data) => {
               return (
@@ -288,7 +289,7 @@ export default function ApplicantsFilter({
             className="text-capitalize form-control"
           >
             <option value="" data-display="Product Designer">
-              Admin's Candidates
+              Admin's {portal==="study"?"Students":"Candidates"}
             </option>
             {(AdminList || []).map((data) => {
               return (
