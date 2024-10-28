@@ -1,9 +1,40 @@
-import React from 'react'
+import React, { useState } from 'react'
 import StudyAdminHeader from '../StudyComman/studyAdminHeader'
 import StudyAdminSidebar from '../StudyComman/studySiderbar'
 import { Link } from 'react-router-dom'
+import ActivityTable from '../../common/activity_table'
+import { BsUsbMiniFill } from 'react-icons/bs'
+import { FaWindowMaximize } from 'react-icons/fa'
+import EmployeeTable from '../../common/employeeTable'
+import AppliedProgramTable from '../StudyComman/appliedProgramTable'
 
 export default function StudyDashboard() {
+    const [openTable, setOpenTable] = useState(null);
+    const [activityNo, setActivityNo] = useState(1);
+    const [studentsPageNo, setStudentsPageNo] = useState(1);
+    const [appliedProgramPageNo, setAppliedProgramNo] = useState(1);
+    let [appliedProgram, setAppliedProgram] = useState("");
+    let [activity, setActivity] = useState("");
+    let [students, setStudents] = useState("");
+    let [apiCall, setApiCall] = useState(false);
+    let adminId = localStorage.getItem("admin_id");
+    /*Function to maximixe and minimize the tables*/
+    const toggleTable = (tableNumber) => {
+        if (openTable === tableNumber) {
+            setOpenTable(null);
+        } else {
+            setOpenTable(tableNumber);
+        }
+        // Function to focus on the particular div we select for maximizing and minimizing.
+        window.requestAnimationFrame(() => {
+            const element = document.getElementById(`table${tableNumber}`);
+            element && element.scrollIntoView({ behavior: "smooth" });
+        });
+    };
+    /*Function get minimize maximize icons */
+    const getIcon = (tableNumber) => {
+        return openTable === tableNumber ? <BsUsbMiniFill /> : <FaWindowMaximize />;
+    };
     return (
         <div className="site-wrapper overflow-hidden bg-default-2">
             {/* <!-- Header Area --> */}
@@ -150,6 +181,184 @@ export default function StudyDashboard() {
                             </Link>
                         </div> */}
 
+                    </div>
+                    <div className='row'
+                    >
+                        <div
+                            id="table1"
+                            className={openTable === 1 ? "col-md-12" : "col-md-6"}
+                        >
+                            <div className="bg-white dashboard_card mb-7">
+                                <div className="d-flex justify-content-between p-5 align-items-center">
+                                    <h3 className="font-size-5 px-3 m-0  ">
+                                        Recently Added Activity
+                                    </h3>
+                                    <div className="d-flex justify-content-between p-0">
+                                        <div className="select_div mr-5">
+                                            <select
+                                                name="activity"
+                                                value={activity}
+                                                id="activity"
+                                                onChange={(e) => {
+                                                    setActivity(e.target.value);
+                                                    setActivityNo(1);
+                                                }}
+                                                className="form-control-sm bg-white dashboard_select rounded-3"
+                                            >
+                                                <option value={""}>Time Duration</option>
+                                                <option value={"today"}>Today </option>
+                                                <option value={"this_week"}>This Week </option>
+                                                <option value={"last_week"}>Last Week</option>
+                                                <option value={"last_month"}>Last Month</option>
+                                                <option value={"current_month"}>Current Month</option>
+                                            </select>
+                                        </div>
+                                        <Link
+                                            className={`text-dark mx-5 ${openTable === 1 ? "open" : ""
+                                                }`}
+                                            to=""
+                                            onClick={() => toggleTable(1)}
+                                            title={openTable === 1 ? "Minimize" : "Maximize"}
+                                        >
+                                            {getIcon(1)}
+                                        </Link>
+                                    </div>
+                                </div>
+                                <ActivityTable
+                                    heading={openTable === 1 ? "" : "Dashboard"}
+                                    filter_by_time={activity}
+                                    setpageNo={setActivityNo}
+                                    pageNo={activityNo}
+                                    apiCall={apiCall}
+                                    setApiCall={setApiCall}
+                                    applicantType={"study permit"}
+                                />
+                            </div>
+                        </div>
+                        {/* <!-- Recent students- --> */}
+                        <div
+                            id="table2"
+                            className={openTable === 2 ? "col-md-12" : "col-md-6"}
+                        >
+                            <div className="bg-white dashboard_card mb-7">
+                                <div className="d-flex justify-content-between p-5 align-items-center">
+                                    <h3 className="font-size-5 px-3 m-0  ">
+                                        Recently Added Students
+                                    </h3>
+                                    <div className="d-flex justify-content-between p-0">
+                                        <div className="select_div mr-5">
+                                            <select
+                                                name="students"
+                                                value={students}
+                                                id="students"
+                                                onChange={(e) => {
+                                                    setStudents(e.target.value);
+                                                    setStudentsPageNo(1);
+                                                }}
+                                                className="form-control-sm bg-white dashboard_select rounded-3"
+                                            >
+                                                <option value={""}>Time Duration</option>
+                                                <option value={"today"}>Today </option>
+                                                <option value={"this_week"}>This Week </option>
+                                                <option value={"last_week"}>Last Week</option>
+                                                <option value={"last_month"}>Last Month</option>
+                                                <option value={"current_month"}>Current Month</option>
+                                            </select>
+                                        </div>
+                                        <div className="">
+                                            <Link
+                                                className="text-center btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
+                                                to={"/students"}
+                                                title="View all Applicants"
+                                            >
+                                                View All
+                                            </Link>
+                                        </div>
+                                        <Link
+                                            className={`text-dark mx-5 ${openTable === 2 ? "open" : ""
+                                                }`}
+                                            to=""
+                                            onClick={() => toggleTable(2)}
+                                            title={openTable === 2 ? "Minimize" : "Maximize"}
+                                        >
+                                            {getIcon(2)}
+                                        </Link>
+                                    </div>
+                                </div>
+                                <EmployeeTable
+                                    heading={openTable === 2 ? "" : "Dashboard"}
+                                    filter_by_time={students}
+                                    setpageNo={setStudentsPageNo}
+                                    pageNo={studentsPageNo}
+                                    self={"yes"}
+                                    apiCall={apiCall}
+                                    setApiCall={setApiCall}
+                                    ApplicantType={"study permit"}
+                                    pageName={"employee"}
+                                    adminFilterValue={adminId}
+                                />
+                            </div>
+                        </div>
+                        {/* <!-- Recent Applied programs- --> */}
+                        <div
+                            id="table3"
+                            className={openTable === 3 ? "col-md-12" : "col-md-6"}
+                        >
+                            <div className="bg-white dashboard_card mb-7">
+                                <div className="d-flex justify-content-between p-5 align-items-center">
+                                    <h3 className="font-size-5 px-3 m-0  ">
+                                        Recently Applied Programs
+                                    </h3>
+                                    <div className="d-flex justify-content-between p-0">
+                                        <div className="select_div mr-5">
+                                            <select
+                                                name="appliedProgram"
+                                                value={appliedProgram}
+                                                id="appliedProgram"
+                                                onChange={(e) => {
+                                                    setAppliedProgram(e.target.value);
+                                                    setAppliedProgramNo(1);
+                                                }}
+                                                className="form-control-sm bg-white dashboard_select rounded-3"
+                                            >
+                                                <option value={""}>Time Duration</option>
+                                                <option value={"today"}>Today </option>
+                                                <option value={"this_week"}>This Week </option>
+                                                <option value={"last_week"}>Last Week</option>
+                                                <option value={"last_month"}>Last Month</option>
+                                                <option value={"current_month"}>Current Month</option>
+                                            </select>
+                                        </div>
+                                        {/* <div className="">
+                                            <Link
+                                                className="text-center btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
+                                                to={"/students"}
+                                                title="View all Applicants"
+                                            >
+                                                View All
+                                            </Link>
+                                        </div> */}
+                                        <Link
+                                            className={`text-dark mx-5 ${openTable === 3 ? "open" : ""
+                                                }`}
+                                            to=""
+                                            onClick={() => toggleTable(3)}
+                                            title={openTable === 3 ? "Minimize" : "Maximize"}
+                                        >
+                                            {getIcon(3)}
+                                        </Link>
+                                    </div>
+                                </div>
+                                <AppliedProgramTable
+                                    heading={openTable === 3 ? "" : "Dashboard"}
+                                    filter_by_time={appliedProgram}
+                                    setpageNo={setAppliedProgramNo}
+                                    pageNo={appliedProgramPageNo}
+                                    apiCall={apiCall}
+                                    setApiCall={setApiCall}
+                                />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

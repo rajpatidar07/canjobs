@@ -656,7 +656,7 @@ export default function EmployeeTable(props) {
                       className="text-gray"
                       title="Sort by Id"
                     >
-                      EID
+                      {portal === "study"?"SID":"EID"}
                     </Link>
                   </th>
                   <th

@@ -28,6 +28,7 @@ export default function AppliedProgramTable(props) {
                 props.pageNo,
                 props.appliedUserIdFilterValue,
                 props.appliedUserTypeFilterValue,
+                props.filter_by_time
             );
             if (userData.data.data.length === 0) {
                 setAppliedProgramData([]);
@@ -66,6 +67,7 @@ export default function AppliedProgramTable(props) {
             columnName,
             sortOrder,
             props.apiCall,
+            props.filter_by_time
             // apiCall,
         ]);
     /*Pagination Calculation */
@@ -102,31 +104,28 @@ export default function AppliedProgramTable(props) {
                                                     className="text-gray"
                                                     title="Sort by Id"
                                                 >
-                                                    EID
+                                                    SID
                                                 </Link>
                                             </th>
-                                            {
-                                                props.heading === "Dashboard" ? (
-                                                    ""
-                                                ) :
-                                                    (
-                                                        <th
-                                                            scope="col"
-                                                            className="border-0 font-size-4 font-weight-normal"
-                                                        >
-                                                            <Link
-                                                                to={""}
-                                                                onClick={() => {
-                                                                    handleSort("employee_name");
-                                                                    props.setpageNo(1);
-                                                                }}
-                                                                className="text-gray"
-                                                                title="Sort byStudent Name"
-                                                            >
-                                                                Student Name
-                                                            </Link>
-                                                        </th>
-                                                    )}
+
+
+                                            <th
+                                                scope="col"
+                                                className="border-0 font-size-4 font-weight-normal"
+                                            >
+                                                <Link
+                                                    to={""}
+                                                    onClick={() => {
+                                                        handleSort("employee_name");
+                                                        props.setpageNo(1);
+                                                    }}
+                                                    className="text-gray"
+                                                    title="Sort byStudent Name"
+                                                >
+                                                    Student Name
+                                                </Link>
+                                            </th>
+
                                             <th
                                                 scope="col"
                                                 className=" border-0 font-size-4 font-weight-normal"
@@ -246,12 +245,18 @@ export default function AppliedProgramTable(props) {
                                                         <td className="py-5 font-size-3 font-weight-normal text-black-2 mb-0">
                                                             <p>{data.college_name}</p>
                                                         </td>
-                                                        <td className="py-5 font-size-3 font-weight-normal text-black-2 mb-0">
-                                                            <p>{data.city + " " + data.state}</p>
-                                                        </td>
-                                                        <td className="py-5 font-size-3 font-weight-normal text-black-2 mb-0">
-                                                            <p>{data.course_duration}</p>
-                                                        </td>
+                                                        {
+                                                            props.heading === "Dashboard" ? (
+                                                                ""
+                                                            ) : <td className="py-5 font-size-3 font-weight-normal text-black-2 mb-0">
+                                                                <p>{data.city + " " + data.state}</p>
+                                                            </td>}
+                                                        {
+                                                            props.heading === "Dashboard" ? (
+                                                                ""
+                                                            ) : <td className="py-5 font-size-3 font-weight-normal text-black-2 mb-0">
+                                                                <p>{data.course_duration}</p>
+                                                            </td>}
                                                     </tr>
                                                 </React.Fragment>
                                             ))

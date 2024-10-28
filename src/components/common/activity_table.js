@@ -106,7 +106,8 @@ export default function ActivityTable(props) {
         "",
         "",
         "",
-        props.filter_by_time
+        props.filter_by_time,
+        props.applicantType
       );
       setactivityData(adata.data.data);
       setTotalData(adata.data.total_rows);

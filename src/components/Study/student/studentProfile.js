@@ -7,7 +7,7 @@ import ItSkills from "../../forms/user/skills";
 import FilterJson from "../../json/filterjson";
 import CustomButton from "../../common/button";
 // import LimaArrowProfile from "../common/LimaArrowProfile";
-// import ContactPage from "../common/contactPage";
+import ContactPage from "../../common/contactPage";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
     EmployeeDetails,
@@ -19,7 +19,7 @@ import {
     // AddPaymentToDataBase,
 } from "../../../api/api";
 import moment from "moment";
-// import Addfollowup from "../forms/admin/addfollowup";
+import Addfollowup from "../../forms/admin/addfollowup";
 import { toast } from "react-toastify";
 import Loader from "../../common/loader";
 import { PiPencilDuotone } from "react-icons/pi";
@@ -33,22 +33,23 @@ import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 // import { RiMailSendLine } from "react-icons/ri";
 // import VisaArrowProfile from "../common/visaArrowProfile";
-// import PayentForm from "../forms/admin/payentForm";
-// import MainEmailPage from "../email/mainemailPage";
+import PayentForm from "../../forms/admin/payentForm";
+import MainEmailPage from "../../email/mainemailPage";
 // import AgentConversation from "../common/AgentConversation";
-// import UserTimline from "../common/UserTimline";
+import UserTimline from "../../common/UserTimline";
 // import InterviewHistoryTable from "../common/InterviewHistoryTable";
 // import SharePointDocument from "../common/Document folder/SharePointDocument";
 import NotFound from "../../common/notfound";
 // import RetainerAgrementMainPage from "../common/Retaineragreement/RetainerAgrementMainPage";
 // import VisaTimeLine from "../common/visaTimeLine";
-import StudyFooter from "../StudyComman/studyFooter";
+// import StudyFooter from "../StudyComman/studyFooter";
 import StudyHeader from "../StudyComman/studyHeader";
 import StudyAdminHeader from "../StudyComman/studyAdminHeader";
 import StudyAdminSidebar from "../StudyComman/studySiderbar";
 import SharePointDocument from "../../common/Document folder/SharePointDocument";
 import AdminSidebar from "../../admin/sidebar";
 import AdminHeader from "../../admin/header";
+import AppliedProgramTable from "../StudyComman/appliedProgramTable";
 // import useSessionCheck from "../common/user_session";
 // import AdobePDFViewer from "../common/Adobe/adobeFile";
 const StudentProfile = (props) => {
@@ -59,7 +60,7 @@ const StudentProfile = (props) => {
     const docId = searchParams.get("docId");
     const docParentId = searchParams.get("docParentId");
     // const partnerChat = searchParams.get("partner");
-    // const notes = searchParams.get("note");
+    const notes = searchParams.get("note");
     // const agreement = searchParams.get("agreement");
     let navigate = useNavigate();
 
@@ -73,25 +74,25 @@ const StudentProfile = (props) => {
     const [showPersonalDetails, setShowPersonalDetails] = useState(false);
     const [showEducation, setShowEducation] = useState(false);
     const [showItSkills, setShowItSkills] = useState(false);
-    //   const [addNote, setAddNote] = useState(false);
+    const [addNote, setAddNote] = useState(false);
     const [TabActive, setTabActive] = useState(
         docId
             ? "documents" /*"sharepoint" */
             //   : partnerChat
             //     ? "agent conversation"
-            //     : notes === "true"
-            //       ? "notes"
-            //       : agreement === "true"
-            //         ? "retaineragreement"
-            :
-            "profile"
+            : notes === "true"
+                ? "notes"
+                //       : agreement === "true"
+                //         ? "retaineragreement"
+                :
+                "profile"
     );
     const [userDetail, setuserDetail] = useState([]);
     const [userFound, setuserFound] = useState([]);
     const [PersonalDetail, setPersonalDetail] = useState([]);
     //   const [appliedJob, setAppliedJob] = useState([]);
     //   const [visaStatus, setVisaStatus] = useState([]);
-    //   const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
+    const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
     let [isLoading, setIsLoading] = useState(true);
     const user_type = localStorage.getItem("userType");
     // let id = localStorage.getItem("employee_id");
@@ -312,11 +313,11 @@ const StudentProfile = (props) => {
                         <Link
                             className="d-flex align-items-center "
                             onClick={() => {
-                                //   if (TabActive === "notes") {
-                                navigate(-1);
-                                //   } else {
-                                //     setAddNote(true);
-                                //   }
+                                if (TabActive === "notes") {
+                                    navigate(-1);
+                                } else {
+                                    setAddNote(true);
+                                }
                             }}
                         >
                             <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
@@ -333,11 +334,11 @@ const StudentProfile = (props) => {
                             <Link
                                 className="d-flex align-items-center "
                                 onClick={() => {
-                                    //   if (TabActive === "notes") {
-                                    navigate(-1);
-                                    //   } else {
-                                    //     setAddNote(true);
-                                    //   }
+                                    if (TabActive === "notes") {
+                                        navigate(-1);
+                                    } else {
+                                        setAddNote(true);
+                                    }
                                 }}
                             >
                                 <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
@@ -386,10 +387,11 @@ const StudentProfile = (props) => {
                                 <div className="bg-white">
                                     {/*----Profile Header----*/}
                                     <ul
-                                        className={`nav border-top border-bottom border-mercury user_profile_tab ${user_type === "admin" || user_type === "agent"
-                                            ? ""
-                                            : "mt-md-13 d-none"
-                                            }`}
+                                        className={`nav border-top border-bottom border-mercury user_profile_tab`}
+                                        // ${/*user_type === "admin" || user_type === "agent"
+                                        // ? ""
+                                        // : "mt-md-13 d-none"
+                                        // */}
                                         id="myTab"
                                         role="tablist"
                                     >
@@ -410,28 +412,25 @@ const StudentProfile = (props) => {
                                                 Profile
                                             </Link>
                                         </li>
-                                        {/* <li
-                      className={`${user_type === "company"
-                        ? "d-none"
-                        : "tab-menu-items nav-item"
-                        }`}
-                    >
-                      <Link
-                        className={
-                          TabActive === "jobs"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6"
-                        }
-                        id="appliedJobs"
-                        data-toggle="tab"
-                        role="tab"
-                        aria-controls="appliedJobs"
-                        aria-selected="true"
-                        onClick={() => setTabActive("jobs")}
-                      >
-                        Applied Jobs
-                      </Link>
-                    </li> */}
+                                        <li
+                                            className={`tab-menu-items nav-item`}
+                                        >
+                                            <Link
+                                                className={
+                                                    TabActive === "programs"
+                                                        ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6 active"
+                                                        : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6"
+                                                }
+                                                id="appliedprograms"
+                                                data-toggle="tab"
+                                                role="tab"
+                                                aria-controls="appliedprograms"
+                                                aria-selected="true"
+                                                onClick={() => setTabActive("programs")}
+                                            >
+                                                Applied Programs
+                                            </Link>
+                                        </li>
                                         <li
                                             className={`${user_type === "company"
                                                 ? "d-none"
@@ -514,30 +513,30 @@ const StudentProfile = (props) => {
                         Visa
                       </Link>
                     </li> */}
-                                        {/* <li
-                      className={
-                        user_type === "company"
-                          ? //|| user_type === "user"
-                          "d-none"
-                          : "tab-menu-items nav-item"
-                      }
-                    >
-                      <Link
-                        className={
-                          TabActive === "notes"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6"
-                        }
-                        id="notesTab"
-                        data-toggle="tab"
-                        role="tab"
-                        aria-controls="notesTab"
-                        aria-selected="true"
-                        onClick={() => setTabActive("notes")}
-                      >
-                        Notes
-                      </Link>
-                    </li> */}
+                                        <li
+                                            className={
+                                                user_type === "company"
+                                                    ? //|| user_type === "user"
+                                                    "d-none"
+                                                    : "tab-menu-items nav-item"
+                                            }
+                                        >
+                                            <Link
+                                                className={
+                                                    TabActive === "notes"
+                                                        ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6 active"
+                                                        : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6"
+                                                }
+                                                id="notesTab"
+                                                data-toggle="tab"
+                                                role="tab"
+                                                aria-controls="notesTab"
+                                                aria-selected="true"
+                                                onClick={() => setTabActive("notes")}
+                                            >
+                                                Notes
+                                            </Link>
+                                        </li>
                                         {/* <li
                       className={
                         user_type === "company" ||
@@ -563,27 +562,27 @@ const StudentProfile = (props) => {
                         Retainer Agreement
                       </Link>
                     </li> */}
-                                        {/* <li
-                      className={`tab-menu-items nav-item ${user_type === "company" ? "d-none" : ""
-                        }`}
-                    >
-                      <Link
-                        className={
-                          TabActive === "payment"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6"
-                        }
-                        id="activityTab"
-                        data-toggle="tab"
-                        role="tab"
-                        aria-controls="activityTab"
-                        aria-selected="true"
-                        onClick={() => setTabActive("payment")}
-                      >
-                        Payments
-                      </Link>
-                    </li>
-                                        <li className="tab-menu-items nav-item pr-12">
+                                        <li
+                                            className={`tab-menu-items nav-item ${user_type === "company" ? "d-none" : ""
+                                                }`}
+                                        >
+                                            <Link
+                                                className={
+                                                    TabActive === "payment"
+                                                        ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6 active"
+                                                        : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6"
+                                                }
+                                                id="activityTab"
+                                                data-toggle="tab"
+                                                role="tab"
+                                                aria-controls="activityTab"
+                                                aria-selected="true"
+                                                onClick={() => setTabActive("payment")}
+                                            >
+                                                Payments
+                                            </Link>
+                                        </li>
+                                        {/* <li className="tab-menu-items nav-item pr-12">
                       <CustomButton
                         className=" font-size-4 rounded-3 btn-primary border-0 mt-2"
                         onClick={() => setShowDoc(true)}
@@ -591,78 +590,78 @@ const StudentProfile = (props) => {
                         {user_type === "user" ? "Add Document" : "Documents"}
                       </CustomButton>
                     </li> */}
-                                        {/* <li
-                      className={
-                        // user_type === "user" ||
-                        user_type === "company"
-                          ? "d-none"
-                          : "tab-menu-items nav-item "
-                      }
-                    >
-                      <Link
-                        className={
-                          TabActive === "contact"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6"
-                        }
-                        id="docTab"
-                        data-toggle="tab"
-                        role="tab"
-                        aria-controls="docTab"
-                        aria-selected="true"
-                        onClick={() => setTabActive("contact")}
-                      >
-                        Contact Us
-                      </Link>
-                    </li> */}
-                                        {/* <li
-                      className={
-                        user_type === "user" || user_type === "company"
-                          ? "d-none"
-                          : "tab-menu-items nav-item "
-                      }
-                    >
-                      <Link
-                        className={
-                          TabActive === "timline"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6"
-                        }
-                        id="docTab"
-                        data-toggle="tab"
-                        role="tab"
-                        aria-controls="docTab"
-                        aria-selected="true"
-                        onClick={() => setTabActive("timline")}
-                      >
-                        TimeLine
-                      </Link>
-                    </li> */}
-                                        {/* <li
-                      className={
-                        user_type === "company" ||
-                          // user_type === "user" ||
-                          user_type === "agent"
-                          ? "d-none"
-                          : "tab-menu-items nav-item"
-                      }
-                    >
-                      <Link
-                        className={
-                          TabActive === "email"
-                            ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6 active"
-                            : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6"
-                        }
-                        id="docTab"
-                        data-toggle="tab"
-                        role="tab"
-                        aria-controls="docTab"
-                        aria-selected="true"
-                        onClick={() => setTabActive("email")}
-                      >
-                        Email
-                      </Link>
-                    </li> */}
+                                        <li
+                                            className={
+                                                // user_type === "user" ||
+                                                user_type === "company"
+                                                    ? "d-none"
+                                                    : "tab-menu-items nav-item "
+                                            }
+                                        >
+                                            <Link
+                                                className={
+                                                    TabActive === "contact"
+                                                        ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6 active"
+                                                        : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6"
+                                                }
+                                                id="docTab"
+                                                data-toggle="tab"
+                                                role="tab"
+                                                aria-controls="docTab"
+                                                aria-selected="true"
+                                                onClick={() => setTabActive("contact")}
+                                            >
+                                                Contact Us
+                                            </Link>
+                                        </li>
+                                        <li
+                                            className={
+                                                user_type === "user" || user_type === "company"
+                                                    ? "d-none"
+                                                    : "tab-menu-items nav-item "
+                                            }
+                                        >
+                                            <Link
+                                                className={
+                                                    TabActive === "timline"
+                                                        ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6 active"
+                                                        : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6"
+                                                }
+                                                id="docTab"
+                                                data-toggle="tab"
+                                                role="tab"
+                                                aria-controls="docTab"
+                                                aria-selected="true"
+                                                onClick={() => setTabActive("timline")}
+                                            >
+                                                TimeLine
+                                            </Link>
+                                        </li>
+                                        <li
+                                            className={
+                                                user_type === "company" ||
+                                                    // user_type === "user" ||
+                                                    user_type === "agent"
+                                                    ? "d-none"
+                                                    : "tab-menu-items nav-item"
+                                            }
+                                        >
+                                            <Link
+                                                className={
+                                                    TabActive === "email"
+                                                        ? "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6 active"
+                                                        : "text-uppercase font-size-3 font-weight-bold text-default-color py-4 mb-0 px-6"
+                                                }
+                                                id="docTab"
+                                                data-toggle="tab"
+                                                role="tab"
+                                                aria-controls="docTab"
+                                                aria-selected="true"
+                                                onClick={() => setTabActive("email")}
+                                            >
+                                                Email
+                                            </Link>
+                                        </li>
                                         {/* <li
                       className={
                         user_type === "company" || user_type === "user"
@@ -1289,30 +1288,28 @@ const StudentProfile = (props) => {
                                         </div>
                                     </div>
                                     {/* <!-- Sidebar End --> */}
-                                    {/* <div
-                    className={
-                      TabActive === "jobs"
-                        ? "row m-0  justify-content-center"
-                        : "d-none"
-                    }
-                    id="appliedJobs"
-                    role="tabpanel"
-                    aria-labelledby="appliedJobs"
-                  >
-                    {TabActive === "jobs" ? (
-                      <JobProfileResponse
-                        employee_id={eid}
-                        heading={"userprofile"}
-                        setApiCall={setApiCall}
-                        apiCall={apiCall}
-                        statusCall={statusCall}
-                        setStatusCall={setStatusCall}
-                        pageNo={pageNo}
-                        setpageNo={setpageNo}
-                      />
-                    ) : null}
-                   
-                  </div> */}
+                                    <div
+                                        className={
+                                            TabActive === "programs"
+                                                ? "row m-0  justify-content-center"
+                                                : "d-none"
+                                        }
+                                        id="appliedprograms"
+                                        role="tabpanel"
+                                        aria-labelledby="appliedprograms"
+                                    >
+                                        {TabActive === "programs" ? (
+                                            <AppliedProgramTable
+                                                employeeId={eid}
+                                                employeeTypeFilterValue={"employee"}
+                                                setApiCall={setApiCall}
+                                                apiCall={apiCall}
+                                                pageNo={pageNo}
+                                                setpageNo={setpageNo}
+                                            />
+                                        ) : null}
+
+                                    </div>
                                     <div
                                         className={
                                             TabActive === "documents"
@@ -1357,27 +1354,27 @@ const StudentProfile = (props) => {
                       setVisaStatusRejectComment={setVisaStatusRejectComment}
                     />
                   </div> */}
-                                    {/* <div
-                    className={
-                      TabActive === "notes"
-                        ? "justify-content-center "
-                        : "d-none"
-                    }
-                  >
-                    <Addfollowup
-                      userId={eid}
-                      userType={"employee"}
-                      setApiCall={setApiCall}
-                      assigned_by_id={PersonalDetail.assigned_by}
-                      noteNotification={notes}
-                      show={TabActive === "notes" || addNote}
-                      page={TabActive === "notes" ? "no" : "yes"}
-                      close={() => {
-                        setAddNote(false);
-                      }}
-                      skip={() => navigate(-1)}
-                    />
-                  </div> */}
+                                    <div
+                                        className={
+                                            TabActive === "notes"
+                                                ? "justify-content-center "
+                                                : "d-none"
+                                        }
+                                    >
+                                        <Addfollowup
+                                            userId={eid}
+                                            userType={"employee"}
+                                            setApiCall={setApiCall}
+                                            assigned_by_id={PersonalDetail.assigned_by}
+                                            noteNotification={notes}
+                                            show={TabActive === "notes" || addNote}
+                                            page={TabActive === "notes" ? "no" : "yes"}
+                                            close={() => {
+                                                setAddNote(false);
+                                            }}
+                                            skip={() => navigate(-1)}
+                                        />
+                                    </div>
                                     {/* <div
                     className={
                       TabActive === "retaineragreement"
@@ -1399,45 +1396,45 @@ const StudentProfile = (props) => {
                       />
                     ) : null}
                   </div> */}
-                                    {/* <div
-                    className={
-                      TabActive === "payment"
-                        ? "justify-content-center "
-                        : "d-none"
-                    }
-                  >
-                    {TabActive === "payment" ? (
-                      <div className="p-10 activity_container">
-                        <PayentForm
-                          data={PersonalDetail}
-                          user_id={eid}
-                          user_type={"employee"}
-                        />
-                      </div>
-                    ) : null}
-                  </div> */}
-                                    {/* <div
-                    className={
-                      TabActive === "contact"
-                        ? "justify-content-center "
-                        : "d-none"
-                    }
-                  >
-                    {TabActive === "contact" ? (
-                      <ContactPage email={PersonalDetail.email} />
-                    ) : null}
-                  </div> */}
-                                    {/* <div
-                    className={
-                      TabActive === "email"
-                        ? "justify-content-center "
-                        : "d-none"
-                    }
-                  >
-                    {TabActive === "email" ? (
-                      <MainEmailPage email={PersonalDetail.email} />
-                    ) : null}
-                  </div> */}
+                                    <div
+                                        className={
+                                            TabActive === "payment"
+                                                ? "justify-content-center "
+                                                : "d-none"
+                                        }
+                                    >
+                                        {TabActive === "payment" ? (
+                                            <div className="p-10 activity_container">
+                                                <PayentForm
+                                                    data={PersonalDetail}
+                                                    user_id={eid}
+                                                    user_type={"employee"}
+                                                />
+                                            </div>
+                                        ) : null}
+                                    </div>
+                                    <div
+                                        className={
+                                            TabActive === "contact"
+                                                ? "justify-content-center "
+                                                : "d-none"
+                                        }
+                                    >
+                                        {TabActive === "contact" ? (
+                                            <ContactPage email={PersonalDetail.email} />
+                                        ) : null}
+                                    </div>
+                                    <div
+                                        className={
+                                            TabActive === "email"
+                                                ? "justify-content-center "
+                                                : "d-none"
+                                        }
+                                    >
+                                        {TabActive === "email" ? (
+                                            <MainEmailPage email={PersonalDetail.email} />
+                                        ) : null}
+                                    </div>
                                     {/* <div
                     className={
                       TabActive === "agent conversation"
@@ -1460,14 +1457,14 @@ const StudentProfile = (props) => {
                       />
                     ) : null}
                   </div> */}
-                                    {/* {TabActive === "timline" ? (
-                    <UserTimline
-                      userId={eid}
-                      userEmail={PersonalDetail.email}
-                      userName={PersonalDetail.name}
-                      userType={"employee"}
-                    />
-                  ) : null} */}
+                                    {TabActive === "timline" ? (
+                                        <UserTimline
+                                            userId={eid}
+                                            userEmail={PersonalDetail.email}
+                                            userName={PersonalDetail.name}
+                                            userType={"employee"}
+                                        />
+                                    ) : null}
                                     {/* <div
                     className={
                       TabActive === "InterviewHistory"
@@ -1495,7 +1492,7 @@ const StudentProfile = (props) => {
                 </div>
             </div>
 
-            {user_type === "admin" || user_type === "agent" ? "" : <StudyFooter />}
+            {/* {user_type === "admin" || user_type === "agent" ? "" : <StudyFooter />} */}
             {showEducation ? (
                 <EducationDetails
                     show={showEducation}

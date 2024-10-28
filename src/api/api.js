@@ -729,22 +729,22 @@ export const ADocAnnotation = async (
   DocUserType
 ) => {
   // console.log(
-    //"1. task_creator_user_id =>", id,
-    //   "2. task_creator_user_type =>", user_type === "admin" ? "admin" : "agent",
-    //   "3. doc_id =>", docId,
-    //   "4. user_admin_assigned =>", type === "partner" || "partnerChat" ? assigned_by_id : "",
-    //   "5. json =>", AdobeAnnotation,
-    //   "6. assined_to_user_id =>", assineduserid,
-    //   "7. assigned_user_type =>", AssignUserType,
-    //   "8. document_url =>", type === "partner" || "partnerChat" ? DocUrl : "",
-    //   '9. subject_description =>', comment,
-    //   '10. x_axis =>', x,
-    //   '11. y_axis =>', y,
-    //   '12. type =>', type,
-    //   '13. employee_id =>', employee_id,
-    //   '14. doc_parent_id =>',docPartentId,
-    // '15. DocUserType =>', DocUserType,
-    // '16. assign_to =>',email
+  //"1. task_creator_user_id =>", id,
+  //   "2. task_creator_user_type =>", user_type === "admin" ? "admin" : "agent",
+  //   "3. doc_id =>", docId,
+  //   "4. user_admin_assigned =>", type === "partner" || "partnerChat" ? assigned_by_id : "",
+  //   "5. json =>", AdobeAnnotation,
+  //   "6. assined_to_user_id =>", assineduserid,
+  //   "7. assigned_user_type =>", AssignUserType,
+  //   "8. document_url =>", type === "partner" || "partnerChat" ? DocUrl : "",
+  //   '9. subject_description =>', comment,
+  //   '10. x_axis =>', x,
+  //   '11. y_axis =>', y,
+  //   '12. type =>', type,
+  //   '13. employee_id =>', employee_id,
+  //   '14. doc_parent_id =>',docPartentId,
+  // '15. DocUserType =>', DocUserType,
+  // '16. assign_to =>',email
   // )
   const response = await axios.post(
     `${API_URL}admin/docTaskAdd?document_user_type=${DocUserType}`,
@@ -3174,7 +3174,8 @@ export const getActivityLog = async (
   pagetype,
   sort,
   columnName,
-  time
+  time,
+  applicantType
 ) => {
   // console.log("Props" + props.user_id + props.user_type);
   const response = await axios.post(
@@ -3192,6 +3193,7 @@ export const getActivityLog = async (
       stackHolder_id: stackHolder_id,
       stackHolder_type: stackHolder_type,
       status: pagetype === "interviewHistory" ? "21,36" : "",
+      interested_in: applicantType,
     },
     {
       headers: {
@@ -3542,7 +3544,7 @@ export const ApplyProgram = async (data) => {
   return response.data;
 }
 /* Api to get apply program */
-export const GetApplyProgram = async (search, employerId, employee_type, limit, sort, column, page, applied_user_id, applied_user_type, program_id) => {
+export const GetApplyProgram = async (search, employerId, employee_type, limit, sort, column, page, applied_user_id, applied_user_type, time, program_id) => {
   const response = await axios.post(
     `${API_URL}getAppliedPrograms`,
     {
@@ -3556,6 +3558,7 @@ export const GetApplyProgram = async (search, employerId, employee_type, limit, 
       employee_type: employee_type,
       applied_user_type: applied_user_type,
       program_id: program_id,
+      filter_by_time: time,
     }
     ,
     {
