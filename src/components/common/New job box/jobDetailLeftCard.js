@@ -3,7 +3,7 @@ import { BiBriefcase } from "react-icons/bi";
 // import { FaStar } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";
 import { GrClose } from "react-icons/gr";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { MdOutlinePayments } from "react-icons/md"
 import moment from "moment";
 const JobDetailLeftCardBox = ({
@@ -14,7 +14,7 @@ const JobDetailLeftCardBox = ({
   user_type
 }) => {
   const [isVisible, setIsVisible] = useState(true);
-
+  let navigate = useNavigate()
   // Handle scroll event
   const handleScroll = (e) => {
     const scrollTop = e.target.scrollTop;
@@ -87,7 +87,7 @@ const JobDetailLeftCardBox = ({
                         onClick={() =>
                           token && user_type === "user"
                             ? OnApplyClick(0, jobData?.job_id)
-                            : Navigate("/candidate_login")
+                            : navigate("/candidate_login")
                         }
                         disabled={jobData?.is_applied !== "0"}>
                         {jobData?.is_applied === "0" ? "Apply now" : "Applied"}
