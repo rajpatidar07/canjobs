@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import StudyAdminHeader from '../StudyComman/studyAdminHeader'
 import StudyAdminSidebar from '../StudyComman/studySiderbar'
 import { Link } from 'react-router-dom'
@@ -7,7 +7,9 @@ import { BsUsbMiniFill } from 'react-icons/bs'
 import { FaWindowMaximize } from 'react-icons/fa'
 import EmployeeTable from '../../common/employeeTable'
 import AppliedProgramTable from '../StudyComman/appliedProgramTable'
-
+import DataChart from '../../common/DataChart'
+import Loader from '../../common/loader'
+import { GetAllChartData } from '../../../api/api'
 export default function StudyDashboard() {
     const [openTable, setOpenTable] = useState(null);
     const [activityNo, setActivityNo] = useState(1);
@@ -18,6 +20,9 @@ export default function StudyDashboard() {
     let [students, setStudents] = useState("");
     let [apiCall, setApiCall] = useState(false);
     let adminId = localStorage.getItem("admin_id");
+    const [applicantStatusChartData, setApplicantStatusData] = useState([]);
+    const [loadingStatus, setLoadingStatus] = useState(true);
+    let adminType = localStorage.getItem("userType")
     /*Function to maximixe and minimize the tables*/
     const toggleTable = (tableNumber) => {
         if (openTable === tableNumber) {
@@ -35,6 +40,30 @@ export default function StudyDashboard() {
     const getIcon = (tableNumber) => {
         return openTable === tableNumber ? <BsUsbMiniFill /> : <FaWindowMaximize />;
     };
+    /*Function to Get Graph data */
+    const GetChartData = async () => {
+        //Applicants status data
+        try {
+            let res = await GetAllChartData("", adminType, "study permit");
+            if (res.status === 1) {
+                console.log(res.data)
+                // setLoginCondition(false)
+                setApplicantStatusData(res.data);
+                setLoadingStatus(false);
+            } else {
+                setApplicantStatusData([]);
+                setLoadingStatus(false);
+            }
+        } catch (err) {
+            console.log(err);
+            setLoadingStatus(false);
+        }
+    }
+    useEffect(() => {
+        GetChartData()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
     return (
         <div className="site-wrapper overflow-hidden bg-default-2">
             {/* <!-- Header Area --> */}
@@ -184,6 +213,23 @@ export default function StudyDashboard() {
                     </div>
                     <div className='row'
                     >
+                        <div id="table0" className={"col-md-6"}>
+                            <div className="bg-white dashboard_card mb-7">
+                                <div className="d-flex justify-content-between p-5 align-items-center">
+                                    <h3 className="font-size-5 px-3 m-0 ">Applicant's status</h3>
+                                </div>
+                                <div className="bg-white dashboard_card ">
+                                    {loadingStatus ? (
+                                        <Loader />
+                                    ) : (
+                                        <DataChart
+                                            data={applicantStatusChartData}
+                                            dataType={"status"}
+                                        />
+                                    )}
+                                </div>
+                            </div>
+                        </div>
                         <div
                             id="table1"
                             className={openTable === 1 ? "col-md-12" : "col-md-6"}
