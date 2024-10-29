@@ -98,9 +98,11 @@ export default function EmployeeTable(props) {
         sortOrder,
         props.filter_by_time,
         "",
-        props.skill || props.heading === "Dashboard" || status === "00" || portal === "study"
-          ? ""
-          : status,
+        props.statustFilterValue
+          ? props.statustFilterValue :
+          props.skill || props.heading === "Dashboard" || status === "00" || portal === "study"
+            ? ""
+            : status,
         props.job_id ? props.job_id : "",
         props.filterByEmployeeId,
         props?.ApplicantType ? props?.ApplicantType : props.interestFilterValue,
@@ -176,6 +178,7 @@ export default function EmployeeTable(props) {
     props.categoryFilterValue,
     props.localFilterValue,
     props.filterByEmployeeId,
+    props.statustFilterValue
   ]);
 
   /* Function to show the single data to update Employee*/
@@ -656,7 +659,7 @@ export default function EmployeeTable(props) {
                       className="text-gray"
                       title="Sort by Id"
                     >
-                      {portal === "study"?"SID":"EID"}
+                      {portal === "study" ? "SID" : "EID"}
                     </Link>
                   </th>
                   <th
@@ -1625,6 +1628,17 @@ export default function EmployeeTable(props) {
                               ) : (portal === "study" && (props.skill === null ||
                                 props.skill === undefined)) ?
                                 <>
+                                  <button
+                                    className="btn btn-outline-info action_btn"
+                                    onClick={() =>
+                                      ChangeApplicantsStatus(empdata)
+                                    }
+                                    title="Change status"
+                                  >
+                                    <span className="text-gray px-2">
+                                      <GoTasklist />
+                                    </span>
+                                  </button>
                                   <button
                                     className={
                                       !props?.ApplicantType

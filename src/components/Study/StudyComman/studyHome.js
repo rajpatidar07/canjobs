@@ -41,7 +41,7 @@ export default function StudyHome() {
                                 </Link>
                             </div>
                             {/* Admin Section */}
-                            <div className="col text-center p-2 rounded shadow-sm mx-2 study_home_banner"
+                            <div className="d-none col text-center p-2 rounded shadow-sm mx-2 study_home_banner"
                                 style={{
 
                                     backgroundPosition: "center 42%",
