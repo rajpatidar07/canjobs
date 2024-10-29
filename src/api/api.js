@@ -37,12 +37,13 @@ export const GetAllDataCount = async () => {
 };
 
 //Api to get the graph data count of all data
-export const GetAllChartData = async (id, type) => {
+export const GetAllChartData = async (id, type, applicantType) => {
   const response = await axios.post(
     `${API_URL}admin/getEmployeeStatusCount`,
     {
       id: id,
       type: type,
+      interested_in: applicantType,
     },
     {
       headers: {

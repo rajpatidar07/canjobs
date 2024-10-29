@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import FilterJson from "../json/filterjson";
 import { /*GetFilter,*/ GetAgentJson, getallAdminData } from "../../api/api";
 import { CiSearch } from "react-icons/ci";
+import filterjson from "../json/filterjson";
 
 export default function ApplicantsFilter({
   search,
@@ -28,7 +29,9 @@ export default function ApplicantsFilter({
   localFilterValue,
   setLocalFilterValue,
   setFilterByEmployeeId,
-  filterByEmployeeId
+  filterByEmployeeId,
+  statustFilterValue,
+  setStatustFilterValue
 }) {
   // let [SkillList, setSkillList] = useState([]);
   // let [EducationList, setEducationList] = useState([]);
@@ -271,6 +274,37 @@ export default function ApplicantsFilter({
       </div>
       <div
         className={
+          (skill === null || skill === undefined) && user_type === "admin" && portal === "study"
+            ? "col p-1 form_group mb-3"
+            : "d-none"
+        }
+      >
+        <p className="input_label">Filter by status</p>
+        <div className="select_div">
+          <select
+            name="status"
+            value={statustFilterValue}
+            id="status"
+            onChange={(e) => {
+              setStatustFilterValue(e.target.value);
+              setpageNo(1);
+            }}
+            className="text-capitalize form-control"
+          >
+            <option value="" data-display="Product Designer">
+              Select status            </option>
+            {(filterjson.employee_status || []).map((data, index) => {
+              return (
+                <option value={index + 1} key={index}>
+                  {data}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+      </div>
+      <div
+        className={
           (skill === null || skill === undefined) && user_type === "admin"
             ? "col p-1 form_group mb-3 "
             : "d-none"
@@ -289,7 +323,7 @@ export default function ApplicantsFilter({
             className="text-capitalize form-control"
           >
             <option value="" data-display="Product Designer">
-              Admin's {portal==="study"?"Students":"Candidates"}
+              Admin's {portal === "study" ? "Students" : "Candidates"}
             </option>
             {(AdminList || []).map((data) => {
               return (

@@ -16,6 +16,7 @@ export default function StudentList(props) {
   const [agentFilterValue, setAgentFilterValue] = useState("");
   const [adminFilterValue, setAdminFilterValue] = useState("");
   const [interestFilterValue, setinterestFilterValue] = useState("");
+  const [statustFilterValue, setStatustFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
   let [showAddEmployeeModal, setShowEmployeeMOdal] = useState(false);
@@ -108,6 +109,8 @@ export default function StudentList(props) {
                     interestFilterValue={interestFilterValue}
                     setinterestFilterValue={setinterestFilterValue}
                     setSearchError={setSearchError}
+                    statustFilterValue={statustFilterValue}
+                     setStatustFilterValue={setStatustFilterValue}
                     // skill={props.skill}
                     pageName={"study_permit"}
                   />
@@ -126,6 +129,7 @@ export default function StudentList(props) {
                 adminFilterValue={adminFilterValue}
                 interestFilterValue={interestFilterValue}
                 apiCall={apiCall}
+                statustFilterValue={statustFilterValue}
                 setApiCall={setApiCall}
                 skill={props.skill}
                 // job_id={props.job_id}
