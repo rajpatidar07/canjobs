@@ -1291,7 +1291,7 @@ const StudentProfile = (props) => {
                                     <div
                                         className={
                                             TabActive === "programs"
-                                                ? "row m-0  justify-content-center"
+                                                ? "m-0 justify-content-center"
                                                 : "d-none"
                                         }
                                         id="appliedprograms"

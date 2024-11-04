@@ -67,7 +67,8 @@ export default function AppliedProgramTable(props) {
             columnName,
             sortOrder,
             props.apiCall,
-            props.filter_by_time
+            props.filter_by_time,
+            props.pageNo
             // apiCall,
         ]);
     /*Pagination Calculation */
@@ -207,11 +208,15 @@ export default function AppliedProgramTable(props) {
                                     <tbody>
                                         {/* Map function to show the data in the list*/}
                                         {totalData === 0 || appliedProgramData.length === 0 ? (
-                                            <tr>
-                                                <th colSpan={10} className="bg-white text-center">
-                                                    No Data Found
-                                                </th>
-                                            </tr>
+                                            <React.Fragment >
+                                                <tr className="applicant_row">
+                                                    <th colSpan={10} className="bg-white text-center">
+                                                        <p className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                                            No Data Found
+                                                        </p>
+                                                    </th>
+                                                </tr>
+                                            </React.Fragment>
                                         ) : (
                                             (appliedProgramData || []).map((data, i) => (
                                                 <React.Fragment key={i}>

@@ -205,6 +205,7 @@ export default function CompanySignUp(props) {
     )}&scope=${encodeURIComponent(scope)}`;
   };
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     i = i + 2;
     if (
       (code !== "" ||

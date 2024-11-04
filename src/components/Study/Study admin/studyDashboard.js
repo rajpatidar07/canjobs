@@ -46,7 +46,7 @@ export default function StudyDashboard() {
         try {
             let res = await GetAllChartData("", adminType, "study permit");
             if (res.status === 1) {
-                console.log(res.data)
+                // console.log(res.data)
                 // setLoginCondition(false)
                 setApplicantStatusData(res.data);
                 setLoadingStatus(false);
@@ -79,9 +79,8 @@ export default function StudyDashboard() {
             >
 
                 <div className="container-fluid mt-15">
-                    <div className="row">
+                    {/* <div className="row">
                         <div className="col-xxl-3 col-xl-4 col-md-6 col-xs-12 col-sm-6">
-                            {/* <!-- Single Category --> */}
                             <Link
                                 to=""
                                 className="media bg-white rounded-4 pl-8 pt-9 pb-9 pr-7 hover-shadow-1 mb-9 shadow-8"
@@ -89,7 +88,6 @@ export default function StudyDashboard() {
                                 <div className="text-blue bg-blue-opacity-1 circle-56 font-size-6 mr-7">
                                     <i className="fas fa-briefcase"></i>
                                 </div>
-                                {/* <!-- Category Content --> */}
                                 <div>
                                     <h5 className="font-size-8 font-weight-semibold text-black-2 line-height-reset font-weight-bold mb-1">
                                         <span className="counter">
@@ -101,10 +99,8 @@ export default function StudyDashboard() {
                                     </p>
                                 </div>
                             </Link>
-                            {/* <!-- End Single Category --> */}
                         </div>
                         <div className="col-xxl-3 col-xl-4 col-md-6 col-xs-12 col-sm-6">
-                            {/* <!-- Single Category --> */}
                             <Link
                                 to=""
                                 className="media bg-white rounded-4 pl-8 pt-9 pb-9 pr-7 hover-shadow-1 mb-9 shadow-8"
@@ -112,7 +108,6 @@ export default function StudyDashboard() {
                                 <div className="text-pink bg-pink-opacity-1 circle-56 font-size-6 mr-7">
                                     <i className="fas fa-user"></i>
                                 </div>
-                                {/* <!-- Category Content --> */}
                                 <div>
                                     <h5 className="font-size-8 font-weight-semibold text-black-2 line-height-reset font-weight-bold mb-1">
                                         <span className="counter">
@@ -124,10 +119,8 @@ export default function StudyDashboard() {
                                     </p>
                                 </div>
                             </Link>
-                            {/* <!-- End Single Category --> */}
                         </div>
                         <div className="col-xxl-3 col-xl-4 col-md-6 col-xs-12 col-sm-6">
-                            {/* <!-- Single Category --> */}
                             <Link
                                 to=""
                                 className="media bg-white rounded-4 pl-8 pt-9 pb-9 pr-7 hover-shadow-1 mb-9 shadow-8"
@@ -135,7 +128,6 @@ export default function StudyDashboard() {
                                 <div className="text-orange bg-orange-opacity-1 circle-56 font-size-6 mr-7">
                                     <i className="fas fa-eye"></i>
                                 </div>
-                                {/* <!-- Category Content --> */}
                                 <div>
                                     <h5 className="font-size-8 font-weight-semibold text-black-2 line-height-reset font-weight-bold mb-1">
                                         <span className="counter">
@@ -147,9 +139,8 @@ export default function StudyDashboard() {
                                     </p>
                                 </div>
                             </Link>
-                            {/* <!-- End Single Category --> */}
                         </div>
-                        {/* <div className="col-xxl-3 col-xl-4 col-md-6 col-xs-12 col-sm-6">
+                        <div className="col-xxl-3 col-xl-4 col-md-6 col-xs-12 col-sm-6">
                             <Link
                                 to=""
                                 className="media bg-white rounded-4 pl-8 pt-9 pb-9 pr-7 hover-shadow-1 mb-9 shadow-8"
@@ -167,9 +158,8 @@ export default function StudyDashboard() {
                                     </p>
                                 </div>
                             </Link>
-                        </div> */}
+                        </div>
                         <div className="col-xxl-3 col-xl-4 col-md-6 col-xs-12 col-sm-6">
-                            {/* <!-- Single Category --> */}
                             <Link
                                 to=""
                                 className="media bg-white rounded-4 pl-8 pt-9 pb-9 pr-7 hover-shadow-1 mb-9 shadow-8"
@@ -177,7 +167,6 @@ export default function StudyDashboard() {
                                 <div className="text-orange bg-orange-opacity-1 circle-56 font-size-6 mr-7">
                                     <i className="fas fa-users"></i>
                                 </div>
-                                {/* <!-- Category Content --> */}
                                 <div>
                                     <h5 className="font-size-8 font-weight-semibold text-black-2 line-height-reset font-weight-bold mb-1">
                                         <span className="counter">
@@ -189,9 +178,8 @@ export default function StudyDashboard() {
                                     </p>
                                 </div>
                             </Link>
-                            {/* <!-- End Single Category --> */}
                         </div>
-                        {/* <div className="col-xxl-3 col-xl-4 col-md-6 col-xs-12 col-sm-6">
+                        <div className="col-xxl-3 col-xl-4 col-md-6 col-xs-12 col-sm-6">
                             <Link
                                 to=""
                                 className="media bg-white rounded-4 pl-8 pt-9 pb-9 pr-7 hover-shadow-1 mb-9 shadow-8"
@@ -208,9 +196,8 @@ export default function StudyDashboard() {
                                     </p>
                                 </div>
                             </Link>
-                        </div> */}
-
-                    </div>
+                        </div>
+                    </div> */}
                     <div className='row'
                     >
                         <div id="table0" className={"col-md-6"}>
@@ -228,57 +215,6 @@ export default function StudyDashboard() {
                                         />
                                     )}
                                 </div>
-                            </div>
-                        </div>
-                        <div
-                            id="table1"
-                            className={openTable === 1 ? "col-md-12" : "col-md-6"}
-                        >
-                            <div className="bg-white dashboard_card mb-7">
-                                <div className="d-flex justify-content-between p-5 align-items-center">
-                                    <h3 className="font-size-5 px-3 m-0  ">
-                                        Recently Added Activity
-                                    </h3>
-                                    <div className="d-flex justify-content-between p-0">
-                                        <div className="select_div mr-5">
-                                            <select
-                                                name="activity"
-                                                value={activity}
-                                                id="activity"
-                                                onChange={(e) => {
-                                                    setActivity(e.target.value);
-                                                    setActivityNo(1);
-                                                }}
-                                                className="form-control-sm bg-white dashboard_select rounded-3"
-                                            >
-                                                <option value={""}>Time Duration</option>
-                                                <option value={"today"}>Today </option>
-                                                <option value={"this_week"}>This Week </option>
-                                                <option value={"last_week"}>Last Week</option>
-                                                <option value={"last_month"}>Last Month</option>
-                                                <option value={"current_month"}>Current Month</option>
-                                            </select>
-                                        </div>
-                                        <Link
-                                            className={`text-dark mx-5 ${openTable === 1 ? "open" : ""
-                                                }`}
-                                            to=""
-                                            onClick={() => toggleTable(1)}
-                                            title={openTable === 1 ? "Minimize" : "Maximize"}
-                                        >
-                                            {getIcon(1)}
-                                        </Link>
-                                    </div>
-                                </div>
-                                <ActivityTable
-                                    heading={openTable === 1 ? "" : "Dashboard"}
-                                    filter_by_time={activity}
-                                    setpageNo={setActivityNo}
-                                    pageNo={activityNo}
-                                    apiCall={apiCall}
-                                    setApiCall={setApiCall}
-                                    applicantType={"study permit"}
-                                />
                             </div>
                         </div>
                         {/* <!-- Recent students- --> */}
@@ -345,6 +281,58 @@ export default function StudyDashboard() {
                                 />
                             </div>
                         </div>
+                        <div
+                            id="table1"
+                            className={openTable === 1 ? "col-md-12" : "col-md-6"}
+                        >
+                            <div className="bg-white dashboard_card mb-7">
+                                <div className="d-flex justify-content-between p-5 align-items-center">
+                                    <h3 className="font-size-5 px-3 m-0  ">
+                                        Recently Added Activity
+                                    </h3>
+                                    <div className="d-flex justify-content-between p-0">
+                                        <div className="select_div mr-5">
+                                            <select
+                                                name="activity"
+                                                value={activity}
+                                                id="activity"
+                                                onChange={(e) => {
+                                                    setActivity(e.target.value);
+                                                    setActivityNo(1);
+                                                }}
+                                                className="form-control-sm bg-white dashboard_select rounded-3"
+                                            >
+                                                <option value={""}>Time Duration</option>
+                                                <option value={"today"}>Today </option>
+                                                <option value={"this_week"}>This Week </option>
+                                                <option value={"last_week"}>Last Week</option>
+                                                <option value={"last_month"}>Last Month</option>
+                                                <option value={"current_month"}>Current Month</option>
+                                            </select>
+                                        </div>
+                                        <Link
+                                            className={`text-dark mx-5 ${openTable === 1 ? "open" : ""
+                                                }`}
+                                            to=""
+                                            onClick={() => toggleTable(1)}
+                                            title={openTable === 1 ? "Minimize" : "Maximize"}
+                                        >
+                                            {getIcon(1)}
+                                        </Link>
+                                    </div>
+                                </div>
+                                <ActivityTable
+                                    heading={openTable === 1 ? "" : "Dashboard"}
+                                    filter_by_time={activity}
+                                    setpageNo={setActivityNo}
+                                    pageNo={activityNo}
+                                    apiCall={apiCall}
+                                    setApiCall={setApiCall}
+                                    applicantType={"study permit"}
+                                />
+                            </div>
+                        </div>
+
                         {/* <!-- Recent Applied programs- --> */}
                         <div
                             id="table3"
