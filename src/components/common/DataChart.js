@@ -6,6 +6,7 @@ const DataChart = ({ data, dataType }) => {
   // Extracting counts from data
   const counts = data.map((item) => parseInt(item.count, 10));
   let navigate = useNavigate();
+  let portal = localStorage.getItem("portal")
   // Applicant's status data
   // Reverse mapping object for status names to status numbers
   const statusMap = {
@@ -107,7 +108,7 @@ const DataChart = ({ data, dataType }) => {
   const options = {
     chart: {
       events: {
-        dataPointSelection: dataType === "status" ? handleStatusClick : null,
+        dataPointSelection: (dataType === "status" && portal !== "study") ? handleStatusClick : null,
       },
       width: "100%", // Change width to 100%
       type: "pie", // Change chart type to 'pie'
