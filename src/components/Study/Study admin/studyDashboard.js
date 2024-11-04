@@ -363,15 +363,15 @@ export default function StudyDashboard() {
                                                 <option value={"current_month"}>Current Month</option>
                                             </select>
                                         </div>
-                                        {/* <div className="">
+                                        <div className="">
                                             <Link
                                                 className="text-center btn-sm p-2 btn-outline-info border border-info mt-0 rounded-3 dashboard_view_"
-                                                to={"/students"}
+                                                to={"/programs"}
                                                 title="View all Applicants"
                                             >
                                                 View All
                                             </Link>
-                                        </div> */}
+                                        </div>
                                         <Link
                                             className={`text-dark mx-5 ${openTable === 3 ? "open" : ""
                                                 }`}
