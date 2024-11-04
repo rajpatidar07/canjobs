@@ -190,6 +190,7 @@ export default function EmployeeSignupModal(props) {
     )}&scope=${encodeURIComponent(scope)}`;
   };
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     i = i + 3;
     // eslint-disable-next-line
     if (
