@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import Notifications from "../../admin/notifications";
 // import GenerateToken from "./generateToken";
 // import { getAllAdminNotification, ReadNotification } from "../../api/api";
 // import AdminSetting from "./Modal/adminSetting";
@@ -71,9 +72,9 @@ const StudyAdminHeader = (props) => {
 
                     {/* {userType === "agent" || userType === "" ? "" : <GlobalSearch />} */}
                     {/* {userType === "agent" ? null : ( */}
-                    {/* <Notifications type={"mention_document"} /> */}
+                    <Notifications type={"mention_document"} />
                     {/* // )} */}
-                    {/* <Notifications type={""} /> */}
+                    <Notifications type={""} />
                     <div className="header-btn-devider ml-auto ml-lg-5 pl-2 d-xs-flex align-items-center">
                         <div>
                             <div className="dropdown show-gr-dropdown py-5">

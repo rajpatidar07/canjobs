@@ -36,7 +36,7 @@ export default function StudyHome() {
 
                                 }}>
 
-                                <Link to="/partnerlogin" className="btn btn-success btn-lg" state={{ page: "study" }}>
+                                <Link to="/study_partner_login" className="btn btn-success btn-lg" state={{ page: "study" }}>
                                     Consultant
                                 </Link>
                             </div>

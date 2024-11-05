@@ -97,6 +97,7 @@ import StudyDashboard from "../Study/Study admin/studyDashboard";
 import StudentList from "../Study/Study admin/studentsList";
 import StudyAdminLoginFrom from "../Study/Study admin/studyAdminLogin";
 import AppliedPrograms from "../Study/Study admin/appliedPrograms";
+import StudyPartnerLogin from "../Study/StudyComman/studyPartnerLogin";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -210,6 +211,8 @@ function MainLayout() {
         )}
         {/* Agent */}
         <Route path="/partnerlogin" element={<AgentLogin setLoginCondition={setLoginCondition} />} />
+        {/* Study partner login page */}
+        <Route path="/study_partner_login" element={<StudyPartnerLogin setLoginCondition={setLoginCondition} />} />
         {/* Admin */}
         <Route path="/adminlogin" element={<AdminLoginFrom setLoginCondition={setLoginCondition} />} />
         <Route path="/study_admin_login" element={<StudyAdminLoginFrom setLoginCondition={setLoginCondition} />} />
