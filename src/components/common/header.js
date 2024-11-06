@@ -81,7 +81,7 @@ function EmployeeHeader() {
         <nav className="navbar site-navbar offcanvas-active navbar-expand-lg  px-0 py-0">
           {/* <!-- Brand Logo--> */}
           <div className="brand-logo">
-            <Link to={userType ? "/study" : "/main_home"}>
+            <Link to={userType ? "/" : "/main_home"}>
               {/* <!-- light version logo (logo must be black // eslint-disable-next-line)--> */}
               <img
                 src="image/00logo-main-black.png"
