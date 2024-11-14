@@ -100,12 +100,9 @@ class ViewSDKClient {
           id: data.id,
           parentReference: data.parentReference,
         },
-
-
-      },
+    },
       viewerConfig
     );
-    // console.log("data",data)
     return previewFilePromise;
   }
   previewFileUsingFilePromise(divId, filePromise, data) {

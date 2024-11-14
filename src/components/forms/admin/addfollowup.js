@@ -206,14 +206,14 @@ function Addfollowup(props) {
               className={`activity_container px-8 py-6 col-md-8 border-right ${props.page === "yes" ? "d-none" : ""}`}
             >
               {/* {console.log(response)} */}
-              <div className="single_note bg-light p-5 rounded">
+              <div className="single_note  p-5 rounded">
                 {response.length === 0 || !response ? (
                   <div className="d-flex justify-content-center">
                     <p className="text-italic font-size-3 m-0">No Data Found</p>
                   </div>
                 ) : (
                   (response || []).map((res) => (
-                    <div className="bg-white rounded p-5 mb-2" key={res.id}>
+                    <div className={`rounded p-5 mb-2 ${props?.note_id === res.id ? "bg-light" : "bg-white"}`} key={res.id}>
                       <div className="m-0 d-flex justify-content-between align-items-center">
                         <b className="font-size-4 font-weight-bold text-dark text-break">
                           {res.subject}

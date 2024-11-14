@@ -19,6 +19,8 @@ export default function CommentReplyBox({
   replyCommentData,
   OnHandleUpdateCommentReply,
   OnDeleteCommentReplies,
+  admin_id,
+  AdminType
 }) {
   return (
     <div className="reply_box_container mx-2 fade show">
@@ -39,10 +41,15 @@ export default function CommentReplyBox({
                       style={{
                         position: "absolute",
                         right: 0,
-                        display: "flex",
+                        display: `${AdminType === "agent"
+                          ? replyItem.sender_id === admin_id
+                            ? "flex"
+                            : "none"
+                          : "flex"}`,
                         gap: 3,
                         top: 0,
                       }}
+
                     >
                       <Link
                         className="text-gray pr-2"
@@ -61,7 +68,11 @@ export default function CommentReplyBox({
                           OnDeleteCommentReplies(replyItem.id);
                         }}
                       >
-                        {" "}
+                        {console.log(AdminType === "agent"
+                          ? replyItem.sender_id === admin_id
+                            ? "1flex"
+                            : "neone"
+                          : "flexx")}
                         <CiTrash />
                       </Link>
                     </div>

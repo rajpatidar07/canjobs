@@ -56,6 +56,7 @@ const NewUserProfile = (props) => {
   const docParentId = searchParams.get("docParentId");
   const partnerChat = searchParams.get("partner");
   const notes = searchParams.get("note");
+  const note_id = searchParams.get("noteid");
   const agreement = searchParams.get("agreement");
   let navigate = useNavigate();
 
@@ -369,7 +370,7 @@ const NewUserProfile = (props) => {
                     />
                   </div>
                 ) : null}
-                {visaStatus.length!==0 && (user_type === "admin" ||
+                {visaStatus.length !== 0 && (user_type === "admin" ||
                   user_type === "agent") ? (<div
                     className={
                       // noLima==="1"?"d-none":
@@ -1653,6 +1654,7 @@ const NewUserProfile = (props) => {
                       close={() => {
                         setAddNote(false);
                       }}
+                      note_id={notes ? note_id : ""}
                       skip={() => navigate(-1)}
                     />
                   </div>

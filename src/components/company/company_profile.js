@@ -35,6 +35,7 @@ function CompanyProfileDetail(props) {
   const CompanyId = searchParams.get("cId");
   const docParentId = searchParams.get("docParentId");
   const notes = searchParams.get("note");
+  const note_id = searchParams.get("noteid");
   const agreement = searchParams.get("agreement");
   const company_id = localStorage.getItem("company_id");
   let cid = CompanyId ? CompanyId : company_id;
@@ -931,6 +932,7 @@ function CompanyProfileDetail(props) {
                     assigned_by_id={localStorage.getItem("admin_id")}
                     show={TabActive === "notes" || addNote}
                     page={TabActive === "notes" ? "no" : "yes"}
+                    note_id={notes ? note_id : ""}
                     close={() => {
                       setAddNote(false);
                     }}

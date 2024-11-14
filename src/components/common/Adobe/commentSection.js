@@ -1012,7 +1012,11 @@ export default function CommentSection({
                   key={index}
                 >
                   <div
-                    className="comment_status_update d-flex"
+                    className={`comment_status_update ${AdminType === "agent"
+                      ? commentItem.task_creator_user_id === admin_id
+                        ? "d-flex"
+                        : "d-none"
+                      : "d-flex"}`}
                     style={{ position: "absolute", right: 5, gap: 5 }}
                   >
                     <Link
@@ -1022,7 +1026,7 @@ export default function CommentSection({
                         handleUpdateCommentLinkClick(commentItem);
                       }}
                     >
-                      {" "}
+                      {console.log(commentItem)}
                       <CiEdit />
                     </Link>
 
@@ -1030,12 +1034,12 @@ export default function CommentSection({
                       className=""
                       title={commentItem.status === "2" ? "Task overdue" : "Update status to complete"}
                       onClick={(e) => {
-                          OnHandleUpdateCommentStatus(
-                            commentItem,
-                            commentItem.status === "1" ? "0" : "1"
-                          );
-                          setFilteredEmails([]);
-                          setAnnotationDrawBox("");
+                        OnHandleUpdateCommentStatus(
+                          commentItem,
+                          commentItem.status === "1" ? "0" : "1"
+                        );
+                        setFilteredEmails([]);
+                        setAnnotationDrawBox("");
                       }}
                     >
                       <IoIosCheckmarkCircle
@@ -1141,6 +1145,8 @@ export default function CommentSection({
                     replyCommentClick === commentItem.id ? (
                       //Reply box
                       <CommentReplyBox
+                        admin_id={admin_id}
+                        AdminType={AdminType}
                         commentsReplyList={commentsReplyList}
                         replyComment={replyComment}
                         handleInputChange={handleInputChange}
