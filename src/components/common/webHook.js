@@ -90,8 +90,8 @@ const WebhookComponent = () => {
                 // const data = await response.json();
                 // console.log(data)
                 // setWebhookResponse(data);
-            } catch (error) {
-                console.error('Error fetching data: ', error);
+            } catch (err) {
+                console.error('Error fetching data: ', err);
                 // setWebhookResponse(null);
             }
         };

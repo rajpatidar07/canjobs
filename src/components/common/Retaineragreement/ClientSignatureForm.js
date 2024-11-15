@@ -94,8 +94,8 @@ export default function ClientSignatureForm() {
 
                 window.open(newPageUrl, '_blank')
             }
-        } catch (error) {
-            console.log(error)
+        } catch (err) {
+            console.log(err)
         }
     }
     useEffect(() => {

@@ -167,8 +167,8 @@ function JobResponse(props) {
           const allLmiaSubStages = await Promise.all(subStagePromises);
           setLmiaSubStages(allLmiaSubStages.flat()); // Flatten and set the state
 
-        } catch (error) {
-          console.error("Error fetching LMIA substage:", error);
+        } catch (err) {
+          console.error("Error fetching LMIA substage:", err);
         }
       }
     };

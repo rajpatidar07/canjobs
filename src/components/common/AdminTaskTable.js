@@ -54,6 +54,7 @@ export default function AdminTaskTable(props) {
       }
     } catch (err) {
       console.log(err);
+      if(err.response.status === 401){}
       setIsLoading(false);
     }
   };

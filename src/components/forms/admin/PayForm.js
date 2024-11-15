@@ -91,8 +91,8 @@ export default function PayForm({ setApicall, data, user, user_id }) {
           setLoading(false);
           const paymentObject = new window.Razorpay(options);
           paymentObject.open();
-        } catch (error) {
-          console.log(error);
+        } catch (err) {
+          console.log(err);
           setLoading(false);
         }
       };

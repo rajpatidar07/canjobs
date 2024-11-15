@@ -90,10 +90,34 @@ const AgreementOneForm = ({
           : /\S+@\S+\.\S+/.test(value)
             ? null
             : "Client's Email is invalid",
+      validateClientFirstName: (value) =>
+        value === "" || value.trim() === "" ? "First name is required" : null,
+      validateClientLastName: (value) =>
+        value === "" || value.trim() === "" ? "Last name is required" : null,
     },
+    client_address: (value) =>
+      value === "" || value.trim() === "" ? "Client Address is required" : null,
+    client_contact: (value) =>
+      value === "" || value.trim() === ""
+        ? "Client Contact No is required"
+        : null,
+    client_telephone: (value) =>
+      value === "" || value.trim() === ""
+        ? "Client's Telephone Number is required"
+        : null,
+    client_cellphone: (value) =>
+      value === "" || value.trim() === ""
+        ? "Client's Cellphone Number is required"
+        : null,
+    initial: (value) =>
+      value === "" || value.trim() === "" ? "Initial is required" : null,
+    summary: (value) =>
+      value === "" || value.trim() === ""
+        ? "Summary of prelimi nary advice is required"
+        : null,
   };
 
-  const { state, setState, onInputChange, errors } = useValidation(
+  const { state, validate, setState, onInputChange, errors } = useValidation(
     initialFormState,
     validators
   );
@@ -106,8 +130,8 @@ const AgreementOneForm = ({
       if (felidData?.family_json) {
         try {
           updatedState.family_json = felidData?.family_json;
-        } catch (error) {
-          console.error("Failed to parse family_json:", error);
+        } catch (err) {
+          console.err("Failed to parse family_json:", err);
         }
       }
 
@@ -199,67 +223,70 @@ const AgreementOneForm = ({
         (index === "rcic_signature" || index === "final")) ||
       openSignature === "no"
     ) {
-      try {
-        let res = await AddUpdateAgreement(state);
-        console.log(res);
-        if (
-          res.data.status === 1 &&
-          res.data.message === "Agreement updated successfully."
-        ) {
-          setLoading(false);
-          setState(initialFormState);
-          toast.success("Felids added successfully.", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
-          // if (openSignature === "yes") {
-          try {
-            let res = await GetAgreement(
-              "",
-              user_id,
-              emp_user_type,
-              felidData.type
-            );
-            /*FUnction to generate pdf after adding signature */
-            if (
-              openSignature === "yes" &&
-              (res.data.data[0].signature_status === "2" ||
-                res.data.data[0].signature_status === "1" ||
-                index === "rcic_signature")
-            ) {
-              const stateData = {
-                user_id: user_id,
-                emp_user_type: emp_user_type,
-                folderId: folderId,
-                felidData: res.data.data[0],
-                family_json: res.data.data[0].family_json,
-              };
-              // console.log(stateData);
-              const newPageUrl = `/agreeone`;
-              localStorage.setItem(
-                "agreementStateData",
-                JSON.stringify(stateData)
+      console.log(validate(),errors)
+      if (index === "update details" ? validate() : "") {
+        try {
+          let res = await AddUpdateAgreement(state);
+          console.log(res);
+          if (  
+            res.data.status === 1 &&
+            res.data.message === "Agreement updated successfully."
+          ) {
+            setLoading(false);
+            setState(initialFormState);
+            toast.success("Felids added successfully.", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+            // if (openSignature === "yes") {
+            try {
+              let res = await GetAgreement(
+                "",
+                user_id,
+                emp_user_type,
+                felidData.type
               );
-              // Open the new page in a new tab
-              setApicall(true);
-              close();
-              if (index === "final") {
-                window.open(newPageUrl, "_blank");
-                window.close();
-              } else {
-                window.open(newPageUrl, "_blank");
+              /*FUnction to generate pdf after adding signature */
+              if (
+                openSignature === "yes" &&
+                (res.data.data[0].signature_status === "2" ||
+                  res.data.data[0].signature_status === "1" ||
+                  index === "rcic_signature")
+              ) {
+                const stateData = {
+                  user_id: user_id,
+                  emp_user_type: emp_user_type,
+                  folderId: folderId,
+                  felidData: res.data.data[0],
+                  family_json: res.data.data[0].family_json,
+                };
+                // console.log(stateData);
+                const newPageUrl = `/agreeone`;
+                localStorage.setItem(
+                  "agreementStateData",
+                  JSON.stringify(stateData)
+                );
+                // Open the new page in a new tab
+                setApicall(true);
+                close();
+                if (index === "final") {
+                  window.open(newPageUrl, "_blank");
+                  window.close();
+                } else {
+                  window.open(newPageUrl, "_blank");
+                }
               }
+            } catch (err) {
+              console.log(err);
             }
-          } catch (error) {
-            console.log(error);
+            // }
+            close();
+            setApicall(true);
           }
-          // }
-          close();
-          setApicall(true);
+        } catch (err) {
+          console.log(err);
+          setLoading(false);
         }
-      } catch (err) {
-        console.log(err);
-        setLoading(false);
       }
     } else {
       setFelidData({
@@ -313,8 +340,6 @@ const AgreementOneForm = ({
     "date_signature_client": "",
     "client_date_of_birth": ""
   });
-  console.log(
-    openSignature === "yes" )
   return (
     <Modal
       show={show}
@@ -351,7 +376,7 @@ const AgreementOneForm = ({
                       htmlFor={`client_first_name_0`}
                       className="font-size-4 text-black-2 line-height-reset"
                     >
-                      Client's First Name
+                      Client's First Name <span className="text-danger">*</span>
                     </label>
                     <input
                       type="text"
@@ -368,7 +393,7 @@ const AgreementOneForm = ({
                       htmlFor={`client_last_name_0`}
                       className="font-size-4 text-black-2 line-height-reset"
                     >
-                      Client's Last Name
+                      Client's Last Name<span className="text-danger">*</span>
                     </label>
                     <input
                       type="text"
@@ -391,42 +416,50 @@ const AgreementOneForm = ({
                     label: "Client Address",
                     name: "client_address",
                     type: "text",
+                    requried: true,
                   },
                   {
                     label: "Client Email",
                     name: "client_email",
                     type: "email",
+                    requried: true,
                   },
                   {
                     label: "Client Contact No",
                     name: "client_contact",
                     type: "number",
+                    requried: true,
                   },
                   {
                     label: "Client's Telephone Number",
                     name: "client_telephone",
                     type: "number",
+                    requried: true,
                   },
                   {
                     label: "Client's Cellphone Number",
                     name: "client_cellphone",
                     type: "number",
+                    requried: true,
                   },
                   {
                     label: "Client's Fax Number",
                     name: "client_fax",
                     type: "number",
+                    requried: false,
                   },
                   {
                     label: "Initial",
                     name: "initial",
                     type: "text",
+                    requried: true,
                   },
                   {
                     label:
                       "Summary of preliminary advice given to the client",
                     name: "summary",
                     type: "text",
+                    requried: true,
                   },
                 ]
                 : [
@@ -548,7 +581,7 @@ const AgreementOneForm = ({
                     type: "number",
                   },
                 ]
-              ).map(({ label, name, type, index }) => (
+              ).map(({ label, name, type, requried, index }) => (
                 <div
                   className={`form-group ${label.split(" ").length > 6
                     ? "col-lg-6 col-md-12"
@@ -560,7 +593,7 @@ const AgreementOneForm = ({
                     htmlFor={name}
                     className="font-size-4 text-black-2 line-height-reset"
                   >
-                    {label}
+                    {label} {requried === true ? <span className="text-danger">*</span> : ""}
                   </label>
                   <input
                     type={type}

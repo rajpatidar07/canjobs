@@ -100,8 +100,8 @@ export default function MainRetainerAggHtml({
         try {
           await AddUpdateAgreement(data);
           setApicall(true);
-        } catch (error) {
-          console.log(error);
+        } catch (err) {
+          console.log(err);
         }
       }
       const stateData = {
