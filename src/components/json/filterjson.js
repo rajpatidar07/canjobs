@@ -838,6 +838,7 @@ const filterjson = {
     "permanent residency travel document",
     "employers",
     "LMIA exempt employers",
+    "initial consultation"
   ]
   ,
   "program_discipline_category": [

@@ -11,7 +11,7 @@ import {
   Link,
 } from "@react-pdf/renderer";
 import moment from "moment";
-import { AddSharePointDOcument, AddUpdateAgreement } from "../../../api/api";
+import { AddSharePointDOcument, AddUpdateAgreement } from "../../../../api/api";
 // import { toast } from "react-toastify";
 
 const AggrementOne = () => {

@@ -51,10 +51,31 @@ export default function FolderList({
                     setFolderID(item.id);
                     setDocTypeName(item.name);
                   } else {
-                    setDocPreview(true);
-                    setDocSingleDate(item);
-                    setFileID(item.id);
-                    SetPdfDocUrl(item);
+                    const userAgent = navigator.userAgent;
+                    // const vendor = navigator.vendor;
+                    if (item?.name.includes(1295) && userAgent.includes("Firefox")) {
+                      console.log(item["@microsoft.graph.downloadUrl"])
+                      // window.open(item["@microsoft.graph.downloadUrl"], '_blank');
+
+                      // if (userAgent.includes("Chrome") && vendor.includes("Google")) {
+                      //   console.log("Browser: Google Chrome");
+                      // } else if (userAgent.includes("Firefox")) {
+                      //   console.log("Browser: Mozilla Firefox");
+                      // } else if (userAgent.includes("Safari") && vendor.includes("Apple")) {
+                      //   console.log("Browser: Safari");
+                      // } else if (userAgent.includes("Edg")) {
+                      //   console.log("Browser: Microsoft Edge");
+                      // } else if (userAgent.includes("Trident") || userAgent.includes("MSIE")) {
+                      //   console.log("Browser: Internet Explorer");
+                      // } else {
+                      //   console.log("Browser: Unknown");
+                      // }
+                    } else {
+                      setDocPreview(true);
+                      setDocSingleDate(item);
+                      setFileID(item.id);
+                      SetPdfDocUrl(item);
+                    }
                   }
                 }}
                 onContextMenu={(e) => {

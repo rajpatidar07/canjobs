@@ -65,7 +65,7 @@ import Federalpr from "../admin/federalpr";
 import PartnerDetails from "../agent/partnerDetails";
 import SharePointDocument from "./Document folder/SharePointDocument";
 import Newpdf from "./Adobe/newpdf";
-import AgreementOne from "./Retaineragreement/AgreementOne";
+import AgreementOne from "../common/Retaineragreement/Agreement native/AgreementOne";
 import SignaturePadComponent from "./Retaineragreement/SignaturePadComponent";
 import HtmlAgreementOne from "./Retaineragreement/Html/HtmlAgreementOne";
 import WebhookComponent from "./webHook";
@@ -98,6 +98,7 @@ import StudentList from "../Study/Study admin/studentsList";
 import StudyAdminLoginFrom from "../Study/Study admin/studyAdminLogin";
 import AppliedPrograms from "../Study/Study admin/appliedPrograms";
 import StudyPartnerLogin from "../Study/StudyComman/studyPartnerLogin";
+import InitialConsultationAgreement from "./Retaineragreement/Agreement native/initialConsulation";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -148,6 +149,7 @@ function MainLayout() {
         <Route exact path="/linkedin" component={LinkedInCallback} />
         <Route exact path="/signagreement" element={<UserSigningPage />} />
         <Route path="/agreeone" element={<AgreementOne />} />
+        <Route path="/initial_consultation" element={<InitialConsultationAgreement />} />
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/demojob" element={<DemoJob />} />
 

@@ -9,8 +9,8 @@ import HtmlAGreementFour from "./Html/HtmlAGreementFour";
 import HtmlAgreementFive from "./Html/HtmlAgreementFive";
 import HtmlAgreementSix from "./Html/HtmlAgreementSix";
 import HtmlAgreementSeven from "./Html/HtmlAgreementSeven";
-import HtmlAgreementEight from "./Html/HtmlAgreementEight";
-import HTmlAgreementNine from "./Html/HTmlAgreementNine";
+// import HtmlAgreementEight from "./Html/HtmlAgreementEight";
+// import HTmlAgreementNine from "./Html/HTmlAgreementNine";
 import HtmlAgreementTen from "./Html/HtmlAgreementTen";
 import HtmlAgreementEleven from "./Html/HtmlAgreementEleven";
 import HtmlAgreementTwelve from "./Html/HtmlAgreementTwelve";
@@ -19,6 +19,7 @@ import HtmlAgreementFourTeen from "./Html/HtmlAgreementFourTeen";
 import HtmlAgreementFifteenth from "./Html/HtmlAgreementFifteenth";
 import HtmlAgreementsixteen from "./Html/HtmlAgreementsixteen";
 import { IoMdArrowBack } from "react-icons/io";
+import HtmlAgreementSeventeen from "./Html/HtmlAgreementSeventeen";
 export default function MainRetainerAggHtml({
   setApicall,
   close,
@@ -111,7 +112,7 @@ export default function MainRetainerAggHtml({
         felidData: felidData,
       };
       // Serialize the state data to pass as query parameters
-      const newPageUrl = `/agreeone`;
+      const newPageUrl = agreementData.type ==="initial consultation"?`/initial_consultation `:`/agreeone`;
       localStorage.setItem("agreementStateData", JSON.stringify(stateData));
       // Open the new page in a new tab
       window.open(newPageUrl, "_blank");
@@ -192,9 +193,27 @@ export default function MainRetainerAggHtml({
         ) : agreementData.type === "prospective workers" ? (
           <HtmlAgreementSeven />
         ) : agreementData.type === "express entry" ? (
-          <HtmlAgreementEight />
+          <HtmlAgreementOne
+            page={"admin"}
+            userData={userData}
+            felidData={felidData}
+            emp_user_type={emp_user_type}
+            addSign={""}
+          />
+          // <HtmlAgreementEight
+          // page={"admin"}
+          //   userData={userData}
+          //   felidData={felidData}
+          //   emp_user_type={emp_user_type}
+          //   addSign={""} />
         ) : agreementData.type === "PNP + express entry/federal PR" ? (
-          <HTmlAgreementNine />
+          <HtmlAgreementOne
+            page={"admin"}
+            userData={userData}
+            felidData={felidData}
+            emp_user_type={emp_user_type}
+            addSign={""}
+          />// <HTmlAgreementNine />
         ) : agreementData.type === "super visa application" ? (
           <HtmlAgreementTen />
         ) : agreementData.type === "spousal sponsorship" ? (
@@ -209,7 +228,15 @@ export default function MainRetainerAggHtml({
           <HtmlAgreementFifteenth />
         ) : agreementData.type === "LMIA exempt employers" ? (
           <HtmlAgreementsixteen />
-        ) : null}
+        ) : agreementData.type === "initial consultation" ?
+          (
+            <HtmlAgreementSeventeen
+              page={"admin"}
+              userData={userData}
+              felidData={felidData}
+              emp_user_type={emp_user_type}
+              addSign={""} />
+          ) : null}
         {/* <button
           className={
             felidData.agreement_date ? "btn btn-primary my-2" : "d-none"

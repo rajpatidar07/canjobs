@@ -27,7 +27,7 @@ const HtmlAgreementOne = ({
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Retainer Agreement - Client 1 column - Copy (3) (1).docx</title>
+    <title>Retainer Agreement</title>
     <meta name="author" content="Admin" />
     <style type="text/css">
     body {font-family: Century;
