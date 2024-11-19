@@ -55,7 +55,7 @@ export default function FolderList({
                     // const vendor = navigator.vendor;
                     if (item?.name.includes(1295) && userAgent.includes("Firefox")) {
                       console.log(item["@microsoft.graph.downloadUrl"])
-                      // window.open(item["@microsoft.graph.downloadUrl"], '_blank');
+                      window.open(item.webUrl, '_blank');
 
                       // if (userAgent.includes("Chrome") && vendor.includes("Google")) {
                       //   console.log("Browser: Google Chrome");

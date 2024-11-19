@@ -187,7 +187,7 @@ const HtmlAgreementSeventeen = ({
     </p>
 </li>
 </ol>
-</div>
+</div>      
 <div>
     <p class="text-center"><u>SIGNED BY THE CLIENT AND THE RCIC IN ACCEPTANCE OF AGREEMENT</u></p>
     <div style="display: flex; flex-wrap: wrap;">

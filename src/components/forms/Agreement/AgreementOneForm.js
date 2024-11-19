@@ -84,37 +84,37 @@ const AgreementOneForm = ({
   };
   const validators = {
     family_json: {
-      validateClientEmail: (value) =>
+      validateClientEmail: [(value) =>
         value === "" || value.trim() === ""
           ? "Client's Email is required"
           : /\S+@\S+\.\S+/.test(value)
             ? null
-            : "Client's Email is invalid",
-      validateClientFirstName: (value) =>
-        value === "" || value.trim() === "" ? "First name is required" : null,
-      validateClientLastName: (value) =>
-        value === "" || value.trim() === "" ? "Last name is required" : null,
+            : "Client's Email is invalid"],
+      validateClientFirstName: [(value) =>
+        value === "" || value.trim() === "" ? "First name is required" : null],
+      validateClientLastName: [(value) =>
+        value === "" || value.trim() === "" ? "Last name is required" : null],
     },
-    client_address: (value) =>
-      value === "" || value.trim() === "" ? "Client Address is required" : null,
-    client_contact: (value) =>
+    client_address: [(value) =>
+      value === "" || value.trim() === "" ? "Client Address is required" : null],
+    client_contact: [(value) =>
       value === "" || value.trim() === ""
         ? "Client Contact No is required"
-        : null,
-    client_telephone: (value) =>
+        : null],
+    client_telephone: [(value) =>
       value === "" || value.trim() === ""
         ? "Client's Telephone Number is required"
-        : null,
-    client_cellphone: (value) =>
+        : null],
+    client_cellphone: [(value) =>
       value === "" || value.trim() === ""
         ? "Client's Cellphone Number is required"
-        : null,
-    initial: (value) =>
-      value === "" || value.trim() === "" ? "Initial is required" : null,
-    summary: (value) =>
+        : null],
+    initial: [(value) =>
+      value === "" || value.trim() === "" ? "Initial is required" : null],
+    summary: [(value) =>
       value === "" || value.trim() === ""
         ? "Summary of prelimi nary advice is required"
-        : null,
+        : null],
   };
 
   const { state, validate, setState, onInputChange, errors } = useValidation(
@@ -223,12 +223,13 @@ const AgreementOneForm = ({
         (index === "rcic_signature" || index === "final")) ||
       openSignature === "no"
     ) {
-      console.log(validate(),errors)
-      if (index === "update details" ? validate() : "") {
+      // console.log(index, e ``                                                        rrors)
+      // if (index === "update details" ? validate() : "") {
+        console.log("first")
         try {
           let res = await AddUpdateAgreement(state);
           console.log(res);
-          if (  
+          if (
             res.data.status === 1 &&
             res.data.message === "Agreement updated successfully."
           ) {
@@ -287,7 +288,7 @@ const AgreementOneForm = ({
           console.log(err);
           setLoading(false);
         }
-      }
+      // }
     } else {
       setFelidData({
         ...felidData,
