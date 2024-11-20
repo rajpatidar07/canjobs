@@ -55,11 +55,6 @@ const InitialConsultationAgreement = () => {
             [file]
           );
           if (res.data.message === "Document Upload") {
-            // toast.success(`Document Uploaded successfully`, {
-            //   position: toast.POSITION.TOP_RIGHT,
-            //   autoClose: 1000,
-            // });
-            // console.log(res.data.data[0][0].document_id)
             try {
               let data = {
                 id: felidData?.id,
@@ -72,16 +67,6 @@ const InitialConsultationAgreement = () => {
               console.log(err)
             }
           }
-          // console.log(res.data)
-          // if (
-          //   res.data.message === "Failed" &&
-          //   res.data.data === "No Token Found"
-          // ) {
-          //   toast.success(`Document Uploaded successfully`, {
-          //     position: toast.POSITION.TOP_RIGHT,
-          //     autoClose: 1000,
-          //   });
-          // }
         } catch (error) {
           console.log("Error saving doc to sharepoint", error);
         }
@@ -95,14 +80,54 @@ const InitialConsultationAgreement = () => {
   let components = (
     <View style={{ height: "auto" }}>
       <View style={{ padding: "10px 20px" }}>
+        {/* Header Section */}
+        <View style={styles.header}>
+          <Image style={styles.logo} src="https://canpathwaysjobs.com/image/00logo-main-black.png" />
+        </View>
+
+        {/* Main Content */}
         <View>
-          <Text
-            style={{ textAlign: "center", fontSize: "24px", marginBottom: 15 }}
-          >
-            INITIAL CONSULTATION AGREEMENT
+          <Text style={styles.title}>RETAINER AGREEMENT</Text>
+          <Text style={styles.subTitle}>Between Harpreet Kaur</Text>
+          <Text style={styles.subTitle}>CAN Pathways Immigration Consultancy Ltd.</Text>
+          <Text style={styles.subTitle}>
+            <Text style={styles.bold}>Client:</Text>
+            <Text style={styles.paraGap}>Sargam Walia</Text>
           </Text>
-          <Text style={{ marginBottom: 10, textAlign: "center", }}>
-            BETWEEN{"\n"}CAN Pathways Immigration Consultancy Ltd.{"\n"}and Client:
+
+          <Text style={styles.paragraph}>
+            This Agreement ("the <Text style={styles.bold}>Agreement</Text>") is made on the date mentioned below.
+          </Text>
+          <Text style={styles.paragraph}>
+            "The <Text style={styles.bold}>Effective Date:</Text> 3 October 2024"
+          </Text>
+          <Text style={styles.paragraph}>BY AND BETWEEN</Text>
+          <Text style={styles.paragraph}>
+            This <Text style={styles.bold}>RECRUITMENT AGREEMENT</Text> entered by and between{" "}
+            <Text style={styles.bold}>CAN Pathways Immigration Consultancy Ltd.</Text> (the "Agency") with address at
+            Unit #310, 2618 Hopewell PI. NE Calgary, AB. T1Y 717, Canada, represented by Registered Canadian Immigration
+            Consultant referred to as (RCIC) Harpreet Kaur, herein{" "}
+            <Text style={styles.bold}>"Legal Representative / Agent / Recruiter"</Text>.
+          </Text>
+          <Text style={styles.paragraph}>AND</Text>
+          <Text style={styles.paragraph}>
+            The <Text style={styles.bold}>"Candidate"</Text>, as his/her details appear in Appendix I of this present
+            agreement, collectively called the "Client".
+          </Text>
+          <Text style={styles.paragraph}>
+            <Text style={styles.bold}>WHEREAS</Text> the Recruiter and the Client wish to enter into a written agreement
+            which contains the agreed-upon terms and conditions upon which the Recruiter will provide his/her services to
+            the Client. Harpreet Kaur is a licensed recruiter and is authorized to engage in sourcing, selection, and
+            recruitment activities, potentially related to employment or staffing.
+          </Text>
+          <Text style={styles.paragraph}>
+            <Text style={styles.bold}>AND WHEREAS</Text> the recruiter is a member of the College of Immigration and
+            Citizenship Consultants (the "Council") (RCIC), the regulator in Canada for immigration consultants;
+          </Text>
+          <Text style={styles.paragraph}>
+            IN CONSIDERATION of the mutual promises and covenants herein contained and for other good and valuable
+            consideration, the receipt and sufficiency of which are hereby acknowledged, the parties hereto willing to be
+            legally bound agree as follows:
           </Text>
         </View>
         <View>
@@ -161,6 +186,8 @@ const InitialConsultationAgreement = () => {
                 ___________________________________________________________________________________________
               </Text>
             </View>
+          </View>
+          <View style={[styles.section, { marginTop: 10 }]}>
             <Text style={styles.text}>
               2. The professional services that the RCIC will offer to the Client
               according to the terms specified are mentioned below:
@@ -178,9 +205,8 @@ const InitialConsultationAgreement = () => {
               </Text>
             </View>
           </View>
-
           <View style={styles.section}>
-            <Text style={[styles.header, styles.textunderline]}>3.LIMITS OF ENGAGEMENT</Text>
+            <Text style={styles.header}>3. <Text style={[styles.textunderline]}>LIMITS OF ENGAGEMENT</Text></Text>
             <View style={{ marginLeft: 20 }}>
               <Text style={styles.text}>
                 • This Agreement comprises a single consultation with 2-3 follow-up
@@ -201,7 +227,7 @@ const InitialConsultationAgreement = () => {
             </View>
           </View>
           <View style={styles.section}>
-            <Text style={[styles.header, styles.textunderline]}>4.CONSULTATION APPROACH</Text>
+            <Text style={styles.header}>4. <Text style={[styles.textunderline]}>CONSULTATION APPROACH</Text></Text>
             <View style={{ marginLeft: 20 }}>
               <Text style={styles.text}>
                 • The RCIC will offer consultation services to the Client through in-person meetings, phone conversations, or Zoom sessions (video or voice calls).
@@ -211,7 +237,7 @@ const InitialConsultationAgreement = () => {
             </View>
           </View>
           <View style={styles.section}>
-            <Text style={[styles.header, styles.textunderline]}>5.PAYMENT OF FEE</Text>
+            <Text style={styles.header}>5. <Text style={[styles.textunderline]}>PAYMENT OF FEE</Text></Text>
             <View style={{ marginLeft: 20 }}>
               <Text style={styles.text}>
                 • For the consultation service, the Client is responsible for an
@@ -225,7 +251,7 @@ const InitialConsultationAgreement = () => {
           </View>
 
           <View style={styles.section}>
-            <Text style={[styles.header, styles.textunderline]}>6.REFUND POLICY</Text>
+            <Text style={styles.header}>6. <Text style={[styles.textunderline]}>REFUND POLICY</Text></Text>
             <View style={{ marginLeft: 20 }}>
               <Text style={styles.text}>
                 • The Client retains the right to receive a refund for any fees that have not been utilized in accordance with this agreement.{"\n"}
@@ -237,9 +263,9 @@ const InitialConsultationAgreement = () => {
             </View>
           </View>
           <View style={styles.section}>
-            <Text style={[styles.header, styles.textunderline]}>7.OTHER CONDITIONS</Text>
+            <Text style={styles.header}>7. <Text style={[styles.textunderline]}>OTHER CONDITIONS</Text></Text>
 
-            <View style={{ marginLeft: 20, paddingBottom: 55 }}>
+            <View style={{ marginLeft: 20 }}>
               <Text style={styles.text}>
                 <Text>
                   <Text style={[styles.bold, styles.textunderline]}><TbArrowBadgeRight /> CLIENT RESPONSIBILITIES</Text>: The Client is obligated to provide the RCIC with accurate factual information and documentation necessary for the consultation process. Honesty and precision are essential. The Client must disclose all pertinent information, even if it is negative or adverse. Any failure to fully disclose relevant details may impact the advice provided by the RCIC, potentially voiding this Agreement or significantly influencing the Client's application outcome or status retention.
@@ -259,13 +285,13 @@ const InitialConsultationAgreement = () => {
                   </Link>.ICCRC's Contact Information is as follows:
                   {"\n"}Immigration Consultants of Canada Regulatory Council (ICCRC)
                   {"\n"}5500 North Service Rd., Suite 1002, Burlington, ON, L7L 6W6
-                  {"\n"}Toll free: 1-877-836-7543
+                  {"\n"}Toll free: 1-877-836-7543{"\n"}
                 </Text>
               </Text>
             </View>
           </View>
           <View style={styles.section}>
-            <Text style={[styles.header, styles.textunderline, { marginTop: 10 }]}>8.APPLICABLE LAW</Text>
+            <Text style={styles.header}>8. <Text style={[styles.textunderline]}>APPLICABLE LAW</Text></Text>
             <View style={{ marginLeft: 20 }}>
               <Text style={styles.text}>
                 The laws in effect in the Province of Alberta, Canada shall govern the terms and conditions of this agreement.

@@ -99,6 +99,7 @@ import StudyAdminLoginFrom from "../Study/Study admin/studyAdminLogin";
 import AppliedPrograms from "../Study/Study admin/appliedPrograms";
 import StudyPartnerLogin from "../Study/StudyComman/studyPartnerLogin";
 import InitialConsultationAgreement from "./Retaineragreement/Agreement native/initialConsulation";
+import RecruitmentAgrement from "./Retaineragreement/Agreement native/RecruitmentAgrement";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -150,6 +151,7 @@ function MainLayout() {
         <Route exact path="/signagreement" element={<UserSigningPage />} />
         <Route path="/agreeone" element={<AgreementOne />} />
         <Route path="/initial_consultation" element={<InitialConsultationAgreement />} />
+        <Route path="/recruitment_service" element={<RecruitmentAgrement />} />
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/demojob" element={<DemoJob />} />
 

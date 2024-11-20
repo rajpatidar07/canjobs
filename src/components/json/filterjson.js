@@ -838,7 +838,8 @@ const filterjson = {
     "permanent residency travel document",
     "employers",
     "LMIA exempt employers",
-    "initial consultation"
+    "initial consultation",
+    "recruitment services agreement"
   ]
   ,
   "program_discipline_category": [
@@ -968,7 +969,7 @@ const filterjson = {
     "70%",
     "N/A"
   ],
-  "programs_math_requirement":[
+  "programs_math_requirement": [
     "50%",
     "51%",
     "55%",

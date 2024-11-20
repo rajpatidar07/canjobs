@@ -20,6 +20,7 @@ import HtmlAgreementFifteenth from "./Html/HtmlAgreementFifteenth";
 import HtmlAgreementsixteen from "./Html/HtmlAgreementsixteen";
 import { IoMdArrowBack } from "react-icons/io";
 import HtmlAgreementSeventeen from "./Html/HtmlAgreementSeventeen";
+import HtmlAgreementEighteen from "./Html/HtmlAgreementEighteen";
 export default function MainRetainerAggHtml({
   setApicall,
   close,
@@ -112,7 +113,7 @@ export default function MainRetainerAggHtml({
         felidData: felidData,
       };
       // Serialize the state data to pass as query parameters
-      const newPageUrl = agreementData.type ==="initial consultation"?`/initial_consultation `:`/agreeone`;
+      const newPageUrl = agreementData.type === "initial consultation" ? `/initial_consultation ` : agreementData.type === "recruitment services agreement" ? `/recruitment_service` : `/agreeone`;
       localStorage.setItem("agreementStateData", JSON.stringify(stateData));
       // Open the new page in a new tab
       window.open(newPageUrl, "_blank");
@@ -236,7 +237,15 @@ export default function MainRetainerAggHtml({
               felidData={felidData}
               emp_user_type={emp_user_type}
               addSign={""} />
-          ) : null}
+          ) : agreementData.type === "recruitment services agreement" ?
+            (
+              <HtmlAgreementEighteen
+                page={"admin"}
+                userData={userData}
+                felidData={felidData}
+                emp_user_type={emp_user_type}
+                addSign={""} />
+            ) : null}
         {/* <button
           className={
             felidData.agreement_date ? "btn btn-primary my-2" : "d-none"

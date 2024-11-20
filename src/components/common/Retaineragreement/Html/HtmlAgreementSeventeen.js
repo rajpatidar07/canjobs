@@ -1,4 +1,4 @@
-import moment from "moment";
+// import moment from "moment";
 import { useEffect } from "react";
 // import { Link } from "react-router-dom";
 const HtmlAgreementSeventeen = ({

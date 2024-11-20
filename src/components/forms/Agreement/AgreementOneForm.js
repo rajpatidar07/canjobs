@@ -117,7 +117,7 @@ const AgreementOneForm = ({
         : null],
   };
 
-  const { state, validate, setState, onInputChange, errors } = useValidation(
+  const { state,/* validate,*/ setState, onInputChange, errors } = useValidation(
     initialFormState,
     validators
   );
