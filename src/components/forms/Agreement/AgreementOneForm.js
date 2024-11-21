@@ -31,7 +31,7 @@ const AgreementOneForm = ({
     client_date_of_birth: "",
   };
   const initialFormState = {
-    type: "temporary resident visa",
+    type: "",
     rcic_membership_no: "",
     matter: "",
     summary: "",
@@ -225,69 +225,69 @@ const AgreementOneForm = ({
     ) {
       // console.log(index, e ``                                                        rrors)
       // if (index === "update details" ? validate() : "") {
-        console.log("first")
-        try {
-          let res = await AddUpdateAgreement(state);
-          console.log(res);
-          if (
-            res.data.status === 1 &&
-            res.data.message === "Agreement updated successfully."
-          ) {
-            setLoading(false);
-            setState(initialFormState);
-            toast.success("Felids added successfully.", {
-              position: toast.POSITION.TOP_RIGHT,
-              autoClose: 1000,
-            });
-            // if (openSignature === "yes") {
-            try {
-              let res = await GetAgreement(
-                "",
-                user_id,
-                emp_user_type,
-                felidData.type
-              );
-              /*FUnction to generate pdf after adding signature */
-              if (
-                openSignature === "yes" &&
-                (res.data.data[0].signature_status === "2" ||
-                  res.data.data[0].signature_status === "1" ||
-                  index === "rcic_signature")
-              ) {
-                const stateData = {
-                  user_id: user_id,
-                  emp_user_type: emp_user_type,
-                  folderId: folderId,
-                  felidData: res.data.data[0],
-                  family_json: res.data.data[0].family_json,
-                };
-                // console.log(stateData);
-                const newPageUrl = `/agreeone`;
-                localStorage.setItem(
-                  "agreementStateData",
-                  JSON.stringify(stateData)
-                );
-                // Open the new page in a new tab
-                setApicall(true);
-                close();
-                if (index === "final") {
-                  window.open(newPageUrl, "_blank");
-                  window.close();
-                } else {
-                  window.open(newPageUrl, "_blank");
-                }
-              }
-            } catch (err) {
-              console.log(err);
-            }
-            // }
-            close();
-            setApicall(true);
-          }
-        } catch (err) {
-          console.log(err);
+      console.log("first")
+      try {
+        let res = await AddUpdateAgreement(state);
+        console.log(res);
+        if (
+          res.data.status === 1 &&
+          res.data.message === "Agreement updated successfully."
+        ) {
           setLoading(false);
+          setState(initialFormState);
+          toast.success("Felids added successfully.", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          // if (openSignature === "yes") {
+          try {
+            let res = await GetAgreement(
+              "",
+              user_id,
+              emp_user_type,
+              felidData.type
+            );
+            /*FUnction to generate pdf after adding signature */
+            if (
+              openSignature === "yes" &&
+              (res.data.data[0].signature_status === "2" ||
+                res.data.data[0].signature_status === "1" ||
+                index === "rcic_signature")
+            ) {
+              const stateData = {
+                user_id: user_id,
+                emp_user_type: emp_user_type,
+                folderId: folderId,
+                felidData: res.data.data[0],
+                family_json: res.data.data[0].family_json,
+              };
+              // console.log(stateData);
+              const newPageUrl = state.type === "initial consultation" ? `/initial_consultation ` : state.type === "recruitment services agreement" ? `/recruitment_service` : `/agreeone`;
+              localStorage.setItem(
+                "agreementStateData",
+                JSON.stringify(stateData)
+              );
+              // Open the new page in a new tab
+              setApicall(true);
+              close();
+              if (index === "final") {
+                window.open(newPageUrl, "_blank");
+                window.close();
+              } else {
+                window.open(newPageUrl, "_blank");
+              }
+            }
+          } catch (err) {
+            console.log(err);
+          }
+          // }
+          close();
+          setApicall(true);
         }
+      } catch (err) {
+        console.log(err);
+        setLoading(false);
+      }
       // }
     } else {
       setFelidData({
@@ -345,7 +345,7 @@ const AgreementOneForm = ({
     <Modal
       show={show}
       size={
-        openSignature === "yes" ? "md" : "xl"}
+        openSignature === "yes" ? "md" : state.type === "recruitment services agreement" ? "lg" : "xl"}
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
@@ -415,6 +415,7 @@ const AgreementOneForm = ({
                 ? [
                   {
                     label: "Client Address",
+                    display: state.type === "recruitment services agreement" ? "d-none" : "",
                     name: "client_address",
                     type: "text",
                     requried: true,
@@ -428,6 +429,7 @@ const AgreementOneForm = ({
                   {
                     label: "Client Contact No",
                     name: "client_contact",
+                    display: state.type === "recruitment services agreement" ? "d-none" : "",
                     type: "number",
                     requried: true,
                   },
@@ -459,6 +461,7 @@ const AgreementOneForm = ({
                     label:
                       "Summary of preliminary advice given to the client",
                     name: "summary",
+                    display: state.type === "recruitment services agreement" ? "d-none" : "",
                     type: "text",
                     requried: true,
                   },
@@ -466,128 +469,166 @@ const AgreementOneForm = ({
                 : [
                   {
                     label: "Client Address",
+                    display: "",
                     name: "client_address",
                     type: "text",
                   },
                   {
                     label: "Client Email",
+                    display: "",
                     name: "client_email",
                     type: "email",
                   },
                   {
                     label: "Client Contact No",
+                    display: state.type === "recruitment services agreement" ? "d-none" : "",
                     name: "client_contact",
                     type: "number",
                   },
                   {
                     label: "Client's Telephone Number",
+                    display: "",
                     name: "client_telephone",
                     type: "number",
                   },
                   {
                     label: "Client's Cellphone Number",
+                    display: "",
                     name: "client_cellphone",
                     type: "number",
                   },
                   {
                     label: "Client's Fax Number",
+                    display: "",
                     name: "client_fax",
                     type: "number",
                   },
                   {
                     label: "Client File Number",
+                    display: state.type === "recruitment services agreement" ? "d-none" : "",
                     name: "client_file_no",
                     type: "number",
                   },
                   {
                     label: "Agreement Creation Date",
+                    display: "",
                     name: "agreement_date",
                     type: "date",
                   },
                   {
                     label: "Professional Fees",
+                    display: state.type === "recruitment services agreement" ? "d-none" : "",
                     name: "professional_fees",
                     type: "number",
                   },
                   {
                     label: "Courier charges",
+                    display: state.type === "recruitment services agreement" ? "d-none" : "",
                     name: "courier_charges",
                     type: "number",
                   },
                   {
                     label: "Administrative Fee",
+                    display: state.type === "recruitment services agreement" ? "d-none" : "",
                     name: "administrative_fee",
                     type: "number",
                   },
                   {
                     label: "Government fees",
+                    display: state.type === "recruitment services agreement" ? "d-none" : "",
                     name: "government_fees",
                     type: "number",
                   },
                   {
                     label: "Applicable Taxes",
+                    display: state.type === "recruitment services agreement" ? "d-none" : "",
                     name: "application_fees",
                     type: "number",
                   },
                   {
                     label: "Balance (Paid at time of filing)",
+                    display: state.type === "recruitment services agreement" ? "d-none" : "",
                     name: "balance",
                     type: "number",
                   },
                   {
                     label: "Total Cost",
+                    display: state.type === "recruitment services agreement" ? "d-none" : "",
                     name: "total_cost",
                     type: "number",
                   },
                   {
                     label:
                       "The Client asked the RCIC, and the RCIC has agreed, to act for the Client in the matter of",
+                    display: state.type === "recruitment services agreement" ? "d-none" : "",
                     name: "matter",
                     type: "text",
                   },
                   {
                     label:
                       "Summary of preliminary advice given to the client",
+                    display: state.type === "recruitment services agreement" ? "d-none" : "",
                     name: "summary",
                     type: "text",
                   },
                   {
                     label:
                       "Applicable Retainer Fee for this stage (Non-Refundable) for Step 1",
+                    display: state.type === "recruitment services agreement" ? "d-none" : "",
                     name: "applicable_retainer_fee_stape_1",
                     type: "number",
                   },
                   {
                     label:
                       "Applicable Government Processing Fee for Step 1",
+                    display: state.type === "recruitment services agreement" ? "d-none" : "",
                     name: "applicable_government_processing_fee_stape_1",
                     type: "number",
                   },
                   {
                     label:
                       "Applicable Retainer Fee for this stage (Non-Refundable) for Step 2",
+                    display: state.type === "recruitment services agreement" ? "d-none" : "",
                     name: "applicable_retainer_fee_stape_2",
                     type: "number",
                   },
                   {
                     label:
                       "Total Amount: (Non-Refundable) (Paid at signing of contract and sharing of checklist)",
+                    display: state.type === "recruitment services agreement" ? "d-none" : "",
                     name: "total_amount_signing_of_contract",
                     type: "number",
                   },
                   {
                     label:
                       "Balance (Non-Refundable) (Paid at time of filing)",
+                    display: state.type === "recruitment services agreement" ? "d-none" : "",
                     name: "balance_paid_at_time_of_filing",
                     type: "number",
                   },
+                  {
+                    label:
+                      "Other Professional Advice INitial Consultation",
+                    display: state.type === "initial consultation" ? "" : "d-none",
+                    name: "other_professional_advice_initial_consultation",
+                    type: "text",
+                  },
+                  {
+                    label:
+                      "Additional Relevant Information",
+                    display: state.type === "initial consultation" ? "" : "d-none",
+                    name: "additional_relevant_information",
+                    type: "text",
+                  },
+
+
                 ]
-              ).map(({ label, name, type, requried, index }) => (
+              ).map(({ label, name, type, requried, display, index }) => (
                 <div
                   className={`form-group ${label.split(" ").length > 6
                     ? "col-lg-6 col-md-12"
                     : "col-lg-3 col-md-4 col-sm-6"
-                    } `}
+                    } ${display}`}
                   key={index}
                 >
                   <label
@@ -619,7 +660,7 @@ const AgreementOneForm = ({
               ))}
             <div
               className={
-                openSignature === "yes" ? "d-none" : "form-group col-md-12 "
+                openSignature === "yes" || state.type === "recruitment services agreement" ? "d-none" : "form-group col-md-12 "
               }
             >
               <h3 className="font-size-4 text-black-2 line-height-reset">

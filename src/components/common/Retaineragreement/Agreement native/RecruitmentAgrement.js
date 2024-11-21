@@ -8,9 +8,7 @@ import {
   Image,
   PDFViewer,
   BlobProvider,
-  Link,
 } from "@react-pdf/renderer";
-import { TbArrowBadgeRight } from "react-icons/tb";
 import moment from "moment";
 import { AddSharePointDOcument, AddUpdateAgreement } from "../../../../api/api";
 // import { toast } from "react-toastify";
@@ -77,18 +75,30 @@ const RecruitmentAgrement = () => {
     convertBlob();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blobData]);
+  const parseDate = (date) => {
+    if (!date || date === "0000-00-00" || date === "0000-00-00 00:00:00") return null;
+    const parsedDate = new Date(date);
+    return !isNaN(parsedDate.getTime()) ? parsedDate : null;
+  };
+
+  const agreementDate = parseDate(felidData?.agreement_date);
+  const formattedDate = agreementDate
+    ? moment(agreementDate).format("DD MMMM YYYY")
+    : "____________";
   let components = (
     <View style={{ height: "auto" }}>
       <View style={{ padding: "10px 20px" }}>
-        <View>
+        <View style={styles.section}>
           <Text style={{ textAlign: "center", fontSize: "18px", marginBottom: 15 }}>RETAINER AGREEMENT{"\n"}
             <Text style={{ textAlign: "center", fontSize: "12px", marginBottom: 15 }}>Between Harpreet Kaur{"\n"} CAN Pathways Immigration Consultancy Ltd.{"\n"}</Text >
-            <Text style={[styles.bold, { textAlign: "center", fontSize: "12px", marginBottom: 15 }]}>Client:</Text>{"\n"}
-            <Text style={[styles.paraGap, { textAlign: "center", fontSize: "12px", marginBottom: 15 }]}>Sargam Walia</Text>
+            <Text style={[styles.bold, { textAlign: "center", fontSize: "12px", marginBottom: 15 }]}>Client:</Text>
+            <Text style={[styles.textunderline, { textAlign: "center", fontSize: "12px", marginBottom: 15 }]}> {familyJsonArray[0]?.client_first_name || ""}{" "}
+              {familyJsonArray[0]?.client_last_name || ""}{" "}</Text>
           </Text>
           <Text style={styles.paragraph}>
             This Agreement ("the <Text style={styles.bold}>Agreement</Text>") is made on the date mentioned below.{"\n"}{"\n"}
-            "The <Text style={styles.bold}>Effective Date:</Text> 3 October 2024"{"\n"}{"\n"}BY AND BETWEEN{"\n"}{"\n"}
+            "The <Text style={styles.bold}>Effective Date:</Text> {formattedDate || "____________"
+            }"{"\n"}{"\n"}BY AND BETWEEN{"\n"}{"\n"}
             This <Text style={styles.bold}>RECRUITMENT AGREEMENT</Text> entered by and between{"\n"}
             <Text style={styles.bold}>CAN Pathways Immigration Consultancy Ltd.</Text> (the "Agency") with address at
             Unit #310, 2618 Hopewell PI. NE Calgary, AB. T1Y 717, Canada, represented by Registered Canadian Immigration
@@ -118,24 +128,21 @@ const RecruitmentAgrement = () => {
               contract negotiations.
             </Text>
             <Text style={styles.text}>
-              2. The Candidate, seeking employment or job placement, agrees to sign
-              the retainer specifically for the recruitment services being offered. This
-              indicates that the Candidate acknowledges the separate nature of these
-              services and understands that they are unrelated to any immigration or
-              citizenship matters they may be pursuing with the Recruiter.
+              2. The Candidate, seeking employment or job placement, agrees to sign the retainer specifically for the recruitment services being offered. This indicates that the Candidate acknowledges the separate nature of these services and understands that they are unrelated to any immigration or citizenship matters they may be pursuing with the Recruiter.
+              {"\n"}{"\n"}
             </Text>
             <Text style={styles.text}>3. The Candidate has duly provided consent for the acquisition of recruitment services and has not incurred any charges whatsoever in relation to the provision of said services.{"\n"}{"\n"}
             </Text>
             <Text style={styles.text}>4. The Recruiter has provided a thorough explanation and understanding regarding the distinction between recruitment services and immigration services, including their respective scope of practice. It has been made clear that the candidate is under no obligation to avail both services simultaneously from CAN Pathways Immigration Consultancy Ltd. {"\n"}{"\n"}</Text>
-            <Text style={styles.text}>5. The Candidate has made an informed decision and voluntary agreement to engage CAN Pathways Immigration Consultancy Ltd. for the purpose of recruitment services.{"\n"}{"\n"} </Text>
+            <Text style={styles.text}>5. The Candidate has made an informed decision and voluntary agreement to engage CAN Pathways Immigration Consultancy Ltd. for the purpose of recruitment services.{"\n"} </Text>
             <Text style={styles.text}>6. The employer has willingly agreed to remunerate the established standard service charge associated with the recruitment services, encompassing the successful placement of the candidate within the organization {"\n"}{"\n"}</Text>
             <Text style={styles.text}>7.  The Candidate agrees to provide, upon request from the recruiter:{"\n"}
               • All necessary documentation{"\n"}
               • All documentation in English or French, or with an English or French translation.{"\n"}{"\n"}
             </Text>
             <Text style={styles.text}>
-              8. The Client understands that he/she must be accurate and honest in the information he/she provides and that any misrepresentations or omissions may void this Agreement, or seriously affect the outcome of the application or the retention of any immigration status he/she may obtain. The Recruiter's obligations under the retainer Agreement are null and void if the Client knowingly provides any inaccurate, misleading, or false material information.{"\n"}{"\n"} </Text>
-            <Text style={styles.text}>9. This agreement does not provide a guarantee of securing employment.{"\n"}{"\n"} </Text>
+              8. The Client understands that he/she must be accurate and honest in the information he/she provides and that any misrepresentations or omissions may void this Agreement, or seriously affect the outcome of the application or the retention of any immigration status he/she may obtain. The Recruiter's obligations under the retainer Agreement are null and void if the Client knowingly provides any inaccurate, misleading, or false material information.{"\n"} </Text>
+            <Text style={styles.text}>9. This agreement does not provide a guarantee of securing employment.{"\n"} </Text>
           </View>
           <View >
             <Text style={styles.subHeader}>10. Confidentiality:</Text>
@@ -197,34 +204,191 @@ const RecruitmentAgrement = () => {
               15.9 Each of the parties hereto must do and execute or cause to be done or executed all such further and other things, acts, deeds, documents, and assurances as may be necessary or reasonably required to carry out the intent and purpose of this Agreement fully and effectively.
               {"\n"}{"\n"}
               15.10 The Client acknowledges that he/she has had sufficient time to review this Agreement and has been given an opportunity to obtain independent legal advice and translation prior to the execution and delivery of this Agreement.
-              {"\n"}{"\n"}{"\n"}{"\n"}
+              {"\n"}{"\n"}{"\n"}{"\n"} {"\n"}{"\n"}
             </Text>
           </View>
           <View >
-            <Text style={styles.subHeader}>16. Contact Information:</Text>
-            <Text style={styles.text}></Text>
-            <View style={styles.clientForm}>
-              <View style={styles.clientFormChild}>
-                <Text style={styles.header}>Client</Text>
-                <Text style={styles.text}>
-                  Given Name:{" "}
-                  <Text style={styles.textunderline}>[Client First Name]</Text>
-                </Text>
-                <Text style={styles.text}>
-                  Family Name:{" "}
-                  <Text style={styles.textunderline}>[Client Last Name]</Text>
-                </Text>
+            <View>
+              <Text style={styles.subHeader}>16. Contact Information:</Text>
+              <Text style={[styles.header, styles.textunderline]}>Client</Text>
+
+              <View style={styles.clientForm}>
+                <View style={styles.clientFormChild}>
+                  <Text style={styles.text}>
+                    Given Name: <Text style={styles.textunderline}>{felidData && familyJsonArray[0]?.client_first_name
+                      ? familyJsonArray[0]?.client_first_name
+                      : "        "
+                    } </Text>
+                  </Text>
+                </View>
+                <View style={styles.clientFormChild}>
+                  <Text style={styles.text}>
+                    Family Name: <Text style={styles.textunderline}>{felidData && familyJsonArray[0]?.client_last_name
+                      ? familyJsonArray[0]?.client_last_name
+                      : "        "
+                    }</Text>
+                  </Text>
+                </View>
               </View>
-              <View style={styles.clientFormChild}>
-                <Text style={styles.text}>
-                  Address: <Text style={styles.textunderline}>[Client Address]</Text>
-                </Text>
-                <Text style={styles.text}>
-                  Telephone Number:{" "}
-                  <Text style={styles.textunderline}>[Client Contact]</Text>
-                </Text>
+
+              <View style={styles.clientForm}>
+                <View style={styles.clientFormChild}>
+                  <Text style={styles.text}>
+                    Address: <Text style={styles.textunderline}>{" " + (felidData?.client_address || "        ")}</Text>
+                  </Text>
+                </View>
+                <View style={styles.clientFormChild}>
+                  <Text style={styles.text}>
+                    Telephone Number: <Text style={styles.textunderline}>{" " + (felidData?.client_telephone || "          ")}</Text>
+                  </Text>
+                </View>
+              </View>
+
+              <View style={styles.clientForm}>
+                <View style={styles.clientFormChild}>
+                  <Text style={styles.text}>
+                    Cellphone Number: <Text style={styles.textunderline}>{" " + (felidData?.client_cellphone || "          ")}</Text>
+                  </Text>
+                </View>
+                <View style={styles.clientFormChild}>
+                  <Text style={styles.text}>
+                    Fax Number: <Text style={styles.textunderline}>{" " + (felidData?.client_fax || "           ")}</Text>
+                  </Text>
+                </View>
+              </View>
+
+              <View style={styles.clientForm}>
+                <View style={styles.clientFormChild}>
+                  <Text style={styles.text}>
+                    E-mail Address: <Text style={styles.textunderline}>{" " + (felidData?.client_email || "           ")}</Text>
+                  </Text>
+                </View>
+              </View>
+
+              <Text style={[styles.header, styles.textunderline]}>Recruiter</Text>
+
+              <View style={styles.clientForm}>
+                <View style={styles.clientFormChild}>
+                  <Text style={styles.text}>
+                    Given Name: <Text style={styles.textunderline}>Harpreet</Text>
+                  </Text>
+                </View>
+                <View style={styles.clientFormChild}>
+                  <Text style={styles.text}>
+                    Family Name: <Text style={styles.textunderline}>Kaur</Text>
+                  </Text>
+                </View>
+              </View>
+
+              <View style={styles.clientForm}>
+                <View style={styles.clientFormChild}>
+                  <Text style={styles.text}>
+                    Address: <Text style={styles.textunderline}>2618 Hopewell</Text>
+                  </Text>
+                </View>
+                <View style={styles.clientFormChild}>
+                  <Text style={styles.text}>
+                    Telephone Number: <Text style={styles.textunderline}>403-888-5308</Text>
+                  </Text>
+                </View>
+              </View>
+
+              <View style={styles.clientForm}>
+                <View style={styles.clientFormChild}>
+                  <Text style={styles.text}>
+                    Fax: <Text style={styles.textunderline}>_____________</Text>
+                  </Text>
+                </View>
+                <View style={styles.clientFormChild}>
+                  <Text style={styles.text}>
+                    E-mail: <Text style={styles.textunderline}>info@canpathways.ca</Text>
+                  </Text>
+                </View>
+              </View>
+              <View style={styles.clientForm}>
+                <View style={styles.clientFormChild}>
+                  <Text style={styles.text}>
+                    <Text style={styles.textunderline}>{" " + (familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")}</Text>
+                  </Text>
+                  <Text>Name of Client</Text>
+                </View>
+                <View style={styles.clientFormChild}>
+                  <Text style={styles.text}>
+                    {familyJsonArray[0]?.client_signature ? (
+                      <View style={{ display: "flex", flexDirection: "column" }}>
+                        <View style={{ width: "500px" }}>
+                          <Image
+                            source={{ uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAApgAAAKYB3X3/OAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAANCSURBVEiJtZZPbBtFFMZ/M7ubXdtdb1xSFyeilBapySVU8h8OoFaooFSqiihIVIpQBKci6KEg9Q6H9kovIHoCIVQJJCKE1ENFjnAgcaSGC6rEnxBwA04Tx43t2FnvDAfjkNibxgHxnWb2e/u992bee7tCa00YFsffekFY+nUzFtjW0LrvjRXrCDIAaPLlW0nHL0SsZtVoaF98mLrx3pdhOqLtYPHChahZcYYO7KvPFxvRl5XPp1sN3adWiD1ZAqD6XYK1b/dvE5IWryTt2udLFedwc1+9kLp+vbbpoDh+6TklxBeAi9TL0taeWpdmZzQDry0AcO+jQ12RyohqqoYoo8RDwJrU+qXkjWtfi8Xxt58BdQuwQs9qC/afLwCw8tnQbqYAPsgxE1S6F3EAIXux2oQFKm0ihMsOF71dHYx+f3NND68ghCu1YIoePPQN1pGRABkJ6Bus96CutRZMydTl+TvuiRW1m3n0eDl0vRPcEysqdXn+jsQPsrHMquGeXEaY4Yk4wxWcY5V/9scqOMOVUFthatyTy8QyqwZ+kDURKoMWxNKr2EeqVKcTNOajqKoBgOE28U4tdQl5p5bwCw7BWquaZSzAPlwjlithJtp3pTImSqQRrb2Z8PHGigD4RZuNX6JYj6wj7O4TFLbCO/Mn/m8R+h6rYSUb3ekokRY6f/YukArN979jcW+V/S8g0eT/N3VN3kTqWbQ428m9/8k0P/1aIhF36PccEl6EhOcAUCrXKZXXWS3XKd2vc/TRBG9O5ELC17MmWubD2nKhUKZa26Ba2+D3P+4/MNCFwg59oWVeYhkzgN/JDR8deKBoD7Y+ljEjGZ0sosXVTvbc6RHirr2reNy1OXd6pJsQ+gqjk8VWFYmHrwBzW/n+uMPFiRwHB2I7ih8ciHFxIkd/3Omk5tCDV1t+2nNu5sxxpDFNx+huNhVT3/zMDz8usXC3ddaHBj1GHj/As08fwTS7Kt1HBTmyN29vdwAw+/wbwLVOJ3uAD1wi/dUH7Qei66PfyuRj4Ik9is+hglfbkbfR3cnZm7chlUWLdwmprtCohX4HUtlOcQjLYCu+fzGJH2QRKvP3UNz8bWk1qMxjGTOMThZ3kvgLI5AzFfo379UAAAAASUVORK5CYII=" }}
+                            style={{ minHeight: "50000px", minWidth: "50000px" }}
+                          />
+                        </View>
+                        {/* <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7 }}>
+                          <Text style={{ textTransform: "capitalize" }}>
+                            {familyJsonArray[0]?.client_first_name || ""}{" "}
+                            {familyJsonArray[0]?.client_last_name || ""}{" "}
+                          </Text>
+                          <Text> {(!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client === "0000-00-00" || familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00")
+                            ? "________________"
+                            : familyJsonArray[0]?.date_signature_client}</Text>
+                        </Text> */}
+                      </View>
+                    ) : (
+                      <Text>___________________</Text>
+                    )}
+                  </Text>
+                  <Text>Signature of Client</Text>
+                </View>
+                <View style={styles.clientFormChild}>
+                  <Text style={styles.text}>
+                    <Text>
+                      {(!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client === "0000-00-00" || familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00")
+                        ? "________________"
+                        : familyJsonArray[0]?.date_signature_client}</Text>
+                  </Text>
+                  <Text>Date</Text>
+                </View>
+              </View>
+              <View style={styles.clientForm}>
+                <View style={styles.clientFormChild}>
+                  <Text style={styles.text}>
+                    <Text style={styles.textunderline}>Harpreet Kaur</Text>
+                  </Text>
+                  <Text>Name of RCIC</Text>
+                </View>
+                <View style={styles.clientFormChild}>
+                  <Text style={styles.text}>
+                    {felidData?.rcic_signature ? (
+                      <View style={{ display: "flex", flexDirection: "column" }}>
+                        <Image
+                          source={{ uri: felidData?.rcic_signature }}
+                          style={{ width: "40%", height: "auto" }}
+                        />
+                        <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7 }}>
+                          <Text style={{ textTransform: "capitalize" }}>
+                            Harpreet Kaur{" "}
+                          </Text>
+                          <Text> {(!felidData?.date_signature_rcic || felidData?.date_signature_rcic === "0000-00-00" || felidData?.date_signature_rcic === "0000-00-00 00:00:00")
+                            ? "________________"
+                            : felidData?.date_signature_rcic}</Text>
+                        </Text>
+                      </View>
+                    ) : (
+                      <Text>___________________</Text>
+                    )}
+                  </Text>
+                  <Text>Signature of RCIC</Text>
+                </View>
+                <View style={styles.clientFormChild}>
+                  <Text style={styles.text}>
+                    <Text> {(!felidData?.date_signature_rcic || felidData?.date_signature_rcic === "0000-00-00" || felidData?.date_signature_rcic === "0000-00-00 00:00:00")
+                      ? "________________"
+                      : felidData?.date_signature_rcic}</Text>
+                  </Text>
+                  <Text>Date</Text>
+                </View>
               </View>
             </View>
+
           </View>
         </View>
 

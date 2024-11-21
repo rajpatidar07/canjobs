@@ -68,10 +68,27 @@ const HtmlAgreementEighteen = ({
             <h4 style="text-align: center">Between Harpreet Kaur</h4>
             <h4 style="text-align: center">CAN Pathways Immigration Consultancy Ltd.</h4>
             <h4 style="text-align: center">
-                <strong>Client:</strong> <span class="para_gap">Sargam Walia</span>
+                <strong>Client:</strong> <span class="para_gap">${felidData &&
+            (familyJsonArray[0]?.client_first_name ||
+                familyJsonArray[0]?.client_last_name)
+            ? familyJsonArray[0]?.client_first_name +
+            " " +
+            (familyJsonArray[0]?.client_last_name || "")
+            : emp_user_type === "employee"
+                ? userData?.name || "" || ""
+                : "" || ""
+        }</span>
             </h4>
             <p>This Agreement ("the <b>Agreement</b>") is made on the date mentioned below.</p>
-            <p>"The <b>Effective Date:</b> 3 October 2024"</p>
+            <p>"The <b>Effective Date:</b>
+    ${felidData?.agreement_date &&
+            felidData?.agreement_date !== "0000-00-00 00:00:00" &&
+            felidData?.agreement_date !== "0000-00-00"
+            ? ` <span class="para_gap">${moment(
+                new Date(felidData?.agreement_date)
+            ).format("DD MMMM YYYY")}`
+            : "____________"
+        }"</p>
             <p>BY AND BETWEEN</p>
             <p>This <b>RECRUITMENT AGREEMENT</b> entered by and between <br>
                 <b>CAN Pathways Immigration Consultancy Ltd.</b> (the "Agency")   with address at Unit #310, 2618 Hopewell PI. NE Calgary, AB. T1Y 717, Canada, represented by Registered Canadian Immigration Consultant referred to as (RCIC) Harpreet Kaur, herein "<b>Legal Representative / Agent / Recruiter</b>".</p>
@@ -204,8 +221,8 @@ const HtmlAgreementEighteen = ({
         <p class="col-6">
         Telephone Number :  <span style=" min-width: 150px;
         border-bottom: 1px solid grey;
-        display: inline-block;">${felidData && felidData?.client_contact
-            ? felidData?.client_contact
+        display: inline-block;">${felidData && felidData?.client_telephone
+            ? felidData?.client_telephone
             : userData?.contact_no || ""
         }
         </span>
@@ -244,7 +261,34 @@ const HtmlAgreementEighteen = ({
                 <p class="col-6 text-capitalize">E-mail: <span class="para_gap"><a href="mailto:info@canpathways.ca">info@canpathways.ca</a></span></p>
          <p class="container-fluid"><b>IN WITNESS THEREOF this Agreement has been duly executed by the parties hereto on the date first above written</b></p>
                 <div class="col-6">
-                <p><span class="para_gap">${familyJsonArray[0]?.client_signature ? `<img src="${familyJsonArray[0]?.client_signature}" alt="Client Signature" style="max-width: 200px;">` : "                        "}</span><br>
+                <p><span class="para_gap">${familyJsonArray[0]?.client_signature
+            ? `
+                <div class="d-flex flex-column">
+                                <img
+              src="${familyJsonArray[0]?.client_signature}"
+              alt="${familyJsonArray[0]?.client_first_name} ${familyJsonArray[0]?.client_last_name
+            }"
+              style="max-width: 200px; float: right;"
+              class="${familyJsonArray[0]?.client_signature ? "d-block" : "d-none"}"
+            />
+             <p style="margin: 0">______________________________</p>
+                          <small class="row ">
+                            <span class="col text-capitalize" >
+                              ${familyJsonArray[0]?.client_first_name +
+            " " +
+            (familyJsonArray[0]?.client_last_name || "") +
+            " "
+            }${familyJsonArray[0]?.date_signature_client}</span>
+                          </small>
+                              </div>`
+            : page === "admin"
+                ? "___________________________"
+                : ` <button class="btn btn-outline-secondary border-0  " 
+                          style="font-family:cursive;" 
+                          id="add-signature-button-0">
+                    Add Signature
+                  </button>`
+        }</span><br>
                 <span>${familyJsonArray[0]?.client_first_name} ${familyJsonArray[0]?.client_last_name}</span>
                 </p>
                 <p>Signature of Client</p>
@@ -257,12 +301,7 @@ const HtmlAgreementEighteen = ({
             </ol>
             </div>
       </div>
-    
-          
-    
-            
-    
-            <h3 style="text-align: center">AUTHORIZATION</h3>
+      <h3 style="text-align: center">AUTHORIZATION</h3>
             <p>I <span class="para_gap">${familyJsonArray[0]?.client_first_name} ${familyJsonArray[0]?.client_last_name}</span> hereinafter referred to as the "client"), hereby authorize and appoint Harpreet kaur (hereinafter referred to as the "Recruiter" with an ICCRC# RS33393), of CAN Pathways Immigration Consultancy Ltd. (hereinafter referred to as the "firm"), to represent me in the recruitment process.<br><br>
             The Recruiter and the firm are authorized to assign any of its staff members, associates, affiliates, lawyers or the agents to process any matters in whole or part related to above-mentioned subject as they deem appropriate.<br><br>
             The Recruiter and the firm are authorized to collect Information and communicate with The Employer related to my profile. In case of Online application and documentation.  I authorized Recruiter Harpreet Kaur to electronically sign and submit the application on my behalf.<br><br>
@@ -285,7 +324,28 @@ const HtmlAgreementEighteen = ({
                 <p>Name of Client</p>
                 </div>
                     <div class="col-4">
-                <p><span>${familyJsonArray[0]?.client_signature ? `<img src="${familyJsonArray[0]?.client_signature}" alt="Client Signature" style="max-width: 200px;">` : "______________________"}</span>
+                <p> ${familyJsonArray[0]?.client_signature
+            ? `
+        <div class="d-flex flex-column">
+                        <img
+      src="${familyJsonArray[0]?.client_signature}"
+      alt="${familyJsonArray[0]?.client_first_name} ${familyJsonArray[0]?.client_last_name
+            }"
+      style="max-width: 200px; float: right;"
+      class="${familyJsonArray[0]?.client_signature ? "d-block" : "d-none"}"
+    />
+     <p style="margin: 0">______________________________</p>
+                  <small class="row ">
+                    <span class="col text-capitalize" >
+                      ${familyJsonArray[0]?.client_first_name +
+            " " +
+            (familyJsonArray[0]?.client_last_name || "") +
+            " "
+            }${familyJsonArray[0]?.date_signature_client}</span>
+                  </small>
+                      </div>`
+            : "___________________________"
+        }
                 </p><p>Signature of Client</p>
                 </div>
              <div  class="col-4">
@@ -294,7 +354,12 @@ const HtmlAgreementEighteen = ({
             familyJsonArray[0]?.date_signature_client === "0000-00-00" ||
             !familyJsonArray[0]?.date_signature_client
             ? "_____________________"
-            : `<span  class="para_gap" style="max-width: 200px;">${familyJsonArray[0]?.date_signature_client}</span>`
+            : `<span  class="para_gap" style="max-width: 200px;">${!familyJsonArray[0]?.date_signature_client ||
+                familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00" ||
+                familyJsonArray[0]?.date_signature_client === "0000-00-00"
+                ? "_______________"
+                : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")
+            }</span>`
         }
             </p>
             <p >Date</p>

@@ -11,8 +11,8 @@ import HtmlAGreementFour from './Html/HtmlAGreementFour'
 import HtmlAgreementFive from './Html/HtmlAgreementFive'
 import HtmlAgreementSix from './Html/HtmlAgreementSix'
 import HtmlAgreementSeven from './Html/HtmlAgreementSeven'
-import HtmlAgreementEight from './Html/HtmlAgreementEight'
-import HTmlAgreementNine from './Html/HTmlAgreementNine'
+// import HtmlAgreementEight from './Html/HtmlAgreementEight'
+// import HTmlAgreementNine from './Html/HTmlAgreementNine'
 import HtmlAgreementTen from './Html/HtmlAgreementTen'
 import HtmlAgreementEleven from './Html/HtmlAgreementEleven'
 import HtmlAgreementTwelve from './Html/HtmlAgreementTwelve'
@@ -20,6 +20,8 @@ import HtmlAgreementThirteen from './Html/HtmlAgreementThirteen'
 import HtmlAgreementFourTeen from './Html/HtmlAgreementFourTeen'
 import HtmlAgreementFifteenth from './Html/HtmlAgreementFifteenth'
 import HtmlAgreementsixteen from './Html/HtmlAgreementsixteen'
+import HtmlAgreementEighteen from './Html/HtmlAgreementEighteen'
+import HtmlAgreementSeventeen from './Html/HtmlAgreementSeventeen'
 export default function UserSigningPage() {
     const [loader, setLoader] = useState(false)
     // const [pdf, setPdf] = useState(false)
@@ -99,7 +101,7 @@ export default function UserSigningPage() {
     // const familyJsonArray = felidData?.family_json //? JSON.parse(felidData.family_json) : [];
     return (
         <div className='d-flex p-5' style={{ backgroundColor: "#423f3f" }}>
-               
+
             {loader ?
                 <Loader />
                 : <div style={{ margin: "auto" }}>
@@ -116,7 +118,10 @@ export default function UserSigningPage() {
                         userType={""}
                     /> */}
                     {type === "temporary resident visa"
-                        ? <HtmlAgreementOne page={"user"} felidData={felidData} emp_user_type={emp_user_type} addSign={addSign} />
+                        ? <HtmlAgreementOne page={"user"}
+                            felidData={felidData}
+                            emp_user_type={emp_user_type}
+                            addSign={addSign} />
                         : type === "ATIP"
                             ? <HtmlAgreementTwo felidData={felidData} emp_user_type={emp_user_type} />
                             : type === "visitor"
@@ -130,9 +135,18 @@ export default function UserSigningPage() {
                                             : type === "prospective workers"
                                                 ? <HtmlAgreementSeven />
                                                 : type === "express entry"
-                                                    ? <HtmlAgreementEight />
+                                                    ? <HtmlAgreementOne
+                                                        page={"user"}
+                                                        felidData={felidData}
+                                                        emp_user_type={emp_user_type}
+                                                        addSign={addSign} />
+                                                    //<HtmlAgreementEight />
                                                     : type === "PNP + express entry/federal PR"
-                                                        ? <HTmlAgreementNine />
+                                                        ? <HtmlAgreementOne
+                                                            page={"user"}
+                                                            felidData={felidData}
+                                                            emp_user_type={emp_user_type}
+                                                            addSign={addSign} />//<HTmlAgreementNine />
                                                         : type === "super visa application"
                                                             ? <HtmlAgreementTen />
                                                             : type === "spousal sponsorship"
@@ -147,7 +161,21 @@ export default function UserSigningPage() {
                                                                                 ? <HtmlAgreementFifteenth />
                                                                                 : type === "LMIA exempt employers"
                                                                                     ? <HtmlAgreementsixteen />
-                                                                                    : null
+                                                                                    : type === "initial consultation" ?
+                                                                                        (
+                                                                                            <HtmlAgreementSeventeen
+                                                                                                page={"user"}
+                                                                                                felidData={felidData}
+                                                                                                emp_user_type={emp_user_type}
+                                                                                                addSign={addSign} />
+                                                                                        ) : type === "recruitment services agreement" ?
+                                                                                            (
+                                                                                                <HtmlAgreementEighteen
+                                                                                                    page={"user"}
+                                                                                                    felidData={felidData}
+                                                                                                    emp_user_type={emp_user_type}
+                                                                                                    addSign={addSign} />
+                                                                                            ) : null
                     }
 
                     <div className='d-flex justify-content-center mt-5'>
@@ -156,12 +184,12 @@ export default function UserSigningPage() {
                         </button>
                     </div>
                 </div>}
-                <button className='btn btn-primary text-end m-2' onClick={() => {
-                    setOpenAddFeildsModal(true)
-                    setShowDetailsOption(true)
-                    setClientIndex("update details")
-                }}>Update Details</button>
-                {/* <div className={"d-none col-4 position-sticky bg-white h-100vh"}>
+            <button className='btn btn-primary text-end m-2' onClick={() => {
+                setOpenAddFeildsModal(true)
+                setShowDetailsOption(true)
+                setClientIndex("update details")
+            }}>Update Details</button>
+            {/* <div className={"d-none col-4 position-sticky bg-white h-100vh"}>
                     <div className='p-10'>
                         <h3>Add{felidData.initial ? "" : " Initial and Client"} Signature</h3>
                         <button className={felidData.initial ? "d-none" : "btn btn-primary text-decoration-none"} style={{ fontFamily: "cursive" }}

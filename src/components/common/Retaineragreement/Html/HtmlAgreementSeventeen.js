@@ -1,4 +1,5 @@
 // import moment from "moment";
+import moment from "moment";
 import { useEffect } from "react";
 // import { Link } from "react-router-dom";
 const HtmlAgreementSeventeen = ({
@@ -50,7 +51,29 @@ const HtmlAgreementSeventeen = ({
     </p>
     <div>
     BY AND BETWEEN<br>
-    <p><strong>Harpreet Kaur</strong> (the "RCIC")Located at: <strong>CAN Pathways Immigration Consultancy Ltd.</strong>Address: <strong>Unit #310, 2618 Hopewell Pl. NE, Calgary, AB, T1Y 717, Canada </strong> Here in after referred to as: <strong>"Legal Representative/RCIC"</strong><br>AND<br>The <strong>"Candidate"</strong> as his/her details provided as of this present agreement, collectively called the <strong>"Client."</strong><br> <span class="px-8"><strong>Name</strong>: <span>_____________</span><br> <strong>Address</strong>: <span>_____________</span><br> <strong>Phone Number</strong>: <span>_____________</span><br><strong>Email Address</strong>: <span>_____________</span>
+    <p><strong>Harpreet Kaur</strong> (the "RCIC")Located at: <strong>CAN Pathways Immigration Consultancy Ltd.</strong>Address: <strong>Unit #310, 2618 Hopewell Pl. NE, Calgary, AB, T1Y 717, Canada </strong> Here in after referred to as: <strong>"Legal Representative/RCIC"</strong><br>AND<br>The <strong>"Candidate"</strong> as his/her details provided as of this present agreement, collectively called the <strong>"Client."</strong><br> <span class="px-8"><strong>Name</strong>: <span><u>${felidData &&
+            (familyJsonArray[0]?.client_first_name ||
+                familyJsonArray[0]?.client_last_name)
+            ? familyJsonArray[0]?.client_first_name +
+            " " +
+            (familyJsonArray[0]?.client_last_name || "")
+            : emp_user_type === "employee"
+                ? userData?.name || "" || ""
+                : "" || ""
+        }</u></span><br> <strong>Address</strong>: <span><u>${felidData && felidData?.client_address
+            ? felidData?.client_address
+            : emp_user_type === "employer"
+                ? userData?.address || ""
+                : (userData?.current_location || "") +
+                " " +
+                (userData?.currently_located_country || "")
+        }  </u></span><br> <strong>Phone Number</strong>: <span><u>>${felidData && felidData?.client_contact
+            ? felidData?.client_contact
+            : userData?.contact_no || ""
+        }</u></span><br><strong>Email Address</strong>: <span><u>${felidData && felidData?.client_email
+            ? felidData?.client_email || ""
+            : userData?.email || ""
+        }</u></span>
     <span></p>
     <div>
     <h6><u>AGREEMENT</u></h6>
@@ -201,9 +224,50 @@ const HtmlAgreementSeventeen = ({
         style="max-width: 200px; float: right;" 
         class="d-block" 
       />
-      <p style="margin: 0;">______________________________</p>
+      <p style="margin: 0;"> ${familyJsonArray[0]?.client_signature
+            ? `
+        <div class="d-flex flex-column">
+                        <img
+      src="${familyJsonArray[0]?.client_signature}"
+      alt="${familyJsonArray[0]?.client_first_name} ${familyJsonArray[0]?.client_last_name
+            }"
+      style="max-width: 200px; float: right;"
+      class="${familyJsonArray[0]?.client_signature ? "d-block" : "d-none"}"
+    />
+     <p style="margin: 0">______________________________</p>
+                  <small class="row ">
+                    <span class="col text-capitalize" >
+                      ${familyJsonArray[0]?.client_first_name +
+            " " +
+            (familyJsonArray[0]?.client_last_name || "") +
+            " "
+            }${familyJsonArray[0]?.date_signature_client}</span>
+                  </small>
+                      </div>`
+            : page === "admin"
+                ? "___________________________"
+                : ` <button class="btn btn-outline-secondary border-0  " 
+                  style="font-family:cursive;" 
+                  id="add-signature-button-0">
+            Add Signature
+          </button>`
+        }</p>
       <small class="row">
-        <span class="col text-capitalize">John Doe 2024-11-18</span>
+        <span class="col text-capitalize">${felidData &&
+            (familyJsonArray[0]?.client_first_name ||
+                familyJsonArray[0]?.client_last_name)
+            ? familyJsonArray[0]?.client_first_name +
+            " " +
+            (familyJsonArray[0]?.client_last_name || "")
+            : emp_user_type === "employee"
+                ? userData?.name || "" || ""
+                : "" || ""
+        } ${!familyJsonArray[0]?.date_signature_client ||
+            familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00" ||
+            familyJsonArray[0]?.date_signature_client === "0000-00-00"
+            ? ""
+            : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")
+        }</span>
       </small>
     </div>
     <p style="margin: 0 0 30px 0;">Signature of Client</p>

@@ -87,7 +87,7 @@ export default function ClientSignatureForm() {
                     // folderId: folderId,
                     felidData: res.data.data[0],
                 };
-                const newPageUrl = `/agreeone`
+                const newPageUrl = state.type === "initial consultation" ? `/initial_consultation ` : state.type === "recruitment services agreement" ? `/recruitment_service` : `/agreeone`
                 localStorage.setItem('agreementStateData', JSON.stringify(stateData));
                 // Open the new page in a new tab
 
