@@ -11,8 +11,8 @@ const HtmlAgreementSeventeen = ({
 }) => {
     const familyJsonArray = felidData?.family_json || []; //? JSON.parse(felidData?.family_json) : [];
     const jsxContent = `<!DOCTYPE html>
-<html lang="en">
- <head>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Retainer Agreement</title>
     <meta name="author" content="Admin" />
@@ -29,8 +29,8 @@ const HtmlAgreementSeventeen = ({
         padding: 5px;
       }
     </style>
-</head>
-<body style="margin: 0 auto; max-width: 1024px;color:"black;>
+  </head>
+  <body style="margin: 0 auto; max-width: 1024px;color:"black;">
 <div class="header" style="padding: 10px 20px;text-align: justify;">
       <img
         src="https://canpathwaysjobs.com/image/00logo-main-black.png"
@@ -240,7 +240,15 @@ const HtmlAgreementSeventeen = ({
         <div class="d-flex flex-column">
                         <img
       src="${familyJsonArray[0]?.client_signature}"
-      alt="${familyJsonArray[0]?.client_first_name} ${familyJsonArray[0]?.client_last_name
+      alt="${felidData &&
+                (familyJsonArray[0]?.client_first_name ||
+                    familyJsonArray[0]?.client_last_name)
+                ? familyJsonArray[0]?.client_first_name +
+                " " +
+                (familyJsonArray[0]?.client_last_name || "")
+                : emp_user_type === "employee"
+                    ? userData?.name || "" || ""
+                    : "" || ""
             }"
       style="max-width: 200px; float: right;"
       class="${familyJsonArray[0]?.client_signature ? "d-block" : "d-none"}"
@@ -248,11 +256,16 @@ const HtmlAgreementSeventeen = ({
      <p style="margin: 0">______________________________</p>
                   <small class="row ">
                     <span class="col text-capitalize" >
-                      ${familyJsonArray[0]?.client_first_name +
-            " " +
-            (familyJsonArray[0]?.client_last_name || "") +
-            " "
-            }${moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</span>
+                      ${felidData &&
+                (familyJsonArray[0]?.client_first_name ||
+                    familyJsonArray[0]?.client_last_name)
+                ? familyJsonArray[0]?.client_first_name +
+                " " +
+                (familyJsonArray[0]?.client_last_name || "")
+                : emp_user_type === "employee"
+                    ? userData?.name || "" || ""
+                    : "" || ""
+            } ${moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</span>
                   </small>
                       </div>`
             : page === "admin"
@@ -311,26 +324,7 @@ const HtmlAgreementSeventeen = ({
 
 </body>
 </html>`;
-    // useEffect(() => {
-    //   // Event handler function
-    //   const handleClick = (e) => {
-    //     addSign(e, "initial"); // Call the addSign function with desired arguments
-    //   };
-
-    //   // Ensure the HTML is injected
-    //   const btn = document.getElementById('add-signature-button-initial');
-
-    //   if (btn) {
-    //     // Attach event listener
-    //     btn.addEventListener('click', handleClick);
-
-    //     // Clean up event listener
-    //     return () => {
-    //       btn.removeEventListener('click', handleClick);
-    //     };
-    //   }
-    //   // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, []);
+   
     useEffect(
         (e) => {
             // Attach event listeners after HTML is injected

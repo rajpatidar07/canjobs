@@ -377,13 +377,15 @@ const AgreementOneForm = ({
                       htmlFor={`client_first_name_0`}
                       className="font-size-4 text-black-2 line-height-reset"
                     >
-                      Client's First Name <span className="text-danger">*</span>
+                      Client's First Name
+                      {/* <span className="text-danger">*</span> */}
                     </label>
                     <input
                       type="text"
                       className="form-control col"
                       value={state?.family_json[0]?.client_first_name}
                       onChange={(e) => handleClientChange(0, e)}
+                      required
                       id={`client_first_name_0`}
                       name="client_first_name"
                       placeholder="Client's first name"
@@ -394,7 +396,8 @@ const AgreementOneForm = ({
                       htmlFor={`client_last_name_0`}
                       className="font-size-4 text-black-2 line-height-reset"
                     >
-                      Client's Last Name<span className="text-danger">*</span>
+                      Client's Last Name
+                      {/* <span className="text-danger">*</span> */}
                     </label>
                     <input
                       type="text"
@@ -402,6 +405,7 @@ const AgreementOneForm = ({
                       value={state?.family_json[0]?.client_last_name}
                       onChange={(e) => handleClientChange(0, e)}
                       id={`client_last_name_0`}
+                      required
                       name="client_last_name"
                       placeholder="Client's last name"
                     />
@@ -638,7 +642,8 @@ const AgreementOneForm = ({
                     htmlFor={name}
                     className="font-size-4 text-black-2 line-height-reset"
                   >
-                    {label} {requried === true ? <span className="text-danger">*</span> : ""}
+                    {label}
+                    {/* {requried === true ? <span className="text-danger">*</span> : ""} */}
                   </label>
                   <input
                     type={type}

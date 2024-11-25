@@ -18,8 +18,7 @@ const HtmlAgreementEighteen = ({
         <style>
             body {
                 font-family: 'Century', serif;
-                max-width: 1024px;
-                margin: 0 auto;
+                 margin: 0 auto;
                 color: black;
             }
             .header {
@@ -266,23 +265,34 @@ const HtmlAgreementEighteen = ({
                 <div class="d-flex flex-column">
                                 <img
               src="${familyJsonArray[0]?.client_signature}"
-              alt="${familyJsonArray[0]?.client_first_name} ${familyJsonArray[0]?.client_last_name
-            }"
+              alt="${felidData &&
+                (familyJsonArray[0]?.client_first_name ||
+                    familyJsonArray[0]?.client_last_name)
+                ? familyJsonArray[0]?.client_first_name +
+                " " +
+                (familyJsonArray[0]?.client_last_name || "")
+                : emp_user_type === "employee"
+                    ? userData?.name || "" || ""
+                    : "" || ""}"
               style="max-width: 200px; float: right;"
               class="${familyJsonArray[0]?.client_signature ? "d-block" : "d-none"}"
             />
              <p style="margin: 0">______________________________</p>
                           <small class="row ">
                             <span class="col text-capitalize" >
-                              ${familyJsonArray[0]?.client_first_name +
-            " " +
-            (familyJsonArray[0]?.client_last_name || "") +
-            " "
-            }${familyJsonArray[0]?.date_signature_client}</span>
+                              ${felidData &&
+                (familyJsonArray[0]?.client_first_name ||
+                    familyJsonArray[0]?.client_last_name)
+                ? familyJsonArray[0]?.client_first_name +
+                " " +
+                (familyJsonArray[0]?.client_last_name || "")
+                : emp_user_type === "employee"
+                    ? userData?.name || "" || ""
+                    : "" || ""}${familyJsonArray[0]?.date_signature_client}</span>
                           </small>
                               </div>`
             : page === "admin"
-                ? "___________________________"
+                ? "                "
                 : ` <button class="btn btn-outline-secondary border-0  " 
                           style="font-family:cursive;" 
                           id="add-signature-button-0">
@@ -302,7 +312,15 @@ const HtmlAgreementEighteen = ({
             </div>
       </div>
       <h3 style="text-align: center">AUTHORIZATION</h3>
-            <p>I <span class="para_gap">${familyJsonArray[0]?.client_first_name} ${familyJsonArray[0]?.client_last_name}</span> hereinafter referred to as the "client"), hereby authorize and appoint Harpreet kaur (hereinafter referred to as the "Recruiter" with an ICCRC# RS33393), of CAN Pathways Immigration Consultancy Ltd. (hereinafter referred to as the "firm"), to represent me in the recruitment process.<br><br>
+            <p>I <span class="para_gap">${felidData &&
+            (familyJsonArray[0]?.client_first_name ||
+                familyJsonArray[0]?.client_last_name)
+            ? familyJsonArray[0]?.client_first_name +
+            " " +
+            (familyJsonArray[0]?.client_last_name || "")
+            : emp_user_type === "employee"
+                ? userData?.name || "" || ""
+                : "" || ""}</span> hereinafter referred to as the "client"), hereby authorize and appoint Harpreet kaur (hereinafter referred to as the "Recruiter" with an ICCRC# RS33393), of CAN Pathways Immigration Consultancy Ltd. (hereinafter referred to as the "firm"), to represent me in the recruitment process.<br><br>
             The Recruiter and the firm are authorized to assign any of its staff members, associates, affiliates, lawyers or the agents to process any matters in whole or part related to above-mentioned subject as they deem appropriate.<br><br>
             The Recruiter and the firm are authorized to collect Information and communicate with The Employer related to my profile. In case of Online application and documentation.  I authorized Recruiter Harpreet Kaur to electronically sign and submit the application on my behalf.<br><br>
             I also give permission to the Recruiter and the firm to post photos on social media ensuring that my private information is redacted. In doing so, they my each receive or pay each other any pecuniary remuneration/benefits that may be acquired directly or indirectly including those from a third party for the purpose of obtaining a favorable and expeditious results.</p>
@@ -319,7 +337,15 @@ const HtmlAgreementEighteen = ({
         </div>
     <div class="row">
         <div class="col-4">
-                <p><span class="para_gap">${familyJsonArray[0]?.client_first_name} ${familyJsonArray[0]?.client_last_name}</span>
+                <p><span class="para_gap">${felidData &&
+            (familyJsonArray[0]?.client_first_name ||
+                familyJsonArray[0]?.client_last_name)
+            ? familyJsonArray[0]?.client_first_name +
+            " " +
+            (familyJsonArray[0]?.client_last_name || "")
+            : emp_user_type === "employee"
+                ? userData?.name || "" || ""
+                : "" || ""}</span>
                 </p>
                 <p>Name of Client</p>
                 </div>
@@ -337,11 +363,15 @@ const HtmlAgreementEighteen = ({
      <p style="margin: 0">______________________________</p>
                   <small class="row ">
                     <span class="col text-capitalize" >
-                      ${familyJsonArray[0]?.client_first_name +
-            " " +
-            (familyJsonArray[0]?.client_last_name || "") +
-            " "
-            }${familyJsonArray[0]?.date_signature_client}</span>
+                      ${felidData &&
+                (familyJsonArray[0]?.client_first_name ||
+                    familyJsonArray[0]?.client_last_name)
+                ? familyJsonArray[0]?.client_first_name +
+                " " +
+                (familyJsonArray[0]?.client_last_name || "")
+                : emp_user_type === "employee"
+                    ? userData?.name || "" || ""
+                    : "" || ""}${moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</span>
                   </small>
                       </div>`
             : "___________________________"
@@ -379,7 +409,7 @@ const HtmlAgreementEighteen = ({
             felidData?.date_signature_rcic === "0000-00-00" ||
             !felidData?.date_signature_rcic
             ? "_____________________"
-            : `<span  class="para_gap" style="max-width: 200px;">${felidData?.date_signature_rcic}</span>`
+            : `<span  class="para_gap" style="max-width: 200px;">${moment(felidData?.date_signature_rcic).format("DD-MM-YYYY")}</span>`
         }
             </p>
             <p >Date</p>
@@ -389,7 +419,6 @@ const HtmlAgreementEighteen = ({
         </div>
     </body>
     </html>`;
-
     useEffect(
         (e) => {
             // Attach event listeners after HTML is injected
