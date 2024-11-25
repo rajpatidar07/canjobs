@@ -48,8 +48,8 @@ function ProgramListSection() {
                 body: formData // Remove headers, let the browser handle them
             });
             return await response.json();
-        } catch (error) {
-            console.log(error);
+        } catch (err) {
+            console.log(err);
             return null; // Return null on error
         }
     }
@@ -144,8 +144,8 @@ function ProgramListSection() {
                 setLoading(false)
                 setShowCandidateModal(false)
             }
-        } catch (error) {
-            console.log(error)
+        } catch (err) {
+            console.log(err)
         }
     }
     return (

@@ -29,11 +29,11 @@ function SendMailForm({ email, setApiCall }) {
           ? "Subject is required"
           // : /[-]?\d+(\.\d+)?/.test(value)
           //   ? "Subject can not have a number."
-            : value.length < 2
-              ? "Subject should have 2 or more letters"
-              : /[^A-Za-z 0-9]/g.test(value)
-                ? "Cannot use special character "
-                : "",
+          : value.length < 2
+            ? "Subject should have 2 or more letters"
+            : /[^A-Za-z 0-9]/g.test(value)
+              ? "Cannot use special character "
+              : "",
     ],
     description: [
       (value) =>
@@ -47,6 +47,10 @@ function SendMailForm({ email, setApiCall }) {
             // ? "Cannot use special character "
             "",
     ],
+    // adminemail: [
+    //   (value) => value && !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/.test(value) ? "Invalid CC Email format" : "",
+
+    // ],
   };
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, onInputChange, errors, setErrors, validate } =
@@ -255,6 +259,16 @@ function SendMailForm({ email, setApiCall }) {
       }
     }
   };
+  // Update adminemail state to ensure multiple emails are comma-separated
+  const handleAdminEmailChange = (e) => {
+    const value = e.target.value;
+    const emailArray = value.split(",").map((email) => email.trim()); // Split emails and trim whitespace
+
+    setState((prevState) => ({
+      ...prevState,
+      adminemail: [AdminEmail, ...emailArray.filter((email) => email !== AdminEmail)], // Ensure AdminEmail is always first
+    }));
+  };
   return (
     <div>
       <form>
@@ -288,6 +302,22 @@ function SendMailForm({ email, setApiCall }) {
                 {errors.subject}
               </span>
             )}
+          </div>
+          <div className="mb-2 col-12">
+            <label htmlFor="adminemail" className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0">
+              CC Email:
+            </label>
+            <input
+              maxLength={100}
+              name="adminemail"
+              value={state.adminemail || ""}
+              onChange={handleAdminEmailChange} // Handle change
+              type="email"
+              className={errors.adminemail ? "form-control border border-danger" : "form-control"}
+              placeholder="CC Email"
+              id="adminemail"
+            />
+            {errors.adminemail && <span key={errors.adminemail} className="text-danger font-size-3">{errors.adminemail}</span>}
           </div>
           <div className="mb-2 col-12">
             <label

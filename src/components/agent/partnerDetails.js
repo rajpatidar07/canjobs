@@ -24,6 +24,7 @@ export default function PartnerDetails({ setLoginCondition }) {
   const searchParams = new URLSearchParams(location.search);
   const partnerChat = searchParams.get("partner");
   const notes = searchParams.get("note");
+  const note_id = searchParams.get("noteid");
   const PartnerId = searchParams.get("PartnerId");
   let navigate = useNavigate();
   const agent_id = localStorage.getItem("agent_id");
@@ -613,6 +614,7 @@ export default function PartnerDetails({ setLoginCondition }) {
                     close={() => {
                       setAddNote(false);
                     }}
+                    note_id={notes ? note_id : ""}
                     skip={() => navigate(-1)}
                   />
                   {/* ) : null} */}

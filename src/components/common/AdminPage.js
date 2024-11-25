@@ -40,8 +40,8 @@ export default function AdminPage(props) {
       };
       setAdminData(adminData);
       setIsLoading(false);
-    } catch (error) {
-      console.error("Error fetching admin data: ", error);
+    } catch (err) {
+      console.error("Error fetching admin data: ", err);
       setIsLoading(false);
     }
   };

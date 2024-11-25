@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import GenerateToken from "./generateToken";
@@ -31,7 +31,7 @@ const AdminHeader = (props) => {
   //     console.log(err);
   //   }
   // };
-  /*Render Mewthod to get Notification */
+  /*Render Method to get Notification */
   // useEffect(() => {
   //   Notiication();
   //   if (apicall === true) {
@@ -57,21 +57,21 @@ const AdminHeader = (props) => {
       <div className="container-fluid-fluid">
         <nav className="navbar site-navbar offcanvas-active navbar-expand-lg  px-0 py-0">
           {/* <!-- Page logo--> */}
-          {/* /*Added logo To set sidebar menu to show and hide on all screens*/ }
-        <div className="brand-logo ">
-          <Link
-            to={userType === "agent" ? "/partner_profile" : "/dashboard"}
-          >
-            <img src="image/logo-main-black.png" alt="" />
-          </Link>
-        </div>
+          {/* /*Added logo To set sidebar menu to show and hide on all screens*/}
+          <div className="brand-logo ">
+            <Link
+              to={userType === "agent" ? "/partner_profile" : "/dashboard"}
+            >
+              <img src="image/logo-main-black.png" alt="" />
+            </Link>
+          </div>
           {/* <!-- Page Heading--> */}
           <h3 className="font-size-6 mb-0 mx-5 text-capitalize">{props.heading}</h3>
           <div className="collapse navbar-collapse" id="mobile-menu"></div>
 
           {userType === "agent" || userType === "" ? "" : <GlobalSearch />}
           {/* {userType === "agent" ? null : ( */}
-            <Notifications type={"mention_document"} />
+          <Notifications type={"mention_document"} />
           {/* // )} */}
           <Notifications type={""} />
           <div className="header-btn-devider ml-auto ml-lg-5 pl-2 d-xs-flex align-items-center">
@@ -129,8 +129,10 @@ const AdminHeader = (props) => {
                       userType === "admin"
                         ? "/adminlogin"
                         : userType === "agent"
-                        ? "/partnerlogin"
-                        : "/"
+                          ? localStorage.getItem("portal") === "study"
+                            ? "/study_partner_login"
+                            : "/partnerlogin"
+                          : "/"
                     }
                     onClick={() => {
                       localStorage.clear(); // clear the local storage

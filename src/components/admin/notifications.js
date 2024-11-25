@@ -302,12 +302,12 @@ function Notifications({
                                           "/partner_profile"
                                           : data.subject === "mention_notes"//Notes for employer
                                             ? data.document_user_type === "employer"
-                                              ? `/client_detail?note=true`
+                                              ? `/client_detail?note=true&noteid=${data.mention_id}`
                                               : data.document_user_type === "agent" && (window.location.pathname === "/partner_profile")//Notes for agent with same path as navigation
                                                 ?
-                                                `?note=true`
-                                                : data.document_user_type === "agent" ? `/partner_profile?note=true`//Notes for agent
-                                                  : `/${data.employee_id}?note=true`//Notes for employee
+                                                `?note=true&noteid=${data.mention_id}`
+                                                : data.document_user_type === "agent" ? `/partner_profile?note=true&noteid=${data.mention_id}`//Notes for agent
+                                                  : `/${data.employee_id}?note=true&noteid=${data.mention_id}`//Notes for employee
                                             : data.subject === "signed_agreement"
                                               ? data.document_user_type === "employer"//AGREEMENT FOR EMPLOYER
                                                 ? `/client_detail?agreement=true`

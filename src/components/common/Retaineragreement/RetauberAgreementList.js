@@ -146,9 +146,8 @@ export default function RetauberAgreementList({
     <div className="response_main_div w-100">
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
         <div
-          className={`${
-            openAgreement ? "d-none" : "d-flex"
-          } justify-content-between`}
+          className={`${openAgreement ? "d-none" : "d-flex"
+            } justify-content-between`}
         >
           <div className="p-3">
             <h3 className="">Agreement's</h3>
@@ -307,19 +306,19 @@ export default function RetauberAgreementList({
                               setAgreementData(data);
                             }}
                             title="Add Felids"
-                            // disabled={data.initial}
+                          // disabled={data.initial}
                           >
                             <span className="text-gray px-2">
                               <FaEdit />
                             </span>
                           </button>
                           <button
-                            className="btn btn-outline-info action_btn "
+                            className={`btn btn-outline-info action_btn ${data.type === "recruitment services agreement" || data.type === "initial consultation" ? "d-none" : ""}`}
                             onClick={() => {
                               setOpenAddClientFeilds(true);
                               setAgreementData(data);
                             }}
-                            title="Add Client"
+                            title="Add Family"
                           >
                             <span className="text-gray px-2">
                               <FaPlus />
@@ -383,8 +382,8 @@ export default function RetauberAgreementList({
                               data?.signature_status === "2"
                                 ? false
                                 : data?.rcic_signature
-                                ? true
-                                : true
+                                  ? true
+                                  : true
                             }
                             title="RCIC Sign"
                           >

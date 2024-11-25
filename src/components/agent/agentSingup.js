@@ -265,7 +265,7 @@ export default function AgentSignUp(props) {
   //   }
   // }, []);
 
-  /*FUnctiom to Sign Up with facebook */
+  /*Function to Sign Up with facebook */
   // const responseFacebook = async (response) => {
   //   if (response.graphDomain === "facebook") {
   //     try {

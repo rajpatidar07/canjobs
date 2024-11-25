@@ -11,7 +11,7 @@ import {
   Link,
 } from "@react-pdf/renderer";
 import moment from "moment";
-import { AddSharePointDOcument, AddUpdateAgreement } from "../../../api/api";
+import { AddSharePointDOcument, AddUpdateAgreement } from "../../../../api/api";
 // import { toast } from "react-toastify";
 
 const AggrementOne = () => {
@@ -149,7 +149,7 @@ const AggrementOne = () => {
             //   position: toast.POSITION.TOP_RIGHT,
             //   autoClose: 1000,
             // });
-            console.log(res.data.data[0][0].document_id)
+            // console.log(res.data.data[0][0].document_id)
             try {
               let data = {
                 id: felidData?.id,
@@ -158,8 +158,8 @@ const AggrementOne = () => {
               };
               let addDocId = await AddUpdateAgreement(data);
               console.log(addDocId);
-            } catch (error) {
-              console.log(error)
+            } catch (err) {
+              console.log(err)
             }
           }
           // console.log(res.data)

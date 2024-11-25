@@ -31,7 +31,7 @@ const AgreementOneForm = ({
     client_date_of_birth: "",
   };
   const initialFormState = {
-    type: "temporary resident visa",
+    type: "",
     rcic_membership_no: "",
     matter: "",
     summary: "",
@@ -84,16 +84,40 @@ const AgreementOneForm = ({
   };
   const validators = {
     family_json: {
-      validateClientEmail: (value) =>
+      validateClientEmail: [(value) =>
         value === "" || value.trim() === ""
           ? "Client's Email is required"
           : /\S+@\S+\.\S+/.test(value)
             ? null
-            : "Client's Email is invalid",
+            : "Client's Email is invalid"],
+      validateClientFirstName: [(value) =>
+        value === "" || value.trim() === "" ? "First name is required" : null],
+      validateClientLastName: [(value) =>
+        value === "" || value.trim() === "" ? "Last name is required" : null],
     },
+    client_address: [(value) =>
+      value === "" || value.trim() === "" ? "Client Address is required" : null],
+    client_contact: [(value) =>
+      value === "" || value.trim() === ""
+        ? "Client Contact No is required"
+        : null],
+    client_telephone: [(value) =>
+      value === "" || value.trim() === ""
+        ? "Client's Telephone Number is required"
+        : null],
+    client_cellphone: [(value) =>
+      value === "" || value.trim() === ""
+        ? "Client's Cellphone Number is required"
+        : null],
+    initial: [(value) =>
+      value === "" || value.trim() === "" ? "Initial is required" : null],
+    summary: [(value) =>
+      value === "" || value.trim() === ""
+        ? "Summary of prelimi nary advice is required"
+        : null],
   };
 
-  const { state, setState, onInputChange, errors } = useValidation(
+  const { state,/* validate,*/ setState, onInputChange, errors } = useValidation(
     initialFormState,
     validators
   );
@@ -106,8 +130,8 @@ const AgreementOneForm = ({
       if (felidData?.family_json) {
         try {
           updatedState.family_json = felidData?.family_json;
-        } catch (error) {
-          console.error("Failed to parse family_json:", error);
+        } catch (err) {
+          console.err("Failed to parse family_json:", err);
         }
       }
 
@@ -199,6 +223,9 @@ const AgreementOneForm = ({
         (index === "rcic_signature" || index === "final")) ||
       openSignature === "no"
     ) {
+      // console.log(index, e ``                                                        rrors)
+      // if (index === "update details" ? validate() : "") {
+      console.log("first")
       try {
         let res = await AddUpdateAgreement(state);
         console.log(res);
@@ -235,7 +262,7 @@ const AgreementOneForm = ({
                 family_json: res.data.data[0].family_json,
               };
               // console.log(stateData);
-              const newPageUrl = `/agreeone`;
+              const newPageUrl = state.type === "initial consultation" ? `/initial_consultation ` : state.type === "recruitment services agreement" || state.type === "initial consultation" ? `/recruitment_service` : `/agreeone`;
               localStorage.setItem(
                 "agreementStateData",
                 JSON.stringify(stateData)
@@ -250,8 +277,8 @@ const AgreementOneForm = ({
                 window.open(newPageUrl, "_blank");
               }
             }
-          } catch (error) {
-            console.log(error);
+          } catch (err) {
+            console.log(err);
           }
           // }
           close();
@@ -261,6 +288,7 @@ const AgreementOneForm = ({
         console.log(err);
         setLoading(false);
       }
+      // }
     } else {
       setFelidData({
         ...felidData,
@@ -313,13 +341,11 @@ const AgreementOneForm = ({
     "date_signature_client": "",
     "client_date_of_birth": ""
   });
-  console.log(
-    openSignature === "yes" )
   return (
     <Modal
       show={show}
       size={
-        openSignature === "yes" ? "md" : "xl"}
+        openSignature === "yes" ? "md" : state.type === "recruitment services agreement" || state.type === "initial consultation" ? "lg" : "xl"}
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
@@ -351,7 +377,7 @@ const AgreementOneForm = ({
                       htmlFor={`client_first_name_0`}
                       className="font-size-4 text-black-2 line-height-reset"
                     >
-                      Client's First Name
+                      Client's First Name <span className="text-danger">*</span>
                     </label>
                     <input
                       type="text"
@@ -368,7 +394,7 @@ const AgreementOneForm = ({
                       htmlFor={`client_last_name_0`}
                       className="font-size-4 text-black-2 line-height-reset"
                     >
-                      Client's Last Name
+                      Client's Last Name<span className="text-danger">*</span>
                     </label>
                     <input
                       type="text"
@@ -389,178 +415,230 @@ const AgreementOneForm = ({
                 ? [
                   {
                     label: "Client Address",
+                    display: "",
                     name: "client_address",
                     type: "text",
+                    requried: true,
                   },
                   {
                     label: "Client Email",
                     name: "client_email",
                     type: "email",
+                    requried: true,
                   },
                   {
                     label: "Client Contact No",
                     name: "client_contact",
+                    display: state.type === "recruitment services agreement" ? "d-none" : "",
                     type: "number",
+                    requried: true,
                   },
                   {
                     label: "Client's Telephone Number",
+                    display: state.type === "initial consultation" ? "d-none" : "",
                     name: "client_telephone",
                     type: "number",
+                    requried: true,
                   },
                   {
                     label: "Client's Cellphone Number",
+                    display: state.type === "initial consultation" ? "d-none" : "",
                     name: "client_cellphone",
                     type: "number",
+                    requried: true,
                   },
                   {
                     label: "Client's Fax Number",
+                    display: state.type === "initial consultation" ? "d-none" : "",
                     name: "client_fax",
                     type: "number",
+                    requried: false,
                   },
                   {
                     label: "Initial",
                     name: "initial",
                     type: "text",
+                    requried: true,
                   },
                   {
                     label:
                       "Summary of preliminary advice given to the client",
                     name: "summary",
+                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" ? "d-none" : "",
                     type: "text",
+                    requried: true,
                   },
                 ]
                 : [
                   {
                     label: "Client Address",
+                    display: "",
                     name: "client_address",
                     type: "text",
                   },
                   {
                     label: "Client Email",
+                    display: "",
                     name: "client_email",
                     type: "email",
                   },
                   {
                     label: "Client Contact No",
+                    display: state.type === "recruitment services agreement" ? "d-none" : "",
                     name: "client_contact",
                     type: "number",
                   },
                   {
                     label: "Client's Telephone Number",
+                    display: state.type === "initial consultation" ? "d-none" : "",
                     name: "client_telephone",
                     type: "number",
                   },
                   {
                     label: "Client's Cellphone Number",
+                    display: state.type === "initial consultation" ? "d-none" : "",
                     name: "client_cellphone",
                     type: "number",
                   },
                   {
                     label: "Client's Fax Number",
+                    display: state.type === "initial consultation" ? "d-none" : "",
                     name: "client_fax",
                     type: "number",
                   },
                   {
                     label: "Client File Number",
+                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" ? "d-none" : "",
                     name: "client_file_no",
                     type: "number",
                   },
                   {
                     label: "Agreement Creation Date",
+                    display: "",
                     name: "agreement_date",
                     type: "date",
                   },
                   {
                     label: "Professional Fees",
+                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" ? "d-none" : "",
                     name: "professional_fees",
                     type: "number",
                   },
                   {
                     label: "Courier charges",
+                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" ? "d-none" : "",
                     name: "courier_charges",
                     type: "number",
                   },
                   {
                     label: "Administrative Fee",
+                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" ? "d-none" : "",
                     name: "administrative_fee",
                     type: "number",
                   },
                   {
                     label: "Government fees",
+                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" ? "d-none" : "",
                     name: "government_fees",
                     type: "number",
                   },
                   {
                     label: "Applicable Taxes",
+                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" ? "d-none" : "",
                     name: "application_fees",
                     type: "number",
                   },
                   {
                     label: "Balance (Paid at time of filing)",
+                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" ? "d-none" : "",
                     name: "balance",
                     type: "number",
                   },
                   {
                     label: "Total Cost",
+                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" ? "d-none" : "",
                     name: "total_cost",
                     type: "number",
                   },
                   {
                     label:
                       "The Client asked the RCIC, and the RCIC has agreed, to act for the Client in the matter of",
+                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" ? "d-none" : "",
                     name: "matter",
                     type: "text",
                   },
                   {
                     label:
                       "Summary of preliminary advice given to the client",
+                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" ? "d-none" : "",
                     name: "summary",
                     type: "text",
                   },
                   {
                     label:
                       "Applicable Retainer Fee for this stage (Non-Refundable) for Step 1",
+                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" ? "d-none" : "",
                     name: "applicable_retainer_fee_stape_1",
                     type: "number",
                   },
                   {
                     label:
                       "Applicable Government Processing Fee for Step 1",
+                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" ? "d-none" : "",
                     name: "applicable_government_processing_fee_stape_1",
                     type: "number",
                   },
                   {
                     label:
                       "Applicable Retainer Fee for this stage (Non-Refundable) for Step 2",
+                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" ? "d-none" : "",
                     name: "applicable_retainer_fee_stape_2",
                     type: "number",
                   },
                   {
                     label:
                       "Total Amount: (Non-Refundable) (Paid at signing of contract and sharing of checklist)",
+                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" ? "d-none" : "",
                     name: "total_amount_signing_of_contract",
                     type: "number",
                   },
                   {
                     label:
                       "Balance (Non-Refundable) (Paid at time of filing)",
+                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" ? "d-none" : "",
                     name: "balance_paid_at_time_of_filing",
                     type: "number",
                   },
+                  {
+                    label:
+                      "Other Professional Advice INitial Consultation",
+                    display: state.type === "initial consultation" ? "" : "d-none",
+                    name: "other_professional_advice_initial_consultation",
+                    type: "text",
+                  },
+                  {
+                    label:
+                      "Additional Relevant Information",
+                    display: state.type === "initial consultation" ? "" : "d-none",
+                    name: "additional_relevant_information",
+                    type: "text",
+                  },
+
+
                 ]
-              ).map(({ label, name, type, index }) => (
+              ).map(({ label, name, type, requried, display, index }) => (
                 <div
                   className={`form-group ${label.split(" ").length > 6
                     ? "col-lg-6 col-md-12"
                     : "col-lg-3 col-md-4 col-sm-6"
-                    } `}
+                    } ${display}`}
                   key={index}
                 >
                   <label
                     htmlFor={name}
                     className="font-size-4 text-black-2 line-height-reset"
                   >
-                    {label}
+                    {label} {requried === true ? <span className="text-danger">*</span> : ""}
                   </label>
                   <input
                     type={type}
@@ -585,7 +663,7 @@ const AgreementOneForm = ({
               ))}
             <div
               className={
-                openSignature === "yes" ? "d-none" : "form-group col-md-12 "
+                openSignature === "yes" || state.type === "recruitment services agreement" || state.type === "initial consultation" ? "d-none" : "form-group col-md-12 "
               }
             >
               <h3 className="font-size-4 text-black-2 line-height-reset">

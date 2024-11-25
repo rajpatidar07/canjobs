@@ -14,6 +14,7 @@ const employer_id = localStorage.getItem("company_id");
 const admin_id = localStorage.getItem("admin_id");
 // const agent_id = localStorage.getItem("agent_id");
 const user_type = localStorage.getItem("userType");
+let portal = localStorage.getItem("portal")
 // const admin_type = localStorage.getItem("admin_type");
 if (view_as_token) {
   Token = view_as_token;
@@ -312,7 +313,7 @@ export const getallEmployeeData = async (
       filter_status: status,
       job_id: job_id,
       work_permit_canada: candian,
-      interested_in: localStorage.getItem("portal") === "study" ? "study permit" : inserted,
+      interested_in: portal === "study" ? "study permit" : inserted,
       agent_id: agentId,
       assigned_by: assignedadminId,
       category: subType,
@@ -1957,6 +1958,7 @@ export const getAllMentionNotification = async (
       employee_id: "",
       page: page,
       limit: limit,
+      interested_in: portal === "study" ? "study permit" : ""
     },
     {
       headers: {
@@ -3518,7 +3520,7 @@ export const ExportExcelApi = async (type) => {
     `${API_URL}common/getDataForExcel`,
     {
       type: type,
-      interested_in: localStorage.getItem("portal") === "study" ? "study permit" : ""
+      interested_in: portal === "study" ? "study permit" : ""
     },
     {
       headers: {

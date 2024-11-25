@@ -170,22 +170,6 @@ const AdminSidebar = (props) => {
           </Link>
         </li>
         <li
-          ref={(el) => (liRefs.current["Manage Applicants"] = el)}
-          className={localStorage.getItem("portal") === "study"
-            ? "d-none"
-            : `${props.heading === "Manage Applicants" ? "active" : ""}`}
-        >
-          <Link
-            onClick={() => clearPageNo()}
-            to="/employee"
-            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
-          >
-            <LiaUsersSolid className="sidebar_icon" />
-            Manage Applicants
-            {/* <i className="far fa-user mr-5"></i>Manage Applicants */}
-          </Link>
-        </li>
-        <li
           ref={(el) => (liRefs.current["New Applicants"] = el)}
           className={
             localStorage.getItem("portal") === "study"
@@ -200,6 +184,22 @@ const AdminSidebar = (props) => {
             {/* <i className="far fa-user mr-5"></i> */}
             <LiaUsersSolid className="sidebar_icon" />
             New Applicants
+          </Link>
+        </li>
+        <li
+          ref={(el) => (liRefs.current["Manage Applicants"] = el)}
+          className={localStorage.getItem("portal") === "study"
+            ? "d-none"
+            : `${props.heading === "Manage Applicants" ? "active" : ""}`}
+        >
+          <Link
+            onClick={() => clearPageNo()}
+            to="/employee"
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+          >
+            <LiaUsersSolid className="sidebar_icon" />
+            Manage Applicants
+            {/* <i className="far fa-user mr-5"></i>Manage Applicants */}
           </Link>
         </li>
         <li
