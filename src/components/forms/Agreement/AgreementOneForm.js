@@ -435,21 +435,21 @@ const AgreementOneForm = ({
                     name: "client_contact",
                     display: state.type === "recruitment services agreement" ? "d-none" : "",
                     type: "number",
-                    requried: true,
+                    requried: state.type === "recruitment services agreement" ? false : true,
                   },
                   {
                     label: "Client's Telephone Number",
                     display: state.type === "initial consultation" ? "d-none" : "",
                     name: "client_telephone",
                     type: "number",
-                    requried: true,
+                    requried: state.type === "initial consultation" ? false : true,
                   },
                   {
                     label: "Client's Cellphone Number",
                     display: state.type === "initial consultation" ? "d-none" : "",
                     name: "client_cellphone",
                     type: "number",
-                    requried: true,
+                    requried: state.type === "initial consultation" ? false : true,
                   },
                   {
                     label: "Client's Fax Number",
@@ -470,7 +470,7 @@ const AgreementOneForm = ({
                     name: "summary",
                     display: state.type === "recruitment services agreement" || state.type === "initial consultation" ? "d-none" : "",
                     type: "text",
-                    requried: true,
+                    requried: state.type === "recruitment services agreement" || state.type === "initial consultation" ? false : true,
                   },
                 ]
                 : [
@@ -658,6 +658,7 @@ const AgreementOneForm = ({
                     placeholder={label}
                     id={name}
                     name={name}
+                    required={requried}
                   />
                   {errors[name] && (
                     <span className="text-danger font-size-3 mx-5">
