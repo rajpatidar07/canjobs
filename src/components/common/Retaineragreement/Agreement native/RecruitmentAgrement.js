@@ -305,84 +305,87 @@ const RecruitmentAgrement = () => {
                   </Text>
                 </View>
               </View>
-              <View style={styles.clientForm}>
-                <View style={styles.clientFormChild}>
-                  <Text style={styles.text}>
-                    <Text style={styles.textunderline}>{" " + (familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")}</Text>
+              <View style={{ flexDirection: "row", flexWrap: "wrap", marginBottom: 20 }}>
+                {/* Client Name */}
+                <View style={{ width: "33.33%", padding: 10 }}>
+                  <Text style={[styles.textunderline, { textTransform: "capitalize" }]}>
+                    {familyJsonArray[0]?.client_first_name || ""}{" "}
+                    {familyJsonArray[0]?.client_last_name || "_________________"}
                   </Text>
                   <Text>Name of Client</Text>
                 </View>
-                <View style={styles.clientFormChild}>
-                  <Text style={styles.text}>
-                    {familyJsonArray[0]?.client_signature ? (
-                      <View style={{ display: "flex", flexDirection: "column" }}>
-                        <View style={{ width: "500px" }}>
-                          <Image
-                            source={{ uri: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAApgAAAKYB3X3/OAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAANCSURBVEiJtZZPbBtFFMZ/M7ubXdtdb1xSFyeilBapySVU8h8OoFaooFSqiihIVIpQBKci6KEg9Q6H9kovIHoCIVQJJCKE1ENFjnAgcaSGC6rEnxBwA04Tx43t2FnvDAfjkNibxgHxnWb2e/u992bee7tCa00YFsffekFY+nUzFtjW0LrvjRXrCDIAaPLlW0nHL0SsZtVoaF98mLrx3pdhOqLtYPHChahZcYYO7KvPFxvRl5XPp1sN3adWiD1ZAqD6XYK1b/dvE5IWryTt2udLFedwc1+9kLp+vbbpoDh+6TklxBeAi9TL0taeWpdmZzQDry0AcO+jQ12RyohqqoYoo8RDwJrU+qXkjWtfi8Xxt58BdQuwQs9qC/afLwCw8tnQbqYAPsgxE1S6F3EAIXux2oQFKm0ihMsOF71dHYx+f3NND68ghCu1YIoePPQN1pGRABkJ6Bus96CutRZMydTl+TvuiRW1m3n0eDl0vRPcEysqdXn+jsQPsrHMquGeXEaY4Yk4wxWcY5V/9scqOMOVUFthatyTy8QyqwZ+kDURKoMWxNKr2EeqVKcTNOajqKoBgOE28U4tdQl5p5bwCw7BWquaZSzAPlwjlithJtp3pTImSqQRrb2Z8PHGigD4RZuNX6JYj6wj7O4TFLbCO/Mn/m8R+h6rYSUb3ekokRY6f/YukArN979jcW+V/S8g0eT/N3VN3kTqWbQ428m9/8k0P/1aIhF36PccEl6EhOcAUCrXKZXXWS3XKd2vc/TRBG9O5ELC17MmWubD2nKhUKZa26Ba2+D3P+4/MNCFwg59oWVeYhkzgN/JDR8deKBoD7Y+ljEjGZ0sosXVTvbc6RHirr2reNy1OXd6pJsQ+gqjk8VWFYmHrwBzW/n+uMPFiRwHB2I7ih8ciHFxIkd/3Omk5tCDV1t+2nNu5sxxpDFNx+huNhVT3/zMDz8usXC3ddaHBj1GHj/As08fwTS7Kt1HBTmyN29vdwAw+/wbwLVOJ3uAD1wi/dUH7Qei66PfyuRj4Ik9is+hglfbkbfR3cnZm7chlUWLdwmprtCohX4HUtlOcQjLYCu+fzGJH2QRKvP3UNz8bWk1qMxjGTOMThZ3kvgLI5AzFfo379UAAAAASUVORK5CYII=" }}
-                            style={{ minHeight: "50000px", minWidth: "50000px" }}
-                          />
-                        </View>
-                        {/* <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7 }}>
-                          <Text style={{ textTransform: "capitalize" }}>
-                            {familyJsonArray[0]?.client_first_name || ""}{" "}
-                            {familyJsonArray[0]?.client_last_name || ""}{" "}
-                          </Text>
-                          <Text> {(!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client === "0000-00-00" || familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00")
-                            ? "________________"
-                            : familyJsonArray[0]?.date_signature_client}</Text>
-                        </Text> */}
-                      </View>
-                    ) : (
-                      <Text>___________________</Text>
-                    )}
-                  </Text>
+                {/* Client Signature */}
+                <View style={{ width: "33.33%", padding: 10 }}>
+                  {familyJsonArray[0]?.client_signature ? (
+                    <View style={{ display: "flex", flexDirection: "column" }}>
+                      <Image
+                        source={{ uri: familyJsonArray[0]?.client_signature }}
+                        style={{ width: "60%", height: "auto" }}
+                      />
+                      <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7 }}>
+                        <Text style={{ textTransform: "capitalize" }}>
+                          {familyJsonArray[0]?.client_first_name || ""}{" "}
+                          {familyJsonArray[0]?.client_last_name || ""}{" "}
+                        </Text>
+                        <Text> {!familyJsonArray[0]?.date_signature_client ||
+                          familyJsonArray[0]?.date_signature_client ===
+                          "0000-00-00 00:00:00"
+                          ? "____________"
+                          : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</Text>
+                      </Text>
+                    </View>
+                  ) : (
+                    <Text>___________________</Text>
+                  )}
                   <Text>Signature of Client</Text>
                 </View>
-                <View style={styles.clientFormChild}>
-                  <Text style={styles.text}>
-                    <Text>
-                      {(!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client === "0000-00-00" || familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00")
-                        ? "________________"
-                        : familyJsonArray[0]?.date_signature_client}</Text>
+                {/* Client Signature Date*/}
+                <View style={{ width: "33.33%", padding: 10 }}>
+                  <Text style={[styles.textunderline, { marginTop: 10 }]}>
+                    {(!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client ===
+                      "0000-00-00 00:00:00")
+                      ? "________________"
+                      : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}
                   </Text>
                   <Text>Date</Text>
                 </View>
               </View>
-              <View style={styles.clientForm}>
-                <View style={styles.clientFormChild}>
-                  <Text style={styles.text}>
-                    <Text style={styles.textunderline}>Harpreet Kaur</Text>
+              <View style={{ flexDirection: "row", flexWrap: "wrap", marginBottom: 20 }}>
+                {/* RCIC Name */}
+                <View style={{ width: "33.33%", padding: 10 }}>
+                  <Text style={[styles.textunderline, { textTransform: "capitalize" }]}>
+                    Harpreet Kaur
                   </Text>
                   <Text>Name of RCIC</Text>
                 </View>
-                <View style={styles.clientFormChild}>
-                  <Text style={styles.text}>
-                    {felidData?.rcic_signature ? (
-                      <View style={{ display: "flex", flexDirection: "column" }}>
-                        <Image
-                          source={{ uri: felidData?.rcic_signature }}
-                          style={{ width: "40%", height: "auto" }}
-                        />
-                        <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7 }}>
-                          <Text style={{ textTransform: "capitalize" }}>
-                            Harpreet Kaur{" "}
-                          </Text>
-                          <Text> {(!felidData?.date_signature_rcic || felidData?.date_signature_rcic === "0000-00-00" || felidData?.date_signature_rcic === "0000-00-00 00:00:00")
-                            ? "________________"
-                            : felidData?.date_signature_rcic}</Text>
+                {/* RCIC Signature */}
+                <View style={{ width: "33.33%", padding: 10 }}>
+                  {felidData?.rcic_signature ? (
+                    <View style={{ display: "flex", flexDirection: "column" }}>
+                      <Image
+                        source={{ uri: felidData?.rcic_signature }}
+                        style={{ width: "60%", height: "auto" }}
+                      />
+                      <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7 }}>
+                        <Text style={{ textTransform: "capitalize" }}>
+                          Harpreet Kaur{" "}
                         </Text>
-                      </View>
-                    ) : (
-                      <Text>___________________</Text>
-                    )}
-                  </Text>
+                        <Text> {(!felidData?.date_signature_rcic || felidData?.date_signature_rcic === "0000-00-00" || felidData?.date_signature_rcic === "0000-00-00 00:00:00")
+                          ? "________________"
+                          : moment(felidData?.date_signature_rcic).format("DD-MM-YYYY")}</Text>
+                      </Text>
+                    </View>
+                  ) : (
+                    <Text>___________________</Text>
+                  )}
                   <Text>Signature of RCIC</Text>
                 </View>
-                <View style={styles.clientFormChild}>
-                  <Text style={styles.text}>
-                    <Text> {(!felidData?.date_signature_rcic || felidData?.date_signature_rcic === "0000-00-00" || felidData?.date_signature_rcic === "0000-00-00 00:00:00")
+                {/* RCIC Signature Date*/}
+                <View style={{ width: "33.33%", padding: 10 }}>
+                  <Text style={[styles.textunderline, { marginTop: 10 }]}>
+                    {(!felidData?.date_signature_rcic || felidData?.date_signature_rcic === "0000-00-00" || felidData?.date_signature_rcic === "0000-00-00 00:00:00")
                       ? "________________"
-                      : felidData?.date_signature_rcic}</Text>
+                      : moment(felidData?.date_signature_rcic).format("DD-MM-YYYY")}
                   </Text>
                   <Text>Date</Text>
                 </View>

@@ -77,98 +77,67 @@ const InitialConsultationAgreement = () => {
     convertBlob();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blobData]);
+  const parseDate = (date) => {
+    if (!date || date === "0000-00-00" || date === "0000-00-00 00:00:00") return null;
+    const parsedDate = new Date(date);
+    return !isNaN(parsedDate.getTime()) ? parsedDate : null;
+  };
+
+  const agreementDate = parseDate(felidData?.agreement_date);
+  const formattedDate = agreementDate
+    ? moment(agreementDate).format("DD MMMM YYYY")
+    : "____________";
   let components = (
     <View style={{ height: "auto" }}>
       <View style={{ padding: "10px 20px" }}>
-        {/* Header Section */}
-        <View style={styles.header}>
-          <Image style={styles.logo} src="https://canpathwaysjobs.com/image/00logo-main-black.png" />
-        </View>
-
-        {/* Main Content */}
-        <View>
-          <Text style={styles.title}>RETAINER AGREEMENT</Text>
-          <Text style={styles.subTitle}>Between Harpreet Kaur</Text>
-          <Text style={styles.subTitle}>CAN Pathways Immigration Consultancy Ltd.</Text>
-          <Text style={styles.subTitle}>
-            <Text style={styles.bold}>Client:</Text>
-            <Text style={styles.paraGap}>Sargam Walia</Text>
+        <View style={styles.section}>
+          <Text style={{ textAlign: "center", fontSize: "18px", marginBottom: 15 }}>RETAINER AGREEMENT{"\n"}
+            <Text style={{ textAlign: "center", fontSize: "12px", marginBottom: 15 }}>Between {"\n"} CAN Pathways Immigration Consultancy Ltd.{"\n"}</Text >
+            <Text style={[styles.bold, { textAlign: "center", fontSize: "12px", marginBottom: 15 }]}>Client:</Text>
+            <Text style={[styles.textunderline, { textAlign: "center", fontSize: "12px", marginBottom: 15 }]}> {familyJsonArray[0]?.client_first_name || ""}{" "}
+              {familyJsonArray[0]?.client_last_name || ""}{" "}</Text>
+            {"\n"}{"\n"}
           </Text>
 
           <Text style={styles.paragraph}>
-            This Agreement ("the <Text style={styles.bold}>Agreement</Text>") is made on the date mentioned below.
+            This Initial Consultation Agreement ("the <Text style={styles.bold}>Agreement</Text>") is made on the date mentioned below.{"\n"}{"\n"}
           </Text>
           <Text style={styles.paragraph}>
-            "The <Text style={styles.bold}>Effective Date:</Text> 3 October 2024"
+            "The <Text style={styles.bold}>Effective Date:</Text> {formattedDate || ""}"{"\n"}{"\n"}
           </Text>
-          <Text style={styles.paragraph}>BY AND BETWEEN</Text>
-          <Text style={styles.paragraph}>
-            This <Text style={styles.bold}>RECRUITMENT AGREEMENT</Text> entered by and between{" "}
-            <Text style={styles.bold}>CAN Pathways Immigration Consultancy Ltd.</Text> (the "Agency") with address at
-            Unit #310, 2618 Hopewell PI. NE Calgary, AB. T1Y 717, Canada, represented by Registered Canadian Immigration
-            Consultant referred to as (RCIC) Harpreet Kaur, herein{" "}
-            <Text style={styles.bold}>"Legal Representative / Agent / Recruiter"</Text>.
+          <Text style={styles.paragraph}>BY AND BETWEEN{"\n"}{"\n"}</Text>
+          <Text>
+            <Text style={styles.bold}>Harpreet Kaur</Text> (the "RCIC") Located
+            at:{" "}
+            <Text style={styles.bold}>
+              CAN Pathways Immigration Consultancy Ltd.
+            </Text>{" "}
+            Address:{" "}
+            <Text style={styles.bold}>
+              Unit #310, 2618 Hopewell Pl. NE, Calgary, AB, T1Y 717, Canada
+            </Text>{" "}
+            Hereinafter referred to as:{" "}
+            <Text style={styles.bold}>"Legal Representative/RCIC"{"\n"}{"\n"}</Text>
           </Text>
-          <Text style={styles.paragraph}>AND</Text>
-          <Text style={styles.paragraph}>
-            The <Text style={styles.bold}>"Candidate"</Text>, as his/her details appear in Appendix I of this present
-            agreement, collectively called the "Client".
+          <Text>
+            AND{"\n"}The <Text style={styles.bold}>"Candidate"</Text> as
+            his/her details provided as of this present agreement, collectively
+            called the <Text style={styles.bold}>"Client."{"\n"}{"\n"}</Text>
           </Text>
-          <Text style={styles.paragraph}>
-            <Text style={styles.bold}>WHEREAS</Text> the Recruiter and the Client wish to enter into a written agreement
-            which contains the agreed-upon terms and conditions upon which the Recruiter will provide his/her services to
-            the Client. Harpreet Kaur is a licensed recruiter and is authorized to engage in sourcing, selection, and
-            recruitment activities, potentially related to employment or staffing.
+          <Text>
+            <Text style={styles.bold}>Name:</Text> <Text style={[styles.textunderline]}>{familyJsonArray[0]?.client_first_name || ""}   {familyJsonArray[0]?.client_last_name || "" || "_______________"}</Text>{"\n"}
+            <Text style={styles.bold}>Address:</Text> <Text style={[styles.textunderline]}>{felidData?.client_address || "_______________"}{"\n"}</Text>
+            <Text style={styles.bold}>Phone Number:</Text> <Text style={[styles.textunderline]}>{felidData?.client_contact || "_______________"}{"\n"}</Text>
+            <Text style={styles.bold}>Email Address:</Text><Text style={[styles.textunderline]}> {felidData?.client_email || "_______________"}</Text>{"\n"}{"\n"}
           </Text>
-          <Text style={styles.paragraph}>
-            <Text style={styles.bold}>AND WHEREAS</Text> the recruiter is a member of the College of Immigration and
-            Citizenship Consultants (the "Council") (RCIC), the regulator in Canada for immigration consultants;
-          </Text>
-          <Text style={styles.paragraph}>
-            IN CONSIDERATION of the mutual promises and covenants herein contained and for other good and valuable
-            consideration, the receipt and sufficiency of which are hereby acknowledged, the parties hereto willing to be
-            legally bound agree as follows:
+          <Text style={[styles.bold, styles.textunderline]}>AGREEMENT</Text>{"\n"}
+          <Text>
+            Harpreet Kaur is a member in good standing of the immigration Consultants of Canada Regulatory Council.{"\n"}
+            (ICCRC).As such,its By-laws.Code of Professional Ethics, and Regulations bind her.{"\n"}
+            Additionally , the provisions of this agreement are subject to ICCRC regulations, certain aspects of which are predetermined and cannot be modified.
           </Text>
         </View>
         <View>
-          <View style={styles.section}>
-            <Text>
-              This Initial Consultation AGREEMENT ("the Agreement") is made on
-              the date mentioned below.{"\n"}"The Effective Date": D3 September 2024
-            </Text>
-            <View style={styles.section}>
-              <Text>BY AND BETWEEN</Text>
-              <Text>
-                <Text style={styles.bold}>Harpreet Kaur</Text> (the "RCIC") Located
-                at:{" "}
-                <Text style={styles.bold}>
-                  CAN Pathways Immigration Consultancy Ltd.
-                </Text>{" "}
-                Address:{" "}
-                <Text style={styles.bold}>
-                  Unit #310, 2618 Hopewell Pl. NE, Calgary, AB, T1Y 717, Canada
-                </Text>{" "}
-                Hereinafter referred to as:{" "}
-                <Text style={styles.bold}>"Legal Representative/RCIC"</Text>
-              </Text>
-              <Text>
-                AND{"\n"}The <Text style={styles.bold}>"Candidate"</Text> as
-                his/her details provided as of this present agreement, collectively
-                called the <Text style={styles.bold}>"Client."</Text>
-              </Text>
-              <Text>
-                <Text style={styles.bold}>Name:</Text> _______________{"\n"}
-                <Text style={styles.bold}>Address:</Text> _______________{"\n"}
-                <Text style={styles.bold}>Phone Number:</Text> _______________{"\n"}
-                <Text style={styles.bold}>Email Address:</Text> _______________{"\n"}        </Text>
-              <Text style={[styles.bold, styles.textunderline]}>AGREEMENT</Text>{"\n"}
-              <Text>
-                Harpreet Kaur is a member in good standing of the immigration Consultants of Canada Regulatory Council.{"\n"}
-                (ICCRC).As such,its By-laws.Code of Professional Ethics, and Regulations bind her.{"\n"}
-                Additionally , the provisions of this agreement are subject to ICCRC regulations, certain aspects of which are predetermined and cannot be modified.
-              </Text>
-            </View>
-          </View>
         </View>
         <View>
           <View style={styles.section}>
@@ -182,8 +151,8 @@ const InitialConsultationAgreement = () => {
             </Text>
             <View style={{ marginLeft: 20 }}>
               <Text style={styles.text}>• Visitor visa / Super-visa application{"\n"}• Study permit application{"\n"}• Work permit application / LMIA Related Inquiries (please specify) _____________{"\n"}• Permanent residence / Citizenship application (please specify)
-                _____________{"\n"}• Other (please specify): _____________{"\n"}Please provide additional relevant information below:
-                ___________________________________________________________________________________________
+                _____________{"\n"}• Other (please specify): {felidData?.other_professional_advice_initial_consultation ? <Text style={[styles.textunderline]}>{felidData?.other_professional_advice_initial_consultation}</Text> : "_____________"}{"\n"}Please provide additional relevant information below:{"\n"}
+                {felidData?.additional_relevant_information ? <Text style={[styles.textunderline]}>{felidData?.additional_relevant_information}</Text> : "___________________________________________________________________________________________"}
               </Text>
             </View>
           </View>
@@ -303,37 +272,75 @@ const InitialConsultationAgreement = () => {
               SIGNED BY THE CLIENT AND THE RCIC IN ACCEPTANCE OF AGREEMENT
             </Text>
 
-            <View style={styles.clientForm}>
+            <View style={{ flexDirection: "row", flexWrap: "wrap", marginBottom: 20 }}>
               {/* Client Signature */}
-              <View style={styles.clientFormChild}>
-                {/* <Image src="" alt="Client Signature" style={styles.image} /> */}
-                <Text style={styles.text}>______________________________</Text>
-                <Text style={styles.text}>
-                  <Text style={styles.bold}>John Doe</Text> 2024-11-18
-                </Text>
-                <Text style={styles.text}>Signature of Client</Text>
+              <View style={{ width: "50%", padding: 10 }}>
+                {familyJsonArray[0]?.client_signature ? (
+                  <View style={{ display: "flex", flexDirection: "column" }}>
+                    <Image
+                      source={{ uri: familyJsonArray[0]?.client_signature }}
+                      style={{ width: "60%", height: "auto" }}
+                    />
+                    <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7 }}>
+                      <Text style={{ textTransform: "capitalize" }}>
+                        {familyJsonArray[0]?.client_first_name || ""}{" "}
+                        {familyJsonArray[0]?.client_last_name || ""}{" "}
+                      </Text>
+                      <Text> {!familyJsonArray[0]?.date_signature_client ||
+                        familyJsonArray[0]?.date_signature_client ===
+                        "0000-00-00 00:00:00"
+                        ? "____________"
+                        : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</Text>
+                    </Text>
+                  </View>
+                ) : (
+                  <Text>___________________</Text>
+                )}
+                <Text>Signature of Client</Text>
               </View>
-
               {/* RCIC Signature */}
-              <View style={styles.clientFormChild}>
-                {/* <Image src="" alt="RCIC Signature" style={styles.image} /> */}
-                <Text style={styles.text}>______________________________</Text>
-                <Text style={styles.text}>
-                  <Text style={styles.bold}>Harpreet Kaur</Text> 2024-11-18
-                </Text>
-                <Text style={styles.text}>Signature of RCIC</Text>
+              <View style={{ width: "50%", padding: 10 }}>
+                {felidData?.rcic_signature ? (
+                  <View style={{ display: "flex", flexDirection: "column" }}>
+                    <Image
+                      source={{ uri: felidData?.rcic_signature }}
+                      style={{ width: "60%", height: "auto" }}
+                    />
+                    <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7 }}>
+                      <Text style={{ textTransform: "capitalize" }}>
+                        Harpreet Kaur{" "}
+                      </Text>
+                      <Text> {(!felidData?.date_signature_rcic || felidData?.date_signature_rcic === "0000-00-00" || felidData?.date_signature_rcic === "0000-00-00 00:00:00")
+                        ? "________________"
+                        : moment(felidData?.date_signature_rcic).format("DD-MM-YYYY")}</Text>
+                    </Text>
+                  </View>
+                ) : (
+                  <Text>___________________</Text>
+                )}
+                <Text>Signature of RCIC</Text>
               </View>
-            </View>
 
-            {/* Date Sections */}
-            <View style={styles.clientForm}>
-              <View style={styles.clientFormChild}>
-                <Text style={styles.text}>2024-11-18</Text>
-                <Text style={styles.text}>Date</Text>
+            </View>
+            <View style={{ flexDirection: "row", flexWrap: "wrap", marginBottom: 20 }}>
+              {/* Client Signature Date*/}
+              <View style={{ width: "50%", padding: 10 }}>
+                <Text style={[styles.textunderline, { marginTop: 10 }]}>
+                  {(!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client ===
+                    "0000-00-00 00:00:00")
+                    ? "________________"
+                    : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}
+                </Text>
+                <Text>Date</Text>
               </View>
-              <View style={styles.clientFormChild}>
-                <Text style={styles.text}>2024-11-18</Text>
-                <Text style={styles.text}>Date</Text>
+              {/* RCIC Signature Date*/}
+              <View style={{ width: "50%", padding: 10 }}>
+                <Text style={[styles.textunderline, { marginTop: 10 }]}>
+                  {(!felidData?.date_signature_rcic || felidData?.date_signature_rcic === "0000-00-00" || felidData?.date_signature_rcic === "0000-00-00 00:00:00")
+                    ? "________________"
+                    : moment(felidData?.date_signature_rcic).format("DD-MM-YYYY")}
+                </Text>
+                <Text>Date</Text>
               </View>
             </View>
           </View>

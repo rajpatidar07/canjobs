@@ -50,7 +50,7 @@ export default function UserSigningPage() {
             //     emp_user_type,
             //     folderId
             // );
-            let Agreeres = await GetAgreement("", user_id, emp_user_type, type)
+            let Agreeres = await GetAgreement("", user_id, emp_user_type, type === "PNP   express entry/federal PR" ? "PNP + express entry/federal PR" : type)
             if (Agreeres.data.data) {
                 setFelidData(Agreeres.data.data[0])
                 setLoader(false);
@@ -141,7 +141,7 @@ export default function UserSigningPage() {
                                                         emp_user_type={emp_user_type}
                                                         addSign={addSign} />
                                                     //<HtmlAgreementEight />
-                                                    : type === "PNP + express entry/federal PR"
+                                                    : type === "PNP   express entry/federal PR"
                                                         ? <HtmlAgreementOne
                                                             page={"user"}
                                                             felidData={felidData}
