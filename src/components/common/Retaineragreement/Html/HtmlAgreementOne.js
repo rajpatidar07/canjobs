@@ -1216,7 +1216,7 @@ services that have been rendered or accounting for the time that has been spent 
           " " +
           item.client_last_name +
           " "
-          }${item.date_signature_client}</span>
+          }${moment(item.date_signature_client).format("DD-MM-YYYY")}</span>
                   </small>
                       </div>`
           : page === "admin"
