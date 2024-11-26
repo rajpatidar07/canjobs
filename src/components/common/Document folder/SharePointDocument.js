@@ -816,26 +816,27 @@ export default function SharePointDocument({
                       "application/vnd.openxmlformats-officedocument.wordprocessingml.document") &&
                       convertedDoc ? (
                       // commentsRes ? (
-                        <AdobePDFViewer
-                          url={convertedDoc}
-                          data={docSingleDate}
-                          setDocSingleDate={setDocSingleDate}
-                          userId={user_id}
-                          commentsList={commentsList}
-                          selectedMentionAdmin={selectedMentionAdmin}
-                          DocUserType={emp_user_type}
-                          adminList={adminList}
-                          partnerList={partnerList}
-                          setCommentsList={setCommentsList}
-                          userType={localStorage.getItem("userType")}
-                          docsection={true}
-                          docTypeList={docTypeList}
-                          fileId={fileID}
-                          setFileID={setFileID}
-                          setConvertedDoc={setConvertedDoc}
-                          getCommentsList={getCommentsList}
-                          SetPdfDocUrl={SetPdfDocUrl}
-                        />
+                      <AdobePDFViewer
+                        url={convertedDoc}
+                        data={docSingleDate}
+                        setDocSingleDate={setDocSingleDate}
+                        userId={user_id}
+                        commentsList={commentsList}
+                        selectedMentionAdmin={selectedMentionAdmin}
+                        DocUserType={emp_user_type}
+                        adminList={adminList}
+                        partnerList={partnerList}
+                        setCommentsList={setCommentsList}
+                        userType={localStorage.getItem("userType")}
+                        docsection={true}
+                        docTypeList={docTypeList}
+                        fileId={fileID}
+                        setFileID={setFileID}
+                        setConvertedDoc={setConvertedDoc}
+                        getCommentsList={getCommentsList}
+                        SetPdfDocUrl={SetPdfDocUrl}
+                        openCommentBox={docId ? true : false}
+                      />
                       // ) : null
                     ) : (
                       <Loader />

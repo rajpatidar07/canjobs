@@ -87,9 +87,9 @@ function Employer() {
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
         {/* <!-- Header Area --> */}
-        <AdminHeader heading={"Manage Clients"} />
+        <AdminHeader heading={"Manage Employers"} />
         {/* <!-- navbar- --> */}
-        <AdminSidebar heading={"Manage Clients"} />
+        <AdminSidebar heading={"Manage Employers"} />
 
         {/* <!-- Add Company Details Modal --> */}
         {showAddEmployerModal ? (

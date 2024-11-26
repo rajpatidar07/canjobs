@@ -19,6 +19,7 @@ function SendMailForm({ email, setApiCall }) {
     description: "",
     email: email,
     adminemail: AdminEmail,
+    bccemail: ""
   };
 
   /*Validation */
@@ -208,7 +209,7 @@ function SendMailForm({ email, setApiCall }) {
   };
 
   /*Function to sent email*/
-  const onContactusClick = async () => {
+  const onSendMailClick = async () => {
     // console.log(fileBase);
     if (validate()) {
       try {
@@ -260,13 +261,23 @@ function SendMailForm({ email, setApiCall }) {
     }
   };
   // Update adminemail state to ensure multiple emails are comma-separated
-  const handleAdminEmailChange = (e) => {
+  const handleAdminCCEmailChange = (e) => {
     const value = e.target.value;
     const emailArray = value.split(",").map((email) => email.trim()); // Split emails and trim whitespace
 
     setState((prevState) => ({
       ...prevState,
       adminemail: [AdminEmail, ...emailArray.filter((email) => email !== AdminEmail)], // Ensure AdminEmail is always first
+    }));
+  };
+  // Update adminemail state to ensure multiple emails are comma-separated
+  const handleAdminBBEmailChange = (e) => {
+    const value = e.target.value;
+    const emailArray = value.split(",").map((email) => email.trim()); // Split emails and trim whitespace
+
+    setState((prevState) => ({
+      ...prevState,
+      bccemail: [...emailArray], // Ensure AdminEmail is always first
     }));
   };
   return (
@@ -311,13 +322,37 @@ function SendMailForm({ email, setApiCall }) {
               maxLength={100}
               name="adminemail"
               value={state.adminemail || ""}
-              onChange={handleAdminEmailChange} // Handle change
+              onChange={handleAdminCCEmailChange} // Handle change
               type="email"
               className={errors.adminemail ? "form-control border border-danger" : "form-control"}
               placeholder="CC Email"
               id="adminemail"
             />
             {errors.adminemail && <span key={errors.adminemail} className="text-danger font-size-3">{errors.adminemail}</span>}
+          </div>
+          {/* New BCC Email Field */}
+          <div className="mb-2 col-12">
+            <label
+              htmlFor="bccemail"
+              className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
+            >
+              BCC Email:
+            </label>
+            <input
+              maxLength={100}
+              name="bccemail"
+              value={state.bccemail || ""}
+              onChange={handleAdminBBEmailChange}
+              type="email"
+              className={errors.bccemail ? "form-control border border-danger" : "form-control"}
+              placeholder="BCC Email"
+              id="bccemail"
+            />
+            {errors.bccemail && (
+              <span key={errors.bccemail} className="text-danger font-size-3">
+                {errors.bccemail}
+              </span>
+            )}
           </div>
           <div className="mb-2 col-12">
             <label
@@ -411,7 +446,7 @@ function SendMailForm({ email, setApiCall }) {
               </button>
             ) : (
               <button
-                onClick={(e) => onContactusClick(e)}
+                onClick={(e) => onSendMailClick(e)}
                 className="btn btn-primary btn-small rounded-5 text-uppercase w-100"
                 type="button"
               >

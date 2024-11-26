@@ -203,11 +203,11 @@ const AdminSidebar = (props) => {
           </Link>
         </li>
         <li
-          ref={(el) => (liRefs.current["Manage Clients"] = el)}
+          ref={(el) => (liRefs.current["Manage Employers"] = el)}
           className={
             user_type === "agent"
               ? "d-none"
-              : `${props.heading === "Manage Clients" ? "active" : ""}`
+              : `${props.heading === "Manage Employers" ? "active" : ""}`
           }
         >
           <Link
@@ -217,7 +217,7 @@ const AdminSidebar = (props) => {
           >
             {/* <i className="far fa-building mr-5"></i> */}
             <BsBuildings className="sidebar_icon" />
-            Manage Clients
+            Manage Employers
           </Link>
         </li>
         <li
