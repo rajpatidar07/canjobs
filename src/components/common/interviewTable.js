@@ -55,7 +55,7 @@ function Interview(props) {
   /*Render function to get the interview*/
   useEffect(() => {
     InterviewData();
-    // eslint-disable-next-line
+   // eslint-disable-next-line
   }, [
     search,
     props.pageNo,

@@ -201,7 +201,7 @@ function AddJobModal(props) {
     } else {
       JobData();
     }
-    // eslint-disable-next-line
+  // eslint-disable-next-line
   }, [props]);
   /* Functionality to close the modal */
   const close = () => {

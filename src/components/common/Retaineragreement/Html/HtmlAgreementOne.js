@@ -1274,7 +1274,7 @@ services that have been rendered or accounting for the time that has been spent 
       felidData?.date_signature_rcic === "0000-00-00" ||
       felidData?.date_signature_rcic === "0000-00-00 00:00:00"
       ? ""
-      : felidData?.date_signature_rcic
+      : moment(felidData?.date_signature_rcic).format("DD-MM-YYYY")
     }</span>
 
                   </small>
@@ -1293,7 +1293,7 @@ services that have been rendered or accounting for the time that has been spent 
       felidData?.date_signature_rcic === "0000-00-00" ||
       felidData?.date_signature_rcic === "0000-00-00 00:00:00"
       ? "_____________________"
-      : `<span  class="para_gap" style="max-width: 200px;">${felidData?.date_signature_rcic}</span>`
+      : `<span  class="para_gap" style="max-width: 200px;">${moment(felidData?.date_signature_rcic).format("DD-MM-YYYY")}</span>`
     }
         </p>
         <p style="margin: 0 0 30px 0">Date</p>
@@ -1487,12 +1487,7 @@ services that have been rendered or accounting for the time that has been spent 
     </div>
 
     <div class="header" style="padding: 10px 20px">
-      <div style="text-align: center; color: #ed1c24">
-        Office: 2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7, Canada | Tel.:
-        403.888.5308 <br />Email: info@canpathways.ca |
-        Website:www.canpathways.ca
-      </div>
- <div  style="
+    <div  style="
           text-align: right;
           display: flex;
           flex-direction: column;
@@ -1519,6 +1514,12 @@ services that have been rendered or accounting for the time that has been spent 
     }</p>
           <p style="margin: 0 0 30px 0">Initial</p>
         </div>
+      <div style="text-align: center; color: #ed1c24">
+        Office: 2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7, Canada | Tel.:
+        403.888.5308 <br />Email: info@canpathways.ca |
+        Website:www.canpathways.ca
+      </div>
+ 
     </div>
   </body>
   </html>`;

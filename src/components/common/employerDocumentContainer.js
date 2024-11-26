@@ -586,7 +586,7 @@ export default function EmployerDocumrentContainer(props) {
       setApiCall(false);
     }
     setAnnotationMode(false);
-    // eslint-disable-next-line
+   // eslint-disable-next-line
   }, [docId, apiCall, docName]);
   //USeEffect foe commet replies list
   useEffect(() => {
@@ -600,7 +600,7 @@ export default function EmployerDocumrentContainer(props) {
     if (commenAapiCall === true) {
       setCommentApiCall(false);
     }
-    // eslint-disable-next-line
+  // eslint-disable-next-line
   }, [docId, commenAapiCall, adminid, annotationStatus]);
 
   /*Function to change document type */

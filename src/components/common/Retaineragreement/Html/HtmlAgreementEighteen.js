@@ -413,8 +413,28 @@ const HtmlAgreementEighteen = ({
         }
             </p>
             <p >Date</p>
+             <div  style="
+          text-align: right;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-evenly;
+          align-items: flex-end;
+        ">
+       <p class="para_gap text-uppercase"
+    } style="margin: 0">${felidData?.initial
+            ? felidData?.initial?.split(' ')               // Split the string by spaces
+                ?.filter(word => word)      // Filter out empty strings (caused by multiple spaces)
+                ?.map(word => word[0])      // Map each word to its first letter
+                ?.join(' ')
+            : page === "admin"
+                ? ""
+                : ``
+        }</p>
+          <p style="margin: 0 0 30px 0">Initial</p>
+        </div>
                 </div>
-        <div class="header" style="padding: 10px 20px; text-align: center; color: #ed1c24;">
+               
+        <div class="header mx-auto" style="padding: 10px 20px; text-align: center; color: #ed1c24;">
             Office: 2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7, Canada | Tel.: 403.888.5308 <br>Email: info@canpathways.ca | Website: www.canpathways.ca
         </div>
     </body>

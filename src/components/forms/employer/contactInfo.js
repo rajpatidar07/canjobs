@@ -101,7 +101,7 @@ function ContactInfo(props) {
     props.employerId === undefined || props.employerId === "0"
       ? setState(initialFormState)
       : EmployerData();
-    // eslint-disable-next-line
+// eslint-disable-next-line
   }, [props]);
 
   // COMPANY PERSONAL INFO SUBMIT BUTTON
