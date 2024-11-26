@@ -1554,7 +1554,7 @@ const AggrementOne = () => {
                         familyJsonArray[0]?.date_signature_client ===
                         "0000-00-00 00:00:00"
                         ? "____________"
-                        : familyJsonArray[0]?.date_signature_client}</Text>
+                        : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</Text>
                     </Text>
                   </View>
                 ) : (
@@ -1574,7 +1574,7 @@ const AggrementOne = () => {
                   {(!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client ===
                     "0000-00-00 00:00:00")
                     ? "________________"
-                    : familyJsonArray[0]?.date_signature_client}
+                    : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}
                 </Text>
                 <Text>Date</Text>
               </View>
@@ -1599,7 +1599,7 @@ const AggrementOne = () => {
                               item.date_signature_client ===
                               "0000-00-00 00:00:00"
                               ? "____________"
-                              : item.date_signature_client}
+                              : moment(item.date_signature_client).format("DD-MM-YYYY")}
                           </Text>
                         </Text>
                       </View>
@@ -1620,7 +1620,7 @@ const AggrementOne = () => {
                     <Text style={[styles.textunderline, { marginTop: 10 }]}>
                       {(!item.date_signature_client || felidData?.date_signature_rcic === "0000-00-00" || item.date_signature_client === "0000-00-00 00:00:00")
                         ? "________________"
-                        : item.date_signature_client}
+                        : moment(item.date_signature_client).format("DD-MM-YYYY")}
                     </Text>
                     <Text>Date</Text>
                   </View>
@@ -1641,7 +1641,7 @@ const AggrementOne = () => {
                       </Text>
                       <Text> {(!felidData?.date_signature_rcic || felidData?.date_signature_rcic === "0000-00-00" || felidData?.date_signature_rcic === "0000-00-00 00:00:00")
                         ? "________________"
-                        : felidData?.date_signature_rcic}</Text>
+                        : moment(felidData?.date_signature_rcic).format("DD-MM-YYYY")}</Text>
                     </Text>
                   </View>
                 ) : (
@@ -1659,7 +1659,7 @@ const AggrementOne = () => {
                 <Text style={[styles.textunderline, { marginTop: 10 }]}>
                   {(!felidData?.date_signature_rcic || felidData?.date_signature_rcic === "0000-00-00" || felidData?.date_signature_rcic === "0000-00-00 00:00:00")
                     ? "________________"
-                    : felidData?.date_signature_rcic}
+                    : moment(felidData?.date_signature_rcic).format("DD-MM-YYYY")}
                 </Text>
                 <Text>Date</Text>
               </View>
@@ -1802,37 +1802,30 @@ const AggrementOne = () => {
                     (familyJsonArray[0]?.client_last_name || " ")
                     : "_______________"}
                 </Text>
-                <Text style={{ margin: "10px 0 30px 0" }}>Client’s full name</Text>
+                <Text style={{ margin: "0 0 30px 0" }}>Client’s full name</Text>
               </View>
               <View style={[styles.clientFormChild, { alignSelf: "center" }]}>
-                {familyJsonArray[0]?.client_signature ?
-                  <View style={{ display: "flex", flexDirection: "column", marginBottom: 15 }}>
+                {familyJsonArray[0]?.client_signature ? (
+                  <View style={{ display: "flex", flexDirection: "column" }}>
                     <Image
-                      src={
-                        familyJsonArray[0]?.client_signature
-                          ? familyJsonArray[0]?.client_signature
-                          : ""
-                      }
-                      alt={(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || "")}
-
-                      style={{ width: "40%", height: "auto", alignSelf: "center" }}
+                      source={{ uri: familyJsonArray[0]?.client_signature }}
+                      style={{ width: "40%", height: "auto" ,alignSelf: "center"}}
                     />
-                    <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7, flex: "row" }}>
-                      <Text style={{ textTransform: "capitalize", flex: "column" }}>
-                        {familyJsonArray[0]?.client_first_name || "" +
-                          " " +
-                          familyJsonArray[0]?.client_last_name + " "
-                        }
+                    <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7 }}>
+                      <Text style={{ textTransform: "capitalize" }}>
+                        {familyJsonArray[0]?.client_first_name || ""}{" "}
+                        {familyJsonArray[0]?.client_last_name || ""}{" "}
                       </Text>
-                      <Text style={{ flex: "column" }}>
-                        {!familyJsonArray[0]?.date_signature_client ||
-                          familyJsonArray[0]?.date_signature_client ===
-                          "0000-00-00 00:00:00"
-                          ? "____________"
-                          : familyJsonArray[0]?.date_signature_client}</Text>
+                      <Text> {!familyJsonArray[0]?.date_signature_client ||
+                        familyJsonArray[0]?.date_signature_client ===
+                        "0000-00-00 00:00:00"
+                        ? "____________"
+                        : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</Text>
                     </Text>
                   </View>
-                  : <Text>___________________</Text>}
+                ) : (
+                  <Text>___________________</Text>
+                )}
                 <Text style={{ margin: "0 0 50px 0" }}>Signatures</Text>
               </View>
               <View style={styles.clientFormChild}>
@@ -1841,9 +1834,9 @@ const AggrementOne = () => {
                     familyJsonArray[0]?.date_signature_client ===
                     "0000-00-00 00:00:00"
                     ? "____________"
-                    : familyJsonArray[0]?.date_signature_client}
+                    : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}
                 </Text>
-                <Text style={{ margin: "10px 0 30px 0" }}>Date</Text>
+                <Text style={{ margin: "0 0 30px 0" }}>Date</Text>
               </View>
             </View>
           </View>
