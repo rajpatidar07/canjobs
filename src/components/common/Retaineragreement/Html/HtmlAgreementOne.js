@@ -1156,7 +1156,7 @@ services that have been rendered or accounting for the time that has been spent 
       " " +
       (familyJsonArray[0]?.client_last_name || "") +
       " "
-      }${familyJsonArray[0]?.date_signature_client}</span>
+      }${moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</span>
                   </small>
                       </div>`
       : page === "admin"
@@ -1191,7 +1191,7 @@ services that have been rendered or accounting for the time that has been spent 
       !familyJsonArray[0]?.date_signature_client ||
       familyJsonArray[0]?.date_signature_client === "0000-00-00"
       ? "_____________________"
-      : `<span  class="para_gap" style="max-width: 200px;">${familyJsonArray[0]?.date_signature_client}</span>`
+      : `<span  class="para_gap" style="max-width: 200px;">${moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</span>`
     }
             </p>
             <p style="margin: 0 0 30px 0">Date</p>
@@ -1247,7 +1247,7 @@ services that have been rendered or accounting for the time that has been spent 
           item.date_signature_client === "0000-00-00" ||
           !item.date_signature_client
           ? "_____________________"
-          : `<span  class="para_gap" style="max-width: 200px;">${item.date_signature_client}</span>`
+          : `<span  class="para_gap" style="max-width: 200px;">${moment(item.date_signature_client).format("DD-MM-YYYY")}</span>`
         }
             </p>
             <p style="margin: 0 0 30px 0">Date</p>
