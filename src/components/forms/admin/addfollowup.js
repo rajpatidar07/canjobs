@@ -70,6 +70,7 @@ function Addfollowup(props) {
       }
     } catch (err) {
       console.log(err);
+      setResponseData([]);
     }
   };
 
@@ -205,7 +206,6 @@ function Addfollowup(props) {
             <div
               className={`activity_container px-8 py-6 col-md-8 border-right ${props.page === "yes" ? "d-none" : ""}`}
             >
-              {/* {console.log(response)} */}
               <div className="single_note  p-5 rounded">
                 {response.length === 0 || !response ? (
                   <div className="d-flex justify-content-center">
@@ -533,7 +533,7 @@ function Addfollowup(props) {
               </tr>
             </thead>
             <tbody>
-              {response.map((item) => item.status === "1") ? (
+              {response.length !== 0 && response.map((item) => item.status === "1") ? (
                 (response || []).map(
                   (res) =>
                     res.status === "1" && (

@@ -286,13 +286,17 @@ function Notifications({
                                       }&docParentId=${data.notif_json
                                         ? JSON.parse(data.notif_json).doc_parent_id
                                         : ""
-                                      }`
+                                      }&annotationId=${data.notif_json
+                                        ? JSON.parse(data.notif_json).annotation_id
+                                        : ""}`
                                       ://Mention documents for employee
                                       `/${data.employee_id}?docId=${data.mention_id
                                       }&docParentId=${data.notif_json
                                         ? JSON.parse(data.notif_json).doc_parent_id
                                         : ""
-                                      }`
+                                      }&annotationId=${data.notif_json
+                                        ? JSON.parse(data.notif_json).annotation_id
+                                        : ""}`
                                     : data.subject === "mention_partner"//Partner admin chat for employee
                                       ? `/${data.employee_id}?partner=${data.from_id}`
                                       : data.subject === "mention_partnerChat"//Partner admin chat for partner

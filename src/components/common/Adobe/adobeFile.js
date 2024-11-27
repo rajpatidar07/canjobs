@@ -23,16 +23,16 @@ const AdobePDFViewer = ({
   setFileID,
   setConvertedDoc,
   getCommentsList,
-  SetPdfDocUrl
+  SetPdfDocUrl,
+  openCommentBox,
+  AnnoteId
 }) => {
-  let [openAnnotationBox, setOpenAnnotationBox] = useState(false);
+  let [openAnnotationBox, setOpenAnnotationBox] = useState(openCommentBox ? true : false);
   let [annotationDrawBox, setAnnotationDrawBox] = useState("");
-  let [annotationId, setAnnotationId] = useState("");
-  let [annotationData, setAnnotationData] = useState(
-    commentsList.length !== 0 ? commentsList
-      ?.map((item) => JSON.parse(item?.doctaskjson))
-      ?.filter((item) => item !== "") : []);
-
+  let [annotationId, setAnnotationId] = useState(AnnoteId);//"01PMN6UKUFRLIYUS2R5JGZAPLUMKPKPUW2");
+  let [annotationData, setAnnotationData] = useState(commentsList.length !== 0 ? commentsList
+    ?.map((item) => JSON.parse(item?.doctaskjson))
+    ?.filter((item) => item !== "") : []);
   const [annotationManager, setAnnotationManager] = useState(null);
   const [adobeViewer, setAdobeViewer] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(
@@ -69,7 +69,17 @@ const AdobePDFViewer = ({
       }
     }
   };
+  useEffect(() => {
+    // Compute AnoData when commentsList changes
+    const AnoData = commentsList.length !== 0
+      ? commentsList
+        ?.map((item) => JSON.parse(item?.doctaskjson))
+        ?.filter((item) => item !== "")
+      : [];
 
+    // Update the annotationData state
+    setAnnotationData(AnoData);
+  }, [commentsList]);
   // Optional: Update state if documents array changes
   // useEffect(() => {
   //   setDocSingleDate(docTypeList[currentIndex]);
@@ -89,8 +99,8 @@ const AdobePDFViewer = ({
           showPageControls: true,
           enableAnnotationAPIs: true,
           includePDFAnnotations: false,
-          showDownloadPDF: false, // Disable download
-          showPrintPDF: false,    // Disable print
+          // showDownloadPDF: false, // Disable download
+          // showPrintPDF: false,    // Disable print
         },
         url,
         data,
@@ -114,6 +124,7 @@ const AdobePDFViewer = ({
           adobeViewer
             .getAnnotationManager()
             .then((annotationManager) => {
+              console.log(annotationManager)
               setAnnotationManager(annotationManager);
               if (annotationData.length === 0) {
               } else {
@@ -141,7 +152,7 @@ const AdobePDFViewer = ({
                     newAnnotation,
                   ];
                   setAnnotationDrawBox(
-                    annotationData.find((item) => item.id === event.data.id)
+                    (annotationData).find((item) => item.id === event.data.id)
                       ? ""
                       : event.data
                   );
@@ -201,7 +212,7 @@ const AdobePDFViewer = ({
     // Cleanup function to clear the timer if the component unmounts or myState changes
     // return () => clearTimeout(timer);
     // eslint-disable-next-line
-  }, [url]);
+  }, [url, commentsList, annotationData]);
   /*Render method to Highlight the annotation from clicking it */
   useEffect(() => {
     // if (!data?.name?.includes(1295)) {

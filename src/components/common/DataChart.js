@@ -147,15 +147,21 @@ const DataChart = ({ data, dataType }) => {
 
   return (
     <div className="d-flex justify-content-center w-100 ">
-      <div id="chart" className="text-capitalize w-100">
-        <ReactApexChart
-          options={options}
-          series={counts}
-          type="pie"
-          width={"100%"}
-        />
-      </div>
-      <div id="html-dist"></div>
+      {data.length === 0 ?
+        <div className="text-capitalize w-100 h-100">
+          <p className="text-center">No Data found</p>
+        </div>
+        : <React.Fragment>
+          <div id="chart" className="text-capitalize w-100">
+            <ReactApexChart
+              options={options}
+              series={counts}
+              type="pie"
+              width={"100%"}
+            />
+          </div>
+          <div id="html-dist"></div>
+        </React.Fragment>}
     </div>
   );
 };

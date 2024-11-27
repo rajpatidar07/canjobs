@@ -14,19 +14,20 @@ const VisaSubStageSelector = ({
       {(FilterJson.visa_sub_stages[expandedStatus] || []).map((subStage, j) => (
         <div
           key={j}
-          className={`sub-stage text-capitalize ${expandedStatus === "file decision" ? "col-4" : "col-6"} ${(selectedStatus || []).some((item) => item.substage === subStage)
-              ? "selected"
-              : ""
+          className={`sub-stage  ${expandedStatus === "file decision" ? "col-4" : "col-6"} ${(selectedStatus || []).some((item) => item.substage === subStage)
+            ? "selected"
+            : ""
             }`}
           onClick={() => {
-            if(!id){
+            if (!id) {
               onVisaUpdateClick()
               handleSubStageSelection(expandedStatus, subStage)
-            }else{
+            } else {
               handleSubStageSelection(expandedStatus, subStage)
               if (expandedStatus === "file decision") {
                 setSelectedSubStage(subStage)
-              }}
+              }
+            }
           }}
         >
           <input
@@ -37,7 +38,10 @@ const VisaSubStageSelector = ({
             )}
             readOnly
           />
-          {subStage}
+          <span className={subStage === "itr" || subStage ===
+            "ielts/pte" ? `text-uppercase` : subStage ===
+              "pcc (all countries)" ? "" : `text-capitalize`}>{subStage ===
+                "pcc (all countries)" ? "PCC (all countries)" : subStage}</span>
         </div>
       ))}
     </div>

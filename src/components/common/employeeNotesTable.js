@@ -40,6 +40,7 @@ export default function EmployeeNotesTable({ search, userType }) {
       setIsLoading(false);
     } catch (err) {
       console.log(err);
+      setIsLoading(false);
     }
   };
   useEffect(() => {

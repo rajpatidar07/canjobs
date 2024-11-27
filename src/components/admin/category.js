@@ -370,11 +370,9 @@ function Category() {
                           {/* Map function to show the data in the list*/}
                           {totalData === 0 || categoryData.length === 0 ? (
                             <tr>
-                              <th className="bg-white"></th>
-                              <th className="bg-white text-center">
+                              <th colSpan={2} className="bg-white text-center">
                                 No Data Found
                               </th>
-                              <th className="bg-white"></th>
                             </tr>
                           ) : (
                             (categoryData || []).map((catdata,i) => (

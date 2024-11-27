@@ -34,6 +34,7 @@ function CompanyProfileDetail(props) {
   const docId = searchParams.get("docId");
   const CompanyId = searchParams.get("cId");
   const docParentId = searchParams.get("docParentId");
+  const docHighAnnoId = searchParams.get("annotationId");
   const notes = searchParams.get("note");
   const note_id = searchParams.get("noteid");
   const agreement = searchParams.get("agreement");
@@ -887,6 +888,7 @@ function CompanyProfileDetail(props) {
                       folderId={
                         docId ? docParentId : employerData.documents_folder_id
                       }
+                      AnnoteId={docHighAnnoId}
                       notification={docId ? "yes" : "no"}
                       docId={docId ? docId : ""}
                       user_name={employerData.company_name}

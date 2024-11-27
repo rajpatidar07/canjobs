@@ -37,6 +37,7 @@ export default function SharePointDocument({
   docTypePage,
   user_name,
   partnerId,
+  AnnoteId
 }) {
   const [docTypeName, setDocTypeName] = useState("");
   const [newType, setNewType] = useState("");
@@ -251,6 +252,7 @@ export default function SharePointDocument({
             setDocSingleDate(res.data.data.find((item) => item.id === newdocId));
             SetPdfDocUrl(res.data.data.find((item) => item.id === newdocId));
             setFileID(res.data.data.find((item) => item.id === newdocId).id);
+            getCommentsList(res.data.data.find((item) => item.id === newdocId))
             const newUrl = window.location.pathname;
             window.history.replaceState({}, document.title, newUrl);
           }
@@ -836,6 +838,7 @@ export default function SharePointDocument({
                         getCommentsList={getCommentsList}
                         SetPdfDocUrl={SetPdfDocUrl}
                         openCommentBox={docId ? true : false}
+                        AnnoteId={AnnoteId}
                       />
                       // ) : null
                     ) : (

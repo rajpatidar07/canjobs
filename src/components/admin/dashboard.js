@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // import EmployeeDetails from "../common/employeeDetail";
 // import { ToastContainer /*,toast */ } from "react-toastify";
 import Interview from "../common/interviewTable";
@@ -29,6 +29,8 @@ const AdminDashboard = ({ setLoginCondition }) => {
   // }, []);
   let adminType = localStorage.getItem("admin_type");
   let adminId = localStorage.getItem("admin_id");
+  let navigateUrl = localStorage.getItem("navigation_url")
+  let navigate = useNavigate()
   // eslint-disable-next-line
   /*States */
   // let [showEmployeeProfile, setShowEmployeeProfile] = useState(false);
@@ -150,6 +152,10 @@ const AdminDashboard = ({ setLoginCondition }) => {
     if (apiCall === true) {
       setApiCall(false);
     }
+    if (navigateUrl) {
+      navigate(`${navigateUrl}`)
+      localStorage.setItem("navigation_url", "")
+    }
     // eslint-disable-next-line
   }, [apiCall]);
 
@@ -178,7 +184,6 @@ const AdminDashboard = ({ setLoginCondition }) => {
   //       maximumFractionDigits: 2,
   //     })
   //   : null;
-
   return (
     <div className="site-wrapper overflow-hidden bg-default-2">
       {/* <!-- Header Area --> */}

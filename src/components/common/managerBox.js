@@ -88,110 +88,115 @@ export default function ManegerBox({
     <table className="table table-striped main_data_table">
       <thead>
         <tr>
-          <th scope="col" className="border-0 font-size-4 font-weight-normal" 
-          title="Name">
+          <th scope="col" className="border-0 font-size-4 font-weight-normal"
+            title="Name">
             Name
           </th>
           <th scope="col" className="border-0 font-size-4 font-weight-normal"
-          title="Contact">
+            title="Contact">
             Contact
           </th>
           <th scope="col" className="border-0 font-size-4 font-weight-normal"
-          title="Total Jobs">
+            title="Total Jobs">
             Total Jobs
           </th>
         </tr>
       </thead>
       <tbody>
-        {(allData || []).map((item, index) => (
-          <tr key={index}>
-            <td className="border-0">
-              <Accordion
-                className="w-100 p-0 m-0 border-0"
-                activeKey={activeAccordion}
-                onSelect={() => handleAccordionToggle(item.admin_id)}
-                flush
-              >
-                <Accordion.Item
-                  eventKey={item.admin_id}
-                  className="card w-100 rounded-6 overflow-hidden border-0"
+        {allData.length === 0 || !allData ? <tr>
+          <td colSpan={3}>
+            <p className="text-center">No Data found</p>
+          </td>
+        </tr> :
+          (allData || []).map((item, index) => (
+            <tr key={index}>
+              <td className="border-0">
+                <Accordion
+                  className="w-100 p-0 m-0 border-0"
+                  activeKey={activeAccordion}
+                  onSelect={() => handleAccordionToggle(item.admin_id)}
+                  flush
                 >
-                  <Accordion.Header className="w-100 m-0 border-0 bg-white accordian_btn_design">
-                    <div className="d-flex executive_box gx-2 w-100 justify-content-between align-items-center">
-                      <div className="d-flex w-100">
-                        <div className="media d-flex align-items-center">
-                          <div className="circle-40 mx-auto overflow-hidden">
-                            {item.profile_image === null ? (
-                              <img
-                                src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                                alt=""
-                                className="w-100"
-                              />
-                            ) : (
-                              <img
-                                src={item.profile_image}
-                                alt=""
-                                className="w-100"
-                              />
-                            )}
+                  <Accordion.Item
+                    eventKey={item.admin_id}
+                    className="card w-100 rounded-6 overflow-hidden border-0"
+                  >
+                    <Accordion.Header className="w-100 m-0 border-0 bg-white accordian_btn_design">
+                      <div className="d-flex executive_box gx-2 w-100 justify-content-between align-items-center">
+                        <div className="d-flex w-100">
+                          <div className="media d-flex align-items-center">
+                            <div className="circle-40 mx-auto overflow-hidden">
+                              {item.profile_image === null ? (
+                                <img
+                                  src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                                  alt=""
+                                  className="w-100"
+                                />
+                              ) : (
+                                <img
+                                  src={item.profile_image}
+                                  alt=""
+                                  className="w-100"
+                                />
+                              )}
+                            </div>
+                          </div>
+                          <div className="text-left mb-0 d-flex profile_name_box ">
+                            <h5 className="m-0 text-black-3 font-weight-bold d-block text-capitalize ml-4" title={item.name}>
+                              {item.name}
+                              <p className="text-gray font-size-3 m-0 text-capitalize"
+                                title={`(${item.admin_type})`}>
+                                ({item.admin_type})
+                              </p>
+                            </h5>
                           </div>
                         </div>
-                        <div className="text-left mb-0 d-flex profile_name_box ">
-                          <h5 className="m-0 text-black-3 font-weight-bold d-block text-capitalize ml-4" title={item.name}>
-                            {item.name}
-                            <p className="text-gray font-size-3 m-0 text-capitalize"
-                            title={`(${item.admin_type})`}>
-                              ({item.admin_type})
-                            </p>
-                          </h5>
-                        </div>
                       </div>
-                    </div>
-                  </Accordion.Header>
-                  <Accordion.Body>
-                    {/* Assigned Job Table */}
-                    <AssignedJobTable
-                      heading={"Assigned Job's"}
-                      data={allData}
-                      isLoading={isLoading}
-                      handleSort={handleSort}
-                      nPages={nPages}
-                      currentPage={currentPage}
-                      setCurrentPage={setCurrentPage}
-                      totalData={totalData}
-                      manager_id={item.admin_id}
-                      setTotalJobs={setTotalJobs}
-                      setApiCall={setApiCall}
-                    />
-                  </Accordion.Body>
-                </Accordion.Item>
-              </Accordion>
-            </td>
-            <td className="border-0 align-baseline">
-              <div className="ml-4">
-                <p className="text-gray font-size-3 m-0 mb-3"
-                title={item.email}>{item.email}</p>
-                <p className="text-gray font-size-3 m-0 "
-                title={item.contact_no}>{item.contact_no}</p>
-              </div>
-            </td>
-            <td className="border-0 align-baseline">
-              <div className="ml-4">
-                <p title={(totalJobs || []).find((i) => i.managerId === item.admin_id)
+                    </Accordion.Header>
+                    <Accordion.Body>
+                      {/* Assigned Job Table */}
+                      <AssignedJobTable
+                        heading={"Assigned Job's"}
+                        data={allData}
+                        isLoading={isLoading}
+                        handleSort={handleSort}
+                        nPages={nPages}
+                        currentPage={currentPage}
+                        setCurrentPage={setCurrentPage}
+                        totalData={totalData}
+                        manager_id={item.admin_id}
+                        setTotalJobs={setTotalJobs}
+                        setApiCall={setApiCall}
+                      />
+                    </Accordion.Body>
+                  </Accordion.Item>
+                </Accordion>
+              </td>
+              <td className="border-0 align-baseline">
+                <div className="ml-4">
+                  <p className="text-gray font-size-3 m-0 mb-3"
+                    title={item.email}>{item.email}</p>
+                  <p className="text-gray font-size-3 m-0 "
+                    title={item.contact_no}>{item.contact_no}</p>
+                </div>
+              </td>
+              <td className="border-0 align-baseline">
+                <div className="ml-4">
+                  <p title={(totalJobs || []).find((i) => i.managerId === item.admin_id)
                     ? (totalJobs || []).find(
-                        (i) => i.managerId === item.admin_id
-                      ).count
+                      (i) => i.managerId === item.admin_id
+                    ).count
                     : 0}>
-                  {(totalJobs || []).find((i) => i.managerId === item.admin_id)
-                    ? (totalJobs || []).find(
+                    {(totalJobs || []).find((i) => i.managerId === item.admin_id)
+                      ? (totalJobs || []).find(
                         (i) => i.managerId === item.admin_id
                       ).count
-                    : 0}
-                </p>
-              </div>
-            </td>
-          </tr>
-        ))}
+                      : 0}
+                  </p>
+                </div>
+              </td>
+            </tr>
+          ))}
       </tbody>
     </table>
   );

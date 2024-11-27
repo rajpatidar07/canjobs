@@ -1,14 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Loader from "../common/loader";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const NotFound = (props) => {
   let token = localStorage.getItem("token")
   let location = useLocation()
   const searchParams = new URLSearchParams(location.search);
+  // const agreement = searchParams.get("agreement");
   const docId = searchParams.get("docId");
   const notes = searchParams.get("note");
   const portal = localStorage.getItem("portal")
+  let navigate = useNavigate()
+  useEffect(() => {
+    if (docId || notes) {
+      localStorage.setItem("navigation_url", location.pathname + location.search)
+      navigate("/adminlogin")
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     token && (location.pathname === "/partner_profile"
       || location.pathname === "/dashboard"

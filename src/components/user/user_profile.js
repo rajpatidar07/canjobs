@@ -53,11 +53,12 @@ const NewUserProfile = (props) => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const docId = searchParams.get("docId");
-  const docParentId = searchParams.get("docParentId");
-  const partnerChat = searchParams.get("partner");
-  const notes = searchParams.get("note");
-  const note_id = searchParams.get("noteid");
   const agreement = searchParams.get("agreement");
+  const notes = searchParams.get("note");
+  const docParentId = searchParams.get("docParentId");
+  const docHighAnnoId = searchParams.get("annotationId");
+  const partnerChat = searchParams.get("partner");
+  const note_id = searchParams.get("noteid");
   let navigate = useNavigate();
 
   const [apiCall, setApiCall] = useState(false);
@@ -1578,6 +1579,7 @@ const NewUserProfile = (props) => {
                             ? docParentId
                             : PersonalDetail.documents_folder_id
                         }
+                        AnnoteId={docHighAnnoId}
                         notification={docId ? "yes" : "no"}
                         docId={docId ? docId : ""}
                         docTypePage={"adobe"}
