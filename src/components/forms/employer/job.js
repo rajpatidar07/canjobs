@@ -201,7 +201,7 @@ function AddJobModal(props) {
     } else {
       JobData();
     }
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [props]);
   /* Functionality to close the modal */
   const close = () => {
@@ -804,7 +804,7 @@ function AddJobModal(props) {
                   )}
                 </div>
               </div>
-              <div className="form-group col-md-4 px-0 pr-3">
+              <div className="form-group col-md-4 px-0 pr-3 d-none">
                 <label
                   htmlFor="requirement"
                   className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"

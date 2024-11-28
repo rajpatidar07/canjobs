@@ -11,6 +11,8 @@ import JobTable from "../common/jobTable";
 import EmployeeTable from "../common/employeeTable";
 import EmployerTable from "../common/employerTable";
 import {
+  AddAdminPermission,
+  GetAdminrSetting,
   /*getSummaryCount*/ GetAllApplicanttypeChartData,
   GetAllChartData /* GetAllLimaChartData, GetAllVisaChartData */,
 } from "../../api/api";
@@ -61,6 +63,90 @@ const AdminDashboard = ({ setLoginCondition }) => {
   const [applicantsTypeChartData, setapplicantsTypeChartData] = useState([]);
   // const [lmiaChartData, setLmiaChartData] = useState([]);
   // const [visaChartData, setVisaChartData] = useState([]);
+  // State to manage sidebar visibility
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  // State to manage table visibility
+  const [tables, setTables] = useState({
+    jobTable: 0,
+    employeeTable: 0,
+    employerTable: 0,
+    lmiaTable: 0,
+    followupTable: 0,
+    taskTable: 0,
+    activityTable: 0,
+    interviewTable: 0
+  });
+
+  // Toggle sidebar visibility
+  const toggleMangeTableSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+  /*Function to get the permision data */
+  const GetDashboardPermissionData = async () => {
+    try {
+      let Response = await GetAdminrSetting();
+      const dashboard_permission = JSON.parse(Response.data.dashboard_permission);
+      setTables(dashboard_permission || tables);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  // Handle checkbox change
+  const handleMangeTableCheckboxChange = async (tableName) => {
+    const updatedPermissions = {
+      dashboard_permission: {
+        jobTable: tableName === "jobTable"
+          ? tables.jobTable === 0
+            ? 1
+            : 0
+          : tables.jobTable,
+        employeeTable: tableName === "employeeTable"
+          ? tables.employeeTable === 0
+            ? 1
+            : 0
+          : tables.employeeTable,
+        employerTable: tableName === "employerTable"
+          ? tables.employerTable === 0
+            ? 1
+            : 0
+          : tables.employerTable,
+        lmiaTable: tableName === "lmiaTable"
+          ? tables.lmiaTable === 0
+            ? 1
+            : 0
+          : tables.lmiaTable,
+        followupTable: tableName === "followupTable"
+          ? tables.followupTable === 0
+            ? 1
+            : 0
+          : tables.followupTable,
+        taskTable: tableName === "taskTable"
+          ? tables.taskTable === 0
+            ? 1
+            : 0
+          : tables.taskTable,
+        activityTable: tableName === "activityTable"
+          ? tables.activityTable === 0
+            ? 1
+            : 0
+          : tables.activityTable,
+        interviewTable: tableName === "interviewTable"
+          ? tables.interviewTable === 0
+            ? 1
+            : 0
+          : tables.interviewTable,
+      }
+    }
+    try {
+      let Response = await AddAdminPermission(updatedPermissions);
+      if (Response.message === "successfully") {
+        GetDashboardPermissionData()
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  };
 
   /*Function to maximixe and minimize the tables*/
   const toggleTable = (tableNumber) => {
@@ -149,6 +235,7 @@ const AdminDashboard = ({ setLoginCondition }) => {
   };
   useEffect(() => {
     GetChartData();
+    GetDashboardPermissionData();
     if (apiCall === true) {
       setApiCall(false);
     }
@@ -200,6 +287,55 @@ const AdminDashboard = ({ setLoginCondition }) => {
         }
         id="dashboard-body"
       >
+        {/* <!--Mange Table sidebar  --> */}
+        <div className="global_search_box  position-relative">
+          <div
+            className={
+              isSidebarOpen
+                ? " d-flex global_search_content notification_box position-fixed show"
+                : " d-flex global_search_content notification_box position-fixed"
+            }
+          >
+            <div className="left_side" onClick={() => setIsSidebarOpen(false)}></div>
+            <div className="right_side bg-white">
+              <div className="global_search d-flex align-items-center p-3 px-5 justify-content-between">
+                <h4 className="font-size-5 font-weight-bold m-0 border-bottom text-uppercase px-5">
+                  Mange Tables
+                </h4>
+                <i
+                  style={{ fontSize: "22px" }}
+                  className="fas fa-times text-dark ml-4"
+                  onClick={() => setIsSidebarOpen(false)}
+                ></i>
+              </div>
+              <div
+                className="row global_search_result notofications_list  px-5 ">
+                {/* Sidebar */}
+                {isSidebarOpen && (
+                  <li
+                    className={
+                      `border-bottom border-hit-gray font-size-5 text-wrap`
+                    }
+                    style={{ padding: "10px", borderBottom: "1px solid #ddd" }}
+                  >
+                    {tables && Object.keys(tables || []).map((tableName, index) => (
+                      <div className="text-dark text-decoration-none d-flex justify-content-between" key={index}>
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={tables[tableName] === 0 ? false : true}
+                            onChange={() => handleMangeTableCheckboxChange(tableName)}
+                          />
+                          <span className="px-2 text-capitalize">{tableName}</span>
+                        </label>
+                      </div>
+                    ))}
+                  </li>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div className="container-fluid mt-5">
           {/* <!-- Summary count --> */}
@@ -447,6 +583,12 @@ const AdminDashboard = ({ setLoginCondition }) => {
                 </div>
               </div>
             </div>
+            {isSidebarOpen ? null :
+              <div className="d-flex flex-row-reverse col-12 mb-2">
+                <button className="btn btn-primary" onClick={toggleMangeTableSidebar}>
+                  {"Mange tables"}
+                </button>
+              </div>}
             {/* Applicant's Lima */}
             {/* <div
               id="table_01"
@@ -482,7 +624,7 @@ const AdminDashboard = ({ setLoginCondition }) => {
               </div>
             </div> */}
             {/* <!-- Recent Jobs- --> */}
-            <div
+            {tables.jobTable ? <div
               id="table1"
               className={openTable === 1 ? "col-md-12" : "col-md-6"}
             >
@@ -541,9 +683,9 @@ const AdminDashboard = ({ setLoginCondition }) => {
                   response={openTable === 1 ? "response" : ""}
                 />
               </div>
-            </div>
+            </div> : null}
             {/* <!-- Recent Employees- --> */}
-            <div
+            {tables.employeeTable ? <div
               id="table4"
               className={openTable === 4 ? "col-md-12" : "col-md-6"}
             >
@@ -603,9 +745,9 @@ const AdminDashboard = ({ setLoginCondition }) => {
                   adminFilterValue={adminId}
                 />
               </div>
-            </div>
+            </div> : null}
             {/* <!-- Recent Companies --> */}
-            <div
+            {tables.employerTable ? <div
               id="table2"
               className={openTable === 2 ? "col-md-12" : "col-md-6"}
             >
@@ -663,7 +805,7 @@ const AdminDashboard = ({ setLoginCondition }) => {
                   setApiCall={setApiCall}
                 />
               </div>
-            </div>
+            </div> : null}
             {/* <!-- Recent Job Response- --> */}
             {/* <div className="bg-white dashboard_card mb-7">
                 <div className="d-flex justify-content-between p-5 align-items-center">
@@ -701,7 +843,7 @@ const AdminDashboard = ({ setLoginCondition }) => {
                 <JobResponse heading={"Dashboard"} filter_by_time={response} />
               </div> */}
             {/* <!-- Recent lima's- --> */}
-            <div
+            {tables.lmiaTable ? <div
               id="table5"
               className={openTable === 5 ? "col-md-12" : "col-md-6"}
             >
@@ -761,9 +903,9 @@ const AdminDashboard = ({ setLoginCondition }) => {
                   setpageNo={setLmiaPageNo}
                 />
               </div>
-            </div>
+            </div> : null}
             {/* <!-- Recent Interviews- --> */}
-            <div
+            {tables.interviewTable ? <div
               id="table3"
               className={openTable === 3 ? "col-md-12" : "col-md-6"}
             >
@@ -822,9 +964,9 @@ const AdminDashboard = ({ setLoginCondition }) => {
                   openTable={openTable}
                 />
               </div>
-            </div>
+            </div> : null}
             {/* <!-- Recent Follow- --> */}
-            <div
+            {tables.followupTable ? <div
               id="table6"
               className={openTable === 6 ? "col-md-12" : "col-md-6"}
             >
@@ -880,8 +1022,9 @@ const AdminDashboard = ({ setLoginCondition }) => {
                   page={"dashboard"}
                 />
               </div>
-            </div>
-            <div
+            </div> : null}
+            {/* <!-- Recent Tasks- --> */}
+            {tables.taskTable ? <div
               id="table4"
               className={openTable === 7 ? "col-md-12" : "col-md-6"}
             >
@@ -939,8 +1082,9 @@ const AdminDashboard = ({ setLoginCondition }) => {
                   setApiCall={setApiCall}
                 />
               </div>
-            </div>
-            <div
+            </div> : null}
+            {/* <!-- Recent Activity- --> */}
+            {tables.activityTable ? <div
               id="table8"
               className={openTable === 8 ? "col-md-12" : "col-md-6"}
             >
@@ -989,7 +1133,7 @@ const AdminDashboard = ({ setLoginCondition }) => {
                   setApiCall={setApiCall}
                 />
               </div>
-            </div>
+            </div> : null}
           </div>
         </div>
       </div>

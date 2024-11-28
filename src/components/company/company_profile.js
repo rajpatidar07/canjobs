@@ -886,8 +886,7 @@ function CompanyProfileDetail(props) {
                       user_id={cid}
                       emp_user_type={"employer"}
                       folderId={
-                        docId ? docParentId : employerData.documents_folder_id
-                      }
+                        docId ? docParentId : employerData.documents_folder_id}
                       AnnoteId={docHighAnnoId}
                       notification={docId ? "yes" : "no"}
                       docId={docId ? docId : ""}

@@ -94,7 +94,7 @@ export default function ManageTask() {
                                 </select>
                             </div>
                             <div className="col p-1 form_group mb-3">
-                                <p className="input_label">Filter by user:</p>
+                                <p className="input_label">Filter by Candidate:</p>
                                 <select
                                     name="userId"
                                     value={userId + "," + userType}
