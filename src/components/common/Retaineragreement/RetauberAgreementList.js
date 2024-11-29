@@ -61,7 +61,8 @@ export default function RetauberAgreementList({
       if (res.data.data) {
         setAgreementList(res.data.data);
         const newUrl = window.location.pathname;
-        window.history.replaceState({}, document.title, newUrl);
+       window.history.replaceState({}, document.title, newUrl);
+localStorage.setItem("navigation_url", "")
       } else {
         setAgreementList([]);
       }

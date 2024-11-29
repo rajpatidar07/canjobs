@@ -728,7 +728,8 @@ export const ADocAnnotation = async (
   docPartentId,
   AdobeAnnotation,
   annotationId,
-  DocUserType
+  DocUserType,
+  docName
 ) => {
   // console.log(
   //"1. task_creator_user_id =>", id,
@@ -789,6 +790,7 @@ export const ADocAnnotation = async (
       id: annotationId,
       assigned_to: email,
       assigned_to_name: assignName,
+      document_name: docName
     },
     {
       headers: {
@@ -944,7 +946,8 @@ export const SendReplyCommit = async (
   employee_id,
   parent_id,
   DocUserType,
-  id
+  id,
+  docName
 ) => {
   console.log("  id =>", id,
     //   "doc_id =>", data.doc_id,
@@ -989,6 +992,7 @@ export const SendReplyCommit = async (
       msg: msg,
       type: type,
       employee_id: employee_id,
+      document_name: docName,
       doc_parent_id: parent_id// want to make changes to the backend for this variable
     },
     {

@@ -31,6 +31,11 @@ function GlobalSearch() {
       GlobalSearchAPICall();
     }
   };
+  const close = () => {
+    setshow(false)
+    setSearchData([])
+    setsearch("")
+  }
   return (
     <div className="global_search_box">
       {/* <i
@@ -63,6 +68,7 @@ function GlobalSearch() {
                 className="form-control"
                 placeholder="Search Candidate"
                 name="Employee_name"
+                value={search}
                 onChange={(e) => setsearch(e.target.value)}
                 onKeyPress={handleKeyPress}
               />
@@ -100,9 +106,7 @@ function GlobalSearch() {
               style={{ fontSize: "22px" }}
               className="fas fa-times text-dark ml-4"
               onClick={() => {
-                setshow(false)
-                setSearchData([])
-                setsearch("")
+                close()
               }}
             ></i>
           </div>
@@ -117,6 +121,7 @@ function GlobalSearch() {
                     </h5>
                     {searchData["employee"].map((data) => (
                       <GlobalSearchCard
+                        close={close}
                         to={`/${data.employee_id}`}
                         key={data.employee_id} // Use a unique key
                         name={data.name}
@@ -133,6 +138,7 @@ function GlobalSearch() {
                     </h5>
                     {searchData["employer"].map((data) => (
                       <GlobalSearchCard
+                        close={close}
                         key={data.company_id} // Use a unique key
                         name={data.contact_person_name}
                         mobile={data.contact_no}
@@ -152,6 +158,7 @@ function GlobalSearch() {
                     </h5>
                     {searchData["agent"].map((data) => (
                       <GlobalSearchCard
+                        close={close}
                         key={data.id} // Use a unique key
                         name={data.name}
                         mobile={data.contact_no}
@@ -170,6 +177,7 @@ function GlobalSearch() {
                     </h5>
                     {searchData["admin"].map((data) => (
                       <GlobalSearchCard
+                        close={close}
                         key={data.admin_id} // Use a unique key
                         name={data.name}
                         mobile={data.contact_no}

@@ -24,6 +24,7 @@ import AdminTaskTable from "../common/AdminTaskTable";
 import DataChart from "../common/DataChart";
 import Loader from "../common/loader";
 import ActivityTable from "../common/activity_table";
+import { BiLeftArrow } from "react-icons/bi";
 // import SessionCheck from "../common/session";
 const AdminDashboard = ({ setLoginCondition }) => {
   // useEffect(() => {
@@ -241,7 +242,7 @@ const AdminDashboard = ({ setLoginCondition }) => {
     }
     if (navigateUrl) {
       navigate(`${navigateUrl}`)
-      localStorage.setItem("navigation_url", "")
+      // localStorage.setItem("navigation_url", "")
     }
     // eslint-disable-next-line
   }, [apiCall]);
@@ -282,62 +283,30 @@ const AdminDashboard = ({ setLoginCondition }) => {
         className={
           // showEmployeeProfile === false
           //   ?
-          "dashboard-main-container mt-12 mt-lg-12"
+          "dashboard-main-container mt-12 mt-lg-12 row"
           //   :"dashboard-main-container mt-25 mt-lg-22 d-none"
         }
         id="dashboard-body"
       >
-        {/* <!--Mange Table sidebar  --> */}
-        <div className="global_search_box  position-relative">
-          <div
-            className={
-              isSidebarOpen
-                ? " d-flex global_search_content notification_box position-fixed show"
-                : " d-flex global_search_content notification_box position-fixed"
-            }
-          >
-            <div className="left_side" onClick={() => setIsSidebarOpen(false)}></div>
-            <div className="right_side bg-white">
-              <div className="global_search d-flex align-items-center p-3 px-5 justify-content-between">
-                <h4 className="font-size-5 font-weight-bold m-0 border-bottom text-uppercase px-5">
-                  Mange Tables
-                </h4>
-                <i
-                  style={{ fontSize: "22px" }}
-                  className="fas fa-times text-dark ml-4"
-                  onClick={() => setIsSidebarOpen(false)}
-                ></i>
-              </div>
-              <div
-                className="row global_search_result notofications_list  px-5 ">
-                {/* Sidebar */}
-                {isSidebarOpen && (
-                  <li
-                    className={
-                      `border-bottom border-hit-gray font-size-5 text-wrap`
-                    }
-                    style={{ padding: "10px", borderBottom: "1px solid #ddd" }}
-                  >
-                    {tables && Object.keys(tables || []).map((tableName, index) => (
-                      <div className="text-dark text-decoration-none d-flex justify-content-between" key={index}>
-                        <label>
-                          <input
-                            type="checkbox"
-                            checked={tables[tableName] === 0 ? false : true}
-                            onChange={() => handleMangeTableCheckboxChange(tableName)}
-                          />
-                          <span className="px-2 text-capitalize">{tableName}</span>
-                        </label>
-                      </div>
-                    ))}
-                  </li>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <div className="container-fluid mt-5">
+        <Link
+          to={""}
+          onClick={() => {
+            toggleMangeTableSidebar()
+          }}
+          className={"annotation-mobile-button"
+          }
+          data-toggle="collapse"
+          role="button"
+          aria-expanded="false"
+          aria-controls="sidebar"
+          title="Manage tables"
+        >
+          <BiLeftArrow />
+        </Link>
+        <div className={`container-fluid mt-5 ${isSidebarOpen
+          ? "col-md-9 col-lg-9 col-sm-11"
+          : "col-md-12 col-lg-12 col-sm-12"}`}>
           {/* <!-- Summary count --> */}
           <div className="row mb-7 d-none">
             <div className="col-xxl-3 col-xl-4 col-md-5 col-6 col-sm-6">
@@ -583,12 +552,6 @@ const AdminDashboard = ({ setLoginCondition }) => {
                 </div>
               </div>
             </div>
-            {isSidebarOpen ? null :
-              <div className="d-flex flex-row-reverse col-12 mb-2">
-                <button className="btn btn-primary" onClick={toggleMangeTableSidebar}>
-                  {"Mange tables"}
-                </button>
-              </div>}
             {/* Applicant's Lima */}
             {/* <div
               id="table_01"
@@ -1136,6 +1099,62 @@ const AdminDashboard = ({ setLoginCondition }) => {
             </div> : null}
           </div>
         </div>
+        {/* <!--Mange Table sidebar  --> */}
+        <div className={` col-md-3 col-lg-3 col-sm-2 py-2 h-75vh  bg-white  ${isSidebarOpen
+          ? ""
+          : " d-none"}`}>
+          <div
+            className={`position-fixed  ${isSidebarOpen
+              ? " show"
+              : ""}`
+            }
+            style={{
+              transition: "width .5s",
+              width: "100%",
+              // zIndex: "9999",
+              overflowY: "auto",
+              overflowX: "hidden"
+            }}
+          >
+            <div className="right_side">
+              <div className=" d-flex align-items-center p-3 px-5 justify-content-between">
+                <h4 className="font-size-5 font-weight-bold m-0 border-bottom text-uppercase px-5">
+                  Mange Tables
+                </h4>
+                <i
+                  style={{ fontSize: "22px" }}
+                  className="fas fa-times text-dark ml-4"
+                  onClick={() => setIsSidebarOpen(false)}
+                ></i>
+              </div>
+              <div
+                className="row   px-5 ">
+                {/* Sidebar */}
+                {isSidebarOpen && (
+                  <div
+                    className={
+                      `font-size-5 text-wrap`
+                    }
+                    style={{ padding: "10px", borderBottom: "1px solid #ddd" }}
+                  >
+                    {tables && Object.keys(tables || []).map((tableName, index) => (
+                      <div className="text-dark text-decoration-none d-flex justify-content-between" key={index}>
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={tables[tableName] === 0 ? false : true}
+                            onChange={() => handleMangeTableCheckboxChange(tableName)}
+                          />
+                          <span className="px-2 text-capitalize">{tableName}</span>
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       {/* {showEmployeeProfile === true ? (
         <div className="dashboard-main-container mt-16">
@@ -1162,7 +1181,7 @@ const AdminDashboard = ({ setLoginCondition }) => {
           </div>
         </div>
       ) : null} */}
-    </div>
+    </div >
   );
 };
 export default AdminDashboard;

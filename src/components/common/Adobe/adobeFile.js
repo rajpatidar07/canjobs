@@ -380,7 +380,7 @@ const AdobePDFViewer = ({
           setAnnotationData={setAnnotationData}
           setCommentsList={setCommentsList}
           openAnnotationBox={openAnnotationBox}
-          docsection
+          docsection={docsection}
         />
       )}
     </div>

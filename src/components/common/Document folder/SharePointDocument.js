@@ -255,6 +255,7 @@ export default function SharePointDocument({
             getCommentsList(res.data.data.find((item) => item.id === newdocId))
             const newUrl = window.location.pathname;
             window.history.replaceState({}, document.title, newUrl);
+            localStorage.setItem("navigation_url", "")
           }
         }
         // setFolderID(res.data.data[0].parentReference.id)

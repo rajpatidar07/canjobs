@@ -379,7 +379,8 @@ export default function CommentSection({
           docData.parentReference.id, // document parent code
           annotationDrawBox, //Annotation data,
           "", //annotationId
-          DocUserType //User type of document
+          DocUserType, //User type of document
+          docData.name,//document name
         );
         if (res.data.message === "task inserted successfully!") {
           toast.success("Comment uploaded Successfully", {
@@ -493,7 +494,9 @@ export default function CommentSection({
           AdminType === "agent" ? "agent" : senderType,
           userId, //Userid
           docData.parentReference.id,
-          DocUserType
+          DocUserType,
+          "",
+          docData.name,//document name
         );
         if (res.data.message === "message sent successfully!") {
           toast.success("Replied Successfully", {
@@ -604,6 +607,8 @@ export default function CommentSection({
       assigned_to: updatedEmails,
       assigned_to_name: updatedNames,
       id: originalData.id,
+      document_name: docData.name,
+      json: JSON.parse(originalData.doctaskjson)
     };
     // Debug logs to verify the updated values
     // console.log("Assigned User Type: ", updatedUserTypes);

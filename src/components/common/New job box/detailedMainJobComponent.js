@@ -98,7 +98,8 @@ export default function DetailedMainJobComponent({
     //Function to replace the url path after searching Job
     if (search) {
       const newUrl = window.location.pathname;
-      window.history.replaceState({}, document.title, newUrl);
+     window.history.replaceState({}, document.title, newUrl);
+localStorage.setItem("navigation_url", "")
     }
     if (ApiCall === true) {
       setApiCall(false);
