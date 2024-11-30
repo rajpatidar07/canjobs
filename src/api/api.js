@@ -729,9 +729,18 @@ export const ADocAnnotation = async (
   AdobeAnnotation,
   annotationId,
   DocUserType,
-  docName
+  docName,
+  stardivate,
+  endDate,
+  GroupBy,
+  Priority,
+  Status
 ) => {
-  // console.log(
+  console.log(stardivate,
+    endDate,
+   "ppp", GroupBy,
+    Priority,
+    Status)
   //"1. task_creator_user_id =>", id,
   //   "2. task_creator_user_type =>", user_type === "admin" ? "admin" : "agent",
   //   "3. doc_id =>", docId,
@@ -790,7 +799,12 @@ export const ADocAnnotation = async (
       id: annotationId,
       assigned_to: email,
       assigned_to_name: assignName,
-      document_name: docName
+      document_name: docName,
+      start_date: stardivate,
+      end_date: endDate,
+      group_by: GroupBy,
+      priority: Priority,
+      status: Status
     },
     {
       headers: {
@@ -801,7 +815,20 @@ export const ADocAnnotation = async (
   );
   return response;
 };
-/*Api to get document comment list  */
+
+
+/*Api to get common json to get the json to add task  */
+export const GetGetCommanJson = async (type) => {
+  const response = await axios.post(`${API_URL}api/common_controller/getCommonJson`, {
+    type: type
+  }, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  });
+  return response.data;
+};/*Api to get document comment list  */
 export const GetCommentsAndAssign = async (
   id,
   userid,

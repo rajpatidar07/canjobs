@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from "react";
 import Loader from "./loader";
 import { Link } from "react-router-dom";
-import { GetCommentsAndAssign, UpdateDocuentcommentAssign } from "../../api/api";
+import { GetCommentsAndAssign, GetFilter, UpdateDocuentcommentAssign } from "../../api/api";
 import Pagination from "./pagination";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { toast } from "react-toastify";
 import ConvertTime from "./ConvertTime";
+import moment from "moment";
 export default function AdminTaskTable(props) {
   const [taskData, setTaskData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [taskStatus/*, setTaskStatus*/] = useState("");
-  const [columnName, setcolumnName] = useState("status");
+  const [columnName, setcolumnName] = useState("updated_on");
   const [sortOrder, setSortOrder] = useState("DESC");
+  const [groupBy, setGroupBy] = useState([]);
+  const [status, setStatus] = useState([]);
+  const [priority, setPriority] = useState([]);
   // let adminEmail = localStorage.getItem("admin_id");
 
   /*Pagination states */
@@ -29,7 +33,7 @@ export default function AdminTaskTable(props) {
         "",
         props.adminId,//adminEmail,
         props.status ? props.status : taskStatus,
-        "document",
+        "",
         props.pageNo,
         recordsPerPage,
         sortOrder,
@@ -40,6 +44,10 @@ export default function AdminTaskTable(props) {
         props.TaskUserType,
 
       );
+      let JsonRes = await GetFilter()
+      setPriority(JsonRes.data.data.priority)
+      setGroupBy(JsonRes.data.data.group_by)
+      setStatus(JsonRes.data.data.status_type)
       if (res.data.status === (1 || "1")) {
         setTaskData(res.data.data.data);
         setIsLoading(false);
@@ -54,7 +62,7 @@ export default function AdminTaskTable(props) {
       }
     } catch (err) {
       console.log(err);
-      if(err.response.status === 401){}
+      if (err.response.status === 401) { }
       setIsLoading(false);
     }
   };
@@ -167,26 +175,64 @@ export default function AdminTaskTable(props) {
                     Description
                   </Link>
                 </th>
-                {/* {props.heading === "Dashboard" ? (
-                    ""
-                  ) : (
-                    <th
-                      scope="col"
-                      className="border-0 font-size-4 font-weight-normal"
+                {props.heading === "Dashboard" ? (
+                  ""
+                ) : (
+                  <th
+                    scope="col"
+                    className="border-0 font-size-4 font-weight-normal"
+                  >
+                    <Link
+                      to={""}
+                      onClick={() => {
+                        handleSort("type");
+                        props.setpageNo(1)
+                      }}
+                      className="text-gray"
+                      title="Sort by Type"
                     >
-                      <Link
-                        to={""}
-                        onClick={() => {
-                          handleSort("type");
-                           window.location.pathname === "/dashboard"?props.setpageNo(1):setCurrentPage(1)
-                        }}
-                        className="text-gray"
-                        title="Sort by Type"
-                      >
-                        Type
-                      </Link>
-                    </th>
-                  )} */}
+                      Timeline
+                    </Link>
+                  </th>
+                )}
+                {props.heading === "Dashboard" ? (
+                  ""
+                ) : (
+                  <th
+                    scope="col"
+                    className="border-0 font-size-4 font-weight-normal"
+                  >
+                    <Link
+                      to={""}
+                      onClick={() => {
+                        handleSort("Priority")
+                        props.setpageNo(1)
+                      }}
+                      className="text-gray"
+                      title="Sort by Priority"
+                    >
+                      Priority
+                    </Link>
+                  </th>
+                )}
+                {
+                  <th
+                    scope="col"
+                    className="border-0 font-size-4 font-weight-normal"
+                  >
+                    <Link
+                      to={""}
+                      onClick={() => {
+                        handleSort("group_by");
+                        props.setpageNo(1)
+                      }}
+                      className="text-gray"
+                      title="Sort by Status"
+                    >
+                      Group by
+                    </Link>
+                  </th>
+                }
                 {
                   <th
                     scope="col"
@@ -205,26 +251,7 @@ export default function AdminTaskTable(props) {
                     </Link>
                   </th>
                 }
-                {/* {props.heading === "Dashboard" ? (
-                  ""
-                ) : (
-                  <th
-                    scope="col"
-                    className="border-0 font-size-4 font-weight-normal"
-                  >
-                    <Link
-                      to={""}
-                      // onClick={() => {
-                      //   handleSort("country");
-                      //    window.location.pathname === "/dashboard"?props.setpageNo(1):setCurrentPage(1)
-                      // }}
-                      className="text-gray"
-                      title="Sort by Country"
-                    >
-                      Country
-                    </Link>
-                  </th>
-                )} */}
+
                 {/* {props.heading === "Dashboard" ? (
                     ""
                   ) : (
@@ -292,22 +319,51 @@ export default function AdminTaskTable(props) {
                         )}
                       </td>
 
-                      {/* {props.heading === "Dashboard" ? (
+                      {props.heading === "Dashboard" ? (
                         ""
                       ) : (
                         <td className=" py-5">
-                          {data.type === null ? (
+                          {data.start_date === null ? (
                             <p className="font-size-3  mb-0">N/A</p>
                           ) : (
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                               <p className="text-gray font-size-2 m-0">
-                                {data.type}
+                                {moment(data.start_date).format('ll') + (data.end_date !== "0000-00-00 00:00:00" ? ("-" + moment(data.end_date).format('ll')) : "")}
                               </p>
                             </h3>
                           )}
                         </td>
-                      )} */}
-
+                      )}
+                      {props.heading === "Dashboard" ? (
+                        ""
+                      ) : (
+                        <td className=" py-5">
+                          {data.priority === null ? (
+                            <p className="font-size-3  mb-0">N/A</p>
+                          ) : (
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              <p className="text-gray font-size-2 m-0">
+                                {priority.filter((i) => i.id === parseInt(data.priority))[0].value}
+                              </p>
+                            </h3>
+                          )}
+                        </td>
+                      )}
+                      {props.heading === "Dashboard" ? (
+                        ""
+                      ) : (
+                        <td className=" py-5">
+                          {data.group_by === null ? (
+                            <p className="font-size-3  mb-0">N/A</p>
+                          ) : (
+                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              <p className="text-gray font-size-2 m-0">
+                                {groupBy.filter((i) => data.group_by.split(",").includes(String(i.id))).map((item) => item.value + " ")}
+                              </p>
+                            </h3>
+                          )}
+                        </td>
+                      )}
                       <td className=" py-5">
                         {data.status === null ||
                           data.status === undefined ||

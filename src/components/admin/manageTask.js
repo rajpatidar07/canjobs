@@ -6,6 +6,7 @@ import AdminTaskTable from '../common/AdminTaskTable'
 import { getallAdminData, getallEmployeeData, getAllEmployer } from '../../api/api'
 import AdminListTaskTable from '../common/AdminListTaskTabel'
 import CustomButton from '../common/button'
+import AddTaskForm from '../forms/admin/addTaskForm'
 
 export default function ManageTask() {
     const [apiCall, setApiCall] = useState(false)
@@ -155,10 +156,13 @@ export default function ManageTask() {
                         <div>
                             <TaskCount count={count} />
                             <div className="row">
-                                <div className="col-6 mb-18">
+                                <div className="col-12 mb-18">
                                     <h3 className="font-size-5 px-3 m-0  ">
                                         Tasks
                                     </h3>
+                                    <AddTaskForm
+                                        userId={userId}
+                                        setApiCall={setApiCall} />
                                     <AdminTaskTable
                                         heading={""}
                                         filter_by_time={""}
@@ -175,7 +179,7 @@ export default function ManageTask() {
                                     />
                                 </div>
 
-                                <div className="col-6 mb-18">
+                                <div className="col-6 mb-18 d-none">
                                     <h3 className="font-size-5 px-3 m-0  ">
                                         Admin tasks
                                     </h3>
