@@ -15,7 +15,6 @@ export default function AdminTaskTable(props) {
   const [columnName, setcolumnName] = useState("updated_on");
   const [sortOrder, setSortOrder] = useState("DESC");
   const [groupBy, setGroupBy] = useState([]);
-  const [status, setStatus] = useState([]);
   const [priority, setPriority] = useState([]);
   // let adminEmail = localStorage.getItem("admin_id");
 
@@ -33,7 +32,7 @@ export default function AdminTaskTable(props) {
         "",
         props.adminId,//adminEmail,
         props.status ? props.status : taskStatus,
-        "",
+        window.location.pathname === "/managetasks" || window.location.pathname === "/dashboard" ? "" : "task",
         props.pageNo,
         recordsPerPage,
         sortOrder,
@@ -45,9 +44,8 @@ export default function AdminTaskTable(props) {
 
       );
       let JsonRes = await GetFilter()
-      setPriority(JsonRes.data.data.priority)
-      setGroupBy(JsonRes.data.data.group_by)
-      setStatus(JsonRes.data.data.status_type)
+      setPriority(JsonRes?.data?.data?.priority)
+      setGroupBy(JsonRes?.data?.data?.group_by)
       if (res.data.status === (1 || "1")) {
         setTaskData(res.data.data.data);
         setIsLoading(false);
@@ -101,6 +99,7 @@ export default function AdminTaskTable(props) {
       assigned_to: assigned_to,
       assigned_to_name: assigned_to_name,
       id: originalData.id,
+      type: originalData.type
     };
 
     // Call the API to update the document
@@ -215,7 +214,9 @@ export default function AdminTaskTable(props) {
                     </Link>
                   </th>
                 )}
-                {
+                {props.heading === "Dashboard" ? (
+                  ""
+                ) :
                   <th
                     scope="col"
                     className="border-0 font-size-4 font-weight-normal"
@@ -268,7 +269,7 @@ export default function AdminTaskTable(props) {
               {/* Map function to show the data in the list*/}
               {totalData === 0 || taskData.length === 0 ? (
                 <tr>
-                  <th colSpan={6} className="bg-white text-center">
+                  <th colSpan={7} className="bg-white text-center">
                     No Data Found
                   </th>
                 </tr>
@@ -327,7 +328,7 @@ export default function AdminTaskTable(props) {
                             <p className="font-size-3  mb-0">N/A</p>
                           ) : (
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              <p className="text-gray font-size-2 m-0">
+                              <p className="text-gray font-size-2 m-0 border rounded-pill p-2 text-center bg-light">
                                 {moment(data.start_date).format('ll') + (data.end_date !== "0000-00-00 00:00:00" ? ("-" + moment(data.end_date).format('ll')) : "")}
                               </p>
                             </h3>
@@ -338,14 +339,15 @@ export default function AdminTaskTable(props) {
                         ""
                       ) : (
                         <td className=" py-5">
-                          {data.priority === null ? (
+                          {!data.priority || data.priority === null || data.priority.length === 0 || data.priority === (0 || "0") ? (
                             <p className="font-size-3  mb-0">N/A</p>
                           ) : (
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              <p className="text-gray font-size-2 m-0">
-                                {priority.filter((i) => i.id === parseInt(data.priority))[0].value}
+                              <p className={`text-white rounded-pill text-center font-size-2 m-0 ${data.priority === ("1" || 1) ? "badge-danger" : data.priority === ("2" || 2) ? "badge-orange" : data.priority === ("3" || 3) ? "badge-warning" : data.priority === ("4" || 4) ? "badge-info" : ""}`}>
+                                {priority?.filter((i) => i.id === parseInt(data.priority))[0].value}
                               </p>
                             </h3>
+
                           )}
                         </td>
                       )}
@@ -353,12 +355,17 @@ export default function AdminTaskTable(props) {
                         ""
                       ) : (
                         <td className=" py-5">
-                          {data.group_by === null ? (
+                          {!data.group_by || data.group_by === null || data.group_by.length === 0 || data.group_by === (0 || "0") ? (
                             <p className="font-size-3  mb-0">N/A</p>
                           ) : (
                             <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                               <p className="text-gray font-size-2 m-0">
-                                {groupBy.filter((i) => data.group_by.split(",").includes(String(i.id))).map((item) => item.value + " ")}
+                                {groupBy
+                                  .filter((i) => data.group_by.split(",").includes(String(i.id)))
+                                  .map((item, index, arr) => (
+                                    item.value + (index < arr.length - 1 ? ", " : "")
+                                  ))}
+
                               </p>
                             </h3>
                           )}
@@ -381,19 +388,23 @@ export default function AdminTaskTable(props) {
                                       ? "Completed"
                                       : data.status === "2"
                                         ? "Overdue"
-                                        : "Incomplete"
+                                        : data.status === "3"
+                                          ? "Processing"
+                                          : "Incomplete"
                                   }
                                   variant={data.status === ("1" || 1)
                                     ? "shamrock"
                                     : data.status === ("2" || 2)
                                       ? "danger"
-                                      : "warning"}
+                                      : data.status === ("3" || 3) ? "info"
+                                        : "warning"}
                                   size="xs"
                                   className={`user_status_btn btn-xs ${data.status === "1"
                                     ? "btn-shamrock"
                                     : data.status === "2"
                                       ? "btn-danger px-4"
-                                      : "btn-warning"
+                                      : data.status === ("3" || 3) ? "btn-info"
+                                        : "btn-warning"
                                     } rounded-pill font-size-1 px-1 text-white mr-2`}
                                   // disabled={data.status === "2"}
                                   onSelect={(eventKey, e) => OnStatusChange(data, eventKey)}                          >
@@ -410,6 +421,13 @@ export default function AdminTaskTable(props) {
                                     className="text-capitalize"
                                   >
                                     Incomplete
+                                  </Dropdown.Item>
+                                  <Dropdown.Item
+                                    value={3}
+                                    eventKey={3}
+                                    className="text-capitalize"
+                                  >
+                                    Processing
                                   </Dropdown.Item>
                                   {/* <Dropdown.Item
                                 value={2}

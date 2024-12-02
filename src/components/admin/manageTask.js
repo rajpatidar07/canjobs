@@ -109,7 +109,7 @@ export default function ManageTask() {
                                     }}
                                     className="form-control bg-white dashboard_select rounded-3"
                                 >
-                                    <option value={""}>Select user</option>
+                                    <option value={""}>Select Candidate</option>
                                     {(employeeList || []).map((item, index) => {
                                         return <option className='text-capitalize' key={index} value={item.employee_id ? `${item.employee_id},employee` : `${item.company_id},employer`}
                                         >{(item.employee_id ? item.name : item.company_name) || "unknown user"}</option>
@@ -134,6 +134,7 @@ export default function ManageTask() {
                                     <option value={"1"}>Completed Tasks</option>
                                     <option value={"0"}>Incomplete Tasks</option>
                                     <option value={"2"}>Overdue Tasks</option>
+                                    <option value={"3"}>Processing Tasks</option>
                                 </select>
                                 {/* <small className="text-danger">{searcherror}</small> */}
                             </div>
@@ -162,6 +163,7 @@ export default function ManageTask() {
                                     </h3>
                                     <AddTaskForm
                                         userId={userId}
+                                        TaskUserType={userType}
                                         setApiCall={setApiCall} />
                                     <AdminTaskTable
                                         heading={""}
@@ -190,7 +192,7 @@ export default function ManageTask() {
                                         setApiCall={setApiCall}
                                         employeeId={userId}
                                         TaskUserType={userType}
-                                        setCount={setCount}
+                                        // setCount={setCount}
                                         adminId={adminId}
                                         adminType={adminType}
                                         status={status}

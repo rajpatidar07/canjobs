@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import TextEditor from "../../common/TextEditor";
 import ConvertTime from "../../common/ConvertTime";
 import { FaEdit } from "react-icons/fa";
+import AdminTaskTable from "../../common/AdminTaskTable";
 
 function Addfollowup(props) {
   let [response, setResponseData] = useState([]);
@@ -21,6 +22,8 @@ function Addfollowup(props) {
   // let employId = props.employee_id;
   let user_type = localStorage.getItem("userType");
   let adminType = localStorage.getItem("admin_type");
+  const [taskPage, setTaskPage] = useState(1)
+  // const [taskPage, setTaskPage] = useState(1)
   let adminId =
     adminType === "agent"
       ? localStorage.getItem("agent_id")
@@ -82,8 +85,8 @@ function Addfollowup(props) {
     // }
     if (props.noteNotification) {
       const newUrl = window.location.pathname;
-     window.history.replaceState({}, document.title, newUrl);
-localStorage.setItem("navigation_url", "")
+      window.history.replaceState({}, document.title, newUrl);
+      localStorage.setItem("navigation_url", "")
     }
     // eslint-disable-next-line
   }, [props, sortOrder]);
@@ -207,7 +210,25 @@ localStorage.setItem("navigation_url", "")
             <div
               className={`activity_container px-8 py-6 col-md-8 border-right ${props.page === "yes" ? "d-none" : ""}`}
             >
+              <div>
+                <h5>Tasks</h5>
+                <AdminTaskTable
+                  heading={""}
+                  filter_by_time={""}
+                  // apiCall={apiCall}
+                  // setApiCall={setApiCall}
+                  employeeId={props.userId}
+                  TaskUserType={props.userType}
+                  // setCount={setCount}
+                  status={""}
+                  adminId={""}
+                  pageNo={taskPage}
+                  setpageNo={setTaskPage}
+                  adminType={""}
+                />
+              </div>
               <div className="single_note  p-5 rounded">
+              <h5>Notes</h5>
                 {response.length === 0 || !response ? (
                   <div className="d-flex justify-content-center">
                     <p className="text-italic font-size-3 m-0">No Data Found</p>

@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { ADocAnnotation, getallAdminData, GetFilter } from '../../../api/api';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 export default function AddTaskForm(props) {
     const [taskTitle, setTaskTitle] = useState("");
     const [stardivate, setStardivate] = useState(new Date().toISOString().split("T")[0]);
     const [endDate, setEndDate] = useState("");
     const [AdminList, setAdminList] = useState([]);
-    const [selectedGroupBy, setSelectedGroupBy] = useState("");
-    const [selectedAdmin, setSelectedAdmin] = useState("");
+    const [selectedGroupBy, setSelectedGroupBy] = useState([]);
+    const [selectedAdmin, setSelectedAdmin] = useState([]);
     const [groupBy, setGroupBy] = useState([]);
     const [status, setStatus] = useState([]);
     const [priority, setPriority] = useState([]);
@@ -44,22 +45,18 @@ export default function AddTaskForm(props) {
     const removeGroup = (user) => {
         setSelectedGroupBy(selectedGroupBy.filter((item) => item !== user));
     };
-    /*On change function for group by field */
     const handleAdminSelect = (e) => {
-        const selectedId = e.target.value; // Get the admin_id as a string
-        const selectedAdminObj = AdminList.find((user) => user.admin_id === selectedId);
+        const selectedAdminId = e.target.value;
+        console.log('Current selectedAdmin:', selectedAdmin); // Debugging line
 
-        if (
-            selectedAdminObj &&
-            Array.isArray(selectedAdmin) &&
-            !selectedAdmin.find((admin) => admin.admin_id === selectedId)
-        ) {
+        const selectedAdminObj = AdminList.find(user => user.admin_id === selectedAdminId);
+
+        if (selectedAdminObj && !selectedAdmin.some(admin => admin.admin_id === selectedAdminObj.admin_id)) {
             setSelectedAdmin([...selectedAdmin, selectedAdminObj]);
-        } else {
-            setSelectedAdmin([selectedAdminObj])
         }
-
     };
+
+
     /*Delete function for group by field */
     const removeAdmin = (adminId) => {
         setSelectedAdmin(selectedAdmin.filter((admin) => admin.admin_id !== adminId));
@@ -96,7 +93,7 @@ export default function AddTaskForm(props) {
                 "", // document parent code
                 "", //Annotation data,
                 "", //annotationId
-                "", //User type of document
+                props.userId ? props.TaskUserType : "", //User type of document
                 "",//document name
                 stardivate,
                 endDate,
@@ -110,16 +107,16 @@ export default function AddTaskForm(props) {
                     autoClose: 1000,
                 });
                 setTaskTitle("")
-                setStardivate("")
+                setStardivate(new Date().toISOString().split("T")[0])
                 setEndDate("")
-                setSelectedGroupBy("")
-                setSelectedAdmin("")
+                setSelectedGroupBy([])
+                setSelectedAdmin([])
                 setSelectedStatus("")
                 setSelectedPriority("")
                 setLoading(false)
                 props.setApiCall(true)
             }
-            if(res.data.message==="required fields cannot be blank assined_to_user_id"){
+            if (res.data.message === "required fields cannot be blank assined_to_user_id") {
                 toast.error("Please add the fields", {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 1000,
@@ -133,7 +130,7 @@ export default function AddTaskForm(props) {
     }
 
     return (
-        <form onSubmit={(e) => handleTaskSubmit(e)}>
+        <form onSubmit={(e) => handleTaskSubmit(e)} className='mb-3'>
             <div className='row'>
                 <div className='col'>
                     <input
@@ -166,7 +163,7 @@ export default function AddTaskForm(props) {
                         value={selectedPriority}
                         onChange={(e) => setSelectedPriority(e.target.value)}
                     >
-                        <option value="">Select a Priority</option>
+                        <option value="">Select Priority</option>
                         {priority.map((user) => (
                             <option key={user.id} value={user.id}>
                                 {user.value}
@@ -176,11 +173,11 @@ export default function AddTaskForm(props) {
                 </div>
                 <div className='col'>
                     <select
-                        className="form-control"
+                        className="form-control mb-2 text-capitalize"
                         value={selectedStatus}
                         onChange={(e) => setSelectedStatus(e.target.value)}
                     >
-                        <option value="">Select a Status</option>
+                        <option value="">Select Status</option>
                         {status.map((user) => (
                             <option key={user.id} value={user.id}>
                                 {user.value}
@@ -188,70 +185,103 @@ export default function AddTaskForm(props) {
                         ))}
                     </select>
                 </div>
-                <div className='col'>
+                <div className="col">
                     <select
-                        className="form-control mb-2"
+                        className="form-control mb-2 text-capitalize"
                         onChange={handleGroupSelect}
                     >
-                        <option value="">Select a Group</option>
+                        <option value="">Select Group</option>
                         {groupBy.map((user) => (
                             <option key={user.id} value={user.id}>
                                 {user.value}
                             </option>
                         ))}
                     </select>
-                    {/* {console.log(selectedGroupBy.toString())} */}
-                    <div className="d-flex flex-wrap gap-2">
-                        {(selectedGroupBy || []).map((item, index) => (
-                            <p
-                                key={index}
-                                className="badge bg-primary text-white p-2 d-flex align-items-center"
-                                title={`Name: ${groupBy.find((user) => user.id === parseInt(item))?.value}`}
-                            >
-                                {groupBy.find((i) => i.id === parseInt(item)).value}
-                                <button
-                                    type="button"
-                                    className="btn-sm btn-close ms-2"
-                                    aria-label="Remove"
-                                    onClick={() => removeGroup(item)}
-                                >x</button>
-                            </p>
-                        ))}
+
+                    <div className="row m-0 p-0">
+                        {selectedGroupBy.length === 0 ? (
+                            null) : (
+                            selectedGroupBy.map((item, index) => (
+                                <span
+                                    key={index}
+                                    className="text-capitalize text-black-2 font-size-2 d-flex align-items-center p-1"
+                                    title={`${groupBy.find((i) => i.id === parseInt(item))?.value}`}>
+                                    {groupBy.find((i) => i.id === parseInt(item)).value}
+                                    <Link
+                                        onClick={() => removeGroup(item)}
+                                        title={`Delete ${groupBy.find((i) => i.id === parseInt(item))?.value}`}
+                                    >
+                                        <i className="px-1 fa fa-times-circle" aria-hidden="true"></i>
+                                    </Link>
+                                </span>
+                            ))
+                        )}
                     </div>
                 </div>
+
                 <div className="col">
                     <select
-                        className="form-control mb-2"
+                        className="form-control mb-2 text-capitalize"
                         onChange={handleAdminSelect}
                         value=""
                     >
-                        <option value="">Select an Admin</option>
+                        <option value="">Select Admin</option>
                         {AdminList.map((user) => (
                             <option key={user.admin_id} value={user.admin_id}>
                                 {user.name}
                             </option>
                         ))}
                     </select>
-                    <div className="d-flex flex-wrap gap-2">
-                        {(selectedAdmin || []).map((item) => (
-                            <p
-                                key={item.admin_id}
-                                className="badge bg-primary text-white p-2 d-flex align-items-center"
-                                title={`Name: ${item.name}`}
-                            >
-                                {item.name}
-                                <button
-                                    type="button"
-                                    className="btn-close ms-2"
-                                    aria-label="Remove"
-                                    onClick={() => removeAdmin(item.admin_id)}
+
+                    <div className="row m-0 p-0">
+                        {selectedAdmin.length === 0 ? (
+                            null
+                        ) : (
+                            selectedAdmin.map((item) => (
+                                <div
+                                    key={item.admin_id}
+                                    className="position-relative d-inline-block mr-3 mb-2"
+                                    style={{ width: '25px', height: '25px' }}
                                 >
-                                    x
-                                </button>
-                            </p>
-                        ))}
+                                    <img
+                                        className="rounded-circle"
+                                        src={item.profile_image || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'}
+                                        alt={`Profile of ${item.name}`}
+                                        title={`Profile image of ${item.name}`}
+                                        style={{
+                                            width: '100%',
+                                            height: '100%',
+                                            objectFit: 'cover',
+                                            border: '2px solid #dee2e6',
+                                        }}
+                                    />
+                                    <button
+                                        onClick={() => removeAdmin(item.admin_id)}
+                                        aria-label={`Remove ${item.name}`}
+                                        className="position-absolute text-danger bg-transparent border-0 p-0"
+                                        style={{
+                                            top: '-5px',
+                                            right: '-5px',
+                                            cursor: 'pointer',
+                                        }}
+                                    >
+                                        <i
+                                            className="fa fa-times-circle"
+                                            aria-hidden="true"
+                                            style={{
+                                                fontSize: '10px',
+                                                backgroundColor: 'white',
+                                                borderRadius: '50%',
+                                                boxShadow: '0 1px 4px rgba(0, 0, 0, 0.2)',
+                                            }}
+                                        ></i>
+                                    </button>
+                                </div>
+                            ))
+                        )}
                     </div>
                 </div>
+
                 <div className="col">
 
                     {loading === true ? (
