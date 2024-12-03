@@ -70,7 +70,7 @@ export default function EmployeeTable(props) {
       : props.pageName === "local_candidate"
         ? ""
         : props?.ApplicantType
-          ? "4,7,8"
+          ? "4,7,8,9"
           : props.self === "yes"
             ? -1
             : 4
@@ -597,6 +597,21 @@ export default function EmployeeTable(props) {
                   >
                     Submitted
                   </button>
+                  <button
+                    type="button"
+                    className={
+                      status === "9" || status === 9
+                        ? "btn btn-primary"
+                        : "btn btn-outline-primary"
+                    }
+                    onClick={() => {
+                      setStatus(9);
+                      clearPageNo();
+                    }}
+                    title="Submitted"
+                  >
+                    Completed
+                  </button>
                 </>
               )}
               <button
@@ -612,7 +627,7 @@ export default function EmployeeTable(props) {
                       : "btn btn-outline-primary"
                 }
                 onClick={() => {
-                  setStatus(props.self === "yes" ? "0,1,2,3,5,6" : "4,7,8");
+                  setStatus(props.self === "yes" ? "0,1,2,3,5,6" : "4,7,8,9");
                   clearPageNo();
                 }}
                 title="All"
@@ -1350,7 +1365,9 @@ export default function EmployeeTable(props) {
                                               ? "Working on"
                                               : empdata.status === "8"
                                                 ? "Submitted"
-                                                : "N/A"
+                                                : empdata.status === "9"
+                                                  ? "Completed"
+                                                  : "N/A"
                               }
                             >
                               <span
@@ -1373,7 +1390,9 @@ export default function EmployeeTable(props) {
                                               ? "bg-primary-opacity-8"
                                               : empdata.status === "8"
                                                 ? "bg-eastern"
-                                                : ""
+                                                : empdata.status === "9"
+                                                  ? "bg-shamrock"
+                                                  : ""
                                   }`}
                               >
                                 {empdata.status === "1" ||
@@ -1393,7 +1412,8 @@ export default function EmployeeTable(props) {
                                               ? "Working on"
                                               : empdata.status === "8"
                                                 ? "Submitted"
-                                                : ""}
+                                                : empdata.status === "9"
+                                                  ? "Completed" : ""}
                               </span>
                             </p>
                           </td>

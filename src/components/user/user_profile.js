@@ -481,15 +481,18 @@ const NewUserProfile = (props) => {
                         onClick={async () => {
                           if (
                             !PersonalDetail.documents_folder_id &&
-                            PersonalDetail.name
+                            PersonalDetail.name && PersonalDetail.email
                           ) {
-                            const responseData = await AddEmployeeDetails(
+                            // const responseData = 
+                            await AddEmployeeDetails(
                               PersonalDetail
                             );
                             setApiCall(true);
-                            if (responseData.status === 1) {
-                              setTabActive("documents");
-                            }
+                            // if (responseData.status === 1) {
+                            //   setTabActive("documents");
+                            // }else{
+                            setTabActive("documents");
+                            // }
                           } else {
                             setTabActive("documents");
                           }
@@ -853,7 +856,9 @@ const NewUserProfile = (props) => {
                                                         ? "Submitted"
                                                         : status === "0"
                                                           ? "New"
-                                                          : "status"
+                                                          : status === "9"
+                                                            ? "Complete"
+                                                            : "status"
                                       }
                                       size="sm"
                                       className="user_status_btn btn-primary rounded-pill font-size-3 px-3 py-1 text-white mr-2"

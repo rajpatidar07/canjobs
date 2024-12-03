@@ -707,9 +707,9 @@ function PersonalDetails(props) {
                       onChange={onInputChange}
                       onKeyDownCapture={(e) => e.preventDefault()}
                       className={
-                        errors.date_of_birth
-                          ? "form-control coustam_datepicker border border-danger"
-                          : "form-control coustam_datepicker"
+                        `form-control ${errors.date_of_birth
+                          ? " border border-danger"
+                          : "" }`
                       }
                       id="date_of_birth"
                     />
@@ -829,6 +829,7 @@ function PersonalDetails(props) {
                       <option value={"married"}>Married</option>
                       <option value={"separated"}>Separated</option>
                       <option value={"divorced"}>Divorced</option>
+                      <option value={"common law"}>Common Law</option>
                     </select>
                     {/*----ERROR MESSAGE FOR MARITAL STATUS----*/}
                     {errors.marital_status && (

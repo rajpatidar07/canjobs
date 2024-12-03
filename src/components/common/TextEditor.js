@@ -84,7 +84,8 @@ export default function TextEditor({ state, setState, page, identifier }) {
   }
   const editorStyle = {
     height: '10rem',
-    padding: '1rem'
+    padding: '1rem',
+    cursor: 'text',
   }
   return (
     <div
