@@ -83,6 +83,8 @@ class ViewSDKClient {
         downloadWithAnnotations: false,
         printWithAnnotations: false,
         enableAddTextComment: false,
+        enablePDFAnnotationTextHighlighting: true, // Enable PDF annotation text highlighting
+
       }
     };
 

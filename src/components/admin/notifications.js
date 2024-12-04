@@ -261,12 +261,12 @@ function Notifications({
                   <li
                     key={data.id}
                     className={
-                      `dropdown-item border-bottom border-hit-gray font-size-3 text-wrap ${data.is_read === "1"
-                        ? ""
-                        : " bg-light "
-                      }`
+                      `dropdown-item border-bottom border-hit-gray font-size-3 text-wrap`
                     }
-                    style={{ padding: "10px", borderBottom: "1px solid #ddd" }}
+                    style={{
+                      padding: "10px", borderBottom: "1px solid #ddd", backgroundColor: data.is_read === "1"
+                        ? "#eaeaea" : ""
+                    }}
                   >
                     <Link
                       to={

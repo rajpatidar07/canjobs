@@ -860,14 +860,14 @@ export default function CommentSection({
               value={comments || ""}
               onChange={handleInputChange}
               placeholder="Comments or add others with @"
-              className="comment-input border-0 bg-light"
+              className={`comment-input ${commntData ? "" : "border-0"} bg-light`}
               rows={2}
-              style={{ outline: 0 }}
+              style={{ outline: 0, border: commntData ? "2px solid blue" : "" }}
             ></textarea>
             {filteredEmails.length > 0 && type !== "reply" ? (
               <ul
                 className="email-suggestions"
-                style={{ maxHeight: 400, overflowY: "auto" }}
+                style={{ maxHeight: 400, overflowY: "auto",zIndex:"999 !important" }}
               >
                 {filteredEmails.map((email, index) => (
                   <li
@@ -987,15 +987,16 @@ export default function CommentSection({
               (commentsList || []).map((commentItem, index) => (
                 <div
                   className={`card col-12 mb-2 p-0 comment_box_card bg-white
-                  ${annotationId === JSON.parse(commentItem?.doctaskjson).id &&
+                  ${(annotationId === JSON.parse(commentItem?.doctaskjson).id &&
                       annotationId &&
-                      JSON.parse(commentItem?.doctaskjson)
+                      JSON.parse(commentItem?.doctaskjson)) || commntData === commentItem
                       ? "highlighted-comment"
                       : ""
-                    }`}
+                    } `}
                   style={{
                     backgroundColor: "#fff",
                     color: "white",
+                    transitionDelay: "initial"
                   }}
                   onClick={() => {
                     setAnnotationId(
@@ -1031,7 +1032,6 @@ export default function CommentSection({
                         handleUpdateCommentLinkClick(commentItem);
                       }}
                     >
-                      {console.log(commentItem)}
                       <CiEdit />
                     </Link>
 

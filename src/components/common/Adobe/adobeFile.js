@@ -48,6 +48,7 @@ const AdobePDFViewer = ({
         setCurrentIndex(newIndex);
         setDocSingleDate(docTypeList[newIndex]);
         setFileID(docTypeList[newIndex].id);
+        getCommentsList(docTypeList[newIndex])
         SetPdfDocUrl(docTypeList[newIndex]);
         setOpenAnnotationBox(false)
       }
@@ -64,6 +65,7 @@ const AdobePDFViewer = ({
         setCurrentIndex(newIndex);
         setDocSingleDate(docTypeList[newIndex]);
         setFileID(docTypeList[newIndex].id);
+        getCommentsList(docTypeList[newIndex])
         SetPdfDocUrl(docTypeList[newIndex]);
         setOpenAnnotationBox(false)
       }
@@ -98,7 +100,7 @@ const AdobePDFViewer = ({
           showLeftHandPanel: true,
           showPageControls: true,
           enableAnnotationAPIs: true,
-          includePDFAnnotations: false,
+          includePDFAnnotations: true,
           // showDownloadPDF: false, // Disable download
           // showPrintPDF: false,    // Disable print
         },
@@ -156,6 +158,7 @@ const AdobePDFViewer = ({
                       ? ""
                       : event.data
                   );
+                  setOpenAnnotationBox(true)
                 } else if (event.type === "ANNOTATION_UPDATED") {
                   viewSDKClient.annots = [
                     ...viewSDKClient.annots.filter(
@@ -180,6 +183,7 @@ const AdobePDFViewer = ({
       // viewSDKClient.registerSaveApiHandler(userId, annotationId, DocUserType);
       viewSDKClient.registerGetUserProfileApiHandler();
     });
+
     // }
     //     let timer;
     //         timer = setTimeout(() => {
@@ -213,6 +217,7 @@ const AdobePDFViewer = ({
     // return () => clearTimeout(timer);
     // eslint-disable-next-line
   }, [url, commentsList, annotationData]);
+  console.log(annotationDrawBox)
   /*Render method to Highlight the annotation from clicking it */
   useEffect(() => {
     // if (!data?.name?.includes(1295)) {
