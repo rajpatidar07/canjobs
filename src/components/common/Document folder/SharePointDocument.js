@@ -103,6 +103,7 @@ export default function SharePointDocument({
   };
   // Generate a list of comments from the state for image annotation
   const getCommentsList = async (data) => {
+    console.log(data,"data is coming")
     if (data) {
       localStorage.setItem("mentionAdmin", "");
       try {
@@ -941,7 +942,7 @@ export default function SharePointDocument({
                   )}
                 </div>
               </div>
-              <div className="row m-0 bg-white px-2 pb-2 justify-content-center">
+              <div className="row m-0 bg-white px-2 pb-2">
                 {/* List of documents docTypeList */}
                 {docLoder ? (
                   <div className="table-responsive main_table_div">
@@ -969,6 +970,15 @@ export default function SharePointDocument({
                     SetPdfDocUrl={SetPdfDocUrl}
                     emp_user_type={emp_user_type}
                     user_id={user_id}
+                    userType={localStorage.getItem("userType")}
+                    adminList={adminList}
+                    partnerList={partnerList}
+                    userId={user_id}
+                    commentsList={commentsList}
+                    DocUserType={emp_user_type}
+                    docsection={true}
+                    getCommentsList={getCommentsList}
+                    setCommentsList={setCommentsList}
                   />
                 )}
               </div>

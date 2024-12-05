@@ -30,6 +30,8 @@ export default function CommentSection({
   partnerList,
   openAnnotationBox,
   docsection,
+  page,
+  setOpenAnnotationBox
 }) {
   const [comments, setComments] = useState();
   const [commntData, setCommentData] = useState();
@@ -392,9 +394,9 @@ export default function CommentSection({
           setSelectedAdmin("");
           setSelectedPartner("");
           setFilteredEmails([]);
-          setAnnotationDrawBox("");
-          localStorage.setItem("callNotification", true);
           Getcomments();
+          if (page !== "file") { setAnnotationDrawBox(""); }
+          localStorage.setItem("callNotification", true);
         }
       } catch (err) {
         console.log(err);
@@ -509,7 +511,7 @@ export default function CommentSection({
           getCommentsReplyList();
           setSelectedAdminReplye("");
           setFilteredEmails([]);
-          setAnnotationDrawBox("");
+          if (page !== "file") { setAnnotationDrawBox(""); }
           setSelectedPartner("");
         }
       } catch (err) {
@@ -750,7 +752,7 @@ export default function CommentSection({
         getCommentsReplyList();
         setSelectedAdminReplye("");
         setFilteredEmails([]);
-        setAnnotationDrawBox("");
+        if (page !== "file") { setAnnotationDrawBox(""); }
         setSelectedPartner("");
       }
     } catch (err) {
@@ -770,9 +772,11 @@ export default function CommentSection({
     );
     if (CommentRes.data.status === (1 || "1")) {
       setCommentsList(CommentRes.data.data.data);
-      setAnnotationData(
-        CommentRes.data.data.data.map((item) => JSON.parse(item.doctaskjson))
-      );
+      if (page !== "file") {
+        setAnnotationData(
+          CommentRes.data.data.data.map((item) => JSON.parse(item.doctaskjson))
+        );
+      }
     }
   };
   /*Function to delete comment */
@@ -823,6 +827,13 @@ export default function CommentSection({
         maxHeight: docsection ? "100vh" : "calc(100vh - 130px)",
       }}
     >
+      {page === "file" &&
+        <div className="d-flex flex-row-reverse"> <button
+          className={`btn-sm btn-light border-0 rounded-5 mx-2 flex-end`}
+          onClick={() => setOpenAnnotationBox(false)}
+        >
+          x
+        </button></div>}
       {/* //condition for imm pdf
         // (docData.name && docData.name.toLowerCase().includes("imm")
         //   ? replyCommentClick === undefined ||
@@ -867,7 +878,7 @@ export default function CommentSection({
             {filteredEmails.length > 0 && type !== "reply" ? (
               <ul
                 className="email-suggestions"
-                style={{ maxHeight: 400, overflowY: "auto",zIndex:"999 !important" }}
+                style={{ maxHeight: 400, overflowY: "auto", zIndex: "999 !important" }}
               >
                 {filteredEmails.map((email, index) => (
                   <li
@@ -903,7 +914,7 @@ export default function CommentSection({
                 onClick={() => {
                   setComments("");
                   setCommentToApi("");
-                  setAnnotationDrawBox("");
+                  if (page !== "file") { setAnnotationDrawBox(""); }
                   setCommentData();
                   setSelectedPartner();
                 }}
@@ -999,9 +1010,11 @@ export default function CommentSection({
                     transitionDelay: "initial"
                   }}
                   onClick={() => {
-                    setAnnotationId(
-                      JSON.parse(commentItem?.doctaskjson).id || ""
-                    );
+                    if (page !== "file") {
+                      setAnnotationId(
+                        JSON.parse(commentItem?.doctaskjson).id || ""
+                      )
+                    }
                     setReplyCommentClick(commentItem.id);
                     getCommentsReplyList();
                     setFilteredEmails([]);
@@ -1044,7 +1057,7 @@ export default function CommentSection({
                           commentItem.status === "1" ? "0" : "1"
                         );
                         setFilteredEmails([]);
-                        setAnnotationDrawBox("");
+                        if (page !== "file") { setAnnotationDrawBox(""); }
                       }}
                     >
                       <IoIosCheckmarkCircle
