@@ -47,7 +47,7 @@ function SearchForm({ setSearch, setJobLocation, setCategoryFilterValue }) {
       ...state,
       country: options,
     });
-    // eslint-disable-next-line
+   // eslint-disable-next-line
   }, [states]);
 
   /*Onclick Function to search */

@@ -51,7 +51,7 @@ function Setting(props) {
     if (apiCall === true) {
       setApiCall(false);
     }
-    // eslint-disable-next-line
+   // eslint-disable-next-line
   }, [apiCall]);
 
   /*Function to grant the permission */

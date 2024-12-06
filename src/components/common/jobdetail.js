@@ -39,7 +39,7 @@ function JobDetailPage(props) {
   /*Render method to get job detail data */
   useEffect(() => {
     JobData();
-    // eslint-disable-next-line
+   // eslint-disable-next-line
   }, [props.jobdata, apiCall]);
 
   /*Set skill variable to array frm string */

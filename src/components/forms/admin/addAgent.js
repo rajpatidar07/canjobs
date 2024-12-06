@@ -228,7 +228,7 @@ function AddAgent(props) {
     if (user_type === "admin") {
       AdminJson()
     }
-    // eslint-disable-next-line
+  // eslint-disable-next-line
   }, [props.agentId]);
 
   // USER agent PROFILE UPDATE SUBMIT BUTTON

@@ -48,7 +48,7 @@ function ManageEmail(props) {
     } else {
       setState(props.data);
     }
-    // eslint-disable-next-line
+   // eslint-disable-next-line
   }, [props.data]);
   const onAddUpdateTemplate = async (event) => {
     event.preventDefault();

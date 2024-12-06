@@ -55,7 +55,7 @@ function JobBoxResponse({
 
   useEffect(() => {
     JobData();
-    // eslint-disable-next-line
+   // eslint-disable-next-line
   }, [
     JobId,
     locationFilterValue,
