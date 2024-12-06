@@ -979,6 +979,7 @@ export default function SharePointDocument({
                     docsection={true}
                     getCommentsList={getCommentsList}
                     setCommentsList={setCommentsList}
+                    partnerId={partnerId}
                   />
                 )}
               </div>

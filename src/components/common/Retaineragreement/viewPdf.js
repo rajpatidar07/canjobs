@@ -110,7 +110,7 @@ import { Modal } from "react-bootstrap";
 import AdobePDFViewer from "../Adobe/adobeFile";
 import Loader from "../../common/loader";
 import { useLocation } from "react-router-dom";
-import { GetDocConvertToken, getSharePointParticularFolders } from "../../../api/api";
+import { GetAgent, getallAdminData, GetCommentsAndAssign, GetDocConvertToken, getSharePointParticularFolders } from "../../../api/api";
 import { jsPDF } from "jspdf";
 export default function ViewPdf({
   show,
@@ -129,13 +129,20 @@ export default function ViewPdf({
 }) {
   let location = useLocation()
   const queryParams = new URLSearchParams(location.search);
-  const new_emp_user_type = queryParams.get("new_emp_user_type");
-  const new_user_id = queryParams.get("new_user_id");
-  const new_folderId = queryParams.get("folderId");
-  const new_document_id = queryParams.get("document_id");
+  const [new_emp_user_type] = useState(queryParams.get("new_emp_user_type"))
+  const [new_user_id] = useState(queryParams.get("new_user_id"))
+  const [new_folderId] = useState(queryParams.get("folderId"))
+  const [new_document_id] = useState(queryParams.get("document_id"))
+  const [Partner_id] = useState(queryParams.get("partner_id"))
   let [newPdf, setNewPdf] = useState()
   let [newPdfUrl, setNewPdfUrl] = useState()
   let [newDocLoder, setNewDocLoder] = useState(false)
+  let [commentsList, setCommentsList] = useState([])
+  let [adminList, setAdminList] = useState([])
+  let [partnerList, setPartnerist] = useState([])
+  // let [docTypeList, setDocTypeList] = useState([])
+
+
   let GetPdfDocument = async () => {
     try {
       let res = await getSharePointParticularFolders(
@@ -145,9 +152,11 @@ export default function ViewPdf({
       );
       if (res.data.status === 1) {
         setNewDocLoder(false);
+        // setDocTypeList(res.data.data)
         if (res.data.data.find((item) => item.id === new_document_id)) {
           let data = res.data.data.find((item) => item.id === new_document_id)
           setNewPdf(data);
+          getCommentsList(data)
           if (
             data.file.mimeType === "image/jpeg" ||
             data.file.mimeType === "image/png" ||
@@ -243,8 +252,54 @@ export default function ViewPdf({
 
     return; // Return the base64 PDF data
   };
+  const getCommentsList = async (data) => {
+    if (data) {
+      localStorage.setItem("mentionAdmin", "");
+      try {
+        let res = await GetCommentsAndAssign(
+          data.id, //docId,
+          "", // adminid,
+          "", // annotationStatus,
+          "document"
+        );
+        if (res.data.status === (1 || "1")) {
+          setCommentsList(res.data.data.data);
+        } else if (res.data.message === "Task data not found") {
+          setCommentsList([]);
+        }
+      } catch (err) {
+        console.log(err);
+        setCommentsList([]);
+      }
+
+    } else {
+      setCommentsList([]);
+    }
+  };
+  /*FUnction to get admin data */
+  const AdminData = async () => {
+    try {
+      if (localStorage.getItem("userType") === "admin" || localStorage.getItem("userType") === "agent") {
+        const Partnerdata = await GetAgent();
+        const userData = await getallAdminData();
+        let newPartnerList = Partnerdata.data.data.filter(
+          (item) => item.id === Partner_id
+        );
+        setPartnerist(newPartnerList);
+
+        if (userData.data.length === 0) {
+          setAdminList([]);
+        } else {
+          setAdminList(userData.data);
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   useEffect(() => {
     GetPdfDocument()
+    AdminData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   if (type === "modal") {
@@ -276,12 +331,12 @@ export default function ViewPdf({
                 url={pdf["@microsoft.graph.downloadUrl"]}
                 data={pdf}
                 userId={user_id}
-                commentsList={[]}
+                commentsList={commentsList}
                 selectedMentionAdmin={[]}
                 DocUserType={emp_user_type}
                 adminList={[]}
                 partnerList={[]}
-                setCommentsList={[]}
+                setCommentsList={setCommentsList}
                 userType={""}
               />
             )}
@@ -300,13 +355,21 @@ export default function ViewPdf({
           url={newPdfUrl}
           data={newPdf}
           userId={new_user_id}
-          commentsList={[]}
+          commentsList={commentsList}
           selectedMentionAdmin={[]}
           DocUserType={new_emp_user_type}
-          adminList={[]}
-          partnerList={[]}
-          setCommentsList={[]}
-          userType={""}
+          adminList={adminList}
+          partnerList={partnerList}
+          setCommentsList={setCommentsList}
+          userType={localStorage.getItem("userType")}
+          docsection={true}
+          getCommentsList={getCommentsList}
+          setDocSingleDate={setNewPdf}
+          // docTypeList={docTypeList}
+          // fileId={fileID}
+          // setFileID={setFileID}
+          setConvertedDoc={setNewPdfUrl}
+          SetPdfDocUrl={GetPdfDocument}
         />
       )
     );

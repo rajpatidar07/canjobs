@@ -4,6 +4,7 @@ import CommentSection from "./commentSection.js";
 import { FaComments } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { GrNext, GrPrevious } from "react-icons/gr";
+import Loader from "../loader.js"
 // import $ from 'jquery';
 const AdobePDFViewer = ({
   url,
@@ -90,99 +91,103 @@ const AdobePDFViewer = ({
   // }, [currentIndex]);
   /*REnder document method */
   useEffect(() => {
-    // if (!data?.name?.includes(1295)) {
-    const viewSDKClient = new ViewSDKClient();
-    viewSDKClient.ready().then(() => {
-      const previewFilePromise = viewSDKClient.previewFile(
-        "pdf-div",
-        {
-          showAnnotationTools: false,
-          showLeftHandPanel: true,
-          showPageControls: true,
-          enableAnnotationAPIs: true,
-          includePDFAnnotations: true,
-          // showDownloadPDF: false, // Disable download
-          // showPrintPDF: false,    // Disable print
-        },
-        url,
-        data,
-        userType
-      );
-      const eventOptions = {
-        listenOn: [
-          "ANNOTATION_ADDED",
-          "ANNOTATION_UPDATED",
-          "ANNOTATION_DELETED",
-        ],
-      };
-      // const AdminDetails = {
-      //     "id": localStorage.getItem("admin_id"),
-      //     "name": localStorage.getItem("admin").charAt(0).toUpperCase() + localStorage.getItem("admin").slice(1),
-      //     "type": "Person"
-      // }
-      previewFilePromise
-        .then((adobeViewer) => {
-          setAdobeViewer(adobeViewer);
-          adobeViewer
-            .getAnnotationManager()
-            .then((annotationManager) => {
-              console.log(annotationManager)
-              setAnnotationManager(annotationManager);
-              if (annotationData.length === 0) {
-              } else {
+    if (url &&
+      data &&
+      userType) {
+      // if (!data?.name?.includes(1295)) {
+      const viewSDKClient = new ViewSDKClient();
+      viewSDKClient.ready().then(() => {
+        const previewFilePromise = viewSDKClient.previewFile(
+          "pdf-div",
+          {
+            showAnnotationTools: false,
+            showLeftHandPanel: true,
+            showPageControls: true,
+            enableAnnotationAPIs: true,
+            includePDFAnnotations: true,
+            // showDownloadPDF: false, // Disable download
+            // showPrintPDF: false,    // Disable print
+          },
+          url,
+          data,
+          userType
+        );
+        const eventOptions = {
+          listenOn: [
+            "ANNOTATION_ADDED",
+            "ANNOTATION_UPDATED",
+            "ANNOTATION_DELETED",
+          ],
+        };
+        // const AdminDetails = {
+        //     "id": localStorage.getItem("admin_id"),
+        //     "name": localStorage.getItem("admin").charAt(0).toUpperCase() + localStorage.getItem("admin").slice(1),
+        //     "type": "Person"
+        // }
+        previewFilePromise
+          .then((adobeViewer) => {
+            setAdobeViewer(adobeViewer);
+            adobeViewer
+              .getAnnotationManager()
+              .then((annotationManager) => {
+                // console.log(annotationManager)
+                setAnnotationManager(annotationManager);
+                if (annotationData.length === 0) {
+                } else {
 
-                annotationManager
-                  .addAnnotations(annotationData)
-                  .then(() => console.log("Success"))
-                  .catch((error) => console.log(error));
-              }
-              annotationManager
-                .getAnnotations()
-                .then((result) => {
-                  viewSDKClient.annots = result;
-                })
-                .catch((e) => {
-                  console.log(e);
-                });
-              annotationManager.registerEventListener(function (event) {
-                if (event.type === "ANNOTATION_ADDED") {
-                  // Include AdminDetails for annotations
-                  const newAnnotation = event.data;
-                  // newAnnotation.creator = AdminDetails;
-                  viewSDKClient.annots = [
-                    ...viewSDKClient.annots,
-                    newAnnotation,
-                  ];
-                  setAnnotationDrawBox(
-                    (annotationData).find((item) => item.id === event.data.id)
-                      ? ""
-                      : event.data
-                  );
-                  setOpenAnnotationBox(true)
-                } else if (event.type === "ANNOTATION_UPDATED") {
-                  viewSDKClient.annots = [
-                    ...viewSDKClient.annots.filter(
-                      (a) => a.id !== event.data.id
-                    ),
-                    event.data,
-                  ];
-                } else if (event.type === "ANNOTATION_DELETED") {
-                  viewSDKClient.annots = viewSDKClient.annots.filter(
-                    (a) => a.id !== event.data.id
-                  );
+                  annotationManager
+                    .addAnnotations(annotationData)
+                    .then(() => console.log("Success"))
+                    .catch((error) => console.log(error));
                 }
-              }, eventOptions);
-            })
-            .catch((e) => {
-              console.log("Error getting Annotation Manager:", e);
-            });
-        })
-        .catch((e) => {
-          console.log("Error in previewFilePromise:", e);
-        });
-      // viewSDKClient.registerSaveApiHandler(userId, annotationId, DocUserType);
-      viewSDKClient.registerGetUserProfileApiHandler();
-    });
+                annotationManager
+                  .getAnnotations()
+                  .then((result) => {
+                    viewSDKClient.annots = result;
+                  })
+                  .catch((e) => {
+                    console.log(e);
+                  });
+                annotationManager.registerEventListener(function (event) {
+                  if (event.type === "ANNOTATION_ADDED") {
+                    // Include AdminDetails for annotations
+                    const newAnnotation = event.data;
+                    // newAnnotation.creator = AdminDetails;
+                    viewSDKClient.annots = [
+                      ...viewSDKClient.annots,
+                      newAnnotation,
+                    ];
+                    setAnnotationDrawBox(
+                      (annotationData).find((item) => item.id === event.data.id)
+                        ? ""
+                        : event.data
+                    );
+                    setOpenAnnotationBox(true)
+                  } else if (event.type === "ANNOTATION_UPDATED") {
+                    viewSDKClient.annots = [
+                      ...viewSDKClient.annots.filter(
+                        (a) => a.id !== event.data.id
+                      ),
+                      event.data,
+                    ];
+                  } else if (event.type === "ANNOTATION_DELETED") {
+                    viewSDKClient.annots = viewSDKClient.annots.filter(
+                      (a) => a.id !== event.data.id
+                    );
+                  }
+                }, eventOptions);
+              })
+              .catch((e) => {
+                console.log("Error getting Annotation Manager:", e);
+              });
+          })
+          .catch((e) => {
+            console.log("Error in previewFilePromise:", e);
+          });
+        // viewSDKClient.registerSaveApiHandler(userId, annotationId, DocUserType);
+        viewSDKClient.registerGetUserProfileApiHandler();
+      });
+    }
 
     // }
     //     let timer;
@@ -217,7 +222,6 @@ const AdobePDFViewer = ({
     // return () => clearTimeout(timer);
     // eslint-disable-next-line
   }, [url, commentsList, annotationData]);
-  console.log(annotationDrawBox)
   /*Render method to Highlight the annotation from clicking it */
   useEffect(() => {
     // if (!data?.name?.includes(1295)) {
@@ -337,17 +341,20 @@ const AdobePDFViewer = ({
         >
           <GrNext />
         </button>}
-        <div
-          id="pdf-div"
-          className={`${(userType === "admin" || userType === "agent") && openAnnotationBox
-            ? "w-100"
-            : "w-100"
-            } full-window-div`}
-          style={{
-            height: docsection ? "100vh" : "calc(100vh - 130px)",
-            // transition: "all .3s",
-          }}
-        ></div>
+        {url &&
+          data &&
+          userType ? <div
+            id="pdf-div"
+            className={`${(userType === "admin" || userType === "agent") && openAnnotationBox
+              ? "w-100"
+              : "w-100"
+              } full-window-div`}
+            style={{
+              height: docsection ? "100vh" : "calc(100vh - 130px)",
+              // transition: "all .3s",
+            }}
+          ></div> :
+          <Loader />}
       </div>
       <Link
         to={""}

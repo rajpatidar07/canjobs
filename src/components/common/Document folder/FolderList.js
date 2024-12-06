@@ -35,6 +35,7 @@ export default function FolderList({
   commentsList,
   DocUserType,
   getCommentsList,
+  partnerId
 }) {
   const [view, setView] = useState("block"); // Default to block view
   let [openAnnotationBox, setOpenAnnotationBox] = useState();
@@ -42,7 +43,7 @@ export default function FolderList({
 
   return (
     <div
-      className={`bg-light ${view === "block" ? "justify-content-center" : "w-100"}`}
+      className={`bg-light w-100 ${view === "block" ? "justify-content-center" : ""}`}
       style={{
         minHeight: "200px",
         overflow: "auto",
@@ -58,21 +59,21 @@ export default function FolderList({
           onClick={() => setView("block")}
           title="Block View"
         >
-          <b style={{fontSize:"1rem",fontWeight:"200"}}><CiImageOn className="sidebar_icon" /></b>
+          <b style={{ fontSize: "1rem", fontWeight: "200" }}><CiImageOn className="sidebar_icon" /></b>
         </Link>
         <Link to=""
           className={`btn-sm ${view === "list" ? "btn-primary" : "btn-outline-primary"} mx-1 `}
           onClick={() => setView("list")}
           title="List View"
         >
-          <b style={{fontSize:"1rem",fontWeight:"200"}}><CiViewList className="sidebar_icon" /></b>
+          <b style={{ fontSize: "1rem", fontWeight: "200" }}><CiViewList className="sidebar_icon" /></b>
         </Link>
       </div>
       <div className="row">
         {/* File List */}
-        <div className={`file-list ${openAnnotationBox === true ? "col-9" : "col-12"}`}>
+        <div className={`file-list justify-content-center ${openAnnotationBox === true ? "col-9" : "col-12"}`}>
           {view === "block" ? (
-            <div className="d-flex flex-wrap ">
+            <div className="d-flex flex-wrap justify-content-center">
               {(docTypeList || []).map((item, index) => (
                 <React.Fragment key={index}>
                   <div
@@ -209,7 +210,8 @@ export default function FolderList({
                         </li>
                         <li className={item.folder ? "d-none" : "list-group-item text-darger"}>
                           <Link
-                            to={`/view_pdf_Agreement?new_emp_user_type=${emp_user_type}&new_user_id=${user_id}&folderId=${item.parentReference.id}&document_id=${item.id}`} target="_blank">
+                            // state={{ id: res.job_id }}
+                            to={`/view_pdf_Agreement?new_emp_user_type=${emp_user_type}&new_user_id=${user_id}&folderId=${item.parentReference.id}&document_id=${item.id}&partner_id=${partnerId}`} target="_blank">
                             {" "}
                             Open in new tab {item.folder ? "Folder" : "File"}
                           </Link>
