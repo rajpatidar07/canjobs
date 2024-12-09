@@ -22,10 +22,21 @@ export default function AddTaskForm(props) {
         try {
             let res = await GetFilter()
             let adminRes = await getallAdminData()
-            setAdminList(adminRes.data)
-            setPriority(res.data.data.priority)
-            setGroupBy(res.data.data.group_by)
-            setStatus(res.data.data.status_type)
+            console.log(res.data.status === 1)
+            if (adminRes.data.length > 0) {
+                setAdminList(adminRes.data)
+            } else {
+                setAdminList([])
+            }
+            if (res.data.status === 1) {
+                setPriority(res.data.data.priority)
+                setGroupBy(res.data.data.group_by)
+                setStatus(res.data.data.status_type)
+            } else {
+                setPriority([])
+                setGroupBy([])
+                setStatus([])
+            }
         } catch (err) {
             console.log(err)
         }
@@ -164,7 +175,7 @@ export default function AddTaskForm(props) {
                         onChange={(e) => setSelectedPriority(e.target.value)}
                     >
                         <option value="">Select Priority</option>
-                        {priority.map((user) => (
+                        {(priority || []).map((user) => (
                             <option key={user.id} value={user.id}>
                                 {user.value}
                             </option>
@@ -178,7 +189,7 @@ export default function AddTaskForm(props) {
                         onChange={(e) => setSelectedStatus(e.target.value)}
                     >
                         <option value="">Select Status</option>
-                        {status.map((user) => (
+                        {(status || []).map((user) => (
                             <option key={user.id} value={user.id}>
                                 {user.value}
                             </option>
@@ -191,7 +202,7 @@ export default function AddTaskForm(props) {
                         onChange={handleGroupSelect}
                     >
                         <option value="">Select Group</option>
-                        {groupBy.map((user) => (
+                        {(groupBy || []).map((user) => (
                             <option key={user.id} value={user.id}>
                                 {user.value}
                             </option>
@@ -201,7 +212,7 @@ export default function AddTaskForm(props) {
                     <div className="row m-0 p-0">
                         {selectedGroupBy.length === 0 ? (
                             null) : (
-                            selectedGroupBy.map((item, index) => (
+                            (selectedGroupBy || []).map((item, index) => (
                                 <span
                                     key={index}
                                     className="text-capitalize text-black-2 font-size-2 d-flex align-items-center p-1"
@@ -226,7 +237,7 @@ export default function AddTaskForm(props) {
                         value=""
                     >
                         <option value="">Select Admin</option>
-                        {AdminList.map((user) => (
+                        {(AdminList || []).map((user) => (
                             <option key={user.admin_id} value={user.admin_id}>
                                 {user.name}
                             </option>
@@ -237,7 +248,7 @@ export default function AddTaskForm(props) {
                         {selectedAdmin.length === 0 ? (
                             null
                         ) : (
-                            selectedAdmin.map((item) => (
+                            (selectedAdmin || []).map((item) => (
                                 <div
                                     key={item.admin_id}
                                     className="position-relative d-inline-block mr-3 mb-2"

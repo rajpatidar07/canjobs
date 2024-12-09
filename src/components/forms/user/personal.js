@@ -705,7 +705,7 @@ function PersonalDetails(props) {
                       name="date_of_birth"
                       value={state.date_of_birth || ""}
                       onChange={onInputChange}
-                      onKeyDownCapture={(e) => e.preventDefault()}
+                      // onKeyDownCapture={(e) => e.preventDefault()}
                       className={
                         `form-control ${errors.date_of_birth
                           ? " border border-danger"

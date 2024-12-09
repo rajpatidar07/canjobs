@@ -112,6 +112,7 @@ export default function FolderList({
                           setDocSingleDate(item);
                           setFileID(item.id);
                           SetPdfDocUrl(item);
+                          getCommentsList(item)
                           // }
                         }
                       }}
