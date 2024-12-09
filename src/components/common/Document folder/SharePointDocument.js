@@ -26,6 +26,7 @@ import EditDocNameFOrm from "./EditDocNameFOrm";
 import AdobePDFViewer from "../Adobe/adobeFile";
 import { jsPDF } from "jspdf";
 import MentionAdminInDoc from "../Adobe/MentionAdminInDoc";
+import DocumentsNotes from "./DocumentsNotes";
 // import { PDFDocument } from 'pdf-lib';
 
 export default function SharePointDocument({
@@ -40,6 +41,7 @@ export default function SharePointDocument({
   AnnoteId
 }) {
   const [docTypeName, setDocTypeName] = useState("");
+  const [openNoteForm, setOpenNoteForm] = useState("");
   const [newType, setNewType] = useState("");
   const [docFileBase, setDocFileBase] = useState("");
   const [folderID, setFolderID] = useState(folderId);
@@ -103,7 +105,7 @@ export default function SharePointDocument({
   };
   // Generate a list of comments from the state for image annotation
   const getCommentsList = async (data) => {
-    console.log(data,"data is coming")
+    console.log(data, "data is coming")
     if (data) {
       localStorage.setItem("mentionAdmin", "");
       try {
@@ -905,41 +907,46 @@ export default function SharePointDocument({
                       </button>
                     </>
                   ) : (
-                    <Dropdown>
-                      <Dropdown.Toggle
-                        variant="secondary"
-                        size={"sm"}
-                        style={{ maxHeight: 34 }}
-                        id="dropdown-basic"
-                      >
-                        + Add New Folder
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu
-                        style={{ height: "400px", overflowY: "scroll" }}
-                      >
-                        <Dropdown.Item
-                          onClick={() => handleDocTypeChange("")}
-                          key={-1}
+                    <>
+                      <Dropdown>
+                        <Dropdown.Toggle
+                          variant="secondary"
+                          size={"sm"}
+                          style={{ maxHeight: 34 }}
+                          id="dropdown-basic"
                         >
-                          Select Folder Name
-                        </Dropdown.Item>
-                        {DocTypeData.map((item, index) => (
+                          + Add New Folder
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu
+                          style={{ height: "400px", overflowY: "scroll" }}
+                        >
                           <Dropdown.Item
-                            onClick={() => handleDocTypeChange(item)}
-                            key={index}
-                            className="text-capitalize"
+                            onClick={() => handleDocTypeChange("")}
+                            key={-1}
                           >
-                            {item.replaceAll("_", " ")}
+                            Select Folder Name
                           </Dropdown.Item>
-                        ))}
-                        <Dropdown.Item
-                          onClick={() => handleDocTypeChange("other")}
-                        >
-                          Other
-                        </Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
+                          {DocTypeData.map((item, index) => (
+                            <Dropdown.Item
+                              onClick={() => handleDocTypeChange(item)}
+                              key={index}
+                              className="text-capitalize"
+                            >
+                              {item.replaceAll("_", " ")}
+                            </Dropdown.Item>
+                          ))}
+                          <Dropdown.Item
+                            onClick={() => handleDocTypeChange("other")}
+                          >
+                            Other
+                          </Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    </>
                   )}
+                  {openNoteForm ? <DocumentsNotes />
+                    : <button className="btn btn-primary mx-2" style={{ maxHeight: 34 }}
+                      onClick={() => setOpenNoteForm(true)}>Add notes</button>}
                 </div>
               </div>
               <div className="row m-0 bg-white px-2 pb-2">
