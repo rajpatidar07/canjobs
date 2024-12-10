@@ -1137,9 +1137,7 @@ export default function EmployeeTable(props) {
                             )}
                           </td>
                         )}
-                        {props.heading === "Dashboard" ? (
-                          ""
-                        ) : (
+                        {(
                           <td className=" py-5">
                             {empdata.language === null ? (
                               <p className="font-size-3  mb-0">N/A</p>
