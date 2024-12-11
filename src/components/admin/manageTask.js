@@ -7,6 +7,7 @@ import { getallAdminData, getallEmployeeData, getAllEmployer } from '../../api/a
 import AdminListTaskTable from '../common/AdminListTaskTabel'
 import CustomButton from '../common/button'
 import AddTaskForm from '../forms/admin/addTaskForm'
+import { Link } from 'react-router-dom'
 
 export default function ManageTask() {
     const [apiCall, setApiCall] = useState(false)
@@ -19,7 +20,7 @@ export default function ManageTask() {
     const [taskPage, setTaskPage] = useState(1)
     const [adminPage, setAdminPage] = useState(1)
     const [employeeList, setEmployeeList] = useState([])
-    // const [employerList, setEmployerList] = useState([])
+    const [showTaskForm, setShowTaskForm] = useState(false)
     const [adminList, setAdminList] = useState([])
     /*FUnction to get all user data */
     const GetAllUserData = async () => {
@@ -161,10 +162,15 @@ export default function ManageTask() {
                                     <h3 className="font-size-5 px-3 m-0  ">
                                         Tasks
                                     </h3>
-                                    <AddTaskForm
+                                    {showTaskForm ? <AddTaskForm
                                         userId={userId}
                                         TaskUserType={userType}
-                                        setApiCall={setApiCall} />
+                                        setApiCall={setApiCall}
+                                        setShowTaskForm={setShowTaskForm} /> :
+                                        <div className="d-flex flex-row-reverse">
+                                            <Link className="btn btn-primary mb-2" onClick={() => setShowTaskForm(true)}>Add Task
+                                            </Link>
+                                        </div>}
                                     <AdminTaskTable
                                         heading={""}
                                         filter_by_time={""}

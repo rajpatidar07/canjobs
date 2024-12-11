@@ -737,21 +737,21 @@ export const ADocAnnotation = async (
   Status
 ) => {
   console.log(
-  "1. task_creator_user_id =>", id,
-  //   "2. task_creator_user_type =>", user_type === "admin" ? "admin" : "agent",
-  //   "3. doc_id =>", docId,
-  //   "4. user_admin_assigned =>", type === "partner" || "partnerChat" ? assigned_by_id : "",
-  //   "5. json =>", AdobeAnnotation,
-  //   "6. assined_to_user_id =>", assineduserid,
-  //   "7. assigned_user_type =>", AssignUserType,
-  //   "8. document_url =>", type === "partner" || "partnerChat" ? DocUrl : "",
-  //   '9. subject_description =>', comment,
-  //   '10. x_axis =>', x,
-  //   '11. y_axis =>', y,
-  //   '12. type =>', type,
-  //   '13. employee_id =>', employee_id,
-  //   '14. doc_parent_id =>',docPartentId,
-  '15. DocUserType =>', DocUserType,)
+    "1. task_creator_user_id =>", id,
+    //   "2. task_creator_user_type =>", user_type === "admin" ? "admin" : "agent",
+    //   "3. doc_id =>", docId,
+    //   "4. user_admin_assigned =>", type === "partner" || "partnerChat" ? assigned_by_id : "",
+    //   "5. json =>", AdobeAnnotation,
+    //   "6. assined_to_user_id =>", assineduserid,
+    //   "7. assigned_user_type =>", AssignUserType,
+    //   "8. document_url =>", type === "partner" || "partnerChat" ? DocUrl : "",
+    //   '9. subject_description =>', comment,
+    //   '10. x_axis =>', x,
+    //   '11. y_axis =>', y,
+    //   '12. type =>', type,
+    //   '13. employee_id =>', employee_id,
+    //   '14. doc_parent_id =>',docPartentId,
+    '15. DocUserType =>', DocUserType,)
   // '16. assign_to =>',email
   // )
   const response = await axios.post(
@@ -2193,6 +2193,7 @@ export const GetFilter = async (props) => {
 
 /*Add Filters Api */
 export const AddFIlter = async (props, id) => {
+  // console.log(props)
   const response = await axios.put(
     `${API_URL}${user_type}/addUpdatefilterList`,
     { id: id, json_item: props.json_item },
@@ -3270,13 +3271,17 @@ export const UpdateCredentialApi = async (props) => {
 };
 /*Share point apis */
 // Api function to get folders or type of document of perticular employee
-export const getSharePointFoldersList = async (Id, User) => {
+export const getSharePointFoldersList = async (Id, User, columnName, sort, limit, page) => {
   const response = await axios.post(
     `${API_URL}admin/getSharpointSiteDriveFolderData_new`,
     {
       driveId: driveId,
       userId: Id,
       userType: User,
+      // column_name: columnName,
+      // sort_order: sort,
+      // limit: limit,
+      // page: page
     },
     {
       headers: {
@@ -3288,7 +3293,7 @@ export const getSharePointFoldersList = async (Id, User) => {
   return response;
 };
 //Api function to GET emolyee  peticular document folder data
-export const getSharePointParticularFolders = async (Id, User, folderId) => {
+export const getSharePointParticularFolders = async (Id, User, folderId, columnName, sort, limit, page) => {
   const response = await axios.post(
     `${API_URL}admin/getSharpointSiteDriveFolderToFolderData_new`,
     {
@@ -3296,6 +3301,10 @@ export const getSharePointParticularFolders = async (Id, User, folderId) => {
       userId: Id,
       userType: User,
       folderId: folderId,
+      column_name: columnName,
+      sort_order: sort,
+      limit: limit,
+      page: page
     },
     {
       headers: {

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function DocSaveForm({
   handleBulkFileChange,
@@ -9,15 +10,21 @@ export default function DocSaveForm({
   setSaveBtn,
   setDocFileBase,
   view,
+  docFileBase
 }) {
+  /*Function to remove the file from the selected file list */
+  const removeFile = (fileName) => {
+    setDocFileBase((prevFiles) =>
+      prevFiles.filter((file) => file.name !== fileName)
+    ); // Remove file by name
+  };
   return (
     <div className={`d-flex align-items-center ${view === "list" ? "flex-column" : ""}`}>
       <form>
         <div className={`${view === "list" ? "d-flex align-items-center mb-3" : ""}`}>
           <label
-            className={`btn btn-white rounded ${
-              view === "list" ? "d-flex align-items-center justify-content-start" : ""
-            }`}
+            className={`btn btn-white rounded ${view === "list" ? "d-flex align-items-center justify-content-start" : ""
+              }`}
             style={{
               margin: 10,
               color: "grey",
@@ -43,11 +50,31 @@ export default function DocSaveForm({
             </p>
           </label>
         </div>
-        {saveBtn === true ? (
+        {/* Display Selected File Names with Cross Button */}
+        {docFileBase.length > 0 && (
+          <div className="form-group">
+            <ul className="list-unstyled d-flex align-items-center flex-wrap">
+              {docFileBase.map((file, index) => (
+                <li
+                  key={index}
+                  className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                >
+                  {file.name}
+                  <Link
+                    className="p-0 ms-1"
+                    onClick={() => removeFile(file.name)}
+                  >
+                    <i className="px-3 fa fa-times-circle" aria-hidden="true"></i>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {saveBtn === true && docFileBase.length > 0 ? (
           <div
-            className={`doc_upload_col ${
-              view === "list" ? "d-flex justify-content-between align-items-center" : ""
-            }`}
+            className={`doc_upload_col ${view === "list" ? "d-flex justify-content-between align-items-center" : ""
+              }`}
           >
             {loadingBtn ? (
               <button

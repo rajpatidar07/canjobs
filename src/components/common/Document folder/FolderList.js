@@ -6,6 +6,7 @@ import DocSaveForm from "./DocSaveForm";
 import ConvertTime from "../ConvertTime";
 import CommentSection from "../Adobe/commentSection";
 import { CiImageOn, CiViewList } from "react-icons/ci";
+import Pagination from "../pagination";
 
 export default function FolderList({
   setDocPreview,
@@ -35,9 +36,15 @@ export default function FolderList({
   commentsList,
   DocUserType,
   getCommentsList,
-  partnerId
+  partnerId,
+  handleSort,
+  setPageNo,
+  nPages,
+  totalData,
+  pageNo,
+  docFileBase
 }) {
-  const [view, setView] = useState("block"); // Default to block view
+  const [view, setView] = useState("list"); // Default to block view
   let [openAnnotationBox, setOpenAnnotationBox] = useState();
   let [DocData, setDocData] = useState();
 
@@ -232,6 +239,7 @@ export default function FolderList({
               ))}
               {/* Upload Document Form */}
               <DocSaveForm
+                docFileBase={docFileBase}
                 view={view}
                 handleBulkFileChange={handleBulkFileChange}
                 saveBtn={saveBtn}
@@ -244,23 +252,47 @@ export default function FolderList({
           ) : (
             <div className=" rounded shadow-sm col-12">
               {/* Table Header */}
-              <div className="d-flex bg-light py-2 px-3 border-bottom" style={{ fontWeight: "bold" }}>
-                <div className="col-6">Name</div>
-                <div className="col-3">Last Modified</div>
-                <div className="col-3">Type</div>
+              <div className="d-flex bg-light py-2 px-3 border-bottom fw-bold">
+                <div className="col-3 ">
+                  <Link onClick={() => {
+                    handleSort("name")
+                    setPageNo(1)
+                  }} className="text-decoration-none  text-gray">Name</Link>
+                </div>
+                <div className="col-3 ">
+                  <Link onClick={() => {
+                    handleSort("createdDateTime")
+                    setPageNo(1)
+                  }} className="text-decoration-none  text-gray">Created At</Link>
+                </div>
+                <div className="col-3 ">
+                  <Link onClick={() => {
+                    handleSort("lastModifiedDateTime")
+                    setPageNo(1)
+                  }} className="text-decoration-none  text-gray">Last Modified</Link>
+                </div>
+                <div className="col-3 ">
+                  <Link onClick={() => {
+                    handleSort("mimeType")
+                    setPageNo(1)
+                  }} className="text-decoration-none  text-gray">Type</Link>
+                </div>
               </div>
+
               {/* List Items */}
               {(docTypeList || []).map((item, index) => (
                 <div
                   key={index}
-                  className="d-flex bg-white align-items-center py-2 px-3 border-bottom"
+                  className="d-flex align-items-center bg-white py-2 px-3 border-bottom"
                   style={{ fontSize: "14px" }}
                 >
-                  <div className="col-6">
+                  {/* Name and Dropdown */}
+                  <div className="col-3">
                     {showDropDown === item.id && (
-                      <ul className="list-group">
+                      <ul className="list-group position-absolute z-index-1 bg-white shadow-sm">
                         <li className="list-group-item">
                           <Link
+                            className="text-decoration-none"
                             onClick={() => {
                               setEditNameForm(true);
                               setDocSingleDate(item);
@@ -269,105 +301,100 @@ export default function FolderList({
                             Rename
                           </Link>
                         </li>
-                        <li className="list-group-item text-darger">
-                          <Link onClick={() => ShowDeleteAlert(item)}>
-                            {" "}
+                        <li className="list-group-item text-danger">
+                          <Link
+                            className="text-decoration-none"
+                            onClick={() => ShowDeleteAlert(item)}
+                          >
                             Delete {item.folder ? "Folder" : "File"}
                           </Link>
                         </li>
-                        <li className={item.folder ? "d-none" : "list-group-item text-darger"}>
-                          <Link
-                            to={`/view_pdf_Agreement?new_emp_user_type=${emp_user_type}&new_user_id=${user_id}&folderId=${item.parentReference.id}&document_id=${item.id}`} target="_blank">
-                            {" "}
-                            Open in new tab {item.folder ? "Folder" : "File"}
-                          </Link>
-                        </li>
-                        <li className={item.folder ? "d-none" : "list-group-item text-darger"}>
-                          <Link to="" onClick={() => {
-                            getCommentsList(item)
-                            setOpenAnnotationBox(true)
-                            setDocData(item)
-                          }}>
-                            Comment's</Link>
-                        </li>
+                        {!item.folder && (
+                          <>
+                            <li className="list-group-item text-danger">
+                              <Link
+                                className="text-decoration-none"
+                                to={`/view_pdf_Agreement?new_emp_user_type=${emp_user_type}&new_user_id=${user_id}&folderId=${item.parentReference.id}&document_id=${item.id}`}
+                                target="_blank"
+                              >
+                                Open in New Tab
+                              </Link>
+                            </li>
+                            <li className="list-group-item text-danger">
+                              <Link
+                                className="text-decoration-none"
+                                onClick={() => {
+                                  getCommentsList(item);
+                                  setOpenAnnotationBox(true);
+                                  setDocData(item);
+                                }}
+                              >
+                                Comments
+                              </Link>
+                            </li>
+                          </>
+                        )}
                       </ul>
                     )}
                     <Link
                       to="#"
-                      className="text-decoration-none text-dark"
+                      className="text-dark text-decoration-none d-flex align-items-center"
                       onClick={() => {
                         if (item.folder) {
                           setFolderID(item.id);
                           setDocTypeName(item.name);
                         } else {
-                          // const userAgent = navigator.userAgent;
-                          // // const vendor = navigator.vendor;
-                          // if (item?.name.includes(1295) && userAgent.includes("Firefox")) {
-                          //   console.log(item["@microsoft.graph.downloadUrl"])
-                          //   window.open(item.webUrl, '_blank');
-
-                          //   // if (userAgent.includes("Chrome") && vendor.includes("Google")) {
-                          //   //   console.log("Browser: Google Chrome");
-                          //   // } else if (userAgent.includes("Firefox")) {
-                          //   //   console.log("Browser: Mozilla Firefox");
-                          //   // } else if (userAgent.includes("Safari") && vendor.includes("Apple")) {
-                          //   //   console.log("Browser: Safari");
-                          //   // } else if (userAgent.includes("Edg")) {
-                          //   //   console.log("Browser: Microsoft Edge");
-                          //   // } else if (userAgent.includes("Trident") || userAgent.includes("MSIE")) {
-                          //   //   console.log("Browser: Internet Explorer");
-                          //   // } else {
-                          //   //   console.log("Browser: Unknown");
-                          //   // }
-                          // } else {
                           setDocPreview(true);
                           setDocSingleDate(item);
                           setFileID(item.id);
                           SetPdfDocUrl(item);
-                          // }
                         }
                       }}
                       onContextMenu={(e) => {
-                        e.preventDefault(); // prevent the default behaviour when right clicked
+                        e.preventDefault();
                         setShowDropDown(item.id);
-                        localStorage.setItem("new_pdf_url", "");
-                        localStorage.setItem("new_pdf", "");
-                        localStorage.setItem("new_emp_user_type", "");
-                        localStorage.setItem("new_user_id", "");
                       }}
                     >
                       {item.folder ? (
-                        <FaFolder className="mr-2 text-warning" />
-                      ) : item.file && item.file.mimeType === "application/pdf" ? (
-                        <FaRegFilePdf className="mr-2 text-danger" />
-                      ) : item.file && item.file.mimeType.startsWith("image/") ? (
+                        <FaFolder className="me-2 text-warning" />
+                      ) : item.file?.mimeType === "application/pdf" ? (
+                        <FaRegFilePdf className="me-2 text-danger" />
+                      ) : item.file?.mimeType?.startsWith("image/") ? (
                         <img
                           src={item["@microsoft.graph.downloadUrl"]}
                           alt={item.name}
-                          className="file-icon"
+                          className="me-2"
                           style={{ width: "24px", height: "24px", objectFit: "cover" }}
                         />
                       ) : (
-                        <BsFiletypeDocx className="mr-2" style={{ color: "#2B579A" }} />
+                        <BsFiletypeDocx className="me-2" style={{ color: "#2B579A" }} />
                       )}
-                      {" " + item.name.replace("_", " ")}
+                      <span className="mx-2 text-break">{item.name.replaceAll("_", " ")}</span>
                     </Link>
-
                   </div>
+                  {/* Created At */}
+                  <div className="col-3">
+                    <ConvertTime _date={item.createdDateTime} format={".fromNow()"} />
+                  </div>
+
+                  {/* Last Modified */}
                   <div className="col-3">
                     <ConvertTime _date={item.lastModifiedDateTime} format={".fromNow()"} />
                   </div>
+                  {/* Type */}
                   <div className="col-3">
                     {item.folder
                       ? "Folder"
                       : item.file.mimeType.includes("pdf")
                         ? "PDF"
-                        : "Document"}
+                        : item.file.mimeType.includes("image")
+                          ? "Image" : "Document"}
                   </div>
                 </div>
               ))}
               {/* Upload Document Form */}
               <DocSaveForm
+                docFileBase={docFileBase}
                 view={view}
                 handleBulkFileChange={handleBulkFileChange}
                 saveBtn={saveBtn}
@@ -378,6 +405,13 @@ export default function FolderList({
               />
             </div>
           )}
+          <Pagination
+            setCurrentPage={setPageNo}
+            nPages={nPages}
+            total={totalData}
+            count={docTypeList.length}
+            currentPage={pageNo}
+          />
         </div>
 
         {(userType === "admin" || userType === "agent") && (
