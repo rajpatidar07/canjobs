@@ -30,61 +30,84 @@ const DocumentsNotes = (props) => {
     const saveDocumentAsBase64 = async () => {
         console.log(editorState)
         try {
-            // Extract content and convert to HTML
-//             const content = editorState.getCurrentContent();
-//             const htmlContent = stateToHTML(content);
-//             console.log("html =>", htmlContent)
-//             // Convert HTML to a Word document (Blob)
-//             const convertedBlob = htmlDocx.asBlob("htmlContent");
-// console.log("convertedBlob =>", convertedBlob)
-//             // Create a File object from the Blob
-//             const wordFile = new File([convertedBlob], `note${new Date().getTime()}.txt`, {
-//                 type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-//                 lastModified: new Date().getTime(), // Set the last modified time
-//             });
-//             console.log(wordFile)
+            const content = editorState.getCurrentContent();
+            const htmlContent = stateToHTML(content); // Get the HTML content from the editor
+            console.log("html =>", htmlContent);
 
-//     // Create a temporary link to trigger the download
-//     const link = document.createElement("a");
-//     const url = URL.createObjectURL(wordFile);
+            // Convert HTML to a Word document (Blob) using htmlDocx
+            const convertedBlob = htmlDocx.asBlob(htmlContent); // Pass the variable `htmlContent` instead of the string "htmlContent"
+            console.log("convertedBlob =>", convertedBlob);
+            // nsp code start here
 
-//     // Set the download attribute of the link to the desired filename
-//     link.href = url;
-//     link.download = wordFile.name;  // The name of the file being downloaded
+            // Create a temporary element to parse the HTML
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = htmlContent;
 
-//     // Trigger a click event on the link to start the download
-//     link.click();
+            // Replace <br> tags with newlines
+            tempDiv.querySelectorAll('br').forEach(br => br.replaceWith('\n'));
 
-//     // Clean up the URL object to release memory
-//     URL.revokeObjectURL(url);
-const content = editorState.getCurrentContent();
-const htmlContent = stateToHTML(content); // Get the HTML content from the editor
-console.log("html =>", htmlContent);
+            // Replace bullet lists with text representation
+            tempDiv.querySelectorAll('ul, ol').forEach(list => {
+                const isOrdered = list.tagName === 'OL';
+                let bulletIndex = 1;
 
-// Convert HTML to a Word document (Blob) using htmlDocx
-const convertedBlob = htmlDocx.asBlob(htmlContent); // Pass the variable `htmlContent` instead of the string "htmlContent"
-console.log("convertedBlob =>", convertedBlob);
+                Array.from(list.children).forEach(li => {
+                    // Add bullet or number before the text
+                    const bullet = isOrdered ? `${bulletIndex}. ` : '• ';
+                    li.textContent = bullet + li.textContent.trim();
 
-// Create a File object from the Blob
-const wordFile = new File([convertedBlob], `note${new Date().getTime()}.docx`, {
-    type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    lastModified: new Date().getTime(), // Set the last modified time
-});
-console.log(wordFile);
+                    bulletIndex++;
+                });
 
-// Create a temporary link to trigger the download
-const link = document.createElement("a");
-const url = URL.createObjectURL(wordFile);
+                // Replace list with its text representation
+                list.replaceWith(document.createTextNode(list.textContent + '\n'));
+            });
 
-// Set the download attribute of the link to the desired filename
-link.href = url;
-link.download = wordFile.name;  // The name of the file being downloaded
+            // Preserve newlines and white spaces for <pre> tags
+            tempDiv.querySelectorAll('pre').forEach(pre => {
+                const text = pre.textContent;
+                pre.replaceWith(document.createTextNode(text));
+            });
+            // Handle <b>, <strong> for bold text
+            tempDiv.querySelectorAll('b, strong').forEach(bold => {
+                bold.textContent = `**${bold.textContent.trim()}**`;
+                bold.replaceWith(document.createTextNode(bold.textContent));
+            });
 
-// Trigger a click event on the link to start the download
-link.click();
+            // Handle <i>, <em> for italic text
+            tempDiv.querySelectorAll('i, em').forEach(italic => {
+                italic.textContent = `*${italic.textContent.trim()}*`;
+                italic.replaceWith(document.createTextNode(italic.textContent));
+            });
+            // Extract the text content with whitespace
+            let plainText = tempDiv.textContent;
 
-// Clean up the URL object to release memory
-URL.revokeObjectURL(url);
+            // Clean up excessive spaces and lines
+            plainText = plainText.replace(/(\r\n|\n|\r)/gm, '\n') // Normalize line endings
+                .replace(/\n\s*\n/g, '\n\n') // Remove extra blank lines
+                .trim(); // Trim leading and trailing spaces
+            //ends here nsp code
+
+            // Create a File object from the Blob
+            const wordFile = new File([plainText], `note${new Date().getTime()}.docx`, {
+                type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                lastModified: new Date().getTime(), // Set the last modified time
+            });
+            console.log(wordFile);
+
+            // Create a temporary link to trigger the download
+            const link = document.createElement("a");
+            const url = URL.createObjectURL(wordFile);
+
+            // Set the download attribute of the link to the desired filename
+            link.href = url;
+            link.download = wordFile.name;  // The name of the file being downloaded
+
+            // Trigger a click event on the link to start the download
+            link.click();
+
+            // Clean up the URL object to release memory
+            URL.revokeObjectURL(url);
 
             // Call AddSharePointDocument with fileObject
             const res = await AddSharePointDOcument(

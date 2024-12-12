@@ -277,6 +277,14 @@ export default function SharePointDocument({
             const newUrl = window.location.pathname;
             window.history.replaceState({}, document.title, newUrl);
             localStorage.setItem("navigation_url", "")
+          } else {
+            toast.error("This document is no longer available.", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+            const newUrl = window.location.pathname;
+            window.history.replaceState({}, document.title, newUrl);
+            localStorage.setItem("navigation_url", "")
           }
         }
         // setFolderID(res.data.data[0].parentReference.id)
@@ -504,6 +512,7 @@ export default function SharePointDocument({
   const SaveBulkDocument = async () => {
     setLoadingBtn(true);
     setShowDropDown(false);
+    console.log(docFileBase, "pppppppppppppp")
     try {
       let res = await AddSharePointDOcument(
         user_id,
@@ -580,7 +589,7 @@ export default function SharePointDocument({
   /*To call Api to delete Folder or document */
   async function DeleteSharepointDocument(id, type) {
     try {
-      const responseData = await DeleteFolderOrDocument(id, type);
+      const responseData = await DeleteFolderOrDocument(id, type,emp_user_type,user_id);
       if (responseData.data.message === "Document deleted successfully!") {
         toast.error("Document deleted successfully!", {
           position: toast.POSITION.TOP_RIGHT,

@@ -14,7 +14,9 @@ const NotFound = (props) => {
   useEffect(() => {
     if (docId || notes) {
       localStorage.setItem("navigation_url", location.pathname + location.search)
-      navigate("/adminlogin")
+      if (!token) {
+         navigate("/adminlogin")
+       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
