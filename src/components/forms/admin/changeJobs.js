@@ -87,7 +87,7 @@ function ChangeJob(props) {
     }
   };
   // END USER CHANGE JOB VALIDATION
-  /*FUnction to redender the data in the option of the select box*/
+  /*Function to redender the data in the option of the select box*/
   useEffect(() => {
     const options = allJobData.map((option) => ({
       value: option.job_id,

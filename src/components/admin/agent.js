@@ -81,9 +81,7 @@ function Agent() {
         <AdminSidebar
           heading={user_type === "agent" ? "Profile" : "Manage Partner"}
         />
-
         {/* <!--Add Agent Details Modal --> */}
-
         <div className={"dashboard-main-container mt-16"} id="dashboard-body">
           <div className="container-fluid">
             <div className="mb-18">

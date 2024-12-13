@@ -220,7 +220,7 @@ const InitialConsultationAgreement = () => {
           </View>
 
           <View style={styles.section}>
-            <Text style={styles.header}>6. <Text style={[styles.textunderline]}>REFUND POLICY</Text></Text>
+            <Text style={styles.header}>6. <Text style={[styles.textunderline]}>REFuND POLICY</Text></Text>
             <View style={{ marginLeft: 20 }}>
               <Text style={styles.text}>
                 • The Client retains the right to receive a refund for any fees that have not been utilized in accordance with this agreement.{"\n"}

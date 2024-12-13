@@ -52,7 +52,7 @@ export default function AppliedPrograms(props) {
             SearchCandidate();
         }
     };
-    /*FUnction to get all user data */
+    /*Function to get all user data */
     const GetAllUserData = async () => {
         try {
             const userData = await getallEmployeeData();

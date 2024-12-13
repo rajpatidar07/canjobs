@@ -23,7 +23,7 @@ export default function Credentional() {
   useEffect(() => {
     GetData();
   }, [apiCall]);
-  //   FUnction to open edit form
+  //   Function to open edit form
   const editCredential = (data) => {
     setShowCredentialForm(true);
     setSingleCredentialData(data);

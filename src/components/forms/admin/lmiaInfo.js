@@ -57,7 +57,7 @@ export default function LmiaInfo(props) {
         setLoading(false)
         setErrors("");
     }
-    /*FUnction to update additional lmia info */
+    /*Function to update additional lmia info */
     const onAddInfo = async (e) => {
         e.preventDefault()
         setLoading(true)

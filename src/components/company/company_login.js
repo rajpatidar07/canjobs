@@ -66,11 +66,11 @@ function CompanyLoginForm(props) {
           : "Email is invalid",
     ],
   };
-  /*----LOGIN ONCHANGE FUNCTION----*/
+  /*----LOGIN ONCHANGE FuNCTION----*/
   const { state, setErrors, setState, onInputChange, errors, validate } =
     useValidation(initialFormState, validators);
 
-  /*----LOGIN SUBMIT FUNCTION----*/
+  /*----LOGIN SUBMIT FuNCTION----*/
   const onCompanyLoginClick = async (event) => {
     event.preventDefault();
     if (validate()) {
@@ -238,7 +238,7 @@ function CompanyLoginForm(props) {
     }
   }, []);
 
-  /*FUnctiom to login with facebook */
+  /*Functiom to login with facebook */
   // const responseFacebook = async (response) => {
   //   if (response.graphDomain === "facebook") {
   //     let data = await SocialCompanyLogin(response.userID, response.email, response.name, response.picture.data.url, "Facebook");

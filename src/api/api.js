@@ -736,8 +736,8 @@ export const ADocAnnotation = async (
   Priority,
   Status
 ) => {
-  console.log(
-    "1. task_creator_user_id =>", id,
+  // console.log(
+  //   "1. task_creator_user_id =>", id,
     //   "2. task_creator_user_type =>", user_type === "admin" ? "admin" : "agent",
     //   "3. doc_id =>", docId,
     //   "4. user_admin_assigned =>", type === "partner" || "partnerChat" ? assigned_by_id : "",
@@ -751,7 +751,7 @@ export const ADocAnnotation = async (
     //   '12. type =>', type,
     //   '13. employee_id =>', employee_id,
     //   '14. doc_parent_id =>',docPartentId,
-    '15. DocUserType =>', DocUserType,)
+    // '15. DocUserType =>', DocUserType,
   // '16. assign_to =>',email
   // )
   const response = await axios.post(
@@ -1680,7 +1680,7 @@ export const AddLimia = async (props, employee_id, job_id) => {
   );
   return response.data;
 };
-/*FUnction to add update lmia additional information for employee lmia*/
+/*Function to add update lmia additional information for employee lmia*/
 export const AddLmiaAdditionalInformationEmployee = async (data) => {
   // (props);
   const response = await axios.put(
@@ -1695,7 +1695,7 @@ export const AddLmiaAdditionalInformationEmployee = async (data) => {
   );
   return response.data;
 };
-/*FUnction to add update lmia additional information for job lmia*/
+/*Function to add update lmia additional information for job lmia*/
 export const AddLmiaAdditionalInformationJob = async (data) => {
   // (props);
   const response = await axios.put(
@@ -1746,7 +1746,7 @@ export const GetJobLimaSubStages = async (id, status) => {
   return response.data;
 };
 
-/*FUnction to add update lmia sub stage of employee */
+/*Function to add update lmia sub stage of employee */
 export const AddUpdateEmployeeLmiaSubStage = async (props) => {
   const response = await axios.put(
     `${API_URL}addUpdateLmiaSubstagesEmployee`,
@@ -1760,7 +1760,7 @@ export const AddUpdateEmployeeLmiaSubStage = async (props) => {
   );
   return response.data;
 };
-/*FUnction to Delete lmia sub stage of employee */
+/*Function to Delete lmia sub stage of employee */
 export const deleteLmiaSubstageEmployee = async (id) => {
   const response = await axios.post(
     `${API_URL}/deleteLmiaSubstageEmployee`,
@@ -1776,7 +1776,7 @@ export const deleteLmiaSubstageEmployee = async (id) => {
   );
   return response.data;
 };
-/*FUnction to add update lmia sub stage  of job*/
+/*Function to add update lmia sub stage  of job*/
 export const AddUpdateJobLmiaSubStage = async (props) => {
   const response = await axios.put(
     `${API_URL}addUpdateLmiaSubstagesJob`,
@@ -1790,7 +1790,7 @@ export const AddUpdateJobLmiaSubStage = async (props) => {
   );
   return response.data;
 };
-/*FUction to delete lmiasub stage */
+/*Fuction to delete lmiasub stage */
 export const deleteLmiaSubstageJob = async (id) => {
   const response = await axios.post(
     `${API_URL}/deleteLmiaSubstageJob`,

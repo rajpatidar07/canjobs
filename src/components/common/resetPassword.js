@@ -33,10 +33,10 @@ export default function ResetPassword() {
           : "",
     ],
   };
-  /*----RESET PASSWORD ONCHANGE FUNCTION----*/
+  /*----RESET PASSWORD ONCHANGE FuNCTION----*/
   const { state, onInputChange, setState, errors, validate } = useValidation(
     initialFormState,validators);
-  /*----RESET PASSWORD SUBMIT FUNCTION----*/
+  /*----RESET PASSWORD SUBMIT FuNCTION----*/
   const onUserResetPasswordClick = async (event) => {
     event.preventDefault();
     if (validate()) {

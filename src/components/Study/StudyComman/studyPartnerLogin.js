@@ -41,11 +41,11 @@ export default function StudyPartnerLogin({ setLoginCondition }) {
                             : "Email is invalid",
         ],
     };
-    /*----LOGIN ONCHANGE FUNCTION----*/
+    /*----LOGIN ONCHANGE FuNCTION----*/
     const { state, onInputChange, setState, errors, setErrors, validate } =
         useValidation(initialFormState, validators);
 
-    /*----LOGIN SUBMIT FUNCTION----*/
+    /*----LOGIN SUBMIT FuNCTION----*/
     const onAgentLoginClick = async (event) => {
         event.preventDefault();
 

@@ -28,7 +28,7 @@
 //     //         navigate("/agreeone", { state: { dataUrl, user_id, emp_user_type, folderID } });
 //     //     }
 //     // };
-//     /*FUnction to set the image to state and preview it */
+//     /*Function to set the image to state and preview it */
 //     const handleImageUpload = (event) => {
 //         const file = event.target.files[0];
 //         if (file) {

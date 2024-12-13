@@ -19,7 +19,7 @@
 //   pdf,
 //   type
 // }) {
-//   /*FUnction to open add signature modal */
+//   /*Function to open add signature modal */
 //   // const addSignatureCLick = async () => {
 //   //   setOpenViewAgreementSign("sign");
 //   //   setOpenAddAgreementFelids(true);
@@ -276,7 +276,7 @@ export default function ViewPdf({
       setCommentsList([]);
     }
   };
-  /*FUnction to get admin data */
+  /*Function to get admin data */
   const AdminData = async () => {
     try {
       if (localStorage.getItem("userType") === "admin" || localStorage.getItem("userType") === "agent") {

@@ -247,7 +247,7 @@ const AgreementOneForm = ({
               emp_user_type,
               felidData.type
             );
-            /*FUnction to generate pdf after adding signature */
+            /*Function to generate pdf after adding signature */
             if (
               openSignature === "yes" &&
               (res.data.data[0].signature_status === "2" ||

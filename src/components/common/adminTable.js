@@ -22,7 +22,7 @@ export default function AdminTable({
   setApiCall,
   jobId,
 }) {
-  /*FUnction to reasign job to manager */
+  /*Function to reasign job to manager */
   const OnReasignManagerToJobClick = async (e) => {
     try {
       let Response = await ReassignJobTOManager(e, jobId);

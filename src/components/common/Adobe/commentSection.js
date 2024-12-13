@@ -762,7 +762,7 @@ export default function CommentSection({
       setSelectedPartner("");
     }
   };
-  /*FUnction to get comment list */
+  /*Function to get comment list */
   const Getcomments = async (annotStatus, adminfilter) => {
     let CommentRes = await GetCommentsAndAssign(
       docData.id, //docId,

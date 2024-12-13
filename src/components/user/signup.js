@@ -249,7 +249,7 @@ export default function EmployeeSignupModal(props) {
     // AgentJson();
   }, []);
 
-  /*FUnctiom to Sign Up with facebook */
+  /*Functiom to Sign Up with facebook */
   // const responseFacebook = async (response) => {
   //   if (response.graphDomain === "facebook") {
   //     try {

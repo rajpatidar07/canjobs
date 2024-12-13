@@ -88,7 +88,7 @@ export default function SharePointDocument({
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
 
-  /*FUnction to get admin data */
+  /*Function to get admin data */
   const AdminData = async () => {
     try {
       const userData = await getallAdminData();

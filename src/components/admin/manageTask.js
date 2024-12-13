@@ -22,7 +22,7 @@ export default function ManageTask() {
     const [employeeList, setEmployeeList] = useState([])
     const [showTaskForm, setShowTaskForm] = useState(false)
     const [adminList, setAdminList] = useState([])
-    /*FUnction to get all user data */
+    /*Function to get all user data */
     const GetAllUserData = async () => {
         try {
             const userData = await getallEmployeeData();

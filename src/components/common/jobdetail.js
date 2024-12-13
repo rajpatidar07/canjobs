@@ -51,7 +51,7 @@ function JobDetailPage(props) {
         ? []
         : jobDetatilsData.keyskill.split(",");
   }
-  /*FUnction to apply to the job */
+  /*Function to apply to the job */
   const OnApplyClick = async (status) => {
     try {
       let Response = await ApplyJob(jobId, user_id, status);

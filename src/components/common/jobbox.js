@@ -145,7 +145,7 @@ localStorage.setItem("navigation_url", "")
     jobsNo,
   ]);
 
-  /*FUnction to apply to the job */
+  /*Function to apply to the job */
   const OnApplyClick = async (status, job_id) => {
     try {
       let Response = await ApplyJob(job_id, user_id, status);

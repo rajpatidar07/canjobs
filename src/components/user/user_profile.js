@@ -133,7 +133,7 @@ const NewUserProfile = (props) => {
       setIsLoading(false);
     }
   };
-  /*FUnction to get Lmia */
+  /*Function to get Lmia */
   const getLimaOfuser = async () => {
     try {
       let response = await GetEmployeeByLima(
@@ -484,9 +484,11 @@ const NewUserProfile = (props) => {
                             PersonalDetail.name && PersonalDetail.email
                           ) {
                             // const responseData = 
-                            await AddEmployeeDetails(
-                              PersonalDetail
-                            );
+                            // Exclude 'email' field from PersonalDetail
+                            const { email, ...personalDetailsWithoutEmail } = PersonalDetail;
+                            // Call the API with the modified object
+                            await AddEmployeeDetails(personalDetailsWithoutEmail);
+
                             setApiCall(true);
                             // if (responseData.status === 1) {
                             //   setTabActive("documents");

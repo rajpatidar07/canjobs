@@ -304,7 +304,7 @@ function JobResponse(props) {
     setResData(e);
     setJobId(e.job_id);
   };
-  /*FUnction to open additionlima info modal */
+  /*Function to open additionlima info modal */
   const AdditionalLmiaInfo = (e) => {
     setShowLmiaAdditionalInfobModal(true)
     setResData(e);

@@ -112,7 +112,7 @@ function MainLayout() {
   const token = localStorage.getItem("token");
   const userType = localStorage.getItem("userType");
   // let adminType = localStorage.getItem("admin_type");
-  /*FUnction to check the employee profile with just its id  */
+  /*Function to check the employee profile with just its id  */
   const ValidateRoute = () => {
     const { eid } = useParams();
     const isValidEid = /^\d+$/.test(eid); // Check if eid is a number

@@ -137,7 +137,7 @@ const StudentProfile = (props) => {
             setIsLoading(false);
         }
     };
-    /*FUnction to get Lmia */
+    /*Function to get Lmia */
     //   const getLimaOfuser = async () => {
     //     try {
     //       let response = await GetEmployeeByLima(

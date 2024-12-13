@@ -62,13 +62,13 @@ export default function EmployeeLoginModal(props) {
           : "Email is invalid",
     ],
   };
-  /*----LOGIN ONCHANGE FUNCTION----*/
+  /*----LOGIN ONCHANGE FuNCTION----*/
   const { state, onInputChange, setErrors, errors, validate } = useValidation(
     initialFormState,
     validators
   );
 
-  /*----LOGIN SUBMIT FUNCTION----*/
+  /*----LOGIN SUBMIT FuNCTION----*/
   const onUserLoginClick = async (event) => {
     event.preventDefault();
     if (validate()) {

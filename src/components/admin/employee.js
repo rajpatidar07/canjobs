@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import PersonalDetails from "../forms/user/personal";
-// import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import UserProfile from "../user/profile";
 import EmployeeTable from "../common/employeeTable";
 import ApplicantsFilter from "../common/applicantsFilter";
@@ -184,22 +182,6 @@ function Employee(props) {
             }
           >
             <div className="container-fluid">
-              {/* <div className="row justify-content-center">
-                <div className="col-12 dark-mode-texts">
-                  <div className="mb-9">
-                    <Link
-                      to={""}
-                      onClick={() => setShowEmployeeProfile(false)}
-                      className="d-flex align-items-center ml-4"
-                    >
-                      <i className="icon icon-small-left bg-white circle-40 mr-5 font-size-7 text-black font-weight-bold shadow-8 mt-10"></i>
-                      <span className="text-uppercase font-size-3 font-weight-bold text-gray">
-                        Back
-                      </span>
-                    </Link>
-                  </div>
-                </div>
-              </div> */}
               <div className="mb-18">
                 <UserProfile
                   employeeId={employeeId}

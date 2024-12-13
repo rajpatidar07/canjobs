@@ -39,13 +39,13 @@ export default function StudyAdminLoginFrom({ setAdminLoggedIn, setLoginConditio
                             : "Email is invalid",
         ],
     };
-    /*----LOGIN ONCHANGE FUNCTION----*/
+    /*----LOGIN ONCHANGE FuNCTION----*/
     const { state, onInputChange, errors, setErrors, validate } = useValidation(
         initialFormState,
         validators
     );
 
-    /*----LOGIN SUBMIT FUNCTION----*/
+    /*----LOGIN SUBMIT FuNCTION----*/
     const onUserLoginClick = async (event) => {
         event.preventDefault();
 

@@ -501,7 +501,7 @@ export default function PreviewDocument({
   //   }, [numPages]);
 
   // }
-  /*FUnction to render pagination for pdf document */
+  /*Function to render pagination for pdf document */
   // const renderPagination = (page, pages) => {
   //   if (!pages) {
   //     return null;

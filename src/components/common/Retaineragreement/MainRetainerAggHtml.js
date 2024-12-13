@@ -46,7 +46,7 @@ export default function MainRetainerAggHtml({
       );
       if (res.data.data) {
         setFelidData(res.data.data[0]);
-        /*FUnction to generate pdf after adding signature */
+        /*Function to generate pdf after adding signature */
         // if (openSignature === "yes" && res.data.data[0].initial && res.data.data[0].signature_status  === "1") {
         //   const stateData = {
         //     user_id: user_id,

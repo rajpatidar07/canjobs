@@ -101,7 +101,7 @@ function Education(props) {
           : null,
     ],
   };
-  /*----LOGIN ONCHANGE FUNCTION----*/
+  /*----LOGIN ONCHANGE FuNCTION----*/
   const { state, setState, onInputChange, errors, setErrors, validate } =
     useValidation(initialFormState, validators);
   // API CALL
@@ -141,7 +141,7 @@ function Education(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiCall, props.employeeId]);
 
-  /*----EDUCATION SUBMIT FUNCTION----*/
+  /*----EDUCATION SUBMIT FuNCTION----*/
   const onEducationSubmitClick = async (event) => {
     event.preventDefault();
     if (validate()) {

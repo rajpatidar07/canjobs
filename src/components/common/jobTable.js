@@ -211,7 +211,7 @@ export default function JobTable(props) {
   // const JobDetail = (e) => {
   //   props.JobDetail(e);
   // };
-  /*FUnction to open additionlima info modal */
+  /*Function to open additionlima info modal */
   const AdditionalLmiaInfo = (e) => {
     setShowLmiaAdditionalInfobModal(true)
     setJobId(e);

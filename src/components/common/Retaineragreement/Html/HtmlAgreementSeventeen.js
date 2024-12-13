@@ -189,7 +189,7 @@ const HtmlAgreementSeventeen = ({
     </ul>
 </li>
 <li>
-    <h6><u>REFUND POLICY</u></h6>
+    <h6><u>REFuND POLICY</u></h6>
     <ul>
         <li>The Client retains the right to receive a refund for any fees that have not been utilized in accordance with this agreement.</li>
         <li>The Client holds the option to reschedule their appointment or opt for a consultation on an alternate date, following payment of the fee.</li>
