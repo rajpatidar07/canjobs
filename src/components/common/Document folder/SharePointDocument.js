@@ -27,6 +27,7 @@ import AdobePDFViewer from "../Adobe/adobeFile";
 import { jsPDF } from "jspdf";
 import MentionAdminInDoc from "../Adobe/MentionAdminInDoc";
 import DocumentsNotes from "./DocumentsNotes";
+import DocViewer from "react-doc-viewer";
 // import { PDFDocument } from 'pdf-lib';
 
 export default function SharePointDocument({
@@ -512,7 +513,7 @@ export default function SharePointDocument({
   const SaveBulkDocument = async () => {
     setLoadingBtn(true);
     setShowDropDown(false);
-    console.log(docFileBase, "pppppppppppppp")
+    // console.log(docFileBase, "pppppppppppppp")
     try {
       let res = await AddSharePointDOcument(
         user_id,
@@ -589,7 +590,7 @@ export default function SharePointDocument({
   /*To call Api to delete Folder or document */
   async function DeleteSharepointDocument(id, type) {
     try {
-      const responseData = await DeleteFolderOrDocument(id, type,emp_user_type,user_id);
+      const responseData = await DeleteFolderOrDocument(id, type, emp_user_type, user_id);
       if (responseData.data.message === "Document deleted successfully!") {
         toast.error("Document deleted successfully!", {
           position: toast.POSITION.TOP_RIGHT,
@@ -662,7 +663,8 @@ export default function SharePointDocument({
           return resp.blob();
         })
         .then(function (blob) {
-          setConvertedDoc(window.URL.createObjectURL(blob));
+          // setConvertedDoc(window.URL.createObjectURL(blob));
+          setConvertedDoc([{ uri: data["@microsoft.graph.downloadUrl"] }]);
         })
         .catch((error) => console.error(error));
     } catch (error) {
@@ -878,6 +880,7 @@ export default function SharePointDocument({
                 </div>
               </div>
             </div>
+            // <DocViewer documents={convertedDoc} style={{ width: 500, height: 500 }} />
           ) : (
             <div className={"document_container bg-white"}>
               <div className="row m-0 bg-white justify-content-between p-2">

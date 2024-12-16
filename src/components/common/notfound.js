@@ -15,12 +15,29 @@ const NotFound = (props) => {
     if (docId || notes) {
       localStorage.setItem("navigation_url", location.pathname + location.search)
       if (!token) {
-         navigate("/adminlogin")
-       }
+        navigate("/adminlogin")
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
+  console.log(token && (location.pathname === "/partner_profile"
+    || location.pathname === "/dashboard"
+    || location.pathname === "/client"
+    || props.userType === "user"
+    ? location.pathname === `/${localStorage.getItem("employee_id")}`
+    : location.pathname === "/")
+    ? "<Loader />"
+    : "pppppp", token, props.userType === "company"
+    ? "/client"
+    : props.userType === "agent"
+      ? "/partner_profile"
+      : props.userType === "admin" ?
+        "/dashboard"
+        : (docId || notes)
+          ? "/adminlogin"
+          : portal === "study"
+            ? "/study"
+            : "/")
   return (
     token && (location.pathname === "/partner_profile"
       || location.pathname === "/dashboard"
@@ -33,7 +50,7 @@ const NotFound = (props) => {
       <div className="page_not_found p-6 text-center">
         <h1>404</h1>
         <h5>Ooops! Page Not Found</h5>
-        <Link className="btn btn-primary mt-5"
+        <Link onClick={() => localStorage.setItem("navigation_url", "")} className="btn btn-primary mt-5"
           to={props.userType === "company"
             ? "/client"
             : props.userType === "agent"
