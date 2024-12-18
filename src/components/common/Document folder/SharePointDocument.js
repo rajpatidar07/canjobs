@@ -26,8 +26,8 @@ import EditDocNameFOrm from "./EditDocNameFOrm";
 import AdobePDFViewer from "../Adobe/adobeFile";
 import { jsPDF } from "jspdf";
 import MentionAdminInDoc from "../Adobe/MentionAdminInDoc";
-import DocumentsNotes from "./DocumentsNotes";
-import DocViewer from "react-doc-viewer";
+// import DocumentsNotes from "./DocumentsNotes";
+// import DocViewer from "react-doc-viewer";
 // import { PDFDocument } from 'pdf-lib';
 
 export default function SharePointDocument({
@@ -42,7 +42,7 @@ export default function SharePointDocument({
   AnnoteId
 }) {
   const [docTypeName, setDocTypeName] = useState("");
-  const [openNoteForm, setOpenNoteForm] = useState("");
+  // const [openNoteForm, setOpenNoteForm] = useState("");
   const [newType, setNewType] = useState("");
   const [docFileBase, setDocFileBase] = useState("");
   const [folderID, setFolderID] = useState(folderId);
@@ -973,7 +973,7 @@ export default function SharePointDocument({
                       </Dropdown>
                     </>
                   )}
-                  {openNoteForm ?
+                  {/* {openNoteForm ?
                     <DocumentsNotes
                       user_id={user_id}
                       emp_user_type={emp_user_type}
@@ -983,7 +983,7 @@ export default function SharePointDocument({
                       setOpenNoteForm={setOpenNoteForm}
                     />
                     : <button className="btn btn-primary mx-2" style={{ maxHeight: 34 }}
-                      onClick={() => setOpenNoteForm(true)}>Add notes</button>}
+                      onClick={() => setOpenNoteForm(true)}>Add notes</button>} */}
                 </div>
               </div>
               <div className="row m-0 bg-white px-2 pb-2">

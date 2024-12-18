@@ -3452,6 +3452,7 @@ export const ChangeFolderNameSharpoint = async (
 };
 // /Api function to Delete Folder or document for sharepoint
 export const DeleteFolderOrDocument = async (FolderId, type, userType, userId) => {
+  console.log(FolderId, type, userType, userId)
   const response = await axios.post(
     `${API_URL}admin/deleteSharepointDocument_new`,
     {
