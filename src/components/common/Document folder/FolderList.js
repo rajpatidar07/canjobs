@@ -224,7 +224,7 @@ export default function FolderList({
                             Open in new tab {item.folder ? "Folder" : "File"}
                           </Link>
                         </li>
-                        <li className={item.folder ? "d-none" : "list-group-item text-darger"} >
+                        <li className={`list-group-item text-darger ${item.folder || (userType !== "admin" && userType !== "agent") ? "d-none" : ""} `} >
                           <Link to="" onClick={() => {
                             getCommentsList(item)
                             setOpenAnnotationBox(true)
@@ -320,7 +320,7 @@ export default function FolderList({
                                 Open in New Tab
                               </Link>
                             </li>
-                            <li className="list-group-item text-danger">
+                            <li className={`list-group-item text-danger ${ (userType !== "admin" && userType !== "agent") ? "d-none" : ""}`}>
                               <Link
                                 className="text-decoration-none"
                                 onClick={() => {

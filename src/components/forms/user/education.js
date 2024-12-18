@@ -69,10 +69,10 @@ function Education(props) {
         value === null || value.trim() === ""
           ? "University is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : value.length < 2
-          ? "University should have 2 or more letters"
-          : null,
+            ? "Cannot use special character "
+            : value.length < 2
+              ? "University should have 2 or more letters"
+              : null,
     ],
     course: [
       (value) =>
@@ -95,10 +95,10 @@ function Education(props) {
         value === "" || value === null
           ? "Passing Year is required"
           : !/^[0-9]+$/.test(value)
-          ? "Only numbers are allowed"
-          : !/^(?!0000)\d{4}$/.test(value)
-          ? "Please enter a valid year between 1000 and 9999."
-          : null,
+            ? "Only numbers are allowed"
+            : !/^(?!0000)\d{4}$/.test(value)
+              ? "Please enter a valid year between 1000 and 9999."
+              : null,
     ],
   };
   /*----LOGIN ONCHANGE FuNCTION----*/
@@ -194,7 +194,7 @@ function Education(props) {
   /*To call Api to delete Skill */
   async function deleteEducation(e) {
     try {
-      const responseData = await DeleteEmployeeEducation(e);
+      const responseData = await DeleteEmployeeEducation(e, props.employeeId);
       if (responseData.message === "Education details has been deleted") {
         toast.error("Education deleted Successfully", {
           position: toast.POSITION.TOP_RIGHT,
@@ -264,11 +264,10 @@ function Education(props) {
                             {education.passing_year}
                           </span>
                           <span
-                            className={`${
-                              education.institute_location === null
+                            className={`${education.institute_location === null
                                 ? "d-none"
                                 : ""
-                            } font-size-3 text-gray w-100`}
+                              } font-size-3 text-gray w-100`}
                           >
                             <span className="mr-2">
                               <img

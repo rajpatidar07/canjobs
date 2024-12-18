@@ -28,7 +28,6 @@ const DocumentsNotes = (props) => {
     };
 
     const saveDocumentAsBase64 = async () => {
-        console.log(editorState)
         try {
             const content = editorState.getCurrentContent();
             const htmlContent = stateToHTML(content); // Get the HTML content from the editor

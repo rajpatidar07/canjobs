@@ -44,10 +44,10 @@ function Skills(props) {
         value === "" || value.trim() === ""
           ? "Skills / Software Name is required"
           : value.length < 3
-          ? "Skills / Software Name should have 3 or more letter"
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Skills / Software Name can not have a number."
-          : "",
+            ? "Skills / Software Name should have 3 or more letter"
+            : /[-]?\d+(\.\d+)?/.test(value)
+              ? "Skills / Software Name can not have a number."
+              : "",
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
@@ -100,7 +100,7 @@ function Skills(props) {
     }));
 
     setSkillOption({ ...state, skill: options });
-   // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [SkillList]);
 
   // USER SKILLS SUBMIT BUTTON
@@ -156,7 +156,7 @@ function Skills(props) {
   /*To call Api to delete Skill */
   async function deleteSkill(e) {
     try {
-      const responseData = await DeleteEmployeeSkill(e);
+      const responseData = await DeleteEmployeeSkill(e, props.employeeId);
       if (responseData.message === "skill has been deleted") {
         toast.error("Skill deleted Successfully", {
           position: toast.POSITION.TOP_RIGHT,

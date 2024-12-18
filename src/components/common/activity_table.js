@@ -87,6 +87,7 @@ export default function ActivityTable(props) {
     60: " Agreement added",
     61: " Agreement updated",
     62: "Agreement deleted",
+    63: "Updated comment's on document",
   };
   //   let activityData;
   /* Function to get Activity data*/
@@ -157,20 +158,21 @@ export default function ActivityTable(props) {
                 (activityData || []).map((data) => (
                   <tr key={data.id} className="font-size-3">
                     {hide ? null : <td>{data.user_id}</td>}
-                    {hide ? null : <td>{data.user_type}</td>}
-                    {hide ? null : <td>{data.created_by}</td>}
+                    {hide ? null : <td>{data.user_type === "employee" ? "candidate" : data.user_type === "employer" ? "client" : data.user_type}</td>}
+                    {hide ? null : <td>{data.created_by || data.employer_name || data.employee_name_stackholder}</td>}
                     <td>
-                      <Link to={"/" + data.action_id}>
+                      {data.created_by ? <span> <Link to={"/" + data.action_id}>
                         {data.Candidate_name === ("" || undefined || null)
                           ? "Candidate"
                           : data.Candidate_name}
                       </Link>{" "}
-                      <span className="text-capitalize">{activity_json[`${data.status}`]?.replace("Miscellaneous", data.action_type)}</span>
-                      {/* {" for "} */}
-                      {" by "}
-                      {data.user_type === "agent"
-                        ? "partner"
-                        : data.user_type + " " + data.created_by}
+                        <span className="text-capitalize">{activity_json[`${data.status}`]?.replace("Miscellaneous", data.action_type)}</span>
+                        {/* {" for "} */}
+                        {" by "}
+                        {data.user_type === "agent"
+                          ? "partner"
+                          : data.user_type === "employee" ? "candidate" : data.user_type === "employer" ? "client" : data.user_type + " " + data.created_by ? data.created_by : "unknown user"}
+                      </span> : <div dangerouslySetInnerHTML={{ __html: data.msg }} />}
                     </td>
                     <td>
                       <ConvertTime _date={data.created_at} format={'MMMM Do YYYY, h:mm:ss a'} />

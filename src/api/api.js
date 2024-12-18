@@ -431,10 +431,13 @@ export const AddEmployeeSkill = async (props, id) => {
 };
 
 /*Delete Employee Skill Api */
-export const DeleteEmployeeSkill = async (props) => {
+export const DeleteEmployeeSkill = async (props, id) => {
   const response = await axios.post(
     `${API_URL}deleteEmployeeSkill`,
-    { skill_id: props },
+    {
+      skill_id: props,
+      employee_id: id
+    },
     {
       headers: {
         "Content-Type": "application/json",
@@ -446,10 +449,13 @@ export const DeleteEmployeeSkill = async (props) => {
 };
 
 /*Delete Employee Education Api */
-export const DeleteEmployeeEducation = async (props) => {
+export const DeleteEmployeeEducation = async (props, id) => {
   const response = await axios.post(
     `${API_URL}deleteEmployeeEducation`,
-    { education_id: props },
+    {
+      education_id: props,
+      employee_id: id
+    },
     {
       headers: {
         "Content-Type": "application/json",
@@ -461,10 +467,13 @@ export const DeleteEmployeeEducation = async (props) => {
 };
 
 /*Delete Employee Career Api */
-export const DeleteEmployeeCareer = async (props) => {
+export const DeleteEmployeeCareer = async (props, id) => {
   const response = await axios.post(
     `${API_URL}deleteEmployeeCareer`,
-    { career_id: props },
+    {
+      career_id: props,
+      employee_id: id
+    },
     {
       headers: {
         "Content-Type": "application/json",
@@ -738,20 +747,20 @@ export const ADocAnnotation = async (
 ) => {
   // console.log(
   //   "1. task_creator_user_id =>", id,
-    //   "2. task_creator_user_type =>", user_type === "admin" ? "admin" : "agent",
-    //   "3. doc_id =>", docId,
-    //   "4. user_admin_assigned =>", type === "partner" || "partnerChat" ? assigned_by_id : "",
-    //   "5. json =>", AdobeAnnotation,
-    //   "6. assined_to_user_id =>", assineduserid,
-    //   "7. assigned_user_type =>", AssignUserType,
-    //   "8. document_url =>", type === "partner" || "partnerChat" ? DocUrl : "",
-    //   '9. subject_description =>', comment,
-    //   '10. x_axis =>', x,
-    //   '11. y_axis =>', y,
-    //   '12. type =>', type,
-    //   '13. employee_id =>', employee_id,
-    //   '14. doc_parent_id =>',docPartentId,
-    // '15. DocUserType =>', DocUserType,
+  //   "2. task_creator_user_type =>", user_type === "admin" ? "admin" : "agent",
+  //   "3. doc_id =>", docId,
+  //   "4. user_admin_assigned =>", type === "partner" || "partnerChat" ? assigned_by_id : "",
+  //   "5. json =>", AdobeAnnotation,
+  //   "6. assined_to_user_id =>", assineduserid,
+  //   "7. assigned_user_type =>", AssignUserType,
+  //   "8. document_url =>", type === "partner" || "partnerChat" ? DocUrl : "",
+  //   '9. subject_description =>', comment,
+  //   '10. x_axis =>', x,
+  //   '11. y_axis =>', y,
+  //   '12. type =>', type,
+  //   '13. employee_id =>', employee_id,
+  //   '14. doc_parent_id =>',docPartentId,
+  // '15. DocUserType =>', DocUserType,
   // '16. assign_to =>',email
   // )
   const response = await axios.post(
@@ -2681,6 +2690,7 @@ export const GetEmployeeFilterJob = async (
 
 /*Api to Reserved employee for a job */
 export const ReservedEmployeeForJob = async (id, employee_id, status) => {
+  console.log(id, employee_id, status)
   const response = await axios.put(
     `${API_URL}setEmployeeReserve`,
     {
@@ -3452,7 +3462,6 @@ export const ChangeFolderNameSharpoint = async (
 };
 // /Api function to Delete Folder or document for sharepoint
 export const DeleteFolderOrDocument = async (FolderId, type, userType, userId) => {
-  console.log(FolderId, type, userType, userId)
   const response = await axios.post(
     `${API_URL}admin/deleteSharepointDocument_new`,
     {

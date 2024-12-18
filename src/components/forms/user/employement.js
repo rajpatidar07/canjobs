@@ -206,7 +206,7 @@ function EmployementDetails(props) {
   /*To call Api to delete Skill */
   async function deleteEducation(e) {
     try {
-      const responseData = await DeleteEmployeeCareer(e);
+      const responseData = await DeleteEmployeeCareer(e,props.employeeId);
       if (responseData.message === "career details has been deleted") {
         toast.error("Career deleted Successfully", {
           position: toast.POSITION.TOP_RIGHT,
