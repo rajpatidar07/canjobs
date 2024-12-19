@@ -3,7 +3,8 @@ import useValidation from "../../common/useValidation";
 import { Modal } from "react-bootstrap";
 import {
   /* getSingleFollowup*/ getAllUsersFollowUpData,
-  AddAllUserFollowup /*AddFollowup*/,
+  AddAllUserFollowup, /*AddFollowup*/
+  getallAdminData,
 } from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -16,6 +17,7 @@ import AdminTaskTable from "../../common/AdminTaskTable";
 function Addfollowup(props) {
   let [response, setResponseData] = useState([]);
   let [loading, setLoading] = useState(false);
+  let [updateNote, setUpdateNote] = useState(false);
   /* Shorting states */
   const [columnName, setcolumnName] = useState("created_at");
   const [sortOrder, setSortOrder] = useState("DESC");
@@ -23,6 +25,8 @@ function Addfollowup(props) {
   let user_type = localStorage.getItem("userType");
   let adminType = localStorage.getItem("admin_type");
   const [taskPage, setTaskPage] = useState(1)
+  const [AdminList, setAdminList] = useState([]);
+  const [selectedAdmin, setSelectedAdmin] = useState([]);
   // const [taskPage, setTaskPage] = useState(1)
   let adminId =
     adminType === "agent"
@@ -57,6 +61,13 @@ function Addfollowup(props) {
         columnName,
         sortOrder
       );
+      let adminRes = await getallAdminData()
+      // console.log(res.data.status === 1)
+      if (adminRes.data.length > 0) {
+        setAdminList(adminRes.data)
+      } else {
+        setAdminList([])
+      }
       if (
         userData.data === null ||
         userData.data === undefined ||
@@ -109,6 +120,10 @@ function Addfollowup(props) {
     status: "",
     assigned_by_id: assigned_id,
     assigned_by_type: assigned_by_type,
+    assigned_to_email: [],
+    assigned_to_name: [],
+    assigned_user_type: [],
+    assined_to_user_id: [],
   };
   // VALIDATION CONDITIONS
   const validators = {
@@ -142,13 +157,22 @@ function Addfollowup(props) {
   /* Functionality to close the modal */
   const close = () => {
     setState(initialFormState);
+    setUpdateNote(false)
     setErrors("");
     setLoading(false);
+    setSelectedAdmin([])
     props.close();
     if (props.page === "yes") {
       props.skip();
     }
   };
+  useEffect(() => {
+    if (typeof state.assigned_to_name === "string") {
+      setState({ ...state, assigned_to_name: state.assigned_to_name.split(","), assigned_to_email: state.assigned_to_email.split(","), assigned_user_type: state.assigned_user_type.split(","), assined_to_user_id: state.assined_to_user_id.split(",") });
+      setUpdateNote(false)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [updateNote])
 
   // USER FOLLOW UP PROFILE UPDATE SUBMIT BUTTON
   const onAminFollowClick = async (event) => {
@@ -195,6 +219,49 @@ function Addfollowup(props) {
     setcolumnName(columnName);
     // setCurrentPage(1);
   };
+  const handleAdminSelect = (e) => {
+    const selectedAdminId = e.target.value;
+
+    const selectedAdminObj = AdminList.find(user => user.admin_id === selectedAdminId);
+
+    if (selectedAdminObj && !selectedAdmin.some(admin => admin.admin_id === selectedAdminObj.admin_id)) {
+      setSelectedAdmin([...selectedAdmin, selectedAdminObj]);
+
+      setState((prevState) => ({
+        ...prevState,
+        assigned_to_email: [...(Array.isArray(prevState.assigned_to_email) ? prevState.assigned_to_email : prevState.assigned_to_email.split(",")) || [], selectedAdminObj.email],
+        assigned_to_name: [...(Array.isArray(prevState.assigned_to_name) ? prevState.assigned_to_name : prevState.assigned_to_name.split(",")) || [], selectedAdminObj.name],
+        assigned_user_type: [...(Array.isArray(prevState.assigned_user_type) ? prevState.assigned_user_type : prevState.assigned_user_type.split(",")) || [], selectedAdminObj.admin_type],
+        assined_to_user_id: [...(Array.isArray(prevState.assined_to_user_id) ? prevState.assined_to_user_id : prevState.assined_to_user_id.split(",")) || [], selectedAdminObj.admin_id],
+      }));
+    }
+  };
+
+  /*Delete function for group by field */
+  const removeAdmin = (adminId) => {
+    const updatedSelectedAdmin = selectedAdmin.filter((admin) => admin.admin_id !== adminId);
+
+    // Update selectedAdmin state
+    setSelectedAdmin(updatedSelectedAdmin);
+
+    // Remove corresponding admin details from the state
+    setState({
+      ...state,
+      assigned_to_email: state?.assigned_to_email.filter((email, index) =>
+        selectedAdmin[index].admin_id !== adminId
+      ),
+      assigned_to_name: state?.assigned_to_name.filter((name, index) =>
+        selectedAdmin[index].admin_id !== adminId
+      ),
+      assigned_user_type: state?.assigned_user_type.filter((type, index) =>
+        selectedAdmin[index].admin_id !== adminId
+      ),
+      assined_to_user_id: state?.assined_to_user_id.filter((id, index) =>
+        selectedAdmin[index].admin_id !== adminId
+      ),
+    });
+  };
+
   let content = (
     <>
 
@@ -228,7 +295,7 @@ function Addfollowup(props) {
                 />
               </div>
               <div className="single_note  p-5 rounded">
-              <h5>Notes</h5>
+                <h5>Notes</h5>
                 {response.length === 0 || !response ? (
                   <div className="d-flex justify-content-center">
                     <p className="text-italic font-size-3 m-0">No Data Found</p>
@@ -248,11 +315,17 @@ function Addfollowup(props) {
                               setState(prevState => ({
                                 ...prevState,        // Spread the existing state
                                 admin_id: adminId,   // Add or update admin_id
-                                ...res               // Spread the properties from res into state
+                                ...res
                               }));
+                              setUpdateNote(true)
+                              setSelectedAdmin(res?.assined_to_user_id ? AdminList.filter((item) => res?.assined_to_user_id.split(",").includes(item.admin_id.toString())) : [])
                             }}>  <FaEdit />
                             </Link>
                           </p>
+                          {res?.assigned_to_name && <span className="font-size-3">
+                            Assigned admin:
+                            {res?.assigned_to_name?.split(",").map((item, index) => <span className="badge-light rounded-pill p-1 m-1">{item}</span>)}
+                          </span>}
                           <i className="font-size-2">
                             Created on:
                             <ConvertTime
@@ -357,6 +430,75 @@ function Addfollowup(props) {
                 </div>
                 <div className="form-group col px-0 pr-3">
                   <label
+                    htmlFor="admin"
+                    className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
+                  >
+                    Select admin:
+                  </label>
+                  <div className="position-relative">
+                    <select
+                      className="form-control mb-2 text-capitalize"
+                      onChange={handleAdminSelect}
+                      value=""
+                    >
+                      <option value="">Select Admin</option>
+                      {(AdminList || []).map((user) => (
+                        <option key={user.admin_id} value={user.admin_id}>
+                          {user.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="row m-0 p-0">
+                    {selectedAdmin.length === 0 ? (
+                      null
+                    ) : (
+                      (selectedAdmin || []).map((item) => (
+                        <div
+                          key={item.admin_id}
+                          className="position-relative d-inline-block mr-3 mb-2"
+                          style={{ width: '25px', height: '25px' }}
+                        >
+                          <img
+                            className="rounded-circle"
+                            src={item.profile_image || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png'}
+                            alt={`Profile of ${item.name}`}
+                            title={`Profile image of ${item.name}`}
+                            style={{
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'cover',
+                              border: '2px solid #dee2e6',
+                            }}
+                          />
+                          <button
+                            onClick={() => removeAdmin(item.admin_id)}
+                            aria-label={`Remove ${item.name}`}
+                            className="position-absolute text-danger bg-transparent border-0 p-0"
+                            style={{
+                              top: '-5px',
+                              right: '-5px',
+                              cursor: 'pointer',
+                            }}
+                          >
+                            <i
+                              className="fa fa-times-circle"
+                              aria-hidden="true"
+                              style={{
+                                fontSize: '10px',
+                                backgroundColor: 'white',
+                                borderRadius: '50%',
+                                boxShadow: '0 1px 4px rgba(0, 0, 0, 0.2)',
+                              }}
+                            ></i>
+                          </button>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
+                <div className="form-group col px-0 pr-3">
+                  <label
                     htmlFor="remark"
                     className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
                   >
@@ -446,7 +588,17 @@ function Addfollowup(props) {
                     </button>
                   )}
                   {(state.subject || props.page === "yes") && <button
-                    onClick={() => props.page === "yes" ? props.skip() : setState(initialFormState)}
+                    onClick={() => {
+                      if (props.page === "yes") {
+                        props.skip();
+                      } else {
+                        setState(initialFormState);
+                        setSelectedAdmin([]);
+                        setLoading(false)
+                        setUpdateNote(false)
+                      }
+                    }}
+
                     className={`btn btn-small w-25 rounded-5 ${props.page === "yes" ? " mx-2 " : " mt-2 "}text-uppercase`}
                     type="button"
                   >

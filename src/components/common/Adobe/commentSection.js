@@ -782,7 +782,7 @@ export default function CommentSection({
   /*Function to delete comment */
   const OnDeleteComment = async (docId, id) => {
     try {
-      let res = await DeleteCommentsAndAssign(docId, id);
+      let res = await DeleteCommentsAndAssign(docId, id, userId, DocUserType, admin_id, AdminType);
       if (res.data.message === "Task deleted successfully!") {
         toast.success("Task Deleted Successfully", {
           position: toast.POSITION.TOP_RIGHT,
@@ -800,7 +800,7 @@ export default function CommentSection({
   /*Function to delete comment Replies*/
   const OnDeleteCommentReplies = async (id) => {
     try {
-      let res = await DeleteReplyCommentsAndAssign(id);
+      let res = await DeleteReplyCommentsAndAssign(id, userId, DocUserType, admin_id, AdminType);
       if (res.data.message === "deleted successfully!") {
         toast.success("Reply Deleted Successfully", {
           position: toast.POSITION.TOP_RIGHT,

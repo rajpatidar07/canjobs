@@ -946,12 +946,19 @@ export const UpdateDocuentcommentAssign = async (json, docUserType) => {
   return response.data;
 };
 /*Api to delete document comments */
-export const DeleteCommentsAndAssign = async (DocId, id) => {
+export const DeleteCommentsAndAssign = async (DocId, id, userId,
+  userType,
+  adminId,
+  adminType,) => {
   const response = await axios.post(
     `${API_URL}admin/deleteDocTask`,
     {
       doc_id: DocId,
       id: id,
+      user_id: userId,
+      user_type: userType,
+      admin_id: adminId,
+      admin_type: adminType,
     },
     {
       headers: {
@@ -1098,11 +1105,19 @@ export const GetReplyCommit = async (doc_id) => {
   return response;
 };
 /*Api to delete document comments replyes */
-export const DeleteReplyCommentsAndAssign = async (id) => {
+export const DeleteReplyCommentsAndAssign = async (id, userId,
+  userType,
+  adminId,
+  adminType,) => {
   const response = await axios.post(
     `${API_URL}admin/deleteThreadMsg`,
     {
       id: id,
+      user_id: userId,
+      user_type: userType,
+      admin_id: adminId,
+      admin_type: adminType,
+
     },
     {
       headers: {
