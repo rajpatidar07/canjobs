@@ -72,7 +72,7 @@ export default function AddTaskForm(props) {
     };
     const handleAdminSelect = (e) => {
         const selectedAdminId = e.target.value;
-        console.log('Current selectedAdmin:', selectedAdmin); // Debugging line
+        // console.log('Current selectedAdmin:', selectedAdmin); // Debugging line
 
         const selectedAdminObj = AdminList.find(user => user.admin_id === selectedAdminId);
 
@@ -195,9 +195,9 @@ export default function AddTaskForm(props) {
             alert("No status found")
         }
     }
-    console.log(selectedStatus)
+    // console.log(selectedStatus)
     return (
-        <form onSubmit={(e) => handleTaskSubmit(e)} className='mb-3'>
+        <form className='mb-3'>
             <div className='d-flex flex-row-reverse'>
                 <Link
                     className="btn-sm btn-light rounded-3 p-2"
@@ -279,7 +279,6 @@ export default function AddTaskForm(props) {
                                 </Link>
                             )}
                         </div>
-
                         {/* Add New Status Input and Save Button */}
                         {showStatusInput && (
                             <div className="d-flex align-items-center">
@@ -319,7 +318,6 @@ export default function AddTaskForm(props) {
                         )}
                     </div>
                 </div>
-
                 <div className="col">
                     <select
                         className="form-control mb-2 text-capitalize"
@@ -332,7 +330,6 @@ export default function AddTaskForm(props) {
                             </option>
                         ))}
                     </select>
-
                     <div className="row m-0 p-0">
                         {selectedGroupBy.length === 0 ? (
                             null) : (
@@ -353,7 +350,6 @@ export default function AddTaskForm(props) {
                         )}
                     </div>
                 </div>
-
                 <div className="col">
                     <select
                         className="form-control mb-2 text-capitalize"
@@ -420,7 +416,7 @@ export default function AddTaskForm(props) {
                 <div className="col">
 
                     {loading === true ? (
-                        <Link className="btn btn-primary btn-medium w-100 rounded-5 text-uppercase">
+                        <Link className="btn-md btn-primary p-1 px-12 rounded-4">
                             <span
                                 className="spinner-border spinner-border-sm "
                                 role="status"
@@ -429,7 +425,7 @@ export default function AddTaskForm(props) {
                             <span className="sr-only">Loading...</span>
                         </Link>
                     ) : (
-                        <Link type="submit" className="btn-md btn-primary p-1 px-10 rounded-4">
+                        <Link onClick={(e) => handleTaskSubmit(e)} className="btn-md btn-primary p-1 px-10 rounded-4">
                             Save
                         </Link>
                     )}

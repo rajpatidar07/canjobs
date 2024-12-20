@@ -57,6 +57,7 @@ const NewUserProfile = (props) => {
   const notes = searchParams.get("note");
   const docParentId = searchParams.get("docParentId");
   const docHighAnnoId = searchParams.get("annotationId");
+  const docTaskId = searchParams.get("taskId");
   const partnerChat = searchParams.get("partner");
   const note_id = searchParams.get("noteid");
   let navigate = useNavigate();
@@ -1587,6 +1588,7 @@ const NewUserProfile = (props) => {
                             : PersonalDetail.documents_folder_id
                         }
                         AnnoteId={docHighAnnoId}
+                        docTaskId={docTaskId}
                         notification={docId ? "yes" : "no"}
                         docId={docId ? docId : ""}
                         docTypePage={"adobe"}

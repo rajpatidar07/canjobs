@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import CommentReplyBox from "../CommentReplyBox";
 import { toast } from "react-toastify";
@@ -31,7 +31,8 @@ export default function CommentSection({
   openAnnotationBox,
   docsection,
   page,
-  setOpenAnnotationBox
+  setOpenAnnotationBox,
+  docTaskId
 }) {
   const [comments, setComments] = useState();
   const [commntData, setCommentData] = useState();
@@ -45,7 +46,7 @@ export default function CommentSection({
   // let [adminid, setAdminId] = useState();
   // let [annotationStatus, setAnnotationStatus] = useState();
   let [selectedAdminReply, setSelectedAdminReplye] = useState("");
-  let [replyCommentClick, setReplyCommentClick] = useState();
+  let [replyCommentClick, setReplyCommentClick] = useState(docTaskId || "");
   let [selectedAdmin, setSelectedAdmin] = useState("");
   let [selectedPartner, setSelectedPartner] = useState("");
   const AdminType = localStorage.getItem("admin_type");
@@ -77,6 +78,13 @@ export default function CommentSection({
       setCommentsReplyList([]);
     }
   };
+  useEffect(() => {
+    if (docTaskId) {
+      getCommentsReplyList()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [docTaskId])
+
   /*Function to set the color code to the background of the user name */
   const determineBackgroundColor = (commentItem) => {
     const colorClasses = [

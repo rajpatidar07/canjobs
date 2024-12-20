@@ -18,7 +18,7 @@ function SendMailForm({ email, setApiCall }) {
     subject: "",
     description: "",
     email: email,
-    adminemail: AdminEmail,
+    adminemail: "",
     bccemail: ""
   };
 

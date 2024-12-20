@@ -288,7 +288,7 @@ function Notifications({
                                         : ""
                                       }&annotationId=${data.notif_json
                                         ? JSON.parse(data.notif_json).annotation_id
-                                        : ""}`
+                                        : ""}&taskId=${JSON.parse(data.notif_json).task_id}`
                                       ://Mention documents for employee
                                       `/${data.employee_id}?docId=${data.mention_id
                                       }&docParentId=${data.notif_json
@@ -296,7 +296,7 @@ function Notifications({
                                         : ""
                                       }&annotationId=${data.notif_json
                                         ? JSON.parse(data.notif_json).annotation_id
-                                        : ""}`
+                                        : ""}&taskId=${JSON.parse(data.notif_json).task_id}`
                                     : data.subject === "mention_partner"//Partner admin chat for employee
                                       ? `/${data.employee_id}?partner=${data.from_id}`
                                       : data.subject === "mention_partnerChat"//Partner admin chat for partner

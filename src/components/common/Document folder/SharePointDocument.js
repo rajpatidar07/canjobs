@@ -39,7 +39,8 @@ export default function SharePointDocument({
   docTypePage,
   user_name,
   partnerId,
-  AnnoteId
+  AnnoteId,
+  docTaskId
 }) {
   const [docTypeName, setDocTypeName] = useState("");
   // const [openNoteForm, setOpenNoteForm] = useState("");
@@ -871,6 +872,7 @@ export default function SharePointDocument({
                         SetPdfDocUrl={SetPdfDocUrl}
                         openCommentBox={docId ? true : false}
                         AnnoteId={AnnoteId}
+                        docTaskId={docTaskId}
                       />
                       // ) : null
                     ) : (

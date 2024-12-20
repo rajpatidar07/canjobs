@@ -26,7 +26,8 @@ const AdobePDFViewer = ({
   getCommentsList,
   SetPdfDocUrl,
   openCommentBox,
-  AnnoteId
+  AnnoteId,
+  docTaskId
 }) => {
   let [openAnnotationBox, setOpenAnnotationBox] = useState(openCommentBox ? true : false);
   let [annotationDrawBox, setAnnotationDrawBox] = useState("");
@@ -393,6 +394,7 @@ const AdobePDFViewer = ({
           setCommentsList={setCommentsList}
           openAnnotationBox={openAnnotationBox}
           docsection={docsection}
+          docTaskId={docTaskId}
         />
       )}
     </div>

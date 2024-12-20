@@ -403,7 +403,11 @@ const EmailList = ({
               )} */}
             </div>
           </div>
-          <div className="email_detail_div col-md-6 p-6">
+          <div className="email_detail_div col-md-6 p-6"
+            style={{
+              overflowY: "scroll",
+              height: "calc(100vh - 182px)"
+            }}>
             {sentEmail === "yes" ? (
               <div>
                 <h5 className="mb-0">Send Email to User</h5>
