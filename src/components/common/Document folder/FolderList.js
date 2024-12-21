@@ -42,7 +42,8 @@ export default function FolderList({
   nPages,
   totalData,
   pageNo,
-  docFileBase
+  docFileBase,
+  setOpenNoteForm
 }) {
   const [view, setView] = useState("list"); // Default to block view
   let [openAnnotationBox, setOpenAnnotationBox] = useState();
@@ -122,6 +123,7 @@ export default function FolderList({
                           getCommentsList(item)
                           // }
                         }
+                        setOpenNoteForm(false)
                       }}
                       onContextMenu={(e) => {
                         e.preventDefault(); // prevent the default behaviour when right clicked
@@ -349,6 +351,7 @@ export default function FolderList({
                           setFileID(item.id);
                           SetPdfDocUrl(item);
                         }
+                        setOpenNoteForm(false)
                       }}
                       onContextMenu={(e) => {
                         e.preventDefault();

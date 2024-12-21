@@ -26,7 +26,7 @@ import EditDocNameFOrm from "./EditDocNameFOrm";
 import AdobePDFViewer from "../Adobe/adobeFile";
 import { jsPDF } from "jspdf";
 import MentionAdminInDoc from "../Adobe/MentionAdminInDoc";
-// import DocumentsNotes from "./DocumentsNotes";
+import DocumentsNotes from "./DocumentsNotes";
 // import DocViewer from "react-doc-viewer";
 // import { PDFDocument } from 'pdf-lib';
 
@@ -43,7 +43,7 @@ export default function SharePointDocument({
   docTaskId
 }) {
   const [docTypeName, setDocTypeName] = useState("");
-  // const [openNoteForm, setOpenNoteForm] = useState("");
+  const [openNoteForm, setOpenNoteForm] = useState(false);
   const [newType, setNewType] = useState("");
   const [docFileBase, setDocFileBase] = useState("");
   const [folderID, setFolderID] = useState(folderId);
@@ -184,6 +184,20 @@ export default function SharePointDocument({
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     ) {
       convertToPDF(data);
+    } else if (data.file.mimeType === "text/plain") {
+      fetch(data["@microsoft.graph.downloadUrl"])
+        .then(async (response) => {
+          if (!response.ok) {
+            throw new Error("Failed to fetch the file");
+          }
+          let data = await response.text()
+          return data;
+        })
+        .then((text) => {
+          setConvertedDoc(text)
+          setOpenNoteForm(true)
+        })
+        .catch((error) => console.error("Error fetching the file:", error));
     } else {
       setConvertedDoc(data["@microsoft.graph.downloadUrl"]);
     }
@@ -679,7 +693,7 @@ export default function SharePointDocument({
     <>
       {folderId ? (
         <div className="document_section">
-          {docPreview ? (
+          {docPreview && docSingleDate.file.mimeType !== "text/plain" ? (
             <div
               className="App-viewer document_preview_full_screen"
               style={{
@@ -849,7 +863,8 @@ export default function SharePointDocument({
                         imgConRes === "imageConverted") ||
                       docSingleDate.file.mimeType ===
                       "application/vnd.openxmlformats-officedocument.wordprocessingml.document") &&
-                      convertedDoc ? (
+                      (convertedDoc && docSingleDate.file.mimeType !==
+                        "text/plain") ? (
                       // commentsRes ? (
                       <AdobePDFViewer
                         url={convertedDoc}
@@ -876,7 +891,15 @@ export default function SharePointDocument({
                       />
                       // ) : null
                     ) : (
-                      <Loader />
+                      docSingleDate.file.mimeType ===
+                        "text/plain" ?
+                        null
+                        // <div className="d-flex justify-content-center">
+                        //   {/* <iframe title={docSingleDate.name} src={convertedDoc} height={100} width={100}></iframe> */}
+                        //   <p style={{ whiteSpace: "pre-wrap" }}>{convertedDoc}</p>
+                        // </div>
+                        :
+                        <Loader />
                     )
                   }
                 </div>
@@ -975,7 +998,7 @@ export default function SharePointDocument({
                       </Dropdown>
                     </>
                   )}
-                  {/* {openNoteForm ?
+                  {openNoteForm ?
                     <DocumentsNotes
                       user_id={user_id}
                       emp_user_type={emp_user_type}
@@ -983,9 +1006,12 @@ export default function SharePointDocument({
                       docTypeName={docTypeName}
                       setApiCall={setApiCall}
                       setOpenNoteForm={setOpenNoteForm}
+                      convertedDoc={convertedDoc}
+                      docSingleDate={docSingleDate}
+                      setConvertedDoc={setConvertedDoc}
                     />
                     : <button className="btn btn-primary mx-2" style={{ maxHeight: 34 }}
-                      onClick={() => setOpenNoteForm(true)}>Add notes</button>} */}
+                      onClick={() => setOpenNoteForm(true)}>Add notes</button>}
                 </div>
               </div>
               <div className="row m-0 bg-white px-2 pb-2">
@@ -1032,6 +1058,7 @@ export default function SharePointDocument({
                     totalData={totalData}
                     pageNo={pageNo}
                     docFileBase={docFileBase}
+                    setOpenNoteForm={setOpenNoteForm}
                   />
                 )}
               </div>
