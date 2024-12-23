@@ -2768,6 +2768,23 @@ export const SendEmail = async (data, FileList, url) => {
   );
   return response.data;
 };
+/*Api to forward  email to the user and company*/
+export const forwardMail = async (data, FileList, url) => {
+  // console.log(FileList);
+  const response = await axios.post(
+    `${API_URL}forwardMail`,
+    data
+    ,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
+
 /*Api to get manager's team list*/
 export const GetManagerTeam = async (manager_id) => {
   const response = await axios.post(

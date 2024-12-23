@@ -9,6 +9,7 @@ import Loader from "../common/loader";
 import { /*useNavigate,*/ Link } from "react-router-dom";
 import { AiOutlineDownload } from "react-icons/ai";
 import ReplyEmailForm from "./ReplyEmailForm";
+import ForwardEmailForm from "./ForwardEmailForm";
 const PreviewEmail = ({ id, emailType, singleEmailData }) => {
   let userType = localStorage.getItem("userType");
   /* states */
@@ -16,10 +17,15 @@ const PreviewEmail = ({ id, emailType, singleEmailData }) => {
   let [isLoading, setIsLoading] = useState(true);
   const [emailData, setemailData] = useState([]);
   const [showReplyForm, setShowReplyForm] = useState(false);
+  const [showForwardForm, setShowForwardForm] = useState(false);
 
   const toggleReplyFormClick = () => {
     setShowReplyForm(!showReplyForm);
   };
+  const toggleForwardFormClick = () => {
+    setShowForwardForm(!showForwardForm);
+  };
+
   /* Function to get Employee visa data */
   const EmailData = async () => {
     setIsLoading(true);
@@ -45,7 +51,6 @@ const PreviewEmail = ({ id, emailType, singleEmailData }) => {
       setemailData([]);
     }
   };
-
   /*Render function to get the employee data*/
   useEffect(() => {
     EmailData();
@@ -234,16 +239,35 @@ const PreviewEmail = ({ id, emailType, singleEmailData }) => {
                     toggleReplyFormClick={toggleReplyFormClick}
                   />
                 </>
-              ) : (
+              ) : 
+              showForwardForm?
+              <>
+              <ForwardEmailForm
+                 data={singleEmailData}
+                emailType={emailType}
+                setShowForwardForm={setShowForwardForm}
+                setApiCall={setApiCall}
+                toggleForwardFormClick={toggleForwardFormClick}
+              />
+            </>
+              :(
                 <>
                   {/* Add button to toggle form */}
                   {userType === "agent" || userType === "company" || userType === "user" ? null : (
+                    <>
                     <button
-                      className="btn btn-primary"
+                      className="btn btn-primary mx-2"
                       onClick={toggleReplyFormClick}
                     >
                       Add Reply
                     </button>
+                    <button
+                      className="btn btn-primary"
+                      onClick={toggleForwardFormClick}
+                    >
+                      Forward mail
+                    </button>
+                    </>
                   )}
                 </>
               )}
