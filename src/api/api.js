@@ -2614,7 +2614,8 @@ export const ReadSentEmail = async (page, limit, search, email) => {
       // email_id: id,
       page: page,
       count: limit,
-      filter_by_email_id: email,
+      filter_by_email_id: "",
+      filter_by_to_email_id: email,
       search: search,
     },
     {

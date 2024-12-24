@@ -386,7 +386,7 @@ function SendMailForm({ email, setApiCall }) {
                 <TextEditor
                   state={state}
                   setState={setState}
-                  page={"description"}// has same variable as description
+                  page={"mail"}// has same variable as description
                 />
               </div>
               {/*----ERROR MESSAGE FOR DESRIPTION----*/}
