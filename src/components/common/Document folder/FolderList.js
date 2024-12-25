@@ -45,7 +45,7 @@ export default function FolderList({
   docFileBase,
   setOpenNoteForm
 }) {
-  const [view, setView] = useState("list"); // Default to block view
+  const [view, setView] = useState(localStorage.getItem("docView") || "list"); // Default to block view
   let [openAnnotationBox, setOpenAnnotationBox] = useState();
   let [DocData, setDocData] = useState();
 
@@ -64,14 +64,20 @@ export default function FolderList({
       <div className="view-toggle mb-4">
         <Link to=""
           className={`btn-sm ${view === "block" ? "btn-primary" : "btn-outline-primary"} mx-1 `}
-          onClick={() => setView("block")}
+          onClick={() => {
+            setView("block")
+            localStorage.setItem("docView", "block")
+          }}
           title="Block View"
         >
           <b style={{ fontSize: "1rem", fontWeight: "200" }}><CiImageOn className="sidebar_icon" /></b>
         </Link>
         <Link to=""
           className={`btn-sm ${view === "list" ? "btn-primary" : "btn-outline-primary"} mx-1 `}
-          onClick={() => setView("list")}
+          onClick={() => {
+            setView("list")
+            localStorage.setItem("docView", "list")
+          }}
           title="List View"
         >
           <b style={{ fontSize: "1rem", fontWeight: "200" }}><CiViewList className="sidebar_icon" /></b>
@@ -124,6 +130,7 @@ export default function FolderList({
                           // }
                         }
                         setOpenNoteForm(false)
+                        setPageNo(1)
                       }}
                       onContextMenu={(e) => {
                         e.preventDefault(); // prevent the default behaviour when right clicked
@@ -218,7 +225,7 @@ export default function FolderList({
                             Delete {item.folder ? "Folder" : "File"}
                           </Link>
                         </li>
-                        <li className={item.folder ? "d-none" : "list-group-item text-darger"}>
+                        <li className={item.folder || item.file.mimeType === "text/plain" ? "d-none" : "list-group-item text-darger"}>
                           <Link
                             // state={{ id: res.job_id }}
                             to={`/view_pdf_Agreement?new_emp_user_type=${emp_user_type}&new_user_id=${user_id}&folderId=${item.parentReference.id}&document_id=${item.id}&partner_id=${partnerId}`} target="_blank">
@@ -226,7 +233,7 @@ export default function FolderList({
                             Open in new tab {item.folder ? "Folder" : "File"}
                           </Link>
                         </li>
-                        <li className={`list-group-item text-darger ${item.folder || (userType !== "admin" && userType !== "agent") ? "d-none" : ""} `} >
+                        <li className={`list-group-item text-darger ${item.folder || item.file.mimeType === "text/plain" || (userType !== "admin" && userType !== "agent") ? "d-none" : ""} `} >
                           <Link to="" onClick={() => {
                             getCommentsList(item)
                             setOpenAnnotationBox(true)
@@ -313,16 +320,16 @@ export default function FolderList({
                         </li>
                         {!item.folder && (
                           <>
-                            <li className="list-group-item text-danger">
+                            <li className={item.file.mimeType === "text/plain" ? "d-none" : "list-group-item text-danger"}>
                               <Link
-                                className="text-decoration-none"
+                                className={"text-decoration-none"}
                                 to={`/view_pdf_Agreement?new_emp_user_type=${emp_user_type}&new_user_id=${user_id}&folderId=${item.parentReference.id}&document_id=${item.id}`}
                                 target="_blank"
                               >
                                 Open in New Tab
                               </Link>
                             </li>
-                            <li className={`list-group-item text-danger ${ (userType !== "admin" && userType !== "agent") ? "d-none" : ""}`}>
+                            <li className={`list-group-item text-danger ${(userType !== "admin" && userType !== "agent" && item.file.mimeType === "text/plain") ? "d-none" : ""}`}>
                               <Link
                                 className="text-decoration-none"
                                 onClick={() => {
@@ -339,7 +346,7 @@ export default function FolderList({
                       </ul>
                     )}
                     <Link
-                      to="#"
+                      to=""
                       className="text-dark text-decoration-none d-flex align-items-center"
                       onClick={() => {
                         if (item.folder) {
@@ -352,6 +359,7 @@ export default function FolderList({
                           SetPdfDocUrl(item);
                         }
                         setOpenNoteForm(false)
+                        setPageNo(1)
                       }}
                       onContextMenu={(e) => {
                         e.preventDefault();
@@ -414,6 +422,8 @@ export default function FolderList({
             total={totalData}
             count={docTypeList.length}
             currentPage={pageNo}
+            setView={setView}
+            view={view}
           />
         </div>
 

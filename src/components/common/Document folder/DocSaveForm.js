@@ -86,7 +86,7 @@ export default function DocSaveForm({
                 }}
                 type="button"
                 disabled
-              >
+              >Saving Documents
                 <span
                   className="spinner-border spinner-border-sm"
                   role="status"
