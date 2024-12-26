@@ -197,13 +197,14 @@ import { AddSharePointDOcument } from "../../../api/api";
 import { toast } from "react-toastify";
 
 const DocumentsNotes = (props) => {
-    const initialHTML = props.convertedDoc;
+    const initialHTML = props.convertedDoc || "";
     const contentState = ContentState.createFromBlockArray(
         convertFromHTML(initialHTML)
     );
     const [editorState, setEditorState] = useState(
         EditorState.createWithContent(contentState)
     );
+    console.log(props.convertedDoc,)
     /*Function to Add note to the api */
     const exportToTextFile = async () => {
         const htmlContent = stateToHTML(editorState.getCurrentContent());
@@ -247,7 +248,12 @@ const DocumentsNotes = (props) => {
         props.setOpenNoteForm(false); // Close the note form
         props.setConvertedDoc("")
     };
-
+    const editorStyle = {
+        backgroundColor: "#f7f1a3",
+        minHeight: "10rem",
+        padding: "1rem",
+        borderRadius: "5px",
+    };
     return (
         <div className='position-sticky'>
             <div className="d-flex flex-row-reverse position-relative">
@@ -268,7 +274,7 @@ const DocumentsNotes = (props) => {
                     <span style={{ fontWeight: 'bold', fontSize: '16px' }}>×</span>
                 </button>
             </div>
-            <div style={{ border: "1px solid #ccc", padding: "10px", marginBottom: "20px" }}>
+            <div style={{ border: "1px solid #ccc", padding: "10px", marginBottom: "5px", width: "200px", backgroundColor: "#f7f1a3" }}>
                 <Editor
                     editorState={editorState}
                     onEditorStateChange={(state) => setEditorState(state)}
@@ -276,14 +282,12 @@ const DocumentsNotes = (props) => {
                         options: ['inline', 'list'],
                         inline: { options: ['bold', 'italic'] },
                         list: { options: ['unordered', 'ordered'] },
-                        blockType: { options: ['Normal', 'H1', 'H2', 'H3'] },
-                        fontSize: { options: ['10', '12', '14', '16', '18', '24', '36'] },
-                        colorPicker: { colors: ['#000000', '#FF0000', '#00FF00', '#0000FF'] },
                         emoji: true,
                     }}
+                    editorStyle={editorStyle}
                 />
             </div>
-            <button className='btn-sm btn-primary' onClick={exportToTextFile} style={{ marginRight: "10px" }}>
+            <button className='btn-sm btn-primary' onClick={exportToTextFile}>
                 Save
             </button>
         </div>

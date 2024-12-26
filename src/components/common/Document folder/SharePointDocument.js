@@ -75,6 +75,7 @@ export default function SharePointDocument({
   // const [commentsRes, setCommentsRes] = useState();
   const [imgConRes, setImgConRes] = useState();
   const [convertedDoc, setConvertedDoc] = useState("");
+  const [noteText, setNoteText] = useState("");
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
   const [pageNo, setPageNo] = useState(1);
@@ -185,22 +186,28 @@ export default function SharePointDocument({
     ) {
       convertToPDF(data);
     } else if (data.file.mimeType === "text/plain") {
-      fetch(data["@microsoft.graph.downloadUrl"])
-        .then(async (response) => {
-          if (!response.ok) {
-            throw new Error("Failed to fetch the file");
-          }
-          let data = await response.text()
-          return data;
-        })
-        .then((text) => {
-          setConvertedDoc(text)
-          setOpenNoteForm(true)
-        })
-        .catch((error) => console.error("Error fetching the file:", error));
+      GetNoteText(data, true);
     } else {
       setConvertedDoc(data["@microsoft.graph.downloadUrl"]);
     }
+  }
+  const GetNoteText = (data, isOpen) => {
+    fetch(data["@microsoft.graph.downloadUrl"])
+      .then(async (response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch the file");
+        }
+        let data = await response.text()
+        return data;
+      })
+      .then((text) => {
+        setNoteText(text)
+        /*Open the note form when admin click it from the docs list else not open from this function */
+        if (isOpen) {
+          setOpenNoteForm(true)
+        }
+      })
+      .catch((error) => console.error("Error fetching the file:", error));
   }
   // const documentID = "YOUR_DOCUMENT_ID"; // Replace YOUR_DOCUMENT_ID with the actual document ID
 
@@ -282,6 +289,9 @@ export default function SharePointDocument({
         setTotalData(res.data.total_rows)
         setShowDropDown(false);
         setDocLoder(false);
+        if (res.data.data.find((item) => item?.file?.mimeType === "text/plain")) {
+          GetNoteText(res.data.data.find((item) => item.file.mimeType === "text/plain"), false)
+        }
         if (notification === "yes") {
           if (res.data.data.find((item) => item.id === newdocId)) {
             setDocPreview(true);
@@ -1006,12 +1016,12 @@ export default function SharePointDocument({
                       docTypeName={docTypeName}
                       setApiCall={setApiCall}
                       setOpenNoteForm={setOpenNoteForm}
-                      convertedDoc={convertedDoc}
-                      docSingleDate={docSingleDate}
-                      setConvertedDoc={setConvertedDoc}
+                      convertedDoc={noteText}
+                      docSingleDate={docTypeList?.find((item) => item.file.mimeType === "text/plain") ? docTypeList.find((item) => item.file.mimeType === "text/plain") : docSingleDate}
+                      setConvertedDoc={setNoteText}
                     />
                     : <button className="btn btn-primary mx-2" style={{ maxHeight: 34 }}
-                      onClick={() => setOpenNoteForm(true)}>Add notes</button>}
+                      onClick={() => setOpenNoteForm(true)}>{docTypeList?.find((item) => item?.file?.mimeType === "text/plain") ? "Open Note" : "Add notes"}</button>}
                 </div>
               </div>
               <div className="row m-0 bg-white px-2 pb-2">
