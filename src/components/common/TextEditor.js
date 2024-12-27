@@ -351,21 +351,22 @@ import { EditorState, convertFromHTML, ContentState, AtomicBlockUtils } from 'dr
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { stateToHTML } from 'draft-js-export-html';
+import { AddAdmin } from '../../api/api';
 
 export default function TextEditor({ state, setState, page, identifier }) {
+  let adminSignature = localStorage.getItem("admin_signature")
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
   const [showSignatureFields, setShowSignatureFields] = useState(false);
   const [signatureURL, setSignatureURL] = useState('');
   const [signatureText, setSignatureText] = useState('');
-
   useEffect(() => {
-    const orgVariable = page === "description" || page === "mail" ? "description" :
-      page === "FollowUp" ? "remark" :
-        page === "addAgentConversation" ? "message" :
-          page === "companyDetails" ? "about" :
-            page === "requirement" ? "requirement" :
-              page === "yourDuties" ? "your_duties" :
-                page === "jobDescription" ? "job_description" : null;
+    const orgVariable = page === 'description' || page === 'mail' ? 'description' :
+      page === 'FollowUp' ? 'remark' :
+        page === 'addAgentConversation' ? 'message' :
+          page === 'companyDetails' ? 'about' :
+            page === 'requirement' ? 'requirement' :
+              page === 'yourDuties' ? 'your_duties' :
+                page === 'jobDescription' ? 'job_description' : null;
 
     if (!state[orgVariable]) {
       setEditorState(EditorState.createEmpty());
@@ -381,41 +382,108 @@ export default function TextEditor({ state, setState, page, identifier }) {
   const handleEditorChange = (newEditorState) => {
     setEditorState(newEditorState);
   };
-
   const handleBlur = () => {
     const htmlContent = stateToHTML(editorState.getCurrentContent());
-    setState({ ...state, description: htmlContent });
-  };
-
-  const insertSignature = (editorState, signatureURL, signatureText) => {
-    const contentState = editorState.getCurrentContent();
-    const contentStateWithEntity = contentState.createEntity('IMAGE', 'IMMUTABLE', { src: signatureURL });
-    const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
-
-    let newEditorState = AtomicBlockUtils.insertAtomicBlock(editorState, entityKey, ' ');
-
-    if (signatureText) {
-      const contentStateWithText = newEditorState.getCurrentContent().createEntity('TEXT', 'MUTABLE', { text: signatureText });
-      const entityKeyText = contentStateWithText.getLastCreatedEntityKey();
-      newEditorState = AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKeyText, ' ');
+    if (page === "emailReplyPage") {
+      setState(htmlContent);
+    } else {
+      setState({
+        ...state, [
+          page === "description"|| page === "mail" ? "description" :
+            page === "FollowUp" ? "remark" :
+              page === "addAgentConversation" ? "message" :
+                page === "companyDetails" ? "about" :
+                  page === "requirement" ? "requirement" :
+                    page === "yourDuties" ? "your_duties" :
+                      page === "jobDescription" ? "job_description" : null]
+          : htmlContent
+      });
     }
+  };
+  // const handleBlur = () => {
+  //   const htmlContent = stateToHTML(editorState.getCurrentContent());
+  //   setState({ ...state, description: htmlContent });
+  // };
 
-    return EditorState.forceSelection(newEditorState, newEditorState.getCurrentContent().getSelectionAfter());
+  const insertSignature = (editorState, combinedBase64) => {
+    console.log(editorState, combinedBase64)
+    let contentState = editorState.getCurrentContent();
+    let selection = editorState.getSelection();
+
+    // Move selection to the end of the content
+    const endSelection = selection.merge({
+      anchorOffset: contentState.getPlainText().length,
+      focusOffset: contentState.getPlainText().length,
+    });
+    // Create a new EditorState with the cursor at the end
+    let newEditorState = EditorState.acceptSelection(editorState, endSelection);
+    // Insert image (combinedBase64)
+    if (combinedBase64) {
+      const contentStateWithEntity = contentState.createEntity('IMAGE', 'IMMUTABLE', { src: combinedBase64 });
+      const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+      newEditorState = AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' ');
+    }
+    return EditorState.moveFocusToEnd(newEditorState);
   };
 
-  const handleAddSignature = () => {
+  // const handleAddSignature = async () => {
+  //   if (showSignatureFields) {
+  //     if (signatureURL || signatureText) {
+  //       let signatureData = await combineTextAndImageToBase64(signatureText, signatureURL);
+  //       if (signatureData) {
+  //         let data = {
+  //           admin_id: localStorage.getItem("admin_id"),
+  //           signature: signatureData
+  //         }
+  //         // Combine text and image into one base64 image
+  //         const responseData = await AddAdmin(data);
+  //         if (responseData.message === "admin updated successfully") {
+  //           localStorage.setItem("admin_signature", signatureData)
+  //         }
+  //       }
+  //     }
+  //     setSignatureURL('');
+  //     setSignatureText('');
+  //     setShowSignatureFields(false);
+  //   } else {
+  //     setShowSignatureFields(true);
+  //     insertSignature(editorState, adminSignature);
+  //   }
+  // };
+  const handleAddSignature = async () => {
     if (showSignatureFields) {
       if (signatureURL || signatureText) {
-        const updatedEditorState = insertSignature(editorState, signatureURL, signatureText);
-        setEditorState(updatedEditorState);
+        let signatureData = await combineTextAndImageToBase64(signatureText, signatureURL);
+        if (signatureData) {
+          let data = {
+            admin_id: localStorage.getItem("admin_id"),
+            signature: signatureData,
+          };
+          // Save the signature data
+          const responseData = await AddAdmin(data);
+          if (responseData.message === "admin updated successfully") {
+            localStorage.setItem("admin_signature", signatureData);
+          }
+          // Insert the signature into the editor
+          const updatedEditorState = insertSignature(editorState, signatureData);
+          setEditorState(updatedEditorState);
+        }
       }
       setSignatureURL('');
       setSignatureText('');
       setShowSignatureFields(false);
     } else {
+      // Show signature fields or add the existing signature from localStorage
       setShowSignatureFields(true);
+  
+      if (adminSignature) {
+        // Insert the signature from localStorage into the editor
+        const updatedEditorState = insertSignature(editorState, adminSignature);
+        setEditorState(updatedEditorState);
+      }
     }
   };
+  
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -426,63 +494,99 @@ export default function TextEditor({ state, setState, page, identifier }) {
       reader.readAsDataURL(file);
     }
   };
+
+  const combineTextAndImageToBase64 = (text, imageUrl) => {
+    return new Promise((resolve, reject) => {
+      // Create a new canvas element
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+
+      // Create the image element
+      const image = new Image();
+      image.src = imageUrl;
+
+      image.onload = () => {
+        const textHeight = 50; // Adjust text size
+        const imageHeight = image.height;
+        const imageWidth = image.width;
+        const canvasWidth = Math.max(500, imageWidth); // Adjust canvas width as needed
+        const canvasHeight = imageHeight + textHeight + 10; // Add space for text
+
+        canvas.width = canvasWidth;
+        canvas.height = canvasHeight;
+
+        // Draw the image on canvas
+        ctx.drawImage(image, 0, 0);
+
+        // Set text style and draw text
+        ctx.font = '86px Arial'; // Increased font size
+        ctx.fillStyle = 'black';
+        ctx.fillText(text, 10, imageHeight + 40); // Adjust text position
+
+        // Get the base64 image data
+        const base64Image = canvas.toDataURL('image/png');
+        console.log('Combined Base64 Image:', base64Image);
+
+        // Resolve the Promise with the base64 image
+        resolve(base64Image);
+
+        // Insert the base64 image into the editor at the end (if needed)
+        const updatedEditorState = insertSignature(editorState, base64Image);
+        setEditorState(updatedEditorState);
+      };
+
+      image.onerror = (error) => {
+        reject(new Error("Image loading failed"));
+      };
+    });
+  };
+
+
   const editorStyle = {
     height: '10rem',
     padding: '1rem',
     cursor: 'text',
   };
-  const blockRenderer = (contentBlock) => {
-    if (contentBlock.getType() === 'atomic') {
-      return {
-        component: MediaComponent,
-        editable: false,
-      };
-    }
-    return null;
-  };
-  const MediaComponent = ({ block, contentState }) => {
-    const entityKey = block.getEntityAt(0);
-  
-    if (!entityKey) {
-      return null; // or return some fallback UI
-    }
-  
-    const entity = contentState.getEntity(entityKey);
-    const { src, text } = entity.getData();
-  
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        {/* Render text above the image */}
-        {text && <div style={{ marginBottom: '8px', fontSize: '14px', fontWeight: 'bold' }}>{text}</div>}
-        {/* Render image below the text */}
-        {src && <img src={src} alt="Signature" style={{ maxWidth: '150px', marginTop: '8px' }} />}
-      </div>
-    );
-  };
-  
-  
+
+  // const blockRenderer = (contentBlock) => {
+  //   if (contentBlock.getType() === 'atomic') {
+  //     return {
+  //       component: MediaComponent,
+  //       editable: false,
+  //     };
+  //   }
+  //   return null;
+  // };
+
+  // const MediaComponent = ({ block, contentState }) => {
+  //   const entityKey = block.getEntityAt(0);
+
+  //   if (!entityKey) {
+  //     return null; // or return some fallback UI
+  //   }
+
+  //   const entity = contentState.getEntity(entityKey);
+  //   const { src, text } = entity.getData();
+
+  //   return (
+  //     <div style={{ display: 'flex', flexDirection: 'column' }}>
+  //       {/* Render text above the image */}
+  //       {text && <div style={{ marginBottom: '8px', fontSize: '14px', fontWeight: 'bold' }}>{text}</div>}
+  //       {/* Render image below the text */}
+  //       {src && <img src={src} alt="Signature" style={{ maxWidth: '150px', marginTop: '8px' }} />}
+  //     </div>
+  //   );
+  // };
+
   return (
     <div>
-      {/* <Editor
-        editorState={editorState}
-        onEditorStateChange={handleEditorChange}
-        onBlur={handleBlur}
-        wrapperStyle={{
-          display: "block",
-          width: "100%",
-          color: "#6b6e6f",
-          backgroundColor: "#fff",
-          border: "1px solid #e5e5e5",
-          borderRadius: "0.3125rem",
-        }}
-        editorStyle={{ height: '10rem', padding: '1rem', cursor: 'text' }}
-      /> */}
       <Editor
         editorState={editorState}
         onEditorStateChange={handleEditorChange}
         onBlur={handleBlur}
-        blockRendererFn={blockRenderer}
-        wrapperStyle={{display: "block",
+        // blockRendererFn={blockRenderer}
+        wrapperStyle={{
+          display: "block",
           width: "100%",
           color: "#6b6e6f",
           backgroundColor: "#fff",
@@ -494,14 +598,9 @@ export default function TextEditor({ state, setState, page, identifier }) {
           options: ['inline', 'list', 'image'],
           inline: { options: ['bold', 'italic'] },
           list: { options: ['unordered', 'ordered'] },
-          // image: {
-          //   uploadCallback: handleImageUpload,
-          //   previewImage: true,
-          //   alt: { present: true, mandatory: false },
-          // },
         }}
       />
-      {showSignatureFields && (
+      {showSignatureFields && !adminSignature ? (
         <div style={{ margin: '10px 0' }}>
           <input
             type="file"
@@ -517,8 +616,8 @@ export default function TextEditor({ state, setState, page, identifier }) {
             className="form-control mb-2"
           />
         </div>
-      )}
-      <button type="button" className="btn btn-primary" onClick={handleAddSignature}>
+      ) : null}
+      <button type="button" className={(showSignatureFields && adminSignature) || page !== "mail" ? "d-none" : "btn btn-primary"} onClick={handleAddSignature}>
         {showSignatureFields ? 'Save Signature' : 'Add Signature'}
       </button>
     </div>

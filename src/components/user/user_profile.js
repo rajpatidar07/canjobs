@@ -85,7 +85,7 @@ const NewUserProfile = (props) => {
             : "profile"
   );
   const [userDetail, setuserDetail] = useState([]);
-  const [userFound, setuserFound] = useState([]);
+  const [userFound, setuserFound] = useState();
   const [PersonalDetail, setPersonalDetail] = useState([]);
   const [appliedJob, setAppliedJob] = useState([]);
   const [visaStatus, setVisaStatus] = useState([]);
@@ -304,7 +304,7 @@ const NewUserProfile = (props) => {
     <div className="site-wrapper overflow-hidden bg-default-2">
       {/* <!-- Header Area --> */}
       {user_type === "admin" || user_type === "agent" ? (
-        (docId || notes ? (docId || notes) && userFound.length !== 0 : userFound.length !== 0) && <>
+        (docId || notes ? (docId || notes) && userFound : userFound) && <>
           <AdminHeader
             heading={
               <Link
@@ -1779,9 +1779,14 @@ const NewUserProfile = (props) => {
               </div>
             </div>
           ) : (
-            <div className="col-12 order-2 order-xl-1  mt-15 text-center">
-              <NotFound userType={user_type} />
-            </div>
+            userFound ?
+              <div className="table-responsive main_table_div">
+                <Loader />
+              </div>
+              :
+              <div className="col-12 order-2 order-xl-1  mt-15 text-center">
+                <NotFound userType={user_type} />
+              </div>
           )}
         </div>
       </div>
