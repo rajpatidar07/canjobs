@@ -6,7 +6,7 @@ import DocSaveForm from "./DocSaveForm";
 import ConvertTime from "../ConvertTime";
 import CommentSection from "../Adobe/commentSection";
 import { CiImageOn, CiViewList } from "react-icons/ci";
-import Pagination from "../pagination";
+// import Pagination from "../pagination";
 
 export default function FolderList({
   setDocPreview,
@@ -38,7 +38,7 @@ export default function FolderList({
   getCommentsList,
   partnerId,
   handleSort,
-  setPageNo,
+  // setPageNo,
   nPages,
   totalData,
   pageNo,
@@ -130,7 +130,7 @@ export default function FolderList({
                           // }
                         }
                         setOpenNoteForm(false)
-                        setPageNo(1)
+                        // setPageNo(1)
                       }}
                       onContextMenu={(e) => {
                         e.preventDefault(); // prevent the default behaviour when right clicked
@@ -265,25 +265,25 @@ export default function FolderList({
                 <div className="col-3 ">
                   <Link onClick={() => {
                     handleSort("name")
-                    setPageNo(1)
+                    // setPageNo(1)
                   }} className="text-decoration-none  text-gray">Name</Link>
                 </div>
                 <div className="col-3 ">
                   <Link onClick={() => {
                     handleSort("createdDateTime")
-                    setPageNo(1)
+                    // setPageNo(1)
                   }} className="text-decoration-none  text-gray">Created At</Link>
                 </div>
                 <div className="col-3 ">
                   <Link onClick={() => {
                     handleSort("lastModifiedDateTime")
-                    setPageNo(1)
+                    // setPageNo(1)
                   }} className="text-decoration-none  text-gray">Last Modified</Link>
                 </div>
                 <div className="col-3 ">
                   <Link onClick={() => {
                     handleSort("mimeType")
-                    setPageNo(1)
+                    // setPageNo(1)
                   }} className="text-decoration-none  text-gray">Type</Link>
                 </div>
               </div>
@@ -359,7 +359,7 @@ export default function FolderList({
                           SetPdfDocUrl(item);
                         }
                         setOpenNoteForm(false)
-                        setPageNo(1)
+                        // setPageNo(1)
                       }}
                       onContextMenu={(e) => {
                         e.preventDefault();
@@ -416,15 +416,15 @@ export default function FolderList({
               />
             </div>
           )}
-          <Pagination
-            setCurrentPage={setPageNo}
+          {/* <Pagination
+            setCurrentPage={ setPageNo}
             nPages={nPages}
             total={totalData}
             count={docTypeList.length}
             currentPage={pageNo}
             setView={setView}
             view={view}
-          />
+          /> */}
         </div>
 
         {(userType === "admin" || userType === "agent") && (

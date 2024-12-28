@@ -1017,7 +1017,7 @@ export default function SharePointDocument({
                       setApiCall={setApiCall}
                       setOpenNoteForm={setOpenNoteForm}
                       convertedDoc={noteText}
-                      docSingleDate={docTypeList?.find((item) => item.file.mimeType === "text/plain") ? docTypeList.find((item) => item.file.mimeType === "text/plain") : docSingleDate}
+                      docSingleDate={docTypeList?.find((item) => item?.file?.mimeType === "text/plain") ? docTypeList.find((item) => item?.file?.mimeType === "text/plain") : docSingleDate}
                       setConvertedDoc={setNoteText}
                     />
                     : <button className="btn btn-primary mx-2" style={{ maxHeight: 34 }}

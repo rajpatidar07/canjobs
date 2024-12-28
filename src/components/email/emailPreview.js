@@ -57,7 +57,7 @@ const PreviewEmail = ({ id, emailType, singleEmailData }) => {
     if (apiCall === true) {
       setApiCall(false);
     }
-   // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [apiCall, id]);
 
   /*Function to decode the email subject */
@@ -239,38 +239,38 @@ const PreviewEmail = ({ id, emailType, singleEmailData }) => {
                     toggleReplyFormClick={toggleReplyFormClick}
                   />
                 </>
-              ) : 
-              showForwardForm?
-              <>
-              <ForwardEmailForm
-                 data={singleEmailData}
-                emailType={emailType}
-                setShowForwardForm={setShowForwardForm}
-                setApiCall={setApiCall}
-                toggleForwardFormClick={toggleForwardFormClick}
-              />
-            </>
-              :(
-                <>
-                  {/* Add button to toggle form */}
-                  {userType === "agent" || userType === "company" || userType === "user" ? null : (
+              ) :
+                showForwardForm ?
+                  <>
+                    <ForwardEmailForm
+                      data={singleEmailData}
+                      emailType={emailType}
+                      setShowForwardForm={setShowForwardForm}
+                      setApiCall={setApiCall}
+                      toggleForwardFormClick={toggleForwardFormClick}
+                    />
+                  </>
+                  : (
                     <>
-                    <button
-                      className="btn btn-primary mx-2"
-                      onClick={toggleReplyFormClick}
-                    >
-                      Add Reply
-                    </button>
-                    <button
+                      {/* Add button to toggle form */}
+                      {userType === "agent" || userType === "company" || userType === "user" ? null : (
+                        <>
+                          <button
+                            className="btn btn-primary mx-2"
+                            onClick={toggleReplyFormClick}
+                          >
+                            Add Reply
+                          </button>
+                          {/* <button
                       className="btn btn-primary"
                       onClick={toggleForwardFormClick}
                     >
                       Forward mail
-                    </button>
+                    </button> */}
+                        </>
+                      )}
                     </>
                   )}
-                </>
-              )}
             </div>
           </div>
         </div>
