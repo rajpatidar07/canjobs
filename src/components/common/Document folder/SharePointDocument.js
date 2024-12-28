@@ -77,19 +77,19 @@ export default function SharePointDocument({
   const [convertedDoc, setConvertedDoc] = useState("");
   const [noteText, setNoteText] = useState("");
   /*Pagination states */
-  const [totalData, setTotalData] = useState("");
-  const [pageNo, setPageNo] = useState(1);
-  const [recordsPerPage] = useState(10);
+  // const [totalData, setTotalData] = useState("");
+  // const [pageNo, setPageNo] = useState(1);
+  // const [recordsPerPage] = useState(10);
   /*Shorting states */
   const [columnName, setcolumnName] = useState("id");
   const [sortOrder, setSortOrder] = useState("DESC");
-  /*Sorting Function */
+  // /*Sorting Function */
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
     setcolumnName(columnName);
   };
   /*Pagination Calculation */
-  const nPages = Math.ceil(totalData / recordsPerPage);
+  // const nPages = Math.ceil(totalData / recordsPerPage);
 
   /*Function to get admin data */
   const AdminData = async () => {
@@ -280,13 +280,13 @@ export default function SharePointDocument({
         docId ? folderId : folderID,
         columnName,
         sortOrder,
-        recordsPerPage,
-        pageNo,
+        // recordsPerPage,
+        // pageNo,
       );
       if (res.data.status === 1) {
         // if (notification === "no") { setDocPreview(false); }
         setDocTypeList(res.data.data);
-        setTotalData(res.data.total_rows)
+        // setTotalData(res.data.total_rows)
         setShowDropDown(false);
         setDocLoder(false);
         if (res.data.data.find((item) => item?.file?.mimeType === "text/plain")) {
@@ -390,7 +390,7 @@ export default function SharePointDocument({
     //   )
     // );
     // eslint-disable-next-line
-  }, [folderID, apiCall, docId, fileID, pageNo, columnName, sortOrder]);
+  }, [folderID, apiCall, docId, fileID, /*pageNo*/ columnName, sortOrder]);
 
   /*On change fnction to upload bulk document in 1 array*/
   const handleBulkFileChange = async (event, id) => {
@@ -1063,10 +1063,10 @@ export default function SharePointDocument({
                     setCommentsList={setCommentsList}
                     partnerId={partnerId}
                     handleSort={handleSort}
-                    setPageNo={setPageNo}
-                    nPages={nPages}
-                    totalData={totalData}
-                    pageNo={pageNo}
+                    // setPageNo={setPageNo}
+                    // nPages={nPages}
+                    // totalData={totalData}
+                    // pageNo={pageNo}
                     docFileBase={docFileBase}
                     setOpenNoteForm={setOpenNoteForm}
                   />
