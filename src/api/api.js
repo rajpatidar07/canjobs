@@ -3336,7 +3336,7 @@ export const getSharePointFoldersList = async (Id, User, columnName, sort, limit
   return response;
 };
 //Api function to GET emolyee  peticular document folder data
-export const getSharePointParticularFolders = async (Id, User, folderId, columnName, sort, limit, page) => {
+export const getSharePointParticularFolders = async (Id, User, folderId, columnName, sort, limit, page,fileId) => {
   const response = await axios.post(
     `${API_URL}admin/getSharpointSiteDriveFolderToFolderData_new`,
     {
@@ -3347,7 +3347,8 @@ export const getSharePointParticularFolders = async (Id, User, folderId, columnN
       column_name: columnName,
       sort_order: sort,
       limit: limit,
-      page: page
+      page: page,
+      itemId:fileId
     },
     {
       headers: {

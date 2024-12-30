@@ -11,6 +11,7 @@ const MentionAdminInDoc = ({
   setTaggedAdmin,
   DocUserType,
   showMentionAdminDropDown,
+  AdminData
 }) => {
   let AssignedId =
     commentsList.length === 0

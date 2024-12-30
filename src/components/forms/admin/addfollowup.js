@@ -18,6 +18,8 @@ function Addfollowup(props) {
   let [response, setResponseData] = useState([]);
   let [loading, setLoading] = useState(false);
   let [updateNote, setUpdateNote] = useState(false);
+  let [apiCall, setApiCall] = useState(false);
+
   /* Shorting states */
   const [columnName, setcolumnName] = useState("created_at");
   const [sortOrder, setSortOrder] = useState("DESC");
@@ -99,9 +101,14 @@ function Addfollowup(props) {
       window.history.replaceState({}, document.title, newUrl);
       localStorage.setItem("navigation_url", "")
     }
+    if (apiCall) {
+      setApiCall(false)
+    }
     // eslint-disable-next-line
-  }, [props, sortOrder]);
-
+  }, [props.noteNotification, props.userId,
+  props.userType, apiCall,
+    sortOrder]);
+  console.log(props)
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     /*only for employee*/
@@ -171,7 +178,7 @@ function Addfollowup(props) {
       setState({ ...state, assigned_to_name: state.assigned_to_name.split(","), assigned_to_email: state.assigned_to_email.split(","), assigned_user_type: state.assigned_user_type.split(","), assined_to_user_id: state.assined_to_user_id.split(",") });
       setUpdateNote(false)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateNote])
 
   // USER FOLLOW UP PROFILE UPDATE SUBMIT BUTTON
@@ -199,6 +206,7 @@ function Addfollowup(props) {
             autoClose: 1000,
           });
           props.setApiCall(true);
+          setApiCall(true)
           return close();
         }
       } catch (err) {

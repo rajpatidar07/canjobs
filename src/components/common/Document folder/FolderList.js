@@ -5,9 +5,10 @@ import { FaRegFilePdf, FaFolder } from "react-icons/fa6";
 import DocSaveForm from "./DocSaveForm";
 import ConvertTime from "../ConvertTime";
 import CommentSection from "../Adobe/commentSection";
-import { CiImageOn, CiViewList } from "react-icons/ci";
-// import Pagination from "../pagination";
-
+import { LuLayoutList } from "react-icons/lu";
+import Pagination from "../pagination";
+import { PiGridFourFill } from "react-icons/pi";
+import { MdNoteAdd } from "react-icons/md";
 export default function FolderList({
   setDocPreview,
   ShowDeleteAlert,
@@ -38,12 +39,13 @@ export default function FolderList({
   getCommentsList,
   partnerId,
   handleSort,
-  // setPageNo,
+  setPageNo,
   nPages,
   totalData,
   pageNo,
   docFileBase,
-  setOpenNoteForm
+  setOpenNoteForm,
+  AdminData
 }) {
   const [view, setView] = useState(localStorage.getItem("docView") || "list"); // Default to block view
   let [openAnnotationBox, setOpenAnnotationBox] = useState();
@@ -61,27 +63,35 @@ export default function FolderList({
       }}
     >
       {/* Toggle View Buttons */}
-      <div className="view-toggle mb-4">
-        <Link to=""
-          className={`btn-sm ${view === "block" ? "btn-primary" : "btn-outline-primary"} mx-1 `}
+
+      <div
+        className="py-5 min-width-px-100 btn-group button_group"
+        role="group"
+      >
+        <button
+          className={`action_btn btn-sm ${view === "block" ? "btn-primary" : "btn-outline-primary"}`}
           onClick={() => {
             setView("block")
             localStorage.setItem("docView", "block")
           }}
           title="Block View"
         >
-          <b style={{ fontSize: "1rem", fontWeight: "200" }}><CiImageOn className="sidebar_icon" /></b>
-        </Link>
-        <Link to=""
-          className={`btn-sm ${view === "list" ? "btn-primary" : "btn-outline-primary"} mx-1 `}
+          <span className="text-gray">
+            <b style={{ fontSize: "1rem", fontWeight: "200" }}><PiGridFourFill className="sidebar_icon" /></b>                                    </span>
+        </button>
+        <button
+          className={`action_btn btn-sm ${view === "list" ? "btn-primary" : "btn-outline-primary"}`}
           onClick={() => {
             setView("list")
             localStorage.setItem("docView", "list")
           }}
           title="List View"
         >
-          <b style={{ fontSize: "1rem", fontWeight: "200" }}><CiViewList className="sidebar_icon" /></b>
-        </Link>
+          <span className="text-gray">
+            <b style={{ fontSize: "1rem", fontWeight: "200" }}><LuLayoutList className="sidebar_icon" /></b>
+          </span>
+        </button>
+
       </div>
       <div className="row">
         {/* File List */}
@@ -130,7 +140,7 @@ export default function FolderList({
                           // }
                         }
                         setOpenNoteForm(false)
-                        // setPageNo(1)
+                        setPageNo(1)
                       }}
                       onContextMenu={(e) => {
                         e.preventDefault(); // prevent the default behaviour when right clicked
@@ -169,6 +179,16 @@ export default function FolderList({
                             />
                           </div>
                         )}
+                        {item.file && item.file.mimeType === "text/plain" && (
+                            <MdNoteAdd
+                              style={{
+                                width: "90px",
+                                marginBottom: 5,
+                                height: "90px",
+                                color: "#rgb(251, 199, 45)",
+                              }} />
+                        )}
+
                         {item.file && item.file.mimeType === "application/pdf" && (
                           <FaRegFilePdf
                             style={{
@@ -238,6 +258,7 @@ export default function FolderList({
                             getCommentsList(item)
                             setOpenAnnotationBox(true)
                             setDocData(item)
+                            AdminData()
                           }}>
                             Comment's</Link>
                         </li>
@@ -265,25 +286,25 @@ export default function FolderList({
                 <div className="col-3 ">
                   <Link onClick={() => {
                     handleSort("name")
-                    // setPageNo(1)
+                    setPageNo(1)
                   }} className="text-decoration-none  text-gray">Name</Link>
                 </div>
                 <div className="col-3 ">
                   <Link onClick={() => {
                     handleSort("createdDateTime")
-                    // setPageNo(1)
+                    setPageNo(1)
                   }} className="text-decoration-none  text-gray">Created At</Link>
                 </div>
                 <div className="col-3 ">
                   <Link onClick={() => {
                     handleSort("lastModifiedDateTime")
-                    // setPageNo(1)
+                    setPageNo(1)
                   }} className="text-decoration-none  text-gray">Last Modified</Link>
                 </div>
                 <div className="col-3 ">
                   <Link onClick={() => {
                     handleSort("mimeType")
-                    // setPageNo(1)
+                    setPageNo(1)
                   }} className="text-decoration-none  text-gray">Type</Link>
                 </div>
               </div>
@@ -336,6 +357,7 @@ export default function FolderList({
                                   getCommentsList(item);
                                   setOpenAnnotationBox(true);
                                   setDocData(item);
+                                  AdminData()
                                 }}
                               >
                                 Comments
@@ -357,9 +379,10 @@ export default function FolderList({
                           setDocSingleDate(item);
                           setFileID(item.id);
                           SetPdfDocUrl(item);
+                          getCommentsList(item)
                         }
                         setOpenNoteForm(false)
-                        // setPageNo(1)
+                        setPageNo(1)
                       }}
                       onContextMenu={(e) => {
                         e.preventDefault();
@@ -377,7 +400,9 @@ export default function FolderList({
                           className="me-2"
                           style={{ width: "24px", height: "24px", objectFit: "cover" }}
                         />
-                      ) : (
+                      ) : item.file && item.file.mimeType === "text/plain" ? (
+                        <MdNoteAdd className="me-2" style={{color:"rgb(251, 199, 45)"}}/>)
+                        : (
                         <BsFiletypeDocx className="me-2" style={{ color: "#2B579A" }} />
                       )}
                       <span className="mx-2 text-break">{item.name.replaceAll("_", " ")}</span>
@@ -416,15 +441,15 @@ export default function FolderList({
               />
             </div>
           )}
-          {/* <Pagination
-            setCurrentPage={ setPageNo}
+          <Pagination
+            setCurrentPage={setPageNo}
             nPages={nPages}
             total={totalData}
             count={docTypeList.length}
             currentPage={pageNo}
             setView={setView}
             view={view}
-          /> */}
+          />
         </div>
 
         {(userType === "admin" || userType === "agent") && (

@@ -261,12 +261,12 @@ const PreviewEmail = ({ id, emailType, singleEmailData }) => {
                           >
                             Add Reply
                           </button>
-                          {/* <button
+                          <button
                       className="btn btn-primary"
                       onClick={toggleForwardFormClick}
                     >
                       Forward mail
-                    </button> */}
+                    </button>
                         </>
                       )}
                     </>

@@ -204,7 +204,6 @@ const DocumentsNotes = (props) => {
     const [editorState, setEditorState] = useState(
         EditorState.createWithContent(contentState)
     );
-    console.log(props.convertedDoc,)
     /*Function to Add note to the api */
     const exportToTextFile = async () => {
         const htmlContent = stateToHTML(editorState.getCurrentContent());
@@ -246,7 +245,7 @@ const DocumentsNotes = (props) => {
     const handleNoteFormClose = () => {
         setEditorState(EditorState.createEmpty()); // Reset the editor state
         props.setOpenNoteForm(false); // Close the note form
-        props.setConvertedDoc("")
+        // props.setConvertedDoc("")
     };
     const editorStyle = {
         backgroundColor: "#f7f1a3",

@@ -76,10 +76,11 @@ export default function SharePointDocument({
   const [imgConRes, setImgConRes] = useState();
   const [convertedDoc, setConvertedDoc] = useState("");
   const [noteText, setNoteText] = useState("");
+  const [docNoteData, setDocNoteData] = useState("");
   /*Pagination states */
-  // const [totalData, setTotalData] = useState("");
-  // const [pageNo, setPageNo] = useState(1);
-  // const [recordsPerPage] = useState(10);
+  const [totalData, setTotalData] = useState("");
+  const [pageNo, setPageNo] = useState(1);
+  const [recordsPerPage] = useState(10);
   /*Shorting states */
   const [columnName, setcolumnName] = useState("id");
   const [sortOrder, setSortOrder] = useState("DESC");
@@ -89,7 +90,7 @@ export default function SharePointDocument({
     setcolumnName(columnName);
   };
   /*Pagination Calculation */
-  // const nPages = Math.ceil(totalData / recordsPerPage);
+  const nPages = Math.ceil(totalData / recordsPerPage);
 
   /*Function to get admin data */
   const AdminData = async () => {
@@ -122,6 +123,7 @@ export default function SharePointDocument({
   };
   // Generate a list of comments from the state for image annotation
   const getCommentsList = async (data) => {
+    console.log(data)
     if (data) {
       localStorage.setItem("mentionAdmin", "");
       try {
@@ -191,6 +193,7 @@ export default function SharePointDocument({
       setConvertedDoc(data["@microsoft.graph.downloadUrl"]);
     }
   }
+  /*Function to convert data  */
   const GetNoteText = (data, isOpen) => {
     fetch(data["@microsoft.graph.downloadUrl"])
       .then(async (response) => {
@@ -280,21 +283,24 @@ export default function SharePointDocument({
         docId ? folderId : folderID,
         columnName,
         sortOrder,
-        // recordsPerPage,
-        // pageNo,
+        recordsPerPage,
+        pageNo,
+        docId ? docId : ""
       );
       if (res.data.status === 1) {
         // if (notification === "no") { setDocPreview(false); }
         setDocTypeList(res.data.data);
-        // setTotalData(res.data.total_rows)
+        setTotalData(res.data.total_rows)
         setShowDropDown(false);
         setDocLoder(false);
-        if (res.data.data.find((item) => item?.file?.mimeType === "text/plain")) {
-          GetNoteText(res.data.data.find((item) => item.file.mimeType === "text/plain"), false)
+        if (res?.data?.notes) {
+          GetNoteText(res.data.notes, false)
+          setDocNoteData(res.data.notes)
         }
         if (notification === "yes") {
           if (res.data.data.find((item) => item.id === newdocId)) {
             setDocPreview(true);
+            AdminData()
             // console.log(res.data.data.find((item) => item.id === newdocId))
             setDocSingleDate(res.data.data.find((item) => item.id === newdocId));
             SetPdfDocUrl(res.data.data.find((item) => item.id === newdocId));
@@ -373,7 +379,7 @@ export default function SharePointDocument({
   useEffect(() => {
     AllShareType();
     // if (localStorage.getItem("userType") === "admin") {
-    AdminData();
+    // AdminData();
     // }
     // if (notification === "yes") {
     //     setDocPreview(true)
@@ -390,7 +396,18 @@ export default function SharePointDocument({
     //   )
     // );
     // eslint-disable-next-line
-  }, [folderID, apiCall, docId, fileID, /*pageNo*/ columnName, sortOrder]);
+  }, [folderID, apiCall, docId, fileID, pageNo, columnName, sortOrder]);
+  // /*Render method to get the note data to the felid */
+  // useEffect(() => {
+  //   if (openNoteForm) {
+  //     let data = docTypeList?.find((item) => item?.file?.mimeType === "text/plain")
+  //     console.log(data, "note single data")
+  //     setDocNoteData(data)
+  //     GetNoteText(data, true);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [openNoteForm])
+
 
   /*On change fnction to upload bulk document in 1 array*/
   const handleBulkFileChange = async (event, id) => {
@@ -848,6 +865,7 @@ export default function SharePointDocument({
                           )}
                           <MentionAdminInDoc
                             adminList={adminList}
+                            AdminData={AdminData}
                             setMentionAdminShowDropDown={
                               setMentionAdminShowDropDown
                             }
@@ -898,6 +916,7 @@ export default function SharePointDocument({
                         openCommentBox={docId ? true : false}
                         AnnoteId={AnnoteId}
                         docTaskId={docTaskId}
+                        AdminData={AdminData}
                       />
                       // ) : null
                     ) : (
@@ -1017,11 +1036,17 @@ export default function SharePointDocument({
                       setApiCall={setApiCall}
                       setOpenNoteForm={setOpenNoteForm}
                       convertedDoc={noteText}
-                      docSingleDate={docTypeList?.find((item) => item?.file?.mimeType === "text/plain") ? docTypeList.find((item) => item?.file?.mimeType === "text/plain") : docSingleDate}
+                      docSingleDate={docNoteData}
                       setConvertedDoc={setNoteText}
                     />
                     : <button className="btn btn-primary mx-2" style={{ maxHeight: 34 }}
-                      onClick={() => setOpenNoteForm(true)}>{docTypeList?.find((item) => item?.file?.mimeType === "text/plain") ? "Open Note" : "Add notes"}</button>}
+                      onClick={() => {
+                        setOpenNoteForm(true)
+                        if (docNoteData) {
+                          setDocNoteData(docNoteData)
+                          GetNoteText(docNoteData, true);
+                        }
+                      }}>{docNoteData ? "Open Note" : "Add notes"}</button>}
                 </div>
               </div>
               <div className="row m-0 bg-white px-2 pb-2">
@@ -1063,12 +1088,13 @@ export default function SharePointDocument({
                     setCommentsList={setCommentsList}
                     partnerId={partnerId}
                     handleSort={handleSort}
-                    // setPageNo={setPageNo}
-                    // nPages={nPages}
-                    // totalData={totalData}
-                    // pageNo={pageNo}
+                    setPageNo={setPageNo}
+                    nPages={nPages}
+                    totalData={totalData}
+                    pageNo={pageNo}
                     docFileBase={docFileBase}
                     setOpenNoteForm={setOpenNoteForm}
+                    AdminData={AdminData}
                   />
                 )}
               </div>

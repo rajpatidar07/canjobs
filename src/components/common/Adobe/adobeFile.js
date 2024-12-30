@@ -27,7 +27,8 @@ const AdobePDFViewer = ({
   SetPdfDocUrl,
   openCommentBox,
   AnnoteId,
-  docTaskId
+  docTaskId,
+  AdminData
 }) => {
   let [openAnnotationBox, setOpenAnnotationBox] = useState(openCommentBox ? true : false);
   let [annotationDrawBox, setAnnotationDrawBox] = useState("");
@@ -363,6 +364,7 @@ const AdobePDFViewer = ({
           setOpenAnnotationBox(openAnnotationBox ? false : true);
           if (openAnnotationBox === false) {
             getCommentsList(data)
+            AdminData()
           }
         }}
         className={
