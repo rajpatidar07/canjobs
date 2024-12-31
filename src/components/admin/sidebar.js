@@ -12,8 +12,8 @@ import { LiaUsersSolid, LiaAddressCardSolid, LiaCcVisa } from "react-icons/lia";
 import { BsBuildings, BsQrCodeScan } from "react-icons/bs";
 import { PiApplePodcastsLogoThin } from "react-icons/pi";
 import { AiOutlineUserAdd /*, AiOutlineMail*/ } from "react-icons/ai";
-import { TbFilterPlus, TbLetterC, TbLetterH, TbUserDollar } from "react-icons/tb";
-import { FaGraduationCap, FaNotesMedical, FaPassport, FaRegCreditCard, FaTasks } from "react-icons/fa";
+import { TbFilterPlus, TbLetterC, TbLetterH, TbMapWest, TbUserDollar } from "react-icons/tb";
+import { FaAcquisitionsIncorporated, FaGraduationCap, FaNotesMedical, FaPassport, FaRegCreditCard, FaTasks } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
 import { GrVisa } from "react-icons/gr";
 import { TiBusinessCard } from "react-icons/ti";
@@ -368,6 +368,46 @@ const AdminSidebar = (props) => {
             {/* <i className="fas fa-filter mr-5"></i> */}
             <FaGraduationCap className="sidebar_icon" />
             PGWP
+          </Link>
+        </li>
+        <li
+          ref={(el) => (liRefs.current["WES"] = el)}
+          className={
+            user_type === "agent"
+              ? "d-none"
+              : props.heading === "WES"
+                ? "active"
+                : ""
+          }
+        >
+          <Link
+            onClick={() => clearPageNo()}
+            to="/wes"
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+          >
+            {/* <i className="fas fa-filter mr-5"></i> */}
+            <TbMapWest className="sidebar_icon" />
+            WES
+          </Link>
+        </li>
+        <li
+          ref={(el) => (liRefs.current["ATIP"] = el)}
+          className={
+            user_type === "agent"
+              ? "d-none"
+              : props.heading === "ATIP"
+                ? "active"
+                : ""
+          }
+        >
+          <Link
+            onClick={() => clearPageNo()}
+            to="/atip"
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+          >
+            {/* <i className="fas fa-filter mr-5"></i> */}
+            <FaAcquisitionsIncorporated className="sidebar_icon" />
+            ATIP
           </Link>
         </li>
         <li

@@ -353,7 +353,7 @@ export default function ApplicantsFilter({
               setpageNo(1);
             }}
             className={` form-control ${interestFilterValue === "pnp"
-              || interestFilterValue === "pgwp"
+              || interestFilterValue === "pgwp" || interestFilterValue === "wes" || interestFilterValue === "atip"
               ? `text-uppercase`
               : "text-capitalize"
               }`}
@@ -366,7 +366,7 @@ export default function ApplicantsFilter({
                 key={interest}
                 value={interest}
                 className={
-                  interest === "pnp" || interest === "pgwp" ? `text-uppercase` : "text-capitalize"
+                  interest === "pnp" || interest === "wes" || interest === "atip" || interest === "pgwp" ? `text-uppercase` : "text-capitalize"
                 }
               >
                 {interest}
@@ -378,7 +378,7 @@ export default function ApplicantsFilter({
       <div
         className={
           (skill === null || skill === undefined) &&
-            (pageName === "pnp" || pageName === "pgwp" || pageName === "employee")
+            (pageName === "pnp" || pageName === "wes" | pageName === "atip" || pageName === "pgwp" || pageName === "employee")
             ? "col p-1 form_group mb-3"
             : "d-none"
         }

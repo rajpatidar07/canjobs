@@ -100,6 +100,8 @@ import AppliedPrograms from "../Study/Study admin/appliedPrograms";
 import StudyPartnerLogin from "../Study/StudyComman/studyPartnerLogin";
 import InitialConsultationAgreement from "./Retaineragreement/Agreement native/initialConsulation";
 import RecruitmentAgrement from "./Retaineragreement/Agreement native/RecruitmentAgrement";
+import Wes from "../admin/wes";
+import Atip from "../admin/atip";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -289,6 +291,8 @@ function MainLayout() {
             <Route path="/humanitarian_and_Compassionate" element={<Humanitarian />} />
             <Route path="/permanent_resident_cards" element={<ParmanentResidentCard />} />
             <Route path="/pgwp" element={<PGWP />} />
+            <Route path="/wes" element={<Wes />} />
+            <Route path="/atip" element={<Atip />} />
             <Route path="/localcandidates" element={<LocalCandidate />} />
             <Route path="/Newpdf" element={<Newpdf />} />
             <Route path="/federal_pr" element={<Federalpr />} />

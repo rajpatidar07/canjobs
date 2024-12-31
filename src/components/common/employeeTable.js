@@ -1291,7 +1291,7 @@ export default function EmployeeTable(props) {
                               </p>
                             ) : (
                               <p
-                                className={`font-size-2 font-weight-normal text-black-2 mb-0 ${empdata.interested_in === "pgwp"
+                                className={`font-size-2 font-weight-normal text-black-2 mb-0 ${empdata.interested_in === "pgwp"||empdata.interested_in === "wes"||empdata.interested_in === "atip"
                                   ? `text-uppercase`
                                   : "text-capitalize"
                                   }`}

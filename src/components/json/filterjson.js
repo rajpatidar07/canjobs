@@ -621,6 +621,8 @@ const filterjson = {
     // "full-time",
     // "contract",
     // "all",
+    "wes",//Added as per simrans required in the group
+    "atip"//Added as per simrans required in the group
   ],
   interested_sub_type: {
     "pnp": [
