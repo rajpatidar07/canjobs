@@ -123,7 +123,6 @@ export default function SharePointDocument({
   };
   // Generate a list of comments from the state for image annotation
   const getCommentsList = async (data) => {
-    console.log(data)
     if (data) {
       localStorage.setItem("mentionAdmin", "");
       try {
@@ -1027,26 +1026,31 @@ export default function SharePointDocument({
                       </Dropdown>
                     </>
                   )}
-                  {openNoteForm ?
-                    <DocumentsNotes
-                      user_id={user_id}
-                      emp_user_type={emp_user_type}
-                      folderID={folderID}
-                      docTypeName={docTypeName}
-                      setApiCall={setApiCall}
-                      setOpenNoteForm={setOpenNoteForm}
-                      convertedDoc={noteText}
-                      docSingleDate={docNoteData}
-                      setConvertedDoc={setNoteText}
-                    />
-                    : <button className="btn btn-primary mx-2" style={{ maxHeight: 34 }}
+
+                  <>
+                    {openNoteForm
+                      ? <DocumentsNotes
+                        user_id={user_id}
+                        emp_user_type={emp_user_type}
+                        folderID={folderID}
+                        docTypeName={docTypeName}
+                        setApiCall={setApiCall}
+                        setOpenNoteForm={setOpenNoteForm}
+                        show={openNoteForm}
+                        convertedDoc={noteText}
+                        docSingleDate={docNoteData}
+                        setConvertedDoc={setNoteText}
+                      />
+                      : null}
+                    <button className="btn btn-primary mx-2" style={{ maxHeight: 34 }}
                       onClick={() => {
                         setOpenNoteForm(true)
                         if (docNoteData) {
                           setDocNoteData(docNoteData)
                           GetNoteText(docNoteData, true);
                         }
-                      }}>{docNoteData ? "Open Note" : "Add notes"}</button>}
+                      }}>{docNoteData ? "Open Note" : "Add notes"}</button>
+                  </>
                 </div>
               </div>
               <div className="row m-0 bg-white px-2 pb-2">

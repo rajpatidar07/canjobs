@@ -180,13 +180,13 @@ export default function FolderList({
                           </div>
                         )}
                         {item.file && item.file.mimeType === "text/plain" && (
-                            <MdNoteAdd
-                              style={{
-                                width: "90px",
-                                marginBottom: 5,
-                                height: "90px",
-                                color: "#rgb(251, 199, 45)",
-                              }} />
+                          <MdNoteAdd
+                            style={{
+                              width: "90px",
+                              marginBottom: 5,
+                              height: "90px",
+                              color: "#rgb(251, 199, 45)",
+                            }} />
                         )}
 
                         {item.file && item.file.mimeType === "application/pdf" && (
@@ -401,10 +401,10 @@ export default function FolderList({
                           style={{ width: "24px", height: "24px", objectFit: "cover" }}
                         />
                       ) : item.file && item.file.mimeType === "text/plain" ? (
-                        <MdNoteAdd className="me-2" style={{color:"rgb(251, 199, 45)"}}/>)
+                        <MdNoteAdd className="me-2" style={{ color: "rgb(251, 199, 45)" }} />)
                         : (
-                        <BsFiletypeDocx className="me-2" style={{ color: "#2B579A" }} />
-                      )}
+                          <BsFiletypeDocx className="me-2" style={{ color: "#2B579A" }} />
+                        )}
                       <span className="mx-2 text-break">{item.name.replaceAll("_", " ")}</span>
                     </Link>
                   </div>
@@ -424,7 +424,10 @@ export default function FolderList({
                       : item.file.mimeType.includes("pdf")
                         ? "PDF"
                         : item.file.mimeType.includes("image")
-                          ? "Image" : "Document"}
+                          ? "Image"
+                          : item.file.mimeType === "text/plain"
+                            ? "Note"
+                            : "Document"}
                   </div>
                 </div>
               ))}

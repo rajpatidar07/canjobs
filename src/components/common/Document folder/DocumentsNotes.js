@@ -195,8 +195,10 @@ import { EditorState, convertFromHTML, ContentState } from "draft-js";
 import { stateToHTML } from "draft-js-export-html";
 import { AddSharePointDOcument } from "../../../api/api";
 import { toast } from "react-toastify";
+import { Modal } from "react-bootstrap";
 
 const DocumentsNotes = (props) => {
+    const [loading, setLoading] = useState(false)
     const initialHTML = props.convertedDoc || "";
     const contentState = ContentState.createFromBlockArray(
         convertFromHTML(initialHTML)
@@ -205,7 +207,8 @@ const DocumentsNotes = (props) => {
         EditorState.createWithContent(contentState)
     );
     /*Function to Add note to the api */
-    const exportToTextFile = async () => {
+    const exportToTextFile = async (e) => {
+        e.preventDefault()
         const htmlContent = stateToHTML(editorState.getCurrentContent());
 
         // Convert HTML to plain text
@@ -223,22 +226,28 @@ const DocumentsNotes = (props) => {
         // link.href = URL.createObjectURL(blob);
         // link.download = "note.txt"; // Save as a .txt file
         // link.click();
-        const res = await AddSharePointDOcument(
-            props.user_id,
-            props.emp_user_type,
-            props.folderID,
-            props.docTypeName,
-            [wordFile]
-        );
+        try {
+            setLoading(true)
+            const res = await AddSharePointDOcument(
+                props.user_id,
+                props.emp_user_type,
+                props.folderID,
+                props.docTypeName,
+                [wordFile]
+            );
 
-        if (res.data.message === "Document Upload") {
-            toast.success('Note added successfully!', {
-                position: toast.POSITION.TOP_RIGHT,
-                autoClose: 1000,
-            });
-            props.setApiCall(true);
-            handleNoteFormClose()
-            localStorage.removeItem('writerContent'); // Clear saved content from localStorage
+            if (res.data.message === "Document Upload") {
+                toast.success('Note added successfully!', {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 1000,
+                });
+                props.setApiCall(true);
+                setLoading(false)
+                handleNoteFormClose()
+                localStorage.removeItem('writerContent'); // Clear saved content from localStorage
+            }
+        } catch (error) {
+            console.log(error)
         }
     };
     /*Function to close the note form */
@@ -246,6 +255,7 @@ const DocumentsNotes = (props) => {
         setEditorState(EditorState.createEmpty()); // Reset the editor state
         props.setOpenNoteForm(false); // Close the note form
         // props.setConvertedDoc("")
+        setLoading(false)
     };
     const editorStyle = {
         backgroundColor: "#f7f1a3",
@@ -254,42 +264,61 @@ const DocumentsNotes = (props) => {
         borderRadius: "5px",
     };
     return (
-        <div className='position-sticky'>
-            <div className="d-flex flex-row-reverse position-relative">
+        <>
+            <Modal
+                show={props.show}
+                size="md"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                onBackdropClick={handleNoteFormClose}
+            >
                 <button
-                    className={`btn-sm btn-light border-0 rounded-circle p-2 position-absolute top-0 end-0`}
-                    onClick={handleNoteFormClose} // Reset editor and close form
-                    style={{
-                        backgroundColor: '#f8f9fa', // Light background
-                        color: '#333', // Dark text color for visibility
-                        borderRadius: '50%',
-                        fontSize: '18px',
-                        lineHeight: '18px',
-                        width: '30px',
-                        height: '30px',
-                        padding: '0',
-                    }}
+                    type="button"
+                    className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
+                    data-dismiss="modal"
+                    onClick={handleNoteFormClose}
                 >
-                    <span style={{ fontWeight: 'bold', fontSize: '16px' }}>×</span>
+                    <i className="fas fa-times"></i>
                 </button>
-            </div>
-            <div style={{ border: "1px solid #ccc", padding: "10px", marginBottom: "5px", width: "200px", backgroundColor: "#f7f1a3" }}>
-                <Editor
-                    editorState={editorState}
-                    onEditorStateChange={(state) => setEditorState(state)}
-                    toolbar={{
-                        options: ['inline', 'list'],
-                        inline: { options: ['bold', 'italic'] },
-                        list: { options: ['unordered', 'ordered'] },
-                        emoji: true,
-                    }}
-                    editorStyle={editorStyle}
-                />
-            </div>
-            <button className='btn-sm btn-primary' onClick={exportToTextFile}>
-                Save
-            </button>
-        </div>
+                {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
+                <div className="bg-white rounded h-100 p-7">
+                    <form onSubmit={(e) => exportToTextFile(e)}>
+                        <h5 className="text-center mb-7">Add Note </h5>
+                        <div style={{ border: "1px solid #ccc", padding: "10px", marginBottom: "5px", width: "100%", backgroundColor: "#f7f1a3" }}>
+                            <Editor
+                                editorState={editorState}
+                                onEditorStateChange={(state) => setEditorState(state)}
+                                toolbar={{
+                                    options: ['inline', 'list'],
+                                    inline: { options: ['bold', 'italic'] },
+                                    list: { options: ['unordered', 'ordered'] },
+                                    emoji: true,
+                                }}
+                                editorStyle={editorStyle}
+                            />
+                        </div>
+                        <div className="d-flex justify-content-center">
+                            {loading === true ? (
+                                <button
+                                    className="btn btn-primary "
+                                    type="button"
+                                    disabled
+                                >
+                                    <span
+                                        className="spinner-border spinner-border-sm "
+                                        role="status"
+                                        aria-hidden="true"
+                                    ></span>
+                                    <span className="sr-only">Loading...</span>
+                                </button>
+                            ) : <button className='btn btn-primary' type="submit">
+                                Save
+                            </button>}
+                        </div>
+                    </form>
+                </div>
+            </Modal>
+        </>
     );
 };
 

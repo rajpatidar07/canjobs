@@ -108,7 +108,6 @@ function Addfollowup(props) {
   }, [props.noteNotification, props.userId,
   props.userType, apiCall,
     sortOrder]);
-  console.log(props)
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
     /*only for employee*/
@@ -183,7 +182,6 @@ function Addfollowup(props) {
 
   // USER FOLLOW UP PROFILE UPDATE SUBMIT BUTTON
   const onAminFollowClick = async (event) => {
-    console.log(state)
     event.preventDefault();
     if (validate()) {
       setLoading(true);
