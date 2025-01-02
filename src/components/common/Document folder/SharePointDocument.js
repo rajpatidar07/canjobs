@@ -76,7 +76,7 @@ export default function SharePointDocument({
   const [imgConRes, setImgConRes] = useState();
   const [convertedDoc, setConvertedDoc] = useState("");
   const [noteText, setNoteText] = useState("");
-  const [docNoteData, setDocNoteData] = useState("");
+  const [docNoteData, setDocNoteData] = useState([]);
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
   const [pageNo, setPageNo] = useState(1);
@@ -292,9 +292,11 @@ export default function SharePointDocument({
         setTotalData(res.data.total_rows)
         setShowDropDown(false);
         setDocLoder(false);
-        if (res?.data?.notes) {
+        if (res?.data?.notes.length !== 0) {
           GetNoteText(res.data.notes, false)
           setDocNoteData(res.data.notes)
+        } else {
+          setDocNoteData([])
         }
         if (notification === "yes") {
           if (res.data.data.find((item) => item.id === newdocId)) {
@@ -1049,7 +1051,7 @@ export default function SharePointDocument({
                           setDocNoteData(docNoteData)
                           GetNoteText(docNoteData, true);
                         }
-                      }}>{docNoteData ? "Open Note" : "Add notes"}</button>
+                      }}>{docNoteData.length !== 0 ? "Open Note" : "Add notes"}</button>
                   </>
                 </div>
               </div>

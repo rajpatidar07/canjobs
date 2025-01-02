@@ -307,8 +307,8 @@ function Addfollowup(props) {
                     <p className="text-italic font-size-3 m-0">No Data Found</p>
                   </div>
                 ) : (
-                  (response || []).map((res) => (
-                    <div className={`rounded p-5 mb-2 ${props?.note_id === res.id ? "bg-light" : "bg-white"}`} key={res.id}>
+                  (response || []).map((res, index) => (
+                    <div className={`rounded p-5 mb-2 ${props?.note_id === res.id ? "bg-light" : "bg-white"}`} key={index}>
                       <div className="m-0 d-flex justify-content-between align-items-center">
                         <b className="font-size-4 font-weight-bold text-dark text-break">
                           {res.subject}

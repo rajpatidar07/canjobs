@@ -165,6 +165,7 @@ const AdobePDFViewer = ({
                         : event.data
                     );
                     setOpenAnnotationBox(true)
+                    AdminData()
                   } else if (event.type === "ANNOTATION_UPDATED") {
                     viewSDKClient.annots = [
                       ...viewSDKClient.annots.filter(
