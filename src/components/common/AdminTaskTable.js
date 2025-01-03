@@ -32,7 +32,7 @@ export default function AdminTaskTable(props) {
         "",
         props.adminId,//adminEmail,
         props.status ? props.status : taskStatus,
-        window.location.pathname === "/managetasks" || window.location.pathname === "/dashboard" ? "" : "task",
+        "task",
         props.pageNo,
         recordsPerPage,
         sortOrder,

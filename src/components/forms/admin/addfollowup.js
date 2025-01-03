@@ -93,6 +93,7 @@ function Addfollowup(props) {
         setResponseData([]);
       } else {
         setResponseData(userData.data.data);
+        setTotalData(userData.data.total_rows)
       }
     } catch (err) {
       console.log(err);
@@ -226,7 +227,8 @@ function Addfollowup(props) {
       setLoading(false);
     }
   };
-
+  /*Pagination Calculation */
+  const nPages = Math.ceil(totalData / recordsPerPage);
   // END USER FOLLOW UP PROFILE UPDATE VALIDATION
   const moment = require("moment");
   /*Sorting Function */

@@ -162,7 +162,8 @@ export default function ManageTask() {
                                     <h3 className="font-size-5 px-3 m-0  ">
                                         Tasks
                                     </h3>
-                                    {showTaskForm ? <AddTaskForm
+                                    {showTaskForm ?
+                                     <AddTaskForm
                                         userId={userId}
                                         TaskUserType={userType}
                                         setApiCall={setApiCall}
