@@ -532,6 +532,7 @@ export default function CommentSection({
   };
   /*Function to update comment */
   const OnHandleUpdateCommentStatus = async (originalData, status) => {
+    console.log(status)
     const {
       assigned_to,
       subject_description,
@@ -621,12 +622,7 @@ export default function CommentSection({
       json: JSON.parse(originalData.doctaskjson)
     };
     // Debug logs to verify the updated values
-    // console.log("Assigned User Type: ", updatedUserTypes);
-    // console.log("Assigned User ID: ", updatedUserIds);
-    // console.log("Assigned To Name: ", updatedNames);
-    // console.log("Assigned To: ", updatedEmails);
-    // console.log("Updated Comment: ", updatedCommentToApi);
-    // console.log("Updated Data: ", updatedData);
+    console.log("Updated Data: ", updatedData);
 
     // Call the API to update the document
     try {
