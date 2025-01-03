@@ -1114,7 +1114,7 @@ const AdminDashboard = ({ setLoginCondition }) => {
             <div className="right_side">
               <div className=" d-flex align-items-center p-3 px-5 justify-content-between">
                 <h4 className="font-size-5 font-weight-bold m-0 border-bottom text-uppercase px-5">
-                  Mange Tables
+                  Manage Tables
                 </h4>
                 <i
                   style={{ fontSize: "22px" }}
@@ -1140,7 +1140,7 @@ const AdminDashboard = ({ setLoginCondition }) => {
                             checked={tables[tableName] === 0 ? false : true}
                             onChange={() => handleMangeTableCheckboxChange(tableName)}
                           />
-                          <span className="px-2 text-capitalize">{tableName === "jobTable" ? "Recent Added Job Table" : tableName === "employeeTable" ? "Recent Added Candidate Table" : tableName === "employerTable" ? "Recent Added Client Table" : tableName === "taskTable" ? "Recent Added Task Table" : tableName === "lmiaTable" ? "Recent Added LMIA Table" : tableName === "followupTable" ? "Recent Added Candidate Alter's Table" : tableName === "activityTable" ? "Recent Added Activity Table" : "Recent Added Interview Table"}</span>
+                          <span className="px-2 text-capitalize">{tableName === "jobTable" ? "Recent Added Job" : tableName === "employeeTable" ? "Recent Added Candidate" : tableName === "employerTable" ? "Recent Added Client" : tableName === "taskTable" ? "Recent Added Task" : tableName === "lmiaTable" ? "Recent Added LMIA" : tableName === "followupTable" ? "Recent Added Candidate Alter's" : tableName === "activityTable" ? "Recent Added Activity" : "Recent Added Interview"}</span>
                         </label>
                       </div>
                     ))}

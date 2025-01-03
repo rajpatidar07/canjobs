@@ -353,8 +353,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { stateToHTML } from 'draft-js-export-html';
 import { AddAdmin } from '../../api/api';
 
-export default function TextEditor({ state, setState, page, identifier }) {
-  let adminSignature = localStorage.getItem("admin_signature")
+export default function TextEditor({ state, setState, page, identifier, adminSignature }) {
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
   const [showSignatureFields, setShowSignatureFields] = useState(false);
   const [signatureURL, setSignatureURL] = useState('');
@@ -406,7 +405,7 @@ export default function TextEditor({ state, setState, page, identifier }) {
   // };
 
   const insertSignature = (editorState, combinedBase64) => {
-    console.log(editorState, combinedBase64)
+    // console.log(editorState, combinedBase64)
     let contentState = editorState.getCurrentContent();
     let selection = editorState.getSelection();
 
@@ -525,13 +524,14 @@ export default function TextEditor({ state, setState, page, identifier }) {
 
         // Get the base64 image data
         const base64Image = canvas.toDataURL('image/png');
-        console.log('Combined Base64 Image:', base64Image);
+        // console.log('Combined Base64 Image:', base64Image);
 
         // Resolve the Promise with the base64 image
         resolve(base64Image);
 
         // Insert the base64 image into the editor at the end (if needed)
         const updatedEditorState = insertSignature(editorState, base64Image);
+        setState({ ...state, signature: base64Image })
         setEditorState(updatedEditorState);
       };
 
@@ -617,7 +617,7 @@ export default function TextEditor({ state, setState, page, identifier }) {
           />
         </div>
       ) : null}
-      <button type="button" className={(showSignatureFields && adminSignature) || page !== "mail" ? "d-none" : "btn btn-primary"} onClick={handleAddSignature}>
+      <button type="button" className={(showSignatureFields) || page !== "mail" ? "d-none" : "btn btn-primary"} onClick={handleAddSignature}>
         {showSignatureFields ? 'Save Signature' : 'Add Signature'}
       </button>
     </div>
