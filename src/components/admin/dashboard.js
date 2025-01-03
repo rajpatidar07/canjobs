@@ -928,7 +928,7 @@ const AdminDashboard = ({ setLoginCondition }) => {
             >
               <div className="bg-white dashboard_card mb-7">
                 <div className="d-flex justify-content-between p-5 align-items-center">
-                  <h3 className="font-size-5 px-3 m-0">Candidate's Alerts</h3>
+                  <h3 className="font-size-5 px-3 m-0">Latest notes</h3>
                   <Link
                     className={`text-dark mx-5 ${openTable === 6 ? "open" : ""
                       }`}
@@ -1140,7 +1140,7 @@ const AdminDashboard = ({ setLoginCondition }) => {
                             checked={tables[tableName] === 0 ? false : true}
                             onChange={() => handleMangeTableCheckboxChange(tableName)}
                           />
-                          <span className="px-2 text-capitalize">{tableName === "jobTable" ? "Recent Added Job" : tableName === "employeeTable" ? "Recent Added Candidate" : tableName === "employerTable" ? "Recent Added Client" : tableName === "taskTable" ? "Recent Added Task" : tableName === "lmiaTable" ? "Recent Added LMIA" : tableName === "followupTable" ? "Recent Added Candidate Alter's" : tableName === "activityTable" ? "Recent Added Activity" : "Recent Added Interview"}</span>
+                          <span className="px-2 text-capitalize">{tableName === "jobTable" ? "Recent Added Job" : tableName === "employeeTable" ? "Recent Added Candidate" : tableName === "employerTable" ? "Recent Added Client" : tableName === "taskTable" ? "Recent Added Task" : tableName === "lmiaTable" ? "Recent Added LMIA" : tableName === "followupTable" ? "Recent Added Notes" : tableName === "activityTable" ? "Recent Added Activity" : "Recent Added Interview"}</span>
                         </label>
                       </div>
                     ))}
