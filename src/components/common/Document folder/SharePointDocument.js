@@ -292,12 +292,15 @@ export default function SharePointDocument({
         setTotalData(res.data.total_rows)
         setShowDropDown(false);
         setDocLoder(false);
+        // console.log(res.data.data.find((item) => item.id == "01PMN6UKSLPU7GEEOZYRHKRHGNYGHU47J2"),"1295 Gurdeep Singh PDF Format.pdf")
+        // console.log(res.data.data.find((item) => item.id == "01PMN6UKVMY4ZY7L2XLBGJI3PLMFV3IS55"), "name: Police Clearance Certificate Akshay Kumar.pdf")
         if (res?.data?.notes.length !== 0) {
           GetNoteText(res.data.notes, false)
           setDocNoteData(res.data.notes)
         } else {
           setDocNoteData([])
         }
+        console.log(res.data.data.find((item) => item.id === newdocId), notification)
         if (notification === "yes") {
           if (res.data.data.find((item) => item.id === newdocId)) {
             setDocPreview(true);

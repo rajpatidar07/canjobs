@@ -32,7 +32,7 @@ const AdobePDFViewer = ({
 }) => {
   let [openAnnotationBox, setOpenAnnotationBox] = useState(openCommentBox ? true : false);
   let [annotationDrawBox, setAnnotationDrawBox] = useState("");
-  let [annotationId, setAnnotationId] = useState(AnnoteId);//"01PMN6UKUFRLIYUS2R5JGZAPLUMKPKPUW2");
+  let [annotationId, setAnnotationId] = useState(AnnoteId || "");
   let [annotationData, setAnnotationData] = useState(commentsList.length !== 0 ? commentsList
     ?.map((item) => JSON.parse(item?.doctaskjson))
     ?.filter((item) => item !== "") : []);
