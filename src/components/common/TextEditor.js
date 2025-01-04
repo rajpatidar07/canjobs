@@ -347,17 +347,17 @@
 //   );
 // }
 import React, { useState, useEffect } from 'react';
-import { EditorState, convertFromHTML, ContentState, AtomicBlockUtils } from 'draft-js';
+import { EditorState, convertFromHTML, ContentState/*, AtomicBlockUtils */ } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { stateToHTML } from 'draft-js-export-html';
-import { AddAdmin } from '../../api/api';
+// import { AddAdmin } from '../../api/api';
 
 export default function TextEditor({ state, setState, page, identifier, adminSignature }) {
   const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
-  const [showSignatureFields, setShowSignatureFields] = useState(false);
-  const [signatureURL, setSignatureURL] = useState('');
-  const [signatureText, setSignatureText] = useState('');
+  // const [showSignatureFields, setShowSignatureFields] = useState(false);
+  // const [signatureURL, setSignatureURL] = useState('');
+  // const [signatureText, setSignatureText] = useState('');
   useEffect(() => {
     const orgVariable = page === 'description' || page === 'mail' ? 'description' :
       page === 'FollowUp' ? 'remark' :
@@ -399,32 +399,27 @@ export default function TextEditor({ state, setState, page, identifier, adminSig
       });
     }
   };
-  // const handleBlur = () => {
-  //   const htmlContent = stateToHTML(editorState.getCurrentContent());
-  //   setState({ ...state, description: htmlContent });
+  // const insertSignature = (editorState, combinedBase64) => {
+  //   // console.log(editorState, combinedBase64)
+  //   let contentState = editorState.getCurrentContent();
+  //   let selection = editorState.getSelection();
+
+  //   // Move selection to the end of the content
+  //   const endSelection = selection.merge({
+  //     anchorOffset: contentState.getPlainText().length,
+  //     focusOffset: contentState.getPlainText().length,
+  //   });
+  //   // Create a new EditorState with the cursor at the end
+  //   let newEditorState = EditorState.acceptSelection(editorState, endSelection);
+  //   // Insert image (combinedBase64)
+  //   if (combinedBase64) {
+  //     const contentStateWithEntity = contentState.createEntity('IMAGE', 'IMMUTABLE', { src: combinedBase64 });
+  //     const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+  //     newEditorState = AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' ');
+  //   }
+  //   return EditorState.moveFocusToEnd(newEditorState);
   // };
-
-  const insertSignature = (editorState, combinedBase64) => {
-    // console.log(editorState, combinedBase64)
-    let contentState = editorState.getCurrentContent();
-    let selection = editorState.getSelection();
-
-    // Move selection to the end of the content
-    const endSelection = selection.merge({
-      anchorOffset: contentState.getPlainText().length,
-      focusOffset: contentState.getPlainText().length,
-    });
-    // Create a new EditorState with the cursor at the end
-    let newEditorState = EditorState.acceptSelection(editorState, endSelection);
-    // Insert image (combinedBase64)
-    if (combinedBase64) {
-      const contentStateWithEntity = contentState.createEntity('IMAGE', 'IMMUTABLE', { src: combinedBase64 });
-      const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
-      newEditorState = AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' ');
-    }
-    return EditorState.moveFocusToEnd(newEditorState);
-  };
-
+  //old
   // const handleAddSignature = async () => {
   //   if (showSignatureFields) {
   //     if (signatureURL || signatureText) {
@@ -449,97 +444,98 @@ export default function TextEditor({ state, setState, page, identifier, adminSig
   //     insertSignature(editorState, adminSignature);
   //   }
   // };
-  const handleAddSignature = async () => {
-    if (showSignatureFields) {
-      if (signatureURL || signatureText) {
-        let signatureData = await combineTextAndImageToBase64(signatureText, signatureURL);
-        if (signatureData) {
-          let data = {
-            admin_id: localStorage.getItem("admin_id"),
-            signature: signatureData,
-          };
-          // Save the signature data
-          const responseData = await AddAdmin(data);
-          if (responseData.message === "admin updated successfully") {
-            localStorage.setItem("admin_signature", signatureData);
-          }
-          // Insert the signature into the editor
-          const updatedEditorState = insertSignature(editorState, signatureData);
-          setEditorState(updatedEditorState);
-        }
-      }
-      setSignatureURL('');
-      setSignatureText('');
-      setShowSignatureFields(false);
-    } else {
-      // Show signature fields or add the existing signature from localStorage
-      setShowSignatureFields(true);
+  // new
+  // const handleAddSignature = async () => {
+  //   if (showSignatureFields) {
+  //     if (signatureURL || signatureText) {
+  //       let signatureData = await combineTextAndImageToBase64(signatureText, signatureURL);
+  //       if (signatureData) {
+  //         let data = {
+  //           admin_id: localStorage.getItem("admin_id"),
+  //           signature: signatureData,
+  //         };
+  //         // Save the signature data
+  //         const responseData = await AddAdmin(data);
+  //         if (responseData.message === "admin updated successfully") {
+  //           localStorage.setItem("admin_signature", signatureData);
+  //         }
+  //         // Insert the signature into the editor
+  //         const updatedEditorState = insertSignature(editorState, signatureData);
+  //         setEditorState(updatedEditorState);
+  //       }
+  //     }
+  //     setSignatureURL('');
+  //     setSignatureText('');
+  //     setShowSignatureFields(false);
+  //   } else {
+  //     // Show signature fields or add the existing signature from localStorage
+  //     setShowSignatureFields(true);
 
-      if (adminSignature) {
-        // Insert the signature from localStorage into the editor
-        const updatedEditorState = insertSignature(editorState, adminSignature);
-        setEditorState(updatedEditorState);
-      }
-    }
-  };
+  //     if (adminSignature) {
+  //       // Insert the signature from localStorage into the editor
+  //       const updatedEditorState = insertSignature(editorState, adminSignature);
+  //       setEditorState(updatedEditorState);
+  //     }
+  //   }
+  // };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setSignatureURL(reader.result); // Base64 URL of the image
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  // const handleFileChange = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onload = () => {
+  //       setSignatureURL(reader.result); // Base64 URL of the image
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
 
-  const combineTextAndImageToBase64 = (text, imageUrl) => {
-    return new Promise((resolve, reject) => {
-      // Create a new canvas element
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
+  // const combineTextAndImageToBase64 = (text, imageUrl) => {
+  //   return new Promise((resolve, reject) => {
+  //     // Create a new canvas element
+  //     const canvas = document.createElement('canvas');
+  //     const ctx = canvas.getContext('2d');
 
-      // Create the image element
-      const image = new Image();
-      image.src = imageUrl;
+  //     // Create the image element
+  //     const image = new Image();
+  //     image.src = imageUrl;
 
-      image.onload = () => {
-        const textHeight = 50; // Adjust text size
-        const imageHeight = image.height;
-        const imageWidth = image.width;
-        const canvasWidth = Math.max(500, imageWidth); // Adjust canvas width as needed
-        const canvasHeight = imageHeight + textHeight + 10; // Add space for text
+  //     image.onload = () => {
+  //       const textHeight = 50; // Adjust text size
+  //       const imageHeight = image.height;
+  //       const imageWidth = image.width;
+  //       const canvasWidth = Math.max(500, imageWidth); // Adjust canvas width as needed
+  //       const canvasHeight = imageHeight + textHeight + 10; // Add space for text
 
-        canvas.width = canvasWidth;
-        canvas.height = canvasHeight;
+  //       canvas.width = canvasWidth;
+  //       canvas.height = canvasHeight;
 
-        // Draw the image on canvas
-        ctx.drawImage(image, 0, 0);
+  //       // Draw the image on canvas
+  //       ctx.drawImage(image, 0, 0);
 
-        // Set text style and draw text
-        ctx.font = '86px Arial'; // Increased font size
-        ctx.fillStyle = 'black';
-        ctx.fillText(text, 10, imageHeight + 40); // Adjust text position
+  //       // Set text style and draw text
+  //       ctx.font = '86px Arial'; // Increased font size
+  //       ctx.fillStyle = 'black';
+  //       ctx.fillText(text, 10, imageHeight + 40); // Adjust text position
 
-        // Get the base64 image data
-        const base64Image = canvas.toDataURL('image/png');
-        // console.log('Combined Base64 Image:', base64Image);
+  //       // Get the base64 image data
+  //       const base64Image = canvas.toDataURL('image/png');
+  //       // console.log('Combined Base64 Image:', base64Image);
 
-        // Resolve the Promise with the base64 image
-        resolve(base64Image);
+  //       // Resolve the Promise with the base64 image
+  //       resolve(base64Image);
 
-        // Insert the base64 image into the editor at the end (if needed)
-        const updatedEditorState = insertSignature(editorState, base64Image);
-        setState({ ...state, signature: base64Image })
-        setEditorState(updatedEditorState);
-      };
+  //       // Insert the base64 image into the editor at the end (if needed)
+  //       const updatedEditorState = insertSignature(editorState, base64Image);
+  //       setState({ ...state, signature: base64Image })
+  //       setEditorState(updatedEditorState);
+  //     };
 
-      image.onerror = (error) => {
-        reject(new Error("Image loading failed"));
-      };
-    });
-  };
+  //     image.onerror = (error) => {
+  //       reject(new Error("Image loading failed"));
+  //     };
+  //   });
+  // };
 
 
   const editorStyle = {
@@ -600,7 +596,7 @@ export default function TextEditor({ state, setState, page, identifier, adminSig
           list: { options: ['unordered', 'ordered'] },
         }}
       />
-      {showSignatureFields && !adminSignature ? (
+      {/* {showSignatureFields && !adminSignature ? (
         <div style={{ margin: '10px 0' }}>
           <input
             type="file"
@@ -616,10 +612,10 @@ export default function TextEditor({ state, setState, page, identifier, adminSig
             className="form-control mb-2"
           />
         </div>
-      ) : null}
-      <button type="button" className={(showSignatureFields) || page !== "mail" ? "d-none" : "btn btn-primary"} onClick={handleAddSignature}>
+      ) : null} */}
+      {/* <button type="button" className={(showSignatureFields) || page !== "mail" ? "d-none" : "btn btn-primary"} onClick={handleAddSignature}>
         {showSignatureFields ? 'Save Signature' : 'Add Signature'}
-      </button>
+      </button> */}
     </div>
   );
 }

@@ -76,7 +76,7 @@ export default function ManageTask() {
 
                         <div className='row m-0'>
                             <div className="col p-1 form_group mb-3">
-                                <p className="input_label">Filter by admin:</p>
+                                <p className="input_label">Filter by Admin:</p>
                                 <select
                                     name="adminId"
                                     value={adminId + "," + adminType}

@@ -538,7 +538,6 @@ export default function CommentSection({
   };
   /*Function to update comment */
   const OnHandleUpdateCommentStatus = async (originalData, status) => {
-    console.log(status)
     const {
       assigned_to,
       subject_description,
@@ -609,43 +608,59 @@ export default function CommentSection({
     const updatedUserIds = newUserIdArray.join(",");
     const updatedUserTypes = newUserTypeArray.join(",");
     // Construct the final data to send to the API
-    const updatedData = {
-      // ...originalData,
-      doc_id: originalData.doc_id,
-      status: status,
-      is_status_update: true,
-      subject_description: updatedCommentToApi,
-      task_creator_user_id: admin_id,
-      task_creator_user_type:
-        localStorage.getItem("userType") === "admin" ? "admin" : "agent",
-      assined_to_user_id: updatedUserIds,
-      assigned_user_type: updatedUserTypes,
-      doc_parent_id: docData.parentReference.id,
-      assigned_to: updatedEmails,
-      assigned_to_name: updatedNames,
-      id: originalData.id,
-      document_name: docData.name,
-      json: JSON.parse(originalData.doctaskjson)
-    };
+    const updatedData = status === 1 || status === "1" ?
+      {
+        doc_id: originalData.doc_id,
+        status: status,
+        is_status_update: true,
+        task_creator_user_id: admin_id,
+        task_creator_user_type:
+          localStorage.getItem("userType") === "admin" ? "admin" : "agent",
+        assined_to_user_id: updatedUserIds,
+        assigned_user_type: updatedUserTypes,
+        doc_parent_id: docData.parentReference.id,
+        assigned_to: updatedEmails,
+        assigned_to_name: updatedNames,
+        id: originalData.id,
+        document_name: docData.name,
+      } : {
+        // ...originalData,
+        doc_id: originalData.doc_id,
+        status: status,
+        is_status_update: true,
+        subject_description: updatedCommentToApi,
+        task_creator_user_id: admin_id,
+        task_creator_user_type:
+          localStorage.getItem("userType") === "admin" ? "admin" : "agent",
+        assined_to_user_id: updatedUserIds,
+        assigned_user_type: updatedUserTypes,
+        doc_parent_id: docData.parentReference.id,
+        assigned_to: updatedEmails,
+        assigned_to_name: updatedNames,
+        id: originalData.id,
+        document_name: docData.name,
+        json: JSON.parse(originalData.doctaskjson)
+      };
     // Debug logs to verify the updated values
-    console.log("Updated Data: ", updatedData);
+    // console.log("Updated Data: ", updatedData);
 
     // Call the API to update the document
-    // try {
-    //   let res = await UpdateDocuentcommentAssign(updatedData, DocUserType);
-    //   if (res.message === "Task updated successfully!") {
-    //     toast.success("Task completed Successfully", {
-    //       position: toast.POSITION.TOP_RIGHT,
-    //       autoClose: 1000,
-    //     });
-    //     setCommentData();
-    //     setComments("");
-    //     setCommentToApi("");
-    //     Getcomments();
-    //   }
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    try {
+      let res = await UpdateDocuentcommentAssign(updatedData, DocUserType);
+      if (res.message === "Task updated successfully!") {
+        toast.success("Task completed Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setReplyCommentClick(status === 1 || status === "1" ? "" : updatedData.id)
+        setCommentData();
+        setComments("");
+        setCommentToApi("");
+        Getcomments();
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
   const OnHandleUpdateCommentReply = async (originalData) => {
     const { receiver_email, msg, receiver_name, receiver_type, receiver_id } =
@@ -1069,7 +1084,6 @@ export default function CommentSection({
                           commentItem.status === "1" ? "0" : "1"
                         );
                         setFilteredEmails([]);
-                        setReplyCommentClick(commentItem.status !== "1" ? commentItem.id : "",)
                         if (page !== "file") { setAnnotationDrawBox(""); }
                       }}
                     >

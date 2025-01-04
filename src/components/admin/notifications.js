@@ -319,7 +319,9 @@ function Notifications({
                                               ? data.document_user_type === "employer"//AGREEMENT FOR EMPLOYER
                                                 ? `/client_detail?agreement=true`
                                                 : `/${data.employee_id}?agreement=true`//AGREEMENT FOR EMPLOYEE
-                                              : ""
+                                              : data.subject === "mention_task"
+                                                ? `/managetasks?${data.mention_id}`
+                                                : ""
 
                       }
                       onClick={() => {
