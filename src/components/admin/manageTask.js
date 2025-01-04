@@ -76,7 +76,7 @@ export default function ManageTask() {
 
                         <div className='row m-0'>
                             <div className="col p-1 form_group mb-3">
-                                <p className="input_label">Search by admin:</p>
+                                <p className="input_label">Filter by admin:</p>
                                 <select
                                     name="adminId"
                                     value={adminId + "," + adminType}
@@ -163,11 +163,11 @@ export default function ManageTask() {
                                         Tasks
                                     </h3>
                                     {showTaskForm ?
-                                     <AddTaskForm
-                                        userId={userId}
-                                        TaskUserType={userType}
-                                        setApiCall={setApiCall}
-                                        setShowTaskForm={setShowTaskForm} /> :
+                                        <AddTaskForm
+                                            userId={userId}
+                                            TaskUserType={userType}
+                                            setApiCall={setApiCall}
+                                            setShowTaskForm={setShowTaskForm} /> :
                                         <div className="d-flex flex-row-reverse">
                                             <Link className="btn btn-primary mb-2" onClick={() => setShowTaskForm(true)}>Add Task
                                             </Link>

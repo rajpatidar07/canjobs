@@ -21,6 +21,7 @@ function Notifications({
 }) {
   const [show, setshow] = useState(false);
   let [totalNotif, setTotalNotif] = useState();
+  let [totalNotificRow, setTotalNotificRow] = useState();
   let [notification, setNotiication] = useState([]);
   const [apicall, setApicall] = useState(false);
   const [recordsPerPage, setRecordsPerPage] = useState(10);
@@ -49,6 +50,7 @@ function Notifications({
         setNotiication([]);
         setTotalNotif();
       } else {
+        setTotalNotificRow(Response.Data.total_rows)
         setNotiication(user_type === "agent" ? Response.Data.data.filter((item) => item.document_user_type !== "employer") : Response.Data.data);
         setTotalNotif(
           user_type === "agent"
@@ -118,7 +120,8 @@ function Notifications({
   };
   /*Function to load more data while scrolling */
   let handelScroll = (e) => {
-    if ((recordsPerPage === 10 || recordsPerPage + 10) <= notification.length) {
+    // console.log(totalNotificRow, recordsPerPage, recordsPerPage <= totalNotificRow)
+    if (recordsPerPage <= totalNotificRow) {
       setRecordsPerPage(recordsPerPage + 10);
     } else {
       // setRecordsPerPage(emailData.length);

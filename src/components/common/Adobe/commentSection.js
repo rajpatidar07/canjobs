@@ -413,6 +413,12 @@ export default function CommentSection({
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
+          if (err.response.data.message === "required fields cannot be blank doc_parent_id") {
+            toast.error("Folder not found", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+          }
           // setSelectedAnnotation(null);
           setComments("");
           setCommentToApi("");
@@ -625,21 +631,21 @@ export default function CommentSection({
     console.log("Updated Data: ", updatedData);
 
     // Call the API to update the document
-    try {
-      let res = await UpdateDocuentcommentAssign(updatedData, DocUserType);
-      if (res.message === "Task updated successfully!") {
-        toast.success("Task completed Successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        setCommentData();
-        setComments("");
-        setCommentToApi("");
-        Getcomments();
-      }
-    } catch (err) {
-      console.log(err);
-    }
+    // try {
+    //   let res = await UpdateDocuentcommentAssign(updatedData, DocUserType);
+    //   if (res.message === "Task updated successfully!") {
+    //     toast.success("Task completed Successfully", {
+    //       position: toast.POSITION.TOP_RIGHT,
+    //       autoClose: 1000,
+    //     });
+    //     setCommentData();
+    //     setComments("");
+    //     setCommentToApi("");
+    //     Getcomments();
+    //   }
+    // } catch (err) {
+    //   console.log(err);
+    // }
   };
   const OnHandleUpdateCommentReply = async (originalData) => {
     const { receiver_email, msg, receiver_name, receiver_type, receiver_id } =
@@ -1019,8 +1025,10 @@ export default function CommentSection({
                         JSON.parse(commentItem?.doctaskjson).id || ""
                       )
                     }
-                    setReplyCommentClick(commentItem.id);
-                    getCommentsReplyList();
+                    if (commentItem.status !== "1") {
+                      setReplyCommentClick(commentItem.id);
+                      getCommentsReplyList();
+                    }
                     setFilteredEmails([]);
                     // setComments("")
                     setCommentToApi("");
@@ -1043,7 +1051,7 @@ export default function CommentSection({
                     style={{ position: "absolute", right: 5, gap: 5 }}
                   >
                     <Link
-                      className="text-gray pr-1"
+                      className={`text-gray pr-1 ${commentItem.status !== "0" ? "d-none" : ""}`}
                       title="Update Comment"
                       onClick={() => {
                         handleUpdateCommentLinkClick(commentItem);
@@ -1061,6 +1069,7 @@ export default function CommentSection({
                           commentItem.status === "1" ? "0" : "1"
                         );
                         setFilteredEmails([]);
+                        setReplyCommentClick(commentItem.status !== "1" ? commentItem.id : "",)
                         if (page !== "file") { setAnnotationDrawBox(""); }
                       }}
                     >
