@@ -8,6 +8,8 @@ function SendMailForm({ email, setApiCall }) {
   const [loading, setLoading] = useState(false);
   const [fileBase, setFileBase] = useState("");
   const [fileNames, setFileNames] = useState([]);
+  let adminSignature = localStorage.getItem("admin_signature")
+
   let AdminEmail = localStorage.getItem("admin_email");
   /*Render function to get the Response*/
   // useEffect(() => {
@@ -19,7 +21,8 @@ function SendMailForm({ email, setApiCall }) {
     description: "",
     email: email,
     adminemail: "",
-    bccemail: ""
+    bccemail: "",
+    signature: adminSignature || ""
   };
 
   /*Validation */
@@ -210,7 +213,7 @@ function SendMailForm({ email, setApiCall }) {
 
   /*Function to sent email*/
   const onSendMailClick = async () => {
-    // console.log(fileBase);
+    // console.log(state.signature);
     if (validate()) {
       try {
         setLoading(true);
@@ -386,6 +389,7 @@ function SendMailForm({ email, setApiCall }) {
                 <TextEditor
                   state={state}
                   setState={setState}
+                  adminSignature={adminSignature}
                   page={"mail"}// has same variable as description
                 />
               </div>

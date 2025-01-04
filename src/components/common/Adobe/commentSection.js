@@ -413,6 +413,12 @@ export default function CommentSection({
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
+          if (err.response.data.message === "required fields cannot be blank doc_parent_id") {
+            toast.error("Folder not found", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+          }
           // setSelectedAnnotation(null);
           setComments("");
           setCommentToApi("");
@@ -602,30 +608,40 @@ export default function CommentSection({
     const updatedUserIds = newUserIdArray.join(",");
     const updatedUserTypes = newUserTypeArray.join(",");
     // Construct the final data to send to the API
-    const updatedData = {
-      // ...originalData,
-      doc_id: originalData.doc_id,
-      status: status,
-      is_status_update: true,
-      subject_description: updatedCommentToApi,
-      task_creator_user_id: admin_id,
-      task_creator_user_type:
-        localStorage.getItem("userType") === "admin" ? "admin" : "agent",
-      assined_to_user_id: updatedUserIds,
-      assigned_user_type: updatedUserTypes,
-      doc_parent_id: docData.parentReference.id,
-      assigned_to: updatedEmails,
-      assigned_to_name: updatedNames,
-      id: originalData.id,
-      document_name: docData.name,
-      json: JSON.parse(originalData.doctaskjson)
-    };
+    const updatedData = status === 1 || status === "1" ?
+      {
+        doc_id: originalData.doc_id,
+        status: status,
+        is_status_update: true,
+        task_creator_user_id: admin_id,
+        task_creator_user_type:
+          localStorage.getItem("userType") === "admin" ? "admin" : "agent",
+        assined_to_user_id: updatedUserIds,
+        assigned_user_type: updatedUserTypes,
+        doc_parent_id: docData.parentReference.id,
+        assigned_to: updatedEmails,
+        assigned_to_name: updatedNames,
+        id: originalData.id,
+        document_name: docData.name,
+      } : {
+        // ...originalData,
+        doc_id: originalData.doc_id,
+        status: status,
+        is_status_update: true,
+        subject_description: updatedCommentToApi,
+        task_creator_user_id: admin_id,
+        task_creator_user_type:
+          localStorage.getItem("userType") === "admin" ? "admin" : "agent",
+        assined_to_user_id: updatedUserIds,
+        assigned_user_type: updatedUserTypes,
+        doc_parent_id: docData.parentReference.id,
+        assigned_to: updatedEmails,
+        assigned_to_name: updatedNames,
+        id: originalData.id,
+        document_name: docData.name,
+        json: JSON.parse(originalData.doctaskjson)
+      };
     // Debug logs to verify the updated values
-    // console.log("Assigned User Type: ", updatedUserTypes);
-    // console.log("Assigned User ID: ", updatedUserIds);
-    // console.log("Assigned To Name: ", updatedNames);
-    // console.log("Assigned To: ", updatedEmails);
-    // console.log("Updated Comment: ", updatedCommentToApi);
     // console.log("Updated Data: ", updatedData);
 
     // Call the API to update the document
@@ -636,6 +652,7 @@ export default function CommentSection({
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        setReplyCommentClick(status === 1 || status === "1" ? "" : updatedData.id)
         setCommentData();
         setComments("");
         setCommentToApi("");
@@ -1023,8 +1040,10 @@ export default function CommentSection({
                         JSON.parse(commentItem?.doctaskjson).id || ""
                       )
                     }
-                    setReplyCommentClick(commentItem.id);
-                    getCommentsReplyList();
+                    if (commentItem.status !== "1") {
+                      setReplyCommentClick(commentItem.id);
+                      getCommentsReplyList();
+                    }
                     setFilteredEmails([]);
                     // setComments("")
                     setCommentToApi("");
@@ -1047,7 +1066,7 @@ export default function CommentSection({
                     style={{ position: "absolute", right: 5, gap: 5 }}
                   >
                     <Link
-                      className="text-gray pr-1"
+                      className={`text-gray pr-1 ${commentItem.status !== "0" ? "d-none" : ""}`}
                       title="Update Comment"
                       onClick={() => {
                         handleUpdateCommentLinkClick(commentItem);

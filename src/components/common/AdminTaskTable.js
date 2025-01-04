@@ -32,9 +32,9 @@ export default function AdminTaskTable(props) {
         "",
         props.adminId,//adminEmail,
         props.status ? props.status : taskStatus,
-        window.location.pathname === "/managetasks" || window.location.pathname === "/dashboard" ? "" : "task",
-        props.pageNo,
-        recordsPerPage,
+        "task",
+        props.heading === "Dashboard" ? props.pageNo : "",
+        props.heading === "Dashboard" ? recordsPerPage : "",
         sortOrder,
         columnName,
         props.filter_by_time,
@@ -548,7 +548,7 @@ export default function AdminTaskTable(props) {
           </table>
         )}
       </div>
-      <div className="pt-2">
+      <div className={`pt-2 ${props.heading !== "Dashboard" ? "d-none" : ""}`}>
         <Pagination
           nPages={nPages}
           currentPage={props.pageNo}

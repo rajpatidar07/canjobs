@@ -214,7 +214,7 @@ export const SocialLogin = async (token, email, name, picture, type) => {
   return response.data;
 };
 
-/*Employee Forgot passsword api */
+/*Employee Forgot password api */
 export const EmployeeForgotPassword = async (props) => {
   const response = await axios.post(`${API_URL}employee/ForgetPassword`, {
     forget_email: props.forget_email,
@@ -2742,7 +2742,7 @@ export const RemoveReservedEmployeeForJob = async (apply_id, employee_id) => {
 };
 /*Api to Send email to the user and company*/
 export const SendEmail = async (data, FileList, url) => {
-  // console.log(FileList);
+  console.log(data);
   const response = await axios.post(
     `${API_URL}sendEmailTest`,
     // {
@@ -2758,7 +2758,8 @@ export const SendEmail = async (data, FileList, url) => {
       cc_email: data.adminemail,
       attachments: FileList || "",
       attachments_url: url,
-      bcc_email: data.bccemail
+      bcc_email: data.bccemail,
+      signature: data.signature
     },
     {
       headers: {
@@ -3336,7 +3337,7 @@ export const getSharePointFoldersList = async (Id, User, columnName, sort, limit
   return response;
 };
 //Api function to GET emolyee  peticular document folder data
-export const getSharePointParticularFolders = async (Id, User, folderId, columnName, sort, limit, page,fileId) => {
+export const getSharePointParticularFolders = async (Id, User, folderId, columnName, sort, limit, page, fileId) => {
   const response = await axios.post(
     `${API_URL}admin/getSharpointSiteDriveFolderToFolderData_new`,
     {
@@ -3348,7 +3349,7 @@ export const getSharePointParticularFolders = async (Id, User, folderId, columnN
       sort_order: sort,
       limit: limit,
       page: page,
-      itemId:fileId
+      itemId: fileId
     },
     {
       headers: {

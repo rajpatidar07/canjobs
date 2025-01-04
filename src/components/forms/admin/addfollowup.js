@@ -13,6 +13,7 @@ import TextEditor from "../../common/TextEditor";
 import ConvertTime from "../../common/ConvertTime";
 import { FaEdit } from "react-icons/fa";
 import AdminTaskTable from "../../common/AdminTaskTable";
+import Pagination from "../../common/pagination";
 
 function Addfollowup(props) {
   let [response, setResponseData] = useState([]);
@@ -20,6 +21,10 @@ function Addfollowup(props) {
   let [updateNote, setUpdateNote] = useState(false);
   let [apiCall, setApiCall] = useState(false);
 
+  /* Pagination states */
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalData, setTotalData] = useState("");
+  const [recordsPerPage] = useState(10);
   /* Shorting states */
   const [columnName, setcolumnName] = useState("created_at");
   const [sortOrder, setSortOrder] = useState("DESC");
@@ -61,10 +66,14 @@ function Addfollowup(props) {
         props.userId,
         props.userType,
         columnName,
-        sortOrder
+        sortOrder,
+        "",
+        currentPage,
+        recordsPerPage,
+        props.page === "dashboard" ? 1 : ""
       );
       let adminRes = await getallAdminData()
-      // console.log(res.data.status === 1)
+      // console.log(userData.data.data)
       if (adminRes.data.length > 0) {
         setAdminList(adminRes.data)
       } else {
@@ -80,9 +89,11 @@ function Addfollowup(props) {
         // props.employee_id === "" ||
         // props.employee_id === undefined
       ) {
+        console.log("pppp")
         setResponseData([]);
       } else {
         setResponseData(userData.data.data);
+        setTotalData(userData.data.total_rows)
       }
     } catch (err) {
       console.log(err);
@@ -216,7 +227,8 @@ function Addfollowup(props) {
       setLoading(false);
     }
   };
-
+  /*Pagination Calculation */
+  const nPages = Math.ceil(totalData / recordsPerPage);
   // END USER FOLLOW UP PROFILE UPDATE VALIDATION
   const moment = require("moment");
   /*Sorting Function */
@@ -837,6 +849,15 @@ function Addfollowup(props) {
               )}
             </tbody>
           </table>
+          <div className="pt-2">
+            <Pagination
+              nPages={nPages}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              total={totalData}
+              count={response.length}
+            />
+          </div>
         </div>
       )}
 

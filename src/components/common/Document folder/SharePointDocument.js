@@ -156,6 +156,11 @@ export default function SharePointDocument({
           //   );
           // }
           setCommentsList(res.data.data.data);
+          if (res.data.data.data
+            ?.map((item) => JSON.parse(item?.doctaskjson))
+            ?.filter((item) => item !== "")) {
+            AdminData()
+          }
           // setCommentsRes(res.data.status);
           // if (res.data.data.data[0]?.assined_to_user_id) {
           //   setMentionAdminShowDropDown(true);
@@ -1138,8 +1143,7 @@ export default function SharePointDocument({
       ) : (
         <div className="chat_box_container bg-white row m-0">
           <div className="chat-container d-flex justify-content-center align-items-center w-100">
-            Update the {emp_user_type === "employee" ? "user" : "client"}{" "}
-            profile to get a folder
+            Invalid Folder or document not found.
           </div>
         </div>
       )}

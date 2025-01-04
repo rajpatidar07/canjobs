@@ -320,13 +320,16 @@ export default function AddTaskForm(props) {
                 </div>
                 <div className="col">
                     <select
-                        className="form-control mb-2 text-capitalize"
+                        className={`form-control mb-2 text-capitalize`}
                         onChange={handleGroupSelect}
                     >
                         <option value="">Select Group</option>
                         {(groupBy || []).map((user) => (
-                            <option key={user.id} value={user.id}>
-                                {user.value}
+                            <option key={user.id} value={user.id} className={user.value === "pgwp" || user.value === "wes" ||
+                                user.value === "atip" ?
+                                `text-uppercase` :
+                                "text-capitalize"}>
+                                {user.value === "pnp" ? "Alberta PNP" : user.value}
                             </option>
                         ))}
                     </select>

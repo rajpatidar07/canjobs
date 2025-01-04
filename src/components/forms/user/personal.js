@@ -709,7 +709,7 @@ function PersonalDetails(props) {
                       className={
                         `form-control ${errors.date_of_birth
                           ? " border border-danger"
-                          : "" }`
+                          : ""}`
                       }
                       id="date_of_birth"
                     />
@@ -1030,7 +1030,8 @@ function PersonalDetails(props) {
                       className={`${errors.interested_in
                         ? "form-control  border border-danger "
                         : "form-control "}
-                          ${state.interested_in === "pgwp" ?
+                          ${state.interested_in === "pgwp" || state.interested_in === "wes" ||
+                          state.interested_in === "atip" ?
                           `text-uppercase` :
                           "text-capitalize"}`
                       }
@@ -1042,7 +1043,8 @@ function PersonalDetails(props) {
                       <option value={""}>Select</option>
                       {(FilterJson.interested || []).map((interest, index) => (
                         <option key={index} value={interest}
-                          className={interest === "pgwp" ?
+                          className={interest === "pgwp"|| interest === "wes" ||
+                            interest === "atip" ?
                             `text-uppercase` :
                             "text-capitalize"}>
                           {interest === "pnp" ? "Alberta PNP" : interest}
