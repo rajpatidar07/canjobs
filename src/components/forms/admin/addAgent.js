@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import filterjson from "../../json/filterjson";
 import { AddUpdateAgent, GetAgent, getallAdminData } from "../../../api/api";
+import PasswordInput from "../../common/PasswordInput";
 
 function AddAgent(props) {
   let encoded;
@@ -12,22 +13,7 @@ function AddAgent(props) {
   //   let [already, setAlready] = useState("");
   let [loading, setLoading] = useState(false);
   const [admiinList, setAdminList] = useState([]);
-  const [showPassword, setShowPassword] = useState(false);
-
   let user_type = localStorage.getItem("userType")
-  /*Function to show hide password */
-  const toggleShowPassword = () => setShowPassword((prev) => !prev);
-
-  const renderIcon = () => {
-    if (state.password.length > 0) {
-      return showPassword ? (
-        <i className="fa fa-eye-slash"></i>
-      ) : (
-        <i className="fa fa-eye"></i>
-      );
-    }
-    return null;
-  };
 
   /*Function to get admin json list */
   const AdminJson = async () => {
@@ -228,7 +214,7 @@ function AddAgent(props) {
     if (user_type === "admin") {
       AdminJson()
     }
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [props.agentId]);
 
   // USER agent PROFILE UPDATE SUBMIT BUTTON
@@ -436,25 +422,18 @@ function AddAgent(props) {
                     Password <span className="text-danger">*</span> :
                   </label>
                   <div className="position-relative">
-                    <input
-                      type={showPassword ? "text" : "password"}
+                    <PasswordInput
+                      name="password"
+                      value={state.password}
+                      onChange={onInputChange}
                       className={
                         errors.password
                           ? "form-control border border-danger"
                           : "form-control"
                       }
-                      value={state.password}
-                      onChange={onInputChange}
-                      id="password"
-                      name="password"
                       placeholder="Enter password"
+                      id="password"
                     />
-                    <span
-                      className="password-icon"
-                      onClick={toggleShowPassword}
-                    >
-                      {renderIcon()}
-                    </span>
                   </div>
                   {/*----ERROR MESSAGE FOR agent PASSWORD----*/}
                   {errors.password && (

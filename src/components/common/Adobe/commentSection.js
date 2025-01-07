@@ -429,6 +429,39 @@ export default function CommentSection({
       }
     }
     // Update state to include the new annotation
+    // Example comment data
+    // Example comment data
+    // let commentToApiI = 'hello @ra <span title="raj.we2code@gmail.com" > <b>raj</b></span>';
+
+    // Step 1: Match the name inside the <span><b></b></span> tags
+    // let nameInsideSpanMatch = commentToApi.match(/<span[^>]*?>\s*<b>([^<]+)<\/b>\s*<\/span>/);
+    // console.log(nameInsideSpanMatch)
+
+    // // Initialize updatedComment with the original comment
+    // let updatedComment = commentToApi;
+    // if (nameInsideSpanMatch && nameInsideSpanMatch[1]) {
+    //   const nameInsideSpan = nameInsideSpanMatch[1]; // Extract name inside <b> (e.g., "raj")
+
+    //   // Step 2: Dynamically remove the first two characters after "@" if it matches the name inside <b>
+    //   updatedComment = commentToApi.replace(/@(\w+)/g, (_, word) => {
+    //     // Check if the first two characters of the word match the first two characters of the name
+    //     if (word.startsWith(nameInsideSpan.slice(0, 2))) {
+    //       return '@' + word.slice(2); // Remove the first two characters
+    //     }
+    //     return '@' + word; // Otherwise, keep the word as is
+    //   });
+    //   console.log(commentToApi.replace(/@(\w+)/g, (_, word) => {
+    //     // Check if the first two characters of the word match the first two characters of the name
+    //     if (word.startsWith(nameInsideSpan.slice(0, 2))) {
+    //       return '@' + word.slice(2); // Remove the first two characters
+    //     }
+    //     return '@' + word; // Otherwise, keep the word as is
+    //   })); // Output the updated comment
+    // } else {
+    //   console.log("No valid name found inside <span><b></b></span>.");
+    // }
+
+
   };
   /*Function to reply for the comment */
   const ReplyAnnotation = async (data) => {

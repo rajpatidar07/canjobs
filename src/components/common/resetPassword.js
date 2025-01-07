@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import {  EmployeeResetPasswordApi,  AdminResetPasswordApi,  EmployerResetPasswordApi,  ResetAgentPasswordApi,
+import {
+  EmployeeResetPasswordApi, AdminResetPasswordApi, EmployerResetPasswordApi, ResetAgentPasswordApi,
 } from "../../api/api";
 import useValidation from "../common/useValidation";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
+import PasswordInput from "./PasswordInput";
 const API_URL = window.location.origin
 // https://canjobs.vercel.app/";
 // const API_URL = "https://canpathwaysjobs.com/";
@@ -29,13 +31,13 @@ export default function ResetPassword() {
         value === ""
           ? "Confirm Password is required"
           : value !== state.password
-          ? "Confirm Password must be Same as Password"
-          : "",
+            ? "Confirm Password must be Same as Password"
+            : "",
     ],
   };
   /*----RESET PASSWORD ONCHANGE FuNCTION----*/
   const { state, onInputChange, setState, errors, validate } = useValidation(
-    initialFormState,validators);
+    initialFormState, validators);
   /*----RESET PASSWORD SUBMIT FuNCTION----*/
   const onUserResetPasswordClick = async (event) => {
     event.preventDefault();
@@ -133,11 +135,11 @@ export default function ResetPassword() {
     <>
       {/* <!-- RESET PASSWORD --> */}
       <link rel="stylesheet" href={`${API_URL}/css/bootstrap.css`} />
-      <link rel="stylesheet" href={`${API_URL}/fonts/icon-font/css/style.css`}/>
-      <link rel="stylesheet" href={`${API_URL}/fonts/fontawesome-5/css/all.css`}/>
-      <link rel="stylesheet" href={`${API_URL}/fonts/fontawesome-5/css/main.css`}/>
+      <link rel="stylesheet" href={`${API_URL}/fonts/icon-font/css/style.css`} />
+      <link rel="stylesheet" href={`${API_URL}/fonts/fontawesome-5/css/all.css`} />
+      <link rel="stylesheet" href={`${API_URL}/fonts/fontawesome-5/css/main.css`} />
       <div className="d-flex justify-content-center pt-21">
-        
+
         <div className="bg-white rounded-8 overflow-hidden pt-21">
           <div className="bg-white-2 h-100 px-11 pt-11 pb-7 login_Modal_box ">
             <div className="pb-5 mb-5 text-center">
@@ -159,8 +161,7 @@ export default function ResetPassword() {
                 >
                   Password
                 </label>
-                <input
-                  type="password"
+                <PasswordInput
                   name="password"
                   value={state.password}
                   onChange={onInputChange}
@@ -169,7 +170,7 @@ export default function ResetPassword() {
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  placeholder="example@gmail.com"
+                  placeholder="Enter password"
                   id="password"
                 />
                 {/*----ERROR MESSAGE FOR EMAIL----*/}
@@ -191,9 +192,8 @@ export default function ResetPassword() {
                   Confirm Password
                 </label>
                 <div className="position-relative">
-                  <input
+                  <PasswordInput
                     name="conf_password"
-                    type="password"
                     value={state.conf_password}
                     onChange={onInputChange}
                     className={
@@ -201,7 +201,7 @@ export default function ResetPassword() {
                         ? "form-control border border-danger"
                         : "form-control"
                     }
-                    placeholder="Enter confirm password"
+                    placeholder="Enter password"
                     id="conf_password"
                   />
                   {/*----ERROR MESSAGE FOR CONFIRM PASSWORD----*/}

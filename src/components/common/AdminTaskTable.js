@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Loader from "./loader";
 import { Link } from "react-router-dom";
 import { GetCommentsAndAssign, GetFilter, UpdateDocuentcommentAssign } from "../../api/api";
@@ -24,7 +24,18 @@ export default function AdminTaskTable(props) {
   const [recordsPerPage] = useState(10);
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
+  const rowRefs = useRef([]);
 
+  useEffect(() => {
+    if (props.taskId) {
+      // Find the index of the task data that matches taskId
+      const index = taskData.findIndex(data => data.id === props.taskId);
+      if (index !== -1) {
+        // Scroll to the matching row
+        rowRefs.current[index]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  }, [props.taskId, taskData]);
   // Generate a list of admin;s task
   const getCommentsList = async () => {
     try {
@@ -66,6 +77,8 @@ export default function AdminTaskTable(props) {
   };
   useEffect(() => {
     getCommentsList();
+    const newUrl = window.location.pathname;
+    window.history.replaceState({}, document.title, newUrl);
     // eslint-disable-next-line
   }, [taskStatus, props.pageNo, props.apiCall, props.adminType, props.status, props.adminId, props.employeeId, props.filter_by_time, sortOrder, columnName]);
   /*Sorting Function */
@@ -274,9 +287,9 @@ export default function AdminTaskTable(props) {
                   </th>
                 </tr>
               ) : (
-                (taskData || []).map((data) => (
-                  <React.Fragment key={data.id}>
-                    <tr className=" applicant_row">
+                (taskData || []).map((data, index) => (
+                  <React.Fragment key={data.id} ref={el => (rowRefs.current[index] = el)}>
+                    <tr className={`applicant_row ${props.taskId === data.id ? "bg-light" : ""}`}>
                       <td className="text-capitalize py-5">
                         <p className="font-size-3 font-weight-normal text-black-2 mb-0">
                           {data.task_creator_user_name === null ||

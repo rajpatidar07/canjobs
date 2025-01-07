@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import Loader from "../common/loader";
 import AgentSignUp from "./agentSingup";
 import ForgotPasswordForm from "../forms/admin/ForgotPasswordForm";
+import PasswordInput from "../common/PasswordInput";
 export default function AgentLogin({ setLoginCondition }) {
   let navigate = useNavigate();
   let [loading, setLoading] = useState(false);
@@ -219,9 +220,8 @@ export default function AgentLogin({ setLoginCondition }) {
                       Password
                     </label>
                     <div className="position-relative">
-                      <input
+                      <PasswordInput
                         name="password"
-                        type="password"
                         value={state.password}
                         onChange={onInputChange}
                         className={

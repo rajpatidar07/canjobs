@@ -9,6 +9,7 @@ import {
 } from "../../api/api";
 import Permissions from "../json/emailPermisionJson";
 import { toast } from "react-toastify";
+import PasswordInput from "../common/PasswordInput";
 // import { useGoogleLogin } from '@react-oauth/google';
 // import axios from "axios";
 // import { useLinkedIn , LinkedIn} from "react-linkedin-login-oauth2";
@@ -58,26 +59,26 @@ export default function AgentSignUp(props) {
         value === "" || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? null
+            : "Email is invalid",
     ],
     password: [
       (value) =>
         value === ""
           ? "Password is required"
           : /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,16}$/.test(
-              value
-            )
-          ? null
-          : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
+            value
+          )
+            ? null
+            : "Password must contain digit, one uppercase letter, one special character, no space, and it must be 8-16 characters long",
     ],
     contact_no: [
       (value) =>
         value.trim() === "" || value === "" || value === null
           ? "Contact no is required"
           : value.length < 10 || value.length > 13
-          ? "Contact no should be of 13 digits"
-          : "",
+            ? "Contact no should be of 13 digits"
+            : "",
     ],
     // term_and_condition: [
     //   (value) =>
@@ -93,8 +94,8 @@ export default function AgentSignUp(props) {
           ? value === null || value === ""
             ? "Otp is requried"
             : otpErr === "Invalid Otp"
-            ? "Invalid Otp"
-            : ""
+              ? "Invalid Otp"
+              : ""
           : "",
     ],
   };
@@ -482,18 +483,17 @@ export default function AgentSignUp(props) {
                 Password
               </label>
               <div className="position-relative">
-                <input
+                <PasswordInput
                   name="password"
-                  value={"" || state.password}
+                  value={state.password}
                   onChange={onInputChange}
-                  type="password"
                   className={
                     errors.password
                       ? "form-control border border-danger"
                       : "form-control"
                   }
-                  id="password"
                   placeholder="Enter password"
+                  id="password"
                 />
                 {/* ERROR MSG FOR PASSWORD */}
                 {errors.password && (

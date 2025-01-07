@@ -693,7 +693,9 @@ export default function EmployeeTable(props) {
                       Name
                     </Link>
                   </th>
-                  <th
+                  {props.heading === "Dashboard" ? (
+                    ""
+                  ) : <th
                     scope="col"
                     className="border-0 font-size-4 font-weight-normal"
                   >
@@ -708,7 +710,25 @@ export default function EmployeeTable(props) {
                     >
                       Created by
                     </Link>
-                  </th>
+                  </th>}
+                  {props.heading === "Dashboard" ? (
+                    ""
+                  ) : <th
+                    scope="col"
+                    className="border-0 font-size-4 font-weight-normal"
+                  >
+                    <Link
+                      to={""}
+                      onClick={() => {
+                        handleSort("assigned_by	");
+                        props.setpageNo(1);
+                      }}
+                      className="text-gray"
+                      title="Sort by Assigned by	Admin "
+                    >
+                      Assigned by	Admin
+                    </Link>
+                  </th>}
                   {props.heading === "Dashboard" ? (
                     ""
                   ) : (
@@ -729,9 +749,7 @@ export default function EmployeeTable(props) {
                       </Link>
                     </th>
                   )}
-                  {props.heading === "Dashboard" ? (
-                    ""
-                  ) : (
+                  {(
                     <th
                       scope="col"
                       className="border-0 font-size-4 font-weight-normal"
@@ -868,6 +886,7 @@ export default function EmployeeTable(props) {
                 </tr>
               </thead>
               <tbody>
+                {/* {console.log(employeeData.map((item) => `assigned by :${item.assigned_by}`), admintList.map((item)=>item.admin_id))} */}
                 {/* Map function to show the data in the list*/}
                 {totalData === 0 || employeeData.length === 0 ? (
                   <tr>
@@ -1057,7 +1076,7 @@ export default function EmployeeTable(props) {
                                 )}
                                 <h3 className=" font-weight-normal text-black-2 mb-0">
                                   <p
-                                    className="text-gray font-size-2 m-0"
+                                    className="text-gray font-size-2 m-0 text-break"
                                     title={empdata.email}
                                   >
                                     <Link
@@ -1114,7 +1133,36 @@ export default function EmployeeTable(props) {
                                     (item) =>
                                       item.admin_id ===
                                       empdata?.created_by_admin
+                                  )?.name || "N/A"
+                                }
+                              </p>
+                            )}
+                          </td>
+                        )}
+                        {props.heading === "Dashboard" ? (
+                          ""
+                        ) : (
+                          <td className="py-5 ">
+                            {empdata.assigned_by === null ||
+                              !empdata.assigned_by ||
+                              empdata.assigned_by === ("0" || 0) ? (
+                              <p className="font-size-3  mb-0">N/A</p>
+                            ) : (
+                              <p
+                                className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate text-capitalize"
+                                title={
+                                  admintList?.find(
+                                    (item) =>
+                                      item.admin_id ===
+                                      empdata?.assigned_by
                                   )?.name
+                                }
+                              >
+                                {admintList?.find(
+                                  (item) =>
+                                    item.admin_id ===
+                                    empdata?.assigned_by
+                                )?.name || "N/A"
                                 }
                               </p>
                             )}
@@ -1291,7 +1339,7 @@ export default function EmployeeTable(props) {
                               </p>
                             ) : (
                               <p
-                                className={`font-size-2 font-weight-normal text-black-2 mb-0 ${empdata.interested_in === "pgwp"||empdata.interested_in === "wes"||empdata.interested_in === "atip"
+                                className={`font-size-2 font-weight-normal text-black-2 mb-0 ${empdata.interested_in === "pgwp" || empdata.interested_in === "wes" || empdata.interested_in === "atip"
                                   ? `text-uppercase`
                                   : "text-capitalize"
                                   }`}

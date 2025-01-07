@@ -7,7 +7,7 @@ import { getallAdminData, getallEmployeeData, getAllEmployer } from '../../api/a
 import AdminListTaskTable from '../common/AdminListTaskTabel'
 import CustomButton from '../common/button'
 import AddTaskForm from '../forms/admin/addTaskForm'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 export default function ManageTask() {
     const [apiCall, setApiCall] = useState(false)
@@ -22,6 +22,9 @@ export default function ManageTask() {
     const [employeeList, setEmployeeList] = useState([])
     const [showTaskForm, setShowTaskForm] = useState(false)
     const [adminList, setAdminList] = useState([])
+      const location = useLocation();
+      const searchParams = new URLSearchParams(location.search);
+      const taskId = searchParams.get("taskId");
     /*Function to get all user data */
     const GetAllUserData = async () => {
         try {
@@ -185,6 +188,7 @@ export default function ManageTask() {
                                         pageNo={taskPage}
                                         setpageNo={setTaskPage}
                                         adminType={adminType}
+                                        taskId={taskId}
                                     />
                                 </div>
 

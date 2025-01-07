@@ -8,6 +8,7 @@ import {
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import filterjson from "../../json/filterjson";
+import PasswordInput from "../../common/PasswordInput";
 // import Permissions from "../../json/emailPermisionJson";
 
 function Addadmin(props) {
@@ -15,21 +16,6 @@ function Addadmin(props) {
   const [imgError, setImgError] = useState("");
   let [already, setAlready] = useState("");
   let [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-
-  /*Function to show hide password */
-  const toggleShowPassword = () => setShowPassword((prev) => !prev);
-
-  const renderIcon = () => {
-    if (state.password.length > 0) {
-      return showPassword ? (
-        <i className="fa fa-eye-slash"></i>
-      ) : (
-        <i className="fa fa-eye"></i>
-      );
-    }
-    return null;
-  };
 
   /* Functionality to close the modal */
   const close = () => {
@@ -349,21 +335,18 @@ function Addadmin(props) {
                   Password <span className="text-danger">*</span> :
                 </label>
                 <div className="position-relative">
-                  <input
-                    type={showPassword ? "text" : "password"}
-                    className={
-                      errors.password
-                        ? "form-control border border-danger"
-                        : "form-control"
-                    }
-                    value={state.password}
-                    onChange={onInputChange}
-                    id="password"
-                    name="password"
-                  />
-                  <span className="password-icon" onClick={toggleShowPassword}>
-                    {renderIcon()}
-                  </span>
+                  <PasswordInput
+                      name="password"
+                      value={state.password}
+                      onChange={onInputChange}
+                      className={
+                        errors.password
+                          ? "form-control border border-danger"
+                          : "form-control"
+                      }
+                      placeholder="Enter password"
+                      id="password"
+                    />
                 </div>
                 {/*----ERROR MESSAGE FOR ADMIN PASSWORD----*/}
                 {errors.password && (

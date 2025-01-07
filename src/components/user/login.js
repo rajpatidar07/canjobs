@@ -9,6 +9,7 @@ import {
 } from "../../api/api";
 import useValidation from "../common/useValidation";
 import { toast } from "react-toastify";
+import PasswordInput from "../common/PasswordInput";
 // import { useGoogleLogin } from "@react-oauth/google";
 // import axios from "axios";
 // import { useLinkedIn , LinkedIn} from "react-linkedin-login-oauth2";
@@ -17,6 +18,7 @@ import { toast } from "react-toastify";
 export default function EmployeeLoginModal(props) {
   let [showForgotPassword, setShowForgotPassword] = useState(false);
   let [loading, setLoading] = useState(false);
+
   let navigate = useNavigate();
   // let [facebook, setFacebook] = useState(false);
   let i = 0;
@@ -47,8 +49,8 @@ export default function EmployeeLoginModal(props) {
         value === null || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? null
+            : "Email is invalid",
     ],
     password: [(value) => (value === "" ? "Password is required" : null)],
     forget_email: [
@@ -56,10 +58,10 @@ export default function EmployeeLoginModal(props) {
         state.email
           ? ""
           : value === null || value.trim() === ""
-          ? "Email is required"
-          : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? "Email is required"
+            : /\S+@\S+\.\S+/.test(value)
+              ? null
+              : "Email is invalid",
     ],
   };
   /*----LOGIN ONCHANGE FuNCTION----*/
@@ -201,8 +203,8 @@ export default function EmployeeLoginModal(props) {
     )}&scope=${encodeURIComponent(scope)}`;
   };
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     i = i + 1;
-    // eslint-disable-next-line
     if (
       (code !== "" ||
         code !== undefined ||
@@ -239,9 +241,9 @@ export default function EmployeeLoginModal(props) {
           }
           if (
             res.data.message ===
-              "The token used in the request has been revoked by the user" ||
+            "The token used in the request has been revoked by the user" ||
             decode.error_description ===
-              "Unable to retrieve access token: appid/redirect uri/code verifier does not match authorization code. Or authorization code expired. Or external member binding exists"
+            "Unable to retrieve access token: appid/redirect uri/code verifier does not match authorization code. Or authorization code expired. Or external member binding exists"
           ) {
             toast.error("Token Expired", {
               position: toast.POSITION.TOP_RIGHT,
@@ -451,9 +453,8 @@ export default function EmployeeLoginModal(props) {
                         Password
                       </label>
                       <div className="position-relative">
-                        <input
+                        <PasswordInput
                           name="password"
-                          type="password"
                           value={state.userpassword}
                           onChange={onInputChange}
                           className={

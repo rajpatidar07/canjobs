@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import Loader from "../../common/loader";
 import AgentSignUp from "../../agent/agentSingup";
 import ForgotPasswordForm from "../../forms/admin/ForgotPasswordForm";
+import PasswordInput from "../../common/PasswordInput";
 export default function StudyPartnerLogin({ setLoginCondition }) {
     let navigate = useNavigate();
     let [loading, setLoading] = useState(false);
@@ -217,19 +218,18 @@ export default function StudyPartnerLogin({ setLoginCondition }) {
                                             Password
                                         </label>
                                         <div className="position-relative">
-                                            <input
-                                                name="password"
-                                                type="password"
-                                                value={state.password}
-                                                onChange={onInputChange}
-                                                className={
-                                                    errors.password
-                                                        ? "form-control border border-danger"
-                                                        : "form-control"
-                                                }
-                                                placeholder="Enter password"
-                                                id="password"
-                                            />
+                                            <PasswordInput
+                                            name="password"
+                                            value={state.password}
+                                            onChange={onInputChange}
+                                            className={
+                                                errors.password
+                                                    ? "form-control border border-danger"
+                                                    : "form-control"
+                                            }
+                                            placeholder="Enter password"
+                                            id="password"
+                                        />
                                             {/*----ERROR MESSAGE FOR PASSWORD----*/}
                                             {errors.password && (
                                                 <span>

@@ -5,6 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loader from "../common/loader";
 import ForgotPasswordForm from "../forms/admin/ForgotPasswordForm";
+import PasswordInput from "../common/PasswordInput";
 export default function AdminLoginFrom({ setAdminLoggedIn, setLoginCondition }) {
   let navigate = useNavigate();
   let [loading, setLoading] = useState(false);
@@ -193,9 +194,8 @@ export default function AdminLoginFrom({ setAdminLoggedIn, setLoginCondition }) 
                     Password
                   </label>
                   <div className="position-relative">
-                    <input
+                    <PasswordInput
                       name="password"
-                      type="password"
                       value={state.password}
                       onChange={onInputChange}
                       className={
