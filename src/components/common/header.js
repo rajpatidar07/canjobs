@@ -6,13 +6,14 @@ import { Link, useNavigate } from "react-router-dom";
 // import EmployeeSignupModal from "../user/signup";
 import { toast } from "react-toastify";
 import Setting from "./setting";
+import { getInitials } from "./GetInitials";
 
 function EmployeeHeader() {
   const userType = localStorage.getItem("userType");
   const employee_id = localStorage.getItem("employee_id");
   const company_id = localStorage.getItem("company_id");
   let profile_photo = localStorage.getItem("profile_photo");
-  // let name = localStorage.getItem("name");
+  let name = localStorage.getItem("name");
   let navigate = useNavigate();
   // ADD CLASS FOR MOBILE SCREEN IN SIDEBAR
   // state:-
@@ -369,23 +370,31 @@ function EmployeeHeader() {
                   aria-expanded="false"
                 >
                   <div>
-                    <img
-                      className="rounded-circle"
-                      src={
-                        profile_photo === null ||
-                          profile_photo === "" ||
-                          profile_photo === "null" ||
-                          profile_photo === undefined ||
-                          profile_photo === "undefined"
-                          ? userType === "company"
-                            ? "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
-                            : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                          : profile_photo
-                      }
-                      width={50}
-                      height={50}
-                      alt={""}
-                    />
+                    {((profile_photo === null ||
+                      profile_photo === "" ||
+                      profile_photo === "null" ||
+                      profile_photo === undefined ||
+                      profile_photo === "undefined")
+                      && userType === "company") ?
+                      <p className="company_logo"
+                        style={{ fontSize: "20px" }}>{getInitials(name)}</p>
+                      : <img
+                        className="rounded-circle"
+                        src={
+                          profile_photo === null ||
+                            profile_photo === "" ||
+                            profile_photo === "null" ||
+                            profile_photo === undefined ||
+                            profile_photo === "undefined"
+                            ? userType === "company"
+                              ? "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
+                              : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                            : profile_photo
+                        }
+                        width={50}
+                        height={50}
+                        alt={""}
+                      />}
                   </div>
                   <i className="fas fa-chevron-down heading-default-color ml-6"></i>
                 </Link>

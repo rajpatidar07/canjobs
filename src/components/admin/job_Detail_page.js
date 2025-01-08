@@ -14,6 +14,7 @@ import { RiMailSendLine } from "react-icons/ri";
 import { BiPhoneCall } from "react-icons/bi";
 import LimaArrowProfile from "../common/LimaArrowProfile";
 import EmployeeFooter from "../common/footer";
+import { getInitials } from "../common/GetInitials";
 function JobDetailpageAdmim(props) {
   const user_type = localStorage.getItem("userType");
   let jid = localStorage.getItem("job_id");
@@ -90,7 +91,7 @@ function JobDetailpageAdmim(props) {
           <AdminSidebar />
         </>
       )}
-      
+
       {user_type === "admin" || user_type === "agent" ? null : <EmployeeHeader />}
       <div
         className={
@@ -105,7 +106,7 @@ function JobDetailpageAdmim(props) {
               <div className="bg-white shadow-9 d-flex">
                 <div className="col-md-3 col-sm-6 media align-items-center company_box media border-right">
                   <div className="text_box text-left">
-                    <img
+                    {jobData.logo ? <img
                       className="company_logo"
                       src={
                         jobData.logo === null
@@ -113,7 +114,8 @@ function JobDetailpageAdmim(props) {
                           : jobData.logo
                       }
                       alt=""
-                    />
+                    /> :
+                      <p className="company_logo">AT</p>}
                   </div>
                   <div className="text_box text-left w-100 text-capitalize">
                     <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center text-break">
@@ -361,7 +363,7 @@ function JobDetailpageAdmim(props) {
                           </CustomButton>
                           <div className="col-md-12 col-sm-12 media align-items-center company_box media">
                             <div className="text_box text-left">
-                              <img
+                              {jobData.logo ? <img
                                 className="company_logo"
                                 src={
                                   jobData.logo === null
@@ -369,7 +371,8 @@ function JobDetailpageAdmim(props) {
                                     : jobData.logo
                                 }
                                 alt=""
-                              />
+                              /> : <p className="company_logo"
+                                style={{ fontSize: "50px" }}>{getInitials(jobData.company_name)}</p>}
                             </div>
                             <div className="text_box text-left w-100 text-capitalize">
                               <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center text-break">
@@ -380,7 +383,7 @@ function JobDetailpageAdmim(props) {
                               </h3>
                               <h5 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center text-break">
                                 {/* <b> {jobData.franchise}{" "}</b> */}
-                               { /*<small>
+                                { /*<small>
                                   {jobData.company_name
                                     ? `(${jobData.company_name})`
                                     : ""}</small>*/}

@@ -225,7 +225,7 @@ const AgreementOneForm = ({
     ) {
       // console.log(index, e ``                                                        rrors)
       // if (index === "update details" ? validate() : "") {
-      console.log("first")
+   //    console.log("first")
       try {
         let res = await AddUpdateAgreement(state);
         console.log(res);

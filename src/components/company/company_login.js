@@ -74,6 +74,7 @@ function CompanyLoginForm(props) {
   /*----LOGIN SUBMIT FuNCTION----*/
   const onCompanyLoginClick = async (event) => {
     event.preventDefault();
+    console.log(errors, state)
     if (validate()) {
       setLoading(true);
       try {
@@ -379,28 +380,28 @@ function CompanyLoginForm(props) {
               </div>
               <div className="form-group">
                 <label
-                  htmlFor="userpassword"
+                  htmlFor="password"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Password
                 </label>
                 <div className="position-relative">
                   <PasswordInput
-                    name="userpassword"
-                    value={state.userpassword}
+                    name="password"
+                    value={state.password}
                     onChange={onInputChange}
                     className={
-                      errors.userpassword
+                      errors.password
                         ? "form-control border border-danger"
                         : "form-control"
                     }
                     placeholder="Enter password"
-                    id="userpassword"
+                    id="password"
                   />
                   {/*----ERROR MESSAGE FOR PASSWORD----*/}
-                  {errors.userpassword && (
+                  {errors.password && (
                     <span>
-                      {errors.userpassword.map((error) => (
+                      {errors.password.map((error) => (
                         <span key={error} className="text-danger font-size-3">
                           {error}
                         </span>

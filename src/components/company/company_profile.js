@@ -26,6 +26,7 @@ import MainEmailPage from "../email/mainemailPage";
 import SharePointDocument from "../common/Document folder/SharePointDocument";
 import ConvertTime from "../common/ConvertTime";
 import RetainerAgrementMainPage from "../common/Retaineragreement/RetainerAgrementMainPage";
+import { getInitials } from "../common/GetInitials";
 // import LimaArrowProfile from "../common/LimaArrowProfile";
 function CompanyProfileDetail(props) {
   const user_type = localStorage.getItem("userType");
@@ -177,7 +178,7 @@ function CompanyProfileDetail(props) {
               <div className="bg-white shadow-9 d-flex">
                 <div className="col-md-12 col-sm-12 media align-items-center company_box media border-right">
                   <div className="text_box text-left">
-                    <img
+                    {employerData.logo ? <img
                       className="company_logo"
                       src={
                         employerData.logo === null ||
@@ -188,8 +189,10 @@ function CompanyProfileDetail(props) {
                           : employerData.logo
                       }
                       alt=""
-                    />
-                  </div>
+                    /> :
+                      <p className="company_logo"
+                        style={{ fontSize: "50px" }}>
+                        {employerData && employerData?.company_name ? getInitials(employerData?.company_name) : ""}</p>}                  </div>
                   <div className="text_box text-left w-100 text-capitalize">
                     <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center">
                       <span>
@@ -547,15 +550,18 @@ function CompanyProfileDetail(props) {
                           <div className="bg-white row m-0 w-100 ">
                             <div className="col-md-12 col-sm-12 p-0 media align-items-center company_box media bg-light rounded p-8">
                               <div className="text_box text-left">
-                                <img
+
+                                {employerData.logo ? <img
                                   className="company_logo"
                                   src={
                                     employerData.logo === null
                                       ? "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
                                       : employerData.logo
                                   }
-                                  alt=""
-                                />
+                                  alt={employerData.company_name}
+                                /> :
+                                  <p className="company_logo"
+                                    style={{ fontSize: "50px" }}>{getInitials(employerData?.company_name)}</p>}
                               </div>
                               <div className="text_box text-left w-100">
                                 <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center text-break text-capitalize">

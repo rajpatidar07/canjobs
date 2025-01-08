@@ -6,7 +6,7 @@ const PasswordInput = (props) => {
     const toggleShowPassword = () => setShowPassword((prev) => !prev);
 
     const renderIcon = () => {
-        if (props.value.length > 0) {
+        if (props?.value?.length > 0) {
             return showPassword ? (
                 <i className="fa fa-eye-slash" title="Hide password"></i>
             ) : (
@@ -20,7 +20,7 @@ const PasswordInput = (props) => {
         <div className="position-relative">
             <input
                 type={showPassword ? "text" : "password"}
-                value={props.value}
+                value={props?.value || ""}
                 onChange={props.onChange}
                 placeholder={props.placeholder}
                 style={{ paddingRight: "2rem", width: "100%" }}

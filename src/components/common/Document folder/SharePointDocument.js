@@ -190,7 +190,7 @@ export default function SharePointDocument({
       data.file.mimeType ===
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     ) {
-      console.log("first")
+   //    console.log("first")
       convertToPDF(data);
     } else if (data.file.mimeType === "text/plain") {
       GetNoteText(data, true);
