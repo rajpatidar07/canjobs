@@ -1,6 +1,8 @@
 import axios from "axios";
-const API_URL = window.location.origin === "https://canpathwaysjobs.com"
-  ? "https://api.canpathwaysjobs.com/canjobs/" : "https://apnaorganicstore.in/canjobs/";
+const API_URL =
+  window.location.origin === "https://canpathwaysjobs.com"
+    ? "https://api.canpathwaysjobs.com/canjobs/"
+    : "https://apnaorganicstore.in/canjobs/";
 //Local
 // const API_URL ="http://192.168.29.51/canjobs/"
 // New AWS backend
@@ -14,7 +16,7 @@ const employer_id = localStorage.getItem("company_id");
 const admin_id = localStorage.getItem("admin_id");
 // const agent_id = localStorage.getItem("agent_id");
 const user_type = localStorage.getItem("userType");
-let portal = localStorage.getItem("portal")
+let portal = localStorage.getItem("portal");
 // const admin_type = localStorage.getItem("admin_type");
 if (view_as_token) {
   Token = view_as_token;
@@ -258,13 +260,13 @@ export const AddEmployeeDetails = async (props) => {
   // console.log(props)
   const headers = Token
     ? {
-      "Content-Type": "application/json",
-      Authorization: Token,
-    }
+        "Content-Type": "application/json",
+        Authorization: Token,
+      }
     : {
-      "Content-Type": "application/json",
-      type: "event",
-    };
+        "Content-Type": "application/json",
+        type: "event",
+      };
   // console.log(Token,headers)
   const response = await axios.put(`${API_URL}employeePersonal_detail`, props, {
     headers: headers,
@@ -292,7 +294,7 @@ export const getallEmployeeData = async (
   agentId,
   assignedadminId,
   subType,
-  localFilterValue,
+  localFilterValue
   // subSubtype
   // agent_u_id
 ) => {
@@ -319,7 +321,7 @@ export const getallEmployeeData = async (
       category: subType,
       employee_id: employee_id,
       is_local: localFilterValue,
-      sub_category: ""
+      sub_category: "",
     },
     {
       headers: {
@@ -436,7 +438,7 @@ export const DeleteEmployeeSkill = async (props, id) => {
     `${API_URL}deleteEmployeeSkill`,
     {
       skill_id: props,
-      employee_id: id
+      employee_id: id,
     },
     {
       headers: {
@@ -454,7 +456,7 @@ export const DeleteEmployeeEducation = async (props, id) => {
     `${API_URL}deleteEmployeeEducation`,
     {
       education_id: props,
-      employee_id: id
+      employee_id: id,
     },
     {
       headers: {
@@ -472,7 +474,7 @@ export const DeleteEmployeeCareer = async (props, id) => {
     `${API_URL}deleteEmployeeCareer`,
     {
       career_id: props,
-      employee_id: id
+      employee_id: id,
     },
     {
       headers: {
@@ -809,7 +811,7 @@ export const ADocAnnotation = async (
       end_date: endDate,
       group_by: GroupBy,
       priority: Priority,
-      status: Status
+      status: Status,
     },
     {
       headers: {
@@ -821,19 +823,22 @@ export const ADocAnnotation = async (
   return response;
 };
 
-
 /*Api to get common json to get the json to add task  */
 export const GetGetCommanJson = async (type) => {
-  const response = await axios.post(`${API_URL}api/common_controller/getCommonJson`, {
-    type: type
-  }, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: Token,
+  const response = await axios.post(
+    `${API_URL}api/common_controller/getCommonJson`,
+    {
+      type: type,
     },
-  });
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
   return response.data;
-};/*Api to get document comment list  */
+}; /*Api to get document comment list  */
 export const GetCommentsAndAssign = async (
   id,
   userid,
@@ -846,7 +851,7 @@ export const GetCommentsAndAssign = async (
   time,
   assigned_user_type,
   employeeId,
-  userType,
+  userType
 ) => {
   // console.log( "idi"+id,
   // "userid"+userid,
@@ -872,7 +877,7 @@ export const GetCommentsAndAssign = async (
       type: type,
       assigned_user_type: assigned_user_type,
       employee_id: employeeId,
-      employee_type: userType
+      employee_type: userType,
       // id:"",task_creator_user_id:""
     },
     {
@@ -897,7 +902,7 @@ export const GetAdminsTasks = async (
   time,
   assigned_user_type,
   employeeId,
-  userType,
+  userType
 ) => {
   // console.log( "idi"+id,
   // "userid"+userid,
@@ -923,7 +928,7 @@ export const GetAdminsTasks = async (
       type: type,
       assigned_user_type: assigned_user_type,
       employee_id: employeeId,
-      employee_type: userType
+      employee_type: userType,
       // id:"",task_creator_user_id:""
     },
     {
@@ -937,19 +942,27 @@ export const GetAdminsTasks = async (
 };
 /*Api to update Documentcomment assign */
 export const UpdateDocuentcommentAssign = async (json, docUserType) => {
-  const response = await axios.put(`${API_URL}admin/updateDocTask?document_user_type=${docUserType}`, json, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: Token,
-    },
-  });
+  const response = await axios.put(
+    `${API_URL}admin/updateDocTask?document_user_type=${docUserType}`,
+    json,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
   return response.data;
 };
 /*Api to delete document comments */
-export const DeleteCommentsAndAssign = async (DocId, id, userId,
+export const DeleteCommentsAndAssign = async (
+  DocId,
+  id,
+  userId,
   userType,
   adminId,
-  adminType,) => {
+  adminType
+) => {
   const response = await axios.post(
     `${API_URL}admin/deleteDocTask`,
     {
@@ -988,9 +1001,12 @@ export const SendReplyCommit = async (
   id,
   docName
 ) => {
-  console.log("  id =>", id,
+  console.log(
+    "  id =>",
+    id,
     //   "doc_id =>", data.doc_id,
-    "task_id =>", data.task_id,
+    "task_id =>",
+    data.task_id,
     //   "sender_id =>", senderId,
     //   "sender_email =>", senderEmail,
     //   "sender_name =>", SenderName,
@@ -1009,7 +1025,7 @@ export const SendReplyCommit = async (
     //   "doc_parent_id =>", parent_id,
     //    "data =>", data
     data.task_id ? "fff" : "mmmm"
-  )
+  );
   const response = await axios.post(
     `${API_URL}admin/sendMsg?document_user_type=${DocUserType}`,
     {
@@ -1032,7 +1048,7 @@ export const SendReplyCommit = async (
       type: type,
       employee_id: employee_id,
       document_name: docName,
-      doc_parent_id: parent_id// want to make changes to the backend for this variable
+      doc_parent_id: parent_id, // want to make changes to the backend for this variable
     },
     {
       headers: {
@@ -1105,10 +1121,13 @@ export const GetReplyCommit = async (doc_id) => {
   return response;
 };
 /*Api to delete document comments replyes */
-export const DeleteReplyCommentsAndAssign = async (id, userId,
+export const DeleteReplyCommentsAndAssign = async (
+  id,
+  userId,
   userType,
   adminId,
-  adminType,) => {
+  adminType
+) => {
   const response = await axios.post(
     `${API_URL}admin/deleteThreadMsg`,
     {
@@ -1117,7 +1136,6 @@ export const DeleteReplyCommentsAndAssign = async (id, userId,
       user_type: userType,
       admin_id: adminId,
       admin_type: adminType,
-
     },
     {
       headers: {
@@ -1175,7 +1193,7 @@ export const GetEmployeeVisaList = async (
       limit: limit,
       column_name: column,
       sort_order: sort,
-      type: type
+      type: type,
     },
     {
       headers: {
@@ -1435,7 +1453,7 @@ export const GetAllJobs = async (
       // employee_skills: employeeSkill,
       filter_company_id: cid,
       manager_id: manager_id,
-      is_featured: featured
+      is_featured: featured,
     },
     {
       headers: {
@@ -1707,31 +1725,23 @@ export const AddLimia = async (props, employee_id, job_id) => {
 /*Function to add update lmia additional information for employee lmia*/
 export const AddLmiaAdditionalInformationEmployee = async (data) => {
   // (props);
-  const response = await axios.put(
-    `${API_URL}admin/updateLmiaDetails`,
-    data,
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: Token,
-      },
-    }
-  );
+  const response = await axios.put(`${API_URL}admin/updateLmiaDetails`, data, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  });
   return response.data;
 };
 /*Function to add update lmia additional information for job lmia*/
 export const AddLmiaAdditionalInformationJob = async (data) => {
   // (props);
-  const response = await axios.put(
-    `${API_URL}updateLmiaDetailsJob`,
-    data,
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: Token,
-      },
-    }
-  );
+  const response = await axios.put(`${API_URL}updateLmiaDetailsJob`, data, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  });
   return response.data;
 };
 
@@ -2009,7 +2019,7 @@ export const getAllMentionNotification = async (
       employee_id: "",
       page: page,
       limit: limit,
-      interested_in: portal === "study" ? "study permit" : ""
+      interested_in: portal === "study" ? "study permit" : "",
     },
     {
       headers: {
@@ -2367,7 +2377,7 @@ export const getAllUsersFollowUpData = async (
       search: search,
       limit: limit,
       status: status,
-      page: page
+      page: page,
     },
     {
       headers: {
@@ -2381,12 +2391,16 @@ export const getAllUsersFollowUpData = async (
 
 /*Add All user's Followup Api */
 export const AddAllUserFollowup = async (props) => {
-  const response = await axios.post(`${API_URL}admin/addFollowUp?document_user_type=${props.user_type}`, props, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: Token,
-    },
-  });
+  const response = await axios.post(
+    `${API_URL}admin/addFollowUp?document_user_type=${props.user_type}`,
+    props,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
   return response.data;
 };
 
@@ -2706,7 +2720,7 @@ export const GetEmployeeFilterJob = async (
 
 /*Api to Reserved employee for a job */
 export const ReservedEmployeeForJob = async (id, employee_id, status) => {
-  console.log(id, employee_id, status)
+  console.log(id, employee_id, status);
   const response = await axios.put(
     `${API_URL}setEmployeeReserve`,
     {
@@ -2759,7 +2773,7 @@ export const SendEmail = async (data, FileList, url) => {
       attachments: FileList || "",
       attachments_url: url,
       bcc_email: data.bccemail,
-      signature: data.signature
+      signature: data.signature,
     },
     {
       headers: {
@@ -2773,17 +2787,12 @@ export const SendEmail = async (data, FileList, url) => {
 /*Api to forward  email to the user and company*/
 export const forwardMail = async (data, FileList, url) => {
   // console.log(FileList);
-  const response = await axios.post(
-    `${API_URL}forwardMail`,
-    data
-    ,
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: Token,
-      },
-    }
-  );
+  const response = await axios.post(`${API_URL}forwardMail`, data, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  });
   return response.data;
 };
 
@@ -3315,7 +3324,14 @@ export const UpdateCredentialApi = async (props) => {
 };
 /*Share point apis */
 // Api function to get folders or type of document of perticular employee
-export const getSharePointFoldersList = async (Id, User, columnName, sort, limit, page) => {
+export const getSharePointFoldersList = async (
+  Id,
+  User,
+  columnName,
+  sort,
+  limit,
+  page
+) => {
   const response = await axios.post(
     `${API_URL}admin/getSharpointSiteDriveFolderData_new`,
     {
@@ -3337,7 +3353,16 @@ export const getSharePointFoldersList = async (Id, User, columnName, sort, limit
   return response;
 };
 //Api function to GET emolyee  peticular document folder data
-export const getSharePointParticularFolders = async (Id, User, folderId, columnName, sort, limit, page, fileId) => {
+export const getSharePointParticularFolders = async (
+  Id,
+  User,
+  folderId,
+  columnName,
+  sort,
+  limit,
+  page,
+  fileId
+) => {
   const response = await axios.post(
     `${API_URL}admin/getSharpointSiteDriveFolderToFolderData_new`,
     {
@@ -3349,7 +3374,7 @@ export const getSharePointParticularFolders = async (Id, User, folderId, columnN
       sort_order: sort,
       limit: limit,
       page: page,
-      itemId: fileId
+      itemId: fileId,
     },
     {
       headers: {
@@ -3409,17 +3434,23 @@ export const AddSharePointDOcument = async (
     // console.log(data[i])
     formData.append(`file[${i}]`, data[i]);
   }
-  const response = await axios.post(
-    `${API_URL}admin/sharpointSiteDriveDocumentUpload_new`,
-    formData,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: Token,
-      },
-    }
-  );
-  return response;
+  console.log("NOTEDATA" + JSON.stringify(data));
+
+  if (Token) {
+    const response = await axios.post(
+      `${API_URL}admin/sharpointSiteDriveDocumentUpload_new`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: Token,
+        },
+      }
+    );
+    return response;
+  } else {
+    return "NO TOKEN FOUND";
+  }
 };
 //Api function to get folder or type breadcrumb
 export const getFolderBreadcrumb = async (folderid) => {
@@ -3440,9 +3471,7 @@ export const getFolderBreadcrumb = async (folderid) => {
 };
 // Api to convert doc to pdf
 export const GetDocConvertToken = async (doc_id) => {
-  const response = await axios.get(
-    `${API_URL}admin/getSharePointToken`,
-  );
+  const response = await axios.get(`${API_URL}admin/getSharePointToken`);
   return response;
 };
 // /Api function to edit document name for
@@ -3496,7 +3525,12 @@ export const ChangeFolderNameSharpoint = async (
   return response;
 };
 // /Api function to Delete Folder or document for sharepoint
-export const DeleteFolderOrDocument = async (FolderId, type, userType, userId) => {
+export const DeleteFolderOrDocument = async (
+  FolderId,
+  type,
+  userType,
+  userId
+) => {
   const response = await axios.post(
     `${API_URL}admin/deleteSharepointDocument_new`,
     {
@@ -3504,7 +3538,7 @@ export const DeleteFolderOrDocument = async (FolderId, type, userType, userId) =
       id: FolderId,
       type: type,
       user_id: userId,
-      user_type: userType
+      user_type: userType,
     },
     {
       headers: {
@@ -3559,7 +3593,7 @@ export const GetAgreement = async (Id, receiver, receiver_type, type) => {
       // id: Id,
       receiver: receiver,
       receiver_type: receiver_type,
-      type: type
+      type: type,
     },
     {
       headers: {
@@ -3604,7 +3638,7 @@ export const ExportExcelApi = async (type) => {
     `${API_URL}common/getDataForExcel`,
     {
       type: type,
-      interested_in: portal === "study" ? "study permit" : ""
+      interested_in: portal === "study" ? "study permit" : "",
     },
     {
       headers: {
@@ -3614,13 +3648,12 @@ export const ExportExcelApi = async (type) => {
     }
   );
   return response.data;
-}
+};
 /* Api to apply for program */
 export const ApplyProgram = async (data) => {
   const response = await axios.post(
     `${API_URL}addUpdateAppliedPrograms`,
-    data
-    ,
+    data,
     {
       headers: {
         "Content-Type": "application/json",
@@ -3629,9 +3662,21 @@ export const ApplyProgram = async (data) => {
     }
   );
   return response.data;
-}
+};
 /* Api to get apply program */
-export const GetApplyProgram = async (search, employerId, employee_type, limit, sort, column, page, applied_user_id, applied_user_type, time, program_id) => {
+export const GetApplyProgram = async (
+  search,
+  employerId,
+  employee_type,
+  limit,
+  sort,
+  column,
+  page,
+  applied_user_id,
+  applied_user_type,
+  time,
+  program_id
+) => {
   const response = await axios.post(
     `${API_URL}getAppliedPrograms`,
     {
@@ -3646,8 +3691,7 @@ export const GetApplyProgram = async (search, employerId, employee_type, limit, 
       applied_user_type: applied_user_type,
       program_id: program_id,
       filter_by_time: time,
-    }
-    ,
+    },
     {
       headers: {
         "Content-Type": "application/json",
@@ -3656,4 +3700,4 @@ export const GetApplyProgram = async (search, employerId, employee_type, limit, 
     }
   );
   return response.data;
-}
+};

@@ -32,7 +32,7 @@ export default function CommentSection({
   docsection,
   page,
   setOpenAnnotationBox,
-  docTaskId
+  docTaskId,
 }) {
   const [comments, setComments] = useState();
   const [commntData, setCommentData] = useState();
@@ -80,10 +80,10 @@ export default function CommentSection({
   };
   useEffect(() => {
     if (docTaskId) {
-      getCommentsReplyList()
+      getCommentsReplyList();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [docTaskId])
+  }, [docTaskId]);
 
   /*Function to set the color code to the background of the user name */
   const determineBackgroundColor = (commentItem) => {
@@ -142,12 +142,14 @@ export default function CommentSection({
       const foundEmail = AddPartnersList.find(
         (email) => email.name.toLowerCase() === name.toLowerCase()
       );
+      // console.log("foundEmail" + JSON.stringify(match));
       if (foundEmail) {
         return `<span title="${foundEmail.email}"><b>${foundEmail.name}</b></span>`;
       } else {
         return match; // Keep the original text if email not found
       }
     });
+    console.log("replacedStr" + replacedStr);
     // Update the input value based on the type
     if (type === "reply") {
       setReplyComment(inputValue);
@@ -164,9 +166,9 @@ export default function CommentSection({
         inputValue.includes(
           allAdmin.filter((item) => selectedAdminReply?.includes(item.email))
             ? allAdmin
-              .filter((item) => selectedAdminReply?.includes(item.email))
-              .map((admin) => admin.name)
-              .join(",")
+                .filter((item) => selectedAdminReply?.includes(item.email))
+                .map((admin) => admin.name)
+                .join(",")
             : ""
         )
       ) {
@@ -177,9 +179,9 @@ export default function CommentSection({
           inputValue.includes(
             allAdmin.filter((item) => selectedAdmin?.includes(item.email))
               ? allAdmin
-                .filter((item) => selectedAdmin?.includes(item.email))
-                .map((admin) => admin.name)
-                .join(",")
+                  .filter((item) => selectedAdmin?.includes(item.email))
+                  .map((admin) => admin.name)
+                  .join(",")
               : ""
           )
         ) {
@@ -278,40 +280,40 @@ export default function CommentSection({
       AdminType === "agent"
         ? admin_name
         : newAssinList.find((item) => item.admin_id === admin_id)
-          ? newAssinList.find((item) => item.admin_id === admin_id).name
-          : admin_name;
+        ? newAssinList.find((item) => item.admin_id === admin_id).name
+        : admin_name;
     let senderEmail =
       AdminType === "agent"
         ? admin_email
         : newAssinList.find((item) => item.admin_id === admin_id)
-          ? newAssinList.find((item) => item.admin_id === admin_id).email
-          : "";
+        ? newAssinList.find((item) => item.admin_id === admin_id).email
+        : "";
     // Variables for mentioning admins
     const email = selectedAdmin; // (selectedAdmin + `${selectedPartner && "," + selectedPartner.email}`) || ""; ///\S+@\S+\.\S+/.test(comments) ? comments : "";
     let assignedAdminName = newAssinList.filter((item) =>
       selectedAdmin?.includes(item.email)
     )
       ? newAssinList
-        .filter((item) => selectedAdmin?.includes(item.email))
-        .map((admin) => admin.name)
-        .join(",")
+          .filter((item) => selectedAdmin?.includes(item.email))
+          .map((admin) => admin.name)
+          .join(",")
       : "";
     const assignedUserId = newAssinList.filter((item) =>
       selectedAdmin?.includes(item.email)
     )
       ? newAssinList
-        .filter((item) => selectedAdmin?.includes(item.email))
-        .map((admin) => (admin.u_id ? admin.id : admin.admin_id))
-        .join(",")
+          .filter((item) => selectedAdmin?.includes(item.email))
+          .map((admin) => (admin.u_id ? admin.id : admin.admin_id))
+          .join(",")
       : "";
     // eslint-disable-next-line no-useless-concat
     const assignedUserType = newAssinList.filter((item) =>
       selectedAdmin?.includes(item.email)
     )
       ? newAssinList
-        .filter((item) => selectedAdmin?.includes(item.email))
-        .map((admin) => (admin.u_id ? "agent" : admin.admin_type))
-        .join(",")
+          .filter((item) => selectedAdmin?.includes(item.email))
+          .map((admin) => (admin.u_id ? "agent" : admin.admin_type))
+          .join(",")
       : "";
 
     /*Comment */
@@ -390,7 +392,7 @@ export default function CommentSection({
           annotationDrawBox, //Annotation data,
           "", //annotationId
           DocUserType, //User type of document
-          docData.name,//document name
+          docData.name //document name
         );
         if (res.data.message === "task inserted successfully!") {
           toast.success("Comment uploaded Successfully", {
@@ -403,7 +405,9 @@ export default function CommentSection({
           setSelectedPartner("");
           setFilteredEmails([]);
           Getcomments();
-          if (page !== "file") { setAnnotationDrawBox(""); }
+          if (page !== "file") {
+            setAnnotationDrawBox("");
+          }
           localStorage.setItem("callNotification", true);
         }
       } catch (err) {
@@ -413,7 +417,10 @@ export default function CommentSection({
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
-          if (err.response.data.message === "required fields cannot be blank doc_parent_id") {
+          if (
+            err.response.data.message ===
+            "required fields cannot be blank doc_parent_id"
+          ) {
             toast.error("Folder not found", {
               position: toast.POSITION.TOP_RIGHT,
               autoClose: 1000,
@@ -438,8 +445,8 @@ export default function CommentSection({
       AdminType === "agent"
         ? admin_name
         : newAssinList.find((item) => item.admin_id === admin_id)
-          ? newAssinList.find((item) => item.admin_id === admin_id).name
-          : "";
+        ? newAssinList.find((item) => item.admin_id === admin_id).name
+        : "";
     let senderId = newAssinList.find((item) => item.admin_id === admin_id)
       ? newAssinList.find((item) => item.admin_id === admin_id).admin_id
       : "";
@@ -447,38 +454,38 @@ export default function CommentSection({
       AdminType === "agent"
         ? admin_email
         : newAssinList.find((item) => item.admin_id === admin_id)
-          ? newAssinList.find((item) => item.admin_id === admin_id).email
-          : "";
+        ? newAssinList.find((item) => item.admin_id === admin_id).email
+        : "";
     let senderType =
       AdminType === "agent"
         ? "agent"
         : newAssinList.find((item) => item.admin_id === admin_id)
-          ? newAssinList.find((item) => item.admin_id === admin_id).admin_type
-          : "";
+        ? newAssinList.find((item) => item.admin_id === admin_id).admin_type
+        : "";
     // Variables for mentioning admins
     const email = selectedAdminReply || ""; ///\S+@\S+\.\S+/.test(comments) ? comments : "";
     let assignedAdminName = newAssinList.filter((item) =>
       selectedAdminReply?.includes(item.email)
     )
       ? newAssinList
-        .filter((item) => selectedAdminReply?.includes(item.email))
-        .map((admin) => admin.name)
-        .join(",")
+          .filter((item) => selectedAdminReply?.includes(item.email))
+          .map((admin) => admin.name)
+          .join(",")
       : "";
     const assignedUserId = newAssinList.filter((item) =>
       selectedAdminReply?.includes(item.email)
     )
       ? newAssinList
-        .filter((item) => selectedAdminReply?.includes(item.email))
-        .map((admin) => (admin.u_id ? admin.id : admin.admin_id))
-        .join(",")
+          .filter((item) => selectedAdminReply?.includes(item.email))
+          .map((admin) => (admin.u_id ? admin.id : admin.admin_id))
+          .join(",")
       : "";
     const Rec_Admin_Type = //localStorage.getItem("admin_type");
       newAssinList.filter((item) => selectedAdminReply?.includes(item.email))
         ? newAssinList
-          .filter((item) => selectedAdminReply?.includes(item.email))
-          .map((admin) => (admin.u_id ? "agent" : admin.admin_type))
-          .join(",")
+            .filter((item) => selectedAdminReply?.includes(item.email))
+            .map((admin) => (admin.u_id ? "agent" : admin.admin_type))
+            .join(",")
         : "";
     /*Reply comment */
     let BoldComment = replyCommentToApi?.replace(
@@ -512,7 +519,7 @@ export default function CommentSection({
           docData.parentReference.id,
           DocUserType,
           "",
-          docData.name,//document name
+          docData.name //document name
         );
         if (res.data.message === "message sent successfully!") {
           toast.success("Replied Successfully", {
@@ -525,7 +532,9 @@ export default function CommentSection({
           getCommentsReplyList();
           setSelectedAdminReplye("");
           setFilteredEmails([]);
-          if (page !== "file") { setAnnotationDrawBox(""); }
+          if (page !== "file") {
+            setAnnotationDrawBox("");
+          }
           setSelectedPartner("");
         }
       } catch (err) {
@@ -608,39 +617,41 @@ export default function CommentSection({
     const updatedUserIds = newUserIdArray.join(",");
     const updatedUserTypes = newUserTypeArray.join(",");
     // Construct the final data to send to the API
-    const updatedData = status === 1 || status === "1" ?
-      {
-        doc_id: originalData.doc_id,
-        status: status,
-        is_status_update: true,
-        task_creator_user_id: admin_id,
-        task_creator_user_type:
-          localStorage.getItem("userType") === "admin" ? "admin" : "agent",
-        assined_to_user_id: updatedUserIds,
-        assigned_user_type: updatedUserTypes,
-        doc_parent_id: docData.parentReference.id,
-        assigned_to: updatedEmails,
-        assigned_to_name: updatedNames,
-        id: originalData.id,
-        document_name: docData.name,
-      } : {
-        // ...originalData,
-        doc_id: originalData.doc_id,
-        status: status,
-        is_status_update: true,
-        subject_description: updatedCommentToApi,
-        task_creator_user_id: admin_id,
-        task_creator_user_type:
-          localStorage.getItem("userType") === "admin" ? "admin" : "agent",
-        assined_to_user_id: updatedUserIds,
-        assigned_user_type: updatedUserTypes,
-        doc_parent_id: docData.parentReference.id,
-        assigned_to: updatedEmails,
-        assigned_to_name: updatedNames,
-        id: originalData.id,
-        document_name: docData.name,
-        json: JSON.parse(originalData.doctaskjson)
-      };
+    const updatedData =
+      status === 1 || status === "1"
+        ? {
+            doc_id: originalData.doc_id,
+            status: status,
+            is_status_update: true,
+            task_creator_user_id: admin_id,
+            task_creator_user_type:
+              localStorage.getItem("userType") === "admin" ? "admin" : "agent",
+            assined_to_user_id: updatedUserIds,
+            assigned_user_type: updatedUserTypes,
+            doc_parent_id: docData.parentReference.id,
+            assigned_to: updatedEmails,
+            assigned_to_name: updatedNames,
+            id: originalData.id,
+            document_name: docData.name,
+          }
+        : {
+            // ...originalData,
+            doc_id: originalData.doc_id,
+            status: status,
+            is_status_update: true,
+            subject_description: updatedCommentToApi,
+            task_creator_user_id: admin_id,
+            task_creator_user_type:
+              localStorage.getItem("userType") === "admin" ? "admin" : "agent",
+            assined_to_user_id: updatedUserIds,
+            assigned_user_type: updatedUserTypes,
+            doc_parent_id: docData.parentReference.id,
+            assigned_to: updatedEmails,
+            assigned_to_name: updatedNames,
+            id: originalData.id,
+            document_name: docData.name,
+            json: JSON.parse(originalData.doctaskjson),
+          };
     // Debug logs to verify the updated values
     // console.log("Updated Data: ", updatedData);
 
@@ -652,7 +663,9 @@ export default function CommentSection({
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        setReplyCommentClick(status === 1 || status === "1" ? "" : updatedData.id)
+        setReplyCommentClick(
+          status === 1 || status === "1" ? "" : updatedData.id
+        );
         setCommentData();
         setComments("");
         setCommentToApi("");
@@ -704,20 +717,20 @@ export default function CommentSection({
       AdminType === "agent"
         ? admin_email
         : newAssinList.find((item) => item.admin_id === admin_id)
-          ? newAssinList.find((item) => item.admin_id === admin_id).email
-          : "";
+        ? newAssinList.find((item) => item.admin_id === admin_id).email
+        : "";
     let senderType =
       AdminType === "agent"
         ? "agent"
         : newAssinList.find((item) => item.admin_id === admin_id)
-          ? newAssinList.find((item) => item.admin_id === admin_id).admin_type
-          : "";
+        ? newAssinList.find((item) => item.admin_id === admin_id).admin_type
+        : "";
     let sender =
       AdminType === "agent"
         ? admin_name
         : newAssinList.find((item) => item.admin_id === admin_id)
-          ? newAssinList.find((item) => item.admin_id === admin_id).name
-          : "";
+        ? newAssinList.find((item) => item.admin_id === admin_id).name
+        : "";
     selectedAdmins.forEach((admin) => {
       if (!newEmailsArray.includes(admin.email)) {
         // Add new admin's details to the arrays
@@ -777,7 +790,9 @@ export default function CommentSection({
         getCommentsReplyList();
         setSelectedAdminReplye("");
         setFilteredEmails([]);
-        if (page !== "file") { setAnnotationDrawBox(""); }
+        if (page !== "file") {
+          setAnnotationDrawBox("");
+        }
         setSelectedPartner("");
       }
     } catch (err) {
@@ -807,7 +822,14 @@ export default function CommentSection({
   /*Function to delete comment */
   const OnDeleteComment = async (docId, id) => {
     try {
-      let res = await DeleteCommentsAndAssign(docId, id, userId, DocUserType, admin_id, AdminType);
+      let res = await DeleteCommentsAndAssign(
+        docId,
+        id,
+        userId,
+        DocUserType,
+        admin_id,
+        AdminType
+      );
       if (res.data.message === "Task deleted successfully!") {
         toast.success("Task Deleted Successfully", {
           position: toast.POSITION.TOP_RIGHT,
@@ -825,7 +847,13 @@ export default function CommentSection({
   /*Function to delete comment Replies*/
   const OnDeleteCommentReplies = async (id) => {
     try {
-      let res = await DeleteReplyCommentsAndAssign(id, userId, DocUserType, admin_id, AdminType);
+      let res = await DeleteReplyCommentsAndAssign(
+        id,
+        userId,
+        DocUserType,
+        admin_id,
+        AdminType
+      );
       if (res.data.message === "deleted successfully!") {
         toast.success("Reply Deleted Successfully", {
           position: toast.POSITION.TOP_RIGHT,
@@ -843,22 +871,27 @@ export default function CommentSection({
 
   return (
     <div
-      className={`${openAnnotationBox
-        ? "col-md-3 col-lg-3 col-sm-2 py-2 bg-light comments_and_replies"
-        : "col-md-3 col-lg-3 col-sm-2 py-2 bg-light comments_and_replies d-none"
-        } `}
+      className={`${
+        openAnnotationBox
+          ? "col-md-3 col-lg-3 col-sm-2 py-2 bg-light comments_and_replies"
+          : "col-md-3 col-lg-3 col-sm-2 py-2 bg-light comments_and_replies d-none"
+      } `}
       style={{
         transition: "all .3s",
         maxHeight: docsection ? "100vh" : "calc(100vh - 130px)",
       }}
     >
-      {page === "file" &&
-        <div className="d-flex flex-row-reverse"> <button
-          className={`btn-sm btn-light border-0 rounded-5 mx-2 flex-end`}
-          onClick={() => setOpenAnnotationBox(false)}
-        >
-          x
-        </button></div>}
+      {page === "file" && (
+        <div className="d-flex flex-row-reverse">
+          {" "}
+          <button
+            className={`btn-sm btn-light border-0 rounded-5 mx-2 flex-end`}
+            onClick={() => setOpenAnnotationBox(false)}
+          >
+            x
+          </button>
+        </div>
+      )}
       {/* //condition for imm pdf
         // (docData.name && docData.name.toLowerCase().includes("imm")
         //   ? replyCommentClick === undefined ||
@@ -877,10 +910,10 @@ export default function CommentSection({
       >
         <form
           className="comment-form p-5 rounded bg-white"
-        // onSubmit={(e) => {
-        //   e.preventDefault();
-        //   addAnnotation(annotationDrawBox);
-        // }}
+          // onSubmit={(e) => {
+          //   e.preventDefault();
+          //   addAnnotation(annotationDrawBox);
+          // }}
         >
           <div className="comment-input-container m-0">
             <label className="input_label m-0">Add new comment:</label>
@@ -896,14 +929,20 @@ export default function CommentSection({
               value={comments || ""}
               onChange={handleInputChange}
               placeholder="Comments or add others with @"
-              className={`comment-input ${commntData ? "" : "border-0"} bg-light`}
+              className={`comment-input ${
+                commntData ? "" : "border-0"
+              } bg-light`}
               rows={2}
               style={{ outline: 0, border: commntData ? "2px solid blue" : "" }}
             ></textarea>
             {filteredEmails.length > 0 && type !== "reply" ? (
               <ul
                 className="email-suggestions"
-                style={{ maxHeight: 400, overflowY: "auto", zIndex: "999 !important" }}
+                style={{
+                  maxHeight: 400,
+                  overflowY: "auto",
+                  zIndex: "999 !important",
+                }}
               >
                 {filteredEmails.map((email, index) => (
                   <li
@@ -939,7 +978,9 @@ export default function CommentSection({
                 onClick={() => {
                   setComments("");
                   setCommentToApi("");
-                  if (page !== "file") { setAnnotationDrawBox(""); }
+                  if (page !== "file") {
+                    setAnnotationDrawBox("");
+                  }
                   setCommentData();
                   setSelectedPartner();
                 }}
@@ -1023,22 +1064,24 @@ export default function CommentSection({
               (commentsList || []).map((commentItem, index) => (
                 <div
                   className={`card col-12 mb-2 p-0 comment_box_card bg-white
-                  ${(annotationId === JSON.parse(commentItem?.doctaskjson).id &&
+                  ${
+                    (annotationId === JSON.parse(commentItem?.doctaskjson).id &&
                       annotationId &&
-                      JSON.parse(commentItem?.doctaskjson)) || commntData === commentItem
+                      JSON.parse(commentItem?.doctaskjson)) ||
+                    commntData === commentItem
                       ? "highlighted-comment"
                       : ""
-                    } `}
+                  } `}
                   style={{
                     backgroundColor: "#fff",
                     color: "white",
-                    transitionDelay: "initial"
+                    transitionDelay: "initial",
                   }}
                   onClick={() => {
                     if (page !== "file") {
                       setAnnotationId(
                         JSON.parse(commentItem?.doctaskjson).id || ""
-                      )
+                      );
                     }
                     if (commentItem.status !== "1") {
                       setReplyCommentClick(commentItem.id);
@@ -1058,15 +1101,19 @@ export default function CommentSection({
                   key={index}
                 >
                   <div
-                    className={`comment_status_update ${AdminType === "agent"
-                      ? commentItem.task_creator_user_id === admin_id
-                        ? "d-flex"
-                        : "d-none"
-                      : "d-flex"}`}
+                    className={`comment_status_update ${
+                      AdminType === "agent"
+                        ? commentItem.task_creator_user_id === admin_id
+                          ? "d-flex"
+                          : "d-none"
+                        : "d-flex"
+                    }`}
                     style={{ position: "absolute", right: 5, gap: 5 }}
                   >
                     <Link
-                      className={`text-gray pr-1 ${commentItem.status !== "0" ? "d-none" : ""}`}
+                      className={`text-gray pr-1 ${
+                        commentItem.status !== "0" ? "d-none" : ""
+                      }`}
                       title="Update Comment"
                       onClick={() => {
                         handleUpdateCommentLinkClick(commentItem);
@@ -1077,14 +1124,20 @@ export default function CommentSection({
 
                     <Link
                       className=""
-                      title={commentItem.status === "2" ? "Task overdue" : "Update status to complete"}
+                      title={
+                        commentItem.status === "2"
+                          ? "Task overdue"
+                          : "Update status to complete"
+                      }
                       onClick={(e) => {
                         OnHandleUpdateCommentStatus(
                           commentItem,
                           commentItem.status === "1" ? "0" : "1"
                         );
                         setFilteredEmails([]);
-                        if (page !== "file") { setAnnotationDrawBox(""); }
+                        if (page !== "file") {
+                          setAnnotationDrawBox("");
+                        }
                       }}
                     >
                       <IoIosCheckmarkCircle
