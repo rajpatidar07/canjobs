@@ -128,13 +128,17 @@ export default function CommentSection({
   const handleUpdateCommentLinkClick = (commentItem) => {
     setComments(commentItem.subject_description);
     setCommentData(commentItem);
-    setSelectedAdmin(newAssinList.filter((item) => item.id === commentItem.assigned_to))
   };
+  //Handler for link click for reply of comment
   const handleUpdateReplyLinkClick = (item) => {
     setReplyComment(item.msg);
     setReplyCommentData(item);
-    console.log(newAssinList.filter((item) => item.id === item.receiver_id || item.admin_id === item.receiver_id))
-    setSelectedAdminReplye(newAssinList.filter((item) => item.id === item.receiver_id || item.admin_id === item.receiver_id))
+    // const idsToMatch = item.receiver_id.split(",");
+
+    // const filteredData = newAssinList.filter(
+    //   (item) => idsToMatch.includes(item.id) || idsToMatch.includes(item.admin_id)
+    // );
+    // setSelectedAdminReplye(filteredData)
   };
   /* Function to handle input change and set email or other comments */
   // const handleInputChange = (event, type) => {
@@ -276,6 +280,7 @@ export default function CommentSection({
       }
     }
   };
+  /*FUnction to clicked the email of the searched admin */
   const handleEmailClick = (user, type) => {
     // Add the selected user to the assigned list
     if (type === "reply") {
@@ -304,6 +309,7 @@ export default function CommentSection({
       );
     }
   };
+  /*Add function to add comment */
   const addAnnotation = async (annotation) => {
     // setAddCommentFlag(false);
     // Retrieve data from local storage
@@ -556,47 +562,47 @@ export default function CommentSection({
         autoClose: 1000,
       });
     } else {
-      // try {
-      //   let res = await SendReplyCommit(
-      //     data,
-      //     email,
-      //     replyComment,
-      //     assignedUserId,
-      //     Rec_Admin_Type,
-      //     sender,
-      //     assignedAdminName,
-      //     "document",
-      //     senderId,
-      //     senderEmail,
-      //     AdminType === "agent" ? "agent" : senderType,
-      //     userId, //Userid
-      //     docData.parentReference.id,
-      //     DocUserType,
-      //     data?.task_id ? data.id : "",
-      //     docData.name,//document name
+      try {
+        let res = await SendReplyCommit(
+          data,
+          email,
+          replyComment,
+          assignedUserId,
+          Rec_Admin_Type,
+          sender,
+          assignedAdminName,
+          "document",
+          senderId,
+          senderEmail,
+          AdminType === "agent" ? "agent" : senderType,
+          userId, //Userid
+          docData.parentReference.id,
+          DocUserType,
+          data?.task_id ? data.id : "",
+          docData.name,//document name
 
-      //   );
-      //   if (res.data.message === "message sent successfully!") {
-      //     toast.success("Replied Successfully", {
-      //       position: toast.POSITION.TOP_RIGHT,
-      //       autoClose: 1000,
-      //     });
-      //     // setNotificationApiCall(true);
-      //     localStorage.setItem("callNotification", true);
-      //     setReplyComment("");
-      //     getCommentsReplyList();
-      //     setSelectedAdminReplye("");
-      //     setReplyCommentData("")
-      //     setFilteredEmails([]);
-      //     if (page !== "file") { setAnnotationDrawBox(""); }
+        );
+        if (res.data.message === "message sent successfully!") {
+          toast.success("Replied Successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          // setNotificationApiCall(true);
+          localStorage.setItem("callNotification", true);
+          setReplyComment("");
+          getCommentsReplyList();
+          setSelectedAdminReplye("");
+          setReplyCommentData("")
+          setFilteredEmails([]);
+          if (page !== "file") { setAnnotationDrawBox(""); }
 
-      //   }
-      // } catch (err) {
-      //   console.log(err);
-      //   setSelectedAdminReplye("");
-      //   setFilteredEmails([]);
+        }
+      } catch (err) {
+        console.log(err);
+        setSelectedAdminReplye("");
+        setFilteredEmails([]);
 
-      // }
+      }
     }
   };
   /*Function to update comment */
@@ -703,131 +709,114 @@ export default function CommentSection({
       console.log(err);
     }
   };
-  // const OnHandleUpdateCommentReply = async (originalData) => {
-  //   const { receiver_email, msg, receiver_name, receiver_type, receiver_id } =
-  //     originalData;
-  //   let updatedCommentToApi = replyComment || msg;
+  /*FUnction to update replies for he comment */
+  const OnHandleUpdateCommentReply = async (originalData) => {
+    const { receiver_email, msg, receiver_name, receiver_type, receiver_id } =
+      originalData;
+    let updatedCommentToApi = replyComment || msg;
 
-  //   // Parse the original admin details
-  //   let emailsArray = receiver_email?.split(",") || [];
-  //   let namesArray = receiver_name?.split(",") || [];
-  //   let userIdArray = receiver_id?.split(",") || [];
-  //   let userTypeArray = receiver_type?.split(",") || [];
+    // Parse the original admin details
+    let emailsArray = receiver_email?.split(",") || [];
+    let namesArray = receiver_name?.split(",") || [];
+    let userIdArray = receiver_id?.split(",") || [];
+    let userTypeArray = receiver_type?.split(",") || [];
 
-  //   // Create new arrays for users who should remain after removal
-  //   const newEmailsArray = [];
-  //   const newNamesArray = [];
-  //   const newUserIdArray = [];
-  //   const newUserTypeArray = [];
+    // Create new arrays for users who should remain after removal
+    const newEmailsArray = [];
+    const newNamesArray = [];
+    const newUserIdArray = [];
+    const newUserTypeArray = [];
 
-  //   // Iterate through names to determine which ones to keep
-  //   namesArray.forEach((name, index) => {
-  //     const nameRegex = new RegExp(`\\b${name}\\b`, "g");
+    // Iterate through names to determine which ones to keep
+    namesArray.forEach((name, index) => {
+      const nameRegex = new RegExp(`\\b${name}\\b`, "g");
 
-  //     if (nameRegex.test(updatedCommentToApi)) {
-  //       // If the name is still in the updated comment, keep its corresponding details
-  //       newEmailsArray.push(emailsArray[index]);
-  //       newNamesArray.push(namesArray[index]);
-  //       newUserIdArray.push(userIdArray[index]);
-  //       newUserTypeArray.push(userTypeArray[index]);
-  //     }
-  //   });
+      if (nameRegex.test(updatedCommentToApi)) {
+        // If the name is still in the updated comment, keep its corresponding details
+        newEmailsArray.push(emailsArray[index]);
+        newNamesArray.push(namesArray[index]);
+        newUserIdArray.push(userIdArray[index]);
+        newUserTypeArray.push(userTypeArray[index]);
+      }
+    });
 
-  //   // Handle newly added admins
-  //   const newAssinList = [...allAdmin, ...partnerList];
-  //   const selectedAdmins = newAssinList.filter((item) =>
-  //     selectedAdminReply?.includes(item.email)
-  //   );
-  //   let senderId = newAssinList.find((item) => item.admin_id === admin_id)
-  //     ? newAssinList.find((item) => item.admin_id === admin_id).admin_id
-  //     : "";
-  //   let senderEmail =
-  //     AdminType === "agent"
-  //       ? admin_email
-  //       : newAssinList.find((item) => item.admin_id === admin_id)
-  //         ? newAssinList.find((item) => item.admin_id === admin_id).email
-  //         : "";
-  //   let senderType =
-  //     AdminType === "agent"
-  //       ? "agent"
-  //       : newAssinList.find((item) => item.admin_id === admin_id)
-  //         ? newAssinList.find((item) => item.admin_id === admin_id).admin_type
-  //         : "";
-  //   let sender =
-  //     AdminType === "agent"
-  //       ? admin_name
-  //       : newAssinList.find((item) => item.admin_id === admin_id)
-  //         ? newAssinList.find((item) => item.admin_id === admin_id).name
-  //         : "";
-  //   selectedAdmins.forEach((admin) => {
-  //     if (!newEmailsArray.includes(admin.email)) {
-  //       // Add new admin's details to the arrays
-  //       newEmailsArray.push(admin.email);
-  //       newNamesArray.push(admin.name);
-  //       newUserIdArray.push(admin.u_id ? admin.id : admin.admin_id);
-  //       newUserTypeArray.push(admin.u_id ? "agent" : admin.admin_type);
-  //     }
-  //   });
+    let senderId = newAssinList.find((item) => item.admin_id === admin_id)
+      ? newAssinList.find((item) => item.admin_id === admin_id).admin_id
+      : "";
+    let senderEmail =
+      AdminType === "agent"
+        ? admin_email
+        : newAssinList.find((item) => item.admin_id === admin_id)
+          ? newAssinList.find((item) => item.admin_id === admin_id).email
+          : "";
+    let senderType =
+      AdminType === "agent"
+        ? "agent"
+        : newAssinList.find((item) => item.admin_id === admin_id)
+          ? newAssinList.find((item) => item.admin_id === admin_id).admin_type
+          : "";
+    let sender =
+      AdminType === "agent"
+        ? admin_name
+        : newAssinList.find((item) => item.admin_id === admin_id)
+          ? newAssinList.find((item) => item.admin_id === admin_id).name
+          : "";
+    (selectedAdminReply || []).forEach((admin) => {
+      if (!newEmailsArray.includes(admin.email)) {
+        // Add new admin's details to the arrays
+        newEmailsArray.push(admin.email);
+        newNamesArray.push(admin.name);
+        newUserIdArray.push(admin.u_id ? admin.id : admin.admin_id);
+        newUserTypeArray.push(admin.u_id ? "agent" : admin.admin_type);
+      }
+    });
 
-  //   // Update the comment by ensuring all existing names are wrapped in <span> tags
-  //   updatedCommentToApi = newNamesArray.reduce((comment, name, index) => {
-  //     const email = newEmailsArray[index];
-  //     const nameRegex = new RegExp(`\\b${name}\\b`, "g");
+    // Prepare updated strings for each array
+    const updatedEmails = newEmailsArray.join(",");
+    const updatedNames = newNamesArray.join(",");
+    const updatedUserIds = newUserIdArray.join(",");
+    const updatedUserTypes = newUserTypeArray.join(",");
 
-  //     // Replace names with <span> tags if they aren't already wrapped
-  //     if (!comment.includes(`<span title="${email}"><b>${name}</b></span>`)) {
-  //       const spanTag = `<span title="${email}"><b>${name}</b></span>`;
-  //       comment = comment.replace(nameRegex, spanTag);
-  //     }
-  //     return comment;
-  //   }, updatedCommentToApi);
+    // Call the API to update the document
+    try {
+      let res = await SendReplyCommit(
+        originalData,
+        updatedEmails,
+        updatedCommentToApi,
+        updatedUserIds,
+        updatedUserTypes,
+        sender,
+        updatedNames,
+        "document",
+        senderId,
+        senderEmail,
+        AdminType === "agent" ? "agent" : senderType,
+        userId, //Userid
+        docData.parentReference.id,
+        DocUserType,
+        originalData.id
+      );
+      if (res.data.message === "message sent successfully!") {
+        toast.success("Replied Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        // setNotificationApiCall(true);
+        localStorage.setItem("callNotification", true);
+        setReplyComment("");
+        getCommentsReplyList();
+        setSelectedAdminReplye("");
+        setFilteredEmails([]);
+        if (page !== "file") { setAnnotationDrawBox(""); }
 
-  //   // Prepare updated strings for each array
-  //   const updatedEmails = newEmailsArray.join(",");
-  //   const updatedNames = newNamesArray.join(",");
-  //   const updatedUserIds = newUserIdArray.join(",");
-  //   const updatedUserTypes = newUserTypeArray.join(",");
+      }
+    } catch (err) {
+      console.log(err);
+      setSelectedAdminReplye("");
+      setFilteredEmails([]);
 
-  //   // Call the API to update the document
-  //   try {
-  //     let res = await SendReplyCommit(
-  //       originalData,
-  //       updatedEmails,
-  //       updatedCommentToApi,
-  //       updatedUserIds,
-  //       updatedUserTypes,
-  //       sender,
-  //       updatedNames,
-  //       "document",
-  //       senderId,
-  //       senderEmail,
-  //       AdminType === "agent" ? "agent" : senderType,
-  //       userId, //Userid
-  //       docData.parentReference.id,
-  //       DocUserType,
-  //       originalData.id
-  //     );
-  //     if (res.data.message === "message sent successfully!") {
-  //       toast.success("Replied Successfully", {
-  //         position: toast.POSITION.TOP_RIGHT,
-  //         autoClose: 1000,
-  //       });
-  //       // setNotificationApiCall(true);
-  //       localStorage.setItem("callNotification", true);
-  //       setReplyComment("");
-  //       getCommentsReplyList();
-  //       setSelectedAdminReplye("");
-  //       setFilteredEmails([]);
-  //       if (page !== "file") { setAnnotationDrawBox(""); }
-  //       
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //     setSelectedAdminReplye("");
-  //     setFilteredEmails([]);
-  //     
-  //   }
-  // };
+    }
+  };
   /*Function to get comment list */
   const Getcomments = async (annotStatus, adminfilter) => {
     let CommentRes = await GetCommentsAndAssign(
@@ -1241,7 +1230,7 @@ export default function CommentSection({
                         allAdmin={allAdmin}
                         determineBackgroundColor={determineBackgroundColor}
                         handleUpdateReplyLinkClick={handleUpdateReplyLinkClick}
-                        // OnHandleUpdateCommentReply={OnHandleUpdateCommentReply}
+                        OnHandleUpdateCommentReply={OnHandleUpdateCommentReply}
                         type={type}
                         replyCommentData={replyCommentData}
                         OnDeleteCommentReplies={OnDeleteCommentReplies}

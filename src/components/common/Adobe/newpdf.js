@@ -1278,108 +1278,317 @@
 // };
 
 // export default Newpdf;
-import React, { useState } from "react";
+// import React, { useState } from "react";
 
-const usersList = [
-    { id: 1, name: "John Doe" },
-    { id: 2, name: "Jane Smith" },
-    { id: 3, name: "Alice Johnson" },
-    { id: 4, name: "Bob Brown" },
+// const usersList = [
+//     { id: 1, name: "John Doe" },
+//     { id: 2, name: "Jane Smith" },
+//     { id: 3, name: "Alice Johnson" },
+//     { id: 4, name: "Bob Brown" },
+// ];
+
+// const Newpdf = () => {
+//     const [comment, setComment] = useState("");
+//     const [dropdownVisible, setDropdownVisible] = useState(false);
+//     const [filteredUsers, setFilteredUsers] = useState(usersList);
+//     const [assignedUsers, setAssignedUsers] = useState([]);
+
+//     const handleInputChange = (e) => {
+//         const value = e.target.value;
+//         setComment(value);
+
+//         // Check if the last typed character is '@'
+//         const lastChar = value.slice(-1);
+//         if (lastChar === "@") {
+//             setDropdownVisible(true);
+//             setFilteredUsers(usersList);
+//         } else {
+//             const match = value.match(/@(\w*)$/);
+//             if (match) {
+//                 const query = match[1].toLowerCase();
+//                 const filtered = usersList.filter((user) =>
+//                     user.name.toLowerCase().includes(query)
+//                 );
+//                 setFilteredUsers(filtered);
+//             } else {
+//                 setDropdownVisible(false);
+//             }
+//         }
+//     };
+
+//     const handleUserSelect = (user) => {
+//         // Add the selected user to the assigned list
+//         setAssignedUsers((prev) => [...prev, user]);
+
+//         // Replace @username in the comment
+//         const updatedComment = comment.replace(/@\w*$/, `@${user.name} `);
+//         setComment(updatedComment);
+
+//         // Hide the dropdown and update the filtered users list
+//         setDropdownVisible(false);
+//         setFilteredUsers((prev) =>
+//             prev.filter((u) => u.id !== user.id)
+//         );
+//     };
+
+//     return (
+//         <div style={{ maxWidth: "500px", margin: "0 auto" }}>
+//             <textarea
+//                 value={comment}
+//                 onChange={handleInputChange}
+//                 rows={5}
+//                 style={{ width: "100%", padding: "10px" }}
+//                 placeholder="Type your comment and use @ to mention users..."
+//             />
+
+//             {dropdownVisible && filteredUsers.length > 0 && (
+//                 <ul
+//                     style={{
+//                         listStyle: "none",
+//                         padding: "0",
+//                         margin: "5px 0",
+//                         border: "1px solid #ccc",
+//                         borderRadius: "4px",
+//                         backgroundColor: "#fff",
+//                         maxHeight: "150px",
+//                         overflowY: "auto",
+//                     }}
+//                 >
+//                     {filteredUsers.map((user) => (
+//                         <li
+//                             key={user.id}
+//                             onClick={() => handleUserSelect(user)}
+//                             style={{
+//                                 padding: "10px",
+//                                 cursor: "pointer",
+//                                 borderBottom: "1px solid #eee",
+//                             }}
+//                         >
+//                             {user.name}
+//                         </li>
+//                     ))}
+//                 </ul>
+//             )}
+
+//             {assignedUsers.length > 0 && (
+//                 <div style={{ marginTop: "10px" }}>
+//                     <strong>Assigned Users:</strong>
+//                     <ul>
+//                         {assignedUsers.map((user) => (
+//                             <li key={user.id}>{user.name}</li>
+//                         ))}
+//                     </ul>
+//                 </div>
+//             )}
+//         </div>
+//     );
+// };
+
+// export default Newpdf;
+import React from "react";
+
+const activities = [
+    {
+        "id": 2,
+        "activity_id": 2,
+        "week_no": 2,
+        "language": null,
+        "activity": null,
+        "brand": "amit",
+        "who": "amit",
+        "activity_type": "survey",
+        "completion_check": null,
+        "show_completed": false,
+        "location": null,
+        "user_duration": 0,
+        "teamlead_duration": 0,
+        "coach_duration": 0,
+        "coach_type": null,
+        "travel_time": null,
+        "url": null,
+        "amount": null,
+        "file": null,
+        "upload_possible": "no",
+        "activity_description": "desc1",
+        "activity_name": "acc1",
+        "send_reminder": "no",
+        "show_in_task": "no",
+        "add_comment_option": "no",
+        "indicate_when_completed": "no",
+        "is_active": 1,
+        "is_deleted": 0,
+        "created_at": "2025-01-09T11:12:18.070172Z",
+        "updated_at": "2025-01-10T04:18:00.290446Z",
+        "program_id": 1
+    },
+    {
+        "id": 3,
+        "activity_id": null,
+        "week_no": 1,
+        "language": null,
+        "activity": null,
+        "brand": "brand2",
+        "who": null,
+        "activity_type": "survey",
+        "completion_check": null,
+        "show_completed": false,
+        "location": null,
+        "user_duration": 0,
+        "teamlead_duration": 0,
+        "coach_duration": 0,
+        "coach_type": null,
+        "travel_time": null,
+        "url": null,
+        "amount": null,
+        "file": null,
+        "upload_possible": "no",
+        "activity_description": "desc1",
+        "activity_name": "acc2",
+        "send_reminder": "no",
+        "show_in_task": "no",
+        "add_comment_option": "no",
+        "indicate_when_completed": "no",
+        "is_active": 1,
+        "is_deleted": 0,
+        "created_at": "2025-01-10T05:53:41.964815Z",
+        "updated_at": "2025-01-10T05:53:41.964815Z",
+        "program_id": 1
+    },
+    {
+        "id": 4,
+        "activity_id": null,
+        "week_no": 3,
+        "language": null,
+        "activity": null,
+        "brand": "brand3",
+        "who": null,
+        "activity_type": "survey",
+        "completion_check": null,
+        "show_completed": false,
+        "location": null,
+        "user_duration": 0,
+        "teamlead_duration": 0,
+        "coach_duration": 0,
+        "coach_type": null,
+        "travel_time": null,
+        "url": null,
+        "amount": null,
+        "file": null,
+        "upload_possible": "no",
+        "activity_description": "desc1",
+        "activity_name": "acc2",
+        "send_reminder": "no",
+        "show_in_task": "no",
+        "add_comment_option": "no",
+        "indicate_when_completed": "no",
+        "is_active": 1,
+        "is_deleted": 0,
+        "created_at": "2025-01-10T05:53:56.868331Z",
+        "updated_at": "2025-01-10T05:53:56.868331Z",
+        "program_id": 1
+    },
+    {
+        "id": 5,
+        "activity_id": null,
+        "week_no": 1,
+        "language": null,
+        "activity": null,
+        "brand": "brand4",
+        "who": null,
+        "activity_type": "survey",
+        "completion_check": null,
+        "show_completed": false,
+        "location": null,
+        "user_duration": 0,
+        "teamlead_duration": 0,
+        "coach_duration": 0,
+        "coach_type": null,
+        "travel_time": null,
+        "url": null,
+        "amount": null,
+        "file": null,
+        "upload_possible": "no",
+        "activity_description": "desc1",
+        "activity_name": "acc4",
+        "send_reminder": "no",
+        "show_in_task": "no",
+        "add_comment_option": "no",
+        "indicate_when_completed": "no",
+        "is_active": 1,
+        "is_deleted": 0,
+        "created_at": "2025-01-10T05:54:08.476418Z",
+        "updated_at": "2025-01-10T05:54:08.476418Z",
+        "program_id": 1
+    },
+    {
+        "id": 6,
+        "activity_id": null,
+        "week_no": 2,
+        "language": null,
+        "activity": null,
+        "brand": "brand5",
+        "who": null,
+        "activity_type": "survey",
+        "completion_check": null,
+        "show_completed": false,
+        "location": null,
+        "user_duration": 0,
+        "teamlead_duration": 0,
+        "coach_duration": 0,
+        "coach_type": null,
+        "travel_time": null,
+        "url": null,
+        "amount": null,
+        "file": null,
+        "upload_possible": "no",
+        "activity_description": "desc1",
+        "activity_name": "acc5",
+        "send_reminder": "no",
+        "show_in_task": "no",
+        "add_comment_option": "no",
+        "indicate_when_completed": "no",
+        "is_active": 1,
+        "is_deleted": 0,
+        "created_at": "2025-01-10T05:54:22.328012Z",
+        "updated_at": "2025-01-10T05:54:22.328012Z",
+        "program_id": 1
+    }
 ];
 
 const Newpdf = () => {
-    const [comment, setComment] = useState("");
-    const [dropdownVisible, setDropdownVisible] = useState(false);
-    const [filteredUsers, setFilteredUsers] = useState(usersList);
-    const [assignedUsers, setAssignedUsers] = useState([]);
-
-    const handleInputChange = (e) => {
-        const value = e.target.value;
-        setComment(value);
-
-        // Check if the last typed character is '@'
-        const lastChar = value.slice(-1);
-        if (lastChar === "@") {
-            setDropdownVisible(true);
-            setFilteredUsers(usersList);
-        } else {
-            const match = value.match(/@(\w*)$/);
-            if (match) {
-                const query = match[1].toLowerCase();
-                const filtered = usersList.filter((user) =>
-                    user.name.toLowerCase().includes(query)
-                );
-                setFilteredUsers(filtered);
-            } else {
-                setDropdownVisible(false);
-            }
-        }
-    };
-
-    const handleUserSelect = (user) => {
-        // Add the selected user to the assigned list
-        setAssignedUsers((prev) => [...prev, user]);
-
-        // Replace @username in the comment
-        const updatedComment = comment.replace(/@\w*$/, `@${user.name} `);
-        setComment(updatedComment);
-
-        // Hide the dropdown and update the filtered users list
-        setDropdownVisible(false);
-        setFilteredUsers((prev) =>
-            prev.filter((u) => u.id !== user.id)
-        );
-    };
-
+    // Step 1: Group data by week_no
+    // const groupedData = activities.reduce((acc, activity) => {
+    //     const week = activity.week_no;
+    //     if (!acc[week]) {
+    //         acc[week] = [];
+    //     }
+    //     acc[week].push(activity);
+    //     return acc;
+    // }, {});
+    const groupedData = activities.reduce((acc, activity) => {
+        acc[activity.week_no] = acc[activity.week_no] || [];
+        acc[activity.week_no].push(activity);
+        return acc;
+      }, {});
+    // Step 2: Render grouped data
     return (
-        <div style={{ maxWidth: "500px", margin: "0 auto" }}>
-            <textarea
-                value={comment}
-                onChange={handleInputChange}
-                rows={5}
-                style={{ width: "100%", padding: "10px" }}
-                placeholder="Type your comment and use @ to mention users..."
-            />
-
-            {dropdownVisible && filteredUsers.length > 0 && (
-                <ul
-                    style={{
-                        listStyle: "none",
-                        padding: "0",
-                        margin: "5px 0",
-                        border: "1px solid #ccc",
-                        borderRadius: "4px",
-                        backgroundColor: "#fff",
-                        maxHeight: "150px",
-                        overflowY: "auto",
-                    }}
-                >
-                    {filteredUsers.map((user) => (
-                        <li
-                            key={user.id}
-                            onClick={() => handleUserSelect(user)}
-                            style={{
-                                padding: "10px",
-                                cursor: "pointer",
-                                borderBottom: "1px solid #eee",
-                            }}
-                        >
-                            {user.name}
-                        </li>
-                    ))}
-                </ul>
-            )}
-
-            {assignedUsers.length > 0 && (
-                <div style={{ marginTop: "10px" }}>
-                    <strong>Assigned Users:</strong>
+        <div>
+            <h1>Week-wise Activities</h1>
+            {Object.entries(groupedData).map(([week, activities]) => (
+                <div key={week} style={{ marginBottom: "20px" }}>
+                    <h2>Week {week}</h2>
                     <ul>
-                        {assignedUsers.map((user) => (
-                            <li key={user.id}>{user.name}</li>
+                        {activities.map((activity) => (
+                            <li key={activity.id}>
+                                <strong>Activity Name:</strong> {activity.activity_name} <br />
+                                <strong>Brand:</strong> {activity.brand} <br />
+                                <strong>Description:</strong> {activity.activity_description} <br />
+                                <strong>Type:</strong> {activity.activity_type}
+                            </li>
                         ))}
                     </ul>
                 </div>
-            )}
+            ))}
         </div>
     );
 };

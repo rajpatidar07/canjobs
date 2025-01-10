@@ -21,7 +21,7 @@ export default function AdminTaskTable(props) {
   /*Pagination states */
   const [totalData, setTotalData] = useState(true);
   // const [currentPage, setCurrentPage] = useState(1);
-  const [recordsPerPage] = useState(10);
+  const [recordsPerPage, setRecordsPerPage] = useState(10);
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
   const rowRefs = useRef([]);
@@ -44,8 +44,8 @@ export default function AdminTaskTable(props) {
         props.adminId,//adminEmail,
         props.status ? props.status : taskStatus,
         "task",
-        props.heading === "Dashboard" ? props.pageNo : "",
-        props.heading === "Dashboard" ? recordsPerPage : "",
+        props.pageNo,
+        recordsPerPage,
         sortOrder,
         columnName,
         props.filter_by_time,
@@ -80,7 +80,7 @@ export default function AdminTaskTable(props) {
     const newUrl = window.location.pathname;
     window.history.replaceState({}, document.title, newUrl);
     // eslint-disable-next-line
-  }, [taskStatus, props.pageNo, props.apiCall, props.adminType, props.status, props.adminId, props.employeeId, props.filter_by_time, sortOrder, columnName]);
+  }, [taskStatus, props.pageNo, props.apiCall, props.adminType, props.status, props.adminId, props.employeeId, props.filter_by_time, sortOrder, columnName, recordsPerPage]);
   /*Sorting Function */
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
@@ -561,14 +561,19 @@ export default function AdminTaskTable(props) {
           </table>
         )}
       </div>
-      <div className={`pt-2 ${props.heading !== "Dashboard" ? "d-none" : ""}`}>
-        <Pagination
-          nPages={nPages}
-          currentPage={props.pageNo}
-          setCurrentPage={props.setpageNo}
-          total={totalData}
-          count={taskData.length}
-        />
+      <div className={`pt-2 d-flex justify-content-center`}>
+        {recordsPerPage === totalData ? null
+          : <Pagination
+            nPages={nPages}
+            currentPage={props.pageNo}
+            setCurrentPage={props.setpageNo}
+            total={totalData}
+            count={taskData.length}
+          />}
+        <button className="btn btn-primary" onClick={() => {
+          props.setpageNo(1)
+          setRecordsPerPage(recordsPerPage === totalData ? 10 : totalData)
+        }}>{recordsPerPage === totalData ? "View Pagination" : "View All"}</button>
       </div>
     </div>
   );

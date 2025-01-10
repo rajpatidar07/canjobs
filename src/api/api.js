@@ -988,28 +988,28 @@ export const SendReplyCommit = async (
   id,
   docName
 ) => {
-  console.log("  id =>", id,
-    //   "doc_id =>", data.doc_id,
-    "task_id =>", data.task_id,
-    //   "sender_id =>", senderId,
-    //   "sender_email =>", senderEmail,
-    //   "sender_name =>", SenderName,
-    //   "sender_type =>", senderType,
-    //   "receiver_id =>", recid,
-    //   "receiver_type =>", adminType,
-    //   "mention =>", email,
-    //   "receiver_name =>", assignName,
-    //   "document_url =>", "",
-    //   "next_followup_date =>", "",
-    //   "followup_status =>", "",
-    //   "subject =>", "",
-    //   "msg =>", msg,
-    //   "type =>", type,
-    //   "employee_id =>", employee_id,
-    //   "doc_parent_id =>", parent_id,
-    //    "data =>", data
-    data.task_id ? "fff" : "mmmm"
-  )
+  // console.log("  id =>", id,
+  //   "doc_id =>", data.doc_id,
+  // "task_id =>", data.task_id,
+  //   "sender_id =>", senderId,
+  //   "sender_email =>", senderEmail,
+  //   "sender_name =>", SenderName,
+  //   "sender_type =>", senderType,
+  // "receiver_id =>", recid,
+  // "receiver_type =>", adminType,
+  // "mention =>", email,
+  // "receiver_name =>", assignName,
+  // "document_url =>", "",
+  // "next_followup_date =>", "",
+  // "followup_status =>", "",
+  // "subject =>", "",
+  // "msg =>", msg,
+  // "type =>", type,
+  // "employee_id =>", employee_id,
+  // "doc_parent_id =>", parent_id,
+  //  "data =>", data,
+  // data.task_id ? "fff" : "mmmm"
+  // )
   const response = await axios.post(
     `${API_URL}admin/sendMsg?document_user_type=${DocUserType}`,
     {
@@ -3406,20 +3406,24 @@ export const AddSharePointDOcument = async (
   formData.append("folder_Id", folderId);
   // Loop through the array of files and append each file to formData
   for (let i = 0; i < data.length; i++) {
-    // console.log(data[i])
+    console.log(data[i])
     formData.append(`file[${i}]`, data[i]);
   }
-  const response = await axios.post(
-    `${API_URL}admin/sharpointSiteDriveDocumentUpload_new`,
-    formData,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: Token,
-      },
-    }
-  );
-  return response;
+  if (Token) {
+    const response = await axios.post(
+      `${API_URL}admin/sharpointSiteDriveDocumentUpload_new`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: Token,
+        },
+      }
+    );
+    return response;
+  } else {
+    return { error: 'Token is not available' }
+  }
 };
 //Api function to get folder or type breadcrumb
 export const getFolderBreadcrumb = async (folderid) => {

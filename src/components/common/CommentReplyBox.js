@@ -17,7 +17,7 @@ export default function CommentReplyBox({
   handleUpdateReplyLinkClick,
   type,
   replyCommentData,
-  // OnHandleUpdateCommentReply,
+  OnHandleUpdateCommentReply,
   OnDeleteCommentReplies,
   admin_id,
   AdminType,
@@ -163,8 +163,8 @@ export default function CommentReplyBox({
               type="button"
               onClick={() => {
                 if (replyCommentData) {
-                  // OnHandleUpdateCommentReply(replyCommentData);
-                  ReplyAnnotation(replyCommentData)
+                  OnHandleUpdateCommentReply(replyCommentData);
+                  // ReplyAnnotation(replyCommentData)
                 } else {
                   ReplyAnnotation(commentItem);
                 }
