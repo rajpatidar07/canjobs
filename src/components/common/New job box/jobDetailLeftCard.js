@@ -6,6 +6,7 @@ import { GrClose } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";
 import { MdOutlinePayments } from "react-icons/md"
 import moment from "moment";
+import SAlert from "../sweetAlert";
 const JobDetailLeftCardBox = ({
   token,
   OnApplyClick,
@@ -14,6 +15,8 @@ const JobDetailLeftCardBox = ({
   user_type
 }) => {
   const [isVisible, setIsVisible] = useState(true);
+  const [applyAlert, setApplyAlert] = useState(false);
+
   let navigate = useNavigate()
   // Handle scroll event
   const handleScroll = (e) => {
@@ -86,7 +89,7 @@ const JobDetailLeftCardBox = ({
                           : "btn btn-info "} text-uppercase rounded `}
                         onClick={() =>
                           token && user_type === "user"
-                            ? OnApplyClick(0, jobData?.job_id)
+                            ? setApplyAlert(true)
                             : navigate("/candidate_login")
                         }
                         disabled={jobData?.is_applied !== "0"}>
@@ -222,6 +225,17 @@ const JobDetailLeftCardBox = ({
           </div>
         </div>
       </div>
+      <SAlert
+        show={applyAlert}
+        title={jobData?.job_title}
+        text="Are you Sure you want to Apply for this job ?"
+        onConfirm={() => {
+          OnApplyClick(0, jobData?.job_id)
+          setApplyAlert(false)
+        }}
+        showCancelButton={true}
+        onCancel={() => setApplyAlert(false)}
+      />
     </div>
   );
 };

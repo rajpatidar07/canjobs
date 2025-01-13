@@ -226,6 +226,7 @@ const DocumentsNotes = (props) => {
         // link.href = URL.createObjectURL(blob);
         // link.download = "note.txt"; // Save as a .txt file
         // link.click();
+        console.log("Note file =>",wordFile)
         try {
             setLoading(true)
             const res = await AddSharePointDOcument(

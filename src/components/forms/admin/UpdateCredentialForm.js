@@ -3,6 +3,7 @@ import { UpdateCredentialApi } from "../../../api/api";
 import useValidation from "../../common/useValidation";
 import { Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
+import PasswordInput from "../../common/PasswordInput";
 export default function UpdateCredentialForm({
   show,
   close,
@@ -245,15 +246,14 @@ export default function UpdateCredentialForm({
                   >
                     Password:
                   </label>
-                  <input
-                    placeholder="Enter Password"
-                    type="password"
-                    name="password"
-                    value={state.password || ""}
-                    onChange={onInputChange}
-                    className="form-control"
-                    id="password"
-                  />
+                  <PasswordInput
+                      name="password"
+                      value={state.password}
+                      onChange={onInputChange}
+                      className="form-control"
+                      placeholder="Enter password"
+                      id="password"
+                    />
                 </div>
               )}
             </div>

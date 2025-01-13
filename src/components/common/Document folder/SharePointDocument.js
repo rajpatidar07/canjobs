@@ -190,6 +190,7 @@ export default function SharePointDocument({
       data.file.mimeType ===
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     ) {
+      //    console.log("first")
       convertToPDF(data);
     } else if (data.file.mimeType === "text/plain") {
       GetNoteText(data, true);
@@ -714,8 +715,8 @@ export default function SharePointDocument({
           return resp.blob();
         })
         .then(function (blob) {
-          // setConvertedDoc(window.URL.createObjectURL(blob));
-          setConvertedDoc([{ uri: data["@microsoft.graph.downloadUrl"] }]);
+          setConvertedDoc(window.URL.createObjectURL(blob));
+          // setConvertedDoc([{ uri: data["@microsoft.graph.downloadUrl"] }]);
         })
         .catch((error) => console.error(error));
     } catch (error) {
@@ -1059,7 +1060,7 @@ export default function SharePointDocument({
                           setDocNoteData(docNoteData)
                           GetNoteText(docNoteData, true);
                         }
-                      }}>{docNoteData.length !== 0 ? "Open Note" : "Add notes"}</button>
+                      }}>{docNoteData.length !== 0 ? "Open Note" : "Add Note"}</button>
                   </>
                 </div>
               </div>

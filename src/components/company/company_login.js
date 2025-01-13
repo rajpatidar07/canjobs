@@ -9,6 +9,7 @@ import {
 } from "../../api/api";
 import { toast } from "react-toastify";
 import ForgotPasswordForm from "../forms/admin/ForgotPasswordForm";
+import PasswordInput from "../common/PasswordInput";
 // import { useGoogleLogin } from '@react-oauth/google';
 // import axios from "axios";
 // import { useLinkedIn , LinkedIn} from "react-linkedin-login-oauth2";
@@ -51,8 +52,8 @@ function CompanyLoginForm(props) {
         value === null || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? null
+            : "Email is invalid",
     ],
     password: [(value) => (value === "" ? "Password is required" : null)],
     forget_email: [
@@ -60,10 +61,10 @@ function CompanyLoginForm(props) {
         state.email
           ? ""
           : value === null || value.trim() === ""
-          ? "Email is required"
-          : /\S+@\S+\.\S+/.test(value)
-          ? null
-          : "Email is invalid",
+            ? "Email is required"
+            : /\S+@\S+\.\S+/.test(value)
+              ? null
+              : "Email is invalid",
     ],
   };
   /*----LOGIN ONCHANGE FuNCTION----*/
@@ -73,6 +74,7 @@ function CompanyLoginForm(props) {
   /*----LOGIN SUBMIT FuNCTION----*/
   const onCompanyLoginClick = async (event) => {
     event.preventDefault();
+    console.log(errors, state)
     if (validate()) {
       setLoading(true);
       try {
@@ -221,9 +223,9 @@ function CompanyLoginForm(props) {
           }
           if (
             res.data.message ===
-              "The token used in the request has been revoked by the user" ||
+            "The token used in the request has been revoked by the user" ||
             decode.error_description ===
-              "Unable to retrieve access token: appid/redirect uri/code verifier does not match authorization code. Or authorization code expired. Or external member binding exists"
+            "Unable to retrieve access token: appid/redirect uri/code verifier does not match authorization code. Or authorization code expired. Or external member binding exists"
           ) {
             toast.error("Token Expired", {
               position: toast.POSITION.TOP_RIGHT,
@@ -378,29 +380,28 @@ function CompanyLoginForm(props) {
               </div>
               <div className="form-group">
                 <label
-                  htmlFor="userpassword"
+                  htmlFor="password"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
                   Password
                 </label>
                 <div className="position-relative">
-                  <input
+                  <PasswordInput
                     name="password"
-                    type="password"
-                    value={state.userpassword}
+                    value={state.password}
                     onChange={onInputChange}
                     className={
-                      errors.userpassword
+                      errors.password
                         ? "form-control border border-danger"
                         : "form-control"
                     }
                     placeholder="Enter password"
-                    id="userpassword"
+                    id="password"
                   />
                   {/*----ERROR MESSAGE FOR PASSWORD----*/}
-                  {errors.userpassword && (
+                  {errors.password && (
                     <span>
-                      {errors.userpassword.map((error) => (
+                      {errors.password.map((error) => (
                         <span key={error} className="text-danger font-size-3">
                           {error}
                         </span>

@@ -9,6 +9,7 @@ import {
 import useValidation from "../common/useValidation";
 import { toast } from "react-toastify";
 import ForgotPasswordForm from "../forms/admin/ForgotPasswordForm";
+import PasswordInput from "../common/PasswordInput";
 // import { useGoogleLogin } from "@react-oauth/google";
 // import axios from "axios";
 // import { useLinkedIn , LinkedIn} from "react-linkedin-login-oauth2";
@@ -413,18 +414,17 @@ export default function CandidateLoginForm(props) {
                 Password
               </label>
               <div className="position-relative">
-                <input
+                <PasswordInput
                   name="password"
-                  type="password"
-                  value={state.userpassword}
+                  value={state.password}
                   onChange={onInputChange}
                   className={
-                    errors.userpassword
+                    errors.password
                       ? "form-control border border-danger"
                       : "form-control"
                   }
                   placeholder="Enter password"
-                  id="userpassword"
+                  id="password"
                 />
                 {/*----ERROR MESSAGE FOR PASSWORD----*/}
                 {errors.userpassword && (
@@ -504,7 +504,7 @@ export default function CandidateLoginForm(props) {
             </div>
             <p className="font-size-4 text-center heading-default-color">
               Don’t have an account?
-              <Link className="text-primary ml-2" to={"/candidate_signup"} state={{page:location?.state?.page}}>
+              <Link className="text-primary ml-2" to={"/candidate_signup"} state={{ page: location?.state?.page }}>
                 Create an account
               </Link>
             </p>

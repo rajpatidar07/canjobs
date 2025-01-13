@@ -200,11 +200,11 @@ export default function AddTaskForm(props) {
         <form className='mb-3'>
             <div className='d-flex flex-row-reverse'>
                 <Link
-                    className="btn-sm btn-light rounded-3 p-2"
+                    className="btn-sm btn-light rounded-3 p-2 mtb-1"
                     onClick={() => props.setShowTaskForm(false)}
                     title="Close form"
                 >
-                    <FaWindowClose />
+                    <FaWindowClose style={{color:"red"}} />
                 </Link>
             </div>
             <div className='row'>

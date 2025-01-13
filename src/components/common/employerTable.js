@@ -15,6 +15,7 @@ import { BsArrow90DegRight } from "react-icons/bs";
 // import { AiOutlineFileZip } from "react-icons/ai";
 import AddJobModal from "../forms/employer/job";
 import { LiaBriefcaseMedicalSolid } from "react-icons/lia";
+import { getInitials } from "./GetInitials";
 export default function EmployerTable(props) {
   /*show modal and data , id state */
   let [apiCall, setApiCall] = useState(false);
@@ -318,11 +319,13 @@ export default function EmployerTable(props) {
                                 style={{ borderRadius: 0 }}
                               >
                                 {empdata.logo === null ? (
-                                  <img
-                                    src="https://cdn.logo.com/hotlink-ok/logo-social-sq.png"
-                                    alt=""
-                                    className="w-100"
-                                  />
+                                  empdata?.company_name
+                                  ?<p style={{ fontSize: "15px " }} className="mt-6">{getInitials(empdata?.company_name)}</p>
+                                  :<img
+                                  src="https://cdn.logo.com/hotlink-ok/logo-social-sq.png"
+                                  alt=""
+                                  className="w-100"
+                                />
                                 ) : (
                                   <img
                                     src={empdata.logo}
@@ -426,7 +429,7 @@ export default function EmployerTable(props) {
                           <>
                             <div className="font-size-3 font-weight-normal mb-0"
                               title={empdata.contact_no}>
-                              
+
                               <Link
                                 className="text-dark"
                                 to={`tel:${empdata.contact_no}`}
@@ -508,7 +511,7 @@ export default function EmployerTable(props) {
                             <button className="btn btn-outline-info action_btn">
                               <Link // onClick={() => Joblist(empdata.company_name)}
                                 to="/job"
-                                state={{ company_name: empdata.company_name,company_id:empdata.company_id }}
+                                state={{ company_name: empdata.company_name, company_id: empdata.company_id }}
                                 title="Jobs"
                               >
                                 <span className="text-gray px-1">

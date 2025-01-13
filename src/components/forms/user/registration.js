@@ -2,6 +2,7 @@ import React from "react";
 import { Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import useValidation from "../../common/useValidation";
+import PasswordInput from "../../common/PasswordInput";
 
 function Registration(props) {
   // USER CARRER PROFILE VALIDATION
@@ -159,19 +160,18 @@ function Registration(props) {
                 >
                   Password <span className="text-danger">*</span>:
                 </label>
-                <input
-                  name="userpassword"
-                  value={state.userpassword}
-                  onChange={onInputChange}
-                  type="password"
-                  className={
-                    errors.userpassword
-                      ? "form-control border border-danger"
-                      : "form-control"
-                  }
-                  id="userpassword"
-                  placeholder="Enter password"
-                />
+                 <PasswordInput
+                      name="userpassword"
+                      value={state.userpassword}
+                      onChange={onInputChange}
+                      className={
+                        errors.userpassword
+                          ? "form-control border border-danger"
+                          : "form-control"
+                      }
+                      placeholder="Enter password"
+                      id="userpassword"
+                    />
                 {/*----ERROR MESSAGE FOR PASSWORD----*/}
                 {errors.userpassword && (
                   <span

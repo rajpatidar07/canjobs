@@ -158,9 +158,7 @@ function StudyHeader() {
                                                     profile_photo === "null" ||
                                                     profile_photo === undefined ||
                                                     profile_photo === "undefined"
-                                                    ? userType === "company"
-                                                        ? "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
-                                                        : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                                                    ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                                     : profile_photo
                                             }
                                             width={50}

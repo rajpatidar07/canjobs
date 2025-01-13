@@ -102,7 +102,6 @@ export default function GenerateToken(props) {
           <i className="fas fa-times"></i>
         </button>
         <div className="bg-white rounded h-100 px-11 pt-15">
-          {/* CHANGE PASSWORD FORM */}
           <form onSubmit={onTokenGenerateClick}>
             {/* FORM FIELDS */}
             <div className="form-group w-100 ">
@@ -138,7 +137,6 @@ export default function GenerateToken(props) {
           </form>
         </div>
       </Modal>
-      {/* END CHANGE PASSWORD FORM */}
     </>
   );
 }

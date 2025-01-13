@@ -4,11 +4,13 @@ import { GetJobDetail, ApplyJob } from "../../api/api";
 import { toast } from "react-toastify";
 import Loader from "../common/loader";
 import ConvertTime from "./ConvertTime";
+import SAlert from "./sweetAlert";
 
 function JobDetailPage(props) {
   let [jobDetatilsData, setJobDetailsData] = useState("");
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
+  const [applyAlert, setApplyAlert] = useState(false);
   let skill = [];
   const user_type = localStorage.getItem("userType");
   const jobId = localStorage.getItem("jobId");
@@ -39,15 +41,15 @@ function JobDetailPage(props) {
   /*Render method to get job detail data */
   useEffect(() => {
     JobData();
-   // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [props.jobdata, apiCall]);
 
   /*Set skill variable to array frm string */
   if (jobDetatilsData !== "") {
     skill =
       jobDetatilsData.keyskill === null ||
-      jobDetatilsData.keyskill === undefined ||
-      jobDetatilsData.keyskill === "undefined"
+        jobDetatilsData.keyskill === undefined ||
+        jobDetatilsData.keyskill === "undefined"
         ? []
         : jobDetatilsData.keyskill.split(",");
   }
@@ -88,7 +90,7 @@ function JobDetailPage(props) {
         ) : (
           <div className=" bg-white rounded-4 border border-mercury shadow-9  overflow-y-scroll mt-9 mt-xl-0">
             <div className="pt-9 pl-sm-9 pl-5 pr-sm-9 pr-5 pb-8 border-bottom border-width-1 border-default-color light-mode-texts">
-              
+
               <div className="row">
                 <div className="col-12">
                   {/* <!-- media start --> */}
@@ -134,7 +136,7 @@ function JobDetailPage(props) {
                         onClick={
                           token && (name === null || name === "")
                             ? () => navigate("/profile")
-                            : () => OnApplyClick(0)
+                            : () => setApplyAlert(true)
                         }
                         disabled={
                           jobDetatilsData.is_applied === "0" ? false : true
@@ -245,7 +247,7 @@ function JobDetailPage(props) {
                         Posted Time
                       </span>
                       <h6 className="font-size-5 text-black-2 font-weight-semibold mb-0">
-                      <ConvertTime _date={jobDetatilsData.created_at} format={"DD MMMM, YYYY"}/>
+                        <ConvertTime _date={jobDetatilsData.created_at} format={"DD MMMM, YYYY"} />
 
                         {/* {moment(jobDetatilsData.created_at).format(
                           "DD MMMM, YYYY"
@@ -320,6 +322,17 @@ function JobDetailPage(props) {
             </div>
           </div>
         )}
+        <SAlert
+          show={applyAlert}
+          title={jobDetatilsData.job_title}
+          text="Are you Sure you want to Apply for this job ?"
+          onConfirm={() => {
+            OnApplyClick(0)
+            setApplyAlert(false)
+          }}
+          showCancelButton={true}
+          onCancel={() => setApplyAlert(false)}
+        />
       </div>
     </>
   );

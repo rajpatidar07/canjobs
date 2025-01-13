@@ -20,7 +20,8 @@ export default function CommentReplyBox({
   OnHandleUpdateCommentReply,
   OnDeleteCommentReplies,
   admin_id,
-  AdminType
+  AdminType,
+  dropdownVisible
 }) {
   return (
     <div className="reply_box_container mx-2 fade show">
@@ -68,11 +69,6 @@ export default function CommentReplyBox({
                           OnDeleteCommentReplies(replyItem.id);
                         }}
                       >
-                        {console.log(AdminType === "agent"
-                          ? replyItem.sender_id === admin_id
-                            ? "1flex"
-                            : "neone"
-                          : "flexx")}
                         <CiTrash />
                       </Link>
                     </div>
@@ -168,6 +164,7 @@ export default function CommentReplyBox({
               onClick={() => {
                 if (replyCommentData) {
                   OnHandleUpdateCommentReply(replyCommentData);
+                  // ReplyAnnotation(replyCommentData)
                 } else {
                   ReplyAnnotation(commentItem);
                 }
@@ -185,7 +182,7 @@ export default function CommentReplyBox({
               cancel
             </a> */}
           </div>
-          {filteredEmails.length > 0 && type === "reply" ? (
+          {dropdownVisible && filteredEmails.length > 0 && type === "reply" ? (
             <ul
               className="email-suggestions overflow-scroll"
               style={{

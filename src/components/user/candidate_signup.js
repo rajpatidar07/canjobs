@@ -11,6 +11,7 @@ import {
 import useValidation from "../common/useValidation";
 import { toast } from "react-toastify";
 import Permission from "../json/emailPermisionJson";
+import PasswordInput from "../common/PasswordInput";
 // import { useGoogleLogin } from '@react-oauth/google';
 // import axios from "axios";
 // import { useLinkedIn , LinkedIn} from "react-linkedin-login-oauth2";
@@ -491,18 +492,17 @@ export default function CandidateSignup(props) {
                   Password<span className="text-danger"> *</span> :
                 </label>
                 <div className="position-relative">
-                  <input
+                  <PasswordInput
                     name="password"
-                    value={state.password || ""}
+                    value={state.password}
                     onChange={onInputChange}
-                    type="password"
                     className={
                       errors.password
                         ? "form-control border border-danger"
                         : "form-control"
                     }
-                    id="password"
                     placeholder="Enter password"
+                    id="password"
                   />
                   {/* ERROR MSG FOR PASSWORD */}
                   {errors.password && (

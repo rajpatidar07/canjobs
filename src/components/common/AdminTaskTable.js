@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Loader from "./loader";
 import { Link } from "react-router-dom";
 import { GetCommentsAndAssign, GetFilter, UpdateDocuentcommentAssign } from "../../api/api";
@@ -21,10 +21,21 @@ export default function AdminTaskTable(props) {
   /*Pagination states */
   const [totalData, setTotalData] = useState(true);
   // const [currentPage, setCurrentPage] = useState(1);
-  const [recordsPerPage] = useState(10);
+  const [recordsPerPage, setRecordsPerPage] = useState(10);
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
+  const rowRefs = useRef([]);
 
+  useEffect(() => {
+    if (props.taskId) {
+      // Find the index of the task data that matches taskId
+      const index = taskData.findIndex(data => data.id === props.taskId);
+      if (index !== -1) {
+        // Scroll to the matching row
+        rowRefs.current[index]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+  }, [props.taskId, taskData]);
   // Generate a list of admin;s task
   const getCommentsList = async () => {
     try {
@@ -33,8 +44,8 @@ export default function AdminTaskTable(props) {
         props.adminId,//adminEmail,
         props.status ? props.status : taskStatus,
         "task",
-        props.heading === "Dashboard" ? props.pageNo : "",
-        props.heading === "Dashboard" ? recordsPerPage : "",
+        props.pageNo,
+        recordsPerPage,
         sortOrder,
         columnName,
         props.filter_by_time,
@@ -66,8 +77,10 @@ export default function AdminTaskTable(props) {
   };
   useEffect(() => {
     getCommentsList();
+    const newUrl = window.location.pathname;
+    window.history.replaceState({}, document.title, newUrl);
     // eslint-disable-next-line
-  }, [taskStatus, props.pageNo, props.apiCall, props.adminType, props.status, props.adminId, props.employeeId, props.filter_by_time, sortOrder, columnName]);
+  }, [taskStatus, props.pageNo, props.apiCall, props.adminType, props.status, props.adminId, props.employeeId, props.filter_by_time, sortOrder, columnName, recordsPerPage]);
   /*Sorting Function */
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
@@ -274,9 +287,9 @@ export default function AdminTaskTable(props) {
                   </th>
                 </tr>
               ) : (
-                (taskData || []).map((data) => (
-                  <React.Fragment key={data.id}>
-                    <tr className=" applicant_row">
+                (taskData || []).map((data, index) => (
+                  <React.Fragment key={data.id} ref={el => (rowRefs.current[index] = el)}>
+                    <tr className={`applicant_row ${props.taskId === data.id ? "bg-light" : ""}`}>
                       <td className="text-capitalize py-5">
                         <p className="font-size-3 font-weight-normal text-black-2 mb-0">
                           {data.task_creator_user_name === null ||
@@ -548,14 +561,19 @@ export default function AdminTaskTable(props) {
           </table>
         )}
       </div>
-      <div className={`pt-2 ${props.heading !== "Dashboard" ? "d-none" : ""}`}>
-        <Pagination
-          nPages={nPages}
-          currentPage={props.pageNo}
-          setCurrentPage={props.setpageNo}
-          total={totalData}
-          count={taskData.length}
-        />
+      <div className={`pt-2 d-flex justify-content-center`}>
+        {recordsPerPage === totalData ? null
+          : <Pagination
+            nPages={nPages}
+            currentPage={props.pageNo}
+            setCurrentPage={props.setpageNo}
+            total={totalData}
+            count={taskData.length}
+          />}
+        <button className="btn btn-primary" onClick={() => {
+          props.setpageNo(1)
+          setRecordsPerPage(recordsPerPage === totalData ? 10 : totalData)
+        }}>{recordsPerPage === totalData ? "View Pagination" : "View All"}</button>
       </div>
     </div>
   );

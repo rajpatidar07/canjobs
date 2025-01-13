@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import EmployerDocumentModal from "../forms/admin/EmployerDocumetModal";
 import { PiPencilDuotone } from "react-icons/pi";
 import ConvertTime from "../common/ConvertTime";
+import { getInitials } from "../common/GetInitials";
 function CompanyProfile(props) {
   const user_type = localStorage.getItem("userType");
   const company_id = localStorage.getItem("company_id");
@@ -59,12 +60,12 @@ function CompanyProfile(props) {
     if (apiCall === true) {
       setApiCall(false);
     }
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [apiCall]);
 
   return (
     <div>
-      
+
       {user_type !== "admin" ? <EmployeeHeader /> : null}
       <div
         className={
@@ -94,15 +95,17 @@ function CompanyProfile(props) {
                 <div>aaaaaaaaaaaaa</div>
                 <div className="media align-items-center company_box col-10 p-0">
                   <div className="text_box text-left">
-                    <img
+                    {employerData.logo ? <img
                       className="company_logo"
                       src={
                         employerData.logo === null
                           ? "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
                           : employerData.logo
                       }
-                      alt=""
-                    />
+                      alt={employerData.company_name}
+                    /> :
+                      <p className="company_logo"
+                        style={{ fontSize: "50px" }}>{getInitials(employerData.company_name)}</p>}
                   </div>
                   <div className="text_box text-left w-100 text-capitalize">
                     <h3 className="mb-0 font-size-6 heading-dark-color">
@@ -158,7 +161,7 @@ function CompanyProfile(props) {
                 {employerData.company_start_date ? (
                   <div className="font-size-3 mb-4 mr-10" title="Est. Since">
                     <i className="fas fa-business-time mr-2"></i>
-                    <ConvertTime _date={employerData.company_start_date} format={"YYYY"}/>
+                    <ConvertTime _date={employerData.company_start_date} format={"YYYY"} />
                     {/* {moment(employerData.company_start_date).format("YYYY")} */}
                   </div>
                 ) : null}

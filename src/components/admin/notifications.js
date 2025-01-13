@@ -320,7 +320,7 @@ function Notifications({
                                                 ? `/client_detail?agreement=true`
                                                 : `/${data.employee_id}?agreement=true`//AGREEMENT FOR EMPLOYEE
                                               : data.subject === "mention_task"
-                                                ? `/managetasks?${data.mention_id}`
+                                                ? `/managetasks?taskId=${data.mention_id}`
                                                 : ""
 
                       }
