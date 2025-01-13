@@ -294,7 +294,6 @@ function MainLayout() {
             <Route path="/wes" element={<Wes />} />
             <Route path="/atip" element={<Atip />} />
             <Route path="/localcandidates" element={<LocalCandidate />} />
-            <Route path="/Newpdf" element={<Newpdf />} />
             <Route path="/federal_pr" element={<Federalpr />} />
             <Route path="/view_pdf_Agreement" element={<ViewPdf />} />
             {/* Study pages as for admin */}
@@ -306,6 +305,7 @@ function MainLayout() {
             <Route path="*" element={<Loader load={"yes"} />} />
           </>
         )}
+        <Route path="/Newpdf" element={<Newpdf />} />
 
         {loginCondition === true ? null : <Route path="*" element={<NotFound userType={userType} />} />}
       </Routes>
