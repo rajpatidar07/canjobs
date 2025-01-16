@@ -1089,11 +1089,13 @@ export const SendReplyCommitSharepoint = async (
 };
 
 /*Api to Get Reply for document comments */
-export const GetReplyCommit = async (doc_id) => {
+export const GetReplyCommit = async (doc_id,task_id) => {
   const response = await axios.post(
     `${API_URL}/admin/get_messages`,
     {
       doc_id: doc_id,
+      task_id:task_id
+
     },
     {
       headers: {

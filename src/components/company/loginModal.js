@@ -9,7 +9,7 @@ import {
   SocialCompanyLogin,
 } from "../../api/api";
 import { toast } from "react-toastify";
-import PasswordInput from "../common/PasswordInput";
+import PasswordInput from "../common/Common function/PasswordInput";
 // import { useGoogleLogin } from '@react-oauth/google';
 // import axios from "axios";
 // import { useLinkedIn , LinkedIn} from "react-linkedin-login-oauth2";

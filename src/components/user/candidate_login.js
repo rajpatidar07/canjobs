@@ -9,7 +9,7 @@ import {
 import useValidation from "../common/useValidation";
 import { toast } from "react-toastify";
 import ForgotPasswordForm from "../forms/admin/ForgotPasswordForm";
-import PasswordInput from "../common/PasswordInput";
+import PasswordInput from "../common/Common function/PasswordInput";
 // import { useGoogleLogin } from "@react-oauth/google";
 // import axios from "axios";
 // import { useLinkedIn , LinkedIn} from "react-linkedin-login-oauth2";

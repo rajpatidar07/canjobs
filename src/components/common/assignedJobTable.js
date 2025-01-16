@@ -4,7 +4,7 @@ import Loader from "./loader";
 import { Link } from "react-router-dom";
 import ManagerListModal from "../admin/Modal/managerListModal";
 import { GetAllJobs } from "../../api/api";
-import ConvertTime from "./ConvertTime";
+import ConvertTime from "./Common function/ConvertTime";
 export default function AssignedJobTable(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [apiCall, setApiCall] = useState(false);

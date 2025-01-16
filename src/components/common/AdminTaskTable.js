@@ -1,13 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
 import Loader from "./loader";
 import { Link } from "react-router-dom";
-import { GetCommentsAndAssign, GetFilter, UpdateDocuentcommentAssign } from "../../api/api";
+import { DeleteCommentsAndAssign, GetCommentsAndAssign, GetFilter, UpdateDocuentcommentAssign } from "../../api/api";
 import Pagination from "./pagination";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { toast } from "react-toastify";
-import ConvertTime from "./ConvertTime";
+import ConvertTime from "./Common function/ConvertTime";
 import moment from "moment";
+import SAlert from "./sweetAlert";
+import { LiaUserEditSolid } from "react-icons/lia";
+import { MdFormatListBulletedAdd } from "react-icons/md";
+import { RiDeleteBin5Line } from "react-icons/ri";
+import CommonTaskReplyBox from "./CommonTaskReplyBox";
 export default function AdminTaskTable(props) {
   const [taskData, setTaskData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -16,6 +21,13 @@ export default function AdminTaskTable(props) {
   const [sortOrder, setSortOrder] = useState("DESC");
   const [groupBy, setGroupBy] = useState([]);
   const [priority, setPriority] = useState([]);
+  const [openReplyBox, setOpenReplyBox] = useState(false);
+  const [singleTaskData, setSingleTaskData] = useState();
+
+  /*delete state */
+  const [deleteAlert, setDeleteAlert] = useState(false);
+  const [deleteId, setDeleteID] = useState();
+  const [deleteName, setDeleteName] = useState("");
   // let adminEmail = localStorage.getItem("admin_id");
 
   /*Pagination states */
@@ -25,7 +37,28 @@ export default function AdminTaskTable(props) {
   /*Pagination Calculation */
   const nPages = Math.ceil(totalData / recordsPerPage);
   const rowRefs = useRef([]);
-
+  /*To Show the delete alert box */
+  const ShowDeleteAlert = (e) => {
+    setDeleteID(e.id);
+    setDeleteName(e.subject_description);
+    setDeleteAlert(true);
+  };
+  /*Function to delete comment */
+  const OnDeleteTask = async (id) => {
+    try {
+      let res = await DeleteCommentsAndAssign("", id, "", "", props.adminId, props.adminType);
+      if (res.data.message === "Task deleted successfully!") {
+        toast.success("Task Deleted Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setDeleteAlert(false)
+        getCommentsList();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   useEffect(() => {
     if (props.taskId) {
       // Find the index of the task data that matches taskId
@@ -131,65 +164,47 @@ export default function AdminTaskTable(props) {
     }
   };
   return (
-    <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
-      <div className="table-responsive main_table_div">
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <table className="table table-striped main_data_table">
-            <thead>
-              <tr className="">
-                <th
-                  scope="col"
-                  className=" border-0 font-size-4 font-weight-normal"
-                >
-                  <Link
-                    to={""}
-                    onClick={() => {
-                      handleSort("task_creator_user_name");
-                      props.setpageNo(1)
-                    }}
-                    className="text-gray"
-                    title="Sort by Assigned From"
+    <>
+      <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 row">
+        <div className={`table-responsive main_table_div ${openReplyBox ? "col-9" : "col-12"}`}>
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <table className="table table-striped main_data_table">
+              <thead>
+                <tr className="">
+                  <th
+                    scope="col"
+                    className=" border-0 font-size-4 font-weight-normal"
                   >
-                    Assigned From
-                  </Link>
-                </th>
-                <th
-                  scope="col"
-                  className=" border-0 font-size-4 font-weight-normal"
-                >
-                  <Link
-                    to={""}
-                    onClick={() => {
-                      handleSort("assigned_to_name");
-                      props.setpageNo(1)
-                    }}
-                    className="text-gray"
-                    title="Sort by Assigned To"
+                    <Link
+                      to={""}
+                      onClick={() => {
+                        handleSort("task_creator_user_name");
+                        props.setpageNo(1)
+                      }}
+                      className="text-gray"
+                      title="Sort by Assigned From"
+                    >
+                      Assigned From
+                    </Link>
+                  </th>
+                  <th
+                    scope="col"
+                    className=" border-0 font-size-4 font-weight-normal"
                   >
-                    Assigned To
-                  </Link>
-                </th>
-                <th
-                  scope="col"
-                  className="border-0 font-size-4 font-weight-normal"
-                >
-                  <Link
-                    to={""}
-                    onClick={() => {
-                      handleSort("subject_description");
-                      props.setpageNo(1)
-                    }}
-                    className="text-gray"
-                    title="Sort by Description"
-                  >
-                    Description
-                  </Link>
-                </th>
-                {props.heading === "Dashboard" ? (
-                  ""
-                ) : (
+                    <Link
+                      to={""}
+                      onClick={() => {
+                        handleSort("assigned_to_name");
+                        props.setpageNo(1)
+                      }}
+                      className="text-gray"
+                      title="Sort by Assigned To"
+                    >
+                      Assigned To
+                    </Link>
+                  </th>
                   <th
                     scope="col"
                     className="border-0 font-size-4 font-weight-normal"
@@ -197,76 +212,95 @@ export default function AdminTaskTable(props) {
                     <Link
                       to={""}
                       onClick={() => {
-                        handleSort("type");
+                        handleSort("subject_description");
                         props.setpageNo(1)
                       }}
                       className="text-gray"
-                      title="Sort by Type"
+                      title="Sort by Description"
                     >
-                      Timeline
+                      Description
                     </Link>
                   </th>
-                )}
-                {props.heading === "Dashboard" ? (
-                  ""
-                ) : (
-                  <th
-                    scope="col"
-                    className="border-0 font-size-4 font-weight-normal"
-                  >
-                    <Link
-                      to={""}
-                      onClick={() => {
-                        handleSort("Priority")
-                        props.setpageNo(1)
-                      }}
-                      className="text-gray"
-                      title="Sort by Priority"
+                  {props.heading === "Dashboard" ? (
+                    ""
+                  ) : (
+                    <th
+                      scope="col"
+                      className="border-0 font-size-4 font-weight-normal"
                     >
-                      Priority
-                    </Link>
-                  </th>
-                )}
-                {props.heading === "Dashboard" ? (
-                  ""
-                ) :
-                  <th
-                    scope="col"
-                    className="border-0 font-size-4 font-weight-normal"
-                  >
-                    <Link
-                      to={""}
-                      onClick={() => {
-                        handleSort("group_by");
-                        props.setpageNo(1)
-                      }}
-                      className="text-gray"
-                      title="Sort by Status"
+                      <Link
+                        to={""}
+                        onClick={() => {
+                          handleSort("type");
+                          props.setpageNo(1)
+                        }}
+                        className="text-gray"
+                        title="Sort by Type"
+                      >
+                        Timeline
+                      </Link>
+                    </th>
+                  )}
+                  {props.heading === "Dashboard" ? (
+                    ""
+                  ) : (
+                    <th
+                      scope="col"
+                      className="border-0 font-size-4 font-weight-normal"
                     >
-                      Group by
-                    </Link>
-                  </th>
-                }
-                {
-                  <th
-                    scope="col"
-                    className="border-0 font-size-4 font-weight-normal"
-                  >
-                    <Link
-                      to={""}
-                      onClick={() => {
-                        handleSort("status");
-                        props.setpageNo(1)
-                      }}
-                      className="text-gray"
-                      title="Sort by Status"
+                      <Link
+                        to={""}
+                        onClick={() => {
+                          handleSort("Priority")
+                          props.setpageNo(1)
+                        }}
+                        className="text-gray"
+                        title="Sort by Priority"
+                      >
+                        Priority
+                      </Link>
+                    </th>
+                  )}
+                  {props.heading === "Dashboard" ? (
+                    ""
+                  ) :
+                    <th
+                      scope="col"
+                      className="border-0 font-size-4 font-weight-normal"
                     >
-                      Status
-                    </Link>
-                  </th>
-                }
+                      <Link
+                        to={""}
+                        onClick={() => {
+                          handleSort("group_by");
+                          props.setpageNo(1)
+                        }}
+                        className="text-gray"
+                        title="Sort by Status"
+                      >
+                        Group by
+                      </Link>
+                    </th>
+                  }
+                  {
+                    <th
+                      scope="col"
+                      className="border-0 font-size-4 font-weight-normal"
+                    >
+                      <Link
+                        to={""}
+                        onClick={() => {
+                          handleSort("status");
+                          props.setpageNo(1)
+                        }}
+                        className="text-gray"
+                        title="Sort by Status"
+                      >
+                        Status
+                      </Link>
+                    </th>
+                  }
 
-                {/* {props.heading === "Dashboard" ? (
+                  {props.heading === "Dashboard" ? (
                     ""
                   ) : (
                     <th
@@ -275,216 +309,216 @@ export default function AdminTaskTable(props) {
                     >
                       Action
                     </th>
-                  )} */}
-              </tr>
-            </thead>
-            <tbody>
-              {/* Map function to show the data in the list*/}
-              {totalData === 0 || taskData.length === 0 ? (
-                <tr>
-                  <th colSpan={7} className="bg-white text-center">
-                    No Data Found
-                  </th>
+                  )}
                 </tr>
-              ) : (
-                (taskData || []).map((data, index) => (
-                  <React.Fragment key={data.id} ref={el => (rowRefs.current[index] = el)}>
-                    <tr className={`applicant_row ${props.taskId === data.id ? "bg-light" : ""}`}>
-                      <td className="text-capitalize py-5">
-                        <p className="font-size-3 font-weight-normal text-black-2 mb-0">
-                          {data.task_creator_user_name === null ||
-                            data.task_creator_user_name === undefined ||
-                            data.task_creator_user_name === "undefined" ||
-                            data.task_creator_user_name === "" ||
-                            data.task_creator_user_name === "0" ? (
-                            <span className="font-size-3  mb-0">N/A</span>
+              </thead>
+              <tbody>
+                {/* Map function to show the data in the list*/}
+                {totalData === 0 || taskData.length === 0 ? (
+                  <tr>
+                    <th colSpan={7} className="bg-white text-center">
+                      No Data Found
+                    </th>
+                  </tr>
+                ) : (
+                  (taskData || []).map((data, index) => (
+                    <React.Fragment key={data.id} ref={el => (rowRefs.current[index] = el)}>
+                      <tr className={`applicant_row ${props.taskId === data.id ? "bg-light" : ""}`}>
+                        <td className="text-capitalize py-5">
+                          <p className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            {data.task_creator_user_name === null ||
+                              data.task_creator_user_name === undefined ||
+                              data.task_creator_user_name === "undefined" ||
+                              data.task_creator_user_name === "" ||
+                              data.task_creator_user_name === "0" ? (
+                              <span className="font-size-3  mb-0">N/A</span>
+                            ) : (
+                              data.task_creator_user_name
+                            )}
+                          </p>
+                        </td>
+                        <td className="text-capitalize py-5">
+                          <p className="font-size-3 font-weight-normal text-black-2 mb-0">
+                            {data.assigned_to_name === null ||
+                              data.assigned_to_name === undefined ||
+                              data.assigned_to_name === "undefined" ||
+                              data.assigned_to_name === "" ||
+                              data.assigned_to_name === "0" ? (
+                              <span className="font-size-3  mb-0">N/A</span>
+                            ) : (
+                              data.assigned_to_name
+                            )}
+                          </p>
+                        </td>
+                        <td className="py-5 text-capitalize">
+                          {data.subject_description === null ||
+                            data.subject_description === undefined ||
+                            data.subject_description === "undefined" ||
+                            data.subject_description === "" ||
+                            data.subject_description === "0" ? (
+                            <p className="font-size-3  mb-0">N/A</p>
                           ) : (
-                            data.task_creator_user_name
-                          )}
-                        </p>
-                      </td>
-                      <td className="text-capitalize py-5">
-                        <p className="font-size-3 font-weight-normal text-black-2 mb-0">
-                          {data.assigned_to_name === null ||
-                            data.assigned_to_name === undefined ||
-                            data.assigned_to_name === "undefined" ||
-                            data.assigned_to_name === "" ||
-                            data.assigned_to_name === "0" ? (
-                            <span className="font-size-3  mb-0">N/A</span>
-                          ) : (
-                            data.assigned_to_name
-                          )}
-                        </p>
-                      </td>
-                      <td className="py-5 text-capitalize">
-                        {data.subject_description === null ||
-                          data.subject_description === undefined ||
-                          data.subject_description === "undefined" ||
-                          data.subject_description === "" ||
-                          data.subject_description === "0" ? (
-                          <p className="font-size-3  mb-0">N/A</p>
-                        ) : (
-                          <div className="m-0">
-                            <div className="text-gray font-size-2 m-0"
-                              dangerouslySetInnerHTML={{ __html: data.subject_description }} />
-                            {/* {data.subject_description.replace(/@/g, "")} */}
+                            <div className="m-0">
+                              <div className="text-gray font-size-2 m-0"
+                                dangerouslySetInnerHTML={{ __html: data.subject_description }} />
+                              {/* {data.subject_description.replace(/@/g, "")} */}
 
-                          </div>
+                            </div>
+                          )}
+                        </td>
+
+                        {props.heading === "Dashboard" ? (
+                          ""
+                        ) : (
+                          <td className=" py-5">
+                            {data.start_date === null ? (
+                              <p className="font-size-3  mb-0">N/A</p>
+                            ) : (
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                <p className="text-gray font-size-2 m-0 border rounded-pill p-2 text-center bg-light">
+                                  {moment(data.start_date).format('ll') + (data.end_date !== "0000-00-00 00:00:00" ? ("-" + moment(data.end_date).format('ll')) : "")}
+                                </p>
+                              </h3>
+                            )}
+                          </td>
                         )}
-                      </td>
-
-                      {props.heading === "Dashboard" ? (
-                        ""
-                      ) : (
-                        <td className=" py-5">
-                          {data.start_date === null ? (
-                            <p className="font-size-3  mb-0">N/A</p>
-                          ) : (
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              <p className="text-gray font-size-2 m-0 border rounded-pill p-2 text-center bg-light">
-                                {moment(data.start_date).format('ll') + (data.end_date !== "0000-00-00 00:00:00" ? ("-" + moment(data.end_date).format('ll')) : "")}
-                              </p>
-                            </h3>
-                          )}
-                        </td>
-                      )}
-                      {props.heading === "Dashboard" ? (
-                        ""
-                      ) : (
-                        <td className=" py-5">
-                          {!data.priority || data.priority === null || data.priority.length === 0 || data.priority === (0 || "0") ? (
-                            <p className="font-size-3  mb-0">N/A</p>
-                          ) : (
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              <p className={`text-white rounded-pill text-center font-size-2 m-0 ${data.priority === ("1" || 1) ? "badge-danger" : data.priority === ("2" || 2) ? "badge-orange" : data.priority === ("3" || 3) ? "badge-warning" : data.priority === ("4" || 4) ? "badge-info" : ""}`}>
-                                {priority?.filter((i) => i.id === parseInt(data.priority))[0].value}
-                              </p>
-                            </h3>
-
-                          )}
-                        </td>
-                      )}
-                      {props.heading === "Dashboard" ? (
-                        ""
-                      ) : (
-                        <td className=" py-5">
-                          {!data.group_by || data.group_by === null || data.group_by.length === 0 || data.group_by === (0 || "0") ? (
-                            <p className="font-size-3  mb-0">N/A</p>
-                          ) : (
-                            <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                              <p className="text-gray font-size-2 m-0">
-                                {groupBy
-                                  .filter((i) => data.group_by.split(",").includes(String(i.id)))
-                                  .map((item, index, arr) => (
-                                    item.value + (index < arr.length - 1 ? ", " : "")
-                                  ))}
-
-                              </p>
-                            </h3>
-                          )}
-                        </td>
-                      )}
-                      <td className=" py-5">
-                        {data.status === null ||
-                          data.status === undefined ||
-                          data.status === "undefined" ||
-                          data.status === "" ? (
-                          <p className="font-size-3  mb-0">N/A</p>
+                        {props.heading === "Dashboard" ? (
+                          ""
                         ) : (
-                          <>
-                            {window.location.pathname === "/managetasks" ?
-                              (<div style={{ display: "table-caption" }}>
-                                <DropdownButton
-                                  as={ButtonGroup}
-                                  title={
-                                    data.status === "1"
-                                      ? "Completed"
+                          <td className=" py-5">
+                            {!data.priority || data.priority === null || data.priority.length === 0 || data.priority === (0 || "0") ? (
+                              <p className="font-size-3  mb-0">N/A</p>
+                            ) : (
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                <p className={`text-white rounded-pill text-center font-size-2 m-0 ${data.priority === ("1" || 1) ? "badge-danger" : data.priority === ("2" || 2) ? "badge-orange" : data.priority === ("3" || 3) ? "badge-warning" : data.priority === ("4" || 4) ? "badge-info" : ""}`}>
+                                  {priority?.filter((i) => i.id === parseInt(data.priority))[0].value}
+                                </p>
+                              </h3>
+
+                            )}
+                          </td>
+                        )}
+                        {props.heading === "Dashboard" ? (
+                          ""
+                        ) : (
+                          <td className=" py-5">
+                            {!data.group_by || data.group_by === null || data.group_by.length === 0 || data.group_by === (0 || "0") ? (
+                              <p className="font-size-3  mb-0">N/A</p>
+                            ) : (
+                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                <p className="text-gray font-size-2 m-0">
+                                  {groupBy
+                                    .filter((i) => data.group_by.split(",").includes(String(i.id)))
+                                    .map((item, index, arr) => (
+                                      item.value + (index < arr.length - 1 ? ", " : "")
+                                    ))}
+
+                                </p>
+                              </h3>
+                            )}
+                          </td>
+                        )}
+                        <td className=" py-5">
+                          {data.status === null ||
+                            data.status === undefined ||
+                            data.status === "undefined" ||
+                            data.status === "" ? (
+                            <p className="font-size-3  mb-0">N/A</p>
+                          ) : (
+                            <>
+                              {window.location.pathname === "/managetasks" ?
+                                (<div style={{ display: "table-caption" }}>
+                                  <DropdownButton
+                                    as={ButtonGroup}
+                                    title={
+                                      data.status === "1"
+                                        ? "Completed"
+                                        : data.status === "2"
+                                          ? "Overdue"
+                                          : data.status === "3"
+                                            ? "Processing"
+                                            : "Incomplete"
+                                    }
+                                    variant={data.status === ("1" || 1)
+                                      ? "shamrock"
+                                      : data.status === ("2" || 2)
+                                        ? "danger"
+                                        : data.status === ("3" || 3) ? "info"
+                                          : "warning"}
+                                    size="xs"
+                                    className={`user_status_btn btn-xs ${data.status === "1"
+                                      ? "btn-shamrock"
                                       : data.status === "2"
-                                        ? "Overdue"
-                                        : data.status === "3"
-                                          ? "Processing"
-                                          : "Incomplete"
-                                  }
-                                  variant={data.status === ("1" || 1)
-                                    ? "shamrock"
-                                    : data.status === ("2" || 2)
-                                      ? "danger"
-                                      : data.status === ("3" || 3) ? "info"
-                                        : "warning"}
-                                  size="xs"
-                                  className={`user_status_btn btn-xs ${data.status === "1"
-                                    ? "btn-shamrock"
-                                    : data.status === "2"
-                                      ? "btn-danger px-4"
-                                      : data.status === ("3" || 3) ? "btn-info"
-                                        : "btn-warning"
-                                    } rounded-pill font-size-1 px-1 text-white mr-2`}
-                                  // disabled={data.status === "2"}
-                                  onSelect={(eventKey, e) => OnStatusChange(data, eventKey)}                          >
-                                  <Dropdown.Item
-                                    value={1}
-                                    eventKey={1}
-                                    className="text-capitalize"
-                                  >
-                                    Complete
-                                  </Dropdown.Item>
-                                  <Dropdown.Item
-                                    value={0}
-                                    eventKey={0}
-                                    className="text-capitalize"
-                                  >
-                                    Incomplete
-                                  </Dropdown.Item>
-                                  <Dropdown.Item
-                                    value={3}
-                                    eventKey={3}
-                                    className="text-capitalize"
-                                  >
-                                    Processing
-                                  </Dropdown.Item>
-                                  {/* <Dropdown.Item
+                                        ? "btn-danger px-4"
+                                        : data.status === ("3" || 3) ? "btn-info"
+                                          : "btn-warning"
+                                      } rounded-pill font-size-1 px-1 text-white mr-2`}
+                                    // disabled={data.status === "2"}
+                                    onSelect={(eventKey, e) => OnStatusChange(data, eventKey)}                          >
+                                    <Dropdown.Item
+                                      value={1}
+                                      eventKey={1}
+                                      className="text-capitalize"
+                                    >
+                                      Complete
+                                    </Dropdown.Item>
+                                    <Dropdown.Item
+                                      value={0}
+                                      eventKey={0}
+                                      className="text-capitalize"
+                                    >
+                                      Incomplete
+                                    </Dropdown.Item>
+                                    <Dropdown.Item
+                                      value={3}
+                                      eventKey={3}
+                                      className="text-capitalize"
+                                    >
+                                      Processing
+                                    </Dropdown.Item>
+                                    {/* <Dropdown.Item
                                 value={2}
                                 eventKey={2}
                                 className="text-capitalize"
                               >
                                 Overdue
                               </Dropdown.Item> */}
-                                </DropdownButton>
-                                {(data.status === ("1" || 1) && data.task_complete_date) ?
-                                  <small className="font-size-1 d-flex justify-content-center mt-2 text-capitalize"
-                                  >
-                                    <ConvertTime _date={data.task_complete_date} format={".fromNow()"} /></small> : null}
-                              </div>)
-                              :
-                              <p
-                                className="font-size-2 font-weight-normal text-black-2 mb-0 text-truncate"
-                                title={
-                                  data.status === (0 || "0")
-                                    ? "Incomplete"
-                                    : data.status === (1 || "1") ?
-                                      "Completed" :
-                                      "Overdue"
-                                }
-                              >
-                                {data.status === (0 || "0") ? (
-                                  <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
-                                    Incomplete
-                                  </span>
-                                ) : data.status === "2" ?
-                                  <span className="p-1 bg-danger text-white text-center w-100 border rounded-pill">
-                                    Overdue
-                                  </span>
-                                  : (
-                                    <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
-                                      Complete
+                                  </DropdownButton>
+                                  {(data.status === ("1" || 1) && data.task_complete_date) ?
+                                    <small className="font-size-1 d-flex justify-content-center mt-2 text-capitalize"
+                                    >
+                                      <ConvertTime _date={data.task_complete_date} format={".fromNow()"} /></small> : null}
+                                </div>)
+                                :
+                                <p
+                                  className="font-size-2 font-weight-normal text-black-2 mb-0 text-truncate"
+                                  title={
+                                    data.status === (0 || "0")
+                                      ? "Incomplete"
+                                      : data.status === (1 || "1") ?
+                                        "Completed" :
+                                        "Overdue"
+                                  }
+                                >
+                                  {data.status === (0 || "0") ? (
+                                    <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
+                                      Incomplete
                                     </span>
-                                  )}
-                              </p>}
-                          </>
-                        )}
-                      </td>
+                                  ) : data.status === "2" ?
+                                    <span className="p-1 bg-danger text-white text-center w-100 border rounded-pill">
+                                      Overdue
+                                    </span>
+                                    : (
+                                      <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
+                                        Complete
+                                      </span>
+                                    )}
+                                </p>}
+                            </>
+                          )}
+                        </td>
 
-                      {/* {props.heading === "Dashboard" ? (
+                        {/* {props.heading === "Dashboard" ? (
                         ""
                       ) : (
                         <td className=" py-5">
@@ -511,7 +545,7 @@ export default function AdminTaskTable(props) {
                           )}
                         </td>
                       )} */}
-                      {/* <td className=" py-5 min-width-px-100">
+                        <td className=" py-5 min-width-px-100">
                           <div
                             className="btn-group button_group"
                             role="group"
@@ -520,10 +554,10 @@ export default function AdminTaskTable(props) {
                             <button
                               className="btn btn-outline-info action_btn"
                               onClick={() => {
-                                setAgentId(data.id);
+                                setOpenReplyBox(true);
+                                setSingleTaskData(data)
                               }}
-                              title="Candidate's"
-                              disabled={data.agent_employee_count === "0" || 0}
+                              title="Add Reply"
                             >
                               <span className="text-gray px-2">
                                 <MdFormatListBulletedAdd />
@@ -531,8 +565,11 @@ export default function AdminTaskTable(props) {
                             </button>
                             <button
                               className="btn btn-outline-info action_btn"
-                              onClick={() => props.EditAgent(data.id)}
-                              title="Edit Partner"
+                              onClick={() => {
+                                props.setUpdateTaskData(data)
+                                props.setShowTaskForm(true)
+                              }}
+                              title="Edit Task"
                             >
                               <span className="text-gray px-2">
                                 <LiaUserEditSolid />
@@ -552,29 +589,47 @@ export default function AdminTaskTable(props) {
                               </span>
                             </button>
                           </div>
-                        </td> */}
-                    </tr>
-                  </React.Fragment>
-                ))
-              )}
-            </tbody>
-          </table>
-        )}
+                        </td>
+                      </tr>
+                    </React.Fragment>
+                  ))
+                )}
+              </tbody>
+            </table>
+          )}
+          <div className={`pt-2 d-flex justify-content-center`}>
+            {recordsPerPage === totalData ? null
+              : <Pagination
+                nPages={nPages}
+                currentPage={props.pageNo}
+                setCurrentPage={props.setpageNo}
+                total={totalData}
+                count={taskData.length}
+              />}
+            {(nPages > 1 || totalData > 10) && <button className="btn btn-primary" onClick={() => {
+              props.setpageNo(1)
+              setRecordsPerPage(recordsPerPage === totalData ? 10 : totalData)
+            }}>{recordsPerPage === totalData ? "View Pagination" : "View All"}</button>}
+          </div>
+        </div>
+        {openReplyBox ?
+          <CommonTaskReplyBox
+            openReplyBox={openReplyBox}
+            setOpenReplyBox={setOpenReplyBox}
+            taskData={singleTaskData} />
+          : null}
+
       </div>
-      <div className={`pt-2 d-flex justify-content-center`}>
-        {recordsPerPage === totalData ? null
-          : <Pagination
-            nPages={nPages}
-            currentPage={props.pageNo}
-            setCurrentPage={props.setpageNo}
-            total={totalData}
-            count={taskData.length}
-          />}
-        <button className="btn btn-primary" onClick={() => {
-          props.setpageNo(1)
-          setRecordsPerPage(recordsPerPage === totalData ? 10 : totalData)
-        }}>{recordsPerPage === totalData ? "View Pagination" : "View All"}</button>
-      </div>
-    </div>
+
+      <SAlert
+        show={deleteAlert}
+        title={deleteName}
+        text="Are you Sure you want to delete !"
+        onConfirm={() => OnDeleteTask(deleteId)}
+        showCancelButton={true}
+        onCancel={() => setDeleteAlert(false)}
+      />
+
+    </>
   );
 }

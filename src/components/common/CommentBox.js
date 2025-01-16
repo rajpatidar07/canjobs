@@ -2,7 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FaReplyAll } from "react-icons/fa";
 import CommentReplyBox from "./CommentReplyBox";
-import ConvertTime from "./ConvertTime";
+import ConvertTime from "./Common function/ConvertTime";
+import determineBackgroundColor from "./Common function/DetermineBackgroundColour";
 export default function CommentBox({
   commentsReplyList,
   setAddCommentFlag,
@@ -18,7 +19,6 @@ export default function CommentBox({
   selectedAnnotation,
   setSelectedAnnotation,
   OnHandleUpdateComment,
-  determineBackgroundColor,
   setReplyCommentClick,
   getCommentsReplyList,
   replyCommentClick,

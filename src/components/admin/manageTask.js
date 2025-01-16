@@ -21,6 +21,7 @@ export default function ManageTask() {
     const [adminPage, setAdminPage] = useState(1)
     const [employeeList, setEmployeeList] = useState([])
     const [showTaskForm, setShowTaskForm] = useState(false)
+    const [updateTaskData, setUpdateTaskData] = useState()
     const [adminList, setAdminList] = useState([])
       const location = useLocation();
       const searchParams = new URLSearchParams(location.search);
@@ -170,7 +171,8 @@ export default function ManageTask() {
                                             userId={userId}
                                             TaskUserType={userType}
                                             setApiCall={setApiCall}
-                                            setShowTaskForm={setShowTaskForm} /> :
+                                            setShowTaskForm={setShowTaskForm} 
+                                            updateTaskData={updateTaskData}/> :
                                         <div className="d-flex flex-row-reverse">
                                             <Link className="btn btn-primary mb-2" onClick={() => setShowTaskForm(true)}>Add Task
                                             </Link>
@@ -189,6 +191,8 @@ export default function ManageTask() {
                                         setpageNo={setTaskPage}
                                         adminType={adminType}
                                         taskId={taskId}
+                                        setUpdateTaskData={setUpdateTaskData}
+                                        setShowTaskForm={setShowTaskForm}
                                     />
                                 </div>
 
@@ -209,6 +213,7 @@ export default function ManageTask() {
                                         status={status}
                                         pageNo={adminPage}
                                         setpageNo={setAdminPage}
+                                        setUpdateTaskData={setUpdateTaskData}
                                     />
                                 </div>
                             </div>

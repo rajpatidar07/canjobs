@@ -5,7 +5,7 @@ import {
 import useValidation from "../common/useValidation";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
-import PasswordInput from "./PasswordInput";
+import PasswordInput from "./Common function/PasswordInput";
 const API_URL = window.location.origin
 // https://canjobs.vercel.app/";
 // const API_URL = "https://canpathwaysjobs.com/";

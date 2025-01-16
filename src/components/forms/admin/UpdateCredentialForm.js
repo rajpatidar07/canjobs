@@ -3,7 +3,7 @@ import { UpdateCredentialApi } from "../../../api/api";
 import useValidation from "../../common/useValidation";
 import { Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
-import PasswordInput from "../../common/PasswordInput";
+import PasswordInput from "../../common/Common function/PasswordInput";
 export default function UpdateCredentialForm({
   show,
   close,

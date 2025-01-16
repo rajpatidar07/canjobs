@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import Loader from "../../common/loader";
 import AgentSignUp from "../../agent/agentSingup";
 import ForgotPasswordForm from "../../forms/admin/ForgotPasswordForm";
-import PasswordInput from "../../common/PasswordInput";
+import PasswordInput from "../../common/Common function/PasswordInput";
 export default function StudyPartnerLogin({ setLoginCondition }) {
     let navigate = useNavigate();
     let [loading, setLoading] = useState(false);

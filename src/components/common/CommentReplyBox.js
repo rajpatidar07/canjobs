@@ -1,7 +1,7 @@
 import React from "react";
 // import { Link } from "react-router-dom";
 import { CiPaperplane } from "react-icons/ci";
-import ConvertTime from "./ConvertTime";
+import ConvertTime from "./Common function/ConvertTime";
 import { Link } from "react-router-dom";
 import { CiEdit, CiTrash } from "react-icons/ci";
 export default function CommentReplyBox({

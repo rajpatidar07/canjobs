@@ -12,7 +12,7 @@ import moment from "moment";
 import Loader from "../common/loader";
 import DocumentModal from "../forms/admin/EmployeeDocumentModal";
 import { PiPencilDuotone } from "react-icons/pi";
-import ConvertTime from "../common/ConvertTime";
+import ConvertTime from "../common/Common function/ConvertTime";
 const UserProfile = (props) => {
   const [apiCall, setApiCall] = useState(false);
   const [showDoc, setShowDoc] = useState(false);

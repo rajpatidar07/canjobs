@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getActivityLog } from "../../api/api";
-import ConvertTime from "./ConvertTime";
+import ConvertTime from "./Common function/ConvertTime";
 // import Pagination from "./pagination";
 export default function UserTimline({ userId, userType }) {
   // const [page, setpage] = useState(1);

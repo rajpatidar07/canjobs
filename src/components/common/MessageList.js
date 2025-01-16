@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { AiOutlineDownload } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import ConvertTime from "./ConvertTime";
+import ConvertTime from "./Common function/ConvertTime";
 const MessageList = ({ data, loginuser, loginusertype, recordsPerPage, setRecordsPerPage }) => {
 
   // /*Local Time */

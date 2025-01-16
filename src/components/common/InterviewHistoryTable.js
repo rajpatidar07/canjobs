@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Loader from './loader';
 import { getActivityLog } from "../../api/api"
 import Pagination from './pagination';
-import ConvertTime from './ConvertTime';
+import ConvertTime from './Common function/ConvertTime';
 const InterviewHistoryTable = ({ employee_id }) => {
     let [isLoading, setIsLoading] = useState(true);
     // let [showAddInterviewModal, setShowAddInterviewModal] = useState(false);

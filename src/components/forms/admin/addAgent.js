@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // import filterjson from "../../json/filterjson";
 import { AddUpdateAgent, GetAgent, getallAdminData } from "../../../api/api";
-import PasswordInput from "../../common/PasswordInput";
+import PasswordInput from "../../common/Common function/PasswordInput";
 
 function AddAgent(props) {
   let encoded;

@@ -3,7 +3,7 @@ import useValidation from "./useValidation";
 import { Modal } from "react-bootstrap";
 import { ChangePasswordApi } from "../../api/api"
 import { toast } from "react-toastify";
-import PasswordInput from "./PasswordInput"
+import PasswordInput from "./Common function/PasswordInput"
 const ChangePassword = (props) => {
   let [loading, setLoading] = useState(false)
   // USER CHANGE PASSWORD VALIDATION

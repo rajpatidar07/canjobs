@@ -21,7 +21,7 @@ import { BsArrow90DegRight } from "react-icons/bs";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { MdFormatListBulletedAdd } from "react-icons/md";
 import { GrDocumentUpload } from "react-icons/gr";
-import ConvertTime from "./ConvertTime";
+import ConvertTime from "./Common function/ConvertTime";
 import LmiaInfo from "../forms/admin/lmiaInfo";
 export default function JobTable(props) {
   /*show Modal and props state */

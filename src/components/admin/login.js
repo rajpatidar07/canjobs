@@ -5,7 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loader from "../common/loader";
 import ForgotPasswordForm from "../forms/admin/ForgotPasswordForm";
-import PasswordInput from "../common/PasswordInput";
+import PasswordInput from "../common/Common function/PasswordInput";
 export default function AdminLoginFrom({ setAdminLoggedIn, setLoginCondition }) {
   let navigate = useNavigate();
   let [loading, setLoading] = useState(false);

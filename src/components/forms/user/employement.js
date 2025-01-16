@@ -11,7 +11,7 @@ import {
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import SAlert from "../../common/sweetAlert";
-import ConvertTime from "../../common/ConvertTime";
+import ConvertTime from "../../common/Common function/ConvertTime";
 
 function EmployementDetails(props) {
   /*Data state */
