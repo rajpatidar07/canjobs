@@ -299,8 +299,7 @@ export default function AdminTaskTable(props) {
                       </Link>
                     </th>
                   }
-
-                  {props.heading === "Dashboard" ? (
+                  {props.heading === "Dashboard" || props.heading !== "Task Dashboard" ? (
                     ""
                   ) : (
                     <th
@@ -322,8 +321,8 @@ export default function AdminTaskTable(props) {
                   </tr>
                 ) : (
                   (taskData || []).map((data, index) => (
-                    <React.Fragment key={data.id} ref={el => (rowRefs.current[index] = el)}>
-                      <tr className={`applicant_row ${props.taskId === data.id ? "bg-light" : ""}`}>
+                    <React.Fragment key={data.id} >
+                      <tr className={`applicant_row ${props.taskId === data.id ? "bg-light" : ""}`} ref={el => (rowRefs.current[index] = el)}>
                         <td className="text-capitalize py-5">
                           <p className="font-size-3 font-weight-normal text-black-2 mb-0">
                             {data.task_creator_user_name === null ||
@@ -545,7 +544,7 @@ export default function AdminTaskTable(props) {
                           )}
                         </td>
                       )} */}
-                        <td className=" py-5 min-width-px-100">
+                        <td className={props.heading === "dashboard" || props.heading !== "Task Dashboard" ? "d-none" : " py-5 min-width-px-100"}>
                           <div
                             className="btn-group button_group"
                             role="group"

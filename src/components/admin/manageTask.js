@@ -23,9 +23,9 @@ export default function ManageTask() {
     const [showTaskForm, setShowTaskForm] = useState(false)
     const [updateTaskData, setUpdateTaskData] = useState()
     const [adminList, setAdminList] = useState([])
-      const location = useLocation();
-      const searchParams = new URLSearchParams(location.search);
-      const taskId = searchParams.get("taskId");
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const taskId = searchParams.get("taskId");
     /*Function to get all user data */
     const GetAllUserData = async () => {
         try {
@@ -67,7 +67,6 @@ export default function ManageTask() {
         }
     }, [apiCall])
     return (
-
         <>
             <div className="site-wrapper overflow-hidden bg-default-2">
                 {/* <!-- Header Area --> */}
@@ -171,8 +170,9 @@ export default function ManageTask() {
                                             userId={userId}
                                             TaskUserType={userType}
                                             setApiCall={setApiCall}
-                                            setShowTaskForm={setShowTaskForm} 
-                                            updateTaskData={updateTaskData}/> :
+                                            setShowTaskForm={setShowTaskForm}
+                                            updateTaskData={updateTaskData}
+                                            setUpdateTaskData={setUpdateTaskData} /> :
                                         <div className="d-flex flex-row-reverse">
                                             <Link className="btn btn-primary mb-2" onClick={() => setShowTaskForm(true)}>Add Task
                                             </Link>
@@ -213,7 +213,6 @@ export default function ManageTask() {
                                         status={status}
                                         pageNo={adminPage}
                                         setpageNo={setAdminPage}
-                                        setUpdateTaskData={setUpdateTaskData}
                                     />
                                 </div>
                             </div>

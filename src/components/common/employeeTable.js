@@ -622,7 +622,7 @@ export default function EmployeeTable(props) {
                     : status === "" ||
                       status === "00" ||
                       status === "0,1,2,3,5,6" ||
-                      status === "4,7,8"
+                      status === "4,7,8,9"
                       ? "btn btn-primary"
                       : "btn btn-outline-primary"
                 }
@@ -938,19 +938,15 @@ export default function EmployeeTable(props) {
                                     ? `/student_profile`
                                     : `/${empdata.employee_id}`}
                                   onClick={
-                                    () =>
-                                      portal === "study"
-                                        ? localStorage.setItem(
-                                          "employee_id",
-                                          empdata.employee_id
-                                        )
-                                        : () => {
+                                    () => {
+                                      if (portal === "study") {
+                                        localStorage.setItem("employee_id", empdata.employee_id);
+                                      } else {
+                                        console.log(status === "" ? "00" : status);
+                                        localStorage.setItem("StatusTab", status === "" ? "00" : status);
+                                      }
+                                    }
 
-                                          localStorage.setItem(
-                                            "StatusTab",
-                                            status === "" ? "00" : status
-                                          );
-                                        }
                                     //   empdata.name !== null
                                     //     ? () => employeeDetails(empdata.employee_id)
                                     //     : null
@@ -989,19 +985,15 @@ export default function EmployeeTable(props) {
                                       ? `/student_profile`
                                       : `/${empdata.employee_id}`}
                                     onClick={
-                                      () =>
-                                        portal === "study"
-                                          ? localStorage.setItem(
-                                            "employee_id",
-                                            empdata.employee_id
-                                          )
-                                          : () => {
+                                      () => {
+                                        if (portal === "study") {
+                                          localStorage.setItem("employee_id", empdata.employee_id);
+                                        } else {
+                                          console.log(status === "" ? "00" : status);
+                                          localStorage.setItem("StatusTab", status === "" ? "00" : status);
+                                        }
+                                      }
 
-                                            localStorage.setItem(
-                                              "StatusTab",
-                                              status === "" ? "00" : status
-                                            );
-                                          }
                                       //   empdata.name !== null
                                       //     ? () => employeeDetails(empdata.employee_id)
                                       //     : null

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { AddFIlter, ADocAnnotation, getallAdminData, GetFilter } from '../../../api/api';
+import { AddFIlter, ADocAnnotation, getallAdminData, GetFilter, UpdateDocuentcommentAssign } from '../../../api/api';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import { FaWindowClose } from "react-icons/fa";
@@ -20,7 +20,10 @@ export default function AddTaskForm(props) {
     const [showStatusInput, setShowStatusInput] = useState(false);
     const [newStatus, setNewStatus] = useState("");
     const [statusErrors, setStatusErrors] = useState("");
-    const [apicall, setApiCall] = useState(false);
+    let admin_id = localStorage.getItem("admin_id")
+    let admin_type = localStorage.getItem("admin_type"); //sender type
+    let admin_name = localStorage.getItem("admin")
+    let admin_email = localStorage.getItem("admin_email")
     /*Functio to get the json of group by */
     const GetJson = async () => {
         try {
@@ -53,15 +56,12 @@ export default function AddTaskForm(props) {
     }
     useEffect(() => {
         GetJson()
-        if (apicall) {
-            setApiCall(false)
-        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [apicall])
+    }, [])
+    // console.log(groupBy, props?.updateTaskData.group_by.split(","))
     /*On change function for group by field */
     const handleGroupSelect = (e) => {
         const selectedValue = e.target.value;
-
         if (selectedValue && !selectedGroupBy.includes(selectedValue)) {
             setSelectedGroupBy([...selectedGroupBy, selectedValue]);
         }
@@ -80,8 +80,6 @@ export default function AddTaskForm(props) {
             setSelectedAdmin([...selectedAdmin, selectedAdminObj]);
         }
     };
-
-
     /*Delete function for group by field */
     const removeAdmin = (adminId) => {
         setSelectedAdmin(selectedAdmin.filter((admin) => admin.admin_id !== adminId));
@@ -96,7 +94,7 @@ export default function AddTaskForm(props) {
         let assignedUserType = selectedAdmin?.length > 0 ? selectedAdmin.map((admin) => admin.admin_type).join(",") : ""
         try {
             let res = await ADocAnnotation(
-                localStorage.getItem("admin_id"),
+                admin_id,
                 "",
                 assignedAdminId,
                 email,
@@ -105,14 +103,14 @@ export default function AddTaskForm(props) {
                 "", //annotation.x_axis,
                 "", //annotation.y_axis,
                 "task",
-                localStorage.getItem("admin_type"), //sender type
-                localStorage.getItem("admin"), //sender name,
+                admin_type, //sender type
+                admin_name, //sender name,
                 assignedAdminName, //assigned Admin or user Name,
                 "", //follow up status(for notes only)
                 "", //Next follow up date(for notes only)
                 assignedUserType, //Assign user type,
                 "", //Document url(for notes only)
-                localStorage.getItem("admin_email"), //Sender email
+                admin_email, //Sender email
                 props.userId ? props.userId : "", //employee id,
                 "", //assigned_by_id
                 "", // document parent code
@@ -141,7 +139,6 @@ export default function AddTaskForm(props) {
                 setLoading(false)
                 props.setApiCall(true)
                 props.setShowTaskForm(false)
-                setApiCall(true)
             }
             if (res.data.message === "required fields cannot be blank assined_to_user_id") {
                 toast.error("Please add the fields", {
@@ -167,7 +164,6 @@ export default function AddTaskForm(props) {
                 const responseData = await AddFIlter(data, 36);
                 if (responseData.message === "item already exist !") {
                     setStatusErrors("Status already exist !");
-                    setApiCall(true);
                     setNewStatus("");
                     setLoading(false);
                 }
@@ -195,46 +191,155 @@ export default function AddTaskForm(props) {
             alert("No status found")
         }
     }
-    // console.log(selectedStatus)
+    // Load task data into form fields
+    useEffect(() => {
+        if (props?.updateTaskData) {
+            setTaskTitle(props?.updateTaskData.subject_description || "");
+            setStardivate(props?.updateTaskData.start_date ? props?.updateTaskData.start_date.split(" ")[0] : "");
+            setEndDate(props?.updateTaskData.end_date ? props?.updateTaskData.end_date.split(" ")[0] : "");
+            setSelectedPriority(props?.updateTaskData.priority || "");
+            setSelectedStatus(props?.updateTaskData.status || "");
+            setSelectedGroupBy(props?.updateTaskData.group_by ? props?.updateTaskData.group_by.split(",") : []);
+            setSelectedAdmin(
+                props?.updateTaskData.assigned_to
+                    ? props?.updateTaskData.assigned_to.split(",").map((email, index) => {
+                        const admin_id = props?.updateTaskData.assined_to_user_id.split(",")[index];
+                        const name = props?.updateTaskData.assigned_to_name.split(",")[index];
+                        const admin_type = props?.updateTaskData.assigned_user_type.split(",")[index];
+
+                        // Find the matching admin in the adminList array
+                        const admin = AdminList.find((admin) => admin.admin_id === props?.updateTaskData.assined_to_user_id.split(",")[index]);
+                        return {
+                            admin_id,
+                            name,
+                            profile_image: admin ? admin.profile_image : "", // Use profile_image if found
+                            admin_type,
+                            email,
+                        };
+                    })
+                    : []
+            );
+        }
+    }, [props?.updateTaskData, groupBy, priority, status, AdminList]);
+
+    const onUpdateTaskSubmit = async (e) => {
+        e.preventDefault();
+
+        // Construct the updated task object
+        const updatedTask = {
+            subject_description: taskTitle,
+            start_date: stardivate,
+            end_date: endDate,
+            priority: selectedPriority,
+            status: selectedStatus,
+            group_by: selectedGroupBy.join(","),
+            assigned_to: selectedAdmin.map((admin) => admin.email).join(","),
+            assigned_to_name: selectedAdmin.map((admin) => admin.name).join(","),
+            assined_to_user_id: selectedAdmin.map((admin) => admin.admin_id).join(","),
+            assigned_user_type: selectedAdmin.map((admin) => admin.admin_type).join(","),
+            id: props?.updateTaskData.id,
+            type: props?.updateTaskData.type,
+            task_creator_user_id: admin_id,
+            task_creator_user_type: admin_type
+
+        };
+
+        try {
+            setLoading(true)
+            let res = await UpdateDocuentcommentAssign(updatedTask); // Call the update function
+            if (res.status === (1 || "1")) {
+                if (res.message === "Task updated successfully!") {
+                    toast.success("Task updated Successfully", {
+                        position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 1000,
+                    });
+                    setTaskTitle("")
+                    setStardivate(new Date().toISOString().split("T")[0])
+                    setEndDate("")
+                    setSelectedGroupBy([])
+                    setSelectedAdmin([])
+                    setSelectedStatus("")
+                    setSelectedPriority("")
+                    setLoading(false)
+                    props.setShowTaskForm(false); // Close the form
+                    props.setUpdateTaskData(false)
+                    props.setApiCall(true)
+                }
+            }
+        } catch (error) {
+
+        }
+    };
     return (
         <form className='mb-3'>
             <div className='d-flex flex-row-reverse'>
                 <Link
                     className="btn-sm btn-light rounded-3 p-2 mtb-1"
-                    onClick={() => props.setShowTaskForm(false)}
+                    onClick={() => {
+                        props.setShowTaskForm(false)
+                        props.setUpdateTaskData(false)
+                    }}
                     title="Close form"
                 >
-                    <FaWindowClose style={{color:"red"}} />
+                    <FaWindowClose style={{ color: "red" }} />
                 </Link>
             </div>
             <div className='row'>
-                <div className='col'>
+                <div className='form-group col'>
+                    <label
+                        htmlFor="title"
+                        className="font-size-4 text-black-2  line-height-reset"
+                    >
+                        Task
+                    </label>
                     <input
                         type="text"
                         className="form-control"
                         value={taskTitle}
                         onChange={(e) => setTaskTitle(e.target.value)}
                         placeholder="Enter Text comment"
+                        id='title'
                     />
                 </div>
-                <div className='col'>
+                <div className='form-group col'>
+                    <label
+                        htmlFor="start_date"
+                        className="font-size-4 text-black-2  line-height-reset"
+                    >
+                        Start date
+                    </label>
                     <input
+                        id='start_date'
                         type="date"
                         className="form-control"
                         value={stardivate}
                         onChange={(e) => setStardivate(e.target.value)}
                     />
                 </div>
-                <div className='col'>
+                <div className='form-group  col'>
+                    <label
+                        htmlFor="end_date"
+                        className="font-size-4 text-black-2  line-height-reset"
+                    >
+                        End date
+                    </label>
                     <input
+                        id='end_date'
                         type="date"
                         className="form-control"
                         value={endDate}
                         onChange={(e) => setEndDate(e.target.value)}
                     />
                 </div>
-                <div className='col'>
+                <div className='form-group col'>
+                    <label
+                        htmlFor="priority"
+                        className="font-size-4 text-black-2  line-height-reset"
+                    >
+                        Priority
+                    </label>
                     <select
+                        id='Priority'
                         className="form-control"
                         value={selectedPriority}
                         onChange={(e) => setSelectedPriority(e.target.value)}
@@ -247,11 +352,18 @@ export default function AddTaskForm(props) {
                         ))}
                     </select>
                 </div>
-                <div className="col">
+                <div className="form-group col">
                     <div className="d-flex flex-column">
+                        <label
+                            htmlFor="status"
+                            className="font-size-4 text-black-2  line-height-reset"
+                        >
+                            Status
+                        </label>
                         {/* Status Dropdown and Add Button */}
-                        <div className="d-flex align-items-center mb-2">
+                        <div className="d-flex  align-items-center mb-2">
                             <select
+                                id='status'
                                 className={`form-control text-capitalize ${showStatusInput ? "" : "flex-grow-1 me-2"}`}
                                 value={selectedStatus}
                                 onChange={(e) => setSelectedStatus(e.target.value)}
@@ -318,10 +430,17 @@ export default function AddTaskForm(props) {
                         )}
                     </div>
                 </div>
-                <div className="col">
+                <div className="form-group  col">
+                    <label
+                        htmlFor="group"
+                        className="font-size-4 text-black-2  line-height-reset"
+                    >
+                        Group by
+                    </label>
                     <select
                         className={`form-control mb-2 text-capitalize`}
                         onChange={handleGroupSelect}
+                        id="group"
                     >
                         <option value="">Select Group</option>
                         {(groupBy || []).map((user) => (
@@ -334,27 +453,38 @@ export default function AddTaskForm(props) {
                         ))}
                     </select>
                     <div className="row m-0 p-0">
-                        {selectedGroupBy.length === 0 ? (
-                            null) : (
-                            (selectedGroupBy || []).map((item, index) => (
-                                <span
-                                    key={index}
-                                    className="text-capitalize text-black-2 font-size-2 d-flex align-items-center p-1"
-                                    title={`${groupBy.find((i) => i.id === parseInt(item))?.value}`}>
-                                    {groupBy.find((i) => i.id === parseInt(item)).value}
-                                    <Link
-                                        onClick={() => removeGroup(item)}
-                                        title={`Delete ${groupBy.find((i) => i.id === parseInt(item))?.value}`}
+                        {selectedGroupBy.length === 0 ? null : (
+                            selectedGroupBy.map((item, index) => {
+                                const group = Array.isArray(groupBy) ? groupBy.find((i) => i.id === parseInt(item)) : null;
+                                return (
+                                    <span
+                                        key={index}
+                                        className="text-capitalize text-black-2 font-size-2 d-flex align-items-center p-1"
+                                        title={group ? group.value : 'Unknown'}
                                     >
-                                        <i className="px-1 fa fa-times-circle" aria-hidden="true"></i>
-                                    </Link>
-                                </span>
-                            ))
+                                        {group ? group.value : 'Unknown'}
+                                        <Link
+                                            onClick={() => removeGroup(item)}
+                                            title={`Delete ${group ? group.value : 'Unknown'}`}
+                                        >
+                                            <i className="px-1 fa fa-times-circle" aria-hidden="true"></i>
+                                        </Link>
+                                    </span>
+                                );
+                            })
                         )}
                     </div>
+
                 </div>
-                <div className="col">
+                <div className="form-group col">
+                    <label
+                        htmlFor="admin"
+                        className="font-size-4 text-black-2  line-height-reset"
+                    >
+                        Admin
+                    </label>
                     <select
+                        id='admin'
                         className="form-control mb-2 text-capitalize"
                         onChange={handleAdminSelect}
                         value=""
@@ -428,7 +558,7 @@ export default function AddTaskForm(props) {
                             <span className="sr-only">Loading...</span>
                         </Link>
                     ) : (
-                        <Link onClick={(e) => handleTaskSubmit(e)} className="btn-md btn-primary p-1 px-10 rounded-4">
+                        <Link onClick={(e) => { props?.updateTaskData ? onUpdateTaskSubmit(e) : handleTaskSubmit(e) }} className="btn-md btn-primary p-1 px-10 rounded-4">
                             Save
                         </Link>
                     )}
