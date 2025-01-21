@@ -206,7 +206,7 @@ export default function ManageTask() {
                     />
                   ) : null}
                   <AdminTaskTable
-                    heading={""}
+                    heading={"Task Dashboard"}
                     filter_by_time={""}
                     apiCall={apiCall}
                     setApiCall={setApiCall}

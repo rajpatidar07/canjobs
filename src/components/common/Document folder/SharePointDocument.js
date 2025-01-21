@@ -80,7 +80,7 @@ export default function SharePointDocument({
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
   const [pageNo, setPageNo] = useState(1);
-  const [recordsPerPage] = useState(10);
+  const [recordsPerPage, setRecordsPerPage] = useState(10);
   /*Shorting states */
   const [columnName, setcolumnName] = useState("id");
   const [sortOrder, setSortOrder] = useState("DESC");
@@ -401,7 +401,7 @@ export default function SharePointDocument({
     //   )
     // );
     // eslint-disable-next-line
-  }, [folderID, apiCall, docId, fileID, pageNo, columnName, sortOrder]);
+  }, [folderID, apiCall, docId, fileID, pageNo, columnName, sortOrder, recordsPerPage]);
   // /*Render method to get the note data to the felid */
   // useEffect(() => {
   //   if (openNoteForm) {
@@ -1105,6 +1105,8 @@ export default function SharePointDocument({
                     docFileBase={docFileBase}
                     setOpenNoteForm={setOpenNoteForm}
                     AdminData={AdminData}
+                    setRecordsPerPage={setRecordsPerPage}
+                    recordsPerPage={recordsPerPage}
                   />
                 )}
               </div>

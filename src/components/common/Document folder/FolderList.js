@@ -45,7 +45,9 @@ export default function FolderList({
   pageNo,
   docFileBase,
   setOpenNoteForm,
-  AdminData
+  AdminData,
+  setRecordsPerPage,
+  recordsPerPage
 }) {
   const [view, setView] = useState(localStorage.getItem("docView") || "list"); // Default to block view
   let [openAnnotationBox, setOpenAnnotationBox] = useState();
@@ -95,7 +97,7 @@ export default function FolderList({
       </div>
       <div className="row">
         {/* File List */}
-        <div className={`file-list justify-content-center ${openAnnotationBox === true ? "col-9" : "col-12"}`}>
+        <div className={` justify-content-center ${openAnnotationBox === true ? "col-9" : "col-12"}`}>
           {view === "block" ? (
             <div className="d-flex flex-wrap justify-content-center">
               {(docTypeList || []).map((item, index) => (
@@ -452,6 +454,9 @@ export default function FolderList({
             currentPage={pageNo}
             setView={setView}
             view={view}
+            page={"document"}
+            setRecordsPerPage={setRecordsPerPage}
+            recordsPerPage={recordsPerPage}
           />
         </div>
 

@@ -1,19 +1,10 @@
 import React, { useEffect, useState } from "react";
-import {
-  AddFIlter,
-  ADocAnnotation,
-  getallAdminData,
-  GetFilter,
-  UpdateDocuentcommentAssign,
-} from "../../../api/api";
+import { AddFIlter, ADocAnnotation, getallAdminData, GetFilter, UpdateDocuentcommentAssign } from "../../../api/api";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import { FaWindowClose } from "react-icons/fa";
 export default function AddTaskForm(props) {
   const [taskTitle, setTaskTitle] = useState("");
-  const [stardivate, setStardivate] = useState(
-    new Date().toISOString().split("T")[0]
-  );
+  const [stardivate, setStardivate] = useState(new Date().toISOString().split("T")[0]);
   const [endDate, setEndDate] = useState("");
   const [AdminList, setAdminList] = useState([]);
   const [selectedGroupBy, setSelectedGroupBy] = useState([]);
@@ -32,7 +23,7 @@ export default function AddTaskForm(props) {
   let admin_type = localStorage.getItem("admin_type"); //sender type
   let admin_name = localStorage.getItem("admin");
   let admin_email = localStorage.getItem("admin_email");
-  /*Functio to get the json of group by */
+  /*FunctioN to get the json of group by */
   const GetJson = async () => {
     try {
       let res = await GetFilter();
@@ -246,27 +237,27 @@ export default function AddTaskForm(props) {
       setSelectedAdmin(
         props?.updateTaskData.assigned_to
           ? props?.updateTaskData.assigned_to.split(",").map((email, index) => {
-              const admin_id =
-                props?.updateTaskData.assined_to_user_id.split(",")[index];
-              const name =
-                props?.updateTaskData.assigned_to_name.split(",")[index];
-              const admin_type =
-                props?.updateTaskData.assigned_user_type.split(",")[index];
+            const admin_id =
+              props?.updateTaskData.assined_to_user_id.split(",")[index];
+            const name =
+              props?.updateTaskData.assigned_to_name.split(",")[index];
+            const admin_type =
+              props?.updateTaskData.assigned_user_type.split(",")[index];
 
-              // Find the matching admin in the adminList array
-              const admin = AdminList.find(
-                (admin) =>
-                  admin.admin_id ===
-                  props?.updateTaskData.assined_to_user_id.split(",")[index]
-              );
-              return {
-                admin_id,
-                name,
-                profile_image: admin ? admin.profile_image : "", // Use profile_image if found
-                admin_type,
-                email,
-              };
-            })
+            // Find the matching admin in the adminList array
+            const admin = AdminList.find(
+              (admin) =>
+                admin.admin_id ===
+                props?.updateTaskData.assined_to_user_id.split(",")[index]
+            );
+            return {
+              admin_id,
+              name,
+              profile_image: admin ? admin.profile_image : "", // Use profile_image if found
+              admin_type,
+              email,
+            };
+          })
           : []
       );
     }
@@ -319,7 +310,7 @@ export default function AddTaskForm(props) {
           props.setApiCall(true);
         }
       }
-    } catch (error) {}
+    } catch (error) { }
   };
   return (
     <form className="mt-6 mb-0 task_dashboard_form">
@@ -402,9 +393,8 @@ export default function AddTaskForm(props) {
             <div className="d-flex  align-items-center mb-2">
               <select
                 id="status"
-                className={`form-control text-capitalize ${
-                  showStatusInput ? "" : "flex-grow-1 me-2"
-                }`}
+                className={`form-control text-capitalize ${showStatusInput ? "" : "flex-grow-1 me-2"
+                  }`}
                 value={selectedStatus}
                 onChange={(e) => setSelectedStatus(e.target.value)}
               >
@@ -493,8 +483,8 @@ export default function AddTaskForm(props) {
                 value={user.id}
                 className={
                   user.value === "pgwp" ||
-                  user.value === "wes" ||
-                  user.value === "atip"
+                    user.value === "wes" ||
+                    user.value === "atip"
                     ? `text-uppercase`
                     : "text-capitalize"
                 }
@@ -507,28 +497,28 @@ export default function AddTaskForm(props) {
             {selectedGroupBy.length === 0
               ? null
               : selectedGroupBy.map((item, index) => {
-                  const group = Array.isArray(groupBy)
-                    ? groupBy.find((i) => i.id === parseInt(item))
-                    : null;
-                  return (
-                    <span
-                      key={index}
-                      className="text-capitalize text-black-2 font-size-2 d-flex align-items-center p-1"
-                      title={group ? group.value : "Unknown"}
+                const group = Array.isArray(groupBy)
+                  ? groupBy.find((i) => i.id === parseInt(item))
+                  : null;
+                return (
+                  <span
+                    key={index}
+                    className="text-capitalize text-black-2 font-size-2 d-flex align-items-center p-1"
+                    title={group ? group.value : "Unknown"}
+                  >
+                    {group ? group.value : "Unknown"}
+                    <Link
+                      onClick={() => removeGroup(item)}
+                      title={`Delete ${group ? group.value : "Unknown"}`}
                     >
-                      {group ? group.value : "Unknown"}
-                      <Link
-                        onClick={() => removeGroup(item)}
-                        title={`Delete ${group ? group.value : "Unknown"}`}
-                      >
-                        <i
-                          className="px-1 fa fa-times-circle"
-                          aria-hidden="true"
-                        ></i>
-                      </Link>
-                    </span>
-                  );
-                })}
+                      <i
+                        className="px-1 fa fa-times-circle"
+                        aria-hidden="true"
+                      ></i>
+                    </Link>
+                  </span>
+                );
+              })}
           </div>
         </div>
         <div className="mb-3 form-group col">
@@ -556,49 +546,49 @@ export default function AddTaskForm(props) {
             {selectedAdmin.length === 0
               ? null
               : (selectedAdmin || []).map((item) => (
-                  <div
-                    key={item.admin_id}
-                    className="position-relative d-inline-block mr-3 mb-2"
-                    style={{ width: "25px", height: "25px" }}
+                <div
+                  key={item.admin_id}
+                  className="position-relative d-inline-block mr-3 mb-2"
+                  style={{ width: "25px", height: "25px" }}
+                >
+                  <img
+                    className="rounded-circle"
+                    src={
+                      item.profile_image ||
+                      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                    }
+                    alt={`Profile of ${item.name}`}
+                    title={`Profile image of ${item.name}`}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      border: "2px solid #dee2e6",
+                    }}
+                  />
+                  <button
+                    onClick={() => removeAdmin(item.admin_id)}
+                    aria-label={`Remove ${item.name}`}
+                    className="position-absolute text-danger bg-transparent border-0 p-0"
+                    style={{
+                      top: "-5px",
+                      right: "-5px",
+                      cursor: "pointer",
+                    }}
                   >
-                    <img
-                      className="rounded-circle"
-                      src={
-                        item.profile_image ||
-                        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                      }
-                      alt={`Profile of ${item.name}`}
-                      title={`Profile image of ${item.name}`}
+                    <i
+                      className="fa fa-times-circle"
+                      aria-hidden="true"
                       style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                        border: "2px solid #dee2e6",
+                        fontSize: "10px",
+                        backgroundColor: "white",
+                        borderRadius: "50%",
+                        boxShadow: "0 1px 4px rgba(0, 0, 0, 0.2)",
                       }}
-                    />
-                    <button
-                      onClick={() => removeAdmin(item.admin_id)}
-                      aria-label={`Remove ${item.name}`}
-                      className="position-absolute text-danger bg-transparent border-0 p-0"
-                      style={{
-                        top: "-5px",
-                        right: "-5px",
-                        cursor: "pointer",
-                      }}
-                    >
-                      <i
-                        className="fa fa-times-circle"
-                        aria-hidden="true"
-                        style={{
-                          fontSize: "10px",
-                          backgroundColor: "white",
-                          borderRadius: "50%",
-                          boxShadow: "0 1px 4px rgba(0, 0, 0, 0.2)",
-                        }}
-                      ></i>
-                    </button>
-                  </div>
-                ))}
+                    ></i>
+                  </button>
+                </div>
+              ))}
           </div>
         </div>
 

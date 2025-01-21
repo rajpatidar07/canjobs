@@ -203,7 +203,7 @@ export default function AdminTaskTable(props) {
   };
   return (
     <>
-      <div className="bg-white shadow-8 datatable_div pt-7 rounded pb-8 px-2">
+      <div className="bg-white shadow-8 datatable_div pt-7 rounded pb-8 px-2 row">
         <div
           className={`table-responsive main_table_div ${
             openReplyBox ? "col-9" : "col-12"
@@ -759,30 +759,17 @@ export default function AdminTaskTable(props) {
               </tbody>
             </table>
           )}
-          <div className={`pt-2 d-flex justify-content-center`}>
-            {recordsPerPage === totalData ? null : (
+          <div className={`pt-2 `}>
               <Pagination
                 nPages={nPages}
                 currentPage={props.pageNo}
                 setCurrentPage={props.setpageNo}
                 total={totalData}
                 count={taskData.length}
+                setRecordsPerPage={setRecordsPerPage}
+                recordsPerPage={recordsPerPage}
+                page={"task"}
               />
-            )}
-            {(nPages > 1 || totalData > 10) && (
-              <button
-                className="page-link font-size-3 py-2 font-weight-semibold px-3 rounded"
-                style={{ height: "max-content" }}
-                onClick={() => {
-                  props.setpageNo(1);
-                  setRecordsPerPage(
-                    recordsPerPage === totalData ? 10 : totalData
-                  );
-                }}
-              >
-                {recordsPerPage === totalData ? "View Less" : "View All"}
-              </button>
-            )}
           </div>
         </div>
         {openReplyBox ? (
