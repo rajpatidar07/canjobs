@@ -1,7 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import Loader from "./loader";
 import { Link } from "react-router-dom";
-import { DeleteCommentsAndAssign, GetCommentsAndAssign, GetFilter, UpdateDocuentcommentAssign } from "../../api/api";
+import {
+  DeleteCommentsAndAssign,
+  GetCommentsAndAssign,
+  GetFilter,
+  UpdateDocuentcommentAssign,
+} from "../../api/api";
 import Pagination from "./pagination";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
@@ -13,10 +18,12 @@ import { LiaUserEditSolid } from "react-icons/lia";
 import { MdFormatListBulletedAdd } from "react-icons/md";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import CommonTaskReplyBox from "./CommonTaskReplyBox";
+import AssignedUserList from "./assignedUserList";
+import UserAvatar from "./UserAvtar";
 export default function AdminTaskTable(props) {
   const [taskData, setTaskData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [taskStatus/*, setTaskStatus*/] = useState("");
+  const [taskStatus /*, setTaskStatus*/] = useState("");
   const [columnName, setcolumnName] = useState("updated_on");
   const [sortOrder, setSortOrder] = useState("DESC");
   const [groupBy, setGroupBy] = useState([]);
@@ -46,13 +53,20 @@ export default function AdminTaskTable(props) {
   /*Function to delete comment */
   const OnDeleteTask = async (id) => {
     try {
-      let res = await DeleteCommentsAndAssign("", id, "", "", props.adminId, props.adminType);
+      let res = await DeleteCommentsAndAssign(
+        "",
+        id,
+        "",
+        "",
+        props.adminId,
+        props.adminType
+      );
       if (res.data.message === "Task deleted successfully!") {
         toast.success("Task Deleted Successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        setDeleteAlert(false)
+        setDeleteAlert(false);
         getCommentsList();
       }
     } catch (err) {
@@ -62,10 +76,13 @@ export default function AdminTaskTable(props) {
   useEffect(() => {
     if (props.taskId) {
       // Find the index of the task data that matches taskId
-      const index = taskData.findIndex(data => data.id === props.taskId);
+      const index = taskData.findIndex((data) => data.id === props.taskId);
       if (index !== -1) {
         // Scroll to the matching row
-        rowRefs.current[index]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        rowRefs.current[index]?.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
       }
     }
   }, [props.taskId, taskData]);
@@ -74,7 +91,7 @@ export default function AdminTaskTable(props) {
     try {
       let res = await GetCommentsAndAssign(
         "",
-        props.adminId,//adminEmail,
+        props.adminId, //adminEmail,
         props.status ? props.status : taskStatus,
         "task",
         props.pageNo,
@@ -84,18 +101,17 @@ export default function AdminTaskTable(props) {
         props.filter_by_time,
         props.adminType,
         props.employeeId,
-        props.TaskUserType,
-
+        props.TaskUserType
       );
-      let JsonRes = await GetFilter()
-      setPriority(JsonRes?.data?.data?.priority)
-      setGroupBy(JsonRes?.data?.data?.group_by)
+      let JsonRes = await GetFilter();
+      setPriority(JsonRes?.data?.data?.priority);
+      setGroupBy(JsonRes?.data?.data?.group_by);
       if (res.data.status === (1 || "1")) {
         setTaskData(res.data.data.data);
         setIsLoading(false);
         setTotalData(res.data.data.total_rows);
         if (window.location.pathname === "/managetasks") {
-          props.setCount(res.data.employee_task_count[0])
+          props.setCount(res.data.employee_task_count[0]);
         }
       } else if (res.data.message === "Task data not found") {
         setIsLoading(false);
@@ -104,7 +120,8 @@ export default function AdminTaskTable(props) {
       }
     } catch (err) {
       console.log(err);
-      if (err.response.status === 401) { }
+      if (err.response.status === 401) {
+      }
       setIsLoading(false);
     }
   };
@@ -113,7 +130,19 @@ export default function AdminTaskTable(props) {
     const newUrl = window.location.pathname;
     window.history.replaceState({}, document.title, newUrl);
     // eslint-disable-next-line
-  }, [taskStatus, props.pageNo, props.apiCall, props.adminType, props.status, props.adminId, props.employeeId, props.filter_by_time, sortOrder, columnName, recordsPerPage]);
+  }, [
+    taskStatus,
+    props.pageNo,
+    props.apiCall,
+    props.adminType,
+    props.status,
+    props.adminId,
+    props.employeeId,
+    props.filter_by_time,
+    sortOrder,
+    columnName,
+    recordsPerPage,
+  ]);
   /*Sorting Function */
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
@@ -136,7 +165,9 @@ export default function AdminTaskTable(props) {
       status: status,
       is_status_update: true,
       // subject_description: updatedCommentToApi,
-      task_creator_user_id: localStorage.getItem(localStorage.getItem("userType") === "admin" ? "admin_id" : "agent_id"),
+      task_creator_user_id: localStorage.getItem(
+        localStorage.getItem("userType") === "admin" ? "admin_id" : "agent_id"
+      ),
       task_creator_user_type:
         localStorage.getItem("userType") === "admin" ? "admin" : "agent",
       assined_to_user_id: assined_to_user_id,
@@ -145,28 +176,39 @@ export default function AdminTaskTable(props) {
       assigned_to: assigned_to,
       assigned_to_name: assigned_to_name,
       id: originalData.id,
-      type: originalData.type
+      type: originalData.type,
     };
 
     // Call the API to update the document
     try {
-      let res = await UpdateDocuentcommentAssign(updatedData, props.TaskUserType);
+      let res = await UpdateDocuentcommentAssign(
+        updatedData,
+        props.TaskUserType
+      );
       if (res.message === "Task updated successfully!") {
         toast.success("Task completed Successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        if (window.location.pathname === "/managetasks") { props.setApiCall(true) }
+        if (window.location.pathname === "/managetasks") {
+          props.setApiCall(true);
+        }
       }
     } catch (err) {
-      if (window.location.pathname === "/managetasks") { props.setApiCall(true) }
+      if (window.location.pathname === "/managetasks") {
+        props.setApiCall(true);
+      }
       console.log(err);
     }
   };
   return (
     <>
-      <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 row">
-        <div className={`table-responsive main_table_div ${openReplyBox ? "col-9" : "col-12"}`}>
+      <div className="bg-white shadow-8 datatable_div pt-7 rounded pb-8 px-2">
+        <div
+          className={`table-responsive main_table_div ${
+            openReplyBox ? "col-9" : "col-12"
+          }`}
+        >
           {isLoading ? (
             <Loader />
           ) : (
@@ -181,7 +223,7 @@ export default function AdminTaskTable(props) {
                       to={""}
                       onClick={() => {
                         handleSort("task_creator_user_name");
-                        props.setpageNo(1)
+                        props.setpageNo(1);
                       }}
                       className="text-gray"
                       title="Sort by Assigned From"
@@ -197,7 +239,7 @@ export default function AdminTaskTable(props) {
                       to={""}
                       onClick={() => {
                         handleSort("assigned_to_name");
-                        props.setpageNo(1)
+                        props.setpageNo(1);
                       }}
                       className="text-gray"
                       title="Sort by Assigned To"
@@ -213,7 +255,7 @@ export default function AdminTaskTable(props) {
                       to={""}
                       onClick={() => {
                         handleSort("subject_description");
-                        props.setpageNo(1)
+                        props.setpageNo(1);
                       }}
                       className="text-gray"
                       title="Sort by Description"
@@ -232,7 +274,7 @@ export default function AdminTaskTable(props) {
                         to={""}
                         onClick={() => {
                           handleSort("type");
-                          props.setpageNo(1)
+                          props.setpageNo(1);
                         }}
                         className="text-gray"
                         title="Sort by Type"
@@ -251,8 +293,8 @@ export default function AdminTaskTable(props) {
                       <Link
                         to={""}
                         onClick={() => {
-                          handleSort("Priority")
-                          props.setpageNo(1)
+                          handleSort("Priority");
+                          props.setpageNo(1);
                         }}
                         className="text-gray"
                         title="Sort by Priority"
@@ -263,7 +305,7 @@ export default function AdminTaskTable(props) {
                   )}
                   {props.heading === "Dashboard" ? (
                     ""
-                  ) :
+                  ) : (
                     <th
                       scope="col"
                       className="border-0 font-size-4 font-weight-normal"
@@ -272,7 +314,7 @@ export default function AdminTaskTable(props) {
                         to={""}
                         onClick={() => {
                           handleSort("group_by");
-                          props.setpageNo(1)
+                          props.setpageNo(1);
                         }}
                         className="text-gray"
                         title="Sort by Status"
@@ -280,7 +322,7 @@ export default function AdminTaskTable(props) {
                         Group by
                       </Link>
                     </th>
-                  }
+                  )}
                   {
                     <th
                       scope="col"
@@ -290,7 +332,7 @@ export default function AdminTaskTable(props) {
                         to={""}
                         onClick={() => {
                           handleSort("status");
-                          props.setpageNo(1)
+                          props.setpageNo(1);
                         }}
                         className="text-gray"
                         title="Sort by Status"
@@ -299,7 +341,8 @@ export default function AdminTaskTable(props) {
                       </Link>
                     </th>
                   }
-                  {props.heading === "Dashboard" || props.heading !== "Task Dashboard" ? (
+                  {props.heading === "Dashboard" ||
+                  props.heading !== "Task Dashboard" ? (
                     ""
                   ) : (
                     <th
@@ -321,47 +364,71 @@ export default function AdminTaskTable(props) {
                   </tr>
                 ) : (
                   (taskData || []).map((data, index) => (
-                    <React.Fragment key={data.id} >
-                      <tr className={`applicant_row ${props.taskId === data.id ? "bg-light" : ""}`} ref={el => (rowRefs.current[index] = el)}>
+                    <React.Fragment key={data.id}>
+                      <tr
+                        className={`applicant_row ${
+                          props.taskId === data.id ? "bg-light" : ""
+                        }`}
+                        ref={(el) => (rowRefs.current[index] = el)}
+                      >
                         <td className="text-capitalize py-5">
-                          <p className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          {/* <p className="font-size-3 font-weight-normal text-black-2 mb-0">
                             {data.task_creator_user_name === null ||
-                              data.task_creator_user_name === undefined ||
-                              data.task_creator_user_name === "undefined" ||
-                              data.task_creator_user_name === "" ||
-                              data.task_creator_user_name === "0" ? (
+                            data.task_creator_user_name === undefined ||
+                            data.task_creator_user_name === "undefined" ||
+                            data.task_creator_user_name === "" ||
+                            data.task_creator_user_name === "0" ? (
                               <span className="font-size-3  mb-0">N/A</span>
                             ) : (
                               data.task_creator_user_name
                             )}
-                          </p>
+                          </p> */}
+                          <UserAvatar
+                            profileImage={data.task_creator_user_profile_image}
+                            name={data.task_creator_user_name}
+                            userType={data.task_creator_user_type}
+                            index={index}
+                            userId={data.task_creator_user_id}
+                          />
                         </td>
                         <td className="text-capitalize py-5">
-                          <p className="font-size-3 font-weight-normal text-black-2 mb-0">
+                          {/* <p className="font-size-3 font-weight-normal text-black-2 mb-0">
                             {data.assigned_to_name === null ||
-                              data.assigned_to_name === undefined ||
-                              data.assigned_to_name === "undefined" ||
-                              data.assigned_to_name === "" ||
-                              data.assigned_to_name === "0" ? (
+                            data.assigned_to_name === undefined ||
+                            data.assigned_to_name === "undefined" ||
+                            data.assigned_to_name === "" ||
+                            data.assigned_to_name === "0" ? (
                               <span className="font-size-3  mb-0">N/A</span>
                             ) : (
                               data.assigned_to_name
                             )}
-                          </p>
+                          </p> */}
+                          <AssignedUserList
+                            assined_to_user_id={data.assined_to_user_id}
+                            assigned_to_name={data.assigned_to_name}
+                            assigned_to_profile_image={
+                              data.assigned_to_profile_image
+                            }
+                            assigned_user_type_new={data.assigned_user_type_new}
+                          />
                         </td>
-                        <td className="py-5 text-capitalize">
+                        <td className="py-5">
                           {data.subject_description === null ||
-                            data.subject_description === undefined ||
-                            data.subject_description === "undefined" ||
-                            data.subject_description === "" ||
-                            data.subject_description === "0" ? (
+                          data.subject_description === undefined ||
+                          data.subject_description === "undefined" ||
+                          data.subject_description === "" ||
+                          data.subject_description === "0" ? (
                             <p className="font-size-3  mb-0">N/A</p>
                           ) : (
-                            <div className="m-0">
-                              <div className="text-gray font-size-2 m-0"
-                                dangerouslySetInnerHTML={{ __html: data.subject_description }} />
+                            <div className="m-0" style={{ maxWidth: 300 }}>
+                              <div
+                                className="font-size-3 text-italic text-black-2 mb-0 text-truncate"
+                                title={data.subject_description}
+                                dangerouslySetInnerHTML={{
+                                  __html: data.subject_description,
+                                }}
+                              />
                               {/* {data.subject_description.replace(/@/g, "")} */}
-
                             </div>
                           )}
                         </td>
@@ -371,13 +438,48 @@ export default function AdminTaskTable(props) {
                         ) : (
                           <td className=" py-5">
                             {data.start_date === null ? (
-                              <p className="font-size-3  mb-0">N/A</p>
+                              <p className="font-size-3 mb-0">N/A</p>
                             ) : (
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                <p className="text-gray font-size-2 m-0 border rounded-pill p-2 text-center bg-light">
-                                  {moment(data.start_date).format('ll') + (data.end_date !== "0000-00-00 00:00:00" ? ("-" + moment(data.end_date).format('ll')) : "")}
-                                </p>
-                              </h3>
+                              // <p className="font-size-2 m-0 border rounded-pill p-2 text-center bg-light">
+                              //   {/* {moment(data.start_date).format("ll") +
+                              //     (data.end_date !== "0000-00-00 00:00:00"
+                              //       ? "-" + moment(data.end_date).format("ll")
+                              //       : "")} */}
+
+                              //   {moment(data.end_date).endOf("day").fromNow()}
+                              // </p>
+                              <p
+                                className="font-size-2 m-0 border rounded-pill p-2 text-center"
+                                style={{
+                                  backgroundColor: isNaN(
+                                    new Date(data.end_date)
+                                  ) // Check if the date is invalid
+                                    ? "#f5f5f5" // Light gray for invalid dates
+                                    : new Date(data.end_date) <
+                                      new Date(new Date().setHours(0, 0, 0, 0))
+                                    ? "#f8d7da" // Light red for past dates
+                                    : new Date(data.end_date).toDateString() ===
+                                      new Date().toDateString()
+                                    ? "#fff8e1" // Light blue for today's date
+                                    : "#d4edda", // Light green for future dates
+                                  color: isNaN(new Date(data.end_date)) // Check if the date is invalid
+                                    ? "#6c757d" // Gray text for invalid dates
+                                    : new Date(data.end_date) <
+                                      new Date(new Date().setHours(0, 0, 0, 0))
+                                    ? "#721c24" // Dark red for past dates
+                                    : new Date(data.end_date).toDateString() ===
+                                      new Date().toDateString()
+                                    ? "#0c5460" // Dark blue text for today
+                                    : "#155724", // Dark green text for future dates
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                {isNaN(new Date(data.end_date)) // Check if the date is invalid
+                                  ? "Not Available"
+                                  : moment(data.end_date)
+                                      .endOf("day")
+                                      .fromNow()}
+                              </p>
                             )}
                           </td>
                         )}
@@ -385,15 +487,49 @@ export default function AdminTaskTable(props) {
                           ""
                         ) : (
                           <td className=" py-5">
-                            {!data.priority || data.priority === null || data.priority.length === 0 || data.priority === (0 || "0") ? (
-                              <p className="font-size-3  mb-0">N/A</p>
+                            {!data.priority ||
+                            data.priority === null ||
+                            data.priority.length === 0 ||
+                            data.priority === (0 || "0") ? (
+                              <p
+                                className="rounded-pill text-center font-size-3 badge-light mb-0"
+                                style={{
+                                  fontSize: 12,
+                                  padding: 4,
+                                  width: "max-content",
+                                  minWidth: 55,
+                                }}
+                              >
+                                N/A
+                              </p>
                             ) : (
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                <p className={`text-white rounded-pill text-center font-size-2 m-0 ${data.priority === ("1" || 1) ? "badge-danger" : data.priority === ("2" || 2) ? "badge-orange" : data.priority === ("3" || 3) ? "badge-warning" : data.priority === ("4" || 4) ? "badge-info" : ""}`}>
-                                  {priority?.filter((i) => i.id === parseInt(data.priority))[0].value}
-                                </p>
-                              </h3>
-
+                              // <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                              <p
+                                className={`text-white rounded-pill text-center m-0 ${
+                                  data.priority === ("1" || 1)
+                                    ? "badge-danger"
+                                    : data.priority === ("2" || 2)
+                                    ? "badge-orange"
+                                    : data.priority === ("3" || 3)
+                                    ? "badge-warning"
+                                    : data.priority === ("4" || 4)
+                                    ? "badge-info"
+                                    : ""
+                                }`}
+                                style={{
+                                  fontSize: 12,
+                                  padding: 4,
+                                  width: "max-content",
+                                  minWidth: 55,
+                                }}
+                              >
+                                {
+                                  priority?.filter(
+                                    (i) => i.id === parseInt(data.priority)
+                                  )[0].value
+                                }
+                              </p>
+                              // </h3>
                             )}
                           </td>
                         )}
@@ -401,59 +537,73 @@ export default function AdminTaskTable(props) {
                           ""
                         ) : (
                           <td className=" py-5">
-                            {!data.group_by || data.group_by === null || data.group_by.length === 0 || data.group_by === (0 || "0") ? (
+                            {!data.group_by ||
+                            data.group_by === null ||
+                            data.group_by.length === 0 ||
+                            data.group_by === (0 || "0") ? (
                               <p className="font-size-3  mb-0">N/A</p>
                             ) : (
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                <p className="text-gray font-size-2 m-0">
-                                  {groupBy
-                                    .filter((i) => data.group_by.split(",").includes(String(i.id)))
-                                    .map((item, index, arr) => (
-                                      item.value + (index < arr.length - 1 ? ", " : "")
-                                    ))}
-
-                                </p>
-                              </h3>
+                              <p className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                {groupBy
+                                  .filter((i) =>
+                                    data.group_by
+                                      .split(",")
+                                      .includes(String(i.id))
+                                  )
+                                  .map(
+                                    (item, index, arr) =>
+                                      item.value +
+                                      (index < arr.length - 1 ? ", " : "")
+                                  )}
+                              </p>
                             )}
                           </td>
                         )}
                         <td className=" py-5">
                           {data.status === null ||
-                            data.status === undefined ||
-                            data.status === "undefined" ||
-                            data.status === "" ? (
+                          data.status === undefined ||
+                          data.status === "undefined" ||
+                          data.status === "" ? (
                             <p className="font-size-3  mb-0">N/A</p>
                           ) : (
                             <>
-                              {window.location.pathname === "/managetasks" ?
-                                (<div style={{ display: "table-caption" }}>
+                              {window.location.pathname === "/managetasks" ? (
+                                <div style={{ display: "table-caption" }}>
                                   <DropdownButton
                                     as={ButtonGroup}
                                     title={
                                       data.status === "1"
                                         ? "Completed"
                                         : data.status === "2"
-                                          ? "Overdue"
-                                          : data.status === "3"
-                                            ? "Processing"
-                                            : "Incomplete"
+                                        ? "Overdue"
+                                        : data.status === "3"
+                                        ? "Processing"
+                                        : "Incomplete"
                                     }
-                                    variant={data.status === ("1" || 1)
-                                      ? "shamrock"
-                                      : data.status === ("2" || 2)
+                                    variant={
+                                      data.status === ("1" || 1)
+                                        ? "shamrock"
+                                        : data.status === ("2" || 2)
                                         ? "danger"
-                                        : data.status === ("3" || 3) ? "info"
-                                          : "warning"}
+                                        : data.status === ("3" || 3)
+                                        ? "info"
+                                        : "warning"
+                                    }
                                     size="xs"
-                                    className={`user_status_btn btn-xs ${data.status === "1"
-                                      ? "btn-shamrock"
-                                      : data.status === "2"
+                                    className={`user_status_btn btn-xs ${
+                                      data.status === "1"
+                                        ? "btn-shamrock"
+                                        : data.status === "2"
                                         ? "btn-danger px-4"
-                                        : data.status === ("3" || 3) ? "btn-info"
-                                          : "btn-warning"
-                                      } rounded-pill font-size-1 px-1 text-white mr-2`}
+                                        : data.status === ("3" || 3)
+                                        ? "btn-info"
+                                        : "btn-warning"
+                                    } rounded-pill font-size-1 px-1 text-white mr-2`}
                                     // disabled={data.status === "2"}
-                                    onSelect={(eventKey, e) => OnStatusChange(data, eventKey)}                          >
+                                    onSelect={(eventKey, e) =>
+                                      OnStatusChange(data, eventKey)
+                                    }
+                                  >
                                     <Dropdown.Item
                                       value={1}
                                       eventKey={1}
@@ -483,36 +633,42 @@ export default function AdminTaskTable(props) {
                                 Overdue
                               </Dropdown.Item> */}
                                   </DropdownButton>
-                                  {(data.status === ("1" || 1) && data.task_complete_date) ?
-                                    <small className="font-size-1 d-flex justify-content-center mt-2 text-capitalize"
-                                    >
-                                      <ConvertTime _date={data.task_complete_date} format={".fromNow()"} /></small> : null}
-                                </div>)
-                                :
+                                  {data.status === ("1" || 1) &&
+                                  data.task_complete_date ? (
+                                    <small className="font-size-1 d-flex justify-content-center mt-2 text-capitalize">
+                                      <ConvertTime
+                                        _date={data.task_complete_date}
+                                        format={".fromNow()"}
+                                      />
+                                    </small>
+                                  ) : null}
+                                </div>
+                              ) : (
                                 <p
                                   className="font-size-2 font-weight-normal text-black-2 mb-0 text-truncate"
                                   title={
                                     data.status === (0 || "0")
                                       ? "Incomplete"
-                                      : data.status === (1 || "1") ?
-                                        "Completed" :
-                                        "Overdue"
+                                      : data.status === (1 || "1")
+                                      ? "Completed"
+                                      : "Overdue"
                                   }
                                 >
                                   {data.status === (0 || "0") ? (
                                     <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
                                       Incomplete
                                     </span>
-                                  ) : data.status === "2" ?
+                                  ) : data.status === "2" ? (
                                     <span className="p-1 bg-danger text-white text-center w-100 border rounded-pill">
                                       Overdue
                                     </span>
-                                    : (
-                                      <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
-                                        Complete
-                                      </span>
-                                    )}
-                                </p>}
+                                  ) : (
+                                    <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
+                                      Complete
+                                    </span>
+                                  )}
+                                </p>
+                              )}
                             </>
                           )}
                         </td>
@@ -544,7 +700,14 @@ export default function AdminTaskTable(props) {
                           )}
                         </td>
                       )} */}
-                        <td className={props.heading === "dashboard" || props.heading !== "Task Dashboard" ? "d-none" : " py-5 min-width-px-100"}>
+                        <td
+                          className={
+                            props.heading === "dashboard" ||
+                            props.heading !== "Task Dashboard"
+                              ? "d-none"
+                              : " py-5 min-width-px-100"
+                          }
+                        >
                           <div
                             className="btn-group button_group"
                             role="group"
@@ -554,7 +717,7 @@ export default function AdminTaskTable(props) {
                               className="btn btn-outline-info action_btn"
                               onClick={() => {
                                 setOpenReplyBox(true);
-                                setSingleTaskData(data)
+                                setSingleTaskData(data);
                               }}
                               title="Add Reply"
                             >
@@ -565,8 +728,8 @@ export default function AdminTaskTable(props) {
                             <button
                               className="btn btn-outline-info action_btn"
                               onClick={() => {
-                                props.setUpdateTaskData(data)
-                                props.setShowTaskForm(true)
+                                props.setUpdateTaskData(data);
+                                props.setShowTaskForm(true);
                               }}
                               title="Edit Task"
                             >
@@ -597,27 +760,38 @@ export default function AdminTaskTable(props) {
             </table>
           )}
           <div className={`pt-2 d-flex justify-content-center`}>
-            {recordsPerPage === totalData ? null
-              : <Pagination
+            {recordsPerPage === totalData ? null : (
+              <Pagination
                 nPages={nPages}
                 currentPage={props.pageNo}
                 setCurrentPage={props.setpageNo}
                 total={totalData}
                 count={taskData.length}
-              />}
-            {(nPages > 1 || totalData > 10) && <button className="btn btn-primary" onClick={() => {
-              props.setpageNo(1)
-              setRecordsPerPage(recordsPerPage === totalData ? 10 : totalData)
-            }}>{recordsPerPage === totalData ? "View Pagination" : "View All"}</button>}
+              />
+            )}
+            {(nPages > 1 || totalData > 10) && (
+              <button
+                className="page-link font-size-3 py-2 font-weight-semibold px-3 rounded"
+                style={{ height: "max-content" }}
+                onClick={() => {
+                  props.setpageNo(1);
+                  setRecordsPerPage(
+                    recordsPerPage === totalData ? 10 : totalData
+                  );
+                }}
+              >
+                {recordsPerPage === totalData ? "View Less" : "View All"}
+              </button>
+            )}
           </div>
         </div>
-        {openReplyBox ?
+        {openReplyBox ? (
           <CommonTaskReplyBox
             openReplyBox={openReplyBox}
             setOpenReplyBox={setOpenReplyBox}
-            taskData={singleTaskData} />
-          : null}
-
+            taskData={singleTaskData}
+          />
+        ) : null}
       </div>
 
       <SAlert
@@ -628,7 +802,6 @@ export default function AdminTaskTable(props) {
         showCancelButton={true}
         onCancel={() => setDeleteAlert(false)}
       />
-
     </>
   );
 }
