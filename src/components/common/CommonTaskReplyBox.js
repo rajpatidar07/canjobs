@@ -312,6 +312,7 @@ export default function CommonTaskReplyBox(props) {
                 localStorage.setItem("callNotification", true);
                 setReplyComment("");
                 getCommentsReplyList();
+                setEditableData()
                 setSelectedAdminReplye("");
                 setFilteredEmails([]);
                 setApicall(true)
@@ -418,6 +419,7 @@ export default function CommonTaskReplyBox(props) {
                                 onClick={() => {
                                     setReplyComment("");
                                     setCommentData();
+                                    setEditableData()
                                     // setSelectedPartner();
                                 }}
                             >
@@ -428,6 +430,7 @@ export default function CommonTaskReplyBox(props) {
                                 className="save-comment-btn text-muted"
                                 onClick={(e) => {
                                     e.preventDefault();
+                                    console.log(editableData)
                                     if (editableData) {
                                         OnHandleUpdateCommentReply(editableData);
                                     } else {
