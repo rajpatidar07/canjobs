@@ -203,7 +203,7 @@ export default function AdminTaskTable(props) {
   };
   return (
     <>
-      <div className="bg-white shadow-8 datatable_div pt-7 rounded pb-8 px-2 row">
+      <div className="bg-white shadow-8 datatable_div pt-7 rounded pb-8 px-2">
         <div
           className={`table-responsive main_table_div ${
             openReplyBox ? "col-9" : "col-12"
@@ -760,16 +760,16 @@ export default function AdminTaskTable(props) {
             </table>
           )}
           <div className={`pt-2 `}>
-              <Pagination
-                nPages={nPages}
-                currentPage={props.pageNo}
-                setCurrentPage={props.setpageNo}
-                total={totalData}
-                count={taskData.length}
-                setRecordsPerPage={setRecordsPerPage}
-                recordsPerPage={recordsPerPage}
-                page={"task"}
-              />
+            <Pagination
+              nPages={nPages}
+              currentPage={props.pageNo}
+              setCurrentPage={props.setpageNo}
+              total={totalData}
+              count={taskData.length}
+              setRecordsPerPage={setRecordsPerPage}
+              recordsPerPage={recordsPerPage}
+              page={"task"}
+            />
           </div>
         </div>
         {openReplyBox ? (
