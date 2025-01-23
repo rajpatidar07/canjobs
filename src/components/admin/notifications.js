@@ -81,7 +81,7 @@ function Notifications({
     localStorage.getItem("callNotification"),
     recordsPerPage /*notificationApiCall*/,
   ]);
-  
+
   /*Function to load more data while scrolling */
   let handelScroll = (e) => {
     // console.log(totalNotificRow, recordsPerPage, recordsPerPage <= totalNotificRow)
@@ -284,10 +284,19 @@ function Notifications({
                                                 ? `/client_detail?agreement=true`
                                                 : `/${data.employee_id}?agreement=true`//AGREEMENT FOR EMPLOYEE
                                               : data.subject === "mention_task"
-                                                ? `/managetasks?taskId=${data.mention_id}`
-                                                : ""
+                                                ? (() => {
+                                                  let notifData = {};
+                                                  try {
+                                                    // Attempt to parse the JSON
+                                                    notifData = JSON.parse(data?.notif_json || "{}");
+                                                  } catch (error) {
+                                                    console.error("Invalid JSON in notif_json:", data?.notif_json, error);
+                                                  } const taskId = notifData?.task_id || "";
+                                                  const replyId = notifData?.reply_is || "";
 
-                      }
+                                                  return `/managetasks?taskId=${taskId}&replyId=${replyId}`;
+                                                })()
+                                                : ""}
                       onClick={() => {
                         try {
                           setshow(false);

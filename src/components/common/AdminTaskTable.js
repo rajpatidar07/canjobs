@@ -14,13 +14,13 @@ import { toast } from "react-toastify";
 import ConvertTime from "./Common function/ConvertTime";
 import moment from "moment";
 import SAlert from "./sweetAlert";
-import { LiaUserEditSolid } from "react-icons/lia";
-import { MdFormatListBulletedAdd } from "react-icons/md";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import CommonTaskReplyBox from "./CommonTaskReplyBox";
 import AssignedUserList from "./assignedUserList";
 import UserAvatar from "./UserAvtar";
 import ModalSidebar from "./modalSidebar";
+import { CiEdit } from "react-icons/ci";
+import { AiOutlineMessage } from "react-icons/ai";
 export default function AdminTaskTable(props) {
   const [taskData, setTaskData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -102,7 +102,8 @@ export default function AdminTaskTable(props) {
         props.filter_by_time,
         props.adminType,
         props.employeeId,
-        props.TaskUserType
+        props.TaskUserType,
+        props.taskId
       );
       let JsonRes = await GetFilter();
       setPriority(JsonRes?.data?.data?.priority);
@@ -113,6 +114,11 @@ export default function AdminTaskTable(props) {
         setTotalData(res.data.data.total_rows);
         if (window.location.pathname === "/managetasks") {
           props.setCount(res.data.employee_task_count[0]);
+        }
+        if (props.replyId) {
+          setSingleTaskData(res.data.data.data[0])
+          setOpenReplyBox(true)
+          console.log("first")
         }
       } else if (res.data.message === "Task data not found") {
         setIsLoading(false);
@@ -143,6 +149,8 @@ export default function AdminTaskTable(props) {
     sortOrder,
     columnName,
     recordsPerPage,
+    props.taskId,
+    props.replyId,
   ]);
   /*Sorting Function */
   const handleSort = (columnName) => {
@@ -339,7 +347,7 @@ export default function AdminTaskTable(props) {
                     </th>
                   }
                   {props.heading === "Dashboard" ||
-                  props.heading !== "Task Dashboard" ? (
+                    props.heading !== "Task Dashboard" ? (
                     ""
                   ) : (
                     <th
@@ -363,9 +371,8 @@ export default function AdminTaskTable(props) {
                   (taskData || []).map((data, index) => (
                     <React.Fragment key={data.id}>
                       <tr
-                        className={`applicant_row ${
-                          props.taskId === data.id ? "bg-light" : ""
-                        }`}
+                        className={`applicant_row ${props.taskId === data.id ? "bg-light" : ""
+                          }`}
                         ref={(el) => (rowRefs.current[index] = el)}
                       >
                         <td className="text-capitalize py-5">
@@ -411,10 +418,10 @@ export default function AdminTaskTable(props) {
                         </td>
                         <td className="py-5">
                           {data.subject_description === null ||
-                          data.subject_description === undefined ||
-                          data.subject_description === "undefined" ||
-                          data.subject_description === "" ||
-                          data.subject_description === "0" ? (
+                            data.subject_description === undefined ||
+                            data.subject_description === "undefined" ||
+                            data.subject_description === "" ||
+                            data.subject_description === "0" ? (
                             <p className="font-size-3  mb-0">N/A</p>
                           ) : (
                             <div className="m-0" style={{ maxWidth: 300 }}>
@@ -454,28 +461,28 @@ export default function AdminTaskTable(props) {
                                     ? "#f5f5f5" // Light gray for invalid dates
                                     : new Date(data.end_date) <
                                       new Date(new Date().setHours(0, 0, 0, 0))
-                                    ? "#f8d7da" // Light red for past dates
-                                    : new Date(data.end_date).toDateString() ===
-                                      new Date().toDateString()
-                                    ? "#fff8e1" // Light blue for today's date
-                                    : "#d4edda", // Light green for future dates
+                                      ? "#f8d7da" // Light red for past dates
+                                      : new Date(data.end_date).toDateString() ===
+                                        new Date().toDateString()
+                                        ? "#fff8e1" // Light blue for today's date
+                                        : "#d4edda", // Light green for future dates
                                   color: isNaN(new Date(data.end_date)) // Check if the date is invalid
                                     ? "#6c757d" // Gray text for invalid dates
                                     : new Date(data.end_date) <
                                       new Date(new Date().setHours(0, 0, 0, 0))
-                                    ? "#721c24" // Dark red for past dates
-                                    : new Date(data.end_date).toDateString() ===
-                                      new Date().toDateString()
-                                    ? "#0c5460" // Dark blue text for today
-                                    : "#155724", // Dark green text for future dates
+                                      ? "#721c24" // Dark red for past dates
+                                      : new Date(data.end_date).toDateString() ===
+                                        new Date().toDateString()
+                                        ? "#0c5460" // Dark blue text for today
+                                        : "#155724", // Dark green text for future dates
                                   fontWeight: "bold",
                                 }}
                               >
                                 {isNaN(new Date(data.end_date)) // Check if the date is invalid
                                   ? "Not Available"
                                   : moment(data.end_date)
-                                      .endOf("day")
-                                      .fromNow()}
+                                    .endOf("day")
+                                    .fromNow()}
                               </p>
                             )}
                           </td>
@@ -485,9 +492,9 @@ export default function AdminTaskTable(props) {
                         ) : (
                           <td className=" py-5">
                             {!data.priority ||
-                            data.priority === null ||
-                            data.priority.length === 0 ||
-                            data.priority === (0 || "0") ? (
+                              data.priority === null ||
+                              data.priority.length === 0 ||
+                              data.priority === (0 || "0") ? (
                               <p
                                 className="rounded-pill text-center font-size-3 badge-light mb-0"
                                 style={{
@@ -502,17 +509,16 @@ export default function AdminTaskTable(props) {
                             ) : (
                               // <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                               <p
-                                className={`text-white rounded-pill text-center m-0 ${
-                                  data.priority === ("1" || 1)
-                                    ? "badge-danger"
-                                    : data.priority === ("2" || 2)
+                                className={`text-white rounded-pill text-center m-0 ${data.priority === ("1" || 1)
+                                  ? "badge-danger"
+                                  : data.priority === ("2" || 2)
                                     ? "badge-orange"
                                     : data.priority === ("3" || 3)
-                                    ? "badge-warning"
-                                    : data.priority === ("4" || 4)
-                                    ? "badge-info"
-                                    : ""
-                                }`}
+                                      ? "badge-warning"
+                                      : data.priority === ("4" || 4)
+                                        ? "badge-info"
+                                        : ""
+                                  }`}
                                 style={{
                                   fontSize: 12,
                                   padding: 4,
@@ -535,9 +541,9 @@ export default function AdminTaskTable(props) {
                         ) : (
                           <td className=" py-5">
                             {!data.group_by ||
-                            data.group_by === null ||
-                            data.group_by.length === 0 ||
-                            data.group_by === (0 || "0") ? (
+                              data.group_by === null ||
+                              data.group_by.length === 0 ||
+                              data.group_by === (0 || "0") ? (
                               <p className="font-size-3  mb-0">N/A</p>
                             ) : (
                               <p className="font-size-3 font-weight-normal text-black-2 mb-0">
@@ -558,9 +564,9 @@ export default function AdminTaskTable(props) {
                         )}
                         <td className=" py-5">
                           {data.status === null ||
-                          data.status === undefined ||
-                          data.status === "undefined" ||
-                          data.status === "" ? (
+                            data.status === undefined ||
+                            data.status === "undefined" ||
+                            data.status === "" ? (
                             <p className="font-size-3  mb-0">N/A</p>
                           ) : (
                             <>
@@ -572,30 +578,29 @@ export default function AdminTaskTable(props) {
                                       data.status === "1"
                                         ? "Completed"
                                         : data.status === "2"
-                                        ? "Overdue"
-                                        : data.status === "3"
-                                        ? "Processing"
-                                        : "Incomplete"
+                                          ? "Overdue"
+                                          : data.status === "3"
+                                            ? "Processing"
+                                            : "Incomplete"
                                     }
                                     variant={
                                       data.status === ("1" || 1)
                                         ? "shamrock"
                                         : data.status === ("2" || 2)
-                                        ? "danger"
-                                        : data.status === ("3" || 3)
-                                        ? "info"
-                                        : "warning"
+                                          ? "danger"
+                                          : data.status === ("3" || 3)
+                                            ? "info"
+                                            : "warning"
                                     }
                                     size="xs"
-                                    className={`user_status_btn btn-xs ${
-                                      data.status === "1"
-                                        ? "btn-shamrock"
-                                        : data.status === "2"
+                                    className={`user_status_btn btn-xs ${data.status === "1"
+                                      ? "btn-shamrock"
+                                      : data.status === "2"
                                         ? "btn-danger px-4"
                                         : data.status === ("3" || 3)
-                                        ? "btn-info"
-                                        : "btn-warning"
-                                    } rounded-pill font-size-1 px-1 text-white mr-2`}
+                                          ? "btn-info"
+                                          : "btn-warning"
+                                      } rounded-pill font-size-1 px-1 text-white mr-2`}
                                     // disabled={data.status === "2"}
                                     onSelect={(eventKey, e) =>
                                       OnStatusChange(data, eventKey)
@@ -631,7 +636,7 @@ export default function AdminTaskTable(props) {
                               </Dropdown.Item> */}
                                   </DropdownButton>
                                   {data.status === ("1" || 1) &&
-                                  data.task_complete_date ? (
+                                    data.task_complete_date ? (
                                     <small className="font-size-1 d-flex justify-content-center mt-2 text-capitalize">
                                       <ConvertTime
                                         _date={data.task_complete_date}
@@ -647,8 +652,8 @@ export default function AdminTaskTable(props) {
                                     data.status === (0 || "0")
                                       ? "Incomplete"
                                       : data.status === (1 || "1")
-                                      ? "Completed"
-                                      : "Overdue"
+                                        ? "Completed"
+                                        : "Overdue"
                                   }
                                 >
                                   {data.status === (0 || "0") ? (
@@ -700,7 +705,7 @@ export default function AdminTaskTable(props) {
                         <td
                           className={
                             props.heading === "dashboard" ||
-                            props.heading !== "Task Dashboard"
+                              props.heading !== "Task Dashboard"
                               ? "d-none"
                               : " py-5 min-width-px-100"
                           }
@@ -719,7 +724,7 @@ export default function AdminTaskTable(props) {
                               title="Add Reply"
                             >
                               <span className="text-gray px-2">
-                                <MdFormatListBulletedAdd />
+                                <AiOutlineMessage />
                               </span>
                             </button>
                             <button
@@ -731,7 +736,7 @@ export default function AdminTaskTable(props) {
                               title="Edit Task"
                             >
                               <span className="text-gray px-2">
-                                <LiaUserEditSolid />
+                                <CiEdit />
                               </span>
                             </button>
                             <button
@@ -769,15 +774,19 @@ export default function AdminTaskTable(props) {
             />
           </div>
         </div>
-        <button onClick={() => setOpenReplyBox(true)}>Open</button>
         <ModalSidebar
           show={openReplyBox}
-          onClose={() => setOpenReplyBox(false)}
+          onClose={() => {
+            setOpenReplyBox(false)
+            props.setReplyId("")
+            props.setTaskId("")
+          }}
           children={
             <CommonTaskReplyBox
               openReplyBox={openReplyBox}
               setOpenReplyBox={setOpenReplyBox}
               taskData={singleTaskData}
+              replyId={props.replyId}
             />
           }
         >
@@ -786,6 +795,7 @@ export default function AdminTaskTable(props) {
               openReplyBox={openReplyBox}
               setOpenReplyBox={setOpenReplyBox}
               taskData={singleTaskData}
+              replyId={props.replyId}
             />
           ) : null}
         </ModalSidebar>

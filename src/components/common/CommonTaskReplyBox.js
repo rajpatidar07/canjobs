@@ -23,7 +23,7 @@ export default function CommonTaskReplyBox(props) {
   // let [selectedPartner, setSelectedPartner] = useState("");
   const [commentsReplyList, setCommentsReplyList] = useState([]);
   const [apiCall, setApicall] = useState(false);
-  const [taskId, setTaskId] = useState(props.taskData.id);
+  const [taskId] = useState(props.taskData?.id);
 
   const AdminType = localStorage.getItem("admin_type");
   let admin_id =
@@ -55,9 +55,9 @@ export default function CommonTaskReplyBox(props) {
   };
   // Generate a list of comments reply
   const getCommentsReplyList = async () => {
-    if (props.taskData.id) {
+    if (taskId) {
       try {
-        let res = await GetReplyCommit("", 1 /*, adminid, annotationStatus*/);
+        let res = await GetReplyCommit("", taskId /*, adminid, annotationStatus*/);
         if (res.data.status === (1 || "1")) {
           setCommentsReplyList(res.data.data);
         }
@@ -129,8 +129,8 @@ export default function CommonTaskReplyBox(props) {
       AdminType === "agent"
         ? admin_name
         : adminList.find((item) => item.admin_id === admin_id)
-        ? adminList.find((item) => item.admin_id === admin_id).name
-        : "";
+          ? adminList.find((item) => item.admin_id === admin_id).name
+          : "";
     let senderId = adminList.find((item) => item.admin_id === admin_id)
       ? adminList.find((item) => item.admin_id === admin_id).admin_id
       : "";
@@ -138,14 +138,14 @@ export default function CommonTaskReplyBox(props) {
       AdminType === "agent"
         ? admin_email
         : adminList.find((item) => item.admin_id === admin_id)
-        ? adminList.find((item) => item.admin_id === admin_id).email
-        : "";
+          ? adminList.find((item) => item.admin_id === admin_id).email
+          : "";
     let senderType =
       AdminType === "agent"
         ? "agent"
         : adminList.find((item) => item.admin_id === admin_id)
-        ? adminList.find((item) => item.admin_id === admin_id).admin_type
-        : "";
+          ? adminList.find((item) => item.admin_id === admin_id).admin_type
+          : "";
     // Variables for mentioning admins
     const email =
       (selectedAdminReply || [])?.map((item) => item.email).toString() || ""; ///\S+@\S+\.\S+/.test(comments) ? comments : "";
@@ -153,26 +153,26 @@ export default function CommonTaskReplyBox(props) {
       email?.includes(item.email)
     )
       ? adminList
-          .filter((item) => email?.includes(item.email))
-          .map((admin) => admin.name)
-          .join(",")
+        .filter((item) => email?.includes(item.email))
+        .map((admin) => admin.name)
+        .join(",")
       : "";
     const assignedUserId = adminList.filter((item) =>
       email?.includes(item.email)
     )
       ? adminList
-          .filter((item) => email?.includes(item.email))
-          .map((admin) => (admin.u_id ? admin.id : admin.admin_id))
-          .join(",")
+        .filter((item) => email?.includes(item.email))
+        .map((admin) => (admin.u_id ? admin.id : admin.admin_id))
+        .join(",")
       : "";
     // eslint-disable-next-line no-useless-concat
     const Rec_Admin_Type = adminList.filter((item) =>
       email?.includes(item.email)
     )
       ? adminList
-          .filter((item) => email?.includes(item.email))
-          .map((admin) => (admin.u_id ? "agent" : admin.admin_type))
-          .join(",")
+        .filter((item) => email?.includes(item.email))
+        .map((admin) => (admin.u_id ? "agent" : admin.admin_type))
+        .join(",")
       : "";
     if (replyComment === "" && email === "") {
       toast.error("Comment or email cannot be empty!", {
@@ -256,20 +256,20 @@ export default function CommonTaskReplyBox(props) {
       AdminType === "agent"
         ? admin_email
         : adminList.find((item) => item.admin_id === admin_id)
-        ? adminList.find((item) => item.admin_id === admin_id).email
-        : "";
+          ? adminList.find((item) => item.admin_id === admin_id).email
+          : "";
     let senderType =
       AdminType === "agent"
         ? "agent"
         : adminList.find((item) => item.admin_id === admin_id)
-        ? adminList.find((item) => item.admin_id === admin_id).admin_type
-        : "";
+          ? adminList.find((item) => item.admin_id === admin_id).admin_type
+          : "";
     let sender =
       AdminType === "agent"
         ? admin_name
         : adminList.find((item) => item.admin_id === admin_id)
-        ? adminList.find((item) => item.admin_id === admin_id).name
-        : "";
+          ? adminList.find((item) => item.admin_id === admin_id).name
+          : "";
     (selectedAdminReply || []).forEach((admin) => {
       if (!newEmailsArray.includes(admin.email)) {
         // Add new admin's details to the arrays
@@ -325,6 +325,7 @@ export default function CommonTaskReplyBox(props) {
       setFilteredEmails([]);
     }
   };
+  /*Function to delete the reply */
   const OnDeleteReplyComment = async (id) => {
     try {
       let res = await DeleteReplyCommentsAndAssign(
@@ -350,11 +351,10 @@ export default function CommonTaskReplyBox(props) {
 
   return (
     <div
-      className={`${
-        props.openReplyBox
-          ? "comments_and_replies"
-          : "comments_and_replies d-none"
-      } `}
+      className={`${props.openReplyBox
+        ? "comments_and_replies"
+        : "comments_and_replies d-none"
+        } `}
       style={{
         transition: "all .3s",
         maxHeight: "calc(100vh - 130px)", // docsection ? "100vh" : "calc(100vh - 130px)"
@@ -374,6 +374,10 @@ export default function CommonTaskReplyBox(props) {
         }}
         className="pt-0 pb-5"
       >
+        {props?.taskData?.subject_description && <div>
+          <h6>Task:</h6>
+          <p><b>{props?.taskData?.subject_description}</b></p>
+        </div>}
         <form className="comment-form p-0 rounded bg-white">
           <div className="comment-input-container m-0">
             <label className="input_label m-0 font-size-3">
@@ -384,9 +388,8 @@ export default function CommonTaskReplyBox(props) {
               value={replyComment || ""}
               onChange={handleInputChange}
               placeholder="Comments or add others with @"
-              className={`comment-input ${
-                commntData ? "" : "border-0"
-              } bg-light`}
+              className={`comment-input ${commntData ? "" : "border-0"
+                } bg-light`}
               rows={2}
               style={{ outline: 0, border: commntData ? "2px solid blue" : "" }}
             ></textarea>
@@ -444,7 +447,6 @@ export default function CommonTaskReplyBox(props) {
                 className="save-comment-btn text-muted"
                 onClick={(e) => {
                   e.preventDefault();
-                  console.log(editableData);
                   if (editableData) {
                     OnHandleUpdateCommentReply(editableData);
                   } else {
@@ -460,6 +462,7 @@ export default function CommonTaskReplyBox(props) {
         </form>
       </div>
       <div className="row m-0 py-2 flex-column">
+        <h6>Reply:</h6>
         {commentsReplyList.length === 0 ? (
           <div className="col text-center">
             <p className="m-0">No Replies</p>
@@ -467,7 +470,7 @@ export default function CommonTaskReplyBox(props) {
         ) : (
           (commentsReplyList || []).map((item, index) => (
             <div
-              className={`card col-12 mb-2 p-0 comment_box_card bg-white`}
+              className={`card col-12 mb-2 p-0 comment_box_card bg-white ${props.replyId === item.id ? "highlighted-comment" : ""}`}
               style={{
                 backgroundColor: "#fff",
                 color: "white",
@@ -476,13 +479,12 @@ export default function CommonTaskReplyBox(props) {
               key={index}
             >
               <div
-                className={`comment_status_update ${
-                  AdminType === "agent"
-                    ? item.sender_id === admin_id
-                      ? "d-flex"
-                      : "d-none"
-                    : "d-flex"
-                }`}
+                className={`comment_status_update ${AdminType === "agent"
+                  ? item.sender_id === admin_id
+                    ? "d-flex"
+                    : "d-none"
+                  : "d-flex"
+                  }`}
                 style={{ position: "absolute", right: 5, gap: 5 }}
               >
                 <Link

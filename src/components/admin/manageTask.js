@@ -29,7 +29,8 @@ export default function ManageTask() {
   const [adminList, setAdminList] = useState([]);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const taskId = searchParams.get("taskId");
+  const [taskId, setTaskId] = useState(searchParams.get("taskId"))
+  const [replyId, setReplyId] = useState(searchParams.get("replyId"))
   /*Function to get all user data */
   const GetAllUserData = async () => {
     try {
@@ -91,6 +92,8 @@ export default function ManageTask() {
                     setAdminType(e.target.value.split(",")[1]);
                     setAdminPage(1);
                     setTaskPage(1);
+                    setReplyId("")
+                    setTaskId("")
                   }}
                   className="form-control bg-white dashboard_select rounded-3"
                 >
@@ -119,6 +122,8 @@ export default function ManageTask() {
                     setUserType(e.target.value.split(",")[1]);
                     setAdminPage(1);
                     setTaskPage(1);
+                    setReplyId("")
+                    setTaskId("")
                   }}
                   className="form-control bg-white dashboard_select rounded-3"
                 >
@@ -153,6 +158,8 @@ export default function ManageTask() {
                     setStatus(e.target.value.split(",")[0]);
                     setAdminPage(1);
                     setTaskPage(1);
+                    setReplyId("")
+                    setTaskId("")
                   }}
                   className="form-control bg-white dashboard_select rounded-3"
                 >
@@ -176,6 +183,8 @@ export default function ManageTask() {
                     setAdminType();
                     setAdminPage(1);
                     setTaskPage(1);
+                    setReplyId("")
+                    setTaskId("")
                   }}
                 >
                   Reset
@@ -219,8 +228,11 @@ export default function ManageTask() {
                     setpageNo={setTaskPage}
                     adminType={adminType}
                     taskId={taskId}
+                    replyId={replyId}
                     setUpdateTaskData={setUpdateTaskData}
                     setShowTaskForm={setShowTaskForm}
+                    setReplyId={setReplyId}
+                    setTaskId={setTaskId}
                   />
                 </div>
 

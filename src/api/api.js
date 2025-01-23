@@ -847,8 +847,9 @@ export const GetCommentsAndAssign = async (
   assigned_user_type,
   employeeId,
   userType,
+  taskId
 ) => {
-  // console.log( "idi"+id,
+  // console.log( "id:", taskId,
   // "userid"+userid,
   // "status"+status,
   //   "type"+type,
@@ -872,8 +873,9 @@ export const GetCommentsAndAssign = async (
       type: type,
       assigned_user_type: assigned_user_type,
       employee_id: employeeId,
-      employee_type: userType
-      // id:"",task_creator_user_id:""
+      employee_type: userType,
+      id: taskId || "",
+      // task_creator_user_id:""
     },
     {
       headers: {
@@ -1089,12 +1091,12 @@ export const SendReplyCommitSharepoint = async (
 };
 
 /*Api to Get Reply for document comments */
-export const GetReplyCommit = async (doc_id,task_id) => {
+export const GetReplyCommit = async (doc_id, task_id) => {
   const response = await axios.post(
     `${API_URL}/admin/get_messages`,
     {
       doc_id: doc_id,
-      task_id:task_id
+      task_id: task_id
 
     },
     {

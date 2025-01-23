@@ -33,8 +33,9 @@ function Addfollowup(props) {
   let adminType = localStorage.getItem("admin_type");
   const [taskPage, setTaskPage] = useState(1)
   const [AdminList, setAdminList] = useState([]);
+  const [filteredEmails, setFilteredEmails] = useState([]);
   const [selectedAdmin, setSelectedAdmin] = useState([]);
-  // const [taskPage, setTaskPage] = useState(1)
+  const [dropdownVisible, setDropdownVisible] = useState(false)
   let adminId =
     adminType === "agent"
       ? localStorage.getItem("agent_id")
@@ -190,6 +191,108 @@ function Addfollowup(props) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateNote])
+  // Function to add annotation based on conditions
+  const handleInputChange = (e, type) => {
+    let value = e.target.value;
+    setState({ ...state, remark: value });
+  
+    // Check if the last typed character is '@'
+    value = value.trim();
+    const lastChar = value.slice(-1);
+  
+    // If last character is '@', show the dropdown
+    if (lastChar === "@") {
+      setDropdownVisible(true);
+      setFilteredEmails(AdminList);
+    } else {
+      // Match @username pattern
+      const match = value.match(/@(\w*)$/);
+      if (match) {
+        const query = match[1].toLowerCase();
+        const filtered = AdminList.filter((user) =>
+          user.name.toLowerCase().includes(query)
+        );
+        setFilteredEmails(filtered);
+      } else {
+        setFilteredEmails([]);
+        setDropdownVisible(false);
+      }
+    }
+  
+    // Update the state to remove users from arrays when their @username is removed from the remark
+    const usersInRemark = value.match(/@(\w*)/g)?.map((mention) => mention.slice(1)); // Extract all mentioned usernames from remark
+  
+    setState((prevState) => {
+      // Filter out users not mentioned in the updated remark
+      const updatedAssignedEmails = prevState.assigned_to_email.filter((email, index) => {
+        const userName = prevState.assigned_to_name[index];
+        return usersInRemark?.includes(userName);
+      });
+  
+      const updatedAssignedNames = prevState.assigned_to_name.filter((name) => usersInRemark?.includes(name));
+      const updatedAssignedUserTypes = prevState.assigned_user_type.filter((_, index) => usersInRemark?.includes(prevState.assigned_to_name[index]));
+      const updatedAssignedUserIds = prevState.assined_to_user_id.filter((_, index) => usersInRemark?.includes(prevState.assigned_to_name[index]));
+  
+      return {
+        ...prevState,
+        assigned_to_email: updatedAssignedEmails,
+        assigned_to_name: updatedAssignedNames,
+        assigned_user_type: updatedAssignedUserTypes,
+        assined_to_user_id: updatedAssignedUserIds,
+      };
+    });
+  };
+  
+  /* Function to handle email click (add user to the state) */
+  const handleEmailClick = (user, type) => {
+    // Check if the user is already in the assigned lists to prevent duplicates
+    const isUserAlreadyAssigned = state.assigned_to_email.includes(user.email);
+  
+    if (isUserAlreadyAssigned) {
+      // If the user is already assigned, do not add them again
+      return;
+    }
+  
+    // Add the selected user to the state
+    setSelectedAdmin((prev) => [...prev, user]);
+  
+    // Replace @username in the comment
+    const updatedComment = state.remark.replace(/@\w*$/, `@${user.name} `);
+  
+    // Update the state with the selected admin details
+    setState((prevState) => ({
+      ...prevState,
+      remark: updatedComment,
+      assigned_to_email: [
+        ...(Array.isArray(prevState.assigned_to_email)
+          ? prevState.assigned_to_email
+          : prevState.assigned_to_email.split(",")) || [],
+        user.email,
+      ],
+      assigned_to_name: [
+        ...(Array.isArray(prevState.assigned_to_name)
+          ? prevState.assigned_to_name
+          : prevState.assigned_to_name.split(",")) || [],
+        user.name,
+      ],
+      assigned_user_type: [
+        ...(Array.isArray(prevState.assigned_user_type)
+          ? prevState.assigned_user_type
+          : prevState.assigned_user_type.split(",")) || [],
+        user.admin_type,
+      ],
+      assined_to_user_id: [
+        ...(Array.isArray(prevState.assined_to_user_id)
+          ? prevState.assined_to_user_id
+          : prevState.assined_to_user_id.split(",")) || [],
+        user.admin_id,
+      ],
+    }));
+  
+    // Hide the dropdown
+    setDropdownVisible(false);
+  };
+  
 
   // USER FOLLOW UP PROFILE UPDATE SUBMIT BUTTON
   const onAminFollowClick = async (event) => {
@@ -237,48 +340,48 @@ function Addfollowup(props) {
     setcolumnName(columnName);
     // setCurrentPage(1);
   };
-  const handleAdminSelect = (e) => {
-    const selectedAdminId = e.target.value;
+  // const handleAdminSelect = (e) => {
+  //   const selectedAdminId = e.target.value;
 
-    const selectedAdminObj = AdminList.find(user => user.admin_id === selectedAdminId);
+  //   const selectedAdminObj = AdminList.find(user => user.admin_id === selectedAdminId);
 
-    if (selectedAdminObj && !selectedAdmin.some(admin => admin.admin_id === selectedAdminObj.admin_id)) {
-      setSelectedAdmin([...selectedAdmin, selectedAdminObj]);
+  //   if (selectedAdminObj && !selectedAdmin.some(admin => admin.admin_id === selectedAdminObj.admin_id)) {
+  //     setSelectedAdmin([...selectedAdmin, selectedAdminObj]);
 
-      setState((prevState) => ({
-        ...prevState,
-        assigned_to_email: [...(Array.isArray(prevState.assigned_to_email) ? prevState.assigned_to_email : prevState.assigned_to_email.split(",")) || [], selectedAdminObj.email],
-        assigned_to_name: [...(Array.isArray(prevState.assigned_to_name) ? prevState.assigned_to_name : prevState.assigned_to_name.split(",")) || [], selectedAdminObj.name],
-        assigned_user_type: [...(Array.isArray(prevState.assigned_user_type) ? prevState.assigned_user_type : prevState.assigned_user_type.split(",")) || [], selectedAdminObj.admin_type],
-        assined_to_user_id: [...(Array.isArray(prevState.assined_to_user_id) ? prevState.assined_to_user_id : prevState.assined_to_user_id.split(",")) || [], selectedAdminObj.admin_id],
-      }));
-    }
-  };
+  //     setState((prevState) => ({
+  //       ...prevState,
+  //       assigned_to_email: [...(Array.isArray(prevState.assigned_to_email) ? prevState.assigned_to_email : prevState.assigned_to_email.split(",")) || [], selectedAdminObj.email],
+  //       assigned_to_name: [...(Array.isArray(prevState.assigned_to_name) ? prevState.assigned_to_name : prevState.assigned_to_name.split(",")) || [], selectedAdminObj.name],
+  //       assigned_user_type: [...(Array.isArray(prevState.assigned_user_type) ? prevState.assigned_user_type : prevState.assigned_user_type.split(",")) || [], selectedAdminObj.admin_type],
+  //       assined_to_user_id: [...(Array.isArray(prevState.assined_to_user_id) ? prevState.assined_to_user_id : prevState.assined_to_user_id.split(",")) || [], selectedAdminObj.admin_id],
+  //     }));
+  //   }
+  // };
 
   /*Delete function for group by field */
-  const removeAdmin = (adminId) => {
-    const updatedSelectedAdmin = selectedAdmin.filter((admin) => admin.admin_id !== adminId);
+  // const removeAdmin = (adminId) => {
+  //   const updatedSelectedAdmin = selectedAdmin.filter((admin) => admin.admin_id !== adminId);
 
-    // Update selectedAdmin state
-    setSelectedAdmin(updatedSelectedAdmin);
+  //   // Update selectedAdmin state
+  //   setSelectedAdmin(updatedSelectedAdmin);
 
-    // Remove corresponding admin details from the state
-    setState({
-      ...state,
-      assigned_to_email: state?.assigned_to_email.filter((email, index) =>
-        selectedAdmin[index].admin_id !== adminId
-      ),
-      assigned_to_name: state?.assigned_to_name.filter((name, index) =>
-        selectedAdmin[index].admin_id !== adminId
-      ),
-      assigned_user_type: state?.assigned_user_type.filter((type, index) =>
-        selectedAdmin[index].admin_id !== adminId
-      ),
-      assined_to_user_id: state?.assined_to_user_id.filter((id, index) =>
-        selectedAdmin[index].admin_id !== adminId
-      ),
-    });
-  };
+  //   // Remove corresponding admin details from the state
+  //   setState({
+  //     ...state,
+  //     assigned_to_email: state?.assigned_to_email.filter((email, index) =>
+  //       selectedAdmin[index].admin_id !== adminId
+  //     ),
+  //     assigned_to_name: state?.assigned_to_name.filter((name, index) =>
+  //       selectedAdmin[index].admin_id !== adminId
+  //     ),
+  //     assigned_user_type: state?.assigned_user_type.filter((type, index) =>
+  //       selectedAdmin[index].admin_id !== adminId
+  //     ),
+  //     assined_to_user_id: state?.assined_to_user_id.filter((id, index) =>
+  //       selectedAdmin[index].admin_id !== adminId
+  //     ),
+  //   });
+  // };
 
   let content = (
     <>
@@ -446,7 +549,7 @@ function Addfollowup(props) {
                     </span>
                   )}
                 </div>
-                <div className="form-group col px-0 pr-3">
+                {/* <div className="form-group col px-0 pr-3">
                   <label
                     htmlFor="admin"
                     className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
@@ -514,27 +617,63 @@ function Addfollowup(props) {
                       ))
                     )}
                   </div>
-                </div>
+                </div> */}
                 <div className="form-group col px-0 pr-3">
                   <label
                     htmlFor="remark"
                     className="font-size-3 text-black-2 font-weight-semibold line-height-reset mb-0"
                   >
-                    Add New Note: <span className="text-danger">*</span>
+                    Description: <span className="text-danger">*</span>
                   </label>
                   <div className="position-relative">
                     <div
-                      className={
-                        errors.remark
-                          ? "border border-danger rounded overflow-hidden"
-                          : "border rounded overflow-hidden"
-                      }
+
                     >
-                      <TextEditor
+                      {/* <TextEditor
                         setState={setState}
                         state={state}
                         page={"FollowUp"}
-                      />
+                      /> */}
+                      <textarea
+                        type="text"
+                        value={state.remark || ""}
+                        onChange={handleInputChange}
+                        placeholder="Comments or add others with @"
+                        className={
+                          `comment-input rounded overflow-hidden  ${errors.remark
+                            ? "border border-danger"
+                            : ""}`
+                        }
+                        rows={4}
+                        style={{ outline: 0, }}
+                      ></textarea>
+                      {dropdownVisible && filteredEmails.length > 0 ? (
+                        <ul
+                          className="email-suggestions"
+                          style={{
+                            maxHeight: 400,
+                            overflowY: "auto",
+                            zIndex: "999 !important",
+                          }}
+                        >
+                          {filteredEmails.map((email, index) => (
+                            <li
+                              key={index}
+                              onClick={() => handleEmailClick(email)}
+                              // onMouseOver={() => handleEmailMouseOver(email.email)}
+                              className="email-suggestion-item"
+                            >
+                              <strong>
+                                {email.name +
+                                  (email.u_id ? " (Partner)" : "") +
+                                  "(" +
+                                  email.email +
+                                  ")"}
+                              </strong>
+                            </li>
+                          ))}
+                        </ul>
+                      ) : null}
                     </div>
                     {/*----ERROR MESSAGE FOR DESRIPTION----*/}
                     {errors.remark && (
@@ -863,6 +1002,7 @@ function Addfollowup(props) {
 
     </>
   );
+  console.log(selectedAdmin)
   return props.page === "yes" ? (
     <Modal show={props.show} onHide={close}>
       <button

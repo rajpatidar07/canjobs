@@ -9,10 +9,11 @@ const NotFound = (props) => {
   // const agreement = searchParams.get("agreement");
   const docId = searchParams.get("docId");
   const notes = searchParams.get("note");
+  const taskId = searchParams.get("taskId");
   const portal = localStorage.getItem("portal")
   let navigate = useNavigate()
   useEffect(() => {
-    if (docId || notes) {
+    if (docId || notes || taskId) {
       localStorage.setItem("navigation_url", location.pathname + location.search)
       if (!token) {
         navigate("/adminlogin")
@@ -33,7 +34,7 @@ const NotFound = (props) => {
       ? "/partner_profile"
       : props.userType === "admin" ?
         "/dashboard"
-        : (docId || notes)
+        : (docId || notes || taskId)
           ? "/adminlogin"
           : portal === "study"
             ? "/study"
@@ -57,7 +58,7 @@ const NotFound = (props) => {
               ? "/partner_profile"
               : props.userType === "admin" ?
                 "/dashboard"
-                : (docId || notes)
+                : (docId || notes || taskId)
                   ? "/adminlogin"
                   : portal === "study"
                     ? "/study"

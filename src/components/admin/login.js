@@ -245,13 +245,13 @@ export default function AdminLoginFrom({ setAdminLoggedIn, setLoginCondition }) 
                   </span>
                 </label> */}
 
-                {/* <Link
+                <Link
                   to={""}
                   className="font-size-3 text-dodger line-height-reset mb-3 mx-3"
                   onClick={() => setShowForgotPassword(true)}
                 >
                   Forget Password
-                </Link> */}
+                </Link>
                 {/*----ERROR MESSAGE FOR terms----*/}
                 {/* {errors.tandr && (
                   <span key={errors.tandr} className="text-danger font-size-3">
