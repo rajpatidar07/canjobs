@@ -42,59 +42,57 @@ export default function TaskCount({ count }) {
   ];
 
   return (
-    <div className="mt-4">
-      <div className="row">
-        {cardData.map((card, index) => (
-          <div key={index} className="col-md-3 col-sm-6 mb-4">
+    <div className="row">
+      {cardData.map((card, index) => (
+        <div key={index} className="col-md-3 col-sm-6 mb-4">
+          <div
+            // to="#"
+            className="d-flex justify-content-between border rounded shadow-sm py-4 px-6 align-items-center"
+            style={{
+              backgroundColor: card.bgColor,
+              color: card.textColor,
+              textDecoration: "none",
+              transition: "box-shadow 0.2s",
+            }}
+          >
             <div
-              // to="#"
-              className="d-flex justify-content-between border rounded shadow-sm py-4 px-6 align-items-center"
               style={{
-                backgroundColor: card.bgColor,
-                color: card.textColor,
-                textDecoration: "none",
-                transition: "box-shadow 0.2s",
+                fontSize: "3rem",
+                color: card.iconColor,
+                lineHeight: "1.2",
               }}
+              className="mb-3"
             >
-              <div
-                style={{
-                  fontSize: "3rem",
-                  color: card.iconColor,
-                  lineHeight: "1.2",
-                }}
-                className="mb-3"
+              {card.icon}
+            </div>
+            <div className="text-right">
+              <h5
+                className="m-0"
+                style={{ fontSize: "1.25rem", fontWeight: "900" }}
               >
-                {card.icon}
-              </div>
-              <div className="text-right">
-                <h5
-                  className="m-0"
-                  style={{ fontSize: "1.25rem", fontWeight: "900" }}
-                >
-                  {card.count}
-                </h5>
-                <p
-                  className="m-0"
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    fontSize: "1rem",
-                    fontWeight: "400",
-                    color: "#6c757d",
-                  }}
-                >
-                  <span>{card.title}</span>
-                  {card.title === "Overdue Tasks" && (
-                    <small className="font-size-2">
-                      (Pending for more than 30 days)
-                    </small>
-                  )}
-                </p>
-              </div>
+                {card.count}
+              </h5>
+              <p
+                className="m-0"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  fontSize: "1rem",
+                  fontWeight: "400",
+                  color: "#6c757d",
+                }}
+              >
+                <span>{card.title}</span>
+                {card.title === "Overdue Tasks" && (
+                  <small className="font-size-2">
+                    (Pending for more than 30 days)
+                  </small>
+                )}
+              </p>
             </div>
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
     // <div className="container-fluid mt-5">
     //     {/* <!-- Summary count --> */}

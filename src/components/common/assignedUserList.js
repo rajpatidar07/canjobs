@@ -8,15 +8,18 @@ const AssignedUserList = ({
 }) => {
   // Function to map assigned user details
   const mapAssignedDetails = () => {
-    const userIds = assined_to_user_id.split(",").map((id) => id.trim());
-    const names = assigned_to_name.split(",").map((name) => name.trim());
+    const userIds = assined_to_user_id
+      ? assined_to_user_id.split(",").map((id) => id.trim())
+      : [];
+    const names = assigned_to_name
+      ? assigned_to_name.split(",").map((name) => name.trim())
+      : [];
     const profileImages = assigned_to_profile_image
-      .split(",")
-      .map((img) => img.trim());
+      ? assigned_to_profile_image.split(",").map((img) => img.trim())
+      : [];
     const userTypes = assigned_user_type_new
-      .split(",")
-      .map((type) => type.trim());
-
+      ? assigned_user_type_new.split(",").map((type) => type.trim())
+      : [];
     return userIds.map((id, index) => ({
       userId: id || "N/A",
       name: names[index] || "N/A",
@@ -24,7 +27,6 @@ const AssignedUserList = ({
       userType: userTypes[index] || "N/A",
     }));
   };
-
   const assignedUsers = mapAssignedDetails();
 
   return (

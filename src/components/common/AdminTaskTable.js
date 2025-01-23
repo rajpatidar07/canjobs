@@ -20,6 +20,7 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import CommonTaskReplyBox from "./CommonTaskReplyBox";
 import AssignedUserList from "./assignedUserList";
 import UserAvatar from "./UserAvtar";
+import ModalSidebar from "./modalSidebar";
 export default function AdminTaskTable(props) {
   const [taskData, setTaskData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -204,11 +205,7 @@ export default function AdminTaskTable(props) {
   return (
     <>
       <div className="bg-white shadow-8 datatable_div pt-7 rounded pb-8 px-2">
-        <div
-          className={`table-responsive main_table_div ${
-            openReplyBox ? "col-9" : "col-12"
-          }`}
-        >
+        <div className={`table-responsive main_table_div col-12`}>
           {isLoading ? (
             <Loader />
           ) : (
@@ -358,7 +355,7 @@ export default function AdminTaskTable(props) {
                 {/* Map function to show the data in the list*/}
                 {totalData === 0 || taskData.length === 0 ? (
                   <tr>
-                    <th colSpan={7} className="bg-white text-center">
+                    <th colSpan={8} className="bg-white text-center">
                       No Data Found
                     </th>
                   </tr>
@@ -772,13 +769,26 @@ export default function AdminTaskTable(props) {
             />
           </div>
         </div>
-        {openReplyBox ? (
-          <CommonTaskReplyBox
-            openReplyBox={openReplyBox}
-            setOpenReplyBox={setOpenReplyBox}
-            taskData={singleTaskData}
-          />
-        ) : null}
+        <button onClick={() => setOpenReplyBox(true)}>Open</button>
+        <ModalSidebar
+          show={openReplyBox}
+          onClose={() => setOpenReplyBox(false)}
+          children={
+            <CommonTaskReplyBox
+              openReplyBox={openReplyBox}
+              setOpenReplyBox={setOpenReplyBox}
+              taskData={singleTaskData}
+            />
+          }
+        >
+          {openReplyBox ? (
+            <CommonTaskReplyBox
+              openReplyBox={openReplyBox}
+              setOpenReplyBox={setOpenReplyBox}
+              taskData={singleTaskData}
+            />
+          ) : null}
+        </ModalSidebar>
       </div>
 
       <SAlert
