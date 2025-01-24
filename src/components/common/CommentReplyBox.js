@@ -21,7 +21,8 @@ export default function CommentReplyBox({
   OnDeleteCommentReplies,
   admin_id,
   AdminType,
-  dropdownVisible
+  dropdownVisible,
+  taskType
 }) {
   return (
     <div className="reply_box_container mx-2 fade show">
@@ -152,7 +153,7 @@ export default function CommentReplyBox({
               type="text"
               value={replyComment || ""}
               onChange={(e) => handleInputChange(e, "reply")}
-              placeholder="Comments or add others with @"
+              placeholder={`${taskType || "Comments"} or add others with @`}
               className="comment-input border-0 bg-light"
               style={{ outline: 0, fontSize: 14, height: "auto" }}
               onSubmit={() => {

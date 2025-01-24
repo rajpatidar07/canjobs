@@ -11,9 +11,10 @@ import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 // import TextEditor from "../../common/TextEditor";
 import ConvertTime from "../../common/Common function/ConvertTime";
-import { FaEdit } from "react-icons/fa";
+// import { FaEdit } from "react-icons/fa";
 import AdminTaskTable from "../../common/AdminTaskTable";
 import Pagination from "../../common/pagination";
+import CommentTaskBox from "../../common/commonTaskBox";
 
 function Addfollowup(props) {
   let [response, setResponseData] = useState([]);
@@ -34,7 +35,7 @@ function Addfollowup(props) {
   const [taskPage, setTaskPage] = useState(1)
   const [AdminList, setAdminList] = useState([]);
   const [filteredEmails, setFilteredEmails] = useState([]);
-  const [selectedAdmin, setSelectedAdmin] = useState([]);
+  const [/*selectedAdmin,*/ setSelectedAdmin] = useState([]);
   const [dropdownVisible, setDropdownVisible] = useState(false)
   let adminId =
     adminType === "agent"
@@ -195,11 +196,11 @@ function Addfollowup(props) {
   const handleInputChange = (e, type) => {
     let value = e.target.value;
     setState({ ...state, remark: value });
-  
+
     // Check if the last typed character is '@'
     value = value.trim();
     const lastChar = value.slice(-1);
-  
+
     // If last character is '@', show the dropdown
     if (lastChar === "@") {
       setDropdownVisible(true);
@@ -218,21 +219,21 @@ function Addfollowup(props) {
         setDropdownVisible(false);
       }
     }
-  
+
     // Update the state to remove users from arrays when their @username is removed from the remark
     const usersInRemark = value.match(/@(\w*)/g)?.map((mention) => mention.slice(1)); // Extract all mentioned usernames from remark
-  
+
     setState((prevState) => {
       // Filter out users not mentioned in the updated remark
       const updatedAssignedEmails = prevState.assigned_to_email.filter((email, index) => {
         const userName = prevState.assigned_to_name[index];
         return usersInRemark?.includes(userName);
       });
-  
+
       const updatedAssignedNames = prevState.assigned_to_name.filter((name) => usersInRemark?.includes(name));
       const updatedAssignedUserTypes = prevState.assigned_user_type.filter((_, index) => usersInRemark?.includes(prevState.assigned_to_name[index]));
       const updatedAssignedUserIds = prevState.assined_to_user_id.filter((_, index) => usersInRemark?.includes(prevState.assigned_to_name[index]));
-  
+
       return {
         ...prevState,
         assigned_to_email: updatedAssignedEmails,
@@ -242,23 +243,23 @@ function Addfollowup(props) {
       };
     });
   };
-  
+
   /* Function to handle email click (add user to the state) */
   const handleEmailClick = (user, type) => {
     // Check if the user is already in the assigned lists to prevent duplicates
     const isUserAlreadyAssigned = state.assigned_to_email.includes(user.email);
-  
+
     if (isUserAlreadyAssigned) {
       // If the user is already assigned, do not add them again
       return;
     }
-  
+
     // Add the selected user to the state
     setSelectedAdmin((prev) => [...prev, user]);
-  
+
     // Replace @username in the comment
     const updatedComment = state.remark.replace(/@\w*$/, `@${user.name} `);
-  
+
     // Update the state with the selected admin details
     setState((prevState) => ({
       ...prevState,
@@ -288,11 +289,11 @@ function Addfollowup(props) {
         user.admin_id,
       ],
     }));
-  
+
     // Hide the dropdown
     setDropdownVisible(false);
   };
-  
+
 
   // USER FOLLOW UP PROFILE UPDATE SUBMIT BUTTON
   const onAminFollowClick = async (event) => {
@@ -415,8 +416,12 @@ function Addfollowup(props) {
                   adminType={""}
                 />
               </div>
-              <div className="single_note  p-5 rounded">
-                <h5>Notes</h5>
+              <div className="p-5 rounded "
+                style={{
+                  height: "50vh",
+                  overflowY: "scroll"
+                }}>
+                <h5>Old Notes</h5>
                 {response.length === 0 || !response ? (
                   <div className="d-flex justify-content-center">
                     <p className="text-italic font-size-3 m-0">No Data Found</p>
@@ -431,7 +436,7 @@ function Addfollowup(props) {
                         <div className="d-flex flex-column align-items-end">
                           <p className="m-0 text-capitalize font-size-3 mb-1 d-flex justify-content-between align-items-center w-100">
                             <b>Created by: {res.created_by_name}</b>
-                            <Link className={res.created_by === assigned_id && res.type === assigned_by_type ? "text-gray mb-1 pl-8" : "d-none"} title="Update notes" onClick={() => {
+                            {/* <Link className={res.created_by === assigned_id && res.type === assigned_by_type ? "text-gray mb-1 pl-8" : "d-none"} title="Update notes" onClick={() => {
                               // Merge current state with res and admin_id
                               setState(prevState => ({
                                 ...prevState,        // Spread the existing state
@@ -441,7 +446,7 @@ function Addfollowup(props) {
                               setUpdateNote(true)
                               setSelectedAdmin(res?.assined_to_user_id ? AdminList.filter((item) => res?.assined_to_user_id.split(",").includes(item.admin_id.toString())) : [])
                             }}>  <FaEdit />
-                            </Link>
+                            </Link> */}
                           </p>
                           {res?.assigned_to_name && <span className="font-size-3">
                             Assigned admin:
@@ -479,7 +484,7 @@ function Addfollowup(props) {
               }
               style={{ right: 0 }}
             >
-              <form className="">
+              <form className="d-none">
                 <div className="form-group col px-0 pr-3">
                   <label
                     htmlFor="subject"
@@ -763,6 +768,12 @@ function Addfollowup(props) {
                   </button>}
                 </div>
               </form>
+              <CommentTaskBox
+                userId={props.userId}
+                taskType={"note"}
+                taskUserType={props.userType}
+              // taskId={taskId}
+              />
             </div>
           </div>
         </div>
@@ -1002,7 +1013,6 @@ function Addfollowup(props) {
 
     </>
   );
-  console.log(selectedAdmin)
   return props.page === "yes" ? (
     <Modal show={props.show} onHide={close}>
       <button

@@ -21,7 +21,6 @@ import { toast } from "react-toastify";
 import Loader from "../loader";
 import Breadcrumbs from "./Breadcrumb";
 import EditDocNameFOrm from "./EditDocNameFOrm";
-// import PreviewDocument from "./PreviewDocument";
 // import PdfViewerComponent from "../../PdfViewerComponent";
 import AdobePDFViewer from "../Adobe/adobeFile";
 import { jsPDF } from "jspdf";
