@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { GetAllJobs, getAllJobsCategory } from "../../api/api";
 import JobResponse from "./response";
+import { Pagination } from "react-bootstrap";
 
-function FollowupTable() {
+function FollowupTable(props) {
   /*show Modal and props state */
   const [jobData, setjobData] = useState([]);
   const [JobId, setJobId] = useState([]);

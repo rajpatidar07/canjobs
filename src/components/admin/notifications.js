@@ -271,14 +271,14 @@ function Notifications({
                                         : data.subject === "assigned_admin_to_partner"
                                           ?
                                           "/partner_profile"
-                                          : data.subject === "mention_notes"//Notes for employer
+                                          : data.subject === "mention_notes" || data.subject === "mention_note"//Notes for employer
                                             ? data.document_user_type === "employer"
-                                              ? `/client_detail?note=true&noteid=${data.mention_id}`
+                                              ? `/client_detail?note=true&noteid=${JSON.parse(data.notif_json).task_id}`
                                               : data.document_user_type === "agent" && (window.location.pathname === "/partner_profile")//Notes for agent with same path as navigation
                                                 ?
-                                                `?note=true&noteid=${data.mention_id}`
-                                                : data.document_user_type === "agent" ? `/partner_profile?note=true&noteid=${data.mention_id}`//Notes for agent
-                                                  : `/${data.employee_id}?note=true&noteid=${data.mention_id}`//Notes for employee
+                                                `?note=true&noteid=${JSON.parse(data.notif_json).task_id}`
+                                                : data.document_user_type === "agent" ? `/partner_profile?note=true&noteid=${JSON.parse(data.notif_json).task_id}`//Notes for agent
+                                                  : `/${data.employee_id}?note=true&noteid=${JSON.parse(data.notif_json).task_id}`//Notes for employee
                                             : data.subject === "signed_agreement"
                                               ? data.document_user_type === "employer"//AGREEMENT FOR EMPLOYER
                                                 ? `/client_detail?agreement=true`

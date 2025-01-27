@@ -3608,12 +3608,15 @@ export const DeleteAgreement = async (id) => {
   return response.data;
 };
 /* Export excel Api */
-export const ExportExcelApi = async (type) => {
+export const ExportExcelApi = async (table_name, applicantType, status, local, type) => {
   const response = await axios.post(
     `${API_URL}common/getDataForExcel`,
     {
-      type: type,
-      interested_in: portal === "study" ? "study permit" : ""
+      table_name: table_name,
+      interested_in: applicantType,//employee table
+      filter_status: status,//employee table
+      is_local: local,//employee table
+      type: type,//task table
     },
     {
       headers: {

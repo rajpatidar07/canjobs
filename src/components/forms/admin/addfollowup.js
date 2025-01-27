@@ -416,7 +416,7 @@ function Addfollowup(props) {
                   adminType={""}
                 />
               </div>
-              <div className="p-5 rounded "
+              <div className={response.length === 0 || !response ? "d-none" : "p-5 rounded "}
                 style={{
                   height: "50vh",
                   overflowY: "scroll"
@@ -768,11 +768,13 @@ function Addfollowup(props) {
                   </button>}
                 </div>
               </form>
+              {console.log("pppppppp",props.note_id)}
               <CommentTaskBox
                 userId={props.userId}
                 taskType={"note"}
                 taskUserType={props.userType}
-              // taskId={taskId}
+                // taskId={taskId}
+                noteId={props.note_id}
               />
             </div>
           </div>

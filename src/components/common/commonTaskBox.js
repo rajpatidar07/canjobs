@@ -147,124 +147,198 @@ export default function CommentTaskBox(props) {
         }
     };
     /*Add function to add comment */
+    // const addAnnotation = async (annotation) => {
+    //     // Retrieve data from local storage
+    //     // let IspartnerList = selectedPartner ? partnerList : []; // let DocId = docData.id;
+    //     const email = (selectedAdmin || []).map((item) => item.email).toString() || ""
+    //     let sender =
+    //         AdminType === "agent"
+    //             ? admin_name
+    //             : adminList.find((item) => item.admin_id === admin_id)
+    //                 ? adminList.find((item) => item.admin_id === admin_id).name
+    //                 : admin_name;
+    //     let senderEmail =
+    //         AdminType === "agent"
+    //             ? admin_email
+    //             : adminList.find((item) => item.admin_id === admin_id)
+    //                 ? adminList.find((item) => item.admin_id === admin_id).email
+    //                 : "";
+    //     // Variables for mentioning admins
+    //     let assignedAdminName = adminList.filter((item) =>
+    //         email?.includes(item.email)
+    //     )
+    //         ? adminList
+    //             .filter((item) => email?.includes(item.email))
+    //             .map((admin) => admin.name)
+    //             .join(",")
+    //         : "";
+    //     const assignedUserId = adminList.filter((item) =>
+    //         email?.includes(item.email)
+    //     )
+    //         ? adminList
+    //             .filter((item) => email?.includes(item.email))
+    //             .map((admin) => (admin.u_id ? admin.id : admin.admin_id))
+    //             .join(",")
+    //         : "";
+    //     // eslint-disable-next-line no-useless-concat
+    //     const assignedUserType = adminList.filter((item) =>
+    //         email?.includes(item.email)
+    //     )
+    //         ? adminList
+    //             .filter((item) => email?.includes(item.email))
+    //             .map((admin) => (admin.u_id ? "agent" : admin.admin_type))
+    //             .join(",")
+    //         : "";
+    //     // Now updatedComment will have properly formatted <span> elements without nested bold tags
+    //     // Send data to the API
+    //     if (
+    //         (comments === "" || comments.trim() === "") &&
+    //         email === ""
+    //         // || (comment.includes("@") && !/\S+@\S+\.\S+/.test(comment))
+    //     ) {
+    //         toast.error("Comment or email cannot be empty!", {
+    //             position: toast.POSITION.TOP_RIGHT,
+    //             autoClose: 2000,
+    //         });
+    //     } else {
+    //         try {
+    //             let res = await ADocAnnotation(
+    //                 admin_id,
+    //                 "",
+    //                 assignedUserId,
+    //                 email,
+    //                 subject,
+    //                 comments,//actual
+    //                 "", //annotation.x_axis,
+    //                 "", //annotation.y_axis,
+    //                 props.taskType,
+    //                 AdminType, //sender type
+    //                 sender, //sender name,
+    //                 assignedAdminName, //assigned Admin or user Name,
+    //                 "", //follow up status(for notes only)
+    //                 "", //Next follow up date(for notes only)
+    //                 assignedUserType, //Assign user type,
+    //                 "", //Document url(for notes only)
+    //                 senderEmail, //Sender email
+    //                 props.userId, //employee id,
+    //                 "", //assigned_by_id
+    //                 "",//docData.parentReference.id, // document parent code
+    //                 "",//annotationDrawBox, //Annotation data,
+    //                 "", //annotationId
+    //                 props.taskUserType, //User type of document
+    //                 "",// docData.name,//document name
+    //                 "",//start date
+    //                 endDate,//end date
+    //             );
+    //             if (res.data.message === "task inserted successfully!") {
+    //                 toast.success("Comment uploaded Successfully", {
+    //                     position: toast.POSITION.TOP_RIGHT,
+    //                     autoClose: 1000,
+    //                 });
+    //                 setComments("");
+    //                 setSelectedAdmin("");
+    //                 setEndDate("")
+    //                 setSubject("")
+    //                 setFilteredEmails([]);
+    //                 Getcomments();
+    //                 localStorage.setItem("callNotification", true);
+    //             }
+    //         } catch (err) {
+    //             console.log(err);
+    //             if (err.response.data.message === "required fields cannot be blank") {
+    //                 toast.error(" Please try again later.", {
+    //                     position: toast.POSITION.TOP_RIGHT,
+    //                     autoClose: 1000,
+    //                 });
+    //                 if (err.response.data.message === "required fields cannot be blank doc_parent_id") {
+    //                     toast.error("Folder not found", {
+    //                         position: toast.POSITION.TOP_RIGHT,
+    //                         autoClose: 1000,
+    //                     });
+    //                 }
+    //                 // setSelectedAnnotation(null);
+    //                 setComments("");
+    //                 setSelectedAdmin("");
+
+    //                 setFilteredEmails([]);
+    //             }
+    //         }
+    //     }
+    // };
     const addAnnotation = async (annotation) => {
-        // Retrieve data from local storage
-        // let IspartnerList = selectedPartner ? partnerList : []; // let DocId = docData.id;
-        const email = (selectedAdmin || []).map((item) => item.email).toString() || ""
-        let sender =
-            AdminType === "agent"
-                ? admin_name
-                : adminList.find((item) => item.admin_id === admin_id)
-                    ? adminList.find((item) => item.admin_id === admin_id).name
-                    : admin_name;
-        let senderEmail =
-            AdminType === "agent"
-                ? admin_email
-                : adminList.find((item) => item.admin_id === admin_id)
-                    ? adminList.find((item) => item.admin_id === admin_id).email
-                    : "";
-        // Variables for mentioning admins
-        let assignedAdminName = adminList.filter((item) =>
-            email?.includes(item.email)
-        )
-            ? adminList
-                .filter((item) => email?.includes(item.email))
-                .map((admin) => admin.name)
-                .join(",")
-            : "";
-        const assignedUserId = adminList.filter((item) =>
-            email?.includes(item.email)
-        )
-            ? adminList
-                .filter((item) => email?.includes(item.email))
-                .map((admin) => (admin.u_id ? admin.id : admin.admin_id))
-                .join(",")
-            : "";
-        // eslint-disable-next-line no-useless-concat
-        const assignedUserType = adminList.filter((item) =>
-            email?.includes(item.email)
-        )
-            ? adminList
-                .filter((item) => email?.includes(item.email))
-                .map((admin) => (admin.u_id ? "agent" : admin.admin_type))
-                .join(",")
-            : "";
-        // Now updatedComment will have properly formatted <span> elements without nested bold tags
-        // Send data to the API
-        if (
-            (comments === "" || comments.trim() === "") &&
-            email === ""
-            // || (comment.includes("@") && !/\S+@\S+\.\S+/.test(comment))
-        ) {
-            toast.error("Comment or email cannot be empty!", {
+        const email = selectedAdmin?.map((item) => item.email).toString() || "";
+        const admin = adminList.find((item) => item.admin_id === admin_id) || {};
+        const sender = AdminType === "agent" ? admin_name : admin.name || admin_name;
+        const senderEmail = AdminType === "agent" ? admin_email : admin.email || "";
+        const assignedAdmins = adminList.filter((item) => email.includes(item.email));
+        const assignedAdminName = assignedAdmins.map((admin) => admin.name).join(",") || "";
+        const assignedUserId = assignedAdmins.map((admin) => admin.u_id || admin.admin_id).join(",") || "";
+        const assignedUserType = assignedAdmins.map((admin) => admin.u_id ? "agent" : admin.admin_type).join(",") || "";
+        if (!comments.trim() && !email) {
+            return toast.error("Comment or email cannot be empty!", {
                 position: toast.POSITION.TOP_RIGHT,
                 autoClose: 2000,
             });
-        } else {
-            try {
-                let res = await ADocAnnotation(
-                    admin_id,
-                    "",
-                    assignedUserId,
-                    email,
-                    subject,
-                    comments,//actual
-                    "", //annotation.x_axis,
-                    "", //annotation.y_axis,
-                    props.taskType,
-                    AdminType, //sender type
-                    sender, //sender name,
-                    assignedAdminName, //assigned Admin or user Name,
-                    "", //follow up status(for notes only)
-                    "", //Next follow up date(for notes only)
-                    assignedUserType, //Assign user type,
-                    "", //Document url(for notes only)
-                    senderEmail, //Sender email
-                    props.userId, //employee id,
-                    "", //assigned_by_id
-                    "",//docData.parentReference.id, // document parent code
-                    "",//annotationDrawBox, //Annotation data,
-                    "", //annotationId
-                    props.taskUserType, //User type of document
-                    "",// docData.name,//document name
-                    "",//start date
-                    endDate,//end date
-                );
-                if (res.data.message === "task inserted successfully!") {
-                    toast.success("Comment uploaded Successfully", {
-                        position: toast.POSITION.TOP_RIGHT,
-                        autoClose: 1000,
-                    });
-                    setComments("");
-                    setSelectedAdmin("");
-                    setEndDate("")
-                    setSubject("")
-                    setFilteredEmails([]);
-                    Getcomments();
-                    localStorage.setItem("callNotification", true);
-                }
-            } catch (err) {
-                console.log(err);
-                if (err.response.data.message === "required fields cannot be blank") {
-                    toast.error(" Please try again later.", {
-                        position: toast.POSITION.TOP_RIGHT,
-                        autoClose: 1000,
-                    });
-                    if (err.response.data.message === "required fields cannot be blank doc_parent_id") {
-                        toast.error("Folder not found", {
-                            position: toast.POSITION.TOP_RIGHT,
-                            autoClose: 1000,
-                        });
-                    }
-                    // setSelectedAnnotation(null);
-                    setComments("");
-                    setSelectedAdmin("");
-
-                    setFilteredEmails([]);
-                }
+        }
+        try {
+            const res = await ADocAnnotation(
+                admin_id,
+                "",
+                assignedUserId,
+                email,
+                subject,
+                comments,//actual
+                "", //annotation.x_axis,
+                "", //annotation.y_axis,
+                props.taskType,
+                AdminType, //sender type
+                sender, //sender name,
+                assignedAdminName, //assigned Admin or user Name,
+                "", //follow up status(for notes only)
+                "", //Next follow up date(for notes only)
+                assignedUserType, //Assign user type,
+                "", //Document url(for notes only)
+                senderEmail, //Sender email
+                props.userId, //employee id,
+                "", //assigned_by_id
+                "",//docData.parentReference.id, // document parent code
+                "",//annotationDrawBox, //Annotation data,
+                "", //annotationId
+                props.taskUserType, //User type of document
+                "",// docData.name,//document name
+                "",//start date
+                endDate,//end date
+            );
+            if (res.data.message === "task inserted successfully!") {
+                toast.success("Comment uploaded Successfully", {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 1000,
+                });
+                setComments("");
+                setSelectedAdmin("");
+                setEndDate("");
+                setSubject("");
+                setFilteredEmails([]);
+                Getcomments();
+                localStorage.setItem("callNotification", true);
             }
+        } catch (err) {
+            console.error(err);
+            const message = err.response?.data?.message || "";
+            const errorMessage =
+                message === "required fields cannot be blank doc_parent_id"
+                    ? "Folder not found"
+                    : "Please try again later.";
+            toast.error(errorMessage, {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 1000,
+            });
+            setComments("");
+            setSelectedAdmin("");
+            setFilteredEmails([]);
         }
     };
+
     /*Function to reply for the comment */
     const ReplyAnnotation = async (data) => {
         console.log(data, selectedAdminReply)
@@ -573,7 +647,8 @@ export default function CommentTaskBox(props) {
             "", //docId,
             adminfilter, // adminid,
             annotStatus, // annotationStatus,
-            props.taskType
+            props.taskType,
+            "", "", "", "", "", "", props.userId, props.taskUserType
         );
         if (CommentRes.data.status === (1 || "1")) {
             setCommentsList(CommentRes.data.data.data);
@@ -791,7 +866,7 @@ export default function CommentTaskBox(props) {
                         ) : (
                             (commentsList || []).map((commentItem, index) => (
                                 <div
-                                    className={`card col-12 mb-2 p-0 comment_box_card bg-white`}
+                                    className={`card col-12 mb-2 p-0 comment_box_card bg-white ${props.noteId === commentItem.id ? "highlighted-comment" : ""}`}
                                     style={{
                                         backgroundColor: "#fff",
                                         color: "white",
@@ -812,6 +887,7 @@ export default function CommentTaskBox(props) {
                                     }}
                                     key={index}
                                 >
+                                    {console.log(props.noteId, commentItem)}
                                     <div
                                         className={`comment_status_update ${AdminType === "agent"
                                             ? commentItem.task_creator_user_id === admin_id

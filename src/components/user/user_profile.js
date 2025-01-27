@@ -1669,6 +1669,7 @@ const NewUserProfile = (props) => {
                       skip={() => navigate(-1)}
                     />
                   </div>
+                  {console.log(notes,note_id,"fgdfgdgdgdfgdg")}
                   <div
                     className={
                       TabActive === "retaineragreement"

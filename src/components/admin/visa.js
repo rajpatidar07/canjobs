@@ -16,6 +16,7 @@ import EmployeeHeader from "../common/header";
 import EmployeeFooter from "../common/footer";
 import VisaTable from "../common/visaTable";
 import { useLocation } from "react-router-dom";
+import ExportExcelButton from "../common/exportExcelButton";
 export default function Visa() {
   let location = useLocation();
   /*Show modal states */
@@ -230,6 +231,9 @@ export default function Visa() {
                       </select>
                     </div>
                   </div>
+                </div>
+                <div className="d-flex flex-end">
+                <ExportExcelButton tableName={"employee_visa"} portal={""} applicantType={""} status={""} local={""} type={""} /> 
                 </div>
                 {/*<-- Job Search and Filter -->*/}
                 {/* <div className={userType === "company" ? "d-none"

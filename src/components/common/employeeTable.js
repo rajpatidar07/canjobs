@@ -647,11 +647,11 @@ export default function EmployeeTable(props) {
                       Add Candidate
                     </CustomButton>
                   </div>
-                  <div className="form_group text-right">
-                    <ExportExcelButton type={"employee"} portal={portal} />
-                  </div>
                 </>
               ) : null}
+            <div className="form_group text-right">
+              <ExportExcelButton tableName={"employee"} type={""} portal={portal} applicantType={props?.ApplicantType ? props?.ApplicantType : props.interestFilterValu} status={status} local={props.localFilterValue ? props.localFilterValue : ""} />
+            </div>
           </div>
         )}
         <div className="table-responsive main_table_div">

@@ -282,7 +282,7 @@ th {
 }
 
 label {
-  /* display: inline-block; */
+  display: inline-block;
   margin-bottom: 0.9375rem;
 }
 
