@@ -21,7 +21,7 @@ export default function determineBackgroundColor(item) {
     }
 
     // If not found in the mapping, use the colorClasses logic
-    const id = item.id;
+    const id = item.id || item.employee_id;
     const hashCode = (str) => {
         let hash = 0;
         for (let i = 0; i < str.length; i++) {

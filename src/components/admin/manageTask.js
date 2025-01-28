@@ -7,11 +7,13 @@ import {
   getallAdminData,
   getallEmployeeData,
   getAllEmployer,
+  GetCommentsAndAssign,
 } from "../../api/api";
 import AdminListTaskTable from "../common/AdminListTaskTabel";
 import CustomButton from "../common/button";
 import AddTaskForm from "../forms/admin/addTaskForm";
 import { Link, useLocation } from "react-router-dom";
+import ExportExcelButton from "../common/exportExcelButton";
 
 export default function ManageTask() {
   const [apiCall, setApiCall] = useState(false);
@@ -27,6 +29,7 @@ export default function ManageTask() {
   const [showTaskForm, setShowTaskForm] = useState(false);
   const [updateTaskData, setUpdateTaskData] = useState();
   const [adminList, setAdminList] = useState([]);
+  const [allTaskList, setAllTaskList] = useState([]);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const [taskId, setTaskId] = useState(searchParams.get("taskId"))
@@ -37,6 +40,8 @@ export default function ManageTask() {
       const userData = await getallEmployeeData();
       const AdminData = await getallAdminData();
       const CompanyData = await getAllEmployer();
+      const allTaskres = await GetCommentsAndAssign("", "", "", "task");
+      setAllTaskList(allTaskres.data.data.data)
       //   if (window.location.pathname === `/${user_id}`) {
       //     const Partnerdata = await GetAgent();
       //     let newPartnerList = Partnerdata.data.data.filter(
@@ -195,15 +200,18 @@ export default function ManageTask() {
               <TaskCount count={count} />
               <div className="row">
                 <div className="col-12 mb-18">
-                  <h3 className="d-flex font-size-5 px-3">
-                    Tasks
-                    <Link
-                      className="page-link font-size-3 py-2 ml-3 font-weight-semibold px-3 rounded"
-                      onClick={() => setShowTaskForm(true)}
-                    >
-                      + Add New Task
-                    </Link>
-                  </h3>
+                  <div className="d-flex">
+                    <h3 className="d-flex font-size-5 px-3">
+                      Tasks
+                      <Link
+                        className="page-link font-size-3 ml-3 font-weight-semibold px-3 rounded"
+                        onClick={() => setShowTaskForm(true)}
+                      >
+                        + Add New Task
+                      </Link>
+                    </h3>
+                    <ExportExcelButton tableData={allTaskList} tableName={"task"} portal={""} applicantType={""} status={""} local={""} type={""} />
+                  </div>
                   {showTaskForm ? (
                     <AddTaskForm
                       userId={userId}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 // import CustomButton from "../common/button";
@@ -17,6 +17,7 @@ import EmployeeFooter from "../common/footer";
 import VisaTable from "../common/visaTable";
 import { useLocation } from "react-router-dom";
 import ExportExcelButton from "../common/exportExcelButton";
+import { GetEmployeeVisaList } from "../../api/api";
 export default function Visa() {
   let location = useLocation();
   /*Show modal states */
@@ -40,7 +41,7 @@ export default function Visa() {
   //  const [locationFilterValue, setLocationFilterValue] = useState("");
   //  const [jobSwapFilterValue, setJobSwapFilterValue] = useState("");
   //  const [company, setCompany] = useState("");
-  // let [Json, setJson] = useStatuserTypee([]);
+  let [allVisa, setVisaData] = useState([]);
   let userType = localStorage.getItem("userType");
   /*Render function to get the job */
   // useEffect(() => {
@@ -66,17 +67,17 @@ export default function Visa() {
   //    setJobId(e);
   //  };
   /*Function to get thejSon */
-  // const JsonData = async () => {
-  //   let Json = await GetFilter()
-  //   setJson(Json.data.data)
-  // }
+  const getAllVisaData = async () => {
+    let res = await GetEmployeeVisaList("", "", "", "", "", "", "", "", "", "visa")
+    setVisaData(res.data.data)
+  }
   /*Render method to get the json*/
-  // useEffect(() => {
-  //   JsonData()
-  //   if ((search === "") === true) {
-  //     setSearchError("")
-  //   }
-  // }, [VisStatusFilterValue])
+  useEffect(() => {
+    getAllVisaData()
+    // if ((search === "") === true) {
+    //   setSearchError("")
+    // }
+  }, [])
   /* Function to show the single data to update Employee*/
   // const employeeDetails = (e) => {
   //   setShowEmployeeProfile(true);
@@ -121,7 +122,7 @@ export default function Visa() {
           </>
         )}
 
-         
+
         <div
           className={
             // showJobDetails === false?
@@ -219,7 +220,7 @@ export default function Visa() {
                         className="text-capitalize form-control"
                       >
                         <option value="" data-display="Product Designer">
-                        Candidate's Application type
+                          Candidate's Application type
                         </option>
                         {(FilterJson.interested || []).map((data, i) => {
                           return (
@@ -233,7 +234,7 @@ export default function Visa() {
                   </div>
                 </div>
                 <div className="d-flex flex-end">
-                <ExportExcelButton tableName={"employee_visa"} portal={""} applicantType={""} status={""} local={""} type={""} /> 
+                  <ExportExcelButton tableName={"visa"} portal={""} applicantType={""} status={""} local={""} type={""} tableData={allVisa} />
                 </div>
                 {/*<-- Job Search and Filter -->*/}
                 {/* <div className={userType === "company" ? "d-none"

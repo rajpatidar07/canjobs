@@ -4,8 +4,9 @@ import { LiaUserEditSolid } from "react-icons/lia";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import Pagination from "./pagination";
 import Loader from "./loader";
-import { ReassignJobTOManager } from "../../api/api";
+import { AddAdmin, ReassignJobTOManager } from "../../api/api";
 import { toast } from "react-toastify";
+import { FaToggleOff, FaToggleOn } from "react-icons/fa";
 export default function AdminTable({
   data,
   isLoading,
@@ -37,6 +38,24 @@ export default function AdminTable({
       console.log(err);
     }
   };
+  /*Function to active deactivate the user */
+  const OntoggleActiveStatus = async (e, status, Admdata) => {
+    e.preventDefault()
+    let data = {
+      "admin_id": Admdata.admin_id,
+      "is_active": status
+    }
+    try {
+      let res = await AddAdmin(data)
+      if (res.status === 1) {
+        if (res.message === "admin updated successfully") {
+          setApiCall(true)
+        }
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
   return (
     <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
       <div className="table-responsive main_table_div">
@@ -97,6 +116,14 @@ export default function AdminTable({
                   >
                     Mobile
                   </Link>
+                </th>
+
+                <th
+                  scope="col"
+                  className="border-0 font-size-4 font-weight-normal"
+                  title="Active"
+                >
+                  Active
                 </th>
                 <th
                   scope="col"
@@ -263,6 +290,9 @@ export default function AdminTable({
                         </Link>
                       )}
                     </th>
+                    <th><button title={admin.is_active === ("1" || 1) ? "Deactivate" : "Active"} onClick={(e) => OntoggleActiveStatus(e, admin.is_active === ("1" || 1) ? 0 : 1, admin)} style={{ fontSize: '24px', border: 'none', background: 'none' }}>
+                      {admin.is_active === ("1" || 1) ? <FaToggleOn color="green" /> : <FaToggleOff color="gray" />}
+                    </button></th>
                     <th className="">
                       {page === "admin page" ? (
                         <div

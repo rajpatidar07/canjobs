@@ -157,11 +157,11 @@ export default function JobTable(props) {
             }
           }
           if (
-          // props.detail === "company_detail" ||
-            props.detail === "job_detail"
+            // props.detail === "company_detail" ||
+            props?.detail === "job_detail"
           ) {
-            props.setLmiaStatusRejectComment(LmiaCommentArray);
-            props.setLmia(LmiaData);
+            props?.setLmiaStatusRejectComment(LmiaCommentArray);
+            props?.setLmia(LmiaData);
           }
           setLmiaStatus(LmiaData);
           setLmiaStatusRejectComment(LmiaCommentArray);

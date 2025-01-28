@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import AddAgent from "../forms/admin/addAgent";
 // import { GetFilter } from "../../api/api";
 import AgentTable from "../common/agentTable";
+import ExportExcelButton from "../common/exportExcelButton";
 // import FilterJson from "../json/filterjson";
 function Agent() {
   /*Show modal states */
@@ -207,6 +208,7 @@ function Agent() {
                     >
                       Add Partner
                     </CustomButton>
+                    <ExportExcelButton tableData={[]} tableName={"agent"} portal={""} applicantType={""} status={""} local={""} type={""} />
                   </div>
                 </div>
                 <small className="text-danger">{searcherror}</small>

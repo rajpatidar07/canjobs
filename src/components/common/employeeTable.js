@@ -37,6 +37,7 @@ import VisaTimeLine from "./visaTimeLine";
 import filterjson from "../json/filterjson";
 import CustomButton from "./button";
 import ExportExcelButton from "./exportExcelButton";
+import determineBackgroundColor from "./Common function/DetermineBackgroundColour";
 // import ApplicantCategory from "../forms/user/ApplicantCategory";
 export default function EmployeeTable(props) {
   let agentId = localStorage.getItem("agent_id");
@@ -335,52 +336,6 @@ export default function EmployeeTable(props) {
     localStorage.removeItem("PageNo");
     props.setpageNo(1);
   };
-  const determineBackgroundColor = (commentItem) => {
-    const colorClasses = [
-      "bg-primary-opacity-7",
-      "bg-warning-opacity-7",
-      "bg-orange-opacity-6",
-      "bg-info-opacity-7",
-      "bg-secondary-opacity-7",
-      "bg-danger-opacity-6",
-      "bg-info-opacity-visible",
-      "bg-eastern",
-      "bg-secondary",
-      "bg-violet",
-      "bg-info",
-      "bg-coral-opacity-visible",
-      "bg-warning",
-      "bg-allports",
-      "bg-conch",
-      "bg-pink",
-      "bg-poppy",
-      "bg-success",
-      "bg-helio",
-      "bg-gray"
-    ];
-
-
-    // Instead of using an ID, use the comment type or text to determine the color
-    const commentType = commentItem || ""; // Use 'type' or fallback to 'text'
-
-    // Function to generate a hash code from the string (type or text)
-    const hashCode = (str) => {
-      let hash = 0;
-      for (let i = 0; i < str.length; i++) {
-        const char = str.charCodeAt(i);
-        hash = (hash << 5) - hash + char;
-      }
-      return hash;
-    };
-
-    // Generate a hash based on the comment type or text
-    const hash = Math.abs(hashCode(commentType));
-
-    // Use the hash to select a color class
-    const index = hash % colorClasses.length;
-
-    return colorClasses[index];
-  };
 
   return (
     <>
@@ -650,7 +605,7 @@ export default function EmployeeTable(props) {
                 </>
               ) : null}
             <div className="form_group text-right">
-              <ExportExcelButton tableName={"employee"} type={""} portal={portal} applicantType={props?.ApplicantType ? props?.ApplicantType : props.interestFilterValu} status={status} local={props.localFilterValue ? props.localFilterValue : ""} />
+              <ExportExcelButton tableName={"employee"} type={""} portal={portal} applicantType={props?.ApplicantType ? props?.ApplicantType : props.interestFilterValu} status={status} local={props.localFilterValue ? props.localFilterValue : ""} tableData={[]} />
             </div>
           </div>
         )}
@@ -1342,7 +1297,7 @@ export default function EmployeeTable(props) {
                                     ? "text-dark"
                                     : "text-white"
                                     } text-center  border rounded-pill 
-                                  ${determineBackgroundColor(empdata.interested_in)}`}
+                                  ${determineBackgroundColor(empdata)}`}
                                 >
                                   {empdata.interested_in === "temporary resident (visiting , studying , working)" ? "temporary resident" : empdata.interested_in === "pnp" ? "Alberta PNP" : empdata.interested_in}
                                 </span>
@@ -1369,7 +1324,7 @@ export default function EmployeeTable(props) {
                                 >
                                   <span
                                     className={`p-1 text-white text-center border rounded-pill ${determineBackgroundColor(
-                                      empdata.category
+                                      empdata
                                     )}`}
                                   >
                                     {(filterjson.interested_sub_type[props?.ApplicantType?.toLowerCase()] || []).find((subType) => (
@@ -1481,8 +1436,7 @@ export default function EmployeeTable(props) {
           <p className="font-size-3 font-weight-normal text-black-2 mb-0">
             {(new Date(empdata.created_at) >= oneMonthAgo && new Date(empdata.created_at) <= currentDate) === true ? "New" : "Retained"}          
             </p>
-        </td> */
-                        }
+        </td> */}
                         {props.heading === "Dashboard" ? (
                           ""
                         ) : (

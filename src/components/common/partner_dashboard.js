@@ -10,6 +10,7 @@ import PartnerPage from "./partner_page";
 import PartnerTAble from "./PartnerTAble";
 import SAlert from "../common/sweetAlert";
 import { toast } from "react-toastify";
+import ExportExcelButton from "./exportExcelButton";
 // import FilterJson from "../json/filterjson";
 function PartnerDashboard() {
   /*Show modal states */
@@ -103,7 +104,7 @@ function PartnerDashboard() {
             user_type === "agent" ? "Partner Dashboard" : "Manage Partner"
           }
         />
-        
+
         {/* <!--Add Adgent Details Modal --> */}
 
         <div className={"dashboard-main-container mt-16"} id="dashboard-body">
@@ -139,6 +140,7 @@ function PartnerDashboard() {
                     >
                       Add Partner
                     </CustomButton>
+                    <ExportExcelButton tableData={[]} tableName={"agent"} portal={""} applicantType={""} status={""} local={""} type={""} />
                   </div>
                 </div>
                 <small className="text-danger">{searcherror}</small>

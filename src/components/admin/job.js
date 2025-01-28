@@ -5,7 +5,7 @@ import CustomButton from "../common/button";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import AddJobModal from "../forms/employer/job";
-import { GetFilter } from "../../api/api";
+import { GetAllJobs, GetFilter } from "../../api/api";
 import FilterJson from "../json/filterjson";
 import JobTable from "../common/jobTable";
 import ExportExcelButton from "../common/exportExcelButton";
@@ -28,7 +28,7 @@ function Job(props) {
   // const [company, setCompany] = useState("");
   const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
   let [Json, setJson] = useState([]);
-  let portal = localStorage.getItem("portal")
+  let [allJob, setAllJob] = useState([]);
   // let location = useLocation();
   /*Function to get the jSon */
   const JsonData = async () => {
@@ -42,6 +42,12 @@ function Job(props) {
       setJson(Json.data.data);
     } catch (err) {
       console.log(err);
+    }
+    try {
+      let allJobData = await GetAllJobs()
+      setAllJob(allJobData.data.data)
+    } catch (err) {
+      console.log(err)
     }
   };
 
@@ -310,7 +316,7 @@ function Job(props) {
                       >
                         Add Job
                       </CustomButton>
-                      {/* <ExportExcelButton tableName={"view_job_posted"} portal={portal} applicantType={""} status={""} local={""} type={""} /> */}
+                      <ExportExcelButton tableName={"job"} portal={""} applicantType={""} status={""} local={""} type={""} tableData={allJob} />
                       {/*<-- Add Job Modal -->*/}
                     </div>
                     <small className="text-danger">{searcherror}</small>

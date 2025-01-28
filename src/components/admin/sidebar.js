@@ -712,7 +712,7 @@ const AdminSidebar = (props) => {
           >
             {/* <i className="fas fa-podcast mr-5"></i> */}
             <FaNotesMedical className="sidebar_icon" />
-            Manage Notes
+            Manage Notes                                          
           </Link>
         </li>
         {/* {user_type === "admin" ? (

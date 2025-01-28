@@ -292,6 +292,7 @@ function ManageAdmin() {
                     OnManagerDetailClick={OnManagerDetailClick}
                     setAddTeamListShow={setAddTeamListShow}
                     setExecutiveApiCall={setExecutiveApiCall}
+                    setApiCall={setApiCall}
                   />
                 }
               </div>
