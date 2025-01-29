@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import FilterJson from "../json/filterjson";
-import { /*GetFilter,*/ GetAgentJson, getallAdminData } from "../../api/api";
+import { /*GetFilter,*/ GetAgentJson, getallAdminData, getApplicanTypeApi } from "../../api/api";
 import { CiSearch } from "react-icons/ci";
 import filterjson from "../json/filterjson";
 
@@ -35,10 +35,10 @@ export default function ApplicantsFilter({
 }) {
   // let [SkillList, setSkillList] = useState([]);
   // let [EducationList, setEducationList] = useState([]);
-  // const [searchcall, setsearchcall] = useState(false);
   const [candidateSearch, setcandidateSearch] = useState("");
   let [AgentList, setAgentList] = useState([]);
   let [AdminList, setAdmintList] = useState([]);
+  const [applicantTypeList, setApplicantTypeList] = useState([]);
   let portal = localStorage.getItem("portal")
   /*Function to get thejSon */
   const SearchCandidate = () => {
@@ -71,6 +71,12 @@ export default function ApplicantsFilter({
       } else {
         setAgentList(agentjson);
       }
+    } catch (err) {
+      console.log(err);
+    }
+    try {
+      let response = await getApplicanTypeApi();
+      setApplicantTypeList(response.data.data);
     } catch (err) {
       console.log(err);
     }
@@ -352,24 +358,17 @@ export default function ApplicantsFilter({
               setinterestFilterValue(e.target.value);
               setpageNo(1);
             }}
-            className={` form-control ${interestFilterValue === "pnp"
-              || interestFilterValue === "pgwp" || interestFilterValue === "wes" || interestFilterValue === "atip"
-              ? `text-uppercase`
-              : "text-capitalize"
-              }`}
+            className={` form-control`}
           >
             <option value="" data-display="Product Designer">
               Candidate's Application type
             </option>
-            {(FilterJson.interested || []).map((interest) => (
+            {(applicantTypeList || []).map((interest, index) => (
               <option
-                key={interest}
-                value={interest}
-                className={
-                  interest === "pnp" || interest === "wes" || interest === "atip" || interest === "pgwp" ? `text-uppercase` : "text-capitalize"
-                }
+                key={index}
+                value={interest.id}
               >
-                {interest}
+                {interest.title}
               </option>
             ))}
           </select>

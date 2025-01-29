@@ -238,6 +238,37 @@ export const EmployeeDetails = async (props) => {
   return response.data;
   // }
 };
+/*get Applicant Type and sub types  api */
+export const getApplicanTypeApi = async (props) => {
+  const response = await axios.post(
+    `${API_URL}admin/getApplicantType`,
+    props,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+  // }
+};
+/*Add Applicant Type and sub types  api */
+// export const AddApplicanTypeApi = async (props) => {
+//   const response = await axios.post(
+//     `${API_URL}admin/getApplicantType`,
+//     props,
+//     {
+//       headers: {
+//         "Content-Type": "application/json",
+//         Authorization: Token,
+//       },
+//     }
+//   );
+//   return response.data;
+//   // }
+// };
+
 /*Employee detail api */
 export const EmployeeAppliedJob = async (props) => {
   const response = await axios.post(

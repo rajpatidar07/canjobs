@@ -1594,56 +1594,122 @@
 // };
 
 // export default Newpdf;
-import React, { useState, useRef } from 'react';
+// import React, { useState, useRef } from 'react';
+
+// const Newpdf = () => {
+//     const [time, setTime] = useState(10); // Initial value of the timer
+//     const [isRunning, setIsRunning] = useState(false); // Timer running state
+//     const timerRef = useRef(null); // Reference for the timer
+
+//     // Start the timer
+//     const startTimer = () => {
+//         if (!isRunning && time > 0) {
+//             setIsRunning(true);
+//             timerRef.current = setInterval(() => {
+//                 setTime((prevTime) => {
+//                     if (prevTime > 0) {
+//                         return prevTime - 1;
+//                     } else {
+//                         clearInterval(timerRef.current); // Stop timer when it reaches 0
+//                         return 0;
+//                     }
+//                 });
+//             }, 1000); // Decrement every 1 second
+//         }
+//     };
+
+//     // Stop the timer
+//     const stopTimer = () => {
+//         clearInterval(timerRef.current);
+//         setIsRunning(false);
+//     };
+
+//     // Cleanup on unmount
+//     React.useEffect(() => {
+//         return () => clearInterval(timerRef.current);
+//     }, []);
+
+//     return (
+//         <div style={{ textAlign: 'center', marginTop: '50px' }}>
+//             <h1>Countdown Timer</h1>
+//             <h2>{time}</h2>
+//             <div>
+//                 <button onClick={startTimer} disabled={isRunning}>
+//                     Start
+//                 </button>
+//                 <button onClick={stopTimer} disabled={!isRunning}>
+//                     Stop
+//                 </button>
+//             </div>
+//         </div>
+//     );
+// };
+
+// export default Newpdf;
+import React, { useState } from "react";
 
 const Newpdf = () => {
-    const [time, setTime] = useState(10); // Initial value of the timer
-    const [isRunning, setIsRunning] = useState(false); // Timer running state
-    const timerRef = useRef(null); // Reference for the timer
+    const [data, setData] = useState([]);
+    const [selectedParent, setSelectedParent] = useState(null);
+    const [selectedChild, setSelectedChild] = useState(null);
+    const [title, setTitle] = useState("");
 
-    // Start the timer
-    const startTimer = () => {
-        if (!isRunning && time > 0) {
-            setIsRunning(true);
-            timerRef.current = setInterval(() => {
-                setTime((prevTime) => {
-                    if (prevTime > 0) {
-                        return prevTime - 1;
-                    } else {
-                        clearInterval(timerRef.current); // Stop timer when it reaches 0
-                        return 0;
-                    }
-                });
-            }, 1000); // Decrement every 1 second
+    const addItem = () => {
+        if (!title.trim()) return;
+        let parentId = 0, level = 0, allParentIds = "0";
+
+        if (selectedChild) {
+            const child = data.find((item) => item.id === Number(selectedChild));
+            parentId = child.id;
+            level = 2;
+            allParentIds = `${child.all_parent_id},${child.id}`;
+        } else if (selectedParent) {
+            parentId = Number(selectedParent);
+            level = 1;
+            allParentIds = `${selectedParent}`;
+        } else {
+            parentId = Number(selectedParent);
+            level = 0;
+            allParentIds = `${selectedParent}`;
         }
-    };
 
-    // Stop the timer
-    const stopTimer = () => {
-        clearInterval(timerRef.current);
-        setIsRunning(false);
+        const newItem = {
+            id: Date.now(),
+            title,
+            parent_id: parentId,
+            level,
+            all_parent_id: allParentIds,
+        };
+        setData([...data, newItem]);
+        setTitle("");
+        setSelectedChild("")
+        setSelectedParent("")
     };
-
-    // Cleanup on unmount
-    React.useEffect(() => {
-        return () => clearInterval(timerRef.current);
-    }, []);
 
     return (
-        <div style={{ textAlign: 'center', marginTop: '50px' }}>
-            <h1>Countdown Timer</h1>
-            <h2>{time}</h2>
-            <div>
-                <button onClick={startTimer} disabled={isRunning}>
-                    Start
-                </button>
-                <button onClick={stopTimer} disabled={!isRunning}>
-                    Stop
-                </button>
-            </div>
+        <div>
+            <input
+                type="text"
+                placeholder="Enter title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+            />
+            <select onChange={(e) => setSelectedParent(e.target.value)}>
+                <option value="">Select Parent</option>
+                {data.filter((item) => item.level === 0).map((parent) => (
+                    <option key={parent.id} value={parent.id}>{parent.title}</option>
+                ))}
+            </select>
+            <select onChange={(e) => setSelectedChild(e.target.value)}>
+                <option value="">Select Child</option>
+                {data.filter((item) => item.level === 1).map((child) => (
+                    <option key={child.id} value={child.id}>{child.title}</option>
+                ))}
+            </select>
+            <button onClick={addItem}>Add Item</button>
+            <pre>{JSON.stringify(data, null, 2)}</pre>
         </div>
     );
 };
-
 export default Newpdf;
 

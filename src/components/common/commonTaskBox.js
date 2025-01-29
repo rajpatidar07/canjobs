@@ -266,7 +266,7 @@ export default function CommentTaskBox(props) {
     //     }
     // };
     const addAnnotation = async (annotation) => {
-        const email = selectedAdmin?.map((item) => item.email).toString() || "";
+        const email = selectedAdmin ? selectedAdmin?.map((item) => item.email).toString() : "";
         const admin = adminList.find((item) => item.admin_id === admin_id) || {};
         const sender = AdminType === "agent" ? admin_name : admin.name || admin_name;
         const senderEmail = AdminType === "agent" ? admin_email : admin.email || "";
@@ -773,45 +773,65 @@ export default function CommentTaskBox(props) {
                             onChange={(e) => setEndDate(e.target.value)}
                         />
                     </div>
-                    {comments === "" ? null : (
-                        <div
-                            className="button-container mx-0 w-100"
-                            style={{
-                                display: "flex",
-                                justifyContent: "end",
-                                gap: 15,
-                                alignItems: "center",
-                            }}
-                        >
-                            <Link
-                                className="btn_cancel text-muted"
-                                onClick={() => {
+                    <div
+                        className="button-container mx-0 w-100 mt-2"
+                        style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            gap: 15,
+                            alignItems: "center",
+                        }}
+                    >
+                        {props?.page === "yes" &&
+                            <Link onClick={() => {
+                                if (props.page === "yes") {
+                                    props.skip();
+                                } else {
                                     setComments("");
                                     setCommentData();
                                     setEndDate("")
                                     setSubject("")
                                     setSubject("")
-                                }}
+                                }
+                            }}
+
+                                className={`btn_cancel text-muted ${props.page === "yes" ? " mx-5 " : " "}text-uppercase`}
+                                type="button"
                             >
-                                Cancel
-                            </Link>
-                            <Link
-                                type="submit"
-                                className="save-comment-btn text-muted"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    if (commntData) {
-                                        OnHandleUpdateCommentStatus(commntData);
-                                    } else {
-                                        addAnnotation();
-                                    }
-                                }}
-                                style={{ fontSize: 30, lineHeight: 1 }}
-                            >
-                                <CiPaperplane />
-                            </Link>
-                        </div>
-                    )}
+                                {props.page === "yes" ? "Skip" : "Cancel"}
+                            </Link>}
+                        {comments === "" ? null : (
+                            <div style={{ justifyContent: "end", }}>
+                                <Link
+                                    className="btn_cancel text-muted"
+                                    onClick={() => {
+                                        setComments("");
+                                        setCommentData();
+                                        setEndDate("")
+                                        setSubject("")
+                                        setSubject("")
+                                    }}
+                                >
+                                    Cancel
+                                </Link>
+                                <Link
+                                    type="submit"
+                                    className="save-comment-btn text-muted"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        if (commntData) {
+                                            OnHandleUpdateCommentStatus(commntData);
+                                        } else {
+                                            addAnnotation();
+                                        }
+                                    }}
+                                    style={{ fontSize: 30, lineHeight: 1 }}
+                                >
+                                    <CiPaperplane />
+                                </Link>
+                            </div>
+                        )}
+                    </div>
                 </form>
             </div>
             <div>

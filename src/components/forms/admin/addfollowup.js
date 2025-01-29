@@ -35,7 +35,7 @@ function Addfollowup(props) {
   const [taskPage, setTaskPage] = useState(1)
   const [AdminList, setAdminList] = useState([]);
   const [filteredEmails, setFilteredEmails] = useState([]);
-  const [/*selectedAdmin,*/ setSelectedAdmin] = useState([]);
+  // const [selectedAdmin, setSelectedAdmin] = useState([]);
   const [dropdownVisible, setDropdownVisible] = useState(false)
   let adminId =
     adminType === "agent"
@@ -179,8 +179,9 @@ function Addfollowup(props) {
     setUpdateNote(false)
     setErrors("");
     setLoading(false);
-    setSelectedAdmin([])
+    // setSelectedAdmin([])
     props.close();
+    console.log(props.page)
     if (props.page === "yes") {
       props.skip();
     }
@@ -255,7 +256,7 @@ function Addfollowup(props) {
     }
 
     // Add the selected user to the state
-    setSelectedAdmin((prev) => [...prev, user]);
+    // setSelectedAdmin((prev) => [...prev, user]);
 
     // Replace @username in the comment
     const updatedComment = state.remark.replace(/@\w*$/, `@${user.name} `);
@@ -755,7 +756,7 @@ function Addfollowup(props) {
                         props.skip();
                       } else {
                         setState(initialFormState);
-                        setSelectedAdmin([]);
+                        // setSelectedAdmin([]);
                         setLoading(false)
                         setUpdateNote(false)
                       }
@@ -768,13 +769,14 @@ function Addfollowup(props) {
                   </button>}
                 </div>
               </form>
-              {console.log("pppppppp",props.note_id)}
               <CommentTaskBox
                 userId={props.userId}
                 taskType={"note"}
                 taskUserType={props.userType}
                 // taskId={taskId}
                 noteId={props.note_id}
+                page={props.page}
+                skip={props.skip}
               />
             </div>
           </div>
