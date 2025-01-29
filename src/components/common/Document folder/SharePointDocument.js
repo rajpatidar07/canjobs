@@ -193,8 +193,12 @@ export default function SharePointDocument({
       convertToPDF(data);
     } else if (data.file.mimeType === "text/plain") {
       GetNoteText(data, true);
-    } else {
+    } else if (data.file.mimeType === "application/pdf") {
       setConvertedDoc(data["@microsoft.graph.downloadUrl"]);
+    } else {
+      window.open(data.webUrl);
+      setConvertedDoc("");
+      setDocPreview(false);
     }
   }
   /*Function to convert data  */
@@ -374,8 +378,8 @@ export default function SharePointDocument({
         setBreadCrumbLoder(false);
       }
     } catch (err) {
-      setBreadcrumbData([]);
       console.log(err);
+      setBreadcrumbData([]);
       setShowDropDown(false);
       setBreadCrumbLoder(false);
     }

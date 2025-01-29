@@ -55,9 +55,8 @@ export default function FolderList({
 
   return (
     <div
-      className={`bg-light w-100 ${
-        view === "block" ? "justify-content-center" : ""
-      }`}
+      className={`bg-light w-100 ${view === "block" ? "justify-content-center" : ""
+        }`}
       style={{
         minHeight: "200px",
         overflow: "auto",
@@ -75,11 +74,10 @@ export default function FolderList({
           aria-label="Basic example"
         >
           <button
-            className={`btn btn-outline-primary action_btn ${
-              view === "block"
-                ? "btn-primary text-white"
-                : "btn-outline-primary"
-            }`}
+            className={`btn btn-outline-primary action_btn ${view === "block"
+              ? "btn-primary text-white"
+              : "btn-outline-primary"
+              }`}
             onClick={() => {
               setView("block");
               localStorage.setItem("docView", "block");
@@ -89,9 +87,8 @@ export default function FolderList({
             <PiGridFourFill className="sidebar_icon" />
           </button>
           <button
-            className={`btn btn-outline-primary action_btn ${
-              view === "list" ? "btn-primary text-white" : "btn-outline-primary"
-            }`}
+            className={`btn btn-outline-primary action_btn ${view === "list" ? "btn-primary text-white" : "btn-outline-primary"
+              }`}
             onClick={() => {
               setView("list");
               localStorage.setItem("docView", "list");
@@ -105,9 +102,8 @@ export default function FolderList({
       <div className="row">
         {/* File List */}
         <div
-          className={` justify-content-center ${
-            openAnnotationBox === true ? "col-9" : "col-12"
-          }`}
+          className={` justify-content-center ${openAnnotationBox === true ? "col-9" : "col-12"
+            }`}
         >
           {view === "block" ? (
             <div className="d-flex flex-wrap justify-content-center">
@@ -218,7 +214,7 @@ export default function FolderList({
                         {item.file &&
                           (item.file.mimeType === "application/msword" ||
                             item.file.mimeType ===
-                              "application/vnd.openxmlformats-officedocument.wordprocessingml.document") && (
+                            "application/vnd.openxmlformats-officedocument.wordprocessingml.document") && (
                             <BsFiletypeDocx
                               // className="file-icon"
                               style={{
@@ -281,13 +277,12 @@ export default function FolderList({
                           </Link>
                         </li>
                         <li
-                          className={`list-group-item text-darger ${
-                            item.folder ||
+                          className={`list-group-item text-darger ${item.folder ||
                             item.file.mimeType === "text/plain" ||
                             (userType !== "admin" && userType !== "agent")
-                              ? "d-none"
-                              : ""
-                          } `}
+                            ? "d-none"
+                            : ""
+                            } `}
                         >
                           <Link
                             to=""
@@ -400,9 +395,16 @@ export default function FolderList({
                         </li>
                         {!item.folder && (
                           <>
+                            <li className="list-group-item text-danger">
+                              <Link
+                                className="text-decoration-none" to={item["@microsoft.graph.downloadUrl"]}  rel="noopener noreferrer" download>
+
+                                Download
+                              </Link>
+                            </li>
                             <li
                               className={
-                                item.file.mimeType === "text/plain"
+                                item.file.mimeType === "text/plain" || item.file?.mimeType?.includes("spreadsheetml")
                                   ? "d-none"
                                   : "list-group-item text-danger"
                               }
@@ -416,13 +418,12 @@ export default function FolderList({
                               </Link>
                             </li>
                             <li
-                              className={`list-group-item text-danger ${
-                                userType !== "admin" &&
+                              className={`list-group-item text-danger ${userType !== "admin" &&
                                 userType !== "agent" &&
                                 item.file.mimeType === "text/plain"
-                                  ? "d-none"
-                                  : ""
-                              }`}
+                                ? "d-none"
+                                : ""
+                                }`}
                             >
                               <Link
                                 className="text-decoration-none"
@@ -513,12 +514,12 @@ export default function FolderList({
                     {item.folder
                       ? "Folder"
                       : item.file.mimeType.includes("pdf")
-                      ? "PDF"
-                      : item.file.mimeType.includes("image")
-                      ? "Image"
-                      : item.file.mimeType === "text/plain"
-                      ? "Note"
-                      : "Document"}
+                        ? "PDF"
+                        : item.file.mimeType.includes("image")
+                          ? "Image"
+                          : item.file.mimeType === "text/plain"
+                            ? "Note"
+                            : "Document"}
                   </div>
                 </div>
               ))}

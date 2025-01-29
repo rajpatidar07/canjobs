@@ -615,7 +615,7 @@ const filterjson = {
     "citizenship",// new Applicant type added asked in doc Can-46
     "permanent resident cards",// new Applicant type added asked in doc Can-46
     "wes",//Added as per simrans required in the group
-    "atip"//Added as per simrans required in the group
+    "atip",//Added as per simrans required in the group
     // "swep",
     // "internship",
     // "co-op",

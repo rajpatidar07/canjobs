@@ -8,6 +8,7 @@ import {
   DeleteJobEmployee,
   ApplyJob,
   getallAdminData,
+  AddFIlter,
 } from "../../api/api";
 import moment from "moment";
 import { BiSolidCategory } from "react-icons/bi";
@@ -25,6 +26,7 @@ import {
   /* MdOutlineCastForEducation,*/ MdTypeSpecimen,
   MdRealEstateAgent,
   MdEditNote,
+  MdOutlineTypeSpecimen,
 } from "react-icons/md";
 // import { LiaUserEditSolid, LiaUserTieSolid } from "react-icons/lia";
 import { GoTasklist } from "react-icons/go";
@@ -38,6 +40,7 @@ import filterjson from "../json/filterjson";
 import CustomButton from "./button";
 import ExportExcelButton from "./exportExcelButton";
 import determineBackgroundColor from "./Common function/DetermineBackgroundColour";
+import { RxCross1 } from "react-icons/rx";
 // import ApplicantCategory from "../forms/user/ApplicantCategory";
 export default function EmployeeTable(props) {
   let agentId = localStorage.getItem("agent_id");
@@ -83,6 +86,11 @@ export default function EmployeeTable(props) {
     props.heading === "Dashboard" ? "created_at" : "employee_id"
   );
   const [sortOrder, setSortOrder] = useState("DESC");
+  const [addApplicantTypeloading, setAddApplicantTypeloading] = useState(false);
+  const [showApplicantTypeInput, setShowApplicantTypeInput] = useState(false);
+  const [newApplicantType, setNewApplicantType] = useState("");
+  const [applicantTypeErrors, setApplicantTypeErrors] = useState("");
+
   /* Function to get Employee data*/
   const EmpData = async () => {
     // const params = useParams();
@@ -337,6 +345,40 @@ export default function EmployeeTable(props) {
     props.setpageNo(1);
   };
 
+  /*Function to add more status */
+  const onAddApplicantTypeClick = async (event) => {
+    event.preventDefault();
+
+    if (newApplicantType) {
+      let data = {
+        json_item: newApplicantType,
+      };
+      try {
+        const responseData = await AddFIlter(data, 38);
+        if (responseData.message === "item already exist !") {
+          setApplicantTypeErrors("Applicant Type already exist !");
+          setNewApplicantType("");
+          setAddApplicantTypeloading(false);
+        }
+        if (responseData.message === "filter item added successfully") {
+          toast.success("Applicant Type added successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setShowApplicantTypeInput(false);
+          setNewApplicantType("");
+          setAddApplicantTypeloading(false);
+          setApplicantTypeErrors("");
+        }
+      } catch (err) {
+        console.log(err);
+        setAddApplicantTypeloading(false);
+        setApplicantTypeErrors("");
+      }
+    } else {
+      alert("No Applicant Type found");
+    }
+  };
   return (
     <>
       {showAddEmployeeModal ? (
@@ -601,7 +643,54 @@ export default function EmployeeTable(props) {
                     >
                       Add Candidate
                     </CustomButton>
+                    <Link
+                      className={` btn-sm ${showApplicantTypeInput ? "btn-dark text-white" : " btn-primary"} m-1`}
+                      onClick={() => setShowApplicantTypeInput(showApplicantTypeInput ? false : true)}
+                      title={showApplicantTypeInput ? "Close" : "Add New Applicant type"}
+                    >
+                      {showApplicantTypeInput ? <RxCross1 size={10} /> : <MdOutlineTypeSpecimen size={10} />}
+                    </Link>
                   </div>
+
+                  {/* Add New Applicant type Input and Save Button */}
+                  {showApplicantTypeInput && (
+                    <div className="d-flex align-items-center">
+                      <div>
+                        <input
+                          type="text"
+                          className="form-control mb-2"
+                          placeholder="Enter Applicant Type"
+                          value={newApplicantType}
+                          onChange={(e) => setNewApplicantType(e.target.value)}
+                        />
+                        {applicantTypeErrors && (
+                          <small className="text-danger">{applicantTypeErrors}</small>
+                        )}
+                      </div>
+                      {addApplicantTypeloading ? (
+                        <Link
+                          className="btn-sm btn-primary rounded-3 p-2"
+                          type="button"
+                          disabled
+                        >
+                          <span
+                            className="spinner-border spinner-border-sm me-2"
+                            role="status"
+                            aria-hidden="true"
+                          ></span>
+                          ...
+                        </Link>
+                      ) : newApplicantType ? (
+                        <Link
+                          className="btn-sm btn-primary rounded-3 p-2 mx-1"
+                          onClick={onAddApplicantTypeClick}
+                          title="Save Applicant Type"
+                        >
+                          ➡
+                        </Link>
+                      ) : null}
+                    </div>
+                  )}
                 </>
               ) : null}
             <div className="form_group text-right">
