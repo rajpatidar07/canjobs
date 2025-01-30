@@ -102,7 +102,7 @@ export default function Pnp() {
                 status={"-1"}
                 pageNo={pageNo}
                 setpageNo={setpageNo}
-                ApplicantType={"pnp"}
+                ApplicantType={"4"}
                 categoryFilterValue={categoryFilterValue}
                 filterByEmployeeId={filterByEmployeeId}
 

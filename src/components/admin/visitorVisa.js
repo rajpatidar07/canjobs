@@ -95,7 +95,7 @@ const onSearch = (e) => {
                 status={"-1"}
                 pageNo={pageNo}
                 setpageNo={setpageNo}
-                ApplicantType={"visitor visa"}
+                ApplicantType={"2"}
               />
             </div>
           </div>

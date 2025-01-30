@@ -95,7 +95,7 @@ export default function BusinessVIsa() {
                 status={"-1"}
                 pageNo={pageNo}
                 setpageNo={setpageNo}
-                ApplicantType={"business visa"}
+                ApplicantType={"6"}
               />
             </div>
           </div>

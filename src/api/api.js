@@ -44,7 +44,7 @@ export const GetAllChartData = async (id, type, applicantType) => {
     {
       id: id,
       type: type,
-      interested_in: applicantType,
+      interested_in_id: applicantType,
     },
     {
       headers: {
@@ -157,7 +157,7 @@ export const EmployeeSignUp = async (props, permission) => {
   formData.append("resume", props.resume);
   formData.append("reffer_by", props.reffer_by);
   formData.append("name", props.name);
-  formData.append("interested_in", props.interested_in);
+  formData.append("interested_in_id", props.interested_in_id);
   // formData.append("contact_no", props.contact_no);
   formData.append("permission", JSON.stringify(permission));
   const response = await axios.post(`${API_URL}employee_signup`, formData);
@@ -254,20 +254,20 @@ export const getApplicanTypeApi = async (props) => {
   // }
 };
 /*Add Applicant Type and sub types  api */
-// export const AddApplicanTypeApi = async (props) => {
-//   const response = await axios.post(
-//     `${API_URL}admin/getApplicantType`,
-//     props,
-//     {
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: Token,
-//       },
-//     }
-//   );
-//   return response.data;
-//   // }
-// };
+export const AddApplicanTypeApi = async (props) => {
+  const response = await axios.post(
+    `${API_URL}admin/addUpdateApplicantType`,
+    props,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+  // }
+};
 
 /*Employee detail api */
 export const EmployeeAppliedJob = async (props) => {
@@ -344,7 +344,7 @@ export const getallEmployeeData = async (
       filter_status: status,
       job_id: job_id,
       work_permit_canada: candian,
-      interested_in: portal === "study" ? "study permit" : inserted,
+      interested_in_id: portal === "study" ? 13 : inserted,
       agent_id: agentId,
       assigned_by: assignedadminId,
       category: subType,
@@ -1203,7 +1203,7 @@ export const GetEmployeeVisaList = async (
     `${API_URL}getVisa`,
     {
       search: search,
-      filter_by_interested_in: interested,
+      filter_by_interested_in_id: interested,
       filter_by_visa_country: country,
       filter_by_visa_status: status,
       filter_by_employee_id: id,
@@ -2045,7 +2045,7 @@ export const getAllMentionNotification = async (
       employee_id: "",
       page: page,
       limit: limit,
-      interested_in: portal === "study" ? "study permit" : ""
+      interested_in_id: portal === "study" ? "study permit" : ""
     },
     {
       headers: {
@@ -3305,7 +3305,7 @@ export const getActivityLog = async (
       stackHolder_id: stackHolder_id,
       stackHolder_type: stackHolder_type,
       status: pagetype === "interviewHistory" ? "21,36" : "",
-      interested_in: applicantType,
+      interested_in_id: applicantType,
     },
     {
       headers: {
@@ -3644,7 +3644,7 @@ export const ExportExcelApi = async (table_name, applicantType, status, local, t
     `${API_URL}common/getDataForExcel`,
     {
       table_name: table_name,
-      interested_in: applicantType,//employee table
+      interested_in_id: applicantType,//employee table
       filter_status: status,//employee table
       is_local: local,//employee table
       type: type,//task table

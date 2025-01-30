@@ -59,7 +59,7 @@ function PersonalDetails(props) {
     currently_located_country: "",
     language: "",
     religion: "",
-    interested_in_id	: portal === "study" ? 13 : "",
+    interested_in_id: portal === "study" ? 13 : "",
     experience: "",
     work_permit_canada: "",
     work_permit_other_country: "",
@@ -264,7 +264,7 @@ function PersonalDetails(props) {
     } catch (err) {
       console.log(err);
     }
-    
+
   };
   /*Function to set data to the search agent  */
   // const onAdminSelectChange = (option) => {
@@ -1029,14 +1029,11 @@ function PersonalDetails(props) {
                       onChange={onInputChange}
                     >
                       <option value={""}>Select</option>
-                      {(applicantTypeList || []).map((interest, index) => (
+                      {(applicantTypeList.filter((item) => item.level === ("0" || 0)) || []).map((interest, index) => (
                         <option key={index} value={interest.id}>
-                          {interest.title	}
+                          {interest.title}
                         </option>
                       ))}
-                      {/* <option value={"swap"}>SWEP</option>
-                  <option value={"parttime"}>Part-time</option>
-                  <option value={"all"}>All</option> */}
                     </select>
                     {/*----ERROR MESSAGE FOR interested_in_id----*/}
                     {errors.interested_in_id && (
@@ -1048,89 +1045,86 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
-                  {["temporary resident (visiting , studying , working)", "economic immigration", "family sponsorship", "pnp"].includes(state.interested_in_id?.toLowerCase()) &&
-                    state.interested_in_id && applicantTypeList[state.interested_in_id?.toLowerCase()] &&
-                    <div className={`form-group 
-  ${props.user_of_page === "assignedUser" ||
-                        props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned"
-                        || props.pageNameForForm === "ApplicantType"
-                        ? "d-none"
-                        : `${props.pageNameForForm === "Category" ?
-                          "col-md-12" : "col-md-4"}`}
+                  {[14, "14", 15, "15", 16, "16", 4, "4"].includes(state.interested_in_id) &&
+                    state.interested_in_id &&
+                    <div className={`form-group ${props.user_of_page === "assignedUser" ||
+                      props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned"
+                      || props.pageNameForForm === "ApplicantType"
+                      ? "d-none"
+                      : `${props.pageNameForForm === "Category" ?
+                        "col-md-12" : "col-md-4"}`}
   `}>
                       <label
-                        htmlFor="category"
+                        htmlFor="category_id"
                         className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                       >
                         Sub Type:
                       </label>
                       <select
-                        name="category"
-                        value={state.category || ""}
+                        name="category_id"
+                        value={state.category_id || ""}
                         onChange={onInputChange}
                         className={`form-control 
-                          ${errors.category
+                          ${errors.category_id
                             ? " border border-danger"
-                            : ""} ${state.category === "aos" || state.category === "rrs" ? "text-uppercase" : "text-capitalize"}`
+                            : ""} ${state.category_id === "aos" || state.category_id === "rrs" ? "text-uppercase" : "text-capitalize"}`
                         }
-                        id="category"
+                        id="category_id"
                       >
                         <option value={""}>Select Sub Type</option>
-                        {(FilterJson.interested_sub_type[state.interested_in_id?.toLowerCase()] || []).map((subType, index) => (
-                          <option key={index} value={subType} className={`${subType === "aos" || subType === "rrs" ? "text-uppercase" : "text-capitalize"}`}>
-                            {subType}
+                        {(applicantTypeList.filter((item) => item.parent_id === state.interested_in_id) || []).map((subType, index) => (
+                          <option key={index} value={subType.id} >
+                            {subType.title}
                           </option>
                         ))}
                       </select>
-                      {/* ----ERROR MESSAGE FOR category---- */}
-                      {errors.category && (
+                      {/* ----ERROR MESSAGE FOR category_id---- */}
+                      {errors.category_id && (
                         <span
-                          key={errors.category}
+                          key={errors.category_id}
                           className="text-danger font-size-3"
                         >
-                          {errors.category}
+                          {errors.category_id}
                         </span>
                       )}
                     </div>
                   }
-                  {["economic immigration"].includes(state.interested_in_id?.toLowerCase()) &&
+                  {["15", 15].includes(state.interested_in_id) &&
                     state.interested_in_id &&
-                    FilterJson.interested_sub_type[state.interested_in_id?.toLowerCase()] &&
-                    ["caregivers"].includes(state?.category?.toLowerCase()) &&
-                    state.category && (
-                      <div className={`form-group 
-      ${props.user_of_page === "assignedUser" ||
-                          props.user_of_page === "agentAssigned" ||
-                          props.pageNameForForm === "agentAssigned" ||
-                          props.pageNameForForm === "ApplicantType"
-                          ? "d-none"
-                          : `${props.pageNameForForm === "Category" ? "col-md-12" : "col-md-4"}`}`}>
+                    ["38", 38].includes(state?.category_id) &&
+                    state.category_id && (
+                      <div className={`form-group ${props.user_of_page === "assignedUser" ||
+                        props.user_of_page === "agentAssigned" ||
+                        props.pageNameForForm === "agentAssigned" ||
+                        props.pageNameForForm === "ApplicantType"
+                        ? "d-none"
+                        : `${props.pageNameForForm === "Category" ? "col-md-12" : "col-md-4"}`}`}>
                         <label
-                          htmlFor="sub_category"
+                          htmlFor="sub_category_id"
                           className="font-size-4 text-black-2 font-weight-semibold text-capitalize line-height-reset"
                         >
-                          {state.category} Sub Type:
+                          {applicantTypeList.find((item) => item.id === state.category_id)?.title} Sub Type:
                         </label>
                         <select
-                          name="sub_category"
-                          value={state.sub_category || ""}
+                          name="sub_category_id"
+                          value={state.sub_category_id || ""}
                           onChange={onInputChange}
-                          className={`form-control text-capitalize ${errors.sub_category ? "border border-danger" : ""}`}
-                          id="sub_category"
+                          className={`form-control text-capitalize ${errors.sub_category_id ? "border border-danger" : ""}`}
+                          id="sub_category_id"
                         >
+                          {console.log((applicantTypeList.map((item) => item.parent_id )),state.category_id)}
                           <option value={""}>Select Sub Type</option>
-                          {((FilterJson.interested_sub_type_of_sub_type[state.interested_in_id?.toLowerCase()] &&
-                            FilterJson.interested_sub_type_of_sub_type[state.interested_in_id?.toLowerCase()][state.category.toLowerCase()]) || []).map((subType, index) => (
-                              <option key={index} value={subType} className="text-capitalize">
-                                {subType}
-                              </option>
-                            ))}
+                          {(applicantTypeList.filter((item) => item.parent_id === state.category_id) || []).map((subType, index) => (
+                            <option key={index} value={subType.id} >
+                              {subType.title}
+                            </option>
+                          ))}
                         </select>
 
-                        {/* ----ERROR MESSAGE FOR sub_category---- */}
-                        {errors.sub_category && (
-                          <span key={errors.sub_category} className="text-danger font-size-3">
-                            {errors.sub_category}
+                        {/* ----ERROR MESSAGE FOR sub_category_id---- */}
+                        {errors.sub_category_id && (
+                          <span key={errors.sub_category_id} className="text-danger font-size-3">
+                            {errors.sub_category_id}
                           </span>
                         )}
                       </div>

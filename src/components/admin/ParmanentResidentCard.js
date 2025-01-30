@@ -95,7 +95,7 @@ export default function ParmanentResidentCard() {
                                 status={"-1"}
                                 pageNo={pageNo}
                                 setpageNo={setpageNo}
-                                ApplicantType={"permanent resident cards"}
+                                ApplicantType={"20"}
                             />
                         </div>
                     </div>

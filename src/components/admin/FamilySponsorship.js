@@ -98,7 +98,7 @@ export default function FamilySponsorship() {
                                 status={"-1"}
                                 pageNo={pageNo}
                                 setpageNo={setpageNo}
-                                ApplicantType={"family sponsorship"}
+                                ApplicantType={"16"}
                                 categoryFilterValue={categoryFilterValue}
                             />
                         </div>

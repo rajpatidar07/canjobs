@@ -95,7 +95,7 @@ export default function Humanitarian() {
                                 status={"-1"}
                                 pageNo={pageNo}
                                 setpageNo={setpageNo}
-                                ApplicantType={"humanitarian and compassionate cases"}
+                                ApplicantType={"17"}
                             />
                         </div>
                     </div>

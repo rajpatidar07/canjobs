@@ -8,7 +8,7 @@ import {
   DeleteJobEmployee,
   ApplyJob,
   getallAdminData,
-  AddFIlter,
+  getApplicanTypeApi,
 } from "../../api/api";
 import moment from "moment";
 import { BiSolidCategory } from "react-icons/bi";
@@ -36,12 +36,10 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import { PiBriefcaseLight } from "react-icons/pi";
 import ConvertTime from "./Common function/ConvertTime";
 import VisaTimeLine from "./visaTimeLine";
-import filterjson from "../json/filterjson";
 import CustomButton from "./button";
 import ExportExcelButton from "./exportExcelButton";
 import determineBackgroundColor from "./Common function/DetermineBackgroundColour";
-import { RxCross1 } from "react-icons/rx";
-// import ApplicantCategory from "../forms/user/ApplicantCategory";
+import AddApplicantType from "../forms/admin/AddApplicantType";
 export default function EmployeeTable(props) {
   let agentId = localStorage.getItem("agent_id");
   let user_type = localStorage.getItem("userType");
@@ -58,6 +56,7 @@ export default function EmployeeTable(props) {
   let [showSkillsModal, setShowSkillsModal] = useState(false);
   let [pageNameForForm, setPageNameForForm] = useState(false);
   let [admintList, setAdmintList] = useState([]);
+  let [applicantTypeList, setApplicantTypeList] = useState([]);
   let [showStatusChangeModal, setShowStatusChange] = useState(false);
   /*data and id states */
   const [employeeData, setemployeeData] = useState([]);
@@ -86,11 +85,10 @@ export default function EmployeeTable(props) {
     props.heading === "Dashboard" ? "created_at" : "employee_id"
   );
   const [sortOrder, setSortOrder] = useState("DESC");
-  const [addApplicantTypeloading, setAddApplicantTypeloading] = useState(false);
-  const [showApplicantTypeInput, setShowApplicantTypeInput] = useState(false);
-  const [newApplicantType, setNewApplicantType] = useState("");
-  const [applicantTypeErrors, setApplicantTypeErrors] = useState("");
+  const [showApplicantTypeForm, setShowApplicantTypeForm] = useState(false);
 
+  let getApplicantType = (id) => (applicantTypeList?.find(x => x.id === id)?.title)
+  let getApplicantSubType = (id) => (applicantTypeList?.find(x => x.id === id)?.title)
   /* Function to get Employee data*/
   const EmpData = async () => {
     // const params = useParams();
@@ -139,7 +137,7 @@ export default function EmployeeTable(props) {
         setIsLoading(false);
         localStorage.setItem("StatusTab", "");
       }
-    } catch (err) {
+    } catch (err) { 
       console.log(err);
       setIsLoading(false);
     }
@@ -150,6 +148,12 @@ export default function EmployeeTable(props) {
       } else {
         setAdmintList(adminJson.data);
       }
+    } catch (err) {
+      console.log(err);
+    }
+    try {
+      let response = await getApplicanTypeApi();
+      setApplicantTypeList(response.data.data);
     } catch (err) {
       console.log(err);
     }
@@ -345,40 +349,6 @@ export default function EmployeeTable(props) {
     props.setpageNo(1);
   };
 
-  /*Function to add more status */
-  const onAddApplicantTypeClick = async (event) => {
-    event.preventDefault();
-
-    if (newApplicantType) {
-      let data = {
-        json_item: newApplicantType,
-      };
-      try {
-        const responseData = await AddFIlter(data, 38);
-        if (responseData.message === "item already exist !") {
-          setApplicantTypeErrors("Applicant Type already exist !");
-          setNewApplicantType("");
-          setAddApplicantTypeloading(false);
-        }
-        if (responseData.message === "filter item added successfully") {
-          toast.success("Applicant Type added successfully", {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
-          setShowApplicantTypeInput(false);
-          setNewApplicantType("");
-          setAddApplicantTypeloading(false);
-          setApplicantTypeErrors("");
-        }
-      } catch (err) {
-        console.log(err);
-        setAddApplicantTypeloading(false);
-        setApplicantTypeErrors("");
-      }
-    } else {
-      alert("No Applicant Type found");
-    }
-  };
   return (
     <>
       {showAddEmployeeModal ? (
@@ -399,6 +369,7 @@ export default function EmployeeTable(props) {
           setApiCall={setApiCall}
           close={() => setVisaModal(false)}
           type={props?.ApplicantType}
+          typeName={getApplicantType(props?.ApplicantType)}
         />
       ) : null}
       {showEducationModal ? (
@@ -447,6 +418,14 @@ export default function EmployeeTable(props) {
           setApiCall={setApiCall}
         />
       ) : null}
+      {showApplicantTypeForm ?
+        <AddApplicantType
+          show={showApplicantTypeForm}
+          close={() => {
+            setShowApplicantTypeForm(false);
+          }}
+        />
+        : null}
       {/* {documentModal ? (
         <DocumentModal
           show={documentModal}
@@ -644,53 +623,13 @@ export default function EmployeeTable(props) {
                       Add Candidate
                     </CustomButton>
                     <Link
-                      className={` btn-sm ${showApplicantTypeInput ? "btn-dark text-white" : " btn-primary"} m-1`}
-                      onClick={() => setShowApplicantTypeInput(showApplicantTypeInput ? false : true)}
-                      title={showApplicantTypeInput ? "Close" : "Add New Applicant type"}
+                      className={` btn-sm  btn-primary m-1`}
+                      onClick={() => setShowApplicantTypeForm(true)}
+                      title={"Add New Applicant type"}
                     >
-                      {showApplicantTypeInput ? <RxCross1 size={10} /> : <MdOutlineTypeSpecimen size={10} />}
+                      {<MdOutlineTypeSpecimen size={10} />}
                     </Link>
                   </div>
-
-                  {/* Add New Applicant type Input and Save Button */}
-                  {showApplicantTypeInput && (
-                    <div className="d-flex align-items-center">
-                      <div>
-                        <input
-                          type="text"
-                          className="form-control mb-2"
-                          placeholder="Enter Applicant Type"
-                          value={newApplicantType}
-                          onChange={(e) => setNewApplicantType(e.target.value)}
-                        />
-                        {applicantTypeErrors && (
-                          <small className="text-danger">{applicantTypeErrors}</small>
-                        )}
-                      </div>
-                      {addApplicantTypeloading ? (
-                        <Link
-                          className="btn-sm btn-primary rounded-3 p-2"
-                          type="button"
-                          disabled
-                        >
-                          <span
-                            className="spinner-border spinner-border-sm me-2"
-                            role="status"
-                            aria-hidden="true"
-                          ></span>
-                          ...
-                        </Link>
-                      ) : newApplicantType ? (
-                        <Link
-                          className="btn-sm btn-primary rounded-3 p-2 mx-1"
-                          onClick={onAddApplicantTypeClick}
-                          title="Save Applicant Type"
-                        >
-                          ➡
-                        </Link>
-                      ) : null}
-                    </div>
-                  )}
                 </>
               ) : null}
             <div className="form_group text-right">
@@ -891,7 +830,7 @@ export default function EmployeeTable(props) {
                       </Link>
                     </th>
                   )}
-                  {["temporary resident (visiting , studying , working)", "economic immigration", "family sponsorship", "pnp"].includes(props?.ApplicantType?.toLowerCase()) && (
+                  {[14, "14", 15, "15", 16, "16", 4, "4"].includes(props?.ApplicantType) && (
                     <th
                       scope="col"
                       className="border-0 font-size-4 font-weight-normal"
@@ -986,7 +925,6 @@ export default function EmployeeTable(props) {
                                       if (portal === "study") {
                                         localStorage.setItem("employee_id", empdata.employee_id);
                                       } else {
-                                        console.log(status === "" ? "00" : status);
                                         localStorage.setItem("StatusTab", status === "" ? "00" : status);
                                       }
                                     }
@@ -1033,7 +971,6 @@ export default function EmployeeTable(props) {
                                         if (portal === "study") {
                                           localStorage.setItem("employee_id", empdata.employee_id);
                                         } else {
-                                          console.log(status === "" ? "00" : status);
                                           localStorage.setItem("StatusTab", status === "" ? "00" : status);
                                         }
                                       }
@@ -1368,64 +1305,51 @@ export default function EmployeeTable(props) {
                           //   )}
                           // </td>
                           <td className="text-center ">
-                            {empdata.interested_in === null ||
-                              !empdata.interested_in ? (
+                            {empdata.interested_in_id === null ||
+                              !empdata.interested_in_id ? (
                               <p className="font-size-3 mb-0" title="N/A">
                                 N/A
                               </p>
                             ) : (
                               <p
-                                className={`font-size-2 font-weight-normal text-black-2 mb-0 ${empdata.interested_in === "pgwp" || empdata.interested_in === "wes" || empdata.interested_in === "atip"
-                                  ? `text-uppercase`
-                                  : "text-capitalize"
-                                  }`}
-                                title={empdata.interested_in}
+                                className={`font-size-2 font-weight-normal text-black-2 mb-0 `}
+                                title={empdata.interested_in_id === (14 || "14") ? "temporary resident" : getApplicantType(empdata.interested_in_id)
+                                }
                               >
                                 <span
-                                  className={`p-3 ${empdata.interested_in === "pnp" || empdata.interested_in === "study permit"
-                                    ? "text-dark"
-                                    : "text-white"
-                                    } text-center  border rounded-pill 
+                                  className={`p-3 text-center  border rounded-pill 
                                   ${determineBackgroundColor(empdata)}`}
                                 >
-                                  {empdata.interested_in === "temporary resident (visiting , studying , working)" ? "temporary resident" : empdata.interested_in === "pnp" ? "Alberta PNP" : empdata.interested_in}
+                                  {empdata.interested_in_id === (14 || "14") ? "temporary resident" : getApplicantType(empdata.interested_in_id)
+                                  }
                                 </span>
                               </p>
                             )}
                           </td>
                         )}
-                        {["temporary resident (visiting , studying , working)", "economic immigration", "family sponsorship", "pnp"].includes(props?.ApplicantType?.toLowerCase()) && (
-                          <td className="text-center">
-                            {(!(filterjson.interested_sub_type[props?.ApplicantType?.toLowerCase()] || []).find((subType) => (
-                              subType === empdata.category))) ? (
-                              <p className="font-size-3 mb-0" title="N/A">
-                                N/A
-                              </p>
-                            ) : (
-                              <>
-                                <p
-                                  className={`font-size-2 font-weight-normal text-black-2 mb-0 
-            ${empdata.category === "rrs" || empdata.category === "aos" ? "text-uppercase" : "text-capitalize"}
-          `}
-                                  title={(filterjson.interested_sub_type[props?.ApplicantType?.toLowerCase()] || []).find((subType) => (
-                                    subType === empdata.category ? subType : ""
-                                  ))}
-                                >
-                                  <span
-                                    className={`p-1 text-white text-center border rounded-pill ${determineBackgroundColor(
-                                      empdata
-                                    )}`}
-                                  >
-                                    {(filterjson.interested_sub_type[props?.ApplicantType?.toLowerCase()] || []).find((subType) => (
-                                      subType === empdata.category ? subType : ""
-                                    ))}
-                                  </span>
-                                </p>
-                              </>
-                            )}
-                          </td>
-                        )}
 
+                        <td className={props?.ApplicantType ? "text-center" : "d-none"}>
+                          {[14, "14", 15, "15", 16, "16", 4, "4"].includes(props?.ApplicantType) ? (
+                            <>
+                              <p
+                                className={`font-size-2 font-weight-normal text-black-2 mb-0 text-capitalize  `}
+                                title={getApplicantSubType(empdata.category_id)}
+                              >
+                                <span
+                                  className={`p-1 text-white text-center border rounded-pill ${determineBackgroundColor(
+                                    empdata
+                                  )}`}
+                                >
+                                  {getApplicantSubType(empdata.category_id)}
+                                </span>
+                              </p>
+                            </>
+                          ) : (
+                            <p className="font-size-3 mb-0" title="N/A">
+                              N/A
+                            </p>
+                          )}
+                        </td>
                         {props.visa === "yes" ? null : (
                           <td className="text-center ">
                             <p
@@ -1545,7 +1469,7 @@ export default function EmployeeTable(props) {
                                         : "btn btn-outline-info action_btn"
                                     }
                                     onClick={() => editVisa(empdata)}
-                                    title={`Add/Update ${props?.ApplicantType === "temporary resident (visiting , studying , working)" ? "Temporary Resident" : props?.ApplicantType === "pnp" ? "Alberta PNP" : props?.ApplicantType} status`}
+                                    title={`Add/Update ${props?.ApplicantType === (14 || "14") ? "Temporary Resident" : getApplicantType(props?.ApplicantType)} status`}
                                   >
                                     <span className="text-gray px-2">
                                       <MdEditNote />
@@ -1567,7 +1491,7 @@ export default function EmployeeTable(props) {
                                   <>
                                     <button
                                       className={
-                                        ["study permit", "temporary resident (visiting , studying , working)", "economic immigration", "family sponsorship", "pnp"].includes(props?.ApplicantType?.toLowerCase())
+                                        [14, "14", 15, "15", 16, "16", 4, "4"].includes(props?.ApplicantType)
                                           ? "btn btn-outline-info action_btn"
                                           : "d-none"
                                       }
@@ -1747,7 +1671,7 @@ export default function EmployeeTable(props) {
                                         : "btn btn-outline-info action_btn"
                                     }
                                     onClick={() => editVisa(empdata)}
-                                    title={`Add/Update ${props?.ApplicantType === "temporary resident (visiting , studying , working)" ? "Temporary Resident" : props?.ApplicantType === "pnp" ? "Alberta PNP" : props?.ApplicantType} status`}
+                                    title={`Add/Update ${props?.ApplicantType === (14 || "14") ? "Temporary Resident" : getApplicantType(props?.ApplicantType)} status`}
                                   >
                                     <span className="text-gray px-2">
                                       <MdEditNote />

@@ -102,7 +102,7 @@ export default function PGWP() {
                 status={"-1"}
                 pageNo={pageNo}
                 setpageNo={setpageNo}
-                ApplicantType={"pgwp"}
+                ApplicantType={"12"}
                 categoryFilterValue={categoryFilterValue}
 
               />

@@ -17,7 +17,7 @@ import EmployeeFooter from "../common/footer";
 import VisaTable from "../common/visaTable";
 import { useLocation } from "react-router-dom";
 import ExportExcelButton from "../common/exportExcelButton";
-import { GetEmployeeVisaList } from "../../api/api";
+import { getApplicanTypeApi, GetEmployeeVisaList } from "../../api/api";
 export default function Visa() {
   let location = useLocation();
   /*Show modal states */
@@ -30,7 +30,7 @@ export default function Visa() {
   const [EmpId, setEmpId] = useState(location.state ? location.state.id : "");
   /*Filter and search state */
   // let [SkillList, setSkillList] = useState([])
-  // let [EducationList, setEducationList] = useState([])
+  let [applicantTypeList, setApplicantTypeList] = useState([])
   const [VisaCountryFilter, setVisaCountryFilter] = useState("");
   const [VisStatusFilterValue, setVisStatusFilterValue] = useState("");
   const [IntrestedFilterValue, setIntrestedFilterValue] = useState("");
@@ -68,8 +68,18 @@ export default function Visa() {
   //  };
   /*Function to get thejSon */
   const getAllVisaData = async () => {
-    let res = await GetEmployeeVisaList("", "", "", "", "", "", "", "", "", "visa")
-    setVisaData(res.data.data)
+    try {
+      let res = await GetEmployeeVisaList("", "", "", "", "", "", "", "", "", "visa")
+      setVisaData(res.data.data)
+    } catch (err) {
+      console.log(err)
+    }
+    try {
+      let response = await getApplicanTypeApi();
+      setApplicantTypeList(response.data.data.filter((item) => item.level === (0 || "0")));
+    } catch (err) {
+      console.log(err);
+    }
   }
   /*Render method to get the json*/
   useEffect(() => {
@@ -222,10 +232,10 @@ export default function Visa() {
                         <option value="" data-display="Product Designer">
                           Candidate's Application type
                         </option>
-                        {(FilterJson.interested || []).map((data, i) => {
+                        {(applicantTypeList || []).map((data, i) => {
                           return (
-                            <option value={data} key={i}>
-                              {data}
+                            <option value={data.id} key={i}>
+                              {data.title}
                             </option>
                           );
                         })}

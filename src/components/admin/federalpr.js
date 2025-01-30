@@ -95,7 +95,7 @@ if (inputValue.length > 0) {
                 status={"-1"}
                 pageNo={pageNo}
                 setpageNo={setpageNo}
-                ApplicantType={"Federal PR"}
+                ApplicantType={"11"}
               />
             </div>
           </div>

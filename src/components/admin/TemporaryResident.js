@@ -99,7 +99,7 @@ export default function TemporaryResident() {
                                 pageNo={pageNo}
                                 setpageNo={setpageNo}
                                 categoryFilterValue={categoryFilterValue}
-                                ApplicantType={"temporary resident (visiting , studying , working)"}
+                                ApplicantType={"14"}
                             />
                         </div>
                     </div>

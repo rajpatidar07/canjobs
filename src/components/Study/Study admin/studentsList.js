@@ -137,7 +137,7 @@ export default function StudentList(props) {
                 status={"-1"}
                 pageNo={pageNo}
                 setpageNo={setpageNo}
-                ApplicantType={"study permit"}
+                ApplicantType={"13"}
                 pageName={props.skill ? "" : "employee"}
                 editEmployee={editEmployee}
                 OnProgramApplyClick={props.OnProgramApplyClick}

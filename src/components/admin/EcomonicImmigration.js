@@ -98,7 +98,7 @@ export default function EconomicImmigration() {
                                 status={"-1"}
                                 pageNo={pageNo}
                                 setpageNo={setpageNo}
-                                ApplicantType={"economic immigration"}
+                                ApplicantType={"15"}
                                 categoryFilterValue={categoryFilterValue}
                             />
                         </div>

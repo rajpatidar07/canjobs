@@ -95,7 +95,7 @@ export default function TypePassport() {
                                 status={"-1"}
                                 pageNo={pageNo}
                                 setpageNo={setpageNo}
-                                ApplicantType={"passport"}
+                                ApplicantType={"18"}
                             />
                         </div>
                     </div>

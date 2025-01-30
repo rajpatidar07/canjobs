@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import FilterJson from "../json/filterjson";
 import { /*GetFilter,*/ GetAgentJson, getallAdminData, getApplicanTypeApi } from "../../api/api";
 import { CiSearch } from "react-icons/ci";
 import filterjson from "../json/filterjson";
@@ -363,7 +362,7 @@ export default function ApplicantsFilter({
             <option value="" data-display="Product Designer">
               Candidate's Application type
             </option>
-            {(applicantTypeList || []).map((interest, index) => (
+            {(applicantTypeList.filter((item) => item.level === (0 || "0")) || []).map((interest, index) => (
               <option
                 key={index}
                 value={interest.id}
@@ -389,8 +388,8 @@ export default function ApplicantsFilter({
             className="form-control"
             placeholder={"Search by ID"}
             value={filterByEmployeeId}
-            id="sub type"
-            name="sub type"
+            id="id"
+            name="id"
             onChange={(e) => {
               setFilterByEmployeeId(e.target.value);
               setpageNo(1);
@@ -418,10 +417,12 @@ export default function ApplicantsFilter({
             }}
             className="text-capitalize form-control"
           >
+            {console.log(applicantTypeList.filter((item) => item.level === "1" && item.parent_id ===
+              (pageName === "temporary_resident_(visiting_,_studying_,_working)" ? (14 || "14") : pageName === "economic_immigration" ? (15 || "15") : pageName === "family_sponsorship" ? ("16" || 16) : (4 || 4))))}
             <option value={""}>Candidate's sub type</option>
-            {((FilterJson.interested_sub_type[pageName.replaceAll("_", " ")]) || Object.values(FilterJson.interested_sub_type).flat()).map((subType, index) => (
-              <option key={index} value={subType} className={`${subType === "aos" || subType === "rrs" ? "text-uppercase" : "text-capitalize"}`}>
-                {subType}
+            {(applicantTypeList.filter((item) => item.level === "1")).map((subType, index) => (
+              <option key={index} value={subType.id} className={`text-capitalize`}>
+                {subType.title}
               </option>
             ))}
           </select>

@@ -95,7 +95,7 @@ const onSearch = (e) => {
                 status={"-1"}
                 pageNo={pageNo}
                 setpageNo={setpageNo}
-                ApplicantType={"atip"}
+                ApplicantType={"22"}
               />
             </div>
           </div>

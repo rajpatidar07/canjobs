@@ -58,7 +58,7 @@ export default function VisaStatus(props) {
 
   const validators = {
     status: [
-      (value) => (value === "" || value === null ? `${props.type} is required` : null),
+      (value) => (value === "" || value === null ? `${props.typeName} is required` : null),
     ],
   };
 
@@ -95,7 +95,7 @@ export default function VisaStatus(props) {
           props.type
         );
         if (responseData.data.message === "visa inserted successfully") {
-          toast.success(`${props.type} stage created successfully`, {
+          toast.success(`${props.typeName} stage created successfully`, {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
@@ -103,7 +103,7 @@ export default function VisaStatus(props) {
           close();
         }
         if (responseData.data.message === `visa updated successfully`) {
-          toast.success(`${props.type} stage status Updated successfully`, {
+          toast.success(`${props.typeName} stage status Updated successfully`, {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
@@ -156,11 +156,10 @@ export default function VisaStatus(props) {
       };
     }
     try {
-      console.log(data)
       let Response = await AddUpdateEmployeeVisaSubStage(data);
       /*Removed sub stage response */
       if (Response.message === "updated successfully") {
-        toast.success(`${props.type} Sub Stage Removed successfully`, {
+        toast.success(`${props.typeName} Sub Stage Removed successfully`, {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
@@ -176,7 +175,7 @@ export default function VisaStatus(props) {
       }
       /*Added sub stage response */
       if (Response.message === "created successfully") {
-        toast.success(`${props.type} Sub Stage Added successfully`, {
+        toast.success(`${props.typeName} Sub Stage Added successfully`, {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
@@ -213,7 +212,7 @@ export default function VisaStatus(props) {
         {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
         <div className="bg-white rounded h-100 px-11 pt-7">
           <form>
-            <h5 className="text-center pt-2 mb-7 text-capitalize">Update {props.type} status</h5>
+            <h5 className="text-center pt-2 mb-7 text-capitalize">Update {props.typeName} status</h5>
             <VisaTimeLine visa={state.status} substage={selectedSubStage} />
 
             <div className="form-group col mt-5">
@@ -221,7 +220,7 @@ export default function VisaStatus(props) {
                 htmlFor="status"
                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset text-capitalize"
               >
-                {props.type === "visa" ? "Work Permit" : `${props.type} status`}  : <span className="text-danger">*</span>
+                {props.type === "visa" ? "Work Permit" : `${props.typeName} status`}  : <span className="text-danger">*</span>
               </label>
               <select
                 name="status"
@@ -238,7 +237,7 @@ export default function VisaStatus(props) {
                 }
                 id="status"
               >
-                <option value={""} className="text-capitalize">Select {props.type} Status </option>
+                <option value={""} className="text-capitalize">Select {props.typeName} Status </option>
                 {(FilterJson.visa_status || []).map((item, index) => {
                   isExpanded = expandedStatus === item;
                   return (

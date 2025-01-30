@@ -95,7 +95,7 @@ export default function TypeCitizenship() {
                                 status={"-1"}
                                 pageNo={pageNo}
                                 setpageNo={setpageNo}
-                                ApplicantType={"citizenship"}
+                                ApplicantType={"19"}
                             />
                         </div>
                     </div>
