@@ -277,7 +277,6 @@ export default function CommentSection({
   const addAnnotation = async (annotation) => {
     // setAddCommentFlag(false);
     // Retrieve data from local storage
-    console.log(comments, selectedAdmin)
     const subject = "";
     // let IspartnerList = selectedPartner ? partnerList : [];
 
@@ -439,7 +438,6 @@ export default function CommentSection({
   };
   /*Function to reply for the comment */
   const ReplyAnnotation = async (data) => {
-    console.log(data, selectedAdminReply)
     let sender =
       AdminType === "agent"
         ? admin_name

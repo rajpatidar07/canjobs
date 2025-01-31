@@ -154,7 +154,7 @@ function Notifications({
           >
             {notification.length > 0 && (
               <ul className="w-100 col p-0 ">
-                {notification.map((data) => (
+                {notification.map((data,index) => (
                   // <li
                   //   key={data.id}
                   //   title={data.message}

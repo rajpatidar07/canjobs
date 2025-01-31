@@ -91,7 +91,6 @@ function Addfollowup(props) {
         // props.employee_id === "" ||
         // props.employee_id === undefined
       ) {
-        console.log("pppp")
         setResponseData([]);
       } else {
         setResponseData(userData.data.data);
@@ -181,7 +180,6 @@ function Addfollowup(props) {
     setLoading(false);
     // setSelectedAdmin([])
     props.close();
-    console.log(props.page)
     if (props.page === "yes") {
       props.skip();
     }
@@ -294,7 +292,6 @@ function Addfollowup(props) {
     // Hide the dropdown
     setDropdownVisible(false);
   };
-
 
   // USER FOLLOW UP PROFILE UPDATE SUBMIT BUTTON
   const onAminFollowClick = async (event) => {
@@ -410,7 +407,7 @@ function Addfollowup(props) {
                   employeeId={props.userId}
                   TaskUserType={props.userType}
                   // setCount={setCount}
-                  status={""}
+                  status={"-1"}
                   adminId={""}
                   pageNo={taskPage}
                   setpageNo={setTaskPage}

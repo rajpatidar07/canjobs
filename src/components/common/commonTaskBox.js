@@ -341,7 +341,6 @@ export default function CommentTaskBox(props) {
 
     /*Function to reply for the comment */
     const ReplyAnnotation = async (data) => {
-        console.log(data, selectedAdminReply)
         let sender =
             AdminType === "agent"
                 ? admin_name
@@ -535,7 +534,6 @@ export default function CommentTaskBox(props) {
     };
     /*FUnction to update replies for he comment */
     const OnHandleUpdateCommentReply = async (originalData) => {
-        console.log(originalData)
         const { receiver_email, msg, receiver_name, receiver_type, receiver_id } =
             originalData;
         let updatedCommentToApi = replyComment || msg;
@@ -779,37 +777,36 @@ export default function CommentTaskBox(props) {
                             display: "flex",
                             justifyContent: "space-between",
                             gap: 15,
-                            alignItems: "center",
                         }}
                     >
-                        {props?.page === "yes" &&
-                            <Link onClick={() => {
-                                if (props.page === "yes") {
-                                    props.skip();
-                                } else {
-                                    setComments("");
-                                    setCommentData();
-                                    setEndDate("")
-                                    setSubject("")
-                                    setSubject("")
-                                }
-                            }}
-
-                                className={`btn_cancel text-muted ${props.page === "yes" ? " mx-5 " : " "}text-uppercase`}
+                        {props?.page === "yes" && (
+                            <Link
+                                onClick={() => {
+                                    if (props.page === "yes") {
+                                        props.skip();
+                                    } else {
+                                        setComments("");
+                                        setCommentData();
+                                        setEndDate("");
+                                        setSubject("");
+                                    }
+                                }}
+                                className={`btn_cancel text-muted ${props.page === "yes" ? "mx-5" : ""} text-uppercase`}
                                 type="button"
                             >
                                 {props.page === "yes" ? "Skip" : "Cancel"}
-                            </Link>}
-                        {comments === "" ? null : (
-                            <div style={{ justifyContent: "end", }}>
+                            </Link>
+                        )}
+
+                        {comments !== "" && (
+                            <div style={{ display: "flex", justifyContent: "space-between", width: "100%", alignContent: "center", }}>
                                 <Link
-                                    className="btn_cancel text-muted"
+                                    className="btn_cancel text-muted px-2"
                                     onClick={() => {
                                         setComments("");
                                         setCommentData();
-                                        setEndDate("")
-                                        setSubject("")
-                                        setSubject("")
+                                        setEndDate("");
+                                        setSubject("");
                                     }}
                                 >
                                     Cancel
@@ -832,6 +829,7 @@ export default function CommentTaskBox(props) {
                             </div>
                         )}
                     </div>
+
                 </form>
             </div>
             <div>
@@ -907,7 +905,6 @@ export default function CommentTaskBox(props) {
                                     }}
                                     key={index}
                                 >
-                                    {console.log(props.noteId, commentItem)}
                                     <div
                                         className={`comment_status_update ${AdminType === "agent"
                                             ? commentItem.task_creator_user_id === admin_id
@@ -923,7 +920,6 @@ export default function CommentTaskBox(props) {
                                                 handleUpdateCommentLinkClick(commentItem);
                                                 setEndDate(commentItem.end_date.split(" ")[0])
                                                 setSubject(commentItem.subject)
-                                                console.log(commentItem)
                                             }}
                                         >
                                             <CiEdit />

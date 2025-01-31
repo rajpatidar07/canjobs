@@ -8,6 +8,7 @@ import {
   getallEmployeeData,
   getAllEmployer,
   GetCommentsAndAssign,
+  GetFilter,
 } from "../../api/api";
 import AdminListTaskTable from "../common/AdminListTaskTabel";
 import CustomButton from "../common/button";
@@ -21,7 +22,8 @@ export default function ManageTask() {
   const [adminId, setAdminId] = useState();
   const [userType, setUserType] = useState();
   const [adminType, setAdminType] = useState();
-  const [status, setStatus] = useState();
+  const [status, setStatus] = useState("-1");
+  const [statusList, setStatusList] = useState([]);
   const [count, setCount] = useState();
   const [taskPage, setTaskPage] = useState(1);
   const [adminPage, setAdminPage] = useState(1);
@@ -41,6 +43,8 @@ export default function ManageTask() {
       const AdminData = await getallAdminData();
       const CompanyData = await getAllEmployer();
       const allTaskres = await GetCommentsAndAssign("", "", "", "task");
+      const resStatus = await GetFilter();
+      setStatusList(resStatus.data.data.status_type);
       setAllTaskList(allTaskres.data.data.data)
       //   if (window.location.pathname === `/${user_id}`) {
       //     const Partnerdata = await GetAgent();
@@ -116,7 +120,7 @@ export default function ManageTask() {
                 </select>
               </div>
               <div className="col px-1 form_group mb-3">
-                <p className="input_label">Filter by Candidate:</p>
+                <p className="input_label">Filter by User:</p>
                 <select
                   name="userId"
                   value={userId + "," + userType}
@@ -132,7 +136,7 @@ export default function ManageTask() {
                   }}
                   className="form-control bg-white dashboard_select rounded-3"
                 >
-                  <option value={""}>Select Candidate</option>
+                  <option value={""}>Select user</option>
                   {(employeeList || []).map((item, index) => {
                     return (
                       <option
@@ -144,7 +148,7 @@ export default function ManageTask() {
                             : `${item.company_id},employer`
                         }
                       >
-                        {(item.employee_id ? item.name : item.company_name) ||
+                        {(item.employee_id ? item.name + " (Candidate)" : item.company_name + " (Client)") ||
                           "unknown user"}
                       </option>
                     );
@@ -169,10 +173,13 @@ export default function ManageTask() {
                   className="form-control bg-white dashboard_select rounded-3"
                 >
                   <option value={""}>Select status</option>
-                  <option value={"1"}>Completed Tasks</option>
-                  <option value={"0"}>Incomplete Tasks</option>
-                  <option value={"2"}>Overdue Tasks</option>
-                  <option value={"3"}>Processing Tasks</option>
+                  {(statusList || []).map((item, index) => {
+                    return (
+                      <option value={item.id} index={index}>
+                        {item.value}</option>
+                    )
+                  })}
+
                 </select>
                 {/* <small className="text-danger">{searcherror}</small> */}
               </div>
@@ -241,6 +248,8 @@ export default function ManageTask() {
                     setShowTaskForm={setShowTaskForm}
                     setReplyId={setReplyId}
                     setTaskId={setTaskId}
+                    setStatus={setStatus}
+                    statusList={statusList}
                   />
                 </div>
 

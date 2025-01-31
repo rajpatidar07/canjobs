@@ -54,6 +54,7 @@ export default function FamilySponsorship() {
                                 <div className="row m-0 align-items-center">
                                     {/* Employees filter's */}
                                     <ApplicantsFilter
+                                        applicantTypeId={"16"}
                                         user_type={user_type}
                                         search={search}
                                         onSearch={onSearch}

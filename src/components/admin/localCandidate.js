@@ -5,36 +5,36 @@ import AdminSidebar from "./sidebar";
 import EmployeeTable from "../common/employeeTable";
 import ApplicantsFilter from "../common/applicantsFilter";
 export default function LocalCandidate() {
- /*Filter and search state */
- const [experienceFilterValue, setExperienceFilterValue] = useState("");
- const [skillFilterValue, setSkillFilterValue] = useState("");
- const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
- const [educationFilterValue, setEducationFilterValue] = useState("");
- const [agentFilterValue, setAgentFilterValue] = useState("");
- const [adminFilterValue, setAdminFilterValue] = useState("");
- const [interestFilterValue, setinterestFilterValue] = useState("");
- const [search, setSearch] = useState("");
- const [searcherror, setSearchError] = useState("");
- let user_type = localStorage.getItem("userType")
- let [apiCall, setApiCall] = useState(false);
-/*Function to search the employee */
-const onSearch = (e) => {
- const inputValue = e.target.value;
- setSearch(inputValue);
- setpageNo(1);
- if (inputValue.length > 0) {
-   if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
-     setSearchError("Candidate Name cannot start with a number.");
-   } else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
-     setSearchError("Cannot use special characters.");
-   } else {
-     setSearchError("");
-   }
- } else {
-   setSearchError("");
- }
-};
- 
+  /*Filter and search state */
+  const [experienceFilterValue, setExperienceFilterValue] = useState("");
+  const [skillFilterValue, setSkillFilterValue] = useState("");
+  const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
+  const [educationFilterValue, setEducationFilterValue] = useState("");
+  const [agentFilterValue, setAgentFilterValue] = useState("");
+  const [adminFilterValue, setAdminFilterValue] = useState("");
+  const [interestFilterValue, setinterestFilterValue] = useState("");
+  const [search, setSearch] = useState("");
+  const [searcherror, setSearchError] = useState("");
+  let user_type = localStorage.getItem("userType")
+  let [apiCall, setApiCall] = useState(false);
+  /*Function to search the employee */
+  const onSearch = (e) => {
+    const inputValue = e.target.value;
+    setSearch(inputValue);
+    setpageNo(1);
+    if (inputValue.length > 0) {
+      if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
+        setSearchError("Candidate Name cannot start with a number.");
+      } else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
+        setSearchError("Cannot use special characters.");
+      } else {
+        setSearchError("");
+      }
+    } else {
+      setSearchError("");
+    }
+  };
+
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -50,9 +50,10 @@ const onSearch = (e) => {
                   <h3 className="font-size-6 mb-0">Local Candidate</h3>
                 </div>
                 {/*<-- Search Local Candidate -->*/}
-                 <div className="row m-0 align-items-center">
-                {/* Employees filter's */}
+                <div className="row m-0 align-items-center">
+                  {/* Employees filter's */}
                   <ApplicantsFilter
+                    applicantTypeId={""}
                     user_type={user_type}
                     search={search}
                     onSearch={onSearch}
@@ -73,12 +74,12 @@ const onSearch = (e) => {
                     // skill={props.skill}
                     pageName={"local_candidate"}
                   />
-            </div> 
+                </div>
                 <small className="text-danger">{searcherror}</small>
               </div>
               {/*<-- Local Candidate Table -->*/}
               <EmployeeTable
-               // showEmployeeProfile={showEmployeeProfile}
+                // showEmployeeProfile={showEmployeeProfile}
                 // employeeDetails={employeeDetails}
                 search={search}
                 experienceFilterValue={experienceFilterValue}

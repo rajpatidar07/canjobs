@@ -456,8 +456,8 @@ function PersonalDetails(props) {
                 ) : (
                   <h5 className="text-center pt-2 mb-7">
                     Update {props.pageNameForForm === "ApplicantType" ?
-                      " Applicant Type" : props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned"
-                        ? "Reffer By" : props.user_of_page === "assignedUser"
+                      "Candidates Applicant Type" : props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned"
+                        ? "Refer By" : props.user_of_page === "assignedUser"
                           ? "Assigned To" :
                           "Candidate Details"}
                   </h5>

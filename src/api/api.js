@@ -2742,7 +2742,7 @@ export const GetEmployeeFilterJob = async (
 
 /*Api to Reserved employee for a job */
 export const ReservedEmployeeForJob = async (id, employee_id, status) => {
-  console.log(id, employee_id, status)
+  // console.log(id, employee_id, status)
   const response = await axios.put(
     `${API_URL}setEmployeeReserve`,
     {
@@ -2778,7 +2778,7 @@ export const RemoveReservedEmployeeForJob = async (apply_id, employee_id) => {
 };
 /*Api to Send email to the user and company*/
 export const SendEmail = async (data, FileList, url) => {
-  console.log(data);
+  // console.log(data);
   const response = await axios.post(
     `${API_URL}sendEmailTest`,
     // {
@@ -3442,7 +3442,7 @@ export const AddSharePointDOcument = async (
   formData.append("folder_Id", folderId);
   // Loop through the array of files and append each file to formData
   for (let i = 0; i < data.length; i++) {
-    console.log(data[i])
+    // console.log(data[i])
     formData.append(`file[${i}]`, data[i]);
   }
   if (Token) {

@@ -53,6 +53,7 @@ export default function Humanitarian() {
                                 <div className="row m-0 align-items-center">
                                     {/* Employees filter's */}
                                     <ApplicantsFilter
+                                        applicantTypeId={"17"}
                                         user_type={user_type}
                                         search={search}
                                         onSearch={onSearch}

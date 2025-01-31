@@ -137,7 +137,7 @@ export default function EmployeeTable(props) {
         setIsLoading(false);
         localStorage.setItem("StatusTab", "");
       }
-    } catch (err) { 
+    } catch (err) {
       console.log(err);
       setIsLoading(false);
     }
@@ -873,7 +873,7 @@ export default function EmployeeTable(props) {
                 {/* Map function to show the data in the list*/}
                 {totalData === 0 || employeeData.length === 0 ? (
                   <tr>
-                    <th colSpan={12} className="bg-white text-center">
+                    <th colSpan={13} className="bg-white text-center">
                       No Data Found
                     </th>
                   </tr>
@@ -884,7 +884,7 @@ export default function EmployeeTable(props) {
                         <tr style={{ border: "0" }}>
                           <td
                             style={{ paddingBottom: "0!important" }}
-                            colSpan="12"
+                            colSpan="13"
                             className={
                               empdata.applicant_process_status
                                 ? "bg-white text-center m-0"
@@ -1312,15 +1312,15 @@ export default function EmployeeTable(props) {
                               </p>
                             ) : (
                               <p
-                                className={`font-size-2 font-weight-normal text-black-2 mb-0 `}
-                                title={empdata.interested_in_id === (14 || "14") ? "temporary resident" : getApplicantType(empdata.interested_in_id)
+                                className={`font-size-2 font-weight-normal text-white mb-0 `}
+                                title={empdata.interested_in_id === 14 || empdata.interested_in_id === "14" ? "temporary resident" : getApplicantType(empdata.interested_in_id)
                                 }
                               >
                                 <span
                                   className={`p-3 text-center  border rounded-pill 
                                   ${determineBackgroundColor(empdata)}`}
                                 >
-                                  {empdata.interested_in_id === (14 || "14") ? "temporary resident" : getApplicantType(empdata.interested_in_id)
+                                  {empdata.interested_in_id === 14 || empdata.interested_in_id === "14" ? "temporary resident" : getApplicantType(empdata.interested_in_id)
                                   }
                                 </span>
                               </p>
@@ -1328,11 +1328,11 @@ export default function EmployeeTable(props) {
                           </td>
                         )}
 
-                        <td className={props?.ApplicantType ? "text-center" : "d-none"}>
-                          {[14, "14", 15, "15", 16, "16", 4, "4"].includes(props?.ApplicantType) ? (
+                        <td className={props?.ApplicantType && [14, "14", 15, "15", 16, "16", 4, "4"].includes(props?.ApplicantType) ? "text-center" : "d-none"}>
+                          {[14, "14", 15, "15", 16, "16", 4, "4"].includes(props?.ApplicantType) && empdata.category_id ? (
                             <>
                               <p
-                                className={`font-size-2 font-weight-normal text-black-2 mb-0 text-capitalize  `}
+                                className={`font-size-2 font-weight-normal text-white mb-0 text-capitalize  `}
                                 title={getApplicantSubType(empdata.category_id)}
                               >
                                 <span
@@ -1501,7 +1501,7 @@ export default function EmployeeTable(props) {
                                           empdata.employee_id
                                         )
                                       }
-                                      title="Change Applicant's Sub Type"
+                                      title="Change Candidate Applicant's Sub Type"
                                     >
                                       <span className="text-gray px-2">
                                         <BiSolidCategory />
@@ -1514,7 +1514,7 @@ export default function EmployeeTable(props) {
                                           empdata.employee_id
                                         )
                                       }
-                                      title="Change Applicant's Type"
+                                      title="Change Candidate Applicant's Type"
                                     >
                                       <span className="text-gray px-2">
                                         <MdTypeSpecimen />

@@ -6,12 +6,12 @@ import filterjson from "../json/filterjson";
 export default function ApplicantsFilter({
   search,
   onSearch,
-  experienceFilterValue,
-  setExperienceFilterValue,
+  // experienceFilterValue,
+  // setExperienceFilterValue,
   skillFilterValue,
-  setSkillFilterValue,
+  // setSkillFilterValue,
   educationFilterValue,
-  setEducationFilterValue,
+  // setEducationFilterValue,
   setpageNo,
   agentFilterValue,
   setAgentFilterValue,
@@ -30,7 +30,8 @@ export default function ApplicantsFilter({
   setFilterByEmployeeId,
   filterByEmployeeId,
   statustFilterValue,
-  setStatustFilterValue
+  setStatustFilterValue,
+  applicantTypeId
 }) {
   // let [SkillList, setSkillList] = useState([]);
   // let [EducationList, setEducationList] = useState([]);
@@ -417,10 +418,8 @@ export default function ApplicantsFilter({
             }}
             className="text-capitalize form-control"
           >
-            {console.log(applicantTypeList.filter((item) => item.level === "1" && item.parent_id ===
-              (pageName === "temporary_resident_(visiting_,_studying_,_working)" ? (14 || "14") : pageName === "economic_immigration" ? (15 || "15") : pageName === "family_sponsorship" ? ("16" || 16) : (4 || 4))))}
             <option value={""}>Candidate's sub type</option>
-            {(applicantTypeList.filter((item) => item.level === "1")).map((subType, index) => (
+            {(applicantTypeList.filter((item) => item.level === "1" && item.parent_id === applicantTypeId)).map((subType, index) => (
               <option key={index} value={subType.id} className={`text-capitalize`}>
                 {subType.title}
               </option>

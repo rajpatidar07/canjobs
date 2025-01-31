@@ -6,35 +6,35 @@ import ApplicantsFilter from "../common/applicantsFilter";
 
 export default function Federalpr() {
 
-/*Filter and search state */
-const [experienceFilterValue, setExperienceFilterValue] = useState("");
-const [skillFilterValue, setSkillFilterValue] = useState("");
-const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
-const [educationFilterValue, setEducationFilterValue] = useState("");
-const [agentFilterValue, setAgentFilterValue] = useState("");
-const [adminFilterValue, setAdminFilterValue] = useState("");
-const [interestFilterValue, setinterestFilterValue] = useState("");
-const [search, setSearch] = useState("");
-const [searcherror, setSearchError] = useState("");
-let user_type = localStorage.getItem("userType")
-let [apiCall, setApiCall] = useState(false);
-/*Function to search the employee */
-const onSearch = (e) => {
-const inputValue = e.target.value;
-setSearch(inputValue);
-setpageNo(1);
-if (inputValue.length > 0) {
-  if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
-    setSearchError("Candidate Name cannot start with a number.");
-  } else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
-    setSearchError("Cannot use special characters.");
-  } else {
-    setSearchError("");
-  }
-} else {
-  setSearchError("");
-}
-};
+  /*Filter and search state */
+  const [experienceFilterValue, setExperienceFilterValue] = useState("");
+  const [skillFilterValue, setSkillFilterValue] = useState("");
+  const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
+  const [educationFilterValue, setEducationFilterValue] = useState("");
+  const [agentFilterValue, setAgentFilterValue] = useState("");
+  const [adminFilterValue, setAdminFilterValue] = useState("");
+  const [interestFilterValue, setinterestFilterValue] = useState("");
+  const [search, setSearch] = useState("");
+  const [searcherror, setSearchError] = useState("");
+  let user_type = localStorage.getItem("userType")
+  let [apiCall, setApiCall] = useState(false);
+  /*Function to search the employee */
+  const onSearch = (e) => {
+    const inputValue = e.target.value;
+    setSearch(inputValue);
+    setpageNo(1);
+    if (inputValue.length > 0) {
+      if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
+        setSearchError("Candidate Name cannot start with a number.");
+      } else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
+        setSearchError("Cannot use special characters.");
+      } else {
+        setSearchError("");
+      }
+    } else {
+      setSearchError("");
+    }
+  };
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -51,8 +51,9 @@ if (inputValue.length > 0) {
                 </div>
                 {/*<-- Search Federal pr -->*/}
                 <div className="row m-0 align-items-center">
-              {/* Employees filter's */}
-             <ApplicantsFilter
+                  {/* Employees filter's */}
+                  <ApplicantsFilter
+                    applicantTypeId={"11"}
                     user_type={user_type}
                     search={search}
                     onSearch={onSearch}
@@ -72,13 +73,13 @@ if (inputValue.length > 0) {
                     setSearchError={setSearchError}
                     // skill={props.skill}
                     pageName={"Federal_pr"}
-  />
-            </div>
+                  />
+                </div>
                 <small className="text-danger">{searcherror}</small>
               </div>
               {/*<-- Business visa Table -->*/}
               <EmployeeTable
-                  // showEmployeeProfile={showEmployeeProfile}
+                // showEmployeeProfile={showEmployeeProfile}
                 // employeeDetails={employeeDetails}
                 search={search}
                 experienceFilterValue={experienceFilterValue}

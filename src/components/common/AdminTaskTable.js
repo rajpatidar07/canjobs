@@ -21,6 +21,7 @@ import UserAvatar from "./UserAvtar";
 import ModalSidebar from "./modalSidebar";
 import { CiEdit } from "react-icons/ci";
 import { AiOutlineMessage } from "react-icons/ai";
+import determineBackgroundColor from "./Common function/DetermineBackgroundColour";
 export default function AdminTaskTable(props) {
   const [taskData, setTaskData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -31,6 +32,7 @@ export default function AdminTaskTable(props) {
   const [priority, setPriority] = useState([]);
   const [openReplyBox, setOpenReplyBox] = useState(false);
   const [singleTaskData, setSingleTaskData] = useState();
+  const [statusList, setStatusList] = useState([]);
 
   /*delete state */
   const [deleteAlert, setDeleteAlert] = useState(false);
@@ -108,6 +110,7 @@ export default function AdminTaskTable(props) {
       let JsonRes = await GetFilter();
       setPriority(JsonRes?.data?.data?.priority);
       setGroupBy(JsonRes?.data?.data?.group_by);
+      setStatusList(JsonRes?.data?.data?.status_type);
       if (res.data.status === (1 || "1")) {
         setTaskData(res.data.data.data);
         setIsLoading(false);
@@ -118,7 +121,6 @@ export default function AdminTaskTable(props) {
         if (props.replyId) {
           setSingleTaskData(res.data.data.data[0])
           setOpenReplyBox(true)
-          console.log("first")
         }
       } else if (res.data.message === "Task data not found") {
         setIsLoading(false);
@@ -201,11 +203,13 @@ export default function AdminTaskTable(props) {
         });
         if (window.location.pathname === "/managetasks") {
           props.setApiCall(true);
+          props.setStatus("-1")
         }
       }
     } catch (err) {
       if (window.location.pathname === "/managetasks") {
         props.setApiCall(true);
+        props.setStatus("-1")
       }
       console.log(err);
     }
@@ -574,101 +578,48 @@ export default function AdminTaskTable(props) {
                                 <div style={{ display: "table-caption" }}>
                                   <DropdownButton
                                     as={ButtonGroup}
-                                    title={
-                                      data.status === "1"
-                                        ? "Completed"
-                                        : data.status === "2"
-                                          ? "Overdue"
-                                          : data.status === "3"
-                                            ? "Processing"
-                                            : "Incomplete"
-                                    }
-                                    variant={
-                                      data.status === ("1" || 1)
-                                        ? "shamrock"
-                                        : data.status === ("2" || 2)
-                                          ? "danger"
-                                          : data.status === ("3" || 3)
-                                            ? "info"
-                                            : "warning"
-                                    }
+                                    title={(statusList || []).find((item) => item.id === parseInt(data.status))?.value || "Unknown"}
+                                    variant={data.status === ("0" || 0) ? "warning" : data.status === ("1" || 1)
+                                      ? "shamrock"
+                                      : data.status === ("2" || 2)
+                                        ? "danger"
+                                        : determineBackgroundColor(data)}
                                     size="xs"
-                                    className={`user_status_btn btn-xs ${data.status === "1"
-                                      ? "btn-shamrock"
-                                      : data.status === "2"
-                                        ? "btn-danger px-4"
-                                        : data.status === ("3" || 3)
-                                          ? "btn-info"
-                                          : "btn-warning"
-                                      } rounded-pill font-size-1 px-1 text-white mr-2`}
-                                    // disabled={data.status === "2"}
-                                    onSelect={(eventKey, e) =>
-                                      OnStatusChange(data, eventKey)
-                                    }
+                                    className={`user_status_btn btn-xs ${data.status === "0" ? "btn-warning" : data.status === "1"
+                                      ? "btn-shamrock" : data.status === "2"
+                                        ? "btn-danger px-4" : determineBackgroundColor(data)} rounded-pill font-size-1 px-1 text-white mr-2`}
+                                    onSelect={(eventKey, e) => OnStatusChange(data, eventKey)}
                                   >
-                                    <Dropdown.Item
-                                      value={1}
-                                      eventKey={1}
-                                      className="text-capitalize"
-                                    >
-                                      Complete
-                                    </Dropdown.Item>
-                                    <Dropdown.Item
-                                      value={0}
-                                      eventKey={0}
-                                      className="text-capitalize"
-                                    >
-                                      Incomplete
-                                    </Dropdown.Item>
-                                    <Dropdown.Item
-                                      value={3}
-                                      eventKey={3}
-                                      className="text-capitalize"
-                                    >
-                                      Processing
-                                    </Dropdown.Item>
-                                    {/* <Dropdown.Item
-                                value={2}
-                                eventKey={2}
-                                className="text-capitalize"
-                              >
-                                Overdue
-                              </Dropdown.Item> */}
+                                    {(statusList || []).map((item, index) => (
+                                      <Dropdown.Item
+                                        key={index}
+                                        value={item.id}
+                                        eventKey={item.id}
+                                        className="text-capitalize"
+                                      >
+                                        {item.value}
+                                      </Dropdown.Item>
+                                    ))}
                                   </DropdownButton>
-                                  {data.status === ("1" || 1) &&
-                                    data.task_complete_date ? (
+
+                                  {data.status === ("1" || 1) && data.task_complete_date ? (
                                     <small className="font-size-1 d-flex justify-content-center mt-2 text-capitalize">
-                                      <ConvertTime
-                                        _date={data.task_complete_date}
-                                        format={".fromNow()"}
-                                      />
+                                      <ConvertTime _date={data.task_complete_date} format={".fromNow()"} />
                                     </small>
                                   ) : null}
                                 </div>
+
                               ) : (
                                 <p
                                   className="font-size-2 font-weight-normal text-black-2 mb-0 text-truncate"
-                                  title={
-                                    data.status === (0 || "0")
-                                      ? "Incomplete"
-                                      : data.status === (1 || "1")
-                                        ? "Completed"
-                                        : "Overdue"
-                                  }
+
                                 >
-                                  {data.status === (0 || "0") ? (
-                                    <span className="p-1 bg-warning text-white text-center w-100 border rounded-pill">
-                                      Incomplete
-                                    </span>
-                                  ) : data.status === "2" ? (
-                                    <span className="p-1 bg-danger text-white text-center w-100 border rounded-pill">
-                                      Overdue
-                                    </span>
-                                  ) : (
-                                    <span className="p-1 bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
-                                      Complete
-                                    </span>
-                                  )}
+                                  <span
+                                    className={`p-1 text-white text-center border rounded-pill text-capitalize ${data.status === ("0" || 0) ? "bg-warning" : data.status === ("1" || 1) ? "bg-shamrock" : determineBackgroundColor(data)}`} title={statusList[data.status]?.value} key={index}
+                                  >
+                                    {statusList[data.status]?.value}</span>
+
+
                                 </p>
                               )}
                             </>
