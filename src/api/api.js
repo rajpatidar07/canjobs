@@ -2282,6 +2282,7 @@ export const DeleteFilter = async (pId, cId) => {
   return response.data;
 };
 
+
 /*Delete Admin Api */
 export const DeleteAdmin = async (props) => {
   const response = await axios.post(
@@ -2296,6 +2297,21 @@ export const DeleteAdmin = async (props) => {
   );
   return response.data;
 };
+/*Reassign Admin Api before deletion */
+export const ReassignAdminApi = async (props) => {
+  const response = await axios.post(
+    `${API_URL}/admin/deleteAdmin_new`,
+    props,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
+
 
 /*Add Aplicant's Followup Api */
 export const AddFollowup = async (props) => {

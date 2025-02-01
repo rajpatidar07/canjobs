@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { LiaUserEditSolid } from "react-icons/lia";
 import { RiDeleteBin5Line } from "react-icons/ri";
@@ -7,12 +7,13 @@ import Loader from "./loader";
 import { AddAdmin, ReassignJobTOManager } from "../../api/api";
 import { toast } from "react-toastify";
 import { FaToggleOff, FaToggleOn } from "react-icons/fa";
+import ReassignAdmin from "../forms/admin/ReassignAdmin";
 export default function AdminTable({
   data,
   isLoading,
   handleSort,
   editAdmin,
-  ShowDeleteAlert,
+  // ShowDeleteAlert,
   nPages,
   currentPage,
   setCurrentPage,
@@ -23,6 +24,8 @@ export default function AdminTable({
   setApiCall,
   jobId,
 }) {
+  const [showReassignAdminModal, setShowReassignAdminModal] = useState(false)
+  const [singleAdminData, setSingleAdminData] = useState()
   /*Function to reasign job to manager */
   const OnReasignManagerToJobClick = async (e) => {
     try {
@@ -57,94 +60,95 @@ export default function AdminTable({
     }
   }
   return (
-    <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
-      <div className="table-responsive main_table_div">
-        {isLoading ? (
-          <Loader />
-        ) : (
-          <table className="table table-striped main_data_table">
-            <thead>
-              <tr>
-                <th
-                  scope="col"
-                  className="border-0 font-size-4 font-weight-normal"
-                >
-                  <Link
-                    className="text-gray"
-                    to={""}
-                    onClick={() => handleSort("name")}
-                    title="Sort by Name"
-                  >
-                    Name
-                  </Link>
-                </th>
-                <th
-                  scope="col"
-                  className="pl-4 border-0 font-size-4 font-weight-normal"
-                >
-                  <Link
-                    className="text-gray"
-                    to={""}
-                    onClick={() => handleSort("admin_type")}
-                    title="Sort by Type"
-                  >
-                    Type
-                  </Link>
-                </th>
-                <th
-                  scope="col"
-                  className="pl-4 border-0 font-size-4 font-weight-normal"
-                >
-                  <Link
-                    className="text-gray"
-                    to={""}
-                    onClick={() => handleSort("email")}
-                    title="Sort by Email"
-                  >
-                    Email
-                  </Link>
-                </th>
-                <th
-                  scope="col"
-                  className="pl-4 border-0 font-size-4 font-weight-normal"
-                >
-                  <Link
-                    className="text-gray"
-                    to={""}
-                    onClick={() => handleSort("contact_no")}
-                    title="Mobile"
-                  >
-                    Mobile
-                  </Link>
-                </th>
-
-                <th
-                  scope="col"
-                  className="border-0 font-size-4 font-weight-normal"
-                  title="Active"
-                >
-                  Active
-                </th>
-                <th
-                  scope="col"
-                  className="pl-4 border-0 font-size-4 font-weight-normal"
-                  title="Actions"
-                >
-                  Action
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {totalData === 0 || data.length === 0 ? (
+    <>
+      <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5">
+        <div className="table-responsive main_table_div">
+          {isLoading ? (
+            <Loader />
+          ) : (
+            <table className="table table-striped main_data_table">
+              <thead>
                 <tr>
-                  <th colSpan={5} className="bg-white text-center">
-                    No Data Found
+                  <th
+                    scope="col"
+                    className="border-0 font-size-4 font-weight-normal"
+                  >
+                    <Link
+                      className="text-gray"
+                      to={""}
+                      onClick={() => handleSort("name")}
+                      title="Sort by Name"
+                    >
+                      Name
+                    </Link>
+                  </th>
+                  <th
+                    scope="col"
+                    className="pl-4 border-0 font-size-4 font-weight-normal"
+                  >
+                    <Link
+                      className="text-gray"
+                      to={""}
+                      onClick={() => handleSort("admin_type")}
+                      title="Sort by Type"
+                    >
+                      Type
+                    </Link>
+                  </th>
+                  <th
+                    scope="col"
+                    className="pl-4 border-0 font-size-4 font-weight-normal"
+                  >
+                    <Link
+                      className="text-gray"
+                      to={""}
+                      onClick={() => handleSort("email")}
+                      title="Sort by Email"
+                    >
+                      Email
+                    </Link>
+                  </th>
+                  <th
+                    scope="col"
+                    className="pl-4 border-0 font-size-4 font-weight-normal"
+                  >
+                    <Link
+                      className="text-gray"
+                      to={""}
+                      onClick={() => handleSort("contact_no")}
+                      title="Mobile"
+                    >
+                      Mobile
+                    </Link>
+                  </th>
+
+                  <th
+                    scope="col"
+                    className="border-0 font-size-4 font-weight-normal"
+                    title="Active"
+                  >
+                    Active
+                  </th>
+                  <th
+                    scope="col"
+                    className="pl-4 border-0 font-size-4 font-weight-normal"
+                    title="Actions"
+                  >
+                    Action
                   </th>
                 </tr>
-              ) : (
-                (data || []).map((admin) => (
-                  <tr className="" key={admin.admin_id}>
-                    {/* <th>
+              </thead>
+              <tbody>
+                {totalData === 0 || data.length === 0 ? (
+                  <tr>
+                    <th colSpan={5} className="bg-white text-center">
+                      No Data Found
+                    </th>
+                  </tr>
+                ) : (
+                  (data || []).map((admin) => (
+                    <tr className="" key={admin.admin_id}>
+                      {/* <th>
                       <Link
                         className="text-gray"
                         onClick={
@@ -178,47 +182,47 @@ export default function AdminTable({
                         </div>
                       </Link>
                     </th> */}
-                    <th className=" py-5">
-                      <Link
-                        className="text-gray"
-                        // to={"/admindetail"}
-                        onClick={
-                          page === "admin page" &&
-                            admin.admin_type === "manager"
-                            ? () => {
-                              OnManagerDetailClick(admin);
-                              setAddTeamListShow(false);
-                            }
-                            : null
-                        }
-                      >
-                        <div className="d-flex profile_box gx-2">
-                          <div className="media  align-items-center">
-                            <div className="circle-30 mx-auto overflow-hidden">
-                              {admin.profile_image === null ? (
-                                <img
-                                  src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-                                  alt=""
-                                  className="w-100"
-                                />
-                              ) : (
-                                <img
-                                  src={admin.profile_image}
-                                  alt=""
-                                  className="w-100"
-                                />
-                              )}
+                      <th className=" py-5">
+                        <Link
+                          className="text-gray"
+                          // to={"/admindetail"}
+                          onClick={
+                            page === "admin page" &&
+                              admin.admin_type === "manager"
+                              ? () => {
+                                OnManagerDetailClick(admin);
+                                setAddTeamListShow(false);
+                              }
+                              : null
+                          }
+                        >
+                          <div className="d-flex profile_box gx-2">
+                            <div className="media  align-items-center">
+                              <div className="circle-30 mx-auto overflow-hidden">
+                                {admin.profile_image === null ? (
+                                  <img
+                                    src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+                                    alt=""
+                                    className="w-100"
+                                  />
+                                ) : (
+                                  <img
+                                    src={admin.profile_image}
+                                    alt=""
+                                    className="w-100"
+                                  />
+                                )}
+                              </div>
+                            </div>
+                            <div className=" mb-0">
+                              <p className="m-0 text-black-2 font-weight-bold text-capitalize"
+                                title={admin.name}>
+                                {admin.name}
+                              </p>
                             </div>
                           </div>
-                          <div className=" mb-0">
-                            <p className="m-0 text-black-2 font-weight-bold text-capitalize"
-                              title={admin.name}>
-                              {admin.name}
-                            </p>
-                          </div>
-                        </div>
-                      </Link>
-                      {/* <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-capitalize">
+                        </Link>
+                        {/* <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-capitalize">
                         <Link
                           className="text-gray"
                           onClick={
@@ -234,9 +238,9 @@ export default function AdminTable({
                           {admin.name}
                         </Link>
                       </h3> */}
-                    </th>
-                    <th className="py-5">
-                      {/* <Link
+                      </th>
+                      <th className="py-5">
+                        {/* <Link
                         className="text-gray"
                         onClick={
                           page === "admin page" &&
@@ -248,105 +252,116 @@ export default function AdminTable({
                             : null
                         }
                       > */}
-                      <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-capitalize"
-                        title={admin.admin_type}>
-                        {admin.admin_type}
-                      </h3>
-                      {/* </Link> */}
-                    </th>
-                    <th className="py-5 ">
-                      <h3 className="font-size-3 font-weight-normal mb-0">
-                        <p className="font-size-3 m-0"
-                          title={admin.email}>
+                        <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-capitalize"
+                          title={admin.admin_type}>
+                          {admin.admin_type}
+                        </h3>
+                        {/* </Link> */}
+                      </th>
+                      <th className="py-5 ">
+                        <h3 className="font-size-3 font-weight-normal mb-0">
+                          <p className="font-size-3 m-0"
+                            title={admin.email}>
+                            <Link
+                              className="text-dark  text-lowercase"
+                              to={`mailto:${admin.email}`}
+                            >
+                              {admin.email}
+                            </Link>
+                          </p>
+                        </h3>
+                        {/* </Link> */}
+                      </th>
+                      <th className="py-5 ">
+                        {/* <Link
+                        className="text-gray"
+                        onClick={
+                          page === "admin page" &&
+                          admin.admin_type === "manager"
+                            ? () => {
+                                OnManagerDetailClick(admin);
+                                setAddTeamListShow(false);
+                              }
+                            : null
+                        }
+                      > */}
+                        {admin.contact_no === null ? null : (
                           <Link
-                            className="text-dark  text-lowercase"
-                            to={`mailto:${admin.email}`}
-                          >
-                            {admin.email}
+                            className="font-weight-normal  font-size-3 text-gray"
+                            to={`tel:${admin.contact_no}`}
+                            title={admin.contact_no}>
+                            +{admin.contact_no}
                           </Link>
-                        </p>
-                      </h3>
-                      {/* </Link> */}
-                    </th>
-                    <th className="py-5 ">
-                      {/* <Link
-                        className="text-gray"
-                        onClick={
-                          page === "admin page" &&
-                          admin.admin_type === "manager"
-                            ? () => {
-                                OnManagerDetailClick(admin);
-                                setAddTeamListShow(false);
-                              }
-                            : null
-                        }
-                      > */}
-                      {admin.contact_no === null ? null : (
-                        <Link
-                          className="font-weight-normal  font-size-3 text-gray"
-                          to={`tel:${admin.contact_no}`}
-                          title={admin.contact_no}>
-                          +{admin.contact_no}
-                        </Link>
-                      )}
-                    </th>
-                    <th><button title={admin.is_active === ("1" || 1) ? "Deactivate" : "Active"} onClick={(e) => OntoggleActiveStatus(e, admin.is_active === ("1" || 1) ? 0 : 1, admin)} style={{ fontSize: '24px', border: 'none', background: 'none' }}>
-                      {admin.is_active === ("1" || 1) ? <FaToggleOn color="green" /> : <FaToggleOff color="gray" />}
-                    </button></th>
-                    <th className="">
-                      {page === "admin page" ? (
-                        <div
-                          className="py-5 min-width-px-100 btn-group button_group"
-                          role="group"
-                        >
-                          <button
-                            className="btn btn-outline-info action_btn"
-                            onClick={() => editAdmin(admin.admin_id)}
-                            title="Edit Admin"
+                        )}
+                      </th>
+                      <th><button title={admin.is_active === ("1" || 1) ? "Deactivate" : "Active"} onClick={(e) => OntoggleActiveStatus(e, admin.is_active === ("1" || 1) ? 0 : 1, admin)} style={{ fontSize: '24px', border: 'none', background: 'none' }}>
+                        {admin.is_active === ("1" || 1) ? <FaToggleOn color="green" /> : <FaToggleOff color="gray" />}
+                      </button></th>
+                      <th className="">
+                        {page === "admin page" ? (
+                          <div
+                            className="py-5 min-width-px-100 btn-group button_group"
+                            role="group"
                           >
-                            <span className="text-gray">
-                              <LiaUserEditSolid />
-                            </span>
-                            {/* <span className=" fas fa-edit text-gray"></span> */}
-                          </button>
-                          <button
-                            className="btn btn-outline-info action_btn"
-                            onClick={() => ShowDeleteAlert(admin)}
-                            title="Delete"
+                            <button
+                              className="btn btn-outline-info action_btn"
+                              onClick={() => editAdmin(admin.admin_id)}
+                              title="Edit Admin"
+                            >
+                              <span className="text-gray">
+                                <LiaUserEditSolid />
+                              </span>
+                              {/* <span className=" fas fa-edit text-gray"></span> */}
+                            </button>
+                            <button
+                              className="btn btn-outline-info action_btn"
+                              onClick={() => {
+                                setShowReassignAdminModal(true)
+                                setSingleAdminData(admin)
+                              }}
+                              title="Delete"
+                            >
+                              <span className=" text-danger">
+                                <RiDeleteBin5Line />
+                                {/* <i className="fa fa-trash"></i> */}
+                              </span>
+                            </button>
+                          </div>
+                        ) : (
+                          <div
+                            className="text-capitalize"
+                            onClick={() =>
+                              OnReasignManagerToJobClick(admin.admin_id)
+                            }
                           >
-                            <span className=" text-danger">
-                              <RiDeleteBin5Line />
-                              {/* <i className="fa fa-trash"></i> */}
-                            </span>
-                          </button>
-                        </div>
-                      ) : (
-                        <div
-                          className="text-capitalize"
-                          onClick={() =>
-                            OnReasignManagerToJobClick(admin.admin_id)
-                          }
-                        >
-                          <input type="checkbox" name="manager" id="manager" />
-                        </div>
-                      )}
-                    </th>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        )}
+                            <input type="checkbox" name="manager" id="manager" />
+                          </div>
+                        )}
+                      </th>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          )}
+        </div>
+        <div className="pt-2">
+          <Pagination
+            nPages={nPages}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            total={totalData}
+            count={data.length}
+          />
+        </div>
+        {showReassignAdminModal ?
+          <ReassignAdmin
+            show={showReassignAdminModal}
+            close={() => setShowReassignAdminModal(false)}
+            adminData={singleAdminData}
+            // ShowDeleteAlert={ShowDeleteAlert}
+            setApiCall={setApiCall} /> : null}
       </div>
-      <div className="pt-2">
-        <Pagination
-          nPages={nPages}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          total={totalData}
-          count={data.length}
-        />
-      </div>
-    </div>
+    </>
   );
 }

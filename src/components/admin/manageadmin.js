@@ -3,9 +3,9 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import CustomButton from "../common/button";
 import Addadmin from "../forms/admin/addadmin";
-import { getallAdminData, DeleteAdmin, GetManagerTeam } from "../../api/api";
-import { toast } from "react-toastify";
-import SAlert from "../common/sweetAlert";
+import { getallAdminData/*, DeleteAdmin*/, GetManagerTeam } from "../../api/api";
+// import { toast } from "react-toastify";
+// import SAlert from "../common/sweetAlert";
 import FilterJson from "../json/filterjson";
 import Loader from "../common/loader";
 import ExecutiveBox from "../common/executiveBox";
@@ -30,9 +30,9 @@ function ManageAdmin() {
   let [isLoading, setIsLoading] = useState(true);
   let [addTeamListShow, setAddTeamListShow] = useState(false);
   /*delete state */
-  const [deleteAlert, setDeleteAlert] = useState(false);
-  const [deleteId, setDeleteID] = useState();
-  const [deleteName, setDeleteName] = useState("");
+  // const [deleteAlert, setDeleteAlert] = useState(false);
+  // const [deleteId, setDeleteID] = useState();
+  // const [deleteName, setDeleteName] = useState("");
   /*Filter and search state */
   const [typeFilterValue, setTypeFilterValue] = useState("");
   const [search, setSearch] = useState("");
@@ -112,31 +112,31 @@ function ManageAdmin() {
     setAdminID(e);
   };
   /*To Show the delete alert box */
-  const ShowDeleteAlert = (e) => {
-    setDeleteID(e.admin_id);
-    setDeleteName(e.name);
-    setDeleteAlert(true);
-  };
+  // const ShowDeleteAlert = (e) => {
+  //   setDeleteID(e.admin_id);
+  //   setDeleteName(e.name);
+  //   setDeleteAlert(true);
+  // };
   /*To cancel the delete alert box */
-  const CancelDelete = () => {
-    setDeleteAlert(false);
-  };
+  // const CancelDelete = () => {
+  //   setDeleteAlert(false);
+  // };
   /*To call Api to delete category */
-  async function deleteAdmin(e) {
-    try {
-      const responseData = await DeleteAdmin(e);
-      if (responseData.message === "admin has been deleted") {
-        toast.error("Admin deleted Successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        setApiCall(true);
-        setDeleteAlert(false);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  // async function deleteAdmin(e) {
+  //   try {
+  //     const responseData = await DeleteAdmin(e);
+  //     if (responseData.message === "admin has been deleted") {
+  //       toast.error("Admin deleted Successfully", {
+  //         position: toast.POSITION.TOP_RIGHT,
+  //         autoClose: 1000,
+  //       });
+  //       setApiCall(true);
+  //       setDeleteAlert(false);
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
   /*Search Onchange function to filter the data */
   const onSearch = (e) => {
     const inputValue = e.target.value;
@@ -283,7 +283,7 @@ function ManageAdmin() {
                     isLoading={isLoading}
                     handleSort={handleSort}
                     editAdmin={editAdmin}
-                    ShowDeleteAlert={ShowDeleteAlert}
+                    // ShowDeleteAlert={ShowDeleteAlert}
                     nPages={nPages}
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
@@ -333,7 +333,7 @@ function ManageAdmin() {
                               <h5 className="m-0 text-black-3 font-weight-bold text-capitalize">
                                 {managerData.name}
                                 <small className="text-gray font-size-3 m-0 ">
-                                  ({managerData.admin_type})
+                                  {"  "}({managerData.admin_type})
                                 </small>
                               </h5>
                             )}
@@ -432,14 +432,14 @@ function ManageAdmin() {
             </div>
           </div>
         </div>
-        <SAlert
+        {/* <SAlert
           show={deleteAlert}
           title={deleteName}
           text="Are you Sure you want to delete !"
           onConfirm={() => deleteAdmin(deleteId)}
           showCancelButton={true}
           onCancel={CancelDelete}
-        />
+        /> */}
       </div>
     </>
   );
