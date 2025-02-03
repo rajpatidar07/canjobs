@@ -708,11 +708,11 @@ const AdminSidebar = (props) => {
           <Link
             onClick={() => clearPageNo()}
             to="/notes"
-            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center d-none"
           >
             {/* <i className="fas fa-podcast mr-5"></i> */}
             <FaNotesMedical className="sidebar_icon" />
-            Manage Notes
+            Manage Notes                                          
           </Link>
         </li>
         {/* {user_type === "admin" ? (

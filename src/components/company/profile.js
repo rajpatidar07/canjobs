@@ -10,7 +10,7 @@ import Loader from "../common/loader";
 import { Link } from "react-router-dom";
 import EmployerDocumentModal from "../forms/admin/EmployerDocumetModal";
 import { PiPencilDuotone } from "react-icons/pi";
-import ConvertTime from "../common/ConvertTime";
+import ConvertTime from "../common/Common function/ConvertTime";
 import { getInitials } from "../common/GetInitials";
 function CompanyProfile(props) {
   const user_type = localStorage.getItem("userType");

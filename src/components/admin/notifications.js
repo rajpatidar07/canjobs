@@ -8,7 +8,8 @@ import {
 import { Link } from "react-router-dom";
 import { CgFileDocument } from "react-icons/cg";
 import { FaRegBell } from "react-icons/fa";
-import ConvertTime from "../common/ConvertTime";
+import ConvertTime from "../common/Common function/ConvertTime";
+import determineBackgroundColor from "../common/Common function/DetermineBackgroundColour";
 function Notifications({
   type,
   // userId,
@@ -80,44 +81,7 @@ function Notifications({
     localStorage.getItem("callNotification"),
     recordsPerPage /*notificationApiCall*/,
   ]);
-  /*Function to set the color code to the background of the user name */
-  const determineBackgroundColor = (commentItem) => {
-    const colorClasses = [
-      "bg-primary-opacity-7",
-      "bg-warning-opacity-7",
-      "bg-orange-opacity-6",
-      "bg-info-opacity-7",
-      "bg-secondary-opacity-7",
-      "bg-danger-opacity-6",
-      "bg-info-opacity-visible",
-    ];
 
-    const assignedUserId = commentItem.assigned_to_user_id;
-
-    // Create a mapping dynamically based on assignedUserId
-    const userColorMap = {};
-
-    // Check if assignedUserId is present in the mapping
-    if (assignedUserId && userColorMap.hasOwnProperty(assignedUserId)) {
-      return userColorMap[assignedUserId];
-    }
-
-    // If not found in the mapping, use the colorClasses logic
-    const id = commentItem.id;
-    const hashCode = (str) => {
-      let hash = 0;
-      for (let i = 0; i < str.length; i++) {
-        const char = str.charCodeAt(i);
-        hash = (hash << 5) - hash + char;
-      }
-      return hash;
-    };
-
-    const hash = Math.abs(hashCode(id.toString()));
-    const index = hash % colorClasses.length;
-
-    return colorClasses[index];
-  };
   /*Function to load more data while scrolling */
   let handelScroll = (e) => {
     // console.log(totalNotificRow, recordsPerPage, recordsPerPage <= totalNotificRow)
@@ -190,7 +154,7 @@ function Notifications({
           >
             {notification.length > 0 && (
               <ul className="w-100 col p-0 ">
-                {notification.map((data) => (
+                {notification.map((data,index) => (
                   // <li
                   //   key={data.id}
                   //   title={data.message}
@@ -307,23 +271,32 @@ function Notifications({
                                         : data.subject === "assigned_admin_to_partner"
                                           ?
                                           "/partner_profile"
-                                          : data.subject === "mention_notes"//Notes for employer
+                                          : data.subject === "mention_notes" || data.subject === "mention_note"//Notes for employer
                                             ? data.document_user_type === "employer"
-                                              ? `/client_detail?note=true&noteid=${data.mention_id}`
+                                              ? `/client_detail?note=true&noteid=${JSON.parse(data.notif_json).task_id}`
                                               : data.document_user_type === "agent" && (window.location.pathname === "/partner_profile")//Notes for agent with same path as navigation
                                                 ?
-                                                `?note=true&noteid=${data.mention_id}`
-                                                : data.document_user_type === "agent" ? `/partner_profile?note=true&noteid=${data.mention_id}`//Notes for agent
-                                                  : `/${data.employee_id}?note=true&noteid=${data.mention_id}`//Notes for employee
+                                                `?note=true&noteid=${JSON.parse(data.notif_json).task_id}`
+                                                : data.document_user_type === "agent" ? `/partner_profile?note=true&noteid=${JSON.parse(data.notif_json).task_id}`//Notes for agent
+                                                  : `/${data.employee_id}?note=true&noteid=${JSON.parse(data.notif_json).task_id}`//Notes for employee
                                             : data.subject === "signed_agreement"
                                               ? data.document_user_type === "employer"//AGREEMENT FOR EMPLOYER
                                                 ? `/client_detail?agreement=true`
                                                 : `/${data.employee_id}?agreement=true`//AGREEMENT FOR EMPLOYEE
                                               : data.subject === "mention_task"
-                                                ? `/managetasks?taskId=${data.mention_id}`
-                                                : ""
+                                                ? (() => {
+                                                  let notifData = {};
+                                                  try {
+                                                    // Attempt to parse the JSON
+                                                    notifData = JSON.parse(data?.notif_json || "{}");
+                                                  } catch (error) {
+                                                    console.error("Invalid JSON in notif_json:", data?.notif_json, error);
+                                                  } const taskId = notifData?.task_id || "";
+                                                  const replyId = notifData?.reply_is || "";
 
-                      }
+                                                  return `/managetasks?taskId=${taskId}&replyId=${replyId}`;
+                                                })()
+                                                : ""}
                       onClick={() => {
                         try {
                           setshow(false);

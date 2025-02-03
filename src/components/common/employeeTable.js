@@ -8,6 +8,7 @@ import {
   DeleteJobEmployee,
   ApplyJob,
   getallAdminData,
+  getApplicanTypeApi,
 } from "../../api/api";
 import moment from "moment";
 import { BiSolidCategory } from "react-icons/bi";
@@ -25,6 +26,7 @@ import {
   /* MdOutlineCastForEducation,*/ MdTypeSpecimen,
   MdRealEstateAgent,
   MdEditNote,
+  MdOutlineTypeSpecimen,
 } from "react-icons/md";
 // import { LiaUserEditSolid, LiaUserTieSolid } from "react-icons/lia";
 import { GoTasklist } from "react-icons/go";
@@ -32,12 +34,12 @@ import { GoTasklist } from "react-icons/go";
 import { AiOutlineFilePdf } from "react-icons/ai";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { PiBriefcaseLight } from "react-icons/pi";
-import ConvertTime from "./ConvertTime";
+import ConvertTime from "./Common function/ConvertTime";
 import VisaTimeLine from "./visaTimeLine";
-import filterjson from "../json/filterjson";
 import CustomButton from "./button";
 import ExportExcelButton from "./exportExcelButton";
-// import ApplicantCategory from "../forms/user/ApplicantCategory";
+import determineBackgroundColor from "./Common function/DetermineBackgroundColour";
+import AddApplicantType from "../forms/admin/AddApplicantType";
 export default function EmployeeTable(props) {
   let agentId = localStorage.getItem("agent_id");
   let user_type = localStorage.getItem("userType");
@@ -54,6 +56,7 @@ export default function EmployeeTable(props) {
   let [showSkillsModal, setShowSkillsModal] = useState(false);
   let [pageNameForForm, setPageNameForForm] = useState(false);
   let [admintList, setAdmintList] = useState([]);
+  let [applicantTypeList, setApplicantTypeList] = useState([]);
   let [showStatusChangeModal, setShowStatusChange] = useState(false);
   /*data and id states */
   const [employeeData, setemployeeData] = useState([]);
@@ -82,6 +85,10 @@ export default function EmployeeTable(props) {
     props.heading === "Dashboard" ? "created_at" : "employee_id"
   );
   const [sortOrder, setSortOrder] = useState("DESC");
+  const [showApplicantTypeForm, setShowApplicantTypeForm] = useState(false);
+
+  let getApplicantType = (id) => (applicantTypeList?.find(x => x.id === id)?.title)
+  let getApplicantSubType = (id) => (applicantTypeList?.find(x => x.id === id)?.title)
   /* Function to get Employee data*/
   const EmpData = async () => {
     // const params = useParams();
@@ -141,6 +148,12 @@ export default function EmployeeTable(props) {
       } else {
         setAdmintList(adminJson.data);
       }
+    } catch (err) {
+      console.log(err);
+    }
+    try {
+      let response = await getApplicanTypeApi();
+      setApplicantTypeList(response.data.data);
     } catch (err) {
       console.log(err);
     }
@@ -335,52 +348,6 @@ export default function EmployeeTable(props) {
     localStorage.removeItem("PageNo");
     props.setpageNo(1);
   };
-  const determineBackgroundColor = (commentItem) => {
-    const colorClasses = [
-      "bg-primary-opacity-7",
-      "bg-warning-opacity-7",
-      "bg-orange-opacity-6",
-      "bg-info-opacity-7",
-      "bg-secondary-opacity-7",
-      "bg-danger-opacity-6",
-      "bg-info-opacity-visible",
-      "bg-eastern",
-      "bg-secondary",
-      "bg-violet",
-      "bg-info",
-      "bg-coral-opacity-visible",
-      "bg-warning",
-      "bg-allports",
-      "bg-conch",
-      "bg-pink",
-      "bg-poppy",
-      "bg-success",
-      "bg-helio",
-      "bg-gray"
-    ];
-
-
-    // Instead of using an ID, use the comment type or text to determine the color
-    const commentType = commentItem || ""; // Use 'type' or fallback to 'text'
-
-    // Function to generate a hash code from the string (type or text)
-    const hashCode = (str) => {
-      let hash = 0;
-      for (let i = 0; i < str.length; i++) {
-        const char = str.charCodeAt(i);
-        hash = (hash << 5) - hash + char;
-      }
-      return hash;
-    };
-
-    // Generate a hash based on the comment type or text
-    const hash = Math.abs(hashCode(commentType));
-
-    // Use the hash to select a color class
-    const index = hash % colorClasses.length;
-
-    return colorClasses[index];
-  };
 
   return (
     <>
@@ -402,6 +369,7 @@ export default function EmployeeTable(props) {
           setApiCall={setApiCall}
           close={() => setVisaModal(false)}
           type={props?.ApplicantType}
+          typeName={getApplicantType(props?.ApplicantType)}
         />
       ) : null}
       {showEducationModal ? (
@@ -450,6 +418,14 @@ export default function EmployeeTable(props) {
           setApiCall={setApiCall}
         />
       ) : null}
+      {showApplicantTypeForm ?
+        <AddApplicantType
+          show={showApplicantTypeForm}
+          close={() => {
+            setShowApplicantTypeForm(false);
+          }}
+        />
+        : null}
       {/* {documentModal ? (
         <DocumentModal
           show={documentModal}
@@ -622,7 +598,7 @@ export default function EmployeeTable(props) {
                     : status === "" ||
                       status === "00" ||
                       status === "0,1,2,3,5,6" ||
-                      status === "4,7,8"
+                      status === "4,7,8,9"
                       ? "btn btn-primary"
                       : "btn btn-outline-primary"
                 }
@@ -646,12 +622,19 @@ export default function EmployeeTable(props) {
                     >
                       Add Candidate
                     </CustomButton>
-                  </div>
-                  <div className="form_group text-right">
-                    <ExportExcelButton type={"employee"} portal={portal} />
+                    <Link
+                      className={` btn-sm  btn-primary m-1`}
+                      onClick={() => setShowApplicantTypeForm(true)}
+                      title={"Add New Applicant type"}
+                    >
+                      {<MdOutlineTypeSpecimen size={10} />}
+                    </Link>
                   </div>
                 </>
               ) : null}
+            <div className="form_group text-right">
+              <ExportExcelButton tableName={"employee"} type={""} portal={portal} applicantType={props?.ApplicantType ? props?.ApplicantType : props.interestFilterValu} status={status} local={props.localFilterValue ? props.localFilterValue : ""} tableData={[]} />
+            </div>
           </div>
         )}
         <div className="table-responsive main_table_div">
@@ -847,7 +830,7 @@ export default function EmployeeTable(props) {
                       </Link>
                     </th>
                   )}
-                  {["temporary resident (visiting , studying , working)", "economic immigration", "family sponsorship", "pnp"].includes(props?.ApplicantType?.toLowerCase()) && (
+                  {[14, "14", 15, "15", 16, "16", 4, "4"].includes(props?.ApplicantType) && (
                     <th
                       scope="col"
                       className="border-0 font-size-4 font-weight-normal"
@@ -890,7 +873,7 @@ export default function EmployeeTable(props) {
                 {/* Map function to show the data in the list*/}
                 {totalData === 0 || employeeData.length === 0 ? (
                   <tr>
-                    <th colSpan={12} className="bg-white text-center">
+                    <th colSpan={13} className="bg-white text-center">
                       No Data Found
                     </th>
                   </tr>
@@ -901,7 +884,7 @@ export default function EmployeeTable(props) {
                         <tr style={{ border: "0" }}>
                           <td
                             style={{ paddingBottom: "0!important" }}
-                            colSpan="12"
+                            colSpan="13"
                             className={
                               empdata.applicant_process_status
                                 ? "bg-white text-center m-0"
@@ -938,19 +921,14 @@ export default function EmployeeTable(props) {
                                     ? `/student_profile`
                                     : `/${empdata.employee_id}`}
                                   onClick={
-                                    () =>
-                                      portal === "study"
-                                        ? localStorage.setItem(
-                                          "employee_id",
-                                          empdata.employee_id
-                                        )
-                                        : () => {
+                                    () => {
+                                      if (portal === "study") {
+                                        localStorage.setItem("employee_id", empdata.employee_id);
+                                      } else {
+                                        localStorage.setItem("StatusTab", status === "" ? "00" : status);
+                                      }
+                                    }
 
-                                          localStorage.setItem(
-                                            "StatusTab",
-                                            status === "" ? "00" : status
-                                          );
-                                        }
                                     //   empdata.name !== null
                                     //     ? () => employeeDetails(empdata.employee_id)
                                     //     : null
@@ -989,19 +967,14 @@ export default function EmployeeTable(props) {
                                       ? `/student_profile`
                                       : `/${empdata.employee_id}`}
                                     onClick={
-                                      () =>
-                                        portal === "study"
-                                          ? localStorage.setItem(
-                                            "employee_id",
-                                            empdata.employee_id
-                                          )
-                                          : () => {
+                                      () => {
+                                        if (portal === "study") {
+                                          localStorage.setItem("employee_id", empdata.employee_id);
+                                        } else {
+                                          localStorage.setItem("StatusTab", status === "" ? "00" : status);
+                                        }
+                                      }
 
-                                            localStorage.setItem(
-                                              "StatusTab",
-                                              status === "" ? "00" : status
-                                            );
-                                          }
                                       //   empdata.name !== null
                                       //     ? () => employeeDetails(empdata.employee_id)
                                       //     : null
@@ -1332,64 +1305,51 @@ export default function EmployeeTable(props) {
                           //   )}
                           // </td>
                           <td className="text-center ">
-                            {empdata.interested_in === null ||
-                              !empdata.interested_in ? (
+                            {empdata.interested_in_id === null ||
+                              !empdata.interested_in_id ? (
                               <p className="font-size-3 mb-0" title="N/A">
                                 N/A
                               </p>
                             ) : (
                               <p
-                                className={`font-size-2 font-weight-normal text-black-2 mb-0 ${empdata.interested_in === "pgwp" || empdata.interested_in === "wes" || empdata.interested_in === "atip"
-                                  ? `text-uppercase`
-                                  : "text-capitalize"
-                                  }`}
-                                title={empdata.interested_in}
+                                className={`font-size-2 font-weight-normal text-white mb-0 `}
+                                title={empdata.interested_in_id === 14 || empdata.interested_in_id === "14" ? "temporary resident" : getApplicantType(empdata.interested_in_id)
+                                }
                               >
                                 <span
-                                  className={`p-3 ${empdata.interested_in === "pnp" || empdata.interested_in === "study permit"
-                                    ? "text-dark"
-                                    : "text-white"
-                                    } text-center  border rounded-pill 
-                                  ${determineBackgroundColor(empdata.interested_in)}`}
+                                  className={`p-3 text-center  border rounded-pill 
+                                  ${determineBackgroundColor(empdata)}`}
                                 >
-                                  {empdata.interested_in === "temporary resident (visiting , studying , working)" ? "temporary resident" : empdata.interested_in === "pnp" ? "Alberta PNP" : empdata.interested_in}
+                                  {empdata.interested_in_id === 14 || empdata.interested_in_id === "14" ? "temporary resident" : getApplicantType(empdata.interested_in_id)
+                                  }
                                 </span>
                               </p>
                             )}
                           </td>
                         )}
-                        {["temporary resident (visiting , studying , working)", "economic immigration", "family sponsorship", "pnp"].includes(props?.ApplicantType?.toLowerCase()) && (
-                          <td className="text-center">
-                            {(!(filterjson.interested_sub_type[props?.ApplicantType?.toLowerCase()] || []).find((subType) => (
-                              subType === empdata.category))) ? (
-                              <p className="font-size-3 mb-0" title="N/A">
-                                N/A
-                              </p>
-                            ) : (
-                              <>
-                                <p
-                                  className={`font-size-2 font-weight-normal text-black-2 mb-0 
-            ${empdata.category === "rrs" || empdata.category === "aos" ? "text-uppercase" : "text-capitalize"}
-          `}
-                                  title={(filterjson.interested_sub_type[props?.ApplicantType?.toLowerCase()] || []).find((subType) => (
-                                    subType === empdata.category ? subType : ""
-                                  ))}
-                                >
-                                  <span
-                                    className={`p-1 text-white text-center border rounded-pill ${determineBackgroundColor(
-                                      empdata.category
-                                    )}`}
-                                  >
-                                    {(filterjson.interested_sub_type[props?.ApplicantType?.toLowerCase()] || []).find((subType) => (
-                                      subType === empdata.category ? subType : ""
-                                    ))}
-                                  </span>
-                                </p>
-                              </>
-                            )}
-                          </td>
-                        )}
 
+                        <td className={props?.ApplicantType && [14, "14", 15, "15", 16, "16", 4, "4"].includes(props?.ApplicantType) ? "text-center" : "d-none"}>
+                          {[14, "14", 15, "15", 16, "16", 4, "4"].includes(props?.ApplicantType) && empdata.category_id ? (
+                            <>
+                              <p
+                                className={`font-size-2 font-weight-normal text-white mb-0 text-capitalize  `}
+                                title={getApplicantSubType(empdata.category_id)}
+                              >
+                                <span
+                                  className={`p-1 text-white text-center border rounded-pill ${determineBackgroundColor(
+                                    empdata
+                                  )}`}
+                                >
+                                  {getApplicantSubType(empdata.category_id)}
+                                </span>
+                              </p>
+                            </>
+                          ) : (
+                            <p className="font-size-3 mb-0" title="N/A">
+                              N/A
+                            </p>
+                          )}
+                        </td>
                         {props.visa === "yes" ? null : (
                           <td className="text-center ">
                             <p
@@ -1489,8 +1449,7 @@ export default function EmployeeTable(props) {
           <p className="font-size-3 font-weight-normal text-black-2 mb-0">
             {(new Date(empdata.created_at) >= oneMonthAgo && new Date(empdata.created_at) <= currentDate) === true ? "New" : "Retained"}          
             </p>
-        </td> */
-                        }
+        </td> */}
                         {props.heading === "Dashboard" ? (
                           ""
                         ) : (
@@ -1510,7 +1469,7 @@ export default function EmployeeTable(props) {
                                         : "btn btn-outline-info action_btn"
                                     }
                                     onClick={() => editVisa(empdata)}
-                                    title={`Add/Update ${props?.ApplicantType === "temporary resident (visiting , studying , working)" ? "Temporary Resident" : props?.ApplicantType === "pnp" ? "Alberta PNP" : props?.ApplicantType} status`}
+                                    title={`Add/Update ${props?.ApplicantType === (14 || "14") ? "Temporary Resident" : getApplicantType(props?.ApplicantType)} status`}
                                   >
                                     <span className="text-gray px-2">
                                       <MdEditNote />
@@ -1532,7 +1491,7 @@ export default function EmployeeTable(props) {
                                   <>
                                     <button
                                       className={
-                                        ["study permit", "temporary resident (visiting , studying , working)", "economic immigration", "family sponsorship", "pnp"].includes(props?.ApplicantType?.toLowerCase())
+                                        [14, "14", 15, "15", 16, "16", 4, "4"].includes(props?.ApplicantType)
                                           ? "btn btn-outline-info action_btn"
                                           : "d-none"
                                       }
@@ -1542,7 +1501,7 @@ export default function EmployeeTable(props) {
                                           empdata.employee_id
                                         )
                                       }
-                                      title="Change Applicant's Sub Type"
+                                      title="Change Candidate Applicant's Sub Type"
                                     >
                                       <span className="text-gray px-2">
                                         <BiSolidCategory />
@@ -1555,7 +1514,7 @@ export default function EmployeeTable(props) {
                                           empdata.employee_id
                                         )
                                       }
-                                      title="Change Applicant's Type"
+                                      title="Change Candidate Applicant's Type"
                                     >
                                       <span className="text-gray px-2">
                                         <MdTypeSpecimen />
@@ -1712,7 +1671,7 @@ export default function EmployeeTable(props) {
                                         : "btn btn-outline-info action_btn"
                                     }
                                     onClick={() => editVisa(empdata)}
-                                    title={`Add/Update ${props?.ApplicantType === "temporary resident (visiting , studying , working)" ? "Temporary Resident" : props?.ApplicantType === "pnp" ? "Alberta PNP" : props?.ApplicantType} status`}
+                                    title={`Add/Update ${props?.ApplicantType === (14 || "14") ? "Temporary Resident" : getApplicantType(props?.ApplicantType)} status`}
                                   >
                                     <span className="text-gray px-2">
                                       <MdEditNote />

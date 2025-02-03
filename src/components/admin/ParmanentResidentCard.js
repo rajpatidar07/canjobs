@@ -53,6 +53,7 @@ export default function ParmanentResidentCard() {
                                 <div className="row m-0 align-items-center">
                                     {/* Employees filter's */}
                                     <ApplicantsFilter
+                                        applicantTypeId={"20"}
                                         user_type={user_type}
                                         search={search}
                                         onSearch={onSearch}
@@ -95,7 +96,7 @@ export default function ParmanentResidentCard() {
                                 status={"-1"}
                                 pageNo={pageNo}
                                 setpageNo={setpageNo}
-                                ApplicantType={"permanent resident cards"}
+                                ApplicantType={"20"}
                             />
                         </div>
                     </div>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { CiTrash, CiEdit } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import { Accordion } from "react-bootstrap";
-import ConvertTime from "./ConvertTime";
+import ConvertTime from "./Common function/ConvertTime";
 // import Notifications from "../admin/notifications";
 
 export default function DocumentList({

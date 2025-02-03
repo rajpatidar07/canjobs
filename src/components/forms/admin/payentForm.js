@@ -4,7 +4,7 @@ import { GetPaymentList } from "../../../api/api";
 import PayForm from "./PayForm";
 // import Loader from "../../common/loader";
 import AddTransactionForm from "./addTransactionForm";
-import ConvertTime from "../../common/ConvertTime";
+import ConvertTime from "../../common/Common function/ConvertTime";
 export default function PayentForm({ data, user_id, user_type }) {
   const [apiCall, setApicall] = useState(true);
   // const [loading, setLoading] = useState(true);

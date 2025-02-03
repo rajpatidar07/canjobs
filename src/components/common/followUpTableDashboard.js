@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { /*getFollowupLastData,*/ getSingleFollowup } from "../../api/api";
 import Pagination from "./pagination";
 import Loader from "./loader";
-import ConvertTime from "./ConvertTime";
+import ConvertTime from "./Common function/ConvertTime";
 // import { toast } from "react-toastify";
 function FollowUpDashBoard(props) {
   const [followUpData, setFollowUpData] = useState([]);

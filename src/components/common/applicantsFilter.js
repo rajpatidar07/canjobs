@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
-import FilterJson from "../json/filterjson";
-import { /*GetFilter,*/ GetAgentJson, getallAdminData } from "../../api/api";
+import { /*GetFilter,*/ GetAgentJson, getallAdminData, getApplicanTypeApi } from "../../api/api";
 import { CiSearch } from "react-icons/ci";
 import filterjson from "../json/filterjson";
 
 export default function ApplicantsFilter({
   search,
   onSearch,
-  experienceFilterValue,
-  setExperienceFilterValue,
+  // experienceFilterValue,
+  // setExperienceFilterValue,
   skillFilterValue,
-  setSkillFilterValue,
+  // setSkillFilterValue,
   educationFilterValue,
-  setEducationFilterValue,
+  // setEducationFilterValue,
   setpageNo,
   agentFilterValue,
   setAgentFilterValue,
@@ -31,14 +30,15 @@ export default function ApplicantsFilter({
   setFilterByEmployeeId,
   filterByEmployeeId,
   statustFilterValue,
-  setStatustFilterValue
+  setStatustFilterValue,
+  applicantTypeId
 }) {
   // let [SkillList, setSkillList] = useState([]);
   // let [EducationList, setEducationList] = useState([]);
-  // const [searchcall, setsearchcall] = useState(false);
   const [candidateSearch, setcandidateSearch] = useState("");
   let [AgentList, setAgentList] = useState([]);
   let [AdminList, setAdmintList] = useState([]);
+  const [applicantTypeList, setApplicantTypeList] = useState([]);
   let portal = localStorage.getItem("portal")
   /*Function to get thejSon */
   const SearchCandidate = () => {
@@ -71,6 +71,12 @@ export default function ApplicantsFilter({
       } else {
         setAgentList(agentjson);
       }
+    } catch (err) {
+      console.log(err);
+    }
+    try {
+      let response = await getApplicanTypeApi();
+      setApplicantTypeList(response.data.data);
     } catch (err) {
       console.log(err);
     }
@@ -352,24 +358,17 @@ export default function ApplicantsFilter({
               setinterestFilterValue(e.target.value);
               setpageNo(1);
             }}
-            className={` form-control ${interestFilterValue === "pnp"
-              || interestFilterValue === "pgwp" || interestFilterValue === "wes" || interestFilterValue === "atip"
-              ? `text-uppercase`
-              : "text-capitalize"
-              }`}
+            className={` form-control`}
           >
             <option value="" data-display="Product Designer">
               Candidate's Application type
             </option>
-            {(FilterJson.interested || []).map((interest) => (
+            {(applicantTypeList.filter((item) => item.level === (0 || "0")) || []).map((interest, index) => (
               <option
-                key={interest}
-                value={interest}
-                className={
-                  interest === "pnp" || interest === "wes" || interest === "atip" || interest === "pgwp" ? `text-uppercase` : "text-capitalize"
-                }
+                key={index}
+                value={interest.id}
               >
-                {interest}
+                {interest.title}
               </option>
             ))}
           </select>
@@ -390,8 +389,8 @@ export default function ApplicantsFilter({
             className="form-control"
             placeholder={"Search by ID"}
             value={filterByEmployeeId}
-            id="sub type"
-            name="sub type"
+            id="id"
+            name="id"
             onChange={(e) => {
               setFilterByEmployeeId(e.target.value);
               setpageNo(1);
@@ -420,9 +419,9 @@ export default function ApplicantsFilter({
             className="text-capitalize form-control"
           >
             <option value={""}>Candidate's sub type</option>
-            {((FilterJson.interested_sub_type[pageName.replaceAll("_", " ")]) || Object.values(FilterJson.interested_sub_type).flat()).map((subType, index) => (
-              <option key={index} value={subType} className={`${subType === "aos" || subType === "rrs" ? "text-uppercase" : "text-capitalize"}`}>
-                {subType}
+            {(applicantTypeList.filter((item) => item.level === "1" && item.parent_id === applicantTypeId)).map((subType, index) => (
+              <option key={index} value={subType.id} className={`text-capitalize`}>
+                {subType.title}
               </option>
             ))}
           </select>

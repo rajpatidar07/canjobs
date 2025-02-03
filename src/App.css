@@ -534,6 +534,11 @@ span.job_swap_label {
   padding: 0 15px !important;
 }
 
+.task_dashboard_form .form-group,
+.task_dashboard_form .form_control {
+  padding: 0 5px !important;
+}
+
 .form-group label,
 .form_control .input_label {
   font-weight: 500;
@@ -545,6 +550,11 @@ span.job_swap_label {
   left: 26px;
   background: #fff;
   padding: 0 5px;
+}
+
+.task_dashboard_form .form-group label,
+.task_dashboard_form .form_control .input_label {
+  left: 12px;
 }
 
 .form_control .input_label {
@@ -2265,8 +2275,8 @@ ul.css-8tnble li {
   height: 100vh;
   width: 100%;
   margin-top: -50px;
-  font-size: 50px,;
+  font-size: 50px, ;
   display: flex;
   justify-content: center;
   align-items: center;
-}                          
+}

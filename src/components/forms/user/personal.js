@@ -13,6 +13,7 @@ import {
   EmployeeDetails,
   GetAgentJson,
   getallAdminData,
+  getApplicanTypeApi,
   // GetFilter,
   // AddEmployeePermission,
 } from "../../../api/api";
@@ -33,7 +34,7 @@ function PersonalDetails(props) {
   const [loading, setLoading] = useState(false);
   const [agentList, setAgentList] = useState([]);
   const [admiinList, setAdminList] = useState([]);
-  // const [jsonList, setJsonList] = useState([]);
+  const [applicantTypeList, setApplicantTypeList] = useState([]);
   let [apiCall, setApiCall] = useState(false);
   let [showAddEAgentModal, setShowAgentMOdal] = useState(false);
   // let [showAddEAdminModal, setShowAdminMOdal] = useState(false);
@@ -58,7 +59,7 @@ function PersonalDetails(props) {
     currently_located_country: "",
     language: "",
     religion: "",
-    interested_in: portal === "study" ? "study permit" : "",
+    interested_in_id: portal === "study" ? 13 : "",
     experience: "",
     work_permit_canada: "",
     work_permit_other_country: "",
@@ -177,7 +178,7 @@ function PersonalDetails(props) {
     //       ? "Religion can not have a number."
     //       : "",
     // ],
-    interested_in: [
+    interested_in_id: [
       (value) => (value === "" ? "Interested in is required" : null),
     ],
     // experience: [
@@ -244,23 +245,26 @@ function PersonalDetails(props) {
   };
   /*Function to get admin json list */
   const AdminJson = async () => {
-    let response = await getallAdminData();
     try {
-      // let json = await GetFilter();
-      // console.log(json);
-      // let newAdminJson = response.data.filter((item) => admin_id !== item.admin_id)
-      // if (Array.isArray(newAdminJson)) {
-      //   const options = newAdminJson.map((option) => ({
-      //     value: option.admin_id,
-      //     label: option.name,
-      //   }));
-      //   setAdminList(options);
-      // }
-      // setJsonList(json.data.data);
+      let response = await getallAdminData();
+
       setAdminList(response.data)
     } catch (err) {
       console.log(err);
     }
+    try {
+      let response = await GetAgentJson();
+      setAgentList(response);
+    } catch (err) {
+      console.log(err);
+    }
+    try {
+      let response = await getApplicanTypeApi();
+      setApplicantTypeList(response.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+
   };
   /*Function to set data to the search agent  */
   // const onAdminSelectChange = (option) => {
@@ -269,22 +273,6 @@ function PersonalDetails(props) {
 
   /*Function to get agent json list */
   const AgentJson = async () => {
-    let response = await GetAgentJson();
-    try {
-      // let json = await GetFilter();
-      // console.log(json);
-      // if (Array.isArray(response)) {
-      //   const options = response.map((option) => ({
-      //     value: option.id,
-      //     label: option.u_id + "  " + option.name,
-      //     name: option.name
-      //   }));
-      // }
-      setAgentList(response);
-      // setJsonList(json.data.data);
-    } catch (err) {
-      console.log(err);
-    }
   };
   /*Function to set data to the search agent  */
   // const onSelectChange = (option) => {
@@ -468,8 +456,8 @@ function PersonalDetails(props) {
                 ) : (
                   <h5 className="text-center pt-2 mb-7">
                     Update {props.pageNameForForm === "ApplicantType" ?
-                      " Applicant Type" : props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned"
-                        ? "Reffer By" : props.user_of_page === "assignedUser"
+                      "Candidates Applicant Type" : props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned"
+                        ? "Refer By" : props.user_of_page === "assignedUser"
                           ? "Assigned To" :
                           "Candidate Details"}
                   </h5>
@@ -1027,126 +1015,116 @@ function PersonalDetails(props) {
                       Applicant's Type : <span className="text-danger">*</span>
                     </label>
                     <select
-                      className={`${errors.interested_in
+                      className={`${errors.interested_in_id
                         ? "form-control  border border-danger "
                         : "form-control "}
-                          ${state.interested_in === "pgwp" || state.interested_in === "wes" ||
-                          state.interested_in === "atip" ?
+                          ${state.interested_in_id === "pgwp" || state.interested_in_id === "wes" ||
+                          state.interested_in_id === "atip" ?
                           `text-uppercase` :
                           "text-capitalize"}`
                       }
-                      id="interested_in"
-                      name="interested_in"
-                      value={state.interested_in || ""}
+                      id="interested_in_id"
+                      name="interested_in_id"
+                      value={state.interested_in_id || ""}
                       onChange={onInputChange}
                     >
                       <option value={""}>Select</option>
-                      {(FilterJson.interested || []).map((interest, index) => (
-                        <option key={index} value={interest}
-                          className={interest === "pgwp"|| interest === "wes" ||
-                            interest === "atip" ?
-                            `text-uppercase` :
-                            "text-capitalize"}>
-                          {interest === "pnp" ? "Alberta PNP" : interest}
+                      {(applicantTypeList.filter((item) => item.level === ("0" || 0)) || []).map((interest, index) => (
+                        <option key={index} value={interest.id}>
+                          {interest.title}
                         </option>
                       ))}
-                      {/* <option value={"swap"}>SWEP</option>
-                  <option value={"parttime"}>Part-time</option>
-                  <option value={"all"}>All</option> */}
                     </select>
-                    {/*----ERROR MESSAGE FOR interested_in----*/}
-                    {errors.interested_in && (
+                    {/*----ERROR MESSAGE FOR interested_in_id----*/}
+                    {errors.interested_in_id && (
                       <span
-                        key={errors.interested_in}
+                        key={errors.interested_in_id}
                         className="text-danger font-size-3"
                       >
-                        {errors.interested_in}
+                        {errors.interested_in_id}
                       </span>
                     )}
                   </div>
-                  {["temporary resident (visiting , studying , working)", "economic immigration", "family sponsorship", "pnp"].includes(state.interested_in?.toLowerCase()) &&
-                    state.interested_in && FilterJson.interested_sub_type[state.interested_in?.toLowerCase()] &&
-                    <div className={`form-group 
-  ${props.user_of_page === "assignedUser" ||
-                        props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned"
-                        || props.pageNameForForm === "ApplicantType"
-                        ? "d-none"
-                        : `${props.pageNameForForm === "Category" ?
-                          "col-md-12" : "col-md-4"}`}
+                  {[14, "14", 15, "15", 16, "16", 4, "4"].includes(state.interested_in_id) &&
+                    state.interested_in_id &&
+                    <div className={`form-group ${props.user_of_page === "assignedUser" ||
+                      props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned"
+                      || props.pageNameForForm === "ApplicantType"
+                      ? "d-none"
+                      : `${props.pageNameForForm === "Category" ?
+                        "col-md-12" : "col-md-4"}`}
   `}>
                       <label
-                        htmlFor="category"
+                        htmlFor="category_id"
                         className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                       >
                         Sub Type:
                       </label>
                       <select
-                        name="category"
-                        value={state.category || ""}
+                        name="category_id"
+                        value={state.category_id || ""}
                         onChange={onInputChange}
                         className={`form-control 
-                          ${errors.category
+                          ${errors.category_id
                             ? " border border-danger"
-                            : ""} ${state.category === "aos" || state.category === "rrs" ? "text-uppercase" : "text-capitalize"}`
+                            : ""} ${state.category_id === "aos" || state.category_id === "rrs" ? "text-uppercase" : "text-capitalize"}`
                         }
-                        id="category"
+                        id="category_id"
                       >
                         <option value={""}>Select Sub Type</option>
-                        {(FilterJson.interested_sub_type[state.interested_in?.toLowerCase()] || []).map((subType, index) => (
-                          <option key={index} value={subType} className={`${subType === "aos" || subType === "rrs" ? "text-uppercase" : "text-capitalize"}`}>
-                            {subType}
+                        {(applicantTypeList.filter((item) => item.parent_id === state.interested_in_id) || []).map((subType, index) => (
+                          <option key={index} value={subType.id} >
+                            {subType.title}
                           </option>
                         ))}
                       </select>
-                      {/* ----ERROR MESSAGE FOR category---- */}
-                      {errors.category && (
+                      {/* ----ERROR MESSAGE FOR category_id---- */}
+                      {errors.category_id && (
                         <span
-                          key={errors.category}
+                          key={errors.category_id}
                           className="text-danger font-size-3"
                         >
-                          {errors.category}
+                          {errors.category_id}
                         </span>
                       )}
                     </div>
                   }
-                  {["economic immigration"].includes(state.interested_in?.toLowerCase()) &&
-                    state.interested_in &&
-                    FilterJson.interested_sub_type[state.interested_in?.toLowerCase()] &&
-                    ["caregivers"].includes(state?.category?.toLowerCase()) &&
-                    state.category && (
-                      <div className={`form-group 
-      ${props.user_of_page === "assignedUser" ||
-                          props.user_of_page === "agentAssigned" ||
-                          props.pageNameForForm === "agentAssigned" ||
-                          props.pageNameForForm === "ApplicantType"
-                          ? "d-none"
-                          : `${props.pageNameForForm === "Category" ? "col-md-12" : "col-md-4"}`}`}>
+                  {["15", 15].includes(state.interested_in_id) &&
+                    state.interested_in_id &&
+                    ["38", 38].includes(state?.category_id) &&
+                    state.category_id && (
+                      <div className={`form-group ${props.user_of_page === "assignedUser" ||
+                        props.user_of_page === "agentAssigned" ||
+                        props.pageNameForForm === "agentAssigned" ||
+                        props.pageNameForForm === "ApplicantType"
+                        ? "d-none"
+                        : `${props.pageNameForForm === "Category" ? "col-md-12" : "col-md-4"}`}`}>
                         <label
-                          htmlFor="sub_category"
+                          htmlFor="sub_category_id"
                           className="font-size-4 text-black-2 font-weight-semibold text-capitalize line-height-reset"
                         >
-                          {state.category} Sub Type:
+                          {applicantTypeList.find((item) => item.id === state.category_id)?.title} Sub Type:
                         </label>
                         <select
-                          name="sub_category"
-                          value={state.sub_category || ""}
+                          name="sub_category_id"
+                          value={state.sub_category_id || ""}
                           onChange={onInputChange}
-                          className={`form-control text-capitalize ${errors.sub_category ? "border border-danger" : ""}`}
-                          id="sub_category"
+                          className={`form-control text-capitalize ${errors.sub_category_id ? "border border-danger" : ""}`}
+                          id="sub_category_id"
                         >
+                          {console.log((applicantTypeList.map((item) => item.parent_id )),state.category_id)}
                           <option value={""}>Select Sub Type</option>
-                          {((FilterJson.interested_sub_type_of_sub_type[state.interested_in?.toLowerCase()] &&
-                            FilterJson.interested_sub_type_of_sub_type[state.interested_in?.toLowerCase()][state.category.toLowerCase()]) || []).map((subType, index) => (
-                              <option key={index} value={subType} className="text-capitalize">
-                                {subType}
-                              </option>
-                            ))}
+                          {(applicantTypeList.filter((item) => item.parent_id === state.category_id) || []).map((subType, index) => (
+                            <option key={index} value={subType.id} >
+                              {subType.title}
+                            </option>
+                          ))}
                         </select>
 
-                        {/* ----ERROR MESSAGE FOR sub_category---- */}
-                        {errors.sub_category && (
-                          <span key={errors.sub_category} className="text-danger font-size-3">
-                            {errors.sub_category}
+                        {/* ----ERROR MESSAGE FOR sub_category_id---- */}
+                        {errors.sub_category_id && (
+                          <span key={errors.sub_category_id} className="text-danger font-size-3">
+                            {errors.sub_category_id}
                           </span>
                         )}
                       </div>

@@ -3,7 +3,7 @@ import Collapse from "react-bootstrap/Collapse";
 import Card from "react-bootstrap/Card";
 import { getLMIAstatus } from "../../api/api";
 import { Table } from "react-bootstrap";
-import ConvertTime from "./ConvertTime";
+import ConvertTime from "./Common function/ConvertTime";
 const DashboardCard = (props) => {
   const [open, setOpen] = useState(false);
   const [LMIAdata, setLMIAdata] = useState([]);

@@ -98,7 +98,6 @@ export default function MainRetainerAggHtml({
           type: felidData.type,
           pdf_genrated_status: "1",
         };
-        console.log(data.family_json);
         try {
           await AddUpdateAgreement(data);
           setApicall(true);

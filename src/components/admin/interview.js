@@ -3,14 +3,26 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import Interview from "../common/interviewTable";
 import { useEffect } from "react";
+import ExportExcelButton from "../common/exportExcelButton";
+import { getInterview } from "../../api/api";
 export default function ManageInterview() {
   /*Search state */
   let [search, setSearch] = useState("");
   let [statusFilterValue, setStatusFilterValue] = useState("");
   const [searcherror, setSearchError] = useState("");
   const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
-  
+  const [allInterviews, setAllInterviews] = useState([]);
+
+  const GetllINterviewData = async () => {
+    try {
+      let res = await getInterview()
+      setAllInterviews(res.data)
+    } catch (err) {
+      console.log(err)
+    }
+  }
   useEffect(() => {
+    GetllINterviewData()
     if ((search === "") === true) {
       setSearchError("");
     }
@@ -69,8 +81,10 @@ export default function ManageInterview() {
                         name="type"
                         value={statusFilterValue}
                         id="type"
-                        onChange={(e) => {setStatusFilterValue(e.target.value)
-                          setpageNo(1)}}
+                        onChange={(e) => {
+                          setStatusFilterValue(e.target.value)
+                          setpageNo(1)
+                        }}
                         className=" form-control"
                       >
                         <option value="">Candidate's Interview Status</option>
@@ -81,6 +95,10 @@ export default function ManageInterview() {
                   </div>
                 </div>
                 <small className="text-danger">{searcherror}</small>
+              </div>
+              <div className="d-flex flex-end">
+                {console.log(allInterviews)}
+                <ExportExcelButton tableName={"interview"} portal={""} applicantType={""} status={""} local={""} type={""} tableData={allInterviews} />
               </div>
               {/*<-- Interview list Table -->*/}
               <Interview

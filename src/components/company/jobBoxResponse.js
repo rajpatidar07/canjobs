@@ -9,7 +9,7 @@ import {
   LiaBusinessTimeSolid,
   LiaDollarSignSolid,
 } from "react-icons/lia";
-import ConvertTime from "../common/ConvertTime";
+import ConvertTime from "../common/Common function/ConvertTime";
 function JobBoxResponse({
   categoryFilterValue,
   locationFilterValue,

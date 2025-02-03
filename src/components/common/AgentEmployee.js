@@ -23,7 +23,7 @@ import { LiaUserEditSolid } from "react-icons/lia";
 // import ChangeJob from "../forms/admin/changeJobs";
 import Loader from "../common/loader";
 import PersonalDetails from "../forms/user/personal";
-import ConvertTime from "./ConvertTime";
+import ConvertTime from "./Common function/ConvertTime";
 // import VisaStatus from "../forms/user/visaStatus";
 // import DocumentModal from "../forms/admin/EmployeeDocumentModal";
 // import { BsArrow90DegRight } from "react-icons/bs";

@@ -8,7 +8,7 @@ import {
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import filterjson from "../../json/filterjson";
-import PasswordInput from "../../common/PasswordInput";
+import PasswordInput from "../../common/Common function/PasswordInput";
 // import Permissions from "../../json/emailPermisionJson";
 
 function Addadmin(props) {

@@ -91,6 +91,7 @@ export default function StudentList(props) {
                 <div className="row m-0 align-items-center">
                   {/* Employees filter's */}
                   <ApplicantsFilter
+                    applicantTypeId={"13"}
                     user_type={user_type}
                     search={search}
                     onSearch={onSearch}
@@ -110,7 +111,7 @@ export default function StudentList(props) {
                     setinterestFilterValue={setinterestFilterValue}
                     setSearchError={setSearchError}
                     statustFilterValue={statustFilterValue}
-                     setStatustFilterValue={setStatustFilterValue}
+                    setStatustFilterValue={setStatustFilterValue}
                     // skill={props.skill}
                     pageName={"study_permit"}
                   />
@@ -137,7 +138,7 @@ export default function StudentList(props) {
                 status={"-1"}
                 pageNo={pageNo}
                 setpageNo={setpageNo}
-                ApplicantType={"study permit"}
+                ApplicantType={"13"}
                 pageName={props.skill ? "" : "employee"}
                 editEmployee={editEmployee}
                 OnProgramApplyClick={props.OnProgramApplyClick}

@@ -1385,212 +1385,331 @@
 // };
 
 // export default Newpdf;
-import React from "react";
+// import React from "react";
 
-const activities = [
-    {
-        "id": 2,
-        "activity_id": 2,
-        "week_no": 2,
-        "language": null,
-        "activity": null,
-        "brand": "amit",
-        "who": "amit",
-        "activity_type": "survey",
-        "completion_check": null,
-        "show_completed": false,
-        "location": null,
-        "user_duration": 0,
-        "teamlead_duration": 0,
-        "coach_duration": 0,
-        "coach_type": null,
-        "travel_time": null,
-        "url": null,
-        "amount": null,
-        "file": null,
-        "upload_possible": "no",
-        "activity_description": "desc1",
-        "activity_name": "acc1",
-        "send_reminder": "no",
-        "show_in_task": "no",
-        "add_comment_option": "no",
-        "indicate_when_completed": "no",
-        "is_active": 1,
-        "is_deleted": 0,
-        "created_at": "2025-01-09T11:12:18.070172Z",
-        "updated_at": "2025-01-10T04:18:00.290446Z",
-        "program_id": 1
-    },
-    {
-        "id": 3,
-        "activity_id": null,
-        "week_no": 1,
-        "language": null,
-        "activity": null,
-        "brand": "brand2",
-        "who": null,
-        "activity_type": "survey",
-        "completion_check": null,
-        "show_completed": false,
-        "location": null,
-        "user_duration": 0,
-        "teamlead_duration": 0,
-        "coach_duration": 0,
-        "coach_type": null,
-        "travel_time": null,
-        "url": null,
-        "amount": null,
-        "file": null,
-        "upload_possible": "no",
-        "activity_description": "desc1",
-        "activity_name": "acc2",
-        "send_reminder": "no",
-        "show_in_task": "no",
-        "add_comment_option": "no",
-        "indicate_when_completed": "no",
-        "is_active": 1,
-        "is_deleted": 0,
-        "created_at": "2025-01-10T05:53:41.964815Z",
-        "updated_at": "2025-01-10T05:53:41.964815Z",
-        "program_id": 1
-    },
-    {
-        "id": 4,
-        "activity_id": null,
-        "week_no": 3,
-        "language": null,
-        "activity": null,
-        "brand": "brand3",
-        "who": null,
-        "activity_type": "survey",
-        "completion_check": null,
-        "show_completed": false,
-        "location": null,
-        "user_duration": 0,
-        "teamlead_duration": 0,
-        "coach_duration": 0,
-        "coach_type": null,
-        "travel_time": null,
-        "url": null,
-        "amount": null,
-        "file": null,
-        "upload_possible": "no",
-        "activity_description": "desc1",
-        "activity_name": "acc2",
-        "send_reminder": "no",
-        "show_in_task": "no",
-        "add_comment_option": "no",
-        "indicate_when_completed": "no",
-        "is_active": 1,
-        "is_deleted": 0,
-        "created_at": "2025-01-10T05:53:56.868331Z",
-        "updated_at": "2025-01-10T05:53:56.868331Z",
-        "program_id": 1
-    },
-    {
-        "id": 5,
-        "activity_id": null,
-        "week_no": 1,
-        "language": null,
-        "activity": null,
-        "brand": "brand4",
-        "who": null,
-        "activity_type": "survey",
-        "completion_check": null,
-        "show_completed": false,
-        "location": null,
-        "user_duration": 0,
-        "teamlead_duration": 0,
-        "coach_duration": 0,
-        "coach_type": null,
-        "travel_time": null,
-        "url": null,
-        "amount": null,
-        "file": null,
-        "upload_possible": "no",
-        "activity_description": "desc1",
-        "activity_name": "acc4",
-        "send_reminder": "no",
-        "show_in_task": "no",
-        "add_comment_option": "no",
-        "indicate_when_completed": "no",
-        "is_active": 1,
-        "is_deleted": 0,
-        "created_at": "2025-01-10T05:54:08.476418Z",
-        "updated_at": "2025-01-10T05:54:08.476418Z",
-        "program_id": 1
-    },
-    {
-        "id": 6,
-        "activity_id": null,
-        "week_no": 2,
-        "language": null,
-        "activity": null,
-        "brand": "brand5",
-        "who": null,
-        "activity_type": "survey",
-        "completion_check": null,
-        "show_completed": false,
-        "location": null,
-        "user_duration": 0,
-        "teamlead_duration": 0,
-        "coach_duration": 0,
-        "coach_type": null,
-        "travel_time": null,
-        "url": null,
-        "amount": null,
-        "file": null,
-        "upload_possible": "no",
-        "activity_description": "desc1",
-        "activity_name": "acc5",
-        "send_reminder": "no",
-        "show_in_task": "no",
-        "add_comment_option": "no",
-        "indicate_when_completed": "no",
-        "is_active": 1,
-        "is_deleted": 0,
-        "created_at": "2025-01-10T05:54:22.328012Z",
-        "updated_at": "2025-01-10T05:54:22.328012Z",
-        "program_id": 1
-    }
-];
+// const activities = [
+//     {
+//         "id": 2,
+//         "activity_id": 2,
+//         "week_no": 2,
+//         "language": null,
+//         "activity": null,
+//         "brand": "amit",
+//         "who": "amit",
+//         "activity_type": "survey",
+//         "completion_check": null,
+//         "show_completed": false,
+//         "location": null,
+//         "user_duration": 0,
+//         "teamlead_duration": 0,
+//         "coach_duration": 0,
+//         "coach_type": null,
+//         "travel_time": null,
+//         "url": null,
+//         "amount": null,
+//         "file": null,
+//         "upload_possible": "no",
+//         "activity_description": "desc1",
+//         "activity_name": "acc1",
+//         "send_reminder": "no",
+//         "show_in_task": "no",
+//         "add_comment_option": "no",
+//         "indicate_when_completed": "no",
+//         "is_active": 1,
+//         "is_deleted": 0,
+//         "created_at": "2025-01-09T11:12:18.070172Z",
+//         "updated_at": "2025-01-10T04:18:00.290446Z",
+//         "program_id": 1
+//     },
+//     {
+//         "id": 3,
+//         "activity_id": null,
+//         "week_no": 1,
+//         "language": null,
+//         "activity": null,
+//         "brand": "brand2",
+//         "who": null,
+//         "activity_type": "survey",
+//         "completion_check": null,
+//         "show_completed": false,
+//         "location": null,
+//         "user_duration": 0,
+//         "teamlead_duration": 0,
+//         "coach_duration": 0,
+//         "coach_type": null,
+//         "travel_time": null,
+//         "url": null,
+//         "amount": null,
+//         "file": null,
+//         "upload_possible": "no",
+//         "activity_description": "desc1",
+//         "activity_name": "acc2",
+//         "send_reminder": "no",
+//         "show_in_task": "no",
+//         "add_comment_option": "no",
+//         "indicate_when_completed": "no",
+//         "is_active": 1,
+//         "is_deleted": 0,
+//         "created_at": "2025-01-10T05:53:41.964815Z",
+//         "updated_at": "2025-01-10T05:53:41.964815Z",
+//         "program_id": 1
+//     },
+//     {
+//         "id": 4,
+//         "activity_id": null,
+//         "week_no": 3,
+//         "language": null,
+//         "activity": null,
+//         "brand": "brand3",
+//         "who": null,
+//         "activity_type": "survey",
+//         "completion_check": null,
+//         "show_completed": false,
+//         "location": null,
+//         "user_duration": 0,
+//         "teamlead_duration": 0,
+//         "coach_duration": 0,
+//         "coach_type": null,
+//         "travel_time": null,
+//         "url": null,
+//         "amount": null,
+//         "file": null,
+//         "upload_possible": "no",
+//         "activity_description": "desc1",
+//         "activity_name": "acc2",
+//         "send_reminder": "no",
+//         "show_in_task": "no",
+//         "add_comment_option": "no",
+//         "indicate_when_completed": "no",
+//         "is_active": 1,
+//         "is_deleted": 0,
+//         "created_at": "2025-01-10T05:53:56.868331Z",
+//         "updated_at": "2025-01-10T05:53:56.868331Z",
+//         "program_id": 1
+//     },
+//     {
+//         "id": 5,
+//         "activity_id": null,
+//         "week_no": 1,
+//         "language": null,
+//         "activity": null,
+//         "brand": "brand4",
+//         "who": null,
+//         "activity_type": "survey",
+//         "completion_check": null,
+//         "show_completed": false,
+//         "location": null,
+//         "user_duration": 0,
+//         "teamlead_duration": 0,
+//         "coach_duration": 0,
+//         "coach_type": null,
+//         "travel_time": null,
+//         "url": null,
+//         "amount": null,
+//         "file": null,
+//         "upload_possible": "no",
+//         "activity_description": "desc1",
+//         "activity_name": "acc4",
+//         "send_reminder": "no",
+//         "show_in_task": "no",
+//         "add_comment_option": "no",
+//         "indicate_when_completed": "no",
+//         "is_active": 1,
+//         "is_deleted": 0,
+//         "created_at": "2025-01-10T05:54:08.476418Z",
+//         "updated_at": "2025-01-10T05:54:08.476418Z",
+//         "program_id": 1
+//     },
+//     {
+//         "id": 6,
+//         "activity_id": null,
+//         "week_no": 2,
+//         "language": null,
+//         "activity": null,
+//         "brand": "brand5",
+//         "who": null,
+//         "activity_type": "survey",
+//         "completion_check": null,
+//         "show_completed": false,
+//         "location": null,
+//         "user_duration": 0,
+//         "teamlead_duration": 0,
+//         "coach_duration": 0,
+//         "coach_type": null,
+//         "travel_time": null,
+//         "url": null,
+//         "amount": null,
+//         "file": null,
+//         "upload_possible": "no",
+//         "activity_description": "desc1",
+//         "activity_name": "acc5",
+//         "send_reminder": "no",
+//         "show_in_task": "no",
+//         "add_comment_option": "no",
+//         "indicate_when_completed": "no",
+//         "is_active": 1,
+//         "is_deleted": 0,
+//         "created_at": "2025-01-10T05:54:22.328012Z",
+//         "updated_at": "2025-01-10T05:54:22.328012Z",
+//         "program_id": 1
+//     }
+// ];
+
+// const Newpdf = () => {
+//     // Step 1: Group data by week_no
+//     // const groupedData = activities.reduce((acc, activity) => {
+//     //     const week = activity.week_no;
+//     //     if (!acc[week]) {
+//     //         acc[week] = [];
+//     //     }
+//     //     acc[week].push(activity);
+//     //     return acc;
+//     // }, {});
+//     const groupedData = activities.reduce((acc, activity) => {
+//         acc[activity.week_no] = acc[activity.week_no] || [];
+//         acc[activity.week_no].push(activity);
+//         return acc;
+//       }, {});
+//     // Step 2: Render grouped data
+//     return (
+//         <div>
+//             <h1>Week-wise Activities</h1>
+//             {Object.entries(groupedData).map(([week, activities]) => (
+//                 <div key={week} style={{ marginBottom: "20px" }}>
+//                     <h2>Week {week}</h2>
+//                     <ul>
+//                         {activities.map((activity) => (
+//                             <li key={activity.id}>
+//                                 <strong>Activity Name:</strong> {activity.activity_name} <br />
+//                                 <strong>Brand:</strong> {activity.brand} <br />
+//                                 <strong>Description:</strong> {activity.activity_description} <br />
+//                                 <strong>Type:</strong> {activity.activity_type}
+//                             </li>
+//                         ))}
+//                     </ul>
+//                 </div>
+//             ))}
+//         </div>
+//     );
+// };
+
+// export default Newpdf;
+// import React, { useState, useRef } from 'react';
+
+// const Newpdf = () => {
+//     const [time, setTime] = useState(10); // Initial value of the timer
+//     const [isRunning, setIsRunning] = useState(false); // Timer running state
+//     const timerRef = useRef(null); // Reference for the timer
+
+//     // Start the timer
+//     const startTimer = () => {
+//         if (!isRunning && time > 0) {
+//             setIsRunning(true);
+//             timerRef.current = setInterval(() => {
+//                 setTime((prevTime) => {
+//                     if (prevTime > 0) {
+//                         return prevTime - 1;
+//                     } else {
+//                         clearInterval(timerRef.current); // Stop timer when it reaches 0
+//                         return 0;
+//                     }
+//                 });
+//             }, 1000); // Decrement every 1 second
+//         }
+//     };
+
+//     // Stop the timer
+//     const stopTimer = () => {
+//         clearInterval(timerRef.current);
+//         setIsRunning(false);
+//     };
+
+//     // Cleanup on unmount
+//     React.useEffect(() => {
+//         return () => clearInterval(timerRef.current);
+//     }, []);
+
+//     return (
+//         <div style={{ textAlign: 'center', marginTop: '50px' }}>
+//             <h1>Countdown Timer</h1>
+//             <h2>{time}</h2>
+//             <div>
+//                 <button onClick={startTimer} disabled={isRunning}>
+//                     Start
+//                 </button>
+//                 <button onClick={stopTimer} disabled={!isRunning}>
+//                     Stop
+//                 </button>
+//             </div>
+//         </div>
+//     );
+// };
+
+// export default Newpdf;
+import React, { useState } from "react";
 
 const Newpdf = () => {
-    // Step 1: Group data by week_no
-    // const groupedData = activities.reduce((acc, activity) => {
-    //     const week = activity.week_no;
-    //     if (!acc[week]) {
-    //         acc[week] = [];
-    //     }
-    //     acc[week].push(activity);
-    //     return acc;
-    // }, {});
-    const groupedData = activities.reduce((acc, activity) => {
-        acc[activity.week_no] = acc[activity.week_no] || [];
-        acc[activity.week_no].push(activity);
-        return acc;
-      }, {});
-    // Step 2: Render grouped data
+    const [data, setData] = useState([]);
+    const [selectedParent, setSelectedParent] = useState(null);
+    const [selectedChild, setSelectedChild] = useState(null);
+    const [title, setTitle] = useState("");
+
+    const addItem = () => {
+        if (!title.trim()) return;
+        let parentId = 0, level = 0, allParentIds = "0";
+
+        if (selectedChild) {
+            const child = data.find((item) => item.id === Number(selectedChild));
+            parentId = child.id;
+            level = 2;
+            allParentIds = `${child.all_parent_id},${child.id}`;
+        } else if (selectedParent) {
+            parentId = Number(selectedParent);
+            level = 1;
+            allParentIds = `${selectedParent}`;
+        } else {
+            parentId = Number(selectedParent);
+            level = 0;
+            allParentIds = `${selectedParent}`;
+        }
+
+        const newItem = {
+            id: Date.now(),
+            title,
+            parent_id: parentId,
+            level,
+            all_parent_id: allParentIds,
+        };
+        setData([...data, newItem]);
+        setTitle("");
+        setSelectedChild("")
+        setSelectedParent("")
+    };
+
     return (
         <div>
-            <h1>Week-wise Activities</h1>
-            {Object.entries(groupedData).map(([week, activities]) => (
-                <div key={week} style={{ marginBottom: "20px" }}>
-                    <h2>Week {week}</h2>
-                    <ul>
-                        {activities.map((activity) => (
-                            <li key={activity.id}>
-                                <strong>Activity Name:</strong> {activity.activity_name} <br />
-                                <strong>Brand:</strong> {activity.brand} <br />
-                                <strong>Description:</strong> {activity.activity_description} <br />
-                                <strong>Type:</strong> {activity.activity_type}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            ))}
+            <input
+                type="text"
+                placeholder="Enter title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+            />
+            <select onChange={(e) => setSelectedParent(e.target.value)}>
+                <option value="">Select Parent</option>
+                {data.filter((item) => item.level === 0).map((parent) => (
+                    <option key={parent.id} value={parent.id}>{parent.title}</option>
+                ))}
+            </select>
+            <select onChange={(e) => setSelectedChild(e.target.value)}>
+                <option value="">Select Child</option>
+                {data.filter((item) => item.level === 1).map((child) => (
+                    <option key={child.id} value={child.id}>{child.title}</option>
+                ))}
+            </select>
+            <button onClick={addItem}>Add Item</button>
+            <pre>{JSON.stringify(data, null, 2)}</pre>
         </div>
     );
 };
-
 export default Newpdf;
+

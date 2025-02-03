@@ -44,7 +44,7 @@ export const GetAllChartData = async (id, type, applicantType) => {
     {
       id: id,
       type: type,
-      interested_in: applicantType,
+      interested_in_id: applicantType,
     },
     {
       headers: {
@@ -157,7 +157,7 @@ export const EmployeeSignUp = async (props, permission) => {
   formData.append("resume", props.resume);
   formData.append("reffer_by", props.reffer_by);
   formData.append("name", props.name);
-  formData.append("interested_in", props.interested_in);
+  formData.append("interested_in_id", props.interested_in_id);
   // formData.append("contact_no", props.contact_no);
   formData.append("permission", JSON.stringify(permission));
   const response = await axios.post(`${API_URL}employee_signup`, formData);
@@ -238,6 +238,37 @@ export const EmployeeDetails = async (props) => {
   return response.data;
   // }
 };
+/*get Applicant Type and sub types  api */
+export const getApplicanTypeApi = async (props) => {
+  const response = await axios.post(
+    `${API_URL}admin/getApplicantType`,
+    props,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+  // }
+};
+/*Add Applicant Type and sub types  api */
+export const AddApplicanTypeApi = async (props) => {
+  const response = await axios.post(
+    `${API_URL}admin/addUpdateApplicantType`,
+    props,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+  // }
+};
+
 /*Employee detail api */
 export const EmployeeAppliedJob = async (props) => {
   const response = await axios.post(
@@ -313,7 +344,7 @@ export const getallEmployeeData = async (
       filter_status: status,
       job_id: job_id,
       work_permit_canada: candian,
-      interested_in: portal === "study" ? "study permit" : inserted,
+      interested_in_id: portal === "study" ? 13 : inserted,
       agent_id: agentId,
       assigned_by: assignedadminId,
       category: subType,
@@ -809,7 +840,8 @@ export const ADocAnnotation = async (
       end_date: endDate,
       group_by: GroupBy,
       priority: Priority,
-      status: Status
+      status: Status,
+      subject: subject
     },
     {
       headers: {
@@ -847,8 +879,9 @@ export const GetCommentsAndAssign = async (
   assigned_user_type,
   employeeId,
   userType,
+  taskId
 ) => {
-  // console.log( "idi"+id,
+  // console.log( "id:", taskId,
   // "userid"+userid,
   // "status"+status,
   //   "type"+type,
@@ -872,8 +905,9 @@ export const GetCommentsAndAssign = async (
       type: type,
       assigned_user_type: assigned_user_type,
       employee_id: employeeId,
-      employee_type: userType
-      // id:"",task_creator_user_id:""
+      employee_type: userType,
+      id: taskId || "",
+      // task_creator_user_id:""
     },
     {
       headers: {
@@ -1089,11 +1123,13 @@ export const SendReplyCommitSharepoint = async (
 };
 
 /*Api to Get Reply for document comments */
-export const GetReplyCommit = async (doc_id) => {
+export const GetReplyCommit = async (doc_id, task_id) => {
   const response = await axios.post(
     `${API_URL}/admin/get_messages`,
     {
       doc_id: doc_id,
+      task_id: task_id
+
     },
     {
       headers: {
@@ -1167,7 +1203,7 @@ export const GetEmployeeVisaList = async (
     `${API_URL}getVisa`,
     {
       search: search,
-      filter_by_interested_in: interested,
+      filter_by_interested_in_id: interested,
       filter_by_visa_country: country,
       filter_by_visa_status: status,
       filter_by_employee_id: id,
@@ -2009,7 +2045,7 @@ export const getAllMentionNotification = async (
       employee_id: "",
       page: page,
       limit: limit,
-      interested_in: portal === "study" ? "study permit" : ""
+      interested_in_id: portal === "study" ? "study permit" : ""
     },
     {
       headers: {
@@ -2246,6 +2282,7 @@ export const DeleteFilter = async (pId, cId) => {
   return response.data;
 };
 
+
 /*Delete Admin Api */
 export const DeleteAdmin = async (props) => {
   const response = await axios.post(
@@ -2260,6 +2297,21 @@ export const DeleteAdmin = async (props) => {
   );
   return response.data;
 };
+/*Reassign Admin Api before deletion */
+export const ReassignAdminApi = async (props) => {
+  const response = await axios.post(
+    `${API_URL}/admin/deleteAdmin_new`,
+    props,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+};
+
 
 /*Add Aplicant's Followup Api */
 export const AddFollowup = async (props) => {
@@ -2706,7 +2758,7 @@ export const GetEmployeeFilterJob = async (
 
 /*Api to Reserved employee for a job */
 export const ReservedEmployeeForJob = async (id, employee_id, status) => {
-  console.log(id, employee_id, status)
+  // console.log(id, employee_id, status)
   const response = await axios.put(
     `${API_URL}setEmployeeReserve`,
     {
@@ -2742,7 +2794,7 @@ export const RemoveReservedEmployeeForJob = async (apply_id, employee_id) => {
 };
 /*Api to Send email to the user and company*/
 export const SendEmail = async (data, FileList, url) => {
-  console.log(data);
+  // console.log(data);
   const response = await axios.post(
     `${API_URL}sendEmailTest`,
     // {
@@ -3269,7 +3321,7 @@ export const getActivityLog = async (
       stackHolder_id: stackHolder_id,
       stackHolder_type: stackHolder_type,
       status: pagetype === "interviewHistory" ? "21,36" : "",
-      interested_in: applicantType,
+      interested_in_id: applicantType,
     },
     {
       headers: {
@@ -3406,7 +3458,7 @@ export const AddSharePointDOcument = async (
   formData.append("folder_Id", folderId);
   // Loop through the array of files and append each file to formData
   for (let i = 0; i < data.length; i++) {
-    console.log(data[i])
+    // console.log(data[i])
     formData.append(`file[${i}]`, data[i]);
   }
   if (Token) {
@@ -3603,12 +3655,15 @@ export const DeleteAgreement = async (id) => {
   return response.data;
 };
 /* Export excel Api */
-export const ExportExcelApi = async (type) => {
+export const ExportExcelApi = async (table_name, applicantType, status, local, type) => {
   const response = await axios.post(
     `${API_URL}common/getDataForExcel`,
     {
-      type: type,
-      interested_in: portal === "study" ? "study permit" : ""
+      table_name: table_name,
+      interested_in_id: applicantType,//employee table
+      filter_status: status,//employee table
+      is_local: local,//employee table
+      type: type,//task table
     },
     {
       headers: {

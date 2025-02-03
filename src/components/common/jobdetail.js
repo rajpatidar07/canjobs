@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { GetJobDetail, ApplyJob } from "../../api/api";
 import { toast } from "react-toastify";
 import Loader from "../common/loader";
-import ConvertTime from "./ConvertTime";
+import ConvertTime from "./Common function/ConvertTime";
 import SAlert from "./sweetAlert";
 
 function JobDetailPage(props) {

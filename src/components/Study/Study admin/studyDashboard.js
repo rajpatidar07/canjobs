@@ -275,7 +275,7 @@ export default function StudyDashboard() {
                                     self={"yes"}
                                     apiCall={apiCall}
                                     setApiCall={setApiCall}
-                                    ApplicantType={"study permit"}
+                                    ApplicantType={"13"}
                                     pageName={"employee"}
                                     adminFilterValue={adminId}
                                 />
@@ -328,7 +328,7 @@ export default function StudyDashboard() {
                                     pageNo={activityNo}
                                     apiCall={apiCall}
                                     setApiCall={setApiCall}
-                                    applicantType={"study permit"}
+                                    applicantType={"13"}
                                 />
                             </div>
                         </div>

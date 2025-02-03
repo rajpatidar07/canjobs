@@ -5,7 +5,7 @@ import Pagination from "./pagination";
 import AddInterview from "../forms/admin/addInterview";
 import Loader from "../common/loader";
 import { ImCalendar } from "react-icons/im";
-import ConvertTime from "./ConvertTime";
+import ConvertTime from "./Common function/ConvertTime";
 function Interview(props) {
   let search = props.search;
   let [isLoading, setIsLoading] = useState(true);

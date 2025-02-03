@@ -114,6 +114,7 @@ function SelfApplicat(props) {
                 <div className="row m-0 align-items-center">
                   {/* Employees filter's */}
                   <ApplicantsFilter
+                    applicantTypeId={""}
                     user_type={user_type}
                     search={search}
                     onSearch={onSearch}

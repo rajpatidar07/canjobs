@@ -184,6 +184,7 @@ export default function VisaTable(props) {
           setApiCall={setApiCall}
           close={() => setVisaModal(false)}
           type={"visa"}
+          typeName={"Visa"}
         />
       ) : null}
       {documentModal ? (

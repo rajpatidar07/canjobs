@@ -4,35 +4,35 @@ import AdminSidebar from "./sidebar";
 import EmployeeTable from "../common/employeeTable";
 import ApplicantsFilter from "../common/applicantsFilter";
 export default function ExpressEntry() {
-/*Filter and search state */
-const [experienceFilterValue, setExperienceFilterValue] = useState("");
-const [skillFilterValue, setSkillFilterValue] = useState("");
-const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
-const [educationFilterValue, setEducationFilterValue] = useState("");
-const [agentFilterValue, setAgentFilterValue] = useState("");
-const [adminFilterValue, setAdminFilterValue] = useState("");
-const [interestFilterValue, setinterestFilterValue] = useState("");
-const [search, setSearch] = useState("");
-const [searcherror, setSearchError] = useState("");
-let user_type = localStorage.getItem("userType")
-let [apiCall, setApiCall] = useState(false);
-/*Function to search the employee */
-const onSearch = (e) => {
-const inputValue = e.target.value;
-setSearch(inputValue);
-setpageNo(1);
-if (inputValue.length > 0) {
-  if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
-    setSearchError("Candidate Name cannot start with a number.");
-  } else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
-    setSearchError("Cannot use special characters.");
-  } else {
-    setSearchError("");
-  }
-} else {
-  setSearchError("");
-}
-};
+  /*Filter and search state */
+  const [experienceFilterValue, setExperienceFilterValue] = useState("");
+  const [skillFilterValue, setSkillFilterValue] = useState("");
+  const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
+  const [educationFilterValue, setEducationFilterValue] = useState("");
+  const [agentFilterValue, setAgentFilterValue] = useState("");
+  const [adminFilterValue, setAdminFilterValue] = useState("");
+  const [interestFilterValue, setinterestFilterValue] = useState("");
+  const [search, setSearch] = useState("");
+  const [searcherror, setSearchError] = useState("");
+  let user_type = localStorage.getItem("userType")
+  let [apiCall, setApiCall] = useState(false);
+  /*Function to search the employee */
+  const onSearch = (e) => {
+    const inputValue = e.target.value;
+    setSearch(inputValue);
+    setpageNo(1);
+    if (inputValue.length > 0) {
+      if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
+        setSearchError("Candidate Name cannot start with a number.");
+      } else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
+        setSearchError("Cannot use special characters.");
+      } else {
+        setSearchError("");
+      }
+    } else {
+      setSearchError("");
+    }
+  };
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -43,7 +43,7 @@ if (inputValue.length > 0) {
         <div className="dashboard-main-container mt-16" id="dashboard-body">
           <div className="container-fluid">
             <div className="mb-18">
-            <div className="mb-4 align-items-center">
+              <div className="mb-4 align-items-center">
                 <div className="page___heading">
                   <h3 className="font-size-6 mb-0">Express Entry</h3>
                 </div>
@@ -51,6 +51,7 @@ if (inputValue.length > 0) {
                 <div className="row m-0 align-items-center">
                   {/* Employees filter's */}
                   <ApplicantsFilter
+                    applicantTypeId={"10"}
                     user_type={user_type}
                     search={search}
                     onSearch={onSearch}
@@ -71,12 +72,12 @@ if (inputValue.length > 0) {
                     // skill={props.skill}
                     pageName={"express_entry"}
                   />
-              </div>
-              <small className="text-danger">{searcherror}</small>
+                </div>
+                <small className="text-danger">{searcherror}</small>
               </div>
               {/*<-- Express entry Table -->*/}
               <EmployeeTable
-                 // showEmployeeProfile={showEmployeeProfile}
+                // showEmployeeProfile={showEmployeeProfile}
                 // employeeDetails={employeeDetails}
                 search={search}
                 experienceFilterValue={experienceFilterValue}
@@ -93,7 +94,7 @@ if (inputValue.length > 0) {
                 status={"-1"}
                 pageNo={pageNo}
                 setpageNo={setpageNo}
-                ApplicantType={"express entry"}
+                ApplicantType={"10"}
               />
             </div>
           </div>

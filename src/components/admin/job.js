@@ -5,9 +5,10 @@ import CustomButton from "../common/button";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import AddJobModal from "../forms/employer/job";
-import { GetFilter } from "../../api/api";
+import { GetAllJobs, GetFilter } from "../../api/api";
 import FilterJson from "../json/filterjson";
 import JobTable from "../common/jobTable";
+import ExportExcelButton from "../common/exportExcelButton";
 
 function Job(props) {
   /*show Modal and props state */
@@ -27,6 +28,7 @@ function Job(props) {
   // const [company, setCompany] = useState("");
   const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
   let [Json, setJson] = useState([]);
+  let [allJob, setAllJob] = useState([]);
   // let location = useLocation();
   /*Function to get the jSon */
   const JsonData = async () => {
@@ -40,6 +42,12 @@ function Job(props) {
       setJson(Json.data.data);
     } catch (err) {
       console.log(err);
+    }
+    try {
+      let allJobData = await GetAllJobs()
+      setAllJob(allJobData.data.data)
+    } catch (err) {
+      console.log(err)
     }
   };
 
@@ -97,9 +105,9 @@ function Job(props) {
   const Skill =
     Json && Json.Skill
       ? Json.Skill.filter(
-          (thing, index, self) =>
-            index === self.findIndex((t) => t.value === thing.value)
-        )
+        (thing, index, self) =>
+          index === self.findIndex((t) => t.value === thing.value)
+      )
       : [];
   return (
     <>
@@ -111,8 +119,8 @@ function Job(props) {
         }
       >
         {props.skill === null ||
-        props.skill === undefined ||
-        Object.keys(props.skill).length === 0 ? (
+          props.skill === undefined ||
+          Object.keys(props.skill).length === 0 ? (
           <>
             {/* <!-- Header Area --> */}
             <AdminHeader heading={"Manage Jobs"} />
@@ -120,7 +128,7 @@ function Job(props) {
             <AdminSidebar heading={"Manage Jobs"} />
           </>
         ) : null}
-        
+
         <div
           className={
             showJobDetails === false
@@ -201,7 +209,7 @@ function Job(props) {
                       >
                         <option value="">Job Category</option>
                         {Json &&
-                          (Json.Category || []).map((data,i) => {
+                          (Json.Category || []).map((data, i) => {
                             return (
                               <option value={data.id} key={i}>
                                 {data.value}
@@ -259,7 +267,7 @@ function Job(props) {
                         className="text-capitalize form-control"
                       >
                         <option value="">Job Skill</option>
-                        {(Skill || []).map((data,i) => {
+                        {(Skill || []).map((data, i) => {
                           return (
                             <option value={data.value} key={i}>
                               {data.value}
@@ -289,7 +297,7 @@ function Job(props) {
                         className="text-capitalize form-control"
                       >
                         <option value="">Job Location</option>
-                        {(FilterJson.location || []).map((data,i) => {
+                        {(FilterJson.location || []).map((data, i) => {
                           return (
                             <option value={data.country} key={i}>
                               {data.country}
@@ -299,23 +307,20 @@ function Job(props) {
                       </select>
                     </div>
                   </div>
-                  {props.skill === null ||
-                  props.skill === undefined ||
-                  Object.keys(props.skill).length === 0 ? (
-                    <div className="text-end col-xl-12">
-                      <div className="float-md-right">
-                        <CustomButton
-                          className="font-size-3 rounded-3 btn btn-primary border-0"
-                          onClick={() => editJob("0")}
-                          title="Add Jobs"
-                        >
-                          Add Job
-                        </CustomButton>
-                        {/*<-- Add Job Modal -->*/}
-                      </div>
-                      <small className="text-danger">{searcherror}</small>
+                  <div className="text-end col-xl-12">
+                    <div className="float-md-right">
+                      <CustomButton
+                        className="font-size-3 rounded-3 btn btn-primary border-0"
+                        onClick={() => editJob("0")}
+                        title="Add Jobs"
+                      >
+                        Add Job
+                      </CustomButton>
+                      <ExportExcelButton tableName={"job"} portal={""} applicantType={""} status={""} local={""} type={""} tableData={allJob} />
+                      {/*<-- Add Job Modal -->*/}
                     </div>
-                  ) : null}
+                    <small className="text-danger">{searcherror}</small>
+                  </div>
                 </div>
               </div>
               {/*<-- Job List Table -->*/}

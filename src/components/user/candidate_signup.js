@@ -11,7 +11,7 @@ import {
 import useValidation from "../common/useValidation";
 import { toast } from "react-toastify";
 import Permission from "../json/emailPermisionJson";
-import PasswordInput from "../common/PasswordInput";
+import PasswordInput from "../common/Common function/PasswordInput";
 // import { useGoogleLogin } from '@react-oauth/google';
 // import axios from "axios";
 // import { useLinkedIn , LinkedIn} from "react-linkedin-login-oauth2";
@@ -46,7 +46,7 @@ export default function CandidateSignup(props) {
     otp: "",
     reffer_by: "",
     Credentials: "",
-    interested_in: location?.state?.page === "study" ? "study permit" : ""
+    interested_in_id: location?.state?.page === "study" ? 13 : ""
   };
   // VALIDATION CONDITIONS termsErr
   const validators = {

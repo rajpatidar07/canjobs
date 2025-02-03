@@ -53,6 +53,7 @@ export default function Humanitarian() {
                                 <div className="row m-0 align-items-center">
                                     {/* Employees filter's */}
                                     <ApplicantsFilter
+                                        applicantTypeId={"17"}
                                         user_type={user_type}
                                         search={search}
                                         onSearch={onSearch}
@@ -95,7 +96,7 @@ export default function Humanitarian() {
                                 status={"-1"}
                                 pageNo={pageNo}
                                 setpageNo={setpageNo}
-                                ApplicantType={"humanitarian and compassionate cases"}
+                                ApplicantType={"17"}
                             />
                         </div>
                     </div>

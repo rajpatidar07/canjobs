@@ -21,7 +21,6 @@ import { toast } from "react-toastify";
 import Loader from "../loader";
 import Breadcrumbs from "./Breadcrumb";
 import EditDocNameFOrm from "./EditDocNameFOrm";
-// import PreviewDocument from "./PreviewDocument";
 // import PdfViewerComponent from "../../PdfViewerComponent";
 import AdobePDFViewer from "../Adobe/adobeFile";
 import { jsPDF } from "jspdf";
@@ -80,7 +79,7 @@ export default function SharePointDocument({
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
   const [pageNo, setPageNo] = useState(1);
-  const [recordsPerPage] = useState(10);
+  const [recordsPerPage, setRecordsPerPage] = useState(10);
   /*Shorting states */
   const [columnName, setcolumnName] = useState("id");
   const [sortOrder, setSortOrder] = useState("DESC");
@@ -194,8 +193,12 @@ export default function SharePointDocument({
       convertToPDF(data);
     } else if (data.file.mimeType === "text/plain") {
       GetNoteText(data, true);
-    } else {
+    } else if (data.file.mimeType === "application/pdf") {
       setConvertedDoc(data["@microsoft.graph.downloadUrl"]);
+    } else {
+      window.open(data.webUrl);
+      setConvertedDoc("");
+      setDocPreview(false);
     }
   }
   /*Function to convert data  */
@@ -380,8 +383,8 @@ export default function SharePointDocument({
         setBreadCrumbLoder(false);
       }
     } catch (err) {
-      setBreadcrumbData([]);
       console.log(err);
+      setBreadcrumbData([]);
       setShowDropDown(false);
       setBreadCrumbLoder(false);
     }
@@ -406,7 +409,7 @@ export default function SharePointDocument({
     //   )
     // );
     // eslint-disable-next-line
-  }, [folderID, apiCall, docId, fileID, pageNo, columnName, sortOrder]);
+  }, [folderID, apiCall, docId, fileID, pageNo, columnName, sortOrder, recordsPerPage]);
   // /*Render method to get the note data to the felid */
   // useEffect(() => {
   //   if (openNoteForm) {
@@ -1110,6 +1113,8 @@ export default function SharePointDocument({
                     docFileBase={docFileBase}
                     setOpenNoteForm={setOpenNoteForm}
                     AdminData={AdminData}
+                    setRecordsPerPage={setRecordsPerPage}
+                    recordsPerPage={recordsPerPage}
                   />
                 )}
               </div>

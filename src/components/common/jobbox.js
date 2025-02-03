@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 // } from "react-icons/lia";
 import ApplyBeforeform from "../forms/user/applyBeforeform";
 // import { CiDollar, CiLocationOn } from "react-icons/ci";
-// import ConvertTime from "./ConvertTime";
+// import ConvertTime from "./Common function/ConvertTime";
 import NewJobBox from "./newJobBox";
 function JobBox({
   showAddJobModal,

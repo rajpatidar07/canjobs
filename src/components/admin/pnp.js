@@ -56,6 +56,7 @@ export default function Pnp() {
                 <div className="row m-0 align-items-center">
                   {/* Employees filter's */}
                   <ApplicantsFilter
+                    applicantTypeId={"4"}
                     user_type={user_type}
                     search={search}
                     onSearch={onSearch}
@@ -102,7 +103,7 @@ export default function Pnp() {
                 status={"-1"}
                 pageNo={pageNo}
                 setpageNo={setpageNo}
-                ApplicantType={"pnp"}
+                ApplicantType={"4"}
                 categoryFilterValue={categoryFilterValue}
                 filterByEmployeeId={filterByEmployeeId}
 

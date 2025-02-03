@@ -4,7 +4,7 @@ import Pagination from "../common/pagination";
 import Loader from "../common/loader";
 import { /*GetAgent,*/ getActivityLog } from "../../api/api";
 import { Link } from "react-router-dom";
-import ConvertTime from "./ConvertTime";
+import ConvertTime from "./Common function/ConvertTime";
 export default function ActivityTable(props) {
   /*Show modal states */
   // let [apiCall, setApiCall] = useState(false);

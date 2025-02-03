@@ -53,6 +53,7 @@ export default function BusinessVIsa() {
                 <div className="row m-0 align-items-center">
                   {/* Employees filter's */}
                   <ApplicantsFilter
+                    applicantTypeId={"6"}
                     user_type={user_type}
                     search={search}
                     onSearch={onSearch}
@@ -95,7 +96,7 @@ export default function BusinessVIsa() {
                 status={"-1"}
                 pageNo={pageNo}
                 setpageNo={setpageNo}
-                ApplicantType={"business visa"}
+                ApplicantType={"6"}
               />
             </div>
           </div>

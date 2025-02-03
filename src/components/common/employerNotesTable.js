@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import Pagination from "./pagination";
 import { Link } from "react-router-dom";
 import Loader from "./loader";
-import ConvertTime from "./ConvertTime";
+import ConvertTime from "./Common function/ConvertTime";
 export default function EmployerNotesTable({ search }) {
   let [isLoading, setIsLoading] = useState(true);
   let [apiCall, setApiCall] = useState(false);

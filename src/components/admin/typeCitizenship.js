@@ -53,6 +53,7 @@ export default function TypeCitizenship() {
                                 <div className="row m-0 align-items-center">
                                     {/* Employees filter's */}
                                     <ApplicantsFilter
+applicantTypeId={"19"}
                                         user_type={user_type}
                                         search={search}
                                         onSearch={onSearch}
@@ -95,7 +96,7 @@ export default function TypeCitizenship() {
                                 status={"-1"}
                                 pageNo={pageNo}
                                 setpageNo={setpageNo}
-                                ApplicantType={"citizenship"}
+                                ApplicantType={"19"}
                             />
                         </div>
                     </div>

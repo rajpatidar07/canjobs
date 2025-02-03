@@ -54,6 +54,7 @@ export default function TemporaryResident() {
                                 <div className="row m-0 align-items-center">
                                     {/* Employees filter's */}
                                     <ApplicantsFilter
+                                        applicantTypeId={"14"}
                                         user_type={user_type}
                                         search={search}
                                         onSearch={onSearch}
@@ -99,7 +100,7 @@ export default function TemporaryResident() {
                                 pageNo={pageNo}
                                 setpageNo={setpageNo}
                                 categoryFilterValue={categoryFilterValue}
-                                ApplicantType={"temporary resident (visiting , studying , working)"}
+                                ApplicantType={"14"}
                             />
                         </div>
                     </div>

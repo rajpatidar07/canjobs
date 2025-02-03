@@ -8,7 +8,7 @@ import SendMailForm from "../forms/user/sendMailForm";
 // import { ImCross } from "react-icons/im";
 // import MailPaination from "./mailPaination";
 import { TiAttachment } from "react-icons/ti";
-import ConvertTime from "../common/ConvertTime";
+import ConvertTime from "../common/Common function/ConvertTime";
 const EmailList = ({
   data,
   isLoading,
