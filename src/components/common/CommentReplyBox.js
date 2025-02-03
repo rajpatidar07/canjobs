@@ -81,12 +81,12 @@ export default function CommentReplyBox({
                           )}`}
                           style={{ fontSize: "16px", fontWeight: 700 }}
                         >
-                          {replyItem.sender_name.charAt(0)}
+                          {replyItem?.sender_name.charAt(0)}
                         </div>
                       </div>
                       <div className=" mb-0">
                         <div className="font-size-3 font-weight-bold text-capitalize">
-                          {replyItem.sender_name}
+                          {replyItem?.sender_name}
                         </div>
                         <div
                           className="text-gray font-weight-light m-0 text-capitalize"
@@ -100,7 +100,7 @@ export default function CommentReplyBox({
                         </div>
                       </div>
                     </div>
-                    {/* {replyItem.sender_name} */}
+                    {/* {replyItem?.sender_name} */}
                     {/* {replyItem.task_creator_user_id
                         ? allAdmin.find(
                             (item) =>

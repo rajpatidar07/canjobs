@@ -52,7 +52,10 @@ function Addfollowup(props) {
     : user_type === "company"
       ? "employer"
       : adminType
-
+  let assigned_by_name = user_type === "user" || user_type === "company"
+    ? localStorage.getItem("name")
+    : localStorage.getItem("admin")
+  let assigned_by_email = localStorage.getItem("email");
   /* Function to get the Response data*/
   const ResponseData = async () => {
     try {
@@ -425,8 +428,8 @@ function Addfollowup(props) {
                     <p className="text-italic font-size-3 m-0">No Data Found</p>
                   </div>
                 ) : (
-                  (response || []).map((res) => (
-                    <div className={`rounded p-5 mb-2 ${props?.note_id === res.id ? "bg-light" : "bg-white"}`} key={res.id}>
+                  (response || []).map((res, index) => (
+                    <div className={`rounded p-5 mb-2 ${props?.note_id === res.id ? "bg-light" : "bg-white"}`} key={index}>
                       <div className="m-0 d-flex justify-content-between align-items-center">
                         <b className="font-size-4 font-weight-bold text-dark text-break">
                           {res.subject}
@@ -774,6 +777,10 @@ function Addfollowup(props) {
                 noteId={props.note_id}
                 page={props.page}
                 skip={props.skip}
+                userType={user_type}
+                assigned_id={assigned_id}
+                assigned_by_name={assigned_by_name}
+                assigned_by_email={assigned_by_email}
               />
             </div>
           </div>

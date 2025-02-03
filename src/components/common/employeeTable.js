@@ -633,7 +633,7 @@ export default function EmployeeTable(props) {
                 </>
               ) : null}
             <div className="form_group text-right">
-              <ExportExcelButton tableName={"employee"} type={""} portal={portal} applicantType={props?.ApplicantType ? props?.ApplicantType : props.interestFilterValu} status={status} local={props.localFilterValue ? props.localFilterValue : ""} tableData={[]} />
+              <ExportExcelButton tableName={"employee"} type={""} portal={portal} applicantType={props?.ApplicantType ? props?.ApplicantType : props.interestFilterValu} status={status === "00" || !status ? "" : status} local={props.localFilterValue ? props.localFilterValue : ""} tableData={[]} />
             </div>
           </div>
         )}

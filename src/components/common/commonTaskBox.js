@@ -23,6 +23,7 @@ export default function CommentTaskBox(props) {
     const [filteredEmails, setFilteredEmails] = useState([]);
     let [dropdownVisible, setDropdownVisible] = useState();
     let [selectedAdminReply, setSelectedAdminReplye] = useState([]);
+    const [userErrorforadminAssign, setUserErrorforadminAssign] = useState("");
     let [replyCommentClick, setReplyCommentClick] = useState(props.TaskId || "");
     let [selectedAdmin, setSelectedAdmin] = useState([]);
     const AdminType = localStorage.getItem("admin_type");
@@ -90,32 +91,43 @@ export default function CommentTaskBox(props) {
     // Function to add annotation based on conditions
     const handleInputChange = (e, type) => {
         let value = e.target.value;
-        if (type === "reply") {
-            setType(type)
-            setReplyComment(value)
-        } else {
-            setComments(value)
-            setType(type)
-        }
-        // Check if the last typed character is '@'
-        value = value.trim()
         const lastChar = value.slice(-1);
-        if (lastChar === "@") {
-            setDropdownVisible(true)
-            setFilteredEmails(adminList);
+
+        setType(type); // Set type once, as it is common in both cases
+
+        if (type === "reply") {
+            setReplyComment(value);
         } else {
-            const match = value.match(/@(\w*)$/);
-            if (match) {
-                const query = match[1].toLowerCase();
-                const filtered = adminList.filter((user) =>
-                    user.name.toLowerCase().includes(query)
-                );
-                setFilteredEmails(filtered);
+            setComments(value);
+        }
+
+        setUserErrorforadminAssign("");
+
+        if (props.userType === "admin") {
+            if (lastChar === "@") {
+                setDropdownVisible(true);
+                setFilteredEmails(adminList);
             } else {
-                setFilteredEmails([]);
-                setDropdownVisible(false)
+                const match = value.match(/@(\w*)$/);
+                if (match) {
+                    const query = match[1].toLowerCase();
+                    const filtered = adminList.filter((user) =>
+                        user.name?.toLowerCase().includes(query)
+                    );
+                    setFilteredEmails(filtered);
+                } else {
+                    setFilteredEmails([]);
+                    setDropdownVisible(false);
+                }
+            }
+        } else {
+            if (lastChar === "@") {
+                setUserErrorforadminAssign(`Sorry ! you can't assign admin`);
+            } else {
+                setUserErrorforadminAssign("");
             }
         }
+
     };
     /*FUnction to clicked the email of the searched admin */
     const handleEmailClick = (user, type) => {
@@ -346,16 +358,16 @@ export default function CommentTaskBox(props) {
                 ? admin_name
                 : adminList.find((item) => item.admin_id === admin_id)
                     ? adminList.find((item) => item.admin_id === admin_id).name
-                    : "";
+                    :props.assigned_by_name||"";
         let senderId = adminList.find((item) => item.admin_id === admin_id)
             ? adminList.find((item) => item.admin_id === admin_id).admin_id
-            : "";
+            : props.assigned_id || "";
         let senderEmail =
             AdminType === "agent"
                 ? admin_email
                 : adminList.find((item) => item.admin_id === admin_id)
                     ? adminList.find((item) => item.admin_id === admin_id).email
-                    : "";
+                    : props.assigned_by_email|"";
         let senderType =
             AdminType === "agent"
                 ? "agent"
@@ -716,6 +728,8 @@ export default function CommentTaskBox(props) {
                             rows={2}
                             style={{ outline: 0, border: commntData ? "2px solid blue" : "" }}
                         ></textarea>
+                        {userErrorforadminAssign && type !== "reply" ?
+                            <span className="text-danger font-size-3">{userErrorforadminAssign}</span> : null}
                         {dropdownVisible && filteredEmails.length > 0 && type !== "reply" ? (
                             <ul
                                 className="email-suggestions"
@@ -807,6 +821,7 @@ export default function CommentTaskBox(props) {
                                         setCommentData();
                                         setEndDate("");
                                         setSubject("");
+                                        setDropdownVisible(false)
                                     }}
                                 >
                                     Cancel
@@ -914,7 +929,7 @@ export default function CommentTaskBox(props) {
                                         style={{ position: "absolute", right: 5, gap: 5 }}
                                     >
                                         <Link
-                                            className={`text-gray pr-1 ${commentItem.status !== "0" ? "d-none" : ""}`}
+                                            className={`text-gray pr-1 ${commentItem.status !== "0" || (props.userType !== "admin" && props.assigned_id === commentItem.task_creator_user_id) ? "" : "d-none"}`}
                                             title="Update Comment"
                                             onClick={() => {
                                                 handleUpdateCommentLinkClick(commentItem);
@@ -945,7 +960,7 @@ export default function CommentTaskBox(props) {
                                             />
                                         </Link>
                                         <Link
-                                            className="text-danger pr-1"
+                                            className={props.userType !== "admin" && props.assigned_id === commentItem.task_creator_user_id ? "text-danger pr-1" : "d-none"}
                                             title="Delete Comment"
                                             onClick={() => {
                                                 OnDeleteComment(commentItem.doc_id, commentItem.id);
@@ -1021,7 +1036,7 @@ export default function CommentTaskBox(props) {
                                     {
                                         replyCommentClick === commentItem.id ? (
                                             //Reply box
-                                            <CommentReplyBox
+                                            <> <CommentReplyBox
                                                 admin_id={admin_id}
                                                 AdminType={AdminType}
                                                 commentsReplyList={commentsReplyList}
@@ -1043,6 +1058,9 @@ export default function CommentTaskBox(props) {
                                                 dropdownVisible={dropdownVisible}
                                                 taskType={props.taskType}
                                             />
+                                                {userErrorforadminAssign && type === "reply" ?
+                                                    <span className="text-danger font-size-3">{userErrorforadminAssign}</span> : null}
+                                            </>
                                         ) : null
                                     }
                                 </div>
