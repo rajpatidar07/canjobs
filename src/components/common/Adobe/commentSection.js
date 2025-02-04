@@ -1012,9 +1012,9 @@ export default function CommentSection({
               (commentsList || []).map((commentItem, index) => (
                 <div
                   className={`card col-12 mb-2 p-0 comment_box_card bg-white
-                  ${(annotationId === JSON.parse(commentItem?.doctaskjson).id &&
+                  ${((annotationId === JSON.parse(commentItem?.doctaskjson).id &&
                       annotationId &&
-                      JSON.parse(commentItem?.doctaskjson)) || commntData === commentItem
+                      JSON.parse(commentItem?.doctaskjson)) || commntData === commentItem) || commentItem.id === docTaskId
                       ? "highlighted-comment"
                       : ""
                     } `}
@@ -1045,6 +1045,9 @@ export default function CommentSection({
                   }}
                   key={index}
                 >
+                  {console.log((annotationId === JSON.parse(commentItem?.doctaskjson).id &&
+                    annotationId &&
+                    JSON.parse(commentItem?.doctaskjson)) || commntData === commentItem, commentItem.id, docTaskId)}
                   <div
                     className={`comment_status_update ${AdminType === "agent"
                       ? commentItem.task_creator_user_id === admin_id
