@@ -192,7 +192,7 @@ function Followup() {
                         <option value="">Select Category</option>
                         {(Json.Category || []).map((data,i) => {
                           return (
-                            <option value={i} key={data.value}>
+                            <option value={i} key={i}>
                               {data.value}
                             </option>
                           );
@@ -238,7 +238,7 @@ function Followup() {
                         <option value="">Select Skill</option>
                         {(Json.Skill || []).map((data,i) => {
                           return (
-                            <option value={i} key={data.id}>
+                            <option value={i} key={i}>
                               {data.value}
                             </option>
                           );

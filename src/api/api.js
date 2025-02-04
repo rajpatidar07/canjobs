@@ -2079,7 +2079,8 @@ export const getallAdminData = async (
   page,
   limit,
   column,
-  sort
+  sort,
+  is_active
 ) => {
   const response = await axios.post(
     `${API_URL}admin/getAllAdmin`,
@@ -2090,6 +2091,7 @@ export const getallAdminData = async (
       limit: limit,
       column_name: column,
       sort_order: sort,
+      is_active: is_active
     },
     {
       headers: {

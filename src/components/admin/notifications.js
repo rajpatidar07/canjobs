@@ -91,6 +91,15 @@ function Notifications({
       // setRecordsPerPage(emailData.length);
     }
   };
+  /*Parse the data of the notify_json */
+  const parseJsonSafely = (jsonString) => {
+    try {
+      return jsonString ? JSON.parse(jsonString) : {};
+    } catch (error) {
+      console.error("Invalid JSON in notif_json:", jsonString, error);
+      return {};
+    }
+  }
   return (
     <div className="global_search_box  position-relative">
       {/* <i
@@ -154,7 +163,7 @@ function Notifications({
           >
             {notification.length > 0 && (
               <ul className="w-100 col p-0 ">
-                {notification.map((data,index) => (
+                {notification.map((data, index) => (
                   // <li
                   //   key={data.id}
                   //   title={data.message}
@@ -241,79 +250,54 @@ function Notifications({
                           ? "/selfemployee"
                           : data.subject === "new_employer_registered"
                             ? "/adminclient"
-                            : data.subject === "added_new_job"//New jobs
+                            : data.subject === "added_new_job"
                               ? "/job"
-                              : data.subject === "applied_on_job"//New job responses
+                              : data.subject === "applied_on_job"
                                 ? "/responses"
-                                : data.subject === "interview_scheduled"//Interview scheduled
+                                : data.subject === "interview_scheduled"
                                   ? "/interview"
-                                  : data.subject === "mention_document"//Mention documents
-                                    ? data.document_user_type === "employer" //Mention documents for employer
-                                      ? `/client_detail?docId=${data.mention_id
-                                      }&docParentId=${data.notif_json
-                                        ? JSON.parse(data.notif_json).doc_parent_id
-                                        : ""
-                                      }&annotationId=${data.notif_json
-                                        ? JSON.parse(data.notif_json).annotation_id
-                                        : ""}&taskId=${JSON.parse(data.notif_json).task_id}`
-                                      ://Mention documents for employee
-                                      `/${data.employee_id}?docId=${data.mention_id
-                                      }&docParentId=${data.notif_json
-                                        ? JSON.parse(data.notif_json).doc_parent_id
-                                        : ""
-                                      }&annotationId=${data.notif_json
-                                        ? JSON.parse(data.notif_json).annotation_id
-                                        : ""}&taskId=${JSON.parse(data.notif_json).task_id}`
-                                    : data.subject === "mention_partner"//Partner admin chat for employee
+                                  : data.subject === "mention_document"
+                                    ? data.document_user_type === "employer"
+                                      ? `/client_detail?docId=${data.mention_id}&docParentId=${parseJsonSafely(data?.notif_json).doc_parent_id || ""}&annotationId=${parseJsonSafely(data?.notif_json).annotation_id || ""}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}`
+                                      : `/${data.employee_id}?docId=${data.mention_id}&docParentId=${parseJsonSafely(data?.notif_json).doc_parent_id || ""}&annotationId=${parseJsonSafely(data?.notif_json).annotation_id || ""}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}`
+                                    : data.subject === "mention_partner"
                                       ? `/${data.employee_id}?partner=${data.from_id}`
-                                      : data.subject === "mention_partnerChat"//Partner admin chat for partner
+                                      : data.subject === "mention_partnerChat"
                                         ? `/partner_profile?partner=${data.employee_id}`
                                         : data.subject === "assigned_admin_to_partner"
-                                          ?
-                                          "/partner_profile"
-                                          : data.subject === "mention_notes" || data.subject === "mention_note"//Notes for employer
+                                          ? "/partner_profile"
+                                          : data.subject === "mention_notes" || data.subject === "mention_note"
                                             ? data.document_user_type === "employer"
-                                              ? `/client_detail?note=true&noteid=${JSON.parse(data.notif_json).task_id}`
-                                              : data.document_user_type === "agent" && (window.location.pathname === "/partner_profile")//Notes for agent with same path as navigation
-                                                ?
-                                                `?note=true&noteid=${JSON.parse(data.notif_json).task_id}`
-                                                : data.document_user_type === "agent" ? `/partner_profile?note=true&noteid=${JSON.parse(data.notif_json).task_id}`//Notes for agent
-                                                  : `/${data.employee_id}?note=true&noteid=${JSON.parse(data.notif_json).task_id}`//Notes for employee
+                                              ? `/client_detail?note=true&noteid=${parseJsonSafely(data?.notif_json).task_id || ""}`
+                                              : data.document_user_type === "agent" && (window.location.pathname === "/partner_profile")
+                                                ? `?note=true&noteid=${parseJsonSafely(data?.notif_json).task_id || ""}`
+                                                : data.document_user_type === "agent"
+                                                  ? `/partner_profile?note=true&noteid=${parseJsonSafely(data?.notif_json).task_id || ""}`
+                                                  : `/${data.employee_id}?note=true&noteid=${parseJsonSafely(data?.notif_json).task_id || ""}`
                                             : data.subject === "signed_agreement"
-                                              ? data.document_user_type === "employer"//AGREEMENT FOR EMPLOYER
+                                              ? data.document_user_type === "employer"
                                                 ? `/client_detail?agreement=true`
-                                                : `/${data.employee_id}?agreement=true`//AGREEMENT FOR EMPLOYEE
+                                                : `/${data.employee_id}?agreement=true`
                                               : data.subject === "mention_task"
-                                                ? (() => {
-                                                  let notifData = {};
-                                                  try {
-                                                    // Attempt to parse the JSON
-                                                    notifData = JSON.parse(data?.notif_json || "{}");
-                                                  } catch (error) {
-                                                    console.error("Invalid JSON in notif_json:", data?.notif_json, error);
-                                                  } const taskId = notifData?.task_id || "";
-                                                  const replyId = notifData?.reply_is || "";
-
-                                                  return `/managetasks?taskId=${taskId}&replyId=${replyId}`;
-                                                })()
-                                                : ""}
+                                                ? `/managetasks?taskId=${parseJsonSafely(data?.notif_json).task_id || ""}&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}`
+                                                : ""
+                      }
                       onClick={() => {
                         try {
                           setshow(false);
                           ReadNotification(data.id);
                           setApicall(true);
                           window.history.replaceState({}, document.title, "/");
+
                           if (data.subject === "mention_partnerChat") {
                             localStorage.setItem("agent_id", data.employee_id);
                           } else if (data.subject === "assigned_admin_to_partner" || (data.document_user_type === "agent" && data.subject === "mention_notes")) {
-                            localStorage.setItem("agent_id",
-                              data.document_user_type === "agent" ? data.employee_id : data.action_id);
-                          } else if ((data.subject === "mention_document" || data.subject === "mention_notes" || data.subject === "signed_agreement")
-                            && data.document_user_type === "employer") {
+                            localStorage.setItem("agent_id", data.document_user_type === "agent" ? data.employee_id : data.action_id);
+                          } else if ((data.subject === "mention_document" || data.subject === "mention_notes" || data.subject === "signed_agreement") && data.document_user_type === "employer") {
                             localStorage.setItem("company_id", data.employee_id);
                           }
                         } catch (err) {
-                          console.log(err);
+                          console.error("Error handling click event:", err);
                         }
                         setApicall(true);
                       }}

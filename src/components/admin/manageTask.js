@@ -172,7 +172,7 @@ export default function ManageTask() {
                   }}
                   className="form-control bg-white dashboard_select rounded-3"
                 >
-                  <option value={""}>Select status</option>
+                  <option value={"-1"}>Select status</option>
                   {(statusList || []).map((item, index) => {
                     return (
                       <option value={item.id} index={index}>
@@ -188,7 +188,7 @@ export default function ManageTask() {
                   style={{ height: "29px" }}
                   className="col font-size-3 rounded-3 btn btn-primary border-0"
                   onClick={() => {
-                    setStatus("");
+                    setStatus("-1");
                     setUserId();
                     setUserType();
                     setAdminId();

@@ -377,7 +377,7 @@ function EmployeeHeader() {
                       profile_photo === "undefined")
                       && userType === "company") ?
                       <p className="company_logo"
-                        style={{ fontSize: "20px" }}>{getInitials(name)}</p>
+                        style={{ fontSize: "20px" }}>{name ? getInitials(name) : ""}</p>
                       : <img
                         className="rounded-circle"
                         src={

@@ -141,7 +141,7 @@ export default function AdminTable({
               <tbody>
                 {totalData === 0 || data.length === 0 ? (
                   <tr>
-                    <th colSpan={5} className="bg-white text-center">
+                    <th colSpan={6} className="bg-white text-center">
                       No Data Found
                     </th>
                   </tr>

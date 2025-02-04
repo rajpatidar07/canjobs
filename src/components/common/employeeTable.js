@@ -623,7 +623,7 @@ export default function EmployeeTable(props) {
                       Add Candidate
                     </CustomButton>
                     <Link
-                      className={` btn-sm  btn-primary m-1`}
+                      className={user_type === "admin" ? ` btn-sm  btn-primary m-1` : "d-none"}
                       onClick={() => setShowApplicantTypeForm(true)}
                       title={"Add New Applicant type"}
                     >

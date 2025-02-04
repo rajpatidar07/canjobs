@@ -451,7 +451,7 @@ function Addfollowup(props) {
                           </p>
                           {res?.assigned_to_name && <span className="font-size-3">
                             Assigned admin:
-                            {res?.assigned_to_name?.split(",").map((item, index) => <span className="badge-light rounded-pill p-1 m-1">{item}</span>)}
+                            {res?.assigned_to_name?.split(",").map((item, index) => <span key={index} className="badge-light rounded-pill p-1 m-1">{item}</span>)}
                           </span>}
                           <i className="font-size-2">
                             Created on:

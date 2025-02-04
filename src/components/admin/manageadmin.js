@@ -54,7 +54,8 @@ function ManageAdmin() {
         currentPage,
         recordsPerPage,
         columnName,
-        sortOrder
+        sortOrder,
+        2//to get both is_active 1 and 0
       );
       if (userData.data.length === 0) {
         setAdminData([]);
