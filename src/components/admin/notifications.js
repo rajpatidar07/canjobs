@@ -309,14 +309,14 @@ function Notifications({
                             data
                           )}`}
                         >
-                          {data.receiver_name ? data.receiver_name.charAt(0) : ""}
+                          {data.sender_name ? data.sender_name.charAt(0) : ""}
                         </div>
                         <div className="flex-grow-1">
-                          <div className="d-flex align-items-center justify-content-between">
+                          {/* <div className="d-flex align-items-center justify-content-between">
                             <div className="font-weight-bold text-truncate w-60 intervire-msg">
                               {data.receiver_name ? data.receiver_name : ""}
                             </div>
-                          </div>
+                          </div> */}
                           <div
                             className={`${data.is_read !== "1" ? "font-weight-bold" : ""}  mw-80 notification_text_msg`}
                             style={{ fontSize: "14px" }}
