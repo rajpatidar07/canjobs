@@ -1,10 +1,10 @@
 import axios from "axios";
-const API_URL = window.location.origin === "https://canpathwaysjobs.com"
-  ? "https://api.canpathwaysjobs.com/canjobs/" : "https://apnaorganicstore.in/canjobs/";
+// const API_URL = window.location.origin === "https://canpathwaysjobs.com"
+//   ? "https://api.canpathwaysjobs.com/canjobs/" : "https://apnaorganicstore.in/canjobs/";
 //Local
 // const API_URL ="http://192.168.29.51/canjobs/"
 // New AWS backend
-// const API_URL = "https://api.canpathwaysjobs.com/canjobs/";
+const API_URL = "https://api.canpathwaysjobs.com/canjobs/";
 let Token = localStorage.getItem("token");
 let driveId =
   "b!iUiBybFGWEWfqWdSYuUqrWrIPVmZDQxPmwO4Bzj6nJp5ByboftxMSY6hfWPT-m8F";
@@ -818,7 +818,7 @@ export const ADocAnnotation = async (
     // },
     {
       task_creator_user_id: id,
-      task_creator_user_type: user_type === "admin" ? "admin" : "agent",
+      task_creator_user_type: adminType,
       doc_id: docId,
       user_admin_assigned:
         type === "partner" || "partnerChat" ? assigned_by_id : "",
@@ -879,7 +879,9 @@ export const GetCommentsAndAssign = async (
   assigned_user_type,
   employeeId,
   userType,
-  taskId
+  taskId,
+  task_creator_user_id,
+  task_creator_user_type
 ) => {
   // console.log( "id:", taskId,
   // "userid"+userid,
@@ -907,7 +909,8 @@ export const GetCommentsAndAssign = async (
       employee_id: employeeId,
       employee_type: userType,
       id: taskId || "",
-      // task_creator_user_id:""
+      task_creator_user_id: task_creator_user_id,
+      task_creator_user_type: task_creator_user_type,
     },
     {
       headers: {
@@ -1022,13 +1025,13 @@ export const SendReplyCommit = async (
   id,
   docName
 ) => {
-  // console.log("  id =>", id,
+  console.log("  id =>", id,
   //   "doc_id =>", data.doc_id,
   // "task_id =>", data.task_id,
-  //   "sender_id =>", senderId,
-  //   "sender_email =>", senderEmail,
-  //   "sender_name =>", SenderName,
-  //   "sender_type =>", senderType,
+    "sender_id =>", senderId,
+    "sender_email =>", senderEmail,
+    "sender_name =>", SenderName,
+    "sender_type =>", senderType,
   // "receiver_id =>", recid,
   // "receiver_type =>", adminType,
   // "mention =>", email,
@@ -1043,39 +1046,39 @@ export const SendReplyCommit = async (
   // "doc_parent_id =>", parent_id,
   //  "data =>", data,
   // data.task_id ? "fff" : "mmmm"
-  // )
-  const response = await axios.post(
-    `${API_URL}admin/sendMsg?document_user_type=${DocUserType}`,
-    {
-      id: id,
-      doc_id: data.doc_id,
-      task_id: data.task_id ? data.task_id : data.id,
-      sender_id: senderId,
-      sender_email: senderEmail,
-      sender_name: SenderName,
-      sender_type: senderType,
-      receiver_id: recid,
-      receiver_type: adminType,
-      mention: email,
-      receiver_name: assignName,
-      document_url: "",
-      next_followup_date: "",
-      followup_status: "",
-      subject: "",
-      msg: msg,
-      type: type,
-      employee_id: employee_id,
-      document_name: docName,
-      doc_parent_id: parent_id// want to make changes to the backend for this variable
-    },
-    {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: Token,
-      },
-    }
-  );
-  return response;
+  )
+  // const response = await axios.post(
+  //   `${API_URL}admin/sendMsg?document_user_type=${DocUserType}`,
+  //   {
+  //     id: id,
+  //     doc_id: data.doc_id,
+  //     task_id: data.task_id ? data.task_id : data.id,
+  //     sender_id: senderId,
+  //     sender_email: senderEmail,
+  //     sender_name: SenderName,
+  //     sender_type: senderType,
+  //     receiver_id: recid,
+  //     receiver_type: adminType,
+  //     mention: email,
+  //     receiver_name: assignName,
+  //     document_url: "",
+  //     next_followup_date: "",
+  //     followup_status: "",
+  //     subject: "",
+  //     msg: msg,
+  //     type: type,
+  //     employee_id: employee_id,
+  //     document_name: docName,
+  //     doc_parent_id: parent_id// want to make changes to the backend for this variable
+  //   },
+  //   {
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: Token,
+  //     },
+  //   }
+  // );
+  // return response;
 };
 /*Api to Send Reply for document comments */
 export const SendReplyCommitSharepoint = async (

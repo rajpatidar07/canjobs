@@ -19,8 +19,9 @@ export default function AddTaskForm(props) {
   const [showStatusInput, setShowStatusInput] = useState(false);
   const [newStatus, setNewStatus] = useState("");
   const [statusErrors, setStatusErrors] = useState("");
-  let admin_id = localStorage.getItem("admin_id");
-  let admin_type = localStorage.getItem("admin_type"); //sender type
+  let userType = localStorage.getItem("userType");
+  let admin_id = userType === "user" ? localStorage.getItem("employee_id") : userType === "company" ? localStorage.getItem("company_id") : localStorage.getItem("admin_id");
+  let admin_type = userType === "user" ? "employee" : userType === "company" ? "employer" : localStorage.getItem("admin_type"); //sender type
   let admin_name = localStorage.getItem("admin");
   let admin_email = localStorage.getItem("admin_email");
   /*FunctioN to get the json of group by */
@@ -65,6 +66,7 @@ export default function AddTaskForm(props) {
       setSelectedGroupBy([...selectedGroupBy, selectedValue]);
     }
   };
+  console.log(admin_type)
   /*Delete function for group by field */
   const removeGroup = (user) => {
     setSelectedGroupBy(selectedGroupBy.filter((item) => item !== user));

@@ -38,7 +38,7 @@ export default function AdminTaskTable(props) {
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
-  // let adminEmail = localStorage.getItem("admin_id");
+  let adminId = localStorage.getItem("admin_id");
 
   /*Pagination states */
   const [totalData, setTotalData] = useState(true);
@@ -105,7 +105,9 @@ export default function AdminTaskTable(props) {
         props.adminType,
         props.employeeId,
         props.TaskUserType,
-        props.taskId
+        props.taskId,
+        props.byAdminId,
+        props.byAdminType
       );
       let JsonRes = await GetFilter();
       setPriority(JsonRes?.data?.data?.priority);
@@ -135,6 +137,7 @@ export default function AdminTaskTable(props) {
     }
   };
   useEffect(() => {
+    console.log(props.taskId)
     getCommentsList();
     const newUrl = window.location.pathname;
     window.history.replaceState({}, document.title, newUrl);
@@ -153,6 +156,8 @@ export default function AdminTaskTable(props) {
     recordsPerPage,
     props.taskId,
     props.replyId,
+    props.byAdminId,
+    props.byAdminType
   ]);
   /*Sorting Function */
   const handleSort = (columnName) => {
@@ -685,6 +690,7 @@ export default function AdminTaskTable(props) {
                                 props.setShowTaskForm(true);
                               }}
                               title="Edit Task"
+                              disabled={adminId !== data.task_creator_user_id}
                             >
                               <span className="text-gray px-2">
                                 <CiEdit />
@@ -698,6 +704,7 @@ export default function AdminTaskTable(props) {
                               }
                               onClick={() => ShowDeleteAlert(data)}
                               title="Delete Partner"
+                              disabled={adminId !== data.task_creator_user_id}
                             >
                               <span className="px-2 text-danger">
                                 <RiDeleteBin5Line />

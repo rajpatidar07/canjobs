@@ -20,8 +20,10 @@ export default function ManageTask() {
   const [apiCall, setApiCall] = useState(false);
   const [userId, setUserId] = useState();
   const [adminId, setAdminId] = useState();
+  const [byAdminId, setByAdminId] = useState();
   const [userType, setUserType] = useState();
   const [adminType, setAdminType] = useState();
+  const [byAdminType, setByAdminType] = useState();
   const [status, setStatus] = useState("-1");
   const [statusList, setStatusList] = useState([]);
   const [count, setCount] = useState();
@@ -34,8 +36,10 @@ export default function ManageTask() {
   const [allTaskList, setAllTaskList] = useState([]);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const [taskId, setTaskId] = useState(searchParams.get("taskId"))
-  const [replyId, setReplyId] = useState(searchParams.get("replyId"))
+  let NotifiTaskId = searchParams.get("taskId") || ""
+  let NotifiReplyId = searchParams.get("replyId") || ""
+  const [taskId, setTaskId] = useState(NotifiTaskId)
+  const [replyId, setReplyId] = useState(NotifiReplyId)
   /*Function to get all user data */
   const GetAllUserData = async () => {
     try {
@@ -78,7 +82,14 @@ export default function ManageTask() {
     if (apiCall === true) {
       setApiCall(false);
     }
-  }, [apiCall]);
+    if (NotifiTaskId) {
+      setTaskId(NotifiTaskId)
+    }
+    if (NotifiReplyId) {
+      setReplyId(NotifiReplyId)
+    }
+  }, [apiCall, NotifiTaskId, NotifiReplyId]);
+  console.log("Main page", NotifiTaskId, NotifiReplyId)
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -91,7 +102,7 @@ export default function ManageTask() {
           <div className="container-fluid ">
             <div className="row m-0">
               <div className="col px-1 form_group mb-3">
-                <p className="input_label">Filter by Admin:</p>
+                <p className="input_label">Filter by Assign to admin:</p>
                 <select
                   name="adminId"
                   value={adminId + "," + adminType}
@@ -99,6 +110,35 @@ export default function ManageTask() {
                   onChange={(e) => {
                     setAdminId(e.target.value.split(",")[0]);
                     setAdminType(e.target.value.split(",")[1]);
+                    setAdminPage(1);
+                    setTaskPage(1);
+                    setReplyId("")
+                    setTaskId("")
+                  }}
+                  className="form-control bg-white dashboard_select rounded-3"
+                >
+                  <option value={""}>Select Admin</option>
+                  {(adminList || []).map((item, index) => {
+                    return (
+                      <option
+                        key={index}
+                        value={item.admin_id + "," + item.admin_type}
+                      >
+                        {item.name}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+              <div className="col px-1 form_group mb-3">
+                <p className="input_label">Filter by Assign by admin:</p>
+                <select
+                  name="adminId"
+                  value={byAdminId + "," + byAdminType}
+                  id="adminId"
+                  onChange={(e) => {
+                    setByAdminId(e.target.value.split(",")[0]);
+                    setByAdminType(e.target.value.split(",")[1]);
                     setAdminPage(1);
                     setTaskPage(1);
                     setReplyId("")
@@ -193,6 +233,8 @@ export default function ManageTask() {
                     setUserType();
                     setAdminId();
                     setAdminType();
+                    setByAdminId();
+                    setByAdminType()
                     setAdminPage(1);
                     setTaskPage(1);
                     setReplyId("")
@@ -212,7 +254,11 @@ export default function ManageTask() {
                       Tasks
                       <Link
                         className="page-link font-size-3 ml-3 font-weight-semibold px-3 rounded"
-                        onClick={() => setShowTaskForm(true)}
+                        onClick={() => {
+                          setShowTaskForm(true)
+                          setTaskId("")
+                          setReplyId("")
+                        }}
                       >
                         + Add New Task
                       </Link>
@@ -250,6 +296,8 @@ export default function ManageTask() {
                     setTaskId={setTaskId}
                     setStatus={setStatus}
                     statusList={statusList}
+                    byAdminId={byAdminId}
+                    byAdminType={byAdminType}
                   />
                 </div>
 

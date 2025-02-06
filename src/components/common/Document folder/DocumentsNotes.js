@@ -199,10 +199,12 @@ import { Modal } from "react-bootstrap";
 
 const DocumentsNotes = (props) => {
     const [loading, setLoading] = useState(false)
-    const initialHTML = props.convertedDoc ? props?.convertedDoc : "";
+    const initialHTML = props.convertedDoc ? props.convertedDoc?.replace(/You need to enable JavaScript to run this app\./gi, "") || ""
+        : "";
     const contentState = ContentState.createFromBlockArray(
         convertFromHTML(initialHTML)
     );
+    
     console.log(props.convertedDoc)
     const [editorState, setEditorState] = useState(
         EditorState.createWithContent(contentState)
@@ -269,6 +271,7 @@ const DocumentsNotes = (props) => {
         minHeight: "10rem",
         padding: "1rem",
         borderRadius: "5px",
+        
     };
     return (
         <>

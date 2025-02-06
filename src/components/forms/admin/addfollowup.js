@@ -454,10 +454,10 @@ function Addfollowup(props) {
                             {res?.assigned_to_name?.split(",").map((item, index) => <span key={index} className="badge-light rounded-pill p-1 m-1">{item}</span>)}
                           </span>}
                           <i className="font-size-2">
-                            Created on:
+                            Created on: {"  "}
                             <ConvertTime
                               _date={res.created_at}
-                              format={"Do MM YYYY, h:mm:ss a"}
+                              format={'LL'}
                             />
                             {/* {moment(res.created_at).format(
                             "Do MMM YYYY, h:mm:ss a"

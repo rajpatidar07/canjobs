@@ -60,29 +60,29 @@ export default function CommentSection({
   let newAssinList = [...partnerList, ...allAdmin];
   // Generate a list of comments reply
   const getCommentsReplyList = async () => {
-    if (docData.id) {
-      try {
-        let res = await GetReplyCommit(
-          /*docData.id , adminid, annotationStatus*/
-        );
-        if (res.data.status === (1 || "1")) {
-          setCommentsReplyList(res.data.data);
-        }
-        if (res.data.status === (0 || "0")) {
-          setCommentsReplyList([]);
-        }
-      } catch (err) {
-        console.log(err);
+    // if (docData.id) {
+    try {
+      let res = await GetReplyCommit(
+        /*docData.id , adminid, annotationStatus*/
+      );
+      if (res.data.status === (1 || "1")) {
+        setCommentsReplyList(res.data.data);
+      }
+      if (res.data.status === (0 || "0")) {
         setCommentsReplyList([]);
       }
-    } else {
+    } catch (err) {
+      console.log(err);
       setCommentsReplyList([]);
     }
+    // } else {
+    //   setCommentsReplyList([]);
+    // }
   };
   useEffect(() => {
-    if (docTaskId) {
-      getCommentsReplyList()
-    }
+    // if (docTaskId) {
+    getCommentsReplyList()
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [docTaskId, commentsList])
 
@@ -215,8 +215,6 @@ export default function CommentSection({
   const handleInputChange = (e, type) => {
     e.preventDefault();
     let value = e.target.value;
-    console.log(value, type);
-
     // Set the correct state values based on type
     if (type === "reply") {
       setType(type);
@@ -454,9 +452,10 @@ export default function CommentSection({
         : newAssinList.find((item) => item.admin_id === admin_id)
           ? newAssinList.find((item) => item.admin_id === admin_id).name
           : "";
-    let senderId = newAssinList.find((item) => item.admin_id === admin_id)
-      ? newAssinList.find((item) => item.admin_id === admin_id).admin_id
-      : "";
+    let senderId = AdminType === "agent"
+      ? admin_id : newAssinList.find((item) => item.admin_id === admin_id)
+        ? newAssinList.find((item) => item.admin_id === admin_id).admin_id
+        : "";
     let senderEmail =
       AdminType === "agent"
         ? admin_email
@@ -1185,12 +1184,12 @@ export default function CommentSection({
                   )} */}
                   </div>
                   {
-                    commentsReplyList &&
+
                     //Reply box
                     <CommentReplyBox
                       admin_id={admin_id}
                       AdminType={AdminType}
-                      commentsReplyList={commentsReplyList.filter((item) => item.task_id === commentItem.id)}
+                      commentsReplyList={commentsReplyList ? commentsReplyList.filter((item) => item.task_id === commentItem.id) : []}
                       replyComment={replyComment}
                       handleInputChange={handleInputChange}
                       filteredEmails={filteredEmails}
