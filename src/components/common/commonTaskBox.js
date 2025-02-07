@@ -610,7 +610,7 @@ export default function CommentTaskBox(props) {
             }
         });
 
-        // Prepare updated strings for each array
+        // Prepare updated strings for each array []
         const updatedEmails = newEmailsArray.join(",");
         const updatedNames = newNamesArray.join(",");
         const updatedUserIds = newUserIdArray.join(",");
