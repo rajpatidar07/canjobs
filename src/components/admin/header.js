@@ -140,7 +140,7 @@ const AdminHeader = (props) => {
                         position: toast.POSITION.TOP_RIGHT,
                         autoClose: 1000,
                       });
-                      window.reload();
+                      window.location.reload();
                     }}
                     className="dropdown-item py-2 text-red font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
                   >

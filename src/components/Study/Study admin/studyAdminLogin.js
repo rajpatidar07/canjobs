@@ -75,7 +75,7 @@ export default function StudyAdminLoginFrom({ setAdminLoggedIn, setLoginConditio
                     setLoading(false);
                     setIsLoading(false);
                     navigate("/study_dashboard");
-                    window.reload();
+                    window.location.reload();
                 }
                 if (updatedTodo.message === "Invalid Credentials") {
                     setLoading(false);

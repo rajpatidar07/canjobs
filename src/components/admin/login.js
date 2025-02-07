@@ -77,7 +77,7 @@ export default function AdminLoginFrom({ setAdminLoggedIn, setLoginCondition }) 
           setLoading(false);
           setIsLoading(false);
           navigate("/dashboard");
-          window.reload();
+          window.location.reload();
         }
         if (updatedTodo.message === "Invalid Credentials") {
           setLoading(false);

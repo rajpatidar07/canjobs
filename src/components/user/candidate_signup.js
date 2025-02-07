@@ -239,7 +239,7 @@ export default function CandidateSignup(props) {
               });
               props.close();
               navigate("/");
-              window.reload();
+              window.location.reload();
             } catch (err) {
               console.log(err);
             }

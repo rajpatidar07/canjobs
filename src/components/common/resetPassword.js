@@ -58,7 +58,7 @@ export default function ResetPassword() {
             setLoading(false);
             setState(initialFormState);
             navigate("/");
-            window.reload();
+            window.location.reload();
           }
         } catch (err) {
           console.log(err);
@@ -79,7 +79,7 @@ export default function ResetPassword() {
             setLoading(false);
             setState(initialFormState);
             navigate("/");
-            window.reload();
+            window.location.reload();
           }
         } catch (err) {
           console.log(err);
@@ -100,7 +100,7 @@ export default function ResetPassword() {
             setLoading(false);
             setState(initialFormState);
             navigate("/");
-            window.reload();
+            window.location.reload();
           }
         } catch (err) {
           console.log(err);
@@ -121,7 +121,7 @@ export default function ResetPassword() {
             setLoading(false);
             setState(initialFormState);
             navigate("/");
-            window.reload();
+            window.location.reload();
           }
         } catch (err) {
           console.log(err);

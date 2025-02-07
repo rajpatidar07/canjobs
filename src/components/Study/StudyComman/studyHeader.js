@@ -185,7 +185,7 @@ function StudyHeader() {
                                             });
                                             localStorage.setItem("portal", "study")
                                             navigate("/study");
-                                            window.reload();
+                                            window.location.reload();
                                         }}
                                     >
                                         Log Out

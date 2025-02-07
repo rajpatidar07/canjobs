@@ -79,7 +79,7 @@ export default function AgentLogin({ setLoginCondition }) {
           setLoading(false);
           setIsLoading(false);
           navigate("/partner_profile");
-          window.reload();
+          window.location.reload();
         } else if (
           updatedTodo.message === "Invalid Credentials" ||
           updatedTodo.message === "Invalid credentials !"

@@ -65,7 +65,7 @@ export default function GenerateToken(props) {
           autoClose: 1000,
         });
         close();
-        window.reload();
+        window.location.reload();
       }
       if (responseData.message === "Unauthorized admin") {
         setUnauthorized("Unauthorized admin")
@@ -83,7 +83,7 @@ export default function GenerateToken(props) {
       autoClose: 1000,
     });
     close();
-    window.reload();
+    window.location.reload();
   };
   return (
     <>

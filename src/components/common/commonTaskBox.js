@@ -646,6 +646,7 @@ export default function CommentTaskBox(props) {
                 getCommentsReplyList();
                 setSelectedAdminReplye("");
                 setFilteredEmails([]);
+                setReplyCommentData("")
 
             }
         } catch (err) {
