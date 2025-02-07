@@ -456,6 +456,56 @@ export default function CommentTaskBox(props) {
     };
     /*Function to update comment */
     const OnHandleUpdateCommentStatus = async (originalData, status) => {
+        // const {
+        //     assigned_to,
+        //     subject_description,
+        //     assigned_to_name,
+        //     assigned_user_type,
+        //     assined_to_user_id,
+        // } = originalData;
+
+        // let updatedCommentToApi = comments || subject_description;
+
+        // // Parse the original admin details
+        // let emailsArray = assigned_to?.split(",") || [];
+        // let namesArray = assigned_to_name?.split(",") || [];
+        // let userIdArray = assined_to_user_id?.split(",") || [];
+        // let userTypeArray = assigned_user_type?.split(",") || [];
+
+        // // Create new arrays for users who should remain after removal
+        // const newEmailsArray = [];
+        // const newNamesArray = [];
+        // const newUserIdArray = [];
+        // const newUserTypeArray = [];
+
+        // // Iterate through names to determine which ones to keep
+        // namesArray.forEach((name, index) => {
+        //     const nameRegex = new RegExp(`\\b${name}\\b`, "g");
+
+        //     if (nameRegex.test(updatedCommentToApi)) {
+        //         // If the name is still in the updated comment, keep its corresponding details
+        //         newEmailsArray.push(emailsArray[index]);
+        //         newNamesArray.push(namesArray[index]);
+        //         newUserIdArray.push(userIdArray[index]);
+        //         newUserTypeArray.push(userTypeArray[index]);
+        //     }
+        // });
+
+        // (selectedAdmin || []).forEach((admin) => {
+        //     if (!newEmailsArray.includes(admin.email)) {
+        //         // Add new admin's details to the arrays
+        //         newEmailsArray.push(admin.email);
+        //         newNamesArray.push(admin.name);
+        //         newUserIdArray.push(admin.u_id ? admin.id : admin.admin_id);
+        //         newUserTypeArray.push(admin.u_id ? "agent" : admin.admin_type);
+        //     }
+        // });
+
+        // // Prepare updated strings for each array
+        // const updatedEmails = newEmailsArray.join(",");
+        // const updatedNames = newNamesArray.join(",");
+        // const updatedUserIds = newUserIdArray.join(",");
+        // const updatedUserTypes = newUserTypeArray.join(",");
         const {
             assigned_to,
             subject_description,
@@ -478,12 +528,10 @@ export default function CommentTaskBox(props) {
         const newUserIdArray = [];
         const newUserTypeArray = [];
 
-        // Iterate through names to determine which ones to keep
+        // Ensure we check for @mentions dynamically
         namesArray.forEach((name, index) => {
-            const nameRegex = new RegExp(`\\b${name}\\b`, "g");
-
-            if (nameRegex.test(updatedCommentToApi)) {
-                // If the name is still in the updated comment, keep its corresponding details
+            if (updatedCommentToApi.includes(`@${name}`)) {
+                // Keep only users still mentioned
                 newEmailsArray.push(emailsArray[index]);
                 newNamesArray.push(namesArray[index]);
                 newUserIdArray.push(userIdArray[index]);
@@ -491,13 +539,21 @@ export default function CommentTaskBox(props) {
             }
         });
 
-        (selectedAdmin || []).forEach((admin) => {
+        // **Remove unmentioned admins from selectedAdmin**
+        const filteredSelectedAdmins = selectedAdmin.filter(admin =>
+            updatedCommentToApi.includes(`@${admin.name}`)
+        );
+
+        // Update selectedAdmin state
+        setSelectedAdmin(filteredSelectedAdmins);
+
+        // Add selected admins if they are not already present
+        (filteredSelectedAdmins || []).forEach((admin) => {
             if (!newEmailsArray.includes(admin.email)) {
-                // Add new admin's details to the arrays
                 newEmailsArray.push(admin.email);
                 newNamesArray.push(admin.name);
-                newUserIdArray.push(admin.u_id ? admin.id : admin.admin_id);
-                newUserTypeArray.push(admin.u_id ? "agent" : admin.admin_type);
+                newUserIdArray.push(admin.admin_id);
+                newUserTypeArray.push(admin.admin_type);
             }
         });
 

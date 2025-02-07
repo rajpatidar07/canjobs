@@ -841,7 +841,9 @@ export const ADocAnnotation = async (
       group_by: GroupBy,
       priority: Priority,
       status: Status,
-      subject: subject
+      subject: subject,
+      next_followup_date: nextFollowupDate,
+      followup_status: satus,
     },
     {
       headers: {

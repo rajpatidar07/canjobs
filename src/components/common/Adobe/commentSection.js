@@ -600,12 +600,10 @@ export default function CommentSection({
     const newUserIdArray = [];
     const newUserTypeArray = [];
 
-    // Iterate through names to determine which ones to keep
+    // Ensure we check for @mentions dynamically
     namesArray.forEach((name, index) => {
-      const nameRegex = new RegExp(`\\b${name}\\b`, "g");
-
-      if (nameRegex.test(updatedCommentToApi)) {
-        // If the name is still in the updated comment, keep its corresponding details
+      if (updatedCommentToApi.includes(`@${name}`)) {
+        // Keep only users still mentioned
         newEmailsArray.push(emailsArray[index]);
         newNamesArray.push(namesArray[index]);
         newUserIdArray.push(userIdArray[index]);
@@ -613,13 +611,21 @@ export default function CommentSection({
       }
     });
 
-    (selectedAdmin || []).forEach((admin) => {
+    // **Remove unmentioned admins from selectedAdmin**
+    const filteredSelectedAdmins = selectedAdmin.filter(admin => 
+        updatedCommentToApi.includes(`@${admin.name}`)
+    );
+
+    // Update selectedAdmin state
+    setSelectedAdmin(filteredSelectedAdmins);
+
+    // Add selected admins if they are not already present
+    (filteredSelectedAdmins || []).forEach((admin) => {
       if (!newEmailsArray.includes(admin.email)) {
-        // Add new admin's details to the arrays
         newEmailsArray.push(admin.email);
         newNamesArray.push(admin.name);
-        newUserIdArray.push(admin.u_id ? admin.id : admin.admin_id);
-        newUserTypeArray.push(admin.u_id ? "agent" : admin.admin_type);
+        newUserIdArray.push(admin.admin_id);
+        newUserTypeArray.push(admin.admin_type);
       }
     });
 
