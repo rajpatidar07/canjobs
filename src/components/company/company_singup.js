@@ -246,7 +246,7 @@ function CompanySingupForm(props) {
               });
               //props.close()();
               navigate("/client");
-              window.location.reload();
+              window.reload();
             } catch (err) {
               console.log(err);
             }

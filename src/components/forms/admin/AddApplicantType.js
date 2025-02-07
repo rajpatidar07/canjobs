@@ -94,13 +94,13 @@ export default function AddApplicantType(props) {
             try {
                 const response = await AddApplicanTypeApi(newItem);
                 // console.log(response.status === (1 || "1"), response)
-                if (response.status === (1 || "1")) {
-                    if (state.level === (0 || "0")) {
+                if (response.status === 1 || response.status === "1") {
+                    if (state.level === 0 || state.level === "0") {
                         toast.success("Applicant Type Added successfully", {
                             position: toast.POSITION.TOP_RIGHT,
                             autoClose: 1000,
                         });
-                    } else if (state.level === (1 || "1")) {
+                    } else if (state.level === 1 || state.level === "1") {
                         toast.success("Applicant Sub Type Added successfully", {
                             position: toast.POSITION.TOP_RIGHT,
                             autoClose: 1000,

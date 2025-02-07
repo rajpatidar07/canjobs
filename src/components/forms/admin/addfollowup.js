@@ -52,7 +52,10 @@ function Addfollowup(props) {
     : user_type === "company"
       ? "employer"
       : adminType
-
+  let assigned_by_name = user_type === "user" || user_type === "company"
+    ? localStorage.getItem("name")
+    : localStorage.getItem("admin")
+  let assigned_by_email = localStorage.getItem("email");
   /* Function to get the Response data*/
   const ResponseData = async () => {
     try {
@@ -448,13 +451,13 @@ function Addfollowup(props) {
                           </p>
                           {res?.assigned_to_name && <span className="font-size-3">
                             Assigned admin:
-                            {res?.assigned_to_name?.split(",").map((item, index) => <span className="badge-light rounded-pill p-1 m-1">{item}</span>)}
+                            {res?.assigned_to_name?.split(",").map((item, index) => <span key={index} className="badge-light rounded-pill p-1 m-1">{item}</span>)}
                           </span>}
                           <i className="font-size-2">
-                            Created on:
+                            Created on: {"  "}
                             <ConvertTime
                               _date={res.created_at}
-                              format={"Do MM YYYY, h:mm:ss a"}
+                              format={'LL'}
                             />
                             {/* {moment(res.created_at).format(
                             "Do MMM YYYY, h:mm:ss a"
@@ -774,6 +777,10 @@ function Addfollowup(props) {
                 noteId={props.note_id}
                 page={props.page}
                 skip={props.skip}
+                userType={user_type}
+                assigned_id={assigned_id}
+                assigned_by_name={assigned_by_name}
+                assigned_by_email={assigned_by_email}
               />
             </div>
           </div>

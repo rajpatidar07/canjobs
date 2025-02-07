@@ -96,7 +96,7 @@ export default function CandidateLoginForm(props) {
           setLoading(false);
           Close();
           navigate(location?.state?.page === "study" ? "/study" : `/${updatedTodo.employee_id}`);
-          window.location.reload();
+          window.reload();
         }
         if (updatedTodo.message === "Invalid credentials !") {
           setLoading(false);
@@ -240,7 +240,7 @@ export default function CandidateLoginForm(props) {
             });
             Close();
             navigate(location?.state?.page === "study" ? "/student_profile" : `/${data.employee_id}`);
-            window.location.reload();
+            window.reload();
           }
           if (
             res.data.message ===

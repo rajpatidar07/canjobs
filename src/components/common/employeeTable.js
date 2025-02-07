@@ -623,7 +623,7 @@ export default function EmployeeTable(props) {
                       Add Candidate
                     </CustomButton>
                     <Link
-                      className={` btn-sm  btn-primary m-1`}
+                      className={user_type === "admin" ? ` btn-sm  btn-primary m-1` : "d-none"}
                       onClick={() => setShowApplicantTypeForm(true)}
                       title={"Add New Applicant type"}
                     >
@@ -633,7 +633,7 @@ export default function EmployeeTable(props) {
                 </>
               ) : null}
             <div className="form_group text-right">
-              <ExportExcelButton tableName={"employee"} type={""} portal={portal} applicantType={props?.ApplicantType ? props?.ApplicantType : props.interestFilterValu} status={status} local={props.localFilterValue ? props.localFilterValue : ""} tableData={[]} />
+              <ExportExcelButton tableName={"employee"} type={""} portal={portal} applicantType={props?.ApplicantType ? props?.ApplicantType : props.interestFilterValu} status={status === "00" || !status ? "" : status} local={props.localFilterValue ? props.localFilterValue : ""} tableData={[]} />
             </div>
           </div>
         )}
@@ -869,7 +869,6 @@ export default function EmployeeTable(props) {
                 </tr>
               </thead>
               <tbody>
-                {/* {console.log(employeeData.map((item) => `assigned by :${item.assigned_by}`), admintList.map((item)=>item.admin_id))} */}
                 {/* Map function to show the data in the list*/}
                 {totalData === 0 || employeeData.length === 0 ? (
                   <tr>
@@ -1259,7 +1258,7 @@ export default function EmployeeTable(props) {
                               </span>
                             ) : empdata.applicant_process_status ===
                               "file decision" ? (
-                              <div
+                              <span
                                 className={`px-3 py-2 badge badge-pill ${empdata.applicant_process_substages ===
                                   "approved"
                                   ? " badge-shamrock"
@@ -1278,7 +1277,7 @@ export default function EmployeeTable(props) {
                                       ? "Rejected"
                                       : "Awaiting Decision"}
                                 </span>
-                              </div>
+                              </span>
                             ) : (
                               <span className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 N/A

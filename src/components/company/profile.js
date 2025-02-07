@@ -105,7 +105,7 @@ function CompanyProfile(props) {
                       alt={employerData.company_name}
                     /> :
                       <p className="company_logo"
-                        style={{ fontSize: "50px" }}>{getInitials(employerData.company_name)}</p>}
+                        style={{ fontSize: "50px" }}>{employerData.company_name ? getInitials(employerData.company_name) : ""}</p>}
                   </div>
                   <div className="text_box text-left w-100 text-capitalize">
                     <h3 className="mb-0 font-size-6 heading-dark-color">

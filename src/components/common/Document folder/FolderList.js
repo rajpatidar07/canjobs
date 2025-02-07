@@ -69,7 +69,7 @@ export default function FolderList({
 
       <div className="py-5 min-width-px-100">
         <div
-          class="btn-group button_group"
+          className="btn-group button_group"
           role="group"
           aria-label="Basic example"
         >
@@ -397,7 +397,7 @@ export default function FolderList({
                           <>
                             <li className="list-group-item text-danger">
                               <Link
-                                className="text-decoration-none" to={item["@microsoft.graph.downloadUrl"]}  rel="noopener noreferrer" download>
+                                className="text-decoration-none" to={item["@microsoft.graph.downloadUrl"]} rel="noopener noreferrer" download>
 
                                 Download
                               </Link>
@@ -418,8 +418,8 @@ export default function FolderList({
                               </Link>
                             </li>
                             <li
-                              className={`list-group-item text-danger ${userType !== "admin" &&
-                                userType !== "agent" &&
+                              className={`list-group-item text-danger ${(userType !== "admin" &&
+                                userType !== "agent") ||
                                 item.file.mimeType === "text/plain"
                                 ? "d-none"
                                 : ""

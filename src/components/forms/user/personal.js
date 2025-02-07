@@ -252,6 +252,16 @@ function PersonalDetails(props) {
     } catch (err) {
       console.log(err);
     }
+
+
+  };
+  /*Function to set data to the search agent  */
+  // const onAdminSelectChange = (option) => {
+  //   setState({ ...state, assigned_by: option.value });
+  // };
+
+  /*Function to get agent json list */
+  const AgentJson = async () => {
     try {
       let response = await GetAgentJson();
       setAgentList(response);
@@ -264,15 +274,6 @@ function PersonalDetails(props) {
     } catch (err) {
       console.log(err);
     }
-
-  };
-  /*Function to set data to the search agent  */
-  // const onAdminSelectChange = (option) => {
-  //   setState({ ...state, assigned_by: option.value });
-  // };
-
-  /*Function to get agent json list */
-  const AgentJson = async () => {
   };
   /*Function to set data to the search agent  */
   // const onSelectChange = (option) => {
@@ -1112,7 +1113,7 @@ function PersonalDetails(props) {
                           className={`form-control text-capitalize ${errors.sub_category_id ? "border border-danger" : ""}`}
                           id="sub_category_id"
                         >
-                          {console.log((applicantTypeList.map((item) => item.parent_id )),state.category_id)}
+                          {console.log((applicantTypeList.map((item) => item.parent_id)), state.category_id)}
                           <option value={""}>Select Sub Type</option>
                           {(applicantTypeList.filter((item) => item.parent_id === state.category_id) || []).map((subType, index) => (
                             <option key={index} value={subType.id} >

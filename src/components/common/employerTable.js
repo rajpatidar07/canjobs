@@ -320,12 +320,12 @@ export default function EmployerTable(props) {
                               >
                                 {empdata.logo === null ? (
                                   empdata?.company_name
-                                  ?<p style={{ fontSize: "15px " }} className="mt-6">{getInitials(empdata?.company_name)}</p>
-                                  :<img
-                                  src="https://cdn.logo.com/hotlink-ok/logo-social-sq.png"
-                                  alt=""
-                                  className="w-100"
-                                />
+                                    ? <p style={{ fontSize: "15px " }} className="mt-6">{empdata?.company_name ? getInitials(empdata?.company_name) : ""}</p>
+                                    : <img
+                                      src="https://cdn.logo.com/hotlink-ok/logo-social-sq.png"
+                                      alt=""
+                                      className="w-100"
+                                    />
                                 ) : (
                                   <img
                                     src={empdata.logo}

@@ -180,7 +180,7 @@ function Employer() {
                   <div className="col p-1 d-flex justify-content-evenly ">
                     <div className=" w-100 form_group mt-6 text-right">
                       <CustomButton
-                      style={{height:"32px"}}
+                        style={{ height: "32px" }}
                         className="font-size-3 btn-block rounded-3 btn btn-primary border-0"
                         onClick={() => editEmployer("0")}
                       >
@@ -188,7 +188,7 @@ function Employer() {
                       </CustomButton>
                     </div>
                     <div className=" px-1 form_group mt-4 text-right">
-                      <ExportExcelButton type={"employer"} />
+                      <ExportExcelButton tableData={[]} tableName={"employer"} portal={""} applicantType={""} status={""} local={""} type={""} />
                     </div>
                   </div>
                 </div>

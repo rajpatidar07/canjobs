@@ -199,10 +199,13 @@ import { Modal } from "react-bootstrap";
 
 const DocumentsNotes = (props) => {
     const [loading, setLoading] = useState(false)
-    const initialHTML = props.convertedDoc || "";
+    const initialHTML = props.convertedDoc ? props.convertedDoc?.replace(/You need to enable JavaScript to run this app\./gi, "") || ""
+        : "";
     const contentState = ContentState.createFromBlockArray(
         convertFromHTML(initialHTML)
     );
+    
+    console.log(props.convertedDoc)
     const [editorState, setEditorState] = useState(
         EditorState.createWithContent(contentState)
     );
@@ -217,7 +220,7 @@ const DocumentsNotes = (props) => {
         // Create a Blob with plain text
         const blob = new Blob([htmlContent], { type: "text/plain" });
 
-        const wordFile = new File([blob], props?.convertedDoc ? props?.docSingleDate?.name : `note${new Date().getTime()}.txt`, {
+        const wordFile = new File([blob], props?.docSingleDate?.name ? props?.docSingleDate?.name : `note${new Date().getTime()}.txt`, {
             type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
             lastModified: new Date().getTime(), // Set the last modified time
         });
@@ -226,29 +229,34 @@ const DocumentsNotes = (props) => {
         // link.href = URL.createObjectURL(blob);
         // link.download = "note.txt"; // Save as a .txt file
         // link.click();
-        console.log("Note file =>",wordFile)
-        try {
-            setLoading(true)
-            const res = await AddSharePointDOcument(
-                props.user_id,
-                props.emp_user_type,
-                props.folderID,
-                props.docTypeName,
-                [wordFile]
-            );
+        console.log(props?.docSingleDate?.name ? `ok ok ${props?.docSingleDate?.name}` : `note${new Date().getTime()}.txt`, "Note file =>", wordFile, wordFile.name)
+        if (wordFile.name === "undefined" || wordFile.name === undefined) {
+            toast.error("File name is undefined")
+            console.log(props?.convertedDoc)
+        } else {
+            try {
+                setLoading(true)
+                const res = await AddSharePointDOcument(
+                    props.user_id,
+                    props.emp_user_type,
+                    props.folderID,
+                    props.docTypeName,
+                    [wordFile]
+                );
 
-            if (res.data.message === "Document Upload") {
-                toast.success('Note added successfully!', {
-                    position: toast.POSITION.TOP_RIGHT,
-                    autoClose: 1000,
-                });
-                props.setApiCall(true);
-                setLoading(false)
-                handleNoteFormClose()
-                localStorage.removeItem('writerContent'); // Clear saved content from localStorage
+                if (res.data.message === "Document Upload") {
+                    toast.success('Note added successfully!', {
+                        position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 1000,
+                    });
+                    props.setApiCall(true);
+                    setLoading(false)
+                    handleNoteFormClose()
+                    localStorage.removeItem('writerContent'); // Clear saved content from localStorage
+                }
+            } catch (error) {
+                console.log(error)
             }
-        } catch (error) {
-            console.log(error)
         }
     };
     /*Function to close the note form */
@@ -263,6 +271,7 @@ const DocumentsNotes = (props) => {
         minHeight: "10rem",
         padding: "1rem",
         borderRadius: "5px",
+        
     };
     return (
         <>

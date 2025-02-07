@@ -419,7 +419,7 @@ export default function ApplicantsFilter({
             className="text-capitalize form-control"
           >
             <option value={""}>Candidate's sub type</option>
-            {(applicantTypeList.filter((item) => item.level === "1" && item.parent_id === applicantTypeId)).map((subType, index) => (
+            {(applicantTypeList.filter((item) => pageName === "employee" ? item.level === "1" : (item.level === "1" && item.parent_id === applicantTypeId))).map((subType, index) => (
               <option key={index} value={subType.id} className={`text-capitalize`}>
                 {subType.title}
               </option>

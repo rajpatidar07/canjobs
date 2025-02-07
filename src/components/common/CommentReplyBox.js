@@ -22,12 +22,14 @@ export default function CommentReplyBox({
   admin_id,
   AdminType,
   dropdownVisible,
-  taskType
+  taskType,
+  replyCommentClick
 }) {
+  // console.log("first",replyCommentClick)
   return (
     <div className="reply_box_container mx-2 fade show">
       {/* Display replies only if task_id matches */}
-      {(commentsReplyList || []).map(
+      {commentsReplyList && (commentsReplyList || []).map(
         (replyItem, replyIndex) =>
           // Only render the reply if task_id matches the comment's id
           replyItem.task_id === commentItem.id && (
@@ -81,12 +83,12 @@ export default function CommentReplyBox({
                           )}`}
                           style={{ fontSize: "16px", fontWeight: 700 }}
                         >
-                          {replyItem.sender_name.charAt(0)}
+                          {replyItem?.sender_name.charAt(0)}
                         </div>
                       </div>
                       <div className=" mb-0">
                         <div className="font-size-3 font-weight-bold text-capitalize">
-                          {replyItem.sender_name}
+                          {replyItem?.sender_name}
                         </div>
                         <div
                           className="text-gray font-weight-light m-0 text-capitalize"
@@ -100,18 +102,18 @@ export default function CommentReplyBox({
                         </div>
                       </div>
                     </div>
-                    {/* {replyItem.sender_name} */}
+                    {/* {replyItem?.sender_name} */}
                     {/* {replyItem.task_creator_user_id
-                        ? allAdmin.find(
-                            (item) =>
-                              item.admin_id === replyItem.task_creator_user_id
-                          ).name
                           ? allAdmin.find(
                               (item) =>
                                 item.admin_id === replyItem.task_creator_user_id
                             ).name
-                          : ""
-                        : ""} */}
+                            ? allAdmin.find(
+                                (item) =>
+                                  item.admin_id === replyItem.task_creator_user_id
+                              ).name
+                            : ""
+                          : ""} */}
                   </div>
                   {replyItem.msg && (
                     <span className="m-0 font-size-3 text-dark text-break">
@@ -127,14 +129,14 @@ export default function CommentReplyBox({
 
                   {/* Display mention */}
                   {/* {replyItem.mention && (
-                    <span
-                      className="text-break text-primary font-size-3"
-                      to={`mailto:${replyItem.mention}`}
-                      style={{ marginLeft: "5px" }}
-                    >
-                      {`${replyItem.mention}`}
-                    </span>
-                  )} */}
+                      <span
+                        className="text-break text-primary font-size-3"
+                        to={`mailto:${replyItem.mention}`}
+                        style={{ marginLeft: "5px" }}
+                      >
+                        {`${replyItem.mention}`}
+                      </span>
+                    )} */}
                 </div>
               }
             </div>
@@ -151,7 +153,7 @@ export default function CommentReplyBox({
           <div className="reply_box position-relative d-flex rounded">
             <input
               type="text"
-              value={replyComment || ""}
+              value={replyCommentClick === commentItem.id ? replyComment : ""}
               onChange={(e) => handleInputChange(e, "reply")}
               placeholder={`${taskType || "Comments"} or add others with @`}
               className="comment-input border-0 bg-light"
@@ -176,12 +178,12 @@ export default function CommentReplyBox({
               <CiPaperplane />
             </button>
             {/* <a
-              className="border-0 bg-white rounded cancel-btn text-dark"
-              onClick={() => setReplyCommentClick()}
-              type="button"
-            >
-              cancel
-            </a> */}
+                className="border-0 bg-white rounded cancel-btn text-dark"
+                onClick={() => setReplyCommentClick()}
+                type="button"
+              >
+                cancel
+              </a> */}
           </div>
           {dropdownVisible && filteredEmails.length > 0 && type === "reply" ? (
             <ul

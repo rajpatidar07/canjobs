@@ -23,12 +23,15 @@ export default function CommentTaskBox(props) {
     const [filteredEmails, setFilteredEmails] = useState([]);
     let [dropdownVisible, setDropdownVisible] = useState();
     let [selectedAdminReply, setSelectedAdminReplye] = useState([]);
+    const [userErrorforadminAssign, setUserErrorforadminAssign] = useState("");
     let [replyCommentClick, setReplyCommentClick] = useState(props.TaskId || "");
     let [selectedAdmin, setSelectedAdmin] = useState([]);
-    const AdminType = localStorage.getItem("admin_type");
-    let admin_id = AdminType === "agent" ? localStorage.getItem("agent_id") : localStorage.getItem("admin_id");
-    let admin_name = localStorage.getItem("admin");
+    let userType = localStorage.getItem("userType");
+    let admin_id = userType === "user" ? localStorage.getItem("employee_id") : userType === "company" ? localStorage.getItem("company_id") : localStorage.getItem("admin_id");
+    let AdminType = userType === "user" ? "employee" : userType === "company" ? "employer" : localStorage.getItem("admin_type"); //sender type
+    let admin_name = userType === "user" || userType === "company" ? localStorage.getItem("name") : localStorage.getItem("admin");
     let admin_email = localStorage.getItem("email");
+    console.log(admin_id, AdminType, userType)
     /*Function to get all user data */
     const GetAllUserData = async () => {
         try {
@@ -60,9 +63,9 @@ export default function CommentTaskBox(props) {
         }
     };
     useEffect(() => {
-        if (props.TaskId) {
-            getCommentsReplyList()
-        }
+        // if (props.TaskId) {
+        getCommentsReplyList()
+        // }
         GetAllUserData()
         Getcomments()
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -90,32 +93,43 @@ export default function CommentTaskBox(props) {
     // Function to add annotation based on conditions
     const handleInputChange = (e, type) => {
         let value = e.target.value;
-        if (type === "reply") {
-            setType(type)
-            setReplyComment(value)
-        } else {
-            setComments(value)
-            setType(type)
-        }
-        // Check if the last typed character is '@'
-        value = value.trim()
         const lastChar = value.slice(-1);
-        if (lastChar === "@") {
-            setDropdownVisible(true)
-            setFilteredEmails(adminList);
+
+        setType(type); // Set type once, as it is common in both cases
+
+        if (type === "reply") {
+            setReplyComment(value);
         } else {
-            const match = value.match(/@(\w*)$/);
-            if (match) {
-                const query = match[1].toLowerCase();
-                const filtered = adminList.filter((user) =>
-                    user.name.toLowerCase().includes(query)
-                );
-                setFilteredEmails(filtered);
+            setComments(value);
+        }
+
+        setUserErrorforadminAssign("");
+
+        if (props.userType === "admin") {
+            if (lastChar === "@") {
+                setDropdownVisible(true);
+                setFilteredEmails(adminList);
             } else {
-                setFilteredEmails([]);
-                setDropdownVisible(false)
+                const match = value.match(/@(\w*)$/);
+                if (match) {
+                    const query = match[1].toLowerCase();
+                    const filtered = adminList.filter((user) =>
+                        user.name?.toLowerCase().includes(query)
+                    );
+                    setFilteredEmails(filtered);
+                } else {
+                    setFilteredEmails([]);
+                    setDropdownVisible(false);
+                }
+            }
+        } else {
+            if (lastChar === "@") {
+                setUserErrorforadminAssign(`Sorry ! you can't assign admin`);
+            } else {
+                setUserErrorforadminAssign("");
             }
         }
+
     };
     /*FUnction to clicked the email of the searched admin */
     const handleEmailClick = (user, type) => {
@@ -346,22 +360,23 @@ export default function CommentTaskBox(props) {
                 ? admin_name
                 : adminList.find((item) => item.admin_id === admin_id)
                     ? adminList.find((item) => item.admin_id === admin_id).name
-                    : "";
-        let senderId = adminList.find((item) => item.admin_id === admin_id)
-            ? adminList.find((item) => item.admin_id === admin_id).admin_id
-            : "";
+                    : props.assigned_by_name || "";
+        let senderId = AdminType === "agent"
+            ? admin_id : adminList.find((item) => item.admin_id === admin_id)
+                ? adminList.find((item) => item.admin_id === admin_id).admin_id
+                : props.assigned_id || "";
         let senderEmail =
             AdminType === "agent"
                 ? admin_email
                 : adminList.find((item) => item.admin_id === admin_id)
                     ? adminList.find((item) => item.admin_id === admin_id).email
-                    : "";
-        let senderType =
-            AdminType === "agent"
-                ? "agent"
-                : adminList.find((item) => item.admin_id === admin_id)
-                    ? adminList.find((item) => item.admin_id === admin_id).admin_type
-                    : "";
+                    : props.assigned_by_email || "";
+        // let senderType =
+        //     AdminType === "agent"
+        //         ? "agent"
+        //         : adminList.find((item) => item.admin_id === admin_id)
+        //             ? adminList.find((item) => item.admin_id === admin_id).admin_type
+        //             : "";
         // Variables for mentioning admins
         const email = (selectedAdminReply || [])?.map((item) => item.email).toString() || ""; ///\S+@\S+\.\S+/.test(comments) ? comments : "";
 
@@ -390,6 +405,7 @@ export default function CommentTaskBox(props) {
                 .map((admin) => (admin.u_id ? "agent" : admin.admin_type))
                 .join(",")
             : "";
+        console.log(AdminType, "AdminType", sender, senderId, "data", data, " props.assigned_id", props.assigned_id)
         if (replyComment === "" && email === "") {
             toast.error("Comment or email cannot be empty!", {
                 position: toast.POSITION.TOP_RIGHT,
@@ -408,9 +424,9 @@ export default function CommentTaskBox(props) {
                     props.taskType,
                     senderId,
                     senderEmail,
-                    AdminType === "agent" ? "agent" : senderType,
+                    AdminType,//sender type
                     props.userId, //props.userId
-                    //docData.parentReference.id,
+                    "",//docData.parentReference.id,
                     props.taskUserType,
                     data?.task_id ? data.id : "",
                     //          docData.name,//document name
@@ -565,25 +581,25 @@ export default function CommentTaskBox(props) {
 
         let senderId = adminList.find((item) => item.admin_id === admin_id)
             ? adminList.find((item) => item.admin_id === admin_id).admin_id
-            : "";
+            : props.assigned_id || "";
         let senderEmail =
             AdminType === "agent"
                 ? admin_email
                 : adminList.find((item) => item.admin_id === admin_id)
                     ? adminList.find((item) => item.admin_id === admin_id).email
-                    : "";
-        let senderType =
-            AdminType === "agent"
-                ? "agent"
-                : adminList.find((item) => item.admin_id === admin_id)
-                    ? adminList.find((item) => item.admin_id === admin_id).admin_type
-                    : "";
+                    : props.assigned_by_email || "";
+        // let senderType =
+        //     AdminType === "agent"
+        //         ? "agent"
+        //         : adminList.find((item) => item.admin_id === admin_id)
+        //             ? adminList.find((item) => item.admin_id === admin_id).admin_type
+        //             : "";
         let sender =
             AdminType === "agent"
                 ? admin_name
                 : adminList.find((item) => item.admin_id === admin_id)
                     ? adminList.find((item) => item.admin_id === admin_id).name
-                    : "";
+                    : props.assigned_by_name || "";
         (selectedAdminReply || []).forEach((admin) => {
             if (!newEmailsArray.includes(admin.email)) {
                 // Add new admin's details to the arrays
@@ -613,7 +629,7 @@ export default function CommentTaskBox(props) {
                 props.taskType,
                 senderId,
                 senderEmail,
-                AdminType === "agent" ? "agent" : senderType,
+                AdminType,
                 props.userId, //props.userId
                 "",// docData.parentReference.id,
                 props.taskUserType,
@@ -716,6 +732,8 @@ export default function CommentTaskBox(props) {
                             rows={2}
                             style={{ outline: 0, border: commntData ? "2px solid blue" : "" }}
                         ></textarea>
+                        {userErrorforadminAssign && type !== "reply" ?
+                            <span className="text-danger font-size-3">{userErrorforadminAssign}</span> : null}
                         {dropdownVisible && filteredEmails.length > 0 && type !== "reply" ? (
                             <ul
                                 className="email-suggestions"
@@ -807,6 +825,7 @@ export default function CommentTaskBox(props) {
                                         setCommentData();
                                         setEndDate("");
                                         setSubject("");
+                                        setDropdownVisible(false)
                                     }}
                                 >
                                     Cancel
@@ -891,11 +910,13 @@ export default function CommentTaskBox(props) {
                                         transitionDelay: "initial"
                                     }}
                                     onClick={() => {
+
                                         if (commentItem.status !== "1") {
                                             setReplyCommentClick(commentItem.id);
                                             getCommentsReplyList();
                                         }
                                         setFilteredEmails([]);
+                                        // setComments("")
                                         if (replyCommentClick !== commentItem.id) {
                                             setSelectedAdmin("");
                                             setReplyCommentData("");
@@ -914,7 +935,7 @@ export default function CommentTaskBox(props) {
                                         style={{ position: "absolute", right: 5, gap: 5 }}
                                     >
                                         <Link
-                                            className={`text-gray pr-1 ${commentItem.status !== "0" ? "d-none" : ""}`}
+                                            className={`text-gray pr-1 ${commentItem.status !== "0" || (props.assigned_id === commentItem.task_creator_user_id) ? "" : "d-none"}`}
                                             title="Update Comment"
                                             onClick={() => {
                                                 handleUpdateCommentLinkClick(commentItem);
@@ -945,7 +966,7 @@ export default function CommentTaskBox(props) {
                                             />
                                         </Link>
                                         <Link
-                                            className="text-danger pr-1"
+                                            className={props.assigned_id === commentItem.task_creator_user_id ? "text-danger pr-1" : "d-none"}
                                             title="Delete Comment"
                                             onClick={() => {
                                                 OnDeleteComment(commentItem.doc_id, commentItem.id);
@@ -1019,12 +1040,12 @@ export default function CommentTaskBox(props) {
                                         )}
                                     </div>
                                     {
-                                        replyCommentClick === commentItem.id ? (
+                                        (
                                             //Reply box
-                                            <CommentReplyBox
+                                            <> <CommentReplyBox
                                                 admin_id={admin_id}
                                                 AdminType={AdminType}
-                                                commentsReplyList={commentsReplyList}
+                                                commentsReplyList={commentsReplyList ? commentsReplyList.filter((item) => item.task_id === commentItem.id) : []}
                                                 replyComment={replyComment}
                                                 handleInputChange={handleInputChange}
                                                 filteredEmails={filteredEmails}
@@ -1042,8 +1063,12 @@ export default function CommentTaskBox(props) {
                                                 OnDeleteCommentReplies={OnDeleteCommentReplies}
                                                 dropdownVisible={dropdownVisible}
                                                 taskType={props.taskType}
+                                                replyCommentClick={replyCommentClick}
                                             />
-                                        ) : null
+                                                {userErrorforadminAssign && type === "reply" ?
+                                                    <span className="text-danger font-size-3">{userErrorforadminAssign}</span> : null}
+                                            </>
+                                        )
                                     }
                                 </div>
                             ))

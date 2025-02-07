@@ -60,31 +60,31 @@ export default function CommentSection({
   let newAssinList = [...partnerList, ...allAdmin];
   // Generate a list of comments reply
   const getCommentsReplyList = async () => {
-    if (docData.id) {
-      try {
-        let res = await GetReplyCommit(
-          docData.id /*, adminid, annotationStatus*/
-        );
-        if (res.data.status === (1 || "1")) {
-          setCommentsReplyList(res.data.data);
-        }
-        if (res.data.status === (0 || "0")) {
-          setCommentsReplyList([]);
-        }
-      } catch (err) {
-        console.log(err);
+    // if (docData.id) {
+    try {
+      let res = await GetReplyCommit(
+        /*docData.id , adminid, annotationStatus*/
+      );
+      if (res.data.status === (1 || "1")) {
+        setCommentsReplyList(res.data.data);
+      }
+      if (res.data.status === (0 || "0")) {
         setCommentsReplyList([]);
       }
-    } else {
+    } catch (err) {
+      console.log(err);
       setCommentsReplyList([]);
     }
+    // } else {
+    //   setCommentsReplyList([]);
+    // }
   };
   useEffect(() => {
-    if (docTaskId) {
-      getCommentsReplyList()
-    }
+    // if (docTaskId) {
+    getCommentsReplyList()
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [docTaskId])
+  }, [docTaskId, commentsList])
 
 
 
@@ -213,37 +213,45 @@ export default function CommentSection({
 
   // Function to add annotation based on conditions
   const handleInputChange = (e, type) => {
+    e.preventDefault();
     let value = e.target.value;
+    // Set the correct state values based on type
     if (type === "reply") {
-      setType(type)
-      setReplyComment(value)
+      setType(type);
+      setReplyComment(value);
     } else {
-      setComments(value)
-      setType(type)
+      setComments(value);
+      setType(type);
     }
+
+    // Create the AddPartnersList with selected partners or all partners
     let AddPartnersList = selectedPartner ? [] : partnerList;
     let newAssignList = allAdmin;
     AddPartnersList = [...AddPartnersList, ...newAssignList];
-    // Check if the last typed character is '@'
-    value = value.trim()
+
+    // Trim the value and check the last character
+    value = value.trim();
     const lastChar = value.slice(-1);
+
     if (lastChar === "@") {
-      setDropdownVisible(true)
-      setFilteredEmails(AddPartnersList);
+      setDropdownVisible(true); // Show dropdown when '@' is typed
+      setFilteredEmails(AddPartnersList); // Show all emails in partner list
     } else {
+      // Filter emails when user types after '@'
       const match = value.match(/@(\w*)$/);
       if (match) {
         const query = match[1].toLowerCase();
         const filtered = AddPartnersList.filter((user) =>
           user.name.toLowerCase().includes(query)
         );
-        setFilteredEmails(filtered);
+        setFilteredEmails(filtered); // Update filtered emails
       } else {
-        setFilteredEmails([]);
-        setDropdownVisible(false)
+        setFilteredEmails([]); // Clear emails if no '@' or query match
+        setDropdownVisible(false); // Hide dropdown if no match
       }
     }
   };
+
   /*FUnction to clicked the email of the searched admin */
   const handleEmailClick = (user, type) => {
     // Add the selected user to the assigned list
@@ -444,9 +452,10 @@ export default function CommentSection({
         : newAssinList.find((item) => item.admin_id === admin_id)
           ? newAssinList.find((item) => item.admin_id === admin_id).name
           : "";
-    let senderId = newAssinList.find((item) => item.admin_id === admin_id)
-      ? newAssinList.find((item) => item.admin_id === admin_id).admin_id
-      : "";
+    let senderId = AdminType === "agent"
+      ? admin_id : newAssinList.find((item) => item.admin_id === admin_id)
+        ? newAssinList.find((item) => item.admin_id === admin_id).admin_id
+        : "";
     let senderEmail =
       AdminType === "agent"
         ? admin_email
@@ -1012,9 +1021,9 @@ export default function CommentSection({
               (commentsList || []).map((commentItem, index) => (
                 <div
                   className={`card col-12 mb-2 p-0 comment_box_card bg-white
-                  ${(annotationId === JSON.parse(commentItem?.doctaskjson).id &&
+                  ${((annotationId === JSON.parse(commentItem?.doctaskjson).id &&
                       annotationId &&
-                      JSON.parse(commentItem?.doctaskjson)) || commntData === commentItem
+                      JSON.parse(commentItem?.doctaskjson)) || commntData === commentItem) || commentItem.id === docTaskId
                       ? "highlighted-comment"
                       : ""
                     } `}
@@ -1175,40 +1184,30 @@ export default function CommentSection({
                   )} */}
                   </div>
                   {
-                    replyCommentClick === commentItem.id ? (
-                      //Reply box
-                      <CommentReplyBox
-                        admin_id={admin_id}
-                        AdminType={AdminType}
-                        commentsReplyList={commentsReplyList}
-                        replyComment={replyComment}
-                        handleInputChange={handleInputChange}
-                        filteredEmails={filteredEmails}
-                        handleEmailClick={handleEmailClick}
-                        // handleEmailMouseOver={handleEmailMouseOver}
-                        ReplyAnnotation={ReplyAnnotation}
-                        setReplyCommentClick={setReplyCommentClick}
-                        commentItem={commentItem}
-                        allAdmin={allAdmin}
-                        determineBackgroundColor={determineBackgroundColor}
-                        handleUpdateReplyLinkClick={handleUpdateReplyLinkClick}
-                        OnHandleUpdateCommentReply={OnHandleUpdateCommentReply}
-                        type={type}
-                        replyCommentData={replyCommentData}
-                        OnDeleteCommentReplies={OnDeleteCommentReplies}
-                        dropdownVisible={dropdownVisible}
-                      />
-                    ) : null
-                    // <Link
-                    //   className="mx-5 mr-0 ml-auto font-size-3 "
-                    //   onClick={() => {
-                    //     setReplyCommentClick(commentItem.id);
-                    //     getCommentsReplyList();
-                    //     setFilteredEmails([]);
-                    //   }}
-                    // >
-                    //   Reply <FaReplyAll />
-                    // </Link>
+
+                    //Reply box
+                    <CommentReplyBox
+                      admin_id={admin_id}
+                      AdminType={AdminType}
+                      commentsReplyList={commentsReplyList ? commentsReplyList.filter((item) => item.task_id === commentItem.id) : []}
+                      replyComment={replyComment}
+                      handleInputChange={handleInputChange}
+                      filteredEmails={filteredEmails}
+                      handleEmailClick={handleEmailClick}
+                      // handleEmailMouseOver={handleEmailMouseOver}
+                      ReplyAnnotation={ReplyAnnotation}
+                      setReplyCommentClick={setReplyCommentClick}
+                      commentItem={commentItem}
+                      allAdmin={allAdmin}
+                      determineBackgroundColor={determineBackgroundColor}
+                      handleUpdateReplyLinkClick={handleUpdateReplyLinkClick}
+                      OnHandleUpdateCommentReply={OnHandleUpdateCommentReply}
+                      type={type}
+                      replyCommentData={replyCommentData}
+                      OnDeleteCommentReplies={OnDeleteCommentReplies}
+                      dropdownVisible={dropdownVisible}
+                      replyCommentClick={replyCommentClick}
+                    />
                   }
                 </div>
               ))

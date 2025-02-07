@@ -372,7 +372,7 @@ function JobDetailpageAdmim(props) {
                                 }
                                 alt=""
                               /> : <p className="company_logo"
-                                style={{ fontSize: "50px" }}>{getInitials(jobData.company_name)}</p>}
+                                style={{ fontSize: "50px" }}>{jobData.company_name ? getInitials(jobData.company_name) : ""}</p>}
                             </div>
                             <div className="text_box text-left w-100 text-capitalize">
                               <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center text-break">

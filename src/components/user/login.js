@@ -93,7 +93,7 @@ export default function EmployeeLoginModal(props) {
           setLoading(false);
           Close();
           navigate("/");
-          window.location.reload();
+          window.reload();
         }
         if (updatedTodo.message === "Invalid credentials !") {
           setLoading(false);
@@ -237,7 +237,7 @@ export default function EmployeeLoginModal(props) {
             });
             Close();
             navigate("/");
-            window.location.reload();
+            window.reload();
           }
           if (
             res.data.message ===

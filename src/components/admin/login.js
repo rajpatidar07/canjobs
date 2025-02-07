@@ -22,13 +22,15 @@ export default function AdminLoginFrom({ setAdminLoggedIn, setLoginCondition }) 
   const validators = {
     email: [
       (value) =>
-        value === null || value.trim() === ""
-          ? "Email is required"
-          : /\S+@\S+\.\S+/.test(value)
-            ? null
-            : "Email is invalid",
+        showForgotPassword ?
+          "" : value === null || value.trim() === ""
+            ? "Email is required"
+            : /\S+@\S+\.\S+/.test(value)
+              ? null
+              : "Email is invalid",
     ],
-    password: [(value) => (value === "" ? "Password is required" : null)],
+    password: [(value) => showForgotPassword ?
+      "" : (value === "" ? "Password is required" : null)],
     forget_email: [
       (value) =>
         state.email
@@ -75,7 +77,7 @@ export default function AdminLoginFrom({ setAdminLoggedIn, setLoginCondition }) 
           setLoading(false);
           setIsLoading(false);
           navigate("/dashboard");
-          window.location.reload();
+          window.reload();
         }
         if (updatedTodo.message === "Invalid Credentials") {
           setLoading(false);
@@ -97,6 +99,7 @@ export default function AdminLoginFrom({ setAdminLoggedIn, setLoginCondition }) 
   //Function to forgot password
   const onForgoteClick = async (event) => {
     event.preventDefault();
+    console.log(errors)
     if (validate()) {
       setLoading(true);
       try {

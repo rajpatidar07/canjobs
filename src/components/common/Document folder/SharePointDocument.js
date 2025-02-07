@@ -654,6 +654,8 @@ export default function SharePointDocument({
         CancelDelete();
         setApiCall(true);
         setTaggedAdmin([]);
+        setConvertedDoc("")
+        setNoteText("")
       }
     } catch (err) {
       console.log(err);
