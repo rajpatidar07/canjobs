@@ -93,7 +93,7 @@ export default function CompanyLogin(props) {
           });
           close();
           Navigate("/client");
-          window.location.reload();
+          window.reload();
         } else if (Response.message === "Invalid Credentials !") {
           setLoading(false);
           setErrors({ ...errors, Credentials: ["Invalid Credentials"] });
@@ -216,7 +216,7 @@ export default function CompanyLogin(props) {
             });
             props.close();
             Navigate("/client");
-            window.location.reload();
+            window.reload();
           }
           if (
             res.data.message ===

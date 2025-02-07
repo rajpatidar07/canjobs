@@ -239,7 +239,7 @@ export default function CompanySignUp(props) {
               });
               props.close();
               navigate("/client");
-              window.location.reload();
+              window.reload();
             } catch (err) {
               console.log(err);
             }

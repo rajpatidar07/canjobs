@@ -96,7 +96,7 @@ function CompanyLoginForm(props) {
           });
           close();
           Navigate("/client_detail");
-          window.location.reload();
+          window.reload();
         }
         if (Response.message === "Invalid Credentials !") {
           setLoading(false);
@@ -219,7 +219,7 @@ function CompanyLoginForm(props) {
             });
             //props.close()();
             Navigate("/client");
-            window.location.reload();
+            window.reload();
           }
           if (
             res.data.message ===

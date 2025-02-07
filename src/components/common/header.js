@@ -110,7 +110,7 @@ function EmployeeHeader() {
                   <li className="nav-item nav-item d-none" >
                     <Link className="nav-link" to={window.location.pathname === "/client" ? "" : "/client"}
                       onClick={() =>
-                        window.location.pathname === "/client" ? window.location.reload() : null}
+                        window.location.pathname === "/client" ? window.reload() : null}
                     >
 
                       Home
@@ -145,7 +145,7 @@ function EmployeeHeader() {
                   <li className="nav-item">
                     <Link className="nav-link" to={window.location.pathname === "/" ? "" : "/"}
                       onClick={() =>
-                        window.location.pathname === "/" ? window.location.reload() : null}>
+                        window.location.pathname === "/" ? window.reload() : null}>
                       Home
                     </Link>
                   </li>
@@ -291,7 +291,7 @@ function EmployeeHeader() {
                               autoClose: 1000,
                             });
                             navigate("/");
-                            window.location.reload();
+                            window.reload();
                           }}
                         >
                           
@@ -444,7 +444,7 @@ function EmployeeHeader() {
                         autoClose: 1000,
                       });
                       navigate("/");
-                      window.location.reload();
+                      window.reload();
                     }}
                   >
                     Log Out

@@ -1047,38 +1047,38 @@ export const SendReplyCommit = async (
   //  "data =>", data,
   // data.task_id ? "fff" : "mmmm"
   )
-  // const response = await axios.post(
-  //   `${API_URL}admin/sendMsg?document_user_type=${DocUserType}`,
-  //   {
-  //     id: id,
-  //     doc_id: data.doc_id,
-  //     task_id: data.task_id ? data.task_id : data.id,
-  //     sender_id: senderId,
-  //     sender_email: senderEmail,
-  //     sender_name: SenderName,
-  //     sender_type: senderType,
-  //     receiver_id: recid,
-  //     receiver_type: adminType,
-  //     mention: email,
-  //     receiver_name: assignName,
-  //     document_url: "",
-  //     next_followup_date: "",
-  //     followup_status: "",
-  //     subject: "",
-  //     msg: msg,
-  //     type: type,
-  //     employee_id: employee_id,
-  //     document_name: docName,
-  //     doc_parent_id: parent_id// want to make changes to the backend for this variable
-  //   },
-  //   {
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization: Token,
-  //     },
-  //   }
-  // );
-  // return response;
+  const response = await axios.post(
+    `${API_URL}admin/sendMsg?document_user_type=${DocUserType}`,
+    {
+      id: id,
+      doc_id: data.doc_id,
+      task_id: data.task_id ? data.task_id : data.id,
+      sender_id: senderId,
+      sender_email: senderEmail,
+      sender_name: SenderName,
+      sender_type: senderType,
+      receiver_id: recid,
+      receiver_type: adminType,
+      mention: email,
+      receiver_name: assignName,
+      document_url: "",
+      next_followup_date: "",
+      followup_status: "",
+      subject: "",
+      msg: msg,
+      type: type,
+      employee_id: employee_id,
+      document_name: docName,
+      doc_parent_id: parent_id// want to make changes to the backend for this variable
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
 };
 /*Api to Send Reply for document comments */
 export const SendReplyCommitSharepoint = async (

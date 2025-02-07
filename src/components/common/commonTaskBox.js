@@ -31,7 +31,7 @@ export default function CommentTaskBox(props) {
     let AdminType = userType === "user" ? "employee" : userType === "company" ? "employer" : localStorage.getItem("admin_type"); //sender type
     let admin_name = userType === "user" || userType === "company" ? localStorage.getItem("name") : localStorage.getItem("admin");
     let admin_email = localStorage.getItem("email");
-    console.log(admin_id,AdminType)
+    console.log(admin_id, AdminType, userType)
     /*Function to get all user data */
     const GetAllUserData = async () => {
         try {
@@ -370,7 +370,7 @@ export default function CommentTaskBox(props) {
                 ? admin_email
                 : adminList.find((item) => item.admin_id === admin_id)
                     ? adminList.find((item) => item.admin_id === admin_id).email
-                    : props.assigned_by_email | "";
+                    : props.assigned_by_email || "";
         // let senderType =
         //     AdminType === "agent"
         //         ? "agent"
@@ -405,7 +405,7 @@ export default function CommentTaskBox(props) {
                 .map((admin) => (admin.u_id ? "agent" : admin.admin_type))
                 .join(",")
             : "";
-        console.log(AdminType, "AdminType", sender, senderId)
+        console.log(AdminType, "AdminType", sender, senderId, "data", data, " props.assigned_id", props.assigned_id)
         if (replyComment === "" && email === "") {
             toast.error("Comment or email cannot be empty!", {
                 position: toast.POSITION.TOP_RIGHT,
@@ -581,25 +581,25 @@ export default function CommentTaskBox(props) {
 
         let senderId = adminList.find((item) => item.admin_id === admin_id)
             ? adminList.find((item) => item.admin_id === admin_id).admin_id
-            : "";
+            : props.assigned_id || "";
         let senderEmail =
             AdminType === "agent"
                 ? admin_email
                 : adminList.find((item) => item.admin_id === admin_id)
                     ? adminList.find((item) => item.admin_id === admin_id).email
-                    : "";
-        let senderType =
-            AdminType === "agent"
-                ? "agent"
-                : adminList.find((item) => item.admin_id === admin_id)
-                    ? adminList.find((item) => item.admin_id === admin_id).admin_type
-                    : "";
+                    : props.assigned_by_email || "";
+        // let senderType =
+        //     AdminType === "agent"
+        //         ? "agent"
+        //         : adminList.find((item) => item.admin_id === admin_id)
+        //             ? adminList.find((item) => item.admin_id === admin_id).admin_type
+        //             : "";
         let sender =
             AdminType === "agent"
                 ? admin_name
                 : adminList.find((item) => item.admin_id === admin_id)
                     ? adminList.find((item) => item.admin_id === admin_id).name
-                    : "";
+                    : props.assigned_by_name || "";
         (selectedAdminReply || []).forEach((admin) => {
             if (!newEmailsArray.includes(admin.email)) {
                 // Add new admin's details to the arrays
@@ -629,7 +629,7 @@ export default function CommentTaskBox(props) {
                 props.taskType,
                 senderId,
                 senderEmail,
-                AdminType === "agent" ? "agent" : senderType,
+                AdminType,
                 props.userId, //props.userId
                 "",// docData.parentReference.id,
                 props.taskUserType,
