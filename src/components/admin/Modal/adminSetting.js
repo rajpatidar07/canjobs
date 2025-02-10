@@ -78,42 +78,42 @@ function AdminSetting(props) {
       notification_permission: {
         lmia:
           permissionName === "notification_lmia"
-            ? notification.lmia === 0
+            ? notification?.lmia === 0
               ? 1
               : 0
-            : notification.lmia,
+            : notification?.lmia,
         visa:
           permissionName === "notification_visa"
-            ? notification.visa === 0
+            ? notification?.visa === 0
               ? 1
               : 0
-            : notification.visa,
+            : notification?.visa,
         interview:
           permissionName === "notification_interview"
-            ? notification.interview === 0
+            ? notification?.interview === 0
               ? 1
               : 0
-            : notification.interview,
+            : notification?.interview,
         job:
           permissionName === "notification_job"
-            ? notification.job === 0
+            ? notification?.job === 0
               ? 1
               : 0
-            : notification.job,
+            : notification?.job,
       },
       email_permission: {
         lmia:
-          permissionName === "lmia" ? (email.lmia === 0 ? 1 : 0) : email.lmia,
+          permissionName === "lmia" ? (email?.lmia === 0 ? 1 : 0) : email?.lmia,
         visa:
-          permissionName === "visa" ? (email.visa === 0 ? 1 : 0) : email.visa,
+          permissionName === "visa" ? (email?.visa === 0 ? 1 : 0) : email?.visa,
         interview:
           permissionName === "interview"
-            ? email.interview === 0
+            ? email?.interview === 0
               ? 1
               : 0
-            : email.interview,
-        job: permissionName === "job" ? (email.job === 0 ? 1 : 0) : email.job,
-        new_user_registered: permissionName === "new_user_registered" ? (email.new_user_registered === 0 ? 1 : 0) : email.new_user_registered,
+            : email?.interview,
+        job: permissionName === "job" ? (email?.job === 0 ? 1 : 0) : email?.job,
+        new_user_registered: permissionName === "new_user_registered" ? (email?.new_user_registered === 0 ? 1 : 0) : email?.new_user_registered,
       },
     };
 
@@ -195,7 +195,7 @@ function AdminSetting(props) {
         <div className="bg-white rounded h-100 px-11 pt-10">
           <h3 className="text-center">Settings</h3>
           <div>
-            
+
             <div className="mb-3">
               <ParentSetting setopenAdminSettings={setopenAdminSettings} setApiCall={setApiCall} />
             </div>
@@ -210,7 +210,7 @@ function AdminSetting(props) {
                       type="checkbox"
                       className="custom-control-input"
                       id="customSwitch1"
-                      checked={email.lmia === 0 ? false : true}
+                      checked={email?.lmia === 0 ? false : true}
                       onChange={() => togglePermission("lmia")}
                     />
                     <label
@@ -227,7 +227,7 @@ function AdminSetting(props) {
                       type="checkbox"
                       className="custom-control-input"
                       id="customSwitch2"
-                      checked={email.visa === 0 ? false : true}
+                      checked={email?.visa === 0 ? false : true}
                       onChange={() => togglePermission("visa")}
                     />
                     <label
@@ -244,7 +244,7 @@ function AdminSetting(props) {
                       type="checkbox"
                       className="custom-control-input"
                       id="customSwitch3"
-                      checked={email.interview === 0 ? false : true}
+                      checked={email?.interview === 0 ? false : true}
                       onChange={() => togglePermission("interview")}
                     />
                     <label
@@ -261,7 +261,7 @@ function AdminSetting(props) {
                       type="checkbox"
                       className="custom-control-input"
                       id="customSwitch4"
-                      checked={email.job === 0 ? false : true}
+                      checked={email?.job === 0 ? false : true}
                       onChange={() => togglePermission("job")}
                     />
                     <label
@@ -278,7 +278,7 @@ function AdminSetting(props) {
                       type="checkbox"
                       className="custom-control-input"
                       id="customSwitch10"
-                      checked={email.new_user_registered === 0 ? false : true}
+                      checked={email?.new_user_registered === 0 ? false : true}
                       onChange={() => togglePermission("new_user_registered")}
                     />
                     <label
