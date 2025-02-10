@@ -228,7 +228,6 @@ const AgreementOneForm = ({
    //    console.log("first")
       try {
         let res = await AddUpdateAgreement(state);
-        console.log(res);
         if (
           res.data.status === 1 &&
           res.data.message === "Agreement updated successfully."

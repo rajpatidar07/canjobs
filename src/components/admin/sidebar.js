@@ -5,27 +5,35 @@ import {
   MdOutlinePhotoFilter,
   MdAssignmentAdd,
   MdRealEstateAgent,
-  MdFamilyRestroom,
 } from "react-icons/md";
-import { LuAmpersand, LuFileKey } from "react-icons/lu";
+import { LuFileKey } from "react-icons/lu";
 import { LiaUsersSolid, LiaAddressCardSolid, LiaCcVisa } from "react-icons/lia";
 import { BsBuildings, BsQrCodeScan } from "react-icons/bs";
 import { PiApplePodcastsLogoThin } from "react-icons/pi";
 import { AiOutlineUserAdd /*, AiOutlineMail*/ } from "react-icons/ai";
-import { TbFilterPlus, TbLetterC, TbLetterH, TbMapWest, TbUserDollar } from "react-icons/tb";
-import { FaAcquisitionsIncorporated, FaGraduationCap, FaNotesMedical, FaPassport, FaRegCreditCard, FaTasks } from "react-icons/fa";
+import { TbFilterPlus } from "react-icons/tb";
+import { FaAddressCard, FaEdit, FaNotesMedical, FaTasks } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
-import { GrVisa } from "react-icons/gr";
-import { TiBusinessCard } from "react-icons/ti";
-import { SiExpress, SiStudyverse } from "react-icons/si";
-import { IoLogoPinterest } from "react-icons/io";
+import { SiStudyverse } from "react-icons/si";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
-import { FaPersonShelter, FaUsersBetweenLines } from "react-icons/fa6";
-import { GiTemporaryShield } from "react-icons/gi";
+import { FaPersonShelter } from "react-icons/fa6";
+import { DeleteApplicanTypeApi, getApplicanTypeApi } from "../../api/api";
+import AddApplicantType from "../forms/admin/AddApplicantType";
+import { BiTrash } from "react-icons/bi";
+import SAlert from "../common/sweetAlert";
+import { toast } from "react-toastify";
 const AdminSidebar = (props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(
     localStorage.getItem("isMenuOpen")
   );
+  const [showApplicantTypeForm, setShowApplicantTypeForm] = useState(false);
+  const [updateApplicantTypeData, setUpdateApplicantTypeData] = useState();
+  const [deleteApplicantTypeData, setDeleteApplicantTypeData] = useState();
+  const [showDropDownApplicantTypeData, setShowDropDownApplicantTypeData] = useState(false);
+  const [deleteAlertApplicantTypeData, setDeleteAlertApplicantTypeData] = useState(false);
+
+  const [apiCall, setApiCall] = useState(false);
+  let [applicanttypedata, setApplicanttypedata] = useState([])
   // let view_as_admin_type = localStorage.getItem("view_as_token_admin_type");
   let admin_type = localStorage.getItem("admin_type");
   let user_type = localStorage.getItem("userType");
@@ -44,15 +52,45 @@ const AdminSidebar = (props) => {
   };
   const liRefs = useRef([]);
 
+  const getAllSlotsData = async () => {
+    try {
+      let response = await getApplicanTypeApi();
+      setApplicanttypedata(response.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
   useEffect(() => {
+    getAllSlotsData()
     if (props.heading) {
       const activityLi = liRefs.current[props.heading]
       if (activityLi) {
         activityLi.scrollIntoView({ behavior: "smooth" });
       }
     }
-  }, [props.heading]);
-
+    if (apiCall === true) {
+      setApiCall(false)
+    }
+  }, [props.heading, apiCall]);
+  /*To call Api to delete employee */
+  async function deleteApplicantType(id) {
+    let data = {
+      "id": id,
+    }
+    try {
+      const response = await DeleteApplicanTypeApi(data);
+      if (response.status === 1 || response.status === "1") {
+        toast.error("Applicant Type deleted Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setDeleteAlertApplicantTypeData(false);
+        setApiCall(true);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
   return (
     <div
       className={`dashboard-sidebar-wrapper pt-5 sidebar_parent ${isMenuOpen ? "show" : ""
@@ -330,7 +368,7 @@ const AdminSidebar = (props) => {
             Local Candidate
           </Link>
         </li>
-        <li
+        {/* <li
           ref={(el) => (liRefs.current["PNP"] = el)}
           className={
             user_type === "agent"
@@ -345,7 +383,6 @@ const AdminSidebar = (props) => {
             to="/pnp"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
-            {/* <i className="fas fa-filter mr-5"></i> */}
             <IoLogoPinterest className="sidebar_icon" />
             Alberta PNP
           </Link>
@@ -365,7 +402,6 @@ const AdminSidebar = (props) => {
             to="/pgwp"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
-            {/* <i className="fas fa-filter mr-5"></i> */}
             <FaGraduationCap className="sidebar_icon" />
             PGWP
           </Link>
@@ -385,7 +421,6 @@ const AdminSidebar = (props) => {
             to="/wes"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
-            {/* <i className="fas fa-filter mr-5"></i> */}
             <TbMapWest className="sidebar_icon" />
             WES
           </Link>
@@ -405,7 +440,6 @@ const AdminSidebar = (props) => {
             to="/atip"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
-            {/* <i className="fas fa-filter mr-5"></i> */}
             <FaAcquisitionsIncorporated className="sidebar_icon" />
             ATIP
           </Link>
@@ -425,7 +459,6 @@ const AdminSidebar = (props) => {
             to="/visitorsvisa"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
-            {/* <i className="fas fa-filter mr-5"></i> */}
             <GrVisa className="sidebar_icon" />
             Visitors Visa
           </Link>
@@ -522,7 +555,6 @@ const AdminSidebar = (props) => {
             to="/expressentry"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
-            {/* <i className="fas fa-filter mr-5"></i> */}
             <SiExpress className="sidebar_icon" />
             Express Entry
           </Link>
@@ -543,7 +575,6 @@ const AdminSidebar = (props) => {
               "
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
-            {/* <i className="fas fa-filter mr-5"></i> */}
             <TiBusinessCard className="sidebar_icon" />
             Business Visa
           </Link>
@@ -564,7 +595,6 @@ const AdminSidebar = (props) => {
               "
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
-            {/* <i className="fas fa-filter mr-5"></i> */}
             <TiBusinessCard className="sidebar_icon" />
             Federal PR
           </Link>
@@ -656,6 +686,97 @@ const AdminSidebar = (props) => {
             </span>
             Permanent Resident Cards
           </Link>
+        </li> */}
+        {applicanttypedata
+          .filter((item) => item.parent_id === "0")
+          .map((item) => (
+            <li
+              key={item.id}
+              className={`position-relative ${user_type === "agent" ? "d-none" : props.heading === item.title ? "active" : ""}`}
+              title={props.heading}
+              ref={(el) => (liRefs.current[item.title] = el)}
+            >
+              <Link onClick={() => {
+                clearPageNo()
+              }}
+                onContextMenu={(e) => {
+                  e.preventDefault();
+                  if (admin_type === "super-admin") { setShowDropDownApplicantTypeData(item.id) }
+
+                }}
+                to={`/slots_pages`} state={{ "applicantType": item.id }}
+                className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center text-Capitalize">
+                < LiaUsersSolid className="sidebar_icon" />{item.title}
+              </Link>
+              {showDropDownApplicantTypeData === item.id && (
+                <ul className="list-group ">
+                  <li className="list-group-item">
+                    <Link
+                      onClick={() => {
+                        setUpdateApplicantTypeData(item);
+                        setShowApplicantTypeForm(true);
+                      }}
+                      className="text-dark"
+                      title="Update Applicant Type"
+                    >
+                      <FaEdit size={15} />
+                    </Link>
+                  </li>
+                  <li className="list-group-item">
+                    <Link
+                      onClick={() => {
+                        setDeleteApplicantTypeData(item);
+                        setDeleteAlertApplicantTypeData(true);
+                      }}
+                      className="text-danger"
+                      title="Delete Applicant Type"
+                    >
+                      <BiTrash size={15} />
+                    </Link>
+                  </li>
+                </ul>)}
+            </li>
+          ))}
+
+        <li
+          ref={(el) => (liRefs.current["Add Applicant Type"] = el)}
+          className={
+            admin_type === "super-admin"
+              ? props.heading === "Add Applicant Type" || showApplicantTypeForm === true
+                ? "active"
+                : ""
+              : "d-none"
+          }
+        >
+          <Link
+            onClick={() => {
+              setShowApplicantTypeForm(true);
+              clearPageNo()
+            }}
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+            title={"Add Applicant Type"}
+          >
+            <FaAddressCard className="sidebar_icon" />
+            Add Applicant Type
+          </Link>
+          {showApplicantTypeForm ?
+            <AddApplicantType
+              show={showApplicantTypeForm}
+              close={() => {
+                setShowApplicantTypeForm(false);
+              }}
+              setApicall={setApiCall}
+              UpdateApplicantTypeData={updateApplicantTypeData}
+            />
+            : null}
+          <SAlert
+            show={deleteAlertApplicantTypeData}
+            title={deleteApplicantTypeData?.title}
+            text="Are you Sure you want to delete !"
+            onConfirm={() => deleteApplicantType(deleteApplicantTypeData?.id)}
+            showCancelButton={true}
+            onCancel={() => setDeleteAlertApplicantTypeData(false)}
+          />
         </li>
         {/* <li className={user_type === "agent"?"d-none":props.heading === "Response" ? "active" : ""}>
             <Link
@@ -712,7 +833,7 @@ const AdminSidebar = (props) => {
           >
             {/* <i className="fas fa-podcast mr-5"></i> */}
             <FaNotesMedical className="sidebar_icon" />
-            Manage Notes                                          
+            Manage Notes
           </Link>
         </li>
         {/* {user_type === "admin" ? (
@@ -871,7 +992,6 @@ const AdminSidebar = (props) => {
             Credentials
           </Link>
         </li>
-
       </ul>
     </div>
   );

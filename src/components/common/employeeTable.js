@@ -26,7 +26,6 @@ import {
   /* MdOutlineCastForEducation,*/ MdTypeSpecimen,
   MdRealEstateAgent,
   MdEditNote,
-  MdOutlineTypeSpecimen,
 } from "react-icons/md";
 // import { LiaUserEditSolid, LiaUserTieSolid } from "react-icons/lia";
 import { GoTasklist } from "react-icons/go";
@@ -39,7 +38,6 @@ import VisaTimeLine from "./visaTimeLine";
 import CustomButton from "./button";
 import ExportExcelButton from "./exportExcelButton";
 import determineBackgroundColor from "./Common function/DetermineBackgroundColour";
-import AddApplicantType from "../forms/admin/AddApplicantType";
 export default function EmployeeTable(props) {
   let agentId = localStorage.getItem("agent_id");
   let user_type = localStorage.getItem("userType");
@@ -85,7 +83,7 @@ export default function EmployeeTable(props) {
     props.heading === "Dashboard" ? "created_at" : "employee_id"
   );
   const [sortOrder, setSortOrder] = useState("DESC");
-  const [showApplicantTypeForm, setShowApplicantTypeForm] = useState(false);
+  // const [showApplicantTypeForm, setShowApplicantTypeForm] = useState(false);
 
   let getApplicantType = (id) => (applicantTypeList?.find(x => x.id === id)?.title)
   let getApplicantSubType = (id) => (applicantTypeList?.find(x => x.id === id)?.title)
@@ -191,7 +189,8 @@ export default function EmployeeTable(props) {
     props.categoryFilterValue,
     props.localFilterValue,
     props.filterByEmployeeId,
-    props.statustFilterValue
+    props.statustFilterValue,
+    props?.ApplicantType
   ]);
 
   /* Function to show the single data to update Employee*/
@@ -418,14 +417,14 @@ export default function EmployeeTable(props) {
           setApiCall={setApiCall}
         />
       ) : null}
-      {showApplicantTypeForm ?
+      {/* {showApplicantTypeForm ?
         <AddApplicantType
           show={showApplicantTypeForm}
           close={() => {
             setShowApplicantTypeForm(false);
           }}
         />
-        : null}
+        : null} */}
       {/* {documentModal ? (
         <DocumentModal
           show={documentModal}
@@ -622,13 +621,13 @@ export default function EmployeeTable(props) {
                     >
                       Add Candidate
                     </CustomButton>
-                    <Link
+                    {/* <Link
                       className={user_type === "admin" ? ` btn-sm  btn-primary m-1` : "d-none"}
                       onClick={() => setShowApplicantTypeForm(true)}
                       title={"Add New Applicant type"}
                     >
                       {<MdOutlineTypeSpecimen size={10} />}
-                    </Link>
+                    </Link> */}
                   </div>
                 </>
               ) : null}

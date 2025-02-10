@@ -42,7 +42,7 @@ function ChangeJob(props) {
 
   useEffect(() => {
     JobData();
-   // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [props, apiCall]);
   // USER CHANGE JOB SUBMIT BUTTON
   const onSelectChange = (option) => {
@@ -128,6 +128,12 @@ function ChangeJob(props) {
                 options={state || ""}
                 onChange={onSelectChange}
                 id="job_id"
+                styles={{
+                  control: (base) => ({
+                    ...base,
+                    boxShadow: "none",
+                  }),
+                }}
               />
               <small className="text-danger">{alredyApplied}</small>
             </div>

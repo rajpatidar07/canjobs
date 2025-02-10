@@ -268,6 +268,21 @@ export const AddApplicanTypeApi = async (props) => {
   return response.data;
   // }
 };
+/*Delete Applicant Type and sub types  api */
+export const DeleteApplicanTypeApi = async (props) => {
+  const response = await axios.post(
+    `${API_URL}admin/deleteApplicantType`,
+    props,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response.data;
+  // }
+};
 
 /*Employee detail api */
 export const EmployeeAppliedJob = async (props) => {
@@ -1027,28 +1042,28 @@ export const SendReplyCommit = async (
   id,
   docName
 ) => {
-  console.log("  id =>", id,
-  //   "doc_id =>", data.doc_id,
-  // "task_id =>", data.task_id,
-    "sender_id =>", senderId,
-    "sender_email =>", senderEmail,
-    "sender_name =>", SenderName,
-    "sender_type =>", senderType,
-  // "receiver_id =>", recid,
-  // "receiver_type =>", adminType,
-  // "mention =>", email,
-  // "receiver_name =>", assignName,
-  // "document_url =>", "",
-  // "next_followup_date =>", "",
-  // "followup_status =>", "",
-  // "subject =>", "",
-  // "msg =>", msg,
-  // "type =>", type,
-  // "employee_id =>", employee_id,
-  // "doc_parent_id =>", parent_id,
-  //  "data =>", data,
-  // data.task_id ? "fff" : "mmmm"
-  )
+  // console.log("  id =>", id,
+    //   "doc_id =>", data.doc_id,
+    // "task_id =>", data.task_id,
+    // "sender_id =>", senderId,
+    // "sender_email =>", senderEmail,
+    // "sender_name =>", SenderName,
+    // "sender_type =>", senderType,
+    // "receiver_id =>", recid,
+    // "receiver_type =>", adminType,
+    // "mention =>", email,
+    // "receiver_name =>", assignName,
+    // "document_url =>", "",
+    // "next_followup_date =>", "",
+    // "followup_status =>", "",
+    // "subject =>", "",
+    // "msg =>", msg,
+    // "type =>", type,
+    // "employee_id =>", employee_id,
+    // "doc_parent_id =>", parent_id,
+    //  "data =>", data,
+    // data.task_id ? "fff" : "mmmm"
+  // )
   const response = await axios.post(
     `${API_URL}admin/sendMsg?document_user_type=${DocUserType}`,
     {

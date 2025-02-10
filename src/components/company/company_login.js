@@ -74,7 +74,6 @@ function CompanyLoginForm(props) {
   /*----LOGIN SUBMIT FuNCTION----*/
   const onCompanyLoginClick = async (event) => {
     event.preventDefault();
-    console.log(errors, state)
     if (validate()) {
       setLoading(true);
       try {

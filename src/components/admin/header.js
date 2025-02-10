@@ -125,22 +125,28 @@ const AdminHeader = (props) => {
                   )}
                   {/*<--Logout Functionality-->*/}
                   <Link
-                    to={
-                      userType === "admin"
-                        ? "/adminlogin"
-                        : userType === "agent"
-                          ? localStorage.getItem("portal") === "study"
-                            ? "/study_partner_login"
-                            : "/partnerlogin"
-                          : "/"
-                    }
-                    onClick={() => {
-                      localStorage.clear(); // clear the local storage
+                    to="#"
+                    onClick={(e) => {
+                      e.preventDefault(); // Prevent default navigation
+                      const redirectPath =
+                        userType === "admin"
+                          ? "/adminlogin"
+                          : userType === "agent"
+                            ? localStorage.getItem("portal") === "study"
+                              ? "/study_partner_login"
+                              : "/partnerlogin"
+                            : "/";
+
+                      // Clear all session and local storage
+                      localStorage.clear();
+                      sessionStorage.clear();
+
                       toast.error("Log Out Successfully", {
                         position: toast.POSITION.TOP_RIGHT,
                         autoClose: 1000,
                       });
-                      window.location.reload();
+
+                      window.location.replace(redirectPath);
                     }}
                     className="dropdown-item py-2 text-red font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
                   >

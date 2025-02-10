@@ -137,7 +137,6 @@ export default function AdminTaskTable(props) {
     }
   };
   useEffect(() => {
-    console.log(props.taskId)
     getCommentsList();
     const newUrl = window.location.pathname;
     window.history.replaceState({}, document.title, newUrl);

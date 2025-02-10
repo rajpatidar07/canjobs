@@ -8,9 +8,7 @@ export default function AddApplicantType(props) {
     const [loading, setLoading] = useState(false)
     const [apicall, setApicall] = useState(false)
     const [applicantTypeList, setApplicantTypeList] = useState([])
-    let close = () => {
-        props.close()
-    }
+
     // INITIAL STATE ASSIGNMENT
     const initialFormState = {
         title: "",
@@ -50,6 +48,10 @@ export default function AddApplicantType(props) {
         if (apicall === true) {
             setApicall(false)
         }
+        if (props?.UpdateApplicantTypeData?.id) {
+            setState({ ...state, title: props.UpdateApplicantTypeData.title, selectedParent: props?.UpdateApplicantTypeData?.parent_id, level: props?.UpdateApplicantTypeData?.level });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [apicall])
 
     // HANDLE INPUT CHANGES AND SET LEVEL DYNAMICALLY
@@ -64,7 +66,6 @@ export default function AddApplicantType(props) {
             if (name === "selectedChild") {
                 newLevel = value ? 2 : prevState.selectedParent ? 1 : 0; // Level 2 when child is selected
             }
-
             // If the field being updated is not 'title', update the level
             if (name !== "title") {
                 return {
@@ -81,12 +82,18 @@ export default function AddApplicantType(props) {
             };
         });
     };
+    /*Function to close the modal */
+    let close = () => {
+        props.close()
+        setState(initialFormState)
+    }
     /*Function to add applicant type ,sub type and sub sub type  */
     const addApplicantTypeClick = async (e) => {
         e.preventDefault()
         if (validate()) {
-            setLoading(true)
+            // setLoading(true)
             const newItem = {
+                id: props?.UpdateApplicantTypeData?.id || "",
                 title: state.title,
                 parent_id: state.level === 2 ? state.selectedChild : state.selectedParent,
                 level: state.level, // Dynamic level
@@ -114,7 +121,9 @@ export default function AddApplicantType(props) {
                     }
                     setLoading(false)
                     setApicall(true)
-                    setState(initialFormState); // Reset form after success
+                    setState(initialFormState);
+                    props.setApicall(true)
+                    close()
                 }
             } catch (err) {
                 console.log(err);
@@ -175,7 +184,7 @@ export default function AddApplicantType(props) {
                             </select>
                         </div>
 
-                        <div className="form-group col">
+                        <div className="form-group col d-none">
                             <label
                                 htmlFor="selectedChild"
                                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"

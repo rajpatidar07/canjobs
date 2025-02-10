@@ -552,6 +552,7 @@ function Addfollowup(props) {
           autoClose: 1000,
         });
         setState(initialFormState);
+        setDeleteAlert(false)
         setApiCall(true);
       }
     } catch (err) {
@@ -1008,15 +1009,14 @@ function Addfollowup(props) {
                 assigned_by_name={assigned_by_name}
                 assigned_by_email={assigned_by_email}
               /> */}
-              {deleteAlert &&
-                <SAlert
-                  show={deleteAlert}
-                  title={deleteData.subject}
-                  text="Are you Sure you want to delete !"
-                  onConfirm={() => OnDeleteComment(deleteData.id)}
-                  showCancelButton={true}
-                  onCancel={setDeleteAlert(false)}
-                />}
+              <SAlert
+                show={deleteAlert}
+                title={deleteData.subject}
+                text="Are you Sure you want to delete !"
+                onConfirm={() => OnDeleteComment(deleteData.id)}
+                showCancelButton={true}
+                onCancel={() => setDeleteAlert(false)}
+              />
             </div>
           </div>
         </div>

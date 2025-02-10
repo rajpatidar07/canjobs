@@ -205,7 +205,6 @@ const DocumentsNotes = (props) => {
         convertFromHTML(initialHTML)
     );
     
-    console.log(props.convertedDoc)
     const [editorState, setEditorState] = useState(
         EditorState.createWithContent(contentState)
     );
@@ -229,10 +228,8 @@ const DocumentsNotes = (props) => {
         // link.href = URL.createObjectURL(blob);
         // link.download = "note.txt"; // Save as a .txt file
         // link.click();
-        console.log(props?.docSingleDate?.name ? `ok ok ${props?.docSingleDate?.name}` : `note${new Date().getTime()}.txt`, "Note file =>", wordFile, wordFile.name)
         if (wordFile.name === "undefined" || wordFile.name === undefined) {
             toast.error("File name is undefined")
-            console.log(props?.convertedDoc)
         } else {
             try {
                 setLoading(true)

@@ -222,6 +222,13 @@ function Skills(props) {
                     : "text-capitalize w-100"
                 }
                 isClearable={""}
+                styles={{
+                  control: (base) => ({
+                    ...base,
+                    margin: 0,
+                    padding: 0,
+                  }),
+                }}
               />
               {loading === true ? (
                 <button

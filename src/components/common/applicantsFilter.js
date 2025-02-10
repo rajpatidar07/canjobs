@@ -105,7 +105,7 @@ export default function ApplicantsFilter({
       setSearchError("");
     }
     // eslint-disable-next-line
-  }, [skillFilterValue, educationFilterValue]);
+  }, [skillFilterValue, educationFilterValue, applicantTypeId]);
   return (
     <>
       <div
@@ -377,7 +377,7 @@ export default function ApplicantsFilter({
       <div
         className={
           (skill === null || skill === undefined) &&
-            (pageName === "pnp" || pageName === "wes" | pageName === "atip" || pageName === "pgwp" || pageName === "employee")
+            ((pageName === "4" || pageName === 4) || (pageName === "21" || pageName === 21) | (pageName === "22" || pageName === 22) || (pageName === "12" || pageName === 12) || pageName === "employee")
             ? "col p-1 form_group mb-3"
             : "d-none"
         }
@@ -401,7 +401,7 @@ export default function ApplicantsFilter({
       <div
         className={
           (skill === null || skill === undefined) && (
-            ["temporary_resident_(visiting_,_studying_,_working)", "economic_immigration", "family_sponsorship", "pnp"].includes(pageName.toLowerCase()) || pageName === "employee")
+            [14, "14", 15, "15", 16, "16", 4, "4"].includes(pageName) || pageName === "employee")
             ? "col p-1 form_group mb-3"
             : "d-none"
         }

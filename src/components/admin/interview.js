@@ -97,7 +97,6 @@ export default function ManageInterview() {
                 <small className="text-danger">{searcherror}</small>
               </div>
               <div className="d-flex flex-end">
-                {console.log(allInterviews)}
                 <ExportExcelButton tableName={"interview"} portal={""} applicantType={""} status={""} local={""} type={""} tableData={allInterviews} />
               </div>
               {/*<-- Interview list Table -->*/}

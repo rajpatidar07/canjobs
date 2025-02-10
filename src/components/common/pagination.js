@@ -39,7 +39,7 @@ function Pagination(props) {
                       localStorage.setItem("PageNo", "")
                     }}
                     className={
-                      parseInt(props.urrentPage) === 1
+                      parseInt(props.currentPage) === 1
                         ? "disabled-link page-link  font-size-3 py-2 font-weight-semibold px-3"
                         : "page-link  font-size-3 py-2 font-weight-semibold px-3"
                     }

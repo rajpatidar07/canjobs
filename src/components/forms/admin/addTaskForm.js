@@ -66,7 +66,6 @@ export default function AddTaskForm(props) {
       setSelectedGroupBy([...selectedGroupBy, selectedValue]);
     }
   };
-  console.log(admin_type)
   /*Delete function for group by field */
   const removeGroup = (user) => {
     setSelectedGroupBy(selectedGroupBy.filter((item) => item !== user));

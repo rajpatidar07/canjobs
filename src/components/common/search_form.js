@@ -97,7 +97,7 @@ function SearchForm({ setSearch, setJobLocation, setCategoryFilterValue }) {
                 }
                 placeholder="Type Job title, keywords"
               />
-              <span className="h-100 w-px-50 pos-abs-tl d-flex align-items-center justify-content-center font-size-6">
+              <span className="h-100 w-px-50 pos-abs-tl d-flex align-items-center justify-content-center font-size-6 pt-4">
                 <i className="icon icon-zoom-2 text-primary font-weight-bold"></i>
               </span>
             </div>

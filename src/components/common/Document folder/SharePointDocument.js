@@ -309,7 +309,6 @@ export default function SharePointDocument({
         } else {
           setDocNoteData([])
         }
-        console.log(res.data.data.find((item) => item.id === newdocId), notification)
         if (notification === "yes") {
           if (res.data.data.find((item) => item.id === newdocId)) {
             setDocPreview(true);
