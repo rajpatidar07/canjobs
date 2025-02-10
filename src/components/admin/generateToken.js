@@ -116,6 +116,12 @@ export default function GenerateToken(props) {
                 onChange={onSelectChange}
                 id="view_layout"
                 className="text-capitalize mx-1"
+                styles={{
+                  control: (base) => ({
+                    ...base,
+                    boxShadow: "none",
+                  }),
+                }}
               />
               <small className="text-danger">{Unauthorized}</small>
             </div>
