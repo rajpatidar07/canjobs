@@ -300,7 +300,7 @@ function AdminSetting(props) {
                       type="checkbox"
                       className="custom-control-input"
                       id="customSwitch6"
-                      checked={notification.lmia === 0 ? false : true}
+                      checked={notification?.lmia === 0 ? false : true}
                       onChange={() => togglePermission("notification_lmia")}
                     />
                     <label
@@ -317,7 +317,7 @@ function AdminSetting(props) {
                       type="checkbox"
                       className="custom-control-input"
                       id="customSwitch7"
-                      checked={notification.visa === 0 ? false : true}
+                      checked={notification?.visa === 0 ? false : true}
                       onChange={() => togglePermission("notification_visa")}
                     />
                     <label
@@ -334,7 +334,7 @@ function AdminSetting(props) {
                       type="checkbox"
                       className="custom-control-input"
                       id="customSwitch8"
-                      checked={notification.interview === 0 ? false : true}
+                      checked={notification?.interview === 0 ? false : true}
                       onChange={() => togglePermission("notification_interview")}
                     />
                     <label
@@ -351,7 +351,7 @@ function AdminSetting(props) {
                       type="checkbox"
                       className="custom-control-input"
                       id="customSwitch9"
-                      checked={notification.job === 0 ? false : true}
+                      checked={notification?.job === 0 ? false : true}
                       onChange={() => togglePermission("notification_job")}
                     />
                     <label
