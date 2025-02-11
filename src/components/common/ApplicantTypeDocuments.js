@@ -7,7 +7,7 @@ import { Dropdown, Form } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { IoMdArrowBack } from 'react-icons/io';
 import AdobePDFViewer from './Adobe/adobeFile';
-import { Breadcrumbs } from '@material-ui/core';
+import Breadcrumbs from "./Document folder/Breadcrumb"
 import DocumentsNotes from './Document folder/DocumentsNotes';
 import Loader from './loader';
 import FolderList from './Document folder/FolderList';
@@ -165,8 +165,12 @@ export default function ApplicantTypeDocuments(props) {
     }
 
     // Store the object of files
-    setState({ ...state, docFileBase: filebseList })
-    setState({ ...state, saveBtn: true })
+    setState((prev) => ({
+      ...prev, docFileBase: filebseList
+    }))
+    setState((prev) => ({
+      ...prev, saveBtn: true
+    }))
   };
   const handleSort = (column) =>
     setState((prev) => ({
@@ -176,7 +180,9 @@ export default function ApplicantTypeDocuments(props) {
     }));
   const handleNewTypeChange = (e) => {
     const value = e.target.value.replace(/[^a-zA-Z0-9 ]/g, "");
-    setState({ ...state, newType: value });
+    setState((prev) => ({
+      ...prev, newType: value
+    }));
   };
   const fetchAdminData = async () => {
     try {
@@ -191,7 +197,9 @@ export default function ApplicantTypeDocuments(props) {
         const newPartnerList = partnerData.data.data.filter(
           (item) => item.id === props?.partnerId
         );
-        setState({ ...state, partnerList: newPartnerList });
+        setState((prev) => ({
+          ...prev, partnerList: newPartnerList
+        }));
       }
     } catch (err) {
       console.error(err);
@@ -208,20 +216,28 @@ export default function ApplicantTypeDocuments(props) {
         return data;
       })
       .then((text) => {
-        setState({ ...state, noteText: text })
+        setState((prev) => ({
+          ...prev, noteText: text
+        }))
         /*Open the note form when admin click it from the docs list else not open from this function */
         if (isOpen) {
-          setState({ ...state, openNoteForm: true })
+          setState((prev) => ({
+            ...prev, openNoteForm: true
+          }))
         }
       })
       .catch((error) => console.error("Error fetching the file:", error));
   }
   /*Had folder function */
   const handleDocTypeChange = async (selectedType) => {
-    setState({ ...state, docTypeName: selectedType, showDropDown: false })
+    setState((prev) => ({
+      ...prev, docTypeName: selectedType, showDropDown: false
+    }))
     if (selectedType === "other") {
       // If "other" is selected, clear newType
-      setState({ ...state, newType: "" });
+      setState((prev) => ({
+        ...prev, newType: ""
+      }));
     } else {
       try {
         let res = await AddSharePointFolders(selectedType, state?.folderID);
@@ -233,7 +249,9 @@ export default function ApplicantTypeDocuments(props) {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
-          setState({ ...state, apiCall: true })
+          setState((prev) => ({
+            ...prev, apiCall: true
+          }))
         } else if (res.data.data.error.message === "Name already exists") {
           toast.error(`Type Already exists`, {
             position: toast.POSITION.TOP_RIGHT,
@@ -246,23 +264,31 @@ export default function ApplicantTypeDocuments(props) {
     }
   };
   const getCommentsList = async (data) => {
-    if (!data) return setState({ ...state, commentsList: [] });
+    if (!data) return setState((prev) => ({
+      ...prev, commentsList: []
+    }));
 
     try {
       localStorage.setItem("mentionAdmin", "");
       const res = await GetCommentsAndAssign(data.id, "", "", "document");
 
       if (res.data.status === 1) {
-        setState({ ...state, commentsList: res.data.data.data });
+        setState((prev) => ({
+          ...prev, commentsList: res.data.data.data
+        }));
         if (res.data.data.data.some((item) => JSON.parse(item?.doctaskjson))) {
           fetchAdminData();
         }
       } else {
-        setState({ ...state, commentsList: [] });
+        setState((prev) => ({
+          ...prev, commentsList: []
+        }));
       }
     } catch (err) {
       console.error(err);
-      setState({ ...state, commentsList: [] });
+      setState((prev) => ({
+        ...prev, commentsList: []
+      }));
     }
   };
 
@@ -272,22 +298,32 @@ export default function ApplicantTypeDocuments(props) {
 
     if (["image/jpeg", "image/png", "image/jpg"].includes(mimeType)) {
       let res = convertUrlToPDF(downloadUrl);
-      setState({ ...state, convertedDoc: res });
+      setState((prev) => ({
+        ...prev, convertedDoc: res
+      }));
       //  if (state.base64String) {
-      setState({ ...state, imgConRes: "imageConverted" });
+      setState((prev) => ({
+        ...prev, imgConRes: "imageConverted"
+      }));
       // }
     } else if (
       mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     ) {
       let res = convertWordToPDF(data);
-      setState({ ...state, convertedDoc: res });
+      setState((prev) => ({
+        ...prev, convertedDoc: res
+      }));
     } else if (mimeType === "text/plain") {
       fetchNoteText(downloadUrl, true);
     } else if (mimeType === "application/pdf") {
-      setState({ ...state, convertedDoc: downloadUrl });
+      setState((prev) => ({
+        ...prev, convertedDoc: downloadUrl
+      }));
     } else {
       window.open(data.webUrl);
-      setState({ ...state, convertedDoc: "", docPreview: false });
+      setState((prev) => ({
+        ...prev, convertedDoc: "", docPreview: false
+      }));
     }
   };
 
@@ -295,22 +331,30 @@ export default function ApplicantTypeDocuments(props) {
     fetch(url)
       .then((res) => res.ok ? res.text() : Promise.reject("Failed to fetch"))
       .then((text) =>
-        setState({ ...state, noteText: text, openNoteForm: isOpen })
+        setState((prev) => ({
+          ...prev, noteText: text, openNoteForm: isOpen
+        }))
       )
       .catch((err) => console.error("Error fetching file:", err));
   };
 
   const showDeleteAlert = (data) =>
-    setState({ ...state, deleteData: data, deleteAlert: true });
+    setState((prev) => ({
+      ...prev, deleteData: data, deleteAlert: true
+    }));
 
   const cancelDelete = () =>
-    setState({ ...state, deleteAlert: false, editNameForm: false });
+    setState((prev) => ({
+      ...prev, deleteAlert: false, editNameForm: false
+    }));
 
   // Fetch all sharepoint documents
   const fetchAllShareType = async () => {
 
     try {
-      setState({ ...state, docLoader: true });
+      setState((prev) => ({
+        ...prev, docLoader: true
+      }));
       const res = await getSharePointParticularFolders(
         props?.user_id, props?.emp_user_type, props?.docId ? props?.folderId : state?.folderID,
         state?.columnName, state?.sortOrder, state?.recordsPerPage,
@@ -318,14 +362,15 @@ export default function ApplicantTypeDocuments(props) {
       );
       if (res.data.status === 1) {
         console.log("first", res.data.data)
-        setState({
-          ...state,
+        setState((prev) => ({
+          ...prev,
           docTypeList: res.data.data,
           totalData: res.data.total_rows,
           showDropDown: false,
           docLoader: false,
           docNoteData: res.data.notes.length ? res.data.notes : [],
-        });
+        })
+        );
 
         if (props?.notification === "yes") {
           const currentDoc = res.data.data.find((item) => item.id === state?.fileID);
@@ -366,10 +411,14 @@ export default function ApplicantTypeDocuments(props) {
       }));
     }
     try {
-      setState({ ...state, docBreadCrumbLoader: true });
+      setState((prev) => ({
+        ...prev, docBreadCrumbLoader: true
+      }));
       let res = await getFolderBreadcrumb(state.folderID);
       if (res.data.status === (1 || "1")) {
-        setState({ ...state, breadcrumbData: res.data.data, docBreadCrumbLoader: false, showDropDown: false });
+        setState((prev) => ({
+          ...prev, breadcrumbData: res.data.data, docBreadCrumbLoader: false, showDropDown: false
+        }));
         /*Api calling to changes employee_id or employer_id  to as per the user name */
         // if (
         //   res.data.data[0].name === `${emp_user_type}_${user_id}` ||
@@ -388,60 +437,50 @@ export default function ApplicantTypeDocuments(props) {
         //   }
         // }
       } else {
-        setState({ ...state, docBreadCrumbLoader: false, showDropDown: false, breadcrumbData: [] });
+        setState((prev) => ({
+          ...prev, docBreadCrumbLoader: false, showDropDown: false, breadcrumbData: []
+        }));
       }
     } catch (err) {
       console.log(err);
-      setState({ ...state, docBreadCrumbLoader: false, showDropDown: false, breadcrumbData: [] });
+      setState((prev) => ({
+        ...prev, docBreadCrumbLoader: false, showDropDown: false, breadcrumbData: []
+      }));
     }
   };
   useEffect(() => {
     fetchAllShareType();
 
     if (state.apiCall) {
-      setState({ ...state, apiCall: false });
+      setState((prev) => ({
+        ...prev, apiCall: false
+      }));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.apiCall, state.folderID]);
 
   useEffect(() => {
     if (props.folderId !== state.folderID) {
-      setState({ ...state, folderID: props.folderId });
+      setState((prev) => ({
+        ...prev, folderID: props.folderId
+      }));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.folderId]);
 
-  // useEffect(() => {
-  //   fetchAllShareType();
-  //   if (state.apiCall === true) {
-  //     setState({ ...state, apiCall: false })
-  //   }
-  //   // eslint-disable-next-line
-  // }, [state.folderID, props.folderId, state?.apiCall, props?.docId, state?.fileID, state?.pageNo, state?.columnName, state?.sortOrder, state?.recordsPerPage]);
-  console.log("Checking folderID change: New:", props.folderId, "Old:", state.folderID,"data =>",state.docTypeList);
-  // useEffect(() => {
-  //   console.log("Inside the useEffect Checking folderID change: New:", props.folderId, "Old:", state.folderID);
-
-  //   if (props.folderId !== state.folderID) {
-  //     setState((prevState) => {
-  //       console.log("Updating folderID to:", props.folderId);
-  //       return { ...prevState, folderID: props.folderId };
-  //     });
-  //   }
-  // }, [props.folderId, state.folderID]); 
-
-
-
+  console.log("Checking folderID change: New:", props.folderId, "Old:", state.folderID, "data =>", state.docTypeList);
   //Document Save Function
   const SaveBulkDocument = async () => {
-    setState({ ...state, loadingBtn: true, showDropDown: false })
+    setState((prev) => ({
+      ...prev, loadingBtn: true, showDropDown: false
+    }))
     try {
       let res = await AddSharePointDOcument(
-        props?.user_id,
-        props?.emp_user_type,
-        props?.folderID,
-        state?.docTypeName,
-        state?.docFileBase
+        props?.user_id || "",
+        props?.emp_user_type || "",
+        state?.folderID,
+        state?.docTypeName || "",
+        state?.docFileBase || ""
       );
       if (res.data.message === "Document Upload") {
         toast.success(`Document Uploaded successfully`, {
@@ -491,10 +530,12 @@ export default function ApplicantTypeDocuments(props) {
           autoClose: 1000,
         });
         cancelDelete()
-        setState({ ...state, apiCall: true })
-        setState({ ...state, taggedAdmin: [] })
-        setState({ ...state, convertedDoc: "" })
-        setState({ ...state, noteText: "" })
+        setState((prev) => ({
+          ...prev, apiCall: true
+          , convertedDoc: ""
+          , showDropDown: false
+          , noteText: ""
+        }))
       }
     } catch (err) {
       console.log(err);
@@ -512,7 +553,9 @@ export default function ApplicantTypeDocuments(props) {
                     <div className="back_btn_div">
                       <Link className="rounded back-btn px-3" style={{ position: "absolute", top: 5, left: 5, background: "#fff", height: 35, fontSize: 24, zIndex: 99, display: "flex", justifyContent: "center", boxShadow: "0 0 4px #ccc", alignItems: "center", textDecoration: "none" }} to="" onClick={() => {
                         getCommentsList(state.docSingleDate.id); // Ensure comments reload correctly
-                        setState({ ...state, docSingleDate: "", docPreview: false, folderId: state?.docSingleDate.parentReference.id, convertedDoc: "", showDropDown: "", commentsList: [], taggedAdmin: [], })
+                        setState((prev) => ({
+                          ...prev, docSingleDate: "", docPreview: false, folderId: state?.docSingleDate.parentReference.id, convertedDoc: "", showDropDown: "", commentsList: [], taggedAdmin: [],
+                        }))
                       }}>
                         <IoMdArrowBack /> <span style={{ fontSize: 18 }}>Back to Folder</span>
                       </Link>
@@ -563,7 +606,9 @@ export default function ApplicantTypeDocuments(props) {
                       <>
                         <Form.Control type="text" value={state.newType} placeholder="Enter new type" height={34} className="px-2" onChange={handleNewTypeChange} />
                         <button className="btn btn-sm btn-primary" type="button" style={{ maxHeight: 34 }} onClick={() => handleDocTypeChange(state.newType)}>Save</button>
-                        <button className="btn btn-sm btn-secondary" type="button" style={{ maxHeight: 34 }} onClick={() => setState({ ...state, newType: "" })}>Cancel</button>
+                        <button className="btn btn-sm btn-secondary" type="button" style={{ maxHeight: 34 }} onClick={() => setState((prev) => ({
+                          ...prev, newType: ""
+                        }))}>Cancel</button>
                       </>
                     ) : (
                       <Dropdown>
@@ -591,9 +636,13 @@ export default function ApplicantTypeDocuments(props) {
                     />
                     }
                     <button className="btn btn-primary mx-2" style={{ maxHeight: 34 }} onClick={() => {
-                      setState({ ...state, openNoteForm: true })
+                      setState((prev) => ({
+                        ...prev, openNoteForm: true
+                      }))
                       if (state.docNoteData) {
-                        setState({ ...state, docNoteData: state?.docNoteData })
+                        setState((prev) => ({
+                          ...prev, docNoteData: state?.docNoteData
+                        }))
                         GetNoteText(state.docNoteData, true);
                       }
                     }}>{state.docNoteData.length !== 0 ? "Open Note" : "Add Note"}</button>
