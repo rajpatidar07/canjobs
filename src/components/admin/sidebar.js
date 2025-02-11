@@ -12,25 +12,25 @@ import { BsBuildings, BsQrCodeScan } from "react-icons/bs";
 import { PiApplePodcastsLogoThin } from "react-icons/pi";
 import { AiOutlineUserAdd /*, AiOutlineMail*/ } from "react-icons/ai";
 import { TbFilterPlus } from "react-icons/tb";
-import { FaAddressCard, FaEdit, FaNotesMedical, FaTasks } from "react-icons/fa";
+import { FaAddressCard, FaNotesMedical, FaTasks } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
 import { SiStudyverse } from "react-icons/si";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 import { FaPersonShelter } from "react-icons/fa6";
-import { DeleteApplicanTypeApi, getApplicanTypeApi } from "../../api/api";
-import AddApplicantType from "../forms/admin/AddApplicantType";
-import { BiTrash } from "react-icons/bi";
-import SAlert from "../common/sweetAlert";
-import { toast } from "react-toastify";
+import { getApplicanTypeApi } from "../../api/api";
+// import AddApplicantType from "../forms/admin/AddApplicantType";
+// import { BiTrash } from "react-icons/bi";
+// import SAlert from "../common/sweetAlert";
+// import { toast } from "react-toastify";
 const AdminSidebar = (props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(
     localStorage.getItem("isMenuOpen")
   );
-  const [showApplicantTypeForm, setShowApplicantTypeForm] = useState(false);
-  const [updateApplicantTypeData, setUpdateApplicantTypeData] = useState();
-  const [deleteApplicantTypeData, setDeleteApplicantTypeData] = useState();
-  const [showDropDownApplicantTypeData, setShowDropDownApplicantTypeData] = useState(false);
-  const [deleteAlertApplicantTypeData, setDeleteAlertApplicantTypeData] = useState(false);
+  // const [showApplicantTypeForm, setShowApplicantTypeForm] = useState(false);
+  // const [updateApplicantTypeData, setUpdateApplicantTypeData] = useState();
+  // const [deleteApplicantTypeData, setDeleteApplicantTypeData] = useState();
+  // const [showDropDownApplicantTypeData, setShowDropDownApplicantTypeData] = useState(false);
+  // const [deleteAlertApplicantTypeData, setDeleteAlertApplicantTypeData] = useState(false);
 
   const [apiCall, setApiCall] = useState(false);
   let [applicanttypedata, setApplicanttypedata] = useState([])
@@ -73,24 +73,24 @@ const AdminSidebar = (props) => {
     }
   }, [props.heading, apiCall]);
   /*To call Api to delete employee */
-  async function deleteApplicantType(id) {
-    let data = {
-      "id": id,
-    }
-    try {
-      const response = await DeleteApplicanTypeApi(data);
-      if (response.status === 1 || response.status === "1") {
-        toast.error("Applicant Type deleted Successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        setDeleteAlertApplicantTypeData(false);
-        setApiCall(true);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  // async function deleteApplicantType(id) {
+  //   let data = {
+  //     "id": id,
+  //   }
+  //   try {
+  //     const response = await DeleteApplicanTypeApi(data);
+  //     if (response.status === 1 || response.status === "1") {
+  //       toast.error("Applicant Type deleted Successfully", {
+  //         position: toast.POSITION.TOP_RIGHT,
+  //         autoClose: 1000,
+  //       });
+  //       setDeleteAlertApplicantTypeData(false);
+  //       setApiCall(true);
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
   return (
     <div
       className={`dashboard-sidebar-wrapper pt-5 sidebar_parent ${isMenuOpen ? "show" : ""
@@ -699,16 +699,11 @@ const AdminSidebar = (props) => {
               <Link onClick={() => {
                 clearPageNo()
               }}
-                onContextMenu={(e) => {
-                  e.preventDefault();
-                  if (admin_type === "super-admin") { setShowDropDownApplicantTypeData(item.id) }
-
-                }}
                 to={`/slots_pages`} state={{ "applicantType": item.id }}
                 className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center text-Capitalize">
                 < LiaUsersSolid className="sidebar_icon" />{item.title}
               </Link>
-              {showDropDownApplicantTypeData === item.id && (
+              {/* {showDropDownApplicantTypeData === item.id && (
                 <ul className="list-group ">
                   <li className="list-group-item">
                     <Link
@@ -734,15 +729,15 @@ const AdminSidebar = (props) => {
                       <BiTrash size={15} />
                     </Link>
                   </li>
-                </ul>)}
+                </ul>)} */}
             </li>
           ))}
 
         <li
-          ref={(el) => (liRefs.current["Add Applicant Type"] = el)}
+          ref={(el) => (liRefs.current["Manage Applicant Type"] = el)}
           className={
             admin_type === "super-admin"
-              ? props.heading === "Add Applicant Type" || showApplicantTypeForm === true
+              ? props.heading === "Manage Applicant Type"
                 ? "active"
                 : ""
               : "d-none"
@@ -750,16 +745,16 @@ const AdminSidebar = (props) => {
         >
           <Link
             onClick={() => {
-              setShowApplicantTypeForm(true);
               clearPageNo()
             }}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
-            title={"Add Applicant Type"}
+            title={"Manage Applicant Type"}
+            to="/manage_applicant_type"
           >
             <FaAddressCard className="sidebar_icon" />
-            Add Applicant Type
+            Manage Applicant Type
           </Link>
-          {showApplicantTypeForm ?
+          {/* {showApplicantTypeForm ?
             <AddApplicantType
               show={showApplicantTypeForm}
               close={() => {
@@ -768,15 +763,15 @@ const AdminSidebar = (props) => {
               setApicall={setApiCall}
               UpdateApplicantTypeData={updateApplicantTypeData}
             />
-            : null}
-          <SAlert
+            : null} */}
+          {/* <SAlert
             show={deleteAlertApplicantTypeData}
             title={deleteApplicantTypeData?.title}
             text="Are you Sure you want to delete !"
             onConfirm={() => deleteApplicantType(deleteApplicantTypeData?.id)}
             showCancelButton={true}
             onCancel={() => setDeleteAlertApplicantTypeData(false)}
-          />
+          /> */}
         </li>
         {/* <li className={user_type === "agent"?"d-none":props.heading === "Response" ? "active" : ""}>
             <Link
