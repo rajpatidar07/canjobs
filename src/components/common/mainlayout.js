@@ -103,6 +103,7 @@ import RecruitmentAgrement from "./Retaineragreement/Agreement native/Recruitmen
 import Wes from "../admin/wes";
 import Atip from "../admin/atip";
 import CommonApplicatTypePage from "./CommonApplicatTypePage";
+import MangeApplicantType from "../admin/MangeApplicantType"
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -280,6 +281,7 @@ function MainLayout() {
             <Route path="/googledrive" element={<GoogleDrive />} />
             <Route path="/anotation" element={<Anotation />} />
             <Route path="/slots_pages" element={<CommonApplicatTypePage />} />
+            <Route path="/manage_applicant_type" element={<MangeApplicantType />} />
             <Route path="/businessvisa" element={<BusinessVIsa />} />
             <Route path="/expressentry" element={<ExpressEntry />} />
             <Route path="/visitorsvisa" element={<VisitorVisa />} />
