@@ -699,7 +699,7 @@ const AdminSidebar = (props) => {
               <Link onClick={() => {
                 clearPageNo()
               }}
-                to={`/slots_pages`} state={{ "applicantType": item.id }}
+                to={`/slots_pages`} state={{ "applicantType": item.id, "folderId": item.doc_folder_id }}
                 className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center text-Capitalize">
                 < LiaUsersSolid className="sidebar_icon" />{item.title}
               </Link>

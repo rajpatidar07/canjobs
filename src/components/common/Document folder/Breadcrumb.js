@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Breadcrumbs = ({ data, setFolderID }) => {
+  console.log(data, setFolderID)
   return (
     <nav aria-label="breadcrumb">
       <ol
@@ -11,9 +12,8 @@ const Breadcrumbs = ({ data, setFolderID }) => {
         {(data || []).map((item, index) => (
           <li
             key={index}
-            className={`breadcrumb-item ${
-              index === data.length - 1 ? "active" : ""
-            }`}
+            className={`breadcrumb-item ${index === data.length - 1 ? "active" : ""
+              }`}
           >
             {index === data.length - 1 ? (
               <span>{index === 0 ? "Home" : item.name.replaceAll("_", " ")}</span>
