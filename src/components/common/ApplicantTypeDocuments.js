@@ -587,9 +587,9 @@ export default function ApplicantTypeDocuments(props) {
                           openCommentBox={props?.docId ? true : false}
                           AdminData={fetchAdminData}
                           setFileID={(fileId) => setState((prevState) => ({ ...prevState, fileId: fileId }))}
-                          setConvertedDoc={(convertedDoc) => setState((prevState) => ({ ...prevState, convertedDoc: convertedDoc }))}
-                          setCommentsList={(commentsList) => setState((prevState) => ({ ...prevState, commentsList: commentsList }))}
-                          setDocSingleDate={(docSingleDate) => setState((prevState) => ({ ...prevState, docSingleDate: docSingleDate }))}
+                          setConvertedDoc={(convertedDoc) => setState((prevState) => ({ ...prevState, convertedDoc }))}
+                          setCommentsList={(commentsList) => setState((prevState) => ({ ...prevState, commentsList }))}
+                          setDocSingleDate={(docSingleDate) => setState((prevState) => ({ ...prevState, docSingleDate }))}
                           SetPdfDocUrl={handleDocumentConversion}
                           AnnoteId={props?.AnnoteId}
                           docTaskId={props?.docTaskId}
@@ -636,12 +636,12 @@ export default function ApplicantTypeDocuments(props) {
                         emp_user_type: props?.emp_user_type,
                         folderID: state?.folderID,
                         docTypeName: state?.docTypeName,
-                        setApiCall: (apiStatus) => setState((prevState) => ({ ...prevState, apiCall: apiStatus })),
-                        setOpenNoteForm: (openNoteForm) => setState((prevState) => ({ ...prevState, openNoteForm: openNoteForm })),
+                        setApiCall: (apiCall) => setState((prevState) => ({ ...prevState, apiCall })),
+                        setOpenNoteForm: (openNoteForm) => setState((prevState) => ({ ...prevState, openNoteForm })),
                         show: state?.openNoteForm,
                         convertedDoc: state?.noteText,
                         docSingleDate: state?.docNoteData,
-                        setConvertedDoc: (noteText) => setState((prevState) => ({ ...prevState, noteText: noteText })),
+                        setConvertedDoc: (noteText) => setState((prevState) => ({ ...prevState, noteText })),
                       }}
                     />
                     }
@@ -687,19 +687,19 @@ export default function ApplicantTypeDocuments(props) {
                       SaveBulkDocument={SaveBulkDocument}
                       AdminData={fetchAdminData}
                       SetPdfDocUrl={handleDocumentConversion}
-                      setFileID={(fileID) => setState((prevState) => ({ ...prevState, fileID: fileID }))}
-                      setFolderID={(folderID) => setState((prevState) => ({ ...prevState, folderID: folderID }))}
-                      setDocTypeName={(docTypeName) => setState((prevState) => ({ ...prevState, docTypeName: docTypeName }))}
-                      setShowDropDown={(showDropDown) => setState((prevState) => ({ ...prevState, showDropDown: showDropDown }))}
-                      setDocSingleDate={(docSingleDate) => setState((prevState) => ({ ...prevState, docSingleDate: docSingleDate }))}
-                      setEditNameForm={(editNameForm) => setState((prevState) => ({ ...prevState, editNameForm: editNameForm }))}
-                      setDocPreview={(docPreview) => setState((prevState) => ({ ...prevState, docPreview: docPreview }))}
-                      setSaveBtn={(saveBtn) => setState((prevState) => ({ ...prevState, saveBtn: saveBtn }))}
-                      setDocFileBase={(docFileBase) => setState((prevState) => ({ ...prevState, docFileBase: docFileBase }))}
-                      setCommentsList={(commentsList) => setState((prevState) => ({ ...prevState, commentsList: commentsList }))}
+                      setFileID={(fileID) => setState((prevState) => ({ ...prevState, fileID }))}
+                      setFolderID={(folderID) => setState((prevState) => ({ ...prevState, folderID }))}
+                      setDocTypeName={(docTypeName) => setState((prevState) => ({ ...prevState, docTypeName }))}
+                      setShowDropDown={(showDropDown) => setState((prevState) => ({ ...prevState, showDropDown }))}
+                      setDocSingleDate={(docSingleDate) => setState((prevState) => ({ ...prevState, docSingleDate }))}
+                      setEditNameForm={(editNameForm) => setState((prevState) => ({ ...prevState, editNameForm }))}
+                      setDocPreview={(docPreview) => setState((prevState) => ({ ...prevState, docPreview }))}
+                      setSaveBtn={(saveBtn) => setState((prevState) => ({ ...prevState, saveBtn }))}
+                      setDocFileBase={(docFileBase) => setState((prevState) => ({ ...prevState, docFileBase }))}
+                      setCommentsList={(commentsList) => setState((prevState) => ({ ...prevState, commentsList }))}
                       setPageNo={(pageNo) => setState((prevState) => ({ ...prevState, pageNo }))}
-                      setOpenNoteForm={(openNoteForm) => setState((prevState) => ({ ...prevState, openNoteForm: openNoteForm }))}
-                      setRecordsPerPage={(recordsPerPage) => setState((prevState) => ({ ...prevState, recordsPerPage: recordsPerPage }))}
+                      setOpenNoteForm={(openNoteForm) => setState((prevState) => ({ ...prevState, openNoteForm }))}
+                      setRecordsPerPage={(recordsPerPage) => setState((prevState) => ({ ...prevState, recordsPerPage }))}
                     />
 
                   }
