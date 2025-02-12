@@ -26,19 +26,26 @@ export default function CommonApplicatTypePage() {
     const [applicantTypeFolderId, setApplicanttypeFolderId] = useState(location?.state?.folderId || "");
     const [applicantTypename, setApplicanttypeName] = useState("");
     const [selectedTab, setSelectedTab] = useState("candidate");
-
+    let localApplicantTypeId = localStorage.getItem("applicantType")
+    let localApplicantTypeFolderId = localStorage.getItem("applicantTypeFolderId")
     useEffect(() => {
         // Update only if applicantType is present
         if (location?.state?.applicantType && location?.state?.applicantType !== applicantTypeId) {
             setApplicanttypeId(location.state.applicantType);
+            localStorage.setItem("applicantType", location.state.applicantType)
+        } else {
+            setApplicanttypeId(localApplicantTypeId);
         }
         if (location?.state?.folderId && location?.state?.folderId !== applicantTypeFolderId) {
             setApplicanttypeFolderId(location.state.folderId);
+            localStorage.setItem("applicantTypeFolderId", location.state.folderId)
+        } else {
+            setApplicanttypeFolderId(localApplicantTypeFolderId);
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location?.state?.applicantType, location?.state?.folderId]);
-
+    console.log(applicantTypeId)
     useEffect(() => {
         if (!applicantTypeId) return;
 
@@ -71,7 +78,6 @@ export default function CommonApplicatTypePage() {
             setSearchError("");
         }
     };
-console.log(applicantTypeFolderId,"folder id")
     return (
         <>
             <div className="site-wrapper overflow-hidden bg-default-2">
@@ -171,8 +177,8 @@ console.log(applicantTypeFolderId,"folder id")
                             </div>
                         </div> : <div>
                             <ApplicantTypeDocuments
-                                emp_user_type={""}
-                                user_id={""}
+                                emp_user_type={"applicant_type"}
+                                user_id={applicantTypeId}
                                 folderId={applicantTypeFolderId}
                                 notification={""}
                                 docId={""}

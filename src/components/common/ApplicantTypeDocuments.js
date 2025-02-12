@@ -292,12 +292,11 @@ export default function ApplicantTypeDocuments(props) {
     }
   };
 
-  const handleDocumentConversion = (data) => {
+  const handleDocumentConversion = async (data) => {
     const mimeType = data.file.mimeType;
     const downloadUrl = data["@microsoft.graph.downloadUrl"];
-
     if (["image/jpeg", "image/png", "image/jpg"].includes(mimeType)) {
-      let res = convertUrlToPDF(downloadUrl);
+      let res = await convertUrlToPDF(downloadUrl);
       setState((prev) => ({
         ...prev, convertedDoc: res
       }));
@@ -309,7 +308,7 @@ export default function ApplicantTypeDocuments(props) {
     } else if (
       mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     ) {
-      let res = convertWordToPDF(data);
+      let res = await convertWordToPDF(data);
       setState((prev) => ({
         ...prev, convertedDoc: res
       }));
@@ -350,7 +349,7 @@ export default function ApplicantTypeDocuments(props) {
 
   // Fetch all sharepoint documents
   const fetchAllShareType = async () => {
-
+    console.log(state?.folderID)
     try {
       setState((prev) => ({
         ...prev, docLoader: true
@@ -361,7 +360,7 @@ export default function ApplicantTypeDocuments(props) {
         state?.pageNo, props?.docId || ""
       );
       if (res.data.status === 1) {
-        console.log("first", res.data.data)
+        // console.log("first", res.data.data)
         setState((prev) => ({
           ...prev,
           docTypeList: res.data.data,
@@ -388,7 +387,7 @@ export default function ApplicantTypeDocuments(props) {
           }
         }
       } else {
-        console.log("ppppp", state?.docTypeList)
+        // console.log("ppppp", state?.docTypeList)
         setState((prev) => ({
           ...prev,
           docTypeList: [],
@@ -400,7 +399,7 @@ export default function ApplicantTypeDocuments(props) {
       }
     } catch (err) {
       console.error(err);
-      console.log("ooooooo", state?.docTypeList)
+      // console.log("ooooooo", state?.docTypeList)
       setState((prev) => ({
         ...prev,
         docTypeList: [],
@@ -468,7 +467,7 @@ export default function ApplicantTypeDocuments(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.folderId]);
 
-  console.log("Checking folderID change: New:", props.folderId, "Old:", state.folderID, "data =>", state.docTypeList);
+  // console.log("Checking folderID change: New:", props.folderId, "Old:", state.folderID, "data =>", state.docTypeList);
   //Document Save Function
   const SaveBulkDocument = async () => {
     setState((prev) => ({
@@ -560,32 +559,43 @@ export default function ApplicantTypeDocuments(props) {
                         <IoMdArrowBack /> <span style={{ fontSize: 18 }}>Back to Folder</span>
                       </Link>
                     </div>
-                    {(["application/pdf", "image/jpeg", "image/png", "image/jpg", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"].includes(state.docSingleDate.file.mimeType) && state?.imgConRes === "imageConverted" && state?.convertedDoc) ? (
-                      <AdobePDFViewer
-                        url={state.convertedDoc}
-                        data={state.docSingleDate}
-                        userId={props?.userId}
-                        commentsList={state.commentsList}
-                        selectedMentionAdmin={state.selectedMentionAdmin}
-                        DocUserType={props?.emp_user_type}
-                        adminList={state.adminList}
-                        partnerList={state.partnerList}
-                        docsection={true}
-                        docTypeList={state.docTypeList}
-                        fileId={state.fileID}
-                        userType={localStorage.getItem("userType")}
-                        openCommentBox={props?.docId ? true : false}
-                        AdminData={fetchAdminData}
-                        setFileID={(id) => setState((prevState) => ({ ...prevState, fileId: id }))}
-                        setConvertedDoc={(doc) => setState((prevState) => ({ ...prevState, convertedDoc: doc }))}
-                        setCommentsList={(comments) => setState((prevState) => ({ ...prevState, commentsList: comments }))}
-                        setDocSingleDate={(docDate) => setState((prevState) => ({ ...prevState, docSingleDate: docDate }))}
-                        SetPdfDocUrl={handleDocumentConversion}
-                        AnnoteId={props?.AnnoteId}
-                        docTaskId={props?.docTaskId}
-                      />
+                    {console.log(state.fileID, "pppppppppppppppppp", state.textttttt)}
+                    {(state.docSingleDate.file.mimeType === "application/pdf" ||
+                      ((state.docSingleDate.file.mimeType === "image/jpeg" ||
+                        state.docSingleDate.file.mimeType === "image/png" ||
+                        state.docSingleDate.file.mimeType === "image/jpg") &&
+                        state.imgConRes === "imageConverted") ||
+                      state.docSingleDate.file.mimeType ===
+                      "application/vnd.openxmlformats-officedocument.wordprocessingml.document") &&
+                      (state.convertedDoc && state.docSingleDate.file.mimeType !==
+                        "text/plain")
+                      ? (
+                        <AdobePDFViewer
+                          url={state.convertedDoc}
+                          data={state.docSingleDate}
+                          userId={props?.user_id}
+                          commentsList={state.commentsList}
+                          selectedMentionAdmin={state.selectedMentionAdmin}
+                          DocUserType={props?.emp_user_type}
+                          adminList={state.adminList}
+                          partnerList={state.partnerList}
+                          docsection={true}
+                          getCommentsList={getCommentsList}
+                          docTypeList={state.docTypeList}
+                          fileId={state.fileID}
+                          userType={localStorage.getItem("userType")}
+                          openCommentBox={props?.docId ? true : false}
+                          AdminData={fetchAdminData}
+                          setFileID={(fileId) => setState((prevState) => ({ ...prevState, fileId }))}
+                          setConvertedDoc={(convertedDoc) => setState((prevState) => ({ ...prevState, convertedDoc }))}
+                          setCommentsList={(commentsList) => setState((prevState) => ({ ...prevState, commentsList }))}
+                          setDocSingleDate={(docSingleDate) => setState((prevState) => ({ ...prevState, docSingleDate }))}
+                          SetPdfDocUrl={handleDocumentConversion}
+                          AnnoteId={props?.AnnoteId}
+                          docTaskId={props?.docTaskId}
+                        />
 
-                    ) : (state.docSingleDate.file.mimeType !== "text/plain" && <Loader />)}
+                      ) : (state.docSingleDate.file.mimeType !== "text/plain" && <Loader />)}
                   </div>
                 </div>
               </div>
@@ -622,7 +632,7 @@ export default function ApplicantTypeDocuments(props) {
                     )}
                     {props?.openNoteForm && <DocumentsNotes
                       {...{
-                        user_id: props?.userId,
+                        user_id: props?.user_id,
                         emp_user_type: props?.emp_user_type,
                         folderID: state?.folderID,
                         docTypeName: state?.docTypeName,
@@ -650,49 +660,47 @@ export default function ApplicantTypeDocuments(props) {
                 </div>
                 <div className="row m-0 bg-white px-2 pb-2">
                   {state.docLoader ? <div className="table-responsive main_table_div"><Loader /></div> : <FolderList
-                    {...{
-                      docTypeList: state?.docTypeList,
-                      setFolderID: (folderID) => setState((prevState) => ({ ...prevState, folderID })),
-                      setFileID: (fileID) => setState((prevState) => ({ ...prevState, fileID })),
-                      setDocTypeName: (docTypeName) => setState((prevState) => ({ ...prevState, docTypeName })),
-                      folderID: state?.folderID,
-                      showDropDown: state?.showDropDown,
-                      setShowDropDown: (showDropDown) => setState((prevState) => ({ ...prevState, showDropDown })),
-                      setDocSingleDate: (docSingleDate) => setState((prevState) => ({ ...prevState, docSingleDate })),
-                      setEditNameForm: (editNameForm) => setState((prevState) => ({ ...prevState, editNameForm })),
-                      ShowDeleteAlert: showDeleteAlert,
-                      setDocPreview: (docPreview) => setState((prevState) => ({ ...prevState, docPreview })),
-                      handleBulkFileChange,
-                      saveBtn: state?.saveBtn,
-                      loadingBtn: state?.loadingBtn,
-                      SaveBulkDocument,
-                      setSaveBtn: (saveBtn) => setState((prevState) => ({ ...prevState, saveBtn })),
-                      setDocFileBase: (docFileBase) => setState((prevState) => ({ ...prevState, docFileBase })),
-                      SetPdfDocUrl: handleDocumentConversion,
-                      emp_user_type: props?.emp_user_type,
-                      user_id: props?.user_id,
-                      userType: localStorage.getItem("userType"),
-                      adminList: state?.adminList,
-                      partnerList: state?.partnerList,
-                      userId: props?.user_i,
-                      commentsList: state?.commentsList,
-                      DocUserType: props?.emp_user_type,
-                      docsection: true,
-                      getCommentsList,
-                      setCommentsList: (commentsList) => setState((prevState) => ({ ...prevState, commentsList })),
-                      partnerId: props?.partnerId,
-                      handleSort,
-                      setPageNo: (pageNo) => setState((prevState) => ({ ...prevState, pageNo })),
-                      nPages: props?.nPages,
-                      totalData: state?.totalData,
-                      pageNo: state?.pageNo,
-                      docFileBase: state?.docFileBase,
-                      setOpenNoteForm: (openNoteForm) => setState((prevState) => ({ ...prevState, openNoteForm })),
-                      AdminData: fetchAdminData,
-                      setRecordsPerPage: (recordsPerPage) => setState((prevState) => ({ ...prevState, recordsPerPage })),
-                      recordsPerPage: state?.recordsPerPage,
-                    }}
+                    docTypeList={state?.docTypeList}
+                    folderID={state?.folderID}
+                    showDropDown={state?.showDropDown}
+                    saveBtn={state?.saveBtn}
+                    loadingBtn={state?.loadingBtn}
+                    docPreview={state?.docPreview}
+                    docFileBase={state?.docFileBase}
+                    pageNo={state?.pageNo}
+                    totalData={state?.totalData}
+                    recordsPerPage={state?.recordsPerPage}
+                    userId={props?.user_id}
+                    DocUserType={props?.emp_user_type}
+                    userType={localStorage.getItem("userType")}
+                    adminList={state?.adminList}
+                    partnerList={state?.partnerList}
+                    commentsList={state?.commentsList}
+                    docsection={true}
+                    getCommentsList={getCommentsList}
+                    partnerId={props?.partnerId}
+                    nPages={props?.nPages}
+                    ShowDeleteAlert={showDeleteAlert}
+                    handleSort={handleSort}
+                    handleBulkFileChange={handleBulkFileChange}
+                    SaveBulkDocument={SaveBulkDocument}
+                    AdminData={fetchAdminData}
+                    SetPdfDocUrl={handleDocumentConversion}
+                    setFileID={(fileID) => setState((prevState) => ({ ...prevState, fileID }))}
+                    setFolderID={(folderID) => setState((prevState) => ({ ...prevState, folderID }))}
+                    setDocTypeName={(docTypeName) => setState((prevState) => ({ ...prevState, docTypeName }))}
+                    setShowDropDown={(showDropDown) => setState((prevState) => ({ ...prevState, showDropDown }))}
+                    setDocSingleDate={(docSingleDate) => setState((prevState) => ({ ...prevState, docSingleDate }))}
+                    setEditNameForm={(editNameForm) => setState((prevState) => ({ ...prevState, editNameForm }))}
+                    setDocPreview={(docPreview) => setState((prevState) => ({ ...prevState, docPreview }))}
+                    setSaveBtn={(saveBtn) => setState((prevState) => ({ ...prevState, saveBtn }))}
+                    setDocFileBase={(docFileBase) => setState((prevState) => ({ ...prevState, docFileBase }))}
+                    setCommentsList={(commentsList) => setState((prevState) => ({ ...prevState, commentsList }))}
+                    setPageNo={(pageNo) => setState((prevState) => ({ ...prevState, pageNo }))}
+                    setOpenNoteForm={(openNoteForm) => setState((prevState) => ({ ...prevState, openNoteForm }))}
+                    setRecordsPerPage={(recordsPerPage) => setState((prevState) => ({ ...prevState, recordsPerPage }))}
                   />
+
                   }
                 </div>
                 {state.editNameForm && <EditDocNameForm

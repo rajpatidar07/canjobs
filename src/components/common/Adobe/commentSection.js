@@ -612,9 +612,9 @@ export default function CommentSection({
     });
 
     // **Remove unmentioned admins from selectedAdmin**
-    const filteredSelectedAdmins = selectedAdmin.filter(admin => 
-        updatedCommentToApi.includes(`@${admin.name}`)
-    );
+    const filteredSelectedAdmins = selectedAdmin ? selectedAdmin?.filter(admin =>
+      updatedCommentToApi.includes(`@${admin.name}`)
+    ) : []
 
     // Update selectedAdmin state
     setSelectedAdmin(filteredSelectedAdmins);
