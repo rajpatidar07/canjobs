@@ -204,7 +204,7 @@ const DocumentsNotes = (props) => {
     const contentState = ContentState.createFromBlockArray(
         convertFromHTML(initialHTML)
     );
-    
+    console.log(props)
     const [editorState, setEditorState] = useState(
         EditorState.createWithContent(contentState)
     );

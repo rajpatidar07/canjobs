@@ -43,7 +43,7 @@ export default function ApplicantTypeDocuments(props) {
     imgConRes: null,
     convertedDoc: "",
     noteText: "",
-    docNoteData: [],
+    docNoteData: {},
     totalData: "",
     pageNo: 1,
     recordsPerPage: 10,
@@ -219,7 +219,6 @@ export default function ApplicantTypeDocuments(props) {
         setState((prev) => ({
           ...prev, noteText: text
         }))
-        /*Open the note form when admin click it from the docs list else not open from this function */
         if (isOpen) {
           setState((prev) => ({
             ...prev, openNoteForm: true
@@ -313,7 +312,7 @@ export default function ApplicantTypeDocuments(props) {
         ...prev, convertedDoc: res
       }));
     } else if (mimeType === "text/plain") {
-      fetchNoteText(downloadUrl, true);
+      GetNoteText(data, true);
     } else if (mimeType === "application/pdf") {
       setState((prev) => ({
         ...prev, convertedDoc: downloadUrl
@@ -326,16 +325,6 @@ export default function ApplicantTypeDocuments(props) {
     }
   };
 
-  const fetchNoteText = (url, isOpen) => {
-    fetch(url)
-      .then((res) => res.ok ? res.text() : Promise.reject("Failed to fetch"))
-      .then((text) =>
-        setState((prev) => ({
-          ...prev, noteText: text, openNoteForm: isOpen
-        }))
-      )
-      .catch((err) => console.error("Error fetching file:", err));
-  };
 
   const showDeleteAlert = (data) =>
     setState((prev) => ({
@@ -349,7 +338,6 @@ export default function ApplicantTypeDocuments(props) {
 
   // Fetch all sharepoint documents
   const fetchAllShareType = async () => {
-    console.log(state?.folderID)
     try {
       setState((prev) => ({
         ...prev, docLoader: true
@@ -367,7 +355,7 @@ export default function ApplicantTypeDocuments(props) {
           totalData: res.data.total_rows,
           showDropDown: false,
           docLoader: false,
-          docNoteData: res.data.notes.length ? res.data.notes : [],
+          docNoteData: res.data.notes ? res.data.notes : {},
         })
         );
 
@@ -586,7 +574,7 @@ export default function ApplicantTypeDocuments(props) {
                           userType={localStorage.getItem("userType")}
                           openCommentBox={props?.docId ? true : false}
                           AdminData={fetchAdminData}
-                          setFileID={(fileId) => setState((prevState) => ({ ...prevState, fileId: fileId }))}
+                          setFileID={(fileID) => setState((prevState) => ({ ...prevState, fileID }))}
                           setConvertedDoc={(convertedDoc) => setState((prevState) => ({ ...prevState, convertedDoc }))}
                           setCommentsList={(commentsList) => setState((prevState) => ({ ...prevState, commentsList }))}
                           setDocSingleDate={(docSingleDate) => setState((prevState) => ({ ...prevState, docSingleDate }))}
@@ -630,26 +618,24 @@ export default function ApplicantTypeDocuments(props) {
                         </Dropdown.Menu>
                       </Dropdown>
                     )}
-                    {props?.openNoteForm && <DocumentsNotes
-                      {...{
-                        user_id: props?.user_id,
-                        emp_user_type: props?.emp_user_type,
-                        folderID: state?.folderID,
-                        docTypeName: state?.docTypeName,
-                        setApiCall: (apiCall) => setState((prevState) => ({ ...prevState, apiCall })),
-                        setOpenNoteForm: (openNoteForm) => setState((prevState) => ({ ...prevState, openNoteForm })),
-                        show: state?.openNoteForm,
-                        convertedDoc: state?.noteText,
-                        docSingleDate: state?.docNoteData,
-                        setConvertedDoc: (noteText) => setState((prevState) => ({ ...prevState, noteText })),
-                      }}
+                    <DocumentsNotes
+                      user_id={props?.user_id}
+                      emp_user_type={props?.emp_user_type}
+                      folderID={state?.folderID}
+                      docTypeName={state?.docTypeName}
+                      show={state?.openNoteForm}
+                      convertedDoc={state?.noteText}
+                      docSingleDate={state?.docNoteData}
+                      setApiCall={(apiCall) => setState((prevState) => ({ ...prevState, apiCall }))}
+                      setOpenNoteForm={(openNoteForm) => setState((prevState) => ({ ...prevState, openNoteForm }))}
+                      setConvertedDoc={(noteText) => setState((prevState) => ({ ...prevState, noteText }))}
                     />
-                    }
+
                     <button className="btn btn-primary mx-2" style={{ maxHeight: 34 }} onClick={() => {
                       setState((prev) => ({
                         ...prev, openNoteForm: true
                       }))
-                      if (state.docNoteData) {
+                      if (state.docNoteData.length !== 0 && state.docNoteData) {
                         setState((prev) => ({
                           ...prev, docNoteData: state?.docNoteData
                         }))
