@@ -586,10 +586,10 @@ export default function ApplicantTypeDocuments(props) {
                           userType={localStorage.getItem("userType")}
                           openCommentBox={props?.docId ? true : false}
                           AdminData={fetchAdminData}
-                          setFileID={(fileId) => setState((prevState) => ({ ...prevState, fileId }))}
-                          setConvertedDoc={(convertedDoc) => setState((prevState) => ({ ...prevState, convertedDoc }))}
-                          setCommentsList={(commentsList) => setState((prevState) => ({ ...prevState, commentsList }))}
-                          setDocSingleDate={(docSingleDate) => setState((prevState) => ({ ...prevState, docSingleDate }))}
+                          setFileID={(fileId) => setState((prevState) => ({ ...prevState, fileId: fileId }))}
+                          setConvertedDoc={(convertedDoc) => setState((prevState) => ({ ...prevState, convertedDoc: convertedDoc }))}
+                          setCommentsList={(commentsList) => setState((prevState) => ({ ...prevState, commentsList: commentsList }))}
+                          setDocSingleDate={(docSingleDate) => setState((prevState) => ({ ...prevState, docSingleDate: docSingleDate }))}
                           SetPdfDocUrl={handleDocumentConversion}
                           AnnoteId={props?.AnnoteId}
                           docTaskId={props?.docTaskId}
@@ -637,11 +637,11 @@ export default function ApplicantTypeDocuments(props) {
                         folderID: state?.folderID,
                         docTypeName: state?.docTypeName,
                         setApiCall: (apiStatus) => setState((prevState) => ({ ...prevState, apiCall: apiStatus })),
-                        setOpenNoteForm: (open) => setState((prevState) => ({ ...prevState, openNoteForm: open })),
+                        setOpenNoteForm: (openNoteForm) => setState((prevState) => ({ ...prevState, openNoteForm: openNoteForm })),
                         show: state?.openNoteForm,
                         convertedDoc: state?.noteText,
                         docSingleDate: state?.docNoteData,
-                        setConvertedDoc: (text) => setState((prevState) => ({ ...prevState, noteText: text })),
+                        setConvertedDoc: (noteText) => setState((prevState) => ({ ...prevState, noteText: noteText })),
                       }}
                     />
                     }
@@ -659,47 +659,48 @@ export default function ApplicantTypeDocuments(props) {
                   </div>
                 </div>
                 <div className="row m-0 bg-white px-2 pb-2">
-                  {state.docLoader ? <div className="table-responsive main_table_div"><Loader /></div> : <FolderList
-                    docTypeList={state?.docTypeList}
-                    folderID={state?.folderID}
-                    showDropDown={state?.showDropDown}
-                    saveBtn={state?.saveBtn}
-                    loadingBtn={state?.loadingBtn}
-                    docPreview={state?.docPreview}
-                    docFileBase={state?.docFileBase}
-                    pageNo={state?.pageNo}
-                    totalData={state?.totalData}
-                    recordsPerPage={state?.recordsPerPage}
-                    userId={props?.user_id}
-                    DocUserType={props?.emp_user_type}
-                    userType={localStorage.getItem("userType")}
-                    adminList={state?.adminList}
-                    partnerList={state?.partnerList}
-                    commentsList={state?.commentsList}
-                    docsection={true}
-                    getCommentsList={getCommentsList}
-                    partnerId={props?.partnerId}
-                    nPages={props?.nPages}
-                    ShowDeleteAlert={showDeleteAlert}
-                    handleSort={handleSort}
-                    handleBulkFileChange={handleBulkFileChange}
-                    SaveBulkDocument={SaveBulkDocument}
-                    AdminData={fetchAdminData}
-                    SetPdfDocUrl={handleDocumentConversion}
-                    setFileID={(fileID) => setState((prevState) => ({ ...prevState, fileID }))}
-                    setFolderID={(folderID) => setState((prevState) => ({ ...prevState, folderID }))}
-                    setDocTypeName={(docTypeName) => setState((prevState) => ({ ...prevState, docTypeName }))}
-                    setShowDropDown={(showDropDown) => setState((prevState) => ({ ...prevState, showDropDown }))}
-                    setDocSingleDate={(docSingleDate) => setState((prevState) => ({ ...prevState, docSingleDate }))}
-                    setEditNameForm={(editNameForm) => setState((prevState) => ({ ...prevState, editNameForm }))}
-                    setDocPreview={(docPreview) => setState((prevState) => ({ ...prevState, docPreview }))}
-                    setSaveBtn={(saveBtn) => setState((prevState) => ({ ...prevState, saveBtn }))}
-                    setDocFileBase={(docFileBase) => setState((prevState) => ({ ...prevState, docFileBase }))}
-                    setCommentsList={(commentsList) => setState((prevState) => ({ ...prevState, commentsList }))}
-                    setPageNo={(pageNo) => setState((prevState) => ({ ...prevState, pageNo }))}
-                    setOpenNoteForm={(openNoteForm) => setState((prevState) => ({ ...prevState, openNoteForm }))}
-                    setRecordsPerPage={(recordsPerPage) => setState((prevState) => ({ ...prevState, recordsPerPage }))}
-                  />
+                  {state.docLoader ? <div className="table-responsive main_table_div"><Loader /></div> :
+                    <FolderList
+                      docTypeList={state?.docTypeList}
+                      folderID={state?.folderID}
+                      showDropDown={state?.showDropDown}
+                      saveBtn={state?.saveBtn}
+                      loadingBtn={state?.loadingBtn}
+                      docPreview={state?.docPreview}
+                      docFileBase={state?.docFileBase}
+                      pageNo={state?.pageNo}
+                      totalData={state?.totalData}
+                      recordsPerPage={state?.recordsPerPage}
+                      userId={props?.user_id}
+                      DocUserType={props?.emp_user_type}
+                      userType={localStorage.getItem("userType")}
+                      adminList={state?.adminList}
+                      partnerList={state?.partnerList}
+                      commentsList={state?.commentsList}
+                      docsection={true}
+                      getCommentsList={getCommentsList}
+                      partnerId={props?.partnerId}
+                      nPages={props?.nPages}
+                      ShowDeleteAlert={showDeleteAlert}
+                      handleSort={handleSort}
+                      handleBulkFileChange={handleBulkFileChange}
+                      SaveBulkDocument={SaveBulkDocument}
+                      AdminData={fetchAdminData}
+                      SetPdfDocUrl={handleDocumentConversion}
+                      setFileID={(fileID) => setState((prevState) => ({ ...prevState, fileID: fileID }))}
+                      setFolderID={(folderID) => setState((prevState) => ({ ...prevState, folderID: folderID }))}
+                      setDocTypeName={(docTypeName) => setState((prevState) => ({ ...prevState, docTypeName: docTypeName }))}
+                      setShowDropDown={(showDropDown) => setState((prevState) => ({ ...prevState, showDropDown: showDropDown }))}
+                      setDocSingleDate={(docSingleDate) => setState((prevState) => ({ ...prevState, docSingleDate: docSingleDate }))}
+                      setEditNameForm={(editNameForm) => setState((prevState) => ({ ...prevState, editNameForm: editNameForm }))}
+                      setDocPreview={(docPreview) => setState((prevState) => ({ ...prevState, docPreview: docPreview }))}
+                      setSaveBtn={(saveBtn) => setState((prevState) => ({ ...prevState, saveBtn: saveBtn }))}
+                      setDocFileBase={(docFileBase) => setState((prevState) => ({ ...prevState, docFileBase: docFileBase }))}
+                      setCommentsList={(commentsList) => setState((prevState) => ({ ...prevState, commentsList: commentsList }))}
+                      setPageNo={(pageNo) => setState((prevState) => ({ ...prevState, pageNo }))}
+                      setOpenNoteForm={(openNoteForm) => setState((prevState) => ({ ...prevState, openNoteForm: openNoteForm }))}
+                      setRecordsPerPage={(recordsPerPage) => setState((prevState) => ({ ...prevState, recordsPerPage: recordsPerPage }))}
+                    />
 
                   }
                 </div>

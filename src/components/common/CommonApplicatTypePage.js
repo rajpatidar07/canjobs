@@ -4,8 +4,9 @@ import AdminSidebar from '../admin/sidebar';
 import ApplicantsFilter from './applicantsFilter';
 import EmployeeTable from './employeeTable';
 import { getApplicanTypeApi } from '../../api/api';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import ApplicantTypeDocuments from './ApplicantTypeDocuments';
+import { BsThreeDots } from 'react-icons/bs';
 
 export default function CommonApplicatTypePage() {
     /*Filter and search state */
@@ -87,39 +88,53 @@ export default function CommonApplicatTypePage() {
                 <AdminSidebar heading={applicantTypename} />
                 <div className="dashboard-main-container mt-16" id="dashboard-body">
                     <div className="container-fluid">
-                        <div
-                            className={`btn-group mb-5 `}
-                            role="group"
-                            aria-label="Basic example"
-                        >
-                            <button
-                                type="button"
-                                className={
-                                    selectedTab === "candidate"
-                                        ? "btn btn-primary"
-                                        : "btn btn-outline-primary"
-                                }
-                                onClick={() => {
-                                    setSelectedTab("candidate");
-                                }}
-                                title="Candidate"
+                        <div className='d-flex justify-content-between'>
+                            <div
+                                className={`btn-group mb-5`}
+                                role="group"
+                                aria-label="Basic example"
                             >
-                                Candidate
-                            </button>
-                            <button
-                                type="button"
-                                className={
-                                    selectedTab === "documents"
-                                        ? "btn btn-primary"
-                                        : "btn btn-outline-primary"
-                                }
-                                onClick={() => {
-                                    setSelectedTab("documents");
-                                }}
-                                title="Documents"
-                            >
-                                Documents
-                            </button>
+                                <button
+                                    type="button"
+                                    className={
+                                        selectedTab === "candidate"
+                                            ? "btn btn-primary"
+                                            : "btn btn-outline-primary"
+                                    }
+                                    onClick={() => {
+                                        setSelectedTab("candidate");
+                                    }}
+                                    title="Candidate"
+                                >
+                                    Candidate
+                                </button>
+                                <button
+                                    type="button"
+                                    className={
+                                        selectedTab === "documents"
+                                            ? "btn btn-primary"
+                                            : "btn btn-outline-primary"
+                                    }
+                                    onClick={() => {
+                                        setSelectedTab("documents");
+                                    }}
+                                    title="Documents"
+                                >
+                                    Documents
+                                </button>
+                            </div>
+                            <div className=''>
+                                <Link
+                                    type="button"
+                                    className={``}
+                                    // onClick={() => {
+                                    //     setSelectedTab("candidate");
+                                    // }}
+                                    title="options"
+                                >
+                                    <BsThreeDots size={15}/>
+                                </Link>
+                            </div>
                         </div>
                         {selectedTab === "candidate" ? <div>
                             <div className="mb-18">
