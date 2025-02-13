@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import PersonalDetails from "../forms/user/personal";
 import Education from "../forms/user/education";
 import Skills from "../forms/user/skills";
@@ -38,11 +38,20 @@ import VisaTimeLine from "./visaTimeLine";
 import CustomButton from "./button";
 import ExportExcelButton from "./exportExcelButton";
 import determineBackgroundColor from "./Common function/DetermineBackgroundColour";
+import CommentTaskBox from "./commonTaskBox";
+import ModalSidebar from "./modalSidebar";
+import { BsChat } from "react-icons/bs";
 export default function EmployeeTable(props) {
   let agentId = localStorage.getItem("agent_id");
   let user_type = localStorage.getItem("userType");
   let StatusTab = localStorage.getItem("StatusTab");
   let portal = localStorage.getItem("portal")
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  let canID = searchParams.get("canId") || "";
+  let taskID = searchParams.get("TaskId") || "";
+  let [CandidateId, setCandidateId] = useState(canID || "")
+  let [TaskId, setTaskId] = useState(taskID)
   /*Show modal states */
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
@@ -56,6 +65,7 @@ export default function EmployeeTable(props) {
   let [admintList, setAdmintList] = useState([]);
   let [applicantTypeList, setApplicantTypeList] = useState([]);
   let [showStatusChangeModal, setShowStatusChange] = useState(false);
+  let [showChatModal, setShowChatModal] = useState(false);
   /*data and id states */
   const [employeeData, setemployeeData] = useState([]);
   const [alredyApplied, setAlredyApplied] = useState(false);
@@ -109,7 +119,7 @@ export default function EmployeeTable(props) {
             ? ""
             : status,
         props.job_id ? props.job_id : "",
-        props.filterByEmployeeId,
+        CandidateId ? CandidateId : props.filterByEmployeeId,
         props?.ApplicantType ? props?.ApplicantType : props.interestFilterValue,
         "",
         user_type === "agent" ? agentId : props.agentFilterValue,
@@ -130,6 +140,14 @@ export default function EmployeeTable(props) {
           );
         } else {
           setemployeeData(userData.data);
+          if (TaskId && CandidateId) {
+            setShowChatModal(true)
+            setemployeeId(userData.data[0])
+            const newUrl = window.location.pathname;
+            window.history.replaceState({}, document.title, newUrl);
+            localStorage.setItem("navigation_url", "")
+            setCandidateId("")
+          }
         }
         setTotalData(userData.total_rows);
         setIsLoading(false);
@@ -167,8 +185,16 @@ export default function EmployeeTable(props) {
     if (alredyApplied === true) {
       setAlredyApplied(false);
     }
+    if (canID) {
+      setCandidateId(canID)
+    }
+    if (taskID) {
+      setTaskId(taskID)
+    }
     // eslint-disable-next-line
   }, [
+    canID,
+    taskID,
     props.experienceFilterValue,
     props.skillFilterValue,
     props.educationFilterValue,
@@ -190,9 +216,9 @@ export default function EmployeeTable(props) {
     props.localFilterValue,
     props.filterByEmployeeId,
     props.statustFilterValue,
-    props?.ApplicantType
-  ]);
+    props?.ApplicantType,
 
+  ]);
   /* Function to show the single data to update Employee*/
   // const employeeDetails = (e) => {
   // props.employeeDetails(e);
@@ -347,7 +373,6 @@ export default function EmployeeTable(props) {
     localStorage.removeItem("PageNo");
     props.setpageNo(1);
   };
-
   return (
     <>
       {showAddEmployeeModal ? (
@@ -417,6 +442,40 @@ export default function EmployeeTable(props) {
           setApiCall={setApiCall}
         />
       ) : null}
+      <ModalSidebar
+        show={showChatModal}
+        onClose={() => {
+          setShowChatModal(false)
+          setemployeeId()
+          setTaskId("");
+          setCandidateId("");
+          canID = "";
+          taskID = "";
+        }}
+        children={
+          <CommentTaskBox
+            userId={employeeId?.employee_id}
+            taskType={"applicant_type_candidate_chat"}
+            taskUserType={"employee"}
+            setOpenReplyBox={setShowChatModal}
+            openReplyBox={showChatModal}
+            taskName={"Chat for Candidate"}
+            TaskId={TaskId}
+          />
+        }
+      >
+        {showChatModal ? (
+          <CommentTaskBox
+            userId={employeeId?.employee_id}
+            taskType={"applicant_type_candidate_chat"}
+            taskUserType={"employee"}
+            setOpenReplyBox={setShowChatModal}
+            openReplyBox={showChatModal}
+            taskName={"Chat for Candidate"}
+            TaskId={TaskId}
+          />
+        ) : null}
+      </ModalSidebar>
       {/* {showApplicantTypeForm ?
         <AddApplicantType
           show={showApplicantTypeForm}
@@ -631,8 +690,8 @@ export default function EmployeeTable(props) {
                   </div>
                 </>
               ) : null}
-            <div className="form_group text-right">
-              <ExportExcelButton tableName={"employee"} type={""} portal={portal} applicantType={props?.ApplicantType ? props?.ApplicantType : props.interestFilterValu} status={status === "00" || !status ? "" : status} local={props.localFilterValue ? props.localFilterValue : ""} tableData={[]} />
+            <div className={props.ApplicantType ? "d-none" : "form_group text-right"}>
+              <ExportExcelButton tableName={"employee"} type={""} portal={portal} applicantType={props?.ApplicantType ? props?.ApplicantType : props.interestFilterValue} status={status === "00" || !status ? "" : status} local={props.localFilterValue ? props.localFilterValue : ""} tableData={[]} />
             </div>
           </div>
         )}
@@ -1527,6 +1586,20 @@ export default function EmployeeTable(props) {
                                     >
                                       <span className="text-gray px-2">
                                         <GoTasklist />
+                                      </span>
+                                      {/* <i className="fas fa-stream text-gray"></i> */}
+                                    </button>
+                                    <button
+                                      className="btn btn-outline-info action_btn"
+                                      onClick={() => {
+                                        setShowChatModal(true)
+                                        setemployeeId(empdata)
+                                      }
+                                      }
+                                      title="Chat"
+                                    >
+                                      <span className="text-gray px-2">
+                                        <BsChat />
                                       </span>
                                       {/* <i className="fas fa-stream text-gray"></i> */}
                                     </button>

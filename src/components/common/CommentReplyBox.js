@@ -23,7 +23,7 @@ export default function CommentReplyBox({
   AdminType,
   dropdownVisible,
   taskType,
-  replyCommentClick
+  replyCommentClick,
 }) {
   // console.log("first",replyCommentClick)
   return (
@@ -155,7 +155,7 @@ export default function CommentReplyBox({
               type="text"
               value={replyCommentClick === commentItem.id ? replyComment : ""}
               onChange={(e) => handleInputChange(e, "reply")}
-              placeholder={`${taskType || "Comments"} or add others with @`}
+              placeholder={`Add reply or add others with @`}
               className="comment-input border-0 bg-light"
               style={{ outline: 0, fontSize: 14, height: "auto" }}
               onSubmit={() => {

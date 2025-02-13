@@ -89,7 +89,7 @@ export default function ManageTask() {
       setReplyId(NotifiReplyId)
     }
   }, [apiCall, NotifiTaskId, NotifiReplyId]);
-  console.log("Main page", NotifiTaskId, NotifiReplyId)
+  // console.log("Main page", NotifiTaskId, NotifiReplyId)
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">

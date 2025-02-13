@@ -1,6 +1,6 @@
 import React from 'react';
 import { ExportExcelApi } from '../../api/api';
-import { RiFileDownloadFill } from 'react-icons/ri';
+import { TfiExport } from 'react-icons/tfi';
 import { toast } from 'react-toastify';
 
 const ExportExcelButton = ({ tableName, portal, applicantType, status, local, type, tableData }) => {
@@ -22,7 +22,7 @@ const ExportExcelButton = ({ tableName, portal, applicantType, status, local, ty
         if (tableName === "task") return "Task";
         if (tableName === "interview") return "Interview";
         if (tableName === "agent") return "Partner";
-        
+
     };
     /*Function to convert the array to excel */
     let ExcelConvertFunction = (data) => {
@@ -60,7 +60,6 @@ const ExportExcelButton = ({ tableName, portal, applicantType, status, local, ty
             console.log(err);
         }
     };
-
     return (
         <button onClick={(e) => {
             if (tableName === "job" || tableName === "visa" || tableName === "task" || tableName === "interview") {
@@ -73,8 +72,8 @@ const ExportExcelButton = ({ tableName, portal, applicantType, status, local, ty
             } else { handleDownload(e) }
         }}
             title={`Export ${getDownloadTitle()} Excel`}
-            className="btn action_btn text-gray font-weight-bold font-size-8">
-            <RiFileDownloadFill />
+            className={`btn ${applicantType ? "" :"action_btn"}  `}>
+            <TfiExport className={`${applicantType?"mx-3 font-size-3":"font-size-4"}  text-gray`} />{applicantType ? "  Export Excel" : ""}
         </button>
     );
 };

@@ -7,11 +7,22 @@ import { getApplicanTypeApi } from '../../api/api';
 import { Link, useLocation } from 'react-router-dom';
 import ApplicantTypeDocuments from './ApplicantTypeDocuments';
 import { BsThreeDots } from 'react-icons/bs';
+import { GrLineChart } from "react-icons/gr";
+import { HiOutlineBell } from "react-icons/hi2";
+import { BsChat } from "react-icons/bs";
+import ModalSidebar from "./modalSidebar";
+import CommentTaskBox from "./commonTaskBox";
+import ExportExcelButton from './exportExcelButton';
 
 export default function CommonApplicatTypePage() {
     /*Filter and search state */
     let user_type = localStorage.getItem("userType")
     let location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    let taskId = searchParams.get("taskId")
+    let docId = searchParams.get("docId")
+    let docParentId = searchParams.get("docParentId");
+    let docHighAnnoId = searchParams.get("annotationId");
     const [experienceFilterValue, setExperienceFilterValue] = useState("");
     const [skillFilterValue, setSkillFilterValue] = useState("");
     const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
@@ -23,10 +34,12 @@ export default function CommonApplicatTypePage() {
     const [search, setSearch] = useState("");
     const [searcherror, setSearchError] = useState("");
     let [apiCall, setApiCall] = useState(false);
+    let [showGrpChatBox, setShowGrpChatBox] = useState(false);
+    let [isOpen, setIsOpen] = useState(false);
     const [applicantTypeId, setApplicanttypeId] = useState(location?.state?.applicantType || "");
     const [applicantTypeFolderId, setApplicanttypeFolderId] = useState(location?.state?.folderId || "");
     const [applicantTypename, setApplicanttypeName] = useState("");
-    const [selectedTab, setSelectedTab] = useState("candidate");
+    const [selectedTab, setSelectedTab] = useState(docId ? "documents" : "candidate");
     let localApplicantTypeId = localStorage.getItem("applicantType")
     let localApplicantTypeFolderId = localStorage.getItem("applicantTypeFolderId")
     useEffect(() => {
@@ -45,8 +58,7 @@ export default function CommonApplicatTypePage() {
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [location?.state?.applicantType, location?.state?.folderId]);
-    console.log(applicantTypeId)
+    }, [location?.state?.applicantType, location?.state?.folderId, docId,localApplicantTypeId,localApplicantTypeFolderId]);
     useEffect(() => {
         if (!applicantTypeId) return;
 
@@ -79,6 +91,7 @@ export default function CommonApplicatTypePage() {
             setSearchError("");
         }
     };
+    console.log(localApplicantTypeId,localApplicantTypeFolderId)
     return (
         <>
             <div className="site-wrapper overflow-hidden bg-default-2">
@@ -123,17 +136,49 @@ export default function CommonApplicatTypePage() {
                                     Documents
                                 </button>
                             </div>
-                            <div className=''>
+                            <div
+                                className="position-relative d-inline-block header-btn-devider ml-auto ml-lg-5 pl-2 d-xs-flex align-items-center"
+                                onMouseEnter={() => setIsOpen(true)}
+                                onMouseLeave={() => setIsOpen(false)}
+                                onClick={() => setIsOpen(true)}
+                            >
                                 <Link
-                                    type="button"
-                                    className={``}
-                                    // onClick={() => {
-                                    //     setSelectedTab("candidate");
-                                    // }}
-                                    title="options"
+                                    className="d-flex align-items-center justify-content-center"
                                 >
-                                    <BsThreeDots size={15}/>
+                                    <BsThreeDots size={15} />
                                 </Link>
+
+                                {isOpen && (
+                                    <div className="dropdown-menu show position-absolute bg-white shadow rounded border-0 "
+                                        style={{ left: "auto", right: "0" }} // Align dropdown to the left
+                                    >
+                                        {user_type !== "agent" && (
+                                            <Link to="#" className="dropdown-item align-items-center d-none">
+                                                <HiOutlineBell className="mx-3" /> Notification
+                                            </Link>
+                                        )}
+                                        {user_type !== "agent" && (
+                                            <Link to="#" className="dropdown-item d-none align-items-center ">
+                                                <GrLineChart className="mx-3" /> Activity Log
+                                            </Link>
+                                        )}
+                                        {user_type !== "agent" && (
+                                            <button
+                                                onClick={() => setShowGrpChatBox(true)}
+                                                className="dropdown-item d-flex align-items-center border-0 bg-transparent m-3"
+                                            >
+                                                <BsChat className="mx-3" /> Group Chat
+                                            </button>
+                                        )}
+
+                                        {user_type !== "agent" && (
+                                            <div
+                                                className="dropdown-item d-flex align-items-center border-0 bg-transparent"
+                                            >
+                                                <ExportExcelButton tableName={"employee"} type={""} portal={""} applicantType={applicantTypeId} status={"-1"} local={""} tableData={[]} />                                           </div>
+                                        )}
+                                    </div>
+                                )}
                             </div>
                         </div>
                         {selectedTab === "candidate" ? <div>
@@ -194,17 +239,44 @@ export default function CommonApplicatTypePage() {
                             <ApplicantTypeDocuments
                                 emp_user_type={"applicant_type"}
                                 user_id={applicantTypeId}
-                                folderId={applicantTypeFolderId}
-                                notification={""}
-                                docId={""}
+                                folderId={docId ? docParentId : applicantTypeFolderId}
+                                notification={docId ? "ddyes" : "no"}
+                                docId={docId || ""}
                                 docTypePage={""}
                                 user_name={""}
                                 partnerId={""}
-                                AnnoteId={""}
-                                docTaskId={""} /></div>}
+                                AnnoteId={docId ? docHighAnnoId : ""}
+                                docTaskId={taskId} /></div>}
                     </div>
                 </div>
             </div>
+            <ModalSidebar
+                show={showGrpChatBox}
+                onClose={() => {
+                    setShowGrpChatBox(false)
+                }}
+                children={
+                    <CommentTaskBox
+                        userId={applicantTypeId}
+                        taskType={"applicant_type_group_chat"}
+                        taskUserType={"applicant_type"}
+                        setOpenReplyBox={setShowGrpChatBox}
+                        openReplyBox={showGrpChatBox}
+                        taskName={"Group Chat"}
+                    />
+                }
+            >
+                {showGrpChatBox ? (
+                    <CommentTaskBox
+                        userId={applicantTypeId}
+                        taskType={"applicant_type_group_chat"}
+                        taskUserType={"applicant_type"}
+                        setOpenReplyBox={setShowGrpChatBox}
+                        openReplyBox={showGrpChatBox}
+                        taskName={"Group Chat"}
+                    />
+                ) : null}
+            </ModalSidebar>
         </>
     );
 }

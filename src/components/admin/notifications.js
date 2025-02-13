@@ -259,7 +259,9 @@ function Notifications({
                                   : data.subject === "mention_document"
                                     ? data.document_user_type === "employer"
                                       ? `/client_detail?docId=${data.mention_id}&docParentId=${parseJsonSafely(data?.notif_json).doc_parent_id || ""}&annotationId=${parseJsonSafely(data?.notif_json).annotation_id || ""}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}`
-                                      : `/${data.employee_id}?docId=${data.mention_id}&docParentId=${parseJsonSafely(data?.notif_json).doc_parent_id || ""}&annotationId=${parseJsonSafely(data?.notif_json).annotation_id || ""}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}`
+                                      : data.document_user_type === "applicant_type"
+                                        ? `/slots_pages?docId=${data.mention_id}&docParentId=${parseJsonSafely(data?.notif_json).doc_parent_id || ""}&annotationId=${parseJsonSafely(data?.notif_json).annotation_id || ""}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}`
+                                        : `/${data.employee_id}?docId=${data.mention_id}&docParentId=${parseJsonSafely(data?.notif_json).doc_parent_id || ""}&annotationId=${parseJsonSafely(data?.notif_json).annotation_id || ""}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}`
                                     : data.subject === "mention_partner"
                                       ? `/${data.employee_id}?partner=${data.from_id}`
                                       : data.subject === "mention_partnerChat"
@@ -280,7 +282,7 @@ function Notifications({
                                                 : `/${data.employee_id}?agreement=true`
                                               : data.subject === "mention_task"
                                                 ? `/managetasks?taskId=${parseJsonSafely(data?.notif_json).task_id || ""}&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}`
-                                                : ""
+                                                : data.subject === "mention_applicant_type_candidate_chat" ? `/slots_pages?TaskId=${parseJsonSafely(data?.notif_json).task_id || ""}&canId=${data.employee_id}` : ""
                       }
                       onClick={() => {
                         try {
@@ -293,8 +295,16 @@ function Notifications({
                             localStorage.setItem("agent_id", data.employee_id);
                           } else if (data.subject === "assigned_admin_to_partner" || (data.document_user_type === "agent" && data.subject === "mention_notes")) {
                             localStorage.setItem("agent_id", data.document_user_type === "agent" ? data.employee_id : data.action_id);
-                          } else if ((data.subject === "mention_document" || data.subject === "mention_notes" || data.subject === "signed_agreement") && data.document_user_type === "employer") {
-                            localStorage.setItem("company_id", data.employee_id);
+                          } else if ((data.subject === "mention_document" || data.subject === "mention_notes" || data.subject === "signed_agreement")) {
+                            if (data.document_user_type === "applicant_type") {
+                              localStorage.setItem("applicantType", data.interested_in);
+                              localStorage.setItem("applicantTypeFolderId", parseJsonSafely(data?.notif_json).doc_parent_id);
+
+                            } else if (data.document_user_type === "employer") {
+                              localStorage.setItem("company_id", data.employee_id);
+                            }
+                          } else if (data.subject === "mention_applicant_type_candidate_chat") {
+                            localStorage.setItem("applicantType", data.interested_in);
                           }
                         } catch (err) {
                           console.error("Error handling click event:", err);

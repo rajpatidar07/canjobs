@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { toast } from 'react-toastify';
-import { AddSharePointDOcument, AddSharePointFolders, DeleteFolderOrDocument, GetAgent, getallAdminData, GetCommentsAndAssign, getFolderBreadcrumb, getSharePointParticularFolders } from '../../api/api';
+import { AddSharePointDOcument, AddSharePointFolders, DeleteFolderOrDocument, getallAdminData, GetCommentsAndAssign, getFolderBreadcrumb, getSharePointParticularFolders } from '../../api/api';
 import convertUrlToPDF from './Common function/convertUrlToPdf';
 import convertWordToPDF from './Common function/ConvertWordToPdf';
 import { Dropdown, Form } from 'react-bootstrap';
@@ -192,15 +192,15 @@ export default function ApplicantTypeDocuments(props) {
         adminList: userData.data.length ? userData.data : [],
       }));
 
-      if (window.location.pathname === `/${props?.user_id}`) {
-        const partnerData = await GetAgent();
-        const newPartnerList = partnerData.data.data.filter(
-          (item) => item.id === props?.partnerId
-        );
-        setState((prev) => ({
-          ...prev, partnerList: newPartnerList
-        }));
-      }
+      // if (window.location.pathname === `/${props?.user_id}`) {
+      //   const partnerData = await GetAgent();
+      //   const newPartnerList = partnerData.data.data.filter(
+      //     (item) => item.id === props?.partnerId
+      //   );
+      //   setState((prev) => ({
+      //     ...prev, partnerList: newPartnerList
+      //   }));
+      // }
     } catch (err) {
       console.error(err);
     }
@@ -360,7 +360,7 @@ export default function ApplicantTypeDocuments(props) {
         );
 
         if (props?.notification === "yes") {
-          const currentDoc = res.data.data.find((item) => item.id === state?.fileID);
+          const currentDoc = res.data.data.find((item) => item.id === state?.fileID ? state?.fileID : props?.docId);
           if (currentDoc) {
             setState({
               ...state,
@@ -370,6 +370,7 @@ export default function ApplicantTypeDocuments(props) {
             });
             handleDocumentConversion(currentDoc);
             getCommentsList(currentDoc);
+            fetchAdminData();
           } else {
             toast.error("This document is no longer available.", { position: "top-right", autoClose: 1000 });
           }
@@ -539,7 +540,7 @@ export default function ApplicantTypeDocuments(props) {
                   <div className="px-2 col-12">
                     <div className="back_btn_div">
                       <Link className="rounded back-btn px-3" style={{ position: "absolute", top: 5, left: 5, background: "#fff", height: 35, fontSize: 24, zIndex: 99, display: "flex", justifyContent: "center", boxShadow: "0 0 4px #ccc", alignItems: "center", textDecoration: "none" }} to="" onClick={() => {
-                        getCommentsList(state.docSingleDate.id); // Ensure comments reload correctly
+                        // getCommentsList(state.docSingleDate.id); 
                         setState((prev) => ({
                           ...prev, docSingleDate: "", docPreview: false, folderId: state?.docSingleDate.parentReference.id, convertedDoc: "", showDropDown: "", commentsList: [], taggedAdmin: [],
                         }))
@@ -547,7 +548,7 @@ export default function ApplicantTypeDocuments(props) {
                         <IoMdArrowBack /> <span style={{ fontSize: 18 }}>Back to Folder</span>
                       </Link>
                     </div>
-                    {console.log(state.fileID, "pppppppppppppppppp", state.textttttt)}
+                    {console.log(state?.docSingleDate.parentReference.id, "pppppppppppppppppppppp", state?.docSingleDate)}
                     {(state.docSingleDate.file.mimeType === "application/pdf" ||
                       ((state.docSingleDate.file.mimeType === "image/jpeg" ||
                         state.docSingleDate.file.mimeType === "image/png" ||
@@ -631,7 +632,7 @@ export default function ApplicantTypeDocuments(props) {
                       setConvertedDoc={(noteText) => setState((prevState) => ({ ...prevState, noteText }))}
                     />
 
-                    <button className="btn btn-primary mx-2" style={{ maxHeight: 34 }} onClick={() => {
+                    <button className="btn btn-primary mx-2 d-none" style={{ maxHeight: 34 }} onClick={() => {
                       setState((prev) => ({
                         ...prev, openNoteForm: true
                       }))

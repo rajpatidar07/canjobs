@@ -31,7 +31,6 @@ export default function CommentTaskBox(props) {
     let AdminType = userType === "user" ? "employee" : userType === "company" ? "employer" : localStorage.getItem("admin_type"); //sender type
     let admin_name = userType === "user" || userType === "company" ? localStorage.getItem("name") : localStorage.getItem("admin");
     let admin_email = localStorage.getItem("email");
-    console.log(admin_id, AdminType, userType)
     /*Function to get all user data */
     const GetAllUserData = async () => {
         try {
@@ -105,7 +104,7 @@ export default function CommentTaskBox(props) {
 
         setUserErrorforadminAssign("");
 
-        if (props.userType === "admin") {
+        if (userType === "admin") {
             if (lastChar === "@") {
                 setDropdownVisible(true);
                 setFilteredEmails(adminList);
@@ -360,17 +359,17 @@ export default function CommentTaskBox(props) {
                 ? admin_name
                 : adminList.find((item) => item.admin_id === admin_id)
                     ? adminList.find((item) => item.admin_id === admin_id).name
-                    : props.assigned_by_name || "";
+                    : admin_name || "";
         let senderId = AdminType === "agent"
             ? admin_id : adminList.find((item) => item.admin_id === admin_id)
                 ? adminList.find((item) => item.admin_id === admin_id).admin_id
-                : props.assigned_id || "";
+                : admin_id || "";
         let senderEmail =
             AdminType === "agent"
                 ? admin_email
                 : adminList.find((item) => item.admin_id === admin_id)
                     ? adminList.find((item) => item.admin_id === admin_id).email
-                    : props.assigned_by_email || "";
+                    : admin_email || "";
         // let senderType =
         //     AdminType === "agent"
         //         ? "agent"
@@ -405,7 +404,7 @@ export default function CommentTaskBox(props) {
                 .map((admin) => (admin.u_id ? "agent" : admin.admin_type))
                 .join(",")
             : "";
-        console.log(AdminType, "AdminType", sender, senderId, "data", data, " props.assigned_id", props.assigned_id)
+        console.log(AdminType, "AdminType", sender, senderId, "data", data, " admin_id", admin_id)
         if (replyComment === "" && email === "") {
             toast.error("Comment or email cannot be empty!", {
                 position: toast.POSITION.TOP_RIGHT,
@@ -540,9 +539,9 @@ export default function CommentTaskBox(props) {
         });
 
         // **Remove unmentioned admins from selectedAdmin**
-        const filteredSelectedAdmins = selectedAdmin.filter(admin =>
+        const filteredSelectedAdmins = selectedAdmin ? selectedAdmin?.filter(admin =>
             updatedCommentToApi.includes(`@${admin.name}`)
-        );
+        ) : [];
 
         // Update selectedAdmin state
         setSelectedAdmin(filteredSelectedAdmins);
@@ -637,13 +636,13 @@ export default function CommentTaskBox(props) {
 
         let senderId = adminList.find((item) => item.admin_id === admin_id)
             ? adminList.find((item) => item.admin_id === admin_id).admin_id
-            : props.assigned_id || "";
+            : admin_id || "";
         let senderEmail =
             AdminType === "agent"
                 ? admin_email
                 : adminList.find((item) => item.admin_id === admin_id)
                     ? adminList.find((item) => item.admin_id === admin_id).email
-                    : props.assigned_by_email || "";
+                    : admin_email || "";
         // let senderType =
         //     AdminType === "agent"
         //         ? "agent"
@@ -655,7 +654,7 @@ export default function CommentTaskBox(props) {
                 ? admin_name
                 : adminList.find((item) => item.admin_id === admin_id)
                     ? adminList.find((item) => item.admin_id === admin_id).name
-                    : props.assigned_by_name || "";
+                    : admin_name || "";
         (selectedAdminReply || []).forEach((admin) => {
             if (!newEmailsArray.includes(admin.email)) {
                 // Add new admin's details to the arrays
@@ -763,11 +762,14 @@ export default function CommentTaskBox(props) {
 
     return (
         <div
-            className={`py-2 bg-light comments_and_replies
-         `}
+
+            className={`${props.openReplyBox
+                ? "comments_and_replies"
+                : "comments_and_replies d-none"
+                } `}
             style={{
                 transition: "all .3s",
-                maxHeight: "calc(100vh - 130px)",
+                maxHeight: "calc(100vh - 130px)", // docsection ? "100vh" : "calc(100vh - 130px)"
             }}
         >
             <div
@@ -776,15 +778,15 @@ export default function CommentTaskBox(props) {
                 }}
                 className="pt-0 pb-5"
             >
-                <form className="comment-form p-5 rounded bg-white row" >
-                    <div className="comment-input-container col-12 m-0">
-                        <label className="input_label m-0">Add new {props.taskType}:</label>
+                <form className="comment-form p-5 rounded bg-white " >
+                    <div className="comment-input-container  m-0">
+                        <label className="input_label m-0">Add new {props.taskName}:</label>
 
                         <textarea
                             type="text"
                             value={comments || ""}
                             onChange={handleInputChange}
-                            placeholder={`${props.taskType} or add others with @`}
+                            placeholder={`${props.taskName} or add others with @`}
                             className={`comment-input ${commntData ? "" : "border-0"} bg-light`}
                             rows={2}
                             style={{ outline: 0, border: commntData ? "2px solid blue" : "" }}
@@ -815,7 +817,7 @@ export default function CommentTaskBox(props) {
                             </ul>
                         ) : null}
                     </div>
-                    <div className={props.taskType === "note" ? "mb-0 comment-input-container col-12" : "d-none"}>
+                    <div className={props.taskType === "note" ? "mb-0 comment-input-container " : "d-none"}>
                         <label
                             htmlFor="subject"
                             className="input_label m-0"
@@ -831,7 +833,7 @@ export default function CommentTaskBox(props) {
                             onChange={(e) => setSubject(e.target.value)}
                         />
                     </div>
-                    <div className={props.taskType === "note" ? "mb-0 comment-input-container col-12" : "d-none"}>
+                    <div className={props.taskType === "note" ? "mb-0 comment-input-container " : "d-none"}>
                         <label
                             htmlFor="end_date"
                             className="input_label m-0"
@@ -955,12 +957,12 @@ export default function CommentTaskBox(props) {
                     <div className="row m-0 py-2 flex-column">
                         {commentsList.length === 0 ? (
                             <div className="col text-center">
-                                <h5>No {props.taskType}</h5>
+                                <h5>No {props.taskName}</h5>
                             </div>
                         ) : (
                             (commentsList || []).map((commentItem, index) => (
                                 <div
-                                    className={`card col-12 mb-2 p-0 comment_box_card bg-white ${props.noteId === commentItem.id ? "highlighted-comment" : ""}`}
+                                    className={`card  mb-2 p-0 comment_box_card bg-white ${props.TaskId === commentItem.id ? "highlighted-comment" : ""}`}
                                     style={{
                                         backgroundColor: "#fff",
                                         color: "white",
@@ -992,7 +994,7 @@ export default function CommentTaskBox(props) {
                                         style={{ position: "absolute", right: 5, gap: 5 }}
                                     >
                                         <Link
-                                            className={`text-gray pr-1 ${commentItem.status !== "0" || (props.assigned_id === commentItem.task_creator_user_id) ? "" : "d-none"}`}
+                                            className={`text-gray pr-1 ${commentItem.status !== "0" || (admin_id === commentItem.task_creator_user_id) ? "" : "d-none"}`}
                                             title="Update Comment"
                                             onClick={() => {
                                                 handleUpdateCommentLinkClick(commentItem);
@@ -1023,7 +1025,7 @@ export default function CommentTaskBox(props) {
                                             />
                                         </Link>
                                         <Link
-                                            className={props.assigned_id === commentItem.task_creator_user_id ? "text-danger pr-1" : "d-none"}
+                                            className={admin_id === commentItem.task_creator_user_id ? "text-danger pr-1" : "d-none"}
                                             title="Delete Comment"
                                             onClick={() => {
                                                 OnDeleteComment(commentItem.doc_id, commentItem.id);

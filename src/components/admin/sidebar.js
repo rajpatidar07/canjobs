@@ -10,7 +10,6 @@ import { LuFileKey } from "react-icons/lu";
 import { LiaUsersSolid, LiaAddressCardSolid, LiaCcVisa } from "react-icons/lia";
 import {
   BsBuildings,
-  BsLayoutSidebar,
   BsQrCodeScan,
   BsReverseLayoutTextSidebarReverse,
 } from "react-icons/bs";
@@ -98,9 +97,8 @@ const AdminSidebar = (props) => {
   // }
   return (
     <div
-      className={`dashboard-sidebar-wrapper pt-5 sidebar_parent ${
-        isMenuOpen ? "show" : ""
-      }`}
+      className={`dashboard-sidebar-wrapper pt-5 sidebar_parent ${isMenuOpen ? "show" : ""
+        }`}
       id="sidebar"
     >
       <Link
@@ -181,8 +179,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Dashboard"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -201,8 +199,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Task Dashboard"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -276,8 +274,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Manage Jobs"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -293,13 +291,12 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["Manage Self Jobs"] = el)}
           className={`d-none 
-             ${
-               user_type === "agent"
-                 ? "d-none"
-                 : props.heading === "Manage Self Jobs"
-                 ? "active"
-                 : ""
-             }`}
+             ${user_type === "agent"
+              ? "d-none"
+              : props.heading === "Manage Self Jobs"
+                ? "active"
+                : ""
+            }`}
         >
           <Link
             onClick={() => clearPageNo()}
@@ -317,8 +314,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Visa"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -347,8 +344,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "LMIA status"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -367,8 +364,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Local Candidate"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -705,13 +702,12 @@ const AdminSidebar = (props) => {
           .map((item) => (
             <li
               key={item.id}
-              className={`position-relative ${
-                user_type === "agent"
+              className={`position-relative ${user_type === "agent"
                   ? "d-none"
                   : props.heading === item.title
-                  ? "active"
-                  : ""
-              }`}
+                    ? "active"
+                    : ""
+                }`}
               title={item.title}
               ref={(el) => (liRefs.current[item.title] = el)}
             >
@@ -820,8 +816,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Interview"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -840,8 +836,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Manage Notes"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -880,8 +876,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Assigned Job's"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -902,8 +898,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Manage Admin"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -957,8 +953,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Manage Job Category"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -977,8 +973,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Filter List"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
