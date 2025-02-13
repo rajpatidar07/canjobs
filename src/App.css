@@ -1785,7 +1785,7 @@ li.placeholder span svg {
 }
 
 .dashboard-sidebar-wrapper {
-  width: 125px;
+  width: 175px;
   height: 100vh;
   position: fixed;
   left: 0;
@@ -1799,8 +1799,8 @@ li.placeholder span svg {
 }
 
 .dashboard-sidebar-wrapper.show~.dashboard-main-container {
-  width: calc(100% - 125px);
-  margin-left: 125px;
+  width: calc(100% - 175px);
+  margin-left: 175px;
   transition: all .2s;
 }
 

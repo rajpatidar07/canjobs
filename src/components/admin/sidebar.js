@@ -8,7 +8,12 @@ import {
 } from "react-icons/md";
 import { LuFileKey } from "react-icons/lu";
 import { LiaUsersSolid, LiaAddressCardSolid, LiaCcVisa } from "react-icons/lia";
-import { BsBuildings, BsQrCodeScan } from "react-icons/bs";
+import {
+  BsBuildings,
+  BsLayoutSidebar,
+  BsQrCodeScan,
+  BsReverseLayoutTextSidebarReverse,
+} from "react-icons/bs";
 import { PiApplePodcastsLogoThin } from "react-icons/pi";
 import { AiOutlineUserAdd /*, AiOutlineMail*/ } from "react-icons/ai";
 import { TbFilterPlus } from "react-icons/tb";
@@ -33,7 +38,7 @@ const AdminSidebar = (props) => {
   // const [deleteAlertApplicantTypeData, setDeleteAlertApplicantTypeData] = useState(false);
 
   const [apiCall, setApiCall] = useState(false);
-  let [applicanttypedata, setApplicanttypedata] = useState([])
+  let [applicanttypedata, setApplicanttypedata] = useState([]);
   // let view_as_admin_type = localStorage.getItem("view_as_token_admin_type");
   let admin_type = localStorage.getItem("admin_type");
   let user_type = localStorage.getItem("userType");
@@ -59,17 +64,17 @@ const AdminSidebar = (props) => {
     } catch (err) {
       console.log(err);
     }
-  }
+  };
   useEffect(() => {
-    getAllSlotsData()
+    getAllSlotsData();
     if (props.heading) {
-      const activityLi = liRefs.current[props.heading]
+      const activityLi = liRefs.current[props.heading];
       if (activityLi) {
         activityLi.scrollIntoView({ behavior: "smooth" });
       }
     }
     if (apiCall === true) {
-      setApiCall(false)
+      setApiCall(false);
     }
   }, [props.heading, apiCall]);
   /*To call Api to delete employee */
@@ -93,15 +98,16 @@ const AdminSidebar = (props) => {
   // }
   return (
     <div
-      className={`dashboard-sidebar-wrapper pt-5 sidebar_parent ${isMenuOpen ? "show" : ""
-        }`}
+      className={`dashboard-sidebar-wrapper pt-5 sidebar_parent ${
+        isMenuOpen ? "show" : ""
+      }`}
       id="sidebar"
     >
       <Link
         to={""}
         onClick={() => {
-          sideBar()
-          clearPageNo()
+          sideBar();
+          clearPageNo();
         }}
         className="sidebar-mobile-button"
         data-toggle="collapse"
@@ -147,14 +153,16 @@ const AdminSidebar = (props) => {
                 }
               >
                 <FaRegUser className="sidebar_icon" />
-                Partner Dashboard
+                <span className="text-truncate">Partner Dashboard</span>
               </Link>
             </li>
             <li
               ref={(el) => (liRefs.current["Students"] = el)}
-              className={localStorage.getItem("portal") === "study"
-                ? `${props.heading === "Students" ? "active" : ""}`
-                : "d-none"}
+              className={
+                localStorage.getItem("portal") === "study"
+                  ? `${props.heading === "Students" ? "active" : ""}`
+                  : "d-none"
+              }
             >
               <Link
                 onClick={() => clearPageNo()}
@@ -162,7 +170,7 @@ const AdminSidebar = (props) => {
                 className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
               >
                 <SiStudyverse className="sidebar_icon" />
-                Students
+                <span className="text-truncate">Students</span>
               </Link>
             </li>
           </>
@@ -173,8 +181,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Dashboard"
-                ? "active"
-                : ""
+              ? "active"
+              : ""
           }
         >
           <Link
@@ -183,7 +191,7 @@ const AdminSidebar = (props) => {
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <MdOutlineDashboardCustomize className="sidebar_icon" />
-            Dashboard
+            <span className="text-truncate">Dashboard</span>
             {/* <i className="fab fa-blackberry mr-5"></i>Dashboard */}
           </Link>
         </li>
@@ -193,8 +201,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Task Dashboard"
-                ? "active"
-                : ""
+              ? "active"
+              : ""
           }
         >
           <Link
@@ -204,7 +212,7 @@ const AdminSidebar = (props) => {
           >
             {/* <i className="fas fa-filter mr-5"></i> */}
             <FaTasks className="sidebar_icon" />
-            Task Dashboard
+            <span className="text-truncate">Task Dashboard</span>
           </Link>
         </li>
         <li
@@ -213,7 +221,9 @@ const AdminSidebar = (props) => {
             localStorage.getItem("portal") === "study"
               ? "d-none"
               : `
-          ${props.heading === "New Applicants" ? "active" : ""}`}>
+          ${props.heading === "New Applicants" ? "active" : ""}`
+          }
+        >
           <Link
             onClick={() => clearPageNo()}
             to="/selfemployee"
@@ -221,14 +231,16 @@ const AdminSidebar = (props) => {
           >
             {/* <i className="far fa-user mr-5"></i> */}
             <LiaUsersSolid className="sidebar_icon" />
-            New Applicants
+            <span className="text-truncate">New Applicants</span>
           </Link>
         </li>
         <li
           ref={(el) => (liRefs.current["Manage Applicants"] = el)}
-          className={localStorage.getItem("portal") === "study"
-            ? "d-none"
-            : `${props.heading === "Manage Applicants" ? "active" : ""}`}
+          className={
+            localStorage.getItem("portal") === "study"
+              ? "d-none"
+              : `${props.heading === "Manage Applicants" ? "active" : ""}`
+          }
         >
           <Link
             onClick={() => clearPageNo()}
@@ -236,7 +248,7 @@ const AdminSidebar = (props) => {
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <LiaUsersSolid className="sidebar_icon" />
-            Manage Applicants
+            <span className="text-truncate">Manage Applicants</span>
             {/* <i className="far fa-user mr-5"></i>Manage Applicants */}
           </Link>
         </li>
@@ -255,7 +267,7 @@ const AdminSidebar = (props) => {
           >
             {/* <i className="far fa-building mr-5"></i> */}
             <BsBuildings className="sidebar_icon" />
-            Manage Employers
+            <span className="text-truncate">Manage Employers</span>
           </Link>
         </li>
         <li
@@ -264,8 +276,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Manage Jobs"
-                ? "active"
-                : ""
+              ? "active"
+              : ""
           }
         >
           <Link
@@ -275,18 +287,19 @@ const AdminSidebar = (props) => {
           >
             {/* <i className="far fa-address-card mr-5"></i> */}
             <LiaAddressCardSolid className="sidebar_icon" />
-            Manage Jobs
+            <span className="text-truncate">Manage Jobs</span>
           </Link>
         </li>
         <li
           ref={(el) => (liRefs.current["Manage Self Jobs"] = el)}
           className={`d-none 
-             ${user_type === "agent"
-              ? "d-none"
-              : props.heading === "Manage Self Jobs"
-                ? "active"
-                : ""
-            }`}
+             ${
+               user_type === "agent"
+                 ? "d-none"
+                 : props.heading === "Manage Self Jobs"
+                 ? "active"
+                 : ""
+             }`}
         >
           <Link
             onClick={() => clearPageNo()}
@@ -295,7 +308,7 @@ const AdminSidebar = (props) => {
           >
             {/* <i className="far fa-address-card mr-5"></i> */}
             <LiaAddressCardSolid className="sidebar_icon" />
-            Other Jobs
+            <span className="text-truncate">Other Jobs</span>
           </Link>
         </li>
         <li
@@ -304,8 +317,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Visa"
-                ? "active"
-                : ""
+              ? "active"
+              : ""
           }
         >
           <Link
@@ -315,7 +328,7 @@ const AdminSidebar = (props) => {
           >
             {/* <i className="fab fa-cc-visa mr-5"></i> */}
             <LiaCcVisa className="sidebar_icon" />
-            Visa
+            <span className="text-truncate">Visa</span>
           </Link>
         </li>
         {/* <li className={user_type === "agent"?"d-none":props.heading === "Document Upload & Verification" ? "active" : ""}>
@@ -334,8 +347,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "LMIA status"
-                ? "active"
-                : ""
+              ? "active"
+              : ""
           }
         >
           <Link
@@ -345,7 +358,7 @@ const AdminSidebar = (props) => {
           >
             {/* <i className="fas fa-filter mr-5"></i> */}
             <MdOutlinePhotoFilter className="sidebar_icon" />
-            Manage LMIA
+            <span className="text-truncate">Manage LMIA</span>
           </Link>
         </li>
         <li
@@ -354,8 +367,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Local Candidate"
-                ? "active"
-                : ""
+              ? "active"
+              : ""
           }
         >
           <Link
@@ -365,7 +378,7 @@ const AdminSidebar = (props) => {
           >
             {/* <i className="fas fa-filter mr-5"></i> */}
             <FaPersonShelter className="sidebar_icon" />
-            Local Candidate
+            <span className="text-truncate">Local Candidate</span>
           </Link>
         </li>
         {/* <li
@@ -384,7 +397,7 @@ const AdminSidebar = (props) => {
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <IoLogoPinterest className="sidebar_icon" />
-            Alberta PNP
+            <span className="text-truncate">Alberta PNP</span>
           </Link>
         </li>
         <li
@@ -403,7 +416,7 @@ const AdminSidebar = (props) => {
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <FaGraduationCap className="sidebar_icon" />
-            PGWP
+            <span className="text-truncate">PGWP</span>
           </Link>
         </li>
         <li
@@ -422,7 +435,7 @@ const AdminSidebar = (props) => {
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <TbMapWest className="sidebar_icon" />
-            WES
+            <span className="text-truncate">WES</span>
           </Link>
         </li>
         <li
@@ -441,7 +454,7 @@ const AdminSidebar = (props) => {
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <FaAcquisitionsIncorporated className="sidebar_icon" />
-            ATIP
+            <span className="text-truncate">ATIP</span>
           </Link>
         </li>
         <li
@@ -460,7 +473,7 @@ const AdminSidebar = (props) => {
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <GrVisa className="sidebar_icon" />
-            Visitors Visa
+            <span className="text-truncate">Visitors Visa</span>
           </Link>
         </li>
         <li
@@ -479,7 +492,7 @@ const AdminSidebar = (props) => {
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <SiStudyverse className="sidebar_icon" />
-            Study Permit
+            <span className="text-truncate">Study Permit</span>
           </Link>
         </li>
         <li
@@ -498,7 +511,7 @@ const AdminSidebar = (props) => {
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <GiTemporaryShield className="sidebar_icon" />
-            Temporary Resident
+            <span className="text-truncate">Temporary Resident</span>
           </Link>
         </li>
         <li
@@ -517,7 +530,7 @@ const AdminSidebar = (props) => {
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <TbUserDollar className="sidebar_icon" />
-            Economic Immigration
+            <span className="text-truncate">Economic Immigration</span>
           </Link>
         </li>
         <li
@@ -536,7 +549,7 @@ const AdminSidebar = (props) => {
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <MdFamilyRestroom className="sidebar_icon" />
-            Family Sponsorship
+            <span className="text-truncate">Family Sponsorship</span>
           </Link>
         </li>
 
@@ -556,7 +569,7 @@ const AdminSidebar = (props) => {
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <SiExpress className="sidebar_icon" />
-            Express Entry
+            <span className="text-truncate">Express Entry</span>
           </Link>
         </li>
         <li
@@ -576,7 +589,7 @@ const AdminSidebar = (props) => {
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <TiBusinessCard className="sidebar_icon" />
-            Business Visa
+            <span className="text-truncate">Business Visa</span>
           </Link>
         </li>
         <li
@@ -596,7 +609,7 @@ const AdminSidebar = (props) => {
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <TiBusinessCard className="sidebar_icon" />
-            Federal PR
+            <span className="text-truncate">Federal PR</span>
           </Link>
         </li>
         <li
@@ -692,16 +705,26 @@ const AdminSidebar = (props) => {
           .map((item) => (
             <li
               key={item.id}
-              className={`position-relative ${user_type === "agent" ? "d-none" : props.heading === item.title ? "active" : ""}`}
-              title={props.heading}
+              className={`position-relative ${
+                user_type === "agent"
+                  ? "d-none"
+                  : props.heading === item.title
+                  ? "active"
+                  : ""
+              }`}
+              title={item.title}
               ref={(el) => (liRefs.current[item.title] = el)}
             >
-              <Link onClick={() => {
-                clearPageNo()
-              }}
-                to={`/slots_pages`} state={{ "applicantType": item.id, "folderId": item.doc_folder_id }}
-                className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center text-Capitalize">
-                < LiaUsersSolid className="sidebar_icon" />{item.title}
+              <Link
+                onClick={() => {
+                  clearPageNo();
+                }}
+                to={`/slots_pages`}
+                state={{ applicantType: item.id, folderId: item.doc_folder_id }}
+                className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center text-Capitalize"
+              >
+                <BsReverseLayoutTextSidebarReverse className="sidebar_icon" />
+                <span className="text-truncate">{item.title}</span>
               </Link>
               {/* {showDropDownApplicantTypeData === item.id && (
                 <ul className="list-group ">
@@ -745,14 +768,14 @@ const AdminSidebar = (props) => {
         >
           <Link
             onClick={() => {
-              clearPageNo()
+              clearPageNo();
             }}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
             title={"Manage Applicant Type"}
             to="/manage_applicant_type"
           >
             <FaAddressCard className="sidebar_icon" />
-            Manage Applicant Type
+            <span className="text-truncate">Manage Applicant Type</span>
           </Link>
           {/* {showApplicantTypeForm ?
             <AddApplicantType
@@ -797,8 +820,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Interview"
-                ? "active"
-                : ""
+              ? "active"
+              : ""
           }
         >
           <Link
@@ -808,7 +831,7 @@ const AdminSidebar = (props) => {
           >
             {/* <i className="fas fa-podcast mr-5"></i> */}
             <PiApplePodcastsLogoThin className="sidebar_icon" />
-            Manage Interview
+            <span className="text-truncate">Manage Interview</span>
           </Link>
         </li>
         <li
@@ -817,8 +840,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Manage Notes"
-                ? "active"
-                : ""
+              ? "active"
+              : ""
           }
         >
           <Link
@@ -828,7 +851,7 @@ const AdminSidebar = (props) => {
           >
             {/* <i className="fas fa-podcast mr-5"></i> */}
             <FaNotesMedical className="sidebar_icon" />
-            Manage Notes
+            <span className="text-truncate">Manage Notes</span>
           </Link>
         </li>
         {/* {user_type === "admin" ? (
@@ -847,7 +870,7 @@ const AdminSidebar = (props) => {
                 }
               >
                 <FaRegUser className="sidebar_icon" />
-                Partner Dashboard
+                <span className="text-truncate">Partner Dashboard</span>
               </Link>
             </li>
           ) : null} */}
@@ -857,8 +880,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Assigned Job's"
-                ? "active"
-                : ""
+              ? "active"
+              : ""
           }
         >
           <Link
@@ -869,7 +892,7 @@ const AdminSidebar = (props) => {
             }
           >
             <MdAssignmentAdd className="sidebar_icon" />
-            Manager's Dashboard
+            <span className="text-truncate">Manager's Dashboard</span>
           </Link>
         </li>
 
@@ -879,8 +902,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Manage Admin"
-                ? "active"
-                : ""
+              ? "active"
+              : ""
           }
         >
           <Link
@@ -892,7 +915,7 @@ const AdminSidebar = (props) => {
           >
             {/* <i className="fas fa-user mr-5"></i> */}
             <AiOutlineUserAdd className="sidebar_icon" />
-            Manage Admin
+            <span className="text-truncate">Manage Admin</span>
           </Link>
         </li>
         <li
@@ -912,7 +935,7 @@ const AdminSidebar = (props) => {
             }
           >
             <MdRealEstateAgent className="sidebar_icon" />
-            Manage Partner
+            <span className="text-truncate">Manage Partner</span>
           </Link>
         </li>
         {/* <li className={user_type === "agent"?"d-none":props.heading === "Email" ? "active" : ""}>
@@ -924,7 +947,7 @@ const AdminSidebar = (props) => {
               }
             >
               <AiOutlineMail className="sidebar_icon" />
-              Manage Email
+              <span className="text-truncate">Manage Email</span>
             </Link>
           </li> */}
 
@@ -934,8 +957,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Manage Job Category"
-                ? "active"
-                : ""
+              ? "active"
+              : ""
           }
         >
           <Link
@@ -945,7 +968,7 @@ const AdminSidebar = (props) => {
           >
             {/* <i className="fas fa-qrcode mr-5"></i> */}
             <BsQrCodeScan className="sidebar_icon" />
-            Job Category
+            <span className="text-truncate">Job Category</span>
           </Link>
         </li>
         <li
@@ -954,8 +977,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Filter List"
-                ? "active"
-                : ""
+              ? "active"
+              : ""
           }
         >
           <Link
@@ -965,7 +988,7 @@ const AdminSidebar = (props) => {
           >
             {/* <i className="fas fa-filter mr-5"></i> */}
             <TbFilterPlus className="sidebar_icon" />
-            Filter List
+            <span className="text-truncate">Filter List</span>
           </Link>
         </li>
         <li
@@ -984,7 +1007,7 @@ const AdminSidebar = (props) => {
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
             <LuFileKey className="sidebar_icon" />
-            Credentials
+            <span className="text-truncate">Credentials</span>
           </Link>
         </li>
       </ul>
