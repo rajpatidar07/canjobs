@@ -14,11 +14,13 @@ import FolderList from './Document folder/FolderList';
 import EditDocNameForm from './Document folder/EditDocNameFOrm';
 import SAlert from './sweetAlert';
 export default function ApplicantTypeDocuments(props) {
-  const [state, setState] = useState({
+  
+  const [docFileBase, setDocFileBase] = useState([])
+    const [state, setState] = useState({
     docTypeName: "",
     openNoteForm: false,
     newType: "",
-    docFileBase: "",
+    // docFileBase: [],
     folderID: props?.folderId,
     fileID: "",
     apiCall: false,
@@ -165,9 +167,7 @@ export default function ApplicantTypeDocuments(props) {
     }
 
     // Store the object of files
-    setState((prev) => ({
-      ...prev, docFileBase: filebseList
-    }))
+    setDocFileBase(filebseList)
     setState((prev) => ({
       ...prev, saveBtn: true
     }))
@@ -292,7 +292,8 @@ export default function ApplicantTypeDocuments(props) {
   };
 
   const handleDocumentConversion = async (data) => {
-    const mimeType = data.file.mimeType;
+    const mimeType = data?.file?.mimeType;
+    console.log(data.file)
     const downloadUrl = data["@microsoft.graph.downloadUrl"];
     if (["image/jpeg", "image/png", "image/jpg"].includes(mimeType)) {
       let res = await convertUrlToPDF(downloadUrl);
@@ -318,7 +319,8 @@ export default function ApplicantTypeDocuments(props) {
         ...prev, convertedDoc: downloadUrl
       }));
     } else {
-      window.open(data.webUrl);
+      console.log(mimeType)
+      // window.open(data.webUrl);
       setState((prev) => ({
         ...prev, convertedDoc: "", docPreview: false
       }));
@@ -358,7 +360,7 @@ export default function ApplicantTypeDocuments(props) {
           docNoteData: res.data.notes ? res.data.notes : {},
         })
         );
-
+        console.log(props?.notification)
         if (props?.notification === "yes") {
           const currentDoc = res.data.data.find((item) => item.id === state?.fileID ? state?.fileID : props?.docId);
           if (currentDoc) {
@@ -368,9 +370,14 @@ export default function ApplicantTypeDocuments(props) {
               docSingleDate: currentDoc,
               fileID: currentDoc.id,
             });
+            console.log(currentDoc)
             handleDocumentConversion(currentDoc);
             getCommentsList(currentDoc);
             fetchAdminData();
+            const newUrl = window.location.pathname;
+            window.history.replaceState({}, document.title, newUrl);
+            localStorage.setItem("navigation_url", "")
+
           } else {
             toast.error("This document is no longer available.", { position: "top-right", autoClose: 1000 });
           }
@@ -438,14 +445,14 @@ export default function ApplicantTypeDocuments(props) {
   };
   useEffect(() => {
     fetchAllShareType();
-
+    // console.log(state.folderID, "oooooo")
     if (state.apiCall) {
       setState((prev) => ({
         ...prev, apiCall: false
       }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.apiCall, state.folderID]);
+  }, [state.apiCall, state.folderID,]);
 
   useEffect(() => {
     if (props.folderId !== state.folderID) {
@@ -468,7 +475,7 @@ export default function ApplicantTypeDocuments(props) {
         props?.emp_user_type || "",
         state?.folderID,
         state?.docTypeName || "",
-        state?.docFileBase || ""
+        docFileBase || []
       );
       if (res.data.message === "Document Upload") {
         toast.success(`Document Uploaded successfully`, {
@@ -480,8 +487,8 @@ export default function ApplicantTypeDocuments(props) {
           , saveBtn: false
           , showDropDown: false
           , taggedAdmin: false
-          , docFileBase: false
         }))
+        setDocFileBase([])
       }
       // console.log(res.data)
       if (res.data.message === "Failed" && res.data.data === "No Token Found") {
@@ -494,8 +501,8 @@ export default function ApplicantTypeDocuments(props) {
           , saveBtn: false
           , showDropDown: false
           , taggedAdmin: false
-          , docFileBase: false
         }))
+        setDocFileBase([])
       }
     } catch (err) {
       console.log(err);
@@ -534,7 +541,7 @@ export default function ApplicantTypeDocuments(props) {
       <>
         {state.folderID ? (
           <div className="document_section">
-            {state.docPreview && state?.docSingleDate.file.mimeType !== "text/plain" ? (
+            {state.docPreview && state?.docSingleDate?.file?.mimeType !== "text/plain" ? (
               <div className="App-viewer document_preview_full_screen" style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, zIndex: 999 }}>
                 <div className="row m-0 bg-white document_preview_box overflow-hidden" style={{ height: "100vh" }}>
                   <div className="px-2 col-12">
@@ -542,21 +549,22 @@ export default function ApplicantTypeDocuments(props) {
                       <Link className="rounded back-btn px-3" style={{ position: "absolute", top: 5, left: 5, background: "#fff", height: 35, fontSize: 24, zIndex: 99, display: "flex", justifyContent: "center", boxShadow: "0 0 4px #ccc", alignItems: "center", textDecoration: "none" }} to="" onClick={() => {
                         // getCommentsList(state.docSingleDate.id); 
                         setState((prev) => ({
-                          ...prev, docSingleDate: "", docPreview: false, folderId: state?.docSingleDate.parentReference.id, convertedDoc: "", showDropDown: "", commentsList: [], taggedAdmin: [],
+                          ...prev, docSingleDate: "", docPreview: false, folderID: state?.docSingleDate.parentReference.id, convertedDoc: "", showDropDown: "", commentsList: [], taggedAdmin: [], apiCall: true
                         }))
+                        // fetchAllShareType();
                       }}>
                         <IoMdArrowBack /> <span style={{ fontSize: 18 }}>Back to Folder</span>
                       </Link>
                     </div>
-                    {console.log(state?.docSingleDate.parentReference.id, "pppppppppppppppppppppp", state?.docSingleDate)}
-                    {(state.docSingleDate.file.mimeType === "application/pdf" ||
-                      ((state.docSingleDate.file.mimeType === "image/jpeg" ||
-                        state.docSingleDate.file.mimeType === "image/png" ||
-                        state.docSingleDate.file.mimeType === "image/jpg") &&
+                    {/* {console.log(state?.docSingleDate.parentReference.id, "pppppppppppppppppppppp", state.folderID)} */}
+                    {(state?.docSingleDate?.file?.mimeType === "application/pdf" ||
+                      ((state?.docSingleDate?.file?.mimeType === "image/jpeg" ||
+                        state?.docSingleDate?.file?.mimeType === "image/png" ||
+                        state?.docSingleDate?.file?.mimeType === "image/jpg") &&
                         state.imgConRes === "imageConverted") ||
-                      state.docSingleDate.file.mimeType ===
+                      state?.docSingleDate?.file?.mimeType ===
                       "application/vnd.openxmlformats-officedocument.wordprocessingml.document") &&
-                      (state.convertedDoc && state.docSingleDate.file.mimeType !==
+                      (state.convertedDoc && state?.docSingleDate?.file?.mimeType !==
                         "text/plain")
                       ? (
                         <AdobePDFViewer
@@ -584,7 +592,7 @@ export default function ApplicantTypeDocuments(props) {
                           docTaskId={props?.docTaskId}
                         />
 
-                      ) : (state.docSingleDate.file.mimeType !== "text/plain" && <Loader />)}
+                      ) : (state?.docSingleDate?.file?.mimeType !== "text/plain" && <Loader />)}
                   </div>
                 </div>
               </div>
@@ -606,7 +614,7 @@ export default function ApplicantTypeDocuments(props) {
                         <Form.Control type="text" value={state.newType} placeholder="Enter new type" height={34} className="px-2" onChange={handleNewTypeChange} />
                         <button className="btn btn-sm btn-primary" type="button" style={{ maxHeight: 34 }} onClick={() => handleDocTypeChange(state.newType)}>Save</button>
                         <button className="btn btn-sm btn-secondary" type="button" style={{ maxHeight: 34 }} onClick={() => setState((prev) => ({
-                          ...prev, newType: ""
+                          ...prev, newType: "",docTypeName:""
                         }))}>Cancel</button>
                       </>
                     ) : (
@@ -654,7 +662,7 @@ export default function ApplicantTypeDocuments(props) {
                       saveBtn={state?.saveBtn}
                       loadingBtn={state?.loadingBtn}
                       docPreview={state?.docPreview}
-                      docFileBase={state?.docFileBase}
+                      docFileBase={docFileBase}
                       pageNo={state?.pageNo}
                       totalData={state?.totalData}
                       recordsPerPage={state?.recordsPerPage}
@@ -682,7 +690,7 @@ export default function ApplicantTypeDocuments(props) {
                       setEditNameForm={(editNameForm) => setState((prevState) => ({ ...prevState, editNameForm }))}
                       setDocPreview={(docPreview) => setState((prevState) => ({ ...prevState, docPreview }))}
                       setSaveBtn={(saveBtn) => setState((prevState) => ({ ...prevState, saveBtn }))}
-                      setDocFileBase={(docFileBase) => setState((prevState) => ({ ...prevState, docFileBase }))}
+                      setDocFileBase={setDocFileBase}
                       setCommentsList={(commentsList) => setState((prevState) => ({ ...prevState, commentsList }))}
                       setPageNo={(pageNo) => setState((prevState) => ({ ...prevState, pageNo }))}
                       setOpenNoteForm={(openNoteForm) => setState((prevState) => ({ ...prevState, openNoteForm }))}

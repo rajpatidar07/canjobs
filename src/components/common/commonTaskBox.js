@@ -9,7 +9,9 @@ import { CiEdit, CiTrash } from "react-icons/ci";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import determineBackgroundColor from "./Common function/DetermineBackgroundColour";
 import { getallAdminData } from "../../api/api";
+import Laoder from "../common/loader"
 export default function CommentTaskBox(props) {
+    const [commentsLoading, setCommentsLoading] = useState(false);
     const [comments, setComments] = useState("");
     const [commntData, setCommentData] = useState();
     const [replyCommentData, setReplyCommentData] = useState();
@@ -713,16 +715,21 @@ export default function CommentTaskBox(props) {
     };
     /*Function to get comment list */
     const Getcomments = async (annotStatus, adminfilter) => {
-        let CommentRes = await GetCommentsAndAssign(
-            "", //docId,
-            adminfilter, // adminid,
-            annotStatus, // annotationStatus,
-            props.taskType,
-            "", "", "", "", "", "", props.userId, props.taskUserType
-        );
-        if (CommentRes.data.status === (1 || "1")) {
-            setCommentsList(CommentRes.data.data.data);
-
+        try {
+            setCommentsLoading(true)
+            let CommentRes = await GetCommentsAndAssign(
+                "", //docId,
+                adminfilter, // adminid,
+                annotStatus, // annotationStatus,
+                props.taskType,
+                "", "", "", "", "", "", props.userId, props.taskUserType
+            );
+            if (CommentRes.data.status === (1 || "1")) {
+                setCommentsList(CommentRes.data.data.data);
+                setCommentsLoading(false)
+            }
+        } catch (err) {
+            console.log(err)
         }
     };
     /*Function to delete comment */
@@ -955,183 +962,184 @@ export default function CommentTaskBox(props) {
                         </div>
                     </div>
                     <div className="row m-0 py-2 flex-column">
-                        {commentsList.length === 0 ? (
-                            <div className="col text-center">
-                                <h5>No {props.taskName}</h5>
-                            </div>
-                        ) : (
-                            (commentsList || []).map((commentItem, index) => (
-                                <div
-                                    className={`card  mb-2 p-0 comment_box_card bg-white ${props.TaskId === commentItem.id ? "highlighted-comment" : ""}`}
-                                    style={{
-                                        backgroundColor: "#fff",
-                                        color: "white",
-                                        transitionDelay: "initial"
-                                    }}
-                                    onClick={() => {
-
-                                        if (commentItem.status !== "1") {
-                                            setReplyCommentClick(commentItem.id);
-                                            getCommentsReplyList();
-                                        }
-                                        setFilteredEmails([]);
-                                        // setComments("")
-                                        if (replyCommentClick !== commentItem.id) {
-                                            setSelectedAdmin("");
-                                            setReplyCommentData("");
-                                            setSelectedAdminReplye("");
-                                            setReplyComment("");
-                                        }
-                                    }}
-                                    key={index}
-                                >
+                        {commentsLoading ?
+                            <Laoder /> : commentsList.length === 0 ? (
+                                <div className="col text-center">
+                                    <h5>No {props.taskName}</h5>
+                                </div>
+                            ) : (
+                                (commentsList || []).map((commentItem, index) => (
                                     <div
-                                        className={`comment_status_update ${AdminType === "agent"
-                                            ? commentItem.task_creator_user_id === admin_id
-                                                ? "d-flex"
-                                                : "d-none"
-                                            : "d-flex"}`}
-                                        style={{ position: "absolute", right: 5, gap: 5 }}
-                                    >
-                                        <Link
-                                            className={`text-gray pr-1 ${commentItem.status !== "0" || (admin_id === commentItem.task_creator_user_id) ? "" : "d-none"}`}
-                                            title="Update Comment"
-                                            onClick={() => {
-                                                handleUpdateCommentLinkClick(commentItem);
-                                                setEndDate(commentItem.end_date.split(" ")[0])
-                                                setSubject(commentItem.subject)
-                                            }}
-                                        >
-                                            <CiEdit />
-                                        </Link>
+                                        className={`card  mb-2 p-0 comment_box_card bg-white ${props.TaskId === commentItem.id ? "highlighted-comment" : ""}`}
+                                        style={{
+                                            backgroundColor: "#fff",
+                                            color: "white",
+                                            transitionDelay: "initial"
+                                        }}
+                                        onClick={() => {
 
-                                        <Link
-                                            className={props.taskType === "note" ? "d-none" : ""}
-                                            title={commentItem.status === "2" ? "Task overdue" : "Update status to complete"}
-                                            onClick={(e) => {
-                                                OnHandleUpdateCommentStatus(
-                                                    commentItem,
-                                                    commentItem.status === "1" ? "0" : "1"
-                                                );
-                                                setFilteredEmails([]);
-                                            }}
+                                            if (commentItem.status !== "1") {
+                                                setReplyCommentClick(commentItem.id);
+                                                getCommentsReplyList();
+                                            }
+                                            setFilteredEmails([]);
+                                            // setComments("")
+                                            if (replyCommentClick !== commentItem.id) {
+                                                setSelectedAdmin("");
+                                                setReplyCommentData("");
+                                                setSelectedAdminReplye("");
+                                                setReplyComment("");
+                                            }
+                                        }}
+                                        key={index}
+                                    >
+                                        <div
+                                            className={`comment_status_update ${AdminType === "agent"
+                                                ? commentItem.task_creator_user_id === admin_id
+                                                    ? "d-flex"
+                                                    : "d-none"
+                                                : "d-flex"}`}
+                                            style={{ position: "absolute", right: 5, gap: 5 }}
                                         >
-                                            <IoIosCheckmarkCircle
-                                                style={{
-                                                    cursor: "pointer",
-                                                    color: commentItem.status === "1" ? "green" : "#ccc",
-                                                    fontSize: 18,
+                                            <Link
+                                                className={`text-gray pr-1 ${commentItem.status !== "0" || (admin_id === commentItem.task_creator_user_id) ? "" : "d-none"}`}
+                                                title="Update Comment"
+                                                onClick={() => {
+                                                    handleUpdateCommentLinkClick(commentItem);
+                                                    setEndDate(commentItem.end_date.split(" ")[0])
+                                                    setSubject(commentItem.subject)
                                                 }}
-                                            />
-                                        </Link>
-                                        <Link
-                                            className={admin_id === commentItem.task_creator_user_id ? "text-danger pr-1" : "d-none"}
-                                            title="Delete Comment"
-                                            onClick={() => {
-                                                OnDeleteComment(commentItem.doc_id, commentItem.id);
-                                            }}
-                                        >
-                                            <CiTrash />
-                                        </Link>
-                                    </div>
-                                    <div className="card-body p-2">
-                                        <div className="text-dark">
-                                            <div className="d-flex profile_box gx-2 mb-1">
-                                                <div className="media  align-items-center">
-                                                    <div
-                                                        className={`circle-24 mx-auto overflow-hidden text-capitalize text-white ${determineBackgroundColor(
-                                                            commentItem
-                                                        )}`}
-                                                        style={{ fontSize: "16px", fontWeight: 700 }}
-                                                    >
-                                                        {commentItem.task_creator_user_name?.charAt(0)}
-                                                    </div>
-                                                </div>
-                                                <div className=" mb-0">
-                                                    <div className="font-size-3 font-weight-bold text-capitalize">
-                                                        {commentItem.task_creator_user_name}
-                                                    </div>
-                                                    <div
-                                                        className="text-gray font-weight-light m-0 text-capitalize"
-                                                        style={{ fontSize: 10, fontStyle: "italic" }}
-                                                    >
-                                                        <ConvertTime
-                                                            _date={commentItem.created_on}
-                                                            format={"HH:mm D MMM"}
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className={props.taskType !== "note" ? "d-none" : "m-0 d-flex justify-content-between align-items-center"}>
-                                            <b className="font-size-4 font-weight-bold text-dark text-break">
-                                                {commentItem.subject}
-                                            </b>
-                                            <div className="d-flex flex-column align-items-end">
-                                                <p className="m-0 text-capitalize font-size-3 mb-1 d-flex justify-content-between align-items-center w-100">
-                                                    <b>Created by: {commentItem.task_creator_user_name}</b>
-                                                </p>
-                                                {commentItem?.assigned_to_name && <span className="font-size-3 text-gray">
-                                                    Assigned admin:
-                                                    {commentItem?.assigned_to_name?.split(",").map((item, index) => <span className="badge-light rounded-pill p-1 m-1">{item}</span>)}
-                                                </span>}
-                                                <i className="font-size-2">
-                                                    Created on:
-                                                    <ConvertTime
-                                                        _date={commentItem.created_at}
-                                                        format={"Do MM YYYY, h:mm:ss a"}
-                                                    />
-                                                </i>
-                                            </div>
-                                        </div>
-                                        {commentItem.subject_description && (
-                                            <span className="card-title text-break text-dark m-0 font-size-3">
-                                                <div
-                                                    className="msg-color"
-                                                    dangerouslySetInnerHTML={{
-                                                        __html: commentItem.subject_description.replace(
-                                                            " @ ",
-                                                            " "
-                                                        ),
+                                            >
+                                                <CiEdit />
+                                            </Link>
+
+                                            <Link
+                                                className={props.taskType === "note" ? "d-none" : ""}
+                                                title={commentItem.status === "2" ? "Task overdue" : "Update status to complete"}
+                                                onClick={(e) => {
+                                                    OnHandleUpdateCommentStatus(
+                                                        commentItem,
+                                                        commentItem.status === "1" ? "0" : "1"
+                                                    );
+                                                    setFilteredEmails([]);
+                                                }}
+                                            >
+                                                <IoIosCheckmarkCircle
+                                                    style={{
+                                                        cursor: "pointer",
+                                                        color: commentItem.status === "1" ? "green" : "#ccc",
+                                                        fontSize: 18,
                                                     }}
                                                 />
-                                            </span>
-                                        )}
+                                            </Link>
+                                            <Link
+                                                className={admin_id === commentItem.task_creator_user_id ? "text-danger pr-1" : "d-none"}
+                                                title="Delete Comment"
+                                                onClick={() => {
+                                                    OnDeleteComment(commentItem.doc_id, commentItem.id);
+                                                }}
+                                            >
+                                                <CiTrash />
+                                            </Link>
+                                        </div>
+                                        <div className="card-body p-2">
+                                            <div className="text-dark">
+                                                <div className="d-flex profile_box gx-2 mb-1">
+                                                    <div className="media  align-items-center">
+                                                        <div
+                                                            className={`circle-24 mx-auto overflow-hidden text-capitalize text-white ${determineBackgroundColor(
+                                                                commentItem
+                                                            )}`}
+                                                            style={{ fontSize: "16px", fontWeight: 700 }}
+                                                        >
+                                                            {commentItem.task_creator_user_name?.charAt(0)}
+                                                        </div>
+                                                    </div>
+                                                    <div className=" mb-0">
+                                                        <div className="font-size-3 font-weight-bold text-capitalize">
+                                                            {commentItem.task_creator_user_name}
+                                                        </div>
+                                                        <div
+                                                            className="text-gray font-weight-light m-0 text-capitalize"
+                                                            style={{ fontSize: 10, fontStyle: "italic" }}
+                                                        >
+                                                            <ConvertTime
+                                                                _date={commentItem.created_on}
+                                                                format={"HH:mm D MMM"}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className={props.taskType !== "note" ? "d-none" : "m-0 d-flex justify-content-between align-items-center"}>
+                                                <b className="font-size-4 font-weight-bold text-dark text-break">
+                                                    {commentItem.subject}
+                                                </b>
+                                                <div className="d-flex flex-column align-items-end">
+                                                    <p className="m-0 text-capitalize font-size-3 mb-1 d-flex justify-content-between align-items-center w-100">
+                                                        <b>Created by: {commentItem.task_creator_user_name}</b>
+                                                    </p>
+                                                    {commentItem?.assigned_to_name && <span className="font-size-3 text-gray">
+                                                        Assigned admin:
+                                                        {commentItem?.assigned_to_name?.split(",").map((item, index) => <span className="badge-light rounded-pill p-1 m-1" key={index}>{item}</span>)}
+                                                    </span>}
+                                                    <i className="font-size-2">
+                                                        Created on:
+                                                        <ConvertTime
+                                                            _date={commentItem.created_at}
+                                                            format={"Do MM YYYY, h:mm:ss a"}
+                                                        />
+                                                    </i>
+                                                </div>
+                                            </div>
+                                            {commentItem.subject_description && (
+                                                <span className="card-title text-break text-dark m-0 font-size-3">
+                                                    <div
+                                                        className="msg-color"
+                                                        dangerouslySetInnerHTML={{
+                                                            __html: commentItem.subject_description.replace(
+                                                                " @ ",
+                                                                " "
+                                                            ),
+                                                        }}
+                                                    />
+                                                </span>
+                                            )}
+                                        </div>
+                                        {
+                                            (
+                                                //Reply box
+                                                <> <CommentReplyBox
+                                                    admin_id={admin_id}
+                                                    AdminType={AdminType}
+                                                    commentsReplyList={commentsReplyList ? commentsReplyList.filter((item) => item.task_id === commentItem.id) : []}
+                                                    replyComment={replyComment}
+                                                    handleInputChange={handleInputChange}
+                                                    filteredEmails={filteredEmails}
+                                                    handleEmailClick={handleEmailClick}
+                                                    // handleEmailMouseOver={handleEmailMouseOver}
+                                                    ReplyAnnotation={ReplyAnnotation}
+                                                    setReplyCommentClick={setReplyCommentClick}
+                                                    commentItem={commentItem}
+                                                    allAdmin={adminList}
+                                                    determineBackgroundColor={determineBackgroundColor}
+                                                    handleUpdateReplyLinkClick={handleUpdateReplyLinkClick}
+                                                    OnHandleUpdateCommentReply={OnHandleUpdateCommentReply}
+                                                    type={type}
+                                                    replyCommentData={replyCommentData}
+                                                    OnDeleteCommentReplies={OnDeleteCommentReplies}
+                                                    dropdownVisible={dropdownVisible}
+                                                    taskType={props.taskType}
+                                                    replyCommentClick={replyCommentClick}
+                                                />
+                                                    {userErrorforadminAssign && type === "reply" ?
+                                                        <span className="text-danger font-size-3">{userErrorforadminAssign}</span> : null}
+                                                </>
+                                            )
+                                        }
                                     </div>
-                                    {
-                                        (
-                                            //Reply box
-                                            <> <CommentReplyBox
-                                                admin_id={admin_id}
-                                                AdminType={AdminType}
-                                                commentsReplyList={commentsReplyList ? commentsReplyList.filter((item) => item.task_id === commentItem.id) : []}
-                                                replyComment={replyComment}
-                                                handleInputChange={handleInputChange}
-                                                filteredEmails={filteredEmails}
-                                                handleEmailClick={handleEmailClick}
-                                                // handleEmailMouseOver={handleEmailMouseOver}
-                                                ReplyAnnotation={ReplyAnnotation}
-                                                setReplyCommentClick={setReplyCommentClick}
-                                                commentItem={commentItem}
-                                                allAdmin={adminList}
-                                                determineBackgroundColor={determineBackgroundColor}
-                                                handleUpdateReplyLinkClick={handleUpdateReplyLinkClick}
-                                                OnHandleUpdateCommentReply={OnHandleUpdateCommentReply}
-                                                type={type}
-                                                replyCommentData={replyCommentData}
-                                                OnDeleteCommentReplies={OnDeleteCommentReplies}
-                                                dropdownVisible={dropdownVisible}
-                                                taskType={props.taskType}
-                                                replyCommentClick={replyCommentClick}
-                                            />
-                                                {userErrorforadminAssign && type === "reply" ?
-                                                    <span className="text-danger font-size-3">{userErrorforadminAssign}</span> : null}
-                                            </>
-                                        )
-                                    }
-                                </div>
-                            ))
-                        )}
+                                ))
+                            )}
                     </div>
                 </div>
             </div>

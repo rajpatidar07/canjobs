@@ -23,6 +23,9 @@ export default function CommonApplicatTypePage() {
     let docId = searchParams.get("docId")
     let docParentId = searchParams.get("docParentId");
     let docHighAnnoId = searchParams.get("annotationId");
+    let notifiType = searchParams.get("notifiType") || "";
+    const ApplicantTypeUrlId = searchParams.get("sId");
+    let [TaskId, setTaskId] = useState(taskId)
     const [experienceFilterValue, setExperienceFilterValue] = useState("");
     const [skillFilterValue, setSkillFilterValue] = useState("");
     const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
@@ -36,7 +39,7 @@ export default function CommonApplicatTypePage() {
     let [apiCall, setApiCall] = useState(false);
     let [showGrpChatBox, setShowGrpChatBox] = useState(false);
     let [isOpen, setIsOpen] = useState(false);
-    const [applicantTypeId, setApplicanttypeId] = useState(location?.state?.applicantType || "");
+    const [applicantTypeId, setApplicanttypeId] = useState(ApplicantTypeUrlId ? ApplicantTypeUrlId : location?.state?.applicantType || "");
     const [applicantTypeFolderId, setApplicanttypeFolderId] = useState(location?.state?.folderId || "");
     const [applicantTypename, setApplicanttypeName] = useState("");
     const [selectedTab, setSelectedTab] = useState(docId ? "documents" : "candidate");
@@ -56,9 +59,11 @@ export default function CommonApplicatTypePage() {
         } else {
             setApplicanttypeFolderId(localApplicantTypeFolderId);
         }
-
+        if (taskId) {
+            setTaskId(taskId)
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [location?.state?.applicantType, location?.state?.folderId, docId,localApplicantTypeId,localApplicantTypeFolderId]);
+    }, [taskId, notifiType, location?.state?.applicantType, location?.state?.folderId, docId, localApplicantTypeId, localApplicantTypeFolderId]);
     useEffect(() => {
         if (!applicantTypeId) return;
 
@@ -67,13 +72,22 @@ export default function CommonApplicatTypePage() {
                 const foundItem = (res.data.data || []).find((item) => item.id === applicantTypeId);
                 if (foundItem) {
                     setApplicanttypeName(foundItem.title);
+                    console.log(notifiType, taskId)
+                    if (taskId && notifiType === "group") {
+                        setShowGrpChatBox(true)
+                        const newUrl = window.location.pathname;
+                        console.log(document.title, newUrl)
+                        window.history.replaceState({}, document.title, newUrl);
+                        localStorage.setItem("navigation_url", "")
+                    }
                 }
             })
             .catch((error) => {
                 console.error(error);
             });
 
-    }, [applicantTypeId]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [applicantTypeId, taskId, notifiType]);
     /*Function to search the employee */
     const onSearch = (e) => {
         const inputValue = e.target.value;
@@ -91,7 +105,6 @@ export default function CommonApplicatTypePage() {
             setSearchError("");
         }
     };
-    console.log(localApplicantTypeId,localApplicantTypeFolderId)
     return (
         <>
             <div className="site-wrapper overflow-hidden bg-default-2">
@@ -167,7 +180,7 @@ export default function CommonApplicatTypePage() {
                                                 onClick={() => setShowGrpChatBox(true)}
                                                 className="dropdown-item d-flex align-items-center border-0 bg-transparent m-3"
                                             >
-                                                <BsChat className="mx-3" /> Group Chat
+                                                <BsChat className="mx-3" /> Group discussion 
                                             </button>
                                         )}
 
@@ -240,7 +253,7 @@ export default function CommonApplicatTypePage() {
                                 emp_user_type={"applicant_type"}
                                 user_id={applicantTypeId}
                                 folderId={docId ? docParentId : applicantTypeFolderId}
-                                notification={docId ? "ddyes" : "no"}
+                                notification={docId ? "yes" : "no"}
                                 docId={docId || ""}
                                 docTypePage={""}
                                 user_name={""}
@@ -263,6 +276,7 @@ export default function CommonApplicatTypePage() {
                         setOpenReplyBox={setShowGrpChatBox}
                         openReplyBox={showGrpChatBox}
                         taskName={"Group Chat"}
+                        TaskId={TaskId}
                     />
                 }
             >
@@ -274,6 +288,7 @@ export default function CommonApplicatTypePage() {
                         setOpenReplyBox={setShowGrpChatBox}
                         openReplyBox={showGrpChatBox}
                         taskName={"Group Chat"}
+                        TaskId={TaskId}
                     />
                 ) : null}
             </ModalSidebar>

@@ -7,6 +7,7 @@ import {
   getallAdminData,
   getallEmployeeData,
   getAllEmployer,
+  getApplicanTypeApi,
   GetCommentsAndAssign,
   GetFilter,
 } from "../../api/api";
@@ -26,6 +27,8 @@ export default function ManageTask() {
   const [byAdminType, setByAdminType] = useState();
   const [status, setStatus] = useState("-1");
   const [statusList, setStatusList] = useState([]);
+  let [applicantType, setApplicantType] = useState("")
+  let [applicantTypeList, setApplicantTypeList] = useState([])
   const [count, setCount] = useState();
   const [taskPage, setTaskPage] = useState(1);
   const [adminPage, setAdminPage] = useState(1);
@@ -48,8 +51,10 @@ export default function ManageTask() {
       const CompanyData = await getAllEmployer();
       const allTaskres = await GetCommentsAndAssign("", "", "", "task");
       const resStatus = await GetFilter();
+      const resApplicantType = await getApplicanTypeApi()
       setStatusList(resStatus.data.data.status_type);
       setAllTaskList(allTaskres.data.data.data)
+      setApplicantTypeList(resApplicantType.data.data)
       //   if (window.location.pathname === `/${user_id}`) {
       //     const Partnerdata = await GetAgent();
       //     let newPartnerList = Partnerdata.data.data.filter(
@@ -196,6 +201,37 @@ export default function ManageTask() {
                 </select>
                 {/* <small className="text-danger">{searcherror}</small> */}
               </div>
+              <div className="col px-1 form_group mb-3 d-none">
+                <p className="input_label">Filter by Applicant Type:</p>
+                <select
+                  name="applicantType"
+                  value={applicantType}
+                  id="applicantType"
+                  onChange={(e) => {
+                    // console.log(e.target.value.split(",")[0])
+                    setApplicantType(e.target.value.split(",")[0]);
+                    setAdminPage(1);
+                    setTaskPage(1);
+                    setReplyId("")
+                    setTaskId("")
+                  }}
+                  className="form-control bg-white dashboard_select rounded-3"
+                >
+                  <option value={""}>Select Applicant type</option>
+                  {(applicantTypeList || []).map((item, index) => {
+                    return (
+                      <option
+                        className="text-capitalize"
+                        key={index}
+                        value={
+                          item.id
+                        }
+                      >
+                        {item.title}
+                      </option>
+                    );
+                  })}{" "}
+                </select>              </div>
               <div className="col px-1 form_group mb-3">
                 <p className="input_label">Filter by Status:</p>
                 <select
@@ -298,6 +334,7 @@ export default function ManageTask() {
                     statusList={statusList}
                     byAdminId={byAdminId}
                     byAdminType={byAdminType}
+                    applicantType={applicantType}
                   />
                 </div>
 

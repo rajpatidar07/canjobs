@@ -898,7 +898,8 @@ export const GetCommentsAndAssign = async (
   userType,
   taskId,
   task_creator_user_id,
-  task_creator_user_type
+  task_creator_user_type,
+  applicantType
 ) => {
   // console.log( "id:", taskId,
   // "userid"+userid,

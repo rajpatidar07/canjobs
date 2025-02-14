@@ -260,7 +260,7 @@ function Notifications({
                                     ? data.document_user_type === "employer"
                                       ? `/client_detail?docId=${data.mention_id}&docParentId=${parseJsonSafely(data?.notif_json).doc_parent_id || ""}&annotationId=${parseJsonSafely(data?.notif_json).annotation_id || ""}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}`
                                       : data.document_user_type === "applicant_type"
-                                        ? `/slots_pages?docId=${data.mention_id}&docParentId=${parseJsonSafely(data?.notif_json).doc_parent_id || ""}&annotationId=${parseJsonSafely(data?.notif_json).annotation_id || ""}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}`
+                                        ? `/slots?docId=${data.mention_id}&docParentId=${parseJsonSafely(data?.notif_json).doc_parent_id || ""}&annotationId=${parseJsonSafely(data?.notif_json).annotation_id || ""}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}`
                                         : `/${data.employee_id}?docId=${data.mention_id}&docParentId=${parseJsonSafely(data?.notif_json).doc_parent_id || ""}&annotationId=${parseJsonSafely(data?.notif_json).annotation_id || ""}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}`
                                     : data.subject === "mention_partner"
                                       ? `/${data.employee_id}?partner=${data.from_id}`
@@ -282,7 +282,7 @@ function Notifications({
                                                 : `/${data.employee_id}?agreement=true`
                                               : data.subject === "mention_task"
                                                 ? `/managetasks?taskId=${parseJsonSafely(data?.notif_json).task_id || ""}&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}`
-                                                : data.subject === "mention_applicant_type_candidate_chat" ? `/slots_pages?TaskId=${parseJsonSafely(data?.notif_json).task_id || ""}&canId=${data.employee_id}` : ""
+                                                : data.subject === "mention_applicant_type_candidate_chat" ? `/slots?notifiType=candidate&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}&canId=${data.employee_id}` : data.subject === "mention_applicant_type_group_chat" ? `/slots?notifiType=group&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}` : ""
                       }
                       onClick={() => {
                         try {
@@ -303,7 +303,7 @@ function Notifications({
                             } else if (data.document_user_type === "employer") {
                               localStorage.setItem("company_id", data.employee_id);
                             }
-                          } else if (data.subject === "mention_applicant_type_candidate_chat") {
+                          } else if (data.subject === "mention_applicant_type_candidate_chat" || data.subject === "mention_applicant_type_group_chat") {
                             localStorage.setItem("applicantType", data.interested_in);
                           }
                         } catch (err) {
@@ -332,6 +332,7 @@ function Notifications({
                             style={{ fontSize: "14px" }}
                           >
                             <div className="intervire-msg" dangerouslySetInnerHTML={{ __html: data.message }} />
+                            <small>"${data.comment_msg ? data.comment_msg : ""}"</small>
                           </div>
                         </div>
                       </div>

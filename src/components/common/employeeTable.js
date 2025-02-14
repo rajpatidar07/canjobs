@@ -49,7 +49,8 @@ export default function EmployeeTable(props) {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   let canID = searchParams.get("canId") || "";
-  let taskID = searchParams.get("TaskId") || "";
+  let taskID = searchParams.get("taskId") || "";
+  let notifiType = searchParams.get("notifiType") || "";
   let [CandidateId, setCandidateId] = useState(canID || "")
   let [TaskId, setTaskId] = useState(taskID)
   /*Show modal states */
@@ -140,7 +141,7 @@ export default function EmployeeTable(props) {
           );
         } else {
           setemployeeData(userData.data);
-          if (TaskId && CandidateId) {
+          if (TaskId && CandidateId && notifiType === "candidate") {
             setShowChatModal(true)
             setemployeeId(userData.data[0])
             const newUrl = window.location.pathname;
@@ -195,6 +196,7 @@ export default function EmployeeTable(props) {
   }, [
     canID,
     taskID,
+    notifiType,
     props.experienceFilterValue,
     props.skillFilterValue,
     props.educationFilterValue,
@@ -459,7 +461,7 @@ export default function EmployeeTable(props) {
             taskUserType={"employee"}
             setOpenReplyBox={setShowChatModal}
             openReplyBox={showChatModal}
-            taskName={"Chat for Candidate"}
+            taskName={"Discussion for Candidate"}
             TaskId={TaskId}
           />
         }
@@ -471,7 +473,7 @@ export default function EmployeeTable(props) {
             taskUserType={"employee"}
             setOpenReplyBox={setShowChatModal}
             openReplyBox={showChatModal}
-            taskName={"Chat for Candidate"}
+            taskName={"Discussion for Candidate"}
             TaskId={TaskId}
           />
         ) : null}
@@ -734,6 +736,10 @@ export default function EmployeeTable(props) {
                       Name
                     </Link>
                   </th>
+                  {props.ApplicantType ? <th
+                    scope="col"
+                    className=" border-0 font-size-4 font-weight-normal"
+                  >Discussion</th> : null}
                   {props.heading === "Dashboard" ? (
                     ""
                   ) : <th
@@ -1139,6 +1145,20 @@ export default function EmployeeTable(props) {
                             </span>
                           ) : null}
                         </td>
+                        {props.ApplicantType ? <td> <Link
+                          // className="btn btn-outline-info action_btn"
+                          onClick={() => {
+                            setShowChatModal(true)
+                            setemployeeId(empdata)
+                          }
+                          }
+                          title="Discussion"
+                        >
+                          <span className="text-gray px-2">
+                            <BsChat />
+                          </span>
+                        </Link>
+                        </td> : null}
                         {props.heading === "Dashboard" ? (
                           ""
                         ) : (
@@ -1586,20 +1606,6 @@ export default function EmployeeTable(props) {
                                     >
                                       <span className="text-gray px-2">
                                         <GoTasklist />
-                                      </span>
-                                      {/* <i className="fas fa-stream text-gray"></i> */}
-                                    </button>
-                                    <button
-                                      className="btn btn-outline-info action_btn"
-                                      onClick={() => {
-                                        setShowChatModal(true)
-                                        setemployeeId(empdata)
-                                      }
-                                      }
-                                      title="Chat"
-                                    >
-                                      <span className="text-gray px-2">
-                                        <BsChat />
                                       </span>
                                       {/* <i className="fas fa-stream text-gray"></i> */}
                                     </button>
