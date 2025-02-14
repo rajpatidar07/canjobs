@@ -332,7 +332,7 @@ function Notifications({
                             style={{ fontSize: "14px" }}
                           >
                             <div className="intervire-msg" dangerouslySetInnerHTML={{ __html: data.message }} />
-                            <small>"${data.comment_msg ? data.comment_msg : ""}"</small>
+                            <small>"{data.comment_msg ? data.comment_msg : ""}"</small>
                           </div>
                         </div>
                       </div>

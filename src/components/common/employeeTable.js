@@ -1145,19 +1145,19 @@ export default function EmployeeTable(props) {
                             </span>
                           ) : null}
                         </td>
-                        {props.ApplicantType ? <td> <Link
-                          // className="btn btn-outline-info action_btn"
-                          onClick={() => {
-                            setShowChatModal(true)
-                            setemployeeId(empdata)
-                          }
-                          }
-                          title="Discussion"
-                        >
-                          <span className="text-gray px-2">
-                            <BsChat />
-                          </span>
-                        </Link>
+                        {props.ApplicantType ? <td>
+                          <Link
+                            onClick={() => {
+                              setShowChatModal(true)
+                              setemployeeId(empdata)
+                            }
+                            }
+                            title="Discussion"
+                          >
+                            <span className="text-gray px-2">
+                              <BsChat />
+                            </span>
+                          </Link>
                         </td> : null}
                         {props.heading === "Dashboard" ? (
                           ""
