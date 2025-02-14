@@ -331,7 +331,15 @@ function Notifications({
                             className={`${data.is_read !== "1" ? "font-weight-bold" : ""}  mw-80 notification_text_msg`}
                             style={{ fontSize: "14px" }}
                           >
-                            <div className="intervire-msg" dangerouslySetInnerHTML={{ __html: data.message }} />
+                            <div
+                              className="intervire-msg"
+                              dangerouslySetInnerHTML={{
+                                __html: data.message
+                                  ?.replace(/applicant_type_candidate_chat/g, "Candidate discussion")
+                                  .replace(/applicant_type_group_chat/g, "Group discussion"),
+                              }}
+                            />
+
                             <small>"{data.comment_msg ? data.comment_msg : ""}"</small>
                           </div>
                         </div>

@@ -106,7 +106,7 @@ const AdobePDFViewer = ({
             showLeftHandPanel: true,
             showPageControls: true,
             enableAnnotationAPIs: true,
-            includePDFAnnotations: true,
+            includePDFAnnotations: false,
             // showDownloadPDF: false, // Disable download
             // showPrintPDF: false,    // Disable print
           },
