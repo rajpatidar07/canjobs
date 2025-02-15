@@ -47,23 +47,28 @@ export default function CommonApplicatTypePage() {
     let localApplicantTypeFolderId = localStorage.getItem("applicantTypeFolderId")
     useEffect(() => {
         // Update only if applicantType is present
-        if (location?.state?.applicantType && location?.state?.applicantType !== applicantTypeId) {
-            setApplicanttypeId(location.state.applicantType);
-            localStorage.setItem("applicantType", location.state.applicantType)
+        if ((notifiType === "group" || notifiType === "candidate") && ApplicantTypeUrlId) {
+            setApplicanttypeId(ApplicantTypeUrlId);
+            localStorage.setItem("applicantType", ApplicantTypeUrlId)
         } else {
-            setApplicanttypeId(localApplicantTypeId);
-        }
-        if (location?.state?.folderId && location?.state?.folderId !== applicantTypeFolderId) {
-            setApplicanttypeFolderId(location.state.folderId);
-            localStorage.setItem("applicantTypeFolderId", location.state.folderId)
-        } else {
-            setApplicanttypeFolderId(localApplicantTypeFolderId);
+            if (location?.state?.applicantType && location?.state?.applicantType !== applicantTypeId) {
+                setApplicanttypeId(location.state.applicantType);
+                localStorage.setItem("applicantType", location.state.applicantType)
+            } else {
+                setApplicanttypeId(localApplicantTypeId);
+            }
+            if (location?.state?.folderId && location?.state?.folderId !== applicantTypeFolderId) {
+                setApplicanttypeFolderId(location.state.folderId);
+                localStorage.setItem("applicantTypeFolderId", location.state.folderId)
+            } else {
+                setApplicanttypeFolderId(localApplicantTypeFolderId);
+            }
         }
         if (taskId) {
             setTaskId(taskId)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [taskId, notifiType, location?.state?.applicantType, location?.state?.folderId, docId, localApplicantTypeId, localApplicantTypeFolderId]);
+    }, [ApplicantTypeUrlId, taskId, notifiType, location?.state?.applicantType, location?.state?.folderId, docId, localApplicantTypeId, localApplicantTypeFolderId]);
     useEffect(() => {
         if (!applicantTypeId) return;
 
@@ -72,11 +77,10 @@ export default function CommonApplicatTypePage() {
                 const foundItem = (res.data.data || []).find((item) => item.id === applicantTypeId);
                 if (foundItem) {
                     setApplicanttypeName(foundItem.title);
-                    console.log(notifiType, taskId)
+                    setApplicanttypeFolderId(foundItem.doc_folder_id)
                     if (taskId && notifiType === "group") {
                         setShowGrpChatBox(true)
                         const newUrl = window.location.pathname;
-                        console.log(document.title, newUrl)
                         window.history.replaceState({}, document.title, newUrl);
                         localStorage.setItem("navigation_url", "")
                     }
@@ -87,7 +91,7 @@ export default function CommonApplicatTypePage() {
             });
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [applicantTypeId, taskId, notifiType]);
+    }, [ApplicantTypeUrlId, applicantTypeId, taskId, notifiType]);
     /*Function to search the employee */
     const onSearch = (e) => {
         const inputValue = e.target.value;
@@ -143,6 +147,7 @@ export default function CommonApplicatTypePage() {
                                     }
                                     onClick={() => {
                                         setSelectedTab("documents");
+                                        // setApplicanttypeFolderId(location?.state?.folderId || localApplicantTypeFolderId)
                                     }}
                                     title="Documents"
                                 >
@@ -180,7 +185,7 @@ export default function CommonApplicatTypePage() {
                                                 onClick={() => setShowGrpChatBox(true)}
                                                 className="dropdown-item d-flex align-items-center border-0 bg-transparent m-3"
                                             >
-                                                <BsChat className="mx-3" /> Group discussion 
+                                                <BsChat className="mx-3" /> Group discussion
                                             </button>
                                         )}
 

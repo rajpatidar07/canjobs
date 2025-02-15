@@ -48,11 +48,11 @@ export default function AddApplicantType(props) {
         if (apicall === true) {
             setApicall(false)
         }
-        if (props?.UpdateApplicantTypeData?.id) {
-            setState({ ...state, title: props.UpdateApplicantTypeData.title, selectedParent: props?.UpdateApplicantTypeData?.parent_id, level: props?.UpdateApplicantTypeData?.level });
+        if (props?.updateApplicantTypeData?.id) {
+            setState({ ...state, title: props.updateApplicantTypeData.title, selectedParent: props?.updateApplicantTypeData?.parent_id, level: props?.updateApplicantTypeData?.level });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [apicall])
+    }, [apicall, props?.updateApplicantTypeData])
 
     // HANDLE INPUT CHANGES AND SET LEVEL DYNAMICALLY
     const handleChange = (e) => {
@@ -91,9 +91,9 @@ export default function AddApplicantType(props) {
     const addApplicantTypeClick = async (e) => {
         e.preventDefault()
         if (validate()) {
-            // setLoading(true)
+            setLoading(true)
             const newItem = {
-                id: props?.UpdateApplicantTypeData?.id || "",
+                id: props?.updateApplicantTypeData?.id || "",
                 title: state.title,
                 parent_id: state.level === 2 ? state.selectedChild : state.selectedParent,
                 level: state.level, // Dynamic level
@@ -119,10 +119,11 @@ export default function AddApplicantType(props) {
                             autoClose: 1000,
                         });
                     }
-                    setLoading(false)
-                    setApicall(true)
-                    setState(initialFormState);
                     props.setApicall(true)
+                    setApicall(true)
+                    setLoading(false)
+                    setState(initialFormState);
+                    console.log("first", props.apicall)
                     close()
                 }
             } catch (err) {

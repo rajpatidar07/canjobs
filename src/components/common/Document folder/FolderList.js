@@ -28,14 +28,12 @@ export default function FolderList({
   setDocFileBase,
   SetPdfDocUrl,
   setCommentsList,
-  emp_user_type,
-  user_id,
+  DocUserType,
+  userId,
   userType,
   adminList,
   partnerList,
-  userId,
   commentsList,
-  DocUserType,
   getCommentsList,
   partnerId,
   handleSort,
@@ -269,7 +267,7 @@ export default function FolderList({
                         >
                           <Link
                             // state={{ id: res.job_id }}
-                            to={`/view_pdf_Agreement?new_emp_user_type=${emp_user_type}&new_user_id=${user_id}&folderId=${item.parentReference.id}&document_id=${item.id}&partner_id=${partnerId}`}
+                            to={`/view_pdf_Agreement?new_emp_user_type=${DocUserType}&new_user_id=${userId}&folderId=${item.parentReference.id}&document_id=${item.id}&partner_id=${partnerId}`}
                             target="_blank"
                           >
                             {" "}
@@ -411,11 +409,11 @@ export default function FolderList({
                             >
                               <Link
                                 className={"text-decoration-none"}
-                                to={`/view_pdf_Agreement?new_emp_user_type=${emp_user_type}&new_user_id=${user_id}&folderId=${item.parentReference.id}&document_id=${item.id}`}
+                                to={`/view_pdf_Agreement?new_emp_user_type=${DocUserType}&new_user_id=${userId}&folderId=${item.parentReference.id}&document_id=${item.id}`}
                                 target="_blank"
                               >
                                 Open in New Tab
-                              </Link>
+                              </Link>c
                             </li>
                             <li
                               className={`list-group-item text-danger ${(userType !== "admin" &&

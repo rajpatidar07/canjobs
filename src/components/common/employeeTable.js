@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import PersonalDetails from "../forms/user/personal";
 import Education from "../forms/user/education";
 import Skills from "../forms/user/skills";
@@ -46,8 +46,8 @@ export default function EmployeeTable(props) {
   let user_type = localStorage.getItem("userType");
   let StatusTab = localStorage.getItem("StatusTab");
   let portal = localStorage.getItem("portal")
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
+  // const location = useLocation();
+  const searchParams = new URLSearchParams(window.location.search);
   let canID = searchParams.get("canId") || "";
   let taskID = searchParams.get("taskId") || "";
   let notifiType = searchParams.get("notifiType") || "";

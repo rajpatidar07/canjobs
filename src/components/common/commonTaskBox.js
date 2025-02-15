@@ -406,7 +406,7 @@ export default function CommentTaskBox(props) {
                 .map((admin) => (admin.u_id ? "agent" : admin.admin_type))
                 .join(",")
             : "";
-        console.log(AdminType, "AdminType", sender, senderId, "data", data, " admin_id", admin_id)
+        // console.log(AdminType, "AdminType", sender, senderId, "data", data, " admin_id", admin_id)
         if (replyComment === "" && email === "") {
             toast.error("Comment or email cannot be empty!", {
                 position: toast.POSITION.TOP_RIGHT,
@@ -581,7 +581,8 @@ export default function CommentTaskBox(props) {
             id: originalData.id,
             type: originalData.type,
             end_date: endDate,
-            subject: subject
+            subject: subject,
+            employee_id: props.userId
             // document_name: docData.name,
             // json: JSON.parse(originalData.doctaskjson)
         };

@@ -2,19 +2,21 @@ import React, { useState, useEffect } from "react";
 // import { Link } from "react-router-dom";
 import { DeleteApplicanTypeApi } from "../../api/api";
 import Pagination from "./pagination";
-import AddApplicantType from "../forms/admin/AddApplicantType";
+// import AddApplicantType from "../forms/admin/AddApplicantType";
 import Loader from "../common/loader";
-
 import SAlert from "./sweetAlert";
 import { FaTrash } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 function ApplicantTypeTable(props) {
     // let search = props.search;
     let [isLoading, setIsLoading] = useState(true);
-    let [showApplicantTypeForm, setShowApplicantTypeForm] = useState(false);
-    const [updateApplicantTypeData, setUpdateApplicantTypeData] = useState();
+    // let [showApplicantTypeForm, setShowApplicantTypeForm] = useState(false);
+    // const [updateApplicantTypeData, setUpdateApplicantTypeData] = useState();
     let [apiCall, setApiCall] = useState(props.apiCall);
     const [deleteAlertApplicantTypeData, setDeleteAlertApplicantTypeData] =
+        useState(false);
+    const [deleteAlertApplicant, setDeleteAlertApplicant] =
         useState(false);
 
     const applicantType = props.allApplicantType;
@@ -62,8 +64,10 @@ function ApplicantTypeTable(props) {
                     position: toast.POSITION.TOP_RIGHT,
                     autoClose: 1000,
                 });
-                setDeleteAlertApplicantTypeData(false);
+                setDeleteAlertApplicant(false)
+                setDeleteAlertApplicantTypeData();
                 setApiCall(true);
+                props.setApiCall(true)
             }
         } catch (err) {
             console.log(err);
@@ -72,21 +76,22 @@ function ApplicantTypeTable(props) {
 
     return (
         <>
-            {showApplicantTypeForm ? (
+            {/* {showApplicantTypeForm ? (
                 <AddApplicantType
                     show={showApplicantTypeForm}
                     close={() => {
                         setShowApplicantTypeForm(false);
                     }}
+                    apicall={apiCall}
                     setApicall={setApiCall}
                     UpdateApplicantTypeData={updateApplicantTypeData}
                 />
-            ) : null}
+            ) : null} */}
 
             <div className="mb-18">
                 <div className="mb-4 align-items-center">
                     <div className="page___heading">
-                        <h3 className="font-size-6 mb-0">Interview </h3>
+                        <h3 className="font-size-6 mb-0">Applicant Type </h3>
                     </div>
                 </div>
                 <div
@@ -107,7 +112,7 @@ function ApplicantTypeTable(props) {
                                             scope="col"
                                             className="border-0 font-size-4 font-weight-normal text-start"
                                         >
-                                            title
+                                            Title
                                         </th>
 
                                         {props.heading === "Dashboard" ||
@@ -146,10 +151,15 @@ function ApplicantTypeTable(props) {
                                                             <p className="font-size-3  mb-0">N/A</p>
                                                         ) : (
                                                             <div
-                                                                className="font-size-3 mb-0 font-weight-semibold text-black-2 text-truncate"
-                                                                title={data.title}
+                                                                className="font-size-3 mb-0 font-weight-semibold  text-truncate"
+                                                                title={`Open ${data.title}`}
                                                             >
-                                                                {data.title}
+                                                                <Link
+                                                                 to={`/slots`}
+                                                                    className="text-black-2"
+                                                                    state={{ applicantType: data.id, folderId: data.doc_folder_id }}>
+                                                                    {data.title}
+                                                                </Link>
                                                             </div>
                                                         )}
                                                     </td>
@@ -169,8 +179,8 @@ function ApplicantTypeTable(props) {
                                                                 className="btn btn-outline-info action_btn "
                                                                 style={{ fontSize: "10px" }}
                                                                 onClick={() => {
-                                                                    setUpdateApplicantTypeData(data);
-                                                                    setShowApplicantTypeForm(true);
+                                                                    props.setUpdateApplicantTypeData(data);
+                                                                    props.setShowApplicantTypeForm(true);
                                                                 }}
                                                                 title=" Reschedule Interview"
                                                             >
@@ -179,24 +189,22 @@ function ApplicantTypeTable(props) {
                                                             <button
                                                                 className="btn btn-outline-info action_btn "
                                                                 style={{ fontSize: "10px", color: "red" }}
-                                                                onClick={() =>
-                                                                    setDeleteAlertApplicantTypeData(true)
+                                                                onClick={() => {
+                                                                    setDeleteAlertApplicantTypeData(data)
+                                                                    setDeleteAlertApplicant(true)
                                                                 }
-                                                                title="Delete Applicant Type"
-                                                                disabled={
-                                                                    data.status === "complete" ? true : false
                                                                 }
-                                                            >
+                                                                title="Delete Applicant Type">
                                                                 <FaTrash />
                                                             </button>
                                                             <SAlert
-                                                                show={deleteAlertApplicantTypeData}
-                                                                title={data?.title}
+                                                                show={deleteAlertApplicant}
+                                                                title={deleteAlertApplicantTypeData?.title}
                                                                 text="Are you Sure you want to delete !"
-                                                                onConfirm={() => deleteApplicantType(data.id)}
+                                                                onConfirm={() => deleteApplicantType(deleteAlertApplicantTypeData.id)}
                                                                 showCancelButton={true}
                                                                 onCancel={() =>
-                                                                    setDeleteAlertApplicantTypeData(false)
+                                                                    setDeleteAlertApplicant(false)
                                                                 }
                                                             />
                                                         </div>

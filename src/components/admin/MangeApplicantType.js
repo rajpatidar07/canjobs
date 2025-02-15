@@ -13,7 +13,7 @@ export default function ManageApplicantType(props) {
   const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
   const [allApplicantType, setAllApplicantType] = useState([]);
   const [apiCall, setApiCall] = useState(false);
-
+  const [updateApplicantTypeData, setUpdateApplicantTypeData] = useState();
   const liRefs = useRef([]);
   let [showApplicantTypeForm, setShowApplicantTypeForm] = useState(false);
 
@@ -38,8 +38,6 @@ export default function ManageApplicantType(props) {
     }
   }, [props.heading, apiCall]);
 
-  // console.log(allApplicantType);
-
   /*Search Onchange function to Search applicanttypedata data */
   // const onSearch = (e) => {
   //   const inputValue = e.target.value;
@@ -57,7 +55,6 @@ export default function ManageApplicantType(props) {
   //     setSearchError("");
   //   }
   // };
-
   return (
     <div className="site-wrapper overflow-hidden bg-default-2">
       <AdminHeader heading={"Manage Applicant Type"} />
@@ -74,13 +71,19 @@ export default function ManageApplicantType(props) {
               show={showApplicantTypeForm}
               close={() => {
                 setShowApplicantTypeForm(false);
+                setUpdateApplicantTypeData()
               }}
               setApicall={setApiCall}
+              apicall={apiCall}
+              updateApplicantTypeData={updateApplicantTypeData}
             />
             <div className="d-flex justify-content-end">
               <button
                 className="font-size-3 rounded-3 btn btn-primary border-0 mr-4"
-                onClick={() => setShowApplicantTypeForm(true)}
+                onClick={() => {
+                  setShowApplicantTypeForm(true)
+                  setUpdateApplicantTypeData()
+                }}
               >
                 Add Applicant Type
               </button>
@@ -94,6 +97,9 @@ export default function ManageApplicantType(props) {
               setpageNo={setpageNo}
               pageNo={pageNo}
               allApplicantType={allApplicantType}
+              setApiCall={setApiCall}
+              setShowApplicantTypeForm={setShowApplicantTypeForm}
+              setUpdateApplicantTypeData={setUpdateApplicantTypeData}
             />
           </div>
         </div>

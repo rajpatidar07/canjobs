@@ -185,7 +185,7 @@ export default function CommentReplyBox({
                 cancel
               </a> */}
           </div>
-          {dropdownVisible && filteredEmails.length > 0 && type === "reply" ? (
+          {(replyCommentClick === commentItem.id) &&dropdownVisible && filteredEmails.length > 0 && type === "reply" ? (
             <ul
               className="email-suggestions overflow-scroll"
               style={{

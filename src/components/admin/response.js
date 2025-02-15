@@ -1118,7 +1118,6 @@ function JobResponse(props) {
                                     <span className="text-gray px-2">
                                       <ImCalendar />
                                     </span>
-                                    {/* <i className="fa fa-calendar text-gray px-2"></i> */}
                                   </button>
                                   <button
                                     className={
@@ -1138,7 +1137,6 @@ function JobResponse(props) {
                                   // }
                                   >
                                     <PiBriefcaseLight />
-                                    {/* <i className="fas fa-briefcase"></i> */}
                                   </button>
 
                                   <button
@@ -1212,6 +1210,7 @@ function JobResponse(props) {
           apiCall={apiCall}
           setApiCall={setApiCall}
           close={() => setVisaModal(false)}
+          type={"visa"}
         />
       ) : null}
 

@@ -319,7 +319,7 @@ function Notifications({
                             data
                           )}`}
                         >
-                          {data.sender_name ? data.sender_name.charAt(0) : ""}
+                          {data.sender_name ? data.sender_name.charAt(0) : data.receiver_name.charAt(0)}
                         </div>
                         <div className="flex-grow-1">
                           {/* <div className="d-flex align-items-center justify-content-between">
@@ -340,7 +340,7 @@ function Notifications({
                               }}
                             />
 
-                            <small>"{data.comment_msg ? data.comment_msg : ""}"</small>
+                            <small>{data.comment_msg ? `"${data.comment_msg}"` : ""}</small>
                           </div>
                         </div>
                       </div>

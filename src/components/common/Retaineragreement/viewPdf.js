@@ -370,6 +370,7 @@ export default function ViewPdf({
           // setFileID={setFileID}
           setConvertedDoc={setNewPdfUrl}
           SetPdfDocUrl={GetPdfDocument}
+          AdminData={AdminData}
         />
       )
     );

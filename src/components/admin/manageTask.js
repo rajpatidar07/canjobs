@@ -165,7 +165,7 @@ export default function ManageTask() {
                 </select>
               </div>
               <div className="col px-1 form_group mb-3">
-                <p className="input_label">Filter by User:</p>
+                <p className="input_label">Filter by Applicant/Client:</p>
                 <select
                   name="userId"
                   value={userId + "," + userType}
@@ -181,7 +181,7 @@ export default function ManageTask() {
                   }}
                   className="form-control bg-white dashboard_select rounded-3"
                 >
-                  <option value={""}>Select user</option>
+                  <option value={""}>Select Applicant/Client</option>
                   {(employeeList || []).map((item, index) => {
                     return (
                       <option
