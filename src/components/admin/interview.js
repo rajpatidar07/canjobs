@@ -3,8 +3,8 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import Interview from "../common/interviewTable";
 import { useEffect } from "react";
-import ExportExcelButton from "../common/exportExcelButton";
 import { getInterview } from "../../api/api";
+import CommonThreeDots from "../common/commonThreeDots";
 export default function ManageInterview() {
   /*Search state */
   let [search, setSearch] = useState("");
@@ -93,11 +93,14 @@ export default function ManageInterview() {
                       </select>
                     </div>
                   </div>
+                  <div className="mt-2">
+                    <CommonThreeDots
+                      tableName={"interview"}
+                      tableData={allInterviews} />
+                  </div>
                 </div>
                 <small className="text-danger">{searcherror}</small>
-              </div>
-              <div className="d-flex flex-end">
-                <ExportExcelButton tableName={"interview"} portal={""} applicantType={""} status={""} local={""} type={""} tableData={allInterviews} />
+
               </div>
               {/*<-- Interview list Table -->*/}
               <Interview

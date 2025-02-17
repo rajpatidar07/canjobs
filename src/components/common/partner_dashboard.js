@@ -10,7 +10,7 @@ import PartnerPage from "./partner_page";
 import PartnerTAble from "./PartnerTAble";
 import SAlert from "../common/sweetAlert";
 import { toast } from "react-toastify";
-import ExportExcelButton from "./exportExcelButton";
+import CommonThreeDots from "./commonThreeDots";
 // import FilterJson from "../json/filterjson";
 function PartnerDashboard() {
   /*Show modal states */
@@ -140,8 +140,9 @@ function PartnerDashboard() {
                     >
                       Add Partner
                     </CustomButton>
-                    <ExportExcelButton tableData={[]} tableName={"agent"} portal={""} applicantType={""} status={""} local={""} type={""} />
                   </div>
+                  <CommonThreeDots
+                    tableName={"agent"} />
                 </div>
                 <small className="text-danger">{searcherror}</small>
               </div>

@@ -15,7 +15,7 @@ import AdminListTaskTable from "../common/AdminListTaskTabel";
 import CustomButton from "../common/button";
 import AddTaskForm from "../forms/admin/addTaskForm";
 import { Link, useLocation } from "react-router-dom";
-import ExportExcelButton from "../common/exportExcelButton";
+import CommonThreeDots from "../common/commonThreeDots";
 
 export default function ManageTask() {
   const [apiCall, setApiCall] = useState(false);
@@ -27,7 +27,6 @@ export default function ManageTask() {
   const [byAdminType, setByAdminType] = useState();
   const [status, setStatus] = useState("-1");
   const [statusList, setStatusList] = useState([]);
-  let [applicantType, setApplicantType] = useState("")
   let [applicantTypeList, setApplicantTypeList] = useState([])
   const [count, setCount] = useState();
   const [taskPage, setTaskPage] = useState(1);
@@ -54,7 +53,7 @@ export default function ManageTask() {
       const resApplicantType = await getApplicanTypeApi()
       setStatusList(resStatus.data.data.status_type);
       setAllTaskList(allTaskres.data.data.data)
-      setApplicantTypeList(resApplicantType.data.data)
+      setApplicantTypeList(resApplicantType.data.data.filter((i) => i.parent_id === "0"))
       //   if (window.location.pathname === `/${user_id}`) {
       //     const Partnerdata = await GetAgent();
       //     let newPartnerList = Partnerdata.data.data.filter(
@@ -66,10 +65,10 @@ export default function ManageTask() {
       //   }
       let allUserData = [];
 
-      if (userData?.data?.length === 0 && CompanyData?.data?.length === 0) {
+      if (userData?.data?.length === 0 && CompanyData?.data?.length === 0 && resApplicantType.data.data.length === 0) {
         setEmployeeList([]);
       } else {
-        allUserData = [...userData.data, ...CompanyData.data]; // Merge the arrays
+        allUserData = [...userData.data, ...CompanyData.data,]; // Merge the arrays
         setEmployeeList(allUserData);
       }
 
@@ -179,6 +178,7 @@ export default function ManageTask() {
                     setReplyId("")
                     setTaskId("")
                   }}
+                  disabled={userType === "applicant_type"}
                   className="form-control bg-white dashboard_select rounded-3"
                 >
                   <option value={""}>Select Applicant/Client</option>
@@ -190,31 +190,38 @@ export default function ManageTask() {
                         value={
                           item.employee_id
                             ? `${item.employee_id},employee`
-                            : `${item.company_id},employer`
+                            : item.company_id
+                              ? `${item.company_id},employer`
+                              : `${item.id},applicant_type`
                         }
                       >
-                        {(item.employee_id ? item.name + " (Candidate)" : item.company_name + " (Client)") ||
-                          "unknown user"}
+                        {item.employee_id
+                          ? (item.name + " (Candidate)")
+                          : item.company_id
+                            ? item.company_name + " (Client)"
+                            : item.title + " (Applicant Type)" ||
+                            "unknown user"}
                       </option>
                     );
                   })}{" "}
                 </select>
                 {/* <small className="text-danger">{searcherror}</small> */}
               </div>
-              <div className="col px-1 form_group mb-3 d-none">
+              <div className="col px-1 form_group mb-3">
                 <p className="input_label">Filter by Applicant Type:</p>
                 <select
                   name="applicantType"
-                  value={applicantType}
+                  value={userId + "," + userType}
                   id="applicantType"
                   onChange={(e) => {
-                    // console.log(e.target.value.split(",")[0])
-                    setApplicantType(e.target.value.split(",")[0]);
+                    setUserId(e.target.value.split(",")[0]);
+                    setUserType(e.target.value.split(",")[1]);
                     setAdminPage(1);
                     setTaskPage(1);
                     setReplyId("")
                     setTaskId("")
                   }}
+                  disabled={userType === "employee" || userType === "employer"}
                   className="form-control bg-white dashboard_select rounded-3"
                 >
                   <option value={""}>Select Applicant type</option>
@@ -224,7 +231,7 @@ export default function ManageTask() {
                         className="text-capitalize"
                         key={index}
                         value={
-                          item.id
+                          `${item.id},applicant_type`
                         }
                       >
                         {item.title}
@@ -299,12 +306,17 @@ export default function ManageTask() {
                         + Add New Task
                       </Link>
                     </h3>
-                    <ExportExcelButton tableData={allTaskList} tableName={"task"} portal={""} applicantType={""} status={""} local={""} type={""} />
+                    <div className="mt-4">
+                      <CommonThreeDots
+                        tableName={"task"}
+                        tableData={allTaskList} />
+                    </div>
                   </div>
                   {showTaskForm ? (
                     <AddTaskForm
-                      userId={userId}
-                      TaskUserType={userType}
+                      // userId={userId}
+                      // TaskUserType={userType}
+                      employee_employer_applicantType_list={[...employeeList, ...applicantTypeList]}
                       setApiCall={setApiCall}
                       setShowTaskForm={setShowTaskForm}
                       updateTaskData={updateTaskData}
@@ -334,7 +346,6 @@ export default function ManageTask() {
                     statusList={statusList}
                     byAdminId={byAdminId}
                     byAdminType={byAdminType}
-                    applicantType={applicantType}
                   />
                 </div>
 

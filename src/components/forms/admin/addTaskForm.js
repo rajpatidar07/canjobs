@@ -11,6 +11,8 @@ export default function AddTaskForm(props) {
   const [selectedAdmin, setSelectedAdmin] = useState([]);
   const [groupBy, setGroupBy] = useState([]);
   const [status, setStatus] = useState([]);
+  const [userid, setUserId] = useState('');
+  const [selectUserType, setSelectUserType] = useState('');
   const [priority, setPriority] = useState([]);
   const [selectedStatus, setSelectedStatus] = useState("");
   const [selectedPriority, setSelectedPriority] = useState("");
@@ -132,12 +134,12 @@ export default function AddTaskForm(props) {
         assignedUserType, //Assign user type,
         "", //Document url(for notes only)
         admin_email, //Sender email
-        props.userId ? props.userId : "", //employee id,
+        userid || "", //employee id,
         "", //assigned_by_id
         "", // document parent code
         "", //Annotation data,
         "", //annotationId
-        props.userId ? props.TaskUserType : "", //User type of document
+        selectUserType || "", //User type of document
         "", //document name
         stardivate,
         endDate,
@@ -380,6 +382,45 @@ export default function AddTaskForm(props) {
                 {user.value}
               </option>
             ))}
+          </select>
+        </div>
+        <div className="mb-3 form-group col">
+          <label
+            htmlFor="userId" className="font-size-3 text-black-2  line-height-reset ">Applicant/Applicant Type/Client:</label>
+          <select
+            name="userId"
+            value={userid + "," + selectUserType}
+            id="userId"
+            onChange={(e) => {
+              console.log(e.target.value.split(",")[1])
+              setUserId(e.target.value.split(",")[0]);
+              setSelectUserType(e.target.value.split(",")[1]);
+            }}
+            className="form-control mt-3"
+          >
+            <option value={""}>Select Applicant/Client</option>
+            {(props.employee_employer_applicantType_list || []).map((item, index) => {
+              return (
+                <option
+                  className="text-capitalize"
+                  key={index}
+                  value={
+                    item.employee_id
+                      ? `${item.employee_id},employee`
+                      : item.company_id
+                        ? `${item.company_id},employer`
+                        : `${item.id},applicant_type`
+                  }
+                >
+                  {item.employee_id
+                    ? (item.name + " (Candidate)")
+                    : item.company_id
+                      ? item.company_name + " (Client)"
+                      : item.title + " (Applicant Type)" ||
+                      "unknown user"}
+                </option>
+              );
+            })}{" "}
           </select>
         </div>
         <div className="mb-3 form-group col">

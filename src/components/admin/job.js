@@ -8,7 +8,7 @@ import AddJobModal from "../forms/employer/job";
 import { GetAllJobs, GetFilter } from "../../api/api";
 import FilterJson from "../json/filterjson";
 import JobTable from "../common/jobTable";
-import ExportExcelButton from "../common/exportExcelButton";
+import CommonThreeDots from "../common/commonThreeDots";
 
 function Job(props) {
   /*show Modal and props state */
@@ -308,7 +308,7 @@ function Job(props) {
                     </div>
                   </div>
                   <div className="text-end col-xl-12">
-                    <div className="float-md-right">
+                    <div className="float-md-right d-flex">
                       <CustomButton
                         className="font-size-3 rounded-3 btn btn-primary border-0"
                         onClick={() => editJob("0")}
@@ -316,7 +316,11 @@ function Job(props) {
                       >
                         Add Job
                       </CustomButton>
-                      <ExportExcelButton tableName={"job"} portal={""} applicantType={""} status={""} local={""} type={""} tableData={allJob} />
+                      <div className="mt-4">
+                        <CommonThreeDots
+                          tableName={"job"}
+                          tableData={allJob} />
+                      </div>
                       {/*<-- Add Job Modal -->*/}
                     </div>
                     <small className="text-danger">{searcherror}</small>

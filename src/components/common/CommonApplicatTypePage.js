@@ -4,15 +4,11 @@ import AdminSidebar from '../admin/sidebar';
 import ApplicantsFilter from './applicantsFilter';
 import EmployeeTable from './employeeTable';
 import { getApplicanTypeApi } from '../../api/api';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import ApplicantTypeDocuments from './ApplicantTypeDocuments';
-import { BsThreeDots } from 'react-icons/bs';
-import { GrLineChart } from "react-icons/gr";
-import { HiOutlineBell } from "react-icons/hi2";
-import { BsChat } from "react-icons/bs";
 import ModalSidebar from "./modalSidebar";
 import CommentTaskBox from "./commonTaskBox";
-import ExportExcelButton from './exportExcelButton';
+import CommonThreeDots from './commonThreeDots';
 
 export default function CommonApplicatTypePage() {
     /*Filter and search state */
@@ -38,7 +34,6 @@ export default function CommonApplicatTypePage() {
     const [searcherror, setSearchError] = useState("");
     let [apiCall, setApiCall] = useState(false);
     let [showGrpChatBox, setShowGrpChatBox] = useState(false);
-    let [isOpen, setIsOpen] = useState(false);
     const [applicantTypeId, setApplicanttypeId] = useState(ApplicantTypeUrlId ? ApplicantTypeUrlId : location?.state?.applicantType || "");
     const [applicantTypeFolderId, setApplicanttypeFolderId] = useState(location?.state?.folderId || "");
     const [applicantTypename, setApplicanttypeName] = useState("");
@@ -154,50 +149,10 @@ export default function CommonApplicatTypePage() {
                                     Documents
                                 </button>
                             </div>
-                            <div
-                                className="position-relative d-inline-block header-btn-devider ml-auto ml-lg-5 pl-2 d-xs-flex align-items-center"
-                                onMouseEnter={() => setIsOpen(true)}
-                                onMouseLeave={() => setIsOpen(false)}
-                                onClick={() => setIsOpen(true)}
-                            >
-                                <Link
-                                    className="d-flex align-items-center justify-content-center"
-                                >
-                                    <BsThreeDots size={15} />
-                                </Link>
-
-                                {isOpen && (
-                                    <div className="dropdown-menu show position-absolute bg-white shadow rounded border-0 "
-                                        style={{ left: "auto", right: "0" }} // Align dropdown to the left
-                                    >
-                                        {user_type !== "agent" && (
-                                            <Link to="#" className="dropdown-item align-items-center d-none">
-                                                <HiOutlineBell className="mx-3" /> Notification
-                                            </Link>
-                                        )}
-                                        {user_type !== "agent" && (
-                                            <Link to="#" className="dropdown-item d-none align-items-center ">
-                                                <GrLineChart className="mx-3" /> Activity Log
-                                            </Link>
-                                        )}
-                                        {user_type !== "agent" && (
-                                            <button
-                                                onClick={() => setShowGrpChatBox(true)}
-                                                className="dropdown-item d-flex align-items-center border-0 bg-transparent m-3"
-                                            >
-                                                <BsChat className="mx-3" /> Group discussion
-                                            </button>
-                                        )}
-
-                                        {user_type !== "agent" && (
-                                            <div
-                                                className="dropdown-item d-flex align-items-center border-0 bg-transparent"
-                                            >
-                                                <ExportExcelButton tableName={"employee"} type={""} portal={""} applicantType={applicantTypeId} status={"-1"} local={""} tableData={[]} />                                           </div>
-                                        )}
-                                    </div>
-                                )}
-                            </div>
+                            <CommonThreeDots setShowGrpChatBox={setShowGrpChatBox}
+                                applicantTypeId={applicantTypeId}
+                                tableName={"employee"} 
+                                exportCandidatestatus={"4,7,8,9"}/>
                         </div>
                         {selectedTab === "candidate" ? <div>
                             <div className="mb-18">

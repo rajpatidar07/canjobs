@@ -14,7 +14,7 @@ import Executivelist from "../common/executivelist";
 import { BsEnvelope } from "react-icons/bs";
 import { BiPhoneCall } from "react-icons/bi";
 import { Link } from "react-router-dom";
-import ExportExcelButton from "../common/exportExcelButton";
+import CommonThreeDots from "../common/commonThreeDots";
 function ManageAdmin() {
   /*data and id state */
   let [apiCall, setApiCall] = useState(false);
@@ -272,8 +272,9 @@ function ManageAdmin() {
                         Add Admin
                       </CustomButton>
                     </div>
-                    <div className="form_group text-right">
-                      <ExportExcelButton tableName={"admin"} portal={""} applicantType={""} status={""} local={""} type={""} />
+                    <div className="mt-4">
+                      <CommonThreeDots
+                        tableName={"admin"} />
                     </div>
                   </div>
                   <small className="text-danger">{searcherror}</small>

@@ -321,8 +321,8 @@ function Addfollowup(props) {
     // }
 
     setUserErrorforadminAssign("");
-
-    if (assigned_by_type === "admin") {
+    console.log(user_type)
+    if (user_type === "admin" || user_type === "agent") {
       if (lastChar === "@") {
         setDropdownVisible(true);
         setFilteredEmails(AdminList);

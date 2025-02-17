@@ -72,8 +72,8 @@ const ExportExcelButton = ({ tableName, portal, applicantType, status, local, ty
             } else { handleDownload(e) }
         }}
             title={`Export ${getDownloadTitle()} Excel`}
-            className={`btn ${applicantType ? "" :"action_btn"}  `}>
-            <TfiExport className={`${applicantType?"mx-3 font-size-3":"font-size-4"}  text-gray`} />{applicantType ? "  Export Excel" : ""}
+            className={`btn `}>
+            <TfiExport className={`font-size-4 text-gray mx-3`} /> Export Excel
         </button>
     );
 };

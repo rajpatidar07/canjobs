@@ -36,11 +36,11 @@ import { PiBriefcaseLight } from "react-icons/pi";
 import ConvertTime from "./Common function/ConvertTime";
 import VisaTimeLine from "./visaTimeLine";
 import CustomButton from "./button";
-import ExportExcelButton from "./exportExcelButton";
 import determineBackgroundColor from "./Common function/DetermineBackgroundColour";
 import CommentTaskBox from "./commonTaskBox";
 import ModalSidebar from "./modalSidebar";
 import { BsChat } from "react-icons/bs";
+import CommonThreeDots from "./commonThreeDots";
 export default function EmployeeTable(props) {
   let agentId = localStorage.getItem("agent_id");
   let user_type = localStorage.getItem("userType");
@@ -692,8 +692,14 @@ export default function EmployeeTable(props) {
                   </div>
                 </>
               ) : null}
-            <div className={props.ApplicantType ? "d-none" : "form_group text-right"}>
-              <ExportExcelButton tableName={"employee"} type={""} portal={portal} applicantType={props?.ApplicantType ? props?.ApplicantType : props.interestFilterValue} status={status === "00" || !status ? "" : status} local={props.localFilterValue ? props.localFilterValue : ""} tableData={[]} />
+            <div className={props.ApplicantType ? "d-none" : ""}>
+              <div className="mt-2">
+                <CommonThreeDots
+                  tableName={"employee"}
+                  local={props.localFilterValue ? props.localFilterValue : ""}
+                  portal={portal}
+                  exportCandidatestatus={status === "00" || !status ? "" : status} tableData={[]} />
+              </div>
             </div>
           </div>
         )}
@@ -936,7 +942,7 @@ export default function EmployeeTable(props) {
                 {/* Map function to show the data in the list*/}
                 {totalData === 0 || employeeData.length === 0 ? (
                   <tr>
-                    <th colSpan={13} className="bg-white text-center">
+                    <th colSpan={14} className="bg-white text-center">
                       No Data Found
                     </th>
                   </tr>

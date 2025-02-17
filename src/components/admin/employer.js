@@ -7,7 +7,7 @@ import EmployerProfile from "../company/profile";
 import CompanyDetails from "../forms/employer/companyDetail";
 import EmployerTable from "../common/employerTable";
 import { GetFilter } from "../../api/api";
-import ExportExcelButton from "../common/exportExcelButton";
+import CommonThreeDots from "../common/commonThreeDots";
 function Employer() {
   /*show modal and data, id state */
   let [apiCall, setApiCall] = useState(false);
@@ -178,7 +178,7 @@ function Employer() {
                     </div>
                   </div>
                   <div className="col p-1 d-flex justify-content-evenly ">
-                    <div className=" w-100 form_group mt-6 text-right">
+                    <div className=" w-100 form_group mt-3 text-right">
                       <CustomButton
                         style={{ height: "32px" }}
                         className="font-size-3 btn-block rounded-3 btn btn-primary border-0"
@@ -187,8 +187,9 @@ function Employer() {
                         Add Client
                       </CustomButton>
                     </div>
-                    <div className=" px-1 form_group mt-4 text-right">
-                      <ExportExcelButton tableData={[]} tableName={"employer"} portal={""} applicantType={""} status={""} local={""} type={""} />
+                    <div className=" mt-6 text-right">
+                      <CommonThreeDots
+                        tableName={"employer"} />
                     </div>
                   </div>
                 </div>
