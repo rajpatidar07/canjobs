@@ -1044,26 +1044,26 @@ export const SendReplyCommit = async (
   docName
 ) => {
   // console.log("  id =>", id,
-    //   "doc_id =>", data.doc_id,
-    // "task_id =>", data.task_id,
-    // "sender_id =>", senderId,
-    // "sender_email =>", senderEmail,
-    // "sender_name =>", SenderName,
-    // "sender_type =>", senderType,
-    // "receiver_id =>", recid,
-    // "receiver_type =>", adminType,
-    // "mention =>", email,
-    // "receiver_name =>", assignName,
-    // "document_url =>", "",
-    // "next_followup_date =>", "",
-    // "followup_status =>", "",
-    // "subject =>", "",
-    // "msg =>", msg,
-    // "type =>", type,
-    // "employee_id =>", employee_id,
-    // "doc_parent_id =>", parent_id,
-    //  "data =>", data,
-    // data.task_id ? "fff" : "mmmm"
+  //   "doc_id =>", data.doc_id,
+  // "task_id =>", data.task_id,
+  // "sender_id =>", senderId,
+  // "sender_email =>", senderEmail,
+  // "sender_name =>", SenderName,
+  // "sender_type =>", senderType,
+  // "receiver_id =>", recid,
+  // "receiver_type =>", adminType,
+  // "mention =>", email,
+  // "receiver_name =>", assignName,
+  // "document_url =>", "",
+  // "next_followup_date =>", "",
+  // "followup_status =>", "",
+  // "subject =>", "",
+  // "msg =>", msg,
+  // "type =>", type,
+  // "employee_id =>", employee_id,
+  // "doc_parent_id =>", parent_id,
+  //  "data =>", data,
+  // data.task_id ? "fff" : "mmmm"
   // )
   const response = await axios.post(
     `${API_URL}admin/sendMsg?document_user_type=${DocUserType}`,
@@ -3738,4 +3738,34 @@ export const GetApplyProgram = async (search, employerId, employee_type, limit, 
     }
   );
   return response.data;
+}
+/* Api to Add Update Daily Call Log */
+export const AddUpdateDailCallLogApi = async (data) => {
+  const response = await axios.post(
+    `${API_URL}admin/addUpdateCallLog`,
+    data
+    ,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+}
+/* Api to get Daily Call Log */
+export const getDailyCallLogApi = async (serchName, searchPhone, page, limit) => {
+  const response = await axios.post(
+    `${API_URL}admin/getCallLog`,
+    { "name": serchName, "phone": searchPhone, "page": page, "limit": limit }
+    ,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
 }

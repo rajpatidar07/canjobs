@@ -2280,3 +2280,37 @@ ul.css-8tnble li {
   justify-content: center;
   align-items: center;
 }
+
+/* Sticky column base styles */
+.table_sticky_col {
+  position: sticky;
+  transition: background 0.3s ease;
+  min-width: 150px;
+}
+
+/* Individual sticky columns with adjusted z-index values */
+.sticky_col1 {
+  left: 0;
+  z-index: 3;
+}
+
+.sticky_col2 {
+  left: 150px;
+  z-index: 2;
+}
+
+.sticky_col3 {
+  left: 300px;
+  z-index: 1;
+}
+
+.scrolled .table_sticky_col {
+  background-color: white;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Create a new stacking context for the cell content */
+.table_sticky_col > * {
+  position: relative;
+  z-index: 1;
+}

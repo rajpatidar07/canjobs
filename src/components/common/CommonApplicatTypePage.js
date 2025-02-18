@@ -41,6 +41,19 @@ export default function CommonApplicatTypePage() {
     let localApplicantTypeId = localStorage.getItem("applicantType")
     let localApplicantTypeFolderId = localStorage.getItem("applicantTypeFolderId")
     useEffect(() => {
+        if (taskId) {
+            setTaskId(taskId)
+            if (notifiType === "candidate") {
+                setSelectedTab("candidate")
+            }
+        }
+        if (docId) {
+            setSelectedTab("documents")
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [location.key])
+
+    useEffect(() => {
         // Update only if applicantType is present
         if ((notifiType === "group" || notifiType === "candidate") && ApplicantTypeUrlId) {
             setApplicanttypeId(ApplicantTypeUrlId);
@@ -59,14 +72,11 @@ export default function CommonApplicatTypePage() {
                 setApplicanttypeFolderId(localApplicantTypeFolderId);
             }
         }
-        if (taskId) {
-            setTaskId(taskId)
-        }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ApplicantTypeUrlId, taskId, notifiType, location?.state?.applicantType, location?.state?.folderId, docId, localApplicantTypeId, localApplicantTypeFolderId]);
+    }, [location.key, ApplicantTypeUrlId, taskId, notifiType, location?.state?.applicantType, location?.state?.folderId, docId, localApplicantTypeId, localApplicantTypeFolderId]);
     useEffect(() => {
         if (!applicantTypeId) return;
-
         getApplicanTypeApi()
             .then((res) => {
                 const foundItem = (res.data.data || []).find((item) => item.id === applicantTypeId);
@@ -86,7 +96,8 @@ export default function CommonApplicatTypePage() {
             });
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [ApplicantTypeUrlId, applicantTypeId, taskId, notifiType]);
+    }, [location.key, ApplicantTypeUrlId, applicantTypeId, taskId, notifiType]);
+
     /*Function to search the employee */
     const onSearch = (e) => {
         const inputValue = e.target.value;
@@ -151,8 +162,8 @@ export default function CommonApplicatTypePage() {
                             </div>
                             <CommonThreeDots setShowGrpChatBox={setShowGrpChatBox}
                                 applicantTypeId={applicantTypeId}
-                                tableName={"employee"} 
-                                exportCandidatestatus={"4,7,8,9"}/>
+                                tableName={"employee"}
+                                exportCandidatestatus={"4,7,8,9"} />
                         </div>
                         {selectedTab === "candidate" ? <div>
                             <div className="mb-18">
@@ -235,7 +246,7 @@ export default function CommonApplicatTypePage() {
                         taskUserType={"applicant_type"}
                         setOpenReplyBox={setShowGrpChatBox}
                         openReplyBox={showGrpChatBox}
-                        taskName={"Group Chat"}
+                        taskName={"Group discussion"}
                         TaskId={TaskId}
                     />
                 }
@@ -247,7 +258,7 @@ export default function CommonApplicatTypePage() {
                         taskUserType={"applicant_type"}
                         setOpenReplyBox={setShowGrpChatBox}
                         openReplyBox={showGrpChatBox}
-                        taskName={"Group Chat"}
+                        taskName={"Group discussion"}
                         TaskId={TaskId}
                     />
                 ) : null}

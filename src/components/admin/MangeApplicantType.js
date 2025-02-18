@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import ApplicantTypeTable from "../common/ApplicantTypeTable";
 import AdminHeader from "./header";
 import AdminSidebar from "../admin/sidebar";
-// import ExportExcelButton from "../common/exportExcelButton";
 import { getApplicanTypeApi } from "../../api/api";
 import AddApplicantType from "../forms/admin/AddApplicantType";
 
@@ -87,9 +86,6 @@ export default function ManageApplicantType(props) {
               >
                 Add Applicant Type
               </button>
-              {/* <ExportExcelButton
-                tableName={"Applicanttype"}  portal={""} applicantType={""}  status={""} local={""} type={""} tableData={allApplicantType}
-              /> */}
             </div>
             {/*<-- Applicant type  Table -->*/}
             <ApplicantTypeTable

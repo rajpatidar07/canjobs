@@ -14,9 +14,9 @@ import FolderList from './Document folder/FolderList';
 import EditDocNameForm from './Document folder/EditDocNameFOrm';
 import SAlert from './sweetAlert';
 export default function ApplicantTypeDocuments(props) {
-  
+
   const [docFileBase, setDocFileBase] = useState([])
-    const [state, setState] = useState({
+  const [state, setState] = useState({
     docTypeName: "",
     openNoteForm: false,
     newType: "",
@@ -360,7 +360,6 @@ export default function ApplicantTypeDocuments(props) {
           docNoteData: res.data.notes ? res.data.notes : {},
         })
         );
-        console.log(props?.notification)
         if (props?.notification === "yes") {
           const currentDoc = res.data.data.find((item) => item.id === state?.fileID ? state?.fileID : props?.docId);
           if (currentDoc) {
@@ -455,7 +454,7 @@ export default function ApplicantTypeDocuments(props) {
   }, [state.apiCall, state.folderID,]);
 
   useEffect(() => {
-    if (props.folderId !== state.folderID) {
+    if (props.folderId !== state.folderID && props?.notification === "yes") {
       setState((prev) => ({
         ...prev, folderID: props.folderId
       }));
@@ -614,7 +613,7 @@ export default function ApplicantTypeDocuments(props) {
                         <Form.Control type="text" value={state.newType} placeholder="Enter new type" height={34} className="px-2" onChange={handleNewTypeChange} />
                         <button className="btn btn-sm btn-primary" type="button" style={{ maxHeight: 34 }} onClick={() => handleDocTypeChange(state.newType)}>Save</button>
                         <button className="btn btn-sm btn-secondary" type="button" style={{ maxHeight: 34 }} onClick={() => setState((prev) => ({
-                          ...prev, newType: "",docTypeName:""
+                          ...prev, newType: "", docTypeName: ""
                         }))}>Cancel</button>
                       </>
                     ) : (

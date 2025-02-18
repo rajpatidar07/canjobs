@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import PersonalDetails from "../forms/user/personal";
 import Education from "../forms/user/education";
 import Skills from "../forms/user/skills";
@@ -46,13 +46,13 @@ export default function EmployeeTable(props) {
   let user_type = localStorage.getItem("userType");
   let StatusTab = localStorage.getItem("StatusTab");
   let portal = localStorage.getItem("portal")
-  // const location = useLocation();
-  const searchParams = new URLSearchParams(window.location.search);
-  let canID = searchParams.get("canId") || "";
-  let taskID = searchParams.get("taskId") || "";
-  let notifiType = searchParams.get("notifiType") || "";
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  let canID = searchParams.get("canId");
+  let taskID = searchParams.get("taskId");
+  let notifiType = searchParams.get("notifiType");
   let [CandidateId, setCandidateId] = useState(canID || "")
-  let [TaskId, setTaskId] = useState(taskID)
+  let [TaskId, setTaskId] = useState(taskID | "")
   /*Show modal states */
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
@@ -141,14 +141,16 @@ export default function EmployeeTable(props) {
           );
         } else {
           setemployeeData(userData.data);
+          // console.log(canID, taskID, "TaskId =>", TaskId, "CandidateId =>", CandidateId, notifiType)
           if (TaskId && CandidateId && notifiType === "candidate") {
-            setShowChatModal(true)
-            setemployeeId(userData.data[0])
-            const newUrl = window.location.pathname;
-            window.history.replaceState({}, document.title, newUrl);
-            localStorage.setItem("navigation_url", "")
-            setCandidateId("")
+            setShowChatModal(true);
+            setemployeeId(userData.data[0] || "");
+            window.history.replaceState({}, document.title, window.location.pathname);
+            localStorage.removeItem("navigation_url");
+            setCandidateId("");
+            setTaskId("");
           }
+
         }
         setTotalData(userData.total_rows);
         setIsLoading(false);
@@ -175,7 +177,10 @@ export default function EmployeeTable(props) {
       console.log(err);
     }
   };
-
+  useEffect(() => {
+    if (canID) setCandidateId(canID);
+    if (taskID) setTaskId(taskID);
+  }, [canID, taskID]);
   /*Render function to get the employer*/
   useEffect(() => {
     EmpData();
@@ -186,17 +191,11 @@ export default function EmployeeTable(props) {
     if (alredyApplied === true) {
       setAlredyApplied(false);
     }
-    if (canID) {
-      setCandidateId(canID)
-    }
-    if (taskID) {
-      setTaskId(taskID)
-    }
+
     // eslint-disable-next-line
   }, [
-    canID,
-    taskID,
-    notifiType,
+    CandidateId,
+    TaskId,
     props.experienceFilterValue,
     props.skillFilterValue,
     props.educationFilterValue,
@@ -462,7 +461,7 @@ export default function EmployeeTable(props) {
             setOpenReplyBox={setShowChatModal}
             openReplyBox={showChatModal}
             taskName={"Discussion for Candidate"}
-            TaskId={TaskId}
+            TaskId={taskID}
           />
         }
       >
@@ -474,7 +473,7 @@ export default function EmployeeTable(props) {
             setOpenReplyBox={setShowChatModal}
             openReplyBox={showChatModal}
             taskName={"Discussion for Candidate"}
-            TaskId={TaskId}
+            TaskId={taskID}
           />
         ) : null}
       </ModalSidebar>
