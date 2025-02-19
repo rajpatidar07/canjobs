@@ -362,7 +362,8 @@ export const getallEmployeeData = async (
       interested_in_id: portal === "study" ? 13 : inserted,
       agent_id: agentId,
       assigned_by: assignedadminId,
-      category: subType,
+      // category: subType,
+      category_id: subType,
       employee_id: employee_id,
       is_local: localFilterValue,
       sub_category: ""

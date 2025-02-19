@@ -31,7 +31,8 @@ export default function ApplicantsFilter({
   filterByEmployeeId,
   statustFilterValue,
   setStatustFilterValue,
-  applicantTypeId
+  applicantTypeId,
+  applicantTypeChildId
 }) {
   // let [SkillList, setSkillList] = useState([]);
   // let [EducationList, setEducationList] = useState([]);
@@ -401,7 +402,7 @@ export default function ApplicantsFilter({
       <div
         className={
           (skill === null || skill === undefined) && (
-            [14, "14", 15, "15", 16, "16", 4, "4"].includes(pageName) || pageName === "employee")
+            [14, "14", 15, "15", 16, "16", 4, "4"].includes(pageName) || pageName === "employee") && !applicantTypeChildId
             ? "col p-1 form_group mb-3"
             : "d-none"
         }

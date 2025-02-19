@@ -22,6 +22,7 @@ import { SiStudyverse } from "react-icons/si";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 import { FaPersonShelter } from "react-icons/fa6";
 import { getApplicanTypeApi } from "../../api/api";
+import { Accordion } from "react-bootstrap";
 // import AddApplicantType from "../forms/admin/AddApplicantType";
 // import { BiTrash } from "react-icons/bi";
 // import SAlert from "../common/sweetAlert";
@@ -65,17 +66,21 @@ const AdminSidebar = (props) => {
     }
   };
   useEffect(() => {
-    getAllSlotsData();
     if (props.heading) {
       const activityLi = liRefs.current[props.heading];
       if (activityLi) {
         activityLi.scrollIntoView({ behavior: "smooth" });
       }
     }
+
+  }, [props.heading,]);
+  useEffect(() => {
+    getAllSlotsData();
     if (apiCall === true) {
       setApiCall(false);
     }
-  }, [props.heading, apiCall]);
+  }, [apiCall])
+
   /*To call Api to delete employee */
   // async function deleteApplicantType(id) {
   //   let data = {
@@ -697,7 +702,7 @@ const AdminSidebar = (props) => {
             Permanent Resident Cards
           </Link>
         </li> */}
-        {applicanttypedata
+        {/* {applicanttypedata
           .filter((item) => item.parent_id === "0")
           .map((item) => (
             <li
@@ -722,7 +727,7 @@ const AdminSidebar = (props) => {
                 <BsReverseLayoutTextSidebarReverse className="sidebar_icon" />
                 <span className="text-truncate">{item.title}</span>
               </Link>
-              {/* {showDropDownApplicantTypeData === item.id && (
+              {showDropDownApplicantTypeData === item.id && (
                 <ul className="list-group ">
                   <li className="list-group-item">
                     <Link
@@ -748,10 +753,62 @@ const AdminSidebar = (props) => {
                       <BiTrash size={15} />
                     </Link>
                   </li>
-                </ul>)} */}
+                </ul>)}
+            </li>
+          ))} */}
+        {applicanttypedata
+          .filter((item) => item.parent_id === "0")
+          .map((item, index) => (
+            <li
+              key={item.id}
+              className={`position-relative ${user_type === "agent"
+                ? "d-none"
+                : props.heading === item.title
+                  ? "active"
+                  : ""
+                }`}
+              title={item.title}
+            >
+              <Accordion>
+                <Accordion.Item eventKey={index.toString()}>
+                  <Accordion.Header className="d-flex align-items-center gap-2 py-2 px-3 border-bottom font-size-5 font-weight-normal text-capitalize">{item.title}</Accordion.Header>
+                  <Accordion.Body>
+                    <ul>
+                      {applicanttypedata
+                        .filter((child) => child.parent_id === item.id)
+                        .map((child) => (
+                          <li
+                            key={child.id}
+                            className={`position-relative ${user_type === "agent"
+                              ? "d-none"
+                              : props.heading === child.title
+                                ? "active"
+                                : ""
+                              }`}
+                            title={child.title}>
+                            <Link
+                              onClick={() => {
+                                clearPageNo();
+                              }}
+                              to={`/slots`}
+                              state={{
+                                applicantType: item.id,
+                                applicantTypeChild: child.id,
+                                folderId: child.doc_folder_id,
+                              }}
+                              className="d-flex align-items-center gap-2 py-2 px-3 border-bottom font-size-5 font-weight-normal text-capitalize"
+                            >
+                              <BsReverseLayoutTextSidebarReverse className="sidebar_icon" />
+                              <span className="text-truncate">{child.title}</span>
+                            </Link>
+                          </li>
+                        ))}
+                    </ul>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>
             </li>
           ))}
-
         <li
           ref={(el) => (liRefs.current["Manage Applicant Type"] = el)}
           className={

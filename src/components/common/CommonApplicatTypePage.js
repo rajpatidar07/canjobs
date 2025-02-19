@@ -21,6 +21,7 @@ export default function CommonApplicatTypePage() {
     let docHighAnnoId = searchParams.get("annotationId");
     let notifiType = searchParams.get("notifiType") || "";
     const ApplicantTypeUrlId = searchParams.get("sId");
+    let ApplicantTypeChildUrlId = searchParams.get("sCId");
     let [TaskId, setTaskId] = useState(taskId)
     const [experienceFilterValue, setExperienceFilterValue] = useState("");
     const [skillFilterValue, setSkillFilterValue] = useState("");
@@ -35,10 +36,12 @@ export default function CommonApplicatTypePage() {
     let [apiCall, setApiCall] = useState(false);
     let [showGrpChatBox, setShowGrpChatBox] = useState(false);
     const [applicantTypeId, setApplicanttypeId] = useState(ApplicantTypeUrlId ? ApplicantTypeUrlId : location?.state?.applicantType || "");
+    const [applicantTypeChildId, setApplicanttypeChildId] = useState(ApplicantTypeChildUrlId ? ApplicantTypeChildUrlId : location?.state?.applicantTypeChildId || "");
     const [applicantTypeFolderId, setApplicanttypeFolderId] = useState(location?.state?.folderId || "");
     const [applicantTypename, setApplicanttypeName] = useState("");
     const [selectedTab, setSelectedTab] = useState(docId ? "documents" : "candidate");
-    let localApplicantTypeId = localStorage.getItem("applicantType")
+    let localApplicantTypeId = localStorage.getItem("applicantType");
+    let localApplicantTypeChildId = localStorage.getItem("applicantTypeChild");
     let localApplicantTypeFolderId = localStorage.getItem("applicantTypeFolderId")
     useEffect(() => {
         if (taskId) {
@@ -57,6 +60,7 @@ export default function CommonApplicatTypePage() {
         // Update only if applicantType is present
         if ((notifiType === "group" || notifiType === "candidate") && ApplicantTypeUrlId) {
             setApplicanttypeId(ApplicantTypeUrlId);
+            setApplicanttypeChildId(ApplicantTypeChildUrlId)
             localStorage.setItem("applicantType", ApplicantTypeUrlId)
         } else {
             if (location?.state?.applicantType && location?.state?.applicantType !== applicantTypeId) {
@@ -64,6 +68,12 @@ export default function CommonApplicatTypePage() {
                 localStorage.setItem("applicantType", location.state.applicantType)
             } else {
                 setApplicanttypeId(localApplicantTypeId);
+            }
+            if (location?.state?.applicantTypeChild && location?.state?.applicantTypeChild !== applicantTypeChildId) {
+                setApplicanttypeChildId(location.state.applicantTypeChild);
+                localStorage.setItem("applicantTypeChild", location.state.applicantTypeChild)
+            } else {
+                setApplicanttypeFolderId(localApplicantTypeChildId);
             }
             if (location?.state?.folderId && location?.state?.folderId !== applicantTypeFolderId) {
                 setApplicanttypeFolderId(location.state.folderId);
@@ -74,12 +84,13 @@ export default function CommonApplicatTypePage() {
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [location.key, ApplicantTypeUrlId, taskId, notifiType, location?.state?.applicantType, location?.state?.folderId, docId, localApplicantTypeId, localApplicantTypeFolderId]);
+    }, [location.key, ApplicantTypeUrlId, taskId, notifiType, location?.state?.applicantType, location?.search?.applicantTypeChild, location?.state?.folderId, docId, localApplicantTypeId, localApplicantTypeFolderId]);
     useEffect(() => {
         if (!applicantTypeId) return;
         getApplicanTypeApi()
             .then((res) => {
-                const foundItem = (res.data.data || []).find((item) => item.id === applicantTypeId);
+                let filterNameById = applicantTypeChildId ? applicantTypeChildId : applicantTypeId
+                const foundItem = (res.data.data || []).find((item) => item.id === filterNameById);
                 if (foundItem) {
                     setApplicanttypeName(foundItem.title);
                     setApplicanttypeFolderId(foundItem.doc_folder_id)
@@ -96,7 +107,7 @@ export default function CommonApplicatTypePage() {
             });
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [location.key, ApplicantTypeUrlId, applicantTypeId, taskId, notifiType]);
+    }, [location.key, ApplicantTypeUrlId, ApplicantTypeChildUrlId, applicantTypeChildId, applicantTypeId, taskId, notifiType]);
 
     /*Function to search the employee */
     const onSearch = (e) => {
@@ -197,6 +208,7 @@ export default function CommonApplicatTypePage() {
                                             pageName={applicantTypeId}
                                             categoryFilterValue={categoryFilterValue}
                                             setCategoryFilterValue={setCategoryFilterValue}
+                                            applicantTypeChildId={applicantTypeChildId}
                                         />
                                     </div>
                                     <small className="text-danger">{searcherror}</small>
@@ -216,7 +228,7 @@ export default function CommonApplicatTypePage() {
                                     pageNo={pageNo}
                                     setpageNo={setpageNo}
                                     ApplicantType={applicantTypeId}
-                                    categoryFilterValue={categoryFilterValue}
+                                    categoryFilterValue={applicantTypeChildId ? applicantTypeChildId : categoryFilterValue}
                                 />
                             </div>
                         </div> : <div>
