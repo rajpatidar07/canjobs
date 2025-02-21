@@ -594,7 +594,7 @@ const filterjson = {
     "completed"
   ],
   interested: [
-    "workpermit application",
+    "work permit application",
     "visitor visa",
     "super visa",
     "pnp",

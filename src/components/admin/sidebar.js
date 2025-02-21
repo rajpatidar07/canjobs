@@ -22,7 +22,7 @@ import { SiStudyverse } from "react-icons/si";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 import { FaPersonShelter } from "react-icons/fa6";
 import { getApplicanTypeApi } from "../../api/api";
-import { Accordion } from "react-bootstrap";
+// import { Accordion } from "react-bootstrap";
 // import AddApplicantType from "../forms/admin/AddApplicantType";
 // import { BiTrash } from "react-icons/bi";
 // import SAlert from "../common/sweetAlert";
@@ -42,6 +42,23 @@ const AdminSidebar = (props) => {
   // let view_as_admin_type = localStorage.getItem("view_as_token_admin_type");
   let admin_type = localStorage.getItem("admin_type");
   let user_type = localStorage.getItem("userType");
+  const [openParent, setOpenParent] = useState(null);
+
+  useEffect(() => {
+    // Keep parent open if a child is active
+    const activeChild = applicanttypedata.find((child) => child.title === props.heading);
+    if (activeChild) {
+      setOpenParent(activeChild.parent_id);
+    }
+  }, [props.heading, applicanttypedata]);
+
+  const toggleChildren = (parentId, hasChildren) => {
+    if (hasChildren) {
+      setOpenParent(openParent === parentId ? null : parentId);
+    } else {
+      clearPageNo();
+    }
+  };
   if (admin_type === "" || admin_type === null || admin_type === undefined) {
     // Redirect to the login page
     window.location.href = "/adminlogin";
@@ -758,57 +775,63 @@ const AdminSidebar = (props) => {
           ))} */}
         {applicanttypedata
           .filter((item) => item.parent_id === "0")
-          .map((item, index) => (
-            <li
-              key={item.id}
-              className={`position-relative ${user_type === "agent"
-                ? "d-none"
-                : props.heading === item.title
-                  ? "active"
-                  : ""
-                }`}
-              title={item.title}
-            >
-              <Accordion>
-                <Accordion.Item eventKey={index.toString()}>
-                  <Accordion.Header className="d-flex align-items-center gap-2 py-2 px-3 border-bottom font-size-5 font-weight-normal text-capitalize">{item.title}</Accordion.Header>
-                  <Accordion.Body>
-                    <ul>
-                      {applicanttypedata
-                        .filter((child) => child.parent_id === item.id)
-                        .map((child) => (
-                          <li
-                            key={child.id}
-                            className={`position-relative ${user_type === "agent"
-                              ? "d-none"
-                              : props.heading === child.title
-                                ? "active"
-                                : ""
-                              }`}
-                            title={child.title}>
-                            <Link
-                              onClick={() => {
-                                clearPageNo();
-                              }}
-                              to={`/slots`}
-                              state={{
-                                applicantType: item.id,
-                                applicantTypeChild: child.id,
-                                folderId: child.doc_folder_id,
-                              }}
-                              className="d-flex align-items-center gap-2 py-2 px-3 border-bottom font-size-5 font-weight-normal text-capitalize"
-                            >
-                              <BsReverseLayoutTextSidebarReverse className="sidebar_icon" />
-                              <span className="text-truncate">{child.title}</span>
-                            </Link>
-                          </li>
-                        ))}
-                    </ul>
-                  </Accordion.Body>
-                </Accordion.Item>
-              </Accordion>
-            </li>
-          ))}
+          .map((item) => {
+            const children = applicanttypedata.filter((child) => child.parent_id === item.id);
+            const hasChildren = children.length > 0;
+            return (
+              <li
+                key={item.id}
+                className={`position-relative ${user_type === "agent" ? "d-none" : props.heading === item.title ? "active" : ""
+                  }`}
+                ref={(el) => (liRefs.current[item.title] = el)}
+                title={item.title}
+                onClick={() => toggleChildren(item.id, hasChildren)}
+                style={{ cursor: hasChildren ? "pointer" : "default" }}
+              >
+                <Link
+                  to={!hasChildren ? `/slots` : ""}
+                  state={!hasChildren ? {
+                    applicantType: item.id,
+                    folderId: item.doc_folder_id,
+                  } : undefined}
+                  onClick={!hasChildren ? () => clearPageNo() : undefined}
+                  className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center text-Capitalize"
+                  style={{ textDecoration: "none" }}
+                >
+                  {item.title}
+                </Link>
+                {openParent === item.id && hasChildren && (
+                  <ul className="pl-3 list-unstyled">
+                    {children.map((child) => (
+                      <li
+                        key={child.id}
+                        className={`position-relative p-2 ${user_type === "agent" ? "d-none" : props.heading === child.title ? "active" : ""
+                          }`}
+                        ref={(el) => (liRefs.current[child.title] = el)}
+                        title={child.title}
+                        style={{ transition: "3" }}
+                      >
+                        <Link
+                          onClick={() => clearPageNo()}
+                          to={`/slots`}
+                          state={{
+                            applicantType: child.parent_id,
+                            applicantTypeChild: child.id,
+                            folderId: child.doc_folder_id,
+                          }}
+                          className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center text-Capitalize"
+                          style={{ textDecoration: "none" }}
+                        >
+                          <BsReverseLayoutTextSidebarReverse className="sidebar_icon" />
+                          <span className="text-truncate">{child.title}</span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            );
+          })}
         <li
           ref={(el) => (liRefs.current["Manage Applicant Type"] = el)}
           className={

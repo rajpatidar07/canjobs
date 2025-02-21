@@ -18,6 +18,10 @@ import { Link, useLocation } from "react-router-dom";
 import CommonThreeDots from "../common/commonThreeDots";
 
 export default function ManageTask() {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  let NotifiTaskId = searchParams.get("taskId") || ""
+  let NotifiReplyId = searchParams.get("replyId") || ""
   const [apiCall, setApiCall] = useState(false);
   const [userId, setUserId] = useState();
   const [adminId, setAdminId] = useState();
@@ -25,7 +29,7 @@ export default function ManageTask() {
   const [userType, setUserType] = useState();
   const [adminType, setAdminType] = useState();
   const [byAdminType, setByAdminType] = useState();
-  const [status, setStatus] = useState("-1");
+  const [status, setStatus] = useState(NotifiTaskId ? "" : "-1");
   const [statusList, setStatusList] = useState([]);
   let [applicantTypeList, setApplicantTypeList] = useState([])
   const [count, setCount] = useState();
@@ -36,10 +40,6 @@ export default function ManageTask() {
   const [updateTaskData, setUpdateTaskData] = useState();
   const [adminList, setAdminList] = useState([]);
   const [allTaskList, setAllTaskList] = useState([]);
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  let NotifiTaskId = searchParams.get("taskId") || ""
-  let NotifiReplyId = searchParams.get("replyId") || ""
   const [taskId, setTaskId] = useState(NotifiTaskId)
   const [replyId, setReplyId] = useState(NotifiReplyId)
   /*Function to get all user data */
@@ -82,17 +82,21 @@ export default function ManageTask() {
     }
   };
   useEffect(() => {
-    GetAllUserData();
-    if (apiCall === true) {
-      setApiCall(false);
-    }
     if (NotifiTaskId) {
       setTaskId(NotifiTaskId)
     }
     if (NotifiReplyId) {
       setReplyId(NotifiReplyId)
     }
-  }, [apiCall, NotifiTaskId, NotifiReplyId]);
+  }, [NotifiTaskId, NotifiReplyId])
+
+  useEffect(() => {
+    GetAllUserData();
+    if (apiCall === true) {
+      setApiCall(false);
+    }
+
+  }, [apiCall, taskId, replyId]);
   // console.log("Main page", NotifiTaskId, NotifiReplyId)
   return (
     <>
@@ -336,8 +340,8 @@ export default function ManageTask() {
                     pageNo={taskPage}
                     setpageNo={setTaskPage}
                     adminType={adminType}
-                    taskId={taskId}
-                    replyId={replyId}
+                    taskId={NotifiTaskId}
+                    replyId={NotifiReplyId}
                     setUpdateTaskData={setUpdateTaskData}
                     setShowTaskForm={setShowTaskForm}
                     setReplyId={setReplyId}

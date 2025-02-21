@@ -36,7 +36,7 @@ export default function CommonApplicatTypePage() {
     let [apiCall, setApiCall] = useState(false);
     let [showGrpChatBox, setShowGrpChatBox] = useState(false);
     const [applicantTypeId, setApplicanttypeId] = useState(ApplicantTypeUrlId ? ApplicantTypeUrlId : location?.state?.applicantType || "");
-    const [applicantTypeChildId, setApplicanttypeChildId] = useState(ApplicantTypeChildUrlId ? ApplicantTypeChildUrlId : location?.state?.applicantTypeChildId || "");
+    const [applicantTypeChildId, setApplicanttypeChildId] = useState(ApplicantTypeChildUrlId ? ApplicantTypeChildUrlId : location?.state?.applicantTypeChild || "");
     const [applicantTypeFolderId, setApplicanttypeFolderId] = useState(location?.state?.folderId || "");
     const [applicantTypename, setApplicanttypeName] = useState("");
     const [selectedTab, setSelectedTab] = useState(docId ? "documents" : "candidate");
@@ -213,6 +213,7 @@ export default function CommonApplicatTypePage() {
                                     </div>
                                     <small className="text-danger">{searcherror}</small>
                                 </div>
+                                {console.log("applicantTypeChildId", applicantTypeChildId)}
                                 {/*<-- Employee Table according to applicant Type -->*/}
                                 <EmployeeTable
                                     search={search}
