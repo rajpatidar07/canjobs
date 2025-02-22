@@ -22,22 +22,11 @@ import { SiStudyverse } from "react-icons/si";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 import { FaPersonShelter } from "react-icons/fa6";
 import { getApplicanTypeApi } from "../../api/api";
-// import { Accordion } from "react-bootstrap";
-// import AddApplicantType from "../forms/admin/AddApplicantType";
-// import { BiTrash } from "react-icons/bi";
-// import SAlert from "../common/sweetAlert";
-// import { toast } from "react-toastify";
 const AdminSidebar = (props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(
     localStorage.getItem("isMenuOpen")
   );
-  // const [showApplicantTypeForm, setShowApplicantTypeForm] = useState(false);
-  // const [updateApplicantTypeData, setUpdateApplicantTypeData] = useState();
-  // const [deleteApplicantTypeData, setDeleteApplicantTypeData] = useState();
-  // const [showDropDownApplicantTypeData, setShowDropDownApplicantTypeData] = useState(false);
-  // const [deleteAlertApplicantTypeData, setDeleteAlertApplicantTypeData] = useState(false);
-
-  const [apiCall, setApiCall] = useState(false);
+  // const [apiCall, setApiCall] = useState(false);
   let [applicanttypedata, setApplicanttypedata] = useState([]);
   // let view_as_admin_type = localStorage.getItem("view_as_token_admin_type");
   let admin_type = localStorage.getItem("admin_type");
@@ -93,30 +82,8 @@ const AdminSidebar = (props) => {
   }, [props.heading,]);
   useEffect(() => {
     getAllSlotsData();
-    if (apiCall === true) {
-      setApiCall(false);
-    }
-  }, [apiCall])
+  }, [])
 
-  /*To call Api to delete employee */
-  // async function deleteApplicantType(id) {
-  //   let data = {
-  //     "id": id,
-  //   }
-  //   try {
-  //     const response = await DeleteApplicanTypeApi(data);
-  //     if (response.status === 1 || response.status === "1") {
-  //       toast.error("Applicant Type deleted Successfully", {
-  //         position: toast.POSITION.TOP_RIGHT,
-  //         autoClose: 1000,
-  //       });
-  //       setDeleteAlertApplicantTypeData(false);
-  //       setApiCall(true);
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
   return (
     <div
       className={`dashboard-sidebar-wrapper pt-5 sidebar_parent ${isMenuOpen ? "show" : ""
@@ -744,33 +711,6 @@ const AdminSidebar = (props) => {
                 <BsReverseLayoutTextSidebarReverse className="sidebar_icon" />
                 <span className="text-truncate">{item.title}</span>
               </Link>
-              {showDropDownApplicantTypeData === item.id && (
-                <ul className="list-group ">
-                  <li className="list-group-item">
-                    <Link
-                      onClick={() => {
-                        setUpdateApplicantTypeData(item);
-                        setShowApplicantTypeForm(true);
-                      }}
-                      className="text-dark"
-                      title="Update Applicant Type"
-                    >
-                      <FaEdit size={15} />
-                    </Link>
-                  </li>
-                  <li className="list-group-item">
-                    <Link
-                      onClick={() => {
-                        setDeleteApplicantTypeData(item);
-                        setDeleteAlertApplicantTypeData(true);
-                      }}
-                      className="text-danger"
-                      title="Delete Applicant Type"
-                    >
-                      <BiTrash size={15} />
-                    </Link>
-                  </li>
-                </ul>)}
             </li>
           ))} */}
         {applicanttypedata

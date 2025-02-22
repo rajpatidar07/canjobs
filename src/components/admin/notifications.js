@@ -32,10 +32,10 @@ function Notifications({
     user_type === "admin"
       ? localStorage.getItem("admin_id")
       : user_type === "user"
-      ? localStorage.getItem("employee_id")
-      : user_type === "agent"
-      ? localStorage.getItem("agent_id")
-      : "";
+        ? localStorage.getItem("employee_id")
+        : user_type === "agent"
+          ? localStorage.getItem("agent_id")
+          : "";
   /*notification API Call*/
   const Notiication = async () => {
     try {
@@ -55,20 +55,20 @@ function Notifications({
         setNotiication(
           user_type === "agent"
             ? Response.Data.data.filter(
-                (item) => item.document_user_type !== "employer"
-              )
+              (item) => item.document_user_type !== "employer"
+            )
             : Response.Data.data
         );
         setTotalNotif(
           user_type === "agent"
             ? Response.Data.data.filter(
-                (item) =>
-                  item.document_user_type !== "employer" &&
-                  (item.is_read === 0 || item.is_read === "0")
-              ).length
+              (item) =>
+                item.document_user_type !== "employer" &&
+                (item.is_read === 0 || item.is_read === "0")
+            ).length
             : Response.Data.data.filter(
-                (item) => item.is_read === 0 || item.is_read === "0"
-              ).length
+              (item) => item.is_read === 0 || item.is_read === "0"
+            ).length
         );
       }
     } catch (err) {
@@ -258,91 +258,74 @@ function Notifications({
                         data.subject === "new_user_registered"
                           ? "/selfemployee"
                           : data.subject === "new_employer_registered"
-                          ? "/adminclient"
-                          : data.subject === "added_new_job"
-                          ? "/job"
-                          : data.subject === "applied_on_job"
-                          ? "/responses"
-                          : data.subject === "interview_scheduled"
-                          ? "/interview"
-                          : data.subject === "mention_document"
-                          ? data.document_user_type === "employer"
-                            ? `/client_detail?docId=${
-                                data.mention_id
-                              }&docParentId=${
-                                parseJsonSafely(data?.notif_json)
-                                  .doc_parent_id || ""
-                              }&annotationId=${
-                                parseJsonSafely(data?.notif_json)
-                                  .annotation_id || ""
-                              }&taskId=${
-                                parseJsonSafely(data?.notif_json).task_id || ""
-                              }`
-                            : data.document_user_type === "applicant_type"
-                            ? `/slots?docId=${data.mention_id}&docParentId=${
-                                parseJsonSafely(data?.notif_json)
-                                  .doc_parent_id || ""
-                              }&annotationId=${
-                                parseJsonSafely(data?.notif_json)
-                                  .annotation_id || ""
-                              }&taskId=${
-                                parseJsonSafely(data?.notif_json).task_id || ""
-                              }`
-                            : `/${data.employee_id}?docId=${
-                                data.mention_id
-                              }&docParentId=${
-                                parseJsonSafely(data?.notif_json)
-                                  .doc_parent_id || ""
-                              }&annotationId=${
-                                parseJsonSafely(data?.notif_json)
-                                  .annotation_id || ""
-                              }&taskId=${
-                                parseJsonSafely(data?.notif_json).task_id || ""
-                              }`
-                          : data.subject === "mention_partner"
-                          ? `/${data.employee_id}?partner=${data.from_id}`
-                          : data.subject === "mention_partnerChat"
-                          ? `/partner_profile?partner=${data.employee_id}`
-                          : data.subject === "assigned_admin_to_partner"
-                          ? "/partner_profile"
-                          : data.subject === "mention_notes" ||
-                            data.subject === "mention_note"
-                          ? data.document_user_type === "employer"
-                            ? `/client_detail?note=true&noteid=${
-                                parseJsonSafely(data?.notif_json).task_id || ""
-                              }`
-                            : data.document_user_type === "agent" &&
-                              window.location.pathname === "/partner_profile"
-                            ? `?note=true&noteid=${
-                                parseJsonSafely(data?.notif_json).task_id || ""
-                              }`
-                            : data.document_user_type === "agent"
-                            ? `/partner_profile?note=true&noteid=${
-                                parseJsonSafely(data?.notif_json).task_id || ""
-                              }`
-                            : `/${data.employee_id}?note=true&noteid=${
-                                parseJsonSafely(data?.notif_json).task_id || ""
-                              }`
-                          : data.subject === "signed_agreement"
-                          ? data.document_user_type === "employer"
-                            ? `/client_detail?agreement=true`
-                            : `/${data.employee_id}?agreement=true`
-                          : data.subject === "mention_task"
-                          ? `/managetasks?taskId=${
-                              parseJsonSafely(data?.notif_json).task_id || ""
-                            }&replyId=${
-                              parseJsonSafely(data?.notif_json).reply_id || ""
-                            }`
-                          : data.subject ===
-                            "mention_applicant_type_candidate_chat"
-                          ? `/slots?notifiType=candidate&taskId=${
-                              parseJsonSafely(data?.notif_json).task_id || ""
-                            }&canId=${data.employee_id}`
-                          : data.subject === "mention_applicant_type_group_chat"
-                          ? `/slots?notifiType=group&taskId=${
-                              parseJsonSafely(data?.notif_json).task_id || ""
-                            }`
-                          : ""
+                            ? "/adminclient"
+                            : data.subject === "added_new_job"
+                              ? "/job"
+                              : data.subject === "applied_on_job"
+                                ? "/responses"
+                                : data.subject === "interview_scheduled"
+                                  ? "/interview"
+                                  : data.subject === "mention_document"
+                                    ? data.document_user_type === "employer"
+                                      ? `/client_detail?docId=${data.mention_id
+                                      }&docParentId=${parseJsonSafely(data?.notif_json)
+                                        .doc_parent_id || ""
+                                      }&annotationId=${parseJsonSafely(data?.notif_json)
+                                        .annotation_id || ""
+                                      }&taskId=${parseJsonSafely(data?.notif_json).task_id || ""
+                                      }`
+                                      : data.document_user_type === "applicant_type"
+                                        ? `/slots?docId=${data.mention_id}&docParentId=${parseJsonSafely(data?.notif_json)
+                                          .doc_parent_id || ""
+                                        }&annotationId=${parseJsonSafely(data?.notif_json)
+                                          .annotation_id || ""
+                                        }&taskId=${parseJsonSafely(data?.notif_json).task_id || ""
+                                        }`
+                                        : `/${data.employee_id}?docId=${data.mention_id
+                                        }&docParentId=${parseJsonSafely(data?.notif_json)
+                                          .doc_parent_id || ""
+                                        }&annotationId=${parseJsonSafely(data?.notif_json)
+                                          .annotation_id || ""
+                                        }&taskId=${parseJsonSafely(data?.notif_json).task_id || ""
+                                        }`
+                                    : data.subject === "mention_partner"
+                                      ? `/${data.employee_id}?partner=${data.from_id}`
+                                      : data.subject === "mention_partnerChat"
+                                        ? `/partner_profile?partner=${data.employee_id}`
+                                        : data.subject === "assigned_admin_to_partner"
+                                          ? "/partner_profile"
+                                          : data.subject === "mention_notes" ||
+                                            data.subject === "mention_note"
+                                            ? data.document_user_type === "employer"
+                                              ? `/client_detail?note=true&noteid=${parseJsonSafely(data?.notif_json).task_id || ""
+                                              }`
+                                              : data.document_user_type === "agent" &&
+                                                window.location.pathname === "/partner_profile"
+                                                ? `?note=true&noteid=${parseJsonSafely(data?.notif_json).task_id || ""
+                                                }`
+                                                : data.document_user_type === "agent"
+                                                  ? `/partner_profile?note=true&noteid=${parseJsonSafely(data?.notif_json).task_id || ""
+                                                  }`
+                                                  : `/${data.employee_id}?note=true&noteid=${parseJsonSafely(data?.notif_json).task_id || ""
+                                                  }`
+                                            : data.subject === "signed_agreement"
+                                              ? data.document_user_type === "employer"
+                                                ? `/client_detail?agreement=true`
+                                                : `/${data.employee_id}?agreement=true`
+                                              : data.subject === "mention_task"
+                                                ? `/managetasks?taskId=${parseJsonSafely(data?.notif_json).task_id || ""
+                                                }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""
+                                                }`
+                                                : data.subject ===
+                                                  "mention_applicant_type_candidate_chat"
+                                                  ? `/slots?notifiType=candidate&taskId=${parseJsonSafely(data?.notif_json).task_id || ""
+                                                  }&canId=${data.employee_id}`
+                                                  : data.subject === "mention_applicant_type_group_chat"
+                                                    ? `/slots?notifiType=group&taskId=${parseJsonSafely(data?.notif_json).task_id || ""
+                                                    }`
+                                                    : data.subject === "mention_call_log_chat"
+                                                      ? `/daily_call_log?call_logId=${data.employee_id}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}`
+                                                      : ""
                       }
                       onClick={() => {
                         try {
@@ -386,7 +369,7 @@ function Notifications({
                             }
                           } else if (
                             data.subject ===
-                              "mention_applicant_type_candidate_chat" ||
+                            "mention_applicant_type_candidate_chat" ||
                             data.subject === "mention_applicant_type_group_chat"
                           ) {
                             localStorage.setItem(
@@ -419,9 +402,8 @@ function Notifications({
                             </div>
                           </div> */}
                           <div
-                            className={`${
-                              data.is_read !== "1" ? "font-weight-bold" : ""
-                            }  mw-80 notification_text_msg`}
+                            className={`${data.is_read !== "1" ? "font-weight-bold" : ""
+                              }  mw-80 notification_text_msg`}
                             style={{ fontSize: "14px" }}
                           >
                             <div
@@ -435,7 +417,9 @@ function Notifications({
                                   .replace(
                                     /applicant_type_group_chat/g,
                                     "Group discussion"
-                                  ),
+                                  ).replace(
+                                    /call_log_chat/g,
+                                    "Daily Call log"),
                               }}
                             />
                           </div>

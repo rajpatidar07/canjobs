@@ -3756,10 +3756,25 @@ export const AddUpdateDailCallLogApi = async (data) => {
   return response;
 }
 /* Api to get Daily Call Log */
-export const getDailyCallLogApi = async (serchName, searchPhone, page, limit) => {
+export const getDailyCallLogApi = async (serchName, filterbyAdmin, id, searchPhone, page, limit) => {
   const response = await axios.post(
     `${API_URL}admin/getCallLog`,
-    { "name": serchName, "phone": searchPhone, "page": page, "limit": limit }
+    { name: serchName, phone: searchPhone, id: id, page: page, limit: limit, call_ans_by: filterbyAdmin }
+    ,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+}
+/* Api to get Daily Call Log Char*/
+export const getDailyCallLogChatApi = async (call_log_id, page, limit) => {
+  const response = await axios.post(
+    `${API_URL}admin/getCallLogNotes`,
+    { call_log_id: call_log_id, page: page, limit: limit }
     ,
     {
       headers: {

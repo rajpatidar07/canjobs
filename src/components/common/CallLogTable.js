@@ -5,14 +5,26 @@ import Pagination from "./pagination";
 import StyledDropdown from "./StyledDropDown";
 import TableInput from "./TableInput";
 import useValidation from "./useValidation";
-import { AddUpdateDailCallLogApi, getallAdminData, getDailyCallLogApi, GetFilter } from "../../api/api";
+import { AddUpdateDailCallLogApi, getDailyCallLogApi, GetFilter } from "../../api/api";
 import { toast } from "react-toastify";
+import { BsChat } from "react-icons/bs";
+import CommentTaskBox from "./commonTaskBox";
+import ModalSidebar from "./modalSidebar";
+import { Link, useLocation } from "react-router-dom";
 
 function Calllogtable(props) {
-    const [isLoading] = useState(false);
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    let NotificallLogId = searchParams.get("call_logId") || ""
+    let NotifiTaskId = searchParams.get("taskId") || ""
+    const [isLoading, setIsLoading] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
+    let [taskId, setTaskId] = useState(NotifiTaskId ? NotifiTaskId : "");
+    let [callLogId, setCallLogId] = useState(NotificallLogId ? NotificallLogId : "");
+    let [filterListapiCall, setFilterListApiCall] = useState(false);
+    const [showCallLogModal, setShowCallLogModal] = useState(false);
+    const [singelCallLogData, setSingelCallLogData] = useState();
     const tableContainerRef = useRef(null);
-    const [admiinList, setAdminList] = useState([]);
     const [jsonList, setJsonList] = useState([]);
     let [loading, setLoading] = useState(false);
     let [apiCall, setApiCall] = useState(false);
@@ -21,18 +33,23 @@ function Calllogtable(props) {
     const [currentPage, setCurrentPage] = useState(1);
     const recordsPerPage = 10;
     const nPages = Math.ceil(callLogData.length / recordsPerPage);
-    const GetListJson = async () => {
+    const GetDailyCallLogList = async () => {
         try {
-            let response = await getallAdminData();
-            let json = await GetFilter();
-            let ResCallLog = await getDailyCallLogApi(props.searchCandidate, '', currentPage, recordsPerPage);
-            console.log(ResCallLog)
-            setJsonList(json.data.data);
-            setAdminList(response.data)
+            setIsLoading(true)
+            let ResCallLog = await getDailyCallLogApi(props.searchCandidate, props.selectedAdminId, callLogId, '', currentPage, recordsPerPage);
             setCallLogData(ResCallLog.data.data.data)
             setTotalData(ResCallLog.data.total_rows)
+            if (taskId) {
+                setSingelCallLogData(ResCallLog.data.data.data[0])
+                setShowCallLogModal(true)
+                const newUrl = window.location.pathname;
+                window.history.replaceState({}, document.title, newUrl);
+                localStorage.setItem("navigation_url", "")
+            }
+            setIsLoading(false)
         } catch (err) {
             console.log(err);
+            setIsLoading(false)
         }
     };
     const initialFormState = {
@@ -42,7 +59,7 @@ function Calllogtable(props) {
         call_ans_by: "",
         received_call_date: "",
         email: "",
-        call_notes: "",
+        purpose: "",
         phone: ""
     };
     // VALIDATION CONDITIONS
@@ -73,16 +90,44 @@ function Calllogtable(props) {
     const { state, setState, setErrors, onInputChange, errors, validate } =
         useValidation(initialFormState, validators);
 
-    //  Handle Input Change
-    const handleChange = (index, field, value) => {
-        const updatedData = [...callLogData];
-        updatedData[(currentPage - 1) * recordsPerPage + index][field] = value;
-        setCallLogData(updatedData);
+    //  Handle Update Input Change
+    const handleUpdateChange = (e, id, field) => {
+        if (e && e.preventDefault) {
+            e.preventDefault();
+        }
+        let data = {
+            id: id,
+            [field]: e.target.value,
+        };
+        return AddCallLog(e, data);
     };
 
+    let getFilterList = async () => {
+        try {
+            let json = await GetFilter();
+            setJsonList(json.data.data);
+        } catch (err) {
+            console.log(err)
+
+        }
+    }
+    useEffect(() => {
+        getFilterList()
+        if (filterListapiCall === true) {
+            setFilterListApiCall(false)
+        }
+    }, [filterListapiCall])
+    useEffect(() => {
+        if (NotifiTaskId) {
+            setTaskId(NotifiTaskId)
+        }
+        if (NotificallLogId) {
+            setCallLogId(NotificallLogId)
+        }
+    }, [location.key, NotificallLogId, NotifiTaskId])
     useEffect(() => {
 
-        GetListJson()
+        GetDailyCallLogList()
         if (apiCall === true) { setApiCall(false) }
         const handleScroll = () => {
             if (tableContainerRef.current) {
@@ -99,22 +144,24 @@ function Calllogtable(props) {
                 tableContainerRef.current.removeEventListener("scroll", handleScroll);
             }
         };
-    }, [apiCall]);
-
+    }, [taskId, callLogId, apiCall, props.searchCandidate, props.selectedAdminId]);
+    console.log(location.key, taskId, callLogId, apiCall, props.searchCandidate, props.selectedAdminId)
     /*Function to add New Daily call log item */
-    const AddCallLog = async (e) => {
-        e.preventDefault()
-        if (validate()) {
+    const AddCallLog = async (newValue, data) => {
+        if (newValue && newValue.preventDefault) {
+            newValue.preventDefault();
+        }
+        if (validate() || data?.id) {
             try {
                 setLoading(true)
-                let res = await AddUpdateDailCallLogApi(state)
-                if (res.status === 1 || res.status === "2") {
+                let res = await AddUpdateDailCallLogApi(data ? data : state)
+                if (res.status === 1 || res.status === "2" || res.data.status === 1) {
                     setLoading(false)
                     setState(initialFormState)
                     setErrors("")
                     props.setShowAddForm(false)
                     setApiCall(true)
-                    toast.success("Call log added successfully", {
+                    toast.success(`Call log ${data.id ? "Updated" : "Added"} successfully`, {
                         position: toast.POSITION.TOP_RIGHT,
                         autoClose: 1000,
                     });
@@ -126,163 +173,74 @@ function Calllogtable(props) {
         }
     }
     return (
-        <div className="mb-18 height-100">
-            <div className="mb-4 align-items-center">
-                <div className="page___heading">
-                    <h3 className="font-size-6 mb-0">Call Log</h3>
+        <>
+            <div className="mb-18 height-100">
+                <div className="mb-4 align-items-center">
+                    <div className="page___heading">
+                        <h3 className="font-size-6 mb-0">Call Log</h3>
+                    </div>
                 </div>
-            </div>
 
-            <div
-                className={
-                    props.heading === "Dashboard"
-                        ? ""
-                        : "bg-white shadow-8 datatable_div pt-7 rounded pb-9 px-5"
-                }
-            >
                 <div
-                    className="table-responsive"
-                    style={{ overflowX: "auto", overflowY: "hidden" }}
-                    ref={tableContainerRef}
+                    className={
+                        props.heading === "Dashboard"
+                            ? ""
+                            : "bg-white shadow-8 datatable_div pt-7 rounded pb-9 px-5"
+                    }
                 >
-                    {isLoading ? (
-                        <Loader />
-                    ) : (
+                    <div
+                        className="table-responsive"
+                        style={{ overflowX: "auto", overflowY: "hidden" }}
+                        ref={tableContainerRef}
+                    >
                         <form >
-                            <table className="table table-striped main_data_table text-center align-middle">
-                                <thead>
-                                    <tr className="py-2">
-                                        {[
-                                            "Name",
-                                            "Status",
-                                            "Caller",
-                                            "Date and Time Call",
-                                            "Call Ans By",
-                                            "Phone",
-                                            "Purpose of Call",
-                                            "Email",
-                                            // "Call back Date/time",
-                                            // "Additional Notes",
-                                            // "Action Taken",
-                                        ].map((heading, index) => (
-                                            <th
-                                                key={index}
-                                                className={`border-0 font-size-3 font-weight-normal 
+                            {isLoading ? (
+                                <Loader />
+                            ) : (
+                                <table className="table table-striped main_data_table text-center align-middle">
+                                    <thead>
+                                        <tr className="py-2">
+                                            {[
+                                                "Name",
+                                                "Status",
+                                                "Caller",
+                                                "Date and Time Call",
+                                                "Call Ans By",
+                                                "Phone",
+                                                "Purpose of Call",
+                                                "Email",
+                                                // "Call back Date/time",
+                                                // "Additional Notes",
+                                                // "Action Taken",
+                                            ].map((heading, index) => (
+                                                <th
+                                                    key={index}
+                                                    className={`border-0 font-size-3 font-weight-normal 
                          
-                          ${index === 0 ? "table_sticky_col sticky_col1" : ""} 
-                          ${index === 1 ? "table_sticky_col sticky_col2" : ""} 
-                          ${index === 2 ? "table_sticky_col sticky_col3" : ""}`}
-                                                style={
-                                                    index <= 2
-                                                        ? {
-                                                            background: isScrolled
-                                                                ? "white"
-                                                                : "transparent",
-                                                            transition: "background 0.3s ease",
-                                                        }
-                                                        : {}
-                                                }
-                                            >
-                                                {heading}
-                                            </th>
-                                        ))}
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    {props.showAddForm && (
-                                        <tr>
-                                            {/* Sticky First Column for New Row */}
-                                            <td
-                                                className="table_sticky_col sticky_col1"
-                                                style={{
-                                                    minWidth: "150px",
-                                                    maxWidth: "150px",
-                                                    background: isScrolled ? "white" : "transparent",
-                                                    transition: "background 0.3s ease",
-                                                }}
-                                            >
-                                                <TableInput
-                                                    value={state.name}
-                                                    onChange={onInputChange}
-                                                    type="text"
-                                                    id="name"
-                                                    name="name"
-                                                />
-                                                {errors.name && (
-                                                    <span key={errors.name} className="text-danger font-size-3">
-                                                        {errors.name}
-                                                    </span>
-                                                )}
-                                            </td>
-
-                                            {/* Other Columns */}
-                                            <td className="table_sticky_col sticky_col2" style={{ minWidth: "150px", maxWidth: "150px", background: isScrolled ? "white" : "transparent", transition: "background 0.3s ease" }}>
-                                                <StyledDropdown options={jsonList.status_type} status_name={"Status"} value={state.status} onChange={onInputChange} width={"600"} id="status" name="status" />
-                                            </td>
-
-                                            <td className="table_sticky_col sticky_col3" style={{ minWidth: "150px", maxWidth: "150px", background: isScrolled ? "white" : "transparent", transition: "background 0.3s ease" }}>
-                                                <StyledDropdown options={jsonList.caller} value={state.caller} onChange={onInputChange} width={"400"} id="caller" name="caller" status_name={"Caller"} />
-                                            </td>
-
-                                            <td style={{ minWidth: "150px" }}>
-                                                <TableInput value={state.received_call_date} onChange={onInputChange} type="datetime-local" id="received_call_date" name="received_call_date" />
-                                            </td>
-
-                                            <td style={{ minWidth: "150px" }}>
-                                                <select className="form-control" value={state.call_ans_by} onChange={onInputChange} id="call_ans_by" name="call_ans_by">
-                                                    <option>Select Admin</option>
-                                                    {(admiinList || []).map((item, index) => (
-                                                        <option value={item.admin_id} key={index}>{item.name}</option>
-                                                    ))}
-                                                </select>
-                                            </td>
-
-                                            <td style={{ minWidth: "150px" }}>
-                                                <TableInput value={state.phone} onChange={onInputChange} type="tel" id="phone" name="phone" />
-                                                {errors.phone && (
-                                                    <span key={errors.phone} className="text-danger font-size-3">
-                                                        {errors.phone}
-                                                    </span>
-                                                )}
-                                            </td>
-
-                                            <td style={{ minWidth: "150px" }}>
-                                                <TableInput value={state.call_notes} onChange={onInputChange} type="text" id="call_notes" name="call_notes" />
-                                            </td>
-
-                                            <td style={{ minWidth: "150px" }}>
-                                                <TableInput value={state.email} onChange={onInputChange} type="email" />
-                                            </td>
-
-                                            {/* Button Column */}
-                                            <td style={{ minWidth: "50px", textAlign: "center" }}>
-                                                {loading === true ? (
-                                                    <button
-                                                        className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
-                                                        type="button"
-                                                        disabled
-                                                    >
-                                                        <span
-                                                            className="spinner-border spinner-border-sm "
-                                                            role="status"
-                                                            aria-hidden="true"
-                                                        ></span>
-                                                        <span className="sr-only">Loading...</span>
-                                                    </button>
-                                                ) : <button
-                                                    title="Submit"
-                                                    type="button" className="btn-sm btn-primary" onClick={(e) => AddCallLog(e)}>+</button>}
-                                            </td>
+                          ${index === 0 ? "table_sticky_col sticky_col1" : ""} `}
+                                                    style={
+                                                        index <= 2
+                                                            ? {
+                                                                background: isScrolled
+                                                                    ? "white"
+                                                                    : "transparent",
+                                                                transition: "background 0.3s ease",
+                                                            }
+                                                            : {}
+                                                    }
+                                                >
+                                                    {heading}
+                                                </th>
+                                            ))}
                                         </tr>
+                                    </thead>
 
-                                    )}
-                                    {(callLogData
-                                        || []).map((item, index) => (
-                                            <tr key={index}>
-                                                {/* Sticky First Column */}
+                                    <tbody>
+                                        {props.showAddForm && (
+                                            <tr>
+                                                {/* Sticky First Column for New Row */}
                                                 <td
-                                                    className="table_sticky_col sticky_col1"
+                                                    className="table_sticky_col sticky_col1 "
                                                     style={{
                                                         minWidth: "150px",
                                                         maxWidth: "150px",
@@ -291,131 +249,287 @@ function Calllogtable(props) {
                                                     }}
                                                 >
                                                     <TableInput
-                                                        value={item.name}
-                                                        onChange={(newValue) =>
-                                                            handleChange(index, "name", newValue)
-                                                        }
+                                                        value={state.name}
+                                                        onChange={onInputChange}
                                                         type="text"
+                                                        id="name"
+                                                        name="name"
                                                     />
+                                                    {errors.name && (
+                                                        <span key={errors.name} className="text-danger font-size-3">
+                                                            {errors.name}
+                                                        </span>
+                                                    )}
                                                 </td>
 
                                                 {/* Other Columns */}
-                                                <td
-                                                    style={{
-                                                        minWidth: "150px",
-                                                        maxWidth: "150px",
-                                                        background: isScrolled ? "white" : "transparent",
-                                                        transition: "background 0.3s ease",
-                                                    }}
-                                                    className="table_sticky_col sticky_col2"
-                                                >
-                                                    <StyledDropdown
-                                                        options={jsonList.status_type}
-                                                        value={item.status}
-                                                        onChange={(selectedValue) =>
-                                                            handleChange(index, "status", selectedValue)
-                                                        }
-                                                        status_name={"Status"}
-                                                        width={"600"}
-                                                    />
-                                                </td>
-
-                                                <td
-
-                                                    style={{
-                                                        minWidth: "150px",
-                                                        maxWidth: "150px",
-                                                        background: isScrolled ? "white" : "transparent",
-                                                        transition: "background 0.3s ease",
-                                                    }}
-                                                    className="table_sticky_col sticky_col3"
-                                                >
-                                                    <StyledDropdown
-                                                        options={jsonList.caller}
-                                                        status_name={"Caller"}
-                                                        value={item.callBy}
-                                                        onChange={(selectedValue) =>
-                                                            handleChange(index, "callBy", selectedValue)
-                                                        }
-                                                        width={"400"}
-                                                    />
-                                                </td>
-
-                                                {/* Date Input */}
                                                 <td style={{ minWidth: "150px" }}>
-                                                    <TableInput
-                                                        value={item.callerDateTime}
-                                                        onChange={(newValue) =>
-                                                            handleChange(index, "callerDateTime", newValue)
-                                                        }
-                                                        type="datetime-local"
-                                                    />
+                                                    <StyledDropdown options={jsonList.status_type} status_name={"Status"} value={state.status} onChange={onInputChange} width={"600"} id="status" name="status"
+                                                        setFilterListApiCall={setFilterListApiCall}
+                                                        filterItemID={"36"} />
                                                 </td>
 
-                                                {/* Call Answered By */}
                                                 <td style={{ minWidth: "150px" }}>
-                                                    <select className="form-control">
-                                                        <option>Simran</option>
-                                                        <option>Raman</option>
-                                                        <option>Other</option>
+                                                    <StyledDropdown options={jsonList.caller} value={state.caller} onChange={onInputChange} width={"400"} id="caller" name="caller" status_name={"Caller"}
+                                                        setFilterListApiCall={setFilterListApiCall}
+                                                        filterItemID={"39"} />
+                                                </td>
+
+                                                <td style={{ minWidth: "150px" }}>
+                                                    <TableInput value={state.received_call_date} onChange={onInputChange} type="datetime-local" id="received_call_date" name="received_call_date" />
+                                                </td>
+
+                                                <td style={{ minWidth: "150px" }}>
+                                                    <select className="form-control" value={state.call_ans_by} onChange={onInputChange} id="call_ans_by" name="call_ans_by">
+                                                        <option>Select Admin</option>
+                                                        {(props.admiinList || []).map((item, index) => (
+                                                            <option value={item.admin_id} key={index}>{item.name}</option>
+                                                        ))}
                                                     </select>
                                                 </td>
 
-                                                {/* Phone Number */}
                                                 <td style={{ minWidth: "150px" }}>
-                                                    <TableInput
-                                                        value={item.phone}
-                                                        onChange={(newValue) =>
-                                                            handleChange(index, "phone", newValue)
-                                                        }
-                                                        type="tel"
-                                                    />
+                                                    <TableInput value={state.phone} onChange={onInputChange} type="tel" id="phone" name="phone" />
+                                                    {errors.phone && (
+                                                        <span key={errors.phone} className="text-danger font-size-3">
+                                                            {errors.phone}
+                                                        </span>
+                                                    )}
                                                 </td>
 
-                                                {/* Purpose of Call */}
                                                 <td style={{ minWidth: "150px" }}>
-                                                    <TableInput
-                                                        value={item.purposeOfCall}
-                                                        onChange={(newValue) =>
-                                                            handleChange(index, "purposeOfCall", newValue)
-                                                        }
-                                                        type="text"
-                                                    />
+                                                    <TableInput value={state.purpose} onChange={onInputChange} type="text" id="purpose" name="purpose" />
                                                 </td>
 
-                                                {/* Email */}
                                                 <td style={{ minWidth: "150px" }}>
-                                                    <TableInput
-                                                        value={item.email}
-                                                        onChange={(newValue) =>
-                                                            handleChange(index, "email", newValue)
-                                                        }
-                                                        type="email"
-                                                    />
+                                                    <TableInput value={state.email} onChange={onInputChange} type="email" />
                                                 </td>
-                                                <td className={props.showAddForm ? "" : "d-none"} style={{ minWidth: "150px" }}></td>
+
+                                                {/* Button Column */}
+                                                <td style={{ minWidth: "50px", textAlign: "center" }}>
+                                                    {loading === true ? (
+                                                        <button
+                                                            className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                                                            type="button"
+                                                            disabled
+                                                        >
+                                                            <span
+                                                                className="spinner-border spinner-border-sm "
+                                                                role="status"
+                                                                aria-hidden="true"
+                                                            ></span>
+                                                            <span className="sr-only">Loading...</span>
+                                                        </button>
+                                                    ) : <button
+                                                        title="Submit"
+                                                        type="button" className="btn-sm btn-primary" onClick={(e) => AddCallLog(e)}>+</button>}
+                                                </td>
                                             </tr>
-                                        ))}
-                                </tbody>
-                            </table>
-                        </form>
-                    )}
-                </div>
 
-                {/* Pagination Controls */}
-                <div className="pt-2">
-                    <Pagination
-                        nPages={nPages}
-                        currentPage={currentPage}
-                        setCurrentPage={setCurrentPage}
-                        total={callLogData.length}
-                        count={
-                            totalData
-                        }
-                    />
+                                        )}
+                                        {(callLogData
+                                            || []).map((item, index) => (
+                                                <tr key={index}>
+                                                    {/* Sticky First Column */}
+                                                    <td
+                                                        className="table_sticky_col sticky_col1 "
+                                                        style={{
+                                                            minWidth: "150px",
+                                                            maxWidth: "190px",
+                                                            background: isScrolled ? "white" : "transparent",
+                                                            transition: "background 0.3s ease",
+                                                        }}
+                                                    >
+                                                        <div className="d-flex">
+                                                            <TableInput
+                                                                value={item.name}
+                                                                onChange={(newValue) =>
+                                                                    handleUpdateChange(newValue, item.id, "name")
+                                                                }
+                                                                type="text"
+                                                                name="name"
+                                                                id="name"
+
+                                                            />
+                                                            <Link onClick={() => {
+                                                                setSingelCallLogData(item)
+                                                                setShowCallLogModal(true)
+                                                            }}>
+                                                                <span className="text-gray px-2">
+                                                                    <BsChat />
+                                                                </span>
+                                                            </Link>
+                                                        </div>
+                                                    </td>
+
+                                                    {/* Other Columns */}
+                                                    <td
+                                                        style={{
+                                                            minWidth: "150px",
+                                                        }}
+                                                    >
+                                                        <StyledDropdown
+                                                            options={jsonList.status_type}
+                                                            value={item.status}
+                                                            onChange={(selectedValue) =>
+                                                                handleUpdateChange(selectedValue, item.id, "status")
+                                                            }
+                                                            name="status"
+                                                            id="status"
+                                                            status_name={"Status"}
+                                                            width={"600"}
+                                                            filterItemID={"36"}
+                                                            setFilterListApiCall={setFilterListApiCall}
+
+                                                        />
+                                                    </td>
+
+                                                    <td
+
+                                                        style={{
+                                                            minWidth: "150px",
+
+                                                        }}
+                                                    >
+                                                        <StyledDropdown
+                                                            options={jsonList.caller}
+                                                            status_name={"Caller"}
+                                                            value={item.caller}
+                                                            name="caller"
+                                                            id="caller"
+                                                            onChange={(selectedValue) =>
+                                                                handleUpdateChange(selectedValue, item.id, "caller")
+                                                            }
+                                                            width={"400"}
+                                                            filterItemID={"39"}
+                                                            setFilterListApiCall={setFilterListApiCall}
+
+                                                        />
+                                                    </td>
+
+                                                    {/* Date Input */}
+                                                    <td style={{ minWidth: "150px" }}>
+                                                        <TableInput
+                                                            value={item.callerDateTime}
+                                                            onChange={(newValue) =>
+                                                                handleUpdateChange(newValue, item.id, "received_call_date")
+                                                            }
+                                                            type="datetime-local"
+                                                            name="received_call_date"
+                                                            id="received_call_date"
+                                                        />
+                                                    </td>
+
+                                                    {/* Call Answered By */}
+                                                    <td style={{ minWidth: "150px" }}>
+                                                        <select
+                                                            className="form-control"
+                                                            value={item.call_ans_by}
+                                                            onChange={(e) => handleUpdateChange(e, item.id, "call_ans_by")}
+                                                            name="call_ans_by"
+                                                            id="call_ans_by"
+                                                        >
+                                                            <option value="">Select Admin</option>
+                                                            {(props.adminList || []).map((admin, index) => (
+                                                                <option value={admin.admin_id} key={index}>
+                                                                    {admin.name}
+                                                                </option>
+                                                            ))}
+                                                        </select>
+                                                    </td>
+
+                                                    {/* Phone Number */}
+                                                    <td style={{ minWidth: "150px" }}>
+                                                        <TableInput
+                                                            value={item.phone}
+                                                            onChange={(newValue) =>
+                                                                handleUpdateChange(newValue, item.id, "phone")
+                                                            }
+                                                            type="tel"
+                                                            name="phone"
+                                                            id="phone"
+                                                        />
+                                                    </td>
+
+                                                    {/* Purpose of Call */}
+                                                    <td style={{ minWidth: "150px" }}>
+                                                        <TableInput
+                                                            value={item.purpose}
+                                                            onChange={(newValue) =>
+                                                                handleUpdateChange(newValue, item.id, "purpose")
+                                                            }
+                                                            type="text"
+                                                            id="purpose" name="purpose"
+                                                        />
+                                                    </td>
+
+                                                    {/* Email */}
+                                                    <td style={{ minWidth: "150px" }}>
+                                                        <TableInput
+                                                            value={item.email}
+                                                            onChange={(newValue) =>
+                                                                handleUpdateChange(newValue, item.id, "email")
+                                                            }
+                                                            type="email"
+                                                            id="email" name="email"
+                                                        />
+                                                    </td>
+                                                    <td className={props.showAddForm ? "" : "d-none"} style={{ minWidth: "150px" }}></td>
+                                                </tr>
+                                            ))}
+                                    </tbody>
+                                </table>
+
+                            )}
+                        </form>
+                    </div>
+
+                    {/* Pagination Controls */}
+                    <div className="pt-2">
+                        <Pagination
+                            nPages={nPages}
+                            currentPage={currentPage}
+                            setCurrentPage={setCurrentPage}
+                            total={callLogData.length}
+                            count={
+                                totalData
+                            }
+                        />
+                    </div>
                 </div>
             </div>
-        </div>
+            <ModalSidebar
+                show={showCallLogModal}
+                onClose={() => {
+                    setShowCallLogModal(false)
+                    setTaskId("")
+                    setCallLogId("")
+                }}
+                children={
+                    <CommentTaskBox
+                        userId={singelCallLogData?.id}
+                        taskType={"call_log_chat"}
+                        taskUserType={"call_log"}
+                        setOpenReplyBox={setShowCallLogModal}
+                        openReplyBox={showCallLogModal}
+                        taskName={"Discussion for Call log"}
+                        TaskId={taskId}
+                    />
+                }
+            >
+                {showCallLogModal ? (
+                    <CommentTaskBox
+                        userId={singelCallLogData?.id}
+                        taskType={"call_log_chat"}
+                        taskUserType={"call_log"}
+                        setOpenReplyBox={setShowCallLogModal}
+                        openReplyBox={showCallLogModal}
+                        taskName={"Discussion for Call log"}
+                        TaskId={taskId}
+                    />
+                ) : null}
+            </ModalSidebar>
+        </>
     );
 }
 

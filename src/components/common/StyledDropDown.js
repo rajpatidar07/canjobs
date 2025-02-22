@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
+import { toast } from "react-toastify";
+import { AddFIlter } from "../../api/api";
 
 const StyledDropdown = ({
     options,
@@ -8,9 +10,15 @@ const StyledDropdown = ({
     onChange,
     width,
     status_name,
-    name
+    name,
+    filterItemID,
+    setFilterListApiCall
 }) => {
     const [isOpen, setIsOpen] = useState(false);
+    const [addStatusFieldOpen, setAddStatusFieldOpen] = useState(false);
+    const [newStatus, setNewStatus] = useState("");
+    const [statusErrors, setStatusErrors] = useState("");
+
     // We'll store either top or bottom positioning
     const [dropdownPosition, setDropdownPosition] = useState({ left: 0 });
     const buttonRef = useRef(null);
@@ -105,7 +113,37 @@ const StyledDropdown = ({
         }
         return highlightColors[hash] || "gray";
     };
+    const onAddStatusBlur = async (event) => {
+        event.preventDefault();
 
+        if (newStatus) {
+            let data = {
+                json_item: newStatus,
+            };
+            try {
+                const responseData = await AddFIlter(data, filterItemID);
+                if (responseData.message === "item already exist !") {
+                    setStatusErrors("Status already exist !");
+                    setNewStatus("");
+                }
+                if (responseData.message === "filter item added successfully") {
+                    toast.success(`${status_name} added successfully `, {
+                        position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 1000,
+                    });
+                    setNewStatus("");
+                    setStatusErrors("");
+                    setAddStatusFieldOpen(false)
+                    setFilterListApiCall(true)
+                }
+            } catch (err) {
+                console.log(err);
+                setStatusErrors("");
+            }
+        } else {
+            alert("No status found");
+        }
+    };
     const renderDropdown = () => {
         if (!isOpen) return null;
 
@@ -202,11 +240,25 @@ const StyledDropdown = ({
                         </div>
                     ))}
                 </div>
+                {addStatusFieldOpen ?
+                    <div className="border-top text-center mt-2 form-group">
+                        <label
+                            htmlFor="status"
+                            className="font-size-4 text-black-2 mt-3 line-height-reset"
+                        >Add new {status_name}</label>
+                        <input
+                            id="status"
+                            name="status"
+                            className="form-control mt-3"
+                            value={newStatus} onChange={(e) => setNewStatus(e.target.value)} onBlur={(e) => onAddStatusBlur(e)} />
+                        <small className="test-danger ">{statusErrors}</small>
+                    </div>
+                    : <div className="border-top text-center mt-2">
+                        <button className="btn btn-light mt-2" onClick={() => setAddStatusFieldOpen(true)}>+ Add new {status_name}</button></div>}
             </div>,
             document.body
         );
     };
-
     return (
         <div className="w-full" style={{ position: "static" }}>
             <div
@@ -223,7 +275,7 @@ const StyledDropdown = ({
                     cursor: "pointer",
                 }}
             >
-                {(options && options.find((item) => item.id === value)?.value) || `Select ${status_name}`}
+                {(options && options.find((item) => item.id === parseInt(value))?.value) || `Select ${status_name}`}
             </div>
             {renderDropdown()}
         </div>
