@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import {
   EmployeeLogin,
   EmployeeForgotPassword,
@@ -22,7 +27,7 @@ export default function CandidateLoginForm(props) {
   // let [facebook, setFacebook] = useState(false);
   let i = 0;
   const [searchParams] = useSearchParams();
-  let location = useLocation()
+  let location = useLocation();
   let code = searchParams.get("code");
   if (props.show === true) {
     localStorage.setItem("linkedin", "employeeLogin");
@@ -49,8 +54,8 @@ export default function CandidateLoginForm(props) {
         value === null || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-            ? null
-            : "Email is invalid",
+          ? null
+          : "Email is invalid",
     ],
     password: [(value) => (value === "" ? "Password is required" : null)],
     forget_email: [
@@ -58,10 +63,10 @@ export default function CandidateLoginForm(props) {
         state.email
           ? ""
           : value === null || value.trim() === ""
-            ? "Email is required"
-            : /\S+@\S+\.\S+/.test(value)
-              ? null
-              : "Email is invalid",
+          ? "Email is required"
+          : /\S+@\S+\.\S+/.test(value)
+          ? null
+          : "Email is invalid",
     ],
   };
   /*----LOGIN ONCHANGE FuNCTION----*/
@@ -79,7 +84,7 @@ export default function CandidateLoginForm(props) {
       try {
         const updatedTodo = await EmployeeLogin(state);
         if (updatedTodo.message === "Successfully Logged In") {
-          props.setLoginCondition(true)
+          props.setLoginCondition(true);
           localStorage.setItem("token", updatedTodo.token);
           localStorage.setItem("email", updatedTodo.email);
           localStorage.setItem("userType", "user");
@@ -88,14 +93,21 @@ export default function CandidateLoginForm(props) {
           localStorage.setItem("skill", updatedTodo.skill);
           localStorage.setItem("profile_photo", updatedTodo.profile_photo);
           localStorage.setItem("applicant_type", updatedTodo.interested_in);
-          localStorage.setItem("EmployeePersonalDetail", JSON.stringify(updatedTodo.data));
+          localStorage.setItem(
+            "EmployeePersonalDetail",
+            JSON.stringify(updatedTodo.data)
+          );
           toast.success("Logged In Successfully", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
           setLoading(false);
           Close();
-          navigate(location?.state?.page === "study" ? "/study" : `/${updatedTodo.employee_id}`);
+          navigate(
+            location?.state?.page === "study"
+              ? "/study"
+              : `/${updatedTodo.employee_id}`
+          );
           window.location.reload();
         }
         if (updatedTodo.message === "Invalid credentials !") {
@@ -239,14 +251,18 @@ export default function CandidateLoginForm(props) {
               autoClose: 1000,
             });
             Close();
-            navigate(location?.state?.page === "study" ? "/student_profile" : `/${data.employee_id}`);
+            navigate(
+              location?.state?.page === "study"
+                ? "/student_profile"
+                : `/${data.employee_id}`
+            );
             window.location.reload();
           }
           if (
             res.data.message ===
-            "The token used in the request has been revoked by the user" ||
+              "The token used in the request has been revoked by the user" ||
             decode.error_description ===
-            "Unable to retrieve access token: appid/redirect uri/code verifier does not match authorization code. Or authorization code expired. Or external member binding exists"
+              "Unable to retrieve access token: appid/redirect uri/code verifier does not match authorization code. Or authorization code expired. Or external member binding exists"
           ) {
             toast.error("Token Expired", {
               position: toast.POSITION.TOP_RIGHT,
@@ -469,7 +485,7 @@ export default function CandidateLoginForm(props) {
                   setErrors("");
                 }}
               >
-                Forget Password
+                Forgot Password
               </Link>
               {/*----ERROR MESSAGE FOR terms----*/}
               {errors.tandr && (
@@ -504,7 +520,11 @@ export default function CandidateLoginForm(props) {
             </div>
             <p className="font-size-4 text-center heading-default-color">
               Don’t have an account?
-              <Link className="text-primary ml-2" to={"/candidate_signup"} state={{ page: location?.state?.page }}>
+              <Link
+                className="text-primary ml-2"
+                to={"/candidate_signup"}
+                state={{ page: location?.state?.page }}
+              >
                 Create an account
               </Link>
             </p>

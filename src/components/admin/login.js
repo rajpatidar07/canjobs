@@ -6,7 +6,10 @@ import { toast } from "react-toastify";
 import Loader from "../common/loader";
 import ForgotPasswordForm from "../forms/admin/ForgotPasswordForm";
 import PasswordInput from "../common/Common function/PasswordInput";
-export default function AdminLoginFrom({ setAdminLoggedIn, setLoginCondition }) {
+export default function AdminLoginFrom({
+  setAdminLoggedIn,
+  setLoginCondition,
+}) {
   let navigate = useNavigate();
   let [loading, setLoading] = useState(false);
   let [isLoading, setIsLoading] = useState(false);
@@ -22,24 +25,27 @@ export default function AdminLoginFrom({ setAdminLoggedIn, setLoginCondition }) 
   const validators = {
     email: [
       (value) =>
-        showForgotPassword ?
-          "" : value === null || value.trim() === ""
-            ? "Email is required"
-            : /\S+@\S+\.\S+/.test(value)
-              ? null
-              : "Email is invalid",
+        showForgotPassword
+          ? ""
+          : value === null || value.trim() === ""
+          ? "Email is required"
+          : /\S+@\S+\.\S+/.test(value)
+          ? null
+          : "Email is invalid",
     ],
-    password: [(value) => showForgotPassword ?
-      "" : (value === "" ? "Password is required" : null)],
+    password: [
+      (value) =>
+        showForgotPassword ? "" : value === "" ? "Password is required" : null,
+    ],
     forget_email: [
       (value) =>
         state.email
           ? ""
           : value === null || value.trim() === ""
-            ? "Email is required"
-            : /\S+@\S+\.\S+/.test(value)
-              ? null
-              : "Email is invalid",
+          ? "Email is required"
+          : /\S+@\S+\.\S+/.test(value)
+          ? null
+          : "Email is invalid",
     ],
   };
   /*----LOGIN ONCHANGE FuNCTION----*/
@@ -62,14 +68,14 @@ export default function AdminLoginFrom({ setAdminLoggedIn, setLoginCondition }) 
           updatedTodo.status === true ||
           updatedTodo.message === "Successfully Logged "
         ) {
-          setLoginCondition(true)
+          setLoginCondition(true);
           localStorage.setItem("token", updatedTodo.token);
           localStorage.setItem("userType", "admin");
           localStorage.setItem("admin", updatedTodo.name);
           localStorage.setItem("admin_id", updatedTodo.admin_id);
           localStorage.setItem("admin_type", updatedTodo.user_type);
           localStorage.setItem("admin_email", updatedTodo.email);
-          localStorage.setItem("portal", "job")
+          localStorage.setItem("portal", "job");
           toast.success("Logged In Successfully", {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
@@ -99,7 +105,7 @@ export default function AdminLoginFrom({ setAdminLoggedIn, setLoginCondition }) 
   //Function to forgot password
   const onForgoteClick = async (event) => {
     event.preventDefault();
-    console.log(errors)
+    console.log(errors);
     if (validate()) {
       setLoading(true);
       try {
@@ -132,7 +138,6 @@ export default function AdminLoginFrom({ setAdminLoggedIn, setLoginCondition }) 
       {/* <!-- Login --> */}
 
       <div className="d-flex justify-content-center admin_login_page hv-100 overflow-auto align-items-center">
-
         <div
           className="bg-white rounded"
           style={{ maxWidth: "500px", width: "100%" }}
@@ -248,7 +253,6 @@ export default function AdminLoginFrom({ setAdminLoggedIn, setLoginCondition }) 
                   </span>
                 </label> */}
 
-               
                 {/*----ERROR MESSAGE FOR terms----*/}
                 {/* {errors.tandr && (
                   <span key={errors.tandr} className="text-danger font-size-3">
@@ -275,13 +279,13 @@ export default function AdminLoginFrom({ setAdminLoggedIn, setLoginCondition }) 
                       Log in
                     </button>
                   )}
-                   <Link
-                  to={""}
-                  className="font-size-3 text-dodger line-height-reset mb-3 mx-1 mt-5"
-                  onClick={() => setShowForgotPassword(true)}
-                >
-                  Forget Password
-                </Link>
+                  <Link
+                    to={""}
+                    className="font-size-3 text-dodger line-height-reset mb-3 mx-1 mt-5"
+                    onClick={() => setShowForgotPassword(true)}
+                  >
+                    Forgot Password
+                  </Link>
                   {/* <p className="text-center mt-7 font-size-4 mb-1">
                     Are you a partner?
                   </p>

@@ -52,8 +52,8 @@ function CompanyLoginForm(props) {
         value === null || value.trim() === ""
           ? "Email is required"
           : /\S+@\S+\.\S+/.test(value)
-            ? null
-            : "Email is invalid",
+          ? null
+          : "Email is invalid",
     ],
     password: [(value) => (value === "" ? "Password is required" : null)],
     forget_email: [
@@ -61,10 +61,10 @@ function CompanyLoginForm(props) {
         state.email
           ? ""
           : value === null || value.trim() === ""
-            ? "Email is required"
-            : /\S+@\S+\.\S+/.test(value)
-              ? null
-              : "Email is invalid",
+          ? "Email is required"
+          : /\S+@\S+\.\S+/.test(value)
+          ? null
+          : "Email is invalid",
     ],
   };
   /*----LOGIN ONCHANGE FuNCTION----*/
@@ -82,7 +82,7 @@ function CompanyLoginForm(props) {
           Response.status === true ||
           Response.message === "Successfully Logged In"
         ) {
-          props.setLoginCondition(true)
+          props.setLoginCondition(true);
           localStorage.setItem("token", Response.token);
           localStorage.setItem("userType", "company");
           localStorage.setItem("company_id", Response.company_id);
@@ -222,9 +222,9 @@ function CompanyLoginForm(props) {
           }
           if (
             res.data.message ===
-            "The token used in the request has been revoked by the user" ||
+              "The token used in the request has been revoked by the user" ||
             decode.error_description ===
-            "Unable to retrieve access token: appid/redirect uri/code verifier does not match authorization code. Or authorization code expired. Or external member binding exists"
+              "Unable to retrieve access token: appid/redirect uri/code verifier does not match authorization code. Or authorization code expired. Or external member binding exists"
           ) {
             toast.error("Token Expired", {
               position: toast.POSITION.TOP_RIGHT,
@@ -446,7 +446,7 @@ function CompanyLoginForm(props) {
                     setErrors("");
                   }}
                 >
-                  Forget Password
+                  Forgot Password
                 </Link>
               </div>
 

@@ -59,14 +59,17 @@ const AdminHeader = (props) => {
           {/* <!-- Page logo--> */}
           {/* /*Added logo To set sidebar menu to show and hide on all screens*/}
           <div className="brand-logo ">
-            <Link
-              to={userType === "agent" ? "/partner_profile" : "/dashboard"}
-            >
+            <Link to={userType === "agent" ? "/partner_profile" : "/dashboard"}>
               <img src="image/logo-main-black.png" alt="" />
             </Link>
           </div>
           {/* <!-- Page Heading--> */}
-          <h3 className="font-size-6 mb-0 mx-5 text-capitalize">{props.heading}</h3>
+          <h3
+            className="font-size-6 mb-0 mr-5 text-capitalize"
+            style={{ marginLeft: 20 }}
+          >
+            {props.heading}
+          </h3>
           <div className="collapse navbar-collapse" id="mobile-menu"></div>
 
           {userType === "agent" || userType === "" ? "" : <GlobalSearch />}
@@ -132,10 +135,10 @@ const AdminHeader = (props) => {
                         userType === "admin"
                           ? "/adminlogin"
                           : userType === "agent"
-                            ? localStorage.getItem("portal") === "study"
-                              ? "/study_partner_login"
-                              : "/partnerlogin"
-                            : "/";
+                          ? localStorage.getItem("portal") === "study"
+                            ? "/study_partner_login"
+                            : "/partnerlogin"
+                          : "/";
 
                       // Clear all session and local storage
                       localStorage.clear();
