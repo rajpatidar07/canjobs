@@ -6,6 +6,7 @@ import {
   GetAgreement,
   getSharePointParticularFolders,
   DeleteAgreement,
+  GetSharePointData,
 } from "../../../api/api";
 import { FaFilePdf, FaFileSignature, FaPlus } from "react-icons/fa";
 import MainRetainerAggHtml from "./MainRetainerAggHtml";
@@ -61,8 +62,8 @@ export default function RetauberAgreementList({
       if (res.data.data) {
         setAgreementList(res.data.data);
         const newUrl = window.location.pathname;
-       window.history.replaceState({}, document.title, newUrl);
-localStorage.setItem("navigation_url", "")
+        window.history.replaceState({}, document.title, newUrl);
+        localStorage.setItem("navigation_url", "")
       } else {
         setAgreementList([]);
       }
@@ -79,6 +80,16 @@ localStorage.setItem("navigation_url", "")
         emp_user_type,
         folderId
       );
+      if (res.data.data === "Lifetime validation failed, the token is expired.") {
+        try {
+          let response = await GetSharePointData()
+          if (response.status === 1 || "1") {
+            GetAgreementPdf(data);
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
       if (res.data.status === 1) {
         setDocLoder(false);
         if (res.data.data.find((item) => item.id === data.document_id)) {

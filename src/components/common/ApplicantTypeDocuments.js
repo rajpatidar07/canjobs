@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { toast } from 'react-toastify';
-import { AddSharePointDOcument, AddSharePointFolders, DeleteFolderOrDocument, getallAdminData, GetCommentsAndAssign, getFolderBreadcrumb, getSharePointParticularFolders } from '../../api/api';
+import { AddSharePointDOcument, AddSharePointFolders, DeleteFolderOrDocument, getallAdminData, GetCommentsAndAssign, getFolderBreadcrumb, GetSharePointData, getSharePointParticularFolders } from '../../api/api';
 import convertUrlToPDF from './Common function/convertUrlToPdf';
 import convertWordToPDF from './Common function/ConvertWordToPdf';
 import { Dropdown, Form } from 'react-bootstrap';
@@ -13,6 +13,7 @@ import Loader from './loader';
 import FolderList from './Document folder/FolderList';
 import EditDocNameForm from './Document folder/EditDocNameFOrm';
 import SAlert from './sweetAlert';
+import ExcelToPdfConverter from './Common function/ExcelToPdfConverter';
 export default function ApplicantTypeDocuments(props) {
 
   const [docFileBase, setDocFileBase] = useState([])
@@ -293,7 +294,6 @@ export default function ApplicantTypeDocuments(props) {
 
   const handleDocumentConversion = async (data) => {
     const mimeType = data?.file?.mimeType;
-    console.log(data.file)
     const downloadUrl = data["@microsoft.graph.downloadUrl"];
     if (["image/jpeg", "image/png", "image/jpg"].includes(mimeType)) {
       let res = await convertUrlToPDF(downloadUrl);
@@ -318,9 +318,25 @@ export default function ApplicantTypeDocuments(props) {
       setState((prev) => ({
         ...prev, convertedDoc: downloadUrl
       }));
+    } else if (data.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
+      if (data["@microsoft.graph.downloadUrl"]) {
+        try {
+          let res = await ExcelToPdfConverter(data["@microsoft.graph.downloadUrl"]);
+          console.log(res)
+          setState((prev) => ({
+            ...prev, convertedDoc: `data:application/pdf;base64,${res}`,
+          }));
+        } catch (error) {
+          console.error("Error converting Excel to PDF:", error);
+          setState((prev) => ({
+            ...prev, convertedDoc: "", docPreview: false
+          }));
+        }
+      }
+
     } else {
       console.log(mimeType)
-      // window.open(data.webUrl);
+      window.open(data.webUrl);
       setState((prev) => ({
         ...prev, convertedDoc: "", docPreview: false
       }));
@@ -349,6 +365,16 @@ export default function ApplicantTypeDocuments(props) {
         state?.columnName, state?.sortOrder, state?.recordsPerPage,
         state?.pageNo, props?.docId || ""
       );
+      if (res.data.data === "Lifetime validation failed, the token is expired.") {
+        try {
+          let response = await GetSharePointData()
+          if (response.status === 1 || "1") {
+            setState({ ...state, apiCall: true });
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
       if (res.data.status === 1) {
         // console.log("first", res.data.data)
         setState((prev) => ({

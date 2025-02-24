@@ -145,7 +145,6 @@ function Calllogtable(props) {
             }
         };
     }, [taskId, callLogId, apiCall, props.searchCandidate, props.selectedAdminId]);
-    console.log(location.key, taskId, callLogId, apiCall, props.searchCandidate, props.selectedAdminId)
     /*Function to add New Daily call log item */
     const AddCallLog = async (newValue, data) => {
         if (newValue && newValue.preventDefault) {

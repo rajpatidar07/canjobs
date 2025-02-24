@@ -110,7 +110,7 @@ import { Modal } from "react-bootstrap";
 import AdobePDFViewer from "../Adobe/adobeFile";
 import Loader from "../../common/loader";
 import { useLocation } from "react-router-dom";
-import { GetAgent, getallAdminData, GetCommentsAndAssign, GetDocConvertToken, getSharePointParticularFolders } from "../../../api/api";
+import { GetAgent, getallAdminData, GetCommentsAndAssign, GetDocConvertToken, GetSharePointData, getSharePointParticularFolders } from "../../../api/api";
 import { jsPDF } from "jspdf";
 export default function ViewPdf({
   show,
@@ -140,7 +140,7 @@ export default function ViewPdf({
   let [commentsList, setCommentsList] = useState([])
   let [adminList, setAdminList] = useState([])
   let [partnerList, setPartnerist] = useState([])
-  // let [docTypeList, setDocTypeList] = useState([])
+  let [apicall, setApiCall] = useState(false)
 
 
   let GetPdfDocument = async () => {
@@ -150,6 +150,16 @@ export default function ViewPdf({
         new_emp_user_type,
         new_folderId
       );
+      if (res.data.data === "Lifetime validation failed, the token is expired.") {
+        try {
+          let response = await GetSharePointData()
+          if (response.status === 1 || "1") {
+            setApiCall(true);
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
       if (res.data.status === 1) {
         setNewDocLoder(false);
         // setDocTypeList(res.data.data)
@@ -300,8 +310,11 @@ export default function ViewPdf({
   useEffect(() => {
     GetPdfDocument()
     AdminData()
+    if (apicall === true) {
+      setApicall(false)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [apicall])
   if (type === "modal") {
     return (
       <Modal

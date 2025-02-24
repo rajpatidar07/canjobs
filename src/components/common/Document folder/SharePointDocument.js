@@ -10,6 +10,7 @@ import {
   GetDocConvertToken,
   ChangeFolderNameSharpoint,
   GetAgent,
+  GetSharePointData,
 } from "../../../api/api";
 import { Dropdown, Form } from "react-bootstrap";
 import SAlert from "../../common/sweetAlert";
@@ -26,6 +27,7 @@ import AdobePDFViewer from "../Adobe/adobeFile";
 import { jsPDF } from "jspdf";
 import MentionAdminInDoc from "../Adobe/MentionAdminInDoc";
 import DocumentsNotes from "./DocumentsNotes";
+import ExcelToPdfConverter from "../Common function/ExcelToPdfConverter";
 // import DocViewer from "react-doc-viewer";
 // import { PDFDocument } from 'pdf-lib';
 
@@ -178,7 +180,7 @@ export default function SharePointDocument({
     }
   };
   /*Function to set the image and docx to pdf */
-  const SetPdfDocUrl = (data) => {
+  const SetPdfDocUrl = async (data) => {
     if (
       data.file.mimeType === "image/jpeg" ||
       data.file.mimeType === "image/png" ||
@@ -195,7 +197,21 @@ export default function SharePointDocument({
       GetNoteText(data, true);
     } else if (data.file.mimeType === "application/pdf") {
       setConvertedDoc(data["@microsoft.graph.downloadUrl"]);
+    } else if (data.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
+      if (data["@microsoft.graph.downloadUrl"]) {
+        try {
+          let res = await ExcelToPdfConverter(data["@microsoft.graph.downloadUrl"]);
+          console.log(res)
+          setConvertedDoc(`data:application/pdf;base64,${res}`);
+        } catch (error) {
+          console.error("Error converting Excel to PDF:", error);
+          setConvertedDoc("");
+          setDocPreview(false);
+        }
+      }
+
     } else {
+      console.log(data.file.mimeType)
       window.open(data.webUrl);
       setConvertedDoc("");
       setDocPreview(false);
@@ -295,6 +311,16 @@ export default function SharePointDocument({
         pageNo,
         docId ? docId : ""
       );
+      if (res.data.data === "Lifetime validation failed, the token is expired.") {
+        try {
+          let response = await GetSharePointData()
+          if (response.status === 1 || "1") {
+            setApiCall(true);
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
       if (res.data.status === 1) {
         // if (notification === "no") { setDocPreview(false); }
         setDocTypeList(res.data.data);
@@ -729,7 +755,6 @@ export default function SharePointDocument({
 
     return; // Return the base64 PDF data
   };
-  // console.log(docPreview);
   return (
     <>
       {folderId ? (
@@ -896,17 +921,28 @@ export default function SharePointDocument({
                         </div>
                       )}
                   </div>
+                  {console.log("pppp =>", (docSingleDate.file.mimeType === "application/pdf" ||
+                    ((docSingleDate.file.mimeType === "image/jpeg" ||
+                      docSingleDate.file.mimeType === "image/png" ||
+                      docSingleDate.file.mimeType === "image/jpg") &&
+                      imgConRes === "imageConverted") ||
+                    docSingleDate.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+                    docSingleDate.file.mimeType ===
+                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document") &&
+                    (convertedDoc && docSingleDate.file.mimeType !==
+                      "text/plain"), "mimeType =>", docSingleDate.file.mimeType, "convertedDoc =>", convertedDoc)}
                   {
                     // docTypePage === "adobe"
-                    (docSingleDate.file.mimeType === "application/pdf" ||
+                    ((docSingleDate.file.mimeType === "application/pdf" ||
                       ((docSingleDate.file.mimeType === "image/jpeg" ||
                         docSingleDate.file.mimeType === "image/png" ||
                         docSingleDate.file.mimeType === "image/jpg") &&
                         imgConRes === "imageConverted") ||
+                      docSingleDate.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
                       docSingleDate.file.mimeType ===
                       "application/vnd.openxmlformats-officedocument.wordprocessingml.document") &&
                       (convertedDoc && docSingleDate.file.mimeType !==
-                        "text/plain") ? (
+                        "text/plain")) ? (
                       // commentsRes ? (
                       <AdobePDFViewer
                         url={convertedDoc}

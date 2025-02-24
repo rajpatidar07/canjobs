@@ -1646,70 +1646,69 @@
 // };
 
 // export default Newpdf;
-import React, { useState } from "react";
+// import React, { useState } from "react";
 
-const Newpdf = () => {
-    const [data, setData] = useState([]);
-    const [selectedParent, setSelectedParent] = useState(null);
-    const [selectedChild, setSelectedChild] = useState(null);
-    const [title, setTitle] = useState("");
+// const Newpdf = () => {
+//     const [data, setData] = useState([]);
+//     const [selectedParent, setSelectedParent] = useState(null);
+//     const [selectedChild, setSelectedChild] = useState(null);
+//     const [title, setTitle] = useState("");
 
-    const addItem = () => {
-        if (!title.trim()) return;
-        let parentId = 0, level = 0, allParentIds = "0";
+//     const addItem = () => {
+//         if (!title.trim()) return;
+//         let parentId = 0, level = 0, allParentIds = "0";
 
-        if (selectedChild) {
-            const child = data.find((item) => item.id === Number(selectedChild));
-            parentId = child.id;
-            level = 2;
-            allParentIds = `${child.all_parent_id},${child.id}`;
-        } else if (selectedParent) {
-            parentId = Number(selectedParent);
-            level = 1;
-            allParentIds = `${selectedParent}`;
-        } else {
-            parentId = Number(selectedParent);
-            level = 0;
-            allParentIds = `${selectedParent}`;
-        }
+//         if (selectedChild) {
+//             const child = data.find((item) => item.id === Number(selectedChild));
+//             parentId = child.id;
+//             level = 2;
+//             allParentIds = `${child.all_parent_id},${child.id}`;
+//         } else if (selectedParent) {
+//             parentId = Number(selectedParent);
+//             level = 1;
+//             allParentIds = `${selectedParent}`;
+//         } else {
+//             parentId = Number(selectedParent);
+//             level = 0;
+//             allParentIds = `${selectedParent}`;
+//         }
 
-        const newItem = {
-            id: Date.now(),
-            title,
-            parent_id: parentId,
-            level,
-            all_parent_id: allParentIds,
-        };
-        setData([...data, newItem]);
-        setTitle("");
-        setSelectedChild("")
-        setSelectedParent("")
-    };
+//         const newItem = {
+//             id: Date.now(),
+//             title,
+//             parent_id: parentId,
+//             level,
+//             all_parent_id: allParentIds,
+//         };
+//         setData([...data, newItem]);
+//         setTitle("");
+//         setSelectedChild("")
+//         setSelectedParent("")
+//     };
 
-    return (
-        <div>
-            <input
-                type="text"
-                placeholder="Enter title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-            />
-            <select onChange={(e) => setSelectedParent(e.target.value)}>
-                <option value="">Select Parent</option>
-                {data.filter((item) => item.level === 0).map((parent) => (
-                    <option key={parent.id} value={parent.id}>{parent.title}</option>
-                ))}
-            </select>
-            <select onChange={(e) => setSelectedChild(e.target.value)}>
-                <option value="">Select Child</option>
-                {data.filter((item) => item.level === 1).map((child) => (
-                    <option key={child.id} value={child.id}>{child.title}</option>
-                ))}
-            </select>
-            <button onClick={addItem}>Add Item</button>
-            <pre>{JSON.stringify(data, null, 2)}</pre>
-        </div>
-    );
-};
-export default Newpdf;
-
+//     return (
+//         <div>
+//             <input
+//                 type="text"
+//                 placeholder="Enter title"
+//                 value={title}
+//                 onChange={(e) => setTitle(e.target.value)}
+//             />
+//             <select onChange={(e) => setSelectedParent(e.target.value)}>
+//                 <option value="">Select Parent</option>
+//                 {data.filter((item) => item.level === 0).map((parent) => (
+//                     <option key={parent.id} value={parent.id}>{parent.title}</option>
+//                 ))}
+//             </select>
+//             <select onChange={(e) => setSelectedChild(e.target.value)}>
+//                 <option value="">Select Child</option>
+//                 {data.filter((item) => item.level === 1).map((child) => (
+//                     <option key={child.id} value={child.id}>{child.title}</option>
+//                 ))}
+//             </select>
+//             <button onClick={addItem}>Add Item</button>
+//             <pre>{JSON.stringify(data, null, 2)}</pre>
+//         </div>
+//     );
+// };
+// export default Newpdf;

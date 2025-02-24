@@ -9,6 +9,7 @@ import { LuList } from "react-icons/lu";
 import Pagination from "../pagination";
 import { PiGridFourFill } from "react-icons/pi";
 import { MdNoteAdd } from "react-icons/md";
+import { RiFileExcel2Line } from "react-icons/ri";
 export default function FolderList({
   setDocPreview,
   ShowDeleteAlert,
@@ -220,6 +221,19 @@ export default function FolderList({
                                 marginBottom: 5,
                                 height: "90px",
                                 color: "#2B579A",
+                              }}
+                            />
+                          )}
+                        {item.file &&
+                          (item.file.mimeType ===
+                            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") && (
+                            <RiFileExcel2Line
+                              // className="file-icon"
+                              style={{
+                                width: "90px",
+                                marginBottom: 5,
+                                height: "90px",
+                                color: "green",
                               }}
                             />
                           )}
@@ -481,12 +495,15 @@ export default function FolderList({
                           className="me-2"
                           style={{ color: "rgb(251, 199, 45)" }}
                         />
-                      ) : (
-                        <BsFiletypeDocx
-                          className="me-2"
-                          style={{ color: "#2B579A" }}
-                        />
-                      )}
+                      ) : item.file && item.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                        ? (<RiFileExcel2Line className="me-2"
+                          style={{ color: "green" }} />)
+                        : (
+                          <BsFiletypeDocx
+                            className="me-2"
+                            style={{ color: "#2B579A" }}
+                          />
+                        )}
                       <span className="mx-2 text-break">
                         {item.name.replaceAll("_", " ")}
                       </span>
