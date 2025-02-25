@@ -10,7 +10,8 @@ import {
 import { toast } from "react-toastify";
 import ConvertTime from "./Common function/ConvertTime";
 import determineBackgroundColor from "./Common function/DetermineBackgroundColour";
-
+import MarkReadTask from "./Common function/MarkReadTask";
+import ViewAdminBox from "./ViewAdminBox";
 export default function CommonTaskReplyBox(props) {
   let [editableData, setEditableData] = useState();
   const [commntData, setCommentData] = useState();
@@ -19,7 +20,6 @@ export default function CommonTaskReplyBox(props) {
   let [dropdownVisible, setDropdownVisible] = useState();
   const [adminList, setAdminList] = useState([]);
   let [selectedAdminReply, setSelectedAdminReplye] = useState([]);
-  // const [partnerList, setPartnerist] = useState([]);
   // let [selectedPartner, setSelectedPartner] = useState("");
   const [commentsReplyList, setCommentsReplyList] = useState([]);
   const [apiCall, setApicall] = useState(false);
@@ -477,6 +477,7 @@ export default function CommonTaskReplyBox(props) {
                 transitionDelay: "initial",
               }}
               key={index}
+              onMouseEnter={() => (MarkReadTask(item, "thread"))}
             >
               <div
                 className={`comment_status_update ${AdminType === "agent"
@@ -489,7 +490,7 @@ export default function CommonTaskReplyBox(props) {
               >
                 <Link
                   className={`text-gray pr-1`}
-                  title="Update Comment"
+                  title="Update Reply"
                   onClick={() => {
                     setEditableData(item);
                     setReplyComment(item.msg);
@@ -497,7 +498,12 @@ export default function CommonTaskReplyBox(props) {
                 >
                   <CiEdit />
                 </Link>
+                <span
+                  className={`text-gray pr-1`}
 
+                >
+                  <ViewAdminBox data={item} type="thread" adminList={adminList}/>
+                </span>
                 <Link
                   className="text-danger pr-1"
                   title="Delete Comment"

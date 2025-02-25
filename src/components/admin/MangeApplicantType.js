@@ -89,7 +89,7 @@ export default function ManageApplicantType(props) {
             </div>
             {/*<-- Applicant type  Table -->*/}
             <ApplicantTypeTable
-              heading={"Interview"}
+              heading={"Applicant Type"}
               setpageNo={setpageNo}
               pageNo={pageNo}
               allApplicantType={allApplicantType}

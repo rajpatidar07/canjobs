@@ -16,6 +16,8 @@ import ConvertTime from "../Common function/ConvertTime";
 import { CiEdit, CiTrash } from "react-icons/ci";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import determineBackgroundColor from "../Common function/DetermineBackgroundColour";
+import ViewAdminBox from "../ViewAdminBox";
+import MarkReadTask from "../Common function/MarkReadTask";
 export default function CommentSection({
   commentsList,
   docData,
@@ -1038,6 +1040,7 @@ export default function CommentSection({
                     color: "white",
                     transitionDelay: "initial"
                   }}
+                  onMouseEnter={() => (MarkReadTask(commentItem, "task"))}
                   onClick={() => {
                     if (page !== "file") {
                       setAnnotationId(
@@ -1077,7 +1080,12 @@ export default function CommentSection({
                     >
                       <CiEdit />
                     </Link>
+                    <span
+                      className={`text-gray pr-1`}
 
+                    >
+                      <ViewAdminBox data={commentItem} type="task" adminList={allAdmin} />
+                    </span>
                     <Link
                       className=""
                       title={commentItem.status === "2" ? "Task overdue" : "Update status to complete"}

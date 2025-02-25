@@ -213,7 +213,6 @@ export default function CommonApplicatTypePage() {
                                     </div>
                                     <small className="text-danger">{searcherror}</small>
                                 </div>
-                                {console.log("applicantTypeChildId", applicantTypeChildId)}
                                 {/*<-- Employee Table according to applicant Type -->*/}
                                 <EmployeeTable
                                     search={search}

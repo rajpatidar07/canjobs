@@ -10,6 +10,8 @@ import { IoIosCheckmarkCircle } from "react-icons/io";
 import determineBackgroundColor from "./Common function/DetermineBackgroundColour";
 import { getallAdminData } from "../../api/api";
 import Laoder from "../common/loader"
+import MarkReadTask from "./Common function/MarkReadTask";
+import ViewAdminBox from "./ViewAdminBox";
 export default function CommentTaskBox(props) {
     const [commentsLoading, setCommentsLoading] = useState(false);
     const [comments, setComments] = useState("");
@@ -295,7 +297,7 @@ export default function CommentTaskBox(props) {
                 autoClose: 2000,
             });
         }
-        console.log( props.userId)
+        console.log(props.userId)
         try {
             const res = await ADocAnnotation(
                 admin_id,
@@ -978,6 +980,8 @@ export default function CommentTaskBox(props) {
                                             color: "white",
                                             transitionDelay: "initial"
                                         }}
+                                        onMouseEnter={() => (MarkReadTask(commentItem, "task"))}
+
                                         onClick={() => {
 
                                             if (commentItem.status !== "1") {
@@ -1014,8 +1018,12 @@ export default function CommentTaskBox(props) {
                                             >
                                                 <CiEdit />
                                             </Link>
+                                            <span
+                                                className={`text-gray pr-1`}
 
-                                            <Link
+                                            >
+                                                <ViewAdminBox data={commentItem} type="task" adminList={adminList} />
+                                            </span>                                            <Link
                                                 className={props.taskType === "note" ? "d-none" : ""}
                                                 title={commentItem.status === "2" ? "Task overdue" : "Update status to complete"}
                                                 onClick={(e) => {

@@ -170,7 +170,7 @@ export default function AddApplicantType(props) {
                             />
                             {errors.title && <p style={{ color: "red" }}>{errors.title}</p>}
                         </div>
-                        <div className="form-group col">
+                        <div className={props.updateApplicantTypeData ? "d-none" : "form-group col"}>
                             <label
                                 htmlFor="selectedParent"
                                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"

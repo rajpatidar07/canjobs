@@ -3785,3 +3785,26 @@ export const getDailyCallLogChatApi = async (call_log_id, page, limit) => {
   );
   return response;
 }
+/*Function to read task ad reply by admin  */
+export const ReadTaskOrReplyApi = async (data) => {
+  const response = await axios.post(`${API_URL}common/addUpdateTaskThreadRead`, data, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  }
+  );
+  return response;
+}
+/*Function to get read task ad reply by admin  */
+export const getViewersDataApi = async (id, type) => {
+  const response = await axios.post(`${API_URL}common/getTaskThreadRead`,
+    { "task_id": id, "type": type }, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  }
+  );
+  return response;
+}

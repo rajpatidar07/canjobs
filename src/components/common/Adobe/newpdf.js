@@ -1712,3 +1712,58 @@
 //     );
 // };
 // export default Newpdf;
+import React, { useState } from "react";
+import { LuEye } from "react-icons/lu";
+
+const Newpdf = ({ messages = [
+    {
+        id: 1,
+        text: "Hello World",
+        viewedBy: [
+            { id: 1, name: "John Doe", email: "john@example.com", profilePic: "https://i.pravatar.cc/40?img=1" },
+            { id: 2, name: "", email: "admin@example.com", profilePic: "https://i.pravatar.cc/40?img=2" },
+            { id: 3, name: "John Doe", email: "john@example.com", profilePic: "https://i.pravatar.cc/40?img=1" },
+            { id: 4, name: "", email: "admin@example.com", profilePic: "https://i.pravatar.cc/40?img=2" },
+            { id: 5, name: "John Doe", email: "john@example.com", profilePic: "https://i.pravatar.cc/40?img=1" },
+            { id: 6, name: "", email: "admin@example.com", profilePic: "https://i.pravatar.cc/40?img=2" },
+            { id: 7, name: "John Doe", email: "john@example.com", profilePic: "https://i.pravatar.cc/40?img=1" },
+            { id: 8, name: "", email: "admin@example.com", profilePic: "https://i.pravatar.cc/40?img=2" },
+        ],
+    },
+] }) => {
+    const [hoveredMessage, setHoveredMessage] = useState(null);
+
+    return (
+        <div className="p-3">
+        {messages.map((msg) => (
+          <div key={msg.id} className="border rounded p-3 mb-3 d-flex justify-content-between align-items-center">
+            <p className="mb-0">{msg.text}</p>
+            <div className="position-relative d-inline-block" onMouseLeave={() => setHoveredMessage(null)}>
+              <LuEye className="cursor-pointer" onMouseEnter={() => setHoveredMessage(msg.id)} />
+              {hoveredMessage === msg.id && (
+                <div
+                  className="position-absolute bg-white border rounded p-2 shadow d-flex gap-2"
+                  style={{ top: "100%", left: "50%", transform: "translateX(-50%)" }}
+                >
+                  {msg.viewedBy.map((user) => (
+                    <div key={user.id} className="position-relative">
+                      <img
+                        src={user.profilePic}
+                        alt={user.name || user.email}
+                        title={user.name || user.email}
+
+                      className="rounded-circle border"
+                      style={{ width: "40px", height: "40px", objectFit: "cover" }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+};
+
+export default Newpdf;

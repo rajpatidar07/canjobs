@@ -202,7 +202,7 @@ export default function SharePointDocument({
         try {
           let res = await ExcelToPdfConverter(data["@microsoft.graph.downloadUrl"]);
           console.log(res)
-          setConvertedDoc(`data:application/pdf;base64,${res}`);
+          setConvertedDoc(`${res}`);
         } catch (error) {
           console.error("Error converting Excel to PDF:", error);
           setConvertedDoc("");

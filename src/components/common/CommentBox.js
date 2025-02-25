@@ -4,6 +4,7 @@ import { FaReplyAll } from "react-icons/fa";
 import CommentReplyBox from "./CommentReplyBox";
 import ConvertTime from "./Common function/ConvertTime";
 import determineBackgroundColor from "./Common function/DetermineBackgroundColour";
+import MarkReadTask from "./Common function/MarkReadTask";
 export default function CommentBox({
   commentsReplyList,
   setAddCommentFlag,
@@ -108,6 +109,7 @@ export default function CommentBox({
                   backgroundColor: "#fafafa",
                   color: "white",
                 }}
+                onMouseEnter={() => (MarkReadTask(commentItem, "task"))}
                 onClick={() => {
                   setSelectedAnnotation(
                     //Condition fot imm pdf doc file

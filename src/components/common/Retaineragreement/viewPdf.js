@@ -112,6 +112,7 @@ import Loader from "../../common/loader";
 import { useLocation } from "react-router-dom";
 import { GetAgent, getallAdminData, GetCommentsAndAssign, GetDocConvertToken, GetSharePointData, getSharePointParticularFolders } from "../../../api/api";
 import { jsPDF } from "jspdf";
+import ExcelToPdfConverter from "../Common function/ExcelToPdfConverter";
 export default function ViewPdf({
   show,
   close,
@@ -180,8 +181,22 @@ export default function ViewPdf({
           ) {
             // Await the conversion if convertToPDF is asynchronous
             convertToPDF(data);
+          } else if (data.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
+            if (data["@microsoft.graph.downloadUrl"]) {
+              try {
+                let res = await ExcelToPdfConverter(data["@microsoft.graph.downloadUrl"]);
+                console.log(res)
+                setNewPdfUrl(`${res}`);
+              } catch (error) {
+                console.error("Error converting Excel to PDF:", error);
+                setNewPdfUrl("")
+              }
+            }
+
           } else {
-            setNewPdfUrl(data["@microsoft.graph.downloadUrl"]); // Update state if necessary
+            console.log(data.file.mimeType)
+            window.open(data.webUrl);
+            setNewPdfUrl("")
           }
         } else if (res.data.data === "No Documents Found") {
           setNewDocLoder(false);

@@ -416,7 +416,7 @@ export default function FolderList({
                             </li>
                             <li
                               className={
-                                item.file.mimeType === "text/plain" || item.file?.mimeType?.includes("spreadsheetml")
+                                item.file.mimeType === "text/plain" 
                                   ? "d-none"
                                   : "list-group-item text-danger"
                               }
@@ -427,7 +427,7 @@ export default function FolderList({
                                 target="_blank"
                               >
                                 Open in New Tab
-                              </Link>c
+                              </Link>
                             </li>
                             <li
                               className={`list-group-item text-danger ${(userType !== "admin" &&

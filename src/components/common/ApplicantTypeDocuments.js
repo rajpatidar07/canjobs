@@ -324,7 +324,7 @@ export default function ApplicantTypeDocuments(props) {
           let res = await ExcelToPdfConverter(data["@microsoft.graph.downloadUrl"]);
           console.log(res)
           setState((prev) => ({
-            ...prev, convertedDoc: `data:application/pdf;base64,${res}`,
+            ...prev, convertedDoc: `${res}`,
           }));
         } catch (error) {
           console.error("Error converting Excel to PDF:", error);

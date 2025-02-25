@@ -22,6 +22,7 @@ import ModalSidebar from "./modalSidebar";
 import { CiEdit } from "react-icons/ci";
 import { AiOutlineMessage } from "react-icons/ai";
 import determineBackgroundColor from "./Common function/DetermineBackgroundColour";
+import MarkReadTask from "./Common function/MarkReadTask"
 export default function AdminTaskTable(props) {
   const [taskData, setTaskData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -382,19 +383,17 @@ export default function AdminTaskTable(props) {
                         className={`applicant_row ${props.taskId === data.id ? "bg-light" : ""
                           }`}
                         ref={(el) => (rowRefs.current[index] = el)}
-                      >
+                        onClick={(e) => {
+                          // Check if the clicked element is inside the <td> elements that should not trigger onClick
+                          if (
+                            e.target.closest(".exclude-mark-read") // Add this class to the <td> elements you want to exclude
+                          ) {
+                            e.stopPropagation(); // Prevent the event from bubbling up to the <tr>
+                            return;
+                          }
+                          MarkReadTask(data, "task"); // Call function only if the click was outside the excluded <td>
+                        }}                      >
                         <td className="text-capitalize py-5">
-                          {/* <p className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            {data.task_creator_user_name === null ||
-                            data.task_creator_user_name === undefined ||
-                            data.task_creator_user_name === "undefined" ||
-                            data.task_creator_user_name === "" ||
-                            data.task_creator_user_name === "0" ? (
-                              <span className="font-size-3  mb-0">N/A</span>
-                            ) : (
-                              data.task_creator_user_name
-                            )}
-                          </p> */}
                           <UserAvatar
                             profileImage={data.task_creator_user_profile_image}
                             name={data.task_creator_user_name}
@@ -404,17 +403,6 @@ export default function AdminTaskTable(props) {
                           />
                         </td>
                         <td className="text-capitalize py-5">
-                          {/* <p className="font-size-3 font-weight-normal text-black-2 mb-0">
-                            {data.assigned_to_name === null ||
-                            data.assigned_to_name === undefined ||
-                            data.assigned_to_name === "undefined" ||
-                            data.assigned_to_name === "" ||
-                            data.assigned_to_name === "0" ? (
-                              <span className="font-size-3  mb-0">N/A</span>
-                            ) : (
-                              data.assigned_to_name
-                            )}
-                          </p> */}
                           <AssignedUserList
                             assined_to_user_id={data.assined_to_user_id}
                             assigned_to_name={data.assigned_to_name}
@@ -444,7 +432,6 @@ export default function AdminTaskTable(props) {
                             </div>
                           )}
                         </td>
-
                         {props.heading === "Dashboard" ? (
                           ""
                         ) : (
@@ -570,7 +557,7 @@ export default function AdminTaskTable(props) {
                             )}
                           </td>
                         )}
-                        <td className=" py-5">
+                        <td className="exclude-mark-read py-5">
                           {data.status === null ||
                             data.status === undefined ||
                             data.status === "undefined" ||
@@ -629,40 +616,12 @@ export default function AdminTaskTable(props) {
                             </>
                           )}
                         </td>
-
-                        {/* {props.heading === "Dashboard" ? (
-                        ""
-                      ) : (
-                        <td className=" py-5">
-                          {(data.city === null ||
-                            data.city === undefined ||
-                            data.city === "undefined" ||
-                            data.city === "") &&
-                          (data.state === null ||
-                            data.state === undefined ||
-                            data.state === "undefined" ||
-                            data.state === "") &&
-                          (data.country === null ||
-                            data.country === undefined ||
-                            data.country === "undefined" ||
-                            data.country === "") ? (
-                            <p className="font-size-3  mb-0">N/A</p>
-                          ) : (
-                            <p
-                              className="font-size-3 font-weight-normal text-black-2 mb-0 text-truncate"
-                              title={` ${data.city},${data.state},${data.country}`}
-                            >
-                              {` ${data.city},${data.state},${data.country}`}
-                            </p>
-                          )}
-                        </td>
-                      )} */}
                         <td
                           className={
                             props.heading === "dashboard" ||
                               props.heading !== "Task Dashboard"
                               ? "d-none"
-                              : " py-5 min-width-px-100"
+                              : " py-5 min-width-px-100 exclude-mark-read"
                           }
                         >
                           <div

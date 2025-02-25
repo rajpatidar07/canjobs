@@ -4,6 +4,8 @@ import { CiPaperplane } from "react-icons/ci";
 import ConvertTime from "./Common function/ConvertTime";
 import { Link } from "react-router-dom";
 import { CiEdit, CiTrash } from "react-icons/ci";
+import MarkReadTask from "./Common function/MarkReadTask";
+import ViewAdminBox from "./ViewAdminBox";
 export default function CommentReplyBox({
   commentsReplyList,
   commentItem,
@@ -24,6 +26,7 @@ export default function CommentReplyBox({
   dropdownVisible,
   taskType,
   replyCommentClick,
+  allAdmin
 }) {
   // console.log("first",replyCommentClick)
   return (
@@ -33,7 +36,8 @@ export default function CommentReplyBox({
         (replyItem, replyIndex) =>
           // Only render the reply if task_id matches the comment's id
           replyItem.task_id === commentItem.id && (
-            <div key={replyIndex}>
+            <div key={replyIndex}
+              onMouseEnter={() => (MarkReadTask(replyItem, "thread"))}>
               {/* Display reply message */}
               {
                 <div
@@ -65,6 +69,12 @@ export default function CommentReplyBox({
                         {" "}
                         <CiEdit />
                       </Link>
+                      <span
+                        className={`text-gray pr-1`}
+
+                      >
+                        <ViewAdminBox data={replyItem} type="thread" adminList={allAdmin} />
+                      </span>
                       <Link
                         className="text-danger pr-2"
                         title="Delete Comment"
@@ -185,7 +195,7 @@ export default function CommentReplyBox({
                 cancel
               </a> */}
           </div>
-          {(replyCommentClick === commentItem.id) &&dropdownVisible && filteredEmails.length > 0 && type === "reply" ? (
+          {(replyCommentClick === commentItem.id) && dropdownVisible && filteredEmails.length > 0 && type === "reply" ? (
             <ul
               className="email-suggestions overflow-scroll"
               style={{
