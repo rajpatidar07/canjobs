@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { toast } from "react-toastify";
 import { AddFIlter } from "../../api/api";
+import { Link } from "react-router-dom";
 
 const StyledDropdown = ({
     options,
@@ -16,6 +17,8 @@ const StyledDropdown = ({
 }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [addStatusFieldOpen, setAddStatusFieldOpen] = useState(false);
+    const [showUpdateDropDown, setShowUpdateDropDown] = useState("");
+    const [updateStatusData, setUpdateStatusData] = useState();
     const [newStatus, setNewStatus] = useState("");
     const [statusErrors, setStatusErrors] = useState("");
 
@@ -23,6 +26,13 @@ const StyledDropdown = ({
     const [dropdownPosition, setDropdownPosition] = useState({ left: 0 });
     const buttonRef = useRef(null);
     const dropdownRef = useRef(null);
+    let closeStatusFieldStates = () => {
+        setNewStatus("");
+        setStatusErrors("");
+        setAddStatusFieldOpen(false)
+        setUpdateStatusData()
+        setShowUpdateDropDown("")
+    }
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (
@@ -32,12 +42,14 @@ const StyledDropdown = ({
                 !dropdownRef.current.contains(event.target)
             ) {
                 setIsOpen(false);
+                closeStatusFieldStates()
             }
         };
 
         const handleScroll = () => {
             if (isOpen) {
                 setIsOpen(false);
+                closeStatusFieldStates()
             }
         };
 
@@ -100,12 +112,20 @@ const StyledDropdown = ({
         e.stopPropagation();
         updateDropdownPosition();
         setIsOpen((prev) => !prev);
+        setStatusErrors("")
+        setNewStatus("")
     };
     const highlightColors = [
         "#ff5733", "#33ff57", "#5733ff", "#ff33a8", "#33a8ff",
         "#ffd700", "#ff8c00", "#00ced1", "#dc143c", "#32cd32"
     ];
 
+    const handleRightClick = (e, option) => {
+        e.preventDefault();
+        setUpdateStatusData(option); // Set the status to be updated
+        setNewStatus(option.value); // Prefill input with existing status value
+        setAddStatusFieldOpen(true);
+    };
     const getColor = (option) => {
         let hash = 0;
         for (let i = 0; i < option.length; i++) {
@@ -119,11 +139,12 @@ const StyledDropdown = ({
         if (newStatus) {
             let data = {
                 json_item: newStatus,
+                item_id: updateStatusData ? updateStatusData?.id : ""
             };
             try {
                 const responseData = await AddFIlter(data, filterItemID);
                 if (responseData.message === "item already exist !") {
-                    setStatusErrors("Status already exist !");
+                    setStatusErrors(`${status_name} already exist !`);
                     setNewStatus("");
                 }
                 if (responseData.message === "filter item added successfully") {
@@ -131,10 +152,8 @@ const StyledDropdown = ({
                         position: toast.POSITION.TOP_RIGHT,
                         autoClose: 1000,
                     });
-                    setNewStatus("");
-                    setStatusErrors("");
-                    setAddStatusFieldOpen(false)
-                    setFilterListApiCall(true)
+                    setFilterListApiCall(true);
+                    closeStatusFieldStates();
                 }
             } catch (err) {
                 console.log(err);
@@ -211,15 +230,18 @@ const StyledDropdown = ({
                             key={index}
                             onClick={(e) => {
                                 e.stopPropagation();
-                                if (onChange) {
-                                    onChange({
-                                        target: {
-                                            name: name,
-                                            value: option.id
-                                        }
-                                    });
+                                if (showUpdateDropDown !== option.id) {
+                                    if (onChange) {
+                                        onChange({
+                                            target: {
+                                                name: name,
+                                                value: option.id
+                                            }
+                                        });
+                                    }
+                                    setIsOpen(false);
+                                    closeStatusFieldStates()
                                 }
-                                setIsOpen(false);
                             }}
                             className="rounded-md-3 font-bold text-center"
                             style={{
@@ -235,7 +257,25 @@ const StyledDropdown = ({
                             onMouseLeave={(e) => {
                                 e.currentTarget.style.transform = "scale(1)";
                             }}
+                            onContextMenu={(e) => {
+                                e.preventDefault();
+                                setShowUpdateDropDown(option.id)
+                            }}
+
                         >
+                            {showUpdateDropDown === option.id && (
+                                <ul className="list-group position-absolute z-index-1 bg-white shadow-sm">
+                                    <li className="list-group-item">
+                                        <Link
+                                            className="text-decoration-none"
+                                            onClick={(e) => {
+                                                handleRightClick(e, option)
+                                            }}
+                                        >
+                                            Update  {status_name}
+                                        </Link>
+                                    </li></ul>
+                            )}
                             {option.value}
                         </div>
                     ))}
@@ -245,13 +285,13 @@ const StyledDropdown = ({
                         <label
                             htmlFor="status"
                             className="font-size-4 text-black-2 mt-3 line-height-reset"
-                        >Add new {status_name}</label>
+                        >{updateStatusData ? "Update" : "Add new"} {status_name}</label>
                         <input
                             id="status"
                             name="status"
                             className="form-control mt-3"
                             value={newStatus} onChange={(e) => setNewStatus(e.target.value)} onBlur={(e) => onAddStatusBlur(e)} />
-                        <small className="test-danger ">{statusErrors}</small>
+                        <small className="text-danger ">{statusErrors}</small>
                     </div>
                     : <div className="border-top text-center mt-2">
                         <button className="btn btn-light mt-2" onClick={() => setAddStatusFieldOpen(true)}>+ Add new {status_name}</button></div>}
@@ -266,7 +306,7 @@ const StyledDropdown = ({
                 className="rounded-md  font-bold text-center"
                 onClick={handleOpenDropdown}
                 style={{
-                    backgroundColor: value
+                    backgroundColor: (options && options.find((item) => item.id === parseInt(value))?.value)
                         ? getColor(value)
                         : "gray",
                     color: "white",

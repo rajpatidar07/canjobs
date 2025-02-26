@@ -5,6 +5,7 @@ import {
   MdOutlinePhotoFilter,
   MdAssignmentAdd,
   MdRealEstateAgent,
+  MdOutlineAddIcCall,
 } from "react-icons/md";
 import { LuFileKey } from "react-icons/lu";
 import { LiaUsersSolid, LiaAddressCardSolid, LiaCcVisa } from "react-icons/lia";
@@ -14,7 +15,7 @@ import {
   BsReverseLayoutTextSidebarReverse,
 } from "react-icons/bs";
 import { PiApplePodcastsLogoThin } from "react-icons/pi";
-import { AiOutlineUserAdd /*, AiOutlineMail*/ } from "react-icons/ai";
+import { AiOutlineUserAdd  } from "react-icons/ai";
 import { TbFilterPlus } from "react-icons/tb";
 import { FaAddressCard, FaNotesMedical, FaTasks } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
@@ -26,9 +27,7 @@ const AdminSidebar = (props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(
     localStorage.getItem("isMenuOpen")
   );
-  // const [apiCall, setApiCall] = useState(false);
   let [applicanttypedata, setApplicanttypedata] = useState([]);
-  // let view_as_admin_type = localStorage.getItem("view_as_token_admin_type");
   let admin_type = localStorage.getItem("admin_type");
   let user_type = localStorage.getItem("userType");
   const [openParent, setOpenParent] = useState(null);
@@ -74,6 +73,7 @@ const AdminSidebar = (props) => {
   useEffect(() => {
     if (props.heading) {
       const activityLi = liRefs.current[props.heading];
+      console.log(props.heading,activityLi,liRefs.current)
       if (activityLi) {
         activityLi.scrollIntoView({ behavior: "smooth" });
       }
@@ -179,7 +179,6 @@ const AdminSidebar = (props) => {
           >
             <MdOutlineDashboardCustomize className="sidebar_icon" />
             <span className="text-truncate">Dashboard</span>
-            {/* <i className="fab fa-blackberry mr-5"></i>Dashboard */}
           </Link>
         </li>
         <li
@@ -197,7 +196,6 @@ const AdminSidebar = (props) => {
             to="/managetasks"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
-            {/* <i className="fas fa-filter mr-5"></i> */}
             <FaTasks className="sidebar_icon" />
             <span className="text-truncate">Task Dashboard</span>
           </Link>
@@ -216,7 +214,6 @@ const AdminSidebar = (props) => {
             to="/selfemployee"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
-            {/* <i className="far fa-user mr-5"></i> */}
             <LiaUsersSolid className="sidebar_icon" />
             <span className="text-truncate">New Applicants</span>
           </Link>
@@ -236,7 +233,6 @@ const AdminSidebar = (props) => {
           >
             <LiaUsersSolid className="sidebar_icon" />
             <span className="text-truncate">Manage Applicants</span>
-            {/* <i className="far fa-user mr-5"></i>Manage Applicants */}
           </Link>
         </li>
         <li
@@ -252,7 +248,6 @@ const AdminSidebar = (props) => {
             to="/adminclient"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
-            {/* <i className="far fa-building mr-5"></i> */}
             <BsBuildings className="sidebar_icon" />
             <span className="text-truncate">Manage Employers</span>
           </Link>
@@ -272,7 +267,6 @@ const AdminSidebar = (props) => {
             to="/job"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
-            {/* <i className="far fa-address-card mr-5"></i> */}
             <LiaAddressCardSolid className="sidebar_icon" />
             <span className="text-truncate">Manage Jobs</span>
           </Link>
@@ -292,7 +286,6 @@ const AdminSidebar = (props) => {
             to="/selfjob"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
-            {/* <i className="far fa-address-card mr-5"></i> */}
             <LiaAddressCardSolid className="sidebar_icon" />
             <span className="text-truncate">Other Jobs</span>
           </Link>
@@ -312,21 +305,10 @@ const AdminSidebar = (props) => {
             to="/visa"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
-            {/* <i className="fab fa-cc-visa mr-5"></i> */}
             <LiaCcVisa className="sidebar_icon" />
             <span className="text-truncate">Visa</span>
           </Link>
         </li>
-        {/* <li className={user_type === "agent"?"d-none":props.heading === "Document Upload & Verification" ? "active" : ""}>
-            <Link
-            onClick={()=>clearPageNo()}
-              to="/document"
-              className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
-            >
-              <i className="fas fa-file mr-5"></i>Manage Documents
-            </Link>
-          </li> */}
-
         <li
           ref={(el) => (liRefs.current["LMIA status"] = el)}
           className={
@@ -342,7 +324,6 @@ const AdminSidebar = (props) => {
             to="/lmia"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
-            {/* <i className="fas fa-filter mr-5"></i> */}
             <MdOutlinePhotoFilter className="sidebar_icon" />
             <span className="text-truncate">Manage LMIA</span>
           </Link>
@@ -362,7 +343,6 @@ const AdminSidebar = (props) => {
             to="/localcandidates"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
-            {/* <i className="fas fa-filter mr-5"></i> */}
             <FaPersonShelter className="sidebar_icon" />
             <span className="text-truncate">Local Candidate</span>
           </Link>
@@ -765,7 +745,6 @@ const AdminSidebar = (props) => {
                           }}
                           to={`/slots`}
                           state={{
-                            // applicantType: child.parent_id,
                             applicantTypeChild: child.id,
                             folderId: child.doc_folder_id,
                           }}
@@ -803,43 +782,29 @@ const AdminSidebar = (props) => {
             <FaAddressCard className="sidebar_icon" />
             <span className="text-truncate">Manage Applicant Type</span>
           </Link>
-          {/* {showApplicantTypeForm ?
-            <AddApplicantType
-              show={showApplicantTypeForm}
-              close={() => {
-                setShowApplicantTypeForm(false);
-              }}
-              setApicall={setApiCall}
-              UpdateApplicantTypeData={updateApplicantTypeData}
-            />
-            : null} */}
-          {/* <SAlert
-            show={deleteAlertApplicantTypeData}
-            title={deleteApplicantTypeData?.title}
-            text="Are you Sure you want to delete !"
-            onConfirm={() => deleteApplicantType(deleteApplicantTypeData?.id)}
-            showCancelButton={true}
-            onCancel={() => setDeleteAlertApplicantTypeData(false)}
-          /> */}
         </li>
-        {/* <li className={user_type === "agent"?"d-none":props.heading === "Response" ? "active" : ""}>
-            <Link
-            onClick={()=>clearPageNo()}
-              to="/responses"
-              className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
-            >
-              <i className="fas fa-reply mr-5"></i>Manage Response
-            </Link>
-          </li> */}
-        {/* <li className={user_type === "agent"?"d-none":props.heading === "Manage Follow-ups" ? "active" : ""}>
-            <Link
-            onClick={()=>clearPageNo()}
-              to="/followup"
-              className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
-            >
-              <i className="far fa-comments mr-5"></i>Manage Follow-ups
-            </Link>
-          </li> */}
+        <li
+          ref={(el) => (liRefs.current["Manage Daily Call Log"] = el)}
+          className={
+            admin_type === "agent"
+              ? "d-none"
+              : props.heading === "Manage Daily Call Log"
+                ? "active"
+                : ""
+          }
+        >
+          <Link
+            onClick={() => {
+              clearPageNo();
+            }}
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+            title={"Manage Daily Call Log"}
+            to="/manage_applicant_Call_log"
+          >
+            <MdOutlineAddIcCall className="sidebar_icon" />
+            <span className="text-truncate">Manage Daily Call Log</span>
+          </Link>
+        </li>
         <li
           ref={(el) => (liRefs.current["Interview"] = el)}
           className={
@@ -855,7 +820,6 @@ const AdminSidebar = (props) => {
             to="/interview"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
-            {/* <i className="fas fa-podcast mr-5"></i> */}
             <PiApplePodcastsLogoThin className="sidebar_icon" />
             <span className="text-truncate">Manage Interview</span>
           </Link>
@@ -875,31 +839,11 @@ const AdminSidebar = (props) => {
             to="/notes"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center d-none"
           >
-            {/* <i className="fas fa-podcast mr-5"></i> */}
             <FaNotesMedical className="sidebar_icon" />
             <span className="text-truncate">Manage Notes</span>
           </Link>
         </li>
-        {/* {user_type === "admin" ? (
-            <li
-              className={
-                user_type === "admin" && props.heading === "Partner Dashboard"
-                  ? "active"
-                  : ""
-              }
-            >
-              <Link
-              onClick={()=>clearPageNo()}
-                to="/partner_dashboard"
-                className={
-                  "px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
-                }
-              >
-                <FaRegUser className="sidebar_icon" />
-                <span className="text-truncate">Partner Dashboard</span>
-              </Link>
-            </li>
-          ) : null} */}
+        
         <li
           ref={(el) => (liRefs.current["Assigned Job's"] = el)}
           className={
@@ -939,7 +883,6 @@ const AdminSidebar = (props) => {
               "px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
             }
           >
-            {/* <i className="fas fa-user mr-5"></i> */}
             <AiOutlineUserAdd className="sidebar_icon" />
             <span className="text-truncate">Manage Admin</span>
           </Link>
@@ -964,19 +907,7 @@ const AdminSidebar = (props) => {
             <span className="text-truncate">Manage Partner</span>
           </Link>
         </li>
-        {/* <li className={user_type === "agent"?"d-none":props.heading === "Email" ? "active" : ""}>
-            <Link
-            onClick={()=>clearPageNo()}
-              to="/email"
-              className={
-                "px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
-              }
-            >
-              <AiOutlineMail className="sidebar_icon" />
-              <span className="text-truncate">Manage Email</span>
-            </Link>
-          </li> */}
-
+        
         <li
           ref={(el) => (liRefs.current["Manage Job Category"] = el)}
           className={
@@ -992,7 +923,6 @@ const AdminSidebar = (props) => {
             to="/category"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
-            {/* <i className="fas fa-qrcode mr-5"></i> */}
             <BsQrCodeScan className="sidebar_icon" />
             <span className="text-truncate">Job Category</span>
           </Link>
@@ -1012,7 +942,6 @@ const AdminSidebar = (props) => {
             to="/filter"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
-            {/* <i className="fas fa-filter mr-5"></i> */}
             <TbFilterPlus className="sidebar_icon" />
             <span className="text-truncate">Filter List</span>
           </Link>

@@ -51,15 +51,15 @@ const ManageDailyCallLog = () => {
     return (
         <div className="site-wrapper overflow-hidden bg-default-2">
             {/* Header & Sidebar */}
-            <AdminHeader heading={"Daily Call log"} />
-            <AdminSidebar heading={" Daily Call log"} />
+            <AdminHeader heading={"Manage Daily Call Log"} />
+            <AdminSidebar heading={"Manage Daily Call Log"} />
 
             <div className="dashboard-main-container mt-16" id="dashboard-body">
                 <div className="container-fluid">
                     <div className="mb-18">
                         <div className="mb-4 align-items-center">
                             <div className="page___heading">
-                                <h3 className="font-size-6 mb-0">Daily Call log</h3>
+                                <h3 className="font-size-6 mb-0">Manage Daily Call Log</h3>
                             </div>
                         </div>
 

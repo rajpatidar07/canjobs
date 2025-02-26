@@ -2280,7 +2280,7 @@ export const AddFIlter = async (props, id) => {
   // console.log(props)
   const response = await axios.put(
     `${API_URL}${user_type}/addUpdatefilterList`,
-    { id: id, json_item: props.json_item },
+    { id: id, json_item: props.json_item, item_id: props.item_id },
     {
       headers: {
         "Content-Type": "application/json",

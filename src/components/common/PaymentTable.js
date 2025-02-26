@@ -1,14 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PaymentTableData from "../json/PaymentTableJson.json";
 // import TableInput from "../common/TableInput";
 import StyledDropdown from "../common/StyledDropDown";
 import TableInput from "../common/TableInput";
+import { GetFilter } from "../../api/api";
 
 const PaymentTable = () => {
+  let [filterListapiCall, setFilterListApiCall] = useState(false);
+  const [jsonList, setJsonList] = useState([]);
+
   const records = PaymentTableData.records;
 
-  const paymentStatus = PaymentTableData.paymentStatusOptions;
+  let getFilterList = async () => {
+    try {
+      let json = await GetFilter();
+      setJsonList(json.data.data);
+    } catch (err) {
+      console.log(err)
 
+    }
+  }
+  useEffect(() => {
+    getFilterList()
+    if (filterListapiCall === true) {
+      setFilterListApiCall(false)
+    }
+  }, [filterListapiCall])
   const handleUpdateChange = (e, id, field) => {
     if (e && e.preventDefault) {
       e.preventDefault();
@@ -29,7 +46,7 @@ const PaymentTable = () => {
       <div className="mb-18 height-100">
         <div className="mb-4 align-items-center">
           <div className="page___heading">
-            <h3 className="font-size-6 mb-0">Call Log</h3>
+            <h3 className="font-size-6 mb-0">Payment</h3>
           </div>
         </div>
 
@@ -103,7 +120,7 @@ const PaymentTable = () => {
                       {/* <td>{record.paymentStatus}</td> */}
                       <td>
                         <StyledDropdown
-                          options={paymentStatus}
+                          options={jsonList.payment_status}
                           value={record.paymentStatus}
                           onChange={(selectedValue) =>
                             handleUpdateChange(selectedValue, 1, "status")
@@ -112,7 +129,9 @@ const PaymentTable = () => {
                           id="status"
                           status_name={"Status"}
                           width={"600"}
-                          // filterItemID={"36"}
+                          filterItemID={"40"}
+                          setFilterListApiCall={setFilterListApiCall}
+
                         />
                       </td>
 

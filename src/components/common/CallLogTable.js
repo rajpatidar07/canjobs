@@ -188,11 +188,11 @@ function Calllogtable(props) {
                     }
                 >
                     <div
-                        className="table-responsive"
+                        className="datatable_div  pt-7 rounded pb-8 px-2"
                         style={{ overflowX: "auto", overflowY: "hidden" }}
                         ref={tableContainerRef}
                     >
-                        <form >
+                        <form className="table-responsive main_table_div">
                             {isLoading ? (
                                 <Loader />
                             ) : (
