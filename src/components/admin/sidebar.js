@@ -734,7 +734,12 @@ const AdminSidebar = (props) => {
                     applicantType: item.id,
                     folderId: item.doc_folder_id,
                   } : undefined}
-                  onClick={!hasChildren ? () => clearPageNo() : undefined}
+                  onClick={!hasChildren ? () => {
+                    clearPageNo()
+                    localStorage.setItem("applicantType", "")
+                    localStorage.setItem("applicantTypeFolderId", "")
+                    localStorage.setItem("applicantTypeChild", "")
+                  } : undefined}
                   className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center text-Capitalize"
                   style={{ textDecoration: "none" }}
                 >
@@ -752,10 +757,15 @@ const AdminSidebar = (props) => {
                         style={{ transition: "3" }}
                       >
                         <Link
-                          onClick={() => clearPageNo()}
+                          onClick={() => {
+                            clearPageNo()
+                            localStorage.setItem("applicantType", "")
+                            localStorage.setItem("applicantTypeFolderId", "")
+                            localStorage.setItem("applicantTypeChild", "")
+                          }}
                           to={`/slots`}
                           state={{
-                            applicantType: child.parent_id,
+                            // applicantType: child.parent_id,
                             applicantTypeChild: child.id,
                             folderId: child.doc_folder_id,
                           }}

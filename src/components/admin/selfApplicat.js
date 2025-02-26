@@ -28,7 +28,7 @@ function SelfApplicat(props) {
   const [adminFilterValue, setAdminFilterValue] = useState("");
   const [educationFilterValue, setEducationFilterValue] = useState("");
   const [interestFilterValue, setinterestFilterValue] = useState("");
-  const [categoryFilterValue, setCategoryFilterValue] = useState("");
+  // const [categoryFilterValue, setCategoryFilterValue] = useState("");
   const [filterByEmployeeId, setFilterByEmployeeId] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
@@ -131,8 +131,8 @@ function SelfApplicat(props) {
                     setAdminFilterValue={setAdminFilterValue}
                     interestFilterValue={interestFilterValue}
                     setinterestFilterValue={setinterestFilterValue}
-                    setCategoryFilterValue={setCategoryFilterValue}
-                    categoryFilterValue={categoryFilterValue}
+                    setCategoryFilterValue={setinterestFilterValue}
+                    categoryFilterValue={interestFilterValue}
                     setSearchError={setSearchError}
                     skill={props.skill}
                     pageName={"employee"}
@@ -166,7 +166,7 @@ function SelfApplicat(props) {
                 agentFilterValue={agentFilterValue}
                 adminFilterValue={adminFilterValue}
                 interestFilterValue={interestFilterValue}
-                categoryFilterValue={categoryFilterValue}
+                // categoryFilterValue={categoryFilterValue}
                 localFilterValue={localFilterValue}
                 filterByEmployeeId={filterByEmployeeId}
               />

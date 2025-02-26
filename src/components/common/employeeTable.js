@@ -125,7 +125,7 @@ export default function EmployeeTable(props) {
         "",
         user_type === "agent" ? agentId : props.agentFilterValue,
         props.adminFilterValue,
-        props.categoryFilterValue,
+        "",// props.categoryFilterValue,
         props.localFilterValue,
         // props.subCategoryFilterValue
       );
@@ -194,6 +194,7 @@ export default function EmployeeTable(props) {
 
     // eslint-disable-next-line
   }, [
+    props?.ApplicantType,
     CandidateId,
     TaskId,
     props.experienceFilterValue,
@@ -213,13 +214,13 @@ export default function EmployeeTable(props) {
     props.agentFilterValue,
     props.adminFilterValue,
     props.interestFilterValue,
-    props.categoryFilterValue,
+    // props.categoryFilterValue,
     props.localFilterValue,
     props.filterByEmployeeId,
     props.statustFilterValue,
-    props?.ApplicantType,
 
   ]);
+
   /* Function to show the single data to update Employee*/
   // const employeeDetails = (e) => {
   // props.employeeDetails(e);

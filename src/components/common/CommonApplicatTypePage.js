@@ -30,7 +30,7 @@ export default function CommonApplicatTypePage() {
     const [agentFilterValue, setAgentFilterValue] = useState("");
     const [adminFilterValue, setAdminFilterValue] = useState("");
     const [interestFilterValue, setinterestFilterValue] = useState("");
-    const [categoryFilterValue, setCategoryFilterValue] = useState("");
+    // const [categoryFilterValue, setCategoryFilterValue] = useState("");
     const [search, setSearch] = useState("");
     const [searcherror, setSearchError] = useState("");
     let [apiCall, setApiCall] = useState(false);
@@ -86,28 +86,29 @@ export default function CommonApplicatTypePage() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.key, ApplicantTypeUrlId, taskId, notifiType, location?.state?.applicantType, location?.search?.applicantTypeChild, location?.state?.folderId, docId, localApplicantTypeId, localApplicantTypeFolderId]);
     useEffect(() => {
-        if (!applicantTypeId) return;
-        getApplicanTypeApi()
-            .then((res) => {
-                let filterNameById = applicantTypeChildId ? applicantTypeChildId : applicantTypeId
-                const foundItem = (res.data.data || []).find((item) => item.id === filterNameById);
-                if (foundItem) {
-                    setApplicanttypeName(foundItem.title);
-                    setApplicanttypeFolderId(foundItem.doc_folder_id)
-                    if (taskId && notifiType === "group") {
-                        setShowGrpChatBox(true)
-                        const newUrl = window.location.pathname;
-                        window.history.replaceState({}, document.title, newUrl);
-                        localStorage.setItem("navigation_url", "")
+        if (applicantTypeId || applicantTypeChildId) {
+            getApplicanTypeApi()
+                .then((res) => {
+                    let filterNameById = applicantTypeId ? applicantTypeId : applicantTypeChildId
+                    const foundItem = (res.data.data || []).find((item) => item.id === filterNameById);
+                    if (foundItem) {
+                        setApplicanttypeName(foundItem.title);
+                        setApplicanttypeFolderId(foundItem.doc_folder_id)
+                        if (taskId && notifiType === "group") {
+                            setShowGrpChatBox(true)
+                            const newUrl = window.location.pathname;
+                            window.history.replaceState({}, document.title, newUrl);
+                            localStorage.setItem("navigation_url", "")
+                        }
                     }
-                }
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [location.key, ApplicantTypeUrlId, ApplicantTypeChildUrlId, applicantTypeChildId, applicantTypeId, taskId, notifiType]);
+    }, [applicantTypeId, applicantTypeChildId, location.key, ApplicantTypeUrlId, ApplicantTypeChildUrlId, taskId, notifiType, location?.state?.applicantType, location?.search?.applicantTypeChild, location?.state?.folderId, docId]);
 
     /*Function to search the employee */
     const onSearch = (e) => {
@@ -206,8 +207,8 @@ export default function CommonApplicatTypePage() {
                                             setSearchError={setSearchError}
                                             // skill={props.skill}
                                             pageName={applicantTypeId}
-                                            categoryFilterValue={categoryFilterValue}
-                                            setCategoryFilterValue={setCategoryFilterValue}
+                                            categoryFilterValue={interestFilterValue}
+                                            setCategoryFilterValue={setinterestFilterValue}
                                             applicantTypeChildId={applicantTypeChildId}
                                         />
                                     </div>
@@ -227,8 +228,8 @@ export default function CommonApplicatTypePage() {
                                     status={"-1"}
                                     pageNo={pageNo}
                                     setpageNo={setpageNo}
-                                    ApplicantType={applicantTypeId}
-                                    categoryFilterValue={applicantTypeChildId ? applicantTypeChildId : categoryFilterValue}
+                                    ApplicantType={applicantTypeId ? applicantTypeId : applicantTypeChildId}
+                                // categoryFilterValue={applicantTypeChildId ? applicantTypeChildId : categoryFilterValue}
                                 />
                             </div>
                         </div> : <div>
