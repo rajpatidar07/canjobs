@@ -50,6 +50,7 @@ export default function EmployeeTable(props) {
   const searchParams = new URLSearchParams(location.search);
   let canID = searchParams.get("canId");
   let taskID = searchParams.get("taskId");
+  let taskReplyId = searchParams.get("replyId");
   let notifiType = searchParams.get("notifiType");
   let [CandidateId, setCandidateId] = useState(canID || "")
   let [TaskId, setTaskId] = useState(taskID | "")
@@ -186,7 +187,7 @@ export default function EmployeeTable(props) {
   useEffect(() => {
     if (canID) setCandidateId(canID);
     if (taskID) setTaskId(taskID);
-  }, [canID, taskID]);
+  }, [canID, taskID, taskReplyId]);
   /*Render function to get the employer*/
   useEffect(() => {
     EmpData();

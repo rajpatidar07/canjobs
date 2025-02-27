@@ -319,10 +319,10 @@ function Notifications({
                                                 : data.subject ===
                                                   "mention_applicant_type_candidate_chat"
                                                   ? `/slots?sId=${data.interested_in}&notifiType=candidate&taskId=${parseJsonSafely(data?.notif_json).task_id || ""
-                                                  }&canId=${data.employee_id}`
+                                                  }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}&canId=${data.employee_id}`
                                                   : data.subject === "mention_applicant_type_group_chat"
                                                     ? `/slots?sId=${data.interested_in}&notifiType=group&taskId=${parseJsonSafely(data?.notif_json).task_id || ""
-                                                    }`
+                                                    }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}`
                                                     : data.subject === "mention_call_log_chat"
                                                       ? `/daily_call_log?call_logId=${data.employee_id}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}`
                                                       : ""
