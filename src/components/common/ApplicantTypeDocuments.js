@@ -4,7 +4,7 @@ import { AddSharePointDOcument, AddSharePointFolders, DeleteFolderOrDocument, ge
 import convertUrlToPDF from './Common function/convertUrlToPdf';
 import convertWordToPDF from './Common function/ConvertWordToPdf';
 import { Dropdown, Form } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { IoMdArrowBack } from 'react-icons/io';
 import AdobePDFViewer from './Adobe/adobeFile';
 import Breadcrumbs from "./Document folder/Breadcrumb"
@@ -17,6 +17,7 @@ import ExcelToPdfConverter from './Common function/ExcelToPdfConverter';
 export default function ApplicantTypeDocuments(props) {
 
   const [docFileBase, setDocFileBase] = useState([])
+  let location = useLocation()
   const [state, setState] = useState({
     docTypeName: "",
     openNoteForm: false,
@@ -477,7 +478,7 @@ export default function ApplicantTypeDocuments(props) {
       }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.apiCall, state.folderID,]);
+  }, [state.apiCall, state.folderID,location.key]);
 
   useEffect(() => {
     if (props.folderId !== state.folderID && props?.notification === "yes") {

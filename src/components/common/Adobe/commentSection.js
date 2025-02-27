@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import CommentReplyBox from "../CommentReplyBox";
 import { toast } from "react-toastify";
@@ -60,6 +60,7 @@ export default function CommentSection({
   let admin_name = localStorage.getItem("admin");
   let admin_email = localStorage.getItem("email");
   let newAssinList = [...partnerList, ...allAdmin];
+  const commentRefs = useRef({})
   // Generate a list of comments reply
   const getCommentsReplyList = async () => {
     // if (docData.id) {
@@ -85,6 +86,10 @@ export default function CommentSection({
     // if (docTaskId) {
     getCommentsReplyList()
     // }
+    console.log(docTaskId && commentRefs.current[docTaskId], docTaskId, commentRefs.current[docTaskId])
+    if (docTaskId && commentRefs.current[docTaskId]) {
+      commentRefs.current[docTaskId].scrollIntoView({ behavior: "smooth", block: "center" });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [docTaskId, commentsList])
 
@@ -810,6 +815,8 @@ export default function CommentSection({
         setAnnotationData(
           CommentRes.data.data.data.map((item) => JSON.parse(item.doctaskjson))
         );
+
+
       }
     }
   };
@@ -1035,6 +1042,7 @@ export default function CommentSection({
                       ? "highlighted-comment"
                       : ""
                     } `}
+                  ref={(el) => (commentRefs.current[commentItem.id] = el)}
                   style={{
                     backgroundColor: "#fff",
                     color: "white",

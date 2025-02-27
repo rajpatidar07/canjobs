@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import CommentReplyBox from "./CommentReplyBox";
 import { toast } from "react-toastify";
@@ -35,6 +35,8 @@ export default function CommentTaskBox(props) {
     let AdminType = userType === "user" ? "employee" : userType === "company" ? "employer" : localStorage.getItem("admin_type"); //sender type
     let admin_name = userType === "user" || userType === "company" ? localStorage.getItem("name") : localStorage.getItem("admin");
     let admin_email = localStorage.getItem("email");
+    const commentRefs = useRef({});
+
     /*Function to get all user data */
     const GetAllUserData = async () => {
         try {
@@ -731,6 +733,9 @@ export default function CommentTaskBox(props) {
             if (CommentRes.data.status === (1 || "1")) {
                 setCommentsList(CommentRes.data.data.data);
                 setCommentsLoading(false)
+                if (props.TaskId && commentRefs.current[props.TaskId]) {
+                    commentRefs.current[props.TaskId].scrollIntoView({ behavior: "smooth", block: "center" });
+                }
             }
         } catch (err) {
             console.log(err)
@@ -997,6 +1002,7 @@ export default function CommentTaskBox(props) {
                                                 setReplyComment("");
                                             }
                                         }}
+                                        ref={(el) => (commentRefs.current[commentItem.id] = el)}
                                         key={index}
                                     >
                                         <div

@@ -126,7 +126,7 @@ function CompanyProfileDetail(props) {
       setTabActive("notes");
     }
     // eslint-disable-next-line
-  }, [apiCall, company_id, notes]);
+  }, [apiCall, company_id, notes, location.key]);
 
   return (
     <div>

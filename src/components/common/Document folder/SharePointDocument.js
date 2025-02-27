@@ -201,7 +201,7 @@ export default function SharePointDocument({
       if (data["@microsoft.graph.downloadUrl"]) {
         try {
           let res = await ExcelToPdfConverter(data["@microsoft.graph.downloadUrl"]);
-          console.log(res)
+          // console.log(res)
           setConvertedDoc(`${res}`);
         } catch (error) {
           console.error("Error converting Excel to PDF:", error);
@@ -211,7 +211,7 @@ export default function SharePointDocument({
       }
 
     } else {
-      console.log(data.file.mimeType)
+      // console.log(data.file.mimeType)
       window.open(data.webUrl);
       setConvertedDoc("");
       setDocPreview(false);
@@ -921,16 +921,6 @@ export default function SharePointDocument({
                         </div>
                       )}
                   </div>
-                  {console.log("pppp =>", (docSingleDate.file.mimeType === "application/pdf" ||
-                    ((docSingleDate.file.mimeType === "image/jpeg" ||
-                      docSingleDate.file.mimeType === "image/png" ||
-                      docSingleDate.file.mimeType === "image/jpg") &&
-                      imgConRes === "imageConverted") ||
-                    docSingleDate.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
-                    docSingleDate.file.mimeType ===
-                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document") &&
-                    (convertedDoc && docSingleDate.file.mimeType !==
-                      "text/plain"), "mimeType =>", docSingleDate.file.mimeType, "convertedDoc =>", convertedDoc)}
                   {
                     // docTypePage === "adobe"
                     ((docSingleDate.file.mimeType === "application/pdf" ||

@@ -142,7 +142,7 @@ export default function EmployeeTable(props) {
             );
           } else {
             setemployeeData(userData.data);
-            console.log(canID, taskID, "TaskId =>", TaskId, "CandidateId =>", CandidateId, notifiType)
+            // console.log(canID, taskID, "TaskId =>", TaskId, "CandidateId =>", CandidateId, notifiType)
             if (TaskId && CandidateId && notifiType === "candidate") {
               setShowChatModal(true);
               setemployeeId(userData.data[0] || "");

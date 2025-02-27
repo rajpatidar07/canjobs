@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CiEdit, CiPaperplane, CiTrash } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import {
@@ -24,7 +24,7 @@ export default function CommonTaskReplyBox(props) {
   const [commentsReplyList, setCommentsReplyList] = useState([]);
   const [apiCall, setApicall] = useState(false);
   const [taskId] = useState(props.taskData?.id);
-
+  const commentReplyRefs = useRef({})
   const AdminType = localStorage.getItem("admin_type");
   let admin_id =
     AdminType === "agent"
@@ -60,6 +60,10 @@ export default function CommonTaskReplyBox(props) {
         let res = await GetReplyCommit("", taskId /*, adminid, annotationStatus*/);
         if (res.data.status === (1 || "1")) {
           setCommentsReplyList(res.data.data);
+
+          if (props.replyId && commentReplyRefs.current[props.replyId]) {
+            commentReplyRefs.current[props.replyId].scrollIntoView({ behavior: "smooth", block: "center" });
+          }
         }
         if (
           res.data.status === (0 || "0") ||
@@ -478,6 +482,8 @@ export default function CommonTaskReplyBox(props) {
               }}
               key={index}
               onMouseEnter={() => (MarkReadTask(item, "thread"))}
+              ref={(el) => (commentReplyRefs.current[item.id] = el)}
+
             >
               <div
                 className={`comment_status_update ${AdminType === "agent"
@@ -502,7 +508,7 @@ export default function CommonTaskReplyBox(props) {
                   className={`text-gray pr-1`}
 
                 >
-                  <ViewAdminBox data={item} type="thread" adminList={adminList}/>
+                  <ViewAdminBox data={item} type="thread" adminList={adminList} />
                 </span>
                 <Link
                   className="text-danger pr-1"

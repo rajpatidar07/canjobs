@@ -234,7 +234,7 @@ const NewUserProfile = (props) => {
       setTabActive("retaineragreement");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apiCall, eid, docId, docParentId, notes, agreement]);
+  }, [apiCall, eid, docId, docParentId, notes, agreement, location.key]);
   /*Function to See uploaded resume */
   const handleViewResume = (pdfUrl) => {
     window.open(`/userpdf?pdfUrl=${encodeURIComponent(pdfUrl)}`, "_blank");
