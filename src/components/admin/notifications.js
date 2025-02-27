@@ -275,7 +275,7 @@ function Notifications({
                                       }&taskId=${parseJsonSafely(data?.notif_json).task_id || ""
                                       }`
                                       : data.document_user_type === "applicant_type"
-                                        ? `/slots?docId=${data.mention_id}&docParentId=${parseJsonSafely(data?.notif_json)
+                                        ? `/slots?sId=${data.interested_in}&docId=${data.mention_id}&docParentId=${parseJsonSafely(data?.notif_json)
                                           .doc_parent_id || ""
                                         }&annotationId=${parseJsonSafely(data?.notif_json)
                                           .annotation_id || ""
@@ -318,10 +318,10 @@ function Notifications({
                                                 }`
                                                 : data.subject ===
                                                   "mention_applicant_type_candidate_chat"
-                                                  ? `/slots?notifiType=candidate&taskId=${parseJsonSafely(data?.notif_json).task_id || ""
+                                                  ? `/slots?sId=${data.interested_in}&notifiType=candidate&taskId=${parseJsonSafely(data?.notif_json).task_id || ""
                                                   }&canId=${data.employee_id}`
                                                   : data.subject === "mention_applicant_type_group_chat"
-                                                    ? `/slots?notifiType=group&taskId=${parseJsonSafely(data?.notif_json).task_id || ""
+                                                    ? `/slots?sId=${data.interested_in}&notifiType=group&taskId=${parseJsonSafely(data?.notif_json).task_id || ""
                                                     }`
                                                     : data.subject === "mention_call_log_chat"
                                                       ? `/daily_call_log?call_logId=${data.employee_id}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}`

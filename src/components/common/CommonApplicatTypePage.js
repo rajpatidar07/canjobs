@@ -35,9 +35,10 @@ export default function CommonApplicatTypePage() {
     const [searcherror, setSearchError] = useState("");
     let [apiCall, setApiCall] = useState(false);
     let [showGrpChatBox, setShowGrpChatBox] = useState(false);
-    const [applicantTypeId, setApplicanttypeId] = useState(ApplicantTypeUrlId ? ApplicantTypeUrlId : location?.state?.applicantType || "");
-    const [applicantTypeChildId, setApplicanttypeChildId] = useState(ApplicantTypeChildUrlId ? ApplicantTypeChildUrlId : location?.state?.applicantTypeChild || "");
-    const [applicantTypeFolderId, setApplicanttypeFolderId] = useState(location?.state?.folderId || "");
+    const [applicantTypeId, setApplicanttypeId] = useState(ApplicantTypeUrlId ? ApplicantTypeUrlId : location?.state?.applicantType);
+    const [applicantTypeChildId, setApplicanttypeChildId] = useState(ApplicantTypeChildUrlId ? ApplicantTypeChildUrlId : location?.state?.applicantTypeChild);
+    const [applicantTypeFolderId, setApplicanttypeFolderId] = useState(location?.state?.folderId);
+    const [applicantTypeIdForApi, setApplicantTypeIdForApi] = useState("");
     const [applicantTypename, setApplicanttypeName] = useState("");
     const [selectedTab, setSelectedTab] = useState(docId ? "documents" : "candidate");
     let localApplicantTypeId = localStorage.getItem("applicantType");
@@ -58,16 +59,21 @@ export default function CommonApplicatTypePage() {
 
     useEffect(() => {
         // Update only if applicantType is present
-        if ((notifiType === "group" || notifiType === "candidate") && ApplicantTypeUrlId) {
+        console.log(ApplicantTypeUrlId, notifiType)
+        if ((notifiType === "group" || notifiType === "candidate") && (ApplicantTypeUrlId)) {
             setApplicanttypeId(ApplicantTypeUrlId);
             setApplicanttypeChildId(ApplicantTypeChildUrlId)
             localStorage.setItem("applicantType", ApplicantTypeUrlId)
+            console.log("notification render")
         } else {
             if (location?.state?.applicantType && location?.state?.applicantType !== applicantTypeId) {
                 setApplicanttypeId(location.state.applicantType);
                 localStorage.setItem("applicantType", location.state.applicantType)
+                console.log("first render", applicantTypeId, location.state.applicantType)
             } else {
                 setApplicanttypeId(localApplicantTypeId);
+                console.log("For local render")
+
             }
             if (location?.state?.applicantTypeChild && location?.state?.applicantTypeChild !== applicantTypeChildId) {
                 setApplicanttypeChildId(location.state.applicantTypeChild);
@@ -86,6 +92,7 @@ export default function CommonApplicatTypePage() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.key, ApplicantTypeUrlId, taskId, notifiType, location?.state?.applicantType, location?.search?.applicantTypeChild, location?.state?.folderId, docId, localApplicantTypeId, localApplicantTypeFolderId]);
     useEffect(() => {
+        console.log(applicantTypeId)
         if (applicantTypeId || applicantTypeChildId) {
             getApplicanTypeApi()
                 .then((res) => {
@@ -94,6 +101,7 @@ export default function CommonApplicatTypePage() {
                     if (foundItem) {
                         setApplicanttypeName(foundItem.title);
                         setApplicanttypeFolderId(foundItem.doc_folder_id)
+                        setApplicantTypeIdForApi(foundItem.id)
                         if (taskId && notifiType === "group") {
                             setShowGrpChatBox(true)
                             const newUrl = window.location.pathname;
@@ -172,8 +180,9 @@ export default function CommonApplicatTypePage() {
                                     Documents
                                 </button>
                             </div>
-                            <CommonThreeDots setShowGrpChatBox={setShowGrpChatBox}
-                                applicantTypeId={applicantTypeId}
+                            <CommonThreeDots
+                                setShowGrpChatBox={setShowGrpChatBox}
+                                applicantTypeId={applicantTypeIdForApi}
                                 tableName={"employee"}
                                 exportCandidatestatus={"4,7,8,9"} />
                         </div>
@@ -187,7 +196,7 @@ export default function CommonApplicatTypePage() {
                                     <div className="row m-0 align-items-center">
                                         {/* Employees filter's */}
                                         <ApplicantsFilter
-                                            applicantTypeId={applicantTypeId}
+                                            applicantTypeId={applicantTypeIdForApi}
                                             user_type={user_type}
                                             search={search}
                                             onSearch={onSearch}
@@ -206,7 +215,7 @@ export default function CommonApplicatTypePage() {
                                             setinterestFilterValue={setinterestFilterValue}
                                             setSearchError={setSearchError}
                                             // skill={props.skill}
-                                            pageName={applicantTypeId}
+                                            pageName={applicantTypeIdForApi}
                                             categoryFilterValue={interestFilterValue}
                                             setCategoryFilterValue={setinterestFilterValue}
                                             applicantTypeChildId={applicantTypeChildId}
@@ -228,14 +237,15 @@ export default function CommonApplicatTypePage() {
                                     status={"-1"}
                                     pageNo={pageNo}
                                     setpageNo={setpageNo}
-                                    ApplicantType={applicantTypeId ? applicantTypeId : applicantTypeChildId}
+                                    ApplicantType={applicantTypeIdForApi}
                                 // categoryFilterValue={applicantTypeChildId ? applicantTypeChildId : categoryFilterValue}
                                 />
+
                             </div>
                         </div> : <div>
                             <ApplicantTypeDocuments
                                 emp_user_type={"applicant_type"}
-                                user_id={applicantTypeId}
+                                user_id={applicantTypeIdForApi}
                                 folderId={docId ? docParentId : applicantTypeFolderId}
                                 notification={docId ? "yes" : "no"}
                                 docId={docId || ""}
@@ -254,7 +264,7 @@ export default function CommonApplicatTypePage() {
                 }}
                 children={
                     <CommentTaskBox
-                        userId={applicantTypeId}
+                        userId={applicantTypeIdForApi}
                         taskType={"applicant_type_group_chat"}
                         taskUserType={"applicant_type"}
                         setOpenReplyBox={setShowGrpChatBox}
@@ -266,7 +276,7 @@ export default function CommonApplicatTypePage() {
             >
                 {showGrpChatBox ? (
                     <CommentTaskBox
-                        userId={applicantTypeId}
+                        userId={applicantTypeIdForApi}
                         taskType={"applicant_type_group_chat"}
                         taskUserType={"applicant_type"}
                         setOpenReplyBox={setShowGrpChatBox}

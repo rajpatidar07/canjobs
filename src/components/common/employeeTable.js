@@ -102,63 +102,69 @@ export default function EmployeeTable(props) {
   const EmpData = async () => {
     // const params = useParams();
     setIsLoading(true);
-    try {
-      const userData = await getallEmployeeData(
-        props.search,
-        props.experienceFilterValue,
-        props.skillFilterValue,
-        props.educationFilterValue,
-        props.pageNo,
-        recordsPerPage,
-        columnName,
-        sortOrder,
-        props.filter_by_time,
-        "",
-        props.statustFilterValue
-          ? props.statustFilterValue :
-          props.skill || props.heading === "Dashboard" || status === "00" || portal === "study"
-            ? ""
-            : status,
-        props.job_id ? props.job_id : "",
-        CandidateId ? CandidateId : props.filterByEmployeeId,
-        props?.ApplicantType ? props?.ApplicantType : props.interestFilterValue,
-        "",
-        user_type === "agent" ? agentId : props.agentFilterValue,
-        props.adminFilterValue,
-        "",// props.categoryFilterValue,
-        props.localFilterValue,
-        // props.subCategoryFilterValue
-      );
-      if (userData.data.length === 0) {
-        setemployeeData([]);
-        setIsLoading(false);
-        setTotalData(0);
-      } else {
-        /*Condition for candidate with PGWP applicant type can not able to apply  for the job */
-        if (props.skill) {
-          setemployeeData(
-            userData.data.filter((item) => item.interested_in !== "pgwp")
-          );
+    if ((location.pathname === "/slots" && props?.ApplicantType) || location.pathname !== "/slots") {
+      try {
+        const userData = await getallEmployeeData(
+          props.search,
+          props.experienceFilterValue,
+          props.skillFilterValue,
+          props.educationFilterValue,
+          props.pageNo,
+          recordsPerPage,
+          columnName,
+          sortOrder,
+          props.filter_by_time,
+          "",
+          props.statustFilterValue
+            ? props.statustFilterValue :
+            props.skill || props.heading === "Dashboard" || status === "00" || portal === "study"
+              ? ""
+              : status,
+          props.job_id ? props.job_id : "",
+          CandidateId ? CandidateId : props.filterByEmployeeId,
+          location.pathname === "/slots" ? props?.ApplicantType : props.interestFilterValue,
+          "",
+          user_type === "agent" ? agentId : props.agentFilterValue,
+          props.adminFilterValue,
+          "",// props.categoryFilterValue,
+          props.localFilterValue,
+          // props.subCategoryFilterValue
+        );
+        if (userData.data.length === 0) {
+          setemployeeData([]);
+          setIsLoading(false);
+          setTotalData(0);
         } else {
-          setemployeeData(userData.data);
-          // console.log(canID, taskID, "TaskId =>", TaskId, "CandidateId =>", CandidateId, notifiType)
-          if (TaskId && CandidateId && notifiType === "candidate") {
-            setShowChatModal(true);
-            setemployeeId(userData.data[0] || "");
-            window.history.replaceState({}, document.title, window.location.pathname);
-            localStorage.removeItem("navigation_url");
-            setCandidateId("");
-            setTaskId("");
-          }
+          /*Condition for candidate with PGWP applicant type can not able to apply  for the job */
+          if (props.skill) {
+            setemployeeData(
+              userData.data.filter((item) => item.interested_in !== "pgwp")
+            );
+          } else {
+            setemployeeData(userData.data);
+            // console.log(canID, taskID, "TaskId =>", TaskId, "CandidateId =>", CandidateId, notifiType)
+            if (TaskId && CandidateId && notifiType === "candidate") {
+              setShowChatModal(true);
+              setemployeeId(userData.data[0] || "");
+              window.history.replaceState({}, document.title, window.location.pathname);
+              localStorage.removeItem("navigation_url");
+              setCandidateId("");
+              setTaskId("");
+            }
 
+          }
+          setTotalData(userData.total_rows);
+          setIsLoading(false);
+          localStorage.setItem("StatusTab", "");
         }
-        setTotalData(userData.total_rows);
+      } catch (err) {
+        console.log(err);
         setIsLoading(false);
-        localStorage.setItem("StatusTab", "");
       }
-    } catch (err) {
-      console.log(err);
+    } else {
+      setemployeeData([]);
       setIsLoading(false);
+      setTotalData(0);
     }
     try {
       let adminJson = await getallAdminData();
@@ -375,6 +381,7 @@ export default function EmployeeTable(props) {
     localStorage.removeItem("PageNo");
     props.setpageNo(1);
   };
+  console.log(props?.ApplicantType)
   return (
     <>
       {showAddEmployeeModal ? (
@@ -503,7 +510,7 @@ export default function EmployeeTable(props) {
         {props.heading === "Dashboard" ? null : (
           <div className="d-flex justify-content-between align-items-center w-100">
             <div
-              className={`btn-group mb-5 ${props.skill || props?.ApplicantType ? "d-none" : ""
+              className={`btn-group mb-5 ${props.skill || location.pathname === "/slots" ? "d-none" : ""
                 }`}
               role="group"
               aria-label="Basic example"
@@ -692,7 +699,7 @@ export default function EmployeeTable(props) {
                   </div>
                 </>
               ) : null}
-            <div className={props.ApplicantType ? "d-none" : ""}>
+            <div className={location.pathname === "/slots" ? "d-none" : ""}>
               <div className="mt-2">
                 <CommonThreeDots
                   tableName={"employee"}
@@ -860,7 +867,7 @@ export default function EmployeeTable(props) {
                       </Link>
                     </th>
                   )} */}
-                  {props.heading === "Dashboard" || !props?.ApplicantType ? (
+                  {!location.pathname === "/slots" ? (
                     ""
                   ) : (
                     <th
@@ -949,7 +956,7 @@ export default function EmployeeTable(props) {
                 ) : (
                   (employeeData || []).map((empdata, index) => (
                     <React.Fragment key={index}>
-                      {props?.ApplicantType ? (
+                      {location.pathname === "/slots" ? (
                         <tr style={{ border: "0" }}>
                           <td
                             style={{ paddingBottom: "0!important" }}
@@ -1311,7 +1318,7 @@ export default function EmployeeTable(props) {
                           )}
                         </td>
                       )} */}
-                        <td className={!props?.ApplicantType ? "d-none" : ""}>
+                        <td className={!location.pathname === "/slots" ? "d-none" : ""}>
                           <p
                             className="font-size-2 font-weight-normal text-black-2 mb-0"
                             title={empdata.applicant_process_status || "N/A"}
