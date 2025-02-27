@@ -60,7 +60,9 @@ export default function CommentReplyBox({
 
                     >
                       <Link
-                        className="text-gray pr-2"
+                        className={`${replyItem.sender_id === admin_id
+                          ? ""
+                          : "d-none"} text-gray pr-2`}
                         title="Update Comment"
                         onClick={() => {
                           handleUpdateReplyLinkClick(replyItem);

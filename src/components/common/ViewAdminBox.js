@@ -46,7 +46,7 @@ export default function ViewAdminBox(props) {
                             (viewersList || []).map((user, index) => (
                                 <div key={index} className="position-relative">
                                     <img
-                                        src={user.profile_image}
+                                        src={user.profile_image || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"}
                                         alt={user.name || user.email}
                                         title={user.name || user.email}
                                         className="rounded-circle border"
