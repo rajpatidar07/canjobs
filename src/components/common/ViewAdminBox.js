@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { LuEye } from 'react-icons/lu'
 import { getViewersDataApi } from '../../api/api';
+import UserAvatar from './UserAvtar';
 export default function ViewAdminBox(props) {
     const [hoveredMessage, setHoveredMessage] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -45,12 +46,12 @@ export default function ViewAdminBox(props) {
                             :
                             (viewersList || []).map((user, index) => (
                                 <div key={index} className="position-relative">
-                                    <img
-                                        src={user.profile_image || "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"}
-                                        alt={user.name || user.email}
-                                        title={user.name || user.email}
-                                        className="rounded-circle border"
-                                        style={{ width: "40px", height: "40px", objectFit: "cover" }}
+                                    <UserAvatar
+                                        profileImage={user.profile_image}
+                                        name={user.name || user.email}
+                                        userType={user.admin_type}
+                                        index={index}
+                                        userId={user.admin_id}
                                     />
                                 </div>
                             ))}
