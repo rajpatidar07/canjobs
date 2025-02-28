@@ -26,7 +26,8 @@ export default function CommentReplyBox({
   dropdownVisible,
   taskType,
   replyCommentClick,
-  allAdmin
+  allAdmin,
+  isApiCall
 }) {
   // console.log("first",replyCommentClick)
   return (
@@ -177,11 +178,13 @@ export default function CommentReplyBox({
             <button
               type="button"
               onClick={() => {
-                if (replyCommentData) {
-                  OnHandleUpdateCommentReply(replyCommentData);
-                  // ReplyAnnotation(replyCommentData)
-                } else {
-                  ReplyAnnotation(commentItem);
+                if (!isApiCall && type === "reply") {
+                  if (replyCommentData) {
+                    OnHandleUpdateCommentReply(replyCommentData);
+                    // ReplyAnnotation(replyCommentData)
+                  } else {
+                    ReplyAnnotation(commentItem);
+                  }
                 }
               }}
               className="btn reply_btn doc_btn m-0"

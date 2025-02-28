@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import useValidation from "../../common/useValidation";
 import { Modal } from "react-bootstrap";
 import {
@@ -10,31 +10,39 @@ import {
 } from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import ConvertTime from "../../common/Common function/ConvertTime";
 import AdminTaskTable from "../../common/AdminTaskTable";
 import Pagination from "../../common/pagination";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import SAlert from "../../common/sweetAlert";
+import CommonTaskReplyBox from "../../common/CommonTaskReplyBox";
+import ModalSidebar from "../../common/modalSidebar";
 
 function Addfollowup(props) {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  let NotifiReplyId = searchParams.get("replyId") || ""
+  let NoteRef = useRef({})
+  let [replyId, setReplyId] = useState(NotifiReplyId);
   let [response, setResponseData] = useState([]);
   let [loading, setLoading] = useState(false);
   let [deleteAlert, setDeleteAlert] = useState(false);
   let [deleteData, setDeleteData] = useState("");
   let [apiCall, setApiCall] = useState(false);
+  let [singleNoteData, setSingleNoteData] = useState();
+  let [openReplySidebar, setOpenReplySidebar] = useState();
 
   /* Pagination states */
   const [currentPage, setCurrentPage] = useState(1);
   const [totalData, setTotalData] = useState("");
   const [recordsPerPage] = useState(10);
+  const [taskPage, setTaskPage] = useState(1)
   /* Shorting states */
   const [columnName, setcolumnName] = useState("created_on");
   const [sortOrder, setSortOrder] = useState("DESC");
-  // let employId = props.employee_id;
   let user_type = localStorage.getItem("userType");
   let adminType = localStorage.getItem("admin_type");
-  const [taskPage, setTaskPage] = useState(1)
   const [AdminList, setAdminList] = useState([]);
   const [filteredEmails, setFilteredEmails] = useState([]);
   const [selectedAdmin, setSelectedAdmin] = useState([]);
@@ -100,6 +108,13 @@ function Addfollowup(props) {
       } else {
         setResponseData(userData.data.data.data);
         setTotalData(userData.data.total_rows)
+        if (props.note_id && NoteRef.current[props.note_id]) {
+          NoteRef.current[props.note_id].scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+        if (replyId) {
+          setOpenReplySidebar(true)
+          setSingleNoteData(userData.data.data.data.find((item) => item.id === props?.note_id))
+        }
       }
     } catch (err) {
       console.log(err);
@@ -117,12 +132,18 @@ function Addfollowup(props) {
       const newUrl = window.location.pathname;
       window.history.replaceState({}, document.title, newUrl);
       localStorage.setItem("navigation_url", "")
+
     }
     if (apiCall) {
       setApiCall(false)
     }
     // eslint-disable-next-line
-  }, [props.noteNotification, props.userId, props.userType, apiCall, sortOrder]);
+  }, [replyId, props.noteNotification, props.userId, props.userType, apiCall, sortOrder,]);
+  useEffect(() => {
+    if (props?.note_id && NotifiReplyId) {
+      setReplyId(NotifiReplyId)
+    }
+  }, [NotifiReplyId, props?.note_id, location.key])
   // INITIAL STATE ASSIGNMENT
   // const initialFormState = {
   //   /*only for employee*/
@@ -523,18 +544,21 @@ function Addfollowup(props) {
 
     // Call API to update
     try {
+      setLoading(true);
       let res = await UpdateDocuentcommentAssign(updatedData, props.userType);
       if (res.message === "Task updated successfully!") {
         toast.success("Task completed Successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        setLoading(false);
         setSelectedAdmin([]);
         setState(initialFormState);
         setApiCall(true);
       }
     } catch (err) {
       console.log(err);
+      setLoading(false);
     }
   };
   /*To Show the delete alert box */
@@ -614,7 +638,37 @@ function Addfollowup(props) {
 
   let content = (
     <>
-
+      <ModalSidebar
+        show={openReplySidebar}
+        onClose={() => {
+          setOpenReplySidebar(false)
+          setReplyId("")
+          setSingleNoteData("")
+        }}
+        children={
+          <CommonTaskReplyBox
+            openReplyBox={openReplySidebar}
+            setOpenReplyBox={setOpenReplySidebar}
+            taskData={singleNoteData}
+            replyId={replyId}
+            taskType={"note"}
+            employeeId={props.userId}
+            docUserType={props.userType}
+          />
+        }
+      >
+        {openReplySidebar ? (
+          <CommonTaskReplyBox
+            openReplyBox={openReplySidebar}
+            setOpenReplyBox={setOpenReplySidebar}
+            taskData={singleNoteData}
+            replyId={replyId}
+            taskType={"note"}
+            employeeId={props.userId}
+            docUserType={props.userType}
+          />
+        ) : null}
+      </ModalSidebar>
       {props.userId !== "" ? (
         <div
           className={`bg-white rounded ${props.page === "yes" ? "" : "h-100vh"
@@ -657,7 +711,8 @@ function Addfollowup(props) {
                   </div>
                 ) : (
                   (response || []).map((res, index) => (
-                    <div className={`rounded p-5 mb-2 ${props?.note_id === res.id ? "bg-light" : "bg-white"}`} key={index}>
+                    <div className={`rounded p-5 mb-2 ${props?.note_id === res.id ? "bg-light" : "bg-white"}`} key={index}
+                      ref={(el) => (NoteRef.current[res.id] = el)}>
                       <div className="m-0 d-flex justify-content-between align-items-center">
                         <b className="font-size-4 font-weight-bold text-dark text-break">
                           {res.subject}
@@ -672,6 +727,14 @@ function Addfollowup(props) {
                               setSelectedAdmin(res?.assined_to_user_id ? AdminList.filter((item) => res?.assined_to_user_id.split(",").includes(item.admin_id.toString())) : [])
                             }}>  <FaEdit />
                             </Link>
+                            <Link
+                              className={res.task_creator_user_id === assigned_id && res.task_creator_user_type === assigned_by_type ? "text-gray mb-1 pl-8" : "d-none"}
+                              title="Add Reply for notes"
+                              onClick={() => {
+                                setSingleNoteData(res)
+                                setOpenReplySidebar(true)
+                              }}>  Add Reply
+                            </Link>
                             <Link className={res.task_creator_user_id === assigned_id && res.task_creator_user_type === assigned_by_type ? "text-gray mb-1 pl-8" : "d-none"} title="Delete notes" onClick={() => {
                               ShowDeleteAlert(res)
                             }}>  <FaTrash color={"red"} />
@@ -683,9 +746,9 @@ function Addfollowup(props) {
                             {res?.assigned_to_name?.split(",").map((item, index) => <span key={index} className="badge-light rounded-pill p-1 m-1">{item}</span>)}
                           </span>}
                           <i className="font-size-2">
-                            Created on: {"  "}
+                            Created on: {console.log(res.created_on, res)}
                             <ConvertTime
-                              _date={res.created_at}
+                              _date={res.created_on}
                               format={'LL'}
                             />
                           </i>
@@ -1077,7 +1140,7 @@ function Addfollowup(props) {
                   <Link
                     to={""}
                     onClick={() => {
-                      handleSort("created_at");
+                      handleSort("created_on");
                     }}
                     className="text-gray"
                     title="Sort by Description"
@@ -1193,18 +1256,18 @@ function Addfollowup(props) {
                           )}
                         </td>
                         <td>
-                          {res.created_at === "" ||
-                            res.created_at === "null" ||
-                            res.created_at === null ||
-                            res.created_at === undefined ? (
+                          {res.created_on === "" ||
+                            res.created_on === "null" ||
+                            res.created_on === null ||
+                            res.created_on === undefined ? (
                             <p className="font-size-3 mb-0">N/A</p>
                           ) : (
                             <small>
                               <ConvertTime
-                                _date={res.created_at}
+                                _date={res.created_on}
                                 format={".calendar()"}
                               />
-                              {/* {moment(res.created_at).calendar()} */}
+                              {/* {moment(res.created_on).calendar()} */}
                             </small>
                           )}
                         </td>

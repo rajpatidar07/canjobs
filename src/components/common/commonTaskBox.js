@@ -27,6 +27,7 @@ export default function CommentTaskBox(props) {
     const [filteredEmails, setFilteredEmails] = useState([]);
     let [dropdownVisible, setDropdownVisible] = useState();
     let [selectedAdminReply, setSelectedAdminReplye] = useState([]);
+    let [isApiCall, setIsApiCall] = useState(false);
     const [userErrorforadminAssign, setUserErrorforadminAssign] = useState("");
     let [replyCommentClick, setReplyCommentClick] = useState(props.TaskId || "");
     let [selectedAdmin, setSelectedAdmin] = useState([]);
@@ -301,6 +302,7 @@ export default function CommentTaskBox(props) {
         }
         console.log(props.userId)
         try {
+            setIsApiCall(true)
             const res = await ADocAnnotation(
                 admin_id,
                 "",
@@ -338,6 +340,7 @@ export default function CommentTaskBox(props) {
                 setSelectedAdmin("");
                 setEndDate("");
                 setSubject("");
+                setIsApiCall(false)
                 setFilteredEmails([]);
                 Getcomments();
                 localStorage.setItem("callNotification", true);
@@ -355,6 +358,7 @@ export default function CommentTaskBox(props) {
             });
             setComments("");
             setSelectedAdmin("");
+            setIsApiCall(false)
             setFilteredEmails([]);
         }
     };
@@ -419,6 +423,7 @@ export default function CommentTaskBox(props) {
             });
         } else {
             try {
+                setIsApiCall(true)
                 let res = await SendReplyCommit(
                     data,
                     email,
@@ -450,12 +455,14 @@ export default function CommentTaskBox(props) {
                     setSelectedAdminReplye("");
                     setReplyCommentData("")
                     setFilteredEmails([]);
+                    setIsApiCall(false)
 
                 }
             } catch (err) {
                 console.log(err);
                 setSelectedAdminReplye("");
                 setFilteredEmails([]);
+                setIsApiCall(false)
 
             }
         }
@@ -594,6 +601,7 @@ export default function CommentTaskBox(props) {
         // console.log(updatedData)
         // Call the API to update the document
         try {
+            setIsApiCall(true)
             let res = await UpdateDocuentcommentAssign(updatedData, props.taskUserType);
             if (res.message === "Task updated successfully!") {
                 toast.success("Task completed Successfully", {
@@ -605,10 +613,12 @@ export default function CommentTaskBox(props) {
                 setComments("");
                 setEndDate("")
                 setSubject("")
+                setIsApiCall(false)
                 Getcomments();
             }
         } catch (err) {
             console.log(err);
+            setIsApiCall(false)
         }
     };
     /*FUnction to update replies for he comment */
@@ -681,6 +691,7 @@ export default function CommentTaskBox(props) {
 
         // Call the API to update the document
         try {
+            setIsApiCall(true)
             let res = await SendReplyCommit(
                 originalData,
                 updatedEmails,
@@ -710,12 +721,14 @@ export default function CommentTaskBox(props) {
                 setSelectedAdminReplye("");
                 setFilteredEmails([]);
                 setReplyCommentData("")
+                setIsApiCall(false)
 
             }
         } catch (err) {
             console.log(err);
             setSelectedAdminReplye("");
             setFilteredEmails([]);
+            setIsApiCall(false)
 
         }
     };
@@ -910,10 +923,12 @@ export default function CommentTaskBox(props) {
                                     className="save-comment-btn text-muted"
                                     onClick={(e) => {
                                         e.preventDefault();
-                                        if (commntData) {
-                                            OnHandleUpdateCommentStatus(commntData);
-                                        } else {
-                                            addAnnotation();
+                                        if (!isApiCall && (type !== "reply" || !type)) {
+                                            if (commntData) {
+                                                OnHandleUpdateCommentStatus(commntData);
+                                            } else {
+                                                addAnnotation();
+                                            }
                                         }
                                     }}
                                     style={{ fontSize: 30, lineHeight: 1 }}
@@ -1147,6 +1162,7 @@ export default function CommentTaskBox(props) {
                                                     dropdownVisible={dropdownVisible}
                                                     taskType={props.taskType}
                                                     replyCommentClick={replyCommentClick}
+                                                    isApiCall={isApiCall}
                                                 />
                                                     {userErrorforadminAssign && type === "reply" ?
                                                         <span className="text-danger font-size-3">{userErrorforadminAssign}</span> : null}

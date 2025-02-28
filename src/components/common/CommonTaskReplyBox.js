@@ -13,6 +13,7 @@ import determineBackgroundColor from "./Common function/DetermineBackgroundColou
 import MarkReadTask from "./Common function/MarkReadTask";
 import ViewAdminBox from "./ViewAdminBox";
 export default function CommonTaskReplyBox(props) {
+  let [isApiCall, setIsApiCall] = useState(false);
   let [editableData, setEditableData] = useState();
   const [commntData, setCommentData] = useState();
   const [replyComment, setReplyComment] = useState();
@@ -185,6 +186,7 @@ export default function CommonTaskReplyBox(props) {
       });
     } else {
       try {
+        setIsApiCall(true)
         let res = await SendReplyCommit(
           data,
           email,
@@ -193,13 +195,13 @@ export default function CommonTaskReplyBox(props) {
           Rec_Admin_Type,
           sender,
           assignedAdminName,
-          "task",
+          props.taskType,
           senderId,
           senderEmail,
           AdminType === "agent" ? "agent" : senderType,
-          "", // userId, //Userid
+          props.employeeId, // userId, //Userid
           "", //docData.parentReference.id,
-          "", // DocUserType,
+          props.docUserType, // DocUserType,
           data?.task_id ? data.id : "",
           "" //docData.name,//document name
         );
@@ -211,6 +213,7 @@ export default function CommonTaskReplyBox(props) {
           setReplyComment("");
           setSelectedAdminReplye("");
           setEditableData("");
+          setIsApiCall(false)
           setFilteredEmails([]);
           setApicall(true);
         }
@@ -292,6 +295,7 @@ export default function CommonTaskReplyBox(props) {
 
     // Call the API to update the document
     try {
+      setIsApiCall(true)
       let res = await SendReplyCommit(
         originalData,
         updatedEmails,
@@ -300,11 +304,11 @@ export default function CommonTaskReplyBox(props) {
         updatedUserTypes,
         sender,
         updatedNames,
-        "task",
+        props.taskType,
         senderId,
         senderEmail,
         AdminType === "agent" ? "agent" : senderType,
-        "", //userId, //Userid
+        props.employeeId, //userId, //Userid
         "", //docData.parentReference.id,
         "", //DocUserType,
         originalData.id
@@ -321,11 +325,13 @@ export default function CommonTaskReplyBox(props) {
         setEditableData();
         setSelectedAdminReplye("");
         setFilteredEmails([]);
+        setIsApiCall(false)
         setApicall(true);
       }
     } catch (err) {
       console.log(err);
       setSelectedAdminReplye("");
+      setIsApiCall(false)
       setFilteredEmails([]);
     }
   };
@@ -451,10 +457,12 @@ export default function CommonTaskReplyBox(props) {
                 className="save-comment-btn text-muted"
                 onClick={(e) => {
                   e.preventDefault();
-                  if (editableData) {
-                    OnHandleUpdateCommentReply(editableData);
-                  } else {
-                    addReplyTask(props.taskData);
+                  if (!isApiCall) {
+                    if (editableData) {
+                      OnHandleUpdateCommentReply(editableData);
+                    } else {
+                      addReplyTask(props.taskData);
+                    }
                   }
                 }}
                 style={{ fontSize: 30, lineHeight: 1 }}

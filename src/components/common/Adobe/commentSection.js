@@ -47,7 +47,7 @@ export default function CommentSection({
   const [commentsReplyList, setCommentsReplyList] = useState();
   const [filteredEmails, setFilteredEmails] = useState([]);
   let [dropdownVisible, setDropdownVisible] = useState();
-  // let [annotationStatus, setAnnotationStatus] = useState();
+  let [isApiCall, setIsApiCalls] = useState(false);
   let [selectedAdminReply, setSelectedAdminReplye] = useState([]);
   let [replyCommentClick, setReplyCommentClick] = useState(docTaskId || "");
   let [selectedAdmin, setSelectedAdmin] = useState([]);
@@ -390,6 +390,7 @@ export default function CommentSection({
       });
     } else {
       try {
+        setIsApiCalls(true)
         let res = await ADocAnnotation(
           admin_id,
           DocId,
@@ -423,7 +424,7 @@ export default function CommentSection({
           });
           setComments("");
           setSelectedAdmin("");
-
+          setIsApiCalls(false)
           setFilteredEmails([]);
           Getcomments();
           if (page !== "file") { setAnnotationDrawBox(""); }
@@ -445,7 +446,7 @@ export default function CommentSection({
           // setSelectedAnnotation(null);
           setComments("");
           setSelectedAdmin("");
-
+          setIsApiCalls(false)
           setFilteredEmails([]);
         }
       }
@@ -541,6 +542,7 @@ export default function CommentSection({
       });
     } else {
       try {
+        setIsApiCalls(true)
         let res = await SendReplyCommit(
           data,
           email,
@@ -572,6 +574,7 @@ export default function CommentSection({
           setSelectedAdminReplye("");
           setReplyCommentData("")
           setFilteredEmails([]);
+          setIsApiCalls(false)
           if (page !== "file") { setAnnotationDrawBox(""); }
 
         }
@@ -579,6 +582,7 @@ export default function CommentSection({
         console.log(err);
         setSelectedAdminReplye("");
         setFilteredEmails([]);
+        setIsApiCalls(false)
 
       }
     }
@@ -678,6 +682,7 @@ export default function CommentSection({
     // console.log(updatedData)
     // Call the API to update the document
     try {
+      setIsApiCalls(true)
       let res = await UpdateDocuentcommentAssign(updatedData, DocUserType);
       if (res.message === "Task updated successfully!") {
         toast.success("Task completed Successfully", {
@@ -686,11 +691,13 @@ export default function CommentSection({
         });
         setReplyCommentClick(status === 1 || status === "1" ? "" : updatedData.id)
         setCommentData();
+        setIsApiCalls(false)
         setComments("");
         Getcomments();
       }
     } catch (err) {
       console.log(err);
+      setIsApiCalls(false)
     }
   };
   /*FUnction to update replies for he comment */
@@ -964,10 +971,12 @@ export default function CommentSection({
                 className="save-comment-btn text-muted"
                 onClick={(e) => {
                   e.preventDefault();
-                  if (commntData) {
-                    OnHandleUpdateCommentStatus(commntData);
-                  } else {
-                    addAnnotation(annotationDrawBox);
+                  if (!isApiCall && (type !== "reply" || !type)) {
+                    if (commntData) {
+                      OnHandleUpdateCommentStatus(commntData);
+                    } else {
+                      addAnnotation(annotationDrawBox);
+                    }
                   }
                 }}
                 style={{ fontSize: 30, lineHeight: 1 }}
@@ -1229,6 +1238,7 @@ export default function CommentSection({
                       OnDeleteCommentReplies={OnDeleteCommentReplies}
                       dropdownVisible={dropdownVisible}
                       replyCommentClick={replyCommentClick}
+                      isApiCall={isApiCall}
                     />
                   }
                 </div>

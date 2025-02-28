@@ -20,6 +20,7 @@ export default function AgentConversation({
   const [allData, setAllData] = useState([]);
   const [apicall, setApiCall] = useState([]);
   const [fileNames, setFileNames] = useState([]);
+  const [isApiLoading, setIsApiLoading] = useState(false);
   const [recordsPerPage, setRecordsPerPage] = useState(30);
   // INITIAL STATE ASSIGNMENT
   const initialFormState = {
@@ -47,20 +48,6 @@ export default function AgentConversation({
                 ? "Cannot use special character "
                 : "",
     ],
-    // status: [
-    //   (value) =>
-    //     value === "" || value.trim() === "" ? "status is required" : null,
-    // ],
-    // subject: [
-    //   (value) =>
-    //     value === "" || value.trim() === "" ? "subject is required" : null,
-    // ],
-    // nxtfollowupdate: [
-    //   (value) =>
-    //     value === "" || value.trim() === ""
-    //       ? "Next follow Up Date is required"
-    //       : null,
-    // ],
   };
   // CUSTOM VALIDATIONS IMPORT
   const {
@@ -93,8 +80,8 @@ export default function AgentConversation({
     //Condition to clear docid from url after navigation from notification
     if (partnerChatNav) {
       const newUrl = window.location.pathname;
-     window.history.replaceState({}, document.title, newUrl);
-localStorage.setItem("navigation_url", "")
+      window.history.replaceState({}, document.title, newUrl);
+      localStorage.setItem("navigation_url", "")
     }
     // eslint-disable-next-line
   }, [apicall, partnerChatNav, userId]);
@@ -129,6 +116,7 @@ localStorage.setItem("navigation_url", "")
     e.preventDefault();
     // if (validate()) {
     try {
+      setIsApiLoading(true)
       let res = await ADocAnnotation(
         user_type === "admin"
           ? admin_id
@@ -167,6 +155,7 @@ localStorage.setItem("navigation_url", "")
         //   autoClose: 1000,
         // });
         setApiCall(true);
+        setIsApiLoading(false)
         setState(initialFormState);
         setFileNames("");
       }
@@ -178,6 +167,7 @@ localStorage.setItem("navigation_url", "")
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        setIsApiLoading(false)
         setState(initialFormState);
         setFileNames("");
       }
@@ -328,6 +318,7 @@ localStorage.setItem("navigation_url", "")
             handleRemoveFile={handleRemoveFile}
             fileNames={fileNames}
             setState={setState}
+            isApiLoading={isApiLoading}
           />
         </div>
 

@@ -10,7 +10,8 @@ export default function AddNotesConversation({
   handleBulkFileChange,
   handleRemoveFile,
   fileNames,
-  setState
+  setState,
+  isApiLoading
 }) {
   return (
     <div>
@@ -30,16 +31,15 @@ export default function AddNotesConversation({
             </div>
           ))}
       </div>
-      <form onSubmit={handleMessageSubmit} className="chat-input px-3 py-3">
+      <form onSubmit={() => { if (!isApiLoading) { handleMessageSubmit() } }} className="chat-input px-3 py-3">
         <div className="text_msg_box w-100">
           <textarea
             placeholder="Type your message..."
             value={state.message}
             onChange={onInputChange}
             name="message"
-            className={`message_input_box ${
-              errors.message && "border border-danger"
-            }`}
+            className={`message_input_box ${errors.message && "border border-danger"
+              }`}
             disabled={state.DocUrl}
           ></textarea>
           {/* <TextEditor
@@ -104,9 +104,21 @@ export default function AddNotesConversation({
           </label>
         </div>
         {errors.general && <p className="error-message">{errors.general}</p>}
-        <button type="submit" className="send-button btn btn-primary">
-          <i className="fas fa-angle-double-right"></i>
-        </button>
+        {isApiLoading ?
+          <button
+            className="send-button btn btn-primary"
+            type="button"
+            disabled
+          >
+            <span
+              className="spinner-border spinner-border-sm "
+              role="status"
+              aria-hidden="true"
+            ></span>
+            <span className="sr-only">Loading...</span>
+          </button> : <button type="submit" className="send-button btn btn-primary">
+            <i className="fas fa-angle-double-right"></i>
+          </button>}
       </form>
     </div>
   );

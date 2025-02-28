@@ -21,9 +21,11 @@ const MentionAdminInDoc = ({
     AssignedId.includes(parseInt(item.admin_id))
   );
   const [status, setStatus] = useState(commentsList[0]?.status);
+  const [isApiCall, setIsApiCall] = useState(false);
   const [selectedMentionAdmin, setSelectedMentionAdmin] = useState(
     docPreview === true ? AssigneAdmin : [] || []
   );
+
   const hasRunEffect = useRef(false);
   setTaggedAdmin(selectedMentionAdmin);
   useEffect(() => {
@@ -121,12 +123,14 @@ const MentionAdminInDoc = ({
           task_creator_user_type: "admin",
         };
         try {
+          setIsApiCall(true)
           let res = await UpdateDocuentcommentAssign(updatedData);
           if (res.message === "Task updated successfully!1") {
             toast.success("Admin mentioned Successfully", {
               position: toast.POSITION.TOP_RIGHT,
               autoClose: 1000,
             });
+            setIsApiCall(false)
             localStorage.setItem(
               "mentionAdmin",
               JSON.stringify(selectedMentionAdmin)
@@ -134,9 +138,11 @@ const MentionAdminInDoc = ({
           }
         } catch (err) {
           console.log(err);
+          setIsApiCall(false)
         }
       } else {
         try {
+          setIsApiCall(true)
           let res = await ADocAnnotation(
             localStorage.getItem("admin_id"),
             data?.id,
@@ -167,6 +173,7 @@ const MentionAdminInDoc = ({
               position: toast.POSITION.TOP_RIGHT,
               autoClose: 1000,
             });
+            setIsApiCall(false)
             localStorage.setItem("callNotification", true);
             localStorage.setItem(
               "mentionAdmin",
@@ -175,6 +182,7 @@ const MentionAdminInDoc = ({
           }
         } catch (err) {
           console.log(err);
+          setIsApiCall(false)
         }
       }
     }
@@ -275,6 +283,7 @@ const MentionAdminInDoc = ({
               onClick={() => OnMentionAdmin()}
               className="font-size-3 rounded-3 btn btn-primary border-0 btn-sm w-100"
               title="Save Mention Admin"
+              disabled={isApiCall}
             >
               Save
             </button>

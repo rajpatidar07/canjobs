@@ -703,6 +703,9 @@ export default function AdminTaskTable(props) {
               setOpenReplyBox={setOpenReplyBox}
               taskData={singleTaskData}
               replyId={props.replyId}
+              taskType={"task"}
+              employeeId={""}
+              docUserType={""}
             />
           }
         >
@@ -711,7 +714,10 @@ export default function AdminTaskTable(props) {
               openReplyBox={openReplyBox}
               setOpenReplyBox={setOpenReplyBox}
               taskData={singleTaskData}
-              replyId={props.replyId}
+              replyId={props.replyId} 
+              taskType={"task"}
+              employeeId={""}
+              docUserType={""}
             />
           ) : null}
         </ModalSidebar>

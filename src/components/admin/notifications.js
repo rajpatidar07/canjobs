@@ -298,16 +298,16 @@ function Notifications({
                                             data.subject === "mention_note"
                                             ? data.document_user_type === "employer"
                                               ? `/client_detail?note=true&noteid=${parseJsonSafely(data?.notif_json).task_id || ""
-                                              }`
+                                              }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}`
                                               : data.document_user_type === "agent" &&
                                                 window.location.pathname === "/partner_profile"
                                                 ? `?note=true&noteid=${parseJsonSafely(data?.notif_json).task_id || ""
-                                                }`
+                                                }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}`
                                                 : data.document_user_type === "agent"
                                                   ? `/partner_profile?note=true&noteid=${parseJsonSafely(data?.notif_json).task_id || ""
-                                                  }`
+                                                  }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}`
                                                   : `/${data.employee_id}?note=true&noteid=${parseJsonSafely(data?.notif_json).task_id || ""
-                                                  }`
+                                                  }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}`
                                             : data.subject === "signed_agreement"
                                               ? data.document_user_type === "employer"
                                                 ? `/client_detail?agreement=true`
