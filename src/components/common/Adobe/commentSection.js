@@ -86,7 +86,7 @@ export default function CommentSection({
     // if (docTaskId) {
     getCommentsReplyList()
     // }
-    console.log(docTaskId && commentRefs.current[docTaskId], docTaskId, commentRefs.current[docTaskId])
+    // console.log(docTaskId && commentRefs.current[docTaskId], docTaskId, commentRefs.current[docTaskId])
     if (docTaskId && commentRefs.current[docTaskId]) {
       commentRefs.current[docTaskId].scrollIntoView({ behavior: "smooth", block: "center" });
     }
@@ -661,6 +661,7 @@ export default function CommentSection({
         assigned_to_name: updatedNames,
         id: originalData.id,
         document_name: docData.name,
+        type: originalData.type,
       } : {
         // ...originalData,
         doc_id: originalData.doc_id,
@@ -677,6 +678,7 @@ export default function CommentSection({
         assigned_to_name: updatedNames,
         id: originalData.id,
         document_name: docData.name,
+        type: originalData.type,
         json: JSON.parse(originalData.doctaskjson)
       };
     // console.log(updatedData)
@@ -785,7 +787,8 @@ export default function CommentSection({
         userId, //Userid
         docData.parentReference.id,
         DocUserType,
-        originalData.id
+        originalData.id,
+        docData.name
       );
       if (res.data.message === "message sent successfully!") {
         toast.success("Replied Successfully", {
