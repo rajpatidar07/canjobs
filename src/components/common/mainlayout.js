@@ -105,6 +105,7 @@ import Atip from "../admin/atip";
 import CommonApplicatTypePage from "./CommonApplicatTypePage";
 import MangeApplicantType from "../admin/MangeApplicantType"
 import ManageDailyCallLog from "../admin/ManageDailyCallLog";
+import ManagePayment from "./ManagePayment";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -312,6 +313,8 @@ function MainLayout() {
           </>
         )}
         <Route path="/Newpdf" element={<Newpdf />} />
+
+        <Route path="/test" element={<ManagePayment />} />
 
         {loginCondition === true ? null : <Route path="*" element={<NotFound userType={userType} />} />}
       </Routes>

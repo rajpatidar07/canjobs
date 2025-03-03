@@ -5,7 +5,7 @@ import StyledDropdown from "../common/StyledDropDown";
 import TableInput from "../common/TableInput";
 import { GetFilter } from "../../api/api";
 
-const PaymentTable = () => {
+const PaymentTable = (props) => {
   let [filterListapiCall, setFilterListApiCall] = useState(false);
   const [jsonList, setJsonList] = useState([]);
 
@@ -16,16 +16,16 @@ const PaymentTable = () => {
       let json = await GetFilter();
       setJsonList(json.data.data);
     } catch (err) {
-      console.log(err)
+      console.log(err);
+    }
+  };
 
-    }
-  }
   useEffect(() => {
-    getFilterList()
+    getFilterList();
     if (filterListapiCall === true) {
-      setFilterListApiCall(false)
+      setFilterListApiCall(false);
     }
-  }, [filterListapiCall])
+  }, [filterListapiCall]);
   const handleUpdateChange = (e, id, field) => {
     if (e && e.preventDefault) {
       e.preventDefault();
@@ -81,6 +81,92 @@ const PaymentTable = () => {
                   </tr>
                 </thead>
                 <tbody>
+                  {props.showAddForm && (
+                    <tr>
+                      <td>
+                        <TableInput
+                          value={"name"}
+                          onChange={onInputChange}
+                          type="text"
+                          id="name"
+                          name="name"
+                        />
+                        {/* {errors.name && (
+                        <span key={errors.name} className="text-danger font-size-3">
+                          {errors.name}
+                        </span>
+                      )} */}
+                      </td>
+                      <td>
+                        {" "}
+                        <TableInput
+                          value={"referredBy"}
+                          onChange={onInputChange}
+                          type="text"
+                          id="name"
+                          name="name"
+                        />
+                      </td>
+                      <td>
+                        <TableInput
+                          value={"manager"}
+                          onChange={onInputChange}
+                          type="text"
+                          id="name"
+                          name="name"
+                        />
+                      </td>
+
+                      {/* <td>{record.paymentStatus}</td> */}
+                      <td>
+                        <StyledDropdown
+                          options={jsonList.payment_status}
+                          value={"status"}
+                          onChange={(selectedValue) =>
+                            handleUpdateChange(selectedValue, 1, "status")
+                          }
+                          name="status"
+                          id="status"
+                          status_name={"Status"}
+                          width={"600"}
+                          filterItemID={"40"}
+                          setFilterListApiCall={setFilterListApiCall}
+                        />
+                      </td>
+
+                      <td>
+                        {" "}
+                        <TableInput
+                          value={"dupPayment"}
+                          onChange={onInputChange}
+                          type="text"
+                          id="name"
+                          name="name"
+                        />
+                      </td>
+                      <td>
+                        {" "}
+                        <TableInput
+                          value={"dueDate"}
+                          onChange={onInputChange}
+                          type="text"
+                          id="name"
+                          name="name"
+                        />
+                      </td>
+                      <td>
+                        {" "}
+                        <TableInput
+                          value={"method"}
+                          onChange={onInputChange}
+                          type="text"
+                          id="name"
+                          name="name"
+                        />
+                      </td>
+                      
+                    </tr>
+                  )}
                   {records.map((record, index) => (
                     <tr key={index}>
                       <td>
@@ -131,7 +217,6 @@ const PaymentTable = () => {
                           width={"600"}
                           filterItemID={"40"}
                           setFilterListApiCall={setFilterListApiCall}
-
                         />
                       </td>
 
@@ -165,10 +250,7 @@ const PaymentTable = () => {
                           name="name"
                         />
                       </td>
-                      {/* <td>{record.email}</td>
-                    <td>{record.callBackDate}</td>
-                    <td>{record.additionalNotes}</td>
-                    <td>{record.actionTaken}</td> */}
+                    
                     </tr>
                   ))}
                 </tbody>
