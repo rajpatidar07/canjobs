@@ -365,7 +365,7 @@ export default function ViewPdf({
                 adminList={[]}
                 partnerList={[]}
                 setCommentsList={setCommentsList}
-                userType={""}
+                userType={localStorage.getItem("userType")}
               />
             )}
           </div>

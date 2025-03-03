@@ -33,7 +33,7 @@ export default function CommonTaskReplyBox(props) {
       : localStorage.getItem("admin_id");
   let admin_name = localStorage.getItem("admin");
   let admin_email = localStorage.getItem("email");
-
+  console.log(props.docUserType)
   /*Function to get admin data */
   const AdminData = async () => {
     try {
@@ -310,7 +310,7 @@ export default function CommonTaskReplyBox(props) {
         AdminType === "agent" ? "agent" : senderType,
         props.employeeId, //userId, //Userid
         "", //docData.parentReference.id,
-        "", //DocUserType,
+        props.docUserType, //DocUserType,
         originalData.id
       );
       if (res.data.message === "message sent successfully!") {

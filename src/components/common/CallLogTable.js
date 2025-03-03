@@ -18,7 +18,7 @@ function Calllogtable(props) {
     let NotificallLogId = searchParams.get("call_logId") || ""
     let NotifiTaskId = searchParams.get("taskId") || ""
     const [isLoading, setIsLoading] = useState(false);
-    const [isScrolled, setIsScrolled] = useState(false);
+    const [/*isScrolled,*/ setIsScrolled] = useState(false);
     let [taskId, setTaskId] = useState(NotifiTaskId ? NotifiTaskId : "");
     let [callLogId, setCallLogId] = useState(NotificallLogId ? NotificallLogId : "");
     let [filterListapiCall, setFilterListApiCall] = useState(false);
@@ -218,11 +218,9 @@ function Calllogtable(props) {
                          
                           ${index === 0 ? "table_sticky_col sticky_col1" : ""} `}
                                                     style={
-                                                        index <= 2
+                                                        index === 0
                                                             ? {
-                                                                background: isScrolled
-                                                                    ? "white"
-                                                                    : "transparent",
+                                                                background: "white",
                                                                 transition: "background 0.3s ease",
                                                             }
                                                             : {}
@@ -243,7 +241,7 @@ function Calllogtable(props) {
                                                     style={{
                                                         minWidth: "150px",
                                                         maxWidth: "150px",
-                                                        background: isScrolled ? "white" : "transparent",
+                                                        background: "white",
                                                         transition: "background 0.3s ease",
                                                     }}
                                                 >
@@ -326,156 +324,160 @@ function Calllogtable(props) {
                                             </tr>
 
                                         )}
-                                        {(callLogData
-                                            || []).map((item, index) => (
-                                                <tr key={index}>
-                                                    {/* Sticky First Column */}
-                                                    <td
-                                                        className="table_sticky_col sticky_col1 "
-                                                        style={{
-                                                            minWidth: "150px",
-                                                            maxWidth: "190px",
-                                                            background: isScrolled ? "white" : "transparent",
-                                                            transition: "background 0.3s ease",
-                                                        }}
-                                                    >
-                                                        <div className="d-flex">
-                                                            <TableInput
-                                                                value={item.name}
-                                                                onChange={(newValue) =>
-                                                                    handleUpdateChange(newValue, item.id, "name")
+                                        {callLogData.length === 0 ?
+                                            <tr>
+                                                <td style={{ minWidth: "150px" }} colSpan={8}>No Data Found</td>
+                                            </tr> :
+                                            (callLogData
+                                                || []).map((item, index) => (
+                                                    <tr key={index}>
+                                                        {/* Sticky First Column */}
+                                                        <td
+                                                            className="table_sticky_col sticky_col1 "
+                                                            style={{
+                                                                minWidth: "150px",
+                                                                maxWidth: "190px",
+                                                                background: "white",
+                                                                transition: "background 0.3s ease",
+                                                            }}
+                                                        >
+                                                            <div className="d-flex">
+                                                                <TableInput
+                                                                    value={item.name}
+                                                                    onChange={(newValue) =>
+                                                                        handleUpdateChange(newValue, item.id, "name")
+                                                                    }
+                                                                    type="text"
+                                                                    name="name"
+                                                                    id="name"
+
+                                                                />
+                                                                <Link onClick={() => {
+                                                                    setSingelCallLogData(item)
+                                                                    setShowCallLogModal(true)
+                                                                }}>
+                                                                    <span className="text-gray px-2">
+                                                                        <BsChat />
+                                                                    </span>
+                                                                </Link>
+                                                            </div>
+                                                        </td>
+
+                                                        {/* Other Columns */}
+                                                        <td
+                                                            style={{
+                                                                minWidth: "150px",
+                                                            }}
+                                                        >
+                                                            <StyledDropdown
+                                                                options={jsonList.status_type}
+                                                                value={item.status}
+                                                                onChange={(selectedValue) =>
+                                                                    handleUpdateChange(selectedValue, item.id, "status")
                                                                 }
-                                                                type="text"
-                                                                name="name"
-                                                                id="name"
+                                                                name="status"
+                                                                id="status"
+                                                                status_name={"Status"}
+                                                                width={"600"}
+                                                                filterItemID={"36"}
+                                                                setFilterListApiCall={setFilterListApiCall}
 
                                                             />
-                                                            <Link onClick={() => {
-                                                                setSingelCallLogData(item)
-                                                                setShowCallLogModal(true)
-                                                            }}>
-                                                                <span className="text-gray px-2">
-                                                                    <BsChat />
-                                                                </span>
-                                                            </Link>
-                                                        </div>
-                                                    </td>
+                                                        </td>
 
-                                                    {/* Other Columns */}
-                                                    <td
-                                                        style={{
-                                                            minWidth: "150px",
-                                                        }}
-                                                    >
-                                                        <StyledDropdown
-                                                            options={jsonList.status_type}
-                                                            value={item.status}
-                                                            onChange={(selectedValue) =>
-                                                                handleUpdateChange(selectedValue, item.id, "status")
-                                                            }
-                                                            name="status"
-                                                            id="status"
-                                                            status_name={"Status"}
-                                                            width={"600"}
-                                                            filterItemID={"36"}
-                                                            setFilterListApiCall={setFilterListApiCall}
+                                                        <td
 
-                                                        />
-                                                    </td>
+                                                            style={{
+                                                                minWidth: "150px",
 
-                                                    <td
-
-                                                        style={{
-                                                            minWidth: "150px",
-
-                                                        }}
-                                                    >
-                                                        <StyledDropdown
-                                                            options={jsonList.caller}
-                                                            status_name={"Caller"}
-                                                            value={item.caller}
-                                                            name="caller"
-                                                            id="caller"
-                                                            onChange={(selectedValue) =>
-                                                                handleUpdateChange(selectedValue, item.id, "caller")
-                                                            }
-                                                            width={"400"}
-                                                            filterItemID={"39"}
-                                                            setFilterListApiCall={setFilterListApiCall}
-
-                                                        />
-                                                    </td>
-
-                                                    {/* Date Input */}
-                                                    <td style={{ minWidth: "150px" }}>
-                                                        <TableInput
-                                                            value={item.callerDateTime}
-                                                            onChange={(newValue) =>
-                                                                handleUpdateChange(newValue, item.id, "received_call_date")
-                                                            }
-                                                            type="datetime-local"
-                                                            name="received_call_date"
-                                                            id="received_call_date"
-                                                        />
-                                                    </td>
-
-                                                    {/* Call Answered By */}
-                                                    <td style={{ minWidth: "150px" }}>
-                                                        <select
-                                                            className="form-control"
-                                                            value={item.call_ans_by}
-                                                            onChange={(e) => handleUpdateChange(e, item.id, "call_ans_by")}
-                                                            name="call_ans_by"
-                                                            id="call_ans_by"
+                                                            }}
                                                         >
-                                                            <option value="">Select Admin</option>
-                                                            {(props.adminList || []).map((admin, index) => (
-                                                                <option value={admin.admin_id} key={index}>
-                                                                    {admin.name}
-                                                                </option>
-                                                            ))}
-                                                        </select>
-                                                    </td>
+                                                            <StyledDropdown
+                                                                options={jsonList.caller}
+                                                                status_name={"Caller"}
+                                                                value={item.caller}
+                                                                name="caller"
+                                                                id="caller"
+                                                                onChange={(selectedValue) =>
+                                                                    handleUpdateChange(selectedValue, item.id, "caller")
+                                                                }
+                                                                width={"400"}
+                                                                filterItemID={"39"}
+                                                                setFilterListApiCall={setFilterListApiCall}
 
-                                                    {/* Phone Number */}
-                                                    <td style={{ minWidth: "150px" }}>
-                                                        <TableInput
-                                                            value={item.phone}
-                                                            onChange={(newValue) =>
-                                                                handleUpdateChange(newValue, item.id, "phone")
-                                                            }
-                                                            type="tel"
-                                                            name="phone"
-                                                            id="phone"
-                                                        />
-                                                    </td>
+                                                            />
+                                                        </td>
 
-                                                    {/* Purpose of Call */}
-                                                    <td style={{ minWidth: "150px" }}>
-                                                        <TableInput
-                                                            value={item.purpose}
-                                                            onChange={(newValue) =>
-                                                                handleUpdateChange(newValue, item.id, "purpose")
-                                                            }
-                                                            type="text"
-                                                            id="purpose" name="purpose"
-                                                        />
-                                                    </td>
+                                                        {/* Date Input */}
+                                                        <td style={{ minWidth: "150px" }}>
+                                                            <TableInput
+                                                                value={item.callerDateTime}
+                                                                onChange={(newValue) =>
+                                                                    handleUpdateChange(newValue, item.id, "received_call_date")
+                                                                }
+                                                                type="datetime-local"
+                                                                name="received_call_date"
+                                                                id="received_call_date"
+                                                            />
+                                                        </td>
 
-                                                    {/* Email */}
-                                                    <td style={{ minWidth: "150px" }}>
-                                                        <TableInput
-                                                            value={item.email}
-                                                            onChange={(newValue) =>
-                                                                handleUpdateChange(newValue, item.id, "email")
-                                                            }
-                                                            type="email"
-                                                            id="email" name="email"
-                                                        />
-                                                    </td>
-                                                    <td className={props.showAddForm ? "" : "d-none"} style={{ minWidth: "150px" }}></td>
-                                                </tr>
-                                            ))}
+                                                        {/* Call Answered By */}
+                                                        <td style={{ minWidth: "150px" }}>
+                                                            <select
+                                                                className="form-control"
+                                                                value={item.call_ans_by}
+                                                                onChange={(e) => handleUpdateChange(e, item.id, "call_ans_by")}
+                                                                name="call_ans_by"
+                                                                id="call_ans_by"
+                                                            >
+                                                                <option value="">Select Admin</option>
+                                                                {(props.adminList || []).map((admin, index) => (
+                                                                    <option value={admin.admin_id} key={index}>
+                                                                        {admin.name}
+                                                                    </option>
+                                                                ))}
+                                                            </select>
+                                                        </td>
+
+                                                        {/* Phone Number */}
+                                                        <td style={{ minWidth: "150px" }}>
+                                                            <TableInput
+                                                                value={item.phone}
+                                                                onChange={(newValue) =>
+                                                                    handleUpdateChange(newValue, item.id, "phone")
+                                                                }
+                                                                type="tel"
+                                                                name="phone"
+                                                                id="phone"
+                                                            />
+                                                        </td>
+
+                                                        {/* Purpose of Call */}
+                                                        <td style={{ minWidth: "150px" }}>
+                                                            <TableInput
+                                                                value={item.purpose}
+                                                                onChange={(newValue) =>
+                                                                    handleUpdateChange(newValue, item.id, "purpose")
+                                                                }
+                                                                type="text"
+                                                                id="purpose" name="purpose"
+                                                            />
+                                                        </td>
+
+                                                        {/* Email */}
+                                                        <td style={{ minWidth: "150px" }}>
+                                                            <TableInput
+                                                                value={item.email}
+                                                                onChange={(newValue) =>
+                                                                    handleUpdateChange(newValue, item.id, "email")
+                                                                }
+                                                                type="email"
+                                                                id="email" name="email"
+                                                            />
+                                                        </td>
+                                                        <td className={props.showAddForm ? "" : "d-none"} style={{ minWidth: "150px" }}></td>
+                                                    </tr>
+                                                ))}
                                     </tbody>
                                 </table>
 

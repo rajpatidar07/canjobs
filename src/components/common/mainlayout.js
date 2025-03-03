@@ -314,7 +314,7 @@ function MainLayout() {
         )}
         <Route path="/Newpdf" element={<Newpdf />} />
 
-        <Route path="/test" element={<ManagePayment />} />
+        <Route path="/payment_invoice" element={<ManagePayment />} />
 
         {loginCondition === true ? null : <Route path="*" element={<NotFound userType={userType} />} />}
       </Routes>

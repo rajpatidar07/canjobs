@@ -1013,7 +1013,7 @@ function PersonalDetails(props) {
                       `}`
                   }>
                     <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
-                      Applicant's Type : <span className="text-danger">*</span>
+                      Applicant's Type /Sub Type : <span className="text-danger">*</span>
                     </label>
                     <select
                       className={`${errors.interested_in_id
@@ -1030,13 +1030,20 @@ function PersonalDetails(props) {
                       onChange={onInputChange}
                     >
                       <option value={""}>Select</option>
-                      {(applicantTypeList.filter((item) => item.level === ("0" || 0)) || []).map((interest, index) => (
-                        <option key={index} value={interest.id}>
-                          {interest.title}
-                        </option>
-                      ))}
+                      {(applicantTypeList || []).map((interest, index) => {
+                        const parent = applicantTypeList.find((item) => item.id === interest.parent_id);
+
+                        return (
+                          <option key={index} value={interest.id}>
+                            {interest.title}{" "}
+                            {interest.level !== "0" ? (
+                              <small>( {parent.title} sub type)</small>
+                            ) : null}
+                          </option>
+                        );
+                      })}
+
                     </select>
-                    {/*----ERROR MESSAGE FOR interested_in_id----*/}
                     {errors.interested_in_id && (
                       <span
                         key={errors.interested_in_id}
@@ -1046,7 +1053,7 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
-                  {[14, "14", 15, "15", 16, "16", 4, "4"].includes(state.interested_in_id) &&
+                  {/* {[14, "14", 15, "15", 16, "16", 4, "4"].includes(state.interested_in_id) &&
                     state.interested_in_id &&
                     <div className={`form-group ${props.user_of_page === "assignedUser" ||
                       props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned"
@@ -1079,7 +1086,6 @@ function PersonalDetails(props) {
                           </option>
                         ))}
                       </select>
-                      {/* ----ERROR MESSAGE FOR category_id---- */}
                       {errors.category_id && (
                         <span
                           key={errors.category_id}
@@ -1113,7 +1119,6 @@ function PersonalDetails(props) {
                           className={`form-control text-capitalize ${errors.sub_category_id ? "border border-danger" : ""}`}
                           id="sub_category_id"
                         >
-                          {console.log((applicantTypeList.map((item) => item.parent_id)), state.category_id)}
                           <option value={""}>Select Sub Type</option>
                           {(applicantTypeList.filter((item) => item.parent_id === state.category_id) || []).map((subType, index) => (
                             <option key={index} value={subType.id} >
@@ -1122,14 +1127,13 @@ function PersonalDetails(props) {
                           ))}
                         </select>
 
-                        {/* ----ERROR MESSAGE FOR sub_category_id---- */}
                         {errors.sub_category_id && (
                           <span key={errors.sub_category_id} className="text-danger font-size-3">
                             {errors.sub_category_id}
                           </span>
                         )}
                       </div>
-                    )}
+                    )} */}
 
                   <div className={`form-group col-md-4
                   ${props.user_of_page === "assignedUser" || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned"
