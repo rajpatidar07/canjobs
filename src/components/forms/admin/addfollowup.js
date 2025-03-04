@@ -728,7 +728,7 @@ function Addfollowup(props) {
                             }}>  <FaEdit />
                             </Link>
                             <Link
-                              className={res.task_creator_user_id === assigned_id && res.task_creator_user_type === assigned_by_type ? "text-gray mb-1 pl-8" : "d-none"}
+                              className={"text-gray mb-1 pl-8"}
                               title="Add Reply for notes"
                               onClick={() => {
                                 setSingleNoteData(res)
@@ -1315,7 +1315,8 @@ function Addfollowup(props) {
             />
           </div>
         </div>
-      )}
+      )
+      }
 
     </>
   );
