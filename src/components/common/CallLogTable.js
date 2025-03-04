@@ -32,13 +32,13 @@ function Calllogtable(props) {
     const [totalData, setTotalData] = useState();
     const [currentPage, setCurrentPage] = useState(1);
     const recordsPerPage = 10;
-    const nPages = Math.ceil(callLogData.length / recordsPerPage);
+    const nPages = Math.ceil(totalData / recordsPerPage);
     const GetDailyCallLogList = async () => {
         try {
             setIsLoading(true)
             let ResCallLog = await getDailyCallLogApi(props.searchCandidate, props.selectedAdminId, callLogId, '', currentPage, recordsPerPage);
             setCallLogData(ResCallLog.data.data.data)
-            setTotalData(ResCallLog.data.total_rows)
+            setTotalData(ResCallLog.data.data.total_rows)
             if (taskId) {
                 setSingelCallLogData(ResCallLog.data.data.data[0])
                 setShowCallLogModal(true)
@@ -144,7 +144,7 @@ function Calllogtable(props) {
                 tableContainerRef.current.removeEventListener("scroll", handleScroll);
             }
         };
-    }, [taskId, callLogId, apiCall, props.searchCandidate, props.selectedAdminId]);
+    }, [taskId, callLogId, apiCall, props.searchCandidate, props.selectedAdminId, currentPage]);
     /*Function to add New Daily call log item */
     const AddCallLog = async (newValue, data) => {
         if (newValue && newValue.preventDefault) {
@@ -160,7 +160,7 @@ function Calllogtable(props) {
                     setErrors("")
                     props.setShowAddForm(false)
                     setApiCall(true)
-                    toast.success(`Call log ${data.id ? "Updated" : "Added"} successfully`, {
+                    toast.success(`Call log ${data?.id ? "Updated" : "Added"} successfully`, {
                         position: toast.POSITION.TOP_RIGHT,
                         autoClose: 1000,
                     });
@@ -510,9 +510,7 @@ function Calllogtable(props) {
                             currentPage={currentPage}
                             setCurrentPage={setCurrentPage}
                             total={callLogData.length}
-                            count={
-                                totalData
-                            }
+                            count={totalData}
                         />
                     </div>
                 </div>
