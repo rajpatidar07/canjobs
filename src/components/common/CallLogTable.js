@@ -429,7 +429,7 @@ function Calllogtable(props) {
                                                         {/* Date Input */}
                                                         <td style={{ minWidth: "150px" }}>
                                                             <TableInput
-                                                                value={item.callerDateTime}
+                                                                value={item.received_call_date}
                                                                 onChange={(newValue) =>
                                                                     handleUpdateChange(newValue, item.id, "received_call_date")
                                                                 }
