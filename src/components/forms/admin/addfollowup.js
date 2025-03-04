@@ -14,16 +14,18 @@ import { Link, useLocation } from "react-router-dom";
 import ConvertTime from "../../common/Common function/ConvertTime";
 import AdminTaskTable from "../../common/AdminTaskTable";
 import Pagination from "../../common/pagination";
-import { FaEdit, FaTrash } from "react-icons/fa";
 import SAlert from "../../common/sweetAlert";
 import CommonTaskReplyBox from "../../common/CommonTaskReplyBox";
 import ModalSidebar from "../../common/modalSidebar";
+import { CiEdit, CiTrash } from "react-icons/ci";
+import ViewAdminBox from "../../common/ViewAdminBox";
+import NoteReply from "../../common/NoteReply";
 
 function Addfollowup(props) {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  let NotifiReplyId = searchParams.get("replyId") || ""
-  let NoteRef = useRef({})
+  let NotifiReplyId = searchParams.get("replyId") || "";
+  let NoteRef = useRef({});
   let [replyId, setReplyId] = useState(NotifiReplyId);
   let [response, setResponseData] = useState([]);
   let [loading, setLoading] = useState(false);
@@ -37,7 +39,7 @@ function Addfollowup(props) {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalData, setTotalData] = useState("");
   const [recordsPerPage] = useState(10);
-  const [taskPage, setTaskPage] = useState(1)
+  const [taskPage, setTaskPage] = useState(1);
   /* Shorting states */
   const [columnName, setcolumnName] = useState("created_on");
   const [sortOrder, setSortOrder] = useState("DESC");
@@ -46,27 +48,30 @@ function Addfollowup(props) {
   const [AdminList, setAdminList] = useState([]);
   const [filteredEmails, setFilteredEmails] = useState([]);
   const [selectedAdmin, setSelectedAdmin] = useState([]);
-  const [dropdownVisible, setDropdownVisible] = useState(false)
-  const [userErrorforadminAssign, setUserErrorforadminAssign] = useState(false)
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [userErrorforadminAssign, setUserErrorforadminAssign] = useState(false);
 
   let adminId =
     adminType === "agent"
       ? localStorage.getItem("agent_id")
       : localStorage.getItem("admin_id");
   // USER FOLLOW UP PROFILE UPDATE VALIDATION
-  let assigned_id = user_type === "user"
-    ? localStorage.getItem("employee_id")
-    : user_type === "company"
+  let assigned_id =
+    user_type === "user"
+      ? localStorage.getItem("employee_id")
+      : user_type === "company"
       ? localStorage.getItem("company_id")
-      : adminId
-  let assigned_by_type = user_type === "user"
-    ? "employee"
-    : user_type === "company"
+      : adminId;
+  let assigned_by_type =
+    user_type === "user"
+      ? "employee"
+      : user_type === "company"
       ? "employer"
-      : adminType
-  let assigned_by_name = user_type === "user" || user_type === "company"
-    ? localStorage.getItem("name")
-    : localStorage.getItem("admin")
+      : adminType;
+  let assigned_by_name =
+    user_type === "user" || user_type === "company"
+      ? localStorage.getItem("name")
+      : localStorage.getItem("admin");
   let assigned_by_email = localStorage.getItem("email");
   /* Function to get the Response data*/
   const ResponseData = async () => {
@@ -85,17 +90,24 @@ function Addfollowup(props) {
       /**for task data */
       let userData = await GetCommentsAndAssign(
         "", //docId,
-        "",//adminfilter, // adminid,
-        "",//annotStatus, // annotationStatus,
+        "", //adminfilter, // adminid,
+        "", //annotStatus, // annotationStatus,
         "note",
-        currentPage, recordsPerPage, sortOrder, columnName, "", "", props.userId, props.userType
+        currentPage,
+        recordsPerPage,
+        sortOrder,
+        columnName,
+        "",
+        "",
+        props.userId,
+        props.userType
       );
-      let adminRes = await getallAdminData()
+      let adminRes = await getallAdminData();
       // console.log(userData.data.data)
       if (adminRes.data.length > 0) {
-        setAdminList(adminRes.data)
+        setAdminList(adminRes.data);
       } else {
-        setAdminList([])
+        setAdminList([]);
       }
       if (
         userData.data.data.data === null ||
@@ -107,13 +119,18 @@ function Addfollowup(props) {
         setResponseData([]);
       } else {
         setResponseData(userData.data.data.data);
-        setTotalData(userData.data.total_rows)
+        setTotalData(userData.data.total_rows);
         if (props.note_id && NoteRef.current[props.note_id]) {
-          NoteRef.current[props.note_id].scrollIntoView({ behavior: "smooth", block: "center" });
+          NoteRef.current[props.note_id].scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
         }
         if (replyId) {
-          setOpenReplySidebar(true)
-          setSingleNoteData(userData.data.data.data.find((item) => item.id === props?.note_id))
+          setOpenReplySidebar(true);
+          setSingleNoteData(
+            userData.data.data.data.find((item) => item.id === props?.note_id)
+          );
         }
       }
     } catch (err) {
@@ -131,19 +148,25 @@ function Addfollowup(props) {
     if (props.noteNotification) {
       const newUrl = window.location.pathname;
       window.history.replaceState({}, document.title, newUrl);
-      localStorage.setItem("navigation_url", "")
-
+      localStorage.setItem("navigation_url", "");
     }
     if (apiCall) {
-      setApiCall(false)
+      setApiCall(false);
     }
     // eslint-disable-next-line
-  }, [replyId, props.noteNotification, props.userId, props.userType, apiCall, sortOrder,]);
+  }, [
+    replyId,
+    props.noteNotification,
+    props.userId,
+    props.userType,
+    apiCall,
+    sortOrder,
+  ]);
   useEffect(() => {
     if (props?.note_id && NotifiReplyId) {
-      setReplyId(NotifiReplyId)
+      setReplyId(NotifiReplyId);
     }
-  }, [NotifiReplyId, props?.note_id, location.key])
+  }, [NotifiReplyId, props?.note_id, location.key]);
   // INITIAL STATE ASSIGNMENT
   // const initialFormState = {
   //   /*only for employee*/
@@ -168,20 +191,20 @@ function Addfollowup(props) {
   //   assined_to_user_id: "",
   // };
   const initialFormState = {
-    "task_creator_user_id": assigned_id,
-    "task_creator_user_type": assigned_by_type,
-    "next_followup_date": "",
-    "user_admin_assigned": "",
+    task_creator_user_id: assigned_id,
+    task_creator_user_type: assigned_by_type,
+    next_followup_date: "",
+    user_admin_assigned: "",
     // "followup_status": "",
-    "assined_to_user_id": "",
-    "assigned_user_type": "",
-    "document_url": "",
-    "subject_description": "",
-    "employee_id": props.userId,
-    "assigned_to": "",
-    "assigned_to_name": "",
-    "subject": ""
-  }
+    assined_to_user_id: "",
+    assigned_user_type: "",
+    document_url: "",
+    subject_description: "",
+    employee_id: props.userId,
+    assigned_to: "",
+    assigned_to_name: "",
+    subject: "",
+  };
   // VALIDATION CONDITIONS
   const validators = {
     subject: [
@@ -189,16 +212,16 @@ function Addfollowup(props) {
         value === "" || value === null || value.trim() === ""
           ? "subject required"
           : value.length < 2
-            ? "subject should have 2 or more letters."
-            : "",
+          ? "subject should have 2 or more letters."
+          : "",
     ],
     subject_description: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Discription required"
           : value.length < 2
-            ? "Discription should have 2 or more letters."
-            : "",
+          ? "Discription should have 2 or more letters."
+          : "",
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
@@ -342,7 +365,7 @@ function Addfollowup(props) {
     // }
 
     setUserErrorforadminAssign("");
-    console.log(user_type)
+    console.log(user_type);
     if (user_type === "admin" || user_type === "agent") {
       if (lastChar === "@") {
         setDropdownVisible(true);
@@ -367,7 +390,6 @@ function Addfollowup(props) {
         setUserErrorforadminAssign("");
       }
     }
-
   };
   const handleEmailClick = (user, type) => {
     // Add the selected user to the assigned list
@@ -379,22 +401,21 @@ function Addfollowup(props) {
       // setReplyComment(updatedComment);
 
       // Hide the dropdown and update the filtered users list
-      setDropdownVisible(false)
-      setFilteredEmails((prev) =>
-        prev.filter((u) => u.id !== user.id)
-      );
+      setDropdownVisible(false);
+      setFilteredEmails((prev) => prev.filter((u) => u.id !== user.id));
     } else {
       setSelectedAdmin((prev) => [...prev, user]);
 
       // Replace @username in the comment
-      const updatedComment = state.subject_description.replace(/@\w*$/, `@${user.name} `);
+      const updatedComment = state.subject_description.replace(
+        /@\w*$/,
+        `@${user.name} `
+      );
       setState({ ...state, subject_description: updatedComment });
 
       // Hide the dropdown and update the filtered users list
-      setDropdownVisible(false)
-      setFilteredEmails((prev) =>
-        prev.filter((u) => u.id !== user.id)
-      );
+      setDropdownVisible(false);
+      setFilteredEmails((prev) => prev.filter((u) => u.id !== user.id));
     }
   };
   // USER FOLLOW UP PROFILE UPDATE SUBMIT BUTTON
@@ -410,11 +431,21 @@ function Addfollowup(props) {
       //   setLoading(false);
       //   setState(initialFormState);
       // } else {
-      const assignedAdminsemail = selectedAdmin ? selectedAdmin?.map((item) => item.email).toString() : "";
-      const assignedAdmins = AdminList.filter((item) => assignedAdminsemail.includes(item.email));
-      const assignedAdminName = assignedAdmins.map((admin) => admin.name).join(",") || "";
-      const assignedUserId = assignedAdmins.map((admin) => admin.u_id || admin.admin_id).join(",") || "";
-      const assignedUserType = assignedAdmins.map((admin) => admin.u_id ? "agent" : admin.admin_type).join(",") || "";
+      const assignedAdminsemail = selectedAdmin
+        ? selectedAdmin?.map((item) => item.email).toString()
+        : "";
+      const assignedAdmins = AdminList.filter((item) =>
+        assignedAdminsemail.includes(item.email)
+      );
+      const assignedAdminName =
+        assignedAdmins.map((admin) => admin.name).join(",") || "";
+      const assignedUserId =
+        assignedAdmins.map((admin) => admin.u_id || admin.admin_id).join(",") ||
+        "";
+      const assignedUserType =
+        assignedAdmins
+          .map((admin) => (admin.u_id ? "agent" : admin.admin_type))
+          .join(",") || "";
       try {
         /*only for employee*/
         // let responseData = await AddFollowup(state);
@@ -426,27 +457,27 @@ function Addfollowup(props) {
           assignedUserId || "",
           assignedAdminsemail,
           state.subject,
-          state.subject_description,//actual
+          state.subject_description, //actual
           "", //annotation.x_axis,
           "", //annotation.y_axis,
           "note",
           assigned_by_type, //sender type
           assigned_by_name, //sender name,
           assignedAdminName || "", //assigned Admin or user Name,
-          "",//state.status, //follow up status(for notes only)
-          "",//state.next_followup_date, //Next follow up date(for notes only)
+          "", //state.status, //follow up status(for notes only)
+          "", //state.next_followup_date, //Next follow up date(for notes only)
           assignedUserType || "", //Assign user type,
           "", //Document url(for notes only)
           assigned_by_email, //Sender email
           state.employee_id, //employee id,
           "", //assigned_by_id
-          "",//docData.parentReference.id, // document parent code
-          "",//annotationDrawBox, //Annotation data,
+          "", //docData.parentReference.id, // document parent code
+          "", //annotationDrawBox, //Annotation data,
           "", //annotationId
           props.userType, //User type of document
-          "",// docData.name,//document name
-          "",//start date
-          "",//end date
+          "", // docData.name,//document name
+          "", //start date
+          "" //end date
         );
         if (responseData.data.message === "task inserted successfully!") {
           toast.success("Followup Updated successfully", {
@@ -454,9 +485,9 @@ function Addfollowup(props) {
             autoClose: 1000,
           });
           props.setApiCall(true);
-          setApiCall(true)
-          setSelectedAdmin([])
-          setState(initialFormState)
+          setApiCall(true);
+          setSelectedAdmin([]);
+          setState(initialFormState);
           return close();
         }
       } catch (err) {
@@ -501,7 +532,7 @@ function Addfollowup(props) {
     });
 
     // **Remove unmentioned admins from selectedAdmin**
-    const filteredSelectedAdmins = selectedAdmin.filter(admin =>
+    const filteredSelectedAdmins = selectedAdmin.filter((admin) =>
       updatedCommentToApi.includes(`@${admin.name}`)
     );
 
@@ -536,7 +567,7 @@ function Addfollowup(props) {
       id: originalData.id,
       type: originalData.type,
       task_complete_date: state.next_followup_date,
-      subject: state.subject
+      subject: state.subject,
     };
 
     // console.log("Updated Selected Admins:", filteredSelectedAdmins);
@@ -569,14 +600,21 @@ function Addfollowup(props) {
   /*Function to delete comment */
   const OnDeleteComment = async (id) => {
     try {
-      let res = await DeleteCommentsAndAssign("", id, props.userId, props.userType, assigned_id, assigned_by_type);
+      let res = await DeleteCommentsAndAssign(
+        "",
+        id,
+        props.userId,
+        props.userType,
+        assigned_id,
+        assigned_by_type
+      );
       if (res.data.message === "Task deleted successfully!") {
         toast.success("Task Deleted Successfully", {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
         setState(initialFormState);
-        setDeleteAlert(false)
+        setDeleteAlert(false);
         setApiCall(true);
       }
     } catch (err) {
@@ -641,9 +679,9 @@ function Addfollowup(props) {
       <ModalSidebar
         show={openReplySidebar}
         onClose={() => {
-          setOpenReplySidebar(false)
-          setReplyId("")
-          setSingleNoteData("")
+          setOpenReplySidebar(false);
+          setReplyId("");
+          setSingleNoteData("");
         }}
         children={
           <CommonTaskReplyBox
@@ -671,15 +709,18 @@ function Addfollowup(props) {
       </ModalSidebar>
       {props.userId !== "" ? (
         <div
-          className={`bg-white rounded ${props.page === "yes" ? "" : "h-100vh"
-            } overflow-y-auto`}
+          className={`bg-white rounded ${
+            props.page === "yes" ? "" : "h-100vh"
+          } overflow-y-auto`}
         >
           {props.page === "yes" ? (
             <h5 className="text-center pt-2 mb-7">Add Notes</h5>
           ) : null}
           <div className="row pb-5 m-0">
             <div
-              className={`activity_container px-8 py-6 col-md-8 border-right ${props.page === "yes" ? "d-none" : ""}`}
+              className={`activity_container px-8 py-6 col-md-8 border-right ${
+                props.page === "yes" ? "d-none" : ""
+              }`}
             >
               <div>
                 <h5>Tasks</h5>
@@ -698,71 +739,150 @@ function Addfollowup(props) {
                   adminType={""}
                 />
               </div>
-              <div className={response.length === 0 || !response ? "d-none" : "p-5 rounded "}
+              <div
+                className={
+                  response.length === 0 || !response ? "d-none" : "p-5 rounded "
+                }
                 style={{
                   height: "50vh",
-                  overflowY: "scroll"
-                }}>
-
+                  overflowY: "scroll",
+                }}
+              >
                 <h5>Notes</h5>
                 {response.length === 0 || !response ? (
                   <div className="d-flex justify-content-center">
                     <p className="text-italic font-size-3 m-0">No Data Found</p>
                   </div>
                 ) : (
-                  (response || []).map((res, index) => (
-                    <div className={`rounded p-5 mb-2 ${props?.note_id === res.id ? "bg-light" : "bg-white"}`} key={index}
-                      ref={(el) => (NoteRef.current[res.id] = el)}>
-                      <div className="m-0 d-flex justify-content-between align-items-center">
-                        <b className="font-size-4 font-weight-bold text-dark text-break">
+                  <div className="p-2">
+                    {(response || []).map((res, index) => (
+                      <div>
+                        <div className="shadow-sm rounded p-2 mb-4">
+                          <div
+                            className={`rounded p-2 mb-4 ${
+                              props?.note_id === res.id
+                                ? "bg-light"
+                                : "bg-white"
+                            }`}
+                            key={index}
+                            ref={(el) => (NoteRef.current[res.id] = el)}
+                          >
+                            <div className="m-0 d-flex justify-content-between gap-2">
+                              {/* <b className="font-size-4 font-weight-bold text-dark text-break">
                           {res.subject}
-                        </b>
-                        <div className="d-flex flex-column align-items-end">
-                          <p className="m-0 text-capitalize font-size-3 mb-1 d-flex justify-content-between align-items-center w-100">
-                            <b>Created by: {res.task_creator_user_name}</b>
-                            <Link className={res.task_creator_user_id === assigned_id && res.task_creator_user_type === assigned_by_type ? "text-gray mb-1 pl-8" : "d-none"} title="Update notes" onClick={() => {
-                              // Merge current state with res and admin_id
-                              setState(res)
-                              setFilteredEmails([]);
-                              setSelectedAdmin(res?.assined_to_user_id ? AdminList.filter((item) => res?.assined_to_user_id.split(",").includes(item.admin_id.toString())) : [])
-                            }}>  <FaEdit />
-                            </Link>
-                            <Link
-                              className={"text-gray mb-1 pl-8"}
-                              title="Add Reply for notes"
-                              onClick={() => {
-                                setSingleNoteData(res)
-                                setOpenReplySidebar(true)
-                              }}>  Add Reply
-                            </Link>
-                            <Link className={res.task_creator_user_id === assigned_id && res.task_creator_user_type === assigned_by_type ? "text-gray mb-1 pl-8" : "d-none"} title="Delete notes" onClick={() => {
-                              ShowDeleteAlert(res)
-                            }}>  <FaTrash color={"red"} />
-                            </Link>
+                        </b> */}
+                              <div>
+                                <div className="d-flex align-items-center gap-2">
+                                  <div class="circle-24 mr-2 overflow-hidden text-capitalize text-white bg-blue">
+                                    T
+                                  </div>
+                                  <div className="mb-0">
+                                    <div className=" font-size-3 text-capitalize font-weight-bold">
+                                      {res.task_creator_user_name}{" "}
+                                      {console.log(res)}
+                                    </div>
+                                    <div
+                                      className="  text-capitalize text-gray"
+                                      style={{
+                                        fontSize: "10px",
+                                        fontWeight: "400 !important",
+                                      }}
+                                    >
+                                      <ConvertTime
+                                        _date={res.created_on}
+                                        format={"HH:mm D MMM"}
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div>
+                                  {res?.assigned_to_name && (
+                                    <span className="font-size-3">
+                                      Assigned admin:
+                                      {res?.assigned_to_name
+                                        ?.split(",")
+                                        .map((item, index) => (
+                                          <span
+                                            key={index}
+                                            className="badge-light rounded-pill p-1 m-1"
+                                          >
+                                            {item}
+                                          </span>
+                                        ))}
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+                              <div className="d-flex flex-column align-items-end">
+                                <p className="m-0 text-capitalize font-size-4 mb-1 d-flex justify-content-between gap-2  w-100 ">
+                                  <Link
+                                    className={
+                                      res.task_creator_user_id ===
+                                        assigned_id &&
+                                      res.task_creator_user_type ===
+                                        assigned_by_type
+                                        ? "text-gray mb-1 pr-2"
+                                        : "d-none"
+                                    }
+                                    title="Update notes"
+                                    onClick={() => {
+                                      // Merge current state with res and admin_id
+                                      setState(res);
+                                      setFilteredEmails([]);
+                                      setSelectedAdmin(
+                                        res?.assined_to_user_id
+                                          ? AdminList.filter((item) =>
+                                              res?.assined_to_user_id
+                                                .split(",")
+                                                .includes(
+                                                  item.admin_id.toString()
+                                                )
+                                            )
+                                          : []
+                                      );
+                                    }}
+                                  >
+                                    {" "}
+                                    <CiEdit />
+                                  </Link>
 
-                          </p>
-                          {res?.assigned_to_name && <span className="font-size-3">
-                            Assigned admin:
-                            {res?.assigned_to_name?.split(",").map((item, index) => <span key={index} className="badge-light rounded-pill p-1 m-1">{item}</span>)}
-                          </span>}
-                          <i className="font-size-2">
-                            Created on: {console.log(res.created_on, res)}
-                            <ConvertTime
-                              _date={res.created_on}
-                              format={'LL'}
-                            />
-                          </i>
+                                  <ViewAdminBox />
+
+                                  <Link
+                                    className={
+                                      res.task_creator_user_id ===
+                                        assigned_id &&
+                                      res.task_creator_user_type ===
+                                        assigned_by_type
+                                        ? "text-gray mb-1 pl-1"
+                                        : "d-none"
+                                    }
+                                    title="Delete notes"
+                                    onClick={() => {
+                                      ShowDeleteAlert(res);
+                                    }}
+                                  >
+                                    {" "}
+                                    <CiTrash color={"red"} />
+                                  </Link>
+                                </p>
+
+                                <i className="font-size-2"></i>
+                              </div>
+                            </div>
+                            <div className="font-size-3 mt-3">
+                              <div
+                                dangerouslySetInnerHTML={{
+                                  __html: res.subject_description,
+                                }}
+                              />
+                            </div>
+                            <NoteReply />
+                          </div>
                         </div>
                       </div>
-                      <div className="font-size-4 m-0">
-                        <div
-                          dangerouslySetInnerHTML={{
-                            __html: res.subject_description,
-                          }}
-                        />
-                      </div>
-                    </div>
-                  ))
+                    ))}
+                  </div>
                 )}
               </div>
             </div>
@@ -921,9 +1041,7 @@ function Addfollowup(props) {
                     Description: <span className="text-danger">*</span>
                   </label>
                   <div className="position-relative">
-                    <div
-
-                    >
+                    <div>
                       {/* <TextEditor
                         setState={setState}
                         state={state}
@@ -934,13 +1052,13 @@ function Addfollowup(props) {
                         value={state.subject_description || ""}
                         onChange={handleInputChange}
                         placeholder="Comments or add others with @"
-                        className={
-                          `comment-input rounded overflow-hidden  ${errors.subject_description
+                        className={`comment-input rounded overflow-hidden  ${
+                          errors.subject_description
                             ? "border border-danger"
-                            : ""}`
-                        }
+                            : ""
+                        }`}
                         rows={4}
-                        style={{ outline: 0, }}
+                        style={{ outline: 0 }}
                       ></textarea>
                       {dropdownVisible && filteredEmails.length > 0 ? (
                         <ul
@@ -970,8 +1088,11 @@ function Addfollowup(props) {
                         </ul>
                       ) : null}
                     </div>
-                    {userErrorforadminAssign ?
-                      <span className="text-danger font-size-3">{userErrorforadminAssign}</span> : null}
+                    {userErrorforadminAssign ? (
+                      <span className="text-danger font-size-3">
+                        {userErrorforadminAssign}
+                      </span>
+                    ) : null}
                     {/*----ERROR MESSAGE FOR DESRIPTION----*/}
                     {errors.subject_description && (
                       <span
@@ -1018,7 +1139,6 @@ function Addfollowup(props) {
                   </div>
                 </div>
                 <div className="form-group text-center">
-
                   {loading === true ? (
                     <button
                       className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
@@ -1034,29 +1154,36 @@ function Addfollowup(props) {
                     </button>
                   ) : (
                     <button
-                      onClick={(e) => { state.id ? OnHandleUpdateCommentStatus(state) : onAminFollowClick(e) }}
+                      onClick={(e) => {
+                        state.id
+                          ? OnHandleUpdateCommentStatus(state)
+                          : onAminFollowClick(e);
+                      }}
                       className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                       type="button"
                     >
                       Submit
                     </button>
                   )}
-                  {(state.subject || props.page === "yes") && <button
-                    onClick={() => {
-                      if (props.page === "yes") {
-                        props.skip();
-                      } else {
-                        setState(initialFormState);
-                        setSelectedAdmin([]);
-                        setLoading(false)
-                      }
-                    }}
-
-                    className={`btn btn-small w-25 rounded-5 ${props.page === "yes" ? " mx-2 " : " mt-2 "}text-uppercase`}
-                    type="button"
-                  >
-                    {props.page === "yes" ? "Skip" : "Cancel"}
-                  </button>}
+                  {(state.subject || props.page === "yes") && (
+                    <button
+                      onClick={() => {
+                        if (props.page === "yes") {
+                          props.skip();
+                        } else {
+                          setState(initialFormState);
+                          setSelectedAdmin([]);
+                          setLoading(false);
+                        }
+                      }}
+                      className={`btn btn-small w-25 rounded-5 ${
+                        props.page === "yes" ? " mx-2 " : " mt-2 "
+                      }text-uppercase`}
+                      type="button"
+                    >
+                      {props.page === "yes" ? "Skip" : "Cancel"}
+                    </button>
+                  )}
                 </div>
               </form>
               {/* <CommentTaskBox
@@ -1181,7 +1308,8 @@ function Addfollowup(props) {
               </tr>
             </thead>
             <tbody>
-              {response.length !== 0 && response.map((item) => item.status === "1") ? (
+              {response.length !== 0 &&
+              response.map((item) => item.status === "1") ? (
                 (response || []).map(
                   (res) =>
                     res.status === "1" && (
@@ -1197,8 +1325,8 @@ function Addfollowup(props) {
                                   <img
                                     src={
                                       res.profile_photo === "" ||
-                                        res.profile_photo === null ||
-                                        res.profile_photo === undefined
+                                      res.profile_photo === null ||
+                                      res.profile_photo === undefined
                                         ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                         : res.profile_photo
                                     }
@@ -1209,9 +1337,9 @@ function Addfollowup(props) {
                               </div>
                               <div className=" mb-0">
                                 {res.name === "" ||
-                                  res.name === "null" ||
-                                  res.name === null ||
-                                  res.name === undefined ? (
+                                res.name === "null" ||
+                                res.name === null ||
+                                res.name === undefined ? (
                                   <p className="font-size-3 mb-0">N/A</p>
                                 ) : (
                                   <p
@@ -1227,9 +1355,9 @@ function Addfollowup(props) {
                         </td>
                         <td>
                           {res.subject === "" ||
-                            res.subject === "null" ||
-                            res.subject === null ||
-                            res.subject === undefined ? (
+                          res.subject === "null" ||
+                          res.subject === null ||
+                          res.subject === undefined ? (
                             <p className="font-size-3 mb-0">N/A</p>
                           ) : (
                             <p
@@ -1242,9 +1370,9 @@ function Addfollowup(props) {
                         </td>
                         <td>
                           {res.subject_description === "" ||
-                            res.subject_description === "null" ||
-                            res.subject_description === null ||
-                            res.subject_description === undefined ? (
+                          res.subject_description === "null" ||
+                          res.subject_description === null ||
+                          res.subject_description === undefined ? (
                             <p className="font-size-3 mb-0">N/A</p>
                           ) : (
                             <p
@@ -1257,9 +1385,9 @@ function Addfollowup(props) {
                         </td>
                         <td>
                           {res.created_on === "" ||
-                            res.created_on === "null" ||
-                            res.created_on === null ||
-                            res.created_on === undefined ? (
+                          res.created_on === "null" ||
+                          res.created_on === null ||
+                          res.created_on === undefined ? (
                             <p className="font-size-3 mb-0">N/A</p>
                           ) : (
                             <small>
@@ -1273,9 +1401,9 @@ function Addfollowup(props) {
                         </td>
                         <td>
                           {res.next_followup_date === "" ||
-                            res.next_followup_date === "null" ||
-                            res.next_followup_date === null ||
-                            res.next_followup_date === undefined ? (
+                          res.next_followup_date === "null" ||
+                          res.next_followup_date === null ||
+                          res.next_followup_date === undefined ? (
                             <p className="font-size-3 mb-0">N/A</p>
                           ) : (
                             <small>
@@ -1287,9 +1415,9 @@ function Addfollowup(props) {
                         </td>
                         <td>
                           {res.status === "" ||
-                            res.status === "null" ||
-                            res.status === null ||
-                            res.status === undefined ? (
+                          res.status === "null" ||
+                          res.status === null ||
+                          res.status === undefined ? (
                             <p className="font-size-3 mb-0"></p>
                           ) : (
                             <small>{res.status === "1" ? "Private" : ""}</small>
@@ -1315,9 +1443,7 @@ function Addfollowup(props) {
             />
           </div>
         </div>
-      )
-      }
-
+      )}
     </>
   );
   return props.page === "yes" ? (
