@@ -160,7 +160,8 @@ const StyledDropdown = ({
                 setStatusErrors("");
             }
         } else {
-            alert("No status found");
+            setIsOpen(false);
+            closeStatusFieldStates()
         }
     };
     const renderDropdown = () => {
@@ -280,17 +281,28 @@ const StyledDropdown = ({
                         </div>
                     ))}
                 </div>
+                {console.log(addStatusFieldOpen)}
                 {addStatusFieldOpen ?
                     <div className="border-top text-center mt-2 form-group">
                         <label
                             htmlFor="status"
                             className="font-size-4 text-black-2 mt-3 line-height-reset"
                         >{updateStatusData ? "Update" : "Add new"} {status_name}</label>
-                        <input
+                        <div className="d-flex"> <input
                             id="status"
                             name="status"
                             className="form-control mt-3"
-                            value={newStatus} onChange={(e) => setNewStatus(e.target.value)} onBlur={(e) => onAddStatusBlur(e)} />
+                            value={newStatus}
+                            onFocus={addStatusFieldOpen}
+                            onChange={(e) => setNewStatus(e.target.value)}
+                            onBlur={(e) => onAddStatusBlur(e)}
+                            onKeyDown={(e) => e.key === "Enter" && onAddStatusBlur(e)}
+                        />
+
+                            <button className=" btn-sm btn-primary mt-4 mx-2" onClick={(e) => onAddStatusBlur(e)}>
+                                +
+                            </button>
+                        </div>
                         <small className="text-danger ">{statusErrors}</small>
                     </div>
                     : <div className="border-top text-center mt-2">

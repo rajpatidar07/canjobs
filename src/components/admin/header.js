@@ -78,87 +78,94 @@ const AdminHeader = (props) => {
           {/* // )} */}
           <Notifications type={""} />
           <div className="header-btn-devider ml-auto ml-lg-5 pl-2 d-xs-flex align-items-center">
-            <div>
-              <div className="dropdown show-gr-dropdown py-5">
-                <Link
-                  to={""}
-                  className="proile media ml-7 flex-y-center"
-                  role="button"
-                  id="dropdownMenuLink"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <div className="text-white">
-                    <h6 className="m-0 text-capitalize text-white">
-                      Hi, {Admin}
-                    </h6>
-                  </div>
-                  {/* <i className="fas fa-chevron-down heading-default-color px-3"></i> */}
-                </Link>
-                <div
-                  className="dropdown-menu gr-menu-dropdown dropdown-right border-0 border-width-2 py-2 w-auto bg-default"
-                  aria-labelledby="dropdownMenuLink"
-                >
-                  {userType === "agent" ? null : (
-                    <Link
-                      to={"/adminprofile"}
-                      className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
-                    >
-                      Edit Profile
-                    </Link>
-                  )}
-                  {AdminType === "super-admin" || AdminType === "admin" ? (
-                    <Link
-                      to={""}
-                      onClick={() => setShowGenerateToken(true)}
-                      className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
-                    >
-                      View as
-                    </Link>
-                  ) : null}
-                  {userType === "agent" ? null : (
-                    <Link
-                      to={""}
-                      onClick={() => setSettings(true)}
-                      className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
-                    >
-                      Setting
-                    </Link>
-                  )}
-                  {/*<--Logout Functionality-->*/}
-                  <Link
-                    to="#"
-                    onClick={(e) => {
-                      e.preventDefault(); // Prevent default navigation
-                      const redirectPath =
-                        userType === "admin"
-                          ? "/adminlogin"
-                          : userType === "agent"
-                          ? localStorage.getItem("portal") === "study"
-                            ? "/study_partner_login"
-                            : "/partnerlogin"
-                          : "/";
+  <div>
+    <div className="dropdown show-gr-dropdown py-5">
+      <Link
+        to=""
+        className="profile media flex-y-center"
+        role="button"
+        id="dropdownMenuLink"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        <div className="text-white">
+          <h6 className="m-0 text-capitalize text-white">
+            Hi, {Admin || "User"}
+          </h6>
+        </div>
+        {/* Uncomment if needed */}
+        {/* <i className="fas fa-chevron-down heading-default-color px-3"></i> */}
+      </Link>
 
-                      // Clear all session and local storage
-                      localStorage.clear();
-                      sessionStorage.clear();
+      <div
+        className="dropdown-menu gr-menu-dropdown dropdown-right border-0 border-width-2 py-2 w-auto bg-default"
+        aria-labelledby="dropdownMenuLink"
+      >
+        {userType !== "agent" && (
+          <Link
+            to="/adminprofile"
+            className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
+          >
+            Edit Profile
+          </Link>
+        )}
 
-                      toast.error("Log Out Successfully", {
-                        position: toast.POSITION.TOP_RIGHT,
-                        autoClose: 1000,
-                      });
+        {(AdminType === "super-admin" || AdminType === "admin") && (
+          <Link
+            to=""
+            onClick={() => setShowGenerateToken(true)}
+            className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
+          >
+            View as
+          </Link>
+        )}
 
-                      window.location.replace(redirectPath);
-                    }}
-                    className="dropdown-item py-2 text-red font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
-                  >
-                    Log Out
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
+        {userType !== "agent" && (
+          <Link
+            to=""
+            onClick={() => setSettings(true)}
+            className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
+          >
+            Settings
+          </Link>
+        )}
+
+        {/* Logout Functionality */}
+        <Link
+          to="#"
+          onClick={(e) => {
+            e.preventDefault(); // Prevent default navigation
+
+            const redirectPath =
+              userType === "admin"
+                ? "/adminlogin"
+                : userType === "agent"
+                ? localStorage.getItem("portal") === "study"
+                  ? "/study_partner_login"
+                  : "/partnerlogin"
+                : "/";
+
+            // Clear all session and local storage
+            localStorage.clear();
+            sessionStorage.clear();
+
+            toast.error("Log Out Successfully", {
+              position: toast.POSITION.TOP_RIGHT,
+              autoClose: 1000,
+            });
+
+            window.location.replace(redirectPath);
+          }}
+          className="dropdown-item py-2 text-red font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
+        >
+          Log Out
+        </Link>
+      </div>
+    </div>
+  </div>
+</div>
+
           {/* <div className="dropdown show-gr-dropdown py-5">
             <Link
               to={""}

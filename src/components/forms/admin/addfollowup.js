@@ -7,6 +7,9 @@ import {
   UpdateDocuentcommentAssign,
   ADocAnnotation,
   DeleteCommentsAndAssign,
+  SendReplyCommit,
+  GetReplyCommit,
+  DeleteReplyCommentsAndAssign,
 } from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -15,12 +18,13 @@ import ConvertTime from "../../common/Common function/ConvertTime";
 import AdminTaskTable from "../../common/AdminTaskTable";
 import Pagination from "../../common/pagination";
 import SAlert from "../../common/sweetAlert";
-import CommonTaskReplyBox from "../../common/CommonTaskReplyBox";
-import ModalSidebar from "../../common/modalSidebar";
+// import CommonTaskReplyBox from "../../common/CommonTaskReplyBox";
+// import ModalSidebar from "../../common/modalSidebar";
 import { CiEdit, CiTrash } from "react-icons/ci";
 import ViewAdminBox from "../../common/ViewAdminBox";
-import NoteReply from "../../common/NoteReply";
-
+// import NoteReply from "../../common/NoteReply";
+import CommentReplyBox from "../../common/CommentReplyBox"
+import determineBackgroundColor from "../../common/Common function/DetermineBackgroundColour";
 function Addfollowup(props) {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -32,8 +36,15 @@ function Addfollowup(props) {
   let [deleteAlert, setDeleteAlert] = useState(false);
   let [deleteData, setDeleteData] = useState("");
   let [apiCall, setApiCall] = useState(false);
-  let [singleNoteData, setSingleNoteData] = useState();
-  let [openReplySidebar, setOpenReplySidebar] = useState();
+  // let [singleNoteData, setSingleNoteData] = useState();
+  // let [openReplySidebar, setOpenReplySidebar] = useState();
+  const [replyCommentData, setReplyCommentData] = useState();
+  const [replyComment, setReplyComment] = useState();
+  const [selectedAdminReply, setSelectedAdminReplye] = useState([]);
+  const [isApiCall, setIsApiCall] = useState(false);
+  const [commentsReplyList, setCommentsReplyList] = useState(false);
+  const [replyCommentClick, setReplyCommentClick] = useState(false);
+  const [type, setType] = useState();
 
   /* Pagination states */
   const [currentPage, setCurrentPage] = useState(1);
@@ -60,14 +71,14 @@ function Addfollowup(props) {
     user_type === "user"
       ? localStorage.getItem("employee_id")
       : user_type === "company"
-      ? localStorage.getItem("company_id")
-      : adminId;
+        ? localStorage.getItem("company_id")
+        : adminId;
   let assigned_by_type =
     user_type === "user"
       ? "employee"
       : user_type === "company"
-      ? "employer"
-      : adminType;
+        ? "employer"
+        : adminType;
   let assigned_by_name =
     user_type === "user" || user_type === "company"
       ? localStorage.getItem("name")
@@ -126,23 +137,40 @@ function Addfollowup(props) {
             block: "center",
           });
         }
-        if (replyId) {
-          setOpenReplySidebar(true);
-          setSingleNoteData(
-            userData.data.data.data.find((item) => item.id === props?.note_id)
-          );
-        }
+        // if (replyId) {
+        //   setOpenReplySidebar(true);
+        //   setSingleNoteData(
+        //     userData.data.data.data.find((item) => item.id === props?.note_id)
+        //   );
+        // }
       }
     } catch (err) {
       console.log(err);
       setResponseData([]);
     }
   };
-
+  // Generate a list of comments reply
+  const getCommentsReplyList = async () => {
+    try {
+      let res = await GetReplyCommit(
+        /*docData.id , adminid, annotationStatus*/
+      );
+      if (res.data.status === (1 || "1")) {
+        setCommentsReplyList(res.data.data);
+      }
+      if (res.data.status === (0 || "0")) {
+        setCommentsReplyList([]);
+      }
+    } catch (err) {
+      console.log(err);
+      setCommentsReplyList([]);
+    }
+  };
   /*Render function to get the Response*/
   useEffect(() => {
     // if (props.userId === undefined || !props.userId/*|| props.job_id === undefined*/) {
     // } else {
+    getCommentsReplyList()
     ResponseData();
     // }
     if (props.noteNotification) {
@@ -167,6 +195,121 @@ function Addfollowup(props) {
       setReplyId(NotifiReplyId);
     }
   }, [NotifiReplyId, props?.note_id, location.key]);
+  const handleUpdateReplyLinkClick = (item) => {
+    setReplyComment(item.msg);
+    setReplyCommentData(item);
+    // const idsToMatch = item.receiver_id.split(",");
+
+    // const filteredData = AdminList.filter(
+    //   (item) => idsToMatch.includes(item.id) || idsToMatch.includes(item.admin_id)
+    // );
+    // setSelectedAdminReplye(filteredData)
+  };
+  const OnHandleUpdateCommentReply = async (originalData) => {
+    const { receiver_email, msg, receiver_name, receiver_type, receiver_id } =
+      originalData;
+    let updatedCommentToApi = replyComment || msg;
+
+    // Parse the original admin details
+    let emailsArray = receiver_email?.split(",") || [];
+    let namesArray = receiver_name?.split(",") || [];
+    let userIdArray = receiver_id?.split(",") || [];
+    let userTypeArray = receiver_type?.split(",") || [];
+
+    // Create new arrays for users who should remain after removal
+    const newEmailsArray = [];
+    const newNamesArray = [];
+    const newUserIdArray = [];
+    const newUserTypeArray = [];
+
+    // Iterate through names to determine which ones to keep
+    namesArray.forEach((name, index) => {
+      const nameRegex = new RegExp(`\\b${name}\\b`, "g");
+
+      if (nameRegex.test(updatedCommentToApi)) {
+        // If the name is still in the updated comment, keep its corresponding details
+        newEmailsArray.push(emailsArray[index]);
+        newNamesArray.push(namesArray[index]);
+        newUserIdArray.push(userIdArray[index]);
+        newUserTypeArray.push(userTypeArray[index]);
+      }
+    });
+
+    let senderId = AdminList.find((item) => item.assigned_id === assigned_id)
+      ? AdminList.find((item) => item.assigned_id === assigned_id).assigned_id
+      : assigned_id || "";
+    let senderEmail =
+      assigned_by_type === "agent"
+        ? assigned_by_email
+        : AdminList.find((item) => item.assigned_id === assigned_id)
+          ? AdminList.find((item) => item.assigned_id === assigned_id).email
+          : assigned_by_email || "";
+    // let senderType =            : "";
+    let sender =
+      assigned_by_type === "agent"
+        ? assigned_by_name
+        : AdminList.find((item) => item.assigned_id === assigned_id)
+          ? AdminList.find((item) => item.assigned_id === assigned_id).name
+          : assigned_by_name || "";
+    (selectedAdminReply || []).forEach((admin) => {
+      if (!newEmailsArray.includes(admin.email)) {
+        // Add new admin's details to the arrays
+        newEmailsArray.push(admin.email);
+        newNamesArray.push(admin.name);
+        newUserIdArray.push(admin.u_id ? admin.id : admin.assigned_id);
+        newUserTypeArray.push(admin.u_id ? "agent" : admin.admin_type);
+      }
+    });
+
+    // Prepare updated strings for each array []
+    const updatedEmails = newEmailsArray.join(",");
+    const updatedNames = newNamesArray.join(",");
+    const updatedUserIds = newUserIdArray.join(",");
+    const updatedUserTypes = newUserTypeArray.join(",");
+
+    // Call the API to update the document
+    try {
+      setIsApiCall(true)
+      let res = await SendReplyCommit(
+        originalData,
+        updatedEmails,
+        updatedCommentToApi,
+        updatedUserIds,
+        updatedUserTypes,
+        sender,
+        updatedNames,
+        "note",
+        senderId,
+        senderEmail,
+        assigned_by_type,
+        props.userId, //props.userId
+        "",// docData.parentReference.id,
+        props.userType,
+        originalData.id
+      );
+      if (res.data.message === "message sent successfully!") {
+        toast.success("Replied Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        // setNotificationApiCall(true);
+        localStorage.setItem("callNotification", true);
+        setReplyComment("");
+        getCommentsReplyList();
+        setSelectedAdminReplye("");
+        setFilteredEmails([]);
+        setReplyCommentData("")
+        setIsApiCall(false)
+
+      }
+    } catch (err) {
+      console.log(err);
+      setSelectedAdminReplye("");
+      setFilteredEmails([]);
+      setIsApiCall(false)
+
+    }
+  };
   // INITIAL STATE ASSIGNMENT
   // const initialFormState = {
   //   /*only for employee*/
@@ -212,16 +355,16 @@ function Addfollowup(props) {
         value === "" || value === null || value.trim() === ""
           ? "subject required"
           : value.length < 2
-          ? "subject should have 2 or more letters."
-          : "",
+            ? "subject should have 2 or more letters."
+            : "",
     ],
     subject_description: [
       (value) =>
         value === "" || value === null || value.trim() === ""
           ? "Discription required"
           : value.length < 2
-          ? "Discription should have 2 or more letters."
-          : "",
+            ? "Discription should have 2 or more letters."
+            : "",
     ],
   };
   // CUSTOM VALIDATIONS IMPORT
@@ -357,12 +500,12 @@ function Addfollowup(props) {
   const handleInputChange = (e, type) => {
     let value = e.target.value;
     const lastChar = value.slice(-1);
-    // setType(type); // Set type once, as it is common in both cases
-    // if (type === "reply") {
-    //     setReplyComment(value);
-    // } else {
-    setState({ ...state, subject_description: value });
-    // }
+    setType(type); // Set type once, as it is common in both cases
+    if (type === "reply") {
+      setReplyComment(value);
+    } else {
+      setState({ ...state, subject_description: value });
+    }
 
     setUserErrorforadminAssign("");
     console.log(user_type);
@@ -394,15 +537,17 @@ function Addfollowup(props) {
   const handleEmailClick = (user, type) => {
     // Add the selected user to the assigned list
     if (type === "reply") {
-      // setSelectedAdminReplye((prev) => [...prev, user]);
+      setSelectedAdminReplye((prev) => [...prev, user]);
 
       // Replace @username in the comment
-      // const updatedComment = replyComment.replace(/@\w*$/, `@${user.name} `);
-      // setReplyComment(updatedComment);
+      const updatedComment = replyComment.replace(/@\w*$/, `@${user.name} `);
+      setReplyComment(updatedComment);
 
       // Hide the dropdown and update the filtered users list
-      setDropdownVisible(false);
-      setFilteredEmails((prev) => prev.filter((u) => u.id !== user.id));
+      setDropdownVisible(false)
+      setFilteredEmails((prev) =>
+        prev.filter((u) => u.id !== user.id)
+      );
     } else {
       setSelectedAdmin((prev) => [...prev, user]);
 
@@ -439,7 +584,7 @@ function Addfollowup(props) {
       );
       const assignedAdminName =
         assignedAdmins.map((admin) => admin.name).join(",") || "";
-      const assignedUserId =
+      const admin_id =
         assignedAdmins.map((admin) => admin.u_id || admin.admin_id).join(",") ||
         "";
       const assignedUserType =
@@ -454,7 +599,7 @@ function Addfollowup(props) {
         const responseData = await ADocAnnotation(
           assigned_id,
           "",
-          assignedUserId || "",
+          admin_id || "",
           assignedAdminsemail,
           state.subject,
           state.subject_description, //actual
@@ -496,6 +641,7 @@ function Addfollowup(props) {
       }
     }
   };
+
   /*Function to update comment */
   const OnHandleUpdateCommentStatus = async (originalData, status) => {
     const {
@@ -582,6 +728,7 @@ function Addfollowup(props) {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        setReplyCommentClick(status === 1 || status === "1" ? "" : updatedData.id)
         setLoading(false);
         setSelectedAdmin([]);
         setState(initialFormState);
@@ -673,10 +820,125 @@ function Addfollowup(props) {
   //     ),
   //   });
   // };
+  /*Function to delete comment Replies*/
+  /*Function to reply for the comment */
+  const ReplyAnnotation = async (data) => {
+    let sender =
+      adminType === "agent"
+        ? assigned_by_name
+        : AdminList.find((item) => item.admin_id === assigned_id)
+          ? AdminList.find((item) => item.admin_id === assigned_id).name
+          : assigned_by_name || "";
+    let senderId = adminType === "agent"
+      ? assigned_id : AdminList.find((item) => item.admin_id === assigned_id)
+        ? AdminList.find((item) => item.admin_id === assigned_id).admin_id
+        : assigned_id || "";
+    let senderEmail =
+      adminType === "agent"
+        ? assigned_by_email
+        : AdminList.find((item) => item.admin_id === assigned_id)
+          ? AdminList.find((item) => item.admin_id === assigned_id).email
+          : assigned_by_email || "";;
+    // Variables for mentioning admins
+    const email = (selectedAdminReply || [])?.map((item) => item.email).toString() || ""; ///\S+@\S+\.\S+/.test(comments) ? comments : "";
+
+    let assignedAdminName = AdminList.filter((item) =>
+      email?.includes(item.email)
+    )
+      ? AdminList
+        .filter((item) => email?.includes(item.email))
+        .map((admin) => admin.name)
+        .join(",")
+      : "";
+    const assignedToUserId = AdminList.filter((item) =>
+      email?.includes(item.email)
+    )
+      ? AdminList
+        .filter((item) => email?.includes(item.email))
+        .map((admin) => (admin.u_id ? admin.id : admin.admin_id))
+        .join(",")
+      : "";
+    // eslint-disable-next-line no-useless-concat
+    const Rec_Admin_Type = AdminList.filter((item) =>
+      email?.includes(item.email)
+    )
+      ? AdminList
+        .filter((item) => email?.includes(item.email))
+        .map((admin) => (admin.u_id ? "agent" : admin.admin_type))
+        .join(",")
+      : "";
+    // console.log(adminType, "adminType", sender, senderId, "data", data, " admin_id", admin_id)
+    if (replyComment === "" && email === "") {
+      toast.error("Comment or email cannot be empty!", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+    } else {
+      try {
+        setIsApiCall(true)
+        let res = await SendReplyCommit(
+          data,
+          email,
+          replyComment,
+          assignedToUserId,
+          Rec_Admin_Type,
+          sender,
+          assignedAdminName,
+          "note",
+          senderId,
+          senderEmail,
+          adminType,//sender type
+          props.userId, //props.userId
+          "",//docData.parentReference.id,
+          props.userType,
+          data?.task_id ? data.id : "",
+          //          docData.name,//document name
+
+        );
+        if (res.data.message === "message sent successfully!") {
+          toast.success("Replied Successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          // setNotificationApiCall(true);
+          localStorage.setItem("callNotification", true);
+          setReplyComment("");
+          getCommentsReplyList();
+          setSelectedAdminReplye("");
+          setReplyCommentData("")
+          setFilteredEmails([]);
+          setIsApiCall(false)
+
+        }
+      } catch (err) {
+        console.log(err);
+        setSelectedAdminReplye("");
+        setFilteredEmails([]);
+        setIsApiCall(false)
+
+      }
+    }
+  };
+  const OnDeleteCommentReplies = async (id) => {
+    try {
+      let res = await DeleteReplyCommentsAndAssign(id, props.userId, props.userType, assigned_id, assigned_by_type);
+      if (res.data.message === "deleted successfully!") {
+        toast.success("Reply Deleted Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setReplyComment();
+        setReplyCommentData();
+        getCommentsReplyList();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   let content = (
     <>
-      <ModalSidebar
+      {/* <ModalSidebar
         show={openReplySidebar}
         onClose={() => {
           setOpenReplySidebar(false);
@@ -706,21 +968,19 @@ function Addfollowup(props) {
             docUserType={props.userType}
           />
         ) : null}
-      </ModalSidebar>
+      </ModalSidebar> */}
       {props.userId !== "" ? (
         <div
-          className={`bg-white rounded ${
-            props.page === "yes" ? "" : "h-100vh"
-          } overflow-y-auto`}
+          className={`bg-white rounded ${props.page === "yes" ? "" : "h-100vh"
+            } overflow-y-auto`}
         >
           {props.page === "yes" ? (
             <h5 className="text-center pt-2 mb-7">Add Notes</h5>
           ) : null}
           <div className="row pb-5 m-0">
             <div
-              className={`activity_container px-8 py-6 col-md-8 border-right ${
-                props.page === "yes" ? "d-none" : ""
-              }`}
+              className={`activity_container px-8 py-6 col-md-8 border-right ${props.page === "yes" ? "d-none" : ""
+                }`}
             >
               <div>
                 <h5>Tasks</h5>
@@ -756,16 +1016,31 @@ function Addfollowup(props) {
                 ) : (
                   <div className="p-2">
                     {(response || []).map((res, index) => (
-                      <div>
+                      <div
+                        className={`rounded p-2 mb-4 comment_box_card ${props?.note_id === res.id
+                          ? "bg-light"
+                          : "bg-white"
+                          } ${props.note_id === res.id ? "highlighted-comment" : ""}`}
+                        onClick={() => {
+
+                          if (res.status !== "1") {
+                            setReplyCommentClick(res.id);
+                            getCommentsReplyList();
+                          }
+                          setFilteredEmails([]);
+                          // setComments("")
+                          if (replyCommentClick !== res.id) {
+                            setSelectedAdmin("");
+                            setReplyCommentData("");
+                            setSelectedAdminReplye("");
+                            setReplyComment("");
+                          }
+                        }}
+                        key={index}
+                        ref={(el) => (NoteRef.current[res.id] = el)}>
                         <div className="shadow-sm rounded p-2 mb-4">
                           <div
-                            className={`rounded p-2 mb-4 ${
-                              props?.note_id === res.id
-                                ? "bg-light"
-                                : "bg-white"
-                            }`}
-                            key={index}
-                            ref={(el) => (NoteRef.current[res.id] = el)}
+
                           >
                             <div className="m-0 d-flex justify-content-between gap-2">
                               {/* <b className="font-size-4 font-weight-bold text-dark text-break">
@@ -773,13 +1048,15 @@ function Addfollowup(props) {
                         </b> */}
                               <div>
                                 <div className="d-flex align-items-center gap-2">
-                                  <div class="circle-24 mr-2 overflow-hidden text-capitalize text-white bg-blue">
-                                    T
+                                  <div class={`circle-24 mr-2 overflow-hidden text-capitalize text-white bg-blue ${determineBackgroundColor(
+                                    res
+                                  )}`}
+                                  >
+                                    {res.task_creator_user_name?.charAt(0)}
                                   </div>
                                   <div className="mb-0">
                                     <div className=" font-size-3 text-capitalize font-weight-bold">
                                       {res.task_creator_user_name}{" "}
-                                      {console.log(res)}
                                     </div>
                                     <div
                                       className="  text-capitalize text-gray"
@@ -819,7 +1096,7 @@ function Addfollowup(props) {
                                     className={
                                       res.task_creator_user_id ===
                                         assigned_id &&
-                                      res.task_creator_user_type ===
+                                        res.task_creator_user_type ===
                                         assigned_by_type
                                         ? "text-gray mb-1 pr-2"
                                         : "d-none"
@@ -832,12 +1109,12 @@ function Addfollowup(props) {
                                       setSelectedAdmin(
                                         res?.assined_to_user_id
                                           ? AdminList.filter((item) =>
-                                              res?.assined_to_user_id
-                                                .split(",")
-                                                .includes(
-                                                  item.admin_id.toString()
-                                                )
-                                            )
+                                            res?.assined_to_user_id
+                                              .split(",")
+                                              .includes(
+                                                item.admin_id.toString()
+                                              )
+                                          )
                                           : []
                                       );
                                     }}
@@ -852,7 +1129,7 @@ function Addfollowup(props) {
                                     className={
                                       res.task_creator_user_id ===
                                         assigned_id &&
-                                      res.task_creator_user_type ===
+                                        res.task_creator_user_type ===
                                         assigned_by_type
                                         ? "text-gray mb-1 pl-1"
                                         : "d-none"
@@ -877,7 +1154,32 @@ function Addfollowup(props) {
                                 }}
                               />
                             </div>
-                            <NoteReply />
+                            <CommentReplyBox
+                              admin_id={assigned_id}
+                              adminType={assigned_by_type}
+                              commentsReplyList={commentsReplyList ? commentsReplyList.filter((item) => item.task_id === res.id) : []}
+                              replyComment={replyComment}
+                              handleInputChange={handleInputChange}
+                              filteredEmails={filteredEmails}
+                              handleEmailClick={handleEmailClick}
+                              // handleEmailMouseOver={handleEmailMouseOver}
+                              ReplyAnnotation={ReplyAnnotation}
+                              setReplyCommentClick={setReplyCommentClick}
+                              commentItem={res}
+                              allAdmin={AdminList}
+                              determineBackgroundColor={determineBackgroundColor}
+                              handleUpdateReplyLinkClick={handleUpdateReplyLinkClick}
+                              OnHandleUpdateCommentReply={OnHandleUpdateCommentReply}
+                              type={type}
+                              replyCommentData={replyCommentData}
+                              OnDeleteCommentReplies={OnDeleteCommentReplies}
+                              dropdownVisible={dropdownVisible}
+                              taskType={"note"}
+                              replyCommentClick={replyCommentClick}
+                              isApiCall={isApiCall}
+                            />
+
+                            {/* <NoteReply /> */}
                           </div>
                         </div>
                       </div>
@@ -1052,11 +1354,10 @@ function Addfollowup(props) {
                         value={state.subject_description || ""}
                         onChange={handleInputChange}
                         placeholder="Comments or add others with @"
-                        className={`comment-input rounded overflow-hidden  ${
-                          errors.subject_description
-                            ? "border border-danger"
-                            : ""
-                        }`}
+                        className={`comment-input rounded overflow-hidden  ${errors.subject_description
+                          ? "border border-danger"
+                          : ""
+                          }`}
                         rows={4}
                         style={{ outline: 0 }}
                       ></textarea>
@@ -1176,9 +1477,8 @@ function Addfollowup(props) {
                           setLoading(false);
                         }
                       }}
-                      className={`btn btn-small w-25 rounded-5 ${
-                        props.page === "yes" ? " mx-2 " : " mt-2 "
-                      }text-uppercase`}
+                      className={`btn btn-small w-25 rounded-5 ${props.page === "yes" ? " mx-2 " : " mt-2 "
+                        }text-uppercase`}
                       type="button"
                     >
                       {props.page === "yes" ? "Skip" : "Cancel"}
@@ -1309,7 +1609,7 @@ function Addfollowup(props) {
             </thead>
             <tbody>
               {response.length !== 0 &&
-              response.map((item) => item.status === "1") ? (
+                response.map((item) => item.status === "1") ? (
                 (response || []).map(
                   (res) =>
                     res.status === "1" && (
@@ -1325,8 +1625,8 @@ function Addfollowup(props) {
                                   <img
                                     src={
                                       res.profile_photo === "" ||
-                                      res.profile_photo === null ||
-                                      res.profile_photo === undefined
+                                        res.profile_photo === null ||
+                                        res.profile_photo === undefined
                                         ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                         : res.profile_photo
                                     }
@@ -1337,9 +1637,9 @@ function Addfollowup(props) {
                               </div>
                               <div className=" mb-0">
                                 {res.name === "" ||
-                                res.name === "null" ||
-                                res.name === null ||
-                                res.name === undefined ? (
+                                  res.name === "null" ||
+                                  res.name === null ||
+                                  res.name === undefined ? (
                                   <p className="font-size-3 mb-0">N/A</p>
                                 ) : (
                                   <p
@@ -1355,9 +1655,9 @@ function Addfollowup(props) {
                         </td>
                         <td>
                           {res.subject === "" ||
-                          res.subject === "null" ||
-                          res.subject === null ||
-                          res.subject === undefined ? (
+                            res.subject === "null" ||
+                            res.subject === null ||
+                            res.subject === undefined ? (
                             <p className="font-size-3 mb-0">N/A</p>
                           ) : (
                             <p
@@ -1370,9 +1670,9 @@ function Addfollowup(props) {
                         </td>
                         <td>
                           {res.subject_description === "" ||
-                          res.subject_description === "null" ||
-                          res.subject_description === null ||
-                          res.subject_description === undefined ? (
+                            res.subject_description === "null" ||
+                            res.subject_description === null ||
+                            res.subject_description === undefined ? (
                             <p className="font-size-3 mb-0">N/A</p>
                           ) : (
                             <p
@@ -1385,9 +1685,9 @@ function Addfollowup(props) {
                         </td>
                         <td>
                           {res.created_on === "" ||
-                          res.created_on === "null" ||
-                          res.created_on === null ||
-                          res.created_on === undefined ? (
+                            res.created_on === "null" ||
+                            res.created_on === null ||
+                            res.created_on === undefined ? (
                             <p className="font-size-3 mb-0">N/A</p>
                           ) : (
                             <small>
@@ -1401,9 +1701,9 @@ function Addfollowup(props) {
                         </td>
                         <td>
                           {res.next_followup_date === "" ||
-                          res.next_followup_date === "null" ||
-                          res.next_followup_date === null ||
-                          res.next_followup_date === undefined ? (
+                            res.next_followup_date === "null" ||
+                            res.next_followup_date === null ||
+                            res.next_followup_date === undefined ? (
                             <p className="font-size-3 mb-0">N/A</p>
                           ) : (
                             <small>
@@ -1415,9 +1715,9 @@ function Addfollowup(props) {
                         </td>
                         <td>
                           {res.status === "" ||
-                          res.status === "null" ||
-                          res.status === null ||
-                          res.status === undefined ? (
+                            res.status === "null" ||
+                            res.status === null ||
+                            res.status === undefined ? (
                             <p className="font-size-3 mb-0"></p>
                           ) : (
                             <small>{res.status === "1" ? "Private" : ""}</small>
