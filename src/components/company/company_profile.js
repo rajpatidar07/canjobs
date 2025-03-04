@@ -147,8 +147,8 @@ function CompanyProfileDetail(props) {
                 <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
                 <span className="text-uppercase font-size-3 font-weight-bold text-gray">
                   <h3 className="font-size-6 mb-0 text-capitalize">
-                    {employerData.company_name
-                      ? employerData.company_name + " (Company)"
+                    {employerData?.company_name
+                      ? employerData?.company_name + " (Company)"
                       : ""}
                   </h3>
                 </span>
@@ -178,15 +178,15 @@ function CompanyProfileDetail(props) {
               <div className="bg-white shadow-9 d-flex">
                 <div className="col-md-12 col-sm-12 media align-items-center company_box media border-right">
                   <div className="text_box text-left">
-                    {employerData.logo ? <img
+                    {employerData?.logo ? <img
                       className="company_logo"
                       src={
-                        employerData.logo === null ||
-                          employerData.logo === null ||
-                          employerData.logo === undefined ||
-                          employerData.logo === "undefined"
+                        employerData?.logo === null ||
+                          employerData?.logo === null ||
+                          employerData?.logo === undefined ||
+                          employerData?.logo === "undefined"
                           ? "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
-                          : employerData.logo
+                          : employerData?.logo
                       }
                       alt=""
                     /> :
@@ -196,8 +196,8 @@ function CompanyProfileDetail(props) {
                   <div className="text_box text-left w-100 text-capitalize">
                     <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center">
                       <span>
-                        <b>{employerData.franchise}</b>
-                        <small>{employerData.company_name}</small>
+                        <b>{employerData?.franchise}</b>
+                        <small>{employerData?.company_name}</small>
                       </span>
                       <CustomButton
                         className={
@@ -211,11 +211,11 @@ function CompanyProfileDetail(props) {
                       </CustomButton>
                     </h3>
                     <p className="font-size-3 text-default-color line-height-2 m-0">
-                      {employerData.industry}
+                      {employerData?.industry}
                     </p>
                   </div>
                 </div>
-                {!employerData.email || user_type === "user" ? null : (
+                {!employerData?.email || user_type === "user" ? null : (
                   <div className="col-md-3 col-sm-6 px-5 pt-5 pb-5 border-right">
                     <div
                       className={
@@ -224,11 +224,11 @@ function CompanyProfileDetail(props) {
                     >
                       <Link
                         className="text-dark font-size-5 w-100 text-break"
-                        to={`mailto:${employerData.email}`}
+                        to={`mailto:${employerData?.email}`}
                       >
                         <BsEnvelope className="text-primary font-size-5 " />
                         {"  "}
-                        {employerData.email}
+                        {employerData?.email}
                       </Link>
                       {user_type === "admin" || props.self === "no" ? (
                         <CustomButton
@@ -243,10 +243,10 @@ function CompanyProfileDetail(props) {
                     </div>
                     <Link
                       className="text-dark font-size-5 w-100"
-                      to={`tel:${employerData.contact_no}`}
+                      to={`tel:${employerData?.contact_no}`}
                     >
                       <BiPhoneCall className="text-primary font-size-5" />
-                      {employerData.contact_no}
+                      {employerData?.contact_no}
                     </Link>
                   </div>
                 )}
@@ -337,7 +337,7 @@ function CompanyProfileDetail(props) {
                       aria-controls="docTab"
                       aria-selected="true"
                       onClick={async () => {
-                        if (!employerData.documents_folder_id && employerData.company_name) {
+                        if (!employerData?.documents_folder_id && employerData?.company_name) {
                           const responseData = await AddCompany(employerData);
                           setApiCall(true);
                           if (responseData.status === 1) {
@@ -551,14 +551,14 @@ function CompanyProfileDetail(props) {
                             <div className="col-md-12 col-sm-12 p-0 media align-items-center company_box media bg-light rounded p-8">
                               <div className="text_box text-left">
 
-                                {employerData.logo ? <img
+                                {employerData?.logo ? <img
                                   className="company_logo"
                                   src={
-                                    employerData.logo === null
+                                    employerData?.logo === null
                                       ? "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
-                                      : employerData.logo
+                                      : employerData?.logo
                                   }
-                                  alt={employerData.company_name}
+                                  alt={employerData?.company_name}
                                 /> :
                                   <p className="company_logo"
                                     style={{ fontSize: "50px" }}>{employerData?.company_name ? getInitials(employerData?.company_name) : ""}</p>}
@@ -567,8 +567,8 @@ function CompanyProfileDetail(props) {
                                 <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center text-break text-capitalize">
                                   <span>
                                     <b title="Operating Name">
-                                      {employerData.franchise
-                                        ? employerData.franchise
+                                      {employerData?.franchise
+                                        ? employerData?.franchise
                                         : "Unknown Client"}
                                     </b>
                                   </span>
@@ -585,11 +585,11 @@ function CompanyProfileDetail(props) {
                                 </CustomButton>
                                 <p className="font-size-3 text-default-color line-height-2 m-0 text-break">
                                   <span className="mr-3" title="Legal Name">
-                                    {employerData.company_name}
+                                    {employerData?.company_name}
                                   </span>
-                                  {employerData.industry === ""
+                                  {employerData?.industry === ""
                                     ? null
-                                    : "(" + employerData.industry + ")"}
+                                    : "(" + employerData?.industry + ")"}
                                 </p>
                                 <hr className="my-3" />
                                 <div className="position-relative">
@@ -602,12 +602,12 @@ function CompanyProfileDetail(props) {
                                 </div>
                                 <hr className="my-3" />
                                 <div className="position-relative">
-                                  {!employerData.industry &&
-                                    !employerData.corporation &&
-                                    !employerData.company_size &&
-                                    !employerData.company_start_date &&
-                                    !employerData.website_url &&
-                                    !employerData.vacancy_for_post &&
+                                  {!employerData?.industry &&
+                                    !employerData?.corporation &&
+                                    !employerData?.company_size &&
+                                    !employerData?.company_start_date &&
+                                    !employerData?.website_url &&
+                                    !employerData?.vacancy_for_post &&
                                     !employerKycData.pan_no &&
                                     !employerKycData.tan_number &&
                                     !employerKycData.gstin ? (
@@ -618,43 +618,43 @@ function CompanyProfileDetail(props) {
                                     </div>
                                   ) : (
                                     <div className="text-left row m-0">
-                                      {employerData.industry ? (
+                                      {employerData?.industry ? (
                                         <div
                                           className="font-size-3 mb-1 mr-10"
                                           title="Industry"
                                         >
                                           <i className="far fa-building mr-2"></i>
-                                          {employerData.industry}
+                                          {employerData?.industry}
                                         </div>
                                       ) : null}
-                                      {employerData.corporation ? (
+                                      {employerData?.corporation ? (
                                         <div
                                           className="font-size-3 mb-1 mr-10"
                                           title="Sole Proprietor"
                                         >
                                           <i className="fas fa-briefcase mr-2"></i>
-                                          {employerData.corporation}
+                                          {employerData?.corporation}
                                         </div>
                                       ) : null}
-                                      {employerData.company_size ? (
+                                      {employerData?.company_size ? (
                                         <div
                                           className="font-size-3 mb-1 mr-10"
                                           title="Client's team size (Full time)"
                                         >
                                           <i className="fas fa-user-friends mr-2"></i>
-                                          {employerData.company_size}
+                                          {employerData?.company_size}
                                         </div>
                                       ) : null}
-                                      {employerData.company_size_partTime ? (
+                                      {employerData?.company_size_partTime ? (
                                         <div
                                           className="font-size-3 mb-1 mr-10"
                                           title="Client's team size (Part time)"
                                         >
                                           <i className="fas fa-user-friends mr-2"></i>
-                                          {employerData.company_size_partTime}
+                                          {employerData?.company_size_partTime}
                                         </div>
                                       ) : null}
-                                      {employerData.company_start_date ? (
+                                      {employerData?.company_start_date ? (
                                         <div
                                           className="font-size-3 mb-1 mr-10"
                                           title="Est. Since"
@@ -662,16 +662,16 @@ function CompanyProfileDetail(props) {
                                           <i className="fas fa-business-time mr-2"></i>
                                           <ConvertTime
                                             _date={
-                                              employerData.company_start_date
+                                              employerData?.company_start_date
                                             }
                                             format={"YYYY"}
                                           />
                                           {/* {moment(
-                                            employerData.company_start_date
+                                            employerData?.company_start_date
                                           ).format("YYYY")} */}
                                         </div>
                                       ) : null}
-                                      {employerData.website_url ? (
+                                      {employerData?.website_url ? (
                                         <div
                                           className="font-size-3 mb-1 mr-10"
                                           title="Website URL"
@@ -679,20 +679,20 @@ function CompanyProfileDetail(props) {
                                           <i className="fas fa-globe mr-2"></i>
                                           <Link
                                             className="text-dark"
-                                            to={employerData.website_url}
+                                            to={employerData?.website_url}
                                             target="_blank"
                                           >
-                                            {employerData.website_url}
+                                            {employerData?.website_url}
                                           </Link>
                                         </div>
                                       ) : null}
-                                      {employerData.vacancy_for_post ? (
+                                      {employerData?.vacancy_for_post ? (
                                         <div
                                           className="font-size-3 mb-1 mr-10"
                                           title="Hiring for"
                                         >
                                           <i className="fas fa-bullhorn mr-2"></i>
-                                          {employerData.vacancy_for_post}
+                                          {employerData?.vacancy_for_post}
                                         </div>
                                       ) : null}
                                       {employerKycData === "" ||
@@ -751,7 +751,7 @@ function CompanyProfileDetail(props) {
                                   )}
                                 </div>
                                 <hr className="my-3" />
-                                {!employerData.email || user_type === "user" ? (
+                                {!employerData?.email || user_type === "user" ? (
                                   ""
                                 ) : (
                                   <div
@@ -761,10 +761,10 @@ function CompanyProfileDetail(props) {
                                     <div className="d-flex justify-content-between align-items-center">
                                       <Link
                                         className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
-                                        to={`mailto:${employerData.email}`}
+                                        to={`mailto:${employerData?.email}`}
                                       >
                                         <BsEnvelope className="text-secondary font-size-5 mr-2" />
-                                        {employerData.email}
+                                        {employerData?.email}
                                       </Link>
                                       {user_type === "admin" ||
                                         props.self === "no" ? (
@@ -780,10 +780,10 @@ function CompanyProfileDetail(props) {
                                     </div>
                                     <Link
                                       className="font-size-3 text-break btn btn-outline-secondary btn-rounded px-4"
-                                      to={`tel:${employerData.contact_no}`}
+                                      to={`tel:${employerData?.contact_no}`}
                                     >
                                       <BiPhoneCall className="text-secondary font-size-5 mr-2" />
-                                      {employerData.contact_no}
+                                      {employerData?.contact_no}
                                     </Link>
                                   </div>
                                 )}
@@ -802,7 +802,7 @@ function CompanyProfileDetail(props) {
                           <div className="col-md-12 col-lg-12 p-8 mt-5 bg-light rounded">
                             <div>
                               <h4 className="text-black-2 mb-0 font-size-5 d-flex align-items-center justify-content-space-between text-break">
-                                <span>About {employerData.company_name}</span>
+                                <span>About {employerData?.company_name}</span>
                                 {/* <CustomButton
                                   className={user_type === "user"?"d-none":"font-size-3 rounded-3 btn-primary border-0  absolute_top_right"}
                                   onClick={() => setShowCompanyInfoModal(true)}
@@ -811,14 +811,14 @@ function CompanyProfileDetail(props) {
                                 </CustomButton> */}
                               </h4>
                               <div className="pt-5 text-left">
-                                {employerData.about ? (
+                                {employerData?.about ? (
                                   // <p className="font-size-4 mb-8">
-                                  //   {employerData.about}
+                                  //   {employerData?.about}
                                   // </p>
                                   <div className="w-100 card p-5 shadow-8 border-0 m-0 text-break">
                                     <div
                                       dangerouslySetInnerHTML={{
-                                        __html: employerData.about,
+                                        __html: employerData?.about,
                                       }}
                                     />
                                   </div>
@@ -893,12 +893,12 @@ function CompanyProfileDetail(props) {
                       user_id={cid}
                       emp_user_type={"employer"}
                       folderId={
-                        docId ? docParentId : employerData.documents_folder_id}
+                        docId ? docParentId : employerData?.documents_folder_id}
                       AnnoteId={docHighAnnoId}
                       docTaskId={docTaskId}
                       notification={docId ? "yes" : "no"}
                       docId={docId ? docId : ""}
-                      user_name={employerData.company_name}
+                      user_name={employerData?.company_name}
                     />
                   ) : null}
                 </div>
@@ -1004,7 +1004,7 @@ function CompanyProfileDetail(props) {
                   }
                 >
                   {TabActive === "contact" ? (
-                    <ContactPage email={employerData.email} />
+                    <ContactPage email={employerData?.email} />
                   ) : null}
                 </div>
                 <div
@@ -1013,7 +1013,7 @@ function CompanyProfileDetail(props) {
                   }
                 >
                   {TabActive === "email" ? (
-                    <MainEmailPage email={employerData.email} />
+                    <MainEmailPage email={employerData?.email} />
                   ) : null}
                 </div>
                 <div
@@ -1031,7 +1031,7 @@ function CompanyProfileDetail(props) {
                         // docId
                         //   ? docParentId
                         //   :
-                        employerData.documents_folder_id
+                        employerData?.documents_folder_id
                       }
                       userData={employerData}
                     />

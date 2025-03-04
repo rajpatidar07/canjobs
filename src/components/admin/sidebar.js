@@ -799,7 +799,7 @@ const AdminSidebar = (props) => {
             }}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
             title={"Manage Daily Call Log"}
-            to="/manage_applicant_Call_log"
+            to="/daily_call_log"
           >
             <MdOutlineAddIcCall className="sidebar_icon" />
             <span className="text-truncate">Manage Daily Call Log</span>

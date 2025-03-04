@@ -28,7 +28,8 @@ const AdobePDFViewer = ({
   openCommentBox,
   AnnoteId,
   docTaskId,
-  AdminData
+  AdminData,
+  page
 }) => {
   let [openAnnotationBox, setOpenAnnotationBox] = useState(openCommentBox ? true : false);
   let [annotationDrawBox, setAnnotationDrawBox] = useState("");
@@ -368,9 +369,9 @@ const AdobePDFViewer = ({
           }
         }}
         className={
-          userType === "admin" || userType === "agent"
-            ? "annotation-mobile-button"
-            : "d-none"
+          page === "agreement"
+          ? "d-none"
+          : "annotation-mobile-button"
         }
         data-toggle="collapse"
         role="button"

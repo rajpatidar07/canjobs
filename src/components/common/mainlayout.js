@@ -283,7 +283,6 @@ function MainLayout() {
             <Route path="/googledrive" element={<GoogleDrive />} />
             <Route path="/anotation" element={<Anotation />} />
             <Route path="/slots" element={<CommonApplicatTypePage />} />
-            <Route path="/manage_applicant_Call_log" element={<ManageDailyCallLog />} />
             <Route path="/manage_applicant_type" element={<MangeApplicantType />} />
             <Route path="/businessvisa" element={<BusinessVIsa />} />
             <Route path="/expressentry" element={<ExpressEntry />} />

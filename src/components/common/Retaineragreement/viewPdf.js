@@ -366,6 +366,7 @@ export default function ViewPdf({
                 partnerList={[]}
                 setCommentsList={setCommentsList}
                 userType={localStorage.getItem("userType")}
+                page="agreement"
               />
             )}
           </div>
@@ -399,6 +400,7 @@ export default function ViewPdf({
           setConvertedDoc={setNewPdfUrl}
           SetPdfDocUrl={GetPdfDocument}
           AdminData={AdminData}
+          page="agreement"
         />
       )
     );
