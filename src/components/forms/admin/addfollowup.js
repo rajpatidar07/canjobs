@@ -678,9 +678,9 @@ function Addfollowup(props) {
     });
 
     // **Remove unmentioned admins from selectedAdmin**
-    const filteredSelectedAdmins = selectedAdmin.filter((admin) =>
+    const filteredSelectedAdmins = selectedAdmin ? selectedAdmin?.filter(admin =>
       updatedCommentToApi.includes(`@${admin.name}`)
-    );
+    ) : []
 
     // Update selectedAdmin state
     setSelectedAdmin(filteredSelectedAdmins);
