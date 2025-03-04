@@ -279,14 +279,14 @@ function Calllogtable(props) {
                                                 <td style={{ minWidth: "150px" }}>
                                                     <select className="form-control" value={state.call_ans_by} onChange={onInputChange} id="call_ans_by" name="call_ans_by">
                                                         <option>Select Admin</option>
-                                                        {(props.admiinList || []).map((item, index) => (
+                                                        {(props.adminList || []).map((item, index) => (
                                                             <option value={item.admin_id} key={index}>{item.name}</option>
                                                         ))}
                                                     </select>
                                                 </td>
 
                                                 <td style={{ minWidth: "150px" }}>
-                                                    <TableInput value={state.phone} onChange={onInputChange} type="tel" id="phone" name="phone" />
+                                                    <TableInput value={state.phone} onChange={onInputChange} type="number" id="phone" name="phone" />
                                                     {errors.phone && (
                                                         <span key={errors.phone} className="text-danger font-size-3">
                                                             {errors.phone}
@@ -299,7 +299,7 @@ function Calllogtable(props) {
                                                 </td>
 
                                                 <td style={{ minWidth: "150px" }}>
-                                                    <TableInput value={state.email} onChange={onInputChange} type="email" />
+                                                    <TableInput value={state.email} onChange={onInputChange} type="email" id="email" name="email" />
                                                 </td>
 
                                                 {/* Button Column */}
@@ -317,9 +317,27 @@ function Calllogtable(props) {
                                                             ></span>
                                                             <span className="sr-only">Loading...</span>
                                                         </button>
-                                                    ) : <button
-                                                        title="Submit"
-                                                        type="button" className="btn-sm btn-primary" onClick={(e) => AddCallLog(e)}>+</button>}
+                                                    ) :
+                                                        <> <button
+                                                            title="Submit"
+                                                            type="button"
+                                                            className="btn-sm btn-primary"
+                                                            onClick={(e) => AddCallLog(e)}
+                                                            onKeyDown={(e) => {
+                                                                if (e.key === "Enter") {
+                                                                    e.preventDefault();  // Prevents form submission
+                                                                    AddCallLog();
+                                                                }
+                                                            }}
+                                                        >
+                                                            +
+                                                        </button>
+                                                            <button type="button" title="Cancel" onClick={() => {
+                                                                props.setShowAddForm(false)
+                                                                setState(initialFormState)
+                                                            }} className="btn-sm btn-dark mx-2">x</button>
+                                                        </>
+                                                    }
                                                 </td>
                                             </tr>
 
