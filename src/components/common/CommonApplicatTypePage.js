@@ -35,6 +35,7 @@ export default function CommonApplicatTypePage() {
     const [searcherror, setSearchError] = useState("");
     let [apiCall, setApiCall] = useState(false);
     let [showGrpChatBox, setShowGrpChatBox] = useState(false);
+    let [folderApiCall, setFolderApiCall] = useState(false);
     const [applicantTypeId, setApplicanttypeId] = useState(ApplicantTypeUrlId ? ApplicantTypeUrlId : location?.state?.applicantType);
     const [applicantTypeChildId, setApplicanttypeChildId] = useState(ApplicantTypeChildUrlId ? ApplicantTypeChildUrlId : location?.state?.applicantTypeChild);
     const [applicantTypeFolderId, setApplicanttypeFolderId] = useState(location?.state?.folderId);
@@ -184,7 +185,11 @@ export default function CommonApplicatTypePage() {
                                 setShowGrpChatBox={setShowGrpChatBox}
                                 applicantTypeId={applicantTypeIdForApi}
                                 tableName={"employee"}
-                                exportCandidatestatus={"4,7,8,9"} />
+                                exportCandidatestatus={"4,7,8,9"}
+                                emp_user_type={"applicant_type"}
+                                user_id={applicantTypeIdForApi}
+                                setFolderApiCall={setFolderApiCall}
+                                folderId={docId ? docParentId : applicantTypeFolderId} />
                         </div>
                         {selectedTab === "candidate" ? <div>
                             <div className="mb-18">
@@ -253,7 +258,9 @@ export default function CommonApplicatTypePage() {
                                 user_name={""}
                                 partnerId={""}
                                 AnnoteId={docId ? docHighAnnoId : ""}
-                                docTaskId={taskId} /></div>}
+                                docTaskId={taskId}
+                                folderApiCall={folderApiCall}
+                                setFolderApiCall={setFolderApiCall} /></div>}
                     </div>
                 </div>
             </div>

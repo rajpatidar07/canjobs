@@ -477,9 +477,11 @@ export default function ApplicantTypeDocuments(props) {
         ...prev, apiCall: false
       }));
     }
+    if(props.folderApiCall ===true){
+      props.setFolderApiCall(false)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.apiCall, state.folderID,location.key]);
-
+  }, [props.folderApiCall,state.apiCall, state.folderID, location.key]);
   useEffect(() => {
     if (props.folderId !== state.folderID && props?.notification === "yes") {
       setState((prev) => ({
