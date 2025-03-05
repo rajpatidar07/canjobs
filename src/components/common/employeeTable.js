@@ -908,7 +908,7 @@ export default function EmployeeTable(props) {
                       </Link>
                     </th>
                   )}
-                  {[14, "14", 15, "15", 16, "16", 4, "4"].includes(props?.ApplicantType) && (
+                  {props?.ApplicantType && (
                     <th
                       scope="col"
                       className="border-0 font-size-4 font-weight-normal"
@@ -1419,8 +1419,8 @@ export default function EmployeeTable(props) {
                           </td>
                         )}
 
-                        <td className={props?.ApplicantType && [14, "14", 15, "15", 16, "16", 4, "4"].includes(props?.ApplicantType) ? "text-center" : "d-none"}>
-                          {[14, "14", 15, "15", 16, "16", 4, "4"].includes(props?.ApplicantType) && empdata.category_id ? (
+                        <td className={props?.ApplicantType ? "text-center" : "d-none"}>
+                          {props?.ApplicantType && empdata.category_id ? (
                             <>
                               <p
                                 className={`font-size-2 font-weight-normal text-white mb-0 text-capitalize  `}
