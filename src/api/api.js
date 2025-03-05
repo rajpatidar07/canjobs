@@ -3485,6 +3485,7 @@ export const AddSharePointDOcument = async (
     // console.log(data[i])
     formData.append(`file[${i}]`, data[i]);
   }
+  console.log(formData)
   if (Token) {
     const response = await axios.post(
       `${API_URL}admin/sharpointSiteDriveDocumentUpload_new`,

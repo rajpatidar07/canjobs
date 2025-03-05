@@ -60,20 +60,16 @@ export default function CommonApplicatTypePage() {
 
     useEffect(() => {
         // Update only if applicantType is present
-        console.log(ApplicantTypeUrlId, notifiType)
         if ((notifiType === "group" || notifiType === "candidate") && (ApplicantTypeUrlId)) {
             setApplicanttypeId(ApplicantTypeUrlId);
             setApplicanttypeChildId(ApplicantTypeChildUrlId)
             localStorage.setItem("applicantType", ApplicantTypeUrlId)
-            console.log("notification render")
         } else {
             if (location?.state?.applicantType && location?.state?.applicantType !== applicantTypeId) {
                 setApplicanttypeId(location.state.applicantType);
                 localStorage.setItem("applicantType", location.state.applicantType)
-                console.log("first render", applicantTypeId, location.state.applicantType)
             } else {
                 setApplicanttypeId(localApplicantTypeId);
-                console.log("For local render")
 
             }
             if (location?.state?.applicantTypeChild && location?.state?.applicantTypeChild !== applicantTypeChildId) {
@@ -93,7 +89,6 @@ export default function CommonApplicatTypePage() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.key, ApplicantTypeUrlId, taskId, notifiType, location?.state?.applicantType, location?.search?.applicantTypeChild, location?.state?.folderId, docId, localApplicantTypeId, localApplicantTypeFolderId]);
     useEffect(() => {
-        console.log(applicantTypeId)
         if (applicantTypeId || applicantTypeChildId) {
             getApplicanTypeApi()
                 .then((res) => {

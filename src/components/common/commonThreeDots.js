@@ -6,10 +6,93 @@ import ExportExcelButton from './exportExcelButton'
 import { Link } from 'react-router-dom'
 import { FiFilePlus, FiFolderPlus } from "react-icons/fi";
 import AddFolderModal from './Document folder/AddFolderModal';
+import { toast } from 'react-toastify';
+import { AddSharePointDOcument } from '../../api/api';
 export default function CommonThreeDots(props) {
     let [isOpen, setIsOpen] = useState(false);
-    let [openFolderModal, setOPenFolderModal] = useState(false);
+    let [openFolderModal, setOPenFolderModal] = useState(true);
+    let [addFileLoading, setAddFileLoading] = useState(false);
+    let [addFileClickOn, setAddFileClickOn] = useState(false);
     let user_type = localStorage.getItem("userType");
+    const AddFileClick = async (event) => {
+        setAddFileClickOn(true);
+        setAddFileLoading(true);
+        const files = event.target.files;
+
+        if (files.length > 30) {
+            toast.error('You can only upload a maximum of 30 files at a time', {
+                position: toast.POSITION.TOP_RIGHT,
+                autoClose: 1000,
+            });
+            setAddFileLoading(false);
+            return;
+        }
+
+        const allowedTypes = ['.pdf', '.doc', '.docx', '.jpg', '.jpeg', '.png'];
+        const maxSize = 8 * 1024 * 1024; // 8 MB
+        const fileBaseList = [];
+
+        for (let i = 0; i < files.length; i++) {
+            let file = files[i];
+            const lastDotIndex = file.name.lastIndexOf('.');
+            let fileName = file.name.substring(0, lastDotIndex).replace(/\.+/g, '');
+            const fileExtension = file.name.substring(lastDotIndex + 1);
+            const finalFileName = `${fileName}.${fileExtension}`;
+
+            const updatedFile = new File([file], finalFileName, {
+                type: file.type,
+                lastModified: file.lastModified,
+            });
+
+            if (!allowedTypes.includes(`.${fileExtension.toLowerCase()}`)) {
+                toast.error(`Invalid file type '${updatedFile.name}'. Allowed: PDF, DOC, DOCX, JPG, JPEG, PNG`, {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 1000,
+                });
+                setAddFileLoading(false);
+                return;
+            }
+
+            if (updatedFile.size > maxSize) {
+                toast.error(`File '${updatedFile.name}' exceeds 8 MB size limit`, {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 1000,
+                });
+                setAddFileLoading(false);
+                return;
+            }
+
+            fileBaseList.push(updatedFile);
+        }
+
+        try {
+            const res = await AddSharePointDOcument(
+                props?.user_id || '',
+                props?.emp_user_type || '',
+                props?.folderId,
+                '',
+                fileBaseList
+            );
+
+            if (res.data.message === 'Document Upload') {
+                toast.success('Document uploaded successfully', {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 1000,
+                });
+                props.setFolderApiCall(true);
+            } else if (res.data.message === 'Failed' && res.data.data === 'No Token Found') {
+                toast.error('Something went wrong! Try again later', {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 1000,
+                });
+            }
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setAddFileLoading(false);
+            setAddFileClickOn(false);
+        }
+    };
     return (
         <>
             {openFolderModal && <AddFolderModal
@@ -56,14 +139,28 @@ export default function CommonThreeDots(props) {
                                 <FiFolderPlus className="mx-3" /> Add folder
                             </button>
                         ) : null}
-                        {(user_type === "admin" && props.applicantTypeId) ? (
-                            <button
-                                // onClick={() => props.setShowGrpChatBox(true)}
-                                className="dropdown-item d-flex align-items-center border-0 bg-transparent m-3"
+                        {user_type === 'admin' && props.applicantTypeId && (
+                            <label
+                                className='dropdown-item d-flex align-items-center border-0 bg-transparent m-3'
+                                style={{ cursor: 'pointer' }}
                             >
-                                <FiFilePlus className="mx-3" /> Add file
-                            </button>
-                        ) : null}
+                                <input
+                                    type='file'
+                                    accept='.pdf,.doc,.docx,.jpg,.jpeg,.png'
+                                    style={{ display: 'none' }}
+                                    onChange={AddFileClick}
+                                    multiple
+                                />
+                                {addFileLoading ? (
+                                    <div className='spinner-border spinner-border-sm' role='status'>
+                                        <span className='sr-only'>Loading...</span>
+                                    </div>
+                                ) : (
+                                    <FiFilePlus className='mx-3' />
+                                )}
+                                Add file
+                            </label>
+                        )}
                         {(user_type === "admin" && props.applicantTypeId) ? (
                             <button
                                 onClick={() => props.setShowGrpChatBox(true)}

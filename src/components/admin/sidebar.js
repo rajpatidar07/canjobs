@@ -15,9 +15,9 @@ import {
   BsReverseLayoutTextSidebarReverse,
 } from "react-icons/bs";
 import { PiApplePodcastsLogoThin } from "react-icons/pi";
-import { AiOutlineUserAdd  } from "react-icons/ai";
+import { AiOutlineUserAdd } from "react-icons/ai";
 import { TbFilterPlus } from "react-icons/tb";
-import { FaAddressCard, FaNotesMedical, FaTasks } from "react-icons/fa";
+import { FaAddressCard, FaChevronDown, FaNotesMedical, FaTasks } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
 import { SiStudyverse } from "react-icons/si";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
@@ -73,7 +73,7 @@ const AdminSidebar = (props) => {
   useEffect(() => {
     if (props.heading) {
       const activityLi = liRefs.current[props.heading];
-      console.log(props.heading,activityLi,liRefs.current)
+      console.log(props.heading, activityLi, liRefs.current)
       if (activityLi) {
         activityLi.scrollIntoView({ behavior: "smooth" });
       }
@@ -720,10 +720,11 @@ const AdminSidebar = (props) => {
                     localStorage.setItem("applicantTypeFolderId", "")
                     localStorage.setItem("applicantTypeChild", "")
                   } : undefined}
-                  className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center text-Capitalize"
+                  className="d-flex justify-content-between px-2 py-3 border-top font-size-4 font-weight-light flex-y-center text-Capitalize"
                   style={{ textDecoration: "none" }}
                 >
-                  {item.title}
+                  <span>{item.title}</span>
+                  <span className=" "> {hasChildren && <FaChevronDown />}</span>
                 </Link>
                 {openParent === item.id && hasChildren && (
                   <ul className="pl-3 list-unstyled">
@@ -843,7 +844,7 @@ const AdminSidebar = (props) => {
             <span className="text-truncate">Manage Notes</span>
           </Link>
         </li>
-        
+
         <li
           ref={(el) => (liRefs.current["Assigned Job's"] = el)}
           className={
@@ -907,7 +908,7 @@ const AdminSidebar = (props) => {
             <span className="text-truncate">Manage Partner</span>
           </Link>
         </li>
-        
+
         <li
           ref={(el) => (liRefs.current["Manage Job Category"] = el)}
           className={
