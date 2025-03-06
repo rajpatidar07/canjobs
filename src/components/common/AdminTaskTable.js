@@ -113,7 +113,7 @@ export default function AdminTaskTable(props) {
       let JsonRes = await GetFilter();
       setPriority(JsonRes?.data?.data?.priority);
       setGroupBy(JsonRes?.data?.data?.group_by);
-      setStatusList(JsonRes?.data?.data?.status_type);
+      setStatusList(JsonRes?.data?.data?.status_type);  
       if (res.data.status === (1 || "1")) {
         setTaskData(res.data.data.data);
         setIsLoading(false);
@@ -219,6 +219,9 @@ export default function AdminTaskTable(props) {
       console.log(err);
     }
   };
+
+
+  console.log("statusList", statusList);
   return (
     <>
       <div className="bg-white shadow-8 datatable_div pt-7 rounded pb-8 px-2">

@@ -9,6 +9,8 @@ import {
   ApplyJob,
   getallAdminData,
   getApplicanTypeApi,
+  AddEmployeeDetails,
+  AddUpdateVisa,
 } from "../../api/api";
 import moment from "moment";
 import { BiSolidCategory } from "react-icons/bi";
@@ -41,18 +43,20 @@ import CommentTaskBox from "./commonTaskBox";
 import ModalSidebar from "./modalSidebar";
 import { BsChat } from "react-icons/bs";
 import CommonThreeDots from "./commonThreeDots";
+import { ButtonGroup, Dropdown, DropdownButton } from "react-bootstrap";
+import filterjson from "../json/filterjson";
 export default function EmployeeTable(props) {
   let agentId = localStorage.getItem("agent_id");
   let user_type = localStorage.getItem("userType");
   let StatusTab = localStorage.getItem("StatusTab");
-  let portal = localStorage.getItem("portal")
+  let portal = localStorage.getItem("portal");
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   let canID = searchParams.get("canId");
   let taskID = searchParams.get("taskId");
   let notifiType = searchParams.get("notifiType");
-  let [CandidateId, setCandidateId] = useState(canID || "")
-  let [TaskId, setTaskId] = useState(taskID | "")
+  let [CandidateId, setCandidateId] = useState(canID || "");
+  let [TaskId, setTaskId] = useState(taskID | "");
   /*Show modal states */
   let [apiCall, setApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(true);
@@ -75,17 +79,20 @@ export default function EmployeeTable(props) {
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [statusList, setStatusList] = useState([...filterjson.employee_status]);
+
   /*Pagination states */
   const [status, setStatus] = useState(
     StatusTab
       ? StatusTab
       : props.pageName === "local_candidate"
-        ? ""
-        : props?.ApplicantType
-          ? "4,7,8,9"
-          : props.self === "yes"
-            ? -1
-            : 4
+      ? ""
+      : props?.ApplicantType
+      ? "4,7,8,9"
+      : props.self === "yes"
+      ? -1
+      : 4
   );
   const [totalData, setTotalData] = useState("");
   const [recordsPerPage] = useState(10);
@@ -96,13 +103,18 @@ export default function EmployeeTable(props) {
   const [sortOrder, setSortOrder] = useState("DESC");
   // const [showApplicantTypeForm, setShowApplicantTypeForm] = useState(false);
 
-  let getApplicantType = (id) => (applicantTypeList?.find(x => x.id === id)?.title)
-  let getApplicantSubType = (id) => (applicantTypeList?.find(x => x.id === id)?.title)
+  let getApplicantType = (id) =>
+    applicantTypeList?.find((x) => x.id === id)?.title;
+  let getApplicantSubType = (id) =>
+    applicantTypeList?.find((x) => x.id === id)?.title;
   /* Function to get Employee data*/
   const EmpData = async () => {
     // const params = useParams();
     setIsLoading(true);
-    if ((location.pathname === "/slots" && props?.ApplicantType) || location.pathname !== "/slots") {
+    if (
+      (location.pathname === "/slots" && props?.ApplicantType) ||
+      location.pathname !== "/slots"
+    ) {
       try {
         const userData = await getallEmployeeData(
           props.search,
@@ -116,18 +128,23 @@ export default function EmployeeTable(props) {
           props.filter_by_time,
           "",
           props.statustFilterValue
-            ? props.statustFilterValue :
-            props.skill || props.heading === "Dashboard" || status === "00" || portal === "study"
-              ? ""
-              : status,
+            ? props.statustFilterValue
+            : props.skill ||
+              props.heading === "Dashboard" ||
+              status === "00" ||
+              portal === "study"
+            ? ""
+            : status,
           props.job_id ? props.job_id : "",
           CandidateId ? CandidateId : props.filterByEmployeeId,
-          location.pathname === "/slots" ? props?.ApplicantType : props.interestFilterValue,
+          location.pathname === "/slots"
+            ? props?.ApplicantType
+            : props.interestFilterValue,
           "",
           user_type === "agent" ? agentId : props.agentFilterValue,
           props.adminFilterValue,
-          "",// props.categoryFilterValue,
-          props.localFilterValue,
+          "", // props.categoryFilterValue,
+          props.localFilterValue
           // props.subCategoryFilterValue
         );
         if (userData.data.length === 0) {
@@ -146,12 +163,15 @@ export default function EmployeeTable(props) {
             if (TaskId && CandidateId && notifiType === "candidate") {
               setShowChatModal(true);
               setemployeeId(userData.data[0] || "");
-              window.history.replaceState({}, document.title, window.location.pathname);
+              window.history.replaceState(
+                {},
+                document.title,
+                window.location.pathname
+              );
               localStorage.removeItem("navigation_url");
               setCandidateId("");
               setTaskId("");
             }
-
           }
           setTotalData(userData.total_rows);
           setIsLoading(false);
@@ -186,8 +206,7 @@ export default function EmployeeTable(props) {
   useEffect(() => {
     if (canID) setCandidateId(canID);
     if (taskID) setTaskId(taskID);
-  }, [location.key,
-    canID, taskID,]);
+  }, [location.key, canID, taskID]);
   /*Render function to get the employer*/
   useEffect(() => {
     EmpData();
@@ -226,7 +245,6 @@ export default function EmployeeTable(props) {
     props.localFilterValue,
     props.filterByEmployeeId,
     props.statustFilterValue,
-
   ]);
 
   /* Function to show the single data to update Employee*/
@@ -376,13 +394,126 @@ export default function EmployeeTable(props) {
   // const oneMonthAgo = new Date(); // Create a new date object for one month ago
   // oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1); // Subtract one month from the current date
   /*Funcion to get the user time from updated time */
-  function isTimeWithin24Hours(createdTime) {
-    return Date.now() - new Date(createdTime).getTime() <= 86400000;
-  }
+  // function isTimeWithin24Hours(createdTime) {
+  //   return Date.now() - new Date(createdTime).getTime() <= 86400000;
+  // }
   const clearPageNo = () => {
     localStorage.removeItem("PageNo");
     props.setpageNo(1);
   };
+
+  // const OnStatusChange = (e, empdata, eventKey) => {
+  //   console.log("Selected Status ID:", eventKey, "Employee Data:", empdata);
+  //   // Assuming you want to update the employee status here
+  //   setStatus(eventKey);
+  //   // You may need to call an API to update the status in the backend
+  // };
+
+  const OnStatusChange = async (e, empdata, eventKey) => {
+    e.preventDefault();
+    setLoading(true);
+    let data = {
+      employee_id: empdata.employee_id,
+      status: eventKey,
+      name: empdata.name,
+      documents_folder_id: empdata.documents_folder_id,
+    };
+    try {
+      let response = await AddEmployeeDetails(data);
+      if (response.message === "Employee data updated successfully") {
+        toast.success("Candidate status changes successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        if (empdata.status === "4" && !props.data.visa_status) {
+          let state = { status: "onboard" };
+          try {
+            let VisaResponse = await AddUpdateVisa(
+              empdata.employee_id,
+              state,
+              "",
+              "visa"
+            );
+            if (VisaResponse.data.message === "visa inserted successfully") {
+              props.setApiCall(true);
+              setLoading(false);
+              props.close();
+            }
+          } catch (err) {
+            console.log(err);
+          }
+        } else {
+          props.setApiCall(true);
+          setLoading(false);
+          props.close();
+        }
+      }
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
+  };
+  const OnApplicantTypeChange = async (e, empdata, eventKey) => {
+    e.preventDefault();
+    setLoading(true);
+    let data = {
+      employee_id: empdata.employee_id,
+      interested_in_id: eventKey,
+      name: empdata.name,
+      documents_folder_id: empdata.documents_folder_id,
+    };
+    try {
+      let response = await AddEmployeeDetails(data);
+      if (response.message === "Employee data updated successfully") {
+        toast.success("Candidate Applicant Type updated successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        props.setApiCall(true);
+        setLoading(false);
+      } else {
+        props.setApiCall(true);
+        setLoading(false);
+        props.close();
+      }
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
+  };
+
+  // setStatusList(filterjson.employee_status);
+
+  let ApplicantType = (id) => {
+    const selectedItem = applicantTypeList.find((item) => item.id === id);
+    if (!selectedItem) return null; // Handle case where no match is found
+
+    if (selectedItem.level === "0") {
+      console.log(selectedItem.title);
+      return selectedItem.title;
+    } else if (selectedItem.level === "2") {
+      const data = selectedItem.all_parent_id.split(",")[0];
+      const parentItem = applicantTypeList.find((item) => item.id === data);
+      console.log(parentItem ? parentItem.title : null);
+      return parentItem ? parentItem.title : null;
+    } else {
+      const data = selectedItem.parent_id;
+      const parentItem = applicantTypeList.find((item) => item.id === data);
+      console.log(parentItem ? parentItem.title : null);
+      return parentItem ? parentItem.title : null;
+    }
+  };
+
+  let ApplicantSubType = (id) => {
+    const selectedItem = applicantTypeList.find((item) => item.id === id);
+    if (!selectedItem) return null; // Handle case where no match is found
+    return selectedItem.title;
+  };
+
+  // let sub_type = applicantTypeList.filter(
+  //   (item) => item.parent_id === empdata?.interested_in_id
+  // );
+
   return (
     <>
       {showAddEmployeeModal ? (
@@ -455,8 +586,8 @@ export default function EmployeeTable(props) {
       <ModalSidebar
         show={showChatModal}
         onClose={() => {
-          setShowChatModal(false)
-          setemployeeId()
+          setShowChatModal(false);
+          setemployeeId();
           setTaskId("");
           setCandidateId("");
           canID = "";
@@ -511,8 +642,9 @@ export default function EmployeeTable(props) {
         {props.heading === "Dashboard" ? null : (
           <div className="d-flex justify-content-between align-items-center w-100">
             <div
-              className={`btn-group mb-5 ${props.skill || location.pathname === "/slots" ? "d-none" : ""
-                }`}
+              className={`btn-group mb-5 ${
+                props.skill || location.pathname === "/slots" ? "d-none" : ""
+              }`}
               role="group"
               aria-label="Basic example"
             >
@@ -667,8 +799,8 @@ export default function EmployeeTable(props) {
                       status === "00" ||
                       status === "0,1,2,3,5,6" ||
                       status === "4,7,8,9"
-                      ? "btn btn-primary"
-                      : "btn btn-outline-primary"
+                    ? "btn btn-primary"
+                    : "btn btn-outline-primary"
                 }
                 onClick={() => {
                   setStatus(props.self === "yes" ? "0,1,2,3,5,6" : "4,7,8,9");
@@ -679,34 +811,37 @@ export default function EmployeeTable(props) {
                 All
               </button>
             </div>
-            {props.pageName === "employee"
-              ? (
-                <>
-                  <div className="col mb-5 px-1 form_group text-right">
-                    <CustomButton
-                      className="font-size-3 rounded-3 btn btn-primary border-0"
-                      onClick={() => props.editEmployee("0")}
-                      title="Add Candidate"
-                    >
-                      Add Candidate
-                    </CustomButton>
-                    {/* <Link
+            {props.pageName === "employee" ? (
+              <>
+                <div className="col mb-5 px-1 form_group text-right">
+                  <CustomButton
+                    className="font-size-3 rounded-3 btn btn-primary border-0"
+                    onClick={() => props.editEmployee("0")}
+                    title="Add Candidate"
+                  >
+                    Add Candidate
+                  </CustomButton>
+                  {/* <Link
                       className={user_type === "admin" ? ` btn-sm  btn-primary m-1` : "d-none"}
                       onClick={() => setShowApplicantTypeForm(true)}
                       title={"Add New Applicant type"}
                     >
                       {<MdOutlineTypeSpecimen size={10} />}
                     </Link> */}
-                  </div>
-                </>
-              ) : null}
+                </div>
+              </>
+            ) : null}
             <div className={location.pathname === "/slots" ? "d-none" : ""}>
               <div className="mt-2">
                 <CommonThreeDots
                   tableName={"employee"}
                   local={props.localFilterValue ? props.localFilterValue : ""}
                   portal={portal}
-                  exportCandidatestatus={status === "00" || !status ? "" : status} tableData={[]} />
+                  exportCandidatestatus={
+                    status === "00" || !status ? "" : status
+                  }
+                  tableData={[]}
+                />
               </div>
             </div>
           </div>
@@ -750,46 +885,54 @@ export default function EmployeeTable(props) {
                       Name
                     </Link>
                   </th>
-                  {props.ApplicantType ? <th
-                    scope="col"
-                    className=" border-0 font-size-4 font-weight-normal"
-                  >Discussion</th> : null}
+                  {props.ApplicantType ? (
+                    <th
+                      scope="col"
+                      className=" border-0 font-size-4 font-weight-normal"
+                    >
+                      Discussion
+                    </th>
+                  ) : null}
                   {props.heading === "Dashboard" ? (
                     ""
-                  ) : <th
-                    scope="col"
-                    className="border-0 font-size-4 font-weight-normal"
-                  >
-                    <Link
-                      to={""}
-                      onClick={() => {
-                        handleSort("created_by_admin");
-                        props.setpageNo(1);
-                      }}
-                      className="text-gray"
-                      title="Sort by created by "
+                  ) : (
+                    <th
+                      scope="col"
+                      className="border-0 font-size-4 font-weight-normal"
                     >
-                      Created by
-                    </Link>
-                  </th>}
+                      <Link
+                        to={""}
+                        onClick={() => {
+                          handleSort("created_by_admin");
+                          props.setpageNo(1);
+                        }}
+                        className="text-gray"
+                        title="Sort by created by "
+                      >
+                        Created by
+                      </Link>
+                    </th>
+                  )}
                   {props.heading === "Dashboard" ? (
                     ""
-                  ) : <th
-                    scope="col"
-                    className="border-0 font-size-4 font-weight-normal"
-                  >
-                    <Link
-                      to={""}
-                      onClick={() => {
-                        handleSort("assigned_by	");
-                        props.setpageNo(1);
-                      }}
-                      className="text-gray"
-                      title="Sort by Assigned by	Admin "
+                  ) : (
+                    <th
+                      scope="col"
+                      className="border-0 font-size-4 font-weight-normal"
                     >
-                      Assigned by	Admin
-                    </Link>
-                  </th>}
+                      <Link
+                        to={""}
+                        onClick={() => {
+                          handleSort("assigned_by	");
+                          props.setpageNo(1);
+                        }}
+                        className="text-gray"
+                        title="Sort by Assigned by	Admin "
+                      >
+                        Assigned by Admin
+                      </Link>
+                    </th>
+                  )}
                   {props.heading === "Dashboard" ? (
                     ""
                   ) : (
@@ -810,7 +953,7 @@ export default function EmployeeTable(props) {
                       </Link>
                     </th>
                   )}
-                  {(
+                  {
                     <th
                       scope="col"
                       className="border-0 font-size-4 font-weight-normal"
@@ -827,7 +970,7 @@ export default function EmployeeTable(props) {
                         Date added
                       </Link>
                     </th>
-                  )}
+                  }
                   {props.heading === "Dashboard" || user_type === "agent" ? (
                     ""
                   ) : (
@@ -908,7 +1051,7 @@ export default function EmployeeTable(props) {
                       </Link>
                     </th>
                   )}
-                  {[14, "14", 15, "15", 16, "16", 4, "4"].includes(props?.ApplicantType) && (
+                  {props?.ApplicantType && (
                     <th
                       scope="col"
                       className="border-0 font-size-4 font-weight-normal"
@@ -990,19 +1133,26 @@ export default function EmployeeTable(props) {
                         </td>
                         <td className=" py-5">
                           <div>
-
                             <div className="d-flex profile_box gx-2">
                               <div className="media  align-items-center">
                                 <Link
-                                  to={portal === "study"
-                                    ? `/student_profile`
-                                    : `/${empdata.employee_id}`}
+                                  to={
+                                    portal === "study"
+                                      ? `/student_profile`
+                                      : `/${empdata.employee_id}`
+                                  }
                                   onClick={
                                     () => {
                                       if (portal === "study") {
-                                        localStorage.setItem("employee_id", empdata.employee_id);
+                                        localStorage.setItem(
+                                          "employee_id",
+                                          empdata.employee_id
+                                        );
                                       } else {
-                                        localStorage.setItem("StatusTab", status === "" ? "00" : status);
+                                        localStorage.setItem(
+                                          "StatusTab",
+                                          status === "" ? "00" : status
+                                        );
                                       }
                                     }
 
@@ -1010,8 +1160,11 @@ export default function EmployeeTable(props) {
                                     //     ? () => employeeDetails(empdata.employee_id)
                                     //     : null
                                   }
-                                  title={portal === "study"
-                                    ? "Student Details" : "Candidate Details"}
+                                  title={
+                                    portal === "study"
+                                      ? "Student Details"
+                                      : "Candidate Details"
+                                  }
                                   className="w-100"
                                 >
                                   <div className="circle-30 mx-auto overflow-hidden">
@@ -1034,21 +1187,29 @@ export default function EmployeeTable(props) {
 
                               <div className=" mb-0">
                                 {empdata.name === null ||
-                                  empdata.name === undefined ||
-                                  empdata.name === "undefined" ||
-                                  empdata.name === "" ? (
+                                empdata.name === undefined ||
+                                empdata.name === "undefined" ||
+                                empdata.name === "" ? (
                                   <p className="font-size-3  mb-0">N/A</p>
                                 ) : (
                                   <Link
-                                    to={portal === "study"
-                                      ? `/student_profile`
-                                      : `/${empdata.employee_id}`}
+                                    to={
+                                      portal === "study"
+                                        ? `/student_profile`
+                                        : `/${empdata.employee_id}`
+                                    }
                                     onClick={
                                       () => {
                                         if (portal === "study") {
-                                          localStorage.setItem("employee_id", empdata.employee_id);
+                                          localStorage.setItem(
+                                            "employee_id",
+                                            empdata.employee_id
+                                          );
                                         } else {
-                                          localStorage.setItem("StatusTab", status === "" ? "00" : status);
+                                          localStorage.setItem(
+                                            "StatusTab",
+                                            status === "" ? "00" : status
+                                          );
                                         }
                                       }
 
@@ -1075,18 +1236,19 @@ export default function EmployeeTable(props) {
                                         ? empdata.gender === "female"
                                           ? "F"
                                           : empdata.gender === "male"
-                                            ? "M"
-                                            : "O"
+                                          ? "M"
+                                          : "O"
                                         : "") +
                                       (empdata.marital_status ||
-                                        empdata.date_of_birth
-                                        ? `${empdata.marital_status},${empdata.date_of_birth
-                                          ? moment().diff(
-                                            empdata.date_of_birth + " Y",
-                                            "years"
-                                          )
-                                          : ""
-                                        }`
+                                      empdata.date_of_birth
+                                        ? `${empdata.marital_status},${
+                                            empdata.date_of_birth
+                                              ? moment().diff(
+                                                  empdata.date_of_birth + " Y",
+                                                  "years"
+                                                )
+                                              : ""
+                                          }`
                                         : null)
                                     }
                                   >
@@ -1094,26 +1256,27 @@ export default function EmployeeTable(props) {
                                       ? empdata.gender === "female"
                                         ? "F"
                                         : empdata.gender === "male"
-                                          ? "M"
-                                          : "O"
+                                        ? "M"
+                                        : "O"
                                       : ""}
                                     {/*Calculation of age from date of birth*/}(
                                     {empdata.marital_status ||
-                                      empdata.date_of_birth
-                                      ? `${empdata.marital_status},${empdata.date_of_birth
-                                        ? moment().diff(
-                                          empdata.date_of_birth,
-                                          "years"
-                                        ) + " Y"
-                                        : ""
-                                      }`
+                                    empdata.date_of_birth
+                                      ? `${empdata.marital_status},${
+                                          empdata.date_of_birth
+                                            ? moment().diff(
+                                                empdata.date_of_birth,
+                                                "years"
+                                              ) + " Y"
+                                            : ""
+                                        }`
                                       : null}
                                     )
                                   </p>
                                 ) : null}
                                 {empdata.contact_no === null ||
-                                  !empdata.contact_no ||
-                                  empdata.contact_no === (0 || "0") ? null : (
+                                !empdata.contact_no ||
+                                empdata.contact_no === (0 || "0") ? null : (
                                   <p className="m-0" title={empdata.contact_no}>
                                     +
                                     <Link
@@ -1138,13 +1301,13 @@ export default function EmployeeTable(props) {
                                   </p>
                                 </h3>
                                 {empdata.is_featured === "1" ||
-                                  empdata.is_featured === 1 ? (
+                                empdata.is_featured === 1 ? (
                                   <span className="bg-orange text-white featured_tag">
                                     Featured
                                   </span>
                                 ) : null}
                                 {empdata.created_by_admin === "0" ||
-                                  empdata.created_by_admin === 0 ? (
+                                empdata.created_by_admin === 0 ? (
                                   <span className="bg-info text-white web_tag">
                                     Web
                                   </span>
@@ -1153,33 +1316,34 @@ export default function EmployeeTable(props) {
                             </div>
                           </div>
                           {empdata.is_featured === "1" ||
-                            empdata.is_featured === 1 ? (
+                          empdata.is_featured === 1 ? (
                             <span className="bg-orange text-white featured_tag">
                               Featured
                             </span>
                           ) : null}
                         </td>
-                        {props.ApplicantType ? <td>
-                          <Link
-                            onClick={() => {
-                              setShowChatModal(true)
-                              setemployeeId(empdata)
-                            }
-                            }
-                            title="Discussion"
-                          >
-                            <span className="text-gray px-2">
-                              <BsChat />
-                            </span>
-                          </Link>
-                        </td> : null}
+                        {props.ApplicantType ? (
+                          <td>
+                            <Link
+                              onClick={() => {
+                                setShowChatModal(true);
+                                setemployeeId(empdata);
+                              }}
+                              title="Discussion"
+                            >
+                              <span className="text-gray px-2">
+                                <BsChat />
+                              </span>
+                            </Link>
+                          </td>
+                        ) : null}
                         {props.heading === "Dashboard" ? (
                           ""
                         ) : (
                           <td className="py-5 ">
                             {empdata.created_by_admin === null ||
-                              !empdata.created_by_admin ||
-                              empdata.created_by_admin === ("0" || 0) ? (
+                            !empdata.created_by_admin ||
+                            empdata.created_by_admin === ("0" || 0) ? (
                               <p className="font-size-3  mb-0">N/A</p>
                             ) : (
                               <p
@@ -1192,13 +1356,10 @@ export default function EmployeeTable(props) {
                                   )?.name
                                 }
                               >
-                                {
-                                  admintList?.find(
-                                    (item) =>
-                                      item.admin_id ===
-                                      empdata?.created_by_admin
-                                  )?.name || "N/A"
-                                }
+                                {admintList?.find(
+                                  (item) =>
+                                    item.admin_id === empdata?.created_by_admin
+                                )?.name || "N/A"}
                               </p>
                             )}
                           </td>
@@ -1208,8 +1369,8 @@ export default function EmployeeTable(props) {
                         ) : (
                           <td className="py-5 ">
                             {empdata.assigned_by === null ||
-                              !empdata.assigned_by ||
-                              empdata.assigned_by === ("0" || 0) ? (
+                            !empdata.assigned_by ||
+                            empdata.assigned_by === ("0" || 0) ? (
                               <p className="font-size-3  mb-0">N/A</p>
                             ) : (
                               <p
@@ -1217,17 +1378,14 @@ export default function EmployeeTable(props) {
                                 title={
                                   admintList?.find(
                                     (item) =>
-                                      item.admin_id ===
-                                      empdata?.assigned_by
+                                      item.admin_id === empdata?.assigned_by
                                   )?.name
                                 }
                               >
                                 {admintList?.find(
                                   (item) =>
-                                    item.admin_id ===
-                                    empdata?.assigned_by
-                                )?.name || "N/A"
-                                }
+                                    item.admin_id === empdata?.assigned_by
+                                )?.name || "N/A"}
                               </p>
                             )}
                           </td>
@@ -1237,7 +1395,7 @@ export default function EmployeeTable(props) {
                         ) : (
                           <td className="py-5 ">
                             {empdata.last_updated_by_name === null ||
-                              !empdata.last_updated_by_name ? (
+                            !empdata.last_updated_by_name ? (
                               <p className="font-size-3  mb-0">N/A</p>
                             ) : (
                               <p
@@ -1249,7 +1407,7 @@ export default function EmployeeTable(props) {
                             )}
                           </td>
                         )}
-                        {(
+                        {
                           <td className=" py-5">
                             {empdata.language === null ? (
                               <p className="font-size-3  mb-0">N/A</p>
@@ -1272,9 +1430,9 @@ export default function EmployeeTable(props) {
                               </p>
                             )}
                           </td>
-                        )}
+                        }
                         {props.heading === "Dashboard" ||
-                          user_type === "agent" ? (
+                        user_type === "agent" ? (
                           ""
                         ) : (
                           <td className=" py-5">
@@ -1319,7 +1477,11 @@ export default function EmployeeTable(props) {
                           )}
                         </td>
                       )} */}
-                        <td className={!location.pathname === "/slots" ? "d-none" : ""}>
+                        <td
+                          className={
+                            !location.pathname === "/slots" ? "d-none" : ""
+                          }
+                        >
                           <p
                             className="font-size-2 font-weight-normal text-black-2 mb-0"
                             title={empdata.applicant_process_status || "N/A"}
@@ -1351,23 +1513,24 @@ export default function EmployeeTable(props) {
                             ) : empdata.applicant_process_status ===
                               "file decision" ? (
                               <span
-                                className={`px-3 py-2 badge badge-pill ${empdata.applicant_process_substages ===
+                                className={`px-3 py-2 badge badge-pill ${
+                                  empdata.applicant_process_substages ===
                                   "approved"
-                                  ? " badge-shamrock"
-                                  : empdata.applicant_process_substages ===
-                                    "rejected"
+                                    ? " badge-shamrock"
+                                    : empdata.applicant_process_substages ===
+                                      "rejected"
                                     ? " badge-danger"
                                     : " badge-warning text-white"
-                                  }`}
+                                }`}
                               >
                                 <span>
                                   {empdata.applicant_process_substages ===
-                                    "approved"
+                                  "approved"
                                     ? "Approved"
                                     : empdata.applicant_process_substages ===
                                       "rejected"
-                                      ? "Rejected"
-                                      : "Awaiting Decision"}
+                                    ? "Rejected"
+                                    : "Awaiting Decision"}
                                 </span>
                               </span>
                             ) : (
@@ -1395,34 +1558,119 @@ export default function EmployeeTable(props) {
                           //     </p>
                           //   )}
                           // </td>
-                          <td className="text-center ">
-                            {empdata.interested_in_id === null ||
-                              !empdata.interested_in_id ? (
-                              <p className="font-size-3 mb-0" title="N/A">
-                                N/A
-                              </p>
-                            ) : (
-                              <p
-                                className={`font-size-2 font-weight-normal text-white mb-0 `}
-                                title={empdata.interested_in_id === 14 || empdata.interested_in_id === "14" ? "temporary resident" : getApplicantType(empdata.interested_in_id)
-                                }
-                              >
-                                <span
-                                  className={`p-3 text-center  border rounded-pill 
-                                  ${determineBackgroundColor(empdata)}`}
+                          // <td className="text-center ">
+                          //   {empdata.interested_in_id === null ||
+                          //   !empdata.interested_in_id ? (
+                          //     <p className="font-size-3 mb-0" title="N/A">
+                          //       N/A
+                          //     </p>
+                          //   ) : (
+                          //     <p
+                          //       className={`font-size-2 font-weight-normal text-white mb-0 `}
+                          // title={
+                          //   empdata.interested_in_id === 14 ||
+                          //   empdata.interested_in_id === "14"
+                          //     ? "temporary resident"
+                          //     : getApplicantType(empdata.interested_in_id)
+                          // }
+                          //     >
+                          //       <span
+                          //         className={`p-3 text-center  border rounded-pill
+                          //         ${determineBackgroundColor(empdata)}`}
+                          //       >
+                          //         {empdata.interested_in_id === 14 ||
+                          //         empdata.interested_in_id === "14"
+                          //           ? "temporary resident"
+                          //           : getApplicantType(
+                          //               empdata.interested_in_id
+                          //             )}
+                          //       </span>
+                          //     </p>
+                          //   )}
+                          // </td>
+                          <td
+                            className="text-center"
+                            style={{ width: "15%", zIndex: 9999 }}
+                          >
+                            <td className="exclude-mark-read py-5">
+                              {empdata.interested_in_id === null ||
+                              empdata.interested_in_id === undefined ||
+                              empdata.interested_in_id === "undefined" ||
+                              empdata.interested_in_id === "" ? (
+                                <p className="font-size-3  mb-0">N/A</p>
+                              ) : (
+                                <div
+                                  style={{
+                                    display: "table-caption",
+                                    maxHeight: "100px",
+                                  }}
                                 >
-                                  {empdata.interested_in_id === 14 || empdata.interested_in_id === "14" ? "temporary resident" : getApplicantType(empdata.interested_in_id)
-                                  }
-                                </span>
-                              </p>
-                            )}
+                                  <DropdownButton
+                                    as={ButtonGroup}
+                                    title={ApplicantType(
+                                      empdata.interested_in_id
+                                    ) || "Unknown"}
+                                    variant={
+                                      empdata.interested_in_id === ("0" || 0)
+                                        ? "warning"
+                                        : empdata.interested_in_id ===
+                                          ("1" || 1)
+                                        ? "shamrock"
+                                        : empdata.interested_in_id ===
+                                          ("2" || 2)
+                                        ? "danger"
+                                        : determineBackgroundColor(empdata)
+                                    }
+                                    size="xs"
+                                    className={`user_status_btn btn-xs ${
+                                      empdata.interested_in_id === "0"
+                                        ? "btn-warning"
+                                        : empdata.interested_in_id === "1"
+                                        ? "btn-shamrock"
+                                        : empdata.interested_in_id === "2"
+                                        ? "btn-danger px-4"
+                                        : determineBackgroundColor(empdata)
+                                    } rounded-pill font-size-1 px-1 text-white mr-2`}
+                                    onSelect={(eventKey, e) =>
+                                      OnApplicantTypeChange(
+                                        e,
+                                        empdata,
+                                        eventKey
+                                      )
+                                    }
+                                  >
+                                    <div style={{ maxHeight: "300px", overflow:"scroll"}}>
+                                      {(applicantTypeList || [])
+                                        .filter((item) => item.level === "0")
+                                        .map((item, index) => (
+                                          <Dropdown.Item
+                                            key={index}
+                                            value={item.title}
+                                            eventKey={item.id}
+                                            className="text-capitalize"
+                                            style={{ maxHeight: "100px" }}
+                                          >
+                                            {item.title}
+                                          </Dropdown.Item>
+                                        ))}
+                                    </div>
+                                  </DropdownButton>
+                                </div>
+                              )}
+                            </td>
                           </td>
                         )}
 
-                        <td className={props?.ApplicantType && [14, "14", 15, "15", 16, "16", 4, "4"].includes(props?.ApplicantType) ? "text-center" : "d-none"}>
-                          {[14, "14", 15, "15", 16, "16", 4, "4"].includes(props?.ApplicantType) && empdata.category_id ? (
+                        <td
+                          className={
+                            props?.ApplicantType && props?.ApplicantType
+                              ? "text-center"
+                              : "d-none"
+                          }
+                        >
+                          {props?.ApplicantType && empdata.category_id ? (
                             <>
-                              <p
+                              {/* <p
                                 className={`font-size-2 font-weight-normal text-white mb-0 text-capitalize  `}
                                 title={getApplicantSubType(empdata.category_id)}
                               >
@@ -1433,7 +1681,63 @@ export default function EmployeeTable(props) {
                                 >
                                   {getApplicantSubType(empdata.category_id)}
                                 </span>
-                              </p>
+                              </p> */}
+
+                              <div style={{ display: "table-caption" }}>
+                                <DropdownButton
+                                  as={ButtonGroup}
+                                  title={ApplicantSubType(
+                                    empdata.interested_in_id
+                                  )}
+                                  variant={
+                                    empdata.interested_in_id === ("0" || 0)
+                                      ? "warning"
+                                      : empdata.interested_in_id === ("1" || 1)
+                                      ? "shamrock"
+                                      : empdata.interested_in_id === ("2" || 2)
+                                      ? "danger"
+                                      : determineBackgroundColor(empdata)
+                                  }
+                                  size="xs"
+                                  className={`user_status_btn btn-xs ${
+                                    empdata.interested_in_id === "0"
+                                      ? "btn-warning"
+                                      : empdata.interested_in_id === "1"
+                                      ? "btn-shamrock"
+                                      : empdata.interested_in_id === "2"
+                                      ? "btn-danger px-4"
+                                      : determineBackgroundColor(empdata)
+                                  } rounded-pill font-size-1 px-1 text-white mr-2`}
+                                  onSelect={(eventKey, e) =>
+                                    OnApplicantTypeChange(e, empdata, eventKey)
+                                  }
+                                >
+                                  {(applicantTypeList || [])
+                                    .filter(
+                                      (x) => x.id === empdata.interested_in_id
+                                    )
+                                    .map((item, index) => (
+                                      <>
+                                        {(applicantTypeList || [])
+                                          .filter(
+                                            (x) =>
+                                              x.level === "1" &&
+                                              x.parent_id === item.parent_id
+                                          )
+                                          .map((item, index) => (
+                                            <Dropdown.Item
+                                              key={index}
+                                              value={item.title}
+                                              eventKey={item.id}
+                                              className="text-capitalize"
+                                            >
+                                              {item.title}
+                                            </Dropdown.Item>
+                                          ))}
+                                      </>
+                                    ))}
+                                </DropdownButton>
+                              </div>
                             </>
                           ) : (
                             <p className="font-size-3 mb-0" title="N/A">
@@ -1443,7 +1747,7 @@ export default function EmployeeTable(props) {
                         </td>
                         {props.visa === "yes" ? null : (
                           <td className="text-center ">
-                            <p
+                            {/* <p
                               className="font-size-2 font-weight-normal text-black-2 mb-0"
                               title={
                                 empdata.status === "1" || empdata.status === "0"
@@ -1512,7 +1816,73 @@ export default function EmployeeTable(props) {
                                                 : empdata.status === "9"
                                                   ? "Completed" : ""}
                               </span>
-                            </p>
+                            </p> */}
+
+                            <td className="exclude-mark-read py-5">
+                              {empdata.status === null ||
+                              empdata.status === undefined ||
+                              empdata.status === "undefined" ||
+                              empdata.status === "" ? (
+                                <p className="font-size-3  mb-0">N/A</p>
+                              ) : (
+                                <>
+                                  <div style={{ display: "table-caption" }}>
+                                    <DropdownButton
+                                      as={ButtonGroup}
+                                      title={
+                                        statusList[empdata.status - 1] ||
+                                        "Unknown"
+                                      }
+                                      variant={
+                                        empdata.status === ("0" || 0)
+                                          ? "warning"
+                                          : empdata.status === ("1" || 1)
+                                          ? "shamrock"
+                                          : empdata.status === ("2" || 2)
+                                          ? "danger"
+                                          : determineBackgroundColor(empdata)
+                                      }
+                                      size="xs"
+                                      className={`user_status_btn btn-xs ${
+                                        empdata.status === "0"
+                                          ? "btn-warning"
+                                          : empdata.status === "1"
+                                          ? "btn-shamrock"
+                                          : empdata.status === "2"
+                                          ? "btn-danger px-4"
+                                          : determineBackgroundColor(empdata)
+                                      } rounded-pill font-size-1 px-1 text-white mr-2`}
+                                      onSelect={(eventKey, e) =>
+                                        OnStatusChange(e, empdata, eventKey)
+                                      }
+                                    >
+                                      {(filterjson.employee_status || []).map(
+                                        (item, index) => (
+                                          <Dropdown.Item
+                                            key={index}
+                                            value={item}
+                                            eventKey={index + 1}
+                                            className="text-capitalize"
+                                          >
+                                            {item}
+                                          </Dropdown.Item>
+                                        )
+                                      )}
+                                    </DropdownButton>
+
+                                    {empdata.status === ("1" || 1) &&
+                                    empdata.task_complete_date ? (
+                                      <small className="font-size-1 d-flex justify-content-center mt-2 text-capitalize">
+                                        <ConvertTime
+                                          _date={empdata.task_complete_date}
+                                          format={".fromNow()"}
+                                        />
+                                      </small>
+                                    ) : null}
+                                  </div>
+                                </>
+                              )}
+                            </td>
                           </td>
                         )}
                         <td className="text-center py-5">
@@ -1550,8 +1920,9 @@ export default function EmployeeTable(props) {
                               role="group"
                               aria-label="Basic example"
                             >
-                              {((props.skill === null ||
-                                props.skill === undefined) && portal !== "study") ? (
+                              {(props.skill === null ||
+                                props.skill === undefined) &&
+                              portal !== "study" ? (
                                 <>
                                   <button
                                     className={
@@ -1560,7 +1931,11 @@ export default function EmployeeTable(props) {
                                         : "btn btn-outline-info action_btn"
                                     }
                                     onClick={() => editVisa(empdata)}
-                                    title={`Add/Update ${props?.ApplicantType === (14 || "14") ? "Temporary Resident" : getApplicantType(props?.ApplicantType)} status`}
+                                    title={`Add/Update ${
+                                      props?.ApplicantType === (14 || "14")
+                                        ? "Temporary Resident"
+                                        : getApplicantType(props?.ApplicantType)
+                                    } status`}
                                   >
                                     <span className="text-gray px-2">
                                       <MdEditNote />
@@ -1582,7 +1957,7 @@ export default function EmployeeTable(props) {
                                   <>
                                     <button
                                       className={
-                                        [14, "14", 15, "15", 16, "16", 4, "4"].includes(props?.ApplicantType)
+                                        props?.ApplicantType
                                           ? "btn btn-outline-info action_btn"
                                           : "d-none"
                                       }
@@ -1741,8 +2116,9 @@ export default function EmployeeTable(props) {
                                   </>
                                   {/* )} */}
                                 </>
-                              ) : (portal === "study" && (props.skill === null ||
-                                props.skill === undefined)) ?
+                              ) : portal === "study" &&
+                                (props.skill === null ||
+                                  props.skill === undefined) ? (
                                 <>
                                   <button
                                     className="btn btn-outline-info action_btn"
@@ -1762,7 +2138,11 @@ export default function EmployeeTable(props) {
                                         : "btn btn-outline-info action_btn"
                                     }
                                     onClick={() => editVisa(empdata)}
-                                    title={`Add/Update ${props?.ApplicantType === (14 || "14") ? "Temporary Resident" : getApplicantType(props?.ApplicantType)} status`}
+                                    title={`Add/Update ${
+                                      props?.ApplicantType === (14 || "14")
+                                        ? "Temporary Resident"
+                                        : getApplicantType(props?.ApplicantType)
+                                    } status`}
                                   >
                                     <span className="text-gray px-2">
                                       <MdEditNote />
@@ -1786,19 +2166,25 @@ export default function EmployeeTable(props) {
                                   >
                                     Update
                                   </Link>
-                                </> : (
-                                  <button
-                                    className="btn btn-outline-info action_btn"
-                                    // disabled={alredyApplied ? false : true}
-                                    disabled={empdata.interested_in === "pgwp"}
-                                    onClick={() =>
-                                      portal === "study" ? props.OnProgramApplyClick(null, empdata.employee_id) : onApplyJobClick(empdata.employee_id)
-                                    }
-                                    title="Apply For job"
-                                  >
-                                    {alredyApplied ? "Already Applied" : "Apply"}
-                                  </button>
-                                )}
+                                </>
+                              ) : (
+                                <button
+                                  className="btn btn-outline-info action_btn"
+                                  // disabled={alredyApplied ? false : true}
+                                  disabled={empdata.interested_in === "pgwp"}
+                                  onClick={() =>
+                                    portal === "study"
+                                      ? props.OnProgramApplyClick(
+                                          null,
+                                          empdata.employee_id
+                                        )
+                                      : onApplyJobClick(empdata.employee_id)
+                                  }
+                                  title="Apply For job"
+                                >
+                                  {alredyApplied ? "Already Applied" : "Apply"}
+                                </button>
+                              )}
                             </div>
                           </td>
                         )}
