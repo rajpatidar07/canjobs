@@ -373,15 +373,15 @@ const HtmlAgreementOne = ({
                 >
                   Discount:<br> Courier charges<br> Government fees
                 </td>
+                <td style="border: 1px solid black">${"  "}</td>
+              </tr>
+              <tr>
                 <td style="border: 1px solid black">${felidData?.courier_charges || ""
     }</td>
               </tr>
               <tr>
-                <td style="border: 1px solid black">${felidData?.government_fees || ""
+                <td style="border: 1px solid black;height:42px">${felidData?.government_fees || ""
     }</td>
-              </tr>
-              <tr>
-                <td style="border: 1px solid black;height:42px"></td>
               </tr>
               <tr>
                 <td style="text-align: center; border: 1px solid black">
@@ -394,7 +394,7 @@ const HtmlAgreementOne = ({
                 <td style="text-align: center; border: 1px solid black">
                   Applicable Taxes: ${felidData?.gst || "0"}%
                 </td>
-                <td style="border: 1px solid black">${felidData?.applicable_taxes || ""
+                <td style="border: 1px solid black">${felidData?.application_fees || ""
     }</td>
               </tr>
               <tr>

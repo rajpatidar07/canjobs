@@ -5,12 +5,14 @@ import Pagination from "./pagination";
 import StyledDropdown from "./StyledDropDown";
 import TableInput from "./TableInput";
 import useValidation from "./useValidation";
-import { AddUpdateDailCallLogApi, getDailyCallLogApi, GetFilter } from "../../api/api";
+import { AddUpdateDailCallLogApi, getDailyCallLogApi, GetFilter, DeleteCallLogApi } from "../../api/api";
 import { toast } from "react-toastify";
 import { BsChat } from "react-icons/bs";
 import CommentTaskBox from "./commonTaskBox";
 import ModalSidebar from "./modalSidebar";
 import { Link, useLocation } from "react-router-dom";
+import { FaTrash } from "react-icons/fa";
+import SAlert from "./sweetAlert";
 
 function Calllogtable(props) {
     const location = useLocation();
@@ -28,6 +30,10 @@ function Calllogtable(props) {
     const [jsonList, setJsonList] = useState([]);
     let [loading, setLoading] = useState(false);
     let [apiCall, setApiCall] = useState(false);
+    const [deleteAlertCallLogData, setDeleteAlertCallLogData] =
+        useState(false);
+    const [deleteAlertCallLog, setDeleteAlertCallLog] =
+        useState(false);
     const [callLogData, setCallLogData] = useState([]);
     const [totalData, setTotalData] = useState();
     const [currentPage, setCurrentPage] = useState(1);
@@ -171,6 +177,29 @@ function Calllogtable(props) {
             }
         }
     }
+    /*Function to delete the Call log */
+    const deleteCallLog = async (id) => {
+        let data = {
+            id: id,
+        };
+        try {
+            const response = await DeleteCallLogApi(data);
+            console.log(response)
+            if (response.data.status === 1 || response.data.status === "1") {
+                toast.error("Call log has been deleted !", {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 1000,
+                });
+                setDeleteAlertCallLog(false)
+                setDeleteAlertCallLogData();
+                setApiCall(true);
+                props.setApiCall(true)
+            }
+           
+        } catch (err) {
+
+        }
+    }
     return (
         <>
             <div className="mb-18 height-100">
@@ -210,7 +239,7 @@ function Calllogtable(props) {
                                                 "Email",
                                                 // "Call back Date/time",
                                                 // "Additional Notes",
-                                                // "Action Taken",
+                                                "Action Taken",
                                             ].map((heading, index) => (
                                                 <th
                                                     key={index}
@@ -493,7 +522,22 @@ function Calllogtable(props) {
                                                                 id="email" name="email"
                                                             />
                                                         </td>
-                                                        <td className={props.showAddForm ? "" : "d-none"} style={{ minWidth: "150px" }}></td>
+                                                        <td className={""} style={{ minWidth: "150px" }}>  <button
+                                                            className="btn 
+                                                            btn-outline-info action_btn "
+                                                            style={{
+                                                                fontSize: "10px",
+                                                                color: "red"
+                                                            }}
+                                                            type="button"
+                                                            onClick={() => {
+                                                                setDeleteAlertCallLogData(item)
+                                                                setDeleteAlertCallLog(true)
+                                                            }
+                                                            }
+                                                            title="Delete Call Log ">
+                                                            <FaTrash />
+                                                        </button></td>
                                                     </tr>
                                                 ))}
                                     </tbody>
@@ -501,6 +545,17 @@ function Calllogtable(props) {
 
                             )}
                         </form>
+                        {console.log(deleteAlertCallLog)}
+                        <SAlert
+                            show={deleteAlertCallLog}
+                            title={deleteAlertCallLogData?.name}
+                            text="Are you Sure you want to delete !"
+                            onConfirm={() => deleteCallLog(deleteAlertCallLogData.id)}
+                            showCancelButton={true}
+                            onCancel={() =>
+                                setDeleteAlertCallLog(false)
+                            }
+                        />
                     </div>
 
                     {/* Pagination Controls */}

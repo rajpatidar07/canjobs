@@ -73,7 +73,6 @@ const AdminSidebar = (props) => {
   useEffect(() => {
     if (props.heading) {
       const activityLi = liRefs.current[props.heading];
-      console.log(props.heading, activityLi, liRefs.current)
       if (activityLi) {
         activityLi.scrollIntoView({ behavior: "smooth" });
       }
@@ -701,37 +700,41 @@ const AdminSidebar = (props) => {
             return (
               <li
                 key={item.id}
-                className={`position-relative ${user_type === "agent" ? "d-none" : props.heading === item.title ? "active" : ""
+                className={`position-relative ${user_type === "agent" ? "d-none" : ""
                   }`}
                 ref={(el) => (liRefs.current[item.title] = el)}
                 title={item.title}
-                onClick={() => toggleChildren(item.id, hasChildren)}
-                style={{ cursor: hasChildren ? "pointer" : "default" }}
+                style={{ cursor: "pointer" }}
               >
-                <Link
-                  to={!hasChildren ? `/slots` : ""}
-                  state={!hasChildren ? {
-                    applicantType: item.id,
-                    folderId: item.doc_folder_id,
-                  } : undefined}
-                  onClick={!hasChildren ? () => {
-                    clearPageNo()
-                    localStorage.setItem("applicantType", "")
-                    localStorage.setItem("applicantTypeFolderId", "")
-                    localStorage.setItem("applicantTypeChild", "")
-                  } : undefined}
-                  className="d-flex justify-content-between px-2 py-3 border-top font-size-4 font-weight-light flex-y-center text-Capitalize"
-                  style={{ textDecoration: "none" }}
-                >
-                  <span>{item.title}</span>
-                  <span className=" "> {hasChildren && <FaChevronDown />}</span>
-                </Link>
+                <div
+                  className={`d-flex justify-content-between px-2 py-3 border-top font-size-4 font-weight-light flex-y-center text-Capitalize ${props.heading === item.title ? "active" : ""}`}>
+                  <Link
+                    to={`/slots`}
+                    state={{
+                      applicantType: item.id,
+                      folderId: item.doc_folder_id,
+                    }}
+                    onClick={() => {
+                      clearPageNo()
+                      localStorage.setItem("applicantType", "")
+                      localStorage.setItem("applicantTypeFolderId", "")
+                      localStorage.setItem("applicantTypeChild", "")
+                    }}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <span>{item.title}</span>
+                  </Link>
+                  <Link
+                    style={{ textDecoration: "none" }} onClick={() => toggleChildren(item.id, hasChildren)}
+                  > {hasChildren && <FaChevronDown />}
+                  </Link>
+                </div>
                 {openParent === item.id && hasChildren && (
                   <ul className="pl-3 list-unstyled">
                     {children.map((child) => (
                       <li
                         key={child.id}
-                        className={`position-relative p-2 ${user_type === "agent" ? "d-none" : props.heading === child.title ? "active" : ""
+                        className={`position-relative p-2 ${user_type === "agent" ? "d-none" : props.heading === child.title && props.heading !== item.title ? "active" : ""
                           }`}
                         ref={(el) => (liRefs.current[child.title] = el)}
                         title={child.title}

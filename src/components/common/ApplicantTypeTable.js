@@ -69,6 +69,22 @@ function ApplicantTypeTable(props) {
                 setApiCall(true);
                 props.setApiCall(true)
             }
+            if (response.message === "This applicant type cannot be deleted because it is used for applicant") {
+                toast.error(response.message, {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 1000,
+                });
+                setDeleteAlertApplicant(false)
+                setDeleteAlertApplicantTypeData();
+            }
+            if (response.message === "This applicant type cannot be deleted because it has a sub-applicant type.") {
+                toast.error(response.message, {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 1000,
+                });
+                setDeleteAlertApplicant(false)
+                setDeleteAlertApplicantTypeData();
+            }
         } catch (err) {
             console.log(err);
         }
@@ -155,7 +171,7 @@ function ApplicantTypeTable(props) {
                                                                 title={`Open ${data.title}`}
                                                             >
                                                                 <Link
-                                                                 to={`/slots`}
+                                                                    to={`/slots`}
                                                                     className="text-black-2"
                                                                     state={{ applicantType: data.id, folderId: data.doc_folder_id }}>
                                                                     {data.title}

@@ -1044,7 +1044,7 @@ export const SendReplyCommit = async (
   id,
   docName
 ) => {
-  console.log("  id =>", id, "DocUserType", DocUserType,"type:",type)
+  console.log("  id =>", id, "DocUserType", DocUserType, "type:", type)
   //   "doc_id =>", data.doc_id,
   // "task_id =>", data.task_id,
   // "sender_id =>", senderId,
@@ -3786,6 +3786,22 @@ export const getDailyCallLogChatApi = async (call_log_id, page, limit) => {
   );
   return response;
 }
+/* Api to get Daily Call Log Char*/
+export const DeleteCallLogApi = async (data) => {
+  const response = await axios.post(
+    `${API_URL}admin/deleteCallLog`,
+    data
+    ,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+}
+
 /*Function to read task ad reply by admin  */
 export const ReadTaskOrReplyApi = async (data) => {
   const response = await axios.post(`${API_URL}common/addUpdateTaskThreadRead`, data, {
@@ -3801,6 +3817,18 @@ export const ReadTaskOrReplyApi = async (data) => {
 export const getViewersDataApi = async (id, type) => {
   const response = await axios.post(`${API_URL}common/getTaskThreadRead`,
     { "task_id": id, "type": type }, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  }
+  );
+  return response;
+}
+/*Api to ad update invoice */
+export const AddUpdatePaymentInvoiceApi = async (data) => {
+  const response = await axios.post(`${API_URL}admin/addUpdateInvoice`,
+    data, {
     headers: {
       "Content-Type": "application/json",
       Authorization: Token,

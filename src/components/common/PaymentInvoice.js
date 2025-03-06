@@ -1,54 +1,42 @@
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
-
+import useValidation from "../common/useValidation";
 // import Fatrash from "react-icons/fa"
 
 import { CiTrash } from "react-icons/ci";
 
 const PaymentInvoice = (props) => {
-  const [paymentData, setPaymentData] = useState([
-    {
-      id: 1,
-      serviceDate: "",
-      product: "",
-      description: "",
-      quantity: "",
-      rate: "",
-      amount: "",
-      serviceTax: "",
-    },
-  ]);
-
+  let [paymentInvoiceData/*,setPaymentInvoiceData*/]= useState([])
+  const initialFormState =
+  {
+    user_id:"",//Employee /employer id
+    user_type:"",//Employee /employer type
+    referred_by_id:"",//Creating by admin id
+    referred_by_type:"",//Creating by admin type
+    manager_id:"",//assigning manger ( admin id)
+    manager_type:"",//assigning manger ( admin type)
+    payment_status: "",
+    duplicate_payment: "",
+    due_date: "",
+    payment_method: ""}
+    ;
+  const { state/*, onInputChange, setState, errors, validate*/ } = useValidation(
+    initialFormState, );
   const handleAddNew = (e) => {
     e.preventDefault();
-    setPaymentData([
-      ...paymentData,
-      {
-        id: paymentData.length + 1,
-        serviceDate: "",
-        product: "",
-        description: "",
-        quantity: "",
-        rate: "",
-        amount: "",
-        serviceTax: "",
-      },
-    ]);
+
   };
 
   const handleChange = (index, fieldName, value) => {
-    const updatedData = [...paymentData];
-    updatedData[index][fieldName] = value;
-    setPaymentData(updatedData);
+
   };
 
   const handleDelete = (index) => {
-    setPaymentData(paymentData.filter((_, i) => i !== index));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submitted ");
+    console.log("Submitted ", state);
     // Here you can send the data to an API or process it further.
   };
 
@@ -88,15 +76,15 @@ const PaymentInvoice = (props) => {
           </div>
           <div className="form-group col-md-3">
             <div className="d-flex justify-content-end align-items-start">
-            <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold">
-              Customer Email
-            </label>
-            <button
-              className="position-absolute border-0 bg-transparent text-blue font-size"
-              style={{ top: "-25px" }}
-            >
-              Cc/Bcc
-            </button>
+              <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold">
+                Customer Email
+              </label>
+              <button
+                className="position-absolute border-0 bg-transparent text-blue font-size"
+                style={{ top: "-25px" }}
+              >
+                Cc/Bcc
+              </button>
             </div>
 
             <input type="text" className="form-control" />
@@ -232,7 +220,7 @@ const PaymentInvoice = (props) => {
                 </tr>
               </thead>
               <tbody>
-                {paymentData.map((item, index) => (
+                {paymentInvoiceData.map((item, index) => (
                   <tr key={index}>
                     <td>
                       <input
