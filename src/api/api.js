@@ -3300,7 +3300,8 @@ export const AddCashpayment = async (data) => {
 };
 
 /*Global Search API */
-export const GlobalSearchResult = async (search) => {
+export const GlobalSearchResult = async (search,admin_id,admin_type) => {
+  console.log(admin_id,admin_type)
   const response = await axios.post(
     `${API_URL}common/globalSearch`,
     { search },
@@ -3828,6 +3829,18 @@ export const getViewersDataApi = async (id, type) => {
 /*Api to ad update invoice */
 export const AddUpdatePaymentInvoiceApi = async (data) => {
   const response = await axios.post(`${API_URL}admin/addUpdateInvoice`,
+    data, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  }
+  );
+  return response;
+}
+/*Api to ad update invoice */
+export const getAllInvioce = async (data) => {
+  const response = await axios.post(`${API_URL}common/getPaymentInvoice`,
     data, {
     headers: {
       "Content-Type": "application/json",

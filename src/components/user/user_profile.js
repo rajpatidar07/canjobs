@@ -45,8 +45,8 @@ import SharePointDocument from "../common/Document folder/SharePointDocument";
 import NotFound from "../common/notfound";
 import RetainerAgrementMainPage from "../common/Retaineragreement/RetainerAgrementMainPage";
 import VisaTimeLine from "../common/visaTimeLine";
-// import PaymentPage from "./PaymentPage";
-import PayentForm from "../forms/admin/payentForm";
+import PaymentPage from "./PaymentPage";
+// import PayentForm from "../forms/admin/payentForm";
 // import useSessionCheck from "../common/user_session";
 // import AdobePDFViewer from "../common/Adobe/adobeFile";
 const NewUserProfile = (props) => {
@@ -1701,12 +1701,14 @@ const NewUserProfile = (props) => {
                   >
                     {TabActive === "payment" ? (
                       <div className="p-1 activity_container">
-                        <PayentForm
+                        {/* <PayentForm
                           data={PersonalDetail}
                           user_id={eid}
                           user_type={"employee"}
-                        />
-                        {/* <PaymentPage/> */}
+                        /> */}
+                        <PaymentPage
+                        user_id={eid}
+                        user_type={"employee"}/>
                       </div>
                     ) : null}
                   </div>

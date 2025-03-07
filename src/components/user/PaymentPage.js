@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PaymentInvoice from "../common/PaymentInvoice";
 import { IoCreateOutline } from "react-icons/io5";
 import { BsRecordCircle } from "react-icons/bs";
@@ -7,13 +7,45 @@ import { RiSecurePaymentLine } from "react-icons/ri";
 import { CiTrash } from "react-icons/ci";
 import { AiOutlineFilePdf } from "react-icons/ai";
 import PaymentReminder from "./PaymentReminder";
+import { getallEmployeeData, getAllEmployer, getAllInvioce } from "../../api/api";
+import ConvertTime from "../common/Common function/ConvertTime";
 
-const Payment_Page = () => {
+const Payment_Page = (props) => {
   const [openAddPaymentForm, setOpenAddPaymentForm] = useState(false);
   const [openPaymentReminder, setOpenPaymentReminder] = useState(false);
 
-  // const [createInvoice, setCreateInvoice] = useState(false);
+  const [employeeEmployerlist, setEmployeeEmployerlist] = useState([]);
+  const [invoiceList, setInvoicelist] = useState([]);
+  const [totalData, setTotalData] = useState(""|| 1);
 
+  const GetAllUserData = async () => {
+    try {
+      let invoiceData = {
+        "invoice_no": "",
+        "user_id": props.user_id,
+        "user_type": props.user_type
+      }
+      const userData = await getallEmployeeData();
+      const CompanyData = await getAllEmployer();
+      const InvoiceData = await getAllInvioce(invoiceData);
+      let allUserData = [];
+      console.log(InvoiceData)
+      setInvoicelist(InvoiceData.data.data)
+      setTotalData(InvoiceData.data.total_row)
+      if (userData?.data?.length === 0 && CompanyData?.data?.length === 0) {
+        setEmployeeEmployerlist([]);
+      } else {
+        allUserData = [...userData.data, ...CompanyData.data,]; // Merge the arrays
+        setEmployeeEmployerlist(allUserData);
+      }
+
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    GetAllUserData()
+  }, [])
 
   return (
     <div className="response_main_div w-100">
@@ -39,6 +71,10 @@ const Payment_Page = () => {
           <PaymentInvoice
             setOpenAddPaymentForm={setOpenAddPaymentForm}
             openAddPaymentForm={openAddPaymentForm}
+            userId={props.user_id}
+            userType={props.user_type}
+            employee_employer_list={employeeEmployerlist}
+            totalData={totalData}
           />
         )}
 
@@ -56,7 +92,7 @@ const Payment_Page = () => {
                   scope="col"
                   className="border-0 font-size-4 font-weight-normal"
                 >
-                  Invoice
+                  Tag
                 </th>
                 <th
                   scope="col"
@@ -68,14 +104,20 @@ const Payment_Page = () => {
                   scope="col"
                   className="border-0 font-size-4 font-weight-normal"
                 >
-                  Sent On
+                  Due date
                 </th>
                 <th
                   scope="col"
                   className="border-0 font-size-4 font-weight-normal"
                 >
-                  status
+                  Due amount
                 </th>
+                {/* <th
+                  scope="col"
+                  className="border-0 font-size-4 font-weight-normal"
+                >
+                  status 
+                </th>*/}
                 <th
                   scope="col"
                   className="border-0 font-size-4 font-weight-normal"
@@ -85,110 +127,122 @@ const Payment_Page = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1</td>
-                <td className=" py-5">
-                  <p className="font-size-2 font-weight-normal text-black-2 mb-0">
-                    {/* {data.pdf_genrated_status === "1" ? ( */}
-                    <span className="p-1 bg-primary-opacity-8 text-white  border rounded-pill">
-                      created
-                    </span>
-                  </p>
-                </td>
-                <td className=" py-5">
-                  <p className="font-size-2 font-weight-normal text-black-2 mb-0">
-                    <span className="p-1">10/01/2023</span>
-                  </p>
-                </td>
-                <td>
-                  <p className="font-size-2 font-weight-normal text-black-2 mb-0">
-                    <span className="p-1">10/01/2025</span>
-                  </p>
-                </td>
-
-                <td className=" py-5">
-                  <p className="font-size-2 font-weight-normal text-black-2 mb-0">
-                    <span className="p-1 bg-primary-opacity-8 text-white  border rounded-pill">
-                      completed
-                    </span>
-                  </p>
-                </td>
-                <td className=" py-5">
-                  <div className="btn-group button_group" role="group">
-                    <button
-                      className="btn btn-outline-info action_btn"
-                      onClick={() => {}}
-                      title="Generate Invoice"
-                      v
-                    >
-                      <span className="text-gray px-2">
-                        <IoCreateOutline />
-                      </span>
-                    </button>
-                    <button
-                      className="btn btn-outline-info action_btn"
-                      onClick={() => {
-                        setOpenPaymentReminder(true);
-                      }}
-                      title="Record Payment"
-                    >
-                      <span className="text-gray px-2">
-                        <BsRecordCircle />{" "}
-                      </span>
-                    </button>
-
-                    <button
-                      className="btn btn-outline-info action_btn"
-                      onClick={() => {
-                        setOpenPaymentReminder(true);
-                      }}
-                      title="Payment Reminder"
-                    >
-                      <span className="text-gray px-2">
-                        <FaAmazonPay />
-                      </span>
-                    </button>
-                    <button
-                      className="btn btn-outline-info action_btn"
-                      title="Update"
-                    >
-                      <span className=" px-2">Update</span>
-                    </button>
-                    <button
-                      className="btn btn-outline-info action_btn"
-                      title="View Invoice"
-                    >
-                      <span className="text-gray px-2"><AiOutlineFilePdf /></span>
-                    </button>
-
-                    <button
-                      className="btn btn-outline-info action_btn"
-                      onClick={() => {
-                        setOpenAddPaymentForm(true);
-                      }}
-                      title="Payment Method"
-                    >
-                      <span className="text-gray px-2">
-                        {" "}
-                        <RiSecurePaymentLine />
-                      </span>
-                    </button>
-                    <button
-                      className="btn btn-outline-info action_btn"
-                      onClick={() => {
-                        setOpenAddPaymentForm(true);
-                      }}
-                      title="Delete"
-                    >
-                      <span>
-                        <span className="text-red px-2">
-                          <CiTrash />
+              {
+                (invoiceList || []).map((item, index) =>
+                  <tr key={index}>
+                    <td>{item.invoice_no}</td>
+                    <td className=" py-5">
+                      <p className="font-size-2 font-weight-normal text-black-2 mb-0">
+                        <span className="p-1">
+                          {item.tags || "N/A"}
                         </span>
-                      </span>
-                    </button>
-                  </div>
-                </td>
-              </tr>
+                      </p>
+                    </td>
+                    <td className=" py-5">
+                      <p className="font-size-2 font-weight-normal text-black-2 mb-0">
+                        <span className="p-1">
+                          <ConvertTime _date={item.created_at} format={"DD MMMM, YYYY"} />
+                        </span>
+                      </p>
+                    </td>
+                    <td>
+                      <p className="font-size-2 font-weight-normal text-black-2 mb-0">
+                        <span className="p-1"><ConvertTime _date={item.due_date} format={"DD MMMM, YYYY"} /></span>
+                      </p>
+                    </td>
+                    <td className=" py-5">
+                      <p className="font-size-2 font-weight-normal text-black-2 mb-0">
+                        <span className="p-1 b">
+                          {item.due_amount || "N/A"}
+                        </span>
+                      </p>
+                    </td>
+                    {/* <td className=" py-5">
+                      <p className="font-size-2 font-weight-normal text-black-2 mb-0">
+                        <span className="p-1 bg-primary-opacity-8 text-white  border rounded-pill">
+                          completed
+                        </span>
+                      </p>
+                    </td> */}
+                    <td className=" py-5">
+                      <div className="btn-group button_group" role="group">
+                        <button
+                          className="btn btn-outline-info action_btn"
+                          onClick={() => { }}
+                          title="Generate Invoice"
+                          v
+                        >
+                          <span className="text-gray px-2">
+                            <IoCreateOutline />
+                          </span>
+                        </button>
+                        <button
+                          className="btn btn-outline-info action_btn"
+                          onClick={() => {
+                            setOpenPaymentReminder(true);
+                          }}
+                          title="Record Payment"
+                        >
+                          <span className="text-gray px-2">
+                            <BsRecordCircle />{" "}
+                          </span>
+                        </button>
+
+                        <button
+                          className="btn btn-outline-info action_btn"
+                          onClick={() => {
+                            setOpenPaymentReminder(true);
+                          }}
+                          title="Payment Reminder"
+                        >
+                          <span className="text-gray px-2">
+                            <FaAmazonPay />
+                          </span>
+                        </button>
+                        <button
+                          className="btn btn-outline-info action_btn"
+                          title="Update"
+                        >
+                          <span className=" px-2">Update</span>
+                        </button>
+                        <button
+                          className="btn btn-outline-info action_btn"
+                          title="View Invoice"
+                        >
+                          <span className="text-gray px-2"><AiOutlineFilePdf /></span>
+                        </button>
+
+                        <button
+                          className="btn btn-outline-info action_btn"
+                          onClick={() => {
+                            setOpenAddPaymentForm(true);
+                          }}
+                          title="Payment Method"
+                        >
+                          <span className="text-gray px-2">
+                            {" "}
+                            <RiSecurePaymentLine />
+                          </span>
+                        </button>
+                        <button
+                          className="btn btn-outline-info action_btn"
+                          onClick={() => {
+                            setOpenAddPaymentForm(true);
+                          }}
+                          title="Delete"
+                        >
+                          <span>
+                            <span className="text-red px-2">
+                              <CiTrash />
+                            </span>
+                          </span>
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+
+                )
+              }
             </tbody>
           </table>
           {/* )} */}
@@ -198,6 +252,9 @@ const Payment_Page = () => {
           <PaymentReminder
             openPaymentReminder={openPaymentReminder}
             setOpenPaymentReminder={setOpenPaymentReminder}
+            userId={props.user_id}
+            userType={props.user_type}
+            employee_employer_list={employeeEmployerlist}
           />
         )}
         {/* <div className="pt-2">
