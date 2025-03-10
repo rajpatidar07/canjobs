@@ -1,18 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
-import useValidation from "../common/useValidation";
+import useValidation from "../../common/useValidation";
 // import Fatrash from "react-icons/fa"
 
 import { CiTrash } from "react-icons/ci";
+import { AddUpdatePaymentInvoiceApi } from "../../../api/api";
+import { toast } from "react-toastify";
 
-const PaymentInvoice = (props) => {
+const PaymentInvoiceForm = (props) => {
   let [loading, setLoading] = useState(false)
   const initialFormState =
   {
-    invoice_no: props.totalData + 1,
+    invoice_no: parseInt(props.lastInvoiceNo) + 1,
     user_id: props.userId,//Employee /employer id
     user_type: props.userType,//Employee /employer type
-    user_email: "",//Employee /employer email
+    user_email: props.userEmail,//Employee /employer email
     referred_by_id: "",//Creating by admin id
     referred_by_type: "",//Creating by admin type
     manager_id: "",//assigning manger ( admin id)
@@ -35,12 +37,49 @@ const PaymentInvoice = (props) => {
     gst_percentage: ""
   }
     ;
-  const { state, setState, onInputChange, errors/*, validate*/ } = useValidation(
+  const { state, setState, onInputChange, /*errors, validate*/ } = useValidation(
     initialFormState,);
+  useEffect(() => {
+    if (props.singleInvoiceData) {
+      const updatedData = {
+        ...props.singleInvoiceData,
+        product_json: props.singleInvoiceData?.product_json ? JSON.parse(props.singleInvoiceData.product_json) : [], // Convert string to array
+      };
 
-  const handleSubmit = (e) => {
+      setState(updatedData); // Set updated state
+      console.log(updatedData);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.singleInvoiceData]);
+
+
+
+  /*Function to close the modal */
+  let close = () => {
+    props.close()
+    setState(initialFormState)
+    setLoading(false)
+  }
+  /*function to submit payment invoice  form */
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Submitted ", state);
+    try {
+      setLoading(true)
+      let res = await AddUpdatePaymentInvoiceApi(state)
+      if (res.data.status === 1 || res.data.status === "1") {
+        toast.success("Payment invoice Created successful", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        close()
+        props.setApiCall(true)
+      }
+      setLoading(false)
+    } catch (err) {
+      setLoading(false)
+      console.log(err)
+    }
     // Here you can send the data to an API or process it further.
   };
   // Handle Input Change
@@ -50,6 +89,7 @@ const PaymentInvoice = (props) => {
     setState({ ...state, product_json: updatedData });
   };
 
+  /*Function to add new product */
   const handleAddNewProduct = () => {
     setState((prevState) => {
       const updatedProducts = [
@@ -70,6 +110,7 @@ const PaymentInvoice = (props) => {
     });
   };
 
+  /*Function to delete the product */
   const handleDeleteProduct = (index) => {
     setState((prevState) => {
       const updatedProducts = prevState.product_json
@@ -82,7 +123,7 @@ const PaymentInvoice = (props) => {
 
   return (
     <Modal
-      show={props.openAddPaymentForm}
+      show={props.show}
       size="xl"
       aria-labelledby="contained-modal-title-vcenter"
       centered
@@ -93,7 +134,7 @@ const PaymentInvoice = (props) => {
         type="button"
         className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
         data-dismiss="modal"
-        onClick={() => props.setOpenAddPaymentForm(false)}
+        onClick={() => close()}
       >
         <i className="fas fa-times"></i>
       </button>
@@ -101,9 +142,9 @@ const PaymentInvoice = (props) => {
       <div className="px-11 py-7 bg-white rounded-3">
         <h2 className="font-size-6 text-center">Payment Invoice</h2>
 
-        <h5 className="font-size-6 mb-4"> Invoice no.492</h5>
+        <h5 className="font-size-6 mb-4"> Invoice no. {state.invoice_no}</h5>
         {/* first row */}
-        <form action="submit" onSubmit={(e) => handleSubmit(e)}>
+        <form>
           <div className="row ">
             <div className="form-group col-md-3 p-1">
               <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold">
@@ -116,7 +157,7 @@ const PaymentInvoice = (props) => {
                 onChange={(e) => {
                   console.log(e.target.value.split(",")[1])
                   setState({ ...state, user_id: (e.target.value.split(",")[0]) });
-                  setState({ ...state, user_id: (e.target.value.split(",")[1]) });
+                  setState({ ...state, user_type: (e.target.value.split(",")[1]) });
                 }}
                 disabled={state.user_id && state.user_type}
                 className="form-control mt-3"
@@ -159,7 +200,7 @@ const PaymentInvoice = (props) => {
                 </button>
               </div>
 
-              <input type="email" className="form-control" value={state.user_email} name="user_email" onChange={onInputChange} />
+              <input type="email" disabled={state.user_email} className="form-control" value={state.user_email} name="user_email" onChange={onInputChange} />
 
               {/* <div className="d-flex justify-content-start g-2 mt-3">
                 <input type="checkbox" className="pr-2 mr-2" />
@@ -192,6 +233,7 @@ const PaymentInvoice = (props) => {
                 value={state.due_amount}
                 onChange={onInputChange}
                 name="due_amount"
+                min={0}
               />
               <button className="btn btn-primary d-none">Receive Payment</button>
             </div>
@@ -238,36 +280,20 @@ const PaymentInvoice = (props) => {
           </div>
 
           {/* third section */}
-          <div className=" row mt-8 d-none">
-            <div className="form-group col-sm-6 p-1">
-              <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold">
-                Invoice no.
-              </label>
-              <input type="text" className="form-control" />
-            </div>
-
+          <div className=" row mt-8 ">
             <div className="form-group col-sm-6 p-0 pr-10">
-              <div className=" d-flex  justify-content-end">
-                <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold">
-                  Tages{" "}
-                </label>
-                <button
-                  className="d-none position-absolute border-0 bg-transparent text-blue font-size"
-                  style={{ top: "-25px" }}
-                >
-                  Managed Tags
-                </button>
-              </div>
-              <div className="select_div">
-                <input type="text" className="form-control" name="tags" value={state.tags} onChange={onInputChange} />
-              </div>
+              <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold">
+                Tags{" "}
+              </label>
+              <input type="text" className="form-control" name="tags" value={state.tags} onChange={onInputChange} />
+              <button
+                className="d-none position-absolute border-0 bg-transparent text-blue font-size"
+                style={{ top: "-25px" }}
+              >
+                Managed Tags
+              </button>
             </div>
-          </div>
-
-          {/* fourth section */}
-
-          <div className="row justify-content-end mt-8">
-            <div className="col-md-3 form-group">
+            <div className="col-md-6 form-group">
               <label className="text-black-2 line-height-reset font-weight-semibold font-size-4">
                 Amounts are{" "}
               </label>
@@ -277,6 +303,7 @@ const PaymentInvoice = (props) => {
               </select>
             </div>
           </div>
+
 
           {/* invoice table */}
 
@@ -296,96 +323,104 @@ const PaymentInvoice = (props) => {
                 </tr>
               </thead>
               <tbody>
-                {(state.product_json || []).map((item, index) => (
-                  <tr key={index}>
-                    <td>
-                      {index + 1}
-                    </td>
-                    <td>
-                      <input
-                        type="date"
-                        className="border-0 bg-transparent"
-                        style={{ width: "100%" }}
-                        value={item.serviceDate}
-                        onChange={(e) =>
-                          handleProductChange(index, "service_date", e.target.value)
-                        }
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="text"
-                        className="border-0 bg-transparent"
-                        style={{ width: "100%" }}
-                        value={item.product}
-                        onChange={(e) =>
-                          handleProductChange(index, "product", e.target.value)
-                        }
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="text"
-                        className="border-0 bg-transparent"
-                        style={{ width: "100%" }}
-                        value={item.description}
-                        onChange={(e) =>
-                          handleProductChange(index, "description", e.target.value)
-                        }
-                      />
-                    </td>
-                    <td style={{ textAlign: "right" }}>
-                      <input
-                        type="number"
-                        className="border-0 bg-transparent"
-                        style={{ width: "100%", textAlign: "right" }}
-                        value={item.quantity}
-                        onChange={(e) =>
-                          handleProductChange(index, "quantity", e.target.value)
-                        }
-                      />
-                    </td>
-                    <td style={{ textAlign: "right" }}>
-                      <input
-                        type="number"
-                        className="border-0 bg-transparent mx-2"
-                        style={{ width: "100%", textAlign: "right" }}
-                        value={item.rate}
-                        onChange={(e) => handleProductChange(index, "rate", e.target.value)}
-                      />
-                    </td>
-                    <td style={{ textAlign: "right" }}>
-                      <input
-                        type="number"
-                        className="border-0 bg-transparent"
-                        style={{ width: "100%", textAlign: "right" }}
-                        value={item.amount}
-                        onChange={(e) =>
-                          handleProductChange(index, "amount", e.target.value)
-                        }
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="text"
-                        className="border-0 bg-transparent"
-                        style={{ width: "100%" }}
-                        value={item.serviceTax}
-                        onChange={(e) =>
-                          handleProductChange(index, "service_tax", e.target.value)
-                        }
-                      />
-                    </td>
-                    <td>
-                      <button
-                        className="border-0 bg-transparent"
-                        onClick={() => handleDeleteProduct(index)}
-                      >
-                        <CiTrash color="red" fontSize={20} />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                {console.log(typeof state?.product_json)}
+                {
+                  state?.product_json.length === 0 ? (
+                    <tr>
+                      <th colSpan={9} className="bg-white text-center">
+                        No products have been added yet.
+                      </th>
+                    </tr>
+                  ) : (state?.product_json || []).map((item, index) => (
+                    <tr key={index}>
+                      <td>
+                        {index + 1}
+                      </td>
+                      <td>
+                        <input
+                          type="date"
+                          className="border-0 bg-transparent"
+                          style={{ width: "100%" }}
+                          value={item.serviceDate}
+                          onChange={(e) =>
+                            handleProductChange(index, "service_date", e.target.value)
+                          }
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          className="border-0 bg-transparent"
+                          style={{ width: "100%" }}
+                          value={item.product}
+                          onChange={(e) =>
+                            handleProductChange(index, "product", e.target.value)
+                          }
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          className="border-0 bg-transparent"
+                          style={{ width: "100%" }}
+                          value={item.description}
+                          onChange={(e) =>
+                            handleProductChange(index, "description", e.target.value)
+                          }
+                        />
+                      </td>
+                      <td style={{ textAlign: "right" }}>
+                        <input
+                          type="number"
+                          className="border-0 bg-transparent"
+                          style={{ width: "100%", textAlign: "right" }}
+                          value={item.quantity}
+                          onChange={(e) =>
+                            handleProductChange(index, "quantity", e.target.value)
+                          }
+                        />
+                      </td>
+                      <td style={{ textAlign: "right" }}>
+                        <input
+                          type="number"
+                          className="border-0 bg-transparent mx-2"
+                          style={{ width: "100%", textAlign: "right" }}
+                          value={item.rate}
+                          onChange={(e) => handleProductChange(index, "rate", e.target.value)}
+                        />
+                      </td>
+                      <td style={{ textAlign: "right" }}>
+                        <input
+                          type="number"
+                          className="border-0 bg-transparent"
+                          style={{ width: "100%", textAlign: "right" }}
+                          value={item.amount}
+                          onChange={(e) =>
+                            handleProductChange(index, "amount", e.target.value)
+                          }
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          className="border-0 bg-transparent"
+                          style={{ width: "100%" }}
+                          value={item.serviceTax}
+                          onChange={(e) =>
+                            handleProductChange(index, "service_tax", e.target.value)
+                          }
+                        />
+                      </td>
+                      <td>
+                        <button
+                          className="border-0 bg-transparent"
+                          onClick={() => handleDeleteProduct(index)}
+                        >
+                          <CiTrash color="red" fontSize={20} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
@@ -394,6 +429,7 @@ const PaymentInvoice = (props) => {
               <button
                 className="btn btn-primary py-1 "
                 onClick={(e) => handleAddNewProduct(e)}
+                type="button"
               >
                 Add New{" "}
               </button>
@@ -424,24 +460,24 @@ const PaymentInvoice = (props) => {
               </div>
             </div>
             <div className="py-1" style={{ minWidth: "250px" }}>
-              <ul className="d-flex justify-content-between gap-2">
-                <li className="list-unstyled ">Sub Total</li>
+              <ul className="d-flex justify-content-between">
+                <li className="list-unstyled ">Sub Total {" "}</li>
                 <li className="list-unstyled "><input
-                  type="text"
+                  type="number"
                   className="form-control"
                   name="subtotal" value={state.subtotal} onChange={onInputChange} /></li>
               </ul>
               <ul className="d-flex justify-content-between">
                 <li className="list-unstyled ">Gst@${state.gst_percentage}%</li>
                 <li className="list-unstyled "><input
-                  type="text"
+                  type="number"
                   className="form-control"
                   name="gst_percentage" value={state.gst_percentage} onChange={onInputChange} /></li>
               </ul>
               <ul className="d-flex justify-content-between">
                 <li className="list-unstyled ">Total</li>
                 <li className="list-unstyled "><input
-                  type="text"
+                  type="number"
                   className="form-control"
                   name="total" value={state.total} onChange={onInputChange} /></li>
               </ul>
@@ -453,9 +489,10 @@ const PaymentInvoice = (props) => {
           </div>
           <div className="text-center mb-5">
             <button
-              type="submit"
+              type="button"
               className="btn btn-primary btn-small w-25 mt-5 rounded-5 text-uppercase p-8"
               disabled={loading}
+              onClick={(e) => handleSubmit(e)}
             >
               {loading ? "Saving..." : "Save"}
             </button>
@@ -473,4 +510,4 @@ const PaymentInvoice = (props) => {
   );
 };
 
-export default PaymentInvoice;
+export default PaymentInvoiceForm;

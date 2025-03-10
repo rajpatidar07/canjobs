@@ -335,7 +335,7 @@ function Calllogtable(props) {
                                                 <td style={{ minWidth: "50px", textAlign: "center" }}>
                                                     {loading === true ? (
                                                         <button
-                                                            className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
+                                                            className="btn-sm btn-primary"
                                                             type="button"
                                                             disabled
                                                         >

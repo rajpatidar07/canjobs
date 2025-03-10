@@ -105,7 +105,7 @@ import Atip from "../admin/atip";
 import CommonApplicatTypePage from "./CommonApplicatTypePage";
 import MangeApplicantType from "../admin/MangeApplicantType"
 import ManageDailyCallLog from "../admin/ManageDailyCallLog";
-import ManagePayment from "./ManagePayment";
+import ManagePayment from "../admin/ManagePaymentInvoices";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();

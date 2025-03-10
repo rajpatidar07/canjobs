@@ -281,7 +281,6 @@ const StyledDropdown = ({
                         </div>
                     ))}
                 </div>
-                {console.log(addStatusFieldOpen)}
                 {addStatusFieldOpen ?
                     <div className="border-top text-center mt-2 form-group">
                         <label

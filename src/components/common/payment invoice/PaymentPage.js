@@ -1,52 +1,93 @@
-import React, { useEffect, useState } from "react";
-import PaymentInvoice from "../common/PaymentInvoice";
-import { IoCreateOutline } from "react-icons/io5";
-import { BsRecordCircle } from "react-icons/bs";
-import { FaAmazonPay } from "react-icons/fa";
-import { RiSecurePaymentLine } from "react-icons/ri";
+import React, { useEffect, useState } from "react"; import { FaAmazonPay } from "react-icons/fa";
 import { CiTrash } from "react-icons/ci";
 import { AiOutlineFilePdf } from "react-icons/ai";
-import PaymentReminder from "./PaymentReminder";
-import { getallEmployeeData, getAllEmployer, getAllInvioce } from "../../api/api";
-import ConvertTime from "../common/Common function/ConvertTime";
-
+import PaymentReminder from "../../forms/payment invoice/PaymentReminder";
+import { getallEmployeeData, getAllEmployer, getAllInvioce, DeletePaymentInvoiceApi, GetLastPaymentInvoiceApi } from "../../../api/api";
+import ConvertTime from "../Common function/ConvertTime";
+import SAlert from "../sweetAlert";
+import Pagination from "../pagination"
+import { toast } from "react-toastify";
+import Loader from "../loader";
+import PaymentInvoiceForm from "../../forms/payment invoice/PaymentInvoiceForm";
 const Payment_Page = (props) => {
   const [openAddPaymentForm, setOpenAddPaymentForm] = useState(false);
   const [openPaymentReminder, setOpenPaymentReminder] = useState(false);
-
+  const [apiCall, setApiCall] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [employeeEmployerlist, setEmployeeEmployerlist] = useState([]);
   const [invoiceList, setInvoicelist] = useState([]);
-  const [totalData, setTotalData] = useState(""|| 1);
-
+  const [singleInvoiceData, setSingleInvoiceData] = useState();
+  const [lastInvoiceNo, setLastInvoiceNo] = useState();
+  /*Pagination */
+  const [currentPage, setCurrentPage] = useState(1);
+  const [recordsPerPage] = useState(10);
+  const [totalData, setTotalData] = useState("" || 1);
+  /*delete state */
+  const [deleteAlert, setDeleteAlert] = useState(false);
+  const [deleteData, setDeleteData] = useState("");
   const GetAllUserData = async () => {
     try {
+      setIsLoading(true)
       let invoiceData = {
         "invoice_no": "",
         "user_id": props.user_id,
-        "user_type": props.user_type
+        "user_type": props.user_type,
+        "page": currentPage,
+        "limit": recordsPerPage
       }
       const userData = await getallEmployeeData();
       const CompanyData = await getAllEmployer();
       const InvoiceData = await getAllInvioce(invoiceData);
+      const lastInvoice = await GetLastPaymentInvoiceApi()
       let allUserData = [];
-      console.log(InvoiceData)
       setInvoicelist(InvoiceData.data.data)
-      setTotalData(InvoiceData.data.total_row)
       if (userData?.data?.length === 0 && CompanyData?.data?.length === 0) {
         setEmployeeEmployerlist([]);
+        setIsLoading(false)
       } else {
         allUserData = [...userData.data, ...CompanyData.data,]; // Merge the arrays
         setEmployeeEmployerlist(allUserData);
+        setIsLoading(false)
       }
+      setTotalData(InvoiceData.data.total_data)
+      setLastInvoiceNo(lastInvoice.data.data.invoice_no)
 
     } catch (err) {
       console.log(err);
+      setIsLoading(false)
     }
   };
+  /*Pagination Calculation */
+  const nPages = Math.ceil(totalData / recordsPerPage);
   useEffect(() => {
     GetAllUserData()
-  }, [])
+    if (apiCall === true) {
+      setApiCall(false)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [apiCall])
 
+  const CancelDelete = () => {
+    setDeleteAlert(false);
+    setDeleteData("");
+  }
+  /*Function to delete the invoice */
+  const DeleteInvoice = async (id) => {
+    try {
+      let res = await DeletePaymentInvoiceApi(id)
+      if (res.data.message === "PaymentInvoice has been deleted !") {
+        toast.success("Payment inVoice Deleted successful", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+      }
+      setDeleteAlert(false)
+      setDeleteData(false)
+      setApiCall(true)
+    } catch (err) {
+      console.log(err)
+    }
+  }
   return (
     <div className="response_main_div w-100">
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
@@ -60,7 +101,10 @@ const Payment_Page = (props) => {
           <div className="p-3">
             <button
               className="btn btn-primary"
-              onClick={() => setOpenAddPaymentForm(true)}
+              onClick={() => {
+                setOpenAddPaymentForm(true)
+                setSingleInvoiceData()
+              }}
             >
               Add Invoice
             </button>
@@ -68,18 +112,24 @@ const Payment_Page = (props) => {
         </div>
 
         {openAddPaymentForm && (
-          <PaymentInvoice
-            setOpenAddPaymentForm={setOpenAddPaymentForm}
-            openAddPaymentForm={openAddPaymentForm}
+          <PaymentInvoiceForm
+            close={() => setOpenAddPaymentForm(false)}
+            show={openAddPaymentForm}
             userId={props.user_id}
             userType={props.user_type}
+            userEmail={props.user_email}
             employee_employer_list={employeeEmployerlist}
             totalData={totalData}
+            setApiCall={setApiCall}
+            singleInvoiceData={singleInvoiceData}
+            lastInvoiceNo={lastInvoiceNo}
           />
         )}
 
         <div className="table-responsive main_table_div">
-          <table className="table table-striped main_data_table">
+          {isLoading ? (
+            <Loader />
+          ) : <table className="table table-striped main_data_table">
             <thead>
               <tr>
                 <th
@@ -127,7 +177,13 @@ const Payment_Page = (props) => {
               </tr>
             </thead>
             <tbody>
-              {
+              {totalData === 0 || invoiceList.length === 0 ? (
+                <tr>
+                  <th colSpan={6} className="bg-white text-center">
+                    No Data Found
+                  </th>
+                </tr>
+              ) :
                 (invoiceList || []).map((item, index) =>
                   <tr key={index}>
                     <td>{item.invoice_no}</td>
@@ -166,7 +222,7 @@ const Payment_Page = (props) => {
                     </td> */}
                     <td className=" py-5">
                       <div className="btn-group button_group" role="group">
-                        <button
+                        {/* <button
                           className="btn btn-outline-info action_btn"
                           onClick={() => { }}
                           title="Generate Invoice"
@@ -175,8 +231,8 @@ const Payment_Page = (props) => {
                           <span className="text-gray px-2">
                             <IoCreateOutline />
                           </span>
-                        </button>
-                        <button
+                        </button> */}
+                        {/* <button
                           className="btn btn-outline-info action_btn"
                           onClick={() => {
                             setOpenPaymentReminder(true);
@@ -186,12 +242,13 @@ const Payment_Page = (props) => {
                           <span className="text-gray px-2">
                             <BsRecordCircle />{" "}
                           </span>
-                        </button>
+                        </button> */}
 
                         <button
                           className="btn btn-outline-info action_btn"
                           onClick={() => {
                             setOpenPaymentReminder(true);
+                            setSingleInvoiceData(item)
                           }}
                           title="Payment Reminder"
                         >
@@ -202,17 +259,21 @@ const Payment_Page = (props) => {
                         <button
                           className="btn btn-outline-info action_btn"
                           title="Update"
+                          onClick={() => {
+                            setOpenAddPaymentForm(true)
+                            setSingleInvoiceData(item)
+                          }}
                         >
                           <span className=" px-2">Update</span>
                         </button>
                         <button
-                          className="btn btn-outline-info action_btn"
+                          className="btn btn-outline-info action_btn d-none"
                           title="View Invoice"
                         >
                           <span className="text-gray px-2"><AiOutlineFilePdf /></span>
                         </button>
 
-                        <button
+                        {/* <button
                           className="btn btn-outline-info action_btn"
                           onClick={() => {
                             setOpenAddPaymentForm(true);
@@ -223,11 +284,12 @@ const Payment_Page = (props) => {
                             {" "}
                             <RiSecurePaymentLine />
                           </span>
-                        </button>
+                        </button> */}
                         <button
                           className="btn btn-outline-info action_btn"
                           onClick={() => {
-                            setOpenAddPaymentForm(true);
+                            setDeleteAlert(true);
+                            setDeleteData(item)
                           }}
                           title="Delete"
                         >
@@ -244,28 +306,30 @@ const Payment_Page = (props) => {
                 )
               }
             </tbody>
-          </table>
-          {/* )} */}
+            <div className="pt-2">
+              <Pagination
+                nPages={nPages}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                total={totalData}
+                count={invoiceList.length}
+              />
+            </div>
+          </table>}
         </div>
 
         {openPaymentReminder && (
           <PaymentReminder
-            openPaymentReminder={openPaymentReminder}
-            setOpenPaymentReminder={setOpenPaymentReminder}
+            show={openPaymentReminder}
+            close={() => setOpenPaymentReminder(false)}
             userId={props.user_id}
             userType={props.user_type}
+            userEmail={props.user_email}
+            invoiceData={singleInvoiceData}
             employee_employer_list={employeeEmployerlist}
           />
         )}
-        {/* <div className="pt-2">
-                  <Pagination
-                    //   nPages={nPages}
-                      currentPage={currentPage}
-                      setCurrentPage={setCurrentPage}
-                      total={totalData}
-                      count={interviewHistoryData.length}
-                  />
-              </div> */}
+
         {/* {openSendMail ? (
             <SendEmailAgreement
               show={openSendMail}
@@ -342,15 +406,15 @@ const Payment_Page = (props) => {
               show={openSignfPspdfkit}
               close={() => setOpenSignfPspdfkit(false)}
             />
-          ) : null}
-          <SAlert
-            show={deleteAlert}
-            title={deleteName}
-            text="Are you Sure you want to delete !"
-            onConfirm={() => deleteAdmin(deleteId)}
-            showCancelButton={true}
-            onCancel={CancelDelete}
-          /> */}
+          ) : null} */}
+        <SAlert
+          show={deleteAlert}
+          title={deleteData?.tags}
+          text="Are you Sure you want to delete !"
+          onConfirm={() => DeleteInvoice(deleteData.id)}
+          showCancelButton={true}
+          onCancel={CancelDelete}
+        />
       </div>
     </div>
   );

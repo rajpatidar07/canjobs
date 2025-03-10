@@ -1,32 +1,38 @@
-import React, { useState } from "react";
+import React from "react";
 import { Modal } from "react-bootstrap";
-
-const PaymentReminder = ({ openPaymentReminder, setOpenPaymentReminder }) => {
-  const [formData, setFormData] = useState({
-    date: "",
-    amount: "",
-    user: "",
-    invoice: null,
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+import { SendPaymentInvoiceReminderApi } from "../../../api/api"
+import useValidation from "../../common/useValidation";
+const PaymentReminder = (props) => {
+  let admin_id = localStorage.getItem("admin_id");
+  let admin_type = localStorage.getItem("admin_type")
+  const initialFormState = {
+    due_date: "",
+    due_amount: "",
+    id: props.invoiceData.id,
+    sender_id: admin_id,
+    sender_type: admin_type,
   };
+  const { state, setState, onInputChange, /*errors, validate*/ } = useValidation(
+    initialFormState,);
 
-  const handleFileChange = (e) => {
-    setFormData({ ...formData, invoice: e.target.files[0] });
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data:", formData);
-    setOpenPaymentReminder(false); // Close the modal after submission
+    console.log("Form Data:", state);
+    try {
+      let res = await SendPaymentInvoiceReminderApi(state)
+      if (res.data.message === "success") {
+        setState(initialFormState)
+        props.close()
+      }
+    } catch (err) {
+      console.log(err)
+
+    }
   };
 
   return (
     <Modal
-      show={openPaymentReminder}
+      show={props.show}
       size="md"
       aria-labelledby="contained-modal-title-vcenter"
       centered
@@ -37,7 +43,7 @@ const PaymentReminder = ({ openPaymentReminder, setOpenPaymentReminder }) => {
         type="button"
         className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
         data-dismiss="modal"
-        onClick={() => setOpenPaymentReminder(false)}
+        onClick={() => props.close()}
       >
         <i className="fas fa-times"></i>
       </button>
@@ -57,9 +63,9 @@ const PaymentReminder = ({ openPaymentReminder, setOpenPaymentReminder }) => {
             <input
               type="date"
               className="form-control"
-              name="date"
-              value={formData.date}
-              onChange={handleChange}
+              name="due_date"
+              value={state.due_date}
+              onChange={onInputChange}
               required
             />
           </div>
@@ -72,30 +78,15 @@ const PaymentReminder = ({ openPaymentReminder, setOpenPaymentReminder }) => {
             <input
               type="number"
               className="form-control"
-              name="amount"
-              value={formData.amount}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          {/* User Field */}
-          <div className="form-group">
-            <label className="font-weight-semibold font-size-4 text-black-2 line-height-reset ">
-              User: <span className="text-danger">*</span>
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              name="user"
-              value={formData.user}
-              onChange={handleChange}
+              name="due_amount"
+              value={state.due_amount}
+              onChange={onInputChange}
               required
             />
           </div>
 
           {/* Invoice PDF Upload */}
-          <div className="form-group">
+          {/* <div className="form-group d-none">
             <label className="font-weight-semibold font-size-4 text-black-2 line-height-reset">
               Invoice pdf:
             </label>
@@ -106,11 +97,11 @@ const PaymentReminder = ({ openPaymentReminder, setOpenPaymentReminder }) => {
               onChange={handleFileChange}
               required
             />
-          </div>
+          </div> */}
 
           {/* Submit & Cancel Buttons */}
           <div className="d-flex justify-content-center gap-2">
-           <button className="btn btn-primary">Submit</button>
+            <button className="btn btn-primary">send</button>
           </div>
         </form>
       </div>

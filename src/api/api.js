@@ -3300,8 +3300,8 @@ export const AddCashpayment = async (data) => {
 };
 
 /*Global Search API */
-export const GlobalSearchResult = async (search,admin_id,admin_type) => {
-  console.log(admin_id,admin_type)
+export const GlobalSearchResult = async (search, admin_id, admin_type) => {
+  console.log(admin_id, admin_type)
   const response = await axios.post(
     `${API_URL}common/globalSearch`,
     { search },
@@ -3826,8 +3826,8 @@ export const getViewersDataApi = async (id, type) => {
   );
   return response;
 }
-/*Api to ad update invoice */
-export const AddUpdatePaymentInvoiceApi = async (data) => {
+/*Api to ad update invoice record*/
+export const AddUpdatePaymentInvoiceRecordApi = async (data) => {
   const response = await axios.post(`${API_URL}admin/addUpdateInvoice`,
     data, {
     headers: {
@@ -3838,6 +3838,21 @@ export const AddUpdatePaymentInvoiceApi = async (data) => {
   );
   return response;
 }
+
+/*Api to ad update invoice record*/
+export const getAllInvioceRecord = async (data) => {
+  const response = await axios.post(`${API_URL}admin/getInvoice`,
+    data, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  }
+  );
+  return response;
+}
+
+
 /*Api to ad update invoice */
 export const getAllInvioce = async (data) => {
   const response = await axios.post(`${API_URL}common/getPaymentInvoice`,
@@ -3849,4 +3864,53 @@ export const getAllInvioce = async (data) => {
   }
   );
   return response;
+}
+/*Api to ad update invoice */
+export const AddUpdatePaymentInvoiceApi = async (data) => {
+  const response = await axios.post(`${API_URL}common/addUpdatePaymentInvoice`,
+    data, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  }
+  );
+  return response;
+}
+/*Api to delete update invoice */
+export const DeletePaymentInvoiceApi = async (id) => {
+  const response = await axios.post(`${API_URL}common/deletePaymentInvoice`,
+    { id: id }, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  }
+  );
+  return response;
+}
+/*Api to delete update invoice */
+export const GetLastPaymentInvoiceApi = async (id) => {
+  const response = await axios.get(`${API_URL}common/getLastPaymentInvoice`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+}
+/*Api to send invoice reminder */
+export const SendPaymentInvoiceReminderApi = async (data) => {
+  const response = await axios.post(`${API_URL}common/sendPaymentReminder`, data,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+
 }

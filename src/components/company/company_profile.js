@@ -21,12 +21,13 @@ import { BsEnvelope } from "react-icons/bs";
 import { RiMailSendLine } from "react-icons/ri";
 import { BiPhoneCall } from "react-icons/bi";
 import ContactPage from "../common/contactPage";
-import PayentForm from "../forms/admin/payentForm";
+// import PayentForm from "../forms/admin/payentForm";
 import MainEmailPage from "../email/mainemailPage";
 import SharePointDocument from "../common/Document folder/SharePointDocument";
 import ConvertTime from "../common/Common function/ConvertTime";
 import RetainerAgrementMainPage from "../common/Retaineragreement/RetainerAgrementMainPage";
 import { getInitials } from "../common/GetInitials";
+import PaymentPage from "../common/payment invoice/PaymentPage";
 // import LimaArrowProfile from "../common/LimaArrowProfile";
 function CompanyProfileDetail(props) {
   const user_type = localStorage.getItem("userType");
@@ -988,11 +989,15 @@ function CompanyProfileDetail(props) {
                 >
                   {TabActive === "payment" ? (
                     <div className="p-10 activity_container">
-                      <PayentForm
+                      {/* <PayentForm
                         data={employerData}
                         user_id={cid}
                         user_type={"employer"}
-                      />
+                      /> */}
+                      <PaymentPage
+                        user_id={cid}
+                        user_type={"employer"}
+                        user_email={employerData.email} />
                     </div>
                   ) : null}
                 </div>

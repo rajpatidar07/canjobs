@@ -1,23 +1,44 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { CiFilter, CiSearch } from 'react-icons/ci';
-import AdminHeader from '../admin/header';
-import AdminSidebar from '../admin/sidebar';
+import AdminHeader from './header';
+import AdminSidebar from './sidebar';
 import { FaAngleDown } from 'react-icons/fa';
 import { IoPersonCircleOutline } from 'react-icons/io5';
-import PaymentTable from './PaymentTable';
+import PaymentTable from '../common/PaymentTable';
+import { getallAdminData, getallEmployeeData, getAllEmployer } from '../../api/api';
 
 const ManagePayment = () => {
     const [showdropdown, setShowdropdown] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
-    // const [showItemdropdown, setShowItemdropdown] = useState(false);
-    const [showAddItemForm, setShowAddItemForm] = useState(false);
+    const [employeeEmployerlist, setEmployeeEmployerlist] = useState(false);
+    const [adminList, setAdminList] = useState([]);    const [showAddItemForm, setShowAddItemForm] = useState(false);
     const [showfilterdropdown, setShowfilterdropdown] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
     const [searchCandidate, setSearchCandidate] = useState("");
     const dropdownRef = useRef(null);
+    const getUserData = async () => {
+        try {
+            const userData = await getallEmployeeData();
+            const CompanyData = await getAllEmployer();
+            const resAdmin = await getallAdminData()
+            console.log(resAdmin.data)
+            setAdminList(resAdmin.data)
+            let allUserData = []
+            if (userData?.data?.length === 0 && CompanyData?.data?.length === 0) {
+                setEmployeeEmployerlist([]);
+            } else {
+                allUserData = [...userData.data, ...CompanyData.data,];
+                setEmployeeEmployerlist(allUserData);
+            }
+        } catch (err) {
+            console.log(err)
 
+        }
+    }
 
-
+    useEffect(() => {
+        getUserData()
+    }, [])
 
     useEffect(() => {
         function handleClickOutside(event) {
@@ -241,7 +262,10 @@ const ManagePayment = () => {
                         {/* Payment Table */}
                         <PaymentTable heading={"Payment Table"}
                             showAddForm={showAddItemForm}
-                            setShowAddForm={setShowAddItemForm} />
+                            setShowAddForm={setShowAddItemForm} 
+                            employeeEmployerlist={employeeEmployerlist} 
+                            adminList={adminList}
+                            />
                     </div>
                 </div>
             </div>

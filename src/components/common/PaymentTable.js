@@ -3,17 +3,57 @@ import PaymentTableData from "../json/PaymentTableJson.json";
 // import TableInput from "../common/TableInput";
 import StyledDropdown from "../common/StyledDropDown";
 import TableInput from "../common/TableInput";
-import { GetFilter } from "../../api/api";
+import { AddUpdatePaymentInvoiceRecordApi, getAllInvioceRecord, GetFilter } from "../../api/api";
+import useValidation from "./useValidation";
+import { FaTrash } from "react-icons/fa";
 
 const PaymentTable = (props) => {
   let [filterListapiCall, setFilterListApiCall] = useState(false);
   const [jsonList, setJsonList] = useState([]);
+  const [paymentRecordsList, setPaymentRecordsList] = useState([]);
+  const [totalData, setTotalData] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
+  const recordsPerPage = 10;
+  const nPages = Math.ceil(totalData / recordsPerPage);
+  const [loading, setLoading] = useState(false);
+  const [deleteAlertPaymentRecordData, setDeleteAlertPaymentRecordData] =
+    useState(false);
+  const [deleteAlertPaymentRecord, setDeleteAlertPaymentRecord] =
+    useState(false);
+  let initialFormState = {
+    user_id: "",
+    user_type: "",
+    referred_by_id: "",
+    referred_by_type: "",
+    manager_id: "",
+    manager_type: "",
+    payment_status: "",
+    duplicate_payment: "",
+    due_date: "",
+    payment_method: ""
+  }
+  const validators = {
+    user_id: [
+      (value) =>
+        value === "" || value.trim() === ""
+          ? "user is required"
+          : "",
+    ],
 
-  const records = PaymentTableData.records;
-
+  }
+  const { state, setState, setErrors, onInputChange, errors, validate } =
+    useValidation(initialFormState, validators);
   let getFilterList = async () => {
     try {
+      let getPaymentRecData = {
+        limit: recordsPerPage,
+        page: currentPage
+
+      }
       let json = await GetFilter();
+      let resRecords = await getAllInvioceRecord(getPaymentRecData);
+      setPaymentRecordsList(resRecords.data.data.data)
+      setTotalData(resRecords.data.data.total_rows)
       setJsonList(json.data.data);
     } catch (err) {
       console.log(err);
@@ -25,22 +65,41 @@ const PaymentTable = (props) => {
     if (filterListapiCall === true) {
       setFilterListApiCall(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterListapiCall]);
+
   const handleUpdateChange = (e, id, field) => {
     if (e && e.preventDefault) {
       e.preventDefault();
     }
-    let data = {
-      id: id,
-      [field]: e.target.value,
-    };
+    let data = { id };
 
-    console.log(data);
+    if (["user_id", "referred_by_id", "manager_id"].includes(field)) {
+      const [idValue, typeValue] = e.target.value.split(",");
+      data = { ...data, [field]: idValue, [`${field.replace("_id", "_type")}`]: typeValue };
+    } else {
+      data[field] = e.target.value;
+    }
+    return AddUpdatePaymentInvoiceRecordApi(data);
   };
 
-  const onInputChange = (e, id, field) => {
-    console.log("onchange", e.target.value);
-  };
+  /*function to add payment record  */
+  const AddPaymentRecord = async () => {
+    try {
+      setLoading(true)
+      let res = await AddUpdatePaymentInvoiceRecordApi(state)
+      if (res.data.status === 1 || res.data.status === "1") {
+        setErrors({})
+        setState(initialFormState)
+        setLoading(false)
+        props.setShowAddForm(false)
+      }
+    } catch (err) {
+      console.log(err)
+      setLoading(false)
+
+    }
+  }
   return (
     <>
       <div className="mb-18 height-100">
@@ -69,7 +128,7 @@ const PaymentTable = (props) => {
                       // "Email",
                       // "Call back Date/time",
                       // "Additional Notes",
-                      // "Action Taken",
+                      "Action ",
                     ].map((heading, index) => (
                       <th
                         key={index}
@@ -84,175 +143,289 @@ const PaymentTable = (props) => {
                   {props.showAddForm && (
                     <tr>
                       <td>
-                        <TableInput
-                          value={"name"}
-                          onChange={onInputChange}
-                          type="text"
-                          id="name"
-                          name="name"
-                        />
-                        {/* {errors.name && (
-                        <span key={errors.name} className="text-danger font-size-3">
-                          {errors.name}
-                        </span>
-                      )} */}
+                        <select
+                          name="user_id"
+                          value={state.user_id + "," + state.user_type}
+                          id="user_id"
+                          onChange={(e) => {
+                            const [user_id, user_type] = e.target.value.split(",");
+                            setState((prevState) => ({
+                              ...prevState,
+                              user_id,
+                              user_type,
+                            }));
+                          }}
+                          className="form-control mt-3"
+                        >
+                          <option value="">Select Applicant/Client</option>
+                          {(props.employeeEmployerlist || []).map((item, index) => {
+                            return (
+                              <option
+                                className="text-capitalize"
+                                key={index}
+                                value={
+                                  item.employee_id
+                                    ? `${item.employee_id},employee`
+                                    : item.company_id
+                                      ? `${item.company_id},employer`
+                                      : `${item.id},applicant_type`
+                                }
+                              >
+                                {item.employee_id
+                                  ? item.name + " (Candidate)"
+                                  : item.company_id
+                                    ? item.company_name + " (Client)"
+                                    : item.title + " (Applicant Type)" || "unknown user"}
+                              </option>
+                            );
+                          })}
+                        </select>
+
+                        {errors.user_id && (
+                          <span key={errors.user_id} className="text-danger font-size-3">
+                            {errors.user_id}
+                          </span>
+                        )}
                       </td>
                       <td>
                         {" "}
-                        <TableInput
-                          value={"referredBy"}
-                          onChange={onInputChange}
-                          type="text"
-                          id="name"
-                          name="name"
-                        />
+                        <td style={{ minWidth: "150px" }}>
+                          <select className="form-control" value={state.referred_by_id + "," + state.referred_by_type} id="referred_by_id" onChange={(e) => {
+                            const [referred_by_id, referred_by_type] = e.target.value.split(",");
+                            setState((prevState) => ({
+                              ...prevState,
+                              referred_by_id,
+                              referred_by_type,
+                            }));
+                          }} name="referred_by_id">
+                            <option>Select Refer by</option>
+                            {(props.adminList || []).map((item, index) => (
+                              <option value={`${item.admin_id},${item.admin_type}`} key={index}>{`${item.name} (${item.admin_type})`}</option>
+                            ))}
+                          </select>
+                        </td>
                       </td>
                       <td>
-                        <TableInput
-                          value={"manager"}
-                          onChange={onInputChange}
-                          type="text"
-                          id="name"
-                          name="name"
-                        />
+                        <select className="form-control" value={state.manager_id + "," + state.manager_type} onChange={(e) => {
+                          const [manager_id, manager_type] = e.target.value.split(",");
+                          setState((prevState) => ({
+                            ...prevState,
+                            manager_id,
+                            manager_type,
+                          }));
+                          console.log(manager_id, manager_type)
+                        }} id="manager_id" name="manager_id">
+                          <option>Select Manager</option>
+                          {(props.adminList || []).map((item, index) => (
+                            <option value={`${item.admin_id},${item.admin_type}`} key={index}>{`${item.name} (${item.admin_type})`}</option>
+                          ))}
+                        </select>
                       </td>
-
-                      {/* <td>{record.paymentStatus}</td> */}
                       <td>
                         <StyledDropdown
                           options={jsonList.payment_status}
-                          value={"status"}
-                          onChange={(selectedValue) =>
-                            handleUpdateChange(selectedValue, 1, "status")
-                          }
-                          name="status"
-                          id="status"
-                          status_name={"Status"}
+                          value={state.payment_status}
+                          onChange={onInputChange}
+                          name="payment_status"
+                          id="payment_status"
+                          status_name={"payment status"}
                           width={"600"}
                           filterItemID={"40"}
                           setFilterListApiCall={setFilterListApiCall}
                         />
                       </td>
-
                       <td>
-                        {" "}
                         <TableInput
-                          value={"dupPayment"}
+                          value={state.duplicate_payment}
                           onChange={onInputChange}
-                          type="text"
-                          id="name"
-                          name="name"
+                          type="number"
+                          id="duplicate_payment"
+                          name="duplicate_payment"
                         />
                       </td>
                       <td>
                         {" "}
                         <TableInput
-                          value={"dueDate"}
+                          value={state.due_date}
                           onChange={onInputChange}
-                          type="text"
-                          id="name"
-                          name="name"
+                          type="date"
+                          id="due_date"
+                          name="due_date"
                         />
                       </td>
                       <td>
                         {" "}
                         <TableInput
-                          value={"method"}
+                          value={state.payment_method}
                           onChange={onInputChange}
                           type="text"
-                          id="name"
-                          name="name"
+                          id="payment_method"
+                          name="payment_method"
                         />
                       </td>
-                      
+                      {/* Button Column */}
+                      <td style={{ minWidth: "50px", textAlign: "center" }}>
+                        {loading === true ? (
+                          <button
+                            className="btn-sm btn-primary"
+                            type="button"
+                            disabled
+                          >
+                            <span
+                              className="spinner-border spinner-border-sm "
+                              role="status"
+                              aria-hidden="true"
+                            ></span>
+                            <span className="sr-only">Loading...</span>
+                          </button>
+                        ) :
+                          <> <button
+                            title="Submit"
+                            type="button"
+                            className="btn-sm btn-primary"
+                            onClick={(e) => AddPaymentRecord(e)}
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter") {
+                                e.preventDefault();  // Prevents form submission
+                                AddPaymentRecord();
+                              }
+                            }}
+                          >
+                            +
+                          </button>
+                            <button type="button" title="Cancel" onClick={() => {
+                              props.setShowAddForm(false)
+                              setState(initialFormState)
+                              setErrors({})
+                            }} className="btn-sm btn-dark mx-2">x</button>
+                          </>
+                        }
+                      </td>
                     </tr>
                   )}
-                  {records.map((record, index) => (
-                    <tr key={index}>
-                      <td>
-                        <TableInput
-                          value={record.name}
-                          onChange={onInputChange}
-                          type="text"
-                          id="name"
-                          name="name"
-                        />
-                        {/* {errors.name && (
-                          <span key={errors.name} className="text-danger font-size-3">
-                            {errors.name}
-                          </span>
-                        )} */}
-                      </td>
-                      <td>
-                        {" "}
-                        <TableInput
-                          value={record.referredBy}
-                          onChange={onInputChange}
-                          type="text"
-                          id="name"
-                          name="name"
-                        />
-                      </td>
-                      <td>
-                        <TableInput
-                          value={record.manager}
-                          onChange={onInputChange}
-                          type="text"
-                          id="name"
-                          name="name"
-                        />
-                      </td>
+                  {paymentRecordsList.length === 0 ?
+                    <tr>
+                      <td style={{ minWidth: "150px" }} colSpan={8}>No Data Found</td>
+                    </tr> :
+                    (paymentRecordsList || []).map((record, index) => (
+                      <tr key={index}>
+                        <td>
+                          <select
+                            name="user_id"
+                            value={record.user_id + "," + record.user_type}
+                            id="user_id"
+                            onChange={(e) => handleUpdateChange(e, record.id, "user_id")}
 
-                      {/* <td>{record.paymentStatus}</td> */}
-                      <td>
-                        <StyledDropdown
-                          options={jsonList.payment_status}
-                          value={record.paymentStatus}
-                          onChange={(selectedValue) =>
-                            handleUpdateChange(selectedValue, 1, "status")
+                            className="form-control mt-3"
+                          >
+                            <option value="">Select Applicant/Client</option>
+                            {(props.employeeEmployerlist || []).map((item, index) => {
+                              return (
+                                <option
+                                  className="text-capitalize"
+                                  key={index}
+                                  value={
+                                    item.employee_id
+                                      ? `${item.employee_id},employee`
+                                      : item.company_id
+                                        ? `${item.company_id},employer`
+                                        : `${item.id},applicant_type`
+                                  }
+                                >
+                                  {item.employee_id
+                                    ? item.name + " (Candidate)"
+                                    : item.company_id
+                                      ? item.company_name + " (Client)"
+                                      : item.title + " (Applicant Type)" || "unknown user"}
+                                </option>
+                              );
+                            })}
+                          </select>
+                        </td>
+                        <td>
+                          <select className="form-control" value={record.referred_by_id + "," + record.referred_by_type} id="referred_by_id" onChange={(e) => handleUpdateChange(e, record.id, "referred_by_id")}
+                            name="referred_by_id">
+                            <option>Select Refer by</option>
+                            {(props.adminList || []).map((item, index) => (
+                              <option value={`${item.admin_id},${item.admin_type}`} key={index}>{`${item.name} (${item.admin_type})`}</option>
+                            ))}
+                          </select>
+                        </td>
+                        <td>
+                          <select className="form-control" value={record.manager_id + "," + record.manager_type} id="manager_id" onChange={(e) => handleUpdateChange(e, record.id, "manager_id")}
+                            name="manager_id">
+                            <option>Select Refer by</option>
+                            {(props.adminList || []).map((item, index) => (
+                              <option value={`${item.admin_id},${item.admin_type}`} key={index}>{`${item.name} (${item.admin_type})`}</option>
+                            ))}
+                          </select>
+                        </td>
+
+                        {/* <td>{record.paymentStatus}</td> */}
+                        <td>
+                          <StyledDropdown
+                            options={jsonList.payment_status}
+                            value={record.paymentStatus}
+                            onChange={(selectedValue) =>
+                              handleUpdateChange(selectedValue, record.id, "payment_status")
+                            }
+                            name="payment_status"
+                            id="payment_status"
+                            status_name={"Payment status"}
+                            width={"600"}
+                            filterItemID={"40"}
+                            setFilterListApiCall={setFilterListApiCall}
+                          />
+                        </td>
+
+                        <td>
+                          {" "}
+                          <TableInput
+                            value={record.duplicate_payment}
+                            onChange={(e) => handleUpdateChange(e, record.id, "payment_status")}
+                            type="number"
+                            id="duplicate_payment"
+                            name="duplicate_payment"
+                          />
+                        </td>
+                        <td>
+                          {" "}
+                          <TableInput
+                            value={record.due_date}
+                            onChange={(e) => handleUpdateChange(e, record.id, "due_date")}
+                            type="date"
+                            id="due_date"
+                            name="due_date"
+                          />
+                        </td>
+                        <td>
+                          {" "}
+                          <TableInput
+                            value={record.payment_method}
+                            onChange={(e) => handleUpdateChange(e, record.id, "payment_method")}
+                            type="text"
+                            id="payment_method"
+                            name="payment_method"
+                          />
+                        </td>
+                        <td className={""} style={{ minWidth: "150px" }}>  <button
+                          className="btn 
+                                                            btn-outline-info action_btn "
+                          style={{
+                            fontSize: "10px",
+                            color: "red"
+                          }}
+                          type="button"
+                          onClick={() => {
+                            setDeleteAlertPaymentRecordData(record)
+                            setDeleteAlertPaymentRecord(true)
                           }
-                          name="status"
-                          id="status"
-                          status_name={"Status"}
-                          width={"600"}
-                          filterItemID={"40"}
-                          setFilterListApiCall={setFilterListApiCall}
-                        />
-                      </td>
-
-                      <td>
-                        {" "}
-                        <TableInput
-                          value={record.dupPayment}
-                          onChange={onInputChange}
-                          type="text"
-                          id="name"
-                          name="name"
-                        />
-                      </td>
-                      <td>
-                        {" "}
-                        <TableInput
-                          value={record.dueDate}
-                          onChange={onInputChange}
-                          type="text"
-                          id="name"
-                          name="name"
-                        />
-                      </td>
-                      <td>
-                        {" "}
-                        <TableInput
-                          value={record.method}
-                          onChange={onInputChange}
-                          type="text"
-                          id="name"
-                          name="name"
-                        />
-                      </td>
-                    
-                    </tr>
-                  ))}
+                          }
+                          title="Delete Payment Record">
+                          <FaTrash />
+                        </button></td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
             </form>

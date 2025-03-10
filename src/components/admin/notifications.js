@@ -25,7 +25,7 @@ function Notifications({
   let [totalNotificRow, setTotalNotificRow] = useState();
   let [notification, setNotiication] = useState([]);
   const [apicall, setApicall] = useState(false);
-  const [recordsPerPage, setRecordsPerPage] = useState(10);
+  const [recordsPerPage, setRecordsPerPage] = useState(20);
   let user_type = localStorage.getItem("userType");
   let admin_type = localStorage.getItem("admin_type");
   let loginuserId =
@@ -94,7 +94,7 @@ function Notifications({
 
   /*Function to load more data while scrolling */
   let handelScroll = (e) => {
-    // console.log(totalNotificRow, recordsPerPage, recordsPerPage <= totalNotificRow)
+    console.log(totalNotificRow, recordsPerPage, recordsPerPage <= totalNotificRow)
     if (recordsPerPage <= totalNotificRow) {
       setRecordsPerPage(recordsPerPage + 10);
     } else {
