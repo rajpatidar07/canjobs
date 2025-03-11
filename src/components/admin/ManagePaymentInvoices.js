@@ -6,22 +6,24 @@ import { FaAngleDown } from 'react-icons/fa';
 import { IoPersonCircleOutline } from 'react-icons/io5';
 import PaymentTable from '../common/PaymentTable';
 import { getallAdminData, getallEmployeeData, getAllEmployer } from '../../api/api';
-
+import { Link } from "react-router-dom"
 const ManagePayment = () => {
     const [showdropdown, setShowdropdown] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
+    const [selectedAdminType, setSelectedAdminType] = useState("");
+    const [selectedAdminId, setSelectedAdminId] = useState("");
     const [employeeEmployerlist, setEmployeeEmployerlist] = useState(false);
-    const [adminList, setAdminList] = useState([]);    const [showAddItemForm, setShowAddItemForm] = useState(false);
+    const [adminList, setAdminList] = useState([]); const [showAddItemForm, setShowAddItemForm] = useState(false);
     const [showfilterdropdown, setShowfilterdropdown] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
-    const [searchCandidate, setSearchCandidate] = useState("");
+    const [search, setSearch] = useState("");
     const dropdownRef = useRef(null);
+    /*function to get the user and admin data */
     const getUserData = async () => {
         try {
             const userData = await getallEmployeeData();
             const CompanyData = await getAllEmployer();
             const resAdmin = await getallAdminData()
-            console.log(resAdmin.data)
             setAdminList(resAdmin.data)
             let allUserData = []
             if (userData?.data?.length === 0 && CompanyData?.data?.length === 0) {
@@ -35,7 +37,9 @@ const ManagePayment = () => {
 
         }
     }
-
+    const filteredAdmins = adminList ? adminList?.filter(admin =>
+        admin?.name?.toLowerCase().includes(searchQuery.toLowerCase())
+    ) : []
     useEffect(() => {
         getUserData()
     }, [])
@@ -118,10 +122,11 @@ const ManagePayment = () => {
                                     onFocus={() => setIsFocused(true)}
                                     onBlur={() => setIsFocused(false)}
                                     style={{ height: "2.5rem" }}
-                                    value={searchCandidate}
-                                    onChange={(e) => setSearchCandidate(e.target.value)}
+                                    value={search}
+                                    onChange={(e) => setSearch(e.target.value)}
                                 />
                             </div>
+
 
                             {/* person dropdown */}
                             <div className="position-relative" ref={dropdownRef}>
@@ -151,7 +156,7 @@ const ManagePayment = () => {
                                                 onChange={(e) => setSearchQuery(e.target.value)}
                                             />
                                         </div>
-                                        {/* Admin List
+                                        {/* Admin List */}
                                         <ul className="list-unstyled d-flex align-items-center flex-wrap">
                                             {filteredAdmins.length > 0 ? (
                                                 filteredAdmins.map((admin) => (
@@ -161,6 +166,7 @@ const ManagePayment = () => {
                                                     >
                                                         <Link onClick={() => {
                                                             setSelectedAdminId(admin.admin_id)
+                                                            setSelectedAdminType(admin.admin_type)
                                                             setShowfilterdropdown((prev) => !prev);
                                                             setShowdropdown(false);
                                                             setSearchQuery("")
@@ -173,7 +179,7 @@ const ManagePayment = () => {
                                             ) : (
                                                 <p className="text-muted text-center">No results found</p>
                                             )}
-                                        </ul> */}
+                                        </ul>
                                     </div>
                                 )}
                             </div>
@@ -252,20 +258,24 @@ const ManagePayment = () => {
                             </div>
 
                             <button className="btn btn-primary" onClick={() => {
-                                // setSelectedAdminId("")
-                                // setSelectedAdminId("")
+                                setSelectedAdminId("")
+                                setSelectedAdminType("")
                                 setSearchQuery("")
 
                             }}>Reset</button>
                         </div>
 
                         {/* Payment Table */}
-                        <PaymentTable heading={"Payment Table"}
+                        <PaymentTable
+                            heading={"Payment Table"}
                             showAddForm={showAddItemForm}
-                            setShowAddForm={setShowAddItemForm} 
-                            employeeEmployerlist={employeeEmployerlist} 
+                            setShowAddForm={setShowAddItemForm}
+                            employeeEmployerlist={employeeEmployerlist}
                             adminList={adminList}
-                            />
+                            search={search}
+                            selectedAdminId={selectedAdminId}
+                            selectedAdminType={selectedAdminType}
+                        />
                     </div>
                 </div>
             </div>

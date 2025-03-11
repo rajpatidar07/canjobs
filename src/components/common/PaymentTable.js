@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
-import PaymentTableData from "../json/PaymentTableJson.json";
-// import TableInput from "../common/TableInput";
 import StyledDropdown from "../common/StyledDropDown";
 import TableInput from "../common/TableInput";
-import { AddUpdatePaymentInvoiceRecordApi, getAllInvioceRecord, GetFilter } from "../../api/api";
+import { AddUpdatePaymentInvoiceRecordApi, getAllInvioceRecord, GetFilter, DeletePaymentIvoiceRecord } from "../../api/api";
 import useValidation from "./useValidation";
 import { FaTrash } from "react-icons/fa";
-
+import Pagination from "../common/pagination"
+import SAlert from "../common/sweetAlert";
+import { toast } from "react-toastify";
+import Loader from "../common/loader";
 const PaymentTable = (props) => {
   let [filterListapiCall, setFilterListApiCall] = useState(false);
+  let [isLoading, setIsLoading] = useState(false);
   const [jsonList, setJsonList] = useState([]);
   const [paymentRecordsList, setPaymentRecordsList] = useState([]);
   const [totalData, setTotalData] = useState();
@@ -43,19 +45,30 @@ const PaymentTable = (props) => {
   }
   const { state, setState, setErrors, onInputChange, errors, validate } =
     useValidation(initialFormState, validators);
+  /*function to get the list */
   let getFilterList = async () => {
     try {
+      setIsLoading(true)
       let getPaymentRecData = {
         limit: recordsPerPage,
-        page: currentPage
+        page: currentPage,
+        search: props.search,
+        admin_id: props.selectedAdminId,
+        admin_type: props.selectedAdminType
 
       }
       let json = await GetFilter();
       let resRecords = await getAllInvioceRecord(getPaymentRecData);
-      setPaymentRecordsList(resRecords.data.data.data)
-      setTotalData(resRecords.data.data.total_rows)
+      if (resRecords.data.status === 1 || resRecords.data.status === "1") {
+        setIsLoading(false)
+        setTotalData(resRecords.data.data.total_rows)
+        setPaymentRecordsList(resRecords.data.data.data)
+      } else {
+        setIsLoading(false)
+      }
       setJsonList(json.data.data);
     } catch (err) {
+      setIsLoading(false)
       console.log(err);
     }
   };
@@ -66,9 +79,13 @@ const PaymentTable = (props) => {
       setFilterListApiCall(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterListapiCall]);
+  }, [filterListapiCall,
+    props.search,
+    props.selectedAdminId,
+    props.selectedAdminType]);
 
-  const handleUpdateChange = (e, id, field) => {
+  /*FUnction to update the payment invoice record */
+  const handleUpdateChange = async (e, id, field) => {
     if (e && e.preventDefault) {
       e.preventDefault();
     }
@@ -80,23 +97,60 @@ const PaymentTable = (props) => {
     } else {
       data[field] = e.target.value;
     }
-    return AddUpdatePaymentInvoiceRecordApi(data);
-  };
-
-  /*function to add payment record  */
-  const AddPaymentRecord = async () => {
     try {
-      setLoading(true)
-      let res = await AddUpdatePaymentInvoiceRecordApi(state)
+      let res = await AddUpdatePaymentInvoiceRecordApi(data);
       if (res.data.status === 1 || res.data.status === "1") {
-        setErrors({})
-        setState(initialFormState)
-        setLoading(false)
-        props.setShowAddForm(false)
+        toast.success("Invoice Record Updated successfully !", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setFilterListApiCall(true)
       }
     } catch (err) {
+      console.log(err);
+    }
+  };
+  /*function to add payment record  */
+  const AddPaymentRecord = async () => {
+    if (validate()) {
+      try {
+        setLoading(true)
+        let res = await AddUpdatePaymentInvoiceRecordApi(state)
+        if (res.data.status === 1 || res.data.status === "1") {
+          toast.success("Invoice Record Added successfully !", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setErrors({})
+          setState(initialFormState)
+          setLoading(false)
+          props.setShowAddForm(false)
+          setFilterListApiCall(true)
+        }
+      } catch (err) {
+        console.log(err)
+        setLoading(false)
+
+      }
+    }
+  }
+  /*function to delete the invoice record */
+  const deletePaymentInoiceRecord = async (id) => {
+    try {
+      let data = {
+        id: id
+      }
+      let res = await DeletePaymentIvoiceRecord(data)
+      if (res.data.status === 1) {
+        toast.error("Invoice Record has been deleted !", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setDeleteAlertPaymentRecord(false)
+        setDeleteAlertPaymentRecordData({})
+      };
+    } catch (err) {
       console.log(err)
-      setLoading(false)
 
     }
   }
@@ -112,9 +166,11 @@ const PaymentTable = (props) => {
         <div
           className={"bg-white shadow-8 datatable_div pt-7 rounded pb-9 px-5"}
         >
-          <div className="table-responsive">
-            <form>
-              <table className="table table-striped main_data_table text-center align-middle">
+          <div >
+            <form className="table-responsive main_table_div">
+              {isLoading ? (
+                <Loader />
+              ) : <table className="table table-striped main_data_table text-center align-middle">
                 <thead>
                   <tr className="py-2">
                     {[
@@ -213,7 +269,6 @@ const PaymentTable = (props) => {
                             manager_id,
                             manager_type,
                           }));
-                          console.log(manager_id, manager_type)
                         }} id="manager_id" name="manager_id">
                           <option>Select Manager</option>
                           {(props.adminList || []).map((item, index) => (
@@ -315,7 +370,6 @@ const PaymentTable = (props) => {
                             value={record.user_id + "," + record.user_type}
                             id="user_id"
                             onChange={(e) => handleUpdateChange(e, record.id, "user_id")}
-
                             className="form-control mt-3"
                           >
                             <option value="">Select Applicant/Client</option>
@@ -360,12 +414,10 @@ const PaymentTable = (props) => {
                             ))}
                           </select>
                         </td>
-
-                        {/* <td>{record.paymentStatus}</td> */}
                         <td>
                           <StyledDropdown
                             options={jsonList.payment_status}
-                            value={record.paymentStatus}
+                            value={record.payment_status}
                             onChange={(selectedValue) =>
                               handleUpdateChange(selectedValue, record.id, "payment_status")
                             }
@@ -377,7 +429,6 @@ const PaymentTable = (props) => {
                             setFilterListApiCall={setFilterListApiCall}
                           />
                         </td>
-
                         <td>
                           {" "}
                           <TableInput
@@ -409,8 +460,7 @@ const PaymentTable = (props) => {
                           />
                         </td>
                         <td className={""} style={{ minWidth: "150px" }}>  <button
-                          className="btn 
-                                                            btn-outline-info action_btn "
+                          className="btn  btn-outline-info action_btn "
                           style={{
                             fontSize: "10px",
                             color: "red"
@@ -427,22 +477,40 @@ const PaymentTable = (props) => {
                       </tr>
                     ))}
                 </tbody>
-              </table>
+              </table>}
             </form>
           </div>
 
           {/* Pagination Controls */}
-          {/* <div className="pt-2">
-                        <Pagination
-                            nPages={nPages}
-                            currentPage={currentPage}
-                            setCurrentPage={setCurrentPage}
-                            total={callLogData.length}
-                            count={
-                                totalData
-                            }
-                        />
-                    </div> */}
+          <div className="pt-2">
+            <Pagination
+              nPages={nPages}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              total={paymentRecordsList.length}
+              count={
+                totalData
+              }
+            />
+            <SAlert
+              show={deleteAlertPaymentRecord}
+              title={props?.employeeEmployerlist ?
+                props?.employeeEmployerlist
+                  .filter((item) =>
+                    item.employee_id
+                      ? item.employee_id === deleteAlertPaymentRecordData?.user_id
+                      : item.company_id === deleteAlertPaymentRecordData?.user_id
+                  )
+                  .map((item) => (item.employee_id ? item.name : item.company_name))[0] : "Payment Invoice record"}
+              text="Are you Sure you want to delete !"
+              onConfirm={() => deletePaymentInoiceRecord(deleteAlertPaymentRecordData?.id)}
+              showCancelButton={true}
+              onCancel={() => {
+                setDeleteAlertPaymentRecord(false)
+                setDeleteAlertPaymentRecordData({})
+              }}
+            />
+          </div>
         </div>
       </div>
       {/* <ModalSidebar

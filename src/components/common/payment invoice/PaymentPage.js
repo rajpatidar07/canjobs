@@ -9,6 +9,7 @@ import Pagination from "../pagination"
 import { toast } from "react-toastify";
 import Loader from "../loader";
 import PaymentInvoiceForm from "../../forms/payment invoice/PaymentInvoiceForm";
+import { FiAlertCircle } from "react-icons/fi";
 const Payment_Page = (props) => {
   const [openAddPaymentForm, setOpenAddPaymentForm] = useState(false);
   const [openPaymentReminder, setOpenPaymentReminder] = useState(false);
@@ -154,6 +155,12 @@ const Payment_Page = (props) => {
                   scope="col"
                   className="border-0 font-size-4 font-weight-normal"
                 >
+                  status
+                </th>
+                <th
+                  scope="col"
+                  className="border-0 font-size-4 font-weight-normal"
+                >
                   Due date
                 </th>
                 <th
@@ -199,6 +206,12 @@ const Payment_Page = (props) => {
                         <span className="p-1">
                           <ConvertTime _date={item.created_at} format={"DD MMMM, YYYY"} />
                         </span>
+                      </p>
+                    </td>
+                    <td>
+                      <p className="font-size-2 font-weight-normal mb-0">
+                        {parseInt(item.status) === 1 ? <span className="p-1 text-green">Payment recevied</span> : parseInt(item.status) === 2 ? <span className="p-1 text-warning">Pending</span> : <span className="p-1 text-danger"> <FiAlertCircle /> Overdue on <ConvertTime _date={item.due_date} format={"DD/MM/YYYY"} /></span>
+                        }
                       </p>
                     </td>
                     <td>

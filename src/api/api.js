@@ -3851,7 +3851,18 @@ export const getAllInvioceRecord = async (data) => {
   );
   return response;
 }
-
+/*Api to delete invoice record*/
+export const DeletePaymentIvoiceRecord = async (data) => {
+  const response = await axios.post(`${API_URL}admin/deleteInvoice`,
+    data, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: Token,
+    },
+  }
+  );
+  return response;
+}
 
 /*Api to ad update invoice */
 export const getAllInvioce = async (data) => {
