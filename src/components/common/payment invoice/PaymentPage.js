@@ -210,8 +210,13 @@ const Payment_Page = (props) => {
                     </td>
                     <td>
                       <p className="font-size-2 font-weight-normal mb-0">
-                        {parseInt(item.status) === 1 ? <span className="p-1 text-green">Payment recevied</span> : parseInt(item.status) === 2 ? <span className="p-1 text-warning">Pending</span> : <span className="p-1 text-danger"> <FiAlertCircle /> Overdue on <ConvertTime _date={item.due_date} format={"DD/MM/YYYY"} /></span>
-                        }
+                        {item.status
+                          ? parseInt(item.status) === 1
+                            ? <span className="p-1 bg-primary-opacity-8 text-white  border rounded-pill">Payment received</span>
+                            : parseInt(item.status) === 2
+                              ? <span className="p-1 bg-warning text-white  border rounded-pill">Pending</span>
+                              : <span className="p-1 bg-danger text-white  border rounded-pill"> <FiAlertCircle /> Overdue on <ConvertTime _date={item.due_date} format={"DD/MM/YYYY"} /></span>
+                          : "N/A"}
                       </p>
                     </td>
                     <td>

@@ -1712,58 +1712,124 @@
 //     );
 // };
 // export default Newpdf;
+// import React, { useState } from "react";
+// import { LuEye } from "react-icons/lu";
+
+// const Newpdf = ({ messages = [
+//     {
+//         id: 1,
+//         text: "Hello World",
+//         viewedBy: [
+//             { id: 1, name: "John Doe", email: "john@example.com", profilePic: "https://i.pravatar.cc/40?img=1" },
+//             { id: 2, name: "", email: "admin@example.com", profilePic: "https://i.pravatar.cc/40?img=2" },
+//             { id: 3, name: "John Doe", email: "john@example.com", profilePic: "https://i.pravatar.cc/40?img=1" },
+//             { id: 4, name: "", email: "admin@example.com", profilePic: "https://i.pravatar.cc/40?img=2" },
+//             { id: 5, name: "John Doe", email: "john@example.com", profilePic: "https://i.pravatar.cc/40?img=1" },
+//             { id: 6, name: "", email: "admin@example.com", profilePic: "https://i.pravatar.cc/40?img=2" },
+//             { id: 7, name: "John Doe", email: "john@example.com", profilePic: "https://i.pravatar.cc/40?img=1" },
+//             { id: 8, name: "", email: "admin@example.com", profilePic: "https://i.pravatar.cc/40?img=2" },
+//         ],
+//     },
+// ] }) => {
+//     const [hoveredMessage, setHoveredMessage] = useState(null);
+
+//     return (
+//         <div className="p-3">
+//         {messages.map((msg) => (
+//           <div key={msg.id} className="border rounded p-3 mb-3 d-flex justify-content-between align-items-center">
+//             <p className="mb-0">{msg.text}</p>
+//             <div className="position-relative d-inline-block" onMouseLeave={() => setHoveredMessage(null)}>
+//               <LuEye className="cursor-pointer" onMouseEnter={() => setHoveredMessage(msg.id)} />
+//               {hoveredMessage === msg.id && (
+//                 <div
+//                   className="position-absolute bg-white border rounded p-2 shadow d-flex gap-2"
+//                   style={{ top: "100%", left: "50%", transform: "translateX(-50%)" }}
+//                 >
+//                   {msg.viewedBy.map((user) => (
+//                     <div key={user.id} className="position-relative">
+//                       <img
+//                         src={user.profilePic}
+//                         alt={user.name || user.email}
+//                         title={user.name || user.email}
+
+//                       className="rounded-circle border"
+//                       style={{ width: "40px", height: "40px", objectFit: "cover" }}
+//                       />
+//                     </div>
+//                   ))}
+//                 </div>
+//               )}
+//             </div>
+//           </div>
+//         ))}
+//       </div>
+//     );
+// };
+
+// export default Newpdf;
 import React, { useState } from "react";
-import { LuEye } from "react-icons/lu";
 
-const Newpdf = ({ messages = [
-    {
-        id: 1,
-        text: "Hello World",
-        viewedBy: [
-            { id: 1, name: "John Doe", email: "john@example.com", profilePic: "https://i.pravatar.cc/40?img=1" },
-            { id: 2, name: "", email: "admin@example.com", profilePic: "https://i.pravatar.cc/40?img=2" },
-            { id: 3, name: "John Doe", email: "john@example.com", profilePic: "https://i.pravatar.cc/40?img=1" },
-            { id: 4, name: "", email: "admin@example.com", profilePic: "https://i.pravatar.cc/40?img=2" },
-            { id: 5, name: "John Doe", email: "john@example.com", profilePic: "https://i.pravatar.cc/40?img=1" },
-            { id: 6, name: "", email: "admin@example.com", profilePic: "https://i.pravatar.cc/40?img=2" },
-            { id: 7, name: "John Doe", email: "john@example.com", profilePic: "https://i.pravatar.cc/40?img=1" },
-            { id: 8, name: "", email: "admin@example.com", profilePic: "https://i.pravatar.cc/40?img=2" },
-        ],
-    },
-] }) => {
-    const [hoveredMessage, setHoveredMessage] = useState(null);
+const Newpdf = () => {
+  const [options, setOptions] = useState(["Due on receipt", "Net 15", "Net 30", "Net 60"]);
+  const [selectedOption, setSelectedOption] = useState("Net 30");
+  const [showInput, setShowInput] = useState(false);
+  const [newTerm, setNewTerm] = useState("");
 
-    return (
-        <div className="p-3">
-        {messages.map((msg) => (
-          <div key={msg.id} className="border rounded p-3 mb-3 d-flex justify-content-between align-items-center">
-            <p className="mb-0">{msg.text}</p>
-            <div className="position-relative d-inline-block" onMouseLeave={() => setHoveredMessage(null)}>
-              <LuEye className="cursor-pointer" onMouseEnter={() => setHoveredMessage(msg.id)} />
-              {hoveredMessage === msg.id && (
-                <div
-                  className="position-absolute bg-white border rounded p-2 shadow d-flex gap-2"
-                  style={{ top: "100%", left: "50%", transform: "translateX(-50%)" }}
-                >
-                  {msg.viewedBy.map((user) => (
-                    <div key={user.id} className="position-relative">
-                      <img
-                        src={user.profilePic}
-                        alt={user.name || user.email}
-                        title={user.name || user.email}
+  const handleSelect = (option) => {
+    setSelectedOption(option);
+    setShowInput(false); // Hide input field when selecting an existing option
+  };
 
-                      className="rounded-circle border"
-                      style={{ width: "40px", height: "40px", objectFit: "cover" }}
-                      />
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
-    );
+  const handleAddNew = () => {
+    if (newTerm.trim() !== "" && !options.includes(newTerm)) {
+      setOptions([...options, newTerm]);
+      setSelectedOption(newTerm);
+      setNewTerm("");
+    }
+    setShowInput(false);
+  };
+  console.log(showInput);
+  return (
+    <div className="dropdown-container">
+      {showInput ?
+        <div className="add-new-container">
+          <input
+            type="text"
+            placeholder="Enter new term"
+            value={newTerm}
+            onChange={(e) => setNewTerm(e.target.value)}
+            className="add-new-input"
+          />
+          <button onClick={handleAddNew} className="add-new-button">Add</button>
+        </div>
+        : <select
+          value={selectedOption}
+          onChange={(e) => handleSelect(e.target.value)}
+          className="dropdown-select"
+        >
+          <option value={""}>Selectb term</option>
+          <option onClick={() => setShowInput(true)}>+ Add new</option>
+          {options.map((option, index) => (
+            <option key={index} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+      }
+      {showInput && (
+        <div className="add-new-container">
+          <input
+            type="text"
+            placeholder="Enter new term"
+            value={newTerm}
+            onChange={(e) => setNewTerm(e.target.value)}
+            className="add-new-input"
+          />
+          <button onClick={handleAddNew} className="add-new-button">Add</button>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default Newpdf;

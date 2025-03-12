@@ -2,13 +2,19 @@ import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import useValidation from "../../common/useValidation";
 // import Fatrash from "react-icons/fa"
-
 import { CiTrash } from "react-icons/ci";
-import { AddUpdatePaymentInvoiceApi } from "../../../api/api";
+import { AddFIlter, AddUpdatePaymentInvoiceApi, GetFilter } from "../../../api/api";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const PaymentInvoiceForm = (props) => {
   let [loading, setLoading] = useState(false)
+  let [showTermsInput, setShowTermsInput] = useState(false)
+  let [json, setJson] = useState()
+  let [newTerms, setNewTerms] = useState("")
+  let [termsErrors, setTermsErrors] = useState("")
+  let [addTermsloading, setAddTermsLoading] = useState(false)
+
   const initialFormState =
   {
     invoice_no: parseInt(props.lastInvoiceNo) + 1,
@@ -19,7 +25,7 @@ const PaymentInvoiceForm = (props) => {
     referred_by_type: "",//Creating by admin type
     manager_id: "",//assigning manger ( admin id)
     manager_type: "",//assigning manger ( admin type)
-    payment_status: "",
+    payment_Terms: "",
     duplicate_payment: "",
     due_date: "",
     payment_method: "",
@@ -34,12 +40,24 @@ const PaymentInvoiceForm = (props) => {
     message_on_invoice: "",
     message_on_statement: "",
     amounts_are: "",
-    gst_percentage: ""
+    gst_percentage: "",
+    status: props.singleInvoiceData ? props.singleInvoiceData.status : 2
   }
     ;
   const { state, setState, onInputChange, /*errors, validate*/ } = useValidation(
     initialFormState,);
+  /*Function to get the  payment invoice terms list */
+  let GetAllJsonList = async () => {
+    try {
+      let res = await GetFilter()
+      setJson(res.data.data)
+      console.log(res)
+    } catch (err) {
+      console.log(err);
+    }
+  }
   useEffect(() => {
+    GetAllJsonList()
     if (props.singleInvoiceData) {
       const updatedData = {
         ...props.singleInvoiceData,
@@ -47,12 +65,45 @@ const PaymentInvoiceForm = (props) => {
       };
 
       setState(updatedData); // Set updated state
-      console.log(updatedData);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.singleInvoiceData]);
 
+  /*Function to add the new term */
+  let onAddNewTermsClick = async (event) => {
+    event.preventDefault();
 
+    if (newTerms) {
+      let data = {
+        json_item: newTerms,
+      };
+      try {
+        /*Id for the payment_invoice_terms is 42 */
+        const responseData = await AddFIlter(data, 42);
+        if (responseData.message === "item already exist !") {
+          setTermsErrors("Terms already exist !");
+          setNewTerms("");
+          setLoading(false);
+        }
+        if (responseData.message === "filter item added successfully") {
+          toast.success("Terms added successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          setShowTermsInput(false);
+          setNewTerms("");
+          setAddTermsLoading(false);
+          setTermsErrors("");
+        }
+      } catch (err) {
+        console.log(err);
+        setAddTermsLoading(false);
+        setTermsErrors("");
+      }
+    } else {
+      alert("No Terms found");
+    }
+  }
 
   /*Function to close the modal */
   let close = () => {
@@ -60,6 +111,7 @@ const PaymentInvoiceForm = (props) => {
     setState(initialFormState)
     setLoading(false)
   }
+
   /*function to submit payment invoice  form */
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -242,13 +294,86 @@ const PaymentInvoiceForm = (props) => {
           {/* second row */}
           <div className=" row mt-8">
             <div className="form-group col-md-3 p-1">
-              <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold">
-                Terms
-              </label>
-              <select name="terms" id="" className="form-control" value={state.terms} onChange={onInputChange}>
+              <div className="d-flex flex-column">
+                <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold">
+                  Terms
+                </label>
+                <div className="d-flex  align-items-center mb-2">
+                  <select
+                    name="terms" id="terms"
+                    className={`form-control text-capitalize ${showTermsInput ? "" : "flex-grow-1 me-2"
+                      }`}
+                    value={state.terms} onChange={onInputChange}
+                  >
+                    <option value="">Select Terms</option>
+                    {(json?.payment_invoice_terms || []).map((item) => (
+                      <option key={item.id} value={item.id}>
+                        {item.value}
+                      </option>
+                    ))}
+                  </select>
+                  {showTermsInput ? (
+                    <Link
+                      className="btn-sm btn-light rounded-3 p-2"
+                      onClick={() => setShowTermsInput(false)}
+                      title="Close"
+                    >
+                      x
+                    </Link>
+                  ) : (
+                    <Link
+                      className="btn-sm btn-primary rounded-3 p-2 mx-1"
+                      onClick={() => setShowTermsInput(true)}
+                      title="Add New Option"
+                    >
+                      +
+                    </Link>
+                  )}
+                </div>
+                {showTermsInput && (
+                  <div className="d-flex align-items-center">
+                    <div>
+                      <input
+                        type="text"
+                        className="form-control mb-2"
+                        placeholder="Enter Terms"
+                        value={newTerms}
+                        onChange={(e) => setNewTerms(e.target.value)}
+                      />
+                      {termsErrors && (
+                        <small className="text-danger">{termsErrors}</small>
+                      )}
+                    </div>
+                    {addTermsloading ? (
+                      <Link
+                        className="btn-sm btn-primary rounded-3 p-2"
+                        type="button"
+                        disabled
+                      >
+                        <span
+                          className="spinner-border spinner-border-sm me-2"
+                          // eslint-disable-next-line jsx-a11y/aria-role
+                          role="terms"
+                          aria-hidden="true"
+                        ></span>
+                        ...
+                      </Link>
+                    ) : newTerms ? (
+                      <Link
+                        className="btn-sm btn-primary rounded-3 p-2 mx-1"
+                        onClick={onAddNewTermsClick}
+                        title="Save Terms"
+                      >
+                        ➡
+                      </Link>
+                    ) : null}
+                  </div>
+                )}
+              </div>
+              {/* <select name="terms" id="" className="form-control" value={state.terms} onChange={onInputChange}>
                 <option value="1">New 30</option>
                 <option value="2">user 1</option>
-              </select>
+              </select> */}
             </div>
             <div className="form-group col-md-3 p-1">
               <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold">
@@ -487,7 +612,7 @@ const PaymentInvoiceForm = (props) => {
               </ul>
             </div>
           </div>
-          <div className="text-center mb-5">
+          <div className="text-center mb-5 px-3">
             <button
               type="button"
               className="btn btn-primary btn-small w-25 mt-5 rounded-5 text-uppercase p-8"
