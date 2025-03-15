@@ -1035,9 +1035,9 @@ function PersonalDetails(props) {
 
                         return (
                           <option key={index} value={interest.id}>
-                            {interest.title}{" "}
+                            {interest?.title}{" "}
                             {interest.level !== "0" ? (
-                              <small>( {parent.title} sub type)</small>
+                              <small>( {parent?.title} sub type)</small>
                             ) : null}
                           </option>
                         );
@@ -1082,7 +1082,7 @@ function PersonalDetails(props) {
                         <option value={""}>Select Sub Type</option>
                         {(applicantTypeList.filter((item) => item.parent_id === state.interested_in_id) || []).map((subType, index) => (
                           <option key={index} value={subType.id} >
-                            {subType.title}
+                            {subType?.title}
                           </option>
                         ))}
                       </select>
@@ -1110,7 +1110,7 @@ function PersonalDetails(props) {
                           htmlFor="sub_category_id"
                           className="font-size-4 text-black-2 font-weight-semibold text-capitalize line-height-reset"
                         >
-                          {applicantTypeList.find((item) => item.id === state.category_id)?.title} Sub Type:
+                          {applicantTypeList.find((item) => item.id === state.category_id)??.title} Sub Type:
                         </label>
                         <select
                           name="sub_category_id"
@@ -1122,7 +1122,7 @@ function PersonalDetails(props) {
                           <option value={""}>Select Sub Type</option>
                           {(applicantTypeList.filter((item) => item.parent_id === state.category_id) || []).map((subType, index) => (
                             <option key={index} value={subType.id} >
-                              {subType.title}
+                              {subType?.title}
                             </option>
                           ))}
                         </select>

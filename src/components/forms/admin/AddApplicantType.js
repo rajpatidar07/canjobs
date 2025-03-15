@@ -15,6 +15,7 @@ export default function AddApplicantType(props) {
         selectedParent: "",
         selectedChild: "",
         level: 0,
+        admin_access_id: ""
     };
 
     // VALIDATION CONDITIONS
@@ -49,7 +50,7 @@ export default function AddApplicantType(props) {
             setApicall(false)
         }
         if (props?.updateApplicantTypeData?.id) {
-            setState({ ...state, title: props.updateApplicantTypeData.title, selectedParent: props?.updateApplicantTypeData?.parent_id, level: props?.updateApplicantTypeData?.level });
+            setState({ ...state, title: props.updateApplicantTypeData.title, selectedParent: props?.updateApplicantTypeData?.parent_id, level: props?.updateApplicantTypeData?.level, admin_access_id: props?.updateApplicantTypeData.admin_access_id });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [apicall, props?.updateApplicantTypeData])
@@ -97,6 +98,7 @@ export default function AddApplicantType(props) {
                 title: state.title,
                 parent_id: state.level === 2 ? state.selectedChild : state.selectedParent,
                 level: state.level, // Dynamic level
+                admin_access_id: state.admin_access_id
             };
             try {
                 const response = await AddApplicanTypeApi(newItem);
@@ -132,6 +134,25 @@ export default function AddApplicantType(props) {
             }
         }
     };
+    // Handle checkbox selection
+    const handleCheckboxChange = (id) => {
+        setState((prevState) => {
+            let selectedIds = prevState.admin_access_id ? prevState.admin_access_id.split(",") : [];
+
+            if (selectedIds.includes(id.toString())) {
+                // Remove the ID if already selected
+                selectedIds = selectedIds.filter((adminId) => adminId !== id.toString());
+            } else {
+                // Add the ID if not selected
+                selectedIds.push(id.toString());
+            }
+
+            return {
+                ...prevState,
+                admin_access_id: selectedIds.join(",") // Convert array back to comma-separated string
+            };
+        });
+    };
 
     return (
         <Modal
@@ -153,7 +174,7 @@ export default function AddApplicantType(props) {
                 <form onSubmit={(e) => addApplicantTypeClick(e)}>
                     <h5 className="text-center mb-7">Add Applicant Type </h5>
                     <div className="row">
-                        <div className="form-group col">
+                        <div className="form-group col-6">
                             <label
                                 htmlFor="title"
                                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -170,7 +191,7 @@ export default function AddApplicantType(props) {
                             />
                             {errors.title && <p style={{ color: "red" }}>{errors.title}</p>}
                         </div>
-                        <div className={props.updateApplicantTypeData ? "d-none" : "form-group col"}>
+                        <div className={props.updateApplicantTypeData ? "d-none" : "form-group col-6"}>
                             <label
                                 htmlFor="selectedParent"
                                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
@@ -184,7 +205,27 @@ export default function AddApplicantType(props) {
                                 ))}
                             </select>
                         </div>
-
+                        <div classNme="form-group col-12">
+                            <label
+                                htmlFor="access_admin_id"
+                                className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                            >
+                                Grant access to the admin :
+                            </label>
+                            <ul className="list-unstyled row px-8 d-flex">
+                                {(props.admins || []).map((admin) => (
+                                    <li li key={admin.id} className="col d-flex gap-2" >
+                                        <input
+                                            type="checkbox"
+                                            className="form-check-input"
+                                            checked={state?.admin_access_id?.includes(admin.admin_id)}
+                                            onChange={() => handleCheckboxChange(admin.admin_id)}
+                                        />
+                                        <label className="form-check-label">{admin.name}</label>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
                         <div className="form-group col d-none">
                             <label
                                 htmlFor="selectedChild"
@@ -224,7 +265,7 @@ export default function AddApplicantType(props) {
                         )}
                     </div>
                 </form>
-            </div>
-        </Modal>
+            </div >
+        </Modal >
     );
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import ApplicantTypeTable from "../common/ApplicantTypeTable";
 import AdminHeader from "./header";
 import AdminSidebar from "../admin/sidebar";
-import { getApplicanTypeApi } from "../../api/api";
+import { getallAdminData, getApplicanTypeApi } from "../../api/api";
 import AddApplicantType from "../forms/admin/AddApplicantType";
 
 export default function ManageApplicantType(props) {
@@ -11,6 +11,7 @@ export default function ManageApplicantType(props) {
   // const [searcherror, setSearchError] = useState("");
   const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
   const [allApplicantType, setAllApplicantType] = useState([]);
+  const [allAdmin, setAllAdmin] = useState([]);
   const [apiCall, setApiCall] = useState(false);
   const [updateApplicantTypeData, setUpdateApplicantTypeData] = useState();
   const liRefs = useRef([]);
@@ -19,7 +20,9 @@ export default function ManageApplicantType(props) {
   const getAllSlotsData = async () => {
     try {
       let response = await getApplicanTypeApi();
+      let Adminresponse = await getallAdminData();
       setAllApplicantType(response.data.data);
+      setAllAdmin(Adminresponse.data)
     } catch (err) {
       console.log(err);
     }
@@ -66,7 +69,7 @@ export default function ManageApplicantType(props) {
               <div className="page___heading">
                 <h3 className="font-size-6 mb-0">Applicant Type</h3>
               </div> </div>
-            <AddApplicantType
+            {showApplicantTypeForm && <AddApplicantType
               show={showApplicantTypeForm}
               close={() => {
                 setShowApplicantTypeForm(false);
@@ -74,8 +77,9 @@ export default function ManageApplicantType(props) {
               }}
               setApicall={setApiCall}
               apicall={apiCall}
+              admins={allAdmin}
               updateApplicantTypeData={updateApplicantTypeData}
-            />
+            />}
             <div className="d-flex justify-content-end">
               <button
                 className="font-size-3 rounded-3 btn btn-primary border-0 mr-4"

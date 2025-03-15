@@ -14,6 +14,7 @@ import {
   BsQrCodeScan,
   BsReverseLayoutTextSidebarReverse,
 } from "react-icons/bs";
+import { toast } from "react-toastify"
 import { PiApplePodcastsLogoThin } from "react-icons/pi";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { TbFilterPlus } from "react-icons/tb";
@@ -22,7 +23,9 @@ import { FaRegUser } from "react-icons/fa";
 import { SiStudyverse } from "react-icons/si";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 import { FaPersonShelter } from "react-icons/fa6";
-import { getApplicanTypeApi } from "../../api/api";
+import { AddApplicanTypeApi, DeleteApplicanTypeApi, getApplicanTypeApi } from "../../api/api";
+import TableInput from "../common/TableInput";
+import SAlert from "../common/sweetAlert";
 const AdminSidebar = (props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(
     localStorage.getItem("isMenuOpen")
@@ -31,6 +34,16 @@ const AdminSidebar = (props) => {
   let admin_type = localStorage.getItem("admin_type");
   let user_type = localStorage.getItem("userType");
   const [openParent, setOpenParent] = useState(null);
+  const [apiCall, setApiCall] = useState(false);
+  const [items, setItems] = useState(
+    applicanttypedata.filter((item) => item.parent_id === "0")
+  );
+  let [showDropDown, setShowDropDown] = useState()
+  const [deleteAlertApplicantTypeData, setDeleteAlertApplicantTypeData] =
+    useState(false);
+  const [deleteAlertApplicant, setDeleteAlertApplicant] =
+    useState(false);
+  const [draggedItemIndex, setDraggedItemIndex] = useState(null);
 
   useEffect(() => {
     // Keep parent open if a child is active
@@ -38,7 +51,10 @@ const AdminSidebar = (props) => {
     if (activeChild) {
       setOpenParent(activeChild.parent_id);
     }
-  }, [props.heading, applicanttypedata]);
+    if (apiCall === true) {
+      setApiCall(false)
+    }
+  }, [apiCall, props.heading, applicanttypedata]);
 
   const toggleChildren = (parentId, hasChildren) => {
     if (hasChildren) {
@@ -66,6 +82,7 @@ const AdminSidebar = (props) => {
     try {
       let response = await getApplicanTypeApi();
       setApplicanttypedata(response.data.data);
+      setItems(response.data.data.filter((item) => item.parent_id === "0"))
     } catch (err) {
       console.log(err);
     }
@@ -83,12 +100,99 @@ const AdminSidebar = (props) => {
     getAllSlotsData();
   }, [])
 
+  const handleDragStart = (index) => {
+    setDraggedItemIndex(index);
+  };
+
+  const handleDragOver = (e, index) => {
+    e.preventDefault();
+    if (draggedItemIndex === index) return;
+
+    const updatedItems = [...items];
+    const draggedItem = updatedItems.splice(draggedItemIndex, 1)[0];
+    updatedItems.splice(index, 0, draggedItem);
+
+    setDraggedItemIndex(index);
+    setItems(updatedItems);
+  };
+
+  const handleDragEnd = () => {
+    setDraggedItemIndex(null);
+  };
+  //  Handle Update Input Change
+  const handleUpdateChange = async (e, item, field) => {
+    if (e && e.preventDefault) {
+      e.preventDefault();
+    }
+    let data =
+    {
+      "id": item.id,
+      "level": item.level,
+      "parent_id": item.parent_id,
+      [field]: e.target.value,
+      "admin_access_id": item.admin_access_id,
+    }
+    let res = await AddApplicanTypeApi(data);
+    if (res.status === 1 || res.status === "1") {
+      setApiCall(true)
+    }
+  };
+  /*To call Api to delete employee */
+  async function deleteApplicantType(id) {
+    let data = {
+      id: id,
+    };
+    try {
+      const response = await DeleteApplicanTypeApi(data);
+      if (response.status === 1 || response.status === "1") {
+        toast.error("Applicant Type deleted Successfully", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setDeleteAlertApplicant(false)
+        setDeleteAlertApplicantTypeData();
+        setApiCall(true);
+        setShowDropDown()
+      }
+      if (response.message === "This applicant type cannot be deleted because it is used for applicant") {
+        toast.error(response.message, {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setDeleteAlertApplicant(false)
+        setDeleteAlertApplicantTypeData();
+        setShowDropDown()
+      }
+      if (response.message === "This applicant type cannot be deleted because it has a sub-applicant type.") {
+        toast.error(response.message, {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setDeleteAlertApplicant(false)
+        setDeleteAlertApplicantTypeData();
+        setShowDropDown()
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <div
       className={`dashboard-sidebar-wrapper pt-5 sidebar_parent ${isMenuOpen ? "show" : ""
         }`}
       id="sidebar"
     >
+      <SAlert
+        show={deleteAlertApplicant}
+        title={deleteAlertApplicantTypeData?.title}
+        text="Are you Sure you want to delete !"
+        onConfirm={() => deleteApplicantType(deleteAlertApplicantTypeData.id)}
+        showCancelButton={true}
+        onCancel={() =>
+          setDeleteAlertApplicant(false)
+        }
+      />
       <Link
         to={""}
         onClick={() => {
@@ -692,79 +796,121 @@ const AdminSidebar = (props) => {
               </Link>
             </li>
           ))} */}
-        {applicanttypedata
-          .filter((item) => item.parent_id === "0")
-          .map((item) => {
-            const children = applicanttypedata.filter((child) => child.parent_id === item.id);
-            const hasChildren = children.length > 0;
-            return (
-              <li
-                key={item.id}
-                className={`position-relative ${user_type === "agent" ? "d-none" : ""
-                  }`}
-                ref={(el) => (liRefs.current[item.title] = el)}
-                title={item.title}
-                style={{ cursor: "pointer" }}
-              >
-                <div
-                  className={`d-flex justify-content-between px-2 py-3 border-top font-size-4 font-weight-light flex-y-center text-Capitalize ${props.heading === item.title ? "active" : ""}`}>
-                  <Link
-                    to={`/slots`}
-                    state={{
-                      applicantType: item.id,
-                      folderId: item.doc_folder_id,
-                    }}
-                    onClick={() => {
-                      clearPageNo()
-                      localStorage.setItem("applicantType", "")
-                      localStorage.setItem("applicantTypeFolderId", "")
-                      localStorage.setItem("applicantTypeChild", "")
-                    }}
-                    style={{ textDecoration: "none" }}
-                  >
-                    <span>{item.title}</span>
-                  </Link>
-                  <Link
-                    style={{ textDecoration: "none" }} onClick={() => toggleChildren(item.id, hasChildren)}
-                  > {hasChildren && <FaChevronDown />}
-                  </Link>
-                </div>
-                {openParent === item.id && hasChildren && (
-                  <ul className="pl-3 list-unstyled">
-                    {children.map((child) => (
-                      <li
-                        key={child.id}
-                        className={`position-relative p-2 ${user_type === "agent" ? "d-none" : props.heading === child.title && props.heading !== item.title ? "active" : ""
-                          }`}
-                        ref={(el) => (liRefs.current[child.title] = el)}
-                        title={child.title}
-                        style={{ transition: "3" }}
-                      >
-                        <Link
-                          onClick={() => {
-                            clearPageNo()
-                            localStorage.setItem("applicantType", "")
-                            localStorage.setItem("applicantTypeFolderId", "")
-                            localStorage.setItem("applicantTypeChild", "")
-                          }}
-                          to={`/slots`}
-                          state={{
-                            applicantTypeChild: child.id,
-                            folderId: child.doc_folder_id,
-                          }}
-                          className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center text-Capitalize"
-                          style={{ textDecoration: "none" }}
-                        >
-                          <BsReverseLayoutTextSidebarReverse className="sidebar_icon" />
-                          <span className="text-truncate">{child.title}</span>
+        {items.map((item, index) => {
+          const children = applicanttypedata.filter((child) => child.parent_id === item.id);
+          const hasChildren = children.length > 0;
+
+          return (
+            <li
+              key={item.id}
+              draggable
+              onDragStart={() => handleDragStart(index)}
+              onDragOver={(e) => handleDragOver(e, index)}
+              onDragEnd={handleDragEnd}
+              className={`position-relative ${user_type === "agent"
+                ? "d-none"
+                : props.heading === item.title
+                  ? "active"
+                  : ""
+                }`}
+              title={item.title}
+            >
+              <div
+                className={`d-flex justify-content-between px-2 py-3 border-top font-size-4 font-weight-light flex-y-center text-Capitalize ${props.heading === item.title ? "active" : ""}`}>
+                <Link
+                  to={`/slots`}
+                  state={{
+                    applicantType: item.id,
+                    folderId: item.doc_folder_id,
+                  }}
+                  onClick={() => {
+                    clearPageNo()
+                    localStorage.setItem("applicantType", "")
+                    localStorage.setItem("applicantTypeFolderId", "")
+                    localStorage.setItem("applicantTypeChild", "")
+                  }}
+                  style={{ textDecoration: "none" }}
+                  onContextMenu={(e) => {
+                    e.preventDefault(); // prevent the default behaviour when right clicked
+                    setShowDropDown(item.id);
+                  }}
+                >
+                  <span> <TableInput
+                    value={item.title}
+                    onChange={(newValue) =>
+                      handleUpdateChange(newValue, item, "title")
+                    }
+                    type="text"
+                    id="title"
+                    name="title"
+                  /></span>
+                  {showDropDown === item.id &&
+                    <ul className="list-group">
+
+                      <li className="list-group-item text-danger">
+                        <Link onClick={() => {
+                          setDeleteAlertApplicant(true)
+                          setDeleteAlertApplicantTypeData(item)
+                        }}
+                          className="text-danger">
+                          Delete
                         </Link>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-            );
-          })}
+                      </li></ul>}
+                </Link>
+                <Link
+                  style={{ textDecoration: "none" }} onClick={() => toggleChildren(item.id, hasChildren)}
+                > {hasChildren && <FaChevronDown />}
+                </Link>
+              </div>
+
+              {(openParent === item.id && hasChildren) && (
+                <ul className="pl-3 list-unstyled">
+                  {children.map((child) => (
+                    <li key={child.id} className="position-relative p-2">
+                      <Link
+                        to={`/slots`}
+                        state={{
+                          applicantTypeChild: child.id,
+                          folderId: child.doc_folder_id,
+                        }}
+                        className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center text-Capitalize"
+                        style={{ textDecoration: "none" }}
+                        onContextMenu={(e) => {
+                          e.preventDefault(); // prevent the default behaviour when right clicked
+                          setShowDropDown(item.id);
+                        }}
+                      >
+                        <BsReverseLayoutTextSidebarReverse className="sidebar_icon" />
+                        <span className="text-truncate">
+                          <TableInput
+                            value={child.title}
+                            onChange={(newValue) =>
+                              handleUpdateChange(newValue, child, "title")
+                            }
+                            type="text"
+                            id="title"
+                            name="title"
+                          /></span>
+                      </Link>
+                      {showDropDown === item.id &&
+                        <ul className="list-group">
+                          <li className="list-group-item text-danger">
+                            <Link onClick={() => {
+                              setDeleteAlertApplicant(true)
+                              setDeleteAlertApplicantTypeData(item)
+                            }}
+                              className="text-danger">
+                              {" "}
+                              Delete
+                            </Link>
+                          </li></ul>}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          );
+        })}
         <li
           ref={(el) => (liRefs.current["Manage Applicant Type"] = el)}
           className={

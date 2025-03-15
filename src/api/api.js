@@ -15,7 +15,7 @@ const admin_id = localStorage.getItem("admin_id");
 // const agent_id = localStorage.getItem("agent_id");
 const user_type = localStorage.getItem("userType");
 let portal = localStorage.getItem("portal")
-// const admin_type = localStorage.getItem("admin_type");
+const admin_type = localStorage.getItem("admin_type");
 if (view_as_token) {
   Token = view_as_token;
 }
@@ -242,7 +242,9 @@ export const EmployeeDetails = async (props) => {
 export const getApplicanTypeApi = async (props) => {
   const response = await axios.post(
     `${API_URL}admin/getApplicantType`,
-    props,
+    {
+      admin_access_id: admin_type === "super-admin" ? "" : admin_id
+    },
     {
       headers: {
         "Content-Type": "application/json",

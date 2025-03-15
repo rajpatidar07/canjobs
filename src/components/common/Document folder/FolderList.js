@@ -266,7 +266,7 @@ export default function FolderList({
                             Rename
                           </Link>
                         </li>
-                        <li className="list-group-item text-darger">
+                        <li className="list-group-item text-danger">
                           <Link onClick={() => ShowDeleteAlert(item)}>
                             {" "}
                             Delete {item.folder ? "Folder" : "File"}
@@ -276,7 +276,7 @@ export default function FolderList({
                           className={
                             item.folder || item.file.mimeType === "text/plain"
                               ? "d-none"
-                              : "list-group-item text-darger"
+                              : "list-group-item text-danger"
                           }
                         >
                           <Link
@@ -289,7 +289,7 @@ export default function FolderList({
                           </Link>
                         </li>
                         <li
-                          className={`list-group-item text-darger ${item.folder ||
+                          className={`list-group-item text-danger ${item.folder ||
                             item.file.mimeType === "text/plain" ||
                             (userType !== "admin" && userType !== "agent")
                             ? "d-none"
@@ -416,7 +416,7 @@ export default function FolderList({
                             </li>
                             <li
                               className={
-                                item.file.mimeType === "text/plain" 
+                                item.file.mimeType === "text/plain"
                                   ? "d-none"
                                   : "list-group-item text-danger"
                               }
