@@ -1147,8 +1147,10 @@ function Addfollowup(props) {
                                 <i className="font-size-2"></i>
                               </div>
                             </div>
-                            <div className="font-size-3 mt-3">
+                            <div className=" mt-3">
+                              <span className="font-size-2"><b>Subject: </b>{res.subject}</span>
                               <div
+                                className="font-size-3"
                                 dangerouslySetInnerHTML={{
                                   __html: res.subject_description,
                                 }}
