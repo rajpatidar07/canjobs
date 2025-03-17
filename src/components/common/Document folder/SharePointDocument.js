@@ -1086,11 +1086,9 @@ export default function SharePointDocument({
                     <button className="btn btn-primary mx-2" style={{ maxHeight: 34 }}
                       onClick={() => {
                         setOpenNoteForm(true)
-                        if (docNoteData) {
-                          setDocNoteData(docNoteData)
-                          GetNoteText(docNoteData, true);
-                        }
-                      }}>{docNoteData.length !== 0 ? "Open Note" : "Add Note"}</button>
+                        setNoteText("")
+                        setDocNoteData([])
+                      }}>{"Add Note"}</button>
                   </>
                 </div>
               </div>
