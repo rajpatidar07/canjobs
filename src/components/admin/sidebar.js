@@ -98,7 +98,10 @@ const AdminSidebar = (props) => {
   }, [props.heading,]);
   useEffect(() => {
     getAllSlotsData();
-  }, [])
+    if (apiCall === true) {
+      setApiCall(false)
+    }
+  }, [apiCall])
 
   const handleDragStart = (index) => {
     setDraggedItemIndex(index);
@@ -816,7 +819,7 @@ const AdminSidebar = (props) => {
               title={item.title}
             >
               <div
-                className={`d-flex justify-content-between px-2 py-3 border-top font-size-4 font-weight-light flex-y-center text-Capitalize ${props.heading === item.title ? "active" : ""}`}>
+                className={`d-flex text-break justify-content-between py-3 border-top font-size-4 font-weight-light flex-y-center text-Capitalize ${props.heading === item.title ? "active" : ""}`}>
                 <Link
                   to={`/slots`}
                   state={{
@@ -873,7 +876,7 @@ const AdminSidebar = (props) => {
                           applicantTypeChild: child.id,
                           folderId: child.doc_folder_id,
                         }}
-                        className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center text-Capitalize"
+                        className="px-1 text-break py-3 border-top font-size-4 font-weight-light flex-y-center text-Capitalize"
                         style={{ textDecoration: "none" }}
                         onContextMenu={(e) => {
                           e.preventDefault(); // prevent the default behaviour when right clicked
