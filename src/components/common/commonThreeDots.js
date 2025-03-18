@@ -12,10 +12,10 @@ export default function CommonThreeDots(props) {
   let [isOpen, setIsOpen] = useState(false);
   let [openFolderModal, setOPenFolderModal] = useState(false);
   let [addFileLoading, setAddFileLoading] = useState(false);
-  let [addFileClickOn, setAddFileClickOn] = useState(false);
+  // let [addFileClickOn, setAddFileClickOn] = useState(false);
   let user_type = localStorage.getItem("userType");
   const AddFileClick = async (event) => {
-    setAddFileClickOn(true);
+    // setAddFileClickOn(true);
     setAddFileLoading(true);
     const files = event.target.files;
 
@@ -96,7 +96,7 @@ export default function CommonThreeDots(props) {
       console.error(err);
     } finally {
       setAddFileLoading(false);
-      setAddFileClickOn(false);
+      // setAddFileClickOn(false);
     }
   };
   return (

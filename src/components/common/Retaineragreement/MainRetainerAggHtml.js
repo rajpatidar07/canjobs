@@ -4,7 +4,7 @@ import { AddUpdateAgreement, GetAgreement } from "../../../api/api";
 import HtmlAgreementOne from "./Html/HtmlAgreementOne";
 import HtmlAgreementTwo from "./Html/HtmlAgreementTwo";
 import { Link } from "react-router-dom";
-import HtmlAgreementThree from "./Html/HtmlAgreementThree";
+// import HtmlAgreementThree from "./Html/HtmlAgreementThree";
 import HtmlAGreementFour from "./Html/HtmlAGreementFour";
 import HtmlAgreementFive from "./Html/HtmlAgreementFive";
 import HtmlAgreementSix from "./Html/HtmlAgreementSix";
@@ -21,6 +21,7 @@ import HtmlAgreementsixteen from "./Html/HtmlAgreementsixteen";
 import { IoMdArrowBack } from "react-icons/io";
 import HtmlAgreementSeventeen from "./Html/HtmlAgreementSeventeen";
 import HtmlAgreementEighteen from "./Html/HtmlAgreementEighteen";
+import HtmlRenewalApplication from "./Html/HtmlRenewalApplication";
 export default function MainRetainerAggHtml({
   setApicall,
   close,
@@ -88,6 +89,8 @@ export default function MainRetainerAggHtml({
   //   }
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [])
+
+  console.log(agreementData.type);
   const GeneratePdf = async () => {
     if (openSignature === "yes") {
     }
@@ -112,7 +115,12 @@ export default function MainRetainerAggHtml({
         felidData: felidData,
       };
       // Serialize the state data to pass as query parameters
-      const newPageUrl = agreementData.type === "initial consultation" ? `/initial_consultation ` : agreementData.type === "recruitment services agreement" ? `/recruitment_service` : `/agreeone`;
+      const newPageUrl =
+        agreementData.type === "initial consultation"
+          ? `/initial_consultation `
+          : agreementData.type === "recruitment services agreement"
+          ? `/recruitment_service`
+          : `/agreeone`;
       localStorage.setItem("agreementStateData", JSON.stringify(stateData));
       // Open the new page in a new tab
       window.open(newPageUrl, "_blank");
@@ -183,7 +191,12 @@ export default function MainRetainerAggHtml({
             emp_user_type={emp_user_type}
           />
         ) : agreementData.type === "visitor" ? (
-          <HtmlAgreementThree />
+          // <HtmlAgreementThree />
+          <HtmlRenewalApplication
+            userData={userData}
+            felidData={felidData}
+            emp_user_type={emp_user_type}
+          />
         ) : agreementData.type === "study" ? (
           <HtmlAGreementFour />
         ) : agreementData.type === "work permit" ? (
@@ -200,20 +213,20 @@ export default function MainRetainerAggHtml({
             emp_user_type={emp_user_type}
             addSign={""}
           />
-          // <HtmlAgreementEight
-          // page={"admin"}
-          //   userData={userData}
-          //   felidData={felidData}
-          //   emp_user_type={emp_user_type}
-          //   addSign={""} />
-        ) : agreementData.type === "PNP + express entry/federal PR" ? (
+        ) : // <HtmlAgreementEight
+        // page={"admin"}
+        //   userData={userData}
+        //   felidData={felidData}
+        //   emp_user_type={emp_user_type}
+        //   addSign={""} />
+        agreementData.type === "PNP + express entry/federal PR" ? (
           <HtmlAgreementOne
             page={"admin"}
             userData={userData}
             felidData={felidData}
             emp_user_type={emp_user_type}
             addSign={""}
-          />// <HTmlAgreementNine />
+          /> // <HTmlAgreementNine />
         ) : agreementData.type === "super visa application" ? (
           <HtmlAgreementTen />
         ) : agreementData.type === "spousal sponsorship" ? (
@@ -228,23 +241,23 @@ export default function MainRetainerAggHtml({
           <HtmlAgreementFifteenth />
         ) : agreementData.type === "LMIA exempt employers" ? (
           <HtmlAgreementsixteen />
-        ) : agreementData.type === "initial consultation" ?
-          (
-            <HtmlAgreementSeventeen
-              page={"admin"}
-              userData={userData}
-              felidData={felidData}
-              emp_user_type={emp_user_type}
-              addSign={""} />
-          ) : agreementData.type === "recruitment services agreement" ?
-            (
-              <HtmlAgreementEighteen
-                page={"admin"}
-                userData={userData}
-                felidData={felidData}
-                emp_user_type={emp_user_type}
-                addSign={""} />
-            ) : null}
+        ) : agreementData.type === "initial consultation" ? (
+          <HtmlAgreementSeventeen
+            page={"admin"}
+            userData={userData}
+            felidData={felidData}
+            emp_user_type={emp_user_type}
+            addSign={""}
+          />
+        ) : agreementData.type === "recruitment services agreement" ? (
+          <HtmlAgreementEighteen
+            page={"admin"}
+            userData={userData}
+            felidData={felidData}
+            emp_user_type={emp_user_type}
+            addSign={""}
+          />
+        ) : null}
         {/* <button
           className={
             felidData.agreement_date ? "btn btn-primary my-2" : "d-none"

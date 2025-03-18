@@ -80,7 +80,9 @@ export default function EmployeeTable(props) {
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
   const [loading, setLoading] = useState(false);
-  const [statusList, setStatusList] = useState([...filterjson.employee_status]);
+  // const [statusList, ] = useState([...filterjson.employee_status]);
+
+  const statusList = [...filterjson.employee_status];
 
   /*Pagination states */
   const [status, setStatus] = useState(
@@ -105,8 +107,7 @@ export default function EmployeeTable(props) {
 
   let getApplicantType = (id) =>
     applicantTypeList?.find((x) => x.id === id)?.title;
-  let getApplicantSubType = (id) =>
-    applicantTypeList?.find((x) => x.id === id)?.title;
+
   /* Function to get Employee data*/
   const EmpData = async () => {
     // const params = useParams();
