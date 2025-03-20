@@ -272,6 +272,28 @@ export default function FolderList({
                             Delete {item.folder ? "Folder" : "File"}
                           </Link>
                         </li>
+                        <li className={
+                          item.folder || item.file.mimeType === "text/plain"
+                            ? "d-none"
+                            : "list-group-item text-danger"
+                        }>
+                          <Link
+                            className="text-decoration-none" to={item["@microsoft.graph.downloadUrl"]} rel="noopener noreferrer" download>
+
+                            Download
+                          </Link>
+                        </li>
+                        <li className={
+                          item.folder || item.file.mimeType === "text/plain"
+                            ? "d-none"
+                            : "list-group-item text-danger"
+                        }>
+                          <Link
+                            className="text-decoration-none" to={item.webUrl} target="_blank" >
+
+                            Edit in sharepoint
+                          </Link>
+                        </li>
                         <li
                           className={
                             item.folder || item.file.mimeType === "text/plain"
@@ -412,6 +434,13 @@ export default function FolderList({
                                 className="text-decoration-none" to={item["@microsoft.graph.downloadUrl"]} rel="noopener noreferrer" download>
 
                                 Download
+                              </Link>
+                            </li>
+                            <li className="list-group-item text-danger">
+                              <Link
+                                className="text-decoration-none" to={item.webUrl} target="_blank" >
+
+                                Edit in sharepoint
                               </Link>
                             </li>
                             <li

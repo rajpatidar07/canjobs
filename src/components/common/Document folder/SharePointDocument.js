@@ -460,7 +460,7 @@ export default function SharePointDocument({
       return;
     }
 
-    const allowedTypes = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
+    // const allowedTypes = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
     const maxSize = 1024 * 8000; // 8 MB
 
     const filebseList = [];
@@ -484,17 +484,17 @@ export default function SharePointDocument({
       });
 
       // Check file type
-      const fileType = `.${fileExtension.toLowerCase()}`;
-      if (!allowedTypes.includes(fileType)) {
-        toast.error(
-          `Invalid document type for file '${updatedFile.name}'. Allowed types: PDF, DOC, DOCX, JPG, JPEG, PNG`,
-          {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          }
-        );
-        return;
-      }
+      // const fileType = `.${fileExtension.toLowerCase()}`;
+      // if (!allowedTypes.includes(fileType)) {
+      //   toast.error(
+      //     `Invalid document type for file '${updatedFile.name}'. Allowed types: PDF, DOC, DOCX, JPG, JPEG, PNG`,
+      //     {
+      //       position: toast.POSITION.TOP_RIGHT,
+      //       autoClose: 1000,
+      //     }
+      //   );
+      //   return;
+      // }
 
       // Check file size
       if (updatedFile.size > maxSize) {

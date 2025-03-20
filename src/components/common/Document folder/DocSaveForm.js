@@ -37,7 +37,7 @@ export default function DocSaveForm({
           >
             <input
               type="file"
-              accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+              // accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
               style={{ display: "none" }}
               onChange={(e) => {
                 handleBulkFileChange(e);

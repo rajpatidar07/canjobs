@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { AddSharePointFolders } from "../../../api/api";
-import { Form, Dropdown, Modal, Button } from "react-bootstrap";
+import { Form, Modal, Button } from "react-bootstrap";
 
 export default function AddFolderModal(props) {
   const [state, setState] = useState({
@@ -78,12 +78,12 @@ export default function AddFolderModal(props) {
       try {
         let res = await AddSharePointFolders(selectedType, state?.folderID);
         if (res?.data?.message === "Folder created successfully!") {
-          toast.success(`Type Created successfully`, { autoClose: 1000 });
+          toast.success(`New folder Created successfully`, { autoClose: 1000 });
           setState((prev) => ({ ...prev, newType: "" }));
           props.close();
           props.setFolderApiCall(true);
         } else if (res?.data?.error?.message === "Name already exists") {
-          toast.error(`Type Already exists`, { autoClose: 1000 });
+          toast.error(`Folder Already exists`, { autoClose: 1000 });
         }
       } catch (Err) {
         console.error(Err);

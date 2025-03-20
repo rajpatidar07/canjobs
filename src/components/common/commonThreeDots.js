@@ -28,7 +28,7 @@ export default function CommonThreeDots(props) {
       return;
     }
 
-    const allowedTypes = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
+    // const allowedTypes = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
     const maxSize = 8 * 1024 * 1024; // 8 MB
     const fileBaseList = [];
 
@@ -44,17 +44,17 @@ export default function CommonThreeDots(props) {
         lastModified: file.lastModified,
       });
 
-      if (!allowedTypes.includes(`.${fileExtension.toLowerCase()}`)) {
-        toast.error(
-          `Invalid file type '${updatedFile.name}'. Allowed: PDF, DOC, DOCX, JPG, JPEG, PNG`,
-          {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          }
-        );
-        setAddFileLoading(false);
-        return;
-      }
+      // if (!allowedTypes.includes(`.${fileExtension.toLowerCase()}`)) {
+      //   toast.error(
+      //     `Invalid file type '${updatedFile.name}'. Allowed: PDF, DOC, DOCX, JPG, JPEG, PNG`,
+      //     {
+      //       position: toast.POSITION.TOP_RIGHT,
+      //       autoClose: 1000,
+      //     }
+      //   );
+      //   setAddFileLoading(false);
+      //   return;
+      // }
 
       if (updatedFile.size > maxSize) {
         toast.error(`File '${updatedFile.name}' exceeds 8 MB size limit`, {
@@ -153,7 +153,7 @@ export default function CommonThreeDots(props) {
               >
                 <input
                   type="file"
-                  accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                  // accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
                   style={{ display: "none" }}
                   onChange={AddFileClick}
                   multiple

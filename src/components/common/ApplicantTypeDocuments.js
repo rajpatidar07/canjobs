@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import {
   AddSharePointDOcument,
-  AddSharePointFolders,
   DeleteFolderOrDocument,
   getallAdminData,
   GetCommentsAndAssign,
@@ -12,7 +11,6 @@ import {
 } from "../../api/api";
 import convertUrlToPDF from "./Common function/convertUrlToPdf";
 import convertWordToPDF from "./Common function/ConvertWordToPdf";
-import { Dropdown, Form } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
 import { IoMdArrowBack } from "react-icons/io";
 import AdobePDFViewer from "./Adobe/adobeFile";
@@ -24,6 +22,7 @@ import EditDocNameForm from "./Document folder/EditDocNameFOrm";
 import SAlert from "./sweetAlert";
 import ExcelToPdfConverter from "./Common function/ExcelToPdfConverter";
 import AddFolderModal from "./Document folder/AddFolderModal";
+import convertPPTtoPDF from "./Common function/PpttoPdf";
 export default function ApplicantTypeDocuments(props) {
   const [docFileBase, setDocFileBase] = useState([]);
   let [openFolderModal, setOPenFolderModal] = useState(false);
@@ -65,51 +64,7 @@ export default function ApplicantTypeDocuments(props) {
     columnName: "id",
     sortOrder: "DESC",
   });
-  const DocTypeData =
-    props?.emp_user_type === "employer"
-      ? [
-          "Business T2",
-          "Recent PD7A",
-          "Business T4",
-          "Business Incorporation Certificate",
-          "Employment Contract",
-          "Schedule A",
-          "Signed Job Offer",
-          "PD7A of year",
-          "T2 Schedule 100 and 125",
-          "Certificate of incorporation",
-          "Business license",
-          "T4 summary of year",
-          "Request for Exception from English Language Requirement for LMIA Application",
-          "CPA Attestation Letter",
-          "Representative Submission Letter",
-        ]
-      : [
-          "passport",
-          "drivers_license",
-          "photograph",
-          "immigration_status",
-          "lmia",
-          "job_offer_letter",
-          "provincial_nominee_letter",
-          "proof_of_funds",
-          "proof_of_employment",
-          "marriage_certificate",
-          "education_metric",
-          "education_higher_secondary",
-          "education_graduation",
-          "education_post_graduation",
-          "resume_or_cv",
-          "ielts",
-          "medical",
-          "police_clearance",
-          "refusal_letter",
-          "Employment Contract",
-          "Reference Letters",
-          "Client Info",
-          "Representative Submission Letter",
-          "Bank Statement",
-        ];
+
   /*On change fnction to upload bulk document in 1 array*/
   const handleBulkFileChange = async (event, id) => {
     const files = event.target.files;
@@ -123,7 +78,7 @@ export default function ApplicantTypeDocuments(props) {
       return;
     }
 
-    const allowedTypes = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
+    // const allowedTypes = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
     const maxSize = 1024 * 8000; // 8 MB
 
     const filebseList = [];
@@ -147,17 +102,17 @@ export default function ApplicantTypeDocuments(props) {
       });
 
       // Check file type
-      const fileType = `.${fileExtension.toLowerCase()}`;
-      if (!allowedTypes.includes(fileType)) {
-        toast.error(
-          `Invalid document type for file '${updatedFile.name}'. Allowed types: PDF, DOC, DOCX, JPG, JPEG, PNG`,
-          {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          }
-        );
-        return;
-      }
+      // const fileType = `.${fileExtension.toLowerCase()}`;
+      // if (!allowedTypes.includes(fileType)) {
+      //   toast.error(
+      //     `Invalid document type for file '${updatedFile.name}'. Allowed types: PDF, DOC, DOCX, JPG, JPEG, PNG`,
+      //     {
+      //       position: toast.POSITION.TOP_RIGHT,
+      //       autoClose: 1000,
+      //     }
+      //   );
+      //   return;
+      // }
 
       // Check file size
       if (updatedFile.size > maxSize) {
@@ -192,13 +147,6 @@ export default function ApplicantTypeDocuments(props) {
       sortOrder: prev.sortOrder === "DESC" ? "ASC" : "DESC",
       columnName: column,
     }));
-  const handleNewTypeChange = (e) => {
-    const value = e.target.value.replace(/[^a-zA-Z0-9 ]/g, "");
-    setState((prev) => ({
-      ...prev,
-      newType: value,
-    }));
-  };
   const fetchAdminData = async () => {
     try {
       const userData = await getallAdminData();
@@ -244,45 +192,7 @@ export default function ApplicantTypeDocuments(props) {
       })
       .catch((error) => console.error("Error fetching the file:", error));
   };
-  /*Had folder function */
-  const handleDocTypeChange = async (selectedType) => {
-    setState((prev) => ({
-      ...prev,
-      docTypeName: selectedType,
-      showDropDown: false,
-    }));
-    if (selectedType === "other") {
-      // If "other" is selected, clear newType
-      setState((prev) => ({
-        ...prev,
-        newType: "",
-      }));
-    } else {
-      try {
-        let res = await AddSharePointFolders(selectedType, state?.folderID);
-        if (
-          res.data.data.name &&
-          res.data.message === "Folder created successfully!"
-        ) {
-          toast.success(`Type Created successfully`, {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
-          setState((prev) => ({
-            ...prev,
-            apiCall: true,
-          }));
-        } else if (res.data.data.error.message === "Name already exists") {
-          toast.error(`Type Already exists`, {
-            position: toast.POSITION.TOP_RIGHT,
-            autoClose: 1000,
-          });
-        }
-      } catch (Err) {
-        console.log(Err);
-      }
-    }
-  };
+
   const getCommentsList = async (data) => {
     if (!data)
       return setState((prev) => ({
@@ -373,12 +283,13 @@ export default function ApplicantTypeDocuments(props) {
       }
     } else {
       console.log(mimeType);
-      window.open(data.webUrl);
-      setState((prev) => ({
-        ...prev,
-        convertedDoc: "",
-        docPreview: false,
-      }));
+      convertPPTtoPDF(data["@microsoft.graph.downloadUrl"])
+      // window.open(data.webUrl);
+      // setState((prev) => ({
+      //   ...prev,
+      //   convertedDoc: "",
+      //   docPreview: false,
+      // }));
     }
   };
 
@@ -615,7 +526,6 @@ export default function ApplicantTypeDocuments(props) {
     }
   };
 
-console.log(props.applicantTypeID, "props.applicantTypeID")
 
   /*To call Api to delete Folder or document */
   async function DeleteSharepointDocument(id, type) {
@@ -650,7 +560,7 @@ console.log(props.applicantTypeID, "props.applicantTypeID")
         {state.folderID ? (
           <div className="document_section">
             {state.docPreview &&
-            state?.docSingleDate?.file?.mimeType !== "text/plain" ? (
+              state?.docSingleDate?.file?.mimeType !== "text/plain" ? (
               <div
                 className="App-viewer document_preview_full_screen"
                 style={{
@@ -712,10 +622,11 @@ console.log(props.applicantTypeID, "props.applicantTypeID")
                         state?.docSingleDate?.file?.mimeType === "image/png" ||
                         state?.docSingleDate?.file?.mimeType === "image/jpg") &&
                         state.imgConRes === "imageConverted") ||
+                        state?.docSingleDate?.file?.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
                       state?.docSingleDate?.file?.mimeType ===
-                        "application/vnd.openxmlformats-officedocument.wordprocessingml.document") &&
-                    state.convertedDoc &&
-                    state?.docSingleDate?.file?.mimeType !== "text/plain" ? (
+                      "application/vnd.openxmlformats-officedocument.wordprocessingml.document") &&
+                      state.convertedDoc &&
+                      state?.docSingleDate?.file?.mimeType !== "text/plain" ? (
                       <AdobePDFViewer
                         url={state.convertedDoc}
                         data={state.docSingleDate}
@@ -810,7 +721,7 @@ console.log(props.applicantTypeID, "props.applicantTypeID")
                       </Dropdown>
                     )} */}
 
-                    {openFolderModal &&  (
+                    {openFolderModal && (
                       <AddFolderModal
                         emp_user_type={props.emp_user_type}
                         user_id={props.user_id}
