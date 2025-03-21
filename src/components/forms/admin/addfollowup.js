@@ -25,6 +25,8 @@ import ViewAdminBox from "../../common/ViewAdminBox";
 // import NoteReply from "../../common/NoteReply";
 import CommentReplyBox from "../../common/CommentReplyBox"
 import determineBackgroundColor from "../../common/Common function/DetermineBackgroundColour";
+import MarkReadTask from "../../common/Common function/MarkReadTask";
+
 function Addfollowup(props) {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -508,7 +510,7 @@ function Addfollowup(props) {
     }
 
     setUserErrorforadminAssign("");
-    console.log(user_type);
+    // console.log(user_type);
     if (user_type === "admin" || user_type === "agent") {
       if (lastChar === "@") {
         setDropdownVisible(true);
@@ -1036,6 +1038,8 @@ function Addfollowup(props) {
                             setReplyComment("");
                           }
                         }}
+                        onMouseEnter={() => (MarkReadTask(res, "task"))}
+
                         key={index}
                         ref={(el) => (NoteRef.current[res.id] = el)}>
                         <div className="shadow-sm rounded p-2 mb-4">
@@ -1048,7 +1052,7 @@ function Addfollowup(props) {
                         </b> */}
                               <div>
                                 <div className="d-flex align-items-center gap-2">
-                                  <div class={`circle-24 mr-2 overflow-hidden text-capitalize text-white bg-blue ${determineBackgroundColor(
+                                  <div className={`circle-24 mr-2 overflow-hidden text-capitalize text-white bg-blue ${determineBackgroundColor(
                                     res
                                   )}`}
                                   >
@@ -1123,7 +1127,7 @@ function Addfollowup(props) {
                                     <CiEdit />
                                   </Link>
 
-                                  <ViewAdminBox />
+                                  <ViewAdminBox data={res} type="task" adminList={AdminList} />
 
                                   <Link
                                     className={

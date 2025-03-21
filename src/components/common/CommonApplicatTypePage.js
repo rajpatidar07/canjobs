@@ -90,7 +90,7 @@ export default function CommonApplicatTypePage() {
     }, [location.key, ApplicantTypeUrlId, taskId, notifiType, location?.state?.applicantType, location?.search?.applicantTypeChild, location?.state?.folderId, docId, localApplicantTypeId, localApplicantTypeFolderId]);
     useEffect(() => {
         if (applicantTypeId || applicantTypeChildId) {
-            getApplicanTypeApi()
+            getApplicanTypeApi("")
                 .then((res) => {
                     let filterNameById = applicantTypeId ? applicantTypeId : applicantTypeChildId
                     const foundItem = (res.data.data || []).find((item) => item.id === filterNameById);

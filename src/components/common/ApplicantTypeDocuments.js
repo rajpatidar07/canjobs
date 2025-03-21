@@ -282,7 +282,7 @@ export default function ApplicantTypeDocuments(props) {
         }
       }
     } else {
-      console.log(mimeType);
+      // console.log(mimeType);
       convertPPTtoPDF(data["@microsoft.graph.downloadUrl"])
       // window.open(data.webUrl);
       // setState((prev) => ({
@@ -357,7 +357,7 @@ export default function ApplicantTypeDocuments(props) {
               docSingleDate: currentDoc,
               fileID: currentDoc.id,
             });
-            console.log(currentDoc);
+            // console.log(currentDoc);
             handleDocumentConversion(currentDoc);
             getCommentsList(currentDoc);
             fetchAdminData();

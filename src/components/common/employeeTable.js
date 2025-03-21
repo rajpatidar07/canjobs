@@ -79,7 +79,6 @@ export default function EmployeeTable(props) {
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteId, setDeleteID] = useState();
   const [deleteName, setDeleteName] = useState("");
-  const [loading, setLoading] = useState(false);
   // const [statusList, ] = useState([...filterjson.employee_status]);
 
   const statusList = [...filterjson.employee_status];
@@ -198,7 +197,7 @@ export default function EmployeeTable(props) {
       console.log(err);
     }
     try {
-      let response = await getApplicanTypeApi();
+      let response = await getApplicanTypeApi("");
       setApplicantTypeList(response.data.data);
     } catch (err) {
       console.log(err);
@@ -412,7 +411,7 @@ export default function EmployeeTable(props) {
 
   const OnStatusChange = async (e, empdata, eventKey) => {
     e.preventDefault();
-    setLoading(true);
+    setIsLoading(true);
     let data = {
       employee_id: empdata.employee_id,
       status: eventKey,
@@ -437,7 +436,7 @@ export default function EmployeeTable(props) {
             );
             if (VisaResponse.data.message === "visa inserted successfully") {
               props.setApiCall(true);
-              setLoading(false);
+              setIsLoading(false);
               props.close();
             }
           } catch (err) {
@@ -445,18 +444,18 @@ export default function EmployeeTable(props) {
           }
         } else {
           props.setApiCall(true);
-          setLoading(false);
+          setIsLoading(false);
           props.close();
         }
       }
     } catch (err) {
       console.log(err);
-      setLoading(false);
+      setIsLoading(false);
     }
   };
   const OnApplicantTypeChange = async (e, empdata, eventKey) => {
     e.preventDefault();
-    setLoading(true);
+    setIsLoading(true);
     let data = {
       employee_id: empdata.employee_id,
       interested_in_id: eventKey,
@@ -471,15 +470,15 @@ export default function EmployeeTable(props) {
           autoClose: 1000,
         });
         props.setApiCall(true);
-        setLoading(false);
+        setIsLoading(false);
       } else {
         props.setApiCall(true);
-        setLoading(false);
+        setIsLoading(false);
         props.close();
       }
     } catch (err) {
       console.log(err);
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 

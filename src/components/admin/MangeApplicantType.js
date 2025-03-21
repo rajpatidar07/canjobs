@@ -19,9 +19,9 @@ export default function ManageApplicantType(props) {
 
   const getAllSlotsData = async () => {
     try {
-      let response = await getApplicanTypeApi();
+      let response = await getApplicanTypeApi("");
       let Adminresponse = await getallAdminData();
-      setAllApplicantType(response.data.data);
+      setAllApplicantType((response.data.data).reverse());
       setAllAdmin(Adminresponse.data)
     } catch (err) {
       console.log(err);

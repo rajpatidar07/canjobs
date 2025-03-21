@@ -267,7 +267,7 @@ function ProgramListSection() {
                     <div className="card">
                         <div className="row main_row m-0 overflow-hidden">
                             <div className="col-md-3 filter_sidebar p-3">
-                                <h4 class="mb-3 text-dark">Program Filter</h4>
+                                <h4 className="mb-3 text-dark">Program Filter</h4>
                                 {/* State Filter */}
                                 <div className="form-group mb-2 mt-5">
                                     <label className="input_label">State/Province</label>
@@ -425,7 +425,7 @@ function ProgramListSection() {
                             </div>
                             {/* Program List Display */}
                             <div className="col-md-9 program_list_div bg-light p-3">
-                                <h4 class="mb-3 text-dark">Program Finder</h4>
+                                <h4 className="mb-3 text-dark">Program Finder</h4>
                                 <div id="programList">
                                     <div className="pagination">
                                         {programs.length > 0 ? programs.map((program, index) => (

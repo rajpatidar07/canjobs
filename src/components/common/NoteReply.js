@@ -21,7 +21,7 @@ const NoteReply = () => {
                             </b> */}
           <div>
             <div className="d-flex align-items-center gap-2">
-              <div class="circle-24 mr-2 overflow-hidden text-capitalize text-white bg-blue">
+              <div className="circle-24 mr-2 overflow-hidden text-capitalize text-white bg-blue">
                 T
               </div>
               <div className="mb-0">

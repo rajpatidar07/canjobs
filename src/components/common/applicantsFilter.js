@@ -76,7 +76,7 @@ export default function ApplicantsFilter({
       console.log(err);
     }
     try {
-      let response = await getApplicanTypeApi();
+      let response = await getApplicanTypeApi("");
       setApplicantTypeList(response.data.data);
     } catch (err) {
       console.log(err);

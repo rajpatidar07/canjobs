@@ -33,12 +33,12 @@ export default function AddApplicantType(props) {
     };
 
     // CUSTOM VALIDATION HOOK
-    const { state, setState, errors, validate } =
+    const { state, setState, errors, validate, setErrors } =
         useValidation(initialFormState, validators);
     /*Function to get Latest applicant type data */
     const getApplicanrData = async () => {
         try {
-            let response = await getApplicanTypeApi();
+            let response = await getApplicanTypeApi("");
             setApplicantTypeList(response.data.data);
         } catch (err) {
             console.log(err);
@@ -54,6 +54,8 @@ export default function AddApplicantType(props) {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [apicall, props?.updateApplicantTypeData])
+
+    const adminAccessIds = new Set(state?.admin_access_id?.split(",") || []);
 
     // HANDLE INPUT CHANGES AND SET LEVEL DYNAMICALLY
     const handleChange = (e) => {
@@ -102,6 +104,10 @@ export default function AddApplicantType(props) {
             };
             try {
                 const response = await AddApplicanTypeApi(newItem);
+                if (response.message === 'Applicant type already exist') {
+                    setErrors({ ...errors, title: 'Applicant type already exist' })
+                    setLoading(false)
+                }
                 // console.log(response.status === (1 || "1"), response)
                 if (response.status === 1 || response.status === "1") {
                     if (state.level === 0 || state.level === "0") {
@@ -125,7 +131,6 @@ export default function AddApplicantType(props) {
                     setApicall(true)
                     setLoading(false)
                     setState(initialFormState);
-                    console.log("first", props.apicall)
                     close()
                 }
             } catch (err) {
@@ -212,19 +217,25 @@ export default function AddApplicantType(props) {
                             >
                                 Grant access to the admin :
                             </label>
-                            <ul className="list-unstyled row px-8 d-flex">
-                                {(props.admins || []).map((admin) => (
-                                    <li li key={admin.id} className="col d-flex gap-2" >
-                                        <input
-                                            type="checkbox"
-                                            className="form-check-input"
-                                            checked={state?.admin_access_id?.includes(admin.admin_id)}
-                                            onChange={() => handleCheckboxChange(admin.admin_id)}
-                                        />
-                                        <label className="form-check-label">{admin.name}</label>
-                                    </li>
-                                ))}
+                            <ul className="list-unstyled row px-8 d-flex flex-wrap">
+                                {(props.admins || []).map(({ id, admin_id, name }) => {
+                                    return (
+                                        <li key={id} className="col-md-4 col-sm-6 d-flex align-items-center gap-2">
+                                            <input
+                                                type="checkbox"
+                                                className="form-check-input"
+                                                checked={adminAccessIds.has(String(admin_id))}
+                                                onChange={() => handleCheckboxChange(admin_id)}
+                                                id={`admin-checkbox-${id}`}
+                                            />
+                                            <label htmlFor={`admin-checkbox-${id}`} className="form-check-label">
+                                                {name}
+                                            </label>
+                                        </li>
+                                    );
+                                })}
                             </ul>
+
                         </div>
                         <div className="form-group col d-none">
                             <label

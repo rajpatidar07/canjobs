@@ -75,7 +75,7 @@ export default function Visa() {
       console.log(err)
     }
     try {
-      let response = await getApplicanTypeApi();
+      let response = await getApplicanTypeApi("");
       setApplicantTypeList(response.data.data.filter((item) => item.level === (0 || "0")));
     } catch (err) {
       console.log(err);

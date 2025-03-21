@@ -50,7 +50,7 @@ export default function ManageTask() {
       const CompanyData = await getAllEmployer();
       const allTaskres = await GetCommentsAndAssign("", "", "", "task");
       const resStatus = await GetFilter();
-      const resApplicantType = await getApplicanTypeApi()
+      const resApplicantType = await getApplicanTypeApi("")
       setStatusList(resStatus.data.data.status_type);
       setAllTaskList(allTaskres.data.data.data)
       setApplicantTypeList(resApplicantType.data.data.filter((i) => i.parent_id === "0"))

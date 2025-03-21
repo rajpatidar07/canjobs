@@ -15,7 +15,7 @@ const admin_id = localStorage.getItem("admin_id");
 // const agent_id = localStorage.getItem("agent_id");
 const user_type = localStorage.getItem("userType");
 let portal = localStorage.getItem("portal")
-const admin_type = localStorage.getItem("admin_type");
+// const admin_type = localStorage.getItem("admin_type");
 if (view_as_token) {
   Token = view_as_token;
 }
@@ -239,11 +239,11 @@ export const EmployeeDetails = async (props) => {
   // }
 };
 /*get Applicant Type and sub types  api */
-export const getApplicanTypeApi = async (props) => {
+export const getApplicanTypeApi = async (id) => {
   const response = await axios.post(
     `${API_URL}admin/getApplicantType`,
     {
-      admin_access_id: admin_type === "super-admin" ? "" : admin_id
+      admin_access_id: id
     },
     {
       headers: {
@@ -1046,7 +1046,7 @@ export const SendReplyCommit = async (
   id,
   docName
 ) => {
-  console.log("  id =>", id, "DocUserType", DocUserType, "type:", type)
+  // console.log("  id =>", id, "DocUserType", DocUserType, "type:", type)
   //   "doc_id =>", data.doc_id,
   // "task_id =>", data.task_id,
   // "sender_id =>", senderId,
@@ -3488,7 +3488,7 @@ export const AddSharePointDOcument = async (
     // console.log(data[i])
     formData.append(`file[${i}]`, data[i]);
   }
-  console.log(formData)
+  // console.log(formData)
   if (Token) {
     const response = await axios.post(
       `${API_URL}admin/sharpointSiteDriveDocumentUpload_new`,

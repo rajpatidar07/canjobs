@@ -44,6 +44,7 @@ const AdminSidebar = (props) => {
   const [deleteAlertApplicant, setDeleteAlertApplicant] =
     useState(false);
   const [draggedItemIndex, setDraggedItemIndex] = useState(null);
+  const admin_id = localStorage.getItem("admin_id");
 
   useEffect(() => {
     // Keep parent open if a child is active
@@ -80,7 +81,7 @@ const AdminSidebar = (props) => {
 
   const getAllSlotsData = async () => {
     try {
-      let response = await getApplicanTypeApi();
+      let response = await getApplicanTypeApi(admin_id);
       setApplicanttypedata(response.data.data);
       setItems(response.data.data.filter((item) => item.parent_id === "0"))
     } catch (err) {
@@ -101,6 +102,7 @@ const AdminSidebar = (props) => {
     if (apiCall === true) {
       setApiCall(false)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiCall])
 
   const handleDragStart = (index) => {

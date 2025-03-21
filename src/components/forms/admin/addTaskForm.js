@@ -392,7 +392,7 @@ export default function AddTaskForm(props) {
             value={userid + "," + selectUserType}
             id="userId"
             onChange={(e) => {
-              console.log(e.target.value.split(",")[1])
+              // console.log(e.target.value.split(",")[1])
               setUserId(e.target.value.split(",")[0]);
               setSelectUserType(e.target.value.split(",")[1]);
             }}

@@ -115,7 +115,7 @@ const PaymentInvoiceForm = (props) => {
   /*function to submit payment invoice  form */
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Submitted ", state);
+    // console.log("Submitted ", state);
     try {
       setLoading(true)
       let res = await AddUpdatePaymentInvoiceApi(state)
@@ -207,7 +207,7 @@ const PaymentInvoiceForm = (props) => {
                 value={state.user_id + "," + state.user_type}
                 id="userId"
                 onChange={(e) => {
-                  console.log(e.target.value.split(",")[1])
+                  // console.log(e.target.value.split(",")[1])
                   setState({ ...state, user_id: (e.target.value.split(",")[0]) });
                   setState({ ...state, user_type: (e.target.value.split(",")[1]) });
                 }}

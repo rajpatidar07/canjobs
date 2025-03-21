@@ -185,7 +185,7 @@ export default function ViewPdf({
             if (data["@microsoft.graph.downloadUrl"]) {
               try {
                 let res = await ExcelToPdfConverter(data["@microsoft.graph.downloadUrl"]);
-                console.log(res)
+                // console.log(res)
                 setNewPdfUrl(`${res}`);
               } catch (error) {
                 console.error("Error converting Excel to PDF:", error);
@@ -194,7 +194,7 @@ export default function ViewPdf({
             }
 
           } else {
-            console.log(data.file.mimeType)
+            // console.log(data.file.mimeType)
             window.open(data.webUrl);
             setNewPdfUrl("")
           }

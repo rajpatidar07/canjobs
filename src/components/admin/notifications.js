@@ -94,7 +94,7 @@ function Notifications({
 
   /*Function to load more data while scrolling */
   let handelScroll = (e) => {
-    console.log(totalNotificRow, recordsPerPage, recordsPerPage <= totalNotificRow)
+    // console.log(totalNotificRow, recordsPerPage, recordsPerPage <= totalNotificRow)
     if (recordsPerPage <= totalNotificRow) {
       setRecordsPerPage(recordsPerPage + 10);
     } else {
