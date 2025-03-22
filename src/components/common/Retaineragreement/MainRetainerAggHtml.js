@@ -190,12 +190,13 @@ export default function MainRetainerAggHtml({
             felidData={felidData}
             emp_user_type={emp_user_type}
           />
-        ) : agreementData.type === "visitor" ? (
+        ) : agreementData.type === "employer renewal stream" ? (
           // <HtmlAgreementThree />
           <HtmlRenewalApplication
             userData={userData}
             felidData={felidData}
             emp_user_type={emp_user_type}
+            page={"admin"}
           />
         ) : agreementData.type === "study" ? (
           <HtmlAGreementFour />

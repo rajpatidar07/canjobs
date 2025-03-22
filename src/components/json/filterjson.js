@@ -825,7 +825,7 @@ const filterjson = {
     "Spousal Open Work Permit",
   ],
   Rerainer_Agreement_subCategories: [
-    "visitor",
+    // "visitor",commented for now 2.00pm on 22/03/25.
     "study",
     "work permit",
     "post graduation work permit",
@@ -842,7 +842,8 @@ const filterjson = {
     "employers",
     "LMIA exempt employers",
     "initial consultation",
-    "recruitment services agreement"
+    "recruitment services agreement",
+    "employer renewal stream",
   ]
   ,
   "program_discipline_category": [

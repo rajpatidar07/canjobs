@@ -22,6 +22,7 @@ import HtmlAgreementFifteenth from './Html/HtmlAgreementFifteenth'
 import HtmlAgreementsixteen from './Html/HtmlAgreementsixteen'
 import HtmlAgreementEighteen from './Html/HtmlAgreementEighteen'
 import HtmlAgreementSeventeen from './Html/HtmlAgreementSeventeen'
+import HtmlRenewalApplication from './Html/HtmlRenewalApplication'
 export default function UserSigningPage() {
     const [loader, setLoader] = useState(false)
     // const [pdf, setPdf] = useState(false)
@@ -175,6 +176,14 @@ export default function UserSigningPage() {
                                                                                                     felidData={felidData}
                                                                                                     emp_user_type={emp_user_type}
                                                                                                     addSign={addSign} />
+                                                                                            ) :
+                                                                                            type === "employer renewal stream" ? (
+                                                                                                <HtmlRenewalApplication
+                                                                                                    page={"user"}
+                                                                                                    felidData={felidData}
+                                                                                                    emp_user_type={emp_user_type}
+                                                                                                    addSign={addSign}
+                                                                                                />
                                                                                             ) : null
                     }
 
