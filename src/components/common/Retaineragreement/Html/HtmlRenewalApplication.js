@@ -299,7 +299,7 @@ Toll-free: 1-877-836-7543<br>
     </div>
 </div>
 
-<p style="font-size: 12px; font-weight: bold; color: red; text-align: center; margin-top: 30px;">
+<p class="d-none"style="font-size: 12px; font-weight: bold; color: red; text-align: center; margin-top: 30px;">
     (***THIS AGREEMENT HAS 6 PAGES IN TOTAL, ANY MODIFICATIONS TO THIS AGREEMENT WITHOUT 
     AUTHORIZATION BY BOTH PARTIES COULD LEAD TO LEGAL ACTIONS***)
 </p>
