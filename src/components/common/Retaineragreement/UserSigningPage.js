@@ -23,6 +23,7 @@ import HtmlAgreementsixteen from './Html/HtmlAgreementsixteen'
 import HtmlAgreementEighteen from './Html/HtmlAgreementEighteen'
 import HtmlAgreementSeventeen from './Html/HtmlAgreementSeventeen'
 import HtmlRenewalApplication from './Html/HtmlRenewalApplication'
+import HtmlMoeThanOneApplicant from './Html/HtmlMoeThanOneApplicant'
 export default function UserSigningPage() {
     const [loader, setLoader] = useState(false)
     // const [pdf, setPdf] = useState(false)
@@ -178,13 +179,21 @@ export default function UserSigningPage() {
                                                                                                     addSign={addSign} />
                                                                                             ) :
                                                                                             type === "employer renewal stream" ? (
+                                                                                                // new
                                                                                                 <HtmlRenewalApplication
                                                                                                     page={"user"}
                                                                                                     felidData={felidData}
                                                                                                     emp_user_type={emp_user_type}
                                                                                                     addSign={addSign}
                                                                                                 />
-                                                                                            ) : null
+                                                                                            ) :
+                                                                                                type === "more than one applicant" ?
+                                                                                                    //  new
+                                                                                                    (<HtmlMoeThanOneApplicant
+                                                                                                        page={"user"}
+                                                                                                        felidData={felidData}
+                                                                                                        emp_user_type={emp_user_type}
+                                                                                                        addSign={addSign} />) : null
                     }
 
                     <div className='d-flex justify-content-center mt-5'>

@@ -22,6 +22,7 @@ import { IoMdArrowBack } from "react-icons/io";
 import HtmlAgreementSeventeen from "./Html/HtmlAgreementSeventeen";
 import HtmlAgreementEighteen from "./Html/HtmlAgreementEighteen";
 import HtmlRenewalApplication from "./Html/HtmlRenewalApplication";
+import HtmlMoeThanOneApplicant from "./Html/HtmlMoeThanOneApplicant";
 export default function MainRetainerAggHtml({
   setApicall,
   close,
@@ -119,8 +120,12 @@ export default function MainRetainerAggHtml({
         agreementData.type === "initial consultation"
           ? `/initial_consultation `
           : agreementData.type === "recruitment services agreement"
-          ? `/recruitment_service`
-          : `/agreeone`;
+            ? `/recruitment_service`
+            : agreementData.type === "employer renewal stream"
+              ? `/renewal_application`
+              : agreementData.type === "more than one applicant"
+                ? "/more_than_one_applicant"
+                : `/agreeone`;
       localStorage.setItem("agreementStateData", JSON.stringify(stateData));
       // Open the new page in a new tab
       window.open(newPageUrl, "_blank");
@@ -192,73 +197,82 @@ export default function MainRetainerAggHtml({
           />
         ) : agreementData.type === "employer renewal stream" ? (
           // <HtmlAgreementThree />
+          // new
           <HtmlRenewalApplication
             userData={userData}
             felidData={felidData}
             emp_user_type={emp_user_type}
             page={"admin"}
           />
-        ) : agreementData.type === "study" ? (
-          <HtmlAGreementFour />
-        ) : agreementData.type === "work permit" ? (
-          <HtmlAgreementFive />
-        ) : agreementData.type === "post graduation work permit" ? (
-          <HtmlAgreementSix />
-        ) : agreementData.type === "prospective workers" ? (
-          <HtmlAgreementSeven />
-        ) : agreementData.type === "express entry" ? (
-          <HtmlAgreementOne
-            page={"admin"}
-            userData={userData}
-            felidData={felidData}
-            emp_user_type={emp_user_type}
-            addSign={""}
-          />
-        ) : // <HtmlAgreementEight
-        // page={"admin"}
-        //   userData={userData}
-        //   felidData={felidData}
-        //   emp_user_type={emp_user_type}
-        //   addSign={""} />
-        agreementData.type === "PNP + express entry/federal PR" ? (
-          <HtmlAgreementOne
-            page={"admin"}
-            userData={userData}
-            felidData={felidData}
-            emp_user_type={emp_user_type}
-            addSign={""}
-          /> // <HTmlAgreementNine />
-        ) : agreementData.type === "super visa application" ? (
-          <HtmlAgreementTen />
-        ) : agreementData.type === "spousal sponsorship" ? (
-          <HtmlAgreementEleven />
-        ) : agreementData.type === "citizenship" ? (
-          <HtmlAgreementTwelve />
-        ) : agreementData.type === "PR card renewal" ? (
-          <HtmlAgreementThirteen />
-        ) : agreementData.type === "permanent residency travel document" ? (
-          <HtmlAgreementFourTeen />
-        ) : agreementData.type === "employers" ? (
-          <HtmlAgreementFifteenth />
-        ) : agreementData.type === "LMIA exempt employers" ? (
-          <HtmlAgreementsixteen />
-        ) : agreementData.type === "initial consultation" ? (
-          <HtmlAgreementSeventeen
-            page={"admin"}
-            userData={userData}
-            felidData={felidData}
-            emp_user_type={emp_user_type}
-            addSign={""}
-          />
-        ) : agreementData.type === "recruitment services agreement" ? (
-          <HtmlAgreementEighteen
-            page={"admin"}
-            userData={userData}
-            felidData={felidData}
-            emp_user_type={emp_user_type}
-            addSign={""}
-          />
-        ) : null}
+        ) :
+          agreementData.type === "more than one applicant" ?
+            //  new
+            (<HtmlMoeThanOneApplicant
+              userData={userData}
+              felidData={felidData}
+              emp_user_type={emp_user_type}
+              page={"admin"} />)
+            : agreementData.type === "study" ? (
+              <HtmlAGreementFour />
+            ) : agreementData.type === "work permit" ? (
+              <HtmlAgreementFive />
+            ) : agreementData.type === "post graduation work permit" ? (
+              <HtmlAgreementSix />
+            ) : agreementData.type === "prospective workers" ? (
+              <HtmlAgreementSeven />
+            ) : agreementData.type === "express entry" ? (
+              <HtmlAgreementOne
+                page={"admin"}
+                userData={userData}
+                felidData={felidData}
+                emp_user_type={emp_user_type}
+                addSign={""}
+              />
+            ) : // <HtmlAgreementEight
+              // page={"admin"}
+              //   userData={userData}
+              //   felidData={felidData}
+              //   emp_user_type={emp_user_type}
+              //   addSign={""} />
+              agreementData.type === "PNP + express entry/federal PR" ? (
+                <HtmlAgreementOne
+                  page={"admin"}
+                  userData={userData}
+                  felidData={felidData}
+                  emp_user_type={emp_user_type}
+                  addSign={""}
+                /> // <HTmlAgreementNine />
+              ) : agreementData.type === "super visa application" ? (
+                <HtmlAgreementTen />
+              ) : agreementData.type === "spousal sponsorship" ? (
+                <HtmlAgreementEleven />
+              ) : agreementData.type === "citizenship" ? (
+                <HtmlAgreementTwelve />
+              ) : agreementData.type === "PR card renewal" ? (
+                <HtmlAgreementThirteen />
+              ) : agreementData.type === "permanent residency travel document" ? (
+                <HtmlAgreementFourTeen />
+              ) : agreementData.type === "employers" ? (
+                <HtmlAgreementFifteenth />
+              ) : agreementData.type === "LMIA exempt employers" ? (
+                <HtmlAgreementsixteen />
+              ) : agreementData.type === "initial consultation" ? (
+                <HtmlAgreementSeventeen
+                  page={"admin"}
+                  userData={userData}
+                  felidData={felidData}
+                  emp_user_type={emp_user_type}
+                  addSign={""}
+                />
+              ) : agreementData.type === "recruitment services agreement" ? (
+                <HtmlAgreementEighteen
+                  page={"admin"}
+                  userData={userData}
+                  felidData={felidData}
+                  emp_user_type={emp_user_type}
+                  addSign={""}
+                />
+              ) : null}
         {/* <button
           className={
             felidData.agreement_date ? "btn btn-primary my-2" : "d-none"

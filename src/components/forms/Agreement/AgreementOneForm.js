@@ -261,7 +261,9 @@ const AgreementOneForm = ({
                 family_json: res.data.data[0].family_json,
               };
               // console.log(stateData);
-              const newPageUrl = state.type === "initial consultation" ? `/initial_consultation ` : state.type === "recruitment services agreement" || state.type === "initial consultation" ? `/recruitment_service` : `/agreeone`;
+              const newPageUrl = state.type === "initial consultation" ? `/initial_consultation ` : state.type === "recruitment services agreement" || state.type === "initial consultation" ? `/recruitment_service` : state.type === "employer renewal stream"
+                ? `/renewal_application` : state.type === "more than one applicant"
+                  ? "/more_than_one_applicant" : `/agreeone`;
               localStorage.setItem(
                 "agreementStateData",
                 JSON.stringify(stateData)

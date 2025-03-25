@@ -107,6 +107,7 @@ import MangeApplicantType from "../admin/MangeApplicantType"
 import ManageDailyCallLog from "../admin/ManageDailyCallLog";
 import ManagePayment from "../admin/ManagePaymentInvoices";
 import RenewalApplicantionsPdf from "./Retaineragreement/Agreement native/RenewalApplicantionsPdf";
+import MoreThanOneApplicantAgreementPdf from "./Retaineragreement/Agreement native/MoreThanOneApplicantAgreementPdf";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -267,6 +268,7 @@ function MainLayout() {
             <Route path="/partner_dashboard" element={<PartnerDashboard />} />
             <Route path="/daily_call_log" element={<ManageDailyCallLog />} />
             <Route path="/agreepreivew" element={<HtmlAgreementOne />} />
+            <Route path="/more_than_one_applicant" element={<MoreThanOneApplicantAgreementPdf />} />
             <Route path="/renewal_application" element={<RenewalApplicantionsPdf />} />
             <Route path="/addsign" element={<SignaturePadComponent />} />
             <Route path="/assigned_admin" element={<AsiignedAdmin />} />

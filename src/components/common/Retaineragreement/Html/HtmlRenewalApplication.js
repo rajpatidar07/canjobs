@@ -67,8 +67,8 @@ const HtmlRenewalApplication = ({
             <li>Business Address: <span class="text-dark" >${felidData?.client_address
       ? ` <span class="border-bottom border-dark" style="min-width: 300px;">${felidData?.client_address}</span>`
       : emp_user_type === "employer"
-        ? userData?.address || "____________________"
-        : `<span class="border-bottom border-dark" style="min-width: 300px;">${userData?.current_location + userData?.currently_located_country || "___________________________"
+        ? userData?.address || ""
+        : `<span class="border-bottom border-dark" style="min-width: 300px;">${userData?.current_location + userData?.currently_located_country || ""
         }</span>`
     }</span></li>
             <li>Phone: ${(felidData?.client_contact || userData?.contact_no) ? `<span class="border-bottom border-dark" style="min-width: 300px;">${felidData?.client_contact || userData?.contact_no}</span>` : "____________________________"
