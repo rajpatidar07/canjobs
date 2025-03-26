@@ -3881,7 +3881,10 @@ export const getAllInvioce = async (data) => {
 /*Api to ad update invoice */
 export const AddUpdatePaymentInvoiceApi = async (data) => {
   const response = await axios.post(`${API_URL}common/addUpdatePaymentInvoice`,
-    data, {
+    {
+      ...data,
+      driveId: data.is_send_mail ? driveId : ""
+    }, {
     headers: {
       "Content-Type": "application/json",
       Authorization: Token,
@@ -3916,7 +3919,7 @@ export const GetLastPaymentInvoiceApi = async (id) => {
 }
 /*Api to send invoice reminder */
 export const SendPaymentInvoiceReminderApi = async (data) => {
-  const response = await axios.post(`${API_URL}common/sendPaymentReminder`, data,
+  const response = await axios.post(`${API_URL}common/sendPaymentReminder`, { ...data, driveId: driveId },
     {
       headers: {
         "Content-Type": "application/json",

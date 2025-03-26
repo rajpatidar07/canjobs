@@ -2,6 +2,7 @@ import React from "react";
 import { Modal } from "react-bootstrap";
 import { SendPaymentInvoiceReminderApi } from "../../../api/api"
 import useValidation from "../../common/useValidation";
+import { toast } from "react-toastify";
 const PaymentReminder = (props) => {
   let admin_id = localStorage.getItem("admin_id");
   let admin_type = localStorage.getItem("admin_type")
@@ -11,6 +12,7 @@ const PaymentReminder = (props) => {
     id: props.invoiceData.id,
     sender_id: admin_id,
     sender_type: admin_type,
+    folderId: props.folderId
   };
   const { state, setState, onInputChange, /*errors, validate*/ } = useValidation(
     initialFormState,);
@@ -21,6 +23,10 @@ const PaymentReminder = (props) => {
     try {
       let res = await SendPaymentInvoiceReminderApi(state)
       if (res.data.message === "success") {
+          toast.success("Reminder sent successfully.", {
+                  position: toast.POSITION.TOP_RIGHT,
+                  autoClose: 1000,
+                });
         setState(initialFormState)
         props.close()
       }

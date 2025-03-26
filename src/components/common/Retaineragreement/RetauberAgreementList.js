@@ -498,6 +498,7 @@ export default function RetauberAgreementList({
             docLoader={docLoader}
             pdf={pdf}
             type={"modal"}
+            page={"agreement"}
           />
         ) : null}
         {openSignfPspdfkit ? (

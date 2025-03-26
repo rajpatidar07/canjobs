@@ -126,7 +126,8 @@ export default function ViewPdf({
   setOpenAddAgreementFelids,
   docLoader,
   pdf,
-  type
+  type,
+  page,
 }) {
   let location = useLocation()
   const queryParams = new URLSearchParams(location.search);
@@ -348,7 +349,7 @@ export default function ViewPdf({
           <i className="fas fa-times"></i>
         </button>
         <div className="bg-white rounded p-5">
-          <h5 className="text-center">View Agreement Pdf</h5>
+          <h5 className="text-center">View {page} Pdf</h5>
           <div>
             {docLoader ? (
               <div className="table-responsive main_table_div">
@@ -366,7 +367,7 @@ export default function ViewPdf({
                 partnerList={[]}
                 setCommentsList={setCommentsList}
                 userType={localStorage.getItem("userType")}
-                page="agreement"
+                page={page}
               />
             )}
           </div>
@@ -400,7 +401,7 @@ export default function ViewPdf({
           setConvertedDoc={setNewPdfUrl}
           SetPdfDocUrl={GetPdfDocument}
           AdminData={AdminData}
-          page="agreement"
+          page={page}
         />
       )
     );

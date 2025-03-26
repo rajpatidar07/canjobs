@@ -113,12 +113,16 @@ const PaymentInvoiceForm = (props) => {
   }
 
   /*function to submit payment invoice  form */
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, send) => {
     e.preventDefault();
     // console.log("Submitted ", state);
     try {
+      let data = {
+        ...state,
+        is_send_mail: send ? send : 0
+      }
       setLoading(true)
-      let res = await AddUpdatePaymentInvoiceApi(state)
+      let res = await AddUpdatePaymentInvoiceApi(data)
       if (res.data.status === 1 || res.data.status === "1") {
         toast.success("Payment invoice Created successful", {
           position: toast.POSITION.TOP_RIGHT,
@@ -625,6 +629,7 @@ const PaymentInvoiceForm = (props) => {
               type="button"
               className="btn btn-primary btn-small w-25 mt-5 rounded-5 text-uppercase p-8"
               disabled={loading}
+              onClick={(e) => handleSubmit(e, 1)}
             >
               {loading ? "Saving..." : "save and send"}
             </button>

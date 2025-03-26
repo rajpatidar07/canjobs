@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react"; import { FaAmazonPay } from "react-icons/fa";
+import React, { useEffect, useState } from "react"; import { FaAmazonPay, FaEye } from "react-icons/fa";
 import { CiTrash } from "react-icons/ci";
 import { AiOutlineFilePdf } from "react-icons/ai";
 import PaymentReminder from "../../forms/payment invoice/PaymentReminder";
-import { getallEmployeeData, getAllEmployer, getAllInvioce, DeletePaymentInvoiceApi, GetLastPaymentInvoiceApi } from "../../../api/api";
+import { getallEmployeeData, getAllEmployer, getAllInvioce, DeletePaymentInvoiceApi, GetLastPaymentInvoiceApi, GetSharePointData, getSharePointParticularFolders } from "../../../api/api";
 import ConvertTime from "../Common function/ConvertTime";
 import SAlert from "../sweetAlert";
 import Pagination from "../pagination"
@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import Loader from "../loader";
 import PaymentInvoiceForm from "../../forms/payment invoice/PaymentInvoiceForm";
 import { FiAlertCircle } from "react-icons/fi";
+import ViewPdf from "../Retaineragreement/viewPdf";
 const Payment_Page = (props) => {
   const [openAddPaymentForm, setOpenAddPaymentForm] = useState(false);
   const [openPaymentReminder, setOpenPaymentReminder] = useState(false);
@@ -19,6 +20,10 @@ const Payment_Page = (props) => {
   const [invoiceList, setInvoicelist] = useState([]);
   const [singleInvoiceData, setSingleInvoiceData] = useState();
   const [lastInvoiceNo, setLastInvoiceNo] = useState();
+  const [docLoader, setDocLoder] = useState(false);
+  const [invoicePdf, setInvoicePdf] = useState("");
+  const [openViewInvoice, setOpenViewInvoice] = useState("");
+  const [invoiceData, setInvoiceData] = useState("");
   /*Pagination */
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage] = useState(10);
@@ -89,6 +94,40 @@ const Payment_Page = (props) => {
       console.log(err)
     }
   }
+   const GetInvoicePdf = async (data) => {
+      setDocLoder(true);
+      try {
+        let res = await getSharePointParticularFolders(
+          props.user_id,
+          props.user_type,
+          props.folderId
+        );
+        if (res.data.data === "Lifetime validation failed, the token is expired.") {
+          try {
+            let response = await GetSharePointData()
+            if (response.status === 1 || "1") {
+              GetInvoicePdf(data);
+            }
+          } catch (err) {
+            console.log(err);
+          }
+        }
+        if (res.data.status === 1) {
+          setDocLoder(false);
+          if (res.data.data.find((item) => item.id === data.document_id)) {
+            setInvoicePdf(res.data.data.find((item) => item.id === data.document_id));
+            // console.log(res.data.data.find((item) => item.id === agreementData.document_id))
+          } else if (res.data.data === "No Documents Found") {
+            setDocLoder(false);
+          } else {
+            setDocLoder(false);
+          }
+        }
+      } catch (Err) {
+        console.log(Err);
+        setDocLoder(false);
+      }
+    };
   return (
     <div className="response_main_div w-100">
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
@@ -290,7 +329,20 @@ const Payment_Page = (props) => {
                         >
                           <span className="text-gray px-2"><AiOutlineFilePdf /></span>
                         </button>
-
+<button
+                            className="btn btn-outline-info action_btn "
+                            disabled={!item.document_id}
+                            onClick={() => {
+                              setOpenViewInvoice(true);
+                              setInvoiceData(item);
+                              GetInvoicePdf(item);
+                            }}
+                            title="View Retainer Invoice"
+                          >
+                            <span className="text-gray px-2">
+                              <FaEye />
+                            </span>
+                          </button>
                         {/* <button
                           className="btn btn-outline-info action_btn"
                           onClick={() => {
@@ -345,6 +397,7 @@ const Payment_Page = (props) => {
             userEmail={props.user_email}
             invoiceData={singleInvoiceData}
             employee_employer_list={employeeEmployerlist}
+            folderId={props.folderId}
           />
         )}
 
@@ -401,30 +454,31 @@ const Payment_Page = (props) => {
               setApicall={setApicall}
             />
           ) : null}
-          {openViewAgreement ? (
-            <ViewPdf
-              show={openViewAgreement}
-              close={() => setOpenViewAgreement(false)}
-              agreementData={agreementData}
-              emp_user_type={emp_user_type}
-              userData={userData}
-              setApicall={setApicall}
-              folderId={folderId}
-              user_id={user_id}
-              setOpenAddAgreementFelids={setOpenAddAgreementFelids}
-              setOpenViewAgreementSign={setOpenViewAgreementSign}
-              docLoader={docLoader}
-              pdf={pdf}
-              type={"modal"}
-            />
-          ) : null}
           {openSignfPspdfkit ? (
             <Newpdf
-              document={pdf["@microsoft.graph.downloadUrl"]}
-              show={openSignfPspdfkit}
-              close={() => setOpenSignfPspdfkit(false)}
+            document={pdf["@microsoft.graph.downloadUrl"]}
+            show={openSignfPspdfkit}
+            close={() => setOpenSignfPspdfkit(false)}
             />
-          ) : null} */}
+            ) : null} */}
+            {openViewInvoice ? (
+              <ViewPdf
+                show={openViewInvoice}
+                close={() => setOpenViewInvoice(false)}
+                agreementData={invoiceData}
+                emp_user_type={props.user_type}
+                userData={props.userData}
+                setApicall={setApiCall}
+                folderId={props.folderId}
+                user_id={props.userId}
+                setOpenAddAgreementFelids={""}
+                setOpenViewAgreementSign={""}
+                docLoader={docLoader}
+                pdf={invoicePdf}
+                type={"modal"}
+                page={"invoice"}
+              />
+            ) : null}
         <SAlert
           show={deleteAlert}
           title={deleteData?.tags}

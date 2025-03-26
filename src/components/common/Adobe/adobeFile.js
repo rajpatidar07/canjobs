@@ -369,9 +369,9 @@ const AdobePDFViewer = ({
           }
         }}
         className={
-          page === "agreement"
-          ? "d-none"
-          : "annotation-mobile-button"
+          page === "agreement" || page === "invoice"
+            ? "d-none"
+            : "annotation-mobile-button"
         }
         data-toggle="collapse"
         role="button"
