@@ -14,6 +14,7 @@ const PaymentInvoiceForm = (props) => {
   let [newTerms, setNewTerms] = useState("")
   let [termsErrors, setTermsErrors] = useState("")
   let [addTermsloading, setAddTermsLoading] = useState(false)
+  let [saveType, setSaveType] = useState("")
 
   const initialFormState =
   {
@@ -51,7 +52,6 @@ const PaymentInvoiceForm = (props) => {
     try {
       let res = await GetFilter()
       setJson(res.data.data)
-      console.log(res)
     } catch (err) {
       console.log(err);
     }
@@ -90,6 +90,7 @@ const PaymentInvoiceForm = (props) => {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
+          GetAllJsonList()
           setShowTermsInput(false);
           setNewTerms("");
           setAddTermsLoading(false);
@@ -452,7 +453,6 @@ const PaymentInvoiceForm = (props) => {
                 </tr>
               </thead>
               <tbody>
-                {console.log(typeof state?.product_json)}
                 {
                   state?.product_json.length === 0 ? (
                     <tr>
@@ -616,22 +616,28 @@ const PaymentInvoiceForm = (props) => {
               </ul>
             </div>
           </div>
-          <div className="text-center mb-5 px-3">
+          <div className="d-flex justify-content-space-between text-center mb-5 px-3">
             <button
               type="button"
               className="btn btn-primary btn-small w-25 mt-5 rounded-5 text-uppercase p-8"
               disabled={loading}
-              onClick={(e) => handleSubmit(e)}
+              onClick={(e) => {
+                handleSubmit(e)
+                setSaveType("save")
+              }}
             >
-              {loading ? "Saving..." : "Save"}
+              {saveType === "save" && loading ? "Saving..." : "Save"}
             </button>
             <button
               type="button"
               className="btn btn-primary btn-small w-25 mt-5 rounded-5 text-uppercase p-8"
               disabled={loading}
-              onClick={(e) => handleSubmit(e, 1)}
+              onClick={(e) => {
+                handleSubmit(e, 1)
+                setSaveType("send")
+              }}
             >
-              {loading ? "Saving..." : "save and send"}
+              {saveType === "send" && loading ? "Sending..." : "save and send"}
             </button>
           </div>
         </form>

@@ -997,7 +997,11 @@ function CompanyProfileDetail(props) {
                       {/* <PaymentPage
                         user_id={cid}
                         user_type={"employer"}
-                        user_email={employerData.email} /> */}
+                        user_email={employerData.email}
+                        folderId={
+                          employerData.documents_folder_id
+                        }
+                        userData={employerData} /> */}
                     </div>
                   ) : null}
                 </div>

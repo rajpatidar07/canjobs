@@ -219,8 +219,137 @@ Payment Terms and Conditions
     <p><strong>Invoice Frequency:</strong> The RCIC must provide an invoice to the Client.</p>
     <p><strong>Note:</strong> The courier charges and Government fees are based on current rates and may change anytime on or before submission.</p>
 
-
+<div>
+ <table>
+        <tr>
+            <th>RCIC Service Milestone</th>
+            <th>Estimated date of Completion</th>
+            <th>Professional Fees (Non-Refundable)</th>
+            <th>Applicable Retainer Fee for this stage (Non-Refundable)</th>
+            <th>Applicable Government Processing Fee
+</th>
+        </tr>
+        <tr>
+            <td class="bold">Completes upon signing the retainer and sharing the checklists and intake sheet with client. Data gathering, filling out the forms, information verification and completeness check preparing the application package and payment is due before final submission of application. Provide proof of submission to the client</td>
+            <td></td>
+            <td>All payments made are non-refundable and total service charges to be collected regardless, whether the client withdraw from the file at this stage The government fee and courier charges must be paid apart from professional fees payment scheduled at this stage</td>
+            <td class="text-center">$2100.00 <br>(Service charges 5% GST)</td>
+            <td class="text-center">$255.00 <br>(Government Application Fees)</td>
+        </tr>
+    </table>
+    <h6 class="mt-2">Total Amount: (Non-Refundable) $2355 00
+</h6>
+<div>
+<p>Note :</p>
+<ul>
+<li>There will be an additional fee, or a new fee arrangement will be agreed upon for government's any further request for additional information/documentation of up to $1000.00 such as updating the forms, asking for immigration status update, documents related to marital status change, procedural fairness response or preparing and submitting statutory declarations, affidavits etc.</li>
+<li>If a fee has been quoted in this Retainer, then, while the RCIC expects that his fee will not exceed the amount quoted, the RCIC reserves the right to charge more in appropriate cases, such as immediate and pressing circumstances, the requirement for work outside normal business hours, or other special demands made by client.</li>
+<li>The RCIC reserves the right to alter the amount of the final account to reflect the remaining balance of the fees owed plus any Disbursements and fees for additional services to which the parties previously agreed.</li>
+<li>For application delayed or abandoned beyond 90 days, client is subjected to $350 fee plus applicable taxes to resume the file.</li>
+<li>Full services charges to be paid by client if client decided to withdraw/discharge representation at second/last stage of application.</li>
+<li>Fees charges by Canadian government for application processing has to be paid by client.</li>
+</ul>
+</div>
+</div>
 </li>
+<li>Methods of Payment: We DO NOT accept cheques.
+<p>
+<b class="highlight" >For Clients Located INSIDE Canada, we receive the following methods:</b>
+</p>
+<ul>
+<li><b>In-person Cash Drop-Off</b>-Please contact us to arrange a time to drop off your payment in cash. We will provide you with a receipt.</li>
+<li>E-transfer-Please send the payment and the answer to the secret question to the following e-mail address:<a href="accounts@canpathways.com"> accounts@canpathways.com</a>
+</li>
+<li><b>Credit Card/PayPal</b>: Instructions will be shared, additional up to 3% charges will be applicable if the client is willing to pay by this method.</li>
+</ul>
+<p>
+<b class="highlight" >For Clients Located OUTSIDE Canada, we receive the following method:</b>
+</p>
+<ul>
+<li><b>Wire Transfer</b>- Bank details will be provided once the contract is being signed. (*Banks usually charge a processing fee for wire transfer, so please add CAD $50 fee on top of your payment EVERY TIME you make a wire transfer,</li>
+<li><b>al</b> : Instructions will be shared, additional up to 5% charges will be applicable if the client is willing to pay by this method.</li>
+</ul
+</li>
+<li>Interest
+<p>
+Payment is due on all of the consultant's accounts when rendered. If any account is not paid within 30 days, interest will be charged on outstanding balance at the rate of 20% per annum from the date of the account, until paid. If the account requires recovery/collection action, in order to recover any fees, a surcharge equivalent to the recovery/collection fee incurred will be applied on the Total Cost and is to be paid by the Client
+</p>
+</li>
+<li>Refund policy
+<p>The Client acknowledges that the granting of a visa or status and the time required for processing this application is at the sole discretion of the government of Canada (or Government Authorities) and not the RCIC. Furthermore, the Client acknowledges that fees are not refundable in the event of an application refusal.
+<br><br>
+If, however, the RCIC or professional staff do not complete the tasks identified under section 2 of this Agreement, the RCIC will refund part or all of the professional fees collected. The Client agrees that the professional fees paid are for services indicated above, and any refund is strictly limited to the amount of professional fees paid.
+</p>
+<p>
+RCIC will not refund any fee paid by the client if
+<ul>
+<li>Cancellation by the applicant of the immigration application for any reason whatsoever after the signature on the contract
+</li>
+<li>Later modification in government regulations that is out of control
+</li>
+<li>Hiding information or submission of false documents
+</li>
+<li>Disregarding RCIC's instructions
+<li>
+Not providing required documents within given time frame
+</li>
+</ul>
+If application is refused because of an error or omission on the part of the RCIC or the professional staff, Unused and/or unearned fees will be refunded in accordance with the Client File Management Regulation, the Client Account Regulation and the Retainer Agreement Regulation and in the following manner:<br> <span class="highlight" style="min-width:1000px">Cheque</span><br><br>
+[describe the manner of refund, including method and timeframe]<br><br>
+There shall be no refund due if the application is not submitted, refused, returned, or cannot proceed due to
+</p>
+</li>
+<li>Invoice
+<p>The RCIC will provide invoices, which include:
+<ul>
+<li>the name and address of the Client,
+</li>
+<li>a list of services rendered,
+</li>
+<li>the date(s) the services were rendered, and
+</li>
+<li>the total fees and applicable taxes payable to the Member for the services rendered.</li>
+</ul><br>
+Invoices must be provided to the Client in accordance with the payment terms and conditions, found in section
+<br>
+5 of this Retainer Agreement. Additionally, upon the RCIC withdrawing or being discharged from representation, the RCIC must provide the Client with Statement of Account detailing all services that have been rendered or accounting for the time that has been spent on the Client's file.
+</p>
+</li>
+<li>Dispute Resolution Related to the Code of Professional Ethics
+<p>
+In the event of a dispute related to the Professional Services provided by the RCIC, the Client and RCIC are to make every reasonable effort to resolve the matter between the two parties. In the event a resolution cannot be reached, the Client is to present the complaint in writing to the RCIC and allow the RCIC 30 days to respond to the Client. In the event the dispute is still unresolved, the Client may follow the complaint and discipline procedure outlined by the Council on their website: www.icere-ercic.ca.<br><br>
+ICCRC Contact Information:
+<br>
+Immigration Consultants of Canada Regulatory Council (ICCRC)
+<br>
+5500 North Service Rd., Suite 1002 Burlington, ON, L7L 6W6
+<br>
+Toll-free: 1-877-836-7543
+</p>
+</li>
+<li>
+Confidentiality
+<p>All information and documentation reviewed by the RCIC, required by IRCC and all other governing bodies, and used for the preparation of the application will not be divulged to any third party, other than agents and employees of the RCIC, without prior consent, except as demanded by the Council or required under law. The RCIC, and all agents and employees of the RCIC, are also bound by the confidentiality requirements of Article 8 of the Code of Professional Ethics.
+<br><br>
+The Client agrees to the use of electronic communication and storage of confidential information. The RCIC will use his/her best efforts to maintain a high degree of security for electronic communication and information storage.
+<br>
+The client must file a written authorization with the RCIC, naming the person if client wishes another person or family member to be able to access information on a file.
+</p>
+</li>
+<li>
+Unplanned RCIC Absence
+<p>
+In the event the Client is unable to contact the RCIC and has reason to believe the RCIC may be dead, incapacitated, or otherwise unable to fulfill his/her duties, the Client should contact ICCRC</p></li>
+<li>Force Majeure
+<p>
+The RCIC's failure to perform any term of this Retainer Agreement, as a result of conditions beyond his/her control such as, but not limited to, governmental restrictions or subsequent legislation, war, strikes, or acts of God, shall not be deemed a breach of this Agreement. 
+</p></li>
+<li>Change Policy
+<p>
+The Client acknowledges that if the RCIC is asked to act on the Client's behalf on matters other than those outlined above in the scope of this Agreement, or because of a material change in the Client's circumstances, or because of material facts not disclosed at the outset of the application, or because of a change in government legislation regarding the processing of immigration or citizenship-related applications, the Agreement can be modified accordingly.
+<br><br>
+This Agreement may only be altered or amended when such changes are made in writing and executed by the parties hereto. All changes and/or edits must be initialed and dated by both the Member and the Client. Any substantial changes to this agreement may require that the parties enter into a new Retainer Agreement.
+</p></li>
 </ol>
 </div>
     </div>
