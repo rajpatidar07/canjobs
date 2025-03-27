@@ -347,7 +347,7 @@ The RCIC's failure to perform any term of this Retainer Agreement, as a result o
 <li>Change Policy
 <p>
 The Client acknowledges that if the RCIC is asked to act on the Client's behalf on matters other than those outlined above in the scope of this Agreement, or because of a material change in the Client's circumstances, or because of material facts not disclosed at the outset of the application, or because of a change in government legislation regarding the processing of immigration or citizenship-related applications, the Agreement can be modified accordingly.
-<br><br>
+<br><br>    
 This Agreement may only be altered or amended when such changes are made in writing and executed by the parties hereto. All changes and/or edits must be initialed and dated by both the Member and the Client. Any substantial changes to this agreement may require that the parties enter into a new Retainer Agreement.
 </p></li>
 </ol>
