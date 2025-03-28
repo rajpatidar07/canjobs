@@ -16,13 +16,13 @@ import HtmlAgreementEleven from "./Html/HtmlAgreementEleven";
 import HtmlAgreementTwelve from "./Html/HtmlAgreementTwelve";
 import HtmlAgreementThirteen from "./Html/HtmlAgreementThirteen";
 import HtmlAgreementFourTeen from "./Html/HtmlAgreementFourTeen";
-import HtmlAgreementFifteenth from "./Html/HtmlAgreementFifteenth";
 import HtmlAgreementsixteen from "./Html/HtmlAgreementsixteen";
 import { IoMdArrowBack } from "react-icons/io";
 import HtmlAgreementSeventeen from "./Html/HtmlAgreementSeventeen";
 import HtmlAgreementEighteen from "./Html/HtmlAgreementEighteen";
 import HtmlRenewalApplication from "./Html/HtmlRenewalApplication";
 import HtmlMoeThanOneApplicant from "./Html/HtmlMoeThanOneApplicant";
+import EmployerRetainerAgreement from "./Html/EmployerRetainerAgreement";
 export default function MainRetainerAggHtml({
   setApicall,
   close,
@@ -125,7 +125,9 @@ export default function MainRetainerAggHtml({
               ? `/renewal_application`
               : agreementData.type === "more than one applicant"
                 ? "/more_than_one_applicant"
-                : `/agreeone`;
+                : agreementData.type === "employers"
+                  ? "/employers_agreement"
+                  : `/agreeone`;
       localStorage.setItem("agreementStateData", JSON.stringify(stateData));
       // Open the new page in a new tab
       window.open(newPageUrl, "_blank");
@@ -253,7 +255,11 @@ export default function MainRetainerAggHtml({
               ) : agreementData.type === "permanent residency travel document" ? (
                 <HtmlAgreementFourTeen />
               ) : agreementData.type === "employers" ? (
-                <HtmlAgreementFifteenth />
+                <EmployerRetainerAgreement
+                  userData={userData}
+                  felidData={felidData}
+                  emp_user_type={emp_user_type}
+                  page={"admin"} />
               ) : agreementData.type === "LMIA exempt employers" ? (
                 <HtmlAgreementsixteen />
               ) : agreementData.type === "initial consultation" ? (

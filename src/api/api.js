@@ -3303,7 +3303,7 @@ export const AddCashpayment = async (data) => {
 
 /*Global Search API */
 export const GlobalSearchResult = async (search, admin_id, admin_type) => {
-  console.log(admin_id, admin_type)
+  // console.log(admin_id, admin_type)
   const response = await axios.post(
     `${API_URL}common/globalSearch`,
     { search },

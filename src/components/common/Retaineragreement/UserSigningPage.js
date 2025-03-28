@@ -18,7 +18,7 @@ import HtmlAgreementEleven from './Html/HtmlAgreementEleven'
 import HtmlAgreementTwelve from './Html/HtmlAgreementTwelve'
 import HtmlAgreementThirteen from './Html/HtmlAgreementThirteen'
 import HtmlAgreementFourTeen from './Html/HtmlAgreementFourTeen'
-import HtmlAgreementFifteenth from './Html/HtmlAgreementFifteenth'
+import EmployerRetainerAgreement from './Html/EmployerRetainerAgreement'
 import HtmlAgreementsixteen from './Html/HtmlAgreementsixteen'
 import HtmlAgreementEighteen from './Html/HtmlAgreementEighteen'
 import HtmlAgreementSeventeen from './Html/HtmlAgreementSeventeen'
@@ -160,7 +160,12 @@ export default function UserSigningPage() {
                                                                         : type === "permanent residency travel document"
                                                                             ? <HtmlAgreementFourTeen />
                                                                             : type === "employers"
-                                                                                ? <HtmlAgreementFifteenth />
+                                                                                ? <EmployerRetainerAgreement
+                                                                                    page={"user"}
+                                                                                    felidData={felidData}
+                                                                                    emp_user_type={emp_user_type}
+                                                                                    addSign={addSign}
+                                                                                />
                                                                                 : type === "LMIA exempt employers"
                                                                                     ? <HtmlAgreementsixteen />
                                                                                     : type === "initial consultation" ?

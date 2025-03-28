@@ -108,6 +108,7 @@ import ManageDailyCallLog from "../admin/ManageDailyCallLog";
 import ManagePayment from "../admin/ManagePaymentInvoices";
 import RenewalApplicantionsPdf from "./Retaineragreement/Agreement native/RenewalApplicantionsPdf";
 import MoreThanOneApplicantAgreementPdf from "./Retaineragreement/Agreement native/MoreThanOneApplicantAgreementPdf";
+import EmployerRetainerAgreementPdf from "./Retaineragreement/Agreement native/EmployerRetainerAgreementPdf";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -228,6 +229,11 @@ function MainLayout() {
         {/* Admin */}
         <Route path="/adminlogin" element={<AdminLoginFrom setLoginCondition={setLoginCondition} />} />
         <Route path="/study_admin_login" element={<StudyAdminLoginFrom setLoginCondition={setLoginCondition} />} />
+          <Route path="/agreepreivew" element={<HtmlAgreementOne />} />
+          <Route path="/more_than_one_applicant" element={<MoreThanOneApplicantAgreementPdf />} />
+          <Route path="/renewal_application" element={<RenewalApplicantionsPdf />} />
+          <Route path="/employers_agreement" element={<EmployerRetainerAgreementPdf />} />
+          <Route path="/addsign" element={<SignaturePadComponent />} />
         {(userType === "company" ||
           userType === "user" ||
           userType === "" ||
@@ -267,10 +273,6 @@ function MainLayout() {
             <Route path="/partner" element={<Agent />} />
             <Route path="/partner_dashboard" element={<PartnerDashboard />} />
             <Route path="/daily_call_log" element={<ManageDailyCallLog />} />
-            <Route path="/agreepreivew" element={<HtmlAgreementOne />} />
-            <Route path="/more_than_one_applicant" element={<MoreThanOneApplicantAgreementPdf />} />
-            <Route path="/renewal_application" element={<RenewalApplicantionsPdf />} />
-            <Route path="/addsign" element={<SignaturePadComponent />} />
             <Route path="/assigned_admin" element={<AsiignedAdmin />} />
             <Route path="/activity_log" element={<ActivityLog />} />
             <Route path="/filter" element={<FilterList />} />
