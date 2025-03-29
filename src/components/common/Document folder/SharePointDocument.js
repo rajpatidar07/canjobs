@@ -28,6 +28,7 @@ import { jsPDF } from "jspdf";
 import MentionAdminInDoc from "../Adobe/MentionAdminInDoc";
 import DocumentsNotes from "./DocumentsNotes";
 import ExcelToPdfConverter from "../Common function/ExcelToPdfConverter";
+import CreateExcelSheet from "./CreateExcelSheet";
 // import DocViewer from "react-doc-viewer";
 // import { PDFDocument } from 'pdf-lib';
 
@@ -45,6 +46,7 @@ export default function SharePointDocument({
 }) {
   const [docTypeName, setDocTypeName] = useState("");
   const [openNoteForm, setOpenNoteForm] = useState(false);
+  const [openExcelSheet, setOpenExcelSheet] = useState(false);
   const [newType, setNewType] = useState("");
   const [docFileBase, setDocFileBase] = useState("");
   const [folderID, setFolderID] = useState(folderId);
@@ -1083,12 +1085,25 @@ export default function SharePointDocument({
                         setConvertedDoc={setNoteText}
                       />
                       : null}
+
+                    <CreateExcelSheet show={openExcelSheet}
+                      close={() => setOpenExcelSheet(false)}
+                      user_id={user_id}
+                      emp_user_type={emp_user_type}
+                      folderID={folderID}
+                      docTypeName={docTypeName}
+                      setApiCall={setApiCall}
+                    />
                     <button className="btn btn-primary mx-2" style={{ maxHeight: 34 }}
                       onClick={() => {
                         setOpenNoteForm(true)
                         setNoteText("")
                         setDocNoteData([])
                       }}>{"Add Note"}</button>
+                    <button className="btn btn-dark mx-2" style={{ maxHeight: 34 }}
+                      onClick={() => {
+                        setOpenExcelSheet(true)
+                      }}>Add Sheet</button>
                   </>
                 </div>
               </div>

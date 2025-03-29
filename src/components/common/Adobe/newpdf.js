@@ -1767,67 +1767,103 @@
 // };
 
 // export default Newpdf;
-import React, { useState } from "react";
+// import React, { useState } from "react";
+
+// const Newpdf = () => {
+//   const [options, setOptions] = useState(["Due on receipt", "Net 15", "Net 30", "Net 60"]);
+//   const [selectedOption, setSelectedOption] = useState("Net 30");
+//   const [showInput, setShowInput] = useState(false);
+//   const [newTerm, setNewTerm] = useState("");
+
+//   const handleSelect = (option) => {
+//     setSelectedOption(option);
+//     setShowInput(false); // Hide input field when selecting an existing option
+//   };
+
+//   const handleAddNew = () => {
+//     if (newTerm.trim() !== "" && !options.includes(newTerm)) {
+//       setOptions([...options, newTerm]);
+//       setSelectedOption(newTerm);
+//       setNewTerm("");
+//     }
+//     setShowInput(false);
+//   };
+//   console.log(showInput);
+//   return (
+//     <div className="dropdown-container">
+//       {showInput ?
+//         <div className="add-new-container">
+//           <input
+//             type="text"
+//             placeholder="Enter new term"
+//             value={newTerm}
+//             onChange={(e) => setNewTerm(e.target.value)}
+//             className="add-new-input"
+//           />
+//           <button onClick={handleAddNew} className="add-new-button">Add</button>
+//         </div>
+//         : <select
+//           value={selectedOption}
+//           onChange={(e) => handleSelect(e.target.value)}
+//           className="dropdown-select"
+//         >
+//           <option value={""}>Selectb term</option>
+//           <option onClick={() => setShowInput(true)}>+ Add new</option>
+//           {options.map((option, index) => (
+//             <option key={index} value={option}>
+//               {option}
+//             </option>
+//           ))}
+//         </select>
+//       }
+//       {showInput && (
+//         <div className="add-new-container">
+//           <input
+//             type="text"
+//             placeholder="Enter new term"
+//             value={newTerm}
+//             onChange={(e) => setNewTerm(e.target.value)}
+//             className="add-new-input"
+//           />
+//           <button onClick={handleAddNew} className="add-new-button">Add</button>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default Newpdf;
+import Spreadsheet, { createFormulaParser } from "react-spreadsheet";
+import { useState } from "react";
+import { FaArrowRight, FaArrowDownLong } from "react-icons/fa6";
+
+const customCreateFormulaParser = (data) =>
+  createFormulaParser(data, { SUM: undefined });
 
 const Newpdf = () => {
-  const [options, setOptions] = useState(["Due on receipt", "Net 15", "Net 30", "Net 60"]);
-  const [selectedOption, setSelectedOption] = useState("Net 30");
-  const [showInput, setShowInput] = useState(false);
-  const [newTerm, setNewTerm] = useState("");
+  const [data, setData] = useState([
+    [{ value: "" }, { value: "" }, { value: "" }],
+    [{ value: "" }, { value: "" }, { value: "" }],
+  ]);
 
-  const handleSelect = (option) => {
-    setSelectedOption(option);
-    setShowInput(false); // Hide input field when selecting an existing option
+  // Function to add a new row
+  const addRow = () => {
+    setData([...data, Array(data[0].length).fill({ value: "" })]);
   };
 
-  const handleAddNew = () => {
-    if (newTerm.trim() !== "" && !options.includes(newTerm)) {
-      setOptions([...options, newTerm]);
-      setSelectedOption(newTerm);
-      setNewTerm("");
-    }
-    setShowInput(false);
+  // Function to add a new column
+  const addColumn = () => {
+    setData(data.map((row) => [...row, { value: "" }]));
   };
-  console.log(showInput);
+
   return (
-    <div className="dropdown-container">
-      {showInput ?
-        <div className="add-new-container">
-          <input
-            type="text"
-            placeholder="Enter new term"
-            value={newTerm}
-            onChange={(e) => setNewTerm(e.target.value)}
-            className="add-new-input"
-          />
-          <button onClick={handleAddNew} className="add-new-button">Add</button>
-        </div>
-        : <select
-          value={selectedOption}
-          onChange={(e) => handleSelect(e.target.value)}
-          className="dropdown-select"
-        >
-          <option value={""}>Selectb term</option>
-          <option onClick={() => setShowInput(true)}>+ Add new</option>
-          {options.map((option, index) => (
-            <option key={index} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
-      }
-      {showInput && (
-        <div className="add-new-container">
-          <input
-            type="text"
-            placeholder="Enter new term"
-            value={newTerm}
-            onChange={(e) => setNewTerm(e.target.value)}
-            className="add-new-input"
-          />
-          <button onClick={handleAddNew} className="add-new-button">Add</button>
-        </div>
-      )}
+    <div>
+      <button onClick={addRow}>+ <FaArrowDownLong /></button>
+      <button onClick={addColumn}>+ <FaArrowRight /></button>
+      {/* Scrollable Spreadsheet Container */}
+      <div style={{ width: "100%", height: "400px", overflow: "auto", border: "1px solid #ccc" }}>
+        <Spreadsheet data={data} onChange={setData} createFormulaParser={customCreateFormulaParser} />
+      </div>
     </div>
   );
 };
