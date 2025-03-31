@@ -27,7 +27,7 @@ import AdobePDFViewer from "../Adobe/adobeFile";
 import { jsPDF } from "jspdf";
 import MentionAdminInDoc from "../Adobe/MentionAdminInDoc";
 import DocumentsNotes from "./DocumentsNotes";
-import ExcelToPdfConverter from "../Common function/ExcelToPdfConverter";
+// import ExcelToPdfConverter from "../Common function/ExcelToPdfConverter";
 import CreateExcelSheet from "./CreateExcelSheet";
 // import DocViewer from "react-doc-viewer";
 // import { PDFDocument } from 'pdf-lib';
@@ -199,24 +199,26 @@ export default function SharePointDocument({
       GetNoteText(data, true);
     } else if (data.file.mimeType === "application/pdf") {
       setConvertedDoc(data["@microsoft.graph.downloadUrl"]);
-    } else if (data.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
-      if (data["@microsoft.graph.downloadUrl"]) {
-        try {
-          let res = await ExcelToPdfConverter(data["@microsoft.graph.downloadUrl"]);
-          // console.log(res)
-          setConvertedDoc(`${res}`);
-        } catch (error) {
-          console.error("Error converting Excel to PDF:", error);
-          setConvertedDoc("");
-          setDocPreview(false);
-        }
-      }
+    }
+    // else if (data.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
+    //   if (data["@microsoft.graph.downloadUrl"]) {
+    //     try {
+    //       let res = await ExcelToPdfConverter(data["@microsoft.graph.downloadUrl"]);
+    //       // console.log(res)
+    //       setConvertedDoc(`${res}`);
+    //     } catch (error) {
+    //       console.error("Error converting Excel to PDF:", error);
+    //       setConvertedDoc("");
+    //       setDocPreview(false);
+    //     }
+    //   }
 
-    } else {
+    // }
+    else {
       // console.log(data.file.mimeType)
-      window.open(data.webUrl);
-      setConvertedDoc("");
       setDocPreview(false);
+      setConvertedDoc("");
+      window.open(data.webUrl);
     }
   }
   /*Function to convert data  */
@@ -1100,7 +1102,7 @@ export default function SharePointDocument({
                         setNoteText("")
                         setDocNoteData([])
                       }}>{"Add Note"}</button>
-                    <button className="btn btn-dark mx-2" style={{ maxHeight: 34 }}
+                    <button className="btn btn-dark mx-2 d-none" style={{ maxHeight: 34 }}
                       onClick={() => {
                         setOpenExcelSheet(true)
                       }}>Add Sheet</button>

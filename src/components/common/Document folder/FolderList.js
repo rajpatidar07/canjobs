@@ -10,6 +10,7 @@ import Pagination from "../pagination";
 import { PiGridFourFill } from "react-icons/pi";
 import { MdNoteAdd } from "react-icons/md";
 import { RiFileExcel2Line } from "react-icons/ri";
+import { AiOutlineFilePpt } from "react-icons/ai";
 export default function FolderList({
   setDocPreview,
   ShowDeleteAlert,
@@ -108,6 +109,13 @@ export default function FolderList({
             <div className="d-flex flex-wrap justify-content-center">
               {(docTypeList || []).map((item, index) => (
                 <React.Fragment key={index}>
+                  {
+                    console.log(!item.folder || (userType === "admin" &&
+                      userType === "agent") || (["image/jpeg", "image/png", "image/jpg"].includes(item.file.mimeType)) || item.file.mimeType ===
+                      "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || item.file.mimeType === "application/pdf" || item.file.mimeType === "application/pdf" || item.file.mimeType !== "application/vnd.openxmlformats-officedocument.presentationml.presentation" || item.file.mimeType !== "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                      ? ""
+                      : "d-none", item.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "pppp", item.file.mimeType === "application/vnd.openxmlformats-officedocument.presentationml.presentation")
+                  }
                   <div
                     className="position-relative bg-white rounded overflow-hidden"
                     style={{ maxWidth: 150, margin: 10 }}
@@ -237,6 +245,19 @@ export default function FolderList({
                               }}
                             />
                           )}
+                        {item.file &&
+                          (item.file.mimeType ===
+                            "application/vnd.openxmlformats-officedocument.presentationml.presentation") && (
+                            <AiOutlineFilePpt
+                              // className="file-icon"
+                              style={{
+                                width: "90px",
+                                marginBottom: 5,
+                                height: "90px",
+                                color: "#2B579A"
+                              }}
+                            />
+                          )}
                         <div className="file-content">
                           <p
                             className="file-name text-capitalize m-0"
@@ -294,11 +315,29 @@ export default function FolderList({
                             Edit in sharepoint
                           </Link>
                         </li>
+                        {console.log(
+                          (!item.folder || item.file.mimeType !== "text/plain" ||
+                            (userType === "admin" || userType === "agent") ||
+                            ["image/jpeg", "image/png", "image/jpg"].includes(item.file.mimeType) ||
+                            item.file.mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+                            item.file.mimeType === "application/pdf") &&
+                            (item.file.mimeType !== "application/vnd.openxmlformats-officedocument.presentationml.presentation" &&
+                              item.file.mimeType !== "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                            ? "list-group-item text-danger"
+                            : "d-none"
+                        )
+                        }
                         <li
                           className={
-                            item.folder || item.file.mimeType === "text/plain"
-                              ? "d-none"
-                              : "list-group-item text-danger"
+                            (!item.folder || item.file.mimeType !== "text/plain" ||
+                              (userType === "admin" || userType === "agent") ||
+                              ["image/jpeg", "image/png", "image/jpg"].includes(item.file.mimeType) ||
+                              item.file.mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+                              item.file.mimeType === "application/pdf") &&
+                              (item.file.mimeType !== "application/vnd.openxmlformats-officedocument.presentationml.presentation" &&
+                                item.file.mimeType !== "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                              ? "list-group-item text-danger"
+                              : "d-none"
                           }
                         >
                           <Link
@@ -311,12 +350,16 @@ export default function FolderList({
                           </Link>
                         </li>
                         <li
-                          className={`list-group-item text-danger ${item.folder ||
-                            item.file.mimeType === "text/plain" ||
-                            (userType !== "admin" && userType !== "agent")
-                            ? "d-none"
-                            : ""
-                            } `}
+                          className={`list-group-item text-danger ${(!item.folder || item.file.mimeType !== "text/plain" ||
+                            (userType === "admin" || userType === "agent") ||
+                            ["image/jpeg", "image/png", "image/jpg"].includes(item.file.mimeType) ||
+                            item.file.mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+                            item.file.mimeType === "application/pdf") &&
+                            (item.file.mimeType !== "application/vnd.openxmlformats-officedocument.presentationml.presentation" &&
+                              item.file.mimeType !== "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                            ? ""
+                            : "d-none"
+                            }`}
                         >
                           <Link
                             to=""
@@ -445,9 +488,15 @@ export default function FolderList({
                             </li>
                             <li
                               className={
-                                item.file.mimeType === "text/plain"
-                                  ? "d-none"
-                                  : "list-group-item text-danger"
+                                (!item.folder || item.file.mimeType !== "text/plain" ||
+                                  (userType === "admin" || userType === "agent") ||
+                                  ["image/jpeg", "image/png", "image/jpg"].includes(item.file.mimeType) ||
+                                  item.file.mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+                                  item.file.mimeType === "application/pdf") &&
+                                  (item.file.mimeType !== "application/vnd.openxmlformats-officedocument.presentationml.presentation" &&
+                                    item.file.mimeType !== "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                                  ? "list-group-item text-danger"
+                                  : "d-none"
                               }
                             >
                               <Link
@@ -459,11 +508,15 @@ export default function FolderList({
                               </Link>
                             </li>
                             <li
-                              className={`list-group-item text-danger ${(userType !== "admin" &&
-                                userType !== "agent") ||
-                                item.file.mimeType === "text/plain"
-                                ? "d-none"
-                                : ""
+                              className={`list-group-item text-danger ${(!item.folder || item.file.mimeType !== "text/plain" ||
+                                (userType === "admin" || userType === "agent") ||
+                                ["image/jpeg", "image/png", "image/jpg"].includes(item.file.mimeType) ||
+                                item.file.mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+                                item.file.mimeType === "application/pdf") &&
+                                (item.file.mimeType !== "application/vnd.openxmlformats-officedocument.presentationml.presentation" &&
+                                  item.file.mimeType !== "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                                ? ""
+                                : "d-none"
                                 }`}
                             >
                               <Link
@@ -475,7 +528,7 @@ export default function FolderList({
                                   AdminData();
                                 }}
                               >
-                                Comments
+                                Comment's
                               </Link>
                             </li>
                           </>
@@ -527,12 +580,15 @@ export default function FolderList({
                       ) : item.file && item.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                         ? (<RiFileExcel2Line className="me-2"
                           style={{ color: "green" }} />)
-                        : (
-                          <BsFiletypeDocx
-                            className="me-2"
-                            style={{ color: "#2B579A" }}
-                          />
-                        )}
+                        : item.file && item.file.mineType === "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+                          ? <AiOutlineFilePpt className="me-2"
+                            style={{ color: "#2B579A" }} />
+                          : (
+                            <BsFiletypeDocx
+                              className="me-2"
+                              style={{ color: "#2B579A" }}
+                            />
+                          )}
                       <span className="mx-2 text-break">
                         {item.name.replaceAll("_", " ")}
                       </span>

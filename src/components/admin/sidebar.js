@@ -81,7 +81,7 @@ const AdminSidebar = (props) => {
 
   const getAllSlotsData = async () => {
     try {
-      let response = await getApplicanTypeApi(admin_id);
+      let response = await getApplicanTypeApi(admin_type === "super-admin" ? "" : admin_id);
       setApplicanttypedata(response.data.data);
       setItems(response.data.data.filter((item) => item.parent_id === "0"))
     } catch (err) {
@@ -102,7 +102,7 @@ const AdminSidebar = (props) => {
     if (apiCall === true) {
       setApiCall(false)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiCall])
 
   const handleDragStart = (index) => {
@@ -936,6 +936,28 @@ const AdminSidebar = (props) => {
           >
             <FaAddressCard className="sidebar_icon" />
             <span className="text-truncate">Manage Applicant Type</span>
+          </Link>
+        </li>
+        <li
+          ref={(el) => (liRefs.current["Manage Payment"] = el)}
+          className={
+            admin_type !== "agent"
+              ? props.heading === "Manage Payment"
+                ? "active"
+                : ""
+              : "d-none"
+          }
+        >
+          <Link
+            onClick={() => {
+              clearPageNo();
+            }}
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+            title={"Manage Payment"}
+            to="/payment_invoice"
+          >
+            <FaAddressCard className="sidebar_icon" />
+            <span className="text-truncate">Manage Payment</span>
           </Link>
         </li>
         <li

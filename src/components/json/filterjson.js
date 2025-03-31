@@ -843,9 +843,9 @@ const filterjson = {
     "LMIA exempt employers",
     "initial consultation",
     "recruitment services agreement",
-    "employer renewal stream",
-    "more than one applicant",
-    "3 column",
+    // "employer renewal stream",
+    // "more than one applicant",
+    // "3 column",
   ]
   ,
   "program_discipline_category": [

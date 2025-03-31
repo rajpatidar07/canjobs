@@ -20,9 +20,9 @@ import Loader from "./loader";
 import FolderList from "./Document folder/FolderList";
 import EditDocNameForm from "./Document folder/EditDocNameFOrm";
 import SAlert from "./sweetAlert";
-import ExcelToPdfConverter from "./Common function/ExcelToPdfConverter";
+// import ExcelToPdfConverter from "./Common function/ExcelToPdfConverter";
 import AddFolderModal from "./Document folder/AddFolderModal";
-import convertPPTtoPDF from "./Common function/PpttoPdf";
+// import convertPPTtoPDF from "./Common function/PpttoPdf";
 export default function ApplicantTypeDocuments(props) {
   const [docFileBase, setDocFileBase] = useState([]);
   let [openFolderModal, setOPenFolderModal] = useState(false);
@@ -258,38 +258,40 @@ export default function ApplicantTypeDocuments(props) {
         ...prev,
         convertedDoc: downloadUrl,
       }));
-    } else if (
-      data.file.mimeType ===
-      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    ) {
-      if (data["@microsoft.graph.downloadUrl"]) {
-        try {
-          let res = await ExcelToPdfConverter(
-            data["@microsoft.graph.downloadUrl"]
-          );
-          console.log(res);
-          setState((prev) => ({
-            ...prev,
-            convertedDoc: `${res}`,
-          }));
-        } catch (error) {
-          console.error("Error converting Excel to PDF:", error);
-          setState((prev) => ({
-            ...prev,
-            convertedDoc: "",
-            docPreview: false,
-          }));
-        }
-      }
-    } else {
+    }
+    // else if (
+    //   data.file.mimeType ===
+    //   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    // ) {
+    //   if (data["@microsoft.graph.downloadUrl"]) {
+    //     try {
+    //       let res = await ExcelToPdfConverter(
+    //         data["@microsoft.graph.downloadUrl"]
+    //       );
+    //       console.log(res);
+    //       setState((prev) => ({
+    //         ...prev,
+    //         convertedDoc: `${res}`,
+    //       }));
+    //     } catch (error) {
+    //       console.error("Error converting Excel to PDF:", error);
+    //       setState((prev) => ({
+    //         ...prev,
+    //         convertedDoc: "",
+    //         docPreview: false,
+    //       }));
+    //     }
+    //   }
+    // } 
+    else {
       // console.log(mimeType);
-      convertPPTtoPDF(data["@microsoft.graph.downloadUrl"])
-      // window.open(data.webUrl);
-      // setState((prev) => ({
-      //   ...prev,
-      //   convertedDoc: "",
-      //   docPreview: false,
-      // }));
+      // convertPPTtoPDF(data["@microsoft.graph.downloadUrl"])
+      window.open(data.webUrl);
+      setState((prev) => ({
+        ...prev,
+        convertedDoc: "",
+        docPreview: false,
+      }));
     }
   };
 
@@ -455,7 +457,7 @@ export default function ApplicantTypeDocuments(props) {
       props.setFolderApiCall(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.folderApiCall, state.apiCall, state.folderID, location.key]);
+  }, [props.folderApiCall, state.apiCall, state.folderID, props.notification === "yes" ? location.key : null]);
   useEffect(() => {
     if (props.folderId !== state.folderID && props?.notification === "yes") {
       setState((prev) => ({
@@ -622,7 +624,7 @@ export default function ApplicantTypeDocuments(props) {
                         state?.docSingleDate?.file?.mimeType === "image/png" ||
                         state?.docSingleDate?.file?.mimeType === "image/jpg") &&
                         state.imgConRes === "imageConverted") ||
-                        state?.docSingleDate?.file?.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+                      state?.docSingleDate?.file?.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
                       state?.docSingleDate?.file?.mimeType ===
                       "application/vnd.openxmlformats-officedocument.wordprocessingml.document") &&
                       state.convertedDoc &&

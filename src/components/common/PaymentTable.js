@@ -148,6 +148,7 @@ const PaymentTable = (props) => {
         });
         setDeleteAlertPaymentRecord(false)
         setDeleteAlertPaymentRecordData({})
+        setFilterListApiCall((true))
       };
     } catch (err) {
       console.log(err)

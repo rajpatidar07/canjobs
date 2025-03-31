@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"; import { FaAmazonPay, FaEye 
 import { CiTrash } from "react-icons/ci";
 import { AiOutlineFilePdf } from "react-icons/ai";
 import PaymentReminder from "../../forms/payment invoice/PaymentReminder";
-import { getallEmployeeData, getAllEmployer, getAllInvioce, DeletePaymentInvoiceApi, GetLastPaymentInvoiceApi, GetSharePointData, getSharePointParticularFolders } from "../../../api/api";
+import { getallEmployeeData, getAllEmployer, getAllInvioce, DeletePaymentInvoiceApi, GetLastPaymentInvoiceApi, GetSharePointData, getSharePointParticularFolders, GetFilter } from "../../../api/api";
 import ConvertTime from "../Common function/ConvertTime";
 import SAlert from "../sweetAlert";
 import Pagination from "../pagination"
@@ -24,6 +24,7 @@ const Payment_Page = (props) => {
   const [invoicePdf, setInvoicePdf] = useState("");
   const [openViewInvoice, setOpenViewInvoice] = useState("");
   const [invoiceData, setInvoiceData] = useState("");
+  let [json, setJson] = useState()
   /*Pagination */
   const [currentPage, setCurrentPage] = useState(1);
   const [recordsPerPage] = useState(10);
@@ -32,6 +33,12 @@ const Payment_Page = (props) => {
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteData, setDeleteData] = useState("");
   const GetAllUserData = async () => {
+    try {
+      let res = await GetFilter()
+      setJson(res.data.data)
+    } catch (err) {
+      console.log(err);
+    }
     try {
       setIsLoading(true)
       let invoiceData = {
@@ -237,7 +244,7 @@ const Payment_Page = (props) => {
                     <td className=" py-5">
                       <p className="font-size-2 font-weight-normal text-black-2 mb-0">
                         <span className="p-1">
-                          {item.tags || "N/A"}
+                          {json?.payment_invoice_terms.find((res) => res.id === parseInt(item.terms))?.value || "N/A"}
                         </span>
                       </p>
                     </td>
