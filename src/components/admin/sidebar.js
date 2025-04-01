@@ -6,6 +6,7 @@ import {
   MdAssignmentAdd,
   MdRealEstateAgent,
   MdOutlineAddIcCall,
+  MdOutlinePayments
 } from "react-icons/md";
 import { LuFileKey } from "react-icons/lu";
 import { LiaUsersSolid, LiaAddressCardSolid, LiaCcVisa } from "react-icons/lia";
@@ -956,7 +957,7 @@ const AdminSidebar = (props) => {
             title={"Manage Payment"}
             to="/payment_invoice"
           >
-            <FaAddressCard className="sidebar_icon" />
+            <MdOutlinePayments className="sidebar_icon" />
             <span className="text-truncate">Manage Payment</span>
           </Link>
         </li>

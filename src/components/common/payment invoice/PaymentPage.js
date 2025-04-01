@@ -53,7 +53,7 @@ const Payment_Page = (props) => {
       const InvoiceData = await getAllInvioce(invoiceData);
       const lastInvoice = await GetLastPaymentInvoiceApi()
       let allUserData = [];
-      setInvoicelist(InvoiceData.data.data)
+      setInvoicelist(InvoiceData.data.data.reverse())
       if (userData?.data?.length === 0 && CompanyData?.data?.length === 0) {
         setEmployeeEmployerlist([]);
         setIsLoading(false)
@@ -78,7 +78,7 @@ const Payment_Page = (props) => {
       setApiCall(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apiCall])
+  }, [apiCall, currentPage])
 
   const CancelDelete = () => {
     setDeleteAlert(false);
@@ -153,6 +153,7 @@ const Payment_Page = (props) => {
                 GetAllUserData()
                 setSingleInvoiceData()
               }}
+              disabled={lastInvoiceNo ? false : true}
             >
               Add Invoice
             </button>
@@ -385,16 +386,16 @@ const Payment_Page = (props) => {
                 )
               }
             </tbody>
-            <div className="pt-2">
-              <Pagination
-                nPages={nPages}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-                total={totalData}
-                count={invoiceList.length}
-              />
-            </div>
           </table>}
+          <div className="pt-2">
+            <Pagination
+              nPages={nPages}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              total={totalData}
+              count={invoiceList.length}
+            />
+          </div>
         </div>
 
         {openPaymentReminder && (
