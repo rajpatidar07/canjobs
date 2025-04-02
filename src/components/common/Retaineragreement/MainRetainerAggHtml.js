@@ -23,6 +23,7 @@ import HtmlAgreementEighteen from "./Html/HtmlAgreementEighteen";
 import HtmlRenewalApplication from "./Html/HtmlRenewalApplication";
 import HtmlMoeThanOneApplicant from "./Html/HtmlMoeThanOneApplicant";
 import EmployerRetainerAgreement from "./Html/EmployerRetainerAgreement";
+import ThreeColumnRetainerAgreement from "./Html/THreeColumnRetainerAgreement";
 export default function MainRetainerAggHtml({
   setApicall,
   close,
@@ -127,7 +128,9 @@ export default function MainRetainerAggHtml({
                 ? "/more_than_one_applicant"
                 : agreementData.type === "employers"
                   ? "/employers_agreement"
-                  : `/agreeone`;
+                  : agreementData.type === "three column"
+                    ? "/three_column"
+                    : `/agreeone`;
       localStorage.setItem("agreementStateData", JSON.stringify(stateData));
       // Open the new page in a new tab
       window.open(newPageUrl, "_blank");
@@ -278,7 +281,15 @@ export default function MainRetainerAggHtml({
                   emp_user_type={emp_user_type}
                   addSign={""}
                 />
-              ) : null}
+              ) :
+                agreementData.type === "three column"
+                  ? <ThreeColumnRetainerAgreement
+                    page={"admin"}
+                    userData={userData}
+                    felidData={felidData}
+                    emp_user_type={emp_user_type}
+                    addSign={""} />
+                  : null}
         {/* <button
           className={
             felidData.agreement_date ? "btn btn-primary my-2" : "d-none"

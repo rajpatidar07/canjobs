@@ -18,7 +18,7 @@ const PaymentInvoiceForm = (props) => {
 
   const initialFormState =
   {
-    invoice_no: parseInt(props.lastInvoiceNo) + 1,
+    invoice_no: 1,//parseInt(props.lastInvoiceNo) + 1,
     user_id: props.userId,//Employee /employer id
     user_type: props.userType,//Employee /employer type
     user_email: props.userEmail,//Employee /employer email
@@ -131,6 +131,16 @@ const PaymentInvoiceForm = (props) => {
         });
         close()
         props.setApiCall(true)
+      }
+      if (res.data.status === 0 || res.data.status === "0") {
+        if (res.data.message ===
+          "Duplicate Invoice no.!") {
+          toast.error("Payment invoice No can not be same", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setApiCall(true)
+        }
       }
       setLoading(false)
     } catch (err) {
