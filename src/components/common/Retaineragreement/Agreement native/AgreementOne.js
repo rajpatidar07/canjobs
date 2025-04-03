@@ -252,31 +252,6 @@ const AggrementOne = () => {
             .
           </Text>
         </View>
-        {/* <View style={{ marginTop: 15 }}>
-          <Text style={{ marginBottom: 5 }}>Details of Applicant's and dependents to added in this application</Text>
-          <View>
-            <View>
-              <Text>Principal Applicant <Text style={styles.textunderline} >__________________ </Text> Date of birth <Text style={styles.textunderline} >__________________ </Text>
-              </Text>
-            </View>
-            <View>
-              <Text>Name of Spouse  <Text style={styles.textunderline} >__________________ </Text> Date of birth <Text style={styles.textunderline} >__________________ </Text>
-              </Text>
-            </View>
-            <View>
-              <Text>Name of Dependent Child  <Text style={styles.textunderline} >__________________ </Text> Date of birth <Text style={styles.textunderline} >__________________ </Text>
-              </Text>
-            </View>
-            <View>
-              <Text>Name of Dependent Child  <Text style={styles.textunderline} >__________________ </Text> Date of birth <Text style={styles.textunderline} >__________________ </Text>
-              </Text>
-            </View>
-            <View>
-              <Text>Additional Dependent Child name  <Text style={styles.textunderline} >__________________ </Text> Date of birth <Text style={styles.textunderline} >__________________ </Text>
-              </Text>
-            </View>
-          </View>
-        </View> */}
         <View style={{ marginTop: 15 }}>
           {familyJsonArray.slice(1).length !== 0 ? (
             <Text style={{ marginBottom: 5 }}>
@@ -1809,7 +1784,7 @@ const AggrementOne = () => {
                   <View style={{ display: "flex", flexDirection: "column" }}>
                     <Image
                       source={{ uri: familyJsonArray[0]?.client_signature }}
-                      style={{ width: "40%", height: "auto" ,alignSelf: "center"}}
+                      style={{ width: "40%", height: "auto", alignSelf: "center" }}
                     />
                     <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7 }}>
                       <Text style={{ textTransform: "capitalize" }}>

@@ -261,7 +261,7 @@ const AgreementOneForm = ({
                 family_json: res.data.data[0].family_json,
               };
               // console.log(stateData);
-              const newPageUrl = state.type === "initial consultation" ? `/initial_consultation ` : state.type === "recruitment services agreement" || state.type === "initial consultation" ? `/recruitment_service` : state.type === "employer renewal stream" 
+              const newPageUrl = state.type === "initial consultation" ? `/initial_consultation ` : state.type === "recruitment services agreement" || state.type === "initial consultation" ? `/recruitment_service` : state.type === "employer renewal stream"
                 ? `/renewal_application` : state.type === "more than one applicant"
                   ? "/more_than_one_applicant" :
                   state.type === "employers"
@@ -621,7 +621,7 @@ const AgreementOneForm = ({
                   {
                     label:
                       "Other Professional Advice Initial Consultation",
-                    display: state.type === "initial consultation"  ? "" : "d-none",
+                    display: state.type === "initial consultation" ? "" : "d-none",
                     name: "other_professional_advice_initial_consultation",
                     type: "text",
                   },
@@ -674,7 +674,7 @@ const AgreementOneForm = ({
               ))}
             <div
               className={
-                openSignature === "yes" || state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "form-group col-md-12 "
+                openSignature === "yes" || state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" || state.type === "three column" ? "d-none" : "form-group col-md-12 "
               }
             >
               <h3 className="font-size-4 text-black-2 line-height-reset">

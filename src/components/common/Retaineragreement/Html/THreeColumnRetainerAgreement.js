@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react'
 import moment from 'moment/moment';
 export default function EmployerRetainerAgreement({ page,
-    felidData,
-    userData,
-    emp_user_type,
-    addSign,
+  felidData,
+  userData,
+  emp_user_type,
+  addSign,
 }) {
-    const familyJsonArray = felidData?.family_json || [];
+  const familyJsonArray = felidData?.family_json || [];
 
-    console.log(felidData, "userData", familyJsonArray, page);
+  console.log(felidData, "userData", familyJsonArray, page);
 
-    const jsxContent = `<!DOCTYPE html>
+  const jsxContent = `<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
-<head>
+  <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Retainer Agreement</title>
     <meta name="author" content="Admin" />
@@ -40,284 +40,1782 @@ export default function EmployerRetainerAgreement({ page,
         }
         td {
             border: 1px solid #333;
-            padding: 5px;
         }
-        .d-flex {
-            display: flex;
-            justify-content: end;
-            gap: 4rem;
-        }
+        
     </style>
-</head>
+  </head>
 
-   <body style="margin: 0 auto; max-width: 1024px;color:"black;">
+  <body style="margin: 0 auto; max-width: 1024px;color:"black;">
     <div class="header">
-        <img src="https://canpathwaysjobs.com/image/00logo-main-black.png" alt="Canpathways logo" style="max-width: 200px;" />
+      <img src="https://canpathwaysjobs.com/image/00logo-main-black.png"
+        alt="Canpathways logo" style="max-width: 200px;" />
     </div>
     <div class="content" style="padding: 10px 20px; text-align: justify;">
-        <h2 class="text-center">Retainer Agreement</h2>
-        <div class="container">
-            <p><strong>RCIC Membership Number:</strong> <span class="highlight">R533393</span> &nbsp;&nbsp;
-                <strong>Client File Number:</strong> <span class="highlight">383</span></p>
+      <h2 class="text-center">Retainer Agreement</h2>
+      <div class="container">
+        <p><strong>RCIC Membership Number:</strong> <span
+            class="highlight">R533393</span> &nbsp;&nbsp;
+          <strong>Client File Number:</strong> <span
+            class="highlight">383</span></p>
 
-            <p>
-                This Retainer Agreement is made this <strong>19</strong> day of <strong>August 2024</strong> between
-                Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur (the “RCIC”), RCIC Membership Number
-                <span class="highlight">R533393</span>, phone number <strong>4038885308</strong>, email
-                <strong>info@canpathways.ca</strong>, located at <strong>2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7,
-                    Canada</strong> and Client
-                <span class="highlight">
-                    ${familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name
-            ? `<span class="para_gap">${familyJsonArray[0]?.client_first_name} ${familyJsonArray[0]?.client_last_name || ""}</span>`
-            : emp_user_type === "employee"
-                ? `<span class="para_gap">${userData?.name}</span>` || ""
-                : "_____________________"}
-                </span>
-                (the “Client”), located at
-                <span class="client-info">
-                    ${felidData?.client_address
-            ? `<span class="para_gap">${felidData?.client_address}</span>`
-            : emp_user_type === "employer"
-                ? userData?.address || ""
-                : `<span class="">${userData?.current_location || ""}, ${userData?.currently_located_country || "________________"}</span>`}
-                    , email ${felidData?.client_email || userData?.email || "_________________"}, contact number
-                    <span class="client-info">${felidData?.client_contact || userData?.contact_no || "_________________"}</span>.
-                </span>
-            </p>
+        <p>
+          This Retainer Agreement is made this <strong>19</strong> day of
+          <strong>August 2024</strong> between
+          Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur (the
+          “RCIC”), RCIC Membership Number
+          <span class="highlight">R533393</span>, phone number
+          <strong>4038885308</strong>, email
+          <strong>info@canpathways.ca</strong>, located at <strong>2618 Hopewell
+            Pl NE #310 Calgary, AB T1Y 7J7,
+            Canada</strong> and Client
+          <span class="highlight">
+            ${familyJsonArray[0]?.client_first_name ||
+      familyJsonArray[0]?.client_last_name
+      ? `<span class="para_gap">${familyJsonArray[0]?.client_first_name}
+              ${familyJsonArray[0]?.client_last_name || ""}</span>`
+      : emp_user_type === "employee"
+        ? `<span class="para_gap">${userData?.name}</span>` || ""
+        : "_____________________"}
+          </span>
+          (the “Client”), located at
+          <span class="client-info">
+            ${felidData?.client_address
+      ? `<span class="para_gap">${felidData?.client_address}</span>`
+      : emp_user_type === "employer"
+        ? userData?.address || ""
+        : `<span class>${userData?.current_location || ""},
+              ${userData?.currently_located_country ||
+        "________________"}</span>`}
+            , email ${felidData?.client_email || userData?.email ||
+    "_________________"}, contact number
+            <span class="client-info">${felidData?.client_contact ||
+    userData?.contact_no || "_________________"}</span>.
+          </span>
+        </p>
 
-            <p>WHEREAS the RCIC and the Client wish to enter into a written agreement  which contains the agreed upon terms
-            and conditions upon which the RCIC will provide his/her services to the Client.
-            </p>
-            <p>AND WHEREAS the RCIC is a member College of Immigration and Citizenship Consultants
-            (the"Council"), the regulator in Canada for immigration consultants;
-            </p>
-            <p>
-            IN CONSIDERATION ofthe mutual covenants contained in this Agreement, the parties agree as follows:
-            </p>
-            <ol>
-            <li>
+        <p>WHEREAS the RCIC and the Client wish to enter into a written
+          agreement which contains the agreed upon terms
+          and conditions upon which the RCIC will provide his/her services to
+          the Client.
+        </p>
+        <p>AND WHEREAS the RCIC is a member College of Immigration and
+          Citizenship Consultants
+          (the"Council"), the regulator in Canada for immigration consultants;
+        </p>
+        <p>
+          IN CONSIDERATION ofthe mutual covenants contained in this Agreement,
+          the parties agree as follows:
+        </p>
+        <ol>
+          <li>
             <h6><b>Definitions</b></h6>
-            <p>The terms set out in this Retainer Agreement, have the meaning given to such terms in the Retainer Agreement
-            Regulation and By-law of the Council, as amended from time to time.
+            <p>The terms set out in this Retainer Agreement, have the meaning
+              given to such terms in the Retainer Agreement
+              Regulation and By-law of the Council, as amended from time to
+              time.
             </p></li>
-           <li>
+          <li>
             <h6><strong>RCIC Responsibilities and Commitments</strong></h6>
-            <p>The Client asked the RCIC, and the RCIC has agreed, to act for the Client in the matter of <br>
-            <span style="min-width:500px" class="highlight">${felidData?.matter || ""}</span>
-</p>
-<small>In consideration of the fees paid and the matter stated above, the RCIC agrees to do the following:
-</small>
+            <p>The Client asked the RCIC, and the RCIC has agreed, to act for
+              the Client in the matter of <br>
+              <span style="min-width:500px"
+                class="highlight">${felidData?.matter || ""}</span>
+            </p>
+            <small>In consideration of the fees paid and the matter stated
+              above, the RCIC agrees to do the following:
+            </small>
             <ul type="a">
-                <li>[Summary of preliminary advice given to the client ${felidData?.summary
-            ? `<span class="para_gap">${felidData?.summary || ""
-            }</span>`
-            : "If any_____________________________"
-        }]</li>
-                <li>[Consultation on providing document checklists and intake sheet, file opening]</li>
-                [Consultation and providing document checklists and intake sheet, file opening]
-                <li>[Data gathering, filling out forms]</li
+              <li>[Summary of preliminary advice given to the client
+                ${felidData?.summary
+      ? `<span class="para_gap">${felidData?.summary || ""
+      }</span>`
+      : "If any_____________________________"
+    }]</li>
+              <li>[Consultation on providing document checklists and intake
+                sheet, file opening]</li>
+              [Consultation and providing document checklists and intake sheet,
+              file opening]
+              <li>[Data gathering, filling out forms]</li
                 <li>[Information verification, completeness check]</li
-                <li>[Application submission]</li
-                <li>[File maintenance and correspondence with client and IRCC]</li
-            </ul>
-            <p>
-            The RCIC shall provide the Client with a finalized, signed copy of this Retainer Agreement. RCIC is not responsible
-                for any documentation or information provided by client to IRCC in any of the previous applications therefore shall
-                not be held responsible/liable for it.RCIC will be providing services in English Language.<br><br>
-                RCIC will return any original document that the client provides as soon as the purpose for which the documents were
-                taken is complete.(RCICs are required to provide a copy of the Code to the client.) 3 Code s.24(3)(c) 4 Code s.24(3)(d)
-                5 Code s.24(3)(e) 6 Code s.24(3)(u)<br><br>
-                The RCIC is obligated to provide professional, ethical, and competent services as per the Code of Professional
-                Conduct of the College. A copy of the Code has been provided to the client(s).<br>
-                <a href="https://laws.justice.gc.ca/eng/regulations/SOR-2022-128/index.html">https://laws.justice.gc.ca/eng/regulations/SOR-2022-128/index.html</a>
-                </p>
-             </li>
-             <li>
-             <h6><b>Client Responsibilities and Commitments</b></h6>
-             <p>
-             3.1 The Client must provide, upon request from the RCIC:
-                <ul>
-                <li>All necessary documentation</li
-                <li>All documentation in English or French, or with an English or French translation.</li
-                </ul>
-                </p>
-                <p>3.2 The Client understands that he/she must be accurate and honest in the information he/she provides
-                and that any misrepresentations or omissions may void this Agreement, or seriously affect the outcome
-                of the application or the retention of any immigration status he/she may obtain. The RCIC's
-                obligations under the Retainer Agreement are null and void if the Client knowingly provides any
-                inaccurate, misleading or false material information. The Client's financial obligations remain.</p>
-                <p>3.3 Client is informed that RCIC might obtain assistance from other professionals or services.
-</p>
-                <p>3.4 Client understands that RCIC should not be held responsible for visa outcome as RCIC cannot
-guarantee the decision of IRCC. If IRCC policy or rules changes before/during or after the application
-submission and client deemed ineligible, RCIC should not be held responsible for that.</p>
-                <p>3.5 In the event Immigration, Refugees and Citizenship Canada (IRCC) or Employment and Social
-Development Canada (ESDC) or Provincial Government Administrator or processing Visa Office
-should contact the Client directly, the Client is instructed to notify the RCIC immediately.</p>
-                <p>3.6 The Client is to immediately advise the RCIC of any change in the marital, family, or civil status or change of physical address or contact information for any person included in the application.</p>
-                <p>3.7 In the event of a Joint Retainer Agreement, the Clients agree that the RCIC must share information
-among all clients, as required. Furthermore, if a conflict develops that cannot be resolved, the RCIC
-cannot continue to act for both or all of the Clients and may have to withdraw completely from
-representation.
-</p>
-                <p>3.8 ll necessary information and documentation in English or French, or with an English or French translation, if
-in any other language, with a certified English translation, according to the timeline recommended by RCIC. In
-the event documents are not provided or client fails to contact the RCIC in spite of request made by RCIC on
-email provided by client in the retainer agreement, before the due date mentioned (which is within 30 days
-from the retainer signed, or earlier also depending upon the requirements of the case) the RCIC can close the
-file after notifying the client in advance about the non-responsiveness. An administrative fee of CAD$ 300.00
-plus taxes should be paid by client to close the file. All pending fees are due and are to be paid by client and if
-there is any unused money with RCIC, it should be refunded to client if applicable.
-</p>
-                <p>3.9 Client has been explained by RCIC and is aware of high chances of applicationrefusal due to weak case and
-other reasons as explained. Client still agrees to go ahead with the application.</p>
-                <p>3.10 The client also allows the RCIC to use of digital signatures for the purpose of this application on his/her behalf
-</p>
-                <p>3.11 Mode of communication should be email provided by client in this retainer only, for all the
-correspondence between RCIC and client and RCIC shouldbe given minimum 7 working daysto
-revert to any queries from client. RCIC is not responsible for communication/consequences if
-client does not receive email sent by RCIC and did not communicate with RCIC in given timeline
-or within 15 days of sent email.</p>
-                <p>3.12 Once client provide all the documents required as per checklist, RCIC should be given minimum 3
-weeks' time from the time all documents are reviewed by RCIC and deemed complete, to submit
-the file to IRCC.
-</p>
-                <p>
-                Payment Schedule<br>
-Billing method: The Client will be billed by [flat fee with payment by milestones]. Payment Terms and Conditions</p>
-<p>
-Invoice Frequency: The RCIC must provide an Invoice to the Client
-</p>
-<table style="border-collapse: collapse; width: 100%">
-            <thead>
-              <tr>
-                <th
-                  scope="col"
-                  style="text-align: center; border: 1px solid black;color:#0c5fa6 "
-                >
-                 <b> Fees details</b>
-                </th>
-                <th
-                  scope="col"
-                  style="text-align: center; border: 1px solid black;color:#0c5fa6"
-                >
-                  <b>Amount (CAD)</b>
-                </th>
-              </tr>
-            </thead>
+                  <li>[Application submission]</li
+                    <li>[File maintenance and correspondence with client and
+                      IRCC]</li
+                    </ul>
+                    <p>
+                      The RCIC shall provide the Client with a finalized, signed
+                      copy of this Retainer Agreement. RCIC is not responsible
+                      for any documentation or information provided by client to
+                      IRCC in any of the previous applications therefore shall
+                      not be held responsible/liable for it.RCIC will be
+                      providing services in English Language.<br><br>
+                      RCIC will return any original document that the client
+                      provides as soon as the purpose for which the documents
+                      were
+                      taken is complete.(RCICs are required to provide a copy of
+                      the Code to the client.) 3 Code s.24(3)(c) 4 Code
+                      s.24(3)(d)
+                      5 Code s.24(3)(e) 6 Code s.24(3)(u)<br><br>
+                      The RCIC is obligated to provide professional, ethical,
+                      and competent services as per the Code of Professional
+                      Conduct of the College. A copy of the Code has been
+                      provided to the client(s).<br>
+                      <a
+                        href="https://laws.justice.gc.ca/eng/regulations/SOR-2022-128/index.html">https://laws.justice.gc.ca/eng/regulations/SOR-2022-128/index.html</a>
+                    </p>
+                  </li>
+                  </ul>
+                  <li>
+                    <h6><b>Client Responsibilities and Commitments</b></h6>
+                    <p>
+                      3.1 The Client must provide, upon request from the RCIC:
+                      <ul>
+                        <li>All necessary documentation</li>
+                          <li>All documentation in English or French, or with an
+                            English or French translation.</li>
+                          </ul>
+                        </p>
+                        <p>3.2 The Client understands that he/she must be
+                          accurate and honest in the information he/she provides
+                          and that any misrepresentations or omissions may void
+                          this Agreement, or seriously affect the outcome
+                          of the application or the retention of any immigration
+                          status he/she may obtain. The RCIC's
+                          obligations under the Retainer Agreement are null and
+                          void if the Client knowingly provides any
+                          inaccurate, misleading or false material information.
+                          The Client's financial obligations remain.</p>
+                        <p>3.3 Client is informed that RCIC might obtain
+                          assistance from other professionals or services.
+                        </p>
+                        <p>3.4 Client understands that RCIC should not be held
+                          responsible for visa outcome as RCIC cannot
+                          guarantee the decision of IRCC. If IRCC policy or
+                          rules changes before/during or after the application
+                          submission and client deemed ineligible, RCIC should
+                          not be held responsible for that.</p>
+                        <p>3.5 In the event Immigration, Refugees and
+                          Citizenship Canada (IRCC) or Employment and Social
+                          Development Canada (ESDC) or Provincial Government
+                          Administrator or processing Visa Office
+                          should contact the Client directly, the Client is
+                          instructed to notify the RCIC immediately.</p>
+                        <p>3.6 The Client is to immediately advise the RCIC of
+                          any change in the marital, family, or civil status or
+                          change of physical address or contact information for
+                          any person included in the application.</p>
+                        <p>3.7 In the event of a Joint Retainer Agreement, the
+                          Clients agree that the RCIC must share information
+                          among all clients, as required. Furthermore, if a
+                          conflict develops that cannot be resolved, the RCIC
+                          cannot continue to act for both or all of the Clients
+                          and may have to withdraw completely from
+                          representation.
+                        </p>
+                        <p>3.8 All necessary information and documentation in
+                          English or French, or with an English or French
+                          translation, if
+                          in any other language, with a certified English
+                          translation, according to the timeline recommended by
+                          RCIC. In
+                          the event documents are not provided or client fails
+                          to contact the RCIC in spite of request made by RCIC
+                          on
+                          email provided by client in the retainer agreement,
+                          before the due date mentioned (which is within 30 days
+                          from the retainer signed, or earlier also depending
+                          upon the requirements of the case) the RCIC can close
+                          the
+                          file after notifying the client in advance about the
+                          non-responsiveness. An administrative fee of CAD$
+                          300.00
+                          plus taxes should be paid by client to close the file.
+                          All pending fees are due and are to be paid by client
+                          and if
+                          there is any unused money with RCIC, it should be
+                          refunded to client if applicable.
+                        </p>
+                        <p>3.9 Client has been explained by RCIC and is aware of
+                          high chances of applicationrefusal due to weak case
+                          and
+                          other reasons as explained. Client still agrees to go
+                          ahead with the application.</p>
+                        <p>3.10 The client also allows the RCIC to use of
+                          digital signatures for the purpose of this application
+                          on his/her behalf
+                        </p>
+                        <p>3.11 Mode of communication should be email provided
+                          by client in this retainer only, for all the
+                          correspondence between RCIC and client and RCIC should
+                          be given minimum 7 working days to
+                          revert to any queries from client. RCIC is not
+                          responsible for communication/consequences if
+                          client does not receive email sent by RCIC and did not
+                          communicate with RCIC in given timeline
+                          or within 15 days of sent email.</p>
+                        <p>3.12 Once client provide all the documents required
+                          as per checklist, RCIC should be given minimum 3
+                          weeks' time from the time all documents are reviewed
+                          by RCIC and deemed complete, to submit
+                          the file to IRCC.
+                        </p>
+                      </li>
+                        <li>
+                        <p>
+                          Payment Schedule<br>
+                          Billing method: The Client will be billed by [flat fee
+                          with payment by milestones]. Payment Terms and
+                          Conditions</p>
+                        
+                        <table style="border-collapse: collapse; width: 100%">
+                          <thead>
+                            <tr>
+                              <th
+                                scope="col"
+                                style="text-align: center; border: 1px solid black;color:#0c5fa6 ">
+                                <b> Fees details</b>
+                              </th>
+                              <th
+                                scope="col"
+                                style="text-align: center; border: 1px solid black;color:#0c5fa6">
+                                <b>Amount (CAD)</b>
+                              </th>
+                            </tr>
+                          </thead>
 
-            <tbody>
-            <tr>
-                <td style="text-align: center; border: 1px solid black">
-                  Professional Fees
-                </td>
-                <td style="border: 1px solid black; text-align: center" >${felidData?.professional_fees || ""
-        }</td>
-              </tr>
-           <tr>          <td style="text-align: center; border: 1px solid black">Disbursment</td>  
-           <td style="border: 1px solid black ; text-align: center">${felidData?.disbursment || ""
-        }</td>
-               </tr>
-             
-              <tr>
-                <td style="border: 1px solid black; text-align: center">Discount</td>
-                <td style="border: 1px solid black; text-align: center">${felidData?.government_fees || ""
-        }</td>
-              </tr>
-              <tr>
-                <td style="border: 1px solid black; text-align: center">Government fees</td>
-                <td style="border: 1px solid black; text-align: center">${felidData?.government_fees || ""
-        }</td>
-              </tr>
-              <tr>
-                <td style="text-align: center; border: 1px solid black">
-                  Administrative fee [as required]
-                </td>
-                <td style="border: 1px solid black">${felidData?.administrative_fee || ""
-        }</td>
-              </tr>
-              <tr>
-                <td style="text-align: center; border: 1px solid black">
-                  Applicable Taxes: ${felidData?.gst || "0"}%
-                </td>
-                <td style="border: 1px solid black">${felidData?.application_fees || ""
-        }</td>
-              </tr>
-              <tr>
-                <td style="text-align: center; border: 1px solid black">
-                  Balance (Paid at time of filing):
-                </td>
-                <td style="border: 1px solid black">${felidData?.balance || ""
-        }</td>
-              </tr>
-              <tr>
-                <td style="text-align: center; border: 1px solid black;color:red">
-                  <b>Total Cost</b>
-                </td>
-                <td style="border: 1px solid black">${felidData?.total_cost || ""
-        }</td>
-              </tr>
-            </tbody>
-          </table>
-                <p></p>
-                <p></p>
-             </li>
-             </ol>
+                          <tbody>
+                            <tr>
+                              <td
+                                style="text-align: center; border: 1px solid black">
+                                Professional Fees
+                              </td>
+                              <td
+                                style="border: 1px solid black; text-align: center">${felidData?.professional_fees
+    || ""
+    }</td>
+                            </tr>
+                            <tr> <td
+                                style="text-align: center; border: 1px solid black">Disbursment</td>
+                              <td
+                                style="border: 1px solid black ; text-align: center">${felidData?.disbursment
+    || ""
+    }</td>
+                            </tr>
+
+                            <tr>
+                              <td
+                                style="border: 1px solid black; text-align: center">Discount</td>
+                              <td
+                                style="border: 1px solid black; text-align: center">${felidData?.government_fees
+    || ""
+    }</td>
+                            </tr>
+                            <tr>
+                              <td
+                                style="border: 1px solid black; text-align: center">Government
+                                fees</td>
+                              <td
+                                style="border: 1px solid black; text-align: center">${felidData?.government_fees
+    || ""
+    }</td>
+                            </tr>
+                            <tr>
+                              <td
+                                style="text-align: center; border: 1px solid black">
+                                Administrative fee [as required]
+                              </td>
+                              <td
+                                style="border: 1px solid black">${felidData?.administrative_fee
+    || ""
+    }</td>
+                            </tr>
+                            <tr>
+                              <td
+                                style="text-align: center; border: 1px solid black">
+                                Applicable Taxes: ${felidData?.gst || "0"}%
+                              </td>
+                              <td
+                                style="border: 1px solid black">${felidData?.application_fees
+    || ""
+    }</td>
+                            </tr>
+                            <tr>
+                              <td
+                                style="text-align: center; border: 1px solid black">
+                                Balance (Paid at time of filing):
+                              </td>
+                              <td
+                                style="border: 1px solid black">${felidData?.balance
+    || ""
+    }</td>
+                            </tr>
+                            <tr>
+                              <td
+                                style="text-align: center; border: 1px solid black;color:red">
+                                <b>Total Cost</b>
+                              </td>
+                              <td
+                                style="border: 1px solid black">${felidData?.total_cost
+    || ""
+    }</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div class="mt-5">
+                        <p>
+                          Invoice Frequency: The RCIC must provide an Invoice to
+                          the Client<br>
+                          Note: The courier charges and Government fees based on current rates andmay change anytime on or before submission.
+                        </p>
+                          <table style="border-collapse: collapse; width: 100%">
+                            <thead>
+                              <tr>
+                                <th scope="col"
+                                  style="text-align: center; border: 1px solid black; color:#0c5fa6">
+                                  <b>RCIC Service Milestone</b>
+                                </th>
+                                <th scope="col"
+                                  style="text-align: center; border: 1px solid black; color:#0c5fa6">
+                                  <b>Estimated Date of Completion</b>
+                                </th>
+                                <th scope="col"
+                                  style="text-align: center; border: 1px solid black; color:#0c5fa6">
+                                  <b>Professional Fees (Non-Refundable)</b>
+                                </th>
+                                <th scope="col"
+                                  style="text-align: center; border: 1px solid black; color:#0c5fa6">
+                                  <b>Applicable Retainer Fee for this Stage
+                                    (Non-Refundable)</b>
+                                </th>
+                                <th scope="col"
+                                  style="text-align: center; border: 1px solid black; color:#0c5fa6">
+                                  <b>Applicable Government Processing Fee</b>
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td
+                                  style="border: 1px solid black; text-align: left;">
+                                  Stage 1: Work Permit Completes upon signing
+                                  the retainer and
+                                  sharing the checklists and intake sheet with
+                                  client and data gathering Filling out the
+                                  forms, information verification and
+                                  completeness
+                                  check, preparing the application package and
+                                  payment is due before
+                                  final submission of application. Provide proof
+                                  of submission to the
+                                  client
+
+                                </td>
+                                <td
+                                  style="border: 1px solid black; text-align: center;"></td>
+                                <td
+                                  style="border: 1px solid black; text-align: center;">Non-refundable</td>
+                                <td
+                                  style="border: 1px solid black; text-align: center;">$${felidData?.applicable_retainer_fee_stape_1
+    || "2500"}<br>(Service Charges for Work Permit
+                                  Application for Principal Applicant
+                                  and Dependent Spouse)
+                                </td>
+                                <td
+                                  style="border: 1px solid black; text-align: center;">${felidData?.applicable_government_processing_fee_stape_1
+    || "580"}<br>(GovernmentApplication Fees and
+                                  biometrics fee for Work Permit Application for
+                                  Principal Applicant and Dependent Spouse)
+                                </td>
+                              </tr>
+                              <tr>
+                                <td
+                                  style="border: 1px solid black; text-align: left;">
+                                  Stage2 (PNP) - completes upon signing the
+                                  retainer and sharing the checklists and intake
+                                  sheet with client Data gathering, filling out
+                                  the
+                                  forms, information verification and
+                                  completeness
+                                  check, preparing the application package and
+                                  payment is due before final submission of
+                                  application. Provide proof of submission to
+                                  the
+                                  client
+
+                                </td>
+                                <td
+                                  style="border: 1px solid black; text-align: center;"></td>
+                                <td
+                                  style="border: 1px solid black; text-align: center;">Non-refundable<br>
+                                  All payments made are nonrefundable and total
+                                  service charges
+                                  to be collected regardless, whether
+                                  the client/s withdraw from the file
+                                  at this stage. The government fee
+                                  and courier charges must be paid
+                                  apart from professional fees
+                                  payment
+                                  scheduled at this stage</td>
+                                <td
+                                  style="border: 1px solid black; text-align: center;">$${felidData?.applicable_retainer_fee_stape_2
+    || "2000"}<br>(Service Charges for PNP
+                                  application for Work Permit
+                                  Application for Principal Applicant and
+                                  Dependent Spouse)</td>
+                                <td
+                                  style="border: 1px solid black; text-align: center;">${felidData?.applicable_government_processing_fee_stape_2
+    || "480"}<br>(Government application
+                                  fees for PNP Application
+                                  es forWork Permit
+                                  Application for Principal Applicant
+                                  and Dependent Spouse))
+                                </td>
+                              </tr>
+                              <tr>
+                                <td
+                                  style="border: 1px solid black; text-align: left;">
+                                  Stage3 (Federal PR) - sharing the checklists
+                                  and
+                                  intake sheet with client Data gathering,
+                                  filling out
+                                  the forms, information verification and
+                                  completeness check, preparing the application
+                                  package and payment is due before final
+                                  submission of application. Provide proof of
+                                  submission to the client
+
+                                </td>
+                                <td
+                                  style="border: 1px solid black; text-align: center;"></td>
+                                <td
+                                  style="border: 1px solid black; text-align: center;">Non-refundable
+                                  All payments made are nonrefundable and total
+                                  service charges
+                                  to be collected regardless, whether
+                                  the client/ s withdraw from the file
+                                  at this stage. The government fee
+                                  and courier charges must be paid
+                                  apart from professional fees
+                                  payment
+                                  scheduled at this stage
+                                </td>
+                                <td
+                                  style="border: 1px solid black; text-align: center;">$${felidData?.applicable_retainer_fee_stape_3
+    || "2000"}<br>(Service Charges for Federal
+                                  PR Application es for Work Permit
+                                  Application for Principal Applicant and
+                                  Dependent Spouse)
+                                </td>
+                                <td
+                                  style="border: 1px solid black; text-align: center;">${felidData?.applicable_government_processing_fee_stape_3
+    || "3220"}<br>(Government application fees and
+                                  Biometrics fees for es for Work Permit
+                                  Application for Principal Applicant
+                                  and Dependent Spouse)
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+
+                        <p>
+                          Initial Amount: (Non-Refundable): $3,080<br>
+                          Balance (Non-Refundable): $2840<br>
+                          Balance (Non-Refundable): $5220<br>
+                        </p>
+                        <p>Note:There will be an additional fee, or a new fee
+                          arrangement will be agreed upon for government's any
+                          further request for additional
+                          information/documentation
+                          of up to $1000.00 such as updating the forms, asking
+                          for immigration status update, documents related to
+                          marital status change, procedural fairness response or
+                          preparing and submitting statutory declarations,
+                          affidavits etc.
+                          <ul>
+                            <li>If a fee has been quoted in this Retainer, then,
+                              while the RCIC expects that his fee will not
+                              exceed the
+                            </li>
+                            <li>amount quoted, the RCIC reserves the right to
+                              charge more in appropriate cases, such as
+                              immediate and
+                              pressing circumstances, the requirement for work
+                              outside normal business hours, or other special
+                              demands made by the client.</li>
+                            <li>The RCIC reserves the right to alter the amount
+                              of the final account to reflect the remaining
+                              balance of
+                              the fees owed plus any Disbursements and fees for
+                              additional services to which the parties
+                              previously
+                              agreed.</li>
+                            <li>For application delayed or abandoned beyond 90
+                              days, client is subjected to $350 fee plus
+                              applicable taxes
+                              to resume the file.</li>
+                            <li>Full services charges to be paid by client if
+                              client decided to withdraw/discharge
+                              representation at
+                              second/last stage of application.</li>
+                            <li>Fees charges by Canadian government for
+                              application processing has to be paid by client.
+                            </li>
+                          </ul>
+                        </p>
+                      </li>
+                      <li data-list-text="5." style="font-size: 18px">
+                        <h6>
+                          <b> Methods of Payment: We DO NOT accept cheques.</b>
+                      </h6>
+                      <p>
+                        <b>
+                          <u>
+                            For Clients Located INSIDE Canada, we receive the
+                            following payment
+                            options:
+                          </u>
+                        </b>
+                      </p>
+
+                      <ul id="l6">
+                        <li data-list-text="o">
+                          <b> In-person Cash Drop-Off</b>– Please contact us to
+                          arrange a time to drop off your
+                          payment in cash. We will provide you with a receipt.
+                        </li>
+                        <li data-list-text="o">
+                          <b> E-transfer</b>– Please send the payment and the
+                          answer to the secret
+                          question to the following e-mail address: <a
+                            href="mailto:accounts@canpathways.com"
+                            class="s15"
+                            target="_blank">accounts@canpathways.com</a>
+                        </li>
+                        <li data-list-text="o">
+                          <b> Credit Card/PayPal: </b>Instructions will be
+                          shared, additional up to<b> 3% </b>charges will be
+                          applicable if the client is willing to pay by
+                          this method.
+                        </li>
+                      </ul>
+                      <p>
+                        <b>
+                          <u>
+                            For Clients Located OUTSIDE Canada, we receive the
+                            following
+                            payment options:
+                          </u>
+                        </b>
+                      </p>
+                      <ul id="l7">
+                        <li data-list-text="o">
+                          <b>Wire Transfer</b>- Bank details will be provided
+                          once the contract is
+                          being signed. (*Banks usually charge a processing fee
+                          for
+                          wire transfer, so please add <b> CAD $50 </b>fee on
+                          top of your payment EVERY TIME you make a wire
+                          transfer;
+                        </li>
+                        <li data-list-text="o">
+                          <b>Paypal:</b>Instructions will be shared, additional
+                          up to <b>5 % </b>charges will be applicable if the
+                          client is willing to
+                          pay by this method.
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li data-list-text="6." style="font-size: 18px">
+                  <h6><b>Interest</b></h6>
+                  <p>
+                    Payment is due on all of the consultant’s accounts when
+                    rendered. If
+                    any account is not paid within 30 days, interest will be
+                    charged on
+                    outstanding balance at the rate of 20% per annum from the
+                    date of
+                    the account, until paid.
+                    <span style="color: #010101">If the account requires
+                      recovery/collection action, in order to
+                      recover any fees, a surcharge equivalent to the
+                      recovery/collection fee incurred will be applied on the
+                      Total Cost
+                      and is to be paid by the Client.</span>
+                  </p>
+                </li>
+                <br />
+                <li data-list-text="7." style="font-size: 18px">
+                  <h6>
+                          <b>Refund Policy</b></h6>
+                  <p>
+                    The Client acknowledges that the granting of a visa or
+                    status and
+                    the time required for processing this application is at the
+                    sole
+                    discretion of the government of Canada (or Government
+                    Authorities)
+                    and not the RCIC. Furthermore, the Client acknowledges that
+                    fees are
+                    not refundable in the event of an application refusal.
+                  </p>
+                  <p>
+                    If, however, the RCIC or professional staff do not complete
+                    the
+                    tasks identified under section 2 of this Agreement, the RCIC
+                    will
+                    refund part or all of the professional fees collected. The
+                    Client
+                    agrees that the professional fees paid are for services
+                    indicated
+                    above, and any refund is strictly limited to the amount of
+                    professional fees paid.
+                  </p>
+                  <p>RCIC will not refund any fee paid by the client if</p>
+                  <ul id="l8" style="list-style-type:disc">
+                    <li data-list-text="">
+                      <p>
+                        Cancellation by the applicant of the immigration
+                        application for
+                        any reason whatsoever after the signature on the
+                        contract
+                      </p>
+                    </li>
+                    <li data-list-text="">
+                      <p>
+                        Later modification in government regulations that is out
+                        of
+                        control
+                      </p>
+                    </li>
+                    <li data-list-text="">
+                      <p>Hiding information or submission of false documents</p>
+                    </li>
+                    <li data-list-text="">
+                      <p>Disregarding RCIC’s instructions</p>
+                    </li>
+                    <li data-list-text="">
+                      <p>Not providing required documents within given time
+                        frame</p>
+                    </li>
+                  </ul>
+
+                  <p>
+                    If application is refused because of an error or omission on
+                    the
+                    part of the RCIC or the professional staff, Unused and/or
+                    unearned
+                    fees will be refunded in accordance with the
+                    <u>Client File Management Regulation</u>, the
+                    <u>Client Account Regulation</u> and the
+                    <u>Retainer Agreement Regulation</u> and in the following
+                    manner:
+                    <br>
+                    <u>Cheque</u>
+                    ___________________________________________________________________________________<br>[describe
+                    the manner of refund, including method and time frame]<br>
+                    There shall be no refund due if the application is not
+                    submitted,
+                    refused, returned, or cannot proceed due to reasons relating
+                    to
+                    government policy, a change in the selection criteria,
+                    inadmissibility, if the client fails to adequately support
+                    all
+                    qualifications claimed, or if the client voluntarily
+                    withdraws the
+                    application.
+                  </p>
+                </li>
+                <br />
+                <li data-list-text="8." style="font-size: 18px">
+                   <h6>
+                          <b>Invoicing</b></h6>
+                  <p>The RCIC will provide invoices, which include:</p>
+                  <ul id="l9" style="list-style-type:disc">
+                    <li data-list-text="">
+                      <p>the name and address of the Client,</p>
+                    </li>
+                    <li data-list-text="">
+                      <p>a list of services rendered,</p>
+                    </li>
+                    <li data-list-text="">
+                      <p>the date(s) the services were rendered, and</p>
+                    </li>
+                    <li data-list-text="">
+                      <p>
+                        the total fees and applicable taxes payable to the
+                        Member for
+                        the services rendered.
+                      </p>
+                    </li>
+                  </ul>
+                  <p>
+                    Invoices must be provided to the Client in accordance with
+                    the
+                    payment terms and conditions, found in section 5 of this
+                    Retainer
+                    Agreement. Additionally, upon the RCIC withdrawing or being
+                    discharged from representation, the RCIC must provide the
+                    Client
+                    with Statement of Account detailing all services that have
+                    been
+                    rendered or accounting for the time that has been spent on
+                    the
+                    Client’s file.
+                  </p>
+                  <p>
+                    <br />
+                  </p>
+                </li>
+                <li data-list-text="9." style="font-size: 18px">
+ <h6>
+                          <b>                    Dispute Resolution Related to the Code of Professional
+                    Ethics
+                    </b>
+                  </h6>
+                  <p>
+                    In the event of a dispute related to the Professional
+                    Services
+                    provided by the RCIC, the Client and RCIC are to make every
+                    reasonable effort to resolve the matter between the two
+                    parties. In
+                    the event a resolution cannot be reached, the Client is to
+                    present
+                    the complaint in writing to the RCIC and allow the RCIC<br>
+                    <u>30</u> days to respond to the Client. In the event the
+                    dispute is
+                    still unresolved, the Client may follow the complaint and
+                    discipline
+                    procedure outlined by the Council on their
+                    <span class="s17">website:</span><a
+                      href="http://www.iccrc-crcic.ca/" target="_blank"> </a><a
+                      href="http://www.iccrc-crcic.ca/"
+                      target="_blank">www.iccrc-crcic.ca.</a>
+                  </p>
+                  <h6>ICCRC Contact Information:</h6>
+                  <p>
+                    Immigration Consultants of Canada Regulatory Council
+                    (ICCRC)<br>
+                    5500 North Service Rd., Suite 1002
+                    <br>Burlington, ON, L7L 6W6 <br>Toll-free:
+                    1-877-836-7543</p>
+                </li>
+                <br />
+                <li data-list-text="10." style="font-size: 18px">
+                  <h6><b>Confidentiality</b></h6>
+                  <p>
+                    All information and documentation reviewed by the RCIC,
+                    required by
+                    IRCC and all other governing bodies, and used for the
+                    preparation of
+                    the application will not be divulged to any third party,
+                    other than
+                    agents and employees of the RCIC, without prior consent,
+                    except as
+                    demanded by the Council or required under law. The RCIC, and
+                    all
+                    agents and employees of the RCIC, are also bound by the
+                    confidentiality requirements of Article 8 of the Code of
+                    Professional Ethics.
+                  </p>
+
+                  <p>
+                    The Client agrees to the use of electronic communication and
+                    storage
+                    of confidential information. The RCIC will use his/her best
+                    efforts
+                    to maintain a high degree of security for electronic
+                    communication
+                    and information storage.
+                    <br>
+                    The client must file a written authorization with the RCIC,
+                    naming
+                    the person if client wishes another person or family member
+                    to be
+                    able to access information on a file.
+                  </p>
+                </li>
+                <br />
+                <li data-list-text="11." style="font-size: 18px">
+                  <h6><b>Unplanned RCIC Absence</b></h6>
+                  <p>
+                    In the event the Client is unable to contact the RCIC and
+                    has reason
+                    to believe the RCIC may be dead, incapacitated, or otherwise
+                    unable
+                    to fulfill his/her duties, the Client should contact ICCRC.
+                  </p>
+                </li>
+                <br />
+                <li data-list-text="12." style="font-size: 18px">
+                  <h6><b>Force Majeure</b></h5>
+                  <p>
+                    The RCIC’s failure to perform any term of this Retainer
+                    Agreement,
+                    as a result of conditions beyond his/her control such as,
+                    but not
+                    limited to, governmental restrictions or subsequent
+                    legislation,
+                    war, strikes, or acts of God, shall not be deemed a breach
+                    of this
+                    Agreement.
+                  </p>
+                </li>
+                <br />
+                <li data-list-text="13." style="font-size: 18px">
+                  <h6><b></b>Change Policy</b></h6>
+
+                  <p>
+                    The Client acknowledges that if the RCIC is asked to act on
+                    the
+                    Client’s behalf on matters other than those outlined above
+                    in the
+                    scope of this Agreement, or because of a material change in
+                    the
+                    Client’s circumstances, or because of material facts not
+                    disclosed
+                    at the outset of the application, or because of a change in
+                    government legislation regarding the processing of
+                    immigration or
+                    citizenship-related applications, the Agreement can be
+                    modified
+                    accordingly.
+                  </p>
+
+                  <p>
+                    This Agreement may only be altered or amended when such
+                    changes are
+                    made in writing and executed by the parties hereto. All
+                    changes
+                    and/or edits must be initialed and dated by both the Member
+                    and the
+                    Client. Any substantial changes to this agreement may
+                    require that
+                    the parties enter into a new Retainer Agreement.
+                  </p>
+                </li>
+                <br />
+                <li data-list-text="14." style="font-size: 18px">
+                  <h6><b>Termination</b></h6>
+                  <ol id="l10" style="list-style-type:none; padding-left: 0;">
+                    <li data-list-text="14.1">
+                      <p style="position:relative;">
+                        <span style="position:absolute; left:0;">14.1</span>
+                        <span style="margin-left:40px;">This Agreement is
+                          considered terminated upon completion of tasks
+                          identified under section 2 of this agreement</span>
+                      </p>
+                    </li>
+                    <li data-list-text="14.2">
+                      <p style="position:relative;">
+                        <span style="position:absolute; left:0;">14.2</span>
+                        <span style="margin-left:40px;">This Agreement is
+                          considered terminated if material changes occur to the
+                          Client’s application or
+                          eligibility, which make it impossible to proceed with
+                          services detailed in section 2 of this
+                          Agreement.</span>
+                      </p>
+                    </li>
+                  </ol>
+                </li>
+                <br />
+                <li data-list-text="15." style="font-size: 18px">
+                  <h6>
+                  <b>
+                    Discharge or Withdrawal of Representation
+                  </b></h5>
+                  <ol id="l11" style="list-style-type:none; padding-left: 0;">
+                    <li data-list-text="15.1">
+                      <p style="position:relative;">
+                        <span style="position:absolute; left:0;">15.1</span>
+                        <span style="margin-left:40px;">The Client may discharge
+                          representation and terminate this Agreement, upon
+                          writing, at which time
+                          any outstanding or unearned fees or Disbursements will
+                          be refunded by the RCIC to the Client and/or any
+                          outstanding fees or Disbursements will be paid by the
+                          Client to the RCIC.
+                        </span>
+                      </p>
+                    </li>
+                    <li data-list-text="15.2">
+                      <p style="position:relative;">
+                        <span style="position:absolute; left:0;">15.2</span>
+                        <span style="margin-left:40px;">Pursuant to Article 11
+                          of the <u> Code of Professional Ethics </u>, the RCIC
+                          may withdraw representation and
+                          terminate this Agreement, upon writing, provided
+                          withdrawal does not cause prejudice to the Client, at
+                          which time any outstanding or unearned fees or
+                          Disbursements will be refunded by the RCIC to the
+                          Client and/or any outstanding fees or Disbursements
+                          will be paid by the Client to the RCIC.</span>
+                      </p>
+                    </li>
+                    <li data-list-text="15.3">
+                      <p style="position:relative;">
+                        <span style="position:absolute; left:0;">15.3</span>
+                        <span style="margin-left:40px;">At the time of
+                          withdrawal or discharge, the RCIC must provide the
+                          Client with an invoice detailing all
+                          services that have been rendered or accounting for the
+                          time that has been spent on the Client’s fil.</span>
+                      </p>
+                    </li>
+                  </ol>
+                </li>
+                <br />
+                <li data-list-text="16." style="font-size: 18px">
+                  <h6><b>Governing Law</b></h6>
+
+                  <p>
+                    This Agreement shall be governed by the laws in effect in
+                    the
+                    Province/Territory of Alberta, and the federal laws of
+                    Canada
+                    applicable therein and except for disputes pursuant to
+                    Section 9
+                    hereof, any dispute with respect to the terms of this
+                    Agreement
+                    shall be decided by a court of competent jurisdiction within
+                    the
+                    Province/Territory of Alberta
+                  </p>
+                </li>
+                <br />
+                <li data-list-text="17." style="font-size: 18px">
+                  <h6><b>Amendments to the Service
+                    Agreement</b></h6>
+                  <p>
+                    This service agreement may only be altered or amended when
+                    such
+                    changes are made in writing with the consent of both
+                    parties, signed
+                    and dated by the RCIC and the client
+                  </p>
+                </li>
+                <br />
+                <li data-list-text="18." style="font-size: 18px">
+                  <h6><b>Miscellaneous</b></h6>
+                  <ol id="l12" style="list-style-type:none; padding-left: 0;">
+                    <li data-list-text="18.1">
+                      <p style="position:relative;">
+                        <span style="position:absolute; left:0;">18.1</span>
+                        <span style="margin-left:40px;">The Client expressly
+                          authorizes the RCIC to act on his/her behalf to the
+                          extent of the specific functions which the RCIC was
+                          retained to perform, as per Section 2 hereof.</span>
+                      </p>
+                    </li>
+                    <li data-list-text="18.2">
+                      <p style="position:relative;">
+                        <span style="position:absolute; left:0;">18.2</span>
+                        <span style="margin-left:40px;">This Agreement
+                          constitutes the entire agreement between the parties
+                          with respect to the subject matter hereof and
+                          supersedes all prior agreements, understandings,
+                          warranties, representations, negotiations and
+                          discussions, whether oral or written, of the parties
+                          except as specifically set forth herein.</span>
+                      </p>
+                    </li>
+                    <li data-list-text="18.3">
+                      <p style="position:relative;">
+                        <span style="position:absolute; left:0;">18.3</span>
+                        <span style="margin-left:40px;">This Agreement shall be
+                          binding upon the parties hereto and their respective
+                          heirs, administrators, successors, and permitted
+                          assigns.</span>
+                      </p>
+                    </li>
+                    <li data-list-text="18.4">
+                      <p style="position:relative;">
+                        <span style="position:absolute; left:0;">18.4</span>
+                        <span style="margin-left:40px;">The Costs enumerated in
+                          this Agreement are to be paid by the Client.</span>
+                      </p>
+                    </li>
+                    <li data-list-text="18.5">
+                      <p style="position:relative;">
+                        <span style="position:absolute; left:0;">18.5</span>
+                        <span style="margin-left:40px;">This Agreement may only
+                          be altered or amended when such changes are made in
+                          writing and executed by the parties hereto. All
+                          changes and/or edits must be initialed and dated by
+                          both the Member and the Client. Any substantial
+                          changes to this Agreement may require that the parties
+                          enter into a new Retainer Agreement.</span>
+                      </p>
+                    </li>
+                    <li data-list-text="18.6">
+                      <p style="position:relative;">
+                        <span style="position:absolute; left:0;">18.6</span>
+                        <span style="margin-left:40px;">The Client may, after a
+                          Retainer Agreement is signed, appoint a Designate to
+                          act on their behalf when dealing with the RCIC. A
+                          Designate must not be compensated by the Client or the
+                          RCIC for acting in the capacity of a Designate.</span>
+                      </p>
+                    </li>
+                    <li data-list-text="18.7">
+                      <p style="position:relative;">
+                        <span style="position:absolute; left:0;">18.7</span>
+                        <span style="margin-left:40px;">The provisions of this
+                          Agreement shall be deemed severable. If any provision
+                          of this Agreement shall be held unenforceable by any
+                          court of competent jurisdiction, such provision shall
+                          be severed from this Agreement, and the remaining
+                          provisions shall remain in full force and
+                          effect.</span>
+                      </p>
+                    </li>
+                    <li data-list-text="18.8">
+                      <p style="position:relative;">
+                        <span style="position:absolute; left:0;">18.8</span>
+                        <span style="margin-left:40px;">The headings utilized in
+                          this Agreement are for convenience only and are not to
+                          be construed in any way as additions to or limitations
+                          of the covenants and agreements contained in this
+                          Agreement.</span>
+                      </p>
+                    </li>
+                    <li data-list-text="18.9">
+                      <p style="position:relative;">
+                        <span style="position:absolute; left:0;">18.9</span>
+                        <span style="margin-left:40px;">Each of the parties
+                          hereto must do and execute or cause to be done or
+                          executed all such further and other things, acts,
+                          deeds, documents, and assurances as may be necessary
+                          or reasonably required to carry out the intent and
+                          purpose of this Agreement fully and
+                          effectively.</span>
+                      </p>
+                    </li>
+                    <li data-list-text="18.10">
+                      <p style="position:relative;">
+                        <span style="position:absolute; left:0;">18.10</span>
+                        <span style="margin-left:45px;"> The Client acknowledges
+                          that he/she has had sufficient time to review this
+                          Agreement and has been given an opportunity to obtain
+                          independent legal advice and translation prior to the
+                          execution and delivery of this Agreement.</span>
+                      </p>
+                    </li>
+                    <li data-list-text="18.11">
+                      <p style="position:relative;">
+                        <span style="position:absolute; left:0;">18.11</span>
+                        <span style="margin-left:45px;"> In the event the Client
+                          did not seek independent legal advice prior to signing
+                          this Agreement, he/she did so voluntarily without any
+                          undue pressure and agrees that the failure to obtain
+                          independent legal advice must not be used as a defense
+                          to the enforcement of obligations created by this
+                          Agreement.</span>
+                      </p>
+                    </li>
+                    <li data-list-text="18.12">
+                      <p style="position:relative;">
+                        <span style="position:absolute; left:0;">18.12</span>
+                        <span style="margin-left:45px;"> Furthermore, the Client
+                          acknowledges that he/she has received a copy of this
+                          Agreement and agrees to be bound by its terms.</span>
+                      </p>
+                    </li>
+                    <li data-list-text="18.13">
+                      <p style="position:relative;">
+                        <span style="position:absolute; left:0;">18.13</span>
+                        <span style="margin-left:45px;"> The Client acknowledges
+                          that RCIC is not responsible if the application was
+                          submitted on time as per IRCC before midnight UTC but
+                          submission confirmation from IRCC was received the
+                          next day in UTC. RCIC must not be held accountable for
+                          any further implications including but not limited to
+                          missing deadlines or status expiry due to this IRCC
+                          online system error.</span>
+                      </p>
+                    </li>
+                    <li data-list-text="18.14">
+                      <p style="position:relative;">
+                        <span style="position:absolute; left:0;">18.14</span>
+                        <span style="margin-left:45px;"> The client is aware
+                          that IRCC processing time and approvals are not in
+                          RCIC’s control, and timeline frames provided to the
+                          client are according to IRCC’s website.</span>
+                      </p>
+                    </li>
+                    <li data-list-text="18.15">
+                      <p style="position:relative;">
+                        <span style="position:absolute; left:0;">18.15</span>
+                        <span style="margin-left:45px;"> The Client acknowledges
+                          that he/she has requested that the Agreement be
+                          written in the English language and that English is
+                          the binding language.</span>
+                      </p>
+                    </li>
+                  </ol>
+
+                </li>
+                <br />
+                <li data-list-text="19.">
+                  <p>
+                    The company and RCIC is not part of the hiring process and
+                    is just
+                    acting as representative for filing the application from the
+                    applicant side. The company and RCIC will not be responsible
+                    for
+                    authenticity or legitimacy of any documents submitted in
+                    support of
+                    application. The client is sole responsible for providing
+                    all the
+                    supporting documents.
+                  </p>
+                </li>
+                <br />
+                <li data-list-text="20.">
+                  <p>
+                    CLIENT ACKNOWLEDGES THAT ALL THE 9 PAGES HAVE BEEN READ AND
+                    INITIALED
+                    AFTER ACCEPTING ALL THE TERMS AND CONDITIONS OF THIS
+                    RETAINER
+                    AGREEMENT
+                  </p>
+                </li>
+                <li data-list-text="21." style="font-size: 18px">
+                  <h6><b>Contact Information</b></h6>
+                </li>
+              </ol>
+              <p>Client Name</p>
+              <div class="row">
+                <p class="col-6 text-capitalize">
+                  Given Name :
+                  <span style=" min-width: 150px;
+                     border-bottom: 1px solid grey;
+                     display: inline-block;">${felidData &&
+      familyJsonArray[0]?.client_first_name
+      ? familyJsonArray[0]?.client_first_name
+      : (emp_user_type === "employee" ? userData?.name || "" :
+        "")?.split(
+          " "
+        )[0]
+    }
+                  </span>
+                </p>
+                <p class="col-6 text-capitalize">
+                  Family Name :
+                  <span style=" min-width: 150px;
+                     border-bottom: 1px solid grey;
+                     display: inline-block;">${(familyJsonArray[0]?.client_last_name
+      ? familyJsonArray[0]?.client_last_name
+      : " ") ??
+    (emp_user_type === "employee" ? userData?.name || "" :
+      "")?.split(
+        " "
+      )[1]
+    }
+                  </span>
+                </p>
+                <p class="col-6 text-capitalize">
+                  Address : <span style=" min-width: 150px;
+                     border-bottom: 1px solid grey;
+                     display: inline-block;">${felidData &&
+      felidData?.client_address
+      ? felidData?.client_address
+      : emp_user_type === "employer"
+        ? userData?.address || ""
+        : (userData?.current_location || "") +
+        " " +
+        (userData?.currently_located_country || "")
+    }
+                  </span>
+                </p>
+                <p class="col-6">
+                  Telephone Number : <span style=" min-width: 150px;
+                     border-bottom: 1px solid grey;
+                     display: inline-block;">${felidData &&
+      felidData?.client_contact
+      ? felidData?.client_contact
+      : userData?.contact_no || ""
+    }
+                  </span>
+                </p>
+                <p class="col-6">
+                  Cellphone Number :
+                  <span style=" min-width: 150px;
+                     border-bottom: 1px solid grey;
+                     display: inline-block;">${(felidData?.client_cellphone ?
+      felidData?.client_cellphone : " ") ||
+    ""
+    }
+                  </span>
+                </p>
+                <p class="col-6">
+                  Fax Number :
+                  <span style=" min-width: 150px;
+                     border-bottom: 1px solid grey;
+                     display: inline-block;">${(felidData?.client_fax ?
+      felidData?.client_fax : " ") || ""
+    }</span>
+                </p>
+                <p class="col-6">
+                  E-mail Address : <span style=" min-width: 150px;
+                     border-bottom: 1px solid grey;
+                     display: inline-block;">${felidData &&
+      felidData?.client_email
+      ? felidData?.client_email || ""
+      : userData?.email || ""
+    }
+                  </span>
+                </p>
+              </div>
+              <p>RCIC</p>
+              <div class="row">
+                <p class="col-6 text-capitalize">
+                  Given Name:
+                  <span
+                    style="min-width: 150px; border-bottom: 1px solid grey; display: inline-block;">
+                    Harpreet
+                  </span>
+                </p>
+                <p class="col-6 text-capitalize">
+                  Family Name:
+                  <span
+                    style="min-width: 150px; border-bottom: 1px solid grey; display: inline-block;">
+                    Kaur
+                  </span>
+                </p>
+                <p class="col-6 text-capitalize">
+                  Address:
+                  <span
+                    style="min-width: 150px; border-bottom: 1px solid grey; display: inline-block;">
+                    2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7
+                  </span>
+                </p>
+                <p class="col-6">
+                  Telephone Number:
+                  <span
+                    style="min-width: 150px; border-bottom: 1px solid grey; display: inline-block;">
+                    403-888-5308
+                  </span>
+                </p>
+                <p class="col-6">
+                  Fax Number:
+                  <span
+                    style="min-width: 150px; border-bottom: 1px solid grey; display: inline-block;">
+                    <!-- Leave blank or insert fax number here -->
+                  </span>
+                </p>
+                <p class="col-6">
+                  E-mail Address:
+                  <span
+                    style="min-width: 150px; border-bottom: 1px solid grey; display: inline-block;">
+                    <a href="mailto:info@canpathways.ca" class="s19"
+                      target="_blank">
+                      info@canpathways.ca
+                    </a>
+                  </span>
+                </p>
+              </div>
+
+              <br /><br />
+              <div style="display: flex; flex-wrap: wrap">
+                <!-- Client Signature -->
+                <div style="width: 50%">
+                  ${familyJsonArray[0]?.client_signature
+      ? `
+                  <div class="d-flex flex-column">
+                    <img
+                      src="${familyJsonArray[0]?.client_signature}"
+                      alt="${familyJsonArray[0]?.client_first_name} ${familyJsonArray[0]?.client_last_name
+      }"
+                      style="max-width: 200px; float: right;"
+                      class="${familyJsonArray[0]?.client_signature ? "d-block"
+        : "d-none"}" />
+                    <p style="margin: 0">______________________________</p>
+                    <small class="row ">
+                      <span class="col text-capitalize">
+                        ${familyJsonArray[0]?.client_first_name +
+      " " +
+      (familyJsonArray[0]?.client_last_name || "") +
+      " "
+      }${moment(
+        familyJsonArray[0]?.date_signature_client
+      ).format("DD-MM-YYYY")}</span>
+                    </small>
+                  </div>`
+      : page === "admin"
+        ? "___________________________"
+        : ` <button class="btn btn-outline-secondary border-0  "
+                    style="font-family:cursive;"
+                    id="add-signature-button-0">
+                    Add Signature
+                  </button>`
+    }
+                  <p style="margin: 0 0 30px 0">Signature of Client</p>
+                </div>
+                <div style="width: 50%">
+                  <p class="para_gap text-capitalize" style="margin: 0">
+                    <span class="para_gap text-capitalize">${felidData &&
+      (familyJsonArray[0]?.client_first_name ||
+        familyJsonArray[0]?.client_last_name)
+      ? familyJsonArray[0]?.client_first_name +
+      " " +
+      (familyJsonArray[0]?.client_last_name || "")
+      : emp_user_type === "employee"
+        ? userData?.name || "" || ""
+        : "" || ""
+    }</span>
+                  </p>
+                  <p style="margin: 0 0 30px 0">Name of Client</p>
+                </div>
+                <div style="width: 50%">
+                  <p class style="margin: 0">
+                    ${familyJsonArray[0]?.date_signature_client ===
+      "0000-00-00 00:00:00" ||
+      !familyJsonArray[0]?.date_signature_client ||
+      familyJsonArray[0]?.date_signature_client === "0000-00-00"
+      ? "_____________________"
+      : `<span class="para_gap"
+                      style="max-width: 200px;">${moment(
+        familyJsonArray[0]?.date_signature_client
+      ).format("DD-MM-YYYY")}</span>`
+    }
+                  </p>
+                  <p style="margin: 0 0 30px 0">Date</p>
+                </div>
+                ${(familyJsonArray.slice(1) || []).map(
+      (item, index) =>
+        `<div style="width: 50%">
+
+                  ${item.client_signature
+          ? `
+                  <div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
+<img src=${felidData.client_signature} alt="Signature" style="max-width: 100%; max-height: 100%;"></div>
+
+                    <small class="row ">
+                      <span class="col text-capitalize">
+                        ${item.client_first_name +
+          " " +
+          item.client_last_name +
+          " "
+          }${moment(item.date_signature_client).format(
+            "DD-MM-YYYY"
+          )}</span>
+                    </small>
+                  </div>`
+          : page === "admin"
+            ? `         <div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
+< span style = "max-width: 100%; max-height: 100%;" ></ span> </div>`
+            : ` <button class="btn btn-outline-secondary border-0  "
+                    style="font-family:cursive;"
+                    id="add-signature-button-${index + 1}"
+                    ${
+            // !familyJsonArray[0]?.client_signature ? "disabled" :
+            ""
+            }>
+                    Add Signature
+                  </button>`
+        }
+                  <p style="margin: 0 0 30px 0">Signature of family member</p>
+                </div>
+                <div style="width: 50%">
+                  <p class="para_gap text-capitalize" style="margin: 0">
+                    <span style="max-width: 200px;">${item.client_first_name +
+        " " + item.client_last_name
+        }</span>
+                  </p>
+                  <p style="margin: 0 0 30px 0">Name of family member</p>
+                </div>
+                <div style="width: 50%">
+                  <p style="margin: 0">
+                    ${item.date_signature_client === "0000-00-00 00:00:00" ||
+          item.date_signature_client === "0000-00-00" ||
+          !item.date_signature_client
+          ? "_____________________"
+          : `<span class="para_gap"
+                      style="max-width: 200px;">${moment(
+            item.date_signature_client
+          ).format("DD-MM-YYYY")}</span>`
+        }
+                  </p>
+                  <p style="margin: 0 0 30px 0">Date</p>
+                </div>`
+    )}
+
+                <!-- RCIC Signature -->
+                <div style="width: 50%">
+
+                  <div class="d-flex flex-column">
+                  <div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
+           ${felidData.rcic_signature ? `<img src=${felidData.rcic_signature} alt="Signature" style="max-width: 100%; max-height: 100%;">` :
+      `<span style = "max-width: 100%; max-height: 100%;" ></span> `}
         </div>
-    </div>
+                    <small class="row ">
+                      <span class="col text-capitalize">
+                        Harpreet kaur ${!felidData?.date_signature_rcic ||
+      felidData?.date_signature_rcic === "0000-00-00" ||
+      felidData?.date_signature_rcic === "0000-00-00 00:00:00"
+      ? ""
+      : moment(felidData?.date_signature_rcic).format(
+        "DD-MM-YYYY"
+      )
+    }</span>
 
-    <div class="d-flex">
-        <h3>Initials:</h3>
-        <div>
-            <div style="width: 100px; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
-                ${felidData?.initial
-            ? `<span class="text-capitalize">${felidData?.initial?.split(" ")?.map(word => word[0]).join(" ")}</span>`
-            : `<span style="width: 100px; height: 50px; display: inline-block;"></span>`}
+                    </small>
+                  </div>
+                  <p style="margin: 0 0 30px 0">Signature of RCIC</p>
+                </div>
+                <div style="width: 50%">
+                  <p class="para_gap" style="margin: 0">
+                    <span style="max-width: 200px;">Harpreet Kaur</span>
+                  </p>
+                  <p style="margin: 0 0 30px 0">Name of RCIC</p>
+                </div>
+                <div style="width: 50%">
+                  <p style="margin: 0">
+                    ${!felidData?.date_signature_rcic ||
+      felidData?.date_signature_rcic === "0000-00-00" ||
+      felidData?.date_signature_rcic === "0000-00-00 00:00:00"
+      ? "_____________________"
+      : `<span class="para_gap"
+                      style="max-width: 200px;">${moment(
+        felidData?.date_signature_rcic
+      ).format("DD-MM-YYYY")}</span>`
+    }
+                  </p>
+                  <p style="margin: 0 0 30px 0">Date</p>
+                </div>
+              </div>
+
+              <h3 style="text-align: center">AUTHORIZATION</h3>
+              <p>
+                I <span class="para_gap text-capitalize"
+                  style="min-width: 200px;">${felidData &&
+      (familyJsonArray[0]?.client_first_name ||
+        familyJsonArray[0]?.client_last_name)
+      ? familyJsonArray[0]?.client_first_name +
+      " " +
+      (familyJsonArray[0]?.client_last_name || "")
+      : emp_user_type === "employee"
+        ? userData?.name || "" || ""
+        : "" || ""
+    }</span>( here in after referred to as the “client”),
+                hereby authorize and appoint Harpreet kaur (here in after
+                referred to as
+                the “RCIC” with a CICC# R533393), of CAN Pathways Immigration
+                consultancy ltd.,(hereinafter referred to as the “firm”), to
+                represent
+                me in my application to IRCC.
+              </p>
+              <p>
+                The RCIC and the firm are authorized to assign any of its staff
+                members,
+                associates, affiliates, lawyers or the agents to process any
+                matters in
+                whole or part related to above- mentioned subject as they deem
+                appropriate.
+              </p>
+              <p>
+                The RCIC and the firm are authorized to collect information and
+                communicate with IRCC related to my immigration file. In case of
+                Online
+                application, I authorize RCIC Harpreet kaur to electronically
+                sign and
+                submit the application on my behalf.
+              </p>
+              <p>
+                I also give permission to the RCIC and the firm to post photos
+                on social
+                media ensuring that my private information is redacted.
+              </p>
+              <p>
+                In doing so, they my each receive or pay each other any
+                pecuniary
+                remuneration/benefits that may be acquired directly or
+                indirectly
+                including those from a third party for the purpose of obtaining
+                a
+                favorable and expeditious results.
+              </p>
+              <p>Declaration</p>
+              <ol id="l13">
+                <li data-list-text="1.">
+                  <p>
+                    I confirm that neither I nor any other family members
+                    included in my
+                    application have presented or will present at any future
+                    date, false
+                    and misleading information to either the consultant, the
+                    firm or to
+                    the government of Canada.
+                  </p>
+                </li>
+                <li data-list-text="2.">
+                  <p>
+                    I confirm that neither I nor any other family members
+                    included in my
+                    application have presented or will present at any future
+                    date,
+                    fraudulently obtained or forged documents to either the
+                    consultant,
+                    the firm or to the government of Canada.
+                  </p>
+                </li>
+                <li data-list-text="3.">
+                  <p>
+                    I confirm that it is my responsibility to ensure the
+                    co-operation of
+                    my relatives/employers/educational institutes as needed.
+                  </p>
+                </li>
+                <li data-list-text="4.">
+                  <p>
+                    In the event the Immigration office responsible should
+                    contact the
+                    Client directly, the Client is instructed to notify the RCIC
+                    immediately
+                  </p>
+                </li>
+                <li data-list-text="5.">
+                  <p>
+                    If a refusal of my application is due to medical or criminal
+                    issues
+                    additional services will have to be agreed on in a different
+                    retainer and new fees negotiated. The steps to resolve any
+                    medical
+                    or criminal inadmissibility will not form part of this
+                    agreement.
+                  </p>
+                </li>
+                <li data-list-text="6.">
+                  <p>
+                    I undertake to inform the consultant, the firm or the
+                    Government of
+                    Canada of any change in marital or civic status or change of
+                    my
+                    physical address and contact information for myself and all
+                    persons
+                    included in my application. If such changes occur and it
+                    requires
+                    additional services not herein referred to, it will be
+                    agreed upon
+                    apart from this commitment.
+                  </p>
+                </li>
+                <li data-list-text="7.">
+                  <p>
+                    I understand that the RCIC’s obligations under the
+                    Engagement are null and void if
+                    the Client knowingly provides any inaccurate, misleading or
+                    false
+                    material information. The Client’s financial obligations
+                    remain
+                  </p>
+                </li>
+                <li data-list-text="8.">
+                  <p>
+                    I understand that the processing times are only an estimate
+                    given by
+                    the Government and that I will not hold the consultant, the
+                    firm or
+                    the Government of Canada responsible for any delays except
+                    where it
+                    is due to negligence from the firm.
+                  </p>
+                </li>
+                <li data-list-text="9.">
+                  <p>
+                    I agree that if my application is refused because I
+                    neglected to
+                    provide the required documents within the notified time
+                    frame the
+                    consultant, the firm or the Government of Canada will not be
+                    held
+                    responsible.
+                  </p>
+                </li>
+              </ol>
+              <p>
+                I have read and understood all the terms and steps in the
+                retainer
+                letter above and I agree to all the terms mentioned And for so
+                doing,
+                this document shall constitute good and sufficient authority and
+                declaration.
+              </p>
+              <br /><br />
+              <div style="display: flex; flex-wrap: wrap; align-items: center">
+                <div style="width: 33.33%; text-align: center">
+                  <p class="${felidData &&
+      (familyJsonArray[0]?.client_first_name ||
+        familyJsonArray[0]?.client_last_name)
+      ? "para_gap"
+      : ""
+    } text-capitalize" style="margin: 0">${felidData &&
+      (familyJsonArray[0]?.client_first_name ||
+        familyJsonArray[0]?.client_last_name)
+      ? familyJsonArray[0]?.client_first_name +
+      " " +
+      (familyJsonArray[0]?.client_last_name || "")
+      : emp_user_type === "employee"
+        ? userData?.name || "________________" || ""
+        : "_______________"
+    }</p>
+                  <p style="margin: 0">Client’s full name</p>
+                </div>
+                <div style="width: 33.33%; text-align: center;
+                ${familyJsonArray[0]?.client_signature
+      ? " position:relative; bottom: 40px;"
+      : ""
+    }">
+                  <p class=${familyJsonArray[0]?.client_signature ? "para_gap" :
+      ""
+    } style="margin: 0">
+                    <img
+                      src=${familyJsonArray[0]?.client_signature
+      ? familyJsonArray[0]?.client_signature
+      :
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"
+    }
+                      alt=${felidData &&
+      (familyJsonArray[0]?.client_first_name ||
+        familyJsonArray[0]?.client_last_name)
+      ? familyJsonArray[0]?.client_first_name +
+      " " +
+      (familyJsonArray[0]?.client_last_name || "")
+      : emp_user_type === "employee"
+        ? userData?.name || "" || ""
+        : "" || ""
+    }
+                      style="max-width: 200px; float: right min-width: 200px;"
+                      class=${familyJsonArray[0]?.client_signature ? "d-block" :
+      "d-none"} />
+                    <p
+                      style="border:1px solid black min width: 200px; margin: 0">
+                      ${familyJsonArray[0]?.client_signature ? " " :
+      "__________________"}</p>
+                  </p>
+                  <p style="margin: 0">Signatures</p>
+                </div>
+                <div style="width: 33.33%; text-align: center">
+                  <p class=${!familyJsonArray[0]?.date_signature_client ||
+      familyJsonArray[0]?.date_signature_client ===
+      "0000-00-00 00:00:00" ||
+      familyJsonArray[0]?.date_signature_client === "0000-00-00"
+      ? ""
+      : "para_gap"
+    }
+                    style="margin: 0">${!familyJsonArray[0]?.date_signature_client
+      ||
+      familyJsonArray[0]?.date_signature_client ===
+      "0000-00-00 00:00:00" ||
+      familyJsonArray[0]?.date_signature_client === "0000-00-00"
+      ? "_______________"
+      :
+      moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")
+    }</p>
+                  <p style="margin:0">Date</p>
+                </div>
+              </div>
             </div>
+
+            <div class="header" style="padding: 10px 20px">
+              <div style="
+                       text-align: right;
+                       display: flex;
+                       flex-direction: column;
+                       justify-content: space-evenly;
+                       align-items: flex-end;
+                     ">
+                <p class="para_gap text-uppercase"
+                  } style="margin: 0">${felidData?.initial
+      ? felidData?.initial
+        ?.split(" ")?.filter((word) => word)?.map((word) => word[0])?.join(" ")
+      : page === "admin"
+        ? ""
+        : ``
+    // ? ` <img
+    // src="${familyJsonArray?.initial}"
+    // alt="${familyJsonArray[0]?.client_first_name} ${
+    //            familyJsonArray[0]?.client_last_name
+    //          }"
+    // style="max-width: 200px; float: right;"
+    // class="${familyJsonArray?.initial ? "d-block" :"d-none"}"
+    // />`
+
+
+    }</p>
+
+              </div>
+
+            </div>
+            <p><p
+                style="color: #800000; text-align: center; font-family: 'Times New Roman', serif;">
+                <strong>Office:</strong> 2618 Hopewell Pl NE #310 Calgary, AB
+                T1Y 7J7, Canada |
+                <strong>Tel.:</strong> 403.888.5308 |
+                <br>
+                <strong>Email:</strong>
+                <a href="mailto:info@canpathways.ca"
+                  style="color: blue; text-decoration: underline;">info@canpathways.ca</a>
+                |
+                <strong>Website:</strong>
+                <a href="https://www.canpathways.ca" target="_blank"
+                  style="color: black; text-decoration: none;">
+                  www.canpathways.ca
+                </a>
+              </p>
+              <p
+                style="text-align: end; font-weight:700; font-size: 18px">Initial
+                : ${felidData?.initial ? `${felidData?.initial}` :
+      "__________________"
+    }</p>
+            </p>
+          </div>
         </div>
+      </body>
+    </html> `;
+
+  useEffect(
+    (e) => {
+      // Attach event listeners after HTML is injected
+      familyJsonArray.forEach((_, index) => {
+        const button = document.getElementById(`add-signature-button-${index}`);
+        if (button) {
+          button.addEventListener("click", () => addSign(e, index));
+        }
+      });
+
+      // Clean up event listeners
+      return () => {
+        familyJsonArray.forEach((_, index) => {
+          const button = document.getElementById(
+            `add-signature-button-${index}`
+          );
+          if (button) {
+            button.removeEventListener("click", () => addSign(e, index));
+          }
+        });
+      };
+    },
+    // eslint-disable-next-line
+    [familyJsonArray]
+  );
+
+  return (
+    <div
+      className="agreement_content"
+      style={{
+        maxWidth: "1024px",
+        margin: "0 auto",
+        background: "#fff",
+        padding: "30px",
+        height: "calc(100vh - 100px)",
+        overflow: "auto",
+      }}
+    >
+      <div dangerouslySetInnerHTML={{ __html: jsxContent }} />
     </div>
-</body>
-</html> `;
-
-    useEffect(
-        (e) => {
-            // Attach event listeners after HTML is injected
-            familyJsonArray.forEach((_, index) => {
-                const button = document.getElementById(`add-signature-button-${index}`);
-                if (button) {
-                    button.addEventListener("click", () => addSign(e, index));
-                }
-            });
-
-            // Clean up event listeners
-            return () => {
-                familyJsonArray.forEach((_, index) => {
-                    const button = document.getElementById(
-                        `add-signature-button-${index}`
-                    );
-                    if (button) {
-                        button.removeEventListener("click", () => addSign(e, index));
-                    }
-                });
-            };
-        },
-        // eslint-disable-next-line
-        [familyJsonArray]
-    );
-
-    return (
-        <div
-            className="agreement_content"
-            style={{
-                maxWidth: "1024px",
-                margin: "0 auto",
-                background: "#fff",
-                padding: "30px",
-                height: "calc(100vh - 100px)",
-                overflow: "auto",
-            }}
-        >
-            <div dangerouslySetInnerHTML={{ __html: jsxContent }} />
-        </div>
-    )
+  )
 }

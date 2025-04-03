@@ -166,6 +166,11 @@ export default function FolderList({
                         localStorage.setItem("new_emp_user_type", "");
                         localStorage.setItem("new_user_id", "");
                       }}
+                      onMouseOver={(e) => {
+                        e.preventDefault()
+                        setShowDropDown(item.id);
+                      }}
+
                     >
                       <div className="file-background h-100">
                         {item.folder && (
@@ -276,7 +281,9 @@ export default function FolderList({
                       </div>
                     </Link>
                     {showDropDown === item.id && (
-                      <ul className="list-group">
+                      <ul className="list-group" onMouseLeave={() => {
+                        setShowDropDown();
+                      }}>
                         <li className="list-group-item">
                           <Link
                             onClick={() => {
@@ -450,7 +457,9 @@ export default function FolderList({
                   {/* Name and Dropdown */}
                   <div className="col-3">
                     {showDropDown === item.id && (
-                      <ul className="list-group position-absolute z-index-1 bg-white shadow-sm">
+                      <ul className="list-group position-absolute z-index-1 bg-white shadow-sm" onMouseLeave={() => {
+                        setShowDropDown();
+                      }}>
                         <li className="list-group-item">
                           <Link
                             className="text-decoration-none"
@@ -553,6 +562,10 @@ export default function FolderList({
                         setPageNo(1);
                       }}
                       onContextMenu={(e) => {
+                        e.preventDefault();
+                        setShowDropDown(item.id);
+                      }}
+                      onMouseOver={(e) => {
                         e.preventDefault();
                         setShowDropDown(item.id);
                       }}
