@@ -22,8 +22,9 @@ import EmployerRetainerAgreement from './Html/EmployerRetainerAgreement'
 import HtmlAgreementsixteen from './Html/HtmlAgreementsixteen'
 import HtmlAgreementEighteen from './Html/HtmlAgreementEighteen'
 import HtmlAgreementSeventeen from './Html/HtmlAgreementSeventeen'
-import HtmlRenewalApplication from './Html/HtmlRenewalApplication'
-import HtmlMoeThanOneApplicant from './Html/HtmlMoeThanOneApplicant'
+import HtmlRenewalApplication from './Html/HtmlRenewalApplication';
+import HtmlMoeThanOneApplicant from './Html/HtmlMoeThanOneApplicant';
+import ThreeColumnRetainerAgreement from "./Html/THreeColumnRetainerAgreement";
 export default function UserSigningPage() {
     const [loader, setLoader] = useState(false)
     // const [pdf, setPdf] = useState(false)
@@ -198,8 +199,14 @@ export default function UserSigningPage() {
                                                                                                         page={"user"}
                                                                                                         felidData={felidData}
                                                                                                         emp_user_type={emp_user_type}
-                                                                                                        addSign={addSign} />) : null
-                    }
+                                                                                                        addSign={addSign} />)
+                                                                                                    : type === "three column"
+                                                                                                        ? <ThreeColumnRetainerAgreement
+                                                                                                            page={"user"}
+                                                                                                            felidData={felidData}
+                                                                                                            emp_user_type={emp_user_type}
+                                                                                                            addSign={addSign} />
+                                                                                                        : null}
 
                     <div className='d-flex justify-content-center mt-5'>
                         <button className="btn btn-primary text-decoration-none" onClick={(e) => addSign(e, "final")}>

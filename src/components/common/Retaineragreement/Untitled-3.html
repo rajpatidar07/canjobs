@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+        .family_sponsorship {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        #custom-form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+
+        }
+
+        .form-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .tabs,
+        .yes-no-tabs,
+        .sub-tabs,
+        .citizen-tabs,
+        .age-tabs,
+        .marital-status-tabs {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+        }
+
+        .sub-tabs,
+        .citizen-tabs {
+            gap: 12px;
+        }
+
+        .tab,
+        .age-tab,
+        .yes-no-tab,
+        .marital-tabs,
+        .citizenship-tab {
+            flex: 1;
+            padding: 10px;
+            color: #000;
+            border: 1px solid #007BFF;
+            text-align: center;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background 0.3s;
+        }
+
+
+        .yes-no-tab:hover,
+        .tab:hover,
+        .age-tab:hover,
+        .marital-tabs:hover,
+        .citizenship-tab:hover {
+            background: #0056b3;
+            color: white;
+        }
+
+        .tab.active,
+        .age-tab.active,
+        .yes-no-tab.active,
+        .marital-tabs.active,
+        .citizenship-tab.active {
+            background: #007BFF;
+            color: white;
+        }
+
+        .content,
+        .age-message,
+        .dropdown-container,
+        .extra-text,
+        .child-age-container,
+        .marital-status-container,
+        .car-dropdown-container,
+        .city-tabs-container,
+        .fruit-container,
+        .residing-status-container,
+        .relationship-dropdown-container,
+        .citizenship-tabs-container {
+            display: none;
+            padding: 15px;
+            background: white;
+            width: 700px;
+        }
+
+
+        .family_sponsorship_btn {
+            margin-top: 20px;
+            background: #e73a46;
+            border-color: #e73a46;
+            color: #ffffff;
+            font-size: 14px;
+            line-height: 14px;
+            font-family: Montserrat;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-size: 16px;
+        }
+
+        #indiaMessage {
+            display: none;
+        }
+    </style>
+    </head>
+
+    <body>
+
+        <div class="family_sponsorship">
+
+            <form id="custom-form">
+                <h3 style="text-align: center; color: red;">Your Contact
+                    Information </h3>
+                <p
+                    style="text-align: center; margin-bottom: 50px; font-size:15px;">Information
+                    collected will only be used
+                    for assessing your potential for immigration to Canada</p>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="first-name">First Name:</label>
+                        <input type="text" id="first-name" name="first-name"
+                            placeholder=" First Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="middle-name">Middle Name:</label>
+                        <input type="text" id="middle-name"
+                            placeholder=" Middle Name" name="middle-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="last-name">Last Name:</label>
+                        <input type="text" id="last-name" name="last-name"
+                            placeholder=" Last Name" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email"
+                        placeholder="Enter your Email Address" required>
+                </div>
+
+                <h3
+                    style="text-align: center; color: red; margin-top: 60px;">Your
+                    Personal Profile </h3>
+                <p><strong>What would you like to do?</strong></p>
+
+                <div class="tabs" style="gap:5px;">
+                    <div class="tab" id="tabA">I want to Sponsor</div>
+                    <div class="tab" id="tabB">I want to be Sponsored</div>
+                </div>
+
+                <div id="contentA" class="content">
+                    <p><strong>Are you a citizen or permanent resident of
+                            Canada?</strong></p>
+                    <div class="sub-tabs" style="gap:5px;">
+                        <div class="tab" id="tabX">Citizen</div>
+                        <div class="tab" id="tabY">Permanent Resident</div>
+                        <div class="tab" id="tabZ">Neither</div>
+                    </div>
+                </div>
+
+                <div id="contentX" class="content">
+                    <p><strong>How old are you?</strong></p>
+                    <div class="age-tabs" style="gap:5px;">
+                        <div class="age-tab" id="under17">Under 17</div>
+                        <div class="age-tab" id="above17">17 or Above</div>
+                    </div>
+                </div>
+
+                <div id="residingStatusContainer"
+                    class="residing-status-container">
+                    <p><strong>Are you currently residing in
+                            Canada?</strong></p>
+                    <div class="yes-no-tabs" style="gap: 5px;">
+                        <div class="yes-no-tab" id="residingYes">Yes</div>
+                        <div class="yes-no-tab" id="residingNo">No</div>
+                    </div>
+                </div>
+
+                <div id="under17Message" class="age-message">
+                    <p style="color: red;"><strong>To be eligible to sponsor
+                            your foreign relatives for Canadian immigration
+                            you
+                            must be at least 18 years of age.</strong></p>
+                </div>
+
+                <div id="dropdownContainer" class="dropdown-container">
+                    <label for="dropdown"><strong>Who would you like to
+                            sponsor?</strong></label>
+                    <select id="dropdown">
+                        <option value>Select</option>
+                        <option value="1">Spouse</option>
+                        <option value="2">Common-Law Partner</option>
+                        <option value="3">Mother and Father</option>
+                        <option value="4">Mother</option>
+                        <option value="5">Father</option>
+                        <option value="6">Grandmother and Grandfather</option>
+                        <option value="7">Grandmother</option>
+                        <option value="8">Grandfather</option>
+                        <option value="9">Child</option>
+                        <option value="10">Grandchild</option>
+                    </select>
+                </div>
+
+                <div id="commonLawText" class="extra-text">
+                    <p><strong>Common-Law Partner: A person that you have lived
+                            in a conjugal relationship with for at least
+                            12
+                            months.</strong></p>
+                </div>
+
+                <div id="childAgeContainer" class="child-age-container">
+                    <label for="childAge"><strong>What is your
+                            Child/Grandchild's age?</strong></label>
+                    <select id="childAge">
+                        <option value>Select</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                        <option value="23">23</option>
+                        <option value="24">24 or over</option>
+                    </select>
+                </div>
+
+                <div id="maritalStatusContainer"
+                    class="marital-status-container">
+                    <p><strong>What is your Child/Grandchild's marital
+                            status?</strong></p>
+                    <div class="marital-status-tabs" style="gap: 5px;">
+                        <div class="marital-tabs">Single</div>
+                        <div class="marital-tabs">Married</div>
+                        <div class="marital-tabs">Common-law</div>
+                    </div>
+                </div>
+
+                <div id="relationshipDropdownContainer"
+                    class="relationship-dropdown-container"
+                    style="display: none;">
+                    <label for="relationshipDropdown"><strong>What is your
+                            relationship to the person who will sponsor
+                            you?</strong></label>
+                    <select id="relationshipDropdown">
+                        <option value>Select</option>
+                        <option value="spouse">Spouse</option>
+                        <option value="common-law">Common-Law Partner</option>
+                        <option value="parent">Parent</option>
+                        <option value="child">Child</option>
+                        <option value="grandchild">Grandchild</option>
+                    </select>
+                </div>
+
+                <div id="citizenshipTabsContainer"
+                    class="citizenship-tabs-container" style="display: none;">
+                    <p><strong>What is your sponsor's Canadian
+                            Status?</strong></p>
+                    <div class="citizen-tabs" style="gap: 5px;">
+                        <div class="citizenship-tab"
+                            id="tabCitizen">Citizen</div>
+                        <div class="citizenship-tab"
+                            id="tabPermanentResident">Permanent Resident</div>
+                        <div class="citizenship-tab"
+                            id="tabNeither">Neither</div>
+                    </div>
+                </div>
+
+                <div id="ageDropdownContainer" class="age-dropdown-container"
+                    style="display: none;">
+                    <label for="child-age"><strong>How old are
+                            you?</strong></label>
+                    <select id="child-age">
+                        <option value>Select</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                        <option value="23">23</option>
+                        <option value="24">24 or above</option>
+                    </select>
+                </div>
+                <div id="indiaMessage">To be eligible to sponsor foreign
+                    relatives for Canadian immigration one must be
+                    either a
+                    Canadian citizen or Canadian permanent resident. If you are
+                    interested in immigration to Canada, please
+                    complete our <b>General Immigration Assessment
+                        Form.</b></div>
+                <div class="final-checkbox"
+                    style=" display:flex; gap: 10px; align-items: center; width: auto;">
+                    <input type="checkbox" id="termsCheckbox"
+                        style="width:auto;" required>
+                    <label for="termsCheckbox">I have read and agree to the <a
+                            href="#">Terms & Conditions</a> and <a
+                            href="#">Privacy Policy</a></label>
+                </div>
+
+                <button class="family_sponsorship_btn" type="submit"
+                    id="submitBtn">Submit</button>
+            </div>
+        </form>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+        $(document).ready(function () {
+            $('#custom-form').submit(function (event) {
+                event.preventDefault(); // Prevent form submission
+
+                // Collect form data
+                var formData = {
+                    "fields": [
+                        { "name": "firstname", "value": $('#first-name').val() },
+                        { "name": "lastname", "value": $('#last-name').val() },
+                        { "name": "email", "value": $('#email').val() }
+                    ]
+                };
+
+                var hubspotEndpoint = "https://api.hsforms.com/submissions/v3/integration/submit/45756803/90754f7d-e104-4508-9ad2-0254f809e45f";
+
+                console.log("Form Data:", JSON.stringify(formData)); // Log the form data
+
+                $.ajax({
+                    url: hubspotEndpoint,
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(formData),
+                    success: function (response) {
+                        alert("Form successfully submitted to HubSpot!");
+                        $('#custom-form')[0].reset(); // Reset the form
+                    },
+                    error: function (error) {
+                        alert("Error submitting form. Please try again.");
+                        console.error("Submission Error:", error);
+                    }
+                });
+            });
+
+            function resetActive(className) {
+                document.querySelectorAll("." + className).forEach(el => el.classList.remove("active"));
+            }
+
+            // Event listener for tab A
+            document.getElementById("tabA").addEventListener("click", function () {
+                resetActive("tab");
+                this.classList.add("active");
+                document.getElementById("contentA").style.display = "block"; // Show content A
+                document.getElementById("contentX").style.display = "none"; // Hide content X
+                document.getElementById("residingStatusContainer").style.display = "none"; // Hide residing status
+                document.getElementById("relationshipDropdownContainer").style.display = "none"; // Hide residing status
+                document.getElementById("citizenshipTabsContainer").style.display = "none"; // Hide  sponsor's Canadian Status status
+            });
+
+            // Event listener for tab B (I want to be Sponsored)
+            document.getElementById("tabB").addEventListener("click", function () {
+                resetActive("tab");
+                this.classList.add("active");
+                document.getElementById("contentA").style.display = "none"; // Hide content A
+                document.getElementById("contentX").style.display = "none"; // Hide content X
+                document.getElementById("residingStatusContainer").style.display = "none"; // Hide residing status
+                document.getElementById("dropdownContainer").style.display = "none"; // Hide residing status
+                document.getElementById("childAgeContainer").style.display = "none"; // Hide Child/Grandchild's age status
+                document.getElementById("maritalStatusContainer").style.display = "none"; // Hide Child/Grandchild's marital status
+                document.getElementById("indiaMessage").style.display = "none"; // Hide Child/Grandchild's marital status
+
+                // Show only the two specific fields for "I want to be Sponsored"
+                document.getElementById("relationshipDropdownContainer").style.display = "block"; // Show relationship dropdown
+                document.getElementById("citizenshipTabsContainer").style.display = "block"; // Show citizenship tabs
+            });
+
+
+
+
+
+
+            // Event listener for tab X
+            document.getElementById("tabX").addEventListener("click", function () {
+                resetActive("sub-tabs .tab");
+                this.classList.add("active");
+                document.getElementById("contentX").style.display = "block"; // Show content X
+                document.getElementById("indiaMessage").style.display = "none"; // Hide message when X is clicked
+                document.getElementById("residingStatusContainer").style.display = "none"; // Hide residing status when X is clicked
+            });
+
+            // Event listener for tab Y
+            document.getElementById("tabY").addEventListener("click", function () {
+                resetActive("sub-tabs .tab");
+                this.classList.add("active");
+                document.getElementById("contentX").style.display = "block"; // Show age content
+                document.getElementById("indiaMessage").style.display = "none"; // Hide message when Y is clicked
+                document.getElementById("residingStatusContainer").style.display = "block"; // Show residing status when Y is clicked
+            });
+
+            // Event listener for tab Z
+            document.getElementById("tabZ").addEventListener("click", function () {
+                resetActive("sub-tabs .tab");
+                console.log("object");
+                this.classList.add("active");
+                document.getElementById("indiaMessage").style.display = "block"; // Show message when Z is clicked
+                document.getElementById("residingStatusContainer").style.display = "none"; // Hide residing status when Z is clicked
+                document.getElementById("childAgeContainer").style.display = "none"; // Hide residing status when Z is clicked
+                document.getElementById("maritalStatusContainer").style.display = "none"; // Hide residing status when Z is clicked
+            });
+
+            // Age tab event listeners
+            document.getElementById("under17").addEventListener("click", function () {
+                resetActive("age-tab");
+                this.classList.add("active");
+                document.getElementById("under17Message").style.display = "block"; // Show warning message
+            });
+
+            document.getElementById("above17").addEventListener("click", function () {
+                resetActive("age-tab");
+                this.classList.add("active");
+                document.getElementById("under17Message").style.display = "none"; // Hide warning message
+                document.getElementById("dropdownContainer").style.display = "block"; // Show dropdown for 17 or above
+            });
+
+            // Residing status tab event listeners
+            document.getElementById("residingYes").addEventListener("click", function () {
+                resetActive("yes-no-tab");
+                this.classList.add("active");
+                // Additional logic for "Yes" can be added here
+            });
+
+            document.getElementById("residingNo").addEventListener("click", function () {
+                resetActive("yes-no-tab");
+                this.classList.add("active");
+                // Additional logic for "No" can be added here
+            });
+
+            // Event listener for tab Z (Neither)
+            document.getElementById("tabZ").addEventListener("click", function () {
+                resetActive("sub-tabs .tab");
+                this.classList.add("active");
+                document.getElementById("indiaMessage").style.display = "block"; // Show message when Z is clicked
+                document.getElementById("residingStatusContainer").style.display = "none"; // Hide residing status when Z is clicked
+
+                // Hide "How old are you?" and "Who would you like to sponsor?" fields
+                document.getElementById("contentX").style.display = "none"; // Hide age content
+                document.getElementById("dropdownContainer").style.display = "none"; // Hide dropdown for who to sponsor
+                document.getElementById("indiaMessage").style.display = "block"; // Show the eligibility message
+            });
+            document.getElementById("relationshipDropdown").addEventListener("change", function () {
+                let value = this.value;
+                console.log("pppp")
+                if (value === 'parent') {
+                    document.getElementById("tabCitizen").addEventListener("click", function () {
+                        document.getElementById("ageDropdownContainer").style.display = "block";
+                        resetActive("citizen-tabs .citizenship-tab");
+                        this.classList.add("active");
+                    })
+                    document.getElementById("tabPermanentResident").addEventListener("click", function () {
+                        document.getElementById("ageDropdownContainer").style.display = "block";
+                        resetActive("citizen-tabs .citizenship-tab");
+                        this.classList.add("active");
+                    })
+                    document.getElementById("tabNeither").addEventListener("click", function () {
+                        console.log("lllllllll")
+                        // document.getElementById("ageDropdownContainer").style.display = "none";
+                        // resetActive("citizen-tabs .citizenship-tab");
+                        // this.classList.add("active");
+                         resetActive("citizen-tabs .citizenship-tab");
+                console.log("object");
+                this.classList.add("active");
+                document.getElementById("indiaMessage").style.display = "block"; // Show message when Z is clicked
+                document.getElementById("residingStatusContainer").style.display = "none"; // Hide residing status when Z is clicked
+                document.getElementById("childAgeContainer").style.display = "none"; // Hide residing status when Z is clicked
+                document.getElementById("maritalStatusContainer").style.display = "none"; // Hide residing status when Z is clicked
+                    })
+                    tabNeither
+                }
+                else {
+                    document.getElementById("ageDropdownContainer").style.display = "none";
+
+                }
+                // document.getElementById("childAgeContainer").style.display = (value === "9" || value === "10") ? "block" : "none";
+                // document.getElementById("maritalStatusContainer").style.display = "none"; // Hide marital status container
+            });
+            // Dropdown change event
+            document.getElementById("dropdown").addEventListener("change", function () {
+                let value = this.value;
+                document.getElementById("commonLawText").style.display = (value === "2") ? "block" : "none";
+                document.getElementById("childAgeContainer").style.display = (value === "9" || value === "10") ? "block" : "none";
+                document.getElementById("maritalStatusContainer").style.display = "none"; // Hide marital status container
+            });
+
+            // Child age change event to get selected age of child below or above 15
+            document.getElementById("childAge").addEventListener("change", function () {
+                resetActive("marital-tabs");
+                this.classList.add("active");
+
+                let ageNum = parseInt(this.value) || 0;
+                document.getElementById("maritalStatusContainer").style.display = (ageNum > 15) ? "block" : "none";
+            });
+
+            // On click function of marital status
+            document.querySelectorAll(".marital-tabs").forEach(tab => {
+                tab.addEventListener("click", function () {
+                    resetActive("marital-tabs"); // Ensure this function is defined
+                    this.classList.add("active");
+                });
+            });
+
+            // City tabs event listeners
+            document.getElementById("tabIndore").addEventListener("click", function () {
+                resetActive("tab");
+                this.classList.add("active");
+                document.getElementById("cityMessage").innerText = "You selected Citizen.";
+                document.getElementById("cityMessage").style.display = "block";
+            });
+
+            document.getElementById("tabUjjain").addEventListener("click", function () {
+                resetActive("tab");
+                this.classList.add("active");
+                document.getElementById("cityMessage").innerText = "You selected Permanent Resident.";
+                document.getElementById("cityMessage").style.display = "block";
+            });
+
+            document.getElementById("tabBhopal").addEventListener("click", function () {
+                resetActive("tab");
+                this.classList.add("active");
+                document.getElementById("cityMessage").innerText = "You selected Neither.";
+                document.getElementById("cityMessage").style.display = "block";
+            });
+
+            // Event listener for citizenship tabs
+            $('citizenship-tab').click(function () {
+                $('citizenship-tabs-container').show(); // Show age dropdown when any citizenship tab is clicked
+            });
+
+
+            // Terms and conditions validation
+            document.getElementById("custom-form").addEventListener("submit", function (event) {
+                var checkbox = document.getElementById("termsCheckbox");
+                if (!checkbox.checked) {
+                    alert("Please agree to the Terms & Condidtions and Privacy Policy before submitting.");
+                    event.preventDefault(); // Prevent form submission
+                }
+            });
+        });
+    </script>
+    </body>
+
+</html>
