@@ -260,52 +260,39 @@ const HtmlAgreementEighteen = ({
                 <p class="col-6 text-capitalize">E-mail: <span class="para_gap"><a href="mailto:info@canpathways.ca">info@canpathways.ca</a></span></p>
          <p class="container-fluid"><b>IN WITNESS THEREOF this Agreement has been duly executed by the parties hereto on the date first above written</b></p>
                 <div class="col-6">
-                <p><span class="para_gap">${familyJsonArray[0]?.client_signature
+                ${familyJsonArray[0]?.client_signature
             ? `
-                <div class="d-flex flex-column">
-                                <img
-              src="${familyJsonArray[0]?.client_signature}"
-              alt="${felidData &&
-                (familyJsonArray[0]?.client_first_name ||
-                    familyJsonArray[0]?.client_last_name)
-                ? familyJsonArray[0]?.client_first_name +
-                " " +
-                (familyJsonArray[0]?.client_last_name || "")
-                : emp_user_type === "employee"
-                    ? userData?.name || "" || ""
-                    : "" || ""}"
-              style="max-width: 200px; float: right;"
-              class="${familyJsonArray[0]?.client_signature ? "d-block" : "d-none"}"
-            />
-             <p style="margin: 0">______________________________</p>
-                          <small class="row ">
-                            <span class="col text-capitalize" >
-                              ${felidData &&
-                (familyJsonArray[0]?.client_first_name ||
-                    familyJsonArray[0]?.client_last_name)
-                ? familyJsonArray[0]?.client_first_name +
-                " " +
-                (familyJsonArray[0]?.client_last_name || "")
-                : emp_user_type === "employee"
-                    ? userData?.name || "" || ""
-                    : "" || ""}${familyJsonArray[0]?.date_signature_client}</span>
-                          </small>
-                              </div>`
+                                  <div class="d-flex flex-column">
+                                    <div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;"><img src=${familyJsonArray[0]?.client_signature} alt="Signature" style="max-width: 100%; max-height: 100%;">
+                        </div>
+                
+                                    <small class="row ">
+                                      <span class="col text-capitalize">
+                                        ${familyJsonArray[0]?.client_first_name +
+            " " +
+            (familyJsonArray[0]?.client_last_name || "") +
+            " "
+            }${moment(
+                familyJsonArray[0]?.date_signature_client
+            ).format("DD-MM-YYYY")}</span>
+                                    </small>
+                                  </div>`
             : page === "admin"
-                ? "                "
-                : ` <button class="btn btn-outline-secondary border-0  " 
-                          style="font-family:cursive;" 
-                          id="add-signature-button-0">
-                    Add Signature
-                  </button>`
-        }</span><br>
-                <span>${familyJsonArray[0]?.client_first_name} ${familyJsonArray[0]?.client_last_name}</span>
-                </p>
+                ? ` <div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;"><span style = "max-width: 100%; max-height: 100%;" ></span></div>`
+                : ` <button class="btn btn-outline-secondary border-0  "
+                                    style="font-family:cursive;"
+                                    id="add-signature-button-0">
+                                    Add Signature
+                                  </button>`
+        }
+                
                 <p>Signature of Client</p>
                 </div>
                 <div class="col-6">
-                <p><span class="para_gap">${felidData?.rcic_signature ? `<img src="${felidData.rcic_signature}" alt="RCIC Signature" style="max-width: 200px;">` : "                        "}</span><br>
-                <span>Harpreet Kaur</span></p>
+<div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
+           ${felidData.rcic_signature ? `<img src=${felidData.rcic_signature} alt="Signature" style="max-width: 100%; max-height: 100%;">` :
+            `<span style = "max-width: 100%; max-height: 100%;" ></span> `}
+        </div>                <span>Harpreet Kaur</span></p>
                 <p>Signature of RCIC</p>
                 </li>
             </ol>
@@ -350,31 +337,23 @@ const HtmlAgreementEighteen = ({
                 <p>Name of Client</p>
                 </div>
                     <div class="col-4">
-                <p> ${familyJsonArray[0]?.client_signature
+                <p>   ${familyJsonArray[0]?.client_signature
             ? `
-        <div class="d-flex flex-column">
-                        <img
-      src="${familyJsonArray[0]?.client_signature}"
-      alt="${familyJsonArray[0]?.client_first_name} ${familyJsonArray[0]?.client_last_name
-            }"
-      style="max-width: 200px; float: right;"
-      class="${familyJsonArray[0]?.client_signature ? "d-block" : "d-none"}"
-    />
-     <p style="margin: 0">______________________________</p>
-                  <small class="row ">
-                    <span class="col text-capitalize" >
-                      ${felidData &&
-                (familyJsonArray[0]?.client_first_name ||
-                    familyJsonArray[0]?.client_last_name)
-                ? familyJsonArray[0]?.client_first_name +
-                " " +
-                (familyJsonArray[0]?.client_last_name || "")
-                : emp_user_type === "employee"
-                    ? userData?.name || "" || ""
-                    : "" || ""}${moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</span>
-                  </small>
-                      </div>`
-            : "___________________________"
+                                  <div class="d-flex flex-column">
+                                    <div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;"><img src=${familyJsonArray[0]?.client_signature} alt="Signature" style="max-width: 100%; max-height: 100%;">
+                        </div>
+                                                    <small class="row ">
+                                      <span class="col text-capitalize">
+                                        ${familyJsonArray[0]?.client_first_name +
+            " " +
+            (familyJsonArray[0]?.client_last_name || "") +
+            " "
+            }${moment(
+                familyJsonArray[0]?.date_signature_client
+            ).format("DD-MM-YYYY")}</span>
+                                    </small>
+                                  </div>`
+            : ` <div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;"><span style = "max-width: 100%; max-height: 100%;" ></span></div>`
         }
                 </p><p>Signature of Client</p>
                 </div>
@@ -400,8 +379,10 @@ const HtmlAgreementEighteen = ({
                 <p>Name of RCIC</p>
                 </div>
                     <div class="col-4">
-                <p><span>${felidData?.rcic_signature ? `<img src="${felidData?.rcic_signature}" alt="RCIC Signature" style="max-width: 200px;">` : "______________________"}</span>
-                </p><p>Signature of RCIC</p>
+<div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
+           ${felidData.rcic_signature ? `<img src=${felidData.rcic_signature} alt="Signature" style="max-width: 100%; max-height: 100%;">` :
+            `<span style = "max-width: 100%; max-height: 100%;" ></span> `}
+        </div>                </p><p>Signature of RCIC</p>
                 </div>
              <div  class="col-4">
             <p>
@@ -413,30 +394,39 @@ const HtmlAgreementEighteen = ({
         }
             </p>
             <p >Date</p>
-             <div  style="
-          text-align: right;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-evenly;
-          align-items: flex-end;
-        ">
-       <p class="para_gap text-uppercase"
-    } style="margin: 0">${felidData?.initial
-            ? felidData?.initial?.split(' ')               // Split the string by spaces
-                ?.filter(word => word)      // Filter out empty strings (caused by multiple spaces)
-                ?.map(word => word[0])      // Map each word to its first letter
-                ?.join(' ')
-            : page === "admin"
-                ? ""
-                : ``
-        }</p>
-          <p style="margin: 0 0 30px 0">Initial</p>
-        </div>
+             <div class="d-flex justify-content-end gap-4" style="gap: 4rem;">
+<h3 class="font-size-6 text-end">Initials :</h3>
+<div>
+  <div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
+  ${felidData?.initial
+            ? `<span style="display: inline-block; max-width: 100%; max-height: 100%;" class=" text-capitalize">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${felidData?.initial
+                ?.split(" ") // Split the string by spaces
+                ?.filter((word) => word) // Filter out empty strings (caused by multiple spaces)
+                ?.map((word) => word[0]) // Map each word to its first letter
+                ?.join(" ")}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`
+            : `<span style="display: inline-block; width: 100px; height: 50px; border: 1px solid #ccc;"></span>`
+        }        
+  </div>
+  </div>
+  </div>
+            <p><p
+                style="color: #800000; text-align: center; font-family: 'Times New Roman', serif;">
+                <strong>Office:</strong> 2618 Hopewell Pl NE #310 Calgary, AB
+                T1Y 7J7, Canada |
+                <strong>Tel.:</strong> 403.888.5308 |
+                <br>
+                <strong>Email:</strong>
+                <a href="mailto:info@canpathways.ca"
+                  style="color: blue; text-decoration: underline;">info@canpathways.ca</a>
+                |
+                <strong>Website:</strong>
+                <a href="https://www.canpathways.ca" target="_blank"
+                  style="color: black; text-decoration: none;">
+                  www.canpathways.ca
+                </a>
+              </p>
+
                 </div>
-               
-        <div class="header mx-auto" style="padding: 10px 20px; text-align: center; color: #ed1c24;">
-            Office: 2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7, Canada | Tel.: 403.888.5308 <br>Email: info@canpathways.ca | Website: www.canpathways.ca
-        </div>
     </body>
     </html>`;
     useEffect(

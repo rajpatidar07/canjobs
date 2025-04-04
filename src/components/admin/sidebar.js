@@ -834,10 +834,12 @@ const AdminSidebar = (props) => {
                     localStorage.setItem("applicantType", "")
                     localStorage.setItem("applicantTypeFolderId", "")
                     localStorage.setItem("applicantTypeChild", "")
+                    AddApplicanTypeApi(item);
+
                   }}
                   style={{ textDecoration: "none" }}
                   onContextMenu={(e) => {
-                    e.preventDefault(); // prevent the default behaviour when right clicked
+                    e.preventDefault(); // prevent the default behavior when right clicked
                     setShowDropDown(item.id);
                   }}
                 >
@@ -879,6 +881,7 @@ const AdminSidebar = (props) => {
                           applicantTypeChild: child.id,
                           folderId: child.doc_folder_id,
                         }}
+                        onClicl={AddApplicanTypeApi(child)}
                         className="px-1 text-break py-3 border-top font-size-4 font-weight-light flex-y-center text-Capitalize"
                         style={{ textDecoration: "none" }}
                         onContextMenu={(e) => {

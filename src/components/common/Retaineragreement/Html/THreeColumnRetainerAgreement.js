@@ -1321,17 +1321,13 @@ export default function EmployerRetainerAgreement({ page,
               <br /><br />
               <div style="display: flex; flex-wrap: wrap">
                 <!-- Client Signature -->
-                <div style="width: 50%">
+                <div style="width: 50%" class="p-2">
                   ${familyJsonArray[0]?.client_signature
       ? `
                   <div class="d-flex flex-column">
-                    <img
-                      src="${familyJsonArray[0]?.client_signature}"
-                      alt="${familyJsonArray[0]?.client_first_name} ${familyJsonArray[0]?.client_last_name
-      }"
-                      style="max-width: 200px; float: right;"
-                      class="${familyJsonArray[0]?.client_signature ? "d-block"
-        : "d-none"}" />
+                    <div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;"><img src=${familyJsonArray[0]?.client_signature} alt="Signature" style="max-width: 100%; max-height: 100%;">
+        </div>
+
                     <p style="margin: 0">______________________________</p>
                     <small class="row ">
                       <span class="col text-capitalize">
@@ -1345,7 +1341,7 @@ export default function EmployerRetainerAgreement({ page,
                     </small>
                   </div>`
       : page === "admin"
-        ? "___________________________"
+        ? ` <div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;"><span style = "max-width: 100%; max-height: 100%;" ></span></div>`
         : ` <button class="btn btn-outline-secondary border-0  "
                     style="font-family:cursive;"
                     id="add-signature-button-0">
@@ -1355,8 +1351,8 @@ export default function EmployerRetainerAgreement({ page,
                   <p style="margin: 0 0 30px 0">Signature of Client</p>
                 </div>
                 <div style="width: 50%">
-                  <p class="para_gap text-capitalize" style="margin: 0">
-                    <span class="para_gap text-capitalize">${felidData &&
+                  <p class=" text-capitalize" style="margin: 0;">
+                    <span class="para_gap text-capitalize" style="min-width:400px">${felidData &&
       (familyJsonArray[0]?.client_first_name ||
         familyJsonArray[0]?.client_last_name)
       ? familyJsonArray[0]?.client_first_name +
@@ -1370,7 +1366,7 @@ export default function EmployerRetainerAgreement({ page,
                   <p style="margin: 0 0 30px 0">Name of Client</p>
                 </div>
                 <div style="width: 50%">
-                  <p class style="margin: 0">
+                  <p class style="margin: 0;min-width:200px">
                     ${familyJsonArray[0]?.date_signature_client ===
       "0000-00-00 00:00:00" ||
       !familyJsonArray[0]?.date_signature_client ||
@@ -1390,9 +1386,8 @@ export default function EmployerRetainerAgreement({ page,
 
                   ${item.client_signature
           ? `
-                  <div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
-<img src=${felidData.client_signature} alt="Signature" style="max-width: 100%; max-height: 100%;"></div>
-
+ <div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;"><img src=${item.client_signature} alt="Signature" style="max-width: 100%; max-height: 100%;">
+        </div>
                     <small class="row ">
                       <span class="col text-capitalize">
                         ${item.client_first_name +
@@ -1405,8 +1400,7 @@ export default function EmployerRetainerAgreement({ page,
                     </small>
                   </div>`
           : page === "admin"
-            ? `         <div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
-< span style = "max-width: 100%; max-height: 100%;" ></ span> </div>`
+            ? `         <div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;"><span style = "max-width: 100%; max-height: 100%;" ></span> </div>`
             : ` <button class="btn btn-outline-secondary border-0  "
                     style="font-family:cursive;"
                     id="add-signature-button-${index + 1}"
@@ -1419,8 +1413,8 @@ export default function EmployerRetainerAgreement({ page,
         }
                   <p style="margin: 0 0 30px 0">Signature of family member</p>
                 </div>
-                <div style="width: 50%">
-                  <p class="para_gap text-capitalize" style="margin: 0">
+                <div style="width: 50%" >
+                  <p class="para_gap text-capitalize text-center" style="margin: 0;min-width:20px">
                     <span style="max-width: 200px;">${item.client_first_name +
         " " + item.client_last_name
         }</span>
@@ -1444,7 +1438,7 @@ export default function EmployerRetainerAgreement({ page,
     )}
 
                 <!-- RCIC Signature -->
-                <div style="width: 50%">
+                <div style="width: 50% " >
 
                   <div class="d-flex flex-column">
                   <div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
@@ -1669,33 +1663,26 @@ export default function EmployerRetainerAgreement({ page,
       ? " position:relative; bottom: 40px;"
       : ""
     }">
-                  <p class=${familyJsonArray[0]?.client_signature ? "para_gap" :
-      ""
-    } style="margin: 0">
-                    <img
-                      src=${familyJsonArray[0]?.client_signature
-      ? familyJsonArray[0]?.client_signature
-      :
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlsaOgypoEH0TMazy7VqfXMPmVbgD47iezKA&s"
-    }
-                      alt=${felidData &&
-      (familyJsonArray[0]?.client_first_name ||
-        familyJsonArray[0]?.client_last_name)
-      ? familyJsonArray[0]?.client_first_name +
+                 ${familyJsonArray[0]?.client_signature
+      ? `
+                  <div class="d-flex flex-column">
+                    <div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;"><img src=${familyJsonArray[0]?.client_signature} alt="Signature" style="max-width: 100%; max-height: 100%;">
+        </div>
+
+                    <p style="margin: 0">______________________________</p>
+                    <small class="row ">
+                      <span class="col text-capitalize">
+                        ${familyJsonArray[0]?.client_first_name +
       " " +
-      (familyJsonArray[0]?.client_last_name || "")
-      : emp_user_type === "employee"
-        ? userData?.name || "" || ""
-        : "" || ""
+      (familyJsonArray[0]?.client_last_name || "") +
+      " "
+      }${moment(
+        familyJsonArray[0]?.date_signature_client
+      ).format("DD-MM-YYYY")}</span>
+                    </small>
+                  </div>`
+      : ` <div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;"><span style = "max-width: 100%; max-height: 100%;" ></span></div>`
     }
-                      style="max-width: 200px; float: right min-width: 200px;"
-                      class=${familyJsonArray[0]?.client_signature ? "d-block" :
-      "d-none"} />
-                    <p
-                      style="border:1px solid black min width: 200px; margin: 0">
-                      ${familyJsonArray[0]?.client_signature ? " " :
-      "__________________"}</p>
-                  </p>
                   <p style="margin: 0">Signatures</p>
                 </div>
                 <div style="width: 33.33%; text-align: center">
@@ -1720,36 +1707,21 @@ export default function EmployerRetainerAgreement({ page,
               </div>
             </div>
 
-            <div class="header" style="padding: 10px 20px">
-              <div style="
-                       text-align: right;
-                       display: flex;
-                       flex-direction: column;
-                       justify-content: space-evenly;
-                       align-items: flex-end;
-                     ">
-                <p class="para_gap text-uppercase"
-                  } style="margin: 0">${felidData?.initial
-      ? felidData?.initial
-        ?.split(" ")?.filter((word) => word)?.map((word) => word[0])?.join(" ")
-      : page === "admin"
-        ? ""
-        : ``
-    // ? ` <img
-    // src="${familyJsonArray?.initial}"
-    // alt="${familyJsonArray[0]?.client_first_name} ${
-    //            familyJsonArray[0]?.client_last_name
-    //          }"
-    // style="max-width: 200px; float: right;"
-    // class="${familyJsonArray?.initial ? "d-block" :"d-none"}"
-    // />`
-
-
-    }</p>
-
-              </div>
-
-            </div>
+            <div class="d-flex justify-content-end gap-4" style="gap: 4rem;">
+<h3 class="font-size-6 text-end">Initials :</h3>
+<div>
+  <div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
+  ${felidData?.initial
+      ? `<span style="display: inline-block; max-width: 100%; max-height: 100%;" class=" text-capitalize">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${felidData?.initial
+        ?.split(" ") // Split the string by spaces
+        ?.filter((word) => word) // Filter out empty strings (caused by multiple spaces)
+        ?.map((word) => word[0]) // Map each word to its first letter
+        ?.join(" ")}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`
+      : `<span style="display: inline-block; width: 100px; height: 50px; border: 1px solid #ccc;"></span>`
+    }        
+  </div>
+  </div>
+  </div>
             <p><p
                 style="color: #800000; text-align: center; font-family: 'Times New Roman', serif;">
                 <strong>Office:</strong> 2618 Hopewell Pl NE #310 Calgary, AB
@@ -1766,12 +1738,7 @@ export default function EmployerRetainerAgreement({ page,
                   www.canpathways.ca
                 </a>
               </p>
-              <p
-                style="text-align: end; font-weight:700; font-size: 18px">Initial
-                : ${felidData?.initial ? `${felidData?.initial}` :
-      "__________________"
-    }</p>
-            </p>
+             
           </div>
         </div>
       </body>

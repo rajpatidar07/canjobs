@@ -68,35 +68,42 @@ export default function CommonThreeDots(props) {
       fileBaseList.push(updatedFile);
     }
 
-    try {
-      const res = await AddSharePointDOcument(
-        props?.user_id || "",
-        props?.emp_user_type || "",
-        props?.folderId,
-        "",
-        fileBaseList
-      );
+    if (props?.folderId) {
+      try {
+        const res = await AddSharePointDOcument(
+          props?.user_id || "",
+          props?.emp_user_type || "",
+          props?.folderId,
+          "",
+          fileBaseList
+        );
 
-      if (res.data.message === "Document Upload") {
-        toast.success("Document uploaded successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        props.setFolderApiCall(true);
-      } else if (
-        res.data.message === "Failed" &&
-        res.data.data === "No Token Found"
-      ) {
-        toast.error("Something went wrong! Try again later", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
+        if (res.data.message === "Document Upload") {
+          toast.success("Document uploaded successfully", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+          props.setFolderApiCall(true);
+        } else if (
+          res.data.message === "Failed" &&
+          res.data.data === "No Token Found"
+        ) {
+          toast.error("Something went wrong! Try again later", {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          });
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setAddFileLoading(false);
+        // setAddFileClickOn(false);
       }
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setAddFileLoading(false);
-      // setAddFileClickOn(false);
+    } else {
+      toast.error("Folder id not found", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
     }
   };
   return (
