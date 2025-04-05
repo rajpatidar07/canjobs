@@ -92,8 +92,8 @@ const RecruitmentAgrement = () => {
           <Text style={{ textAlign: "center", fontSize: "18px", marginBottom: 15 }}>RETAINER AGREEMENT{"\n"}
             <Text style={{ textAlign: "center", fontSize: "12px", marginBottom: 15 }}>Between Harpreet Kaur{"\n"} CAN Pathways Immigration Consultancy Ltd.{"\n"}</Text >
             <Text style={[styles.bold, { textAlign: "center", fontSize: "12px", marginBottom: 15 }]}>Client:</Text>
-            <Text style={[styles.textunderline, { textAlign: "center", fontSize: "12px", marginBottom: 15 }]}> {familyJsonArray[0]?.client_first_name || ""}{" "}
-              {familyJsonArray[0]?.client_last_name || ""}{" "}</Text>
+            <Text style={[styles.textunderline, { textAlign: "center", fontSize: "12px", marginBottom: 15 }]}> {familyJsonArray[0]?.client_first_name || "______________"}{" "}
+              {familyJsonArray[0]?.client_last_name || "_____________"}{" "}</Text>
           </Text>
           <Text style={styles.paragraph}>
             This Agreement ("the <Text style={styles.bold}>Agreement</Text>") is made on the date mentioned below.{"\n"}{"\n"}
@@ -217,7 +217,7 @@ const RecruitmentAgrement = () => {
                   <Text style={styles.text}>
                     Given Name: <Text style={styles.textunderline}>{felidData && familyJsonArray[0]?.client_first_name
                       ? familyJsonArray[0]?.client_first_name
-                      : "        "
+                      : "_____________"
                     } </Text>
                   </Text>
                 </View>
@@ -225,7 +225,7 @@ const RecruitmentAgrement = () => {
                   <Text style={styles.text}>
                     Family Name: <Text style={styles.textunderline}>{felidData && familyJsonArray[0]?.client_last_name
                       ? familyJsonArray[0]?.client_last_name
-                      : "        "
+                      : "_____________________ "
                     }</Text>
                   </Text>
                 </View>
@@ -239,7 +239,7 @@ const RecruitmentAgrement = () => {
                 </View>
                 <View style={styles.clientFormChild}>
                   <Text style={styles.text}>
-                    Telephone Number: <Text style={styles.textunderline}>{" " + (felidData?.client_telephone || "          ")}</Text>
+                    Telephone Number: <Text style={styles.textunderline}>{" " + (felidData?.client_telephone || "_______________")}</Text>
                   </Text>
                 </View>
               </View>
@@ -247,12 +247,12 @@ const RecruitmentAgrement = () => {
               <View style={styles.clientForm}>
                 <View style={styles.clientFormChild}>
                   <Text style={styles.text}>
-                    Cellphone Number: <Text style={styles.textunderline}>{" " + (felidData?.client_cellphone || "          ")}</Text>
+                    Cellphone Number: <Text style={styles.textunderline}>{" " + (felidData?.client_cellphone || "_______________")}</Text>
                   </Text>
                 </View>
                 <View style={styles.clientFormChild}>
                   <Text style={styles.text}>
-                    Fax Number: <Text style={styles.textunderline}>{" " + (felidData?.client_fax || "           ")}</Text>
+                    Fax Number: <Text style={styles.textunderline}>{" " + (felidData?.client_fax || "____________")}</Text>
                   </Text>
                 </View>
               </View>
@@ -316,27 +316,36 @@ const RecruitmentAgrement = () => {
                 </View>
                 {/* Client Signature */}
                 <View style={{ width: "33.33%", padding: 10 }}>
-                  {familyJsonArray[0]?.client_signature ? (
-                    <View style={{ display: "flex", flexDirection: "column" }}>
-                      <Image
-                        source={{ uri: familyJsonArray[0]?.client_signature }}
-                        style={{ width: "60%", height: "auto" }}
-                      />
-                      <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7 }}>
-                        <Text style={{ textTransform: "capitalize" }}>
-                          {familyJsonArray[0]?.client_first_name || ""}{" "}
-                          {familyJsonArray[0]?.client_last_name || ""}{" "}
-                        </Text>
-                        <Text> {!familyJsonArray[0]?.date_signature_client ||
-                          familyJsonArray[0]?.date_signature_client ===
-                          "0000-00-00 00:00:00"
-                          ? "____________"
-                          : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</Text>
-                      </Text>
-                    </View>
-                  ) : (
-                    <Text>___________________</Text>
-                  )}
+                  <View style={styles.signatureBox}>
+                    {familyJsonArray[0]?.client_signature ? (
+                      <Image src={familyJsonArray[0].client_signature} style={{
+                        display: "inline-block",
+                        maxWidth: "100%",
+                        maxHeight: "100%",
+                        textTransform: "capitalize",
+                      }} />
+                    ) : (
+                      <View
+                        style={{
+                          display: "inline-block",
+                          width: "100%",
+                          height: 50,
+                          border: "1px solid #ccc",
+                        }}
+                      />)}
+                  </View>
+
+                  <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7 }}>
+                    <Text style={{ textTransform: "capitalize" }}>
+                      {familyJsonArray[0]?.client_first_name || ""}{" "}
+                      {familyJsonArray[0]?.client_last_name || ""}{" "}
+                    </Text>
+                    <Text> {!familyJsonArray[0]?.date_signature_client ||
+                      familyJsonArray[0]?.date_signature_client ===
+                      "0000-00-00 00:00:00"
+                      ? ""
+                      : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</Text>
+                  </Text>
                   <Text>Signature of Client</Text>
                 </View>
                 {/* Client Signature Date*/}
@@ -344,7 +353,7 @@ const RecruitmentAgrement = () => {
                   <Text style={[styles.textunderline, { marginTop: 10 }]}>
                     {(!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client ===
                       "0000-00-00 00:00:00")
-                      ? "________________"
+                      ? "______________"
                       : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}
                   </Text>
                   <Text>Date</Text>
@@ -360,24 +369,32 @@ const RecruitmentAgrement = () => {
                 </View>
                 {/* RCIC Signature */}
                 <View style={{ width: "33.33%", padding: 10 }}>
-                  {felidData?.rcic_signature ? (
-                    <View style={{ display: "flex", flexDirection: "column" }}>
-                      <Image
-                        source={{ uri: felidData?.rcic_signature }}
-                        style={{ width: "60%", height: "auto" }}
-                      />
-                      <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7 }}>
-                        <Text style={{ textTransform: "capitalize" }}>
-                          Harpreet Kaur{" "}
-                        </Text>
-                        <Text> {(!felidData?.date_signature_rcic || felidData?.date_signature_rcic === "0000-00-00" || felidData?.date_signature_rcic === "0000-00-00 00:00:00")
-                          ? "________________"
-                          : moment(felidData?.date_signature_rcic).format("DD-MM-YYYY")}</Text>
-                      </Text>
-                    </View>
-                  ) : (
-                    <Text>___________________</Text>
-                  )}
+                  <View style={styles.signatureBox}>
+                    {felidData?.rcic_signature ? (
+                      <Image src={felidData?.rcic_signature} style={{
+                        display: "inline-block",
+                        maxWidth: "100%",
+                        maxHeight: "100%",
+                        textTransform: "capitalize",
+                      }} />
+                    ) : (
+                      <View
+                        style={{
+                          display: "inline-block",
+                          width: "100%",
+                          height: 50,
+                          border: "1px solid #ccc",
+                        }}
+                      />)}
+                  </View>
+                  <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7 }}>
+                    <Text style={{ textTransform: "capitalize" }}>
+                      Harpreet Kaur{" "}
+                    </Text>
+                    <Text> {(!felidData?.date_signature_rcic || felidData?.date_signature_rcic === "0000-00-00" || felidData?.date_signature_rcic === "0000-00-00 00:00:00")
+                      ? ""
+                      : moment(felidData?.date_signature_rcic).format("DD-MM-YYYY")}</Text>
+                  </Text>
                   <Text>Signature of RCIC</Text>
                 </View>
                 {/* RCIC Signature Date*/}
@@ -407,28 +424,61 @@ const RecruitmentAgrement = () => {
             <View>
               <Image
                 fixed
-                style={styles.image}
-                src={"https://canpathwaysjobs.com/image/00logo-main-black.png"}
+                style={{ width: 100, height: 40 }}
+                src={
+                  "https://canpathwaysjobs.com/image/00logo-main-black.png"
+                }
               />
-              <View style={styles.section}>{components}</View>
+              {components}
+
               <View
-                className="footer"
                 fixed
-                style={{ color: "red", textAlign: "center", marginTop: 25 }}
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "flex-end",
+                  gap: 20,
+                }}
               >
-                <Text>
-                  Office: 2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7, Canada |
-                  Tel.: 403.888.5308 |
-                </Text>
-                <Text style={{ color: "blue", textDecoration: "underline" }}>
-                  Email: info@canpathways.ca | Website: www.canpathways.ca
-                </Text>
-              </View>
-              <View className="initial" fixed style={styles.initial}>
-                <Text>Initial:<Text style={[styles.textunderline, { textTransform: 'uppercase' }]}>{felidData?.initial ? felidData?.initial?.split(' ')               // Split the string by spaces
-                  ?.filter(word => word)      // Filter out empty strings (caused by multiple spaces)
-                  ?.map(word => word[0])      // Map each word to its first letter
-                  ?.join(' ') : "        "}</Text></Text>
+                <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
+                <View>
+                  <View
+                    style={{
+                      width: "100%",
+                      height: 20,
+                      border: "1px solid #ccc",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {felidData?.initial ? (
+                      <Text
+                        style={{
+                          display: "inline-block",
+                          maxWidth: "100%",
+                          maxHeight: "100%",
+                          textTransform: "capitalize",
+                        }}
+                      >
+                        {felidData.initial
+                          .split(" ")
+                          .filter((word) => word)
+                          .map((word) => word[0])
+                          .join(" ")}
+                      </Text>
+                    ) : (
+                      <View
+                        style={{
+                          display: "inline-block",
+                          width: 100,
+                          height: 20,
+                          border: "1px solid #ccc",
+                        }}
+                      />
+                    )}
+                  </View>
+                </View>
               </View>
             </View>
           </Page>
@@ -445,33 +495,60 @@ const RecruitmentAgrement = () => {
                 <View>
                   <Image
                     fixed
-                    style={styles.image}
+                    style={{ width: 100, height: 40 }}
                     src={
                       "https://canpathwaysjobs.com/image/00logo-main-black.png"
-                    }
-                  />
+                    } />
                   {components}
-
                   <View
-                    className="footer"
                     fixed
-                    style={{ color: "red", textAlign: "center", marginTop: 25 }}
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-end",
+                      gap: 20,
+                    }}
                   >
-                    <Text>
-                      Office: 2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7,
-                      Canada | Tel.: 403.888.5308 |
-                    </Text>
-                    <Text
-                      style={{ color: "blue", textDecoration: "underline" }}
-                    >
-                      Email: info@canpathways.ca | Website: www.canpathways.ca
-                    </Text>
-                  </View>
-                  <View className="initial" fixed style={styles.initial}>
-                    <Text>Initial:<Text style={[styles.textunderline, { textTransform: 'uppercase' }]}>{felidData?.initial ? felidData?.initial?.split(' ')               // Split the string by spaces
-                      ?.filter(word => word)      // Filter out empty strings (caused by multiple spaces)
-                      ?.map(word => word[0])      // Map each word to its first letter
-                      ?.join(' ') : "        "}</Text></Text>
+                    <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
+                    <View>
+                      <View
+                        style={{
+                          width: "100%",
+                          height: 50,
+                          border: "1px solid #ccc",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {felidData?.initial ? (
+                          <Text
+                            style={{
+                              display: "inline-block",
+                              maxWidth: "100%",
+                              maxHeight: "100%",
+                              textTransform: "capitalize",
+                            }}
+                          >
+                            {felidData.initial
+                              .split(" ")
+                              .filter((word) => word)
+                              .map((word) => word[0])
+                              .join(" ")}
+                          </Text>
+                        ) : (
+                          <View
+                            style={{
+                              display: "inline-block",
+                              width: 100,
+                              height: 50,
+                              border: "1px solid #ccc",
+                            }}
+                          />
+                        )}
+                      </View>
+
+                    </View>
                   </View>
                 </View>
               </Page>
@@ -479,7 +556,8 @@ const RecruitmentAgrement = () => {
           </PDFViewer>
         );
       }}
-    </BlobProvider>
+    </BlobProvider >
+
   );
 };
 const styles = StyleSheet.create({
@@ -559,6 +637,7 @@ const styles = StyleSheet.create({
   bold: {
     fontWeight: "bold"
   }
+
 });
 
 export default RecruitmentAgrement;

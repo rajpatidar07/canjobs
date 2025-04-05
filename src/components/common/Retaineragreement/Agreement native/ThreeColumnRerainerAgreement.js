@@ -77,6 +77,8 @@ const styles = StyleSheet.create({
     headerCell: {
         backgroundColor: "#f0f0f0",
     },
+    signatureBox: { width: "100%", height: 50, border: "1px solid #ccc", display: "flex", alignItems: "center", justifyContent: "center" },
+
 });
 const ThreeColumnRerainerAgreement = () => {
     const [blobData, setBlobData] = useState();
@@ -156,7 +158,7 @@ const ThreeColumnRerainerAgreement = () => {
                         RCIC Membership Number: R533393
                     </Text>
                     <Text style={{ fontWeight: 600 }}>
-                        Client File Number: : {felidData?.client_file_no}
+                        Client File Number: : {felidData?.client_file_no || "___________________"}
                     </Text>
                 </View>
                 <View>
@@ -187,21 +189,20 @@ const ThreeColumnRerainerAgreement = () => {
 
                             {" " + (familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")}
                         </Text>
-                        {" "}(the “Client”)
-                        <Text className="p"> , located at </Text>
+                        {" "}(the “Client”), located at
                         <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
 
-                            {" " + (felidData?.client_address || "        ")}
+                            {console.log(felidData?.client_address !== "" && felidData.client_address ? ("fgfgfgfg" + felidData.client_address) : "___gfgfggfhgffd_____________", felidData?.client_address)}
                         </Text>
                         , Email
                         <Text style={styles.textunderline} className="para_gap">
 
-                            {" " + (felidData?.client_email || "     ")}
+                            {" " + (felidData?.client_email || "_________________")}
                         </Text>
                         , Contact number
                         <Text style={styles.textunderline} className="para_gap">
 
-                            {" " + (felidData?.client_contact || "     ")}
+                            {" " + (felidData?.client_contact || "_______________")}
                         </Text>
                         .
                     </Text>
@@ -1380,7 +1381,7 @@ const ThreeColumnRerainerAgreement = () => {
                                                 { textTransform: "capitalize", marginLeft: 5 },
                                             ]}
                                         >
-                                            {felidData?.client_address || "_______________"}
+                                            {felidData?.client_address ? felidData?.client_address : "___________________"}
                                         </Text>
                                     </Text>
                                 </View>
@@ -1488,33 +1489,30 @@ const ThreeColumnRerainerAgreement = () => {
                         <View style={{ flexDirection: "row", flexWrap: "wrap", marginBottom: 20 }}>
                             {/* Client Signature */}
                             <View style={{ width: "50%", padding: 10 }}>
-                                {familyJsonArray[0]?.client_signature ? (
-                                    <View style={{ display: "flex", flexDirection: "column" }}>
-                                        <Image
-                                            source={{ uri: familyJsonArray[0]?.client_signature }}
-                                            style={{ width: "40%", height: "auto" }}
-                                        />
-                                        <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7 }}>
-                                            <Text style={{ textTransform: "capitalize" }}>
-                                                {familyJsonArray[0]?.client_first_name || ""}{" "}
-                                                {familyJsonArray[0]?.client_last_name || ""}{" "}
-                                            </Text>
-                                            <Text> {!familyJsonArray[0]?.date_signature_client ||
-                                                familyJsonArray[0]?.date_signature_client ===
-                                                "0000-00-00 00:00:00"
-                                                ? "____________"
-                                                : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</Text>
-                                        </Text>
-                                    </View>
-                                ) : (
-                                    <Text>___________________</Text>
-                                )}
+                                <View style={styles.signatureBox}>
+                                    {familyJsonArray[0]?.client_signature ? (
+                                        <Image src={familyJsonArray[0].client_signature} style={{
+                                            display: "inline-block",
+                                            maxWidth: "100%",
+                                            maxHeight: "100%",
+                                            textTransform: "capitalize",
+                                        }} />
+                                    ) : (
+                                        <View
+                                            style={{
+                                                display: "inline-block",
+                                                width: "100%",
+                                                height: 50,
+                                                border: "1px solid #ccc",
+                                            }}
+                                        />)}
+                                </View>
                                 <Text>Signature of Client</Text>
                             </View>
 
                             {/* Client Name */}
                             <View style={{ width: "50%", padding: 10 }}>
-                                <Text style={[styles.textunderline, { textTransform: "capitalize" }]}>
+                                <Text style={[styles.textunderline, { textTransform: "capitalize", minWidth: "300px" }]}>
                                     {familyJsonArray[0]?.client_first_name || ""}{" "}
                                     {familyJsonArray[0]?.client_last_name || "_________________"}
                                 </Text>
@@ -1535,12 +1533,28 @@ const ThreeColumnRerainerAgreement = () => {
                                     <View style={{ width: "50%", padding: 10 }}>
                                         {item.client_signature ? (
                                             <View style={{ display: "flex", flexDirection: "column" }}>
-                                                <Image
-                                                    source={{ uri: item.client_signature }}
-                                                    style={{ width: "40%", height: "auto" }}
-                                                />
+                                                <View style={styles.signatureBox}>
+                                                    {item?.client_signature ? (
+                                                        <Image src={item.client_signature} style={{
+                                                            display: "inline-block",
+                                                            maxWidth: "100%",
+                                                            maxHeight: "100%",
+                                                            textTransform: "capitalize",
+                                                        }} />
+                                                    ) : (
+                                                        <View
+                                                            style={{
+                                                                display: "inline-block",
+                                                                width: "100%",
+                                                                height: 50,
+                                                                border: "1px solid #ccc",
+                                                            }}
+                                                        />)}
+                                                </View>
                                                 <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7 }}>
-                                                    <Text style={{ textTransform: "capitalize" }}>
+                                                    <Text style={{
+                                                        textTransform: "capitalize", minWidth: "300px"
+                                                    }}>
                                                         {item.client_first_name || ""} {item.client_last_name || ""}{" "}
                                                     </Text>
                                                     <Text>
@@ -1580,10 +1594,13 @@ const ThreeColumnRerainerAgreement = () => {
                             <View style={{ width: "50%", padding: 10 }}>
                                 {felidData?.rcic_signature ? (
                                     <View style={{ display: "flex", flexDirection: "column" }}>
-                                        <Image
-                                            source={{ uri: felidData?.rcic_signature }}
-                                            style={{ width: "40%", height: "auto" }}
-                                        />
+                                        <Image src={felidData?.rcic_signature} style={{
+                                            display: "inline-block",
+                                            maxWidth: "100%",
+                                            maxHeight: "100%",
+                                            textTransform: "capitalize",
+                                        }} />
+
                                         <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7 }}>
                                             <Text style={{ textTransform: "capitalize" }}>
                                                 Harpreet Kaur{" "}
@@ -1594,14 +1611,20 @@ const ThreeColumnRerainerAgreement = () => {
                                         </Text>
                                     </View>
                                 ) : (
-                                    <Text>___________________</Text>
-                                )}
+                                    <View
+                                        style={{
+                                            display: "inline-block",
+                                            width: "100%",
+                                            height: 50,
+                                            border: "1px solid #ccc",
+                                        }}
+                                    />)}
                                 <Text>Signature of RCIC</Text>
                             </View>
 
                             {/* RCIC Name */}
                             <View style={{ width: "50%", padding: 10 }}>
-                                <Text style={[styles.textunderline, { textTransform: "capitalize" }]}>
+                                <Text style={[styles.textunderline, { textTransform: "capitalize", minWidth: "300px" }]}>
                                     Harpreet Kaur
                                 </Text>
                                 <Text>Name of RCIC</Text>
@@ -1756,27 +1779,24 @@ const ThreeColumnRerainerAgreement = () => {
                             <Text style={{ margin: "0 0 30px 0" }}>Client’s full name</Text>
                         </View>
                         <View style={[styles.clientFormChild, { alignSelf: "center" }]}>
-                            {familyJsonArray[0]?.client_signature ? (
-                                <View style={{ display: "flex", flexDirection: "column" }}>
-                                    <Image
-                                        source={{ uri: familyJsonArray[0]?.client_signature }}
-                                        style={{ width: "40%", height: "auto", alignSelf: "center" }}
-                                    />
-                                    <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7 }}>
-                                        <Text style={{ textTransform: "capitalize" }}>
-                                            {familyJsonArray[0]?.client_first_name || ""}{" "}
-                                            {familyJsonArray[0]?.client_last_name || ""}{" "}
-                                        </Text>
-                                        <Text> {!familyJsonArray[0]?.date_signature_client ||
-                                            familyJsonArray[0]?.date_signature_client ===
-                                            "0000-00-00 00:00:00"
-                                            ? "____________"
-                                            : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</Text>
-                                    </Text>
-                                </View>
-                            ) : (
-                                <Text>___________________</Text>
-                            )}
+                            <View style={styles.signatureBox}>
+                                {familyJsonArray[0]?.client_signature ? (
+                                    <Image src={familyJsonArray[0].client_signature} style={{
+                                        display: "inline-block",
+                                        maxWidth: "100%",
+                                        maxHeight: "100%",
+                                        textTransform: "capitalize",
+                                    }} />
+                                ) : (
+                                    <View
+                                        style={{
+                                            display: "inline-block",
+                                            width: "100%",
+                                            height: 50,
+                                            border: "1px solid #ccc",
+                                        }}
+                                    />)}
+                            </View>
                             <Text style={{ margin: "0 0 50px 0" }}>Signatures</Text>
                         </View>
                         <View style={styles.clientFormChild}>
