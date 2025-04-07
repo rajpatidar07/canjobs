@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import { useParams } from "react-router-dom";
 import { GetPaymentList } from "../../../api/api";
 import PayForm from "./PayForm";
 // import Loader from "../../common/loader";
@@ -48,12 +47,8 @@ export default function PayentForm({ data, user_id, user_type }) {
     <>
 
       <div className="bg-white rounded h-100 px-10 overflow-y-hidden">
-        {/* <h5 className="text-center pt-2 mb-7">Follow Ups</h5> */}
         <div className="row">
           {
-            // loading ? (
-            //   <Loader load={"yes"} />
-            // ) :
             <div className="activity_container col-md-8 border-right ">
               <div className="single_note mb-5">
                 {paymentList.length === 0 ? (
@@ -69,7 +64,6 @@ export default function PayentForm({ data, user_id, user_type }) {
                         <p className="text-italic font-size-3 m-0">
                           Payment on:{" "}
                           <ConvertTime _date={res.created_at} format={"Do MM YYYY, h:mm:ss a"} />
-                          {/* {moment(res.created_at).format("Do MM YYYY, h:mm:ss a")} */}
                         </p>
                       </div>
                       <div className="card rounded-3 py-2 px-5">
@@ -142,7 +136,6 @@ export default function PayentForm({ data, user_id, user_type }) {
             )}
         </div>
       </div>
-      {/* </Modal> */}
     </>
   );
 }
