@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 // import CompanyLogin from "../company/loginModal";
 // import CompanySignUp from "../company/signupModal";
 // import EmployeeLoginModal from "../user/login";
@@ -14,7 +14,6 @@ function EmployeeHeader() {
   const company_id = localStorage.getItem("company_id");
   let profile_photo = localStorage.getItem("profile_photo");
   let name = localStorage.getItem("name");
-  let navigate = useNavigate();
   // ADD CLASS FOR MOBILE SCREEN IN SIDEBAR
   // state:-
   // const [addClass, setAddClass] = useState(false);
@@ -436,15 +435,17 @@ function EmployeeHeader() {
                   </Link>
                   <Link
                     className="dropdown-item py-2 text-red font-size-3 font-weight-semibold line-height-1p2 text-uppercase"
-                    to=""
+                    to={
+                     "/"
+                    }
                     onClick={() => {
                       localStorage.clear(); // clear the local storage
                       toast.error("Log Out Successfully", {
                         position: toast.POSITION.TOP_RIGHT,
                         autoClose: 1000,
                       });
-                      navigate("/");
-                      window.reload();
+                      // navigate("/");
+                      // window.reload();
                     }}
                   >
                     Log Out

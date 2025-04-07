@@ -49,6 +49,8 @@ const AgreementOneForm = ({
     applicable_government_processing_fee_stape_1: "",
     applicable_retainer_fee_stape_2: "",
     applicable_government_processing_fee_stape_2: "",
+    applicable_retainer_fee_stape_3: "",
+    applicable_government_processing_fee_stape_3: "",
     total_amount_signing_of_contract: "",
     balance_paid_at_time_of_filing: "",
     rcic_first_name: "",
@@ -599,9 +601,30 @@ const AgreementOneForm = ({
                   },
                   {
                     label:
+                      "Applicable Government Processing Fee for Step 2",
+                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
+                    name: "applicable_government_processing_fee_stape_2",
+                    type: "number",
+                  },
+                  {
+                    label:
+                      "Applicable Government Processing Fee for Step 3",
+                    display: state.type === "three column" ? "" : "d-none",
+                    name: "applicable_government_processing_fee_stape_3",
+                    type: "number",
+                  },
+                  {
+                    label:
                       "Applicable Retainer Fee for this stage (Non-Refundable) for Step 2",
                     display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
                     name: "applicable_retainer_fee_stape_2",
+                    type: "number",
+                  },
+                  {
+                    label:
+                      "Applicable Retainer Fee for this stage (Non-Refundable) for Step 3",
+                    display: state.type === "three column" ? "" : "d-none",
+                    name: "applicable_retainer_fee_stape_3",
                     type: "number",
                   },
                   {

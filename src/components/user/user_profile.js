@@ -45,7 +45,7 @@ import NotFound from "../common/notfound";
 import RetainerAgrementMainPage from "../common/Retaineragreement/RetainerAgrementMainPage";
 import VisaTimeLine from "../common/visaTimeLine";
 import PaymentPage from "../common/payment invoice/PaymentPage";
-// import PayentForm from "../forms/admin/payentForm";
+import PayentForm from "../forms/admin/payentForm";
 // import useSessionCheck from "../common/user_session";
 // import AdobePDFViewer from "../common/Adobe/adobeFile";
 const NewUserProfile = (props) => {
@@ -1700,19 +1700,21 @@ const NewUserProfile = (props) => {
                   >
                     {TabActive === "payment" ? (
                       <div className="p-1 activity_container">
-                        {/* <PayentForm
-                          data={PersonalDetail}
-                          user_id={eid}
-                          user_type={"employee"}
-                        /> */}
-                        <PaymentPage
-                        user_id={eid}
-                        user_type={"employee"}
-                        user_email={PersonalDetail.email}
-                        folderId={
-                          PersonalDetail.documents_folder_id
+                        {user_type === "admin" ?
+                          <PaymentPage
+                            user_id={eid}
+                            user_type={"employee"}
+                            user_email={PersonalDetail.email}
+                            folderId={
+                              PersonalDetail.documents_folder_id
+                            }
+                            userData={PersonalDetail} /> :
+                          <PayentForm
+                            data={PersonalDetail}
+                            user_id={eid}
+                            user_type={"employee"}
+                          />
                         }
-                        userData={PersonalDetail}/>
                       </div>
                     ) : null}
                   </div>

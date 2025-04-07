@@ -18,7 +18,7 @@ const PaymentInvoiceForm = (props) => {
 
   const initialFormState =
   {
-    invoice_no: 1,//parseInt(props.lastInvoiceNo) + 1,
+    invoice_no: parseInt(props.lastInvoiceNo) + 1,
     user_id: props.userId,//Employee /employer id
     user_type: props.userType,//Employee /employer type
     user_email: props.userEmail,//Employee /employer email

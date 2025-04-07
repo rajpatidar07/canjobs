@@ -1102,7 +1102,7 @@ export default function SharePointDocument({
                         setNoteText("")
                         setDocNoteData([])
                       }}>{"Add Note"}</button>
-                    <button className="btn btn-dark mx-2 d-none" style={{ maxHeight: 34 }}
+                    <button className="btn btn-dark mx-2  " style={{ maxHeight: 34 }}
                       onClick={() => {
                         setOpenExcelSheet(true)
                       }}>Add Sheet</button>

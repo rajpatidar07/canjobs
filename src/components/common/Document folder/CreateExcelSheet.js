@@ -7,6 +7,7 @@ import { AddSharePointDOcument } from "../../../api/api";
 const customCreateFormulaParser = (data) =>
     createFormulaParser(data, { SUM: undefined });
 
+
 const CreateExcelSheet = (props) => {
     const [data, setData] = useState([
         [{ value: "" }, { value: "" }, { value: "" }, { value: "" }, { value: "" }, { value: "" }, { value: "" }, { value: "" }, { value: "" }, { value: "" }, { value: "" }, { value: "" },],
@@ -69,7 +70,6 @@ const CreateExcelSheet = (props) => {
         console.log("Generated CSV File Object:", csvFile);
         exportToExcelFile(e, csvFile)
     };
-
     /*Function to Add note to the api */
     const exportToExcelFile = async (e, file) => {
         e.preventDefault()
@@ -113,26 +113,57 @@ const CreateExcelSheet = (props) => {
             size="xl"
             aria-labelledby="contained-modal-title-vcenter"
             centered
-            onBackdropClick={() => props.close()}
+            onBackdropClick={() => handleExcelSheetClose()}
         >
             <button
                 type="button"
                 className="circle-32 btn-reset bg-white pos-abs-tr mt-md-n6 mr-lg-n6 focus-reset z-index-supper"
                 data-dismiss="modal"
-                onClick={() => props.close()}
+                onClick={() => handleExcelSheetClose()}
             >
                 <i className="fas fa-times"></i>
             </button>
             {/* <div className="modal-dialog max-width-px-540 position-relative"> */}
-            <div className="bg-white rounded h-100 p-7">
-                <button onClick={addRow}>+ <FaArrowDownLong /></button>
-                <button onClick={addColumn}>+ <FaArrowRight /></button>
-                {/* Scrollable Spreadsheet Container */}
-                <div style={{ width: "100%", height: "100%", overflow: "auto", border: "1px solid #ccc" }}>
-                    <Spreadsheet data={data} onChange={setData} createFormulaParser={customCreateFormulaParser} />
-                </div>
-                <div className="text-center"><button class="btn btn-primary" onClick={createCSVFile} disable={loading}>{loading ? "Saving" : "Save"}</button></div>
-            </div>
+            <div className="bg-white rounded shadow p-4 d-flex flex-column h-100">
+  {/* Toolbar */}
+  <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+    <h4 className="m-0">Create Excel Sheet</h4>
+    <div className="btn-group" role="group">
+      <button className="btn btn-outline-primary d-flex align-items-center" onClick={addRow}>
+        <span className="me-1">Add Row</span>
+        <FaArrowDownLong />
+      </button>
+      <button className="btn btn-outline-success d-flex align-items-center" onClick={addColumn}>
+        <span className="me-1">Add Column</span>
+        <FaArrowRight />
+      </button>
+    </div>
+  </div>
+
+  {/* Spreadsheet container */}
+  <div
+    className="flex-grow-1 border rounded overflow-auto"
+    style={{ minHeight: '400px', maxHeight: '600px' }}
+  >
+    <Spreadsheet
+      data={data}
+      onChange={setData}
+      createFormulaParser={customCreateFormulaParser}
+    />
+  </div>
+
+  {/* Save Button */}
+  <div className="text-center mt-4">
+    <button
+      className="btn btn-primary px-4 py-2"
+      onClick={createCSVFile}
+      disabled={loading}
+    >
+      {loading ? 'Saving...' : 'Save'}
+    </button>
+  </div>
+</div>
+
         </Modal>
     );
 };

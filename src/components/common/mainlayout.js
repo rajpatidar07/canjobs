@@ -110,6 +110,7 @@ import RenewalApplicantionsPdf from "./Retaineragreement/Agreement native/Renewa
 import MoreThanOneApplicantAgreementPdf from "./Retaineragreement/Agreement native/MoreThanOneApplicantAgreementPdf";
 import EmployerRetainerAgreementPdf from "./Retaineragreement/Agreement native/EmployerRetainerAgreementPdf";
 import ThreeColumnRerainerAgreement from "./Retaineragreement/Agreement native/ThreeColumnRerainerAgreement";
+import ManageHourlyLog from "../admin/ManageHourlyLog";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -276,6 +277,7 @@ function MainLayout() {
             <Route path="/partner" element={<Agent />} />
             <Route path="/partner_dashboard" element={<PartnerDashboard />} />
             <Route path="/daily_call_log" element={<ManageDailyCallLog />} />
+            <Route path="/daily_hours_log" element={<ManageHourlyLog />} />
             <Route path="/assigned_admin" element={<AsiignedAdmin />} />
             <Route path="/activity_log" element={<ActivityLog />} />
             <Route path="/filter" element={<FilterList />} />

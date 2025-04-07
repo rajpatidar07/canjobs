@@ -260,7 +260,7 @@ const StyledDropdown = ({
                             }}
                             onContextMenu={(e) => {
                                 e.preventDefault();
-                                setShowUpdateDropDown(option.id)
+                                if (filterItemID) { setShowUpdateDropDown(option.id) }
                             }}
 
                         >
@@ -304,7 +304,7 @@ const StyledDropdown = ({
                         </div>
                         <small className="text-danger ">{statusErrors}</small>
                     </div>
-                    : <div className="border-top text-center mt-2">
+                    : <div className={filterItemID ? "border-top text-center mt-2" : "d-non"}>
                         <button className="btn btn-light mt-2" onClick={() => setAddStatusFieldOpen(true)}>+ Add new {status_name}</button></div>}
             </div>,
             document.body
