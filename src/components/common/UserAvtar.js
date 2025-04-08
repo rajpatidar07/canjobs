@@ -24,7 +24,7 @@ const UserAvatar = ({ profileImage, name, userType, index, userId }) => {
     />
   ) : (
     <div
-      className="bg-info"
+      className="bg-info mx-auto"
       title={`${name} (${userType})`}
       style={{
         width: "30px",

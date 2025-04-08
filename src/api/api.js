@@ -3893,7 +3893,7 @@ export const AddUpdatePaymentInvoiceApi = async (data) => {
   );
   return response;
 }
-/*Api to delete update invoice */
+/*Api to delete payment invoice */
 export const DeletePaymentInvoiceApi = async (id) => {
   const response = await axios.post(`${API_URL}common/deletePaymentInvoice`,
     { id: id }, {
@@ -3905,7 +3905,7 @@ export const DeletePaymentInvoiceApi = async (id) => {
   );
   return response;
 }
-/*Api to delete update invoice */
+/*Api to get  payment invoice */
 export const GetLastPaymentInvoiceApi = async (id) => {
   const response = await axios.get(`${API_URL}common/getLastPaymentInvoice`,
     {
@@ -3929,4 +3929,43 @@ export const SendPaymentInvoiceReminderApi = async (data) => {
   );
   return response;
 
+}
+/*Api to Get hour log */
+export const GetHourLogApi = async (data) => {
+  const response = await axios.post(`${API_URL}admin/getDailyHourLog
+`, data,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+}
+/*Api to Add  Hour log */
+export const AddUpdateHourLogApi = async (data) => {
+  const response = await axios.post(`${API_URL}admin/addUpdateDailyHourLog
+`, data,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+}
+/*Api to Delete  Hour log */
+export const DeleteUpdateHourLogApi = async (data) => {
+  const response = await axios.post(`${API_URL}admin/deleteDailyHourLog
+`, data,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
 }

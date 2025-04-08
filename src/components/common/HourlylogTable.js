@@ -5,7 +5,7 @@ import Pagination from "./pagination";
 import StyledDropdown from "./StyledDropDown";
 import TableInput from "./TableInput";
 import useValidation from "./useValidation";
-import { GetFilter } from "../../api/api";
+import { GetFilter, GetHourLogApi, AddUpdateHourLogApi, DeleteUpdateHourLogApi } from "../../api/api";
 import { toast } from "react-toastify";
 import { BsChat } from "react-icons/bs";
 import CommentTaskBox from "./commonTaskBox";
@@ -13,6 +13,7 @@ import ModalSidebar from "./modalSidebar";
 import { Link, useLocation } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
 import SAlert from "./sweetAlert";
+import UserAvatar from "./UserAvtar";
 
 function Hourlylogtable(props) {
     const location = useLocation();
@@ -31,37 +32,42 @@ function Hourlylogtable(props) {
     let [loading, setLoading] = useState(false);
     let [apiCall, setApiCall] = useState(false);
     const [deleteAlertHourLogData, setDeleteAlertHourLogData] =
-        useState(false);
+        useState();
     const [deleteAlertHourLog, setDeleteAlertHourLog] =
         useState(false);
     const [HourLogData, setHourLogData] = useState([]);
     const [totalData, setTotalData] = useState();
+    const [editRowId, setEditRowId] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const recordsPerPage = 10;
     const nPages = Math.ceil(totalData / recordsPerPage);
-    // const GetDailyHourLogList = async () => {
-    //     try {
-    //         setIsLoading(true)
-    //         let ResHourLog = await getDailyHourLogApi(props.searchCandidate, props.selectedAdminId, HourLogId, '', currentPage, recordsPerPage);
-    //         setHourLogData(ResHourLog.data.data.data)
-    //         setTotalData(ResHourLog.data.data.total_rows)
-    //         if (taskId) {
-    //             setSingelHourLogData(ResHourLog.data.data.data[0])
-    //             setShowHourLogModal(true)
-    //             const newUrl = window.location.pathname;
-    //             window.history.replaceState({}, document.title, newUrl);
-    //             localStorage.setItem("navigation_url", "")
-    //         }
-    //         setIsLoading(false)
-    //     } catch (err) {
-    //         console.log(err);
-    //         setIsLoading(false)
-    //     }
-    // };
+    const GetDailyHourLogList = async () => {
+        try {
+            setIsLoading(true)
+            let data = {
+                "limit": recordsPerPage, "page": currentPage, "id": HourLogId
+            };
+            let ResHourLog = await GetHourLogApi(data);
+            setHourLogData(ResHourLog.data.data)
+            setTotalData(ResHourLog.data.total_rows)
+            if (taskId) {
+                setSingelHourLogData(ResHourLog.data.data[0])
+                setShowHourLogModal(true)
+                const newUrl = window.location.pathname;
+                window.history.replaceState({}, document.title, newUrl);
+                localStorage.setItem("navigation_url", "")
+            }
+            setIsLoading(false)
+        } catch (err) {
+            console.log(err);
+            setIsLoading(false)
+        }
+    };
     const initialFormState = {
         item: "",
         hour_log_of_admin: "",
-        mention_person: "",
+        mention_person_id: "",
+        mention_person_type: "",
         date: "",
         day: "",
         total_hour: "",
@@ -76,7 +82,7 @@ function Hourlylogtable(props) {
         item: [
             (value) =>
                 value === "" || value.trim() === ""
-                    ? "Name is required"
+                    ? "Item is required"
                     : null
         ],
         hour_log_of_admin: [(value) =>
@@ -120,13 +126,13 @@ function Hourlylogtable(props) {
         if (NotifiTaskId) {
             setTaskId(NotifiTaskId)
         }
+        console.log(NotifiHourLogId, "lll")
         if (NotifiHourLogId) {
             setHourLogId(NotifiHourLogId)
         }
     }, [location.key, NotifiHourLogId, NotifiTaskId])
     useEffect(() => {
-
-        // GetDailyHourLogList()
+        GetDailyHourLogList()
         if (apiCall === true) { setApiCall(false) }
         const handleScroll = () => {
             if (tableContainerRef.current) {
@@ -150,24 +156,26 @@ function Hourlylogtable(props) {
             newValue.preventDefault();
         }
         if (validate() || data?.id) {
-            // try {
-            //     setLoading(true)
-            //     let res = await AddUpdateDailHourLogApi(data ? data : state)
-            //     if (res.status === 1 || res.status === "2" || res.data.status === 1) {
-            //         setLoading(false)
-            //         setState(initialFormState)
-            //         setErrors("")
-            //         props.setShowAddForm(false)
-            //         setApiCall(true)
-            //         toast.success(`Call log ${data?.id ? "Updated" : "Added"} successfully`, {
-            //             position: toast.POSITION.TOP_RIGHT,
-            //             autoClose: 1000,
-            //         });
-            //     }
-            // } catch (err) {
-            //     console.log(err)
-            //     setLoading(false)
-            // }
+            try {
+                setLoading(true)
+                let res = await AddUpdateHourLogApi(data ? data : state)
+                console.log(res)
+                if (res.status === 1 || res.status === "2" || res.data.status === 1) {
+                    setLoading(false)
+                    setState(initialFormState)
+                    setEditRowId()
+                    setErrors("")
+                    props.setShowAddForm(false)
+                    setApiCall(true)
+                    toast.success(`Daily Hour log ${data?.id ? "Updated" : "Added"} successfully`, {
+                        position: toast.POSITION.TOP_RIGHT,
+                        autoClose: 1000,
+                    });
+                }
+            } catch (err) {
+                console.log(err)
+                setLoading(false)
+            }
         }
     }
     /*Function to delete the Call log */
@@ -176,19 +184,17 @@ function Hourlylogtable(props) {
             id: id,
         };
         try {
-            console.log(data)
-            // const response = await DeleteHourLogApi(data);
-            // console.log(response)
-            // if (response.data.status === 1 || response.data.status === "1") {
-            //     toast.error("Call log has been deleted !", {
-            //         position: toast.POSITION.TOP_RIGHT,
-            //         autoClose: 1000,
-            //     });
-            //     setDeleteAlertHourLog(false)
-            //     setDeleteAlertHourLogData();
-            //     setApiCall(true);
-            //     props.setApiCall(true)
-            // }
+            const response = await DeleteUpdateHourLogApi(data);
+            if (response.data.status === 1 || response.data.status === "1") {
+                toast.error("Daily Hour Log has been deleted !", {
+                    position: toast.POSITION.TOP_RIGHT,
+                    autoClose: 1000,
+                });
+                setDeleteAlertHourLog(false)
+                setDeleteAlertHourLogData();
+                setApiCall(true);
+                props.setApiCall(true)
+            }
 
         } catch (err) {
 
@@ -296,10 +302,12 @@ function Hourlylogtable(props) {
                                                     )}
                                                 </td>
                                                 <td style={{ minWidth: "150px" }}>
-                                                    <select className="form-control" value={state.person} onChange={onInputChange} id="person" name="person">
+                                                    <select className="form-control" value={`${state.mention_person_id},${state.mention_person_type}`} onChange={(e) => {
+                                                        setState({ ...state, mention_person_id: e.target.value.split(",")[0], mention_person_type: e.target.value.split(",")[1] })
+                                                    }} id="mention_person_id" name="mention_person_id">
                                                         <option>Select Admin</option>
                                                         {(props.adminList || []).map((item, index) => (
-                                                            <option value={item.admin_id} key={index}>{item.name}</option>
+                                                            <option value={`${item.admin_id},${item.admin_type}`} key={index}>{item.name}</option>
                                                         ))}
                                                     </select>
                                                 </td>
@@ -308,7 +316,8 @@ function Hourlylogtable(props) {
                                                 </td>
 
                                                 <td style={{ minWidth: "150px" }}>
-                                                    <StyledDropdown options={jsonList.days} value={state.day} onChange={onInputChange} width={"400"} id="day" name="day" status_name={"day"}
+                                                    <StyledDropdown options={jsonList.days} value={state.day} onChange={onInputChange} width={"400"} id="day" name="day" status_name={"day"} setFilterListApiCall={setFilterListApiCall}
+                                                        filterItemID={"43"}
                                                     />
                                                 </td>
 
@@ -333,52 +342,41 @@ function Hourlylogtable(props) {
                                                     <TableInput value={state.info} onChange={onInputChange} type="text" id="info" name="info" />
                                                 </td>
                                                 {/* Button Column */}
-                                                <td style={{ minWidth: "80px", textAlign: "center", verticalAlign: "middle" }}>
-                                                    {loading ? (
+                                                <td style={{ minWidth: "50px", textAlign: "center" }}>
+                                                    {loading === true ? (
                                                         <button
-                                                            className="btn btn-sm btn-primary d-flex align-items-center justify-content-center"
+                                                            className="btn-sm btn-primary"
                                                             type="button"
                                                             disabled
-                                                            style={{ width: "36px", height: "36px" }}
                                                         >
                                                             <span
-                                                                className="spinner-border spinner-border-sm"
+                                                                className="spinner-border spinner-border-sm "
                                                                 role="status"
                                                                 aria-hidden="true"
                                                             ></span>
+                                                            <span className="sr-only">Loading...</span>
                                                         </button>
-                                                    ) : (
-                                                        <div className="d-flex align-items-center justify-content-center gap-2">
-                                                            <button
-                                                                title="Submit"
-                                                                type="button"
-                                                                className="btn btn-sm btn-success"
-                                                                style={{ width: "36px", height: "36px", fontSize: "16px", lineHeight: "1" }}
-                                                                onClick={AddHourLog}
-                                                                onKeyDown={(e) => {
-                                                                    if (e.key === "Enter") {
-                                                                        e.preventDefault();
-                                                                        AddHourLog();
-                                                                    }
-                                                                }}
-                                                            >
-                                                                +
-                                                            </button>
-
-                                                            <button
-                                                                type="button"
-                                                                title="Cancel"
-                                                                className="btn btn-sm btn-secondary"
-                                                                style={{ width: "36px", height: "36px", fontSize: "16px", lineHeight: "1" }}
-                                                                onClick={() => {
-                                                                    props.setShowAddForm(false);
-                                                                    setState(initialFormState);
-                                                                }}
-                                                            >
-                                                                ×
-                                                            </button>
-                                                        </div>
-                                                    )}
+                                                    ) :
+                                                        <> <button
+                                                            title="Submit"
+                                                            type="button"
+                                                            className="btn-sm btn-primary"
+                                                            onClick={AddHourLog}
+                                                            onKeyDown={(e) => {
+                                                                if (e.key === "Enter") {
+                                                                    e.preventDefault();
+                                                                    AddHourLog();
+                                                                }
+                                                            }}
+                                                        >
+                                                            +
+                                                        </button>
+                                                            <button type="button" title="Cancel" onClick={() => {
+                                                                props.setShowAddForm(false);
+                                                                setState(initialFormState);
+                                                            }} className="btn-sm btn-dark mx-2">x</button>
+                                                        </>
+                                                    }
                                                 </td>
 
                                             </tr>
@@ -392,7 +390,6 @@ function Hourlylogtable(props) {
                                                 || []).map((item, index) => (
                                                     <tr key={index}>
                                                         {/* Item (Date) */}
-
                                                         <td
                                                             className="table_sticky_col sticky_col1 "
                                                             style={{
@@ -422,36 +419,67 @@ function Hourlylogtable(props) {
                                                         </td>
                                                         {/* Hour Log of Admin */}
                                                         <td style={{ minWidth: "150px" }}>
-                                                            <select
-                                                                className="form-control"
-                                                                value={item.hour_log_of_admin}
-                                                                onChange={(e) => handleUpdateChange(e.target.value, item.id, "hour_log_of_admin")}
-                                                                id="hour_log_of_admin"
-                                                                name="hour_log_of_admin"
-                                                            >
-                                                                <option>Select Admin</option>
-                                                                {(props.adminList || []).map((admin, idx) => (
-                                                                    <option value={admin.admin_id} key={idx}>{admin.name}</option>
-                                                                ))}
-                                                            </select>
+                                                            {editRowId === item.hour_log_of_admin ? (
+                                                                <select
+                                                                    className="form-control"
+                                                                    value={item.hour_log_of_admin}
+                                                                    onChange={(e) =>
+                                                                        handleUpdateChange(e, item.id, "hour_log_of_admin")
+                                                                    }
+                                                                    onBlur={() => setEditRowId(null)} // Hide dropdown when losing focus
+                                                                    autoFocus
+                                                                >
+                                                                    <option value="">Select Admin</option>
+                                                                    {(props.adminList || []).map((admin, idx) => (
+                                                                        <option value={admin.admin_id} key={idx}>
+                                                                            {admin.name}
+                                                                        </option>
+                                                                    ))}
+                                                                </select>
+                                                            ) : (
+                                                                item.hour_log_of_admin && (item.hour_log_of_admin !== 0 || item.hour_log_of_admin !== "0") ? <div onClick={() => setEditRowId(item.hour_log_of_admin)} style={{ cursor: "pointer" }}>
+                                                                    <UserAvatar
+                                                                        profileImage={(props.adminList || []).find((i) => i.admin_id === item.hour_log_of_admin)?.profile_image}
+                                                                        name={(props.adminList || []).find((i) => i.admin_id === item.hour_log_of_admin)?.name}
+                                                                        userType={(props.adminList || []).find((i) => i.admin_id === item.hour_log_of_admin)?.admin_type}
+                                                                        index={index}
+                                                                        userId={item.hour_log_of_admin}
+                                                                    />
+                                                                </div> :
+                                                                    "N/A"
+                                                            )}
                                                         </td>
-
                                                         {/* Mention Person */}
                                                         <td style={{ minWidth: "150px" }}>
-                                                            <select
-                                                                className="form-control"
-                                                                value={item.person}
-                                                                onChange={(e) => handleUpdateChange(e.target.value, item.id, "person")}
-                                                                id="person"
-                                                                name="person"
-                                                            >
-                                                                <option>Select Admin</option>
-                                                                {(props.adminList || []).map((admin, idx) => (
-                                                                    <option value={admin.admin_id} key={idx}>{admin.name}</option>
-                                                                ))}
-                                                            </select>
+                                                            {editRowId === item.mention_person_id ? (
+                                                                <select
+                                                                    className="form-control"
+                                                                    value={item.mention_person_id}
+                                                                    onChange={(e) =>
+                                                                        handleUpdateChange(e, item.id, "mention_person_id")
+                                                                    }
+                                                                    onBlur={() => setEditRowId(null)} // Hide dropdown when losing focus
+                                                                    autoFocus
+                                                                >
+                                                                    <option value="">Select Admin</option>
+                                                                    {(props.adminList || []).map((admin, idx) => (
+                                                                        <option value={admin.admin_id} key={idx}>
+                                                                            {admin.name}
+                                                                        </option>
+                                                                    ))}
+                                                                </select>
+                                                            ) : (
+                                                                item.mention_person_id && (item.mention_person_id !== 0 || item.mention_person_id !== "0") ? <div onClick={() => setEditRowId(item.mention_person_id)} style={{ cursor: "pointer" }}>
+                                                                    <UserAvatar
+                                                                        profileImage={(props.adminList || []).find((i) => i.admin_id === item.hour_log_of_admin)?.profile_image}
+                                                                        name={(props.adminList || []).find((i) => i.admin_id === item.hour_log_of_admin)?.name}
+                                                                        userType={(props.adminList || []).find((i) => i.admin_id === item.hour_log_of_admin)?.admin_type}
+                                                                        index={index}
+                                                                        userId={item.mention_person_id}
+                                                                    />
+                                                                </div> : "N?A"
+                                                            )}
                                                         </td>
-
                                                         {/* Date */}
                                                         <td style={{ minWidth: "150px" }}>
                                                             <TableInput
@@ -462,7 +490,6 @@ function Hourlylogtable(props) {
                                                                 name="date"
                                                             />
                                                         </td>
-
                                                         {/* Day */}
                                                         <td style={{ minWidth: "150px" }}>
                                                             <StyledDropdown
@@ -473,9 +500,10 @@ function Hourlylogtable(props) {
                                                                 id="day"
                                                                 name="day"
                                                                 status_name={"Day"}
+                                                                setFilterListApiCall={setFilterListApiCall}
+                                                                filterItemID={"43"}
                                                             />
                                                         </td>
-
                                                         {/* Total Hour */}
                                                         <td style={{ minWidth: "150px" }}>
                                                             <TableInput
@@ -486,7 +514,6 @@ function Hourlylogtable(props) {
                                                                 name="total_hour"
                                                             />
                                                         </td>
-
                                                         {/* Start Time */}
                                                         <td style={{ minWidth: "150px" }}>
                                                             <TableInput
@@ -497,7 +524,6 @@ function Hourlylogtable(props) {
                                                                 name="start_time"
                                                             />
                                                         </td>
-
                                                         {/* Finish Time */}
                                                         <td style={{ minWidth: "150px" }}>
                                                             <TableInput
@@ -508,7 +534,16 @@ function Hourlylogtable(props) {
                                                                 name="finish_time"
                                                             />
                                                         </td>
-
+                                                        {/* Notes */}
+                                                        <td style={{ minWidth: "150px" }}>
+                                                            <TableInput
+                                                                value={item.notes}
+                                                                onChange={(newValue) => handleUpdateChange(newValue, item.id, "notes")}
+                                                                type="text"
+                                                                id="notes"
+                                                                name="notes"
+                                                            />
+                                                        </td>
                                                         {/* Break */}
                                                         <td style={{ minWidth: "150px" }}>
                                                             <TableInput
@@ -519,7 +554,6 @@ function Hourlylogtable(props) {
                                                                 name="break"
                                                             />
                                                         </td>
-
                                                         {/* Info */}
                                                         <td style={{ minWidth: "150px" }}>
                                                             <TableInput
@@ -530,7 +564,6 @@ function Hourlylogtable(props) {
                                                                 name="info"
                                                             />
                                                         </td>
-
                                                         {/* Delete Button */}
                                                         <td style={{ minWidth: "150px" }}>
                                                             <button
@@ -554,17 +587,16 @@ function Hourlylogtable(props) {
 
                             )}
                         </form>
-                        {console.log(deleteAlertHourLog)}
-                        <SAlert
-                            show={deleteAlertHourLog}
-                            title={deleteAlertHourLogData?.name}
+                        {<SAlert
+                            show={deleteAlertHourLog === true}
+                            title={deleteAlertHourLogData?.item}
                             text="Are you Sure you want to delete !"
                             onConfirm={() => deleteHourLog(deleteAlertHourLogData.id)}
                             showCancelButton={true}
                             onCancel={() =>
                                 setDeleteAlertHourLog(false)
                             }
-                        />
+                        />}
                     </div>
 
                     {/* Pagination Controls */}
@@ -605,7 +637,7 @@ function Hourlylogtable(props) {
                         taskUserType={"hour_log"}
                         setOpenReplyBox={setShowHourLogModal}
                         openReplyBox={showHourLogModal}
-                        taskName={"Discussion for Call log"}
+                        taskName={"Discussion for Daily Hour log"}
                         TaskId={taskId}
                     />
                 ) : null}

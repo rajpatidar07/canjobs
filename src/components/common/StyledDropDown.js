@@ -304,7 +304,7 @@ const StyledDropdown = ({
                         </div>
                         <small className="text-danger ">{statusErrors}</small>
                     </div>
-                    : <div className={filterItemID ? "border-top text-center mt-2" : "d-non"}>
+                    : <div className={filterItemID ? "border-top text-center mt-2" : "d-none"}>
                         <button className="btn btn-light mt-2" onClick={() => setAddStatusFieldOpen(true)}>+ Add new {status_name}</button></div>}
             </div>,
             document.body

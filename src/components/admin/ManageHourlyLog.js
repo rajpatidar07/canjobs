@@ -49,15 +49,15 @@ const ManageHourlyLog = () => {
     return (
         <div className="site-wrapper overflow-hidden bg-default-2">
             {/* Header & Sidebar */}
-            <AdminHeader heading={"Manage Hourly Log"} />
-            <AdminSidebar heading={"Manage Hourly Log"} />
+            <AdminHeader heading={"Manage Daily Hourly Log"} />
+            <AdminSidebar heading={"Manage Daily Hourly Log"} />
 
             <div className="dashboard-main-container mt-16" id="dashboard-body">
                 <div className="container-fluid">
                     <div className="mb-18">
                         <div className="mb-4 align-items-center">
                             <div className="page___heading">
-                                <h3 className="font-size-6 mb-0">Manage Hourly Log</h3>
+                                <h3 className="font-size-6 mb-0">Manage Daily Hourly Log</h3>
                             </div>
                         </div>
 
@@ -82,7 +82,7 @@ const ManageHourlyLog = () => {
 
                             {/* Search */}
                             <div
-                                className="input-group mr-4"
+                                className="input-group mr-4 d-none"
                                 style={{
                                     width: isFocused ? "300px" : "100px",
                                     transition: "width 0.3s ease-in-out",

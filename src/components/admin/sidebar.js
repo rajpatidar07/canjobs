@@ -9,7 +9,7 @@ import {
   MdOutlinePayments
 } from "react-icons/md";
 import { LuFileKey } from "react-icons/lu";
-import { LiaUsersSolid, LiaAddressCardSolid, LiaCcVisa } from "react-icons/lia";
+import { LiaUsersSolid, LiaAddressCardSolid, LiaCcVisa, LiaHourglassHalfSolid } from "react-icons/lia";
 import {
   BsBuildings,
   BsQrCodeScan,
@@ -984,6 +984,28 @@ const AdminSidebar = (props) => {
           >
             <MdOutlineAddIcCall className="sidebar_icon" />
             <span className="text-truncate">Manage Daily Call Log</span>
+          </Link>
+        </li>
+        <li
+          ref={(el) => (liRefs.current["Manage Daily Hourly Log"] = el)}
+          className={
+            admin_type === "agent"
+              ? "d-none"
+              : props.heading === "Manage Daily Hourly Log"
+                ? "active"
+                : ""
+          }
+        >
+          <Link
+            onClick={() => {
+              clearPageNo();
+            }}
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+            title={"Manage Daily Hourly Log"}
+            to="/daily_hours_log"
+          >
+            <LiaHourglassHalfSolid className="sidebar_icon" />
+            <span className="text-truncate">Manage Daily Hour Log</span>
           </Link>
         </li>
         <li

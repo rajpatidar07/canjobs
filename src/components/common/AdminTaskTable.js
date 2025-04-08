@@ -612,8 +612,6 @@ export default function AdminTaskTable(props) {
                                     className={`p-1 text-white text-center border rounded-pill text-capitalize ${data.status === ("0" || 0) ? "bg-warning" : data.status === ("1" || 1) ? "bg-shamrock" : determineBackgroundColor(data)}`} title={statusList[data.status]?.value} key={index}
                                   >
                                     {statusList[data.status]?.value}</span>
-
-
                                 </p>
                               )}
                             </>
