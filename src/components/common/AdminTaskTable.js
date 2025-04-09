@@ -108,12 +108,14 @@ export default function AdminTaskTable(props) {
         props.TaskUserType,
         props.taskId,
         props.byAdminId,
-        props.byAdminType
+        props.byAdminType,
+        ""
+        , props.search
       );
       let JsonRes = await GetFilter();
       setPriority(JsonRes?.data?.data?.priority);
       setGroupBy(JsonRes?.data?.data?.group_by);
-      setStatusList(JsonRes?.data?.data?.status_type);  
+      setStatusList(JsonRes?.data?.data?.status_type);
       if (res.data.status === (1 || "1")) {
         setTaskData(res.data.data.data);
         setIsLoading(false);
@@ -157,7 +159,8 @@ export default function AdminTaskTable(props) {
     props.taskId,
     props.replyId,
     props.byAdminId,
-    props.byAdminType
+    props.byAdminType,
+    props.search
   ]);
   /*Sorting Function */
   const handleSort = (columnName) => {
@@ -221,7 +224,6 @@ export default function AdminTaskTable(props) {
   };
 
 
-  console.log("statusList", statusList);
   return (
     <>
       <div className="bg-white shadow-8 datatable_div pt-7 rounded pb-8 px-2">
@@ -396,24 +398,24 @@ export default function AdminTaskTable(props) {
                           }
                           MarkReadTask(data, "task"); // Call function only if the click was outside the excluded <td>
                         }}                      >
-                        <td className="text-capitalize py-5">
-                          <UserAvatar
+                        <td className="text-capitalize py-5 text-center">
+                          {data.task_creator_user_id ? <UserAvatar
                             profileImage={data.task_creator_user_profile_image}
                             name={data.task_creator_user_name}
                             userType={data.task_creator_user_type}
                             index={index}
                             userId={data.task_creator_user_id}
-                          />
+                          /> : <p className="font-size-3  mb-0">N/A</p>}
                         </td>
-                        <td className="text-capitalize py-5">
-                          <AssignedUserList
+                        <td className="text-capitalize py-5 text-center">
+                          {data.assigned_user_type_new ? <AssignedUserList
                             assined_to_user_id={data.assined_to_user_id}
                             assigned_to_name={data.assigned_to_name}
                             assigned_to_profile_image={
                               data.assigned_to_profile_image
                             }
                             assigned_user_type_new={data.assigned_user_type_new}
-                          />
+                          /> : <p className="font-size-3  mb-0">N/A</p>}
                         </td>
                         <td className="py-5">
                           {data.subject_description === null ||
@@ -715,7 +717,7 @@ export default function AdminTaskTable(props) {
               openReplyBox={openReplyBox}
               setOpenReplyBox={setOpenReplyBox}
               taskData={singleTaskData}
-              replyId={props.replyId} 
+              replyId={props.replyId}
               taskType={"task"}
               employeeId={""}
               docUserType={""}

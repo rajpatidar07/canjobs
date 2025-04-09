@@ -334,8 +334,7 @@ function Notifications({
                           setshow(false);
                           ReadNotification(data.id);
                           setApicall(true);
-                          window.history.replaceState({}, document.title, "/");
-
+                          // window.history.replaceState({}, document.title, "/"); //pta nhi q lgaya tha mene
                           if (data.subject === "mention_partnerChat") {
                             localStorage.setItem("agent_id", data.employee_id);
                           } else if (

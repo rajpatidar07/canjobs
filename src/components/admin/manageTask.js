@@ -16,6 +16,7 @@ import CustomButton from "../common/button";
 import AddTaskForm from "../forms/admin/addTaskForm";
 import { Link, useLocation } from "react-router-dom";
 import CommonThreeDots from "../common/commonThreeDots";
+import { CiSearch } from "react-icons/ci";
 
 export default function ManageTask() {
   const location = useLocation();
@@ -42,6 +43,9 @@ export default function ManageTask() {
   const [allTaskList, setAllTaskList] = useState([]);
   const [taskId, setTaskId] = useState(NotifiTaskId)
   const [replyId, setReplyId] = useState(NotifiReplyId)
+  const [searchError, setSearchError] = useState(false);
+  const [search, setSearch] = useState("");
+
   /*Function to get all user data */
   const GetAllUserData = async () => {
     try {
@@ -97,7 +101,36 @@ export default function ManageTask() {
     }
 
   }, [apiCall, taskId, replyId]);
-  // console.log("Main page", NotifiTaskId, NotifiReplyId)
+  const onSearch = () => {
+    const inputValue = search.trim();
+
+    if (inputValue === "") {
+      setSearchError("The search field cannot be empty.");
+      return;
+    }
+
+    if (/^\d/.test(inputValue)) {
+      setSearchError("Candidate Name cannot start with a number.");
+      return;
+    }
+
+    if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
+      setSearchError("Cannot use special characters.");
+      return;
+    }
+
+    setSearchError("");
+
+    const filteredList = allTaskList.filter((task) =>
+      task.subject_description?.toLowerCase().includes(inputValue.toLowerCase()) ||
+      task.task_creator_user_name?.toLowerCase().includes(inputValue.toLowerCase())
+    );
+
+    setAllTaskList(filteredList); // Show only filtered tasks
+  };
+  const SearchAll = () => {
+    onSearch();
+  };
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -109,6 +142,43 @@ export default function ManageTask() {
         <div className="dashboard-main-container mt-14" id="dashboard-body">
           <div className="container-fluid ">
             <div className="row m-0">
+              {/* Search */}
+              <div
+                className={"col px-1 form_group mb-3"}>
+                <p className="input_label">Search:</p>
+                <div className="input-group ">
+                  <input
+                    required
+                    type="text"
+                    className="form-control"
+                    placeholder="Search"
+                    name="Employee_name"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    onKeyPress={(e) => {
+                      if (e.key === "Enter") SearchAll();
+                    }}
+                  />
+
+                  <div className="input-group-append">
+                    <button
+                      className=""
+                      type="button"
+                      onClick={SearchAll}
+                      style={{
+                        background: "#fff",
+                        border: "1px solid #ccc",
+                        borderTopRightRadius: 5,
+                        borderBottomRightRadius: 5,
+                        outline: 0,
+                      }}
+                    >
+                      <CiSearch />
+                    </button>
+                  </div>
+                </div>
+                <small className="text-danger">{searchError}</small>
+              </div>
               <div className="col px-1 form_group mb-3">
                 <p className="input_label">Filter by Assign to admin:</p>
                 <select
@@ -262,13 +332,12 @@ export default function ManageTask() {
                   <option value={"-1"}>Select status</option>
                   {(statusList || []).map((item, index) => {
                     return (
-                      <option value={item.id} index={index}>
+                      <option value={item.id} key={index}>
                         {item.value}</option>
                     )
                   })}
 
                 </select>
-                {/* <small className="text-danger">{searcherror}</small> */}
               </div>
               <div className="col px-1 form_group mt-7 ">
                 <CustomButton
@@ -286,6 +355,7 @@ export default function ManageTask() {
                     setTaskPage(1);
                     setReplyId("")
                     setTaskId("")
+                    setSearch("")
                   }}
                 >
                   Reset
@@ -350,6 +420,7 @@ export default function ManageTask() {
                     statusList={statusList}
                     byAdminId={byAdminId}
                     byAdminType={byAdminType}
+                    search={search}
                   />
                 </div>
 

@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 import { SendPaymentInvoiceReminderApi } from "../../../api/api"
 import useValidation from "../../common/useValidation";
 import { toast } from "react-toastify";
 const PaymentReminder = (props) => {
+  const [loading, setLoading] = useState(false)
   let admin_id = localStorage.getItem("admin_id");
   let admin_type = localStorage.getItem("admin_type")
   const initialFormState = {
@@ -19,19 +20,23 @@ const PaymentReminder = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data:", state);
+    setLoading(true)
     try {
       let res = await SendPaymentInvoiceReminderApi(state)
       if (res.data.message === "success") {
-          toast.success("Reminder sent successfully.", {
-                  position: toast.POSITION.TOP_RIGHT,
-                  autoClose: 1000,
-                });
+        toast.success("Reminder sent successfully.", {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
         setState(initialFormState)
+        setLoading(false)
         props.close()
+      } else {
+        setLoading(false)
       }
     } catch (err) {
       console.log(err)
+      setLoading(false)
 
     }
   };
@@ -107,7 +112,7 @@ const PaymentReminder = (props) => {
 
           {/* Submit & Cancel Buttons */}
           <div className="d-flex justify-content-center gap-2">
-            <button className="btn btn-primary">send</button>
+            <button className="btn btn-primary" type="submit" disabled={loading}>{loading ? "Sending" : "Send"}</button>
           </div>
         </form>
       </div>

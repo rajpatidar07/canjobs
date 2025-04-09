@@ -170,6 +170,8 @@ function Calllogtable(props) {
                         position: toast.POSITION.TOP_RIGHT,
                         autoClose: 1000,
                     });
+                } else {
+                    setLoading(false)
                 }
             } catch (err) {
                 console.log(err)
@@ -184,7 +186,6 @@ function Calllogtable(props) {
         };
         try {
             const response = await DeleteCallLogApi(data);
-            console.log(response)
             if (response.data.status === 1 || response.data.status === "1") {
                 toast.error("Call log has been deleted !", {
                     position: toast.POSITION.TOP_RIGHT,
@@ -195,7 +196,7 @@ function Calllogtable(props) {
                 setApiCall(true);
                 props.setApiCall(true)
             }
-           
+
         } catch (err) {
 
         }
@@ -545,7 +546,6 @@ function Calllogtable(props) {
 
                             )}
                         </form>
-                        {console.log(deleteAlertCallLog)}
                         <SAlert
                             show={deleteAlertCallLog}
                             title={deleteAlertCallLogData?.name}

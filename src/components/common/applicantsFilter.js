@@ -41,7 +41,7 @@ export default function ApplicantsFilter({
   let [AdminList, setAdmintList] = useState([]);
   const [applicantTypeList, setApplicantTypeList] = useState([]);
   let portal = localStorage.getItem("portal")
-  /*Function to get thejSon */
+  /*Function to search */
   const SearchCandidate = () => {
     if (candidateSearch === "") {
       setSearchError("The search field cannot be empty.");

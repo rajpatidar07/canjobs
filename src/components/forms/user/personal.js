@@ -300,7 +300,11 @@ function PersonalDetails(props) {
     if (validate() && imgError === "") {
       setLoading(true);
       try {
-        const responseData = await AddEmployeeDetails(state);
+        let data = {
+          ...state,
+          contact_no: state.contact_no.replace(/\s+/g, '')// condition set to remove white space from contact number
+        }
+        const responseData = await AddEmployeeDetails(data);
         if (responseData.message === "Employee data inserted successfully") {
           try {
             // let Response = await AddEmployeePermission(Permissions);
