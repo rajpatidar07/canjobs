@@ -34,6 +34,8 @@ function Calllogtable(props) {
         useState(false);
     const [deleteAlertCallLog, setDeleteAlertCallLog] =
         useState(false);
+    const [columnName, setcolumnName] = useState("updated_at");
+    const [sortOrder, setSortOrder] = useState("DESC");
     const [callLogData, setCallLogData] = useState([]);
     const [totalData, setTotalData] = useState();
     const [currentPage, setCurrentPage] = useState(1);
@@ -42,7 +44,7 @@ function Calllogtable(props) {
     const GetDailyCallLogList = async () => {
         try {
             setIsLoading(true)
-            let ResCallLog = await getDailyCallLogApi(props.searchCandidate, props.selectedAdminId, callLogId, '', currentPage, recordsPerPage);
+            let ResCallLog = await getDailyCallLogApi(props.searchCandidate, props.selectedAdminId, callLogId, '', currentPage, recordsPerPage, columnName, sortOrder);
             setCallLogData(ResCallLog.data.data.data)
             setTotalData(ResCallLog.data.data.total_rows)
             if (taskId) {
@@ -150,7 +152,7 @@ function Calllogtable(props) {
                 tableContainerRef.current.removeEventListener("scroll", handleScroll);
             }
         };
-    }, [taskId, callLogId, apiCall, props.searchCandidate, props.selectedAdminId, currentPage]);
+    }, [taskId, callLogId, apiCall, props.searchCandidate, props.selectedAdminId, currentPage, sortOrder, columnName]);
     /*Function to add New Daily call log item */
     const AddCallLog = async (newValue, data) => {
         if (newValue && newValue.preventDefault) {
@@ -201,6 +203,11 @@ function Calllogtable(props) {
 
         }
     }
+    /*Sorting Function */
+    const handleSort = (columnName) => {
+        setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
+        setcolumnName(columnName);
+    };
     return (
         <>
             <div className="mb-18 height-100">
@@ -256,7 +263,10 @@ function Calllogtable(props) {
                                                             : {}
                                                     }
                                                 >
-                                                    {heading}
+                                                    <Link to="" className="text-dark"
+                                                        onClick={() => { if (heading !== "Action Taken") { handleSort(heading === "Date and Time Call" ? "received_call_date" : heading === "Purpose of Call" ? "purpose" : (heading.toLowerCase().replaceAll(" ", "_")) )} }}
+                                                    >
+                                                        {heading}</Link>
                                                 </th>
                                             ))}
                                         </tr>

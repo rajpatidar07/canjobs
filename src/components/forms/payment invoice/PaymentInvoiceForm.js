@@ -211,7 +211,12 @@ const PaymentInvoiceForm = (props) => {
 
         <h5 className="font-size-6 mb-4"> Invoice no. {state.invoice_no}</h5>
         {/* first row */}
-        <form>
+        <form onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit(e);
+          setSaveType("save")
+
+        }}>
           <div className="row ">
             <div className="form-group col-md-3 p-1">
               <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold">
@@ -632,6 +637,7 @@ const PaymentInvoiceForm = (props) => {
               className="btn btn-primary btn-small w-25 mt-5 rounded-5 text-uppercase p-8"
               disabled={loading}
               onClick={(e) => {
+                e.preventDefault();  // Prevent the default form submission
                 handleSubmit(e)
                 setSaveType("save")
               }}

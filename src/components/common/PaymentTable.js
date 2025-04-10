@@ -8,6 +8,7 @@ import Pagination from "../common/pagination"
 import SAlert from "../common/sweetAlert";
 import { toast } from "react-toastify";
 import Loader from "../common/loader";
+import { Link } from "react-router-dom";
 const PaymentTable = (props) => {
   let [filterListapiCall, setFilterListApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(false);
@@ -15,6 +16,8 @@ const PaymentTable = (props) => {
   const [paymentRecordsList, setPaymentRecordsList] = useState([]);
   const [totalData, setTotalData] = useState();
   const [currentPage, setCurrentPage] = useState(1);
+  const [columnName, setcolumnName] = useState("updated_at");
+  const [sortOrder, setSortOrder] = useState("DESC");
   const recordsPerPage = 10;
   const nPages = Math.ceil(totalData / recordsPerPage);
   const [loading, setLoading] = useState(false);
@@ -54,8 +57,9 @@ const PaymentTable = (props) => {
         page: currentPage,
         search: props.search,
         admin_id: props.selectedAdminId,
-        admin_type: props.selectedAdminType
-
+        admin_type: props.selectedAdminType,
+        column_name: columnName,
+        sort_order: sortOrder,
       }
       let json = await GetFilter();
       let resRecords = await getAllInvioceRecord(getPaymentRecData);
@@ -82,7 +86,7 @@ const PaymentTable = (props) => {
   }, [filterListapiCall,
     props.search,
     props.selectedAdminId,
-    props.selectedAdminType]);
+    props.selectedAdminType, sortOrder, columnName]);
 
   /*FUnction to update the payment invoice record */
   const handleUpdateChange = async (e, id, field) => {
@@ -155,6 +159,11 @@ const PaymentTable = (props) => {
 
     }
   }
+  /*Sorting Function */
+  const handleSort = (columnName) => {
+    setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
+    setcolumnName(columnName);
+  };
   return (
     <>
       <div className="mb-18 height-100">
@@ -191,8 +200,10 @@ const PaymentTable = (props) => {
                         key={index}
                         className="border-0 font-size-3 font-weight-normal"
                       >
-                        {heading}
-                      </th>
+                        <Link to="" className="text-dark"
+                          onClick={() => { if (heading !== "Action") { handleSort(heading === "Name" ? "user_name	" : heading === "Referred By" ? "referred_name" : heading === "Manager" ? "manager_name" : heading === "Method" ? "payment_method" : (heading.toLowerCase().replaceAll(" ", "_"))) } }}
+                        >
+                          {heading}</Link>                      </th>
                     ))}
                   </tr>
                 </thead>

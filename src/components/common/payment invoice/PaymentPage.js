@@ -11,6 +11,7 @@ import Loader from "../loader";
 import PaymentInvoiceForm from "../../forms/payment invoice/PaymentInvoiceForm";
 import { FiAlertCircle } from "react-icons/fi";
 import ViewPdf from "../Retaineragreement/viewPdf";
+import { Link } from "react-router-dom";
 const Payment_Page = (props) => {
   const [openAddPaymentForm, setOpenAddPaymentForm] = useState(false);
   const [openPaymentReminder, setOpenPaymentReminder] = useState(false);
@@ -27,6 +28,8 @@ const Payment_Page = (props) => {
   let [json, setJson] = useState()
   /*Pagination */
   const [currentPage, setCurrentPage] = useState(1);
+  const [columnName, setColumnName] = useState("updated_at");
+  const [sortOrder, setSortOrder] = useState("DESC");
   const [recordsPerPage] = useState(10);
   const [totalData, setTotalData] = useState("" || 1);
   /*delete state */
@@ -46,14 +49,16 @@ const Payment_Page = (props) => {
         "user_id": props.user_id,
         "user_type": props.user_type,
         "page": currentPage,
-        "limit": recordsPerPage
+        "limit": recordsPerPage,
+        "sort_order": sortOrder,
+        "column_name": columnName
       }
       const userData = await getallEmployeeData();
       const CompanyData = await getAllEmployer();
       const InvoiceData = await getAllInvioce(invoiceData);
       const lastInvoice = await GetLastPaymentInvoiceApi()
       let allUserData = [];
-      setInvoicelist(InvoiceData.data.data.reverse())
+      setInvoicelist(InvoiceData.data.data)
       if (userData?.data?.length === 0 && CompanyData?.data?.length === 0) {
         setEmployeeEmployerlist([]);
         setIsLoading(false)
@@ -78,7 +83,7 @@ const Payment_Page = (props) => {
       setApiCall(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apiCall, currentPage])
+  }, [apiCall, currentPage, columnName, sortOrder])
 
   const CancelDelete = () => {
     setDeleteAlert(false);
@@ -135,6 +140,11 @@ const Payment_Page = (props) => {
       setDocLoder(false);
     }
   };
+  /*Sorting Function */
+  const handleSort = (columnName) => {
+    setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
+    setColumnName(columnName);
+  };
   return (
     <div className="response_main_div w-100">
       <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-8 px-2 ">
@@ -185,37 +195,47 @@ const Payment_Page = (props) => {
                   scope="col"
                   className="border-0 font-size-4 font-weight-normal"
                 >
-                  Invoice No.
+                  <Link to="" className="text-dark" onClick={() => { handleSort("invoice_no") }}>
+                    Invoice No.
+                  </Link>
                 </th>
                 <th
                   scope="col"
                   className="border-0 font-size-4 font-weight-normal"
                 >
-                  Terms
+                  <Link to="" className="text-dark" onClick={() => { handleSort("terms") }}>
+                    Terms
+                  </Link>
                 </th>
                 <th
                   scope="col"
                   className="border-0 font-size-4 font-weight-normal"
                 >
-                  Created On
+                  <Link to="" className="text-dark" onClick={() => { handleSort("created_at") }}>
+                    Created On
+                  </Link>
                 </th>
                 <th
                   scope="col"
                   className="border-0 font-size-4 font-weight-normal"
                 >
-                  status
+                  <Link to="" className="text-dark" onClick={() => { handleSort("status") }}>
+                    status</Link>
                 </th>
                 <th
                   scope="col"
                   className="border-0 font-size-4 font-weight-normal"
                 >
-                  Due date
+                  <Link to="" className="text-dark" onClick={() => { handleSort("due_date") }}>
+                    Due date
+                  </Link>
                 </th>
                 <th
                   scope="col"
                   className="border-0 font-size-4 font-weight-normal"
                 >
-                  Due amount
+                  <Link to="" className="text-dark" onClick={() => { handleSort("due_amount") }}>
+                    Due amount</Link>
                 </th>
                 {/* <th
                   scope="col"
@@ -278,6 +298,7 @@ const Payment_Page = (props) => {
                           {item.due_amount || "N/A"}
                         </span>
                       </p>
+
                     </td>
                     {/* <td className=" py-5">
                       <p className="font-size-2 font-weight-normal text-black-2 mb-0">

@@ -933,7 +933,7 @@ export const GetCommentsAndAssign = async (
       id: taskId || "",
       task_creator_user_id: task_creator_user_id,
       task_creator_user_type: task_creator_user_type,
-      search:search
+      search: search
     },
     {
       headers: {
@@ -3762,10 +3762,25 @@ export const AddUpdateDailCallLogApi = async (data) => {
   return response;
 }
 /* Api to get Daily Call Log */
-export const getDailyCallLogApi = async (serchName, filterbyAdmin, id, searchPhone, page, limit) => {
+export const getDailyCallLogApi = async (serchName, filterbyAdmin, id, searchPhone, page, limit, column, sort) => {
+  // console.log(" name:", serchName,
+  //   " phone:", searchPhone,
+  //   "id:", id, "page:", page,
+  //   " limit: ", limit,
+  //   'call_ans_by:', filterbyAdmin,
+  //   'column_name:', column,
+  //   'sort_order:', sort,)
   const response = await axios.post(
     `${API_URL}admin/getCallLog`,
-    { name: serchName, phone: searchPhone, id: id, page: page, limit: limit, call_ans_by: filterbyAdmin }
+    {
+      name: serchName,
+      phone: searchPhone,
+      id: id, page: page,
+      limit: limit,
+      call_ans_by: filterbyAdmin,
+      column_name: column,
+      sort_order: sort,
+    }
     ,
     {
       headers: {
@@ -3868,7 +3883,7 @@ export const DeletePaymentIvoiceRecord = async (data) => {
   return response;
 }
 
-/*Api to ad update invoice */
+/*Api to all payment invoice invoice */
 export const getAllInvioce = async (data) => {
   const response = await axios.post(`${API_URL}common/getPaymentInvoice`,
     data, {
@@ -3907,7 +3922,7 @@ export const DeletePaymentInvoiceApi = async (id) => {
   );
   return response;
 }
-/*Api to get  payment invoice */
+/*Api to get last payment invoice */
 export const GetLastPaymentInvoiceApi = async (id) => {
   const response = await axios.get(`${API_URL}common/getLastPaymentInvoice`,
     {
