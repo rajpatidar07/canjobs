@@ -1,126 +1,120 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import AdminHeader from '../admin/header';
 import AdminSidebar from '../admin/sidebar';
 import ApplicantsFilter from './applicantsFilter';
 import EmployeeTable from './employeeTable';
 import { getApplicanTypeApi } from '../../api/api';
-import { useLocation } from 'react-router-dom';
 import ApplicantTypeDocuments from './ApplicantTypeDocuments';
 import ModalSidebar from "./modalSidebar";
 import CommentTaskBox from "./commonTaskBox";
 import CommonThreeDots from './commonThreeDots';
 
 export default function CommonApplicatTypePage() {
-    /*Filter and search state */
-    let user_type = localStorage.getItem("userType")
-    let location = useLocation();
+    const location = useLocation();
     const searchParams = new URLSearchParams(location.search);
-    let taskId = searchParams.get("taskId")
-    let docId = searchParams.get("docId")
-    let docParentId = searchParams.get("docParentId");
-    let docHighAnnoId = searchParams.get("annotationId");
-    let notifiType = searchParams.get("notifiType") || "";
-    const ApplicantTypeUrlId = searchParams.get("sId");
-    let ApplicantTypeChildUrlId = searchParams.get("sCId");
-    let [TaskId, setTaskId] = useState(taskId)
+
+    const user_type = localStorage.getItem("userType");
+    const taskIdParam = searchParams.get("taskId");
+    const docId = searchParams.get("docId");
+    const docParentId = searchParams.get("docParentId");
+    const annotationId = searchParams.get("annotationId");
+    const notifiType = searchParams.get("notifiType") || "";
+    const sId = searchParams.get("sId");
+    const sCId = searchParams.get("sCId");
+
+    const localApplicantTypeId = localStorage.getItem("applicantType");
+    const localApplicantTypeChildId = localStorage.getItem("applicantTypeChild");
+    const localApplicantTypeFolderId = localStorage.getItem("applicantTypeFolderId");
+
+    const state = location?.state || {};
+
+    const [taskId, setTaskId] = useState(taskIdParam);
+    const [selectedTab, setSelectedTab] = useState(docId ? "documents" : "candidate");
+
+    const [search, setSearch] = useState("");
+    const [searcherror, setSearchError] = useState("");
+    const [apiCall, setApiCall] = useState(false);
+    const [showGrpChatBox, setShowGrpChatBox] = useState(false);
+    const [folderApiCall, setFolderApiCall] = useState(false);
+
+    const [applicantTypeId, setApplicantTypeId] = useState(sId || state.applicantType || localApplicantTypeId);
+    const [applicantTypeChildId, setApplicantTypeChildId] = useState(sCId || state.applicantTypeChild || localApplicantTypeChildId);
+    const [applicantTypeFolderId, setApplicantTypeFolderId] = useState(state.folderId || localApplicantTypeFolderId);
+    const [applicantTypeIdForApi, setApplicantTypeIdForApi] = useState("");
+    const [applicantTypeName, setApplicantTypeName] = useState("");
+
+    const [pageNo, setPageNo] = useState(localStorage.getItem("PageNo") || 1);
     const [experienceFilterValue, setExperienceFilterValue] = useState("");
     const [skillFilterValue, setSkillFilterValue] = useState("");
-    const [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
     const [educationFilterValue, setEducationFilterValue] = useState("");
     const [agentFilterValue, setAgentFilterValue] = useState("");
     const [adminFilterValue, setAdminFilterValue] = useState("");
-    const [interestFilterValue, setinterestFilterValue] = useState("");
-    // const [categoryFilterValue, setCategoryFilterValue] = useState("");
-    const [search, setSearch] = useState("");
-    const [searcherror, setSearchError] = useState("");
-    let [apiCall, setApiCall] = useState(false);
-    let [showGrpChatBox, setShowGrpChatBox] = useState(false);
-    let [folderApiCall, setFolderApiCall] = useState(false);
-    const [applicantTypeId, setApplicanttypeId] = useState(ApplicantTypeUrlId ? ApplicantTypeUrlId : location?.state?.applicantType);
-    const [applicantTypeChildId, setApplicanttypeChildId] = useState(ApplicantTypeChildUrlId ? ApplicantTypeChildUrlId : location?.state?.applicantTypeChild);
-    const [applicantTypeFolderId, setApplicanttypeFolderId] = useState(location?.state?.folderId);
-    const [applicantTypeIdForApi, setApplicantTypeIdForApi] = useState("");
-    const [applicantTypename, setApplicanttypeName] = useState("");
-    const [selectedTab, setSelectedTab] = useState(docId ? "documents" : "candidate");
-    let localApplicantTypeId = localStorage.getItem("applicantType");
-    let localApplicantTypeChildId = localStorage.getItem("applicantTypeChild");
-    let localApplicantTypeFolderId = localStorage.getItem("applicantTypeFolderId")
+    const [interestFilterValue, setInterestFilterValue] = useState("");
+
+    // Handle tab switch and task assignment
     useEffect(() => {
-        if (taskId) {
-            setTaskId(taskId)
+        if (taskIdParam) {
+            setTaskId(taskIdParam);
             if (notifiType === "candidate") {
-                setSelectedTab("candidate")
+                setSelectedTab("candidate");
             }
         }
-        if (docId) {
-            setSelectedTab("documents")
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [location.key])
+        if (docId) setSelectedTab("documents");
+    }, [location.key]);
 
+    // Set applicant type IDs and folder ID from params, state, or localStorage
     useEffect(() => {
-        // Update only if applicantType is present
-        if ((notifiType === "group" || notifiType === "candidate") && (ApplicantTypeUrlId)) {
-            setApplicanttypeId(ApplicantTypeUrlId);
-            setApplicanttypeChildId(ApplicantTypeChildUrlId)
-            localStorage.setItem("applicantType", ApplicantTypeUrlId)
+        if (["group", "candidate"].includes(notifiType) && sId) {
+            setApplicantTypeId(sId);
+            setApplicantTypeChildId(sCId);
+            localStorage.setItem("applicantType", sId);
+            localStorage.setItem("applicantTypeChild", sCId);
         } else {
-            if (location?.state?.applicantType && location?.state?.applicantType !== applicantTypeId) {
-                setApplicanttypeId(location.state.applicantType);
-                localStorage.setItem("applicantType", location.state.applicantType)
-            } else {
-                setApplicanttypeId(localApplicantTypeId);
-
+            if (state.applicantType && state.applicantType !== applicantTypeId) {
+                setApplicantTypeId(state.applicantType);
+                localStorage.setItem("applicantType", state.applicantType);
             }
-            if (location?.state?.applicantTypeChild && location?.state?.applicantTypeChild !== applicantTypeChildId) {
-                setApplicanttypeChildId(location.state.applicantTypeChild);
-                localStorage.setItem("applicantTypeChild", location.state.applicantTypeChild)
-            } else {
-                setApplicanttypeFolderId(localApplicantTypeChildId);
+            if (state.applicantTypeChild && state.applicantTypeChild !== applicantTypeChildId) {
+                setApplicantTypeChildId(state.applicantTypeChild);
+                localStorage.setItem("applicantTypeChild", state.applicantTypeChild);
             }
-            if (location?.state?.folderId && location?.state?.folderId !== applicantTypeFolderId) {
-                setApplicanttypeFolderId(location.state.folderId);
-                localStorage.setItem("applicantTypeFolderId", location.state.folderId)
-            } else {
-                setApplicanttypeFolderId(localApplicantTypeFolderId);
+            if (state.folderId && state.folderId !== applicantTypeFolderId) {
+                setApplicantTypeFolderId(state.folderId);
+                localStorage.setItem("applicantTypeFolderId", state.folderId);
             }
         }
+    }, [location.key]);
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [location.key, ApplicantTypeUrlId, taskId, notifiType, location?.state?.applicantType, location?.search?.applicantTypeChild, location?.state?.folderId, docId, localApplicantTypeId, localApplicantTypeFolderId]);
+    // Fetch applicant type details
     useEffect(() => {
-        if (applicantTypeId || applicantTypeChildId) {
-            getApplicanTypeApi("")
-                .then((res) => {
-                    let filterNameById = applicantTypeId ? applicantTypeId : applicantTypeChildId
-                    const foundItem = (res.data.data || []).find((item) => item.id === filterNameById);
-                    if (foundItem) {
-                        setApplicanttypeName(foundItem.title);
-                        setApplicanttypeFolderId(foundItem.doc_folder_id)
-                        setApplicantTypeIdForApi(foundItem.id)
-                        if (taskId && notifiType === "group") {
-                            setShowGrpChatBox(true)
-                            const newUrl = window.location.pathname;
-                            window.history.replaceState({}, document.title, newUrl);
-                            localStorage.setItem("navigation_url", "")
-                        }
+        const targetId = applicantTypeId || applicantTypeChildId;
+        if (!targetId) return;
+
+        getApplicanTypeApi("")
+            .then((res) => {
+                const found = (res.data?.data || []).find(item => item.id === targetId);
+                if (found) {
+                    setApplicantTypeName(found.title);
+                    setApplicantTypeFolderId(found.doc_folder_id);
+                    setApplicantTypeIdForApi(found.id);
+
+                    if (taskId && notifiType === "group") {
+                        setShowGrpChatBox(true);
+                        window.history.replaceState({}, document.title, window.location.pathname);
+                        localStorage.setItem("navigation_url", "");
                     }
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        }
+                }
+            })
+            .catch(console.error);
+    }, [applicantTypeId, applicantTypeChildId]);
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [applicantTypeId, applicantTypeChildId, location.key, ApplicantTypeUrlId, ApplicantTypeChildUrlId, taskId, notifiType, location?.state?.applicantType, location?.search?.applicantTypeChild, location?.state?.folderId, docId]);
-
-    /*Function to search the employee */
     const onSearch = (e) => {
         const inputValue = e.target.value;
         setSearch(inputValue);
-        setpageNo(1);
+        setPageNo(1);
         if (inputValue.length > 0) {
-            if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
+            if (/^\d/.test(inputValue)) {
                 setSearchError("Candidate Name cannot start with a number.");
             } else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
                 setSearchError("Cannot use special characters.");
@@ -131,13 +125,14 @@ export default function CommonApplicatTypePage() {
             setSearchError("");
         }
     };
+
     return (
         <>
             <div className="site-wrapper overflow-hidden bg-default-2">
                 {/* <!-- Header Area --> */}
-                <AdminHeader heading={applicantTypename} />
+                <AdminHeader heading={applicantTypeName} />
                 {/* <!-- navbar- --> */}
-                <AdminSidebar heading={applicantTypename} />
+                <AdminSidebar heading={applicantTypeName} />
                 <div className="dashboard-main-container mt-16" id="dashboard-body">
                     <div className="container-fluid">
                         <div className='d-flex justify-content-between'>
@@ -190,7 +185,7 @@ export default function CommonApplicatTypePage() {
                             <div className="mb-18">
                                 <div className="mb-4 align-items-center">
                                     <div className="page___heading">
-                                        <h3 className="font-size-6 mb-0 Text-capitalize">{applicantTypename}</h3>
+                                        <h3 className="font-size-6 mb-0 Text-capitalize">{applicantTypeName}</h3>
                                     </div>
                                     {/*<-- Search applicant Type -->*/}
                                     <div className="row m-0 align-items-center">
@@ -206,18 +201,18 @@ export default function CommonApplicatTypePage() {
                                             setSkillFilterValue={setSkillFilterValue}
                                             educationFilterValue={educationFilterValue}
                                             setEducationFilterValue={setEducationFilterValue}
-                                            setpageNo={setpageNo}
+                                            setPageNo={setPageNo}
                                             agentFilterValue={agentFilterValue}
                                             setAgentFilterValue={setAgentFilterValue}
                                             adminFilterValue={adminFilterValue}
                                             setAdminFilterValue={setAdminFilterValue}
                                             interestFilterValue={interestFilterValue}
-                                            setinterestFilterValue={setinterestFilterValue}
+                                            setinterestFilterValue={setInterestFilterValue}
                                             setSearchError={setSearchError}
                                             // skill={props.skill}
                                             pageName={applicantTypeIdForApi}
                                             categoryFilterValue={interestFilterValue}
-                                            setCategoryFilterValue={setinterestFilterValue}
+                                            setCategoryFilterValue={setInterestFilterValue}
                                             applicantTypeChildId={applicantTypeChildId}
                                         />
                                     </div>
@@ -236,7 +231,7 @@ export default function CommonApplicatTypePage() {
                                     setApiCall={setApiCall}
                                     status={"-1"}
                                     pageNo={pageNo}
-                                    setpageNo={setpageNo}
+                                    setPageNo={setPageNo}
                                     ApplicantType={applicantTypeIdForApi}
                                 // categoryFilterValue={applicantTypeChildId ? applicantTypeChildId : categoryFilterValue}
                                 />
@@ -252,7 +247,7 @@ export default function CommonApplicatTypePage() {
                                 docTypePage={""}
                                 user_name={""}
                                 partnerId={""}
-                                AnnoteId={docId ? docHighAnnoId : ""}
+                                AnnoteId={docId ? annotationId : ""}
                                 docTaskId={taskId}
                                 folderApiCall={folderApiCall}
                                 setFolderApiCall={setFolderApiCall} /></div>}
@@ -272,7 +267,7 @@ export default function CommonApplicatTypePage() {
                         setOpenReplyBox={setShowGrpChatBox}
                         openReplyBox={showGrpChatBox}
                         taskName={"Group discussion"}
-                        TaskId={TaskId}
+                        TaskId={taskId}
                     />
                 }
             >
@@ -284,7 +279,7 @@ export default function CommonApplicatTypePage() {
                         setOpenReplyBox={setShowGrpChatBox}
                         openReplyBox={showGrpChatBox}
                         taskName={"Group discussion"}
-                        TaskId={TaskId}
+                        TaskId={taskId}
                     />
                 ) : null}
             </ModalSidebar>
