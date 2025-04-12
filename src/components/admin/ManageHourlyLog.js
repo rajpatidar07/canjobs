@@ -11,8 +11,12 @@ import Hourlylogtable from "../common/HourlylogTable";
 const ManageHourlyLog = () => {
     const [showdropdown, setShowdropdown] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
+    const [FilterByHour, setFilterByHour] = useState("");
     const [selectedAdminId, setSelectedAdminId] = useState(null);
     const [showAddItemForm, setShowAddItemForm] = useState(false);
+    const [dayFilterValue, setDayFilterValue] = useState("");
+    const [filterData, setFilterData] = useState([]);
+    const [pageNo, setPageNo] = useState(1);
     const [showfilterdropdown, setShowfilterdropdown] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
     const [adminList, setAdminList] = useState([false]);
@@ -154,6 +158,7 @@ const ManageHourlyLog = () => {
                                                             setShowfilterdropdown((prev) => !prev);
                                                             setShowdropdown(false);
                                                             setSearchQuery("")
+                                                            setPageNo(1)
 
                                                         }}>
                                                             <span className="font-size-4 text-decoration-none">{admin.name}</span>
@@ -167,7 +172,53 @@ const ManageHourlyLog = () => {
                                     </div>
                                 )}
                             </div>
-
+                            <div className=" mr-2 row" style={{bottom:15}}>
+                                <div
+                                    className={"col  form_group "
+                                    }
+                                >
+                                    <p className="input_label">Filter by Day</p>
+                                    <div className="select_div">
+                                        <select
+                                            name="day"
+                                            value={dayFilterValue}
+                                            id="day"
+                                            onChange={(e) => {
+                                                setDayFilterValue(e.target.value);
+                                                setPageNo(1);
+                                            }}
+                                            className="text-capitalize form-control"
+                                        >
+                                            <option value="" data-display="Product Designer">
+                                                Select day            </option>
+                                            {(filterData.days || []).map((data, index) => {
+                                                return (
+                                                    <option value={data.id} key={index}>
+                                                        {data.value}
+                                                    </option>
+                                                );
+                                            })}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div
+                                    className={"col  form_group "
+                                    }
+                                >
+                                    <p className="input_label">Filter by Total Hour</p>
+                                    <div className="select_div">
+                                        <input
+                                            name="hour"
+                                            value={FilterByHour}
+                                            id="hour"
+                                            onChange={(e) => {
+                                                setFilterByHour(e.target.value);
+                                                setPageNo(1);
+                                            }}
+                                            className="text-capitalize form-control"
+                                        />
+                                    </div>
+                                </div></div>
                             {/* Filter Dropdown */}
                             <div className="position-relative d-none">
                                 <button
@@ -253,7 +304,13 @@ const ManageHourlyLog = () => {
                             adminList={adminList}
                             searchCandidate={searchCandidate}
                             setShowAddForm={setShowAddItemForm}
-                            selectedAdminId={selectedAdminId} />
+                            selectedAdminId={selectedAdminId}
+                            totalHour={FilterByHour}
+                            day={dayFilterValue}
+                            setFilterData={setFilterData}
+                            pageNo={pageNo}
+                            setPageNo={setPageNo}
+                        />
                     </div>
                 </div>
             </div>

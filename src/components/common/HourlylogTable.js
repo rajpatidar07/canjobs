@@ -38,7 +38,7 @@ function Hourlylogtable(props) {
     const [HourLogData, setHourLogData] = useState([]);
     const [totalData, setTotalData] = useState();
     const [editRowId, setEditRowId] = useState(null);
-    const [currentPage, setCurrentPage] = useState(1);
+    // const [currentPage, setCurrentPage] = useState(1);
     const [columnName, setcolumnName] = useState("updated_at");
     const [sortOrder, setSortOrder] = useState("DESC");
     const recordsPerPage = 10;
@@ -47,7 +47,7 @@ function Hourlylogtable(props) {
         try {
             setIsLoading(true)
             let data = {
-                "limit": recordsPerPage, "page": currentPage, "id": HourLogId, "column_name": columnName, "sort_order": sortOrder,
+                "limit": recordsPerPage, "page": props.pageNo, "id": HourLogId, "column_name": columnName, "sort_order": sortOrder, "day": props.day, "total_hour": props.totalHour
             };
             let ResHourLog = await GetHourLogApi(data);
             setHourLogData(ResHourLog.data.data)
@@ -113,6 +113,7 @@ function Hourlylogtable(props) {
         try {
             let json = await GetFilter();
             setJsonList(json.data.data);
+            props.setFilterData(json.data.data)
         } catch (err) {
             console.log(err)
 
@@ -128,7 +129,6 @@ function Hourlylogtable(props) {
         if (NotifiTaskId) {
             setTaskId(NotifiTaskId)
         }
-        console.log(NotifiHourLogId, "lll")
         if (NotifiHourLogId) {
             setHourLogId(NotifiHourLogId)
         }
@@ -151,7 +151,7 @@ function Hourlylogtable(props) {
                 tableContainerRef.current.removeEventListener("scroll", handleScroll);
             }
         };
-    }, [taskId, HourLogId, apiCall, props.searchCandidate, props.selectedAdminId, currentPage, columnName, sortOrder]);
+    }, [taskId, HourLogId, apiCall, props.searchCandidate, props.selectedAdminId, props.pageNo, columnName, sortOrder, props.totalHour, props.day]);
     /*Function to add New Daily Hours log item */
     const AddHourLog = async (newValue, data) => {
         if (newValue && newValue.preventDefault) {
@@ -235,7 +235,7 @@ function Hourlylogtable(props) {
                                 <table className="table table-striped main_data_table text-center align-middle">
                                     <thead>
                                         <tr className="py-2">
-                                            {[
+                                            {(props.showAddForm ? [
                                                 "item",
                                                 "Manager",
                                                 "Person",
@@ -248,7 +248,19 @@ function Hourlylogtable(props) {
                                                 "Notes / Extra",
                                                 "Info",
                                                 "Action",
-                                            ].map((heading, index) => (
+                                            ] : [
+                                                "item",
+                                                "Person",
+                                                "Date",
+                                                "Day",
+                                                "Total Hours",
+                                                "Start Time",
+                                                "Finish Time",
+                                                "Break",
+                                                "Notes / Extra",
+                                                "Info",
+                                                "Action",
+                                            ]).map((heading, index) => (
                                                 <th
                                                     key={index}
                                                     className={`border-0 font-size-3 font-weight-normal 
@@ -391,242 +403,248 @@ function Hourlylogtable(props) {
                                             </tr>
 
                                         )}
-                                        {Object.entries(
-                                            HourLogData.reduce((acc, item) => {
-                                                const managerId = item.hour_log_of_admin;
-                                                if (!acc[managerId]) acc[managerId] = [];
-                                                acc[managerId].push(item);
-                                                return acc;
-                                            }, {})
-                                        ).map(([managerId, logs], groupIndex) => {
-                                            const manager = (props.adminList || []).find((admin) => admin.admin_id === managerId);
-                                            const randomColor = "#" + Math.floor(Math.random() * 16777215).toString(16); // generates hex color
+                                        {
+                                            HourLogData.length === 0 || !HourLogData ?
+                                                <tr className="overflow-hidden">
+                                                    <td colSpan={11} className="text-center font-weight-bold text-capitalize">
+                                                        No Data found                                            </td>
+                                                </tr>
+                                                :
+                                                Object.entries(
+                                                    HourLogData.reduce((acc, item) => {
+                                                        const managerId = item.hour_log_of_admin;
+                                                        if (!acc[managerId]) acc[managerId] = [];
+                                                        acc[managerId].push(item);
+                                                        return acc;
+                                                    }, {})
+                                                ).map(([managerId, logs], groupIndex) => {
+                                                    const manager = (props.adminList || []).find((admin) => admin.admin_id === managerId);
+                                                    const randomColor = "#" + Math.floor(Math.random() * 16777215).toString(16); // generates hex color
 
-                                            return (
-                                                <>
-                                                    {/* Manager Row */}
-                                                    <tr key={`manager-${groupIndex}`} className="overflow-hidden">
-                                                        <td colSpan={13} className="text-left font-weight-bold text-capitalize"
-                                                            style={{ color: randomColor }}>
-                                                            {manager?.name || "N/A"}
-                                                        </td>
-                                                    </tr>
+                                                    return (
+                                                        <>
+                                                            {/* Manager Row */}
+                                                            <tr key={`manager-${groupIndex}`} className="overflow-hidden">
+                                                                <td colSpan={11} className="text-left font-weight-bold text-capitalize"
+                                                                    style={{ color: randomColor }}>
+                                                                    {manager?.name || "N/A"}
+                                                                </td>
+                                                            </tr>
 
-                                                    {/* Hour Log Rows */}
-                                                    {logs.map((item, index) => (
-                                                        <tr key={`log-${groupIndex}-${index}`}>
-                                                            {/* Item (Date) with Chat Icon */}
-                                                            <td
-                                                                className="table_sticky_col sticky_col1"
-                                                                style={{
-                                                                    minWidth: "150px",
-                                                                    maxWidth: "190px",
-                                                                    background: "white",
-                                                                    transition: "background 0.3s ease",
-                                                                }}
-                                                            >
-                                                                <div className="d-flex">
-                                                                    <TableInput
-                                                                        value={item.item}
-                                                                        onChange={(newValue) => handleUpdateChange(newValue, item.id, "item")}
-                                                                        type="date"
-                                                                        id="item"
-                                                                        name="item"
-                                                                    />
-                                                                    <Link
-                                                                        onClick={() => {
-                                                                            setSingelHourLogData(item);
-                                                                            setShowHourLogModal(true);
+                                                            {/* Hour Log Rows */}
+                                                            {logs.map((item, index) => (
+                                                                <tr key={`log-${groupIndex}-${index}`}>
+                                                                    {/* Item (Date) with Chat Icon */}
+                                                                    <td
+                                                                        className="table_sticky_col sticky_col1"
+                                                                        style={{
+                                                                            minWidth: "150px",
+                                                                            maxWidth: "190px",
+                                                                            background: "white",
+                                                                            transition: "background 0.3s ease",
                                                                         }}
                                                                     >
-                                                                        <span className="text-gray px-2">
-                                                                            <BsChat />
-                                                                        </span>
-                                                                    </Link>
-                                                                </div>
-                                                            </td>
-
-                                                            {/* Hour Log of Admin (Manager) */}
-                                                            <td style={{ minWidth: "150px" }}>
-                                                                {editRowId === item.hour_log_of_admin ? (
-                                                                    <select
-                                                                        className="form-control"
-                                                                        value={item.hour_log_of_admin}
-                                                                        onChange={(e) =>
-                                                                            handleUpdateChange(e, item.id, "hour_log_of_admin")
-                                                                        }
-                                                                        onBlur={() => setEditRowId(null)}
-                                                                        autoFocus
-                                                                    >
-                                                                        <option value="">Select Manager</option>
-                                                                        {(props.adminList || []).map((admin, idx) => (
-                                                                            <option value={admin.admin_id} key={idx}>
-                                                                                {admin.name}
-                                                                            </option>
-                                                                        ))}
-                                                                    </select>
-                                                                ) : (
-                                                                    item.hour_log_of_admin ? (
-                                                                        <div onClick={() => setEditRowId(item.hour_log_of_admin)} style={{ cursor: "pointer" }}>
-                                                                            <UserAvatar
-                                                                                profileImage={(props.adminList || []).find((i) => i.admin_id === item.hour_log_of_admin)?.profile_image}
-                                                                                name={(props.adminList || []).find((i) => i.admin_id === item.hour_log_of_admin)?.name}
-                                                                                userType={(props.adminList || []).find((i) => i.admin_id === item.hour_log_of_admin)?.admin_type}
-                                                                                index={index}
-                                                                                userId={item.hour_log_of_admin}
+                                                                        <div className="d-flex">
+                                                                            <TableInput
+                                                                                value={item.item}
+                                                                                onChange={(newValue) => handleUpdateChange(newValue, item.id, "item")}
+                                                                                type="date"
+                                                                                id="item"
+                                                                                name="item"
                                                                             />
+                                                                            <Link
+                                                                                onClick={() => {
+                                                                                    setSingelHourLogData(item);
+                                                                                    setShowHourLogModal(true);
+                                                                                }}
+                                                                            >
+                                                                                <span className="text-gray px-2">
+                                                                                    <BsChat />
+                                                                                </span>
+                                                                            </Link>
                                                                         </div>
-                                                                    ) : "N/A"
-                                                                )}
-                                                            </td>
+                                                                    </td>
 
-                                                            {/* Mention Person */}
-                                                            <td style={{ minWidth: "150px" }}>
-                                                                {editRowId === item.mention_person_id ? (
-                                                                    <select
-                                                                        className="form-control"
-                                                                        value={item.mention_person_id}
-                                                                        onChange={(e) =>
-                                                                            handleUpdateChange(e, item.id, "mention_person_id")
-                                                                        }
-                                                                        onBlur={() => setEditRowId(null)}
-                                                                        autoFocus
-                                                                    >
-                                                                        <option value="">Select Person</option>
-                                                                        {(props.adminList || []).map((admin, idx) => (
-                                                                            <option value={admin.admin_id} key={idx}>
-                                                                                {admin.name}
-                                                                            </option>
-                                                                        ))}
-                                                                    </select>
-                                                                ) : (
-                                                                    item.mention_person_id ? (
-                                                                        <div onClick={() => setEditRowId(item.mention_person_id)} style={{ cursor: "pointer" }}>
-                                                                            <UserAvatar
-                                                                                profileImage={(props.adminList || []).find((i) => i.admin_id === item.mention_person_id)?.profile_image}
-                                                                                name={(props.adminList || []).find((i) => i.admin_id === item.mention_person_id)?.name}
-                                                                                userType={(props.adminList || []).find((i) => i.admin_id === item.mention_person_id)?.admin_type}
-                                                                                index={index}
-                                                                                userId={item.mention_person_id}
-                                                                            />
-                                                                        </div>
-                                                                    ) : "N/A"
-                                                                )}
-                                                            </td>
+                                                                    {/* Hour Log of Admin (Manager) */}
+                                                                    <td style={{ minWidth: "150px" }} className="d-none">
+                                                                        {editRowId === item.hour_log_of_admin ? (
+                                                                            <select
+                                                                                className="form-control"
+                                                                                value={item.hour_log_of_admin}
+                                                                                onChange={(e) =>
+                                                                                    handleUpdateChange(e, item.id, "hour_log_of_admin")}
+                                                                                onBlur={() => setEditRowId(null)}
+                                                                                autoFocus
+                                                                            >
+                                                                                <option value="">Select Manager</option>
+                                                                                {(props.adminList || []).map((admin, idx) => (
+                                                                                    <option value={admin.admin_id} key={idx}>
+                                                                                        {admin.name}
+                                                                                    </option>
+                                                                                ))}
+                                                                            </select>
+                                                                        ) : (
+                                                                            item.hour_log_of_admin ? (
+                                                                                <div onClick={() => setEditRowId(item.hour_log_of_admin)} style={{ cursor: "pointer" }}>
+                                                                                    <UserAvatar
+                                                                                        profileImage={(props.adminList || []).find((i) => i.admin_id === item.hour_log_of_admin)?.profile_image}
+                                                                                        name={(props.adminList || []).find((i) => i.admin_id === item.hour_log_of_admin)?.name}
+                                                                                        userType={(props.adminList || []).find((i) => i.admin_id === item.hour_log_of_admin)?.admin_type}
+                                                                                        index={index}
+                                                                                        userId={item.hour_log_of_admin}
+                                                                                    />
+                                                                                </div>
+                                                                            ) : "N/A"
+                                                                        )}
+                                                                    </td>
 
-                                                            {/* Date */}
-                                                            <td style={{ minWidth: "150px" }}>
-                                                                <TableInput
-                                                                    value={item.date}
-                                                                    onChange={(newValue) => handleUpdateChange(newValue, item.id, "date")}
-                                                                    type="date"
-                                                                    id="date"
-                                                                    name="date"
-                                                                />
-                                                            </td>
+                                                                    {/* Mention Person */}
+                                                                    <td style={{ minWidth: "150px" }}>
+                                                                        {editRowId === item.mention_person_id ? (
+                                                                            <select
+                                                                                className="form-control"
+                                                                                value={item.mention_person_id}
+                                                                                onChange={(e) =>
+                                                                                    handleUpdateChange(e, item.id, "mention_person_id")
+                                                                                }
+                                                                                onBlur={() => setEditRowId(null)}
+                                                                                autoFocus
+                                                                            >
+                                                                                <option value="">Select Person</option>
+                                                                                {(props.adminList || []).map((admin, idx) => (
+                                                                                    <option value={admin.admin_id} key={idx}>
+                                                                                        {admin.name}
+                                                                                    </option>
+                                                                                ))}
+                                                                            </select>
+                                                                        ) : (
+                                                                            item.mention_person_id ? (
+                                                                                <div onClick={() => setEditRowId(item.mention_person_id)} style={{ cursor: "pointer" }}>
+                                                                                    <UserAvatar
+                                                                                        profileImage={(props.adminList || []).find((i) => i.admin_id === item.mention_person_id)?.profile_image}
+                                                                                        name={(props.adminList || []).find((i) => i.admin_id === item.mention_person_id)?.name}
+                                                                                        userType={(props.adminList || []).find((i) => i.admin_id === item.mention_person_id)?.admin_type}
+                                                                                        index={index}
+                                                                                        userId={item.mention_person_id}
+                                                                                    />
+                                                                                </div>
+                                                                            ) : "N/A"
+                                                                        )}
+                                                                    </td>
 
-                                                            {/* Day */}
-                                                            <td style={{ minWidth: "150px" }}>
-                                                                <StyledDropdown
-                                                                    options={jsonList.days}
-                                                                    value={item.day}
-                                                                    onChange={(newValue) => handleUpdateChange(newValue, item.id, "day")}
-                                                                    width={"400"}
-                                                                    id="day"
-                                                                    name="day"
-                                                                    status_name={"Day"}
-                                                                    setFilterListApiCall={setFilterListApiCall}
-                                                                    filterItemID={"43"}
-                                                                />
-                                                            </td>
+                                                                    {/* Date */}
+                                                                    <td style={{ minWidth: "150px" }}>
+                                                                        <TableInput
+                                                                            value={item.date}
+                                                                            onChange={(newValue) => handleUpdateChange(newValue, item.id, "date")}
+                                                                            type="date"
+                                                                            id="date"
+                                                                            name="date"
+                                                                        />
+                                                                    </td>
 
-                                                            {/* Total Hour */}
-                                                            <td style={{ minWidth: "150px" }}>
-                                                                <TableInput
-                                                                    value={item.total_hour}
-                                                                    onChange={(newValue) => handleUpdateChange(newValue, item.id, "total_hour")}
-                                                                    type="number"
-                                                                    id="total_hour"
-                                                                    name="total_hour"
-                                                                />
-                                                            </td>
+                                                                    {/* Day */}
+                                                                    <td style={{ minWidth: "150px" }}>
+                                                                        <StyledDropdown
+                                                                            options={jsonList.days}
+                                                                            value={item.day}
+                                                                            onChange={(newValue) => handleUpdateChange(newValue, item.id, "day")}
+                                                                            width={"400"}
+                                                                            id="day"
+                                                                            name="day"
+                                                                            status_name={"Day"}
+                                                                            setFilterListApiCall={setFilterListApiCall}
+                                                                            filterItemID={"43"}
+                                                                        />
+                                                                    </td>
 
-                                                            {/* Start Time */}
-                                                            <td style={{ minWidth: "150px" }}>
-                                                                <TableInput
-                                                                    value={item.start_time}
-                                                                    onChange={(newValue) => handleUpdateChange(newValue, item.id, "start_time")}
-                                                                    type="time"
-                                                                    id="start_time"
-                                                                    name="start_time"
-                                                                />
-                                                            </td>
+                                                                    {/* Total Hour */}
+                                                                    <td style={{ minWidth: "150px" }}>
+                                                                        <TableInput
+                                                                            value={item.total_hour}
+                                                                            onChange={(newValue) => handleUpdateChange(newValue, item.id, "total_hour")}
+                                                                            type="number"
+                                                                            id="total_hour"
+                                                                            name="total_hour"
+                                                                        />
+                                                                    </td>
 
-                                                            {/* Finish Time */}
-                                                            <td style={{ minWidth: "150px" }}>
-                                                                <TableInput
-                                                                    value={item.finish_time}
-                                                                    onChange={(newValue) => handleUpdateChange(newValue, item.id, "finish_time")}
-                                                                    type="time"
-                                                                    id="finish_time"
-                                                                    name="finish_time"
-                                                                />
-                                                            </td>
+                                                                    {/* Start Time */}
+                                                                    <td style={{ minWidth: "150px" }}>
+                                                                        <TableInput
+                                                                            value={item.start_time}
+                                                                            onChange={(newValue) => handleUpdateChange(newValue, item.id, "start_time")}
+                                                                            type="time"
+                                                                            id="start_time"
+                                                                            name="start_time"
+                                                                        />
+                                                                    </td>
 
-                                                            {/* Break */}
-                                                            <td style={{ minWidth: "150px" }}>
-                                                                <TableInput
-                                                                    value={item.break}
-                                                                    onChange={(newValue) => handleUpdateChange(newValue, item.id, "break")}
-                                                                    type="text"
-                                                                    id="break"
-                                                                    name="break"
-                                                                />
-                                                            </td>
+                                                                    {/* Finish Time */}
+                                                                    <td style={{ minWidth: "150px" }}>
+                                                                        <TableInput
+                                                                            value={item.finish_time}
+                                                                            onChange={(newValue) => handleUpdateChange(newValue, item.id, "finish_time")}
+                                                                            type="time"
+                                                                            id="finish_time"
+                                                                            name="finish_time"
+                                                                        />
+                                                                    </td>
 
-                                                            {/* Notes */}
-                                                            <td style={{ minWidth: "150px" }}>
-                                                                <TableInput
-                                                                    value={item.notes}
-                                                                    onChange={(newValue) => handleUpdateChange(newValue, item.id, "notes")}
-                                                                    type="text"
-                                                                    id="notes"
-                                                                    name="notes"
-                                                                />
-                                                            </td>
+                                                                    {/* Break */}
+                                                                    <td style={{ minWidth: "150px" }}>
+                                                                        <TableInput
+                                                                            value={item.break}
+                                                                            onChange={(newValue) => handleUpdateChange(newValue, item.id, "break")}
+                                                                            type="text"
+                                                                            id="break"
+                                                                            name="break"
+                                                                        />
+                                                                    </td>
 
-                                                            {/* Info */}
-                                                            <td style={{ minWidth: "150px" }}>
-                                                                <TableInput
-                                                                    value={item.info}
-                                                                    onChange={(newValue) => handleUpdateChange(newValue, item.id, "info")}
-                                                                    type="text"
-                                                                    id="info"
-                                                                    name="info"
-                                                                />
-                                                            </td>
+                                                                    {/* Notes */}
+                                                                    <td style={{ minWidth: "150px" }}>
+                                                                        <TableInput
+                                                                            value={item.notes}
+                                                                            onChange={(newValue) => handleUpdateChange(newValue, item.id, "notes")}
+                                                                            type="text"
+                                                                            id="notes"
+                                                                            name="notes"
+                                                                        />
+                                                                    </td>
 
-                                                            {/* Delete Button */}
-                                                            <td style={{ minWidth: "150px" }}>
-                                                                <button
-                                                                    className="btn btn-outline-info action_btn"
-                                                                    style={{ fontSize: "10px", color: "red" }}
-                                                                    type="button"
-                                                                    onClick={() => {
-                                                                        setDeleteAlertHourLogData(item);
-                                                                        setDeleteAlertHourLog(true);
-                                                                    }}
-                                                                    title="Delete Hour Log"
-                                                                >
-                                                                    <FaTrash />
-                                                                </button>
-                                                            </td>
-                                                        </tr>
+                                                                    {/* Info */}
+                                                                    <td style={{ minWidth: "150px" }}>
+                                                                        <TableInput
+                                                                            value={item.info}
+                                                                            onChange={(newValue) => handleUpdateChange(newValue, item.id, "info")}
+                                                                            type="text"
+                                                                            id="info"
+                                                                            name="info"
+                                                                        />
+                                                                    </td>
 
-                                                    ))}
-                                                </>
-                                            );
-                                        })}
+                                                                    {/* Delete Button */}
+                                                                    <td style={{ minWidth: "150px" }}>
+                                                                        <button
+                                                                            className="btn btn-outline-info action_btn"
+                                                                            style={{ fontSize: "10px", color: "red" }}
+                                                                            type="button"
+                                                                            onClick={() => {
+                                                                                setDeleteAlertHourLogData(item);
+                                                                                setDeleteAlertHourLog(true);
+                                                                            }}
+                                                                            title="Delete Hour Log"
+                                                                        >
+                                                                            <FaTrash />
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+
+                                                            ))}
+                                                        </>
+                                                    );
+                                                })}
                                     </tbody>
                                 </table>
 
@@ -648,8 +666,8 @@ function Hourlylogtable(props) {
                     <div className="pt-2">
                         <Pagination
                             nPages={nPages}
-                            currentPage={currentPage}
-                            setCurrentPage={setCurrentPage}
+                            currentPage={props.pageNo}
+                            setCurrentPage={props.setPageNo}
                             total={HourLogData.length}
                             count={totalData}
                         />

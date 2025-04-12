@@ -264,7 +264,7 @@ function Calllogtable(props) {
                                                     }
                                                 >
                                                     <Link to="" className="text-dark"
-                                                        onClick={() => { if (heading !== "Action Taken") { handleSort(heading === "Date and Time Call" ? "received_call_date" : heading === "Purpose of Call" ? "purpose" : (heading.toLowerCase().replaceAll(" ", "_")) )} }}
+                                                        onClick={() => { if (heading !== "Action Taken") { handleSort(heading === "Date and Time Call" ? "received_call_date" : heading === "Purpose of Call" ? "purpose" : (heading.toLowerCase().replaceAll(" ", "_"))) } }}
                                                     >
                                                         {heading}</Link>
                                                 </th>
@@ -372,12 +372,12 @@ function Calllogtable(props) {
                                                         >
                                                             +
                                                         </button>
-                                                            <button type="button" title="Cancel" onClick={() => {
-                                                                props.setShowAddForm(false)
-                                                                setState(initialFormState)
-                                                            }} className="btn-sm btn-dark mx-2">x</button>
                                                         </>
                                                     }
+                                                    <button type="button" title="Cancel" onClick={() => {
+                                                        props.setShowAddForm(false)
+                                                        setState(initialFormState)
+                                                    }} className="btn-sm btn-dark mx-2">x</button>
                                                 </td>
                                             </tr>
 
