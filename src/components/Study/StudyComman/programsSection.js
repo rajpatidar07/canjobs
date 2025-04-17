@@ -516,7 +516,6 @@ function ProgramListSection() {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    {console.log(loading === true, program, programData, program === programData)}
                                                     <div className={'mx-5 mb-2 mt-2'}>
                                                         {loading === true && program === programData ? (
                                                             <button

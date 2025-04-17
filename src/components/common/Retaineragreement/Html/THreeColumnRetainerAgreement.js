@@ -8,7 +8,6 @@ export default function EmployerRetainerAgreement({ page,
 }) {
   const familyJsonArray = felidData?.family_json || [];
 
-  console.log(felidData, "userData", familyJsonArray, page);
 
   const jsxContent = `<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">

@@ -109,13 +109,6 @@ export default function FolderList({
             <div className="d-flex flex-wrap justify-content-center">
               {(docTypeList || []).map((item, index) => (
                 <React.Fragment key={index}>
-                  {
-                    console.log(!item.folder || (userType === "admin" &&
-                      userType === "agent") || (["image/jpeg", "image/png", "image/jpg"].includes(item.file.mimeType)) || item.file.mimeType ===
-                      "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || item.file.mimeType === "application/pdf" || item.file.mimeType === "application/pdf" || item.file.mimeType !== "application/vnd.openxmlformats-officedocument.presentationml.presentation" || item.file.mimeType !== "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                      ? ""
-                      : "d-none", item.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "pppp", item.file.mimeType === "application/vnd.openxmlformats-officedocument.presentationml.presentation")
-                  }
                   <div
                     className="position-relative bg-white rounded overflow-hidden"
                     style={{ maxWidth: 150, margin: 10 }}
@@ -322,18 +315,6 @@ export default function FolderList({
                             Edit in sharepoint
                           </Link>
                         </li>
-                        {console.log(
-                          (!item.folder || item.file.mimeType !== "text/plain" ||
-                            (userType === "admin" || userType === "agent") ||
-                            ["image/jpeg", "image/png", "image/jpg"].includes(item.file.mimeType) ||
-                            item.file.mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
-                            item.file.mimeType === "application/pdf") &&
-                            (item.file.mimeType !== "application/vnd.openxmlformats-officedocument.presentationml.presentation" &&
-                              item.file.mimeType !== "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-                            ? "list-group-item text-danger"
-                            : "d-none"
-                        )
-                        }
                         <li
                           className={
                             (!item.folder || item.file.mimeType !== "text/plain" ||

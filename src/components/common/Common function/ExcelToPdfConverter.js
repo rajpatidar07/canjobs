@@ -33,22 +33,12 @@ const ExcelToPdfConverter = async (excelUrl) => {
                         resolve(null);
                         return;
                     }
-                    console.log(jsonData)
                     // Ensure all rows have the same column count
                     const rows = jsonData.map(row =>
                         Array.from({ length: maxColumns }, (_, i) => row[i] || "")
                     );
 
                     const doc = new jsPDF("p", "mm", "a4");
-                    console.log(doc, "doc", doc.autoTable({
-                        head: [jsonData[0]],
-                        body: rows.slice(1),
-                        startY: 20,
-                        margin: { top: 10 },
-                        styles: { fontSize: 8, cellPadding: 2 },
-                        columnStyles: { 0: { halign: "center" } },
-                        theme: "striped",
-                    }))
                     doc.autoTable({
                         head: [jsonData[0]],
                         body: rows.slice(1),
@@ -58,9 +48,7 @@ const ExcelToPdfConverter = async (excelUrl) => {
                         columnStyles: { 0: { halign: "center" } },
                         theme: "striped",
                     });
-                    console.log(doc.output("datauristring"))
                     const pdfBase64 = doc.output("datauristring");
-                    console.log(pdfBase64, "ppppppppppppppppppppppppppp")
                     resolve(pdfBase64);  // Return Base64 from Promise
 
                 } catch (error) {

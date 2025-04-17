@@ -48,6 +48,7 @@ const CreateExcelSheet = (props) => {
 
         ])
         props.close()
+        setLoading(false)
     }
     // Function to add a new row
     const addRow = () => {
@@ -57,6 +58,7 @@ const CreateExcelSheet = (props) => {
     // Function to add a new column
     const addColumn = () => {
         setData(data.map((row) => [...row, { value: "" }]));
+        setLoading(false)
     };
     const createCSVFile = (e) => {
         // Convert spreadsheet data to CSV format
@@ -67,10 +69,9 @@ const CreateExcelSheet = (props) => {
         const csvFile = new File([csvString], `Sheet${new Date().getTime()}`, { type: "text/csv" });
 
         // Log the file object
-        console.log("Generated CSV File Object:", csvFile);
         exportToExcelFile(e, csvFile)
     };
-    /*Function to Add note to the api */
+    /*Function to Add excel to the api */
     const exportToExcelFile = async (e, file) => {
         e.preventDefault()
 
@@ -100,6 +101,8 @@ const CreateExcelSheet = (props) => {
                     props.setApiCall(true);
                     setLoading(false)
                     handleExcelSheetClose()
+                }else{
+                  setLoading(false)
                 }
             } catch (error) {
                 console.log(error)
@@ -113,7 +116,7 @@ const CreateExcelSheet = (props) => {
             size="xl"
             aria-labelledby="contained-modal-title-vcenter"
             centered
-            onBackdropClick={() => handleExcelSheetClose()}
+            // onBackdropClick={() => handleExcelSheetClose()}
         >
             <button
                 type="button"

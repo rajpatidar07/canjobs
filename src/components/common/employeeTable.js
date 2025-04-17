@@ -95,15 +95,7 @@ export default function EmployeeTable(props) {
             ? -1
             : 4
   );
-  console.log(StatusTab
-    ? StatusTab
-    : props.pageName === "local_candidate"
-      ? ""
-      : props?.ApplicantType
-        ? "4,7,8,9"
-        : props.self === "yes"
-          ? -1
-          : 4, StatusTab, "props?.ApplicantType", props?.ApplicantType)
+  
   const [totalData, setTotalData] = useState("");
   const [recordsPerPage] = useState(10);
   /*Shorting states */
@@ -176,7 +168,6 @@ export default function EmployeeTable(props) {
             );
           } else {
             setemployeeData(userData.data);
-            // console.log(canID, taskID, "TaskId =>", TaskId, "CandidateId =>", CandidateId, notifiType)
             if (TaskId && CandidateId && notifiType === "candidate") {
               setShowChatModal(true);
               setemployeeId(userData.data[0] || "");
@@ -420,7 +411,6 @@ export default function EmployeeTable(props) {
   };
 
   // const OnStatusChange = (e, empdata, eventKey) => {
-  //   console.log("Selected Status ID:", eventKey, "Employee Data:", empdata);
   //   // Assuming you want to update the employee status here
   //   setStatus(eventKey);
   //   // You may need to call an API to update the status in the backend
@@ -506,17 +496,14 @@ export default function EmployeeTable(props) {
     if (!selectedItem) return null; // Handle case where no match is found
 
     if (selectedItem.level === "0") {
-      console.log(selectedItem.title);
       return selectedItem.title;
     } else if (selectedItem.level === "2") {
       const data = selectedItem.all_parent_id.split(",")[0];
       const parentItem = applicantTypeList.find((item) => item.id === data);
-      console.log(parentItem ? parentItem.title : null);
       return parentItem ? parentItem.title : null;
     } else {
       const data = selectedItem.parent_id;
       const parentItem = applicantTypeList.find((item) => item.id === data);
-      console.log(parentItem ? parentItem.title : null);
       return parentItem ? parentItem.title : null;
     }
   };

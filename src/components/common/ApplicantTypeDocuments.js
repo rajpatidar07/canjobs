@@ -100,20 +100,6 @@ export default function ApplicantTypeDocuments(props) {
         type: file.type,
         lastModified: file.lastModified,
       });
-
-      // Check file type
-      // const fileType = `.${fileExtension.toLowerCase()}`;
-      // if (!allowedTypes.includes(fileType)) {
-      //   toast.error(
-      //     `Invalid document type for file '${updatedFile.name}'. Allowed types: PDF, DOC, DOCX, JPG, JPEG, PNG`,
-      //     {
-      //       position: toast.POSITION.TOP_RIGHT,
-      //       autoClose: 1000,
-      //     }
-      //   );
-      //   return;
-      // }
-
       // Check file size
       if (updatedFile.size > maxSize) {
         toast.error(
@@ -141,12 +127,12 @@ export default function ApplicantTypeDocuments(props) {
       saveBtn: true,
     }));
   };
-  const handleSort = (column) =>
+  const handleSort = (column) =>{
     setState((prev) => ({
       ...prev,
       sortOrder: prev.sortOrder === "DESC" ? "ASC" : "DESC",
       columnName: column,
-    }));
+    }));}
   const fetchAdminData = async () => {
     try {
       const userData = await getallAdminData();
@@ -457,7 +443,7 @@ export default function ApplicantTypeDocuments(props) {
       props.setFolderApiCall(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.folderApiCall, state.apiCall, state.folderID, props.notification === "yes" ? location.key : null]);
+  }, [state.columnName,state.sortOrder,props.folderApiCall, state.apiCall, state.folderID, props.notification === "yes" ? location.key : null]);
   useEffect(() => {
     if (props.folderId !== state.folderID && props?.notification === "yes") {
       setState((prev) => ({
@@ -617,7 +603,6 @@ export default function ApplicantTypeDocuments(props) {
                         <span style={{ fontSize: 18 }}>Back to Folder</span>
                       </Link>
                     </div>
-                    {/* {console.log(state?.docSingleDate.parentReference.id, "pppppppppppppppppppppp", state.folderID)} */}
                     {(state?.docSingleDate?.file?.mimeType ===
                       "application/pdf" ||
                       ((state?.docSingleDate?.file?.mimeType === "image/jpeg" ||

@@ -1038,7 +1038,20 @@ function PersonalDetails(props) {
                         const parent = applicantTypeList.find((item) => item.id === interest.parent_id);
 
                         return (
-                          <option key={index} value={interest.id}>
+                          <option key={index} value={interest.id} className={
+                            [
+                              "test typw",
+                              "All Checklists",
+                              "Checklists",
+                              "Invitation letters/Declarations",
+                              "Daily hours log",
+                              "Training Modules",
+                              "Admission/student/college"
+                            ].some(item => interest.title.includes(item))
+                              ? "d-none"
+                              : ""
+                          }
+                          >
                             {interest?.title}{" "}
                             {interest.level !== "0" ? (
                               <small>( {parent?.title} sub type)</small>

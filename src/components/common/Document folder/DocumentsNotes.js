@@ -249,9 +249,14 @@ const DocumentsNotes = (props) => {
                     setLoading(false)
                     handleNoteFormClose()
                     localStorage.removeItem('writerContent'); // Clear saved content from localStorage
+                }else{
+                    setLoading(false)
+
                 }
             } catch (error) {
                 console.log(error)
+                setLoading(false)
+
             }
         }
     };

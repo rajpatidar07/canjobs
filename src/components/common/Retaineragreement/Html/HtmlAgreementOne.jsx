@@ -24,7 +24,6 @@ const HtmlAgreementOne = ({
   // eslint-disable-next-line
   const familyJsonArray = felidData?.family_json || [];
 
-  console.log(felidData);
   //? JSON.parse(felidData?.family_json) : [];
   const jsxContent = `<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">

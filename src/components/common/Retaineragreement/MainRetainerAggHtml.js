@@ -92,7 +92,6 @@ export default function MainRetainerAggHtml({
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [])
 
-  console.log(agreementData.type);
   const GeneratePdf = async () => {
     if (openSignature === "yes") {
     }

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import AdminHeader from '../admin/header';
@@ -61,6 +62,7 @@ export default function CommonApplicatTypePage() {
             }
         }
         if (docId) setSelectedTab("documents");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.key]);
 
     // Set applicant type IDs and folder ID from params, state, or localStorage
@@ -107,6 +109,7 @@ export default function CommonApplicatTypePage() {
                 }
             })
             .catch(console.error);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [applicantTypeId, applicantTypeChildId]);
 
     const onSearch = (e) => {

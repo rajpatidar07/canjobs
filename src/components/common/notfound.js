@@ -21,24 +21,6 @@ const NotFound = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  console.log(token && (location.pathname === "/partner_profile"
-    || location.pathname === "/dashboard"
-    || location.pathname === "/client"
-    || props.userType === "user"
-    ? location.pathname === `/${localStorage.getItem("employee_id")}`
-    : location.pathname === "/")
-    ? "<Loader />"
-    : "pppppp", token, props.userType === "company"
-    ? "/client"
-    : props.userType === "agent"
-      ? "/partner_profile"
-      : props.userType === "admin" ?
-        "/dashboard"
-        : (docId || notes || taskId)
-          ? "/adminlogin"
-          : portal === "study"
-            ? "/study"
-            : "/")
   return (
     token && (location.pathname === "/partner_profile"
       || location.pathname === "/dashboard"

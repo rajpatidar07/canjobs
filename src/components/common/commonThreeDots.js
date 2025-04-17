@@ -8,11 +8,13 @@ import { FiFilePlus, FiFolderPlus } from "react-icons/fi";
 import AddFolderModal from "./Document folder/AddFolderModal";
 import { toast } from "react-toastify";
 import { AddSharePointDOcument } from "../../api/api";
+import CreateExcelSheet from "./Document folder/CreateExcelSheet";
+import { AiTwotoneFileExcel } from "react-icons/ai";
 export default function CommonThreeDots(props) {
   let [isOpen, setIsOpen] = useState(false);
   let [openFolderModal, setOPenFolderModal] = useState(false);
   let [addFileLoading, setAddFileLoading] = useState(false);
-  // let [addFileClickOn, setAddFileClickOn] = useState(false);
+  let [openExcelSheet, setOpenExcelSheet] = useState(false);
   let user_type = localStorage.getItem("userType");
   const AddFileClick = async (event) => {
     // setAddFileClickOn(true);
@@ -118,6 +120,15 @@ export default function CommonThreeDots(props) {
           setFolderApiCall={props.setFolderApiCall}
         />
       )}
+      <CreateExcelSheet
+        show={openExcelSheet}
+        close={() => setOpenExcelSheet(false)}
+        user_id={props.user_id}
+        emp_user_type={props.emp_user_type}
+        folderID={props.folderId}
+        docTypeName={""}
+        setApiCall={props.setFolderApiCall}
+      />
       <div
         className="position-relative d-inline-block header-btn-devider ml-auto ml-lg-5 pl-2 d-xs-flex align-items-center"
         onMouseEnter={() => setIsOpen(true)}
@@ -178,6 +189,14 @@ export default function CommonThreeDots(props) {
                 Add file
               </label>
             )}
+            {user_type === "admin" && props.applicantTypeId ? (
+              <button
+                onClick={() => setOpenExcelSheet(true)}
+                className="dropdown-item d-flex align-items-center border-0 bg-transparent m-3"
+              >
+                <AiTwotoneFileExcel className="mx-3" /> Create Excel
+              </button>
+            ) : null}
             {user_type === "admin" && props.applicantTypeId ? (
               <button
                 onClick={() => props.setShowGrpChatBox(true)}

@@ -356,7 +356,6 @@ This Agreement may only be altered or amended when such changes are made in writ
 </body>
 </html>
 `
-    console.log(felidData, "userData", familyJsonArray, page);
     return (
         <div
             className="agreement_content"
