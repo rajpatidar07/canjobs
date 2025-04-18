@@ -32,7 +32,7 @@ const TableInput = ({ value, onChange, name, type, className = "" }) => {
                     value: inputValue
                 }
             });
-        }, 150);
+        }, 10);
     };
 
     return (

@@ -349,6 +349,7 @@ export default function SharePointDocument({
             setDocSingleDate(res.data.data.find((item) => item.id === newdocId));
             SetPdfDocUrl(res.data.data.find((item) => item.id === newdocId));
             setFileID(res.data.data.find((item) => item.id === newdocId).id);
+            console.log(res.data.data.find((item) => item.id === newdocId),"pppppppp")
             getCommentsList(res.data.data.find((item) => item.id === newdocId));
             const newUrl = window.location.pathname;
             window.history.replaceState({}, document.title, newUrl);

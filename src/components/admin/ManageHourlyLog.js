@@ -13,6 +13,8 @@ const ManageHourlyLog = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [FilterByHour, setFilterByHour] = useState("");
     const [selectedAdminId, setSelectedAdminId] = useState(null);
+    const [selectedAdminType, setSelectedAdminType] = useState(null);
+
     const [showAddItemForm, setShowAddItemForm] = useState(false);
     const [dayFilterValue, setDayFilterValue] = useState("");
     const [filterData, setFilterData] = useState([]);
@@ -155,6 +157,7 @@ const ManageHourlyLog = () => {
                                                     >
                                                         <Link onClick={() => {
                                                             setSelectedAdminId(admin.admin_id)
+                                                            setSelectedAdminType(admin.admin_type)
                                                             setShowfilterdropdown((prev) => !prev);
                                                             setShowdropdown(false);
                                                             setSearchQuery("")
@@ -172,7 +175,7 @@ const ManageHourlyLog = () => {
                                     </div>
                                 )}
                             </div>
-                            <div className=" mr-2 row" style={{bottom:15}}>
+                            <div className=" mr-2 row" style={{ bottom: 15 }}>
                                 <div
                                     className={"col  form_group "
                                     }
@@ -292,7 +295,7 @@ const ManageHourlyLog = () => {
                             </div>
                             <button className="btn btn-primary" onClick={() => {
                                 setSelectedAdminId("")
-                                setSelectedAdminId("")
+                                setSelectedAdminType("")
                                 setSearchQuery("")
 
                             }}>Reset</button>
@@ -305,6 +308,7 @@ const ManageHourlyLog = () => {
                             searchCandidate={searchCandidate}
                             setShowAddForm={setShowAddItemForm}
                             selectedAdminId={selectedAdminId}
+                            selectedAdminType={selectedAdminType}
                             totalHour={FilterByHour}
                             day={dayFilterValue}
                             setFilterData={setFilterData}

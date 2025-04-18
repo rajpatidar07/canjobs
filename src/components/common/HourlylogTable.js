@@ -47,7 +47,9 @@ function Hourlylogtable(props) {
         try {
             setIsLoading(true)
             let data = {
-                "limit": recordsPerPage, "page": props.pageNo, "id": HourLogId, "column_name": columnName, "sort_order": sortOrder, "day": props.day, "total_hour": props.totalHour
+                "limit": recordsPerPage, "page": props.pageNo, "id": HourLogId, "column_name": columnName, "sort_order": sortOrder, "day": props.day, "total_hour": props.totalHour,
+                mention_person_id: props.selectedAdminId,
+                mention_person_type: props.selectedAdminType,
             };
             let ResHourLog = await GetHourLogApi(data);
             setHourLogData(ResHourLog.data.data)

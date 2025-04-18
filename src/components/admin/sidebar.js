@@ -1000,7 +1000,7 @@ const AdminSidebar = (props) => {
             onClick={() => {
               clearPageNo();
             }}
-            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center d-none"
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
             title={"Manage Daily Hourly Log"}
             to="/daily_hours_log"
           >
