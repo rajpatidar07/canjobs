@@ -841,11 +841,11 @@ const filterjson = {
     "permanent residency travel document",
     "employers",
     "LMIA exempt employers",
-    "initial consultation",
-    "recruitment services agreement",
-    "employer renewal stream",
-    "more than one applicant",
-    "three column",
+    // "initial consultation",
+    // "recruitment services agreement",
+    // "employer renewal stream",
+    // "more than one applicant",
+    // "three column",
   ]
   ,
   "program_discipline_category": [

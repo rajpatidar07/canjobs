@@ -339,20 +339,20 @@ export default function SharePointDocument({
           GetNoteText(res.data.notes, false)
           setDocNoteData(res.data.notes)
         } else {
-          setDocNoteData([])
+          setDocNoteData([]);
         }
         if (notification === "yes") {
           if (res.data.data.find((item) => item.id === newdocId)) {
             setDocPreview(true);
-            AdminData()
+            AdminData();
             // console.log(res.data.data.find((item) => item.id === newdocId))
             setDocSingleDate(res.data.data.find((item) => item.id === newdocId));
             SetPdfDocUrl(res.data.data.find((item) => item.id === newdocId));
             setFileID(res.data.data.find((item) => item.id === newdocId).id);
-            getCommentsList(res.data.data.find((item) => item.id === newdocId))
+            getCommentsList(res.data.data.find((item) => item.id === newdocId));
             const newUrl = window.location.pathname;
             window.history.replaceState({}, document.title, newUrl);
-            localStorage.setItem("navigation_url", "")
+            localStorage.setItem("navigation_url", "");
           } else {
             toast.error("This document is no longer available.", {
               position: toast.POSITION.TOP_RIGHT,
@@ -360,7 +360,7 @@ export default function SharePointDocument({
             });
             const newUrl = window.location.pathname;
             window.history.replaceState({}, document.title, newUrl);
-            localStorage.setItem("navigation_url", "")
+            localStorage.setItem("navigation_url", "");
           }
         }
         // setFolderID(res.data.data[0].parentReference.id)
@@ -618,11 +618,9 @@ export default function SharePointDocument({
         setSaveBtn(false);
         setShowDropDown(false);
         setTaggedAdmin([]);
-        setDocFileBase([])
-      }
-      // console.log(res.data)
-      if (res.data.message === "Failed" && res.data.data === "No Token Found") {
-        toast.success(`Document Uploaded successfully`, {
+        setDocFileBase([]);
+      }else{
+        toast.error(`Something went wrong`, {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
@@ -1118,7 +1116,7 @@ export default function SharePointDocument({
                       onClick={() => {
                         setOpenExcelSheet(true)
                       }}>Add Excel Sheet</button>
-                    <button className="btn btn-light mx-2  " style={{ maxHeight: 34 }}
+                    <button className="btn btn-light mx-2  d-none" style={{ maxHeight: 34 }}
                       onClick={() => {
                         setOpenWordForm(true)
                       }}>Add Word</button>
