@@ -111,6 +111,7 @@ import MoreThanOneApplicantAgreementPdf from "./Retaineragreement/Agreement nati
 import EmployerRetainerAgreementPdf from "./Retaineragreement/Agreement native/EmployerRetainerAgreementPdf";
 import ThreeColumnRerainerAgreement from "./Retaineragreement/Agreement native/ThreeColumnRerainerAgreement";
 import ManageHourlyLog from "../admin/ManageHourlyLog";
+import ConvertAnyFileToPdf from "./Common function/ConvertAnyFileTopdf";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -287,6 +288,7 @@ function MainLayout() {
             <Route path="/emailtemplate" element={<EmailTemplate />} />
             <Route path="/notes" element={<Notes />} />
             <Route path="/credentials" element={<Credentional />} />
+            <Route path="/testpdfurl" element={<ConvertAnyFileToPdf />} />
             <Route path="/resume/:id" element={<ResumeGrerator />} />
             {/* <Route path="/emailpreview" element={<PreviewEmail />} /> */}
             <Route path="/email" element={<MainEmailPage />} />

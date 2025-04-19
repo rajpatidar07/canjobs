@@ -22,6 +22,7 @@ import EditDocNameForm from "./Document folder/EditDocNameFOrm";
 import SAlert from "./sweetAlert";
 // import ExcelToPdfConverter from "./Common function/ExcelToPdfConverter";
 import AddFolderModal from "./Document folder/AddFolderModal";
+// import ConvertAnyFileToPdf from "./Common function/ConvertAnyFileTopdf";
 // import convertPPTtoPDF from "./Common function/PpttoPdf";
 export default function ApplicantTypeDocuments(props) {
   const [docFileBase, setDocFileBase] = useState([]);
@@ -127,12 +128,13 @@ export default function ApplicantTypeDocuments(props) {
       saveBtn: true,
     }));
   };
-  const handleSort = (column) =>{
+  const handleSort = (column) => {
     setState((prev) => ({
       ...prev,
       sortOrder: prev.sortOrder === "DESC" ? "ASC" : "DESC",
       columnName: column,
-    }));}
+    }));
+  }
   const fetchAdminData = async () => {
     try {
       const userData = await getallAdminData();
@@ -270,14 +272,14 @@ export default function ApplicantTypeDocuments(props) {
     //   }
     // } 
     else {
-      // console.log(mimeType);
       // convertPPTtoPDF(data["@microsoft.graph.downloadUrl"])
       window.open(data.webUrl);
-      setState((prev) => ({
-        ...prev,
-        convertedDoc: "",
-        docPreview: false,
-      }));
+    //   let res = await ConvertAnyFileToPdf(data)
+    //   console.log(res)
+    //   setState((prev) => ({
+    //     ...prev,
+    //     convertedDoc: `data:application/pdf;base64,${res}`,
+    //   }));
     }
   };
 
@@ -443,7 +445,7 @@ export default function ApplicantTypeDocuments(props) {
       props.setFolderApiCall(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.columnName,state.sortOrder,props.folderApiCall, state.apiCall, state.folderID, props.notification === "yes" ? location.key : null]);
+  }, [state.columnName, state.sortOrder, props.folderApiCall, state.apiCall, state.folderID, props.notification === "yes" ? location.key : null]);
   useEffect(() => {
     if (props.folderId !== state.folderID && props?.notification === "yes") {
       setState((prev) => ({
@@ -603,7 +605,9 @@ export default function ApplicantTypeDocuments(props) {
                         <span style={{ fontSize: 18 }}>Back to Folder</span>
                       </Link>
                     </div>
-                    {(state?.docSingleDate?.file?.mimeType ===
+                    {
+                    (
+                      state?.docSingleDate?.file?.mimeType ===
                       "application/pdf" ||
                       ((state?.docSingleDate?.file?.mimeType === "image/jpeg" ||
                         state?.docSingleDate?.file?.mimeType === "image/png" ||

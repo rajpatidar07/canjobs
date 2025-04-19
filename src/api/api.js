@@ -3531,6 +3531,21 @@ export const GetDocConvertToken = async (doc_id) => {
   );
   return response;
 };
+/*Api to convert any file to pdf base64 */
+export const GetPdfBaseOfAnyFile = async (data) => {
+  const response = await axios.post(`https://api.canpathwaysjobs.com/canjobs/common/changeToPdf
+`, data,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  console.log(response,"ppppppp")
+  return response;
+}
+
 // /Api function to edit document name for
 export const ChangeDocNameSharpoint = async (
   userId,
