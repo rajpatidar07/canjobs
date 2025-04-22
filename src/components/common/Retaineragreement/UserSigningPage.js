@@ -21,7 +21,7 @@ import HtmlAgreementFourTeen from './Html/HtmlAgreementFourTeen'
 import EmployerRetainerAgreement from './Html/EmployerRetainerAgreement'
 import HtmlAgreementsixteen from './Html/HtmlAgreementsixteen'
 import HtmlAgreementEighteen from './Html/HtmlAgreementEighteen'
-import HtmlAgreementSeventeen from './Html/HtmlAgreementSeventeen'
+import InitialConsultation from './Html/InitialConsultation'
 import HtmlRenewalApplication from './Html/HtmlRenewalApplication';
 import HtmlMoeThanOneApplicant from './Html/HtmlMoeThanOneApplicant';
 import ThreeColumnRetainerAgreement from "./Html/THreeColumnRetainerAgreement";
@@ -171,7 +171,7 @@ export default function UserSigningPage() {
                                                                                     ? <HtmlAgreementsixteen />
                                                                                     : type === "initial consultation" ?
                                                                                         (
-                                                                                            <HtmlAgreementSeventeen
+                                                                                            <InitialConsultation
                                                                                                 page={"user"}
                                                                                                 felidData={felidData}
                                                                                                 emp_user_type={emp_user_type}

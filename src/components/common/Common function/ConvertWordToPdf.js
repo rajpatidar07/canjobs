@@ -35,6 +35,6 @@ export default async function convertWordToPDF(data) {
         return pdfUrl;
     } catch (error) {
         console.error("Error converting Word to PDF:", error);
-        throw error; // Rethrow to allow handling by the caller
+        return ""; // Rethrow to allow handling by the caller
     }
 }

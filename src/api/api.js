@@ -3542,7 +3542,6 @@ export const GetPdfBaseOfAnyFile = async (data) => {
       },
     }
   );
-  console.log(response,"ppppppp")
   return response;
 }
 

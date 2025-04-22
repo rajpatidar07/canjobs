@@ -22,6 +22,8 @@ import EditDocNameForm from "./Document folder/EditDocNameFOrm";
 import SAlert from "./sweetAlert";
 // import ExcelToPdfConverter from "./Common function/ExcelToPdfConverter";
 import AddFolderModal from "./Document folder/AddFolderModal";
+import ConvertPPT from "./Common function/ConvertPPT";
+import ConvertAnyFileToPdf from "./Common function/ConvertAnyFileTopdf";
 // import ConvertAnyFileToPdf from "./Common function/ConvertAnyFileTopdf";
 // import convertPPTtoPDF from "./Common function/PpttoPdf";
 export default function ApplicantTypeDocuments(props) {
@@ -235,10 +237,19 @@ export default function ApplicantTypeDocuments(props) {
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     ) {
       let res = await convertWordToPDF(data);
-      setState((prev) => ({
-        ...prev,
-        convertedDoc: res,
-      }));
+      console.log(res)
+      if (res) {
+        setState((prev) => ({
+          ...prev,
+          convertedDoc: res,
+        }));
+      } else {
+        setState((prev) => ({
+          ...prev,
+          convertedDoc: "",
+          docPreview: false,
+        }));
+      }
     } else if (mimeType === "text/plain") {
       GetNoteText(data, true);
     } else if (mimeType === "application/pdf") {
@@ -246,41 +257,65 @@ export default function ApplicantTypeDocuments(props) {
         ...prev,
         convertedDoc: downloadUrl,
       }));
-    }
-    // else if (
-    //   data.file.mimeType ===
-    //   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-    // ) {
-    //   if (data["@microsoft.graph.downloadUrl"]) {
-    //     try {
-    //       let res = await ExcelToPdfConverter(
-    //         data["@microsoft.graph.downloadUrl"]
-    //       );
-    //       console.log(res);
-    //       setState((prev) => ({
-    //         ...prev,
-    //         convertedDoc: `${res}`,
-    //       }));
-    //     } catch (error) {
-    //       console.error("Error converting Excel to PDF:", error);
-    //       setState((prev) => ({
-    //         ...prev,
-    //         convertedDoc: "",
-    //         docPreview: false,
-    //       }));
-    //     }
-    //   }
-    // } 
-    else {
-      // convertPPTtoPDF(data["@microsoft.graph.downloadUrl"])
-      window.open(data.webUrl);
-    //   let res = await ConvertAnyFileToPdf(data)
-    //   console.log(res)
-    //   setState((prev) => ({
-    //     ...prev,
-    //     convertedDoc: `data:application/pdf;base64,${res}`,
-    //   }));
-    }
+    } else
+      if (
+        data.file.mimeType === "application/vnd.openxmlformats-officedocument.presentationml.presentation" || data.file.mimeType === "application/vnd.ms-powerpoint" ||
+        data.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+      ) {
+        let res = await ConvertPPT(data)
+        if (res) {
+          setState((prev) => ({
+            ...prev,
+            convertedDoc: res,
+          }));
+        } else {
+          setState((prev) => ({
+            ...prev,
+            convertedDoc: "",
+            docPreview: false,
+          }));
+        }
+      }
+      else if (
+        data.file.mimeType ===
+        "application/vnd.ms-excel"
+      ) {
+        if (data["@microsoft.graph.downloadUrl"]) {
+          try {
+            let res = await ConvertAnyFileToPdf(
+              data
+            );
+            console.log(res);
+            setState((prev) => ({
+              ...prev,
+              convertedDoc: `data:application/pdf;base64,${res}`,
+            }));
+          } catch (error) {
+            console.error("Error converting Excel to PDF:", error);
+            setState((prev) => ({
+              ...prev,
+              convertedDoc: "",
+              docPreview: false,
+            }));
+          }
+        }
+      }
+      else {
+        console.log(data, "other")
+        window.open(data.webUrl);
+        setState((prev) => ({
+          ...prev,
+          convertedDoc: "",
+          docPreview: false,
+        }));
+        // convertPPTtoPDF(data["@microsoft.graph.downloadUrl"])
+        //   let res = await ConvertAnyFileToPdf(data)
+        //   console.log(res)
+        //   setState((prev) => ({
+        //     ...prev,
+        //     convertedDoc: `data:application/pdf;base64,${res}`,
+        //   }));
+      }
   };
 
   const showDeleteAlert = (data) =>
@@ -606,64 +641,64 @@ export default function ApplicantTypeDocuments(props) {
                       </Link>
                     </div>
                     {
-                    (
-                      state?.docSingleDate?.file?.mimeType ===
-                      "application/pdf" ||
-                      ((state?.docSingleDate?.file?.mimeType === "image/jpeg" ||
-                        state?.docSingleDate?.file?.mimeType === "image/png" ||
-                        state?.docSingleDate?.file?.mimeType === "image/jpg") &&
-                        state.imgConRes === "imageConverted") ||
-                      state?.docSingleDate?.file?.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
-                      state?.docSingleDate?.file?.mimeType ===
-                      "application/vnd.openxmlformats-officedocument.wordprocessingml.document") &&
+                      // (
+                      // state?.docSingleDate?.file?.mimeType ===
+                      // "application/pdf" ||
+                      // ((state?.docSingleDate?.file?.mimeType === "image/jpeg" ||
+                      //   state?.docSingleDate?.file?.mimeType === "image/png" ||
+                      //   state?.docSingleDate?.file?.mimeType === "image/jpg") &&
+                      //   state.imgConRes === "imageConverted") ||
+                      // state?.docSingleDate?.file?.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+                      // state?.docSingleDate?.file?.mimeType ===
+                      // "application/vnd.openxmlformats-officedocument.wordprocessingml.document") &&
                       state.convertedDoc &&
-                      state?.docSingleDate?.file?.mimeType !== "text/plain" ? (
-                      <AdobePDFViewer
-                        url={state.convertedDoc}
-                        data={state.docSingleDate}
-                        userId={props?.user_id}
-                        commentsList={state.commentsList}
-                        selectedMentionAdmin={state.selectedMentionAdmin}
-                        DocUserType={props?.emp_user_type}
-                        adminList={state.adminList}
-                        partnerList={state.partnerList}
-                        docsection={true}
-                        getCommentsList={getCommentsList}
-                        docTypeList={state.docTypeList}
-                        fileId={state.fileID}
-                        userType={localStorage.getItem("userType")}
-                        openCommentBox={props?.docId ? true : false}
-                        AdminData={fetchAdminData}
-                        setFileID={(fileID) =>
-                          setState((prevState) => ({ ...prevState, fileID }))
-                        }
-                        setConvertedDoc={(convertedDoc) =>
-                          setState((prevState) => ({
-                            ...prevState,
-                            convertedDoc,
-                          }))
-                        }
-                        setCommentsList={(commentsList) =>
-                          setState((prevState) => ({
-                            ...prevState,
-                            commentsList,
-                          }))
-                        }
-                        setDocSingleDate={(docSingleDate) =>
-                          setState((prevState) => ({
-                            ...prevState,
-                            docSingleDate,
-                          }))
-                        }
-                        SetPdfDocUrl={handleDocumentConversion}
-                        AnnoteId={props?.AnnoteId}
-                        docTaskId={props?.docTaskId}
-                      />
-                    ) : (
-                      state?.docSingleDate?.file?.mimeType !== "text/plain" && (
-                        <Loader />
-                      )
-                    )}
+                        state?.docSingleDate?.file?.mimeType !== "text/plain" ? (
+                        <AdobePDFViewer
+                          url={state.convertedDoc}
+                          data={state.docSingleDate}
+                          userId={props?.user_id}
+                          commentsList={state.commentsList}
+                          selectedMentionAdmin={state.selectedMentionAdmin}
+                          DocUserType={props?.emp_user_type}
+                          adminList={state.adminList}
+                          partnerList={state.partnerList}
+                          docsection={true}
+                          getCommentsList={getCommentsList}
+                          docTypeList={state.docTypeList}
+                          fileId={state.fileID}
+                          userType={localStorage.getItem("userType")}
+                          openCommentBox={props?.docId ? true : false}
+                          AdminData={fetchAdminData}
+                          setFileID={(fileID) =>
+                            setState((prevState) => ({ ...prevState, fileID }))
+                          }
+                          setConvertedDoc={(convertedDoc) =>
+                            setState((prevState) => ({
+                              ...prevState,
+                              convertedDoc,
+                            }))
+                          }
+                          setCommentsList={(commentsList) =>
+                            setState((prevState) => ({
+                              ...prevState,
+                              commentsList,
+                            }))
+                          }
+                          setDocSingleDate={(docSingleDate) =>
+                            setState((prevState) => ({
+                              ...prevState,
+                              docSingleDate,
+                            }))
+                          }
+                          SetPdfDocUrl={handleDocumentConversion}
+                          AnnoteId={props?.AnnoteId}
+                          docTaskId={props?.docTaskId}
+                        />
+                      ) : (
+                        state?.docSingleDate?.file?.mimeType !== "text/plain" && (
+                          <Loader />
+                        )
+                      )}
                   </div>
                 </div>
               </div>

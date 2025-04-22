@@ -2,7 +2,7 @@
 import moment from "moment";
 import { useEffect } from "react";
 // import { Link } from "react-router-dom";
-const HtmlAgreementSeventeen = ({
+const InitialConsultation = ({
     page,
     felidData,
     userData,
@@ -388,4 +388,4 @@ const HtmlAgreementSeventeen = ({
         </div>
     );
 };
-export default HtmlAgreementSeventeen;
+export default InitialConsultation;

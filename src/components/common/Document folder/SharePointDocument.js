@@ -7,7 +7,6 @@ import {
   AddSharePointDOcument,
   getallAdminData,
   GetCommentsAndAssign,
-  GetDocConvertToken,
   ChangeFolderNameSharpoint,
   GetAgent,
   GetSharePointData,
@@ -30,6 +29,9 @@ import DocumentsNotes from "./DocumentsNotes";
 // import ExcelToPdfConverter from "../Common function/ExcelToPdfConverter";
 import CreateExcelSheet from "./CreateExcelSheet";
 import CreateWordFile from "../../forms/user/CreateWordFile";
+import ConvertPPT from "../Common function/ConvertPPT";
+import ConvertAnyFileToPdf from "../Common function/ConvertAnyFileTopdf";
+// import convertWordToPDF from "../Common function/ConvertWordToPdf";
 // import DocViewer from "react-doc-viewer";
 // import { PDFDocument } from 'pdf-lib';
 
@@ -78,7 +80,7 @@ export default function SharePointDocument({
   const [taggedadmin, setTaggedAdmin] = useState([]);
   const [commentsList, setCommentsList] = useState([]);
   // const [commentsRes, setCommentsRes] = useState();
-  const [imgConRes, setImgConRes] = useState();
+  // const [imgConRes, setImgConRes] = useState();
   const [convertedDoc, setConvertedDoc] = useState("");
   const [noteText, setNoteText] = useState("");
   const [docNoteData, setDocNoteData] = useState([]);
@@ -191,33 +193,56 @@ export default function SharePointDocument({
       data.file.mimeType === "image/jpg"
     ) {
       convertUrlToPDF(data["@microsoft.graph.downloadUrl"]);
-    } else if (
-      data.file.mimeType ===
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-    ) {
-      //    console.log("first")
-      convertToPDF(data);
-    } else if (data.file.mimeType === "text/plain") {
+    } 
+    // else if (
+    //   data.file.mimeType ===
+    //   "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    // ) {
+    //   //    console.log("first")
+      // convertWordToPDF(data);
+    // } 
+    else if (data.file.mimeType === "text/plain") {
       GetNoteText(data, true);
     } else if (data.file.mimeType === "application/pdf") {
       setConvertedDoc(data["@microsoft.graph.downloadUrl"]);
     }
-    // else if (data.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
-    //   if (data["@microsoft.graph.downloadUrl"]) {
-    //     try {
-    //       let res = await ExcelToPdfConverter(data["@microsoft.graph.downloadUrl"]);
-    //       // console.log(res)
-    //       setConvertedDoc(`${res}`);
-    //     } catch (error) {
-    //       console.error("Error converting Excel to PDF:", error);
-    //       setConvertedDoc("");
-    //       setDocPreview(false);
-    //     }
-    //   }
-
-    // }
+    else if (
+      data.file.mimeType === "application/vnd.openxmlformats-officedocument.presentationml.presentation" || data.file.mimeType === "application/vnd.ms-powerpoint" ||
+      data.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"||
+       data.file.mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    ) {
+      console.log(data)
+      let res = await ConvertPPT(data)
+      console.log(res)
+      if (res) {
+        setConvertedDoc(res);
+      } else {
+        setDocPreview(false);
+        setConvertedDoc("");
+      }
+    } else if (
+      data.file.mimeType ===
+      "application/vnd.ms-excel"
+    ) {
+      if (data["@microsoft.graph.downloadUrl"]) {
+        try {
+          let res = await ConvertAnyFileToPdf(data);
+          console.log(res);
+          if (res) {
+            setConvertedDoc(`data:application/pdf;base64,${res}`);
+          } else {
+            setDocPreview(false);
+            setConvertedDoc("");
+          }
+        } catch (error) {
+          console.error("Error converting Excel to PDF:", error);
+          setDocPreview(false);
+          setConvertedDoc("");
+        }
+      }
+    }
     else {
-      // console.log(data.file.mimeType)
+      console.log(data.file.mimeType)
       setDocPreview(false);
       setConvertedDoc("");
       window.open(data.webUrl);
@@ -349,7 +374,7 @@ export default function SharePointDocument({
             setDocSingleDate(res.data.data.find((item) => item.id === newdocId));
             SetPdfDocUrl(res.data.data.find((item) => item.id === newdocId));
             setFileID(res.data.data.find((item) => item.id === newdocId).id);
-            console.log(res.data.data.find((item) => item.id === newdocId),"pppppppp")
+            console.log(res.data.data.find((item) => item.id === newdocId), "pppppppp")
             getCommentsList(res.data.data.find((item) => item.id === newdocId));
             const newUrl = window.location.pathname;
             window.history.replaceState({}, document.title, newUrl);
@@ -620,7 +645,7 @@ export default function SharePointDocument({
         setShowDropDown(false);
         setTaggedAdmin([]);
         setDocFileBase([]);
-      }else{
+      } else {
         toast.error(`Something went wrong`, {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
@@ -722,43 +747,12 @@ export default function SharePointDocument({
       reader.onloadend = () => {
         const base64String = reader.result;
         setConvertedDoc(base64String);
-        if (base64String) {
-          setImgConRes("imageConverted");
-        }
+        // if (base64String) {
+        //   setImgConRes("imageConverted");
+        // }
       };
       reader.readAsDataURL(pdfBlob);
     };
-  };
-  // Function to convert a docx to pdf
-  const convertToPDF = async (data) => {
-    try {
-      let response = await GetDocConvertToken();
-      const myHeaders = new Headers();
-      myHeaders.append("Authorization", `Bearer ${response.data.data}`);
-      myHeaders.append("Content-type", "application/json");
-
-      const requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        redirect: "follow",
-      };
-      fetch(
-        `https://graph.microsoft.com/v1.0${data.parentReference.path}/${data.name}:/content?format=pdf`,
-        requestOptions
-      )
-        .then(function (resp) {
-          return resp.blob();
-        })
-        .then(function (blob) {
-          setConvertedDoc(window.URL.createObjectURL(blob));
-          // setConvertedDoc([{ uri: data["@microsoft.graph.downloadUrl"] }]);
-        })
-        .catch((error) => console.error(error));
-    } catch (error) {
-      console.error("Error downloading or parsing the file:", error);
-    }
-
-    return; // Return the base64 PDF data
   };
   return (
     <>
@@ -928,14 +922,15 @@ export default function SharePointDocument({
                   </div>
                   {
                     // docTypePage === "adobe"
-                    ((docSingleDate.file.mimeType === "application/pdf" ||
-                      ((docSingleDate.file.mimeType === "image/jpeg" ||
-                        docSingleDate.file.mimeType === "image/png" ||
-                        docSingleDate.file.mimeType === "image/jpg") &&
-                        imgConRes === "imageConverted") ||
-                      docSingleDate.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
-                      docSingleDate.file.mimeType ===
-                      "application/vnd.openxmlformats-officedocument.wordprocessingml.document") &&
+                    (
+                      // (docSingleDate.file.mimeType === "application/pdf" ||
+                      // ((docSingleDate.file.mimeType === "image/jpeg" ||
+                      //   docSingleDate.file.mimeType === "image/png" ||
+                      //   docSingleDate.file.mimeType === "image/jpg") &&
+                      //   imgConRes === "imageConverted") ||
+                      // docSingleDate.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+                      // docSingleDate.file.mimeType ===
+                      // "application/vnd.openxmlformats-officedocument.wordprocessingml.document") &&
                       (convertedDoc && docSingleDate.file.mimeType !==
                         "text/plain")) ? (
                       // commentsRes ? (

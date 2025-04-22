@@ -18,7 +18,7 @@ import HtmlAgreementThirteen from "./Html/HtmlAgreementThirteen";
 import HtmlAgreementFourTeen from "./Html/HtmlAgreementFourTeen";
 import HtmlAgreementsixteen from "./Html/HtmlAgreementsixteen";
 import { IoMdArrowBack } from "react-icons/io";
-import HtmlAgreementSeventeen from "./Html/HtmlAgreementSeventeen";
+import InitialConsultation from "./Html/InitialConsultation";
 import HtmlAgreementEighteen from "./Html/HtmlAgreementEighteen";
 import HtmlRenewalApplication from "./Html/HtmlRenewalApplication";
 import HtmlMoeThanOneApplicant from "./Html/HtmlMoeThanOneApplicant";
@@ -265,7 +265,7 @@ export default function MainRetainerAggHtml({
               ) : agreementData.type === "LMIA exempt employers" ? (
                 <HtmlAgreementsixteen />
               ) : agreementData.type === "initial consultation" ? (
-                <HtmlAgreementSeventeen
+                <InitialConsultation
                   page={"admin"}
                   userData={userData}
                   felidData={felidData}
