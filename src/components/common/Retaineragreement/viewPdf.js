@@ -110,9 +110,10 @@ import { Modal } from "react-bootstrap";
 import AdobePDFViewer from "../Adobe/adobeFile";
 import Loader from "../../common/loader";
 import { useLocation } from "react-router-dom";
-import { GetAgent, getallAdminData, GetCommentsAndAssign, GetDocConvertToken, GetSharePointData, getSharePointParticularFolders } from "../../../api/api";
+import { GetAgent, getallAdminData, GetCommentsAndAssign, GetSharePointData, getSharePointParticularFolders } from "../../../api/api";
 import { jsPDF } from "jspdf";
-import ExcelToPdfConverter from "../Common function/ExcelToPdfConverter";
+import ConvertAnyFileToPdf from "../Common function/ConvertAnyFileTopdf";
+import ConvertPPT from "../Common function/ConvertPPT";
 export default function ViewPdf({
   show,
   close,
@@ -176,29 +177,47 @@ export default function ViewPdf({
           ) {
             // Await the conversion if convertUrlToPDF is asynchronous
             convertUrlToPDF(data["@microsoft.graph.downloadUrl"]);
-          } else if (
-            data.file.mimeType ===
-            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-          ) {
-            // Await the conversion if convertToPDF is asynchronous
-            convertToPDF(data);
-          } else if (data.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") {
-            if (data["@microsoft.graph.downloadUrl"]) {
-              try {
-                let res = await ExcelToPdfConverter(data["@microsoft.graph.downloadUrl"]);
-                // console.log(res)
-                setNewPdfUrl(`${res}`);
-              } catch (error) {
-                console.error("Error converting Excel to PDF:", error);
-                setNewPdfUrl("")
-              }
-            }
-
+          }  else if (
+      data.file.mimeType === "application/vnd.openxmlformats-officedocument.presentationml.presentation" || data.file.mimeType === "application/vnd.ms-powerpoint" ||
+      data.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+      data.file.mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    ) {
+      console.log(data)
+      let res = await ConvertPPT(data)
+      console.log(res)
+      if (res) {
+        setNewPdfUrl(res);
+      } else {
+        setNewDocLoder(false);
+        setNewPdfUrl("");
+      }
+    } else if (
+      data.file.mimeType ===
+      "application/vnd.ms-excel"
+    ) {
+      if (data["@microsoft.graph.downloadUrl"]) {
+        try {
+          let res = await ConvertAnyFileToPdf(data);
+          console.log(res);
+          if (res) {
+            setNewPdfUrl(`data:application/pdf;base64,${res}`);
           } else {
-            // console.log(data.file.mimeType)
-            window.open(data.webUrl);
-            setNewPdfUrl("")
+            setNewDocLoder(false);
+            setNewPdfUrl("");
           }
+        } catch (error) {
+          console.error("Error converting Excel to PDF:", error);
+          setNewDocLoder(false);
+          setNewPdfUrl("");
+        }
+      }
+    }
+    else {
+      console.log(data.file.mimeType)
+      setNewDocLoder(false);
+      setNewPdfUrl("");
+      window.open(data.webUrl);
+    }
         } else if (res.data.data === "No Documents Found") {
           setNewDocLoder(false);
         } else {
@@ -247,36 +266,6 @@ export default function ViewPdf({
       };
       reader.readAsDataURL(pdfBlob);
     };
-  };
-  // Function to convert a docx to pdf
-  const convertToPDF = async (data) => {
-    try {
-      let response = await GetDocConvertToken();
-      const myHeaders = new Headers();
-      myHeaders.append("Authorization", `Bearer ${response.data.data}`);
-      myHeaders.append("Content-type", "application/json");
-
-      const requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        redirect: "follow",
-      };
-      fetch(
-        `https://graph.microsoft.com/v1.0${data.parentReference.path}/${data.name}:/content?format=pdf`,
-        requestOptions
-      )
-        .then(function (resp) {
-          return resp.blob();
-        })
-        .then(function (blob) {
-          setNewPdfUrl(window.URL.createObjectURL(blob));
-        })
-        .catch((error) => console.error(error));
-    } catch (error) {
-      console.error("Error downloading or parsing the file:", error);
-    }
-
-    return; // Return the base64 PDF data
   };
   const getCommentsList = async (data) => {
     if (data) {

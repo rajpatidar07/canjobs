@@ -31,7 +31,7 @@ import CreateExcelSheet from "./CreateExcelSheet";
 import CreateWordFile from "../../forms/user/CreateWordFile";
 import ConvertPPT from "../Common function/ConvertPPT";
 import ConvertAnyFileToPdf from "../Common function/ConvertAnyFileTopdf";
-// import convertWordToPDF from "../Common function/ConvertWordToPdf";
+import convertWordToPDF from "../Common function/ConvertWordToPdf";
 // import DocViewer from "react-doc-viewer";
 // import { PDFDocument } from 'pdf-lib';
 
@@ -193,14 +193,15 @@ export default function SharePointDocument({
       data.file.mimeType === "image/jpg"
     ) {
       convertUrlToPDF(data["@microsoft.graph.downloadUrl"]);
+    }
+    else if (
+      // data.file.mimeType ===
+      // "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+      data.file.mimeType === "application/msword"
+    ) {
+      //    console.log("first")
+    convertWordToPDF(data);
     } 
-    // else if (
-    //   data.file.mimeType ===
-    //   "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-    // ) {
-    //   //    console.log("first")
-      // convertWordToPDF(data);
-    // } 
     else if (data.file.mimeType === "text/plain") {
       GetNoteText(data, true);
     } else if (data.file.mimeType === "application/pdf") {
@@ -208,8 +209,8 @@ export default function SharePointDocument({
     }
     else if (
       data.file.mimeType === "application/vnd.openxmlformats-officedocument.presentationml.presentation" || data.file.mimeType === "application/vnd.ms-powerpoint" ||
-      data.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"||
-       data.file.mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      data.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+      data.file.mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
     ) {
       console.log(data)
       let res = await ConvertPPT(data)
@@ -1112,7 +1113,7 @@ export default function SharePointDocument({
                       onClick={() => {
                         setOpenExcelSheet(true)
                       }}>Add Excel Sheet</button>
-                    <button className="btn btn-light mx-2  d-none" style={{ maxHeight: 34 }}
+                    <button className="btn btn-light mx-2 " style={{ maxHeight: 34 }}
                       onClick={() => {
                         setOpenWordForm(true)
                       }}>Add Word</button>

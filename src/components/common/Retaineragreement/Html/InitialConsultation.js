@@ -10,7 +10,7 @@ const InitialConsultation = ({
     addSign,
 }) => {
     const familyJsonArray = felidData?.family_json || []; //? JSON.parse(felidData?.family_json) : [];
-    const jsxContent = `<!DOCTYPE html>
+const jsxContent = `<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -30,27 +30,112 @@ const InitialConsultation = ({
       }
     </style>
   </head>
-  <body style="margin: 0 auto; max-width: 1024px;color:"black;">
-<div class="header" style="padding: 10px 20px;text-align: justify;">
+   <body style="margin: 0 auto; margin-bottom: 60px; max-width: 1024px; color:black;">
+    <div class="header" style="margin-top: 22px;padding: 10px 20px; text-align: justify;display: flex; justify-content: space-between; align-items: center;">
       <img
         src="https://canpathwaysjobs.com/image/00logo-main-black.png"
         alt="Canpathways logo"
         style="max-width: 200px"
       />
+      <div style="font-size: 14px;display:flex;flex-direction:column;text-align:center;">
+        <span style="border-bottom: solid 1px; margin-bottom: 9px;">55</span>
+        <label style="">Client File Number</label>
+      </div>     
     </div>
-<div class="main_div" style="padding: 10px">
-      <h3 style="text-align: center">INITIAL CONSULTATION AGREEMENT</h3>
-    <p style="text-align: center">BETWEEN
-    <br> CAN Pathways Immigration Consultancy Ltd.<br>and Client: <u>${felidData &&
-            (familyJsonArray[0]?.client_first_name ||
-                familyJsonArray[0]?.client_last_name)
-            ? familyJsonArray[0]?.client_first_name +
-            " " +
-            (familyJsonArray[0]?.client_last_name || "")
-            : emp_user_type === "employee"
-                ? userData?.name || "" || ""
-                : "" || ""
-        }</u></p>
+    <div style="text-align:center">
+        <h3>INITIAL CONSULTATION AGREEMENT</h3>
+        <h5>BETWEEN</h5>
+        <h5 style="font-size: 15px;line-height: 22px">CAN Pathways Immigration Consultancy Ltd.<br> and<br> Client:</h5>
+    </div>
+   
+    <div style="">
+    <p style="line-height: 28px;margin-bottom: 0;">
+        This Initial Consultation AGREEMENT ("the Agreement") is made on the date mentioned below.<br>             
+        "The Effective Date": 03 September 2024<br>             
+        BY AND BETWEEN<br>             
+        Harpreet Kaur (the "RCIC") located at CAN Pathways Immigration Consultancy Ltd. with address at Unit#310, 2618 Hopewell PI, NE Calgary, AB, T1Y 7J7, Canada herein after referred to as "Legal Representative/ RCIC".<br> 
+        AND<br>             
+        The "Candidate", as his / her details provided as of this present agreement, collectively called the "Client."</p>
+    </div>
+    <ul style="margin-top:0;list-style:none;line-height:23px;">
+        <li><label style="color: #000; font-size: 15px; font-weight: 600;">Client Name:</label><span style="border-bottom:solid 1px;width:200px;display:inline-block;margin-left:9px;font-size:14px;color:#333;line-height:13px;"> Full Name</span></li>
+        <li><label style="color: #000; font-size: 15px; font-weight: 600;">Client Address:</label><span style="border-bottom:solid 1px;width:200px;display:inline-block;margin-left:9px;font-size:14px;color:#333;line-height:13px;"> Address</span></li>
+        <li><label style="color: #000; font-size: 15px; font-weight: 600;">Client phone number:</label><span style="border-bottom:solid 1px;width:200px;display:inline-block;margin-left:9px;font-size:14px;color:#333;line-height:13px;"> Phone Number</span></li>
+        <li><label style="color: #000; font-size: 15px; font-weight: 600;">Client email address:</label><span style="border-bottom:solid 1px;width:200px;display:inline-block;margin-left:9px;font-size:14px;color:#333;line-height:13px;"> Email</span></li>
+      </li>
+   </ul>
+ 
+   <div>
+    <h3 style="margin-bottom: 0;text-decoration: underline;font-size: 16px;"><span>1.</span> AGREEMENT</h3>
+    <p>Harpreet Kaur is a member in good standing of the Immigration Consultants of Canada Regulatory Council (ICCRC). As such, its By-laws, Code of Professional Ethics, and Regulations bind her.</p>
+   <p> Additionally, the provisions of this agreement are subject to ICCRC regulations, certain aspects of which are predetermined and cannot be modified.</p>     
+
+   <h3 style="margin-bottom: 0;text-decoration: underline;font-size: 16px;"><span>2.</span> SCOPE OF SERVICE</h3>
+<p><span>1. </span>Client is seeking consultation and professional advice from the RCIC with respect to one or more of the following (please tick the correct service):</p>
+<ul>
+<li style="line-height:20px;margin-bottom:12px;font-size:15px">Visitor visa /Super-visa application</li>
+<li style="line-height:20px;margin-bottom:12px;font-size:15px">Study permit application</li>
+<li style="line-height:20px;margin-bottom:12px;font-size:15px">Work permit application/LMIA Related Inquiries (please specify)<span>........</span></li>
+<li style="line-height:20px;margin-bottom:12px;font-size:15px">Permanent residence/Citizenship application (please specify)<span>........</span></li>
+<li style="line-height:20px;margin-bottom:12px;font-size:15px">Other (please specify)<span>.........</span></li>
+<li style="line-height:20px;margin-bottom:12px;font-size:15px">Initials:<span>.........</span></li>
+</ul>
+<p><span>2. </span>The professional services that the RCIC (Regulated Canadian Immigration Consultant) will offer to the Client according to the terms specified are mentioned below:</p>
+<ul>
+<li style="line-height:20px;margin-bottom:12px;font-size:15px">Gather additional details regarding the Client's objectives.</li>
+<li style="line-height:20px;margin-bottom:12px;font-size:15px">Acquire information about the Client's history, qualifications, as well as personal and financial situation.</li>
+<li style="line-height:20px;margin-bottom:12px;font-size:15px">Offer guidance concerning the prevailing state of Canadian immigration regulations and policies as they pertain to the Client's inquiry.</li>
+<li style="line-height:20px;margin-bottom:12px;font-size:15px">Examine the information provided by the Client, evaluating its alignment with existing Canadian laws and policies.</li>
+<li style="line-height:20px;margin-bottom:12px;font-size:15px">Identify the most suitable immigration approach for the Client, if applicable and provide recommendations to the Client.</li></ul>
+<h3 style="margin-bottom: 0;text-decoration: underline;font-size: 16px;"><span>3.</span> LIMITS OF ENGAGEMENT</h3>
+<ul>
+<li style="line-height:20px;margin-bottom:12px;font-size:15px">This Agreement comprises of a single consultation with 2-3 follow up inquiries pertaining to the initial consultation focusing on the matters mentioned earlier. The RCIC will not offer additional information or guidance unless both the Client and the RCIC explicitly agree to continue discussing these or other topics. In other cases, a separate written agreement will be put forward to cover those matters.</li>
+<li style="line-height:20px;margin-bottom:12px;font-size:15px">This agreement does not impose any obligation on the RCIC to represent the Client in applications or legal proceedings.</li>
+<li style="line-height:20px;margin-bottom:12px;font-size:15px">Should the Client require further guidance or representation for another matter beyond the scope of topic covered in the initial consultation, a distinct retainer agreement with the RCIC must be signed.</li>
+<li style="line-height:20px;margin-bottom:12px;font-size:15px">The scope of work under this agreement will be confined to a maximum of 30 minutes.</li>
+<li style="line-height:20px;margin-bottom:12px;font-size:15px">We do not provide in-depth career advice or detailed job search assistance during this session. This level of service is exclusively available to appointed clients.</li></ul>
+<h3 style="margin-bottom: 0;text-decoration: underline;font-size: 16px;"><span>4.</span> CONSULTATION APPROACH:</h3>
+<ul>
+<li style="line-height:20px;margin-bottom:12px;font-size:15px">The RCIC will offer consultation services to the Client through in-person meetings, phone conversations, or Zoom sessions (video or voice calls).</li>
+<li style="line-height:20px;margin-bottom:12px;font-size:15px">The duration of the consultation will extend as required for the RCIC to fulfill the services outlined in this</li>
+<li style="line-height:20px;margin-bottom:12px;font-size:15px">The duration of the consultation will extend as required for the RCIC to fulfill the services outlined in this agreement. However, the consultation shall not exceed 30 minutes in duration.</li>
+</ul>
+<h3 style="margin-bottom: 0;text-decoration: underline;font-size: 16px;"><span>5.</span> PAYMENT OF FEE:</h3>
+<ul>
+  <li style="line-height:20px;margin-bottom:12px;font-size:15px">For the consultation service, the Client is responsible for an upfront consultation fee of CAD$200.</li>
+<li style="line-height:20px;margin-bottom:12px;font-size:15px">If the Client promptly engages the services of the RCIC by executing a Retainer Agreement and submitting an initial deposit fee, the cost of the Initial Consultation will be applied as a credit toward the overall fee specified in the Retainer Agreement. As a result, the Initial Consultation charge will be waived.</li>
+</ul>
+<h3 style="margin-bottom: 0;text-decoration: underline;font-size: 16px;"><span>6.</span> REFUND POLICY</h3>
+<ul>
+  <li style="line-height:20px;margin-bottom:12px;font-size:15px">The Client retains the right to receive a refund for any fees that have not been utilized in accordance with this agreement.</li>
+<li style="line-height:20px;margin-bottom:12px;font-size:15px">The Client holds the option to reschedule their appointment or opt for a consultation on an alternate date, following payment of the fee.</li>
+<li style="line-height:20px;margin-bottom:12px;font-size:15px">Fees will be considered earned by the RCIC immediately upon the initiation of professional advice delivery. Fees that have been earned pursuant to this agreement are not eligible for a refund. </li>
+</ul>
+<h3 style="margin-bottom: 0;text-decoration: underline;font-size: 16px;"><span>7.</span> OTHER CONDITIONS</h3>
+<ul>
+  <li style="line-height:20px;margin-bottom:12px;font-size:15px"><span style="font-size:14px;text-decoration:underline;font-weight:600;"> CLIENT RESPONSIBILITIES: </span>The Client is obligated to provide the RCIC with accurate factual
+    information and documentation necessary for the consultation process. Honesty and precision are essential. The Client must disclose all pertinent information, even if it is negative or adverse. Any failure to fully disclose relevant details may impact the advice provided by the RCIC, potentially voiding this Agreement or significantly influencing the Client's application outcome or status retention.</li>
+    <li style="line-height:20px;margin-bottom:12px;font-size:15px"><span style="font-size:14px;text-decoration:underline;font-weight:600;"> ADVICE APPLICABLE TO PRESENT DATE: </span>The consultation given by the RCIC to the Client is founded on the Canadian immigration law and policy as of the date of appointment, where applicable. The RCIC bears no responsibility for any alterations in government legislation or policy that might affect subsequent application processing by the Client.</li>
+    <li style="line-height:20px;margin-bottom:12px;font-size:15px"><span style="font-size:14px;text-decoration:underline;font-weight:600;"> NO GUARANTEE OF OUTCOME: </span>The RCIC does not guarantee the ability to aid the Client in achieving their business, education, employment, or immigration objectives. The RCIC shall render consulting services to the Client at a standard appropriate for an ICCRC member.</li>
+     <li style="line-height:20px;margin-bottom:12px;font-size:15px"><span style="font-size:14px;text-decoration:underline;font-weight:600;"> CONFIDENTIALITY: </span>The RCIC is obliged to maintain the Client's confidence and information. This professional commitment exists to foster candid and comprehensive communication between the Client and the RCIC. All information and documentation submitted by the Client and reviewed by the RCIC will remain confidential and will not be shared with any third party, apart from RCIC's agents and employees, unless explicit consent is given or as required by law.</li>
+     <li style="line-height:20px;margin-bottom:12px;font-size:15px"><span style="font-size:14px;text-decoration:underline;font-weight:600;">DISPUTE RESOLUTION: </span>In the event of a dispute, both the Client and RCIC must strive to resolve the matter amicably. If a resolution cannot be achieved, the Client must submit the complaint in writing to the RCIC and allow a grace period of 5 business days for the RCIC's response. If the dispute persists, the Client can follow the complaint and discipline procedure delineated by ICCRC on their website: http://www.iccrc- crcic.ca/public/complaintsDiscipline.cfm. ICCRC's Contact Information is as follows:</li>
+</ul>
+<p style="padding-left: 40px;line-height: 22px;">Immigration Consultants of Canada Regulatory Council (ICCRC)<br>
+  5500 North Service Rd., Suite 1002, Burlington, ON, L7L<br>
+ 6W6 Toll free: 1-877-836-7543</p>
+<h3 style="margin-bottom: 0;text-decoration: underline;font-size: 16px;"><span>8.</span> APPLICABLE LAW:</h3>
+<ul><li>The laws in effect in the Province of Alberta, Canada shall govern the terms and conditions of this agreement.</li></ul>
+<h4 style="text-align:center;font-size:15px;font-weight:300;text-decoration:underline;">SIGNED BY THE CLIENT AND THE RCIC IN ACCEPTANCE OF AGREEMENT</h4>
+<div style="display: flex;justify-content: space-between;margin-top: 82px;"><span>Signature of Client</span><span>Signature of RCIC</span></div>
+<div style="text-align: center;">
+<p style="text-align: center; color: #ed1c24;line-height: 24px; margin-top: 46px;">
+  Unit# 310, 2618 Hopewell PI NE Calgary, AB T1Y 7J7 Canada | <br>
+Tel.: 403.888.5308 | Email: <a href="info@canpathways.ca">info@canpathways.ca</a> | Website:www.canpathways.ca
+</p></div>
+    </div>
+    
+        </body>
+                    </html>
 
 
 <div class="section">

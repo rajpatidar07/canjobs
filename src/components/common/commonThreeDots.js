@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BsChat, BsThreeDots } from "react-icons/bs";
+import { BsChat, BsFileEarmarkWord, BsThreeDots } from "react-icons/bs";
 // import { GrLineChart } from 'react-icons/gr'
 // import { HiOutlineBell } from 'react-icons/hi2'
 import ExportExcelButton from "./exportExcelButton";
@@ -10,11 +10,14 @@ import { toast } from "react-toastify";
 import { AddSharePointDOcument } from "../../api/api";
 import CreateExcelSheet from "./Document folder/CreateExcelSheet";
 import { AiTwotoneFileExcel } from "react-icons/ai";
+import CreateWordFile from "../forms/user/CreateWordFile";
 export default function CommonThreeDots(props) {
   let [isOpen, setIsOpen] = useState(false);
   let [openFolderModal, setOPenFolderModal] = useState(false);
   let [addFileLoading, setAddFileLoading] = useState(false);
   let [openExcelSheet, setOpenExcelSheet] = useState(false);
+  let [openWordFile, setOpenWordFile] = useState(false);
+
   let user_type = localStorage.getItem("userType");
   const AddFileClick = async (event) => {
     // setAddFileClickOn(true);
@@ -129,6 +132,14 @@ export default function CommonThreeDots(props) {
         docTypeName={""}
         setApiCall={props.setFolderApiCall}
       />
+      <CreateWordFile
+        user_id={props.user_id}
+        emp_user_type={props.emp_user_type}
+        folderID={props.folderId}
+        docTypeName={""}
+        setApiCall={props.setFolderApiCall}
+        show={openWordFile}
+        close={() => setOpenWordFile(false)} />
       <div
         className="position-relative d-inline-block header-btn-devider ml-auto ml-lg-5 pl-2 d-xs-flex align-items-center"
         onMouseEnter={() => setIsOpen(true)}
@@ -195,6 +206,14 @@ export default function CommonThreeDots(props) {
                 className="dropdown-item d-flex align-items-center border-0 bg-transparent m-3"
               >
                 <AiTwotoneFileExcel className="mx-3" /> Create Excel
+              </button>
+            ) : null}
+            {user_type === "admin" && props.applicantTypeId ? (
+              <button
+                onClick={() => setOpenWordFile(true)}
+                className="dropdown-item d-flex align-items-center border-0 bg-transparent m-3"
+              >
+                <BsFileEarmarkWord className="mx-3" /> Create Word
               </button>
             ) : null}
             {user_type === "admin" && props.applicantTypeId ? (
