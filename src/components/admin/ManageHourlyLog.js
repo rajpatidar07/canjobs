@@ -150,9 +150,9 @@ const ManageHourlyLog = () => {
                                         {/* Admin List */}
                                         <ul className="list-unstyled d-flex align-items-center flex-wrap">
                                             {filteredAdmins.length > 0 ? (
-                                                filteredAdmins.map((admin) => (
+                                                filteredAdmins.map((admin,index) => (
                                                     <li
-                                                        key={admin.id}
+                                                        key={index}
                                                         className="bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
                                                     >
                                                         <Link onClick={() => {

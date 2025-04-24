@@ -237,20 +237,7 @@ function Hourlylogtable(props) {
                                 <table className="table table-striped main_data_table text-center align-middle">
                                     <thead>
                                         <tr className="py-2">
-                                            {(props.showAddForm ? [
-                                                "item",
-                                                "Manager",
-                                                "Person",
-                                                "Date",
-                                                "Day",
-                                                "Total Hours",
-                                                "Start Time",
-                                                "Finish Time",
-                                                "Break",
-                                                "Notes / Extra",
-                                                "Info",
-                                                "Action",
-                                            ] : [
+                                            {[
                                                 "item",
                                                 "Person",
                                                 "Date",
@@ -260,9 +247,9 @@ function Hourlylogtable(props) {
                                                 "Finish Time",
                                                 "Break",
                                                 "Notes / Extra",
-                                                "Info",
+                                                // "Info",
                                                 "Action",
-                                            ]).map((heading, index) => (
+                                            ].map((heading, index) => (
                                                 <th
                                                     key={index}
                                                     className={`border-0 font-size-3 font-weight-normal 
@@ -280,7 +267,8 @@ function Hourlylogtable(props) {
                                                     <Link to="" className="text-dark"
                                                         onClick={() => { if (heading !== "Action") { handleSort(heading === "Person" ? "mention_person_id" : heading === "Total Hours" ? "total_hour" : heading === "Manager" ? "hour_log_of_admin" : heading === "Notes / Extra" ? "notes" : (heading.toLowerCase().replaceAll(" ", "_"))) } }}
                                                     >
-                                                        {heading}</Link>                                                 </th>
+                                                        {heading}</Link>
+                                                </th>
                                             ))}
                                         </tr>
                                     </thead>
@@ -301,7 +289,7 @@ function Hourlylogtable(props) {
                                                     <TableInput
                                                         value={state.item}
                                                         onChange={onInputChange}
-                                                        type="date"
+                                                        type="text"
                                                         id="item"
                                                         name="item"
                                                     />
@@ -313,7 +301,7 @@ function Hourlylogtable(props) {
                                                 </td>
                                                 <td style={{ minWidth: "150px" }}>
                                                     <select className="form-control" value={state.hour_log_of_admin} onChange={onInputChange} id="hour_log_of_admin" name="hour_log_of_admin">
-                                                        <option>Select Manger</option>
+                                                        <option>Select person</option>
                                                         {(props.adminList || []).map((item, index) => (
                                                             <option value={item.admin_id} key={index}>{item.name}</option>
                                                         ))}
@@ -324,7 +312,7 @@ function Hourlylogtable(props) {
                                                         </span>
                                                     )}
                                                 </td>
-                                                <td style={{ minWidth: "150px" }}>
+                                                {/* they need person as manger <td style={{ minWidth: "150px" }}>
                                                     <select className="form-control" value={`${state.mention_person_id},${state.mention_person_type}`} onChange={(e) => {
                                                         setState({ ...state, mention_person_id: e.target.value.split(",")[0], mention_person_type: e.target.value.split(",")[1] })
                                                     }} id="mention_person_id" name="mention_person_id">
@@ -333,7 +321,7 @@ function Hourlylogtable(props) {
                                                             <option value={`${item.admin_id},${item.admin_type}`} key={index}>{item.name}</option>
                                                         ))}
                                                     </select>
-                                                </td>
+                                                </td> */}
                                                 <td style={{ minWidth: "150px" }}>
                                                     <TableInput value={state.date} onChange={onInputChange} type="date" id="date" name="date" />
                                                 </td>
@@ -361,9 +349,9 @@ function Hourlylogtable(props) {
                                                 <td style={{ minWidth: "150px" }}>
                                                     <TableInput value={state.notes} onChange={onInputChange} type="text" id="notes" name="notes" />
                                                 </td>
-                                                <td style={{ minWidth: "150px" }}>
+                                                {/* <td style={{ minWidth: "150px" }}>
                                                     <TableInput value={state.info} onChange={onInputChange} type="text" id="info" name="info" />
-                                                </td>
+                                                </td> */}
                                                 {/* Button Column */}
                                                 <td style={{ minWidth: "50px", textAlign: "center" }}>
                                                     {loading === true ? (
@@ -408,7 +396,7 @@ function Hourlylogtable(props) {
                                         {
                                             HourLogData.length === 0 || !HourLogData ?
                                                 <tr className="overflow-hidden">
-                                                    <td colSpan={11} className="text-center font-weight-bold text-capitalize">
+                                                    <td colSpan={10} className="text-center font-weight-bold text-capitalize">
                                                         No Data found                                            </td>
                                                 </tr>
                                                 :
@@ -420,11 +408,14 @@ function Hourlylogtable(props) {
                                                         return acc;
                                                     }, {})
                                                 ).map(([managerId, logs], groupIndex) => {
+                                                    // Sort logs for each manager by date or any other sorting criteria
+                                                    logs.sort((a, b) => new Date(a.created_at) - new Date(b.created_at)); // Sorting by date
+
                                                     const manager = (props.adminList || []).find((admin) => admin.admin_id === managerId);
                                                     const randomColor = "#" + Math.floor(Math.random() * 16777215).toString(16); // generates hex color
 
                                                     return (
-                                                        <>
+                                                        <React.Fragment key={`manager-${groupIndex}`} >
                                                             {/* Manager Row */}
                                                             <tr key={`manager-${groupIndex}`} className="overflow-hidden">
                                                                 <td colSpan={11} className="text-left font-weight-bold text-capitalize"
@@ -450,7 +441,7 @@ function Hourlylogtable(props) {
                                                                             <TableInput
                                                                                 value={item.item}
                                                                                 onChange={(newValue) => handleUpdateChange(newValue, item.id, "item")}
-                                                                                type="date"
+                                                                                type="text"
                                                                                 id="item"
                                                                                 name="item"
                                                                             />
@@ -468,7 +459,7 @@ function Hourlylogtable(props) {
                                                                     </td>
 
                                                                     {/* Hour Log of Admin (Manager) */}
-                                                                    <td style={{ minWidth: "150px" }} className="d-none">
+                                                                    <td style={{ minWidth: "150px" }}>
                                                                         {editRowId === item.hour_log_of_admin ? (
                                                                             <select
                                                                                 className="form-control"
@@ -478,7 +469,7 @@ function Hourlylogtable(props) {
                                                                                 onBlur={() => setEditRowId(null)}
                                                                                 autoFocus
                                                                             >
-                                                                                <option value="">Select Manager</option>
+                                                                                <option value="">Select person</option>
                                                                                 {(props.adminList || []).map((admin, idx) => (
                                                                                     <option value={admin.admin_id} key={idx}>
                                                                                         {admin.name}
@@ -501,7 +492,7 @@ function Hourlylogtable(props) {
                                                                     </td>
 
                                                                     {/* Mention Person */}
-                                                                    <td style={{ minWidth: "150px" }}>
+                                                                    {/* <td style={{ minWidth: "150px" }}>
                                                                         {editRowId === item.mention_person_id ? (
                                                                             <select
                                                                                 className="form-control"
@@ -532,7 +523,7 @@ function Hourlylogtable(props) {
                                                                                 </div>
                                                                             ) : "N/A"
                                                                         )}
-                                                                    </td>
+                                                                    </td> */}
 
                                                                     {/* Date */}
                                                                     <td style={{ minWidth: "150px" }}>
@@ -616,7 +607,7 @@ function Hourlylogtable(props) {
                                                                     </td>
 
                                                                     {/* Info */}
-                                                                    <td style={{ minWidth: "150px" }}>
+                                                                    {/* <td style={{ minWidth: "150px" }}>
                                                                         <TableInput
                                                                             value={item.info}
                                                                             onChange={(newValue) => handleUpdateChange(newValue, item.id, "info")}
@@ -624,7 +615,7 @@ function Hourlylogtable(props) {
                                                                             id="info"
                                                                             name="info"
                                                                         />
-                                                                    </td>
+                                                                    </td> */}
 
                                                                     {/* Delete Button */}
                                                                     <td style={{ minWidth: "150px" }}>
@@ -644,7 +635,7 @@ function Hourlylogtable(props) {
                                                                 </tr>
 
                                                             ))}
-                                                        </>
+                                                        </React.Fragment>
                                                     );
                                                 })}
                                     </tbody>
@@ -652,7 +643,7 @@ function Hourlylogtable(props) {
 
                             )}
                         </form>
-                        {<SAlert
+                        {deleteAlertHourLog && <SAlert
                             show={deleteAlertHourLog === true}
                             title={deleteAlertHourLogData?.item}
                             text="Are you Sure you want to delete !"

@@ -25,6 +25,7 @@ import InitialConsultation from './Html/InitialConsultation'
 import HtmlRenewalApplication from './Html/HtmlRenewalApplication';
 import HtmlMoeThanOneApplicant from './Html/HtmlMoeThanOneApplicant';
 import ThreeColumnRetainerAgreement from "./Html/THreeColumnRetainerAgreement";
+import AlbertaPNPAndFederalPR from './Html/AlbertaPNPAndFederalPR'
 export default function UserSigningPage() {
     const [loader, setLoader] = useState(false)
     // const [pdf, setPdf] = useState(false)
@@ -53,7 +54,7 @@ export default function UserSigningPage() {
             //     emp_user_type,
             //     folderId
             // );
-            let Agreeres = await GetAgreement("", user_id, emp_user_type, type === "PNP   express entry/federal PR" ? "PNP + express entry/federal PR" : type)
+            let Agreeres = await GetAgreement("", user_id, emp_user_type, type === "PNP   express entry/federal PR" ? "Alberta PNP and federal PR" : type)
             if (Agreeres.data.data) {
                 setFelidData(Agreeres.data.data[0])
                 setLoader(false);
@@ -144,8 +145,8 @@ export default function UserSigningPage() {
                                                         emp_user_type={emp_user_type}
                                                         addSign={addSign} />
                                                     //<HtmlAgreementEight />
-                                                    : type === "PNP   express entry/federal PR"
-                                                        ? <HtmlAgreementOne
+                                                    : type === "Alberta PNP and federal PR"
+                                                        ? <AlbertaPNPAndFederalPR
                                                             page={"user"}
                                                             felidData={felidData}
                                                             emp_user_type={emp_user_type}

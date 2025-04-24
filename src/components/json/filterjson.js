@@ -832,7 +832,7 @@ const filterjson = {
     "temporary resident visa",
     "prospective workers",
     "express entry",
-    "PNP + express entry/federal PR",
+    "Alberta PNP and federal PR",//(remove express entry as per new retainer agreements)
     "super visa application",
     "spousal sponsorship",
     "citizenship",
@@ -841,11 +841,11 @@ const filterjson = {
     "permanent residency travel document",
     "employers",
     "LMIA exempt employers",
-    // "initial consultation",
-    // "recruitment services agreement",
-    // "employer renewal stream",
-    // "more than one applicant",
-    // "three column",
+    "initial consultation",
+    "recruitment services agreement",
+    "employer renewal stream",
+    "more than one applicant",
+    "three column",
   ]
   ,
   "program_discipline_category": [

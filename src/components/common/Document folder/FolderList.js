@@ -159,10 +159,10 @@ export default function FolderList({
                         localStorage.setItem("new_emp_user_type", "");
                         localStorage.setItem("new_user_id", "");
                       }}
-                      onMouseOver={(e) => {
-                        e.preventDefault()
-                        setShowDropDown(item.id);
-                      }}
+                      // onMouseOver={(e) => {
+                      //   e.preventDefault()
+                      //   setShowDropDown(item.id);
+                      // }}
 
                     >
                       <div className="file-background h-100">
@@ -546,10 +546,10 @@ export default function FolderList({
                         e.preventDefault();
                         setShowDropDown(item.id);
                       }}
-                      onMouseOver={(e) => {
-                        e.preventDefault();
-                        setShowDropDown(item.id);
-                      }}
+                      // onMouseOver={(e) => {
+                      //   e.preventDefault();
+                      //   setShowDropDown(item.id);
+                      // }}
                     >
                       {item.folder ? (
                         <FaFolder className="me-2 text-warning" />

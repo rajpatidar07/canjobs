@@ -6,12 +6,12 @@ const SAlert = (props) => {
   return (
     <div>
       <SweetAlert
-        show={props.show}
-        title={props.title}
-        text={props.text}
-        onConfirm={props.onConfirm}
-        showCancelButton={props.showCancelButton}
-        onCancel={props.onCancel}
+        show={props?.show}
+        title={props?.title || "No Title Found"}
+        text={props?.text}
+        onConfirm={props?.onConfirm}
+        showCancelButton={props?.showCancelButton}
+        onCancel={props?.onCancel}
       />
     </div>
   );
