@@ -53,6 +53,7 @@ export default function LocalCandidate() {
                 <div className="row m-0 align-items-center">
                   {/* Employees filter's */}
                   <ApplicantsFilter
+setSearch={setSearch}
                     applicantTypeId={""}
                     user_type={user_type}
                     search={search}

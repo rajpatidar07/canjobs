@@ -32,7 +32,8 @@ export default function ApplicantsFilter({
   statustFilterValue,
   setStatustFilterValue,
   applicantTypeId,
-  applicantTypeChildId
+  applicantTypeChildId,
+  setSearch
 }) {
   // let [SkillList, setSkillList] = useState([]);
   // let [EducationList, setEducationList] = useState([]);
@@ -452,7 +453,42 @@ export default function ApplicantsFilter({
           /> <span >Local</span>
         </label>
       </div>
-
+      <div className={"col form_group mt-8"}>
+        <button className="btn btn-primary" onClick={() => {
+          const clearFiltersByPageName = () => {
+            if (pageName === "employee") {
+              setLocalFilterValue("");
+              setCategoryFilterValue("");
+              setFilterByEmployeeId("");
+              setinterestFilterValue("");
+              setAdminFilterValue("");
+              setAgentFilterValue("");
+              setcandidateSearch("");
+              setSearch("")
+              if (portal === "study") {
+                setStatustFilterValue("");
+              }
+            } else if (["4", "21", "22", "12"].includes(pageName)) {
+              setFilterByEmployeeId("")
+            } else if (["14", "15", "16"].includes(pageName) && !applicantTypeChildId) {
+              setCategoryFilterValue("")
+            } else {
+              // Default clear all filters if pageName does not match above
+              setCategoryFilterValue("");
+              setinterestFilterValue("");
+              setAdminFilterValue("");
+              setAgentFilterValue("");
+              setcandidateSearch("");
+              setSearch("")
+              if (portal === "study") {
+                setStatustFilterValue("");
+              }
+            }
+            setpageNo(1);
+          };
+          clearFiltersByPageName();
+        }}>Reset</button>
+      </div>
     </>
   );
 }

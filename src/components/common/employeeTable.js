@@ -100,9 +100,9 @@ export default function EmployeeTable(props) {
   const [recordsPerPage] = useState(10);
   /*Shorting states */
   const [columnName, setcolumnName] = useState(
-    props.heading === "Dashboard" ? "created_at" : "employee_id"
+    props.heading === "Dashboard" ? "created_at" : ""
   );
-  const [sortOrder, setSortOrder] = useState("DESC");
+  const [sortOrder, setSortOrder] = useState(props.heading === "Dashboard" ? "DESC" : "");
   // const [showApplicantTypeForm, setShowApplicantTypeForm] = useState(false);
 
   let getApplicantType = (id) =>
@@ -143,7 +143,7 @@ export default function EmployeeTable(props) {
                     ? "4,7,8,9"
                     : props.self === "yes"
                       ? -1
-                      : 4 || status,
+                      : status,
           props.job_id ? props.job_id : "",
           CandidateId ? CandidateId : props.filterByEmployeeId,
           location.pathname === "/slots"
@@ -814,7 +814,6 @@ export default function EmployeeTable(props) {
                 All
               </button>
             </div>
-            {console.log(props.self === "yes" ? "0,1,2,3,5,6" : "4,7,8,9")}
             {props.pageName === "employee" ? (
               <>
                 <div className="col mb-5 px-1 form_group text-right">

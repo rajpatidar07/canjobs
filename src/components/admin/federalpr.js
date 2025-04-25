@@ -53,6 +53,7 @@ export default function Federalpr() {
                 <div className="row m-0 align-items-center">
                   {/* Employees filter's */}
                   <ApplicantsFilter
+setSearch={setSearch}
                     applicantTypeId={"11"}
                     user_type={user_type}
                     search={search}

@@ -53,6 +53,7 @@ export default function StudyPermit() {
                 <div className="row m-0 align-items-center">
                   {/* Employees filter's */}
                   <ApplicantsFilter
+setSearch={setSearch}
                     applicantTypeId={"13"}
                     user_type={user_type}
                     search={search}

@@ -62,7 +62,7 @@ export default function CommonApplicatTypePage() {
             }
         }
         if (docId) setSelectedTab("documents");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.key]);
 
     // Set applicant type IDs and folder ID from params, state, or localStorage
@@ -109,7 +109,7 @@ export default function CommonApplicatTypePage() {
                 }
             })
             .catch(console.error);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [applicantTypeId, applicantTypeChildId]);
 
     const onSearch = (e) => {
@@ -194,6 +194,7 @@ export default function CommonApplicatTypePage() {
                                     <div className="row m-0 align-items-center">
                                         {/* Employees filter's */}
                                         <ApplicantsFilter
+                                            setSearch={setSearch}
                                             applicantTypeId={applicantTypeIdForApi}
                                             user_type={user_type}
                                             search={search}
@@ -204,7 +205,7 @@ export default function CommonApplicatTypePage() {
                                             setSkillFilterValue={setSkillFilterValue}
                                             educationFilterValue={educationFilterValue}
                                             setEducationFilterValue={setEducationFilterValue}
-                                            setPageNo={setPageNo}
+                                            setpageNo={setPageNo}
                                             agentFilterValue={agentFilterValue}
                                             setAgentFilterValue={setAgentFilterValue}
                                             adminFilterValue={adminFilterValue}
@@ -234,7 +235,7 @@ export default function CommonApplicatTypePage() {
                                     setApiCall={setApiCall}
                                     status={"-1"}
                                     pageNo={pageNo}
-                                    setPageNo={setPageNo}
+                                    setpageNo={setPageNo}
                                     ApplicantType={applicantTypeIdForApi}
                                 // categoryFilterValue={applicantTypeChildId ? applicantTypeChildId : categoryFilterValue}
                                 />

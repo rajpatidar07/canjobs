@@ -51,6 +51,7 @@ export default function ExpressEntry() {
                 <div className="row m-0 align-items-center">
                   {/* Employees filter's */}
                   <ApplicantsFilter
+setSearch={setSearch}
                     applicantTypeId={"10"}
                     user_type={user_type}
                     search={search}
