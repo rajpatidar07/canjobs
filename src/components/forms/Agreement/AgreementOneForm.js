@@ -28,7 +28,7 @@ const AgreementOneForm = ({
       emp_user_type === "employee" ? userData?.name?.split(" ")[1] : "",
     client_signature: "",
     date_signature_client: "",
-    client_date_of_birth: "",
+    client_date_of_birth: emp_user_type === "employee" ? userData?.date_of_birth : "",
   };
   const initialFormState = {
     type: "",
@@ -697,7 +697,7 @@ const AgreementOneForm = ({
               ))}
             <div
               className={
-                openSignature === "yes" || state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" || state.type === "three column" || state.type === "Alberta PNP and federal PR" ? "d-none" : "form-group col-md-12 "
+                openSignature === "yes" || state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" || state.type === "three column" || state.type === "Alberta PNP and federal PR" || SigningUserType === "employee" || SigningUserType === "company" ? "d-none" : "form-group col-md-12 "
               }
             >
               <h3 className="font-size-4 text-black-2 line-height-reset">

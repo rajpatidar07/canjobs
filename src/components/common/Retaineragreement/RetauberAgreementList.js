@@ -325,7 +325,7 @@ export default function RetauberAgreementList({
                             </span>
                           </button>
                           <button
-                            className={`btn btn-outline-info action_btn ${data.type === "recruitment services agreement" || data.type === "initial consultation" || data.type === "employer renewal stream" || data.type === "employers"||data.type === "three column" ? "d-none" : ""}`}
+                            className={`btn btn-outline-info action_btn ${data.type === "recruitment services agreement" || data.type === "initial consultation" || data.type === "employer renewal stream" || data.type === "employers" || data.type === "three column" || data.type === "Alberta PNP and federal PR" ? "d-none" : ""}`}
                             onClick={() => {
                               setOpenAddClientFeilds(true);
                               setAgreementData(data);
