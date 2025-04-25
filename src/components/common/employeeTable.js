@@ -95,7 +95,7 @@ export default function EmployeeTable(props) {
             ? -1
             : 4
   );
-  
+
   const [totalData, setTotalData] = useState("");
   const [recordsPerPage] = useState(10);
   /*Shorting states */
@@ -814,6 +814,7 @@ export default function EmployeeTable(props) {
                 All
               </button>
             </div>
+            {console.log(props.self === "yes" ? "0,1,2,3,5,6" : "4,7,8,9")}
             {props.pageName === "employee" ? (
               <>
                 <div className="col mb-5 px-1 form_group text-right">

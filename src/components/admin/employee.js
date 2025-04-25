@@ -114,6 +114,7 @@ function Employee(props) {
                     applicantTypeId={""}
                     user_type={user_type}
                     search={search}
+                    setSearch={setSearch}
                     onSearch={onSearch}
                     experienceFilterValue={experienceFilterValue}
                     setExperienceFilterValue={setExperienceFilterValue}
