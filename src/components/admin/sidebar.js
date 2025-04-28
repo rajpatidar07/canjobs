@@ -6,27 +6,43 @@ import {
   MdAssignmentAdd,
   MdRealEstateAgent,
   MdOutlineAddIcCall,
-  MdOutlinePayments
+  MdOutlinePayments,
 } from "react-icons/md";
 import { LuFileKey } from "react-icons/lu";
-import { LiaUsersSolid, LiaAddressCardSolid, LiaCcVisa, LiaHourglassHalfSolid } from "react-icons/lia";
+import {
+  LiaUsersSolid,
+  LiaAddressCardSolid,
+  LiaCcVisa,
+  LiaHourglassHalfSolid,
+} from "react-icons/lia";
 import {
   BsBuildings,
   BsQrCodeScan,
   BsReverseLayoutTextSidebarReverse,
 } from "react-icons/bs";
-import { toast } from "react-toastify"
+import { toast } from "react-toastify";
 import { PiApplePodcastsLogoThin } from "react-icons/pi";
 import { AiOutlineUserAdd } from "react-icons/ai";
-import { TbFilterPlus } from "react-icons/tb";
-import { FaAddressCard, FaChevronDown, FaNotesMedical, FaTasks } from "react-icons/fa";
+import { TbFilterPlus, TbUser, TbUsers } from "react-icons/tb";
+import {
+  FaAddressCard,
+  FaChevronDown,
+  FaNotesMedical,
+  FaRegCreditCard,
+  FaTasks,
+} from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
 import { SiStudyverse } from "react-icons/si";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 import { FaPersonShelter } from "react-icons/fa6";
-import { AddApplicanTypeApi, DeleteApplicanTypeApi, getApplicanTypeApi } from "../../api/api";
+import {
+  AddApplicanTypeApi,
+  DeleteApplicanTypeApi,
+  getApplicanTypeApi,
+} from "../../api/api";
 import TableInput from "../common/TableInput";
 import SAlert from "../common/sweetAlert";
+import { CiUser } from "react-icons/ci";
 const AdminSidebar = (props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(
     localStorage.getItem("isMenuOpen")
@@ -39,22 +55,23 @@ const AdminSidebar = (props) => {
   const [items, setItems] = useState(
     applicanttypedata.filter((item) => item.parent_id === "0")
   );
-  let [showDropDown, setShowDropDown] = useState()
+  let [showDropDown, setShowDropDown] = useState();
   const [deleteAlertApplicantTypeData, setDeleteAlertApplicantTypeData] =
     useState(false);
-  const [deleteAlertApplicant, setDeleteAlertApplicant] =
-    useState(false);
+  const [deleteAlertApplicant, setDeleteAlertApplicant] = useState(false);
   const [draggedItemIndex, setDraggedItemIndex] = useState(null);
   const admin_id = localStorage.getItem("admin_id");
 
   useEffect(() => {
     // Keep parent open if a child is active
-    const activeChild = applicanttypedata.find((child) => child.title === props.heading);
+    const activeChild = applicanttypedata.find(
+      (child) => child.title === props.heading
+    );
     if (activeChild) {
       setOpenParent(activeChild.parent_id);
     }
     if (apiCall === true) {
-      setApiCall(false)
+      setApiCall(false);
     }
   }, [apiCall, props.heading, applicanttypedata]);
 
@@ -82,9 +99,11 @@ const AdminSidebar = (props) => {
 
   const getAllSlotsData = async () => {
     try {
-      let response = await getApplicanTypeApi(admin_type === "super-admin" ? "" : admin_id);
+      let response = await getApplicanTypeApi(
+        admin_type === "super-admin" ? "" : admin_id
+      );
       setApplicanttypedata(response.data.data);
-      setItems(response.data.data.filter((item) => item.parent_id === "0"))
+      setItems(response.data.data.filter((item) => item.parent_id === "0"));
     } catch (err) {
       console.log(err);
     }
@@ -96,15 +115,14 @@ const AdminSidebar = (props) => {
         activityLi.scrollIntoView({ behavior: "smooth" });
       }
     }
-
-  }, [props.heading,]);
+  }, [props.heading]);
   useEffect(() => {
     getAllSlotsData();
     if (apiCall === true) {
-      setApiCall(false)
+      setApiCall(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [apiCall])
+  }, [apiCall]);
 
   const handleDragStart = (index) => {
     setDraggedItemIndex(index);
@@ -130,17 +148,16 @@ const AdminSidebar = (props) => {
     if (e && e.preventDefault) {
       e.preventDefault();
     }
-    let data =
-    {
-      "id": item.id,
-      "level": item.level,
-      "parent_id": item.parent_id,
+    let data = {
+      id: item.id,
+      level: item.level,
+      parent_id: item.parent_id,
       [field]: e.target.value,
-      "admin_access_id": item.admin_access_id,
-    }
+      admin_access_id: item.admin_access_id,
+    };
     let res = await AddApplicanTypeApi(data);
     if (res.status === 1 || res.status === "1") {
-      setApiCall(true)
+      setApiCall(true);
     }
   };
   /*To call Api to delete employee */
@@ -155,28 +172,34 @@ const AdminSidebar = (props) => {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        setDeleteAlertApplicant(false)
+        setDeleteAlertApplicant(false);
         setDeleteAlertApplicantTypeData();
         setApiCall(true);
-        setShowDropDown()
+        setShowDropDown();
       }
-      if (response.message === "This applicant type cannot be deleted because it is used for applicant") {
+      if (
+        response.message ===
+        "This applicant type cannot be deleted because it is used for applicant"
+      ) {
         toast.error(response.message, {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        setDeleteAlertApplicant(false)
+        setDeleteAlertApplicant(false);
         setDeleteAlertApplicantTypeData();
-        setShowDropDown()
+        setShowDropDown();
       }
-      if (response.message === "This applicant type cannot be deleted because it has a sub-applicant type.") {
+      if (
+        response.message ===
+        "This applicant type cannot be deleted because it has a sub-applicant type."
+      ) {
         toast.error(response.message, {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        setDeleteAlertApplicant(false)
+        setDeleteAlertApplicant(false);
         setDeleteAlertApplicantTypeData();
-        setShowDropDown()
+        setShowDropDown();
       }
     } catch (err) {
       console.log(err);
@@ -185,8 +208,9 @@ const AdminSidebar = (props) => {
 
   return (
     <div
-      className={`dashboard-sidebar-wrapper pt-5 sidebar_parent ${isMenuOpen ? "show" : ""
-        }`}
+      className={`dashboard-sidebar-wrapper pt-5 sidebar_parent ${
+        isMenuOpen ? "show" : ""
+      }`}
       id="sidebar"
     >
       <SAlert
@@ -195,9 +219,7 @@ const AdminSidebar = (props) => {
         text="Are you Sure you want to delete !"
         onConfirm={() => deleteApplicantType(deleteAlertApplicantTypeData.id)}
         showCancelButton={true}
-        onCancel={() =>
-          setDeleteAlertApplicant(false)
-        }
+        onCancel={() => setDeleteAlertApplicant(false)}
       />
       <Link
         to={""}
@@ -277,8 +299,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Dashboard"
-                ? "active"
-                : ""
+              ? "active"
+              : ""
           }
         >
           <Link
@@ -296,8 +318,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Task Dashboard"
-                ? "active"
-                : ""
+              ? "active"
+              : ""
           }
         >
           <Link
@@ -367,8 +389,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Manage Jobs"
-                ? "active"
-                : ""
+              ? "active"
+              : ""
           }
         >
           <Link
@@ -383,12 +405,13 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["Manage Self Jobs"] = el)}
           className={`d-none 
-             ${user_type === "agent"
-              ? "d-none"
-              : props.heading === "Manage Self Jobs"
-                ? "active"
-                : ""
-            }`}
+             ${
+               user_type === "agent"
+                 ? "d-none"
+                 : props.heading === "Manage Self Jobs"
+                 ? "active"
+                 : ""
+             }`}
         >
           <Link
             onClick={() => clearPageNo()}
@@ -405,8 +428,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Visa"
-                ? "active"
-                : ""
+              ? "active"
+              : ""
           }
         >
           <Link
@@ -424,8 +447,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "LMIA status"
-                ? "active"
-                : ""
+              ? "active"
+              : ""
           }
         >
           <Link
@@ -443,8 +466,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Local Candidate"
-                ? "active"
-                : ""
+              ? "active"
+              : ""
           }
         >
           <Link
@@ -803,7 +826,9 @@ const AdminSidebar = (props) => {
             </li>
           ))} */}
         {items.map((item, index) => {
-          const children = applicanttypedata.filter((child) => child.parent_id === item.id);
+          const children = applicanttypedata.filter(
+            (child) => child.parent_id === item.id
+          );
           const hasChildren = children.length > 0;
 
           return (
@@ -813,29 +838,33 @@ const AdminSidebar = (props) => {
               onDragStart={() => handleDragStart(index)}
               onDragOver={(e) => handleDragOver(e, index)}
               onDragEnd={handleDragEnd}
-              className={`position-relative ${user_type === "agent"
-                ? "d-none"
-                : props.heading === item.title
+              className={`position-relative ${
+                user_type === "agent"
+                  ? "d-none"
+                  : props.heading === item.title
                   ? "active"
                   : ""
-                }`}
+              }`}
               title={item.title}
             >
               <div
-                className={`d-flex text-break justify-content-between py-3 border-top font-size-4 font-weight-light flex-y-center text-Capitalize ${props.heading === item.title ? "active" : ""}`}>
+                className={`d-flex position-relative ${
+                  props.heading === item.title ? "active" : ""
+                }`}
+              >
                 <Link
+                  className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center text-truncate w-100"
                   to={`/slots`}
                   state={{
                     applicantType: item.id,
                     folderId: item.doc_folder_id,
                   }}
                   onClick={() => {
-                    clearPageNo()
-                    localStorage.setItem("applicantType", "")
-                    localStorage.setItem("applicantTypeFolderId", "")
-                    localStorage.setItem("applicantTypeChild", "")
+                    clearPageNo();
+                    localStorage.setItem("applicantType", "");
+                    localStorage.setItem("applicantTypeFolderId", "");
+                    localStorage.setItem("applicantTypeChild", "");
                     AddApplicanTypeApi(item);
-
                   }}
                   style={{ textDecoration: "none" }}
                   onContextMenu={(e) => {
@@ -843,38 +872,62 @@ const AdminSidebar = (props) => {
                     setShowDropDown(item.id);
                   }}
                 >
-                  <span> <TableInput
-                    value={item.title}
-                    onChange={(newValue) =>
-                      handleUpdateChange(newValue, item, "title")
-                    }
-                    type="text"
-                    id="title"
-                    name="title"
-                  /></span>
-                  {showDropDown === item.id &&
+                  <span className="sidebar_icon">
+                    <TbUser />
+                  </span>
+                  <span>
+                    {" "}
+                    <TableInput
+                      value={item.title}
+                      onChange={(newValue) =>
+                        handleUpdateChange(newValue, item, "title")
+                      }
+                      type="text"
+                      id="title"
+                      name="title"
+                    />
+                  </span>
+                  {showDropDown === item.id && (
                     <ul className="list-group">
-
                       <li className="list-group-item text-danger">
-                        <Link onClick={() => {
-                          setDeleteAlertApplicant(true)
-                          setDeleteAlertApplicantTypeData(item)
-                        }}
-                          className="text-danger">
+                        <Link
+                          onClick={() => {
+                            setDeleteAlertApplicant(true);
+                            setDeleteAlertApplicantTypeData(item);
+                          }}
+                          className="text-danger"
+                        >
                           Delete
                         </Link>
-                      </li></ul>}
+                      </li>
+                    </ul>
+                  )}
                 </Link>
-                <Link
-                  style={{ textDecoration: "none" }} onClick={() => toggleChildren(item.id, hasChildren)}
-                > {hasChildren && <FaChevronDown />}
-                </Link>
+                <div
+                  className="text-white"
+                  style={{
+                    textDecoration: "none",
+                    position: "absolute",
+                    right: 0,
+                    top: 0,
+                    bottom: 0,
+                    display: "flex",
+                    alignItems: "center",
+                    padding: "2px",
+                    background: "rgba(153, 43, 50, .5)",
+                    margin: "1px 0",
+                  }}
+                  onClick={() => toggleChildren(item.id, hasChildren)}
+                >
+                  {" "}
+                  {hasChildren && <FaChevronDown />}
+                </div>
               </div>
 
-              {(openParent === item.id && hasChildren) && (
-                <ul className="pl-3 list-unstyled">
+              {openParent === item.id && hasChildren && (
+                <ul className="pl-0 list-unstyled">
                   {children.map((child) => (
-                    <li key={child.id} className="position-relative p-2">
+                    <li key={child.id} className="position-relative">
                       <Link
                         to={`/slots`}
                         state={{
@@ -882,14 +935,14 @@ const AdminSidebar = (props) => {
                           folderId: child.doc_folder_id,
                         }}
                         onClicl={AddApplicanTypeApi(child)}
-                        className="px-1 text-break py-3 border-top font-size-4 font-weight-light flex-y-center text-Capitalize"
+                        className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center text-truncate w-100"
                         style={{ textDecoration: "none" }}
                         onContextMenu={(e) => {
                           e.preventDefault(); // prevent the default behaviour when right clicked
                           setShowDropDown(item.id);
                         }}
                       >
-                        <BsReverseLayoutTextSidebarReverse className="sidebar_icon" />
+                        <TbUsers className="sidebar_icon" />
                         <span className="text-truncate">
                           <TableInput
                             value={child.title}
@@ -899,20 +952,25 @@ const AdminSidebar = (props) => {
                             type="text"
                             id="title"
                             name="title"
-                          /></span>
+                          />
+                        </span>
                       </Link>
-                      {showDropDown === item.id &&
+                      {showDropDown === item.id && (
                         <ul className="list-group">
                           <li className="list-group-item text-danger">
-                            <Link onClick={() => {
-                              setDeleteAlertApplicant(true)
-                              setDeleteAlertApplicantTypeData(item)
-                            }}
-                              className="text-danger">
+                            <Link
+                              onClick={() => {
+                                setDeleteAlertApplicant(true);
+                                setDeleteAlertApplicantTypeData(item);
+                              }}
+                              className="text-danger"
+                            >
                               {" "}
                               Delete
                             </Link>
-                          </li></ul>}
+                          </li>
+                        </ul>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -970,8 +1028,8 @@ const AdminSidebar = (props) => {
             admin_type === "agent"
               ? "d-none"
               : props.heading === "Manage Daily Call Log"
-                ? "active"
-                : ""
+              ? "active"
+              : ""
           }
         >
           <Link
@@ -992,8 +1050,8 @@ const AdminSidebar = (props) => {
             admin_type === "agent"
               ? "d-none"
               : props.heading === "Manage Daily Hourly Log"
-                ? "active"
-                : ""
+              ? "active"
+              : ""
           }
         >
           <Link
@@ -1014,8 +1072,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Interview"
-                ? "active"
-                : ""
+              ? "active"
+              : ""
           }
         >
           <Link
@@ -1033,8 +1091,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Manage Notes"
-                ? "active"
-                : ""
+              ? "active"
+              : ""
           }
         >
           <Link
@@ -1053,8 +1111,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Assigned Job's"
-                ? "active"
-                : ""
+              ? "active"
+              : ""
           }
         >
           <Link
@@ -1075,8 +1133,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Manage Admin"
-                ? "active"
-                : ""
+              ? "active"
+              : ""
           }
         >
           <Link
@@ -1117,8 +1175,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Manage Job Category"
-                ? "active"
-                : ""
+              ? "active"
+              : ""
           }
         >
           <Link
@@ -1136,8 +1194,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Filter List"
-                ? "active"
-                : ""
+              ? "active"
+              : ""
           }
         >
           <Link
