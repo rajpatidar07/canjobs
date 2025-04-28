@@ -202,7 +202,7 @@ const AggrementOne = () => {
             RCIC Membership Number: R533393
           </Text>
           <Text style={{ fontWeight: 600 }}>
-            Client File Number: : {felidData?.client_file_no}
+            Client File Number: : {felidData?.client_file_no||"________________"}
           </Text>
         </View>
         <View>
@@ -361,6 +361,8 @@ const AggrementOne = () => {
               <Text>
                 (f) [File maintenance and correspondence with client and IRCC]
               </Text>
+              <Text>  (g)[Application submission]</Text>
+              <Text> (h)[File maintenance and correspondence with client and IRCC]</Text>
             </View>
             <Text style={{ marginTop: 15, paddingLeft: 10 }}>
               The RCIC shall provide the Client with a finalized, signed copy of
@@ -486,11 +488,11 @@ const AggrementOne = () => {
               4. Payment Schedule
             </Text>
             <View style={{ marginTop: 15, paddingLeft: 10 }}>
-              Billing method: The Client will be billed by [flat fee with
-              payment by milestones]. Payment Terms and Conditions
+              <Text>Billing method: The Client will be billed by [flat fee with
+                payment by milestones]. Payment Terms and Conditions</Text>
             </View>
             <View
-              style={[styles.table, { textAlign: "center", marginTop: 18, }]}
+              style={[styles.table, { textAlign: "center", marginTop: 88, }]}
             >
               <View style={styles.row}>
                 <View style={[styles.cell, styles.headerCell]}>
@@ -605,15 +607,17 @@ const AggrementOne = () => {
                 </View>
               </View>
             </View>
-            <Text style={{ marginTop: 15, paddingLeft: 10 }}>
-              Invoice Frequency: The RCIC must provide an Invoice to the Client
-            </Text>
-            <Text style={{ marginTop: 15, paddingLeft: 10 }}>
-              Note: The courier charges and Government fees based on current
-              rates and may change anytime on or before submission.
-            </Text>
-
-            <View style={[styles.table, { marginTop: 18 }]}>
+            <View>
+              <Text style={{ marginTop: 15, paddingLeft: 10 }}>
+                Invoice Frequency: The RCIC must provide an Invoice to the Client
+              </Text>
+              <Text style={{ marginTop: 15, paddingLeft: 10 }}>
+                Note: The courier charges and Government fees based on current
+                rates and may change anytime on or before submission.
+              </Text>
+            </View>
+            <View style={{ height: 205 }}><Text></Text></View>
+            <View style={[styles.table, { marginTop: 57 }]}>
               <View style={styles.row}>
                 <View style={styles.cell}>
                   <Text style={{ color: "##0c5fa6" }}>
@@ -1328,14 +1332,13 @@ const AggrementOne = () => {
           <View
             data-list-text="19."
             style={{
-              marginTop: 20,
+              marginTop: 25,
               fontWeight: "300",
               flexDirection: "row"
             }}
           >
-            <Text style={{ width: 20, fontWeight: 'bold' }}>19.</Text>
             <Text style={{ flex: 1 }}>
-              The company and RCIC is not part of the hiring process and is
+              <Text style={{ width: 20, fontWeight: 'bold' }}>19.</Text> The company and RCIC is not part of the hiring process and is
               just acting as representative for filing the application from the
               applicant side. The company and RCIC will not be responsible for
               authenticity or legitimacy of any documents submitted in support
@@ -1358,7 +1361,7 @@ const AggrementOne = () => {
               RETAINER AGREEMENT
             </Text>
           </View>
-          <View style={{ marginTop: 20 }}>
+          <View style={{}}>
             {/* Contact Information Header */}
             <Text style={[{ fontWeight: "600" }, styles.definition]}>
               21. Contact Information
@@ -1366,7 +1369,7 @@ const AggrementOne = () => {
 
             {/* Client Information */}
             <Text>Client Name</Text>
-            <View style={{ width: "100%", padding: 20 }}>
+            <View style={{ width: "100%", padding: 5 }}>
               <View style={styles.clientForm}>
                 <View style={styles.clientFormChild}>
                   <Text>
@@ -1406,7 +1409,7 @@ const AggrementOne = () => {
                         { textTransform: "capitalize", marginLeft: 5 },
                       ]}
                     >
-                      {felidData?.client_address || "_______________"}
+                      {felidData?.client_address.trim() !== "" || felidData?.client_address !== " " ? felidData?.client_address : "_______________"}
                     </Text>
                   </Text>
                 </View>
@@ -1506,143 +1509,70 @@ const AggrementOne = () => {
             </View>
 
             {/* Agreement Signature */}
-            <Text style={{ marginTop: 30 }}>
+            <Text style={{}}>
               IN WITNESS WHEREOF this Agreement has been duly executed by the parties
               hereto on the date first above written.
             </Text>
+            <View style={styles.container}>
+              {/* Right Signature Box (Client) */}
 
-            <View style={{ flexDirection: "row", flexWrap: "wrap", marginBottom: 20 }}>
-              {/* Client Signature */}
-              <View style={{ width: "50%", padding: 10 }}>
-                {familyJsonArray[0]?.client_signature ? (
-                  <View style={{ display: "flex", flexDirection: "column" }}>
-                    <Image
-                      source={{ uri: familyJsonArray[0]?.client_signature }}
-                      style={{ width: "40%", height: "auto" }}
+              <View style={styles.box}>
+                <Text style={styles.label}><Text style={styles.required}>*</Text> Signature</Text>
+                <View style={styles.signatureBox}>
+                  {familyJsonArray[0]?.client_signature ? (
+                    <Image src={familyJsonArray[0].client_signature} style={{
+                      display: "inline-block",
+                      maxWidth: "100%",
+                      maxHeight: "100%",
+                      textTransform: "capitalize",
+                    }} />
+                  ) : (
+                    <View
+                      style={{
+                        display: "inline-block",
+                        width: "100%",
+                        height: 50,
+                        border: "1px solid #ccc",
+                      }}
+                    />)}
+                </View>
+                <Text style={[styles.text, styles.textBold]}> {" " + (familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")}</Text>
+                <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {familyJsonArray[0]?.date_signature_client ? moment(familyJsonArray[0].date_signature_client).format("DD/MM/YYYY") : "______________"}</Text>
+                <Text style={styles.text}><Text style={styles.textBold}>Signed at:</Text>_______________________ <Text style={styles.dateLine}></Text></Text>
+              </View>
+
+              {/* Left Signature Box (RCIC) */}
+              <View style={styles.box}>
+                <Text style={styles.label}><Text style={styles.required}>*</Text> Signature</Text>
+                <View style={styles.signatureBox}>
+                  {felidData?.rcic_signature ? (
+                    <Image src={felidData.rcic_signature} style={{
+                      display: "inline-block",
+                      maxWidth: "100%",
+                      maxHeight: "100%",
+                      textTransform: "capitalize",
+                    }} />
+                  ) : (
+                    <View
+                      style={{
+                        display: "inline-block",
+                        width: "100%",
+                        height: 50,
+                        border: "1px solid #ccc",
+                      }}
                     />
-                    <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7 }}>
-                      <Text style={{ textTransform: "capitalize" }}>
-                        {familyJsonArray[0]?.client_first_name || ""}{" "}
-                        {familyJsonArray[0]?.client_last_name || ""}{" "}
-                      </Text>
-                      <Text> {!familyJsonArray[0]?.date_signature_client ||
-                        familyJsonArray[0]?.date_signature_client ===
-                        "0000-00-00 00:00:00"
-                        ? "____________"
-                        : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</Text>
-                    </Text>
-                  </View>
-                ) : (
-                  <Text>___________________</Text>
-                )}
-                <Text>Signature of Client</Text>
-              </View>
-
-              {/* Client Name */}
-              <View style={{ width: "50%", padding: 10 }}>
-                <Text style={[styles.textunderline, { textTransform: "capitalize" }]}>
-                  {familyJsonArray[0]?.client_first_name || ""}{" "}
-                  {familyJsonArray[0]?.client_last_name || "_________________"}
-                </Text>
-                <Text>Name of Client</Text>
-                <Text style={[styles.textunderline, { marginTop: 10 }]}>
-                  {(!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client ===
-                    "0000-00-00 00:00:00")
-                    ? "________________"
-                    : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}
-                </Text>
-                <Text>Date</Text>
-              </View>
-
-              {/* Additional Family Members Signatures */}
-              {familyJsonArray.slice(1).map((item, index) => (
-                <React.Fragment key={index}>
-                  {/* Family Member Signature */}
-                  <View style={{ width: "50%", padding: 10 }}>
-                    {item.client_signature ? (
-                      <View style={{ display: "flex", flexDirection: "column" }}>
-                        <Image
-                          source={{ uri: item.client_signature }}
-                          style={{ width: "40%", height: "auto" }}
-                        />
-                        <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7 }}>
-                          <Text style={{ textTransform: "capitalize" }}>
-                            {item.client_first_name || ""} {item.client_last_name || ""}{" "}
-                          </Text>
-                          <Text>
-                            {!item.date_signature_client ||
-                              item.date_signature_client ===
-                              "0000-00-00 00:00:00"
-                              ? "____________"
-                              : moment(item.date_signature_client).format("DD-MM-YYYY")}
-                          </Text>
-                        </Text>
-                      </View>
-                    ) : (
-                      <Text>___________________</Text>
-                    )}
-                    <Text>Signature of Family member {index + 1}</Text>
-                  </View>
-
-                  {/* Family Member Name */}
-                  <View style={{ width: "50%", padding: 10 }}>
-                    <Text style={[styles.textunderline, { textTransform: "capitalize" }]}>
-                      {item.client_first_name && (item.client_last_name)
-                        ? `${item.client_first_name || ""} ${(item.client_last_name || "")}`
-                        : "_________________"}
-                    </Text>
-                    <Text>Name of Family member {index + 1}</Text>
-                    <Text style={[styles.textunderline, { marginTop: 10 }]}>
-                      {(!item.date_signature_client || felidData?.date_signature_rcic === "0000-00-00" || item.date_signature_client === "0000-00-00 00:00:00")
-                        ? "________________"
-                        : moment(item.date_signature_client).format("DD-MM-YYYY")}
-                    </Text>
-                    <Text>Date</Text>
-                  </View>
-                </React.Fragment>
-              ))}
-
-              {/* RCIC Signature */}
-              <View style={{ width: "50%", padding: 10 }}>
-                {felidData?.rcic_signature ? (
-                  <View style={{ display: "flex", flexDirection: "column" }}>
-                    <Image
-                      source={{ uri: felidData?.rcic_signature }}
-                      style={{ width: "40%", height: "auto" }}
-                    />
-                    <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7 }}>
-                      <Text style={{ textTransform: "capitalize" }}>
-                        Harpreet Kaur{" "}
-                      </Text>
-                      <Text> {(!felidData?.date_signature_rcic || felidData?.date_signature_rcic === "0000-00-00" || felidData?.date_signature_rcic === "0000-00-00 00:00:00")
-                        ? "________________"
-                        : moment(felidData?.date_signature_rcic).format("DD-MM-YYYY")}</Text>
-                    </Text>
-                  </View>
-                ) : (
-                  <Text>___________________</Text>
-                )}
-                <Text>Signature of RCIC</Text>
-              </View>
-
-              {/* RCIC Name */}
-              <View style={{ width: "50%", padding: 10 }}>
-                <Text style={[styles.textunderline, { textTransform: "capitalize" }]}>
-                  Harpreet Kaur
-                </Text>
-                <Text>Name of RCIC</Text>
-                <Text style={[styles.textunderline, { marginTop: 10 }]}>
-                  {(!felidData?.date_signature_rcic || felidData?.date_signature_rcic === "0000-00-00" || felidData?.date_signature_rcic === "0000-00-00 00:00:00")
-                    ? "________________"
-                    : moment(felidData?.date_signature_rcic).format("DD-MM-YYYY")}
-                </Text>
-                <Text>Date</Text>
+                  )}
+                </View>
+                <Text style={[styles.text, styles.textBold]}>Harpreet Kaur (RCIC)</Text>
+                <Text style={styles.text}>RCIC # R533393 CAN Pathways Immigration Consultancy Ltd.</Text>
+                <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {felidData?.date_signature_rcic !== "0000-00-00 00:00:00" && felidData?.date_signature_rcic ? moment(felidData.date_signature_rcic).format("DD/MM/YYYY") : "______________"}</Text>
+                <Text style={styles.text}><Text style={styles.textBold}>Signed at:</Text> <Text style={styles.underline}>Calgary, Alberta, Canada</Text></Text>
               </View>
             </View>
           </View>
 
         </View>
-        <View style={{ marginTop: 50 }}>
+        <View style={{ marginTop: 25 }}>
           <Text style={[{ textAlign: "center", }, styles.definition]}>
             AUTHORIZATION
           </Text>
@@ -1707,8 +1637,8 @@ const AggrementOne = () => {
               </Text>
             </View>
             <View style={{ marginTop: 17, flexDirection: 'row' }}>
-              <Text style={{ width: 20, fontWeight: 'bold' }}>4</Text>
               <Text style={{ flex: 1 }}>
+                <Text style={{ width: 20, fontWeight: 'bold' }}>4</Text>
                 In the event the Immigration office responsible should contact the Client directly, the Clientis instructed to
                 notify the RCIC immediately
               </Text>
@@ -1780,28 +1710,30 @@ const AggrementOne = () => {
                 <Text style={{ margin: "0 0 30px 0" }}>Client’s full name</Text>
               </View>
               <View style={[styles.clientFormChild, { alignSelf: "center" }]}>
-                {familyJsonArray[0]?.client_signature ? (
-                  <View style={{ display: "flex", flexDirection: "column" }}>
-                    <Image
-                      source={{ uri: familyJsonArray[0]?.client_signature }}
-                      style={{ width: "40%", height: "auto", alignSelf: "center" }}
-                    />
-                    <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7 }}>
-                      <Text style={{ textTransform: "capitalize" }}>
-                        {familyJsonArray[0]?.client_first_name || ""}{" "}
-                        {familyJsonArray[0]?.client_last_name || ""}{" "}
-                      </Text>
-                      <Text> {!familyJsonArray[0]?.date_signature_client ||
-                        familyJsonArray[0]?.date_signature_client ===
-                        "0000-00-00 00:00:00"
-                        ? "____________"
-                        : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</Text>
-                    </Text>
+                <View style={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
+                  <View style={{ width: "100%"}}>
+                    <Text style={styles.label}><Text style={styles.required}>*</Text> Signature</Text>
+                    <View style={styles.signatureBox}>
+                      {familyJsonArray[0]?.client_signature ? (
+                        <Image src={familyJsonArray[0].client_signature} style={{
+                          display: "inline-block",
+                          maxWidth: "100%",
+                          maxHeight: "100%",
+                          textTransform: "capitalize",
+                        }} />
+                      ) : (
+                        <View
+                          style={{
+                            display: "inline-block",
+                            width: "100%",
+                            height: 50,
+                            border: "1px solid #ccc",
+                          }}
+                        />)}
+                    </View>
                   </View>
-                ) : (
-                  <Text>___________________</Text>
-                )}
-                <Text style={{ margin: "0 0 50px 0" }}>Signatures</Text>
+                </View>
+                )
               </View>
               <View style={styles.clientFormChild}>
                 <Text className="para_gap" style={{ margin: 0, textDecoration: "underline" }}>
@@ -1828,43 +1760,61 @@ const AggrementOne = () => {
             <View>
               <Image
                 fixed
-                style={styles.image}
-                src={"https://canpathwaysjobs.com/image/00logo-main-black.png"}
+                style={{ width: 100, height: 40 }}
+                src={
+                  "https://canpathwaysjobs.com/image/00logo-main-black.png"
+                }
               />
-              <View style={styles.section}>{components}</View>
+              {components}
+
               <View
-                className="footer"
                 fixed
-                style={{ color: "red", textAlign: "center", marginTop: 25 }}
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "flex-end",
+                  gap: 20,
+                }}
               >
-                <Text>
-                  Office: 2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7, Canada |
-                  Tel.: 403.888.5308 |
-                </Text>
-                <Text style={{ color: "blue", textDecoration: "underline" }}>
-                  Email: info@canpathways.ca | Website: www.canpathways.ca
-                </Text>
-              </View>
-              {/* {felidData?.initial ? (
-                felidData?.initial?.split(' ')               // Split the string by spaces
-                  ?.filter(word => word)      // Filter out empty strings (caused by multiple spaces)
-                  ?.map(word => word[0])      // Map each word to its first letter
-                  ?.join(' ')
-                // <Image
-                //   fixed
-                //   style={[
-                //     styles.textunderline,
-                //     { width: "20%", left: 450, height: "auto" },
-                //   ]}
-                //   src={familyJsonArray?.[0]?.client_signature}
-                // />
-              ) : (
-                null)} */}
-              <View className="initial" fixed style={styles.initial}>
-                <Text>Initial:<Text style={[styles.textunderline, { textTransform: 'uppercase' }]}>{felidData?.initial ? felidData?.initial?.split(' ')               // Split the string by spaces
-                  ?.filter(word => word)      // Filter out empty strings (caused by multiple spaces)
-                  ?.map(word => word[0])      // Map each word to its first letter
-                  ?.join(' ') : "        "}</Text></Text>
+                <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
+                <View>
+                  <View
+                    style={{
+                      width: "100%",
+                      height: 20,
+                      border: "1px solid #ccc",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {felidData?.initial ? (
+                      <Text
+                        style={{
+                          display: "inline-block",
+                          maxWidth: "100%",
+                          maxHeight: "100%",
+                          textTransform: "capitalize",
+                        }}
+                      >
+                        {felidData.initial
+                          .split(" ")
+                          .filter((word) => word)
+                          .map((word) => word[0])
+                          .join(" ")}
+                      </Text>
+                    ) : (
+                      <View
+                        style={{
+                          display: "inline-block",
+                          width: 100,
+                          height: 20,
+                          border: "1px solid #ccc",
+                        }}
+                      />
+                    )}
+                  </View>
+                </View>
               </View>
             </View>
           </Page>
@@ -1881,45 +1831,60 @@ const AggrementOne = () => {
                 <View>
                   <Image
                     fixed
-                    style={styles.image}
+                    style={{ width: 100, height: 40 }}
                     src={
                       "https://canpathwaysjobs.com/image/00logo-main-black.png"
-                    }
-                  />
+                    } />
                   {components}
-
                   <View
-                    className="footer"
                     fixed
-                    style={{ color: "red", textAlign: "center", marginTop: 25 }}
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-end",
+                      gap: 20,
+                    }}
                   >
-                    <Text>
-                      Office: 2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7,
-                      Canada | Tel.: 403.888.5308 |
-                    </Text>
-                    <Text
-                      style={{ color: "blue", textDecoration: "underline" }}
-                    >
-                      Email: info@canpathways.ca | Website: www.canpathways.ca
-                    </Text>
-                  </View>
-                  {/* {familyJsonArray?.[0]?.client_signature ? (
-                    <Image
-                      fixed
-                      style={[
-                        styles.textunderline,
-                        { width: "20%", left: 450, height: "auto" },
-                      ]}
-                      src={familyJsonArray?.[0]?.client_signature}
-                    />
-                  ) : (
-                    null
-                  )} */}
-                  <View className="initial" fixed style={styles.initial}>
-                    <Text>Initial:<Text style={[styles.textunderline, { textTransform: 'uppercase' }]}>{felidData?.initial ? felidData?.initial?.split(' ')               // Split the string by spaces
-                      ?.filter(word => word)      // Filter out empty strings (caused by multiple spaces)
-                      ?.map(word => word[0])      // Map each word to its first letter
-                      ?.join(' ') : "        "}</Text></Text>
+                    <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
+                    <View>
+                      <View
+                        style={{
+                          width: "100%",
+                          height: 50,
+                          border: "1px solid #ccc",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        {felidData?.initial ? (
+                          <Text
+                            style={{
+                              display: "inline-block",
+                              maxWidth: "100%",
+                              maxHeight: "100%",
+                              textTransform: "capitalize",
+                            }}
+                          >
+                            {felidData.initial
+                              .split(" ")
+                              .filter((word) => word)
+                              .map((word) => word[0])
+                              .join(" ")}
+                          </Text>
+                        ) : (
+                          <View
+                            style={{
+                              display: "inline-block",
+                              width: 100,
+                              height: 50,
+                              border: "1px solid #ccc",
+                            }}
+                          />
+                        )}
+                      </View>
+
+                    </View>
                   </View>
                 </View>
               </Page>
@@ -1927,7 +1892,7 @@ const AggrementOne = () => {
           </PDFViewer>
         );
       }}
-    </BlobProvider>
+    </BlobProvider >
   );
 };
 const styles = StyleSheet.create({
@@ -1953,6 +1918,7 @@ const styles = StyleSheet.create({
   text: {
     marginBottom: 5,
     padding: 2,
+    fontSize: 12
   },
   image: {
     width: "140px",
@@ -2001,6 +1967,28 @@ const styles = StyleSheet.create({
   },
   headerCell: {
     backgroundColor: "#f0f0f0",
+  },
+  container: { display: "flex", flexDirection: "row", justifyContent: "space-between", marginTop: 30 },
+  box: { width: "45%" },
+  required: { color: "red" },
+  signatureBox: { width: "100%", height: 50, border: "1px solid #ccc", display: "flex", alignItems: "center", justifyContent: "center" },
+  dateLine: { minWidth: 80, borderBottom: "1px solid black", display: "inline-block" },
+  textBold: {
+    fontFamily: "Times-Bold",
+  },
+  title: {
+    fontSize: 14,
+    fontFamily: "Times-Bold",
+  },
+  subtitle: {
+    fontSize: 12,
+    fontFamily: "Times-Bold",
+    marginBottom: 5,
+  },
+  label: {
+    fontSize: 12,
+    fontFamily: "Times-Bold",
+    marginBottom: 5,
   },
 });
 

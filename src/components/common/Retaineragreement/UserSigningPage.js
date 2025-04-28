@@ -25,7 +25,7 @@ import InitialConsultation from './Html/InitialConsultation'
 import HtmlRenewalApplication from './Html/HtmlRenewalApplication';
 import HtmlMoeThanOneApplicant from './Html/HtmlMoeThanOneApplicant';
 import ThreeColumnRetainerAgreement from "./Html/THreeColumnRetainerAgreement";
-import AlbertaPNPAndFederalPR from './Html/AlbertaPNPAndFederalPR'
+// import AlbertaPNPAndFederalPR from './Html/AlbertaPNPAndFederalPR'
 export default function UserSigningPage() {
     const [loader, setLoader] = useState(false)
     // const [pdf, setPdf] = useState(false)
@@ -146,7 +146,8 @@ export default function UserSigningPage() {
                                                         addSign={addSign} />
                                                     //<HtmlAgreementEight />
                                                     : type === "Alberta PNP and federal PR"
-                                                        ? <AlbertaPNPAndFederalPR
+                                                        ? <HtmlAgreementOne
+                                                            // AlbertaPNPAndFederalPR
                                                             page={"user"}
                                                             felidData={felidData}
                                                             emp_user_type={emp_user_type}

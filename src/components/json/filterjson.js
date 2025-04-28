@@ -827,7 +827,7 @@ const filterjson = {
   Rerainer_Agreement_subCategories: [
     // "visitor",commented for now 2.00pm on 22/03/25.
     // "study",
-    "work permit",//Ye create or check krna he
+    // "work permit",//Ye create or check krna he
     // "post graduation work permit",
     // "temporary resident visa",
     // "prospective workers",
@@ -844,7 +844,7 @@ const filterjson = {
     "initial consultation",
     "recruitment services agreement",
     "employer renewal stream",
-    "more than one applicant",
+    // "more than one applicant",//do not have full retainer agreement details(uncomment krna he code tho *)
     "three column",
   ]
   ,

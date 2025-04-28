@@ -159,6 +159,7 @@ const AgreementOneForm = ({
     client_signature: "",
     date_signature_client: "",
     client_date_of_birth: "",
+    applicant_type: "",
   });
 
   const [editIndex, setEditIndex] = useState(null);
@@ -347,7 +348,6 @@ const AgreementOneForm = ({
     "date_signature_client": "",
     "client_date_of_birth": ""
   });
-  console.log(state.type)
   return (
     <Modal
       show={show}
@@ -697,7 +697,7 @@ const AgreementOneForm = ({
               ))}
             <div
               className={
-                openSignature === "yes" || state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" || state.type === "three column" || state.type === "Alberta PNP and federal PR" || SigningUserType === "employee" || SigningUserType === "company" ? "d-none" : "form-group col-md-12 "
+                openSignature === "yes" || state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" || state.type === "three column" || state.type === "Alberta PNP and federal PR" || state.type === "express entry" || SigningUserType === "employee" || SigningUserType === "company" ? "d-none" : "form-group col-md-12 "
               }
             >
               <h3 className="font-size-4 text-black-2 line-height-reset">
@@ -774,7 +774,7 @@ const AgreementOneForm = ({
               <button
                 type="submit"
                 className="btn btn-primary btn-small w-25 mt-5 rounded-5 text-uppercase p-8"
-                disabled={loading || !IsFamilyFelidsEmpty}
+                disabled={loading || IsFamilyFelidsEmpty !== false}
               >
                 {loading
                   ? "Saving..."

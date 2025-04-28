@@ -18,7 +18,7 @@ import {
 import {
   BsBuildings,
   BsQrCodeScan,
-  BsReverseLayoutTextSidebarReverse,
+  // BsReverseLayoutTextSidebarReverse,
 } from "react-icons/bs";
 import { toast } from "react-toastify";
 import { PiApplePodcastsLogoThin } from "react-icons/pi";
@@ -148,16 +148,19 @@ const AdminSidebar = (props) => {
     if (e && e.preventDefault) {
       e.preventDefault();
     }
-    let data = {
-      id: item.id,
-      level: item.level,
-      parent_id: item.parent_id,
-      [field]: e.target.value,
-      admin_access_id: item.admin_access_id,
-    };
-    let res = await AddApplicanTypeApi(data);
-    if (res.status === 1 || res.status === "1") {
-      setApiCall(true);
+    console.log(e.target.value !== applicanttypedata.find((data) => data.id === item.id).title)
+    if (e.target.value !== applicanttypedata.find((data) => data.id === item.id).title) {
+      let data = {
+        id: item.id,
+        level: item.level,
+        parent_id: item.parent_id,
+        [field]: e.target.value,
+        admin_access_id: item.admin_access_id,
+      };
+      let res = await AddApplicanTypeApi(data);
+      if (res.status === 1 || res.status === "1") {
+        setApiCall(true);
+      }
     }
   };
   /*To call Api to delete employee */
@@ -208,9 +211,8 @@ const AdminSidebar = (props) => {
 
   return (
     <div
-      className={`dashboard-sidebar-wrapper pt-5 sidebar_parent ${
-        isMenuOpen ? "show" : ""
-      }`}
+      className={`dashboard-sidebar-wrapper pt-5 sidebar_parent ${isMenuOpen ? "show" : ""
+        }`}
       id="sidebar"
     >
       <SAlert
@@ -299,8 +301,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Dashboard"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -318,8 +320,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Task Dashboard"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -389,8 +391,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Manage Jobs"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -405,13 +407,12 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["Manage Self Jobs"] = el)}
           className={`d-none 
-             ${
-               user_type === "agent"
-                 ? "d-none"
-                 : props.heading === "Manage Self Jobs"
-                 ? "active"
-                 : ""
-             }`}
+             ${user_type === "agent"
+              ? "d-none"
+              : props.heading === "Manage Self Jobs"
+                ? "active"
+                : ""
+            }`}
         >
           <Link
             onClick={() => clearPageNo()}
@@ -428,8 +429,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Visa"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -447,8 +448,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "LMIA status"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -466,8 +467,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Local Candidate"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -838,19 +839,17 @@ const AdminSidebar = (props) => {
               onDragStart={() => handleDragStart(index)}
               onDragOver={(e) => handleDragOver(e, index)}
               onDragEnd={handleDragEnd}
-              className={`position-relative ${
-                user_type === "agent"
-                  ? "d-none"
-                  : props.heading === item.title
+              className={`position-relative ${user_type === "agent"
+                ? "d-none"
+                : props.heading === item.title
                   ? "active"
                   : ""
-              }`}
+                }`}
               title={item.title}
             >
               <div
-                className={`d-flex position-relative ${
-                  props.heading === item.title ? "active" : ""
-                }`}
+                className={`d-flex position-relative ${props.heading === item.title ? "active" : ""
+                  }`}
               >
                 <Link
                   className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center text-truncate w-100"
@@ -864,7 +863,7 @@ const AdminSidebar = (props) => {
                     localStorage.setItem("applicantType", "");
                     localStorage.setItem("applicantTypeFolderId", "");
                     localStorage.setItem("applicantTypeChild", "");
-                    AddApplicanTypeApi(item);
+                    if (!item.doc_folder_id) { AddApplicanTypeApi(item); }
                   }}
                   style={{ textDecoration: "none" }}
                   onContextMenu={(e) => {
@@ -934,7 +933,7 @@ const AdminSidebar = (props) => {
                           applicantTypeChild: child.id,
                           folderId: child.doc_folder_id,
                         }}
-                        onClicl={AddApplicanTypeApi(child)}
+                        onClick={() => { if (!item.doc_folder_id) { AddApplicanTypeApi(child) } }}
                         className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center text-truncate w-100"
                         style={{ textDecoration: "none" }}
                         onContextMenu={(e) => {
@@ -974,7 +973,8 @@ const AdminSidebar = (props) => {
                     </li>
                   ))}
                 </ul>
-              )}
+              )
+              }
             </li>
           );
         })}
@@ -1028,8 +1028,8 @@ const AdminSidebar = (props) => {
             admin_type === "agent"
               ? "d-none"
               : props.heading === "Manage Daily Call Log"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -1050,8 +1050,8 @@ const AdminSidebar = (props) => {
             admin_type === "agent"
               ? "d-none"
               : props.heading === "Manage Daily Hourly Log"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -1072,8 +1072,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Interview"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -1091,8 +1091,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Manage Notes"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -1111,8 +1111,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Assigned Job's"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -1133,8 +1133,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Manage Admin"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -1175,8 +1175,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Manage Job Category"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -1194,8 +1194,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Filter List"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -1227,7 +1227,7 @@ const AdminSidebar = (props) => {
           </Link>
         </li>
       </ul>
-    </div>
+    </div >
   );
 };
 export default AdminSidebar;

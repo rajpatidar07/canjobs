@@ -292,7 +292,7 @@ const InitialConsultation = ({
                 ${moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}
           </p>
             ` : page === "admin" ? `
-              <p>___________________________</p>
+          <span style="display: inline-block; width: 100px; height: 50px; border: 1px solid #ccc;"></span>
             ` : `
               <button class="btn btn-outline-secondary border-0" style="font-family:cursive;" id="add-signature-button-0">
                 Add Signature
@@ -359,7 +359,8 @@ const InitialConsultation = ({
             ?.map((word) => word[0]) // Map each word to its first letter
             ?.join(" ")}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`
           : `<span style="display: inline-block; width: 100px; height: 50px; border: 1px solid #ccc;"></span>`
-          } </div>
+          }
+           </div>
         <h4 class="font-size-6 text-end d-none">RCIC</h4>
       </div>
       <div class="d-none">

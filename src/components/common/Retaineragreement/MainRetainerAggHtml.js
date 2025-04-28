@@ -24,7 +24,7 @@ import HtmlRenewalApplication from "./Html/HtmlRenewalApplication";
 import HtmlMoeThanOneApplicant from "./Html/HtmlMoeThanOneApplicant";
 import EmployerRetainerAgreement from "./Html/EmployerRetainerAgreement";
 import ThreeColumnRetainerAgreement from "./Html/THreeColumnRetainerAgreement";
-import AlbertaPNPAndFederalPR from "./Html/AlbertaPNPAndFederalPR";
+// import AlbertaPNPAndFederalPR from "./Html/AlbertaPNPAndFederalPR";
 export default function MainRetainerAggHtml({
   setApicall,
   close,
@@ -240,7 +240,8 @@ export default function MainRetainerAggHtml({
               //   emp_user_type={emp_user_type}
               //   addSign={""} />
               agreementData.type === "Alberta PNP and federal PR" ? (
-                <AlbertaPNPAndFederalPR
+                <HtmlAgreementOne
+                //AlbertaPNPAndFederalPR
                   page={"admin"}
                   userData={userData}
                   felidData={felidData}

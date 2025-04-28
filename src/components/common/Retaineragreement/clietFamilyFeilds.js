@@ -29,6 +29,9 @@ function clietFamilyFeilds({
               Date of Birth
             </th>
             <th scope="col" className="border-0 font-size-4 font-weight-normal">
+              Applicant Type
+            </th>
+            <th scope="col" className="border-0 font-size-4 font-weight-normal">
               Actions
             </th>
           </tr>
@@ -47,6 +50,9 @@ function clietFamilyFeilds({
                 {client.client_date_of_birth
                   ? moment(client.client_date_of_birth).format("DD-MM-YYYY")
                   : "N/A"}
+              </td>
+              <td className="text-capitalize">
+                {client.applicant_type || "N/A"}
               </td>
               <td>
                 <div className="btn-group button_group" role="group">
@@ -78,7 +84,7 @@ function clietFamilyFeilds({
         className="form-group row align-items-center mt-2 mb-2"
         style={{ padding: "0!important" }}
       >
-        <div className="col-md-4 mb-2">
+        <div className="col-md-3 mb-2">
           <input
             className="form-control"
             type="text"
@@ -88,7 +94,7 @@ function clietFamilyFeilds({
             placeholder="First Name"
           />
         </div>
-        <div className="col-md-4 mb-2">
+        <div className="col-md-3 mb-2">
           <input
             className="form-control"
             type="text"
@@ -99,6 +105,16 @@ function clietFamilyFeilds({
           />
         </div>
         <div className="col-md-3 mb-2">
+          <input
+            className="form-control"
+            type="text"
+            name="applicant_type"
+            value={newClient.applicant_type}
+            onChange={handleInputChange}
+            placeholder="Applicant type"
+          />
+        </div>
+        <div className="col-md-2 mb-2">
           <input
             min={moment().subtract(84, "years").format("YYYY-MM-DD")}
             max={moment()
