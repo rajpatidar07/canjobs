@@ -8,7 +8,7 @@ import HtmlAgreementOne from './Html/HtmlAgreementOne'
 import HtmlAgreementTwo from './Html/HtmlAgreementTwo'
 import HtmlAgreementThree from './Html/HtmlAgreementThree'
 import HtmlAGreementFour from './Html/HtmlAGreementFour'
-import HtmlAgreementFive from './Html/HtmlAgreementFive'
+import WorkPermitHtml from "./Html/WorkPermitHtml";
 import HtmlAgreementSix from './Html/HtmlAgreementSix'
 import HtmlAgreementSeven from './Html/HtmlAgreementSeven'
 // import HtmlAgreementEight from './Html/HtmlAgreementEight'
@@ -25,7 +25,7 @@ import InitialConsultation from './Html/InitialConsultation'
 import HtmlRenewalApplication from './Html/HtmlRenewalApplication';
 import HtmlMoeThanOneApplicant from './Html/HtmlMoeThanOneApplicant';
 import ThreeColumnRetainerAgreement from "./Html/THreeColumnRetainerAgreement";
-// import AlbertaPNPAndFederalPR from './Html/AlbertaPNPAndFederalPR'
+import AlbertaPNPAndFederalPR from './Html/AlbertaPNPAndFederalPR'
 export default function UserSigningPage() {
     const [loader, setLoader] = useState(false)
     // const [pdf, setPdf] = useState(false)
@@ -133,7 +133,10 @@ export default function UserSigningPage() {
                                 type === "study" ?
                                     <HtmlAGreementFour />
                                     : type === "work permit"
-                                        ? <HtmlAgreementFive />
+                                        ? <WorkPermitHtml 
+                                        felidData={felidData}
+                                        emp_user_type={emp_user_type}
+                                        addSign={addSign}/>
                                         : type === "post graduation work permit"
                                             ? <HtmlAgreementSix />
                                             : type === "prospective workers"
@@ -146,8 +149,7 @@ export default function UserSigningPage() {
                                                         addSign={addSign} />
                                                     //<HtmlAgreementEight />
                                                     : type === "Alberta PNP and federal PR"
-                                                        ? <HtmlAgreementOne
-                                                            // AlbertaPNPAndFederalPR
+                                                        ? <AlbertaPNPAndFederalPR
                                                             page={"user"}
                                                             felidData={felidData}
                                                             emp_user_type={emp_user_type}

@@ -292,7 +292,7 @@ const InitialConsultation = ({
                 ${moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}
           </p>
             ` : page === "admin" ? `
-          <span style="display: inline-block; width: 100px; height: 50px; border: 1px solid #ccc;"></span>
+          <span style="display: inline-block; width: 400px; height: 50px; border: 1px solid #ccc;"></span>
             ` : `
               <button class="btn btn-outline-secondary border-0" style="font-family:cursive;" id="add-signature-button-0">
                 Add Signature

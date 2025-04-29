@@ -109,18 +109,18 @@ export default function RetauberAgreementList({
   useEffect(() => {
     // Call the function when the component first renders
     getAgreeFelidData();
-    // let timer;
+    let timer;
     if (apicall) {
-      //     timer = setTimeout(() => {
-      //         // Function to be executed after 20 seconds when apicall is true because document update's take time
-      //         getAgreeFelidData();
-      //         // Reset the state to false
+          timer = setTimeout(() => {
+              // Function to be executed after 20 seconds when apicall is true because document update's take time
+              getAgreeFelidData();
+              // Reset the state to false
       setApicall(false);
-      //     }, 20000);
+          }, 20000);
     }
 
     // // Cleanup function to clear the timer if the component unmounts or myState changes
-    // return () => clearTimeout(timer);
+    return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apicall]);
   /*To Show the delete alert box */
@@ -325,7 +325,7 @@ export default function RetauberAgreementList({
                             </span>
                           </button>
                           <button
-                            className={`btn btn-outline-info action_btn ${data.type === "recruitment services agreement" || data.type === "initial consultation" || data.type === "employer renewal stream" || data.type === "employers" || data.type === "three column"||data.type === "express entry" || data.type === "Alberta PNP and federal PR" ? "d-none" : ""}`}
+                            className={`btn btn-outline-info action_btn ${data.type === "recruitment services agreement" || data.type === "initial consultation" || data.type === "employer renewal stream" || data.type === "employers" || data.type === "three column"||data.type === "express entry" || data.type === "Alberta PNP and federal PR"||data.type==="work permit" ? "d-none" : ""}`}
                             onClick={() => {
                               setOpenAddClientFeilds(true);
                               setAgreementData(data);

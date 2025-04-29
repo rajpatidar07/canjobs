@@ -6,7 +6,7 @@ import HtmlAgreementTwo from "./Html/HtmlAgreementTwo";
 import { Link } from "react-router-dom";
 // import HtmlAgreementThree from "./Html/HtmlAgreementThree";
 import HtmlAGreementFour from "./Html/HtmlAGreementFour";
-import HtmlAgreementFive from "./Html/HtmlAgreementFive";
+import WorkPermitHtml from "./Html/WorkPermitHtml";
 import HtmlAgreementSix from "./Html/HtmlAgreementSix";
 import HtmlAgreementSeven from "./Html/HtmlAgreementSeven";
 // import HtmlAgreementEight from "./Html/HtmlAgreementEight";
@@ -24,7 +24,7 @@ import HtmlRenewalApplication from "./Html/HtmlRenewalApplication";
 import HtmlMoeThanOneApplicant from "./Html/HtmlMoeThanOneApplicant";
 import EmployerRetainerAgreement from "./Html/EmployerRetainerAgreement";
 import ThreeColumnRetainerAgreement from "./Html/THreeColumnRetainerAgreement";
-// import AlbertaPNPAndFederalPR from "./Html/AlbertaPNPAndFederalPR";
+import AlbertaPNPAndFederalPR from "./Html/AlbertaPNPAndFederalPR";
 export default function MainRetainerAggHtml({
   setApicall,
   close,
@@ -130,7 +130,11 @@ export default function MainRetainerAggHtml({
                   ? "/employers_agreement"
                   : agreementData.type === "three column"
                     ? "/three_column"
-                    : `/agreeone`;
+                    : agreementData.type === "work permit"
+                      ? "/work_permit"
+                      :agreementData.type === "Alberta PNP and federal PR"
+                      ?'/alberta_pnp'
+                      : `/agreeone`;
       localStorage.setItem("agreementStateData", JSON.stringify(stateData));
       // Open the new page in a new tab
       window.open(newPageUrl, "_blank");
@@ -220,7 +224,12 @@ export default function MainRetainerAggHtml({
             : agreementData.type === "study" ? (
               <HtmlAGreementFour />
             ) : agreementData.type === "work permit" ? (
-              <HtmlAgreementFive />
+              <WorkPermitHtml
+                page={"admin"}
+                userData={userData}
+                felidData={felidData}
+                emp_user_type={emp_user_type}
+                addSign={""} />
             ) : agreementData.type === "post graduation work permit" ? (
               <HtmlAgreementSix />
             ) : agreementData.type === "prospective workers" ? (
@@ -240,8 +249,7 @@ export default function MainRetainerAggHtml({
               //   emp_user_type={emp_user_type}
               //   addSign={""} />
               agreementData.type === "Alberta PNP and federal PR" ? (
-                <HtmlAgreementOne
-                //AlbertaPNPAndFederalPR
+                <AlbertaPNPAndFederalPR
                   page={"admin"}
                   userData={userData}
                   felidData={felidData}

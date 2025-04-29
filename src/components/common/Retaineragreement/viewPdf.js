@@ -177,47 +177,49 @@ export default function ViewPdf({
           ) {
             // Await the conversion if convertUrlToPDF is asynchronous
             convertUrlToPDF(data["@microsoft.graph.downloadUrl"]);
-          }  else if (
-      data.file.mimeType === "application/vnd.openxmlformats-officedocument.presentationml.presentation" || data.file.mimeType === "application/vnd.ms-powerpoint" ||
-      data.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
-      data.file.mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-    ) {
-      console.log(data)
-      let res = await ConvertPPT(data)
-      console.log(res)
-      if (res) {
-        setNewPdfUrl(res);
-      } else {
-        setNewDocLoder(false);
-        setNewPdfUrl("");
-      }
-    } else if (
-      data.file.mimeType ===
-      "application/vnd.ms-excel"
-    ) {
-      if (data["@microsoft.graph.downloadUrl"]) {
-        try {
-          let res = await ConvertAnyFileToPdf(data);
-          console.log(res);
-          if (res) {
-            setNewPdfUrl(`data:application/pdf;base64,${res}`);
-          } else {
+          } else if (
+            data.file.mimeType === "application/vnd.openxmlformats-officedocument.presentationml.presentation" || data.file.mimeType === "application/vnd.ms-powerpoint" ||
+            data.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+            data.file.mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          ) {
+            console.log(data)
+            let res = await ConvertPPT(data)
+            console.log(res)
+            if (res) {
+              setNewPdfUrl(res);
+            } else {
+              setNewDocLoder(false);
+              setNewPdfUrl("");
+            }
+          } else if (data.file.mimeType === "application/pdf") {
+            setNewPdfUrl(data["@microsoft.graph.downloadUrl"]);
+          } else if (
+            data.file.mimeType ===
+            "application/vnd.ms-excel"
+          ) {
+            if (data["@microsoft.graph.downloadUrl"]) {
+              try {
+                let res = await ConvertAnyFileToPdf(data);
+                console.log(res);
+                if (res) {
+                  setNewPdfUrl(`data:application/pdf;base64,${res}`);
+                } else {
+                  setNewDocLoder(false);
+                  setNewPdfUrl("");
+                }
+              } catch (error) {
+                console.error("Error converting Excel to PDF:", error);
+                setNewDocLoder(false);
+                setNewPdfUrl("");
+              }
+            }
+          }
+          else {
+            console.log(data.file.mimeType)
             setNewDocLoder(false);
             setNewPdfUrl("");
+            window.open(data.webUrl);
           }
-        } catch (error) {
-          console.error("Error converting Excel to PDF:", error);
-          setNewDocLoder(false);
-          setNewPdfUrl("");
-        }
-      }
-    }
-    else {
-      console.log(data.file.mimeType)
-      setNewDocLoder(false);
-      setNewPdfUrl("");
-      window.open(data.webUrl);
-    }
         } else if (res.data.data === "No Documents Found") {
           setNewDocLoder(false);
         } else {

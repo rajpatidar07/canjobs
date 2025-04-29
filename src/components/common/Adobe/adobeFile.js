@@ -344,6 +344,11 @@ const AdobePDFViewer = ({
         >
           <GrNext />
         </button>}
+        {console.log(url &&
+          data &&
+          userType,url ,
+          data,
+          userType)}
         {url &&
           data &&
           userType ? <div

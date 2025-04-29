@@ -1,30 +1,13 @@
 import moment from "moment";
 import { useEffect } from "react";
-// import { Link } from "react-router-dom";
-const HtmlAgreementOne = ({
+const WorkPermitHtml = ({
   page,
   felidData,
   userData,
   emp_user_type,
   addSign,
 }) => {
-  // Function to replace tags
-  // const replaceTags = (html) => {
-  //   // Replace opening and closing div and ul tags with View tags
-  //   html = html.replaceAll("<img", "<Image")
-  //   html = html.replaceAll('<div', '<View').replaceAll('</div>', '</View>');
-  //   html = html.replaceAll('<span', '<View').replaceAll('</ul>', '</View>');
-  //   html = html.replaceAll('<p', '<Text').replaceAll('</p>', '</Text>');
-  //   html = html.replaceAll('<Link', '<Text').replaceAll('</Link>', '</Text>');
-  //   html = html.replaceAll('<li', '<Text').replaceAll('</li>', '</Text>');
-
-  //   return html;
-  // };
-  // JSX structure with potential tag replacements
-  // eslint-disable-next-line
   const familyJsonArray = felidData?.family_json || [];
-
-  //? JSON.parse(felidData?.family_json) : [];
   const jsxContent = `<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
@@ -438,9 +421,7 @@ const HtmlAgreementOne = ({
               <td>
                 <p>
                 <small>
-                  Step 1 Completes upon signing the retainer and sharing the
-                  checklists and intake sheet with client. Data gathering and
-                  Creating Express Entry Profile
+                  Completes upon signing the retainer and sharing the checklists and intake sheet with client Data gathering, filling out the forms, information verification and completeness check, preparing the application package and payment is due before final submission of application. Provide proof of submission to the client
                 </small>
                 </p>
               </td>
@@ -448,41 +429,13 @@ const HtmlAgreementOne = ({
                 <p><br /></p>
               </td>
               <td>
-                <p><small>Non-refundable</small></p>
+                <p><small>All payments made are non refundable and total service charges to be collected regardless, whether the client s withdraw from the file a this stage. The government fee and courier charges must be paid apart from professional fees payment scheduled</small></p>
               </td>
               <td>${felidData?.applicable_retainer_fee_stape_1 || ""}</td>
               <td>${felidData?.applicable_government_processing_fee_stape_1 || ""
     }</td>
             </tr>
-            <tr>
-              <td>
-                <p>
-                <small>
-                  Step 2 Application preparation, filling out the forms,
-                  information verification and completeness check, preparing the
-                  application package
-                  </small>
-                </p>
-                <p><small>Payment is due before final submission of application.</small></p>
-                <p><small>Provide proof of submission to the client</small></p>
-              </td>
-              <td></td>
-              <td>
-                <p><small>Non-refundable<small></p>
-                <p>
-                <small>
-                  All payments made are non- refundable and total service
-                  charges to be collected regardless, whether the client/ s
-                  withdraw from the file at this stage. The government fee and
-                  courier charges must be paid apart from professional fees
-                  payment scheduled at this stage
-                  </small>
-                </p>
-              </td>
-              <td>${felidData?.applicable_retainer_fee_stape_2 || ""}</td>
-              <td>${felidData?.applicable_government_processing_fee_stape_2 || ""
-    }</td>
-            </tr>
+           
           </table>
           <p class="mt-8">
            <b> Total Amount: (Non-Refundable) (Paid at signing of contract and
@@ -1555,4 +1508,4 @@ services that have been rendered or accounting for the time that has been spent 
     </div>
   );
 };
-export default HtmlAgreementOne;
+export default WorkPermitHtml;

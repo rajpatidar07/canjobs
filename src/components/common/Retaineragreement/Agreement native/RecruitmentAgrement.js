@@ -87,7 +87,7 @@ const RecruitmentAgrement = () => {
     : "____________";
   let components = (
     <View style={{ height: "auto" }}>
-      <View style={{ padding: "10px 20px" }}>
+      <View style={{ padding: "10px 20px 35px 0px"  }}>
         <View style={styles.section}>
           <Text style={{ textAlign: "center", fontSize: "18px", marginBottom: 15 }}>RETAINER AGREEMENT{"\n"}
             <Text style={{ textAlign: "center", fontSize: "12px", marginBottom: 15 }}>Between Harpreet Kaur{"\n"} CAN Pathways Immigration Consultancy Ltd.{"\n"}</Text >
@@ -204,7 +204,7 @@ const RecruitmentAgrement = () => {
               15.9 Each of the parties hereto must do and execute or cause to be done or executed all such further and other things, acts, deeds, documents, and assurances as may be necessary or reasonably required to carry out the intent and purpose of this Agreement fully and effectively.
               {"\n"}{"\n"}
               15.10 The Client acknowledges that he/she has had sufficient time to review this Agreement and has been given an opportunity to obtain independent legal advice and translation prior to the execution and delivery of this Agreement.
-              {"\n"}{"\n"}{"\n"}{"\n"} {"\n"}{"\n"}
+              {"\n"}{"\n"}{"\n"}{"\n"} 
             </Text>
           </View>
           <View >
@@ -307,7 +307,7 @@ const RecruitmentAgrement = () => {
               </View>
               <View style={{ flexDirection: "row", flexWrap: "wrap", marginBottom: 20 }}>
                 {/* Client Name */}
-                <View style={{ width: "33.33%", padding: 10 }}>
+                <View style={{ width: "33.33%", padding: 8 }}>
                   <Text style={[styles.textunderline, { textTransform: "capitalize" }]}>
                     {familyJsonArray[0]?.client_first_name || ""}{" "}
                     {familyJsonArray[0]?.client_last_name || "_________________"}
@@ -315,7 +315,7 @@ const RecruitmentAgrement = () => {
                   <Text>Name of Client</Text>
                 </View>
                 {/* Client Signature */}
-                <View style={{ width: "33.33%", padding: 10 }}>
+                <View style={{ width: "33.33%", padding: 8 }}>
                   <View style={styles.signatureBox}>
                     {familyJsonArray[0]?.client_signature ? (
                       <Image src={familyJsonArray[0].client_signature} style={{
@@ -349,7 +349,7 @@ const RecruitmentAgrement = () => {
                   <Text>Signature of Client</Text>
                 </View>
                 {/* Client Signature Date*/}
-                <View style={{ width: "33.33%", padding: 10 }}>
+                <View style={{ width: "33.33%", padding: 8 }}>
                   <Text style={[styles.textunderline, { marginTop: 10 }]}>
                     {(!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client ===
                       "0000-00-00 00:00:00")
@@ -361,14 +361,14 @@ const RecruitmentAgrement = () => {
               </View>
               <View style={{ flexDirection: "row", flexWrap: "wrap", marginBottom: 20 }}>
                 {/* RCIC Name */}
-                <View style={{ width: "33.33%", padding: 10 }}>
+                <View style={{ width: "33.33%", padding: 8 }}>
                   <Text style={[styles.textunderline, { textTransform: "capitalize" }]}>
                     Harpreet Kaur
                   </Text>
                   <Text>Name of RCIC</Text>
                 </View>
                 {/* RCIC Signature */}
-                <View style={{ width: "33.33%", padding: 10 }}>
+                <View style={{ width: "33.33%", padding: 8 }}>
                   <View style={styles.signatureBox}>
                     {felidData?.rcic_signature ? (
                       <Image src={felidData?.rcic_signature} style={{
@@ -398,7 +398,7 @@ const RecruitmentAgrement = () => {
                   <Text>Signature of RCIC</Text>
                 </View>
                 {/* RCIC Signature Date*/}
-                <View style={{ width: "33.33%", padding: 10 }}>
+                <View style={{ width: "33.33%", padding: 8 }}>
                   <Text style={[styles.textunderline, { marginTop: 10 }]}>
                     {(!felidData?.date_signature_rcic || felidData?.date_signature_rcic === "0000-00-00" || felidData?.date_signature_rcic === "0000-00-00 00:00:00")
                       ? "________________"
@@ -636,7 +636,11 @@ const styles = StyleSheet.create({
   },
   bold: {
     fontWeight: "bold"
-  }
+  },
+  container: { display: "flex", flexDirection: "row", justifyContent: "space-between", marginTop: 30 },
+  box: { width: "45%" },
+  required: { color: "red" },
+  signatureBox: { width: "100%", height: 50, border: "1px solid #ccc", display: "flex", alignItems: "center", }
 
 });
 

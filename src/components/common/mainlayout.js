@@ -112,6 +112,8 @@ import EmployerRetainerAgreementPdf from "./Retaineragreement/Agreement native/E
 import ThreeColumnRerainerAgreement from "./Retaineragreement/Agreement native/ThreeColumnRerainerAgreement";
 import ManageHourlyLog from "../admin/ManageHourlyLog";
 import ConvertAnyFileToPdf from "./Common function/ConvertAnyFileTopdf";
+import WorkPermitPdf from "./Retaineragreement/Agreement native/WorkPermitPdf";
+import AlbertaPnpPdf from "./Retaineragreement/Agreement native/AlbertaPnpPdf";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -237,6 +239,8 @@ function MainLayout() {
         <Route path="/renewal_application" element={<RenewalApplicantionsPdf />} />
         <Route path="/employers_agreement" element={<EmployerRetainerAgreementPdf />} />
         <Route path="/three_column" element={<ThreeColumnRerainerAgreement />} />
+        <Route path="/work_permit" element={<WorkPermitPdf />} />
+        <Route path="/alberta_pnp" element={<AlbertaPnpPdf />} />
 
         <Route path="/addsign" element={<SignaturePadComponent />} />
         {(userType === "company" ||

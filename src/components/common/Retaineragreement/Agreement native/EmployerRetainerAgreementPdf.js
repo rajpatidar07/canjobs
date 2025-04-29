@@ -19,6 +19,9 @@ const styles = StyleSheet.create({
   underline: {
     textDecoration: "underline"
   },
+  mb10: {
+    marginBottom: 10,
+  },
   mb8: {
     marginBottom: 8,
   },
@@ -256,7 +259,7 @@ const EmployerRetainerAgreementPdf = () => {
 
           {/* Client Responsibilities */}
           <View style={styles.section}>
-            <Text style={[styles.subtitle]}>3. Client Responsibilities and Commitment</Text>
+            <Text style={[styles.subtitle,{marginTop:15}]}>3. Client Responsibilities and Commitment</Text>
             <Text>The Client agrees to:</Text>
             <View>
               {[
@@ -389,7 +392,7 @@ const EmployerRetainerAgreementPdf = () => {
           </View>
           {/* 10th section */}
           <View style={styles.section}>
-            <Text style={[styles.subtitle, styles.mb8]}>10. Confidentiality</Text>
+            <Text style={[styles.subtitle, styles.mb10]}>10. Confidentiality</Text>
             <Text style={[styles.mb8]}>All information and documentation reviewed by the RCIC, required by Service Canada and CIC and all other governing bodies, and used for the preparation of the application will not be divulged to any third party, other than agents and employees, without prior consent, except as demanded by law. The Client agrees to let the RCIC publish facts about the case as a case study without mentioning names. The RCIC, and all agents and employees of the RCIC, are also bound by the confidentiality requirements of Article 8.1 and 8.5 of the Code of Professional Ethics.
             </Text>
             <Text style={[styles.mb8]}>
@@ -521,8 +524,6 @@ const EmployerRetainerAgreementPdf = () => {
                     }}
                   />)}
               </View>
-              <Text style={[styles.text, styles.textBold]}>(THE CLIENT)</Text>
-              <Text style={styles.text}>Director/ Owner</Text>
               <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {familyJsonArray[0]?.date_signature_client ? moment(familyJsonArray[0].date_signature_client).format("DD/MM/YYYY") : "______________"}</Text>
               <Text style={styles.text}><Text style={styles.textBold}>Signed at:</Text>_______________________ <Text style={styles.dateLine}></Text></Text>
             </View>

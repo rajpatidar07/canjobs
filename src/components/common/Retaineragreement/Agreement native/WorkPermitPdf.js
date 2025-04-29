@@ -14,108 +14,16 @@ import moment from "moment";
 import { AddSharePointDOcument, AddUpdateAgreement } from "../../../../api/api";
 // import { toast } from "react-toastify";
 
-const AggrementOne = () => {
+const WorkPermitPdf = () => {
   const [blobData, setBlobData] = useState();
   const data = localStorage.getItem("agreementStateData");
   const {
     felidData,
     user_id,
     emp_user_type,
-    folderId: folderID /*, code*/,
+    folderId: folderID ,
   } = JSON.parse(data) || {};
-  // console.log(felidData?.family_json, "<=========== Testing data =======>", data)
-  const familyJsonArray = felidData?.family_json || [] //? JSON.parse(felidData?.family_json) : [];
-  // console.log( JSON.parse(felidData?.family_json))
-  // const latestCode = JSON.stringify(code)
-  //   .replace('" <', "<")
-  //   .replace('>"', ">")
-  //   .replace(/\\n/g, "")
-  //   .replace(/>,/g, ">");
-  // Function to convert the provided string into React PDF Renderer components
-  //   const convertStringToComponent = (str) => {
-  //     const htmlParser = new DOMParser();
-  //     const doc = htmlParser.parseFromString(str, 'text/html');
-
-  //     const convertNodeToComponent = (node) => {
-  //       if (node.nodeType === 3) { // text node
-  //         return node.textContent;
-  //       }
-
-  //       const { tagName, attributes, childNodes } = node;
-  //       const children = Array.from(childNodes).map(convertNodeToComponent);
-
-  //       const style = {};
-  //       if (attributes.style) {
-  //         attributes.style.value.split(';').forEach((styleRule) => {
-  //           const [key, value] = styleRule.split(':');
-  //           if (key && value) {
-  //             style[key.trim()] = value.trim();
-  //           }
-  //         });
-  //       }
-  //       switch (tagName) {
-  //         case 'TEXT':
-  //           return <Text style={style}>{children}</Text>;
-  //         case 'H1':
-  //           return <Text style={[styles.header, style]}>{children}</Text>;
-  //         case 'H2':
-  //           return <Text style={[styles.subHeader, style]}>{children}</Text>;
-  //         case 'VIEW':
-  //           return <View style={[styles.section, style]}>{children}</View>;
-  //         case 'IMG':
-  //           return <Image style={[styles.image, style]} src={node.getAttribute('src')} />;
-  //         default:
-  //           return <Text style={style}>{children}</Text>;
-  //       }
-  //     };
-
-  //     const components = Array.from(doc.body.childNodes).map(convertNodeToComponent);
-  //     return components;
-  //   };
-  // console.log(latestCode.trim())
-  //   const components = convertStringToComponent(latestCode.trim());
-  // const convertStringToComponent = (str) => {
-  //   const htmlParser = new DOMParser();
-  //   const doc = htmlParser.parseFromString(str, 'text/html');
-  // console.log(doc)
-  //   const convertNodeToComponent = (node) => {
-  //     if (node.nodeType === 3) { // text node
-  //       return node.textContent;
-  //     }
-
-  //     const { tagName, attributes, childNodes } = node;
-  //     const children = Array.from(childNodes).map(convertNodeToComponent);
-
-  //     const style = {};
-  //     if (attributes.style) {
-  //       attributes.style.value.split(';').forEach((styleRule) => {
-  //         const [key, value] = styleRule.split(':');
-  //         if (key && value) {
-  //           style[key.trim()] = value.trim();
-  //         }
-  //       });
-  //     }
-  //     switch (tagName) {
-  //       case 'TEXT':
-  //         return <Text style={style}>{children}</Text>;
-  //       case 'H1':
-  //         return <Text style={[styles.header, style]}>{children}</Text>;
-  //       case 'H2':
-  //         return <Text style={[styles.subHeader, style]}>{children}</Text>;
-  //       case 'VIEW':
-  //         return <View style={[styles.section, style]}>{children}</View>;
-  //       case 'IMG':
-  //         return <Image style={[styles.image, style]} src={node.getAttribute('src')} />;
-  //       default:
-  //         return <Text style={style}>{children}</Text>;
-  //     }
-  //   };
-
-  //   const components = Array.from(doc.body.childNodes).map(convertNodeToComponent);
-  //   return components;
-  // };
-
-  // const components = convertStringToComponent(htmlString);
+  const familyJsonArray = felidData?.family_json || [] 
   /*COnvert blob to file  */
   useEffect(() => {
     const convertBlob = async () => {
@@ -135,7 +43,6 @@ const AggrementOne = () => {
           `${felidData?.type.replace(" ", "_")}.pdf`,
           { type: "application/pdf" }
         );
-        // console.log('file = >', file)
         try {
           let res = await AddSharePointDOcument(
             user_id,
@@ -145,11 +52,6 @@ const AggrementOne = () => {
             [file]
           );
           if (res.data.message === "Document Upload") {
-            // toast.success(`Document Uploaded successfully`, {
-            //   position: toast.POSITION.TOP_RIGHT,
-            //   autoClose: 1000,
-            // });
-            // console.log(res.data.data[0][0].document_id)
             try {
               let data = {
                 id: felidData?.id,
@@ -162,16 +64,6 @@ const AggrementOne = () => {
               console.log(err)
             }
           }
-          // console.log(res.data)
-          // if (
-          //   res.data.message === "Failed" &&
-          //   res.data.data === "No Token Found"
-          // ) {
-          //   toast.success(`Document Uploaded successfully`, {
-          //     position: toast.POSITION.TOP_RIGHT,
-          //     autoClose: 1000,
-          //   });
-          // }
         } catch (error) {
           console.log("Error saving doc to sharepoint", error);
         }
@@ -649,9 +541,7 @@ const AggrementOne = () => {
                 <View style={[styles.cell, { height: "280px" }]}>
                   <Text>
                     <Text style={{ marginTop: 10, fontSize: "10px" }}>
-                      Step 1 Completes upon signing the retainer and sharing the
-                      checklists and intake sheet with client. Data gathering and
-                      Creating Express Entry Profile
+                    Completes upon signing the retainer and sharing the checklists and intake sheet with client Data gathering, filling out the forms, information verification and completeness check, preparing the application package and payment is due before final submission of application. Provide proof of submission to the client
                     </Text>
                   </Text>
                 </View>
@@ -661,7 +551,7 @@ const AggrementOne = () => {
                   </Text>
                 </View>
                 <View style={styles.cell}>
-                  <Text>Non-refundable</Text>
+                  <Text style={{paddingBottom:10}}>All payments made are non refundable and total service charges to be collected regardless, whether the client s withdraw from the file a this stage. The government fee and courier charges must be paid apart from professional fees payment scheduled</Text>
                 </View>
                 <View style={[styles.cell, { fontSize: "10px" }]}>
                   <Text>{felidData?.applicable_retainer_fee_stape_1}</Text>
@@ -669,36 +559,6 @@ const AggrementOne = () => {
                 <View style={[styles.cell, { fontSize: "10px" }]}>
                   <Text>
                     {felidData?.applicable_government_processing_fee_stape_1}
-                  </Text>
-                </View>
-              </View>
-              <View style={styles.row}>
-                <View style={styles.cell}>
-                  <Text style={{ marginTop: 10, marginBottom: 15, fontSize: "10px" }}>
-                    Step 2 Application preparation, filling out the forms,
-                    information verification and completeness check, preparing
-                    the application package Payment is due before final
-                    submission of application. Provide proof of submission to
-                    the client
-                  </Text>
-                </View>
-                <View style={styles.cell}></View>
-                <View style={[styles.cell, { fontSize: "10px" }]}>
-                  <Text>Non-refundable</Text>
-                  <Text style={{ marginTop: 10, marginBottom: 28 }}>
-                    All payments made are non- refundable and total service
-                    charges to be collected regardless, whether the client/ s
-                    withdraw from the file at this stage. The government fee and
-                    courier charges must be paid apart from professional fees
-                    payment scheduled at this stage
-                  </Text>
-                </View>
-                <View style={[styles.cell, { fontSize: "10px" }]}>
-                  <Text>{felidData?.applicable_retainer_fee_stape_2}</Text>
-                </View>
-                <View style={[styles.cell, { fontSize: "10px" }]}>
-                  <Text>
-                    {felidData?.applicable_government_processing_fee_stape_2}
                   </Text>
                 </View>
               </View>
@@ -1434,18 +1294,6 @@ const AggrementOne = () => {
                 </View>
                 <View style={styles.clientFormChild}>
                   <Text>
-                    Fax Number:{" "}
-                    <Text style={[styles.textunderline, { marginLeft: 5 }]}>
-                      {felidData?.client_fax || "_______________"}
-                    </Text>
-                  </Text>
-                </View>
-
-              </View>
-              <View style={styles.clientForm}>
-
-                <View style={styles.clientFormChild}>
-                  <Text>
                     E-mail Address:{" "}
                     <Text
                       style={[
@@ -1457,7 +1305,17 @@ const AggrementOne = () => {
                     </Text>
                   </Text>
                 </View>
+
               </View>
+              <View style={styles.clientForm}>
+                <View style={styles.clientFormChild}>
+                  <Text>
+                    Fax Number:{" "}
+                    <Text style={[styles.textunderline, { marginLeft: 5 }]}>
+                      {felidData?.client_fax || "_______________"}
+                    </Text>
+                  </Text>
+                </View></View>
             </View>
 
             {/* RCIC Information */}
@@ -2004,4 +1862,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AggrementOne;
+export default WorkPermitPdf;
