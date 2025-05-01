@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { /*GetFilter,*/ GetAgentJson, getallAdminData, getApplicanTypeApi } from "../../api/api";
+import {
+  /*GetFilter,*/ GetAgentJson,
+  getallAdminData,
+  getApplicanTypeApi,
+} from "../../api/api";
 import { CiSearch } from "react-icons/ci";
 import filterjson from "../json/filterjson";
 
@@ -33,7 +37,7 @@ export default function ApplicantsFilter({
   setStatustFilterValue,
   applicantTypeId,
   applicantTypeChildId,
-  setSearch
+  setSearch,
 }) {
   // let [SkillList, setSkillList] = useState([]);
   // let [EducationList, setEducationList] = useState([]);
@@ -41,7 +45,7 @@ export default function ApplicantsFilter({
   let [AgentList, setAgentList] = useState([]);
   let [AdminList, setAdmintList] = useState([]);
   const [applicantTypeList, setApplicantTypeList] = useState([]);
-  let portal = localStorage.getItem("portal")
+  let portal = localStorage.getItem("portal");
   /*Function to search */
   const SearchCandidate = () => {
     if (candidateSearch === "") {
@@ -109,22 +113,29 @@ export default function ApplicantsFilter({
     // eslint-disable-next-line
   }, [skillFilterValue, educationFilterValue, applicantTypeId]);
   return (
-    <>
+    <div
+      className="row align-items-center mb-3 justify-content-start"
+      style={{ gap: "5px", margin: 0 }}
+    >
       <div
         className={
           // (skill === null || skill === undefined)
           // ?
-          "col p-1 form_group mb-3"
+          "col form_group p-0"
           // : "d-none"
         }
       >
-        <p className="input_label">Search {portal === "study" ? "Student" : "Candidate"}:</p>
+        <p className="input_label">
+          Search {portal === "study" ? "Student" : "Candidate"}:
+        </p>
         <div className="input-group ">
           <input
             required
             type="text"
             className="form-control"
-            placeholder={`Search ${portal === "study" ? "Student" : "Candidate"}`}
+            placeholder={`Search ${
+              portal === "study" ? "Student" : "Candidate"
+            }`}
             name="Employee_name"
             onChange={(e) => setcandidateSearch(e)}
             onKeyPress={handleKeyPress}
@@ -159,7 +170,7 @@ export default function ApplicantsFilter({
       {/* <div
                 className={
                     (skill === null || skill === undefined)
-                        ? "col p-1 form_group mb-3"
+                        ? "col form_group p-0"
                         : "d-none"
                 }
             >
@@ -188,7 +199,7 @@ export default function ApplicantsFilter({
       {/* <div
                 className={
                     (skill === null || skill === undefined)
-                        ? "col p-1 form_group mb-3"
+                        ? "col form_group p-0"
                         : "d-none"
                 }
             >
@@ -218,7 +229,7 @@ export default function ApplicantsFilter({
       {/* <div
                 className={
                     (skill === null || skill === undefined)
-                        ? "col p-1 form_group mb-3"
+                        ? "col form_group p-0"
                         : "d-none"
                 }
             >
@@ -251,7 +262,7 @@ export default function ApplicantsFilter({
       <div
         className={
           (skill === null || skill === undefined) && user_type === "admin"
-            ? "col p-1 form_group mb-3"
+            ? "col form_group p-0"
             : "d-none"
         }
       >
@@ -282,8 +293,10 @@ export default function ApplicantsFilter({
       </div>
       <div
         className={
-          (skill === null || skill === undefined) && user_type === "admin" && portal === "study"
-            ? "col p-1 form_group mb-3"
+          (skill === null || skill === undefined) &&
+          user_type === "admin" &&
+          portal === "study"
+            ? "col form_group p-0"
             : "d-none"
         }
       >
@@ -300,7 +313,8 @@ export default function ApplicantsFilter({
             className="text-capitalize form-control"
           >
             <option value="" data-display="Product Designer">
-              Select status            </option>
+              Select status{" "}
+            </option>
             {(filterjson.employee_status || []).map((data, index) => {
               return (
                 <option value={index + 1} key={index}>
@@ -314,7 +328,7 @@ export default function ApplicantsFilter({
       <div
         className={
           (skill === null || skill === undefined) && user_type === "admin"
-            ? "col p-1 form_group mb-3 "
+            ? "col form_group p-0 "
             : "d-none"
         }
       >
@@ -346,7 +360,7 @@ export default function ApplicantsFilter({
       <div
         className={
           (skill === null || skill === undefined) && pageName === "employee"
-            ? "col p-1 form_group mb-3 "
+            ? "col form_group p-0 "
             : "d-none"
         }
       >
@@ -365,11 +379,11 @@ export default function ApplicantsFilter({
             <option value="" data-display="Product Designer">
               Candidate's Application type
             </option>
-            {(applicantTypeList.filter((item) => item.level === (0 || "0")) || []).map((interest, index) => (
-              <option
-                key={index}
-                value={interest.id}
-              >
+            {(
+              applicantTypeList.filter((item) => item.level === (0 || "0")) ||
+              []
+            ).map((interest, index) => (
+              <option key={index} value={interest.id}>
                 {interest.title}
               </option>
             ))}
@@ -379,8 +393,14 @@ export default function ApplicantsFilter({
       <div
         className={
           (skill === null || skill === undefined) &&
-            ((pageName === "4" || pageName === 4) || (pageName === "21" || pageName === 21) | (pageName === "22" || pageName === 22) || (pageName === "12" || pageName === 12) || pageName === "employee")
-            ? "col p-1 form_group mb-3"
+          (pageName === "4" ||
+            pageName === 4 ||
+            (pageName === "21" || pageName === 21) |
+              (pageName === "22" || pageName === 22) ||
+            pageName === "12" ||
+            pageName === 12 ||
+            pageName === "employee")
+            ? "col form_group p-0"
             : "d-none"
         }
       >
@@ -402,9 +422,11 @@ export default function ApplicantsFilter({
       </div>
       <div
         className={
-          (skill === null || skill === undefined) && (
-            [14, "14", 15, "15", 16, "16", 4, "4"].includes(pageName) || pageName === "employee") && !applicantTypeChildId
-            ? "col p-1 form_group mb-3"
+          (skill === null || skill === undefined) &&
+          ([14, "14", 15, "15", 16, "16", 4, "4"].includes(pageName) ||
+            pageName === "employee") &&
+          !applicantTypeChildId
+            ? "col form_group p-0"
             : "d-none"
         }
       >
@@ -421,26 +443,36 @@ export default function ApplicantsFilter({
             className="text-capitalize form-control"
           >
             <option value={""}>Candidate's sub type</option>
-            {(applicantTypeList.filter((item) => pageName === "employee" ? item.level === "1" : (item.level === "1" && item.parent_id === applicantTypeId))).map((subType, index) => (
-              <option key={index} value={subType.id} className={`text-capitalize`}>
-                {subType.title}
-              </option>
-            ))}
+            {applicantTypeList
+              .filter((item) =>
+                pageName === "employee"
+                  ? item.level === "1"
+                  : item.level === "1" && item.parent_id === applicantTypeId
+              )
+              .map((subType, index) => (
+                <option
+                  key={index}
+                  value={subType.id}
+                  className={`text-capitalize`}
+                >
+                  {subType.title}
+                </option>
+              ))}
           </select>
         </div>
       </div>
 
-      <div className={
-        (skill === null || skill === undefined) &&
-          (pageName === "employee")
-          ? "col form_group mt-8"
-          : "d-none"
-      }>
+      <div
+        className={
+          (skill === null || skill === undefined) && pageName === "employee"
+            ? "col form_group p-0 mt-8"
+            : "d-none"
+        }
+      >
         <label
           htmlFor="local"
           className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
         >
-
           <input
             type="checkbox"
             id="local"
@@ -450,45 +482,54 @@ export default function ApplicantsFilter({
             onChange={(e) =>
               setLocalFilterValue(localFilterValue === 1 ? 0 : 1)
             }
-          /> <span >Local</span>
+          />{" "}
+          <span>Local</span>
         </label>
       </div>
-      <div className={"col form_group mt-8"}>
-        <button className="btn btn-primary" onClick={() => {
-          const clearFiltersByPageName = () => {
-            if (pageName === "employee") {
-              setLocalFilterValue("");
-              setCategoryFilterValue("");
-              setFilterByEmployeeId("");
-              setinterestFilterValue("");
-              setAdminFilterValue("");
-              setAgentFilterValue("");
-              setcandidateSearch("");
-              setSearch("")
-              if (portal === "study") {
-                setStatustFilterValue("");
+      <div className={"col form_group p-0"}>
+        <button
+          className="btn btn-primary w-100"
+          onClick={() => {
+            const clearFiltersByPageName = () => {
+              if (pageName === "employee") {
+                setLocalFilterValue("");
+                setCategoryFilterValue("");
+                setFilterByEmployeeId("");
+                setinterestFilterValue("");
+                setAdminFilterValue("");
+                setAgentFilterValue("");
+                setcandidateSearch("");
+                setSearch("");
+                if (portal === "study") {
+                  setStatustFilterValue("");
+                }
+              } else if (["4", "21", "22", "12"].includes(pageName)) {
+                setFilterByEmployeeId("");
+              } else if (
+                ["14", "15", "16"].includes(pageName) &&
+                !applicantTypeChildId
+              ) {
+                setCategoryFilterValue("");
+              } else {
+                // Default clear all filters if pageName does not match above
+                setCategoryFilterValue("");
+                setinterestFilterValue("");
+                setAdminFilterValue("");
+                setAgentFilterValue("");
+                setcandidateSearch("");
+                setSearch("");
+                if (portal === "study") {
+                  setStatustFilterValue("");
+                }
               }
-            } else if (["4", "21", "22", "12"].includes(pageName)) {
-              setFilterByEmployeeId("")
-            } else if (["14", "15", "16"].includes(pageName) && !applicantTypeChildId) {
-              setCategoryFilterValue("")
-            } else {
-              // Default clear all filters if pageName does not match above
-              setCategoryFilterValue("");
-              setinterestFilterValue("");
-              setAdminFilterValue("");
-              setAgentFilterValue("");
-              setcandidateSearch("");
-              setSearch("")
-              if (portal === "study") {
-                setStatustFilterValue("");
-              }
-            }
-            setpageNo(1);
-          };
-          clearFiltersByPageName();
-        }}>Reset</button>
+              setpageNo(1);
+            };
+            clearFiltersByPageName();
+          }}
+        >
+          Reset
+        </button>
       </div>
-    </>
+    </div>
   );
 }

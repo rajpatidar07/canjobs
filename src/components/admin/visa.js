@@ -30,7 +30,7 @@ export default function Visa() {
   const [EmpId, setEmpId] = useState(location.state ? location.state.id : "");
   /*Filter and search state */
   // let [SkillList, setSkillList] = useState([])
-  let [applicantTypeList, setApplicantTypeList] = useState([])
+  let [applicantTypeList, setApplicantTypeList] = useState([]);
   const [VisaCountryFilter, setVisaCountryFilter] = useState("");
   const [VisStatusFilterValue, setVisStatusFilterValue] = useState("");
   const [IntrestedFilterValue, setIntrestedFilterValue] = useState("");
@@ -69,25 +69,38 @@ export default function Visa() {
   /*Function to get thejSon */
   const getAllVisaData = async () => {
     try {
-      let res = await GetEmployeeVisaList("", "", "", "", "", "", "", "", "", "visa")
-      setVisaData(res.data.data)
-    } catch (err) {
-      console.log(err)
-    }
-    try {
-      let response = await getApplicanTypeApi("");
-      setApplicantTypeList(response.data.data.filter((item) => item.level === (0 || "0")));
+      let res = await GetEmployeeVisaList(
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "visa"
+      );
+      setVisaData(res.data.data);
     } catch (err) {
       console.log(err);
     }
-  }
+    try {
+      let response = await getApplicanTypeApi("");
+      setApplicantTypeList(
+        response.data.data.filter((item) => item.level === (0 || "0"))
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
   /*Render method to get the json*/
   useEffect(() => {
-    getAllVisaData()
+    getAllVisaData();
     // if ((search === "") === true) {
     //   setSearchError("")
     // }
-  }, [])
+  }, []);
   /* Function to show the single data to update Employee*/
   // const employeeDetails = (e) => {
   //   setShowEmployeeProfile(true);
@@ -131,7 +144,6 @@ export default function Visa() {
             <AdminSidebar heading={"Visa"} />
           </>
         )}
-
 
         <div
           className={
@@ -243,9 +255,7 @@ export default function Visa() {
                     </div>
                   </div>
                   <div className="mt-4">
-                    <CommonThreeDots
-                      tableName={"visa"}
-                      tableData={allVisa} />
+                    <CommonThreeDots tableName={"visa"} tableData={allVisa} />
                   </div>
                 </div>
                 {/*<-- Job Search and Filter -->*/}
