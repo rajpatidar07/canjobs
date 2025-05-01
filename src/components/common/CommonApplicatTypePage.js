@@ -40,6 +40,7 @@ export default function CommonApplicatTypePage() {
   const [apiCall, setApiCall] = useState(false);
   const [showGrpChatBox, setShowGrpChatBox] = useState(false);
   const [folderApiCall, setFolderApiCall] = useState(false);
+  const [filterByEmployeeId, setFilterByEmployeeId] = useState("");
 
   const [applicantTypeId, setApplicantTypeId] = useState(
     sId || state.applicantType || localApplicantTypeId
@@ -241,6 +242,8 @@ export default function CommonApplicatTypePage() {
                     categoryFilterValue={interestFilterValue}
                     setCategoryFilterValue={setInterestFilterValue}
                     applicantTypeChildId={applicantTypeChildId}
+                    setFilterByEmployeeId={setFilterByEmployeeId}
+                    filterByEmployeeId={filterByEmployeeId}
                   />
                   <small className="text-danger">{searcherror}</small>
                 </div>
@@ -259,6 +262,7 @@ export default function CommonApplicatTypePage() {
                   pageNo={pageNo}
                   setpageNo={setPageNo}
                   ApplicantType={applicantTypeIdForApi}
+                  filterByEmployeeId={filterByEmployeeId}
                   // categoryFilterValue={applicantTypeChildId ? applicantTypeChildId : categoryFilterValue}
                 />
               </div>

@@ -138,7 +138,7 @@ const CreateWordFile = (props) => {
             );
 
             if (res.data.message === "Document Upload") {
-                toast.success("Note added successfully!");
+                toast.success("Word file Created successfully!");
                 props.setApiCall(true);
                 handleWordClose();
                 localStorage.removeItem("writerContent");
