@@ -95,7 +95,7 @@ export default function EmployerRetainerAgreement({ page,
     <li> 	Guide the Client through the application process and review all documents to ensure consistency and accuracy;</li>
     <li> 	Submit the Client's application package to the appropriate offices;</li>
     <li> 	Apprise the Client on the progress of his/her application;</li>
-    <li> 	Handle all correspondencewith Rural Community of business location on the Client's behalfin respect to the application;</li>
+    <li> 	Handle all correspondence with Rural Community of business location on the Client's behalf respect to the application;</li>
     <li> 	Liaise between the Canadian government and the Client;</li>
     <li> 	Prepare the Client in advance if an Interviewwithan officer of Rural Community of business location is requested.</li>
     <li> 	Perform all duties on behalf of the Client competently and professionally.</li>
@@ -135,7 +135,7 @@ export default function EmployerRetainerAgreement({ page,
     <li><b>The first payment will be paid by the Client to the RCIC on the day this Agreement is executed by the Client: CAD $1000 + 5% GST</b></li>
     <li><b>Second and final payment, will be paid by client before submitting final LMIA application to ESDC: CAD $2000+5% GST</b></li>
 </ul>
-    <p>*Taxes are payable wherever applicable. The above fee does not include any fees payable to the govemment of Canada. While the above fees are non-refundable — if for any reason agreement is terminated any un-used part of fees with be refunded after deduction of any costs. The client may specify the method of refund.</p>
+    <p>*Taxes are payable wherever applicable. The above fee does not include any fees payable to the government of Canada. While the above fees are non-refundable — if for any reason agreement is terminated any un-used part of fees with be refunded after deduction of any costs. The client may specify the method of refund.</p>
     
     <p>Additional fees that is involved in this process are as follows.</p>
     <p><span class="font-weight-bold pr-2 ">✓</span>LMIA Government Application fee foreach position <b>CAD 1000.00</b></p>
@@ -151,7 +151,7 @@ export default function EmployerRetainerAgreement({ page,
     <ul>
     <li> 	In-person Cash Drop-Off — Please contact us to arrange a time to drop off your payment in cash. We will provide you with a receipt.</li>
     <li> 	E-transfer — Please send the payment and the answer to the secret question to the following e-mail address: info@canpathwavs.ca</li>
-    <li> 	Credit CardlPayPal: Instructions will be shared, additional up to 3% charges will be applicable if the client is willing to pay by this method.</li>
+    <li> 	Credit Card PayPal: Instructions will be shared, additional up to 3% charges will be applicable if the client is willing to pay by this method.</li>
     </ul>
     
     <p>For Clients Located <b>OUTSIDE</b> Canada, we receive the following methods:</p>
@@ -196,7 +196,7 @@ export default function EmployerRetainerAgreement({ page,
     <p>
         All information and documentation reviewed by the RCIC, required by Service Canada and CIC and all other governing bodies, and used for the preparation of the application will not be divulged to any third party, other than agents and employees, without prior consent, except as demanded by law. The Client agrees to let the RCIC publish facts about the case as a case study without mentioning names. The RCIC, and all agents and employees of the RCIC, are also bound by the confidentiality requirements of Article 8.1 and 8.5 of the Code of Professional Ethics.</p>
     <p>
-        The Client agrees to thueuse of electronic communication and storage of confidential information. The RCIC will use his/her best efforts to maintain a high degree of security for electronic communication and information storage.
+        The Client agrees to the use of electronic communication and storage of confidential information. The RCIC will use his/her best efforts to maintain a high degree of security for electronic communication and information storage.
     </p>
     </div>
     <div>
@@ -294,9 +294,15 @@ export default function EmployerRetainerAgreement({ page,
               </button></span>`
     }
        </div>
-            <p style="margin-top: 10px; font-weight: bold;">(THE CLIENT)</p>
-            <p style="font-size: 12px;">Director/ Owner</p><br>
-    
+            <p style="margin-top: 10px; font-weight: bold;"> ${familyJsonArray[0]?.client_first_name ||
+              familyJsonArray[0]?.client_last_name
+              ? ` <span class="border-bottom border-dark text-capitalize">${familyJsonArray[0]?.client_first_name
+              } ${familyJsonArray[0]?.client_last_name || ""}</span>`
+              : emp_user_type === "employee"
+                ? ` <span class="border-bottom border-dark text-capitalize "style="min-width: 300px">${userData?.name}</span>` ||
+                ""
+                : ""}</p>
+   
             <p style="font-size: 12px; margin-top: 10px;"><strong>Date:</strong> ${familyJsonArray[0]?.date_signature_client ? `<span class="border-bottom border-dark" style="min-width: 80px;">${moment(familyJsonArray[0].date_signature_client).format("DD/MM/YYYY")}</span>` : "______________"}</p>
             <p style="font-size: 12px; margin-top: -10px;"><strong>Signed at:</strong> <span style="display: inline-block; width: 120px; border-bottom: 1px solid black;"> </span></p>
         </div>
@@ -329,6 +335,21 @@ export default function EmployerRetainerAgreement({ page,
     <h4 class="font-size-6 text-end">Clients</h4></div>
     </div> 
     
+  <div class="d-flex justify-content-center w-100 mt-5">
+<p style="color: #800000; text-align: center; font-family: 'Times New Roman', serif;">
+  <strong>Office:</strong> 2618 Hopewell Pl NE #310 Calgary, AB
+  T1Y 7J7, Canada |
+  <strong>Tel.:</strong> 403.888.5308 |
+  <br>
+  <strong>Email:</strong>
+  <a href="mailto:info@canpathways.ca" style="color: blue; text-decoration: underline;">info@canpathways.ca</a>
+  |
+  <strong>Website:</strong>
+  <a href="https://www.canpathways.ca" target="_blank" style="color: black; text-decoration: none;">
+    www.canpathways.ca
+  </a>
+</p>
+</div>
         </body>
                     </html> `;
 

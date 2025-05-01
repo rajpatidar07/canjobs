@@ -1341,11 +1341,12 @@ export default function EmployerRetainerAgreement({ page,
                   </div>`
       : page === "admin"
         ? ` <div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;"><span style = "max-width: 100%; max-height: 100%;" ></span></div>`
-        : ` <button class="btn btn-outline-secondary border-0  "
-                    style="font-family:cursive;"
-                    id="add-signature-button-0">
-                    Add Signature
-                  </button>`
+        : `<span>
+              <button  class="btn btn-light-outline"
+                      style="font-family:cursive;"max-width: 100%; max-height: 100%;"" 
+                      id="add-signature-button-0">
+                Add Signature
+              </button></span>`
     }
                   <p style="margin: 0 0 30px 0">Signature of Client</p>
                 </div>

@@ -312,6 +312,7 @@ const InitialConsultationAgreement = () => {
               <View style={styles.box}>
                 <Text style={styles.label}><Text style={styles.required}>*</Text> Signature</Text>
                 <View style={styles.signatureBox}>
+                  {console.log(felidData?.rcic_signature)}
                   {felidData?.rcic_signature ? (
                     <Image src={felidData.rcic_signature} style={{
                       display: "inline-block",

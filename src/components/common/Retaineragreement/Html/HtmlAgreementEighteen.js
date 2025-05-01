@@ -279,11 +279,12 @@ const HtmlAgreementEighteen = ({
                                   </div>`
             : page === "admin"
                 ? ` <div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;"><span style = "max-width: 100%; max-height: 100%;" ></span></div>`
-                : ` <button class="btn btn-outline-secondary border-0  "
-                                    style="font-family:cursive;"
-                                    id="add-signature-button-0">
-                                    Add Signature
-                                  </button>`
+                : `<span>
+              <button  class="btn btn-light-outline"
+                      style="font-family:cursive;"max-width: 100%; max-height: 100%;"" 
+                      id="add-signature-button-0">
+                Add Signature
+              </button></span>`
         }
                 
                 <p>Signature of Client</p>
@@ -409,24 +410,23 @@ const HtmlAgreementEighteen = ({
   </div>
   </div>
   </div>
-            <p><p
-                style="color: #800000; text-align: center; font-family: 'Times New Roman', serif;">
-                <strong>Office:</strong> 2618 Hopewell Pl NE #310 Calgary, AB
-                T1Y 7J7, Canada |
-                <strong>Tel.:</strong> 403.888.5308 |
-                <br>
-                <strong>Email:</strong>
-                <a href="mailto:info@canpathways.ca"
-                  style="color: blue; text-decoration: underline;">info@canpathways.ca</a>
-                |
-                <strong>Website:</strong>
-                <a href="https://www.canpathways.ca" target="_blank"
-                  style="color: black; text-decoration: none;">
-                  www.canpathways.ca
-                </a>
-              </p>
+                  </div>
 
-                </div>
+  <div class="d-flex justify-content-center w-100 mt-5">
+<p style="color: #800000; text-align: center; font-family: 'Times New Roman', serif;">
+  <strong>Office:</strong> 2618 Hopewell Pl NE #310 Calgary, AB
+  T1Y 7J7, Canada |
+  <strong>Tel.:</strong> 403.888.5308 |
+  <br>
+  <strong>Email:</strong>
+  <a href="mailto:info@canpathways.ca" style="color: blue; text-decoration: underline;">info@canpathways.ca</a>
+  |
+  <strong>Website:</strong>
+  <a href="https://www.canpathways.ca" target="_blank" style="color: black; text-decoration: none;">
+    www.canpathways.ca
+  </a>
+</p>
+</div>
     </body>
     </html>`;
     useEffect(

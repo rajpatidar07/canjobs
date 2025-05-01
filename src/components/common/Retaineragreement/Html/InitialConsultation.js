@@ -294,9 +294,12 @@ const InitialConsultation = ({
             ` : page === "admin" ? `
           <span style="display: inline-block; width: 400px; height: 50px; border: 1px solid #ccc;"></span>
             ` : `
-              <button class="btn btn-outline-secondary border-0" style="font-family:cursive;" id="add-signature-button-0">
+             <span>
+              <button  class="btn btn-light-outline"
+                      style="font-family:cursive;"max-width: 100%; max-height: 100%;"" 
+                      id="add-signature-button-0">
                 Add Signature
-              </button>
+              </button></span>
             `}
           </div>
           <p>Signature of Client</p>

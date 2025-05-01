@@ -141,9 +141,7 @@ export default function EmployeeTable(props) {
                   ? ""
                   : props?.ApplicantType
                     ? "4,7,8,9"
-                    : props.self === "yes"
-                      ? -1
-                      : status,
+                    : status,
           props.job_id ? props.job_id : "",
           CandidateId ? CandidateId : props.filterByEmployeeId,
           location.pathname === "/slots"

@@ -284,15 +284,20 @@ Toll-free: 1-877-836-7543<br>
       : page === "admin"
         ? `<span style="max-width: 100%; max-height: 100%;"></span>`
         : `<span>
-          <button  class="btn btn-light-outline"
-                  style="font-family:cursive;"max-width: 100%; max-height: 100%;"" 
-                  id="add-signature-button-0">
-            Add Signature
-          </button></span>`
+              <button  class="btn btn-light-outline"
+                      style="font-family:cursive;"max-width: 100%; max-height: 100%;"" 
+                      id="add-signature-button-0">
+                Add Signature
+              </button></span>`
     }
    </div>
-        <p style="margin-top: 10px; font-weight: bold;">(THE CLIENT)</p>
-        <p style="font-size: 12px;">Director/ Owner</p><br>
+        <p style="font-size: 12px;">${familyJsonArray[0]?.client_first_name ||
+          familyJsonArray[0]?.client_last_name
+          ? ` <span class="text-capitalize">${familyJsonArray[0]?.client_first_name
+          } ${familyJsonArray[0]?.client_last_name || ""}</span>`
+          : emp_user_type === "employee"
+            ? ` <span class="text-capitalize "style="min-width: 300px">${userData?.name}</span>` ||
+            "": ""}</p><br>
 
         <p style="font-size: 12px; margin-top: 10px;"><strong>Date:</strong> ${familyJsonArray[0]?.date_signature_client ? `<span class="border-bottom border-dark" style="min-width: 80px;">${moment(familyJsonArray[0].date_signature_client).format("DD/MM/YYYY")}</span>` : "______________"}</p>
         <p style="font-size: 12px; margin-top: -10px;"><strong>Signed at:</strong> <span style="display: inline-block; width: 120px; border-bottom: 1px solid black;"> </span></p>

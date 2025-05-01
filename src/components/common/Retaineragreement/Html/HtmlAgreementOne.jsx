@@ -63,19 +63,19 @@ const HtmlAgreementOne = ({
       </div>
      <p> 
   This Retainer Agreement is made this
-  <span class="${felidData?.client_file_no ? "para_gap" : ""}">
-    ${felidData?.client_file_no || "_________"}
+  <span class="${felidData?.agreement_date? "para_gap" : ""}">
+  ${felidData?.agreement_date &&
+    felidData?.agreement_date !== "0000-00-00 00:00:00" &&
+    felidData?.agreement_date !== "0000-00-00"
+    ? `<span class="para_gap">${moment(
+      new Date(felidData?.agreement_date)
+    ).format("Do")}</span>`
+    : ""
+  }
   </span>
   day of
 
-    ${felidData?.agreement_date &&
-      felidData?.agreement_date !== "0000-00-00 00:00:00" &&
-      felidData?.agreement_date !== "0000-00-00"
-      ? `<span class="para_gap">${moment(
-        new Date(felidData?.agreement_date)
-      ).format("Do")}</span>`
-      : ""
-    }
+    
     ${felidData?.agreement_date &&
       felidData?.agreement_date !== "0000-00-00 00:00:00" &&
       felidData?.agreement_date !== "0000-00-00"
@@ -1150,9 +1150,12 @@ services that have been rendered or accounting for the time that has been spent 
                 ` : page === "admin" ? `
               <span style="width: 400px; height: 50px; border: 1px solid #ccc;"></span>
                 ` : `
-                  <button class="btn btn-outline-secondary border-0" style="font-family:cursive;" id="add-signature-button-0">
-                    Add Signature
-                  </button>
+                 <span>
+              <button  class="btn btn-light-outline"
+                      style="font-family:cursive;"max-width: 100%; max-height: 100%;"" 
+                      id="add-signature-button-0">
+                Add Signature
+              </button></span>
                 `}
             <p style="margin: 0 0 30px 0">Signature of Client</p>
         </div>

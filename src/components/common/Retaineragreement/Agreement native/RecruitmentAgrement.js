@@ -87,7 +87,7 @@ const RecruitmentAgrement = () => {
     : "____________";
   let components = (
     <View style={{ height: "auto" }}>
-      <View style={{ padding: "10px 20px 35px 0px"  }}>
+      <View style={{ padding: "10px 20px 35px 0px" }}>
         <View style={styles.section}>
           <Text style={{ textAlign: "center", fontSize: "18px", marginBottom: 15 }}>RETAINER AGREEMENT{"\n"}
             <Text style={{ textAlign: "center", fontSize: "12px", marginBottom: 15 }}>Between Harpreet Kaur{"\n"} CAN Pathways Immigration Consultancy Ltd.{"\n"}</Text >
@@ -204,7 +204,7 @@ const RecruitmentAgrement = () => {
               15.9 Each of the parties hereto must do and execute or cause to be done or executed all such further and other things, acts, deeds, documents, and assurances as may be necessary or reasonably required to carry out the intent and purpose of this Agreement fully and effectively.
               {"\n"}{"\n"}
               15.10 The Client acknowledges that he/she has had sufficient time to review this Agreement and has been given an opportunity to obtain independent legal advice and translation prior to the execution and delivery of this Agreement.
-              {"\n"}{"\n"}{"\n"}{"\n"} 
+              {"\n"}{"\n"}{"\n"}{"\n"}
             </Text>
           </View>
           <View >
@@ -305,17 +305,16 @@ const RecruitmentAgrement = () => {
                   </Text>
                 </View>
               </View>
-              <View style={{ flexDirection: "row", flexWrap: "wrap", marginBottom: 20 }}>
-                {/* Client Name */}
-                <View style={{ width: "33.33%", padding: 8 }}>
-                  <Text style={[styles.textunderline, { textTransform: "capitalize" }]}>
-                    {familyJsonArray[0]?.client_first_name || ""}{" "}
-                    {familyJsonArray[0]?.client_last_name || "_________________"}
-                  </Text>
-                  <Text>Name of Client</Text>
-                </View>
-                {/* Client Signature */}
-                <View style={{ width: "33.33%", padding: 8 }}>
+              {/* Agreement Signature */}
+              <Text style={{}}>
+                IN WITNESS WHEREOF this Agreement has been duly executed by the parties
+                hereto on the date first above written.
+              </Text>
+              <View style={styles.container}>
+                {/* Right Signature Box (Client) */}
+
+                <View style={styles.box}>
+                  <Text style={styles.label}><Text style={styles.required}>*</Text> Signature</Text>
                   <View style={styles.signatureBox}>
                     {familyJsonArray[0]?.client_signature ? (
                       <Image src={familyJsonArray[0].client_signature} style={{
@@ -334,44 +333,17 @@ const RecruitmentAgrement = () => {
                         }}
                       />)}
                   </View>
+                  <Text style={[styles.text, styles.textBold]}> {" " + (familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")}</Text>
+                  <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {familyJsonArray[0]?.date_signature_client ? moment(familyJsonArray[0].date_signature_client).format("DD/MM/YYYY") : "______________"}</Text>
+                  <Text style={styles.text}><Text style={styles.textBold}>Signed at:</Text>_______________________ <Text style={styles.dateLine}></Text></Text>
+                </View>
 
-                  <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7 }}>
-                    <Text style={{ textTransform: "capitalize" }}>
-                      {familyJsonArray[0]?.client_first_name || ""}{" "}
-                      {familyJsonArray[0]?.client_last_name || ""}{" "}
-                    </Text>
-                    <Text> {!familyJsonArray[0]?.date_signature_client ||
-                      familyJsonArray[0]?.date_signature_client ===
-                      "0000-00-00 00:00:00"
-                      ? ""
-                      : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</Text>
-                  </Text>
-                  <Text>Signature of Client</Text>
-                </View>
-                {/* Client Signature Date*/}
-                <View style={{ width: "33.33%", padding: 8 }}>
-                  <Text style={[styles.textunderline, { marginTop: 10 }]}>
-                    {(!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client ===
-                      "0000-00-00 00:00:00")
-                      ? "______________"
-                      : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}
-                  </Text>
-                  <Text>Date</Text>
-                </View>
-              </View>
-              <View style={{ flexDirection: "row", flexWrap: "wrap", marginBottom: 20 }}>
-                {/* RCIC Name */}
-                <View style={{ width: "33.33%", padding: 8 }}>
-                  <Text style={[styles.textunderline, { textTransform: "capitalize" }]}>
-                    Harpreet Kaur
-                  </Text>
-                  <Text>Name of RCIC</Text>
-                </View>
-                {/* RCIC Signature */}
-                <View style={{ width: "33.33%", padding: 8 }}>
+                {/* Left Signature Box (RCIC) */}
+                <View style={styles.box}>
+                  <Text style={styles.label}><Text style={styles.required}>*</Text> Signature</Text>
                   <View style={styles.signatureBox}>
                     {felidData?.rcic_signature ? (
-                      <Image src={felidData?.rcic_signature} style={{
+                      <Image src={felidData.rcic_signature} style={{
                         display: "inline-block",
                         maxWidth: "100%",
                         maxHeight: "100%",
@@ -385,26 +357,178 @@ const RecruitmentAgrement = () => {
                           height: 50,
                           border: "1px solid #ccc",
                         }}
-                      />)}
+                      />
+                    )}
                   </View>
-                  <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7 }}>
-                    <Text style={{ textTransform: "capitalize" }}>
-                      Harpreet Kaur{" "}
-                    </Text>
-                    <Text> {(!felidData?.date_signature_rcic || felidData?.date_signature_rcic === "0000-00-00" || felidData?.date_signature_rcic === "0000-00-00 00:00:00")
-                      ? ""
-                      : moment(felidData?.date_signature_rcic).format("DD-MM-YYYY")}</Text>
-                  </Text>
-                  <Text>Signature of RCIC</Text>
+                  <Text style={[styles.text, styles.textBold]}>Harpreet Kaur (RCIC)</Text>
+                  <Text style={styles.text}>RCIC # R533393 CAN Pathways Immigration Consultancy Ltd.</Text>
+                  <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {felidData?.date_signature_rcic !== "0000-00-00 00:00:00" && felidData?.date_signature_rcic ? moment(felidData.date_signature_rcic).format("DD/MM/YYYY") : "______________"}</Text>
+                  <Text style={styles.text}><Text style={styles.textBold}>Signed at:</Text> <Text style={styles.underline}>Calgary, Alberta, Canada</Text></Text>
                 </View>
-                {/* RCIC Signature Date*/}
-                <View style={{ width: "33.33%", padding: 8 }}>
-                  <Text style={[styles.textunderline, { marginTop: 10 }]}>
-                    {(!felidData?.date_signature_rcic || felidData?.date_signature_rcic === "0000-00-00" || felidData?.date_signature_rcic === "0000-00-00 00:00:00")
-                      ? "________________"
-                      : moment(felidData?.date_signature_rcic).format("DD-MM-YYYY")}
+              </View>
+              <View style={{ marginTop: 120 }}>
+                <Text style={[{ textAlign: "center", }, styles.definition]}>
+                  AUTHORIZATION
+                </Text>
+                <Text style={{ marginTop: 5 }}>
+                  I {" "}
+                  <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
+                    {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")}
                   </Text>
-                  <Text>Date</Text>
+                  {" "} ( hereinafter referred to as the “client”), hereby authorize and
+                  appoint Harpreet kaur (hereinafter referred to as the “RCIC” with a
+                  CICC# R533393), of CAN Pathways Immigration consultancy
+                  ltd.,(hereinafter referred to as the “firm”), to represent me in my
+                  application to IRCC.
+                </Text>
+                <Text style={{ marginTop: 15 }}>
+                  The Recruiter and the firm are authorized to assign any of its staff members, associates, affiliates, lawyers or the agents to process any matters in whole or part related to above-mentioned subject as they deem appropriate.
+                </Text>
+                <Text style={{ marginTop: 15 }}>
+
+                  The Recruiter and the firm are authorized to collect Information and communicate with The Employer related to my profile. In case of Online application and documentation. I authorized Recruiter Harpreet Kaur to electronically sign and submit the application on my behalf.
+                </Text>
+                <Text style={{ marginTop: 15 }}>I also give permission to the Recruiter and the firm to post photos on social media ensuring that my private information is redacted</Text>
+                <Text style={{ marginTop: 15 }}>
+                  In doing so, they my each receive or pay each other any pecuniary remuneration/benefits that may be acquired directly or indirectly including those from a third party for the purpose of obtaining a favorable and expeditious results.
+                </Text>
+                <Text style={{ marginTop: 15 }}>
+                  The RCIC and the firm are authorized to act on my behalf.{'/n'}{'/n'}
+                  I also agree to provide all necessary documentation as required.
+                </Text>
+                <Text style={[{ marginTop: 20 }, styles.definition]}>Declaration</Text>
+                <View id="l13" style={{ paddingLeft: 10 }}>
+                  <View style={{ marginTop: 17, flexDirection: 'row' }}>
+                    <Text style={{ width: 20, fontWeight: 'bold' }}>1</Text>
+                    <Text style={{ flex: 1 }}>
+                      I confirm that neither I nor any other representatives included in my application have presented or will present at any future date, false and misleading information to either the Recruiter, the firm or to the government of Canada.
+                    </Text>
+                  </View>
+                  <View style={{ marginTop: 17, flexDirection: 'row' }}>
+                    <Text style={{ width: 20, fontWeight: 'bold' }}>2</Text>
+                    <Text style={{ flex: 1 }}>
+                      I understand that The Recruiter's obligations under the Engagement are null and void if the Client knowingly provides any inaccurate, misleading or false material information.
+                    </Text>
+                  </View>
+                  <View style={{ marginTop: 17, flexDirection: 'row' }}>
+                    <Text style={{ width: 20, fontWeight: 'bold' }}>3</Text>
+                    <Text style={{ flex: 1 }}>
+                      I agree that if my application is refused hecause I neglected to provide the required documents or information within the notified time frame or fail to show up at the time of interview, selection or training period the Recruiter, the firm or the Employer will not be held responsible.
+                    </Text>
+                  </View>
+                </View>
+                <View style={{ marginTop: 20 }}>
+                  <Text style={{ flex: 1 }}>
+                    I have read and understood all the terms and steps in the retainer letter above and I agree to all the terms mentioned And for so doing, this document shall constitute good and sufficient authority and declaration
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "100%",
+                    marginTop: 65,
+                  }}
+                >
+                  <View style={[styles.clientForm, { textAlign: "center", marginTop: 20 }]}>
+                    <View style={styles.clientFormChild}>
+                      <Text className="para_gap" style={{ margin: 0, marginBottom: 15, textDecoration: "underline", textTransform: "capitalize" }}>
+                        {familyJsonArray[0]?.client_first_name || "" || familyJsonArray[0]?.client_last_name
+                          ? familyJsonArray[0]?.client_first_name || "" +
+                          " " +
+                          (familyJsonArray[0]?.client_last_name || " ")
+                          : "_______________"}
+                      </Text>
+                      <Text style={{ margin: "0 0 30px 0" }}>Client’s full name</Text>
+                    </View>
+                    <View style={[styles.clientFormChild, { alignSelf: "center" }]}>
+                      <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+                        <View style={{ width: "100%" }}>
+                          <Text style={styles.label}><Text style={styles.required}>*</Text> Signature</Text>
+                          <View style={styles.signatureBox}>
+                            {familyJsonArray[0]?.client_signature ? (
+                              <Image src={familyJsonArray[0].client_signature} style={{
+                                display: "inline-block",
+                                maxWidth: "100%",
+                                maxHeight: "100%",
+                                textTransform: "capitalize",
+                              }} />
+                            ) : (
+                              <View
+                                style={{
+                                  display: "inline-block",
+                                  width: "100%",
+                                  height: 50,
+                                  border: "1px solid #ccc",
+                                }}
+                              />)}
+                          </View>
+                        </View>
+                      </View>
+                    </View>
+                    <View style={styles.clientFormChild}>
+                      <Text className="para_gap" style={{ margin: 0, textDecoration: "underline" }}>
+                        {!familyJsonArray[0]?.date_signature_client ||
+                          familyJsonArray[0]?.date_signature_client ===
+                          "0000-00-00 00:00:00"
+                          ? "____________"
+                          : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}
+                      </Text>
+                      <Text style={{ margin: "0 0 30px 0" }}>Date</Text>
+                    </View>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "100%",
+                    marginTop: 15,
+                  }}
+                >
+                  <View style={[styles.clientForm, { textAlign: "center", marginTop: 20 }]}>
+                    <View style={styles.clientFormChild}>
+                      <Text className="para_gap" style={{ margin: 0, marginBottom: 15, textDecoration: "underline", textTransform: "capitalize" }}>
+                        Harpreet Kaur
+                      </Text>
+                      <Text style={{ margin: "0 0 30px 0" }}>                  Name of RCIC
+                      </Text>
+                    </View>
+                    <View style={[styles.clientFormChild, { alignSelf: "center" }]}>
+                      <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+                        <View style={{ width: "100%" }}>
+                          <Text style={styles.label}><Text style={styles.required}>*</Text> Signature</Text>
+                          <View style={styles.signatureBox}>
+                            {felidData?.rcic_signature ? (
+                              <Image src={felidData?.rcic_signature} style={{
+                                display: "inline-block",
+                                maxWidth: "100%",
+                                maxHeight: "100%",
+                                textTransform: "capitalize",
+                              }} />
+                            ) : (
+                              <View
+                                style={{
+                                  display: "inline-block",
+                                  width: "100%",
+                                  height: 50,
+                                  border: "1px solid #ccc",
+                                }}
+                              />)}
+                          </View>
+                        </View>
+                      </View>
+
+                    </View>
+                    <View style={styles.clientFormChild}>
+                      <Text className="para_gap" style={{ margin: 0, textDecoration: "underline" }}>
+                        {(!felidData?.date_signature_rcic || felidData?.date_signature_rcic === "0000-00-00" || felidData?.date_signature_rcic === "0000-00-00 00:00:00")
+                          ? "____________"
+                          : moment(felidData?.date_signature_rcic).format("DD-MM-YYYY")}
+                      </Text>
+                      <Text style={{ margin: "0 0 30px 0" }}>Date</Text>
+                    </View>
+                  </View>
                 </View>
               </View>
             </View>
