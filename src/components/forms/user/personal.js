@@ -1052,7 +1052,7 @@ function PersonalDetails(props) {
                               : ""
                           }
                           >
-                            {interest?.title}{" "}
+                            {interest?.title}
                             {interest.level !== "0" ? (
                               <small>( {parent?.title} sub type)</small>
                             ) : null}
