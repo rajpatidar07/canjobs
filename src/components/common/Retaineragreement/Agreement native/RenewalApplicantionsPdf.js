@@ -516,8 +516,13 @@ const RenewalApplicantionsPdf = () => {
                     }}
                   />)}
               </View>
-              <Text style={[styles.text, styles.textBold]}>(THE CLIENT)</Text>
-              <Text style={styles.text}>Director/ Owner</Text>
+              <Text style={[styles.text, styles.textBold]}> {familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name ? (
+                <Text style={[{ borderBottomWidth: 1, borderBottomColor: "black", textTransform: "capitalize" }, styles.underline]}>
+                  {familyJsonArray[0]?.client_first_name} {familyJsonArray[0]?.client_last_name || ""}
+                </Text>
+              ) : (
+                "_____________________"
+              )}</Text>
               <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {familyJsonArray[0]?.date_signature_client ? moment(familyJsonArray[0].date_signature_client).format("DD/MM/YYYY") : "______________"}</Text>
               <Text style={styles.text}><Text style={styles.textBold}>Signed at:</Text>_______________________ <Text style={styles.dateLine}></Text></Text>
             </View>

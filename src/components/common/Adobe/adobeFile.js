@@ -344,11 +344,6 @@ const AdobePDFViewer = ({
         >
           <GrNext />
         </button>}
-        {console.log(url &&
-          data &&
-          userType,url ,
-          data,
-          userType)}
         {url &&
           data &&
           userType ? <div
@@ -373,8 +368,9 @@ const AdobePDFViewer = ({
             AdminData()
           }
         }}
+        
         className={
-          page === "agreement" || page === "invoice"
+          page === "agreement" || page === "invoice"||userType === "company" || userType === "user"
             ? "d-none"
             : "annotation-mobile-button"
         }

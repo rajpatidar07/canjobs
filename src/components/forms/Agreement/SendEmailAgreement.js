@@ -337,7 +337,7 @@ export default function SendEmailAgreement({
                 <tr>
                     <td style="padding:24px;background-color:white;border-radius:5px;">
                         <div style="color:black;font-size:medium;">
-                            <p>Dear <b>${felidData.name || "user"}</b>,</p>
+                            <p>Dear <b>${felidData.client_first_name || "user"}</b>,</p>
                             <p>
                                 We are pleased to inform you that your agreement is now ready for signing. To complete the process, please review and fill in the required details by following the link below:
                             </p>
@@ -355,7 +355,7 @@ export default function SendEmailAgreement({
                             <p>
                                 Thank you for your prompt attention to this matter.
                             </p>
-                            <p>Best regards,<br><b>Canpathways Team</b></p>
+                            <p>Best regards,<br><b>Can Pathways Team</b></p>
                         </div>
                     </td>
                 </tr>

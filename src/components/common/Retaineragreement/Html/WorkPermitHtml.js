@@ -46,19 +46,18 @@ const WorkPermitHtml = ({
       </div>
      <p> 
   This Retainer Agreement is made this
-  <span class="${felidData?.client_file_no ? "para_gap" : ""}">
-    ${felidData?.client_file_no || "_________"}
-  </span>
+  <span class="${felidData?.agreement_date? "para_gap" : ""}">
+
+  ${felidData?.agreement_date &&
+    felidData?.agreement_date !== "0000-00-00 00:00:00" &&
+    felidData?.agreement_date !== "0000-00-00"
+    ? `<span class="para_gap">${moment(
+      new Date(felidData?.agreement_date)
+    ).format("Do")}</span>`
+    : ""
+  }  </span>
   day of
 
-    ${felidData?.agreement_date &&
-      felidData?.agreement_date !== "0000-00-00 00:00:00" &&
-      felidData?.agreement_date !== "0000-00-00"
-      ? `<span class="para_gap">${moment(
-        new Date(felidData?.agreement_date)
-      ).format("Do")}</span>`
-      : ""
-    }
     ${felidData?.agreement_date &&
       felidData?.agreement_date !== "0000-00-00 00:00:00" &&
       felidData?.agreement_date !== "0000-00-00"
@@ -1103,9 +1102,12 @@ services that have been rendered or accounting for the time that has been spent 
                 ` : page === "admin" ? `
               <span style="width: 400px; height: 50px; border: 1px solid #ccc;"></span>
                 ` : `
-                  <button class="btn btn-outline-secondary border-0" style="font-family:cursive;" id="add-signature-button-0">
-                    Add Signature
-                  </button>
+                 <span>
+              <button  class="btn btn-light-outline"
+                      style="font-family:cursive;"max-width: 100%; max-height: 100%;"" 
+                      id="add-signature-button-0">
+                Add Signature
+              </button></span>
                 `}
             <p style="margin: 0 0 30px 0">Signature of Client</p>
         </div>
@@ -1157,67 +1159,6 @@ services that have been rendered or accounting for the time that has been spent 
             </p>
             <p style="margin: 0 0 30px 0">Date</p>
         </div>
-    ${(familyJsonArray.slice(1) || []).map(
-      (item, index) =>
-        `<div style="width: 50%">
-           
-       ${item.client_signature
-          ? `
-        <div class="d-flex flex-column">
-                        <img
-      src="${item.client_signature}"
-      alt="${item.client_first_name} ${item.client_last_name}"
-      style="max-width: 200px; float: right;"
-      class="${item.client_signature ? "d-block" : "d-none"}"
-    />
-    <p style="margin: 0">______________________________</p>
-                  <small class="row ">
-                    <span class="col text-capitalize" >
-                      ${item.client_first_name +
-          " " +
-          item.client_last_name +
-          " "
-          }${moment(item.date_signature_client).format(
-            "DD-MM-YYYY"
-          )}</span>
-                  </small>
-                      </div>`
-          : page === "admin"
-            ? `<p style="margin: 0">______________________________</p>`
-            : ` <button class="btn btn-outline-secondary border-0  " 
-                  style="font-family:cursive;" 
-                  id="add-signature-button-${index + 1}"
-                   ${
-            // !familyJsonArray[0]?.client_signature ? "disabled" :
-            ""
-            }
-                   >
-            Add Signature
-          </button>`
-        }
-            <p style="margin: 0 0 30px 0">Signature of family member</p>
-        </div>
-        <div style="width: 50%">
-            <p class="para_gap text-capitalize" style="margin: 0">
-                <span style="max-width: 200px;">${item.client_first_name + " " + item.client_last_name
-        }</span>
-            </p>
-            <p style="margin: 0 0 30px 0">Name of family member</p>
-        </div>
-        <div style="width: 50%">
-            <p style="margin: 0">
-               ${item.date_signature_client === "0000-00-00 00:00:00" ||
-          item.date_signature_client === "0000-00-00" ||
-          !item.date_signature_client
-          ? "_____________________"
-          : `<span  class="para_gap" style="max-width: 200px;">${moment(
-            item.date_signature_client
-          ).format("DD-MM-YYYY")}</span>`
-        }
-            </p>
-            <p style="margin: 0 0 30px 0">Date</p>
-        </div>`
-    )}
 
     <!-- RCIC Signature -->
     

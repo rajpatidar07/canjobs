@@ -78,8 +78,8 @@ const AgreementOneForm = ({
     client_fax: "",
     client_address:
       emp_user_type === "employee"
-        ? userData?.current_location?userData?.current_location + " " + userData?.currently_located_country:""
-        : userData?.address?userData?.address:"",
+        ? userData?.current_location ? userData?.current_location + " " + userData?.currently_located_country : ""
+        : userData?.address ? userData?.address : "",
     family_json: [initialClientState],
     client_first_name:
       emp_user_type === "employee" ? userData?.name : userData?.company_name,
@@ -226,7 +226,7 @@ const AgreementOneForm = ({
         (index === "rcic_signature" || index === "final")) ||
       openSignature === "no"
     ) {
-      // console.log(index, e ``                                                        rrors)
+      console.log(state)
       // if (index === "update details" ? validate() : "") {
       //    console.log("first")
       try {
@@ -269,11 +269,11 @@ const AgreementOneForm = ({
                   ? "/more_than_one_applicant" :
                   state.type === "employers"
                     ? "/employers_agreement"
-                    :state.type==="work permit"
-                    ?"/work_permit"
-                   : state.type === "Alberta PNP and federal PR"
-                      ?'/alberta_pnp'
-                    : `/agreeone`;
+                    : state.type === "work permit"
+                      ? "/work_permit"
+                      : state.type === "Alberta PNP and federal PR"
+                        ? '/alberta_pnp'
+                        : `/agreeone`;
               localStorage.setItem(
                 "agreementStateData",
                 JSON.stringify(stateData)
@@ -606,7 +606,7 @@ const AgreementOneForm = ({
                   {
                     label:
                       "Applicable Government Processing Fee for Step 2",
-                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ||state.type==="work permit"? "d-none" : "",
+                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" || state.type === "work permit" ? "d-none" : "",
                     name: "applicable_government_processing_fee_stape_2",
                     type: "number",
                   },
@@ -620,7 +620,7 @@ const AgreementOneForm = ({
                   {
                     label:
                       "Applicable Retainer Fee for this stage (Non-Refundable) for Step 2",
-                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers"||state.type==="work permit" ? "d-none" : "",
+                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" || state.type === "work permit" ? "d-none" : "",
                     name: "applicable_retainer_fee_stape_2",
                     type: "number",
                   },
@@ -701,7 +701,7 @@ const AgreementOneForm = ({
               ))}
             <div
               className={
-                openSignature === "yes" || state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" || state.type === "three column" || state.type === "Alberta PNP and federal PR" || state.type === "express entry"||state.type==="work permit" || SigningUserType === "employee" || SigningUserType === "company" ? "d-none" : "form-group col-md-12 "
+                openSignature === "yes" || state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" || state.type === "three column" || state.type === "Alberta PNP and federal PR" || state.type === "express entry" || state.type === "work permit" || SigningUserType === "employee" || SigningUserType === "company" ? "d-none" : "form-group col-md-12 "
               }
             >
               <h3 className="font-size-4 text-black-2 line-height-reset">
@@ -769,7 +769,7 @@ const AgreementOneForm = ({
               ? "Are you sure to confirm submission? This signature cannot be updated later!"
               : ""}
             {index === "final" && !state.initial ?
-              <small className="text-danger">Please add the initials and required fields for the agreement.</small> : null}
+              <small className="text-danger">Please add the initials and required fields for the agreement.</small> : index === "final" && !state?.family_json[0]?.client_signature ? <small className="text-danger">Please Add Signature</small> : null}
             <p
               className={index === "final" ? "text-start p-2" : "d-none"}
               style={{ backgroundColor: index === "final" ? "#fdff00" : "" }}
@@ -780,7 +780,7 @@ const AgreementOneForm = ({
               <button
                 type="submit"
                 className="btn btn-primary btn-small w-25 mt-5 rounded-5 text-uppercase p-8"
-                disabled={loading || IsFamilyFelidsEmpty !== false || index === "final" ? !state.initial : false}
+                disabled={loading || IsFamilyFelidsEmpty !== false || index === "final" ? (!state.initial||!state?.family_json[0]?.client_signature ) : false}
               >
                 {loading
                   ? "Saving..."
