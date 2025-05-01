@@ -194,6 +194,7 @@ button.btn.action_btn {
   min-width: 30px;
   line-height: normal;
   height: auto;
+  padding: 5px;
 }
 
 .table.main_data_table th,
@@ -2310,7 +2311,7 @@ ul.css-8tnble li {
 }
 
 /* Create a new stacking context for the cell content */
-.table_sticky_col > * {
+.table_sticky_col>* {
   position: relative;
   z-index: 1;
 }
