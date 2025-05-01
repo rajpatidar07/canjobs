@@ -33,7 +33,7 @@ function SelfApplicat(props) {
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
   let [pageNo, setpageNo] = useState(localStorage.getItem("PageNo") || 1);
-  let user_type = localStorage.getItem("userType")
+  let user_type = localStorage.getItem("userType");
 
   /* Function to show the single data to update Employee*/
   const employeeDetails = (e) => {
@@ -72,8 +72,8 @@ function SelfApplicat(props) {
         }
       >
         {props.skill === null ||
-          props.skill === undefined ||
-          Object.keys(props.skill).length === 0 ? (
+        props.skill === undefined ||
+        Object.keys(props.skill).length === 0 ? (
           <>
             {/* <!-- Header Area --> */}
             <AdminHeader heading={"New Applicants"} />
@@ -98,15 +98,15 @@ function SelfApplicat(props) {
               ? props.skill === null ||
                 props.skill === undefined ||
                 Object.keys(props.skill).length === 0
-                ? "dashboard-main-container mt-16"
+                ? "dashboard-main-container mt-14"
                 : ""
               : "d-none"
           }
           id="dashboard-body"
         >
           <div className="container-fluid">
-            <div className="mb-18">
-              <div className="mb-4 align-items-center">
+            <div className="mb-0">
+              <div className="align-items-center">
                 <div className="page___heading">
                   <h3 className="font-size-6 mb-0">Applicants</h3>
                 </div>
@@ -114,7 +114,7 @@ function SelfApplicat(props) {
                 <div className="row m-0 align-items-center">
                   {/* Employees filter's */}
                   <ApplicantsFilter
-setSearch={setSearch}
+                    setSearch={setSearch}
                     applicantTypeId={""}
                     user_type={user_type}
                     search={search}
@@ -142,7 +142,6 @@ setSearch={setSearch}
                     filterByEmployeeId={filterByEmployeeId}
                     setFilterByEmployeeId={setFilterByEmployeeId}
                   />
-
                 </div>
                 <small className="text-danger">{searcherror}</small>
               </div>
@@ -179,8 +178,8 @@ setSearch={setSearch}
           <div
             className={
               props.skill === null ||
-                props.skill === undefined ||
-                Object.keys(props.skill).length === 0
+              props.skill === undefined ||
+              Object.keys(props.skill).length === 0
                 ? "dashboard-main-container mt-16"
                 : ""
             }
