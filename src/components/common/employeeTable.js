@@ -646,7 +646,7 @@ export default function EmployeeTable(props) {
         {props.heading === "Dashboard" ? null : (
           <div className="d-flex justify-content-between align-items-center w-100">
             <div
-              className={`btn-group mb-5 ${
+              className={`btn-group mb-3 ${
                 props.skill || location.pathname === "/slots" ? "d-none" : ""
               }`}
               role="group"
@@ -817,7 +817,7 @@ export default function EmployeeTable(props) {
             </div>
             {props.pageName === "employee" ? (
               <>
-                <div className="col mb-5 px-1 form_group text-right">
+                <div className="col mb-3 px-1 form_group text-right">
                   <CustomButton
                     className="font-size-3 rounded-3 btn btn-primary border-0"
                     onClick={() => props.editEmployee("0")}

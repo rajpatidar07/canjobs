@@ -114,7 +114,7 @@ export default function ApplicantsFilter({
   }, [skillFilterValue, educationFilterValue, applicantTypeId]);
   return (
     <div
-      className="row align-items-center mb-3 justify-content-start"
+      className="row align-items-end mb-3 justify-content-start"
       style={{ gap: "5px", margin: 0 }}
     >
       <div
@@ -465,13 +465,13 @@ export default function ApplicantsFilter({
       <div
         className={
           (skill === null || skill === undefined) && pageName === "employee"
-            ? "col form_group p-0 mt-8"
+            ? "col form_group p-0"
             : "d-none"
         }
       >
         <label
           htmlFor="local"
-          className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+          className="font-size-3 text-black-2 font-weight-semibold line-height-reset d-flex pb-1 m-0"
         >
           <input
             type="checkbox"

@@ -69,8 +69,8 @@ function Employee(props) {
         }
       >
         {props.skill === null ||
-          props.skill === undefined ||
-          Object.keys(props.skill).length === 0 ? (
+        props.skill === undefined ||
+        Object.keys(props.skill).length === 0 ? (
           <>
             {/* <!-- Header Area --> */}
             <AdminHeader heading={"Manage Applicants"} />
@@ -95,15 +95,15 @@ function Employee(props) {
               ? props.skill === null ||
                 props.skill === undefined ||
                 Object.keys(props.skill).length === 0
-                ? "dashboard-main-container mt-16"
+                ? "dashboard-main-container mt-14"
                 : ""
               : "d-none"
           }
           id="dashboard-body"
         >
           <div className="container-fluid">
-            <div className="mb-18">
-              <div className="mb-4 align-items-center">
+            <div className="mb-0">
+              <div className="mb-0 align-items-center">
                 <div className="page___heading">
                   <h3 className="font-size-6 mb-0">Applicants</h3>
                 </div>
@@ -139,7 +139,6 @@ function Employee(props) {
                     filterByEmployeeId={filterByEmployeeId}
                     setFilterByEmployeeId={setFilterByEmployeeId}
                   />
-
                 </div>
                 <small className="text-danger">{searcherror}</small>
               </div>
@@ -177,8 +176,8 @@ function Employee(props) {
           <div
             className={
               props.skill === null ||
-                props.skill === undefined ||
-                Object.keys(props.skill).length === 0
+              props.skill === undefined ||
+              Object.keys(props.skill).length === 0
                 ? "dashboard-main-container mt-16"
                 : ""
             }
