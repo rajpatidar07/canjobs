@@ -1111,7 +1111,7 @@ export default function EmployeeTable(props) {
                         <tr style={{ border: "0" }}>
                           <td
                             style={{ paddingBottom: "0!important" }}
-                            colSpan="13"
+                            colSpan="14"
                             className={
                               empdata.applicant_process_status
                                 ? "bg-white text-center m-0"

@@ -32,10 +32,9 @@ function Pagination(props) {
           props.nPages > 1 ? " d-flex justify-content-center" : "d-none"
         }
       >
-        {props.count === "1" || props.count === 1
-          ? props.count + " record "
-          : props.count + " records "}
-        of {props.total} total records
+        Showing{" "}
+        {props.count === "1" || props.count === 1 ? props.count : props.count}{" "}
+        of {props.total} records
       </small>
       <nav aria-label="Page navigation example ">
         <ul
@@ -45,7 +44,7 @@ function Pagination(props) {
               : "d-none"
           }
         >
-          <li className="page-item px-1">
+          <li className="page-item">
             <Link
               onClick={() => {
                 props.setCurrentPage(parseInt(props.currentPage) - 1);
@@ -75,7 +74,7 @@ function Pagination(props) {
               {pgNumber}
             </Link>
           ))}
-          <li className="page-item px-1">
+          <li className="page-item">
             <Link
               onClick={() => {
                 props.setCurrentPage(parseInt(props.currentPage) + 1);
