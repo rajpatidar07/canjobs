@@ -207,62 +207,60 @@ export default function CommonApplicatTypePage() {
             </div>
             {selectedTab === "candidate" ? (
               <div>
-                <div className="mb-18">
-                  <div className="mb-4 align-items-center">
-                    <div className="page___heading">
+                <div className="mb-4 align-items-center">
+                  {/* <div className="page___heading">
                       <h3 className="font-size-6 mb-0 Text-capitalize">
                         {applicantTypeName}
                       </h3>
-                    </div>
-                    {/*<-- Search applicant Type -->*/}
+                    </div> */}
+                  {/*<-- Search applicant Type -->*/}
 
-                    {/* Employees filter's */}
-                    <ApplicantsFilter
-                      setSearch={setSearch}
-                      applicantTypeId={applicantTypeIdForApi}
-                      user_type={user_type}
-                      search={search}
-                      onSearch={onSearch}
-                      experienceFilterValue={experienceFilterValue}
-                      setExperienceFilterValue={setExperienceFilterValue}
-                      skillFilterValue={skillFilterValue}
-                      setSkillFilterValue={setSkillFilterValue}
-                      educationFilterValue={educationFilterValue}
-                      setEducationFilterValue={setEducationFilterValue}
-                      setpageNo={setPageNo}
-                      agentFilterValue={agentFilterValue}
-                      setAgentFilterValue={setAgentFilterValue}
-                      adminFilterValue={adminFilterValue}
-                      setAdminFilterValue={setAdminFilterValue}
-                      interestFilterValue={interestFilterValue}
-                      setinterestFilterValue={setInterestFilterValue}
-                      setSearchError={setSearchError}
-                      // skill={props.skill}
-                      pageName={applicantTypeIdForApi}
-                      categoryFilterValue={interestFilterValue}
-                      setCategoryFilterValue={setInterestFilterValue}
-                      applicantTypeChildId={applicantTypeChildId}
-                    />
-                    <small className="text-danger">{searcherror}</small>
-                  </div>
-                  {/*<-- Employee Table according to applicant Type -->*/}
-                  <EmployeeTable
+                  {/* Employees filter's */}
+                  <ApplicantsFilter
+                    setSearch={setSearch}
+                    applicantTypeId={applicantTypeIdForApi}
+                    user_type={user_type}
                     search={search}
+                    onSearch={onSearch}
                     experienceFilterValue={experienceFilterValue}
-                    educationFilterValue={educationFilterValue}
+                    setExperienceFilterValue={setExperienceFilterValue}
                     skillFilterValue={skillFilterValue}
-                    agentFilterValue={agentFilterValue}
-                    adminFilterValue={adminFilterValue}
-                    interestFilterValue={interestFilterValue}
-                    apiCall={apiCall}
-                    setApiCall={setApiCall}
-                    status={"-1"}
-                    pageNo={pageNo}
+                    setSkillFilterValue={setSkillFilterValue}
+                    educationFilterValue={educationFilterValue}
+                    setEducationFilterValue={setEducationFilterValue}
                     setpageNo={setPageNo}
-                    ApplicantType={applicantTypeIdForApi}
-                    // categoryFilterValue={applicantTypeChildId ? applicantTypeChildId : categoryFilterValue}
+                    agentFilterValue={agentFilterValue}
+                    setAgentFilterValue={setAgentFilterValue}
+                    adminFilterValue={adminFilterValue}
+                    setAdminFilterValue={setAdminFilterValue}
+                    interestFilterValue={interestFilterValue}
+                    setinterestFilterValue={setInterestFilterValue}
+                    setSearchError={setSearchError}
+                    // skill={props.skill}
+                    pageName={applicantTypeIdForApi}
+                    categoryFilterValue={interestFilterValue}
+                    setCategoryFilterValue={setInterestFilterValue}
+                    applicantTypeChildId={applicantTypeChildId}
                   />
+                  <small className="text-danger">{searcherror}</small>
                 </div>
+                {/*<-- Employee Table according to applicant Type -->*/}
+                <EmployeeTable
+                  search={search}
+                  experienceFilterValue={experienceFilterValue}
+                  educationFilterValue={educationFilterValue}
+                  skillFilterValue={skillFilterValue}
+                  agentFilterValue={agentFilterValue}
+                  adminFilterValue={adminFilterValue}
+                  interestFilterValue={interestFilterValue}
+                  apiCall={apiCall}
+                  setApiCall={setApiCall}
+                  status={"-1"}
+                  pageNo={pageNo}
+                  setpageNo={setPageNo}
+                  ApplicantType={applicantTypeIdForApi}
+                  // categoryFilterValue={applicantTypeChildId ? applicantTypeChildId : categoryFilterValue}
+                />
               </div>
             ) : (
               <div>

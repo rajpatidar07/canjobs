@@ -642,7 +642,7 @@ export default function EmployeeTable(props) {
           close={() => setShowCategoryModal(false)}
           data={employeeId} />
         : null} */}
-      <div className="bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5 ">
+      <div className="bg-white shadow-8 datatable_div pt-7 rounded pb-9 px-5 ">
         {props.heading === "Dashboard" ? null : (
           <div className="d-flex justify-content-between align-items-center w-100">
             <div
@@ -850,16 +850,19 @@ export default function EmployeeTable(props) {
             </div>
           </div>
         )}
-        <div className="table-responsive main_table_div">
+        <div
+          className="table-responsive main_table_div"
+          style={{ maxHeight: "calc(100vh - 205px)" }}
+        >
           {isLoading ? (
             <Loader />
           ) : (
-            <table className="table table-striped main_data_table">
+            <table className="table table-striped main_data_table m-0">
               <thead>
                 <tr className="">
                   <th
                     scope="col"
-                    className=" border-0 font-size-4 font-weight-normal"
+                    className=" border-0 font-size-4 font-weight-normal text-truncate"
                   >
                     <Link
                       to={""}
@@ -875,7 +878,7 @@ export default function EmployeeTable(props) {
                   </th>
                   <th
                     scope="col"
-                    className=" border-0 font-size-4 font-weight-normal"
+                    className=" border-0 font-size-4 font-weight-normal text-truncate"
                   >
                     <Link
                       to={""}
@@ -892,7 +895,7 @@ export default function EmployeeTable(props) {
                   {props.ApplicantType ? (
                     <th
                       scope="col"
-                      className=" border-0 font-size-4 font-weight-normal"
+                      className=" border-0 font-size-4 font-weight-normal text-truncate"
                     >
                       Discussion
                     </th>
@@ -902,7 +905,7 @@ export default function EmployeeTable(props) {
                   ) : (
                     <th
                       scope="col"
-                      className="border-0 font-size-4 font-weight-normal"
+                      className="border-0 font-size-4 font-weight-normal text-truncate"
                     >
                       <Link
                         to={""}
@@ -922,7 +925,7 @@ export default function EmployeeTable(props) {
                   ) : (
                     <th
                       scope="col"
-                      className="border-0 font-size-4 font-weight-normal"
+                      className="border-0 font-size-4 font-weight-normal text-truncate"
                     >
                       <Link
                         to={""}
@@ -942,7 +945,7 @@ export default function EmployeeTable(props) {
                   ) : (
                     <th
                       scope="col"
-                      className="border-0 font-size-4 font-weight-normal"
+                      className="border-0 font-size-4 font-weight-normal text-truncate"
                     >
                       <Link
                         to={""}
@@ -960,7 +963,7 @@ export default function EmployeeTable(props) {
                   {
                     <th
                       scope="col"
-                      className="border-0 font-size-4 font-weight-normal"
+                      className="border-0 font-size-4 font-weight-normal text-truncate"
                     >
                       <Link
                         to={""}
@@ -980,7 +983,7 @@ export default function EmployeeTable(props) {
                   ) : (
                     <th
                       scope="col"
-                      className="border-0 font-size-4 font-weight-normal"
+                      className="border-0 font-size-4 font-weight-normal text-truncate"
                     >
                       <Link
                         to={""}
@@ -1000,7 +1003,7 @@ export default function EmployeeTable(props) {
                   ) : (
                     <th
                       scope="col"
-                      className="border-0 font-size-4 font-weight-normal"
+                      className="border-0 font-size-4 font-weight-normal text-truncate"
                     >
                       <Link
                         to={""}
@@ -1020,7 +1023,7 @@ export default function EmployeeTable(props) {
                   ) : (
                     <th
                       scope="col"
-                      className="border-0 font-size-4 font-weight-normal"
+                      className="border-0 font-size-4 font-weight-normal text-truncate"
                     >
                       {/* <Link
                         to={""}
@@ -1040,7 +1043,7 @@ export default function EmployeeTable(props) {
                   ) : (
                     <th
                       scope="col"
-                      className="border-0 font-size-4 font-weight-normal"
+                      className="border-0 font-size-4 font-weight-normal text-truncate"
                     >
                       <Link
                         to={""}
@@ -1058,7 +1061,7 @@ export default function EmployeeTable(props) {
                   {props?.ApplicantType && (
                     <th
                       scope="col"
-                      className="border-0 font-size-4 font-weight-normal"
+                      className="border-0 font-size-4 font-weight-normal text-truncate"
                       title="Sub Type"
                     >
                       Sub Type
@@ -1067,7 +1070,7 @@ export default function EmployeeTable(props) {
                   {props.visa === "yes" ? null : (
                     <th
                       scope="col"
-                      className="border-0 font-size-4 font-weight-normal"
+                      className="border-0 font-size-4 font-weight-normal text-truncate"
                       title="Status"
                     >
                       Status
@@ -1075,7 +1078,7 @@ export default function EmployeeTable(props) {
                   )}
                   <th
                     scope="col"
-                    className="border-0 font-size-4 font-weight-normal"
+                    className="border-0 font-size-4 font-weight-normal text-truncate"
                     title="Profile"
                   >
                     Profile
@@ -1085,7 +1088,7 @@ export default function EmployeeTable(props) {
                   ) : (
                     <th
                       scope="col"
-                      className="border-0 font-size-4 font-weight-normal"
+                      className="border-0 font-size-4 font-weight-normal text-truncate"
                       title="Actions"
                     >
                       Action
