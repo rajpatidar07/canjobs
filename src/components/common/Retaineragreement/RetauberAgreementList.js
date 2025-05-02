@@ -20,6 +20,7 @@ import Newpdf from "../Adobe/newpdf";
 import { IoDocumentTextSharp } from "react-icons/io5";
 import { FaEdit } from "react-icons/fa";
 import AddClientForm from "../../forms/Agreement/AddClientForm";
+import moment from "moment";
 export default function RetauberAgreementList({
   user_id,
   emp_user_type,
@@ -115,7 +116,7 @@ export default function RetauberAgreementList({
       getAgreeFelidData();
       // Reset the state to false
     }, 20000);
-    
+
     if (apicall) {
       setApicall(false);
     }
@@ -256,10 +257,10 @@ export default function RetauberAgreementList({
                       </td>
                       <td className="text-capitalize ">{data.type || "N/A"}</td>
                       <td className="text-capitalize ">
-                        {data.sent_date || "N/A"}
+                        {data.send_date?moment(data.send_date).format("DD-MM-YYYY") : "N/A"}
                       </td>
                       <td className="text-capitalize ">
-                        {data.receive_Date || "N/A"}
+                        {data.received_date?moment(data.received_date).format("DD-MM-YYYY") : "N/A"}
                       </td>
                       <td className="text-center py-5">
                         <p className="font-size-2 font-weight-normal text-black-2 mb-0">
@@ -325,7 +326,7 @@ export default function RetauberAgreementList({
                             </span>
                           </button>
                           <button
-                            className={`btn btn-outline-info action_btn ${data.type === "recruitment services agreement" || data.type === "initial consultation" || data.type === "employer renewal stream" || data.type === "employers" || data.type === "three column"||data.type === "express entry" || data.type === "Alberta PNP and federal PR"||data.type==="work permit" ? "d-none" : ""}`}
+                            className={`btn btn-outline-info action_btn ${data.type === "recruitment services agreement" || data.type === "initial consultation" || data.type === "employer renewal stream" || data.type === "employers" || data.type === "three column" || data.type === "express entry" || data.type === "Alberta PNP and federal PR" || data.type === "work permit" ? "d-none" : ""}`}
                             onClick={() => {
                               setOpenAddClientFeilds(true);
                               setAgreementData(data);
@@ -439,6 +440,8 @@ export default function RetauberAgreementList({
             folderId={folderId}
             felidData={agreementData}
             pdf={pdf}
+            setApicall={setApicall}
+
           />
         ) : null}
         {openAddAgreementFelids ? (

@@ -103,8 +103,9 @@ export default function UserSigningPage() {
         setShowDetailsOption(false)
     }
     // const familyJsonArray = felidData?.family_json //? JSON.parse(felidData.family_json) : [];
+    console.log(felidData.signature_status, felidData?.signature_status === "1" || felidData?.signature_status === 1 ? "p" : "o")
     return (
-        <div className='d-flex p-5' style={{ backgroundColor: "#423f3f" }}>
+        felidData?.signature_status === "0" || felidData?.signature_status === 0 ? <div className='d-flex p-5' style={{ backgroundColor: "#423f3f" }}>
 
             {loader ?
                 <Loader />
@@ -133,10 +134,10 @@ export default function UserSigningPage() {
                                 type === "study" ?
                                     <HtmlAGreementFour />
                                     : type === "work permit"
-                                        ? <WorkPermitHtml 
-                                        felidData={felidData}
-                                        emp_user_type={emp_user_type}
-                                        addSign={addSign}/>
+                                        ? <WorkPermitHtml
+                                            felidData={felidData}
+                                            emp_user_type={emp_user_type}
+                                            addSign={addSign} />
                                         : type === "post graduation work permit"
                                             ? <HtmlAgreementSix />
                                             : type === "prospective workers"
@@ -261,6 +262,29 @@ export default function UserSigningPage() {
                     folderId={folderId}
                     index={clientIndex} />
                 : null}
+        </div> : <div
+            style={{
+                display: 'flex',
+                height: '100vh',
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: '#ffffff',
+            }}
+        >
+            <div
+                style={{
+                    padding: '30px 50px',
+                    borderRadius: '12px',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                    backgroundColor: '#fff',
+                    fontSize: '20px',
+                    fontWeight: '500',
+                    color: '#333',
+                    textAlign: 'center',
+                }}
+            >
+                This agreement is already signed by you.
+            </div>
         </div>
     )
 }

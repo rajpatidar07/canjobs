@@ -284,7 +284,7 @@ import { Modal } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import useValidation from "../../common/useValidation";
 import { toast } from "react-toastify";
-import { SendEmail } from "../../../api/api";
+import { AddUpdateAgreement, SendEmail } from "../../../api/api";
 
 export default function SendEmailAgreement({
   show,
@@ -294,6 +294,7 @@ export default function SendEmailAgreement({
   folderId,
   felidData,
   pdf,
+  setApicall,
 }) {
   const [emails, setEmails] = useState([]);
   const [input, setInput] = useState("");
@@ -453,6 +454,14 @@ export default function SendEmailAgreement({
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
+        let data = {
+          send_date: new Date(),
+          id: felidData.id
+        }
+        let res = await AddUpdateAgreement(data);
+        if(res){
+          setApicall(true)
+        }
         close();
       } else {
         toast.error("Something went wrong", {

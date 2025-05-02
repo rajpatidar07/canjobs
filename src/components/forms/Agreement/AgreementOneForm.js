@@ -115,7 +115,7 @@ const AgreementOneForm = ({
       value === "" || value.trim() === "" ? "Initial is required" : null],
     summary: [(value) =>
       value === "" || value.trim() === ""
-        ? "Summary of prelimi nary advice is required"
+        ? "Summary of preliminary advice is required"
         : null],
   };
 
@@ -312,7 +312,7 @@ const AgreementOneForm = ({
   };
   useEffect(() => {
     if (state.initial) {
-      setState({ ...state, signature_status: "1", pdf_genrated_status: "1" });
+      setState({ ...state, signature_status: index === "final" ? "1" : "0", pdf_genrated_status: "1" });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.initial]);
@@ -340,7 +340,7 @@ const AgreementOneForm = ({
           date_signature_client: dateTime,
         };
         updatedState.family_json = family_json;
-        updatedState.signature_status = family_json[0].client_signature ? 1 : 0;
+        // updatedState.signature_status = family_json[0].client_signature ? 1 : 0;
       }
       return updatedState;
     });
@@ -453,14 +453,14 @@ const AgreementOneForm = ({
                     display: state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
                     name: "client_telephone",
                     type: "number",
-                    required: state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? false : true,
+                    // required: state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? false : true,
                   },
                   {
                     label: "Client's Cellphone Number",
                     display: state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
                     name: "client_cellphone",
                     type: "number",
-                    required: state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? false : true,
+                    // required: state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? false : true,
                   },
                   {
                     label: "Client's Fax Number",
@@ -537,43 +537,43 @@ const AgreementOneForm = ({
                     label: "Professional Fees",
                     display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
                     name: "professional_fees",
-                    type: "number",
+                    type: "text",
                   },
                   {
                     label: "Courier charges",
-                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
+                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "work permit" || state.type === "employers" ? "d-none" : "",
                     name: "courier_charges",
-                    type: "number",
+                    type: "text",
                   },
                   {
                     label: "Administrative Fee",
                     display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
                     name: "administrative_fee",
-                    type: "number",
+                    type: "text",
                   },
                   {
                     label: "Government fees",
                     display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
                     name: "government_fees",
-                    type: "number",
+                    type: "text",
                   },
                   {
                     label: "Applicable Taxes",
                     display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
                     name: "application_fees",
-                    type: "number",
+                    type: "text",
                   },
                   {
                     label: "Balance (Paid at time of filing)",
                     display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
                     name: "balance",
-                    type: "number",
+                    type: "text",
                   },
                   {
                     label: "Total Cost",
                     display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
                     name: "total_cost",
-                    type: "number",
+                    type: "text",
                   },
                   {
                     label:
@@ -594,56 +594,56 @@ const AgreementOneForm = ({
                       "Applicable Retainer Fee for this stage (Non-Refundable) for Step 1",
                     display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
                     name: "applicable_retainer_fee_stape_1",
-                    type: "number",
+                    type: "text",
                   },
                   {
                     label:
                       "Applicable Government Processing Fee for Step 1",
                     display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
                     name: "applicable_government_processing_fee_stape_1",
-                    type: "number",
+                    type: "text",
                   },
                   {
                     label:
                       "Applicable Government Processing Fee for Step 2",
                     display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" || state.type === "work permit" ? "d-none" : "",
                     name: "applicable_government_processing_fee_stape_2",
-                    type: "number",
+                    type: "text",
                   },
                   {
                     label:
                       "Applicable Government Processing Fee for Step 3",
                     display: state.type === "three column" ? "" : "d-none",
                     name: "applicable_government_processing_fee_stape_3",
-                    type: "number",
+                    type: "text",
                   },
                   {
                     label:
                       "Applicable Retainer Fee for this stage (Non-Refundable) for Step 2",
                     display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" || state.type === "work permit" ? "d-none" : "",
                     name: "applicable_retainer_fee_stape_2",
-                    type: "number",
+                    type: "text",
                   },
                   {
                     label:
                       "Applicable Retainer Fee for this stage (Non-Refundable) for Step 3",
                     display: state.type === "three column" ? "" : "d-none",
                     name: "applicable_retainer_fee_stape_3",
-                    type: "number",
+                    type: "text",
                   },
                   {
                     label:
                       "Total Amount: (Non-Refundable) (Paid at signing of contract and sharing of checklist)",
                     display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
                     name: "total_amount_signing_of_contract",
-                    type: "number",
+                    type: "text",
                   },
                   {
                     label:
                       "Balance (Non-Refundable) (Paid at time of filing)",
                     display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
                     name: "balance_paid_at_time_of_filing",
-                    type: "number",
+                    type: "text",
                   },
                   {
                     label:
@@ -692,6 +692,7 @@ const AgreementOneForm = ({
                     name={name}
                     required={required}
                   />
+                  <small className="text-warning">{name === "initial" ? "Note : At least two letters required." : ""}</small>
                   {errors[name] && (
                     <span className="text-danger font-size-3 mx-5">
                       {errors[name]}
@@ -727,6 +728,28 @@ const AgreementOneForm = ({
                   : "d-none"
               }
             >
+              <div
+                className={`form-group col-md-12`}
+                key={index}
+              >
+                <label
+                  htmlFor={"sign"}
+                  className="font-size-4 text-black-2 line-height-reset"
+                >
+                  Add Text for signature
+                  {/* {required === true ? <span className="text-danger">*</span> : ""} */}
+                </label>
+                <input
+                  type="text"
+                  className={`form-control`}
+                  value={state?.family_json[index]?.client_signature.includes("data:image/png;base64") ? "" : state?.family_json[index]?.client_signature}
+                  onChange={(e)=>handleSignature(e.target.value, index, "client_signature")}
+                  placeholder={"Signature"}
+                  id={"sign"}
+                  name={"sign"}
+                />
+              </div>
+              <h6 className="text-center">Or</h6>
               <SignaturePadComponent
                 signature={state?.family_json[index]?.client_signature}
                 onEnd={(signature) =>
@@ -780,7 +803,7 @@ const AgreementOneForm = ({
               <button
                 type="submit"
                 className="btn btn-primary btn-small w-25 mt-5 rounded-5 text-uppercase p-8"
-                disabled={loading || IsFamilyFelidsEmpty !== false || index === "final" ? (!state.initial||!state?.family_json[0]?.client_signature ) : false}
+                disabled={loading || IsFamilyFelidsEmpty !== false || index === "final" ? (!state.initial || !state?.family_json[0]?.client_signature) : false}
               >
                 {loading
                   ? "Saving..."

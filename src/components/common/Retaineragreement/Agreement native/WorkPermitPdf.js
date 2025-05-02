@@ -12,6 +12,8 @@ import {
 } from "@react-pdf/renderer";
 import moment from "moment";
 import { AddSharePointDOcument, AddUpdateAgreement } from "../../../../api/api";
+import { InitialFunction } from "../CommonThings/InitialFunction";
+import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
 // import { toast } from "react-toastify";
 
 const WorkPermitPdf = () => {
@@ -21,9 +23,9 @@ const WorkPermitPdf = () => {
     felidData,
     user_id,
     emp_user_type,
-    folderId: folderID ,
+    folderId: folderID,
   } = JSON.parse(data) || {};
-  const familyJsonArray = felidData?.family_json || [] 
+  const familyJsonArray = felidData?.family_json || []
   /*COnvert blob to file  */
   useEffect(() => {
     const convertBlob = async () => {
@@ -93,13 +95,13 @@ const WorkPermitPdf = () => {
           <Text style={{ fontWeight: 600 }}>
             RCIC Membership Number: R533393
           </Text>
-          <Text style={{ fontWeight: 600 }}>
-            Client File Number: : {felidData?.client_file_no || "________________"}
+          <Text style={[{ fontWeight: 600 },]}>
+            Client File Number:   <Text style={styles.textunderline}>{felidData?.client_file_no || "________________"}</Text>
           </Text>
         </View>
         <View>
           <Text>
-            This Retainer Agreement is made this {felidData?.client_file_no}
+            This Retainer Agreement is made this
             <Text style={styles.textunderline}>
               {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "_______" : " " + moment(new Date(felidData?.agreement_date)).format("Do") + " "}
             </Text>
@@ -118,7 +120,7 @@ const WorkPermitPdf = () => {
               target="_blank"
             >   info@canpathways.ca </Link> located at
             <Text style={styles.textunderline}>
-              {" "}   Hopewell Pl NE #310 Calgary, AB T1Y 7J7,
+              {" "} 2618 Hopewell Pl NE #310, Calgary, AB T1Y 7J7,
             </Text>
             <Text style={styles.textunderline}></Text> Canada and Client
             <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
@@ -131,7 +133,7 @@ const WorkPermitPdf = () => {
 
               {" " + (felidData?.client_address || "        ")}
             </Text>
-            , Email
+            , {"\n"}Email
             <Text style={styles.textunderline} className="para_gap">
 
               {" " + (felidData?.client_email || "     ")}
@@ -375,8 +377,8 @@ const WorkPermitPdf = () => {
               </View>
             </View>
           </View>
-          <View data-list-text="4.">
-            <Text style={[styles.definition, { fontWeight: 600 }]}>
+          <View data-list-text="4." style={{ marginTop: 160 }}>
+            <Text style={[styles.definition, { fontWeight: 600, }]}>
               4. Payment Schedule
             </Text>
             <View style={{ marginTop: 15, paddingLeft: 10 }}>
@@ -384,7 +386,7 @@ const WorkPermitPdf = () => {
                 payment by milestones]. Payment Terms and Conditions</Text>
             </View>
             <View
-              style={[styles.table, { textAlign: "center", marginTop: 88, }]}
+              style={[styles.table, { textAlign: "center", }]}
             >
               <View style={styles.row}>
                 <View style={[styles.cell, styles.headerCell]}>
@@ -409,7 +411,7 @@ const WorkPermitPdf = () => {
                     <Text>Disbursement:</Text>
                   </View>
                   <View>
-                    <Text>Courier charges</Text>
+                    <Text>Discount</Text>
                   </View>
                   <View>
                     <Text>Government fees</Text>
@@ -426,7 +428,7 @@ const WorkPermitPdf = () => {
                         },
                       ]}
                     >
-                      <Text>{felidData?.courier_charges}</Text>
+                      <Text>{ }</Text>
                     </View>
                   </View>
                   <View style={styles.row}>
@@ -440,7 +442,7 @@ const WorkPermitPdf = () => {
                       ]}
                     >
 
-                      <Text>{felidData?.government_fees}</Text>
+                      <Text>{ }</Text>
                     </View>
                   </View>
                   <View style={styles.row}>
@@ -454,8 +456,7 @@ const WorkPermitPdf = () => {
                       ]}
                     >
                       <Text>
-                        {(felidData?.courier_charges && felidData?.government_fee) ? parseInt(felidData?.courier_charges) +
-                          parseInt(felidData?.government_fees) : ""}
+                        {felidData?.government_fees || ""}
                       </Text>
                     </View>
                   </View>
@@ -477,7 +478,7 @@ const WorkPermitPdf = () => {
                 </View>
                 <View style={styles.cell}>
 
-                  <Text>{felidData?.applicable_taxes}</Text>
+                  <Text>{felidData?.application_fees}</Text>
                 </View>
               </View>
               <View style={styles.row}>
@@ -538,20 +539,17 @@ const WorkPermitPdf = () => {
                 </View>
               </View>
               <View style={styles.row}>
-                <View style={[styles.cell, { height: "280px" }]}>
-                  <Text>
-                    <Text style={{ marginTop: 10, fontSize: "10px" }}>
-                    Completes upon signing the retainer and sharing the checklists and intake sheet with client Data gathering, filling out the forms, information verification and completeness check, preparing the application package and payment is due before final submission of application. Provide proof of submission to the client
-                    </Text>
+                <View style={[styles.cell]}>
+                  <Text style={{ paddingBottom: 25 }}>
+                    Completes upon signing the retainer and sharing the checklists and intake sheet with client Data gathering, filling out the forms, information verification and completeness check, preparing the application package and payment is due before final submission of application. Provide proof of submission to the client.
                   </Text>
                 </View>
                 <View style={styles.cell}>
                   <Text>
-                    <br />
                   </Text>
                 </View>
                 <View style={styles.cell}>
-                  <Text style={{paddingBottom:10}}>All payments made are non refundable and total service charges to be collected regardless, whether the client s withdraw from the file a this stage. The government fee and courier charges must be paid apart from professional fees payment scheduled</Text>
+                  <Text style={{ paddingBottom: 20 }}>All payments made are non refundable and total service charges to be collected regardless, whether the client s withdraw from the file a this stage. The government fee and courier charges must be paid apart from professional fees payment scheduled</Text>
                 </View>
                 <View style={[styles.cell, { fontSize: "10px" }]}>
                   <Text>{felidData?.applicable_retainer_fee_stape_1}</Text>
@@ -808,11 +806,11 @@ const WorkPermitPdf = () => {
                 Client File Management Regulation
               </Text>
               , the {" "}
-              <Text style={styles.textunderline}>
+              <Text style={[styles.textunderline, { paddingRight: 2 }]}>
                 Client Account Regulation
               </Text>
               and the {" "}
-              <Text style={styles.textunderline}>
+              <Text style={[styles.textunderline, { paddingRight: 2 }]}>
                 Retainer Agreement Regulation
               </Text> {" "}
               and in the following manner:
@@ -1388,27 +1386,14 @@ const WorkPermitPdf = () => {
 
               <View style={styles.box}>
                 <Text style={styles.label}><Text style={styles.required}>*</Text> Signature</Text>
-                <View style={styles.signatureBox}>
-                  {familyJsonArray[0]?.client_signature ? (
-                    <Image src={familyJsonArray[0].client_signature} style={{
-                      display: "inline-block",
-                      maxWidth: "100%",
-                      maxHeight: "100%",
-                      textTransform: "capitalize",
-                    }} />
-                  ) : (
-                    <View
-                      style={{
-                        display: "inline-block",
-                        width: "100%",
-                        height: 50,
-                        border: "1px solid #ccc",
-                      }}
-                    />)}
-                </View>
+                <ClientSignatureFunction
+                        felidData={felidData}
+                        familyJsonArray={familyJsonArray}
+                        page={"user"}
+                        isPdf={true}
+                      />
                 <Text style={[styles.text, styles.textBold]}> {" " + (familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")}</Text>
                 <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {familyJsonArray[0]?.date_signature_client ? moment(familyJsonArray[0].date_signature_client).format("DD/MM/YYYY") : "______________"}</Text>
-                <Text style={styles.text}><Text style={styles.textBold}>Signed at:</Text>_______________________ <Text style={styles.dateLine}></Text></Text>
               </View>
 
               {/* Left Signature Box (RCIC) */}
@@ -1583,24 +1568,12 @@ const WorkPermitPdf = () => {
                 <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
                   <View style={{ width: "100%" }}>
                     <Text style={styles.label}><Text style={styles.required}>*</Text> Signature</Text>
-                    <View style={styles.signatureBox}>
-                      {familyJsonArray[0]?.client_signature ? (
-                        <Image src={familyJsonArray[0].client_signature} style={{
-                          display: "inline-block",
-                          maxWidth: "100%",
-                          maxHeight: "100%",
-                          textTransform: "capitalize",
-                        }} />
-                      ) : (
-                        <View
-                          style={{
-                            display: "inline-block",
-                            width: "100%",
-                            height: 50,
-                            border: "1px solid #ccc",
-                          }}
-                        />)}
-                    </View>
+                      <ClientSignatureFunction
+                        felidData={felidData}
+                        familyJsonArray={familyJsonArray}
+                        page={"user"}
+                        isPdf={true}
+                      />
                   </View>
                 </View>
                 )
@@ -1667,11 +1640,7 @@ const WorkPermitPdf = () => {
                           textTransform: "capitalize",
                         }}
                       >
-                        {felidData.initial
-                          .split(" ")
-                          .filter((word) => word)
-                          .map((word) => word[0])
-                          .join(" ")}
+                        {InitialFunction(felidData?.initial)}
                       </Text>
                     ) : (
                       <View
@@ -1736,11 +1705,7 @@ const WorkPermitPdf = () => {
                               textTransform: "capitalize",
                             }}
                           >
-                            {felidData.initial
-                              .split(" ")
-                              .filter((word) => word)
-                              .map((word) => word[0])
-                              .join(" ")}
+                            {InitialFunction(felidData?.initial)}
                           </Text>
                         ) : (
                           <View

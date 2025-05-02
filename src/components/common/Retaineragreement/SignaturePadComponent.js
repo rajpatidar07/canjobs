@@ -244,18 +244,18 @@ import SignatureCanvas from 'react-signature-canvas';
 const SignaturePadComponent = ({ index, onSignature, setState, state, label, name, signature }) => {
     const sigPad = useRef(null);
     const [isSign, setIsSign] = useState(false)
-    // const clear = () => {
-    //     sigPad.current.clear();
-    //     setState((prevState) => {
-    //         if (Array.isArray(prevState.family_json) && label === "client_signature") {
-    //             const family_json = [...prevState.family_json];
-    //             family_json[index] = { ...family_json[index], [label]: "" };
-    //             return { ...prevState, family_json };
-    //         } else {
-    //             return { ...prevState, [label]: "" };
-    //         }
-    //     });
-    // };
+    const clear = () => {
+        sigPad.current.clear();
+        setState((prevState) => {
+            if (Array.isArray(prevState.family_json) && label === "client_signature") {
+                const family_json = [...prevState.family_json];
+                family_json[index] = { ...family_json[index], [label]: "" };
+                return { ...prevState, family_json };
+            } else {
+                return { ...prevState, [label]: "" };
+            }
+        });
+    };
 
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
@@ -368,14 +368,14 @@ const SignaturePadComponent = ({ index, onSignature, setState, state, label, nam
                     <span style={{ fontSize: '24px' }}>+</span>
                     <p className="mb-0" style={{ fontWeight: 400, fontSize: 12 }}>Add Sign</p>
                 </label>
-                {/* <button onClick={() => clear()} type='button' className="d-none btn btn-secondary btn-sm  d-flex flex-column justify-content-center rounded"
+                <button onClick={() => clear()} type='button' className="d-none btn btn-secondary btn-sm  d-flex flex-column justify-content-center rounded"
                     style={{
                         position: "relative",
                         minHeight: 50,
                         flexDirection: "row",
                         lineHeight: 1,
                         left: "auto"
-                    }}>Clear</button> */}
+                    }}>Clear</button>
             </div>
         </div>
     );
