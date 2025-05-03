@@ -316,7 +316,7 @@ header.site-header.admin_header {
   border-radius: 0;
   background: #992b32;
   top: 0;
-  padding: 3px 5px 2px;
+  padding: 0px 5px 0px;
 }
 
 header.site-header.admin_header h3 {
@@ -1800,8 +1800,8 @@ li.placeholder span svg {
 }
 
 .dashboard-sidebar-wrapper.show~.dashboard-main-container {
-  width: calc(100% - 175px);
-  margin-left: 175px;
+  /* width: calc(100% - 175px); */
+  /* margin-left: 175px; */
   transition: all .2s;
 }
 

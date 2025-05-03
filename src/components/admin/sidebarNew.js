@@ -28,7 +28,6 @@ import {
   FaAddressCard,
   FaChevronDown,
   FaNotesMedical,
-  FaRegCreditCard,
   FaTasks,
 } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
@@ -42,7 +41,7 @@ import {
 } from "../../api/api";
 import TableInput from "../common/TableInput";
 import SAlert from "../common/sweetAlert";
-import { CiUser } from "react-icons/ci";
+// import { CiUser } from "react-icons/ci";
 const AdminSidebar = (props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(
     localStorage.getItem("isMenuOpen")
@@ -61,7 +60,7 @@ const AdminSidebar = (props) => {
   const [deleteAlertApplicant, setDeleteAlertApplicant] = useState(false);
   const [draggedItemIndex, setDraggedItemIndex] = useState(null);
   const admin_id = localStorage.getItem("admin_id");
-
+  let userType = localStorage.getItem("userType");
   useEffect(() => {
     // Keep parent open if a child is active
     const activeChild = applicanttypedata.find(
@@ -216,12 +215,7 @@ const AdminSidebar = (props) => {
   }
 
   return (
-    <div
-      className={`d-none dashboard-sidebar-wrapper pt-5 sidebar_parent ${
-        isMenuOpen ? "show" : ""
-      }`}
-      id="sidebar"
-    >
+    <div className={`sidebar_parent ${isMenuOpen ? "show" : ""}`} id="sidebar">
       <SAlert
         show={deleteAlertApplicant}
         title={deleteAlertApplicantTypeData?.title}
@@ -248,19 +242,19 @@ const AdminSidebar = (props) => {
           <FaChevronRight style={{ paddingLeft: "0" }} />
         )}
       </Link>
-      <div className="brand-logo px-2 mb-5 d-none">
-        <Link to={user_type === "agent" ? "/partner_profile" : "/dashboard"}>
+      <div className="brand-logo px-2 py-4">
+        <Link to={userType === "agent" ? "/partner_profile" : "/dashboard"}>
           <img src="image/logo-main-black.png" alt="" />
         </Link>
       </div>
       <ul
         className="list-unstyled dashboard-layout-sidebar"
-        style={{
-          marginTop:
-            window.innerWidth === 320 || window.innerWidth === 425
-              ? "4.35rem"
-              : "2.25rem",
-        }}
+        // style={{
+        //   marginTop:
+        //     window.innerWidth === 320 || window.innerWidth === 425
+        //       ? "4.35rem"
+        //       : "2.25rem",
+        // }}
       >
         {user_type === "agent" ? (
           <>

@@ -110,13 +110,12 @@ function LimaContainer(props) {
         ) : (
           <>
             {/* <!-- Header Area --> */}
-            <AdminHeader heading={"LMIA status"} />
+            {/* <AdminHeader heading={"LMIA status"} /> */}
             {/* <!-- navbar- --> */}
-            <AdminSidebar heading={"LMIA status"} />
+            {/* <AdminSidebar heading={"LMIA status"} /> */}
           </>
         )}
 
-        
         <div
           className={
             showJobDetails === false
@@ -186,7 +185,7 @@ function LimaContainer(props) {
                         >
                           <option value="">Job Category</option>
                           {Json &&
-                            (Json.Category || []).map((data,i) => {
+                            (Json.Category || []).map((data, i) => {
                               return (
                                 <option value={data.id} key={i}>
                                   {data.value}
@@ -232,7 +231,7 @@ function LimaContainer(props) {
                           className="text-capitalize form-control"
                         >
                           <option value="">Job Skill</option>
-                          {(Skill || []).map((data,i) => {
+                          {(Skill || []).map((data, i) => {
                             return (
                               <option value={data.value} key={i}>
                                 {data.value}
@@ -256,7 +255,7 @@ function LimaContainer(props) {
                           className="text-capitalize form-control"
                         >
                           <option value="">Job Location</option>
-                          {(FilterJson.location || []).map((data,i) => {
+                          {(FilterJson.location || []).map((data, i) => {
                             return (
                               <option value={data.country} key={i}>
                                 {data.country}
