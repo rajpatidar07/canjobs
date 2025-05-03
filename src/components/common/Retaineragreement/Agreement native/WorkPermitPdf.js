@@ -12,8 +12,9 @@ import {
 } from "@react-pdf/renderer";
 import moment from "moment";
 import { AddSharePointDOcument, AddUpdateAgreement } from "../../../../api/api";
-import { InitialFunction } from "../CommonThings/InitialFunction";
+import InitialFunction from "../CommonThings/InitialFunction";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
+import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
 // import { toast } from "react-toastify";
 
 const WorkPermitPdf = () => {
@@ -1385,39 +1386,19 @@ const WorkPermitPdf = () => {
               {/* Right Signature Box (Client) */}
 
               <View style={styles.box}>
-                <Text style={styles.label}><Text style={styles.required}>*</Text> Signature</Text>
                 <ClientSignatureFunction
-                        felidData={felidData}
-                        familyJsonArray={familyJsonArray}
-                        page={"user"}
-                        isPdf={true}
-                      />
+                  felidData={felidData}
+                  familyJsonArray={familyJsonArray}
+                  page={"user"}
+                  isPdf={true}
+                />
                 <Text style={[styles.text, styles.textBold]}> {" " + (familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")}</Text>
                 <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {familyJsonArray[0]?.date_signature_client ? moment(familyJsonArray[0].date_signature_client).format("DD/MM/YYYY") : "______________"}</Text>
               </View>
 
               {/* Left Signature Box (RCIC) */}
               <View style={styles.box}>
-                <Text style={styles.label}><Text style={styles.required}>*</Text> Signature</Text>
-                <View style={styles.signatureBox}>
-                  {felidData?.rcic_signature ? (
-                    <Image src={felidData.rcic_signature} style={{
-                      display: "inline-block",
-                      maxWidth: "100%",
-                      maxHeight: "100%",
-                      textTransform: "capitalize",
-                    }} />
-                  ) : (
-                    <View
-                      style={{
-                        display: "inline-block",
-                        width: "100%",
-                        height: 50,
-                        border: "1px solid #ccc",
-                      }}
-                    />
-                  )}
-                </View>
+                <RCICSignatureFunction isPdf={true} felidData={felidData} />
                 <Text style={[styles.text, styles.textBold]}>Harpreet Kaur (RCIC)</Text>
                 <Text style={styles.text}>RCIC # R533393 CAN Pathways Immigration Consultancy Ltd.</Text>
                 <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {felidData?.date_signature_rcic !== "0000-00-00 00:00:00" && felidData?.date_signature_rcic ? moment(felidData.date_signature_rcic).format("DD/MM/YYYY") : "______________"}</Text>
@@ -1427,7 +1408,7 @@ const WorkPermitPdf = () => {
           </View>
 
         </View>
-        <View style={{ marginTop: 25 }}>
+        <View style={{ marginTop: 30 }}>
           <Text style={[{ textAlign: "center", }, styles.definition]}>
             AUTHORIZATION
           </Text>
@@ -1567,13 +1548,12 @@ const WorkPermitPdf = () => {
               <View style={[styles.clientFormChild, { alignSelf: "center" }]}>
                 <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
                   <View style={{ width: "100%" }}>
-                    <Text style={styles.label}><Text style={styles.required}>*</Text> Signature</Text>
-                      <ClientSignatureFunction
-                        felidData={felidData}
-                        familyJsonArray={familyJsonArray}
-                        page={"user"}
-                        isPdf={true}
-                      />
+                    <ClientSignatureFunction
+                      felidData={felidData}
+                      familyJsonArray={familyJsonArray}
+                      page={"user"}
+                      isPdf={true}
+                    />
                   </View>
                 </View>
                 )
@@ -1623,8 +1603,8 @@ const WorkPermitPdf = () => {
                 <View>
                   <View
                     style={{
-                      width: "100%",
-                      height: 20,
+                      width: 100,
+                      height: 50,
                       border: "1px solid #ccc",
                       display: "flex",
                       alignItems: "center",
@@ -1640,14 +1620,14 @@ const WorkPermitPdf = () => {
                           textTransform: "capitalize",
                         }}
                       >
-                        {InitialFunction(felidData?.initial)}
+                        <InitialFunction initial={felidData?.initial} />
                       </Text>
                     ) : (
                       <View
                         style={{
                           display: "inline-block",
                           width: 100,
-                          height: 20,
+                          height: 50,
                           border: "1px solid #ccc",
                         }}
                       />
@@ -1688,7 +1668,7 @@ const WorkPermitPdf = () => {
                     <View>
                       <View
                         style={{
-                          width: "100%",
+                          width: 100,
                           height: 50,
                           border: "1px solid #ccc",
                           display: "flex",
@@ -1705,7 +1685,7 @@ const WorkPermitPdf = () => {
                               textTransform: "capitalize",
                             }}
                           >
-                            {InitialFunction(felidData?.initial)}
+                            <InitialFunction initial={felidData?.initial} />
                           </Text>
                         ) : (
                           <View
@@ -1718,7 +1698,6 @@ const WorkPermitPdf = () => {
                           />
                         )}
                       </View>
-
                     </View>
                   </View>
                 </View>

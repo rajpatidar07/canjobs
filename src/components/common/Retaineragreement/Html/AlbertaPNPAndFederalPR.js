@@ -1,5 +1,8 @@
 import moment from "moment";
 import { useEffect } from "react";
+import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
+import InitialFunction from "../CommonThings/InitialFunction";
+import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
 export default function AlbertaPNPAndFederalPR({
   page,
   felidData,
@@ -350,8 +353,7 @@ export default function AlbertaPNPAndFederalPR({
                
                 <tr>
                   <td style="border: 1px solid black; text-align: center">Discount</td>
-                  <td style="border: 1px solid black; text-align: center">${felidData?.government_fees || ""
-    }</td>
+                  <td style="border: 1px solid black; text-align: center">${""}</td>
                 </tr>
                 <tr>
                   <td style="border: 1px solid black; text-align: center">Government fees</td>
@@ -362,28 +364,28 @@ export default function AlbertaPNPAndFederalPR({
                   <td style="text-align: center; border: 1px solid black">
                     Administrative fee [as required]
                   </td>
-                  <td style="border: 1px solid black">${felidData?.administrative_fee || ""
+                  <td style="border: 1px solid black;text-align: center">${felidData?.administrative_fee || ""
     }</td>
                 </tr>
                 <tr>
                   <td style="text-align: center; border: 1px solid black">
                     Applicable Taxes: ${felidData?.gst || "0"}%
                   </td>
-                  <td style="border: 1px solid black">${felidData?.application_fees || ""
+                  <td style="border: 1px solid black;text-align: center">${felidData?.application_fees || ""
     }</td>
                 </tr>
                 <tr>
                   <td style="text-align: center; border: 1px solid black">
                     Balance (Paid at time of filing):
                   </td>
-                  <td style="border: 1px solid black">${felidData?.balance || ""
+                  <td style="border: 1px solid black;text-align: center">${felidData?.balance || ""
     }</td>
                 </tr>
                 <tr>
                   <td style="text-align: center; border: 1px solid black;color:red">
                     <b>Total Cost</b>
                   </td>
-                  <td style="border: 1px solid black">${felidData?.total_cost || ""
+                  <td style="border: 1px solid black;text-align: center">${felidData?.total_cost || ""
     }</td>
                 </tr>
               </tbody>
@@ -978,289 +980,146 @@ export default function AlbertaPNPAndFederalPR({
             </p>
           </li>
           <br />
-          <li data-list-text="21." style="font-size: 18px">
-            <h5 style="font-weight: 600">Contact Information</h5>
-          </li>
-        </ol>
-        <p>Client Name</p>
-        <div class="row">
-          <p class="col-6 text-capitalize">
-          Given Name :  
-          <span style=" min-width: 150px;
-          border-bottom: 1px solid grey;
-          display: inline-block;">${felidData && familyJsonArray[0]?.client_first_name
-      ? familyJsonArray[0]?.client_first_name
-      : (emp_user_type === "employee" ? userData?.name || "" : "")?.split(
-        " "
-      )[0]
-    } 
-          </span>
-          </p>
-          <p class="col-6 text-capitalize">
-          Family Name :  
-           <span style=" min-width: 150px;
-          border-bottom: 1px solid grey;
-          display: inline-block;">${(familyJsonArray[0]?.client_last_name
-      ? familyJsonArray[0]?.client_last_name
-      : " ") ??
-    (emp_user_type === "employee" ? userData?.name || "" : "")?.split(
-      " "
-    )[1]
-    } 
-           </span>
-           </p>
-          <p class="col-6 text-capitalize">
-          Address :  <span style=" min-width: 150px;
-          border-bottom: 1px solid grey;
-          display: inline-block;">${felidData && felidData?.client_address
-      ? felidData?.client_address
-      : emp_user_type === "employer"
-        ? userData?.address || ""
-        : (userData?.current_location || "") +
-        " " +
-        (userData?.currently_located_country || "")
-    } 
-          </span>
-          </p> 
-          <p class="col-6">
-          Telephone Number :  <span style=" min-width: 150px;
-          border-bottom: 1px solid grey;
-          display: inline-block;">${felidData && felidData?.client_contact
-      ? felidData?.client_contact
-      : userData?.contact_no || ""
-    }
-          </span>
-          </p>
-          <p class="col-6">
-          Cellphone Number :  
-           <span style=" min-width: 150px;
-          border-bottom: 1px solid grey;
-          display: inline-block;">${(felidData?.client_cellphone ? felidData?.client_cellphone : " ") ||
-    ""
-    }
-           </span>
-           </p>
-          <p class="col-6">
-          Fax Number :  
-           <span style=" min-width: 150px;
-          border-bottom: 1px solid grey;
-          display: inline-block;">${(felidData?.client_fax ? felidData?.client_fax : " ") || ""
-    }</span>
-           </p>
-           <p class="col-6">
-           E-mail Address :  <span style=" min-width: 150px;
-          border-bottom: 1px solid grey;
-          display: inline-block;">${felidData && felidData?.client_email
-      ? felidData?.client_email || ""
-      : userData?.email || ""
-    }
-           </span>
-           </p>
-        </div>
-        <p>RCIC</p>
-        <div class="row">
-    <p class="col-6 text-capitalize">
-      Given Name:
-      <span
-        style="min-width: 150px; border-bottom: 1px solid grey; display: inline-block;"
-      >
-        Harpreet
-      </span>
-    </p>
-    <p class="col-6 text-capitalize">
-      Family Name:
-      <span
-        style="min-width: 150px; border-bottom: 1px solid grey; display: inline-block;"
-      >
-        Kaur
-      </span>
-    </p>
-    <p class="col-6 text-capitalize">
-      Address:
-      <span
-        style="min-width: 150px; border-bottom: 1px solid grey; display: inline-block;"
-      >
-        2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7
-      </span>
-    </p>
-    <p class="col-6">
-      Telephone Number:
-      <span
-        style="min-width: 150px; border-bottom: 1px solid grey; display: inline-block;"
-      >
-        403-888-5308
-      </span>
-    </p>
-    <p class="col-6">
-      Fax Number:
-      <span
-        style="min-width: 150px; border-bottom: 1px solid grey; display: inline-block;"
-      >
-        <!-- Leave blank or insert fax number here -->
-      </span>
-    </p>
-    <p class="col-6">
-      E-mail Address:
-      <span
-        style="min-width: 150px; border-bottom: 1px solid grey; display: inline-block;"
-      >
-        <a href="mailto:info@canpathways.ca" class="s19" target="_blank">
-          info@canpathways.ca
-        </a>
-      </span>
-    </p>
-  </div>
-  
-        <br /><br />
-  <div style="display: flex; flex-wrap: wrap">
-      <!-- Client Signature -->
-      <div style="width: 50%">
-      ${familyJsonArray[0]?.client_signature ? `
-                    <div style="margin-right:15px;height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
-                      <img src="${familyJsonArray[0].client_signature}" 
-                           alt="${(familyJsonArray[0]?.client_first_name || '') + ' ' + (familyJsonArray[0]?.client_last_name || '')}" 
-                           style="max-height: 100%;">
-                    </div>
-                     <p style="margin: 10px 0 0 0;">
-                   ${(familyJsonArray[0]?.client_first_name || '') + ' ' + (familyJsonArray[0]?.client_last_name || '')}
-                      ${moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}
-                </p>
-                  ` : page === "admin" ? `
-                <span style="width: 400px; height: 50px; border: 1px solid #ccc;"></span>
-                  ` : `
-                    <button class="btn btn-outline-secondary border-0" style="font-family:cursive;" id="add-signature-button-0">
-                      Add Signature
-                    </button>
-                  `}
-              <p style="margin: 0 0 30px 0">Signature of Client</p>
+            <li data-list-text="21." style="font-size: 18px;">
+              <h5 style="font-weight: 600;">Contact Information</h5>
+            </li>
+          </ol>
+                 <h6 class="mb-2">Client Information</h6>
+          <div class="row mb-4">
+            <div class="w-50 text-capitalize">
+              <strong>Given Name:</strong>
+              <div class="border-bottom pb-1 d-inline-block px-2 w-75">
+                ${familyJsonArray[0]?.client_first_name || (emp_user_type === "employee" ? userData?.name?.split(" ")[0] || "" : "")}
+              </div>
+            </div>
+            <div class="w-50 text-capitalize">
+              <strong>Family Name:</strong>
+              <div class="border-bottom pb-1 d-inline-block px-2 w-75">
+                ${familyJsonArray[0]?.client_last_name || (emp_user_type === "employee" ? userData?.name?.split(" ")[1] || "" : "")}
+              </div>
+            </div>
+            <div class="w-50 text-capitalize">
+              <strong>Address:</strong>
+              <div class="border-bottom pb-1 d-inline-block px-2 w-75">
+                ${felidData?.client_address || (emp_user_type === "employer" ? userData?.address : (userData?.current_location || "") + " " + (userData?.currently_located_country || ""))}
+              </div>
+            </div>
+            <div class="w-50">
+              <strong>Telephone Number:</strong>
+              <div class="border-bottom pb-1 d-inline-block px-2 w-50">
+                ${felidData?.client_contact || userData?.contact_no || ""}
+              </div>
+            </div>
+            <div class="w-50">
+              <strong>Cellphone Number:</strong>
+              <div class="border-bottom pb-1 d-inline-block px-2 w-50">
+                ${felidData?.client_cellphone || ""}
+              </div>
+            </div>
+            <div class="w-50">
+              <strong>Fax Number:</strong>
+              <div class="border-bottom pb-1 d-inline-block px-2 w-75">
+                ${felidData?.client_fax || ""}
+              </div>
+            </div>
+            <div class="w-100">
+              <strong>Email Address:</strong>
+              <div class="border-bottom pb-1 d-inline-block px-2 w-75">
+                ${felidData?.client_email || userData?.email || ""}
+              </div>
+            </div>
           </div>
-          <div style="width: 50%">
           
-             <div style="height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
-                         ${felidData.rcic_signature ? `
-                           <img src="${felidData.rcic_signature}" alt="Signature" style="max-height: 100%;">
-                         ` : `<span style="max-width: 100%; max-height: 100%;"></span>`}
-                       </div>
-                       <p style="margin: 10px 0 0 0;">Harpreet Kaur 
-                         ${felidData?.date_signature_rcic && felidData.date_signature_rcic !== "0000-00-00" && felidData.date_signature_rcic !== "0000-00-00 00:00:00" ?
-      `<span style="max-width: 200px;">${moment(felidData.date_signature_rcic).format("DD-MM-YYYY")}</span>` : ''}
-                       </p>
-          <p style="margin: 0 0 30px 0">Signature of RCIC</p>
-      </div>
-          <div style="width: 50%">
-              <p class="para_gap text-capitalize" style="margin: 0">
-                  <span class="para_gap text-capitalize">${felidData &&
-      (familyJsonArray[0]?.client_first_name ||
-        familyJsonArray[0]?.client_last_name)
-      ? familyJsonArray[0]?.client_first_name +
-      " " +
-      (familyJsonArray[0]?.client_last_name || "")
+          <!-- RCIC Information -->
+          <h6 class="mb-2">RCIC Information</h6>
+          <div class="row mb-4">
+            <div class=" w-50 text-capitalize">
+              <strong>Given Name:</strong>
+              <div class="border-bottom pb-1 d-inline-block px-2 w-75">Harpreet</div>
+            </div>
+            <div class="w-50 text-capitalize">
+              <strong>Family Name:</strong>
+              <div class="border-bottom pb-1 d-inline-block px-2 w-75">Kaur</div>
+            </div>
+            <div class="w-50">
+              <strong>Address:</strong>
+              <div class="border-bottom pb-1 d-inline-block px-2 w-75">
+                2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7
+              </div>
+            </div>
+            <div class="w-50">
+              <strong>Telephone Number:</strong>
+              <div class="border-bottom pb-1 d-inline-block px-2 w-50">403-888-5308</div>
+            </div>
+            <div class="w-50">
+              <strong>Fax Number:</strong>
+              <div class="border-bottom pb-1 d-inline-block px-2 w-75"></div>
+            </div>
+            <div class="w-50">
+              <strong>Email Address:</strong>
+              <div class="border-bottom pb-1 d-inline-block px-2 w-75">
+                <a href="mailto:info@canpathways.ca" class="text-decoration-none">info@canpathways.ca</a>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Signatures -->
+          <h6 class="mb-2">Signatures</h6>
+          <div class="row align-items-start mb-4">
+            <!-- Client Signature -->
+            <div class="col-md-6 mb-4">
+            ${ClientSignatureFunction({ page, familyJsonArray, felidData })}
+            
+              <p class="mb-0">Signature of Client</p>
+            </div>
+          
+            <!-- RCIC Signature -->
+            <div class="col-md-6 mb-4">
+              ${RCICSignatureFunction({ isPdf: false, felidData })}
+              <p class="mb-0">Signature of RCIC</p>
+            </div>
+          </div>
+          
+          <!-- Name Fields -->
+          <div class="row mb-4">
+            <div class="col-md-6">
+              <p class="mb-1 text-capitalize">
+              ${familyJsonArray[0]?.client_first_name ||
+      familyJsonArray[0]?.client_last_name
+      ? ` <span class="para_gap text-capitalize w-50">${familyJsonArray[0]?.client_first_name
+      } ${familyJsonArray[0]?.client_last_name || ""}</span>`
       : emp_user_type === "employee"
-        ? userData?.name || "" || ""
-        : "" || ""
-    }</span>
-              </p>
-              <p style="margin: 0 0 30px 0">Name of Client</p>
+        ? ` <span class="para_gap text-capitalize w-50">${userData?.name}</span>` ||
+        ""
+        : "_____________________"
+    }    </p>
+              <p class="mb-3">Name of Client</p>
+            </div>
+            <div class="col-md-6">
+              <p class="mb-1 para_gap w-50">Harpreet Kaur</p>
+              <p class="mb-3">Name of RCIC</p>
+            </div>
           </div>
-              <div style="width: 50%">
-          <p class="para_gap" style="margin: 0">
-              <span style="max-width: 200px;">Harpreet Kaur</span>
-          </p>
-          <p style="margin: 0 0 30px 0">Name of RCIC</p>
-      </div>
-          <div style="width: 50%">
-              <p class="" style="margin: 0">
-                   ${familyJsonArray[0]?.date_signature_client ===
-      "0000-00-00 00:00:00" ||
-      !familyJsonArray[0]?.date_signature_client ||
-      familyJsonArray[0]?.date_signature_client === "0000-00-00"
-      ? "_____________________"
-      : `<span  class="para_gap" style="max-width: 200px;">${moment(
-        familyJsonArray[0]?.date_signature_client
-      ).format("DD-MM-YYYY")}</span>`
-    }
+          
+          <!-- Signature Date -->
+          <div class="row">
+            <div class="col-md-6">
+              <p class="mb-1 w-50">
+                ${!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client.startsWith("0000")
+      ? "_____________________________"
+      : `<span>${moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</span>`}
               </p>
-              <p style="margin: 0 0 30px 0">Date</p>
-          </div>
-      ${(familyJsonArray.slice(1) || []).map(
-      (item, index) =>
-        `<div style="width: 50%">
-             
-         ${item.client_signature
-          ? `
-          <div class="d-flex flex-column">
-                          <img
-        src="${item.client_signature}"
-        alt="${item.client_first_name} ${item.client_last_name}"
-        style="max-width: 200px; float: right;"
-        class="${item.client_signature ? "d-block" : "d-none"}"
-      />
-      <p style="margin: 0">______________________________</p>
-                    <small class="row ">
-                      <span class="col text-capitalize" >
-                        ${item.client_first_name +
-          " " +
-          item.client_last_name +
-          " "
-          }${moment(item.date_signature_client).format(
-            "DD-MM-YYYY"
-          )}</span>
-                    </small>
-                        </div>`
-          : page === "admin"
-            ? `<p style="margin: 0">______________________________</p>`
-            : ` <button class="btn btn-outline-secondary border-0  " 
-                    style="font-family:cursive;" 
-                    id="add-signature-button-${index + 1}"
-                     ${
-            // !familyJsonArray[0]?.client_signature ? "disabled" :
-            ""
-            }
-                     >
-              Add Signature
-            </button>`
-        }
-              <p style="margin: 0 0 30px 0">Signature of family member</p>
-          </div>
-          <div style="width: 50%">
-              <p class="para_gap text-capitalize" style="margin: 0">
-                  <span style="max-width: 200px;">${item.client_first_name + " " + item.client_last_name
-        }</span>
+              <p>Date</p>
+            </div>
+              <div class="col-md-6">
+              <p class="mb-1 w-50">
+                ${!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client.startsWith("0000")
+      ? "_____________________________"
+      : `<span>${moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</span>`}
               </p>
-              <p style="margin: 0 0 30px 0">Name of family member</p>
+              <p>Date</p>
+            </div>
           </div>
-          <div style="width: 50%">
-              <p style="margin: 0">
-                 ${item.date_signature_client === "0000-00-00 00:00:00" ||
-          item.date_signature_client === "0000-00-00" ||
-          !item.date_signature_client
-          ? "_____________________"
-          : `<span  class="para_gap" style="max-width: 200px;">${moment(
-            item.date_signature_client
-          ).format("DD-MM-YYYY")}</span>`
-        }
-              </p>
-              <p style="margin: 0 0 30px 0">Date</p>
-          </div>`
-    )}
-  
-      <!-- RCIC Signature -->
-      
-  
-      <div style="width: 50%">
-          <p style="margin: 0">
-              ${!felidData?.date_signature_rcic ||
-      felidData?.date_signature_rcic === "0000-00-00" ||
-      felidData?.date_signature_rcic === "0000-00-00 00:00:00"
-      ? "_____________________"
-      : `<span  class="para_gap" style="max-width: 200px;">${moment(
-        felidData?.date_signature_rcic
-      ).format("DD-MM-YYYY")}</span>`
-    }
-          </p>
-          <p style="margin: 0 0 30px 0">Date</p>
-      </div>
-  </div>
   
         <h3 style="text-align: center">AUTHORIZATION</h3>
         <p>
@@ -1456,15 +1315,11 @@ export default function AlbertaPNPAndFederalPR({
         <div>
           <div
             style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
-            ${felidData?.initial
-      ? `<span style="display: inline-block; max-width: 100%; max-height: 100%;"
-              class=" text-capitalize">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${felidData?.initial
-        ?.split(" ") // Split the string by spaces
-        ?.filter((word) => word) // Filter out empty strings (caused by multiple spaces)
-        ?.map((word) => word[0]) // Map each word to its first letter
-        ?.join(" ")}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`
-      : `<span style="display: inline-block; width: 100px; height: 50px; border: 1px solid #ccc;"></span>`
-    }
+             <span style="display:inline-block;max-width:100%;max-height:100%;" class="text-capitalize">
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         ${felidData?.initial ? InitialFunction({ isPdf: false, initial: felidData?.initial }) : ""}
+                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
              </div>
           <h4 class="font-size-6 text-end d-none">RCIC</h4>
         </div>

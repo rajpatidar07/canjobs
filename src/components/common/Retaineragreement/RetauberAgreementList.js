@@ -21,13 +21,14 @@ import { IoDocumentTextSharp } from "react-icons/io5";
 import { FaEdit } from "react-icons/fa";
 import AddClientForm from "../../forms/Agreement/AddClientForm";
 import moment from "moment";
+import Loader from "../loader";
 export default function RetauberAgreementList({
   user_id,
   emp_user_type,
   folderId,
   userData,
 }) {
-  // let [isLoading, setIsLoading] = useState(true);
+  let [isLoading, setIsLoading] = useState(true);
   const [openSendMail, setOpenSendMail] = useState(false);
   const [openAgreement, setOpenAgreement] = useState(false);
   const [openAddAgreementForm, setOpenAddAgreementForm] = useState(false);
@@ -59,14 +60,17 @@ export default function RetauberAgreementList({
   /*Function to get the Agreement Data */
   const getAgreeFelidData = async () => {
     try {
+      setIsLoading(true)
       let res = await GetAgreement("", user_id, emp_user_type);
       if (res.data.data) {
         setAgreementList(res.data.data);
+        setIsLoading(false)
         const newUrl = window.location.pathname;
         window.history.replaceState({}, document.title, newUrl);
         localStorage.setItem("navigation_url", "")
       } else {
         setAgreementList([]);
+        setIsLoading(false)
       }
     } catch (err) {
       console.log(err);
@@ -187,9 +191,7 @@ export default function RetauberAgreementList({
               setApicall={setApicall}
             />
           ) : (
-            // isLoading ? (
-            //     <Loader />
-            // ) :
+           
             <table className="table table-striped main_data_table">
               <thead>
                 <tr>
@@ -238,7 +240,9 @@ export default function RetauberAgreementList({
                 </tr>
               </thead>
               <tbody>
-                {agreementList.length === 0 ? (
+                { isLoading ? (
+                <Loader />
+            ) :agreementList.length === 0 ? (
                   <tr>
                     <td colSpan={7} className="bg-white text-center">
                       No data found

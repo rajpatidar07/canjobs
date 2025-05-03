@@ -137,7 +137,8 @@ export default function UserSigningPage() {
                                         ? <WorkPermitHtml
                                             felidData={felidData}
                                             emp_user_type={emp_user_type}
-                                            addSign={addSign} />
+                                            addSign={addSign}
+                                            page={"user"} />
                                         : type === "post graduation work permit"
                                             ? <HtmlAgreementSix />
                                             : type === "prospective workers"
