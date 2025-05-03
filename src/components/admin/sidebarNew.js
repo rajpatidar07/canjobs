@@ -93,6 +93,7 @@ const AdminSidebar = (props) => {
 
   const clearPageNo = (title) => {
     localStorage.removeItem("PageNo");
+    localStorage.setItem("admin_heading", title);
     props.setPageHeading(title);
   };
   const liRefs = useRef([]);

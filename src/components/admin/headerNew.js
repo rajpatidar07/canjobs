@@ -63,7 +63,7 @@ const AdminHeader = (props) => {
 
           <h3
             className="font-size-6 mb-0 mr-5 text-capitalize"
-            style={{ marginLeft: 20 }}
+            style={{ marginLeft: 10 }}
           >
             {props.heading}
           </h3>

@@ -6,7 +6,9 @@ import AdminSidebar from "./sidebarNew";
 import { LiaGripLinesSolid } from "react-icons/lia";
 
 export default function AdminMain() {
-  const [pageHeading, setPageHeading] = useState("Dashboard");
+  const [pageHeading, setPageHeading] = useState(
+    localStorage.getItem("admin_heading") || "Dashboard"
+  );
   const [sidebarWidth, setSidebarWidth] = useState(200);
   const containerRef = useRef(null);
   const isDragging = useRef(false);
