@@ -283,9 +283,9 @@ const AdminDashboard = ({ setLoginCondition }) => {
   return (
     <div className="site-wrapper overflow-hidden bg-default-2">
       {/* <!-- Header Area --> */}
-      <AdminHeader heading={"Dashboard"} />
+      {/* <AdminHeader heading={"Dashboard"} /> */}
       {/* <!-- navbar- --> */}
-      <AdminSidebar heading={"Dashboard"} />
+      {/* <AdminSidebar heading={"Dashboard"} /> */}
 
       <div className="container-fluid">
         <div

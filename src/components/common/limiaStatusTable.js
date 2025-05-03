@@ -69,8 +69,8 @@ export default function LimiaStatusTable(props) {
         location.pathname === "/dashboard"
           ? ""
           : location.state === null
-            ? jobId
-            : location.state.id,
+          ? jobId
+          : location.state.id,
         search,
         limiaFilterValue,
         props.pageNo,
@@ -103,7 +103,7 @@ export default function LimiaStatusTable(props) {
       setApiCall(false);
       setChangeJob(false);
     }
-   // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [
     search,
     props.pageNo,
@@ -179,11 +179,11 @@ export default function LimiaStatusTable(props) {
     <div
       className={
         props.heading === "LMIA status" ||
-          (props.heading === undefined && user_type === "admin")
+        (props.heading === undefined && user_type === "admin")
           ? "site-wrapper overflow-hidden bg-default-2  "
           : props.heading === "Dashboard"
-            ? "site-wrapper overflow-hidden bg-default-2 bg-white"
-            : "response_main_div"
+          ? "site-wrapper overflow-hidden bg-default-2 bg-white"
+          : "response_main_div"
       }
     >
       {/* {props.heading === "LIMIA status" ||
@@ -259,21 +259,21 @@ export default function LimiaStatusTable(props) {
       <div
         className={
           props.heading === "LMIA status" ||
-            (props.heading === undefined && user_type === "admin")
-            ? "dashboard-main-container mt-16"
+          (props.heading === undefined && user_type === "admin")
+            ? "dashboard-main-container mt-14"
             : props.heading === "Dashboard"
-              ? ""
-              : "response__container"
+            ? ""
+            : "response__container"
         }
       >
         <div
           className={
             props.heading === "LMIA status" ||
-              (props.heading === undefined && user_type === "admin")
+            (props.heading === undefined && user_type === "admin")
               ? "container"
               : props.heading === "Dashboard"
-                ? ""
-                : "container"
+              ? ""
+              : "container"
           }
         >
           {props.heading === "Dashboard" ? (
@@ -292,7 +292,7 @@ export default function LimiaStatusTable(props) {
               <div
                 className={
                   props.heading === "LMIA status" ||
-                    (props.heading === undefined && user_type === "admin")
+                  (props.heading === undefined && user_type === "admin")
                     ? "row m-0 align-items-center"
                     : "d-none"
                 }
@@ -389,11 +389,11 @@ export default function LimiaStatusTable(props) {
             <div
               className={
                 props.heading === "LMIA status" ||
-                  (props.heading === undefined && user_type === "admin")
+                (props.heading === undefined && user_type === "admin")
                   ? ""
                   : props.heading === "Dashboard"
-                    ? ""
-                    : "bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5"
+                  ? ""
+                  : "bg-white shadow-8 datatable_div  pt-7 rounded pb-9 px-5"
               }
             >
               <div className="table-responsive main_table_div">
@@ -512,7 +512,7 @@ export default function LimiaStatusTable(props) {
                           </Link>
                         </th>
                         {props.heading === "Dashboard" ||
-                          user_type === "company" ? (
+                        user_type === "company" ? (
                           ""
                         ) : (
                           <th
@@ -542,10 +542,10 @@ export default function LimiaStatusTable(props) {
                                       <div className="circle-30 mx-auto overflow-hidden">
                                         {/* {JSON.stringify(res.profile_photo)} */}
                                         {res.profile_photo === null ||
-                                          res.profile_photo === undefined ||
-                                          res.profile_photo === "undefined" ||
-                                          res.profile_photo === "" ||
-                                          res.profile_photo === "Null" ? (
+                                        res.profile_photo === undefined ||
+                                        res.profile_photo === "undefined" ||
+                                        res.profile_photo === "" ||
+                                        res.profile_photo === "Null" ? (
                                           <img
                                             src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                             alt=""
@@ -578,13 +578,15 @@ export default function LimiaStatusTable(props) {
                                         {res.gender === "female" ? "F" : "M"} (
                                         {res.marital_status}
                                         {/*Calculation of age from date of birth*/}
-                                        {((moment().diff(
+                                        {moment().diff(
                                           res.date_of_birth,
                                           "years"
-                                        )) === 0 ? "" : (`,${(moment().diff(
-                                          res.date_of_birth,
-                                          "years"
-                                        ))}Y`))}
+                                        ) === 0
+                                          ? ""
+                                          : `,${moment().diff(
+                                              res.date_of_birth,
+                                              "years"
+                                            )}Y`}
                                         )
                                       </p>
                                     </div>
@@ -600,27 +602,32 @@ export default function LimiaStatusTable(props) {
                               ""
                             ) : (
                               <th className=" py-5">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0" title={res.experience + (
-                                  res.experience === "1-3 " ||
+                                <h3
+                                  className="font-size-3 font-weight-normal text-black-2 mb-0"
+                                  title={
+                                    res.experience +
+                                    (res.experience === "1-3 " ||
                                     res.experience === "1-2 " ||
                                     res.experience === "3-5 " ||
                                     res.experience === "5-7 " ||
                                     res.experience === "7+ "
-                                    ? "Years"
-                                    : res.experience === "0-1 "
+                                      ? "Years"
+                                      : res.experience === "0-1 "
                                       ? "Year"
-                                      : "")}>
+                                      : "")
+                                  }
+                                >
                                   {res.experience ? (
-                                    res.experience + (
-                                      res.experience === "1-3 " ||
-                                        res.experience === "1-2 " ||
-                                        res.experience === "3-5 " ||
-                                        res.experience === "5-7 " ||
-                                        res.experience === "7+ "
-                                        ? "Years"
-                                        : res.experience === "0-1 "
-                                          ? "Year"
-                                          : "")
+                                    res.experience +
+                                    (res.experience === "1-3 " ||
+                                    res.experience === "1-2 " ||
+                                    res.experience === "3-5 " ||
+                                    res.experience === "5-7 " ||
+                                    res.experience === "7+ "
+                                      ? "Years"
+                                      : res.experience === "0-1 "
+                                      ? "Year"
+                                      : "")
                                   ) : (
                                     <span className="font-size-3 font-weight-normal text-black-2 mb-0">
                                       N/A
@@ -628,7 +635,6 @@ export default function LimiaStatusTable(props) {
                                   )}
                                 </h3>
                               </th>
-
                             )}
                             {/* <th className="py-5 ">
                                                             <p className="m-0 text-black-2 font-weight-semibold text-capitalize">
@@ -648,7 +654,8 @@ export default function LimiaStatusTable(props) {
                                         className="text-dark"
                                         to={`tel:${res.contact_no}`}
                                       >
-                                        {(res.contact_no && res.contact_no !== "0")
+                                        {res.contact_no &&
+                                        res.contact_no !== "0"
                                           ? `+${res.contact_no}`
                                           : ""}
                                       </Link>
@@ -676,10 +683,14 @@ export default function LimiaStatusTable(props) {
                               <th className="py-5 ">
                                 <h3 className="font-size-3 font-weight-normal text-black-2 mb-0 text-capitalize">
                                   {res.current_location ||
-                                    res.currently_located_country ? (
+                                  res.currently_located_country ? (
                                     <>
                                       <span className="px-1">
-                                        {`${res.current_location ? res.current_location + "," : ""}${res.currently_located_country}`}
+                                        {`${
+                                          res.current_location
+                                            ? res.current_location + ","
+                                            : ""
+                                        }${res.currently_located_country}`}
                                       </span>
                                     </>
                                   ) : (
@@ -767,7 +778,7 @@ export default function LimiaStatusTable(props) {
                             </p>
                           </th> */}
                             {props.heading === "Dashboard" ||
-                              user_type === "company" ? (
+                            user_type === "company" ? (
                               ""
                             ) : (
                               <th className="py-5  min-width-px-100">

@@ -64,8 +64,8 @@ function JobDetailpageAdmim(props) {
   if (jobData !== "") {
     skill =
       jobData.keyskill === null ||
-        jobData.keyskill === undefined ||
-        jobData.keyskill === "undefined"
+      jobData.keyskill === undefined ||
+      jobData.keyskill === "undefined"
         ? []
         : jobData.keyskill.split(",");
   }
@@ -73,7 +73,26 @@ function JobDetailpageAdmim(props) {
     <div className="">
       {(user_type === "admin" || user_type === "agent") && (
         <>
-          <AdminHeader
+          <Link
+            className="d-flex align-items-center "
+            style={{
+              position: "absolute",
+              top: 5,
+              left: 15,
+              zIndex: 1000,
+              backgroundColor: "#992b32",
+              minWidth: "50%",
+            }}
+            onClick={() => navigate(-1)}
+          >
+            <i className="icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8"></i>
+            <span className="text-uppercase font-size-3 font-weight-bold">
+              <h3 className="font-size-6 mb-0 text-capitalize text-white">
+                Job Details
+              </h3>
+            </span>
+          </Link>
+          {/* <AdminHeader
             heading={
               <Link
                 className="d-flex align-items-center "
@@ -88,11 +107,13 @@ function JobDetailpageAdmim(props) {
               </Link>
             }
           />
-          <AdminSidebar />
+          <AdminSidebar /> */}
         </>
       )}
 
-      {user_type === "admin" || user_type === "agent" ? null : <EmployeeHeader />}
+      {user_type === "admin" || user_type === "agent" ? null : (
+        <EmployeeHeader />
+      )}
       <div
         className={
           user_type === "admin" || user_type === "agent"
@@ -100,29 +121,38 @@ function JobDetailpageAdmim(props) {
             : "bg-default-2 employer-detail-top-padding"
         }
       >
-        <div className={`container${user_type === "admin" || user_type === "agent" ? "-fluid" : ""}`}>
+        <div
+          className={`container${
+            user_type === "admin" || user_type === "agent" ? "-fluid" : ""
+          }`}
+        >
           <div className="row text-left mt-5 pt-0">
             <div className="col-12 mb-1 d-none">
               <div className="bg-white shadow-9 d-flex">
                 <div className="col-md-3 col-sm-6 media align-items-center company_box media border-right">
                   <div className="text_box text-left">
-                    {jobData.logo ? <img
-                      className="company_logo"
-                      src={
-                        jobData.logo === null
-                          ? "image/logo-main-black.png"
-                          : jobData.logo
-                      }
-                      alt=""
-                    /> :
-                      <p className="company_logo">AT</p>}
+                    {jobData.logo ? (
+                      <img
+                        className="company_logo"
+                        src={
+                          jobData.logo === null
+                            ? "image/logo-main-black.png"
+                            : jobData.logo
+                        }
+                        alt=""
+                      />
+                    ) : (
+                      <p className="company_logo">AT</p>
+                    )}
                   </div>
                   <div className="text_box text-left w-100 text-capitalize">
                     <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center text-break">
                       {jobData.job_title}
                       <CustomButton
                         className={
-                          user_type === "user" || user_type === "agent" || jobData.length === 0
+                          user_type === "user" ||
+                          user_type === "agent" ||
+                          jobData.length === 0
                             ? "d-none"
                             : "font-size-3 rounded-3 btn-primary border-0  absolute_top_right"
                         }
@@ -173,7 +203,7 @@ function JobDetailpageAdmim(props) {
                         <CustomButton
                           title={"Send Custom Email"}
                           className="font-size-4 rounded-3 btn-primary py-0 d-none"
-                        /*Functionalities have to be done. */
+                          /*Functionalities have to be done. */
                         >
                           {/*Take off "d-none" when you Send Custom Email API or when you're told to remove it*/}
                           <RiMailSendLine />
@@ -196,8 +226,8 @@ function JobDetailpageAdmim(props) {
                 <div className="col px-5 pt-5 pb-5  border-right position-relative">
                   <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap">
                     {!jobData.location &&
-                      !jobData.language &&
-                      !jobData.address ? (
+                    !jobData.language &&
+                    !jobData.address ? (
                       <div className="info_box text-left text-capitalize">
                         <span className="font-size-3 text-smoke  mr-7">
                           No Data FOund
@@ -353,7 +383,9 @@ function JobDetailpageAdmim(props) {
                         <div className="text-capitalize company_detail_box w-100 m-0 bg-light rounded p-8 position-relative">
                           <CustomButton
                             className={
-                              user_type === "user" || user_type === "agent" || jobData.length === 0
+                              user_type === "user" ||
+                              user_type === "agent" ||
+                              jobData.length === 0
                                 ? "d-none"
                                 : "font-size-3 rounded-3 btn-primary border-0  absolute_top_right"
                             }
@@ -363,16 +395,26 @@ function JobDetailpageAdmim(props) {
                           </CustomButton>
                           <div className="col-md-12 col-sm-12 media align-items-center company_box media">
                             <div className="text_box text-left">
-                              {jobData.logo ? <img
-                                className="company_logo"
-                                src={
-                                  jobData.logo === null
-                                    ? "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
-                                    : jobData.logo
-                                }
-                                alt=""
-                              /> : <p className="company_logo"
-                                style={{ fontSize: "50px" }}>{jobData.company_name ? getInitials(jobData.company_name) : ""}</p>}
+                              {jobData.logo ? (
+                                <img
+                                  className="company_logo"
+                                  src={
+                                    jobData.logo === null
+                                      ? "https://macsnh.org/wp-content/uploads/2019/08/demo-logo-black.png"
+                                      : jobData.logo
+                                  }
+                                  alt=""
+                                />
+                              ) : (
+                                <p
+                                  className="company_logo"
+                                  style={{ fontSize: "50px" }}
+                                >
+                                  {jobData.company_name
+                                    ? getInitials(jobData.company_name)
+                                    : ""}
+                                </p>
+                              )}
                             </div>
                             <div className="text_box text-left w-100 text-capitalize">
                               <h3 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center text-break">
@@ -383,25 +425,30 @@ function JobDetailpageAdmim(props) {
                               </h3>
                               <h5 className="mb-0 font-size-6 heading-dark-color d-flex align-items-center text-break">
                                 {/* <b> {jobData.franchise}{" "}</b> */}
-                                { /*<small>
+                                {/*<small>
                                   {jobData.company_name
                                     ? `(${jobData.company_name})`
                                     : ""}</small>*/}
                               </h5>
 
-                              <hr className={`my-3 ${!jobData.location &&
-                                !jobData.language &&
-                                !jobData.address &&
-                                !jobData.your_duties ? "d-none" : ""}`} />
-                              <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap w-100">
-                                {!jobData.location &&
+                              <hr
+                                className={`my-3 ${
+                                  !jobData.location &&
                                   !jobData.language &&
                                   !jobData.address &&
-                                  !jobData.your_duties ? (
+                                  !jobData.your_duties
+                                    ? "d-none"
+                                    : ""
+                                }`}
+                              />
+                              <div className="personal_info_box d-flex align-items-center justify-content-left flex-wrap w-100">
+                                {!jobData.location &&
+                                !jobData.language &&
+                                !jobData.address &&
+                                !jobData.your_duties ? (
                                   ""
                                 ) : (
                                   <>
-
                                     <div className="info_box text-left text-capitalize">
                                       {jobData.your_duties ? (
                                         <div
@@ -421,7 +468,8 @@ function JobDetailpageAdmim(props) {
                                           />{" "}
                                           {jobData.industry_type &&
                                             `${jobData.industry_type} ,`}
-                                          {jobData.location && ` ${jobData.location}`}
+                                          {jobData.location &&
+                                            ` ${jobData.location}`}
                                         </div>
                                       ) : (
                                         ""
@@ -480,13 +528,13 @@ function JobDetailpageAdmim(props) {
                                   </h4>
                                 </div>
                                 {!jobData.industry &&
-                                  !jobData.corporation &&
-                                  !jobData.company_size &&
-                                  !jobData.job_type &&
-                                  !jobData.education &&
-                                  !jobData.role_category &&
-                                  !jobData.experience_required &&
-                                  !jobData.department ? (
+                                !jobData.corporation &&
+                                !jobData.company_size &&
+                                !jobData.job_type &&
+                                !jobData.education &&
+                                !jobData.role_category &&
+                                !jobData.experience_required &&
+                                !jobData.department ? (
                                   <div className="text-left row m-0">
                                     <div className="font-size-3 mb-4 mr-10">
                                       No Data Found
@@ -605,11 +653,11 @@ function JobDetailpageAdmim(props) {
                                       {jobData.email}
                                     </Link>
                                     {user_type === "admin" ||
-                                      props.self === "no" ? (
+                                    props.self === "no" ? (
                                       <CustomButton
                                         title={"Send Custom Email"}
                                         className="font-size-4 rounded-3 btn-primary py-0 d-none"
-                                      /*Functionalities have to be done. */
+                                        /*Functionalities have to be done. */
                                       >
                                         {/*Take off "d-none" when you Send Custom Email API or when you're told to remove it*/}
                                         <RiMailSendLine />

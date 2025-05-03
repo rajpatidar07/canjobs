@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import { DeleteFilter, GetFilter } from "../../api/api";
-import {  toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SAlert from "../common/sweetAlert";
 import AddFilter from "../forms/admin/FilterForm";
@@ -39,7 +39,7 @@ function FilterList() {
   useEffect(() => {
     FilterData();
     if (apiCall === true) {
-      setApiCall(false)
+      setApiCall(false);
     }
   }, [apiCall]);
 
@@ -79,10 +79,8 @@ function FilterList() {
         <AdminHeader heading={"Filter List"} />
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Filter List"} />
-        <div>
-          
-        </div>
-        <div className="dashboard-main-container mt-16" id="dashboard-body">
+        <div></div>
+        <div className="dashboard-main-container mt-14" id="dashboard-body">
           <div className="container-fluid">
             <div className="mb-18">
               <div className="mb-4 align-items-center">
@@ -152,23 +150,29 @@ function FilterList() {
                           filterType={"Industry"}
                         />
                         <ul className="row m-0 p-0">
-                          {filterData.Industry && filterData.Industry.length === 0 ? (
+                          {filterData.Industry &&
+                          filterData.Industry.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
-                            (filterData.Industry || []
-                            ).map((data, i) => (
+                            (filterData.Industry || []).map((data, i) => (
                               <React.Fragment key={i}>
-                                <li 
-                                title={data.value}
-                                className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center">
+                                <li
+                                  title={data.value}
+                                  className="text-capitalize bg-polar text-black-2 mr-3 px-4 mt-2 mb-2 font-size-3 rounded-3 min-height-32 d-flex align-items-center"
+                                >
                                   {data.value}
-                                  <Link onClick={() => ShowDeleteAlert(data, 4)} title={`Delete ${data.value}`}>
-                                    <i className="px-3 fa fa-times-circle" aria-hidden="true"></i>
+                                  <Link
+                                    onClick={() => ShowDeleteAlert(data, 4)}
+                                    title={`Delete ${data.value}`}
+                                  >
+                                    <i
+                                      className="px-3 fa fa-times-circle"
+                                      aria-hidden="true"
+                                    ></i>
                                   </Link>
                                 </li>
                               </React.Fragment>
                             ))
-
                           )}
                         </ul>
                       </div>
@@ -187,9 +191,11 @@ function FilterList() {
                           setApiCall={setApiCall}
                           setFilterData={setFilterData}
                           filterData={filterData}
-                          filterType={"Education"} />
+                          filterType={"Education"}
+                        />
                         <ul className="row m-0 p-0">
-                          {filterData.Education && filterData.Education.length === 0 ? (
+                          {filterData.Education &&
+                          filterData.Education.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData.Education || []).map((data, i) => (
@@ -224,14 +230,17 @@ function FilterList() {
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                           Corporation
                         </h4>
-                        <AddFilter id={6}
+                        <AddFilter
+                          id={6}
                           apiCall={apiCall}
                           setApiCall={setApiCall}
                           setFilterData={setFilterData}
                           filterData={filterData}
-                          filterType={"Corporation"} />
+                          filterType={"Corporation"}
+                        />
                         <ul className="row m-0 p-0">
-                          {filterData.Corporation && filterData.Corporation.length === 0 ? (
+                          {filterData.Corporation &&
+                          filterData.Corporation.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData.Corporation || []).map((data, i) => (
@@ -266,14 +275,17 @@ function FilterList() {
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                           Language
                         </h4>
-                        <AddFilter id={7}
+                        <AddFilter
+                          id={7}
                           apiCall={apiCall}
                           setApiCall={setApiCall}
                           setFilterData={setFilterData}
                           filterData={filterData}
-                          filterType={"Language"} />
+                          filterType={"Language"}
+                        />
                         <ul className="row m-0 p-0">
-                          {filterData.Language && filterData.Language.length === 0 ? (
+                          {filterData.Language &&
+                          filterData.Language.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData.Language || []).map((data, i) => (
@@ -301,21 +313,24 @@ function FilterList() {
                       </div>
                     </div>
                   </div>
-                    {/* <!-- Country Filter List --> */}
-                    <div className="col-xl-12 p-0 col-lg-12 col-md-12 col-sm-12 mt-3 d-none">
+                  {/* <!-- Country Filter List --> */}
+                  <div className="col-xl-12 p-0 col-lg-12 col-md-12 col-sm-12 mt-3 d-none">
                     <div className="card job_filter_card">
                       <div className="card-body  m-0">
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                           Country
                         </h4>
-                        <AddFilter id={32}
+                        <AddFilter
+                          id={32}
                           apiCall={apiCall}
                           setApiCall={setApiCall}
                           setFilterData={setFilterData}
                           filterData={filterData}
-                          filterType={"Country"} />
+                          filterType={"Country"}
+                        />
                         <ul className="row m-0 p-0">
-                          {filterData.Country && filterData.Country.length === 0 ? (
+                          {filterData.Country &&
+                          filterData.Country.length === 0 ? (
                             <p> No Data Found</p>
                           ) : (
                             (filterData.Country || []).map((data, i) => (
@@ -343,19 +358,21 @@ function FilterList() {
                       </div>
                     </div>
                   </div>
-                   {/* <!-- State Filter List --> */}
-                   <div className="col-xl-12 p-0 col-lg-12 col-md-12 col-sm-12 mt-3 d-none">
+                  {/* <!-- State Filter List --> */}
+                  <div className="col-xl-12 p-0 col-lg-12 col-md-12 col-sm-12 mt-3 d-none">
                     <div className="card job_filter_card">
                       <div className="card-body  m-0">
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                           State
                         </h4>
-                        <AddFilter id={33}
+                        <AddFilter
+                          id={33}
                           apiCall={apiCall}
                           setApiCall={setApiCall}
                           setFilterData={setFilterData}
                           filterData={filterData}
-                          filterType={"State"} />
+                          filterType={"State"}
+                        />
                         <ul className="row m-0 p-0">
                           {filterData.State && filterData.State.length === 0 ? (
                             <p> No Data Found</p>
@@ -392,12 +409,14 @@ function FilterList() {
                         <h4 className="card-title text-dark text-left mb-7 w-100">
                           City
                         </h4>
-                        <AddFilter id={34}
+                        <AddFilter
+                          id={34}
                           apiCall={apiCall}
                           setApiCall={setApiCall}
                           setFilterData={setFilterData}
                           filterData={filterData}
-                          filterType={"City"} />
+                          filterType={"City"}
+                        />
                         <ul className="row m-0 p-0">
                           {filterData.City && filterData.City.length === 0 ? (
                             <p> No Data Found</p>
@@ -426,7 +445,7 @@ function FilterList() {
                         </ul>
                       </div>
                     </div>
-                  </div>                
+                  </div>
                   {/* <!-- Experience  Filter List --> */}
                   {/* <div className="col-xl-12 p-0 col-lg-12 col-md-12 col-sm-12 mt-3">
                     <div className="card job_filter_card">

@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import EmployeeTable from "../../common/employeeTable";
 import ApplicantsFilter from "../../common/applicantsFilter";
@@ -11,7 +10,9 @@ export default function StudentList(props) {
   /*Filter and search state */
   const [experienceFilterValue, setExperienceFilterValue] = useState("");
   const [skillFilterValue, setSkillFilterValue] = useState("");
-  const [pageNo, setpageNo] = useState(props.page === "program" ? 1 : localStorage.getItem("PageNo") || 1);
+  const [pageNo, setpageNo] = useState(
+    props.page === "program" ? 1 : localStorage.getItem("PageNo") || 1
+  );
   const [educationFilterValue, setEducationFilterValue] = useState("");
   const [agentFilterValue, setAgentFilterValue] = useState("");
   const [adminFilterValue, setAdminFilterValue] = useState("");
@@ -21,7 +22,7 @@ export default function StudentList(props) {
   const [searcherror, setSearchError] = useState("");
   let [showAddEmployeeModal, setShowEmployeeMOdal] = useState(false);
   let [employeeId, setemployeeId] = useState();
-  let user_type = localStorage.getItem("userType")
+  let user_type = localStorage.getItem("userType");
   let [apiCall, setApiCall] = useState(false);
   /*Function to search the employee */
   const onSearch = (e) => {
@@ -47,22 +48,32 @@ export default function StudentList(props) {
   };
   return (
     <>
-      <div className={
-        props.skill === null || props.skill === undefined
-          ? "site-wrapper overflow-hidden bg-default-2"
-          : "site-wrapper overflow-hidden "
-      }>
+      <div
+        className={
+          props.skill === null || props.skill === undefined
+            ? "site-wrapper overflow-hidden bg-default-2"
+            : "site-wrapper overflow-hidden "
+        }
+      >
         {/* <!-- Header Area --> */}
         {props.skill === null ||
-          props.skill === undefined ||
-          Object.keys(props.skill).length === 0 ? (
+        props.skill === undefined ||
+        Object.keys(props.skill).length === 0 ? (
           <>
             {/* <!-- Header Area --> */}
-            {user_type === "agent" ? <AdminHeader heading={"Students"} /> : <StudyAdminHeader heading={"Students"} />}
+            {user_type === "agent" ? (
+              <AdminHeader heading={"Students"} />
+            ) : (
+              <StudyAdminHeader heading={"Students"} />
+            )}
             {/* <!-- navbar- --> */}
-            {user_type === "agent" ? <AdminSidebar heading={"Students"} /> : <StudyAdminSidebar heading={"Students"} />}          </>
+            {user_type === "agent" ? (
+              <AdminSidebar heading={"Students"} />
+            ) : (
+              <StudyAdminSidebar heading={"Students"} />
+            )}{" "}
+          </>
         ) : null}
-
 
         {/* <!--Add Employee Details Modal --> */}
         {showAddEmployeeModal ? (
@@ -74,13 +85,16 @@ export default function StudentList(props) {
             close={() => setShowEmployeeMOdal(false)}
           />
         ) : null}
-        <div className={props.skill === null ||
-          props.skill === undefined ||
-          Object.keys(props.skill).length === 0
-          ? "dashboard-main-container mt-16"
-          : ""
-
-        } id="dashboard-body">
+        <div
+          className={
+            props.skill === null ||
+            props.skill === undefined ||
+            Object.keys(props.skill).length === 0
+              ? "dashboard-main-container mt-14"
+              : ""
+          }
+          id="dashboard-body"
+        >
           <div className="container-fluid">
             <div className="mb-18">
               <div className="mb-4 align-items-center">
@@ -91,7 +105,7 @@ export default function StudentList(props) {
                 <div className="row m-0 align-items-center">
                   {/* Employees filter's */}
                   <ApplicantsFilter
-setSearch={setSearch}
+                    setSearch={setSearch}
                     applicantTypeId={"13"}
                     user_type={user_type}
                     search={search}

@@ -18,7 +18,7 @@ export default function Pnp() {
   const [filterByEmployeeId, setFilterByEmployeeId] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
-  let user_type = localStorage.getItem("userType")
+  let user_type = localStorage.getItem("userType");
   let [apiCall, setApiCall] = useState(false);
   /*Function to search the employee */
   const onSearch = (e) => {
@@ -45,7 +45,7 @@ export default function Pnp() {
         {/* <ToastContainer/> */}
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"PNP"} />
-        <div className="dashboard-main-container mt-16" id="dashboard-body">
+        <div className="dashboard-main-container mt-14" id="dashboard-body">
           <div className="container-fluid">
             <div className="mb-18">
               <div className="mb-4 align-items-center">
@@ -56,7 +56,7 @@ export default function Pnp() {
                 <div className="row m-0 align-items-center">
                   {/* Employees filter's */}
                   <ApplicantsFilter
-setSearch={setSearch}
+                    setSearch={setSearch}
                     applicantTypeId={"4"}
                     user_type={user_type}
                     search={search}
@@ -107,7 +107,6 @@ setSearch={setSearch}
                 ApplicantType={"4"}
                 categoryFilterValue={categoryFilterValue}
                 filterByEmployeeId={filterByEmployeeId}
-
               />
             </div>
           </div>

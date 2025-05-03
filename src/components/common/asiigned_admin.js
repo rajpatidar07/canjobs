@@ -5,7 +5,6 @@ import AdminSidebar from "../admin/sidebar";
 import AdminHeader from "../admin/header";
 import AdminAssignedlist from "./admin_assigned_list";
 export default function Asiigned_admin() {
-
   /*Show modal states */
   let [apiCall, setApiCall] = useState(false);
   // let [showAddEAgentModal, setShowAgentMOdal] = useState(false);
@@ -21,10 +20,10 @@ export default function Asiigned_admin() {
   let user_type = localStorage.getItem("userType");
 
   /* Function to show the single data to update Employee*/
-//   const EditAgent = (e) => {
-//     setShowAgentMOdal(true);
-//     setAgentId(e);
-//   };
+  //   const EditAgent = (e) => {
+  //     setShowAgentMOdal(true);
+  //     setAgentId(e);
+  //   };
   /*Function to search the agent */
   const onSearch = (e) => {
     const inputValue = e.target.value;
@@ -44,48 +43,36 @@ export default function Asiigned_admin() {
   };
   return (
     <>
-    <div className={"site-wrapper overflow-hidden bg-default-2"}>
-      {/* <!-- Header Area --> */}
-      <AdminHeader
-        heading={
-         "Assigned Admin"
-        }
-      />
-      {/* <!-- navbar- --> */}
-      <AdminSidebar
-        heading={
-         "Assigned Admin"
-        }
-      />
-      
-      {/* <!--Add Adgent Details Modal --> */}
+      <div className={"site-wrapper overflow-hidden bg-default-2"}>
+        {/* <!-- Header Area --> */}
+        <AdminHeader heading={"Assigned Admin"} />
+        {/* <!-- navbar- --> */}
+        <AdminSidebar heading={"Assigned Admin"} />
 
-      <div className={"dashboard-main-container mt-16"} id="dashboard-body">
-        <div className="container-fluid">
-          <div className="mb-18">
-            <div
-              className={
-                "mb-4 align-items-center"
-              }
-            >
-              <div className="page___heading">
-                <h3 className="font-size-6 mb-0">Admin's</h3>
-              </div>
-              {/* <!-- Agent Search and Filter- --> */}
-              <div className="row m-0 align-items-center">
-                <div className={"col p-1 form_group"}>
-                  <p className="input_label">Search Admin:</p>
-                  <input
-                    required
-                    type="text"
-                    className="form-control"
-                    placeholder={"Search Admin"}
-                    value={search}
-                    name={"admin_name"}
-                    onChange={(e) => onSearch(e)}
-                  />
+        {/* <!--Add Adgent Details Modal --> */}
+
+        <div className={"dashboard-main-container mt-14"} id="dashboard-body">
+          <div className="container-fluid">
+            <div className="mb-18">
+              <div className={"mb-4 align-items-center"}>
+                <div className="page___heading">
+                  <h3 className="font-size-6 mb-0">Admin's</h3>
                 </div>
-                {/* <div className="col px-1 form_group mt-4 text-right">
+                {/* <!-- Agent Search and Filter- --> */}
+                <div className="row m-0 align-items-center">
+                  <div className={"col p-1 form_group"}>
+                    <p className="input_label">Search Admin:</p>
+                    <input
+                      required
+                      type="text"
+                      className="form-control"
+                      placeholder={"Search Admin"}
+                      value={search}
+                      name={"admin_name"}
+                      onChange={(e) => onSearch(e)}
+                    />
+                  </div>
+                  {/* <div className="col px-1 form_group mt-4 text-right">
                   <CustomButton
                     className="font-size-3 rounded-3 btn btn-primary border-0"
                     onClick={() => EditAdmin("0")}
@@ -94,25 +81,25 @@ export default function Asiigned_admin() {
                     Add Admin
                   </CustomButton>
                 </div> */}
+                </div>
+                <small className="text-danger">{searcherror}</small>
               </div>
-              <small className="text-danger">{searcherror}</small>
-            </div>
-            {/* <!-- Admi List Table- --> */}
-            <AdminAssignedlist
-              // showEmployeeProfile={showEmployeeProfile}
-              // employeeDetails={employeeDetails}
-              search={search}
-              // experienceFilterValue={experienceFilterValue}
-              // educationFilterValue={educationFilterValue}
-              // skillFilterValue={skillFilterValue}
-              apiCall={apiCall}
-              setApiCall={setApiCall}
-              pageNo={pageNo}
-              setpageNo={setpageNo}
-            //   EditAgent={EditAgent}
-              user={user_type}
-            />
-            {/* {showAddEAgentModal ? (
+              {/* <!-- Admi List Table- --> */}
+              <AdminAssignedlist
+                // showEmployeeProfile={showEmployeeProfile}
+                // employeeDetails={employeeDetails}
+                search={search}
+                // experienceFilterValue={experienceFilterValue}
+                // educationFilterValue={educationFilterValue}
+                // skillFilterValue={skillFilterValue}
+                apiCall={apiCall}
+                setApiCall={setApiCall}
+                pageNo={pageNo}
+                setpageNo={setpageNo}
+                //   EditAgent={EditAgent}
+                user={user_type}
+              />
+              {/* {showAddEAgentModal ? (
               <AddAgent
                 show={showAddEAgentModal}
                 agentId={agentId}
@@ -121,10 +108,10 @@ export default function Asiigned_admin() {
                 close={() => setShowAgentMOdal(false)}
               />
             ) : null} */}
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </>
-  )
+    </>
+  );
 }

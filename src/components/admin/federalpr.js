@@ -5,7 +5,6 @@ import EmployeeTable from "../common/employeeTable";
 import ApplicantsFilter from "../common/applicantsFilter";
 
 export default function Federalpr() {
-
   /*Filter and search state */
   const [experienceFilterValue, setExperienceFilterValue] = useState("");
   const [skillFilterValue, setSkillFilterValue] = useState("");
@@ -16,7 +15,7 @@ export default function Federalpr() {
   const [interestFilterValue, setinterestFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
-  let user_type = localStorage.getItem("userType")
+  let user_type = localStorage.getItem("userType");
   let [apiCall, setApiCall] = useState(false);
   /*Function to search the employee */
   const onSearch = (e) => {
@@ -42,7 +41,7 @@ export default function Federalpr() {
         <AdminHeader heading={"Federal PR"} />
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Federal PR"} />
-        <div className="dashboard-main-container mt-16" id="dashboard-body">
+        <div className="dashboard-main-container mt-14" id="dashboard-body">
           <div className="container-fluid">
             <div className="mb-18">
               <div className="mb-4 align-items-center">
@@ -53,7 +52,7 @@ export default function Federalpr() {
                 <div className="row m-0 align-items-center">
                   {/* Employees filter's */}
                   <ApplicantsFilter
-setSearch={setSearch}
+                    setSearch={setSearch}
                     applicantTypeId={"11"}
                     user_type={user_type}
                     search={search}

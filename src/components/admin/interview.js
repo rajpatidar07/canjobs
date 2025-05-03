@@ -15,14 +15,14 @@ export default function ManageInterview() {
 
   const GetllINterviewData = async () => {
     try {
-      let res = await getInterview()
-      setAllInterviews(res.data)
+      let res = await getInterview();
+      setAllInterviews(res.data);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
+  };
   useEffect(() => {
-    GetllINterviewData()
+    GetllINterviewData();
     if ((search === "") === true) {
       setSearchError("");
     }
@@ -32,7 +32,7 @@ export default function ManageInterview() {
   const onSearch = (e) => {
     const inputValue = e.target.value;
     setSearch(inputValue);
-    setpageNo(1)
+    setpageNo(1);
     if (inputValue.length > 0) {
       if (/[-]?\d+(\.\d+)?/.test(inputValue.charAt(0))) {
         setSearchError("Applicant name cannot start with a number.");
@@ -52,7 +52,7 @@ export default function ManageInterview() {
         <AdminHeader heading={"Interview"} />
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Interview"} />
-        <div className="dashboard-main-container mt-16" id="dashboard-body">
+        <div className="dashboard-main-container mt-14" id="dashboard-body">
           <div className="container-fluid">
             <div className="mb-18">
               <div className="mb-4 align-items-center">
@@ -82,8 +82,8 @@ export default function ManageInterview() {
                         value={statusFilterValue}
                         id="type"
                         onChange={(e) => {
-                          setStatusFilterValue(e.target.value)
-                          setpageNo(1)
+                          setStatusFilterValue(e.target.value);
+                          setpageNo(1);
                         }}
                         className=" form-control"
                       >
@@ -96,11 +96,11 @@ export default function ManageInterview() {
                   <div className="mt-2">
                     <CommonThreeDots
                       tableName={"interview"}
-                      tableData={allInterviews} />
+                      tableData={allInterviews}
+                    />
                   </div>
                 </div>
                 <small className="text-danger">{searcherror}</small>
-
               </div>
               {/*<-- Interview list Table -->*/}
               <Interview

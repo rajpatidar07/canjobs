@@ -46,7 +46,8 @@ function JobResponse(props) {
   let [isLoading, setIsLoading] = useState(true);
   let [employeeId, setemployeeId] = useState();
   let [lmiaStatus, setLmiaStatus] = useState();
-  let [showLmiaAdditionalInfobModal, setShowLmiaAdditionalInfobModal] = useState(false);
+  let [showLmiaAdditionalInfobModal, setShowLmiaAdditionalInfobModal] =
+    useState(false);
   /*Filter and search state */
   const [skillFilterValue, setSkillFilter] = useState("");
   const [limiaFilterValue, setLmiaFilter] = useState("");
@@ -166,7 +167,6 @@ function JobResponse(props) {
           // Resolve all promises and set the result to lmiaSubStages
           const allLmiaSubStages = await Promise.all(subStagePromises);
           setLmiaSubStages(allLmiaSubStages.flat()); // Flatten and set the state
-
         } catch (err) {
           console.error("Error fetching LMIA substage:", err);
         }
@@ -306,9 +306,9 @@ function JobResponse(props) {
   };
   /*Function to open additionlima info modal */
   const AdditionalLmiaInfo = (e) => {
-    setShowLmiaAdditionalInfobModal(true)
+    setShowLmiaAdditionalInfobModal(true);
     setResData(e);
-  }
+  };
   /* Function to show the single data to update job */
   const OpenChangeJob = (e) => {
     // e.preventDefault();
@@ -340,42 +340,41 @@ function JobResponse(props) {
     <div
       className={
         props.heading === "Response" ||
-          (props.heading === undefined && user_type === "admin")
+        (props.heading === undefined && user_type === "admin")
           ? "site-wrapper overflow-hidden bg-default-2  "
           : props.heading === "Dashboard"
-            ? "site-wrapper overflow-hidden bg-default-2 bg-white"
-            : "response_main_div"
+          ? "site-wrapper overflow-hidden bg-default-2 bg-white"
+          : "response_main_div"
       }
     >
       {props.heading === "Response" ||
-        (props.heading === undefined && user_type === "admin") ? (
+      (props.heading === undefined && user_type === "admin") ? (
         <>
           {/* <!-- Header Area --> */}
           <AdminHeader heading={"Response"} />
           {/* <!-- navbar- --> */}
           <AdminSidebar heading={"Response"} />
-
         </>
       ) : null}
 
       <div
         className={
           props.heading === "Response" ||
-            (props.heading === undefined && user_type === "admin")
-            ? "dashboard-main-container mt-16"
+          (props.heading === undefined && user_type === "admin")
+            ? "dashboard-main-container mt-14"
             : props.heading === "Dashboard"
-              ? ""
-              : "response__container"
+            ? ""
+            : "response__container"
         }
       >
         <div
           className={
             props.heading === "Response" ||
-              (props.heading === undefined && user_type === "admin")
+            (props.heading === undefined && user_type === "admin")
               ? "container-fluid"
               : props.heading === "Dashboard"
-                ? ""
-                : "container"
+              ? ""
+              : "container"
           }
         >
           {props.heading === "Dashboard" ? (
@@ -394,7 +393,7 @@ function JobResponse(props) {
               <div
                 className={
                   props.heading === "Response" ||
-                    (props.heading === undefined && user_type === "admin")
+                  (props.heading === undefined && user_type === "admin")
                     ? "row m-0 align-items-center"
                     : "d-none"
                 }
@@ -492,11 +491,11 @@ function JobResponse(props) {
             <div
               className={
                 props.heading === "Response" ||
-                  (props.heading === undefined && user_type === "admin")
+                (props.heading === undefined && user_type === "admin")
                   ? ""
                   : props.heading === "Dashboard"
-                    ? "bg-white shadow-8 datatable_div pt-7 rounded pb-9 px-5"
-                    : ""
+                  ? "bg-white shadow-8 datatable_div pt-7 rounded pb-9 px-5"
+                  : ""
               }
             >
               <div className="table-responsive main_table_div">
@@ -563,7 +562,7 @@ function JobResponse(props) {
                         </th> */}
 
                         {props.heading === "Dashboard" ||
-                          user_type === "company" ? (
+                        user_type === "company" ? (
                           ""
                         ) : (
                           <th
@@ -658,8 +657,8 @@ function JobResponse(props) {
                           Interview
                         </th>
                         {props.heading === "Dashboard" ||
-                          user_type === "company" ||
-                          props.self === "yes" ? (
+                        user_type === "company" ||
+                        props.self === "yes" ? (
                           ""
                         ) : (
                           <th
@@ -684,7 +683,9 @@ function JobResponse(props) {
                           // ((props.response === "response") || (props.response === "self") ||
                           //   ((props.response === "visa" || props.response === "lmia") && res.job_status === "1")) ?
                           <tr className="position-relative" key={i}>
-                            <th className="py-5 " title={res.employee_id}>{res.employee_id}</th>
+                            <th className="py-5 " title={res.employee_id}>
+                              {res.employee_id}
+                            </th>
                             <th className=" py-5">
                               <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                 {res.name || res.gender || res.date_of_birth ? (
@@ -708,8 +709,10 @@ function JobResponse(props) {
                                     </div>
 
                                     <div className=" mb-0" title={res.name}>
-                                      <p className="m-0 text-black-2 font-weight-bold text-capitalize"
-                                        title={res.name}>
+                                      <p
+                                        className="m-0 text-black-2 font-weight-bold text-capitalize"
+                                        title={res.name}
+                                      >
                                         <Link
                                           className="text-dark"
                                           to={`/${res.employee_id}`}
@@ -717,23 +720,30 @@ function JobResponse(props) {
                                           {res.name}
                                         </Link>
                                       </p>
-                                      <p className="text-gray font-size-2 m-0 text-capitalize" title={(res.gender === "female"
-                                        ? "F"
-                                        : res.gender === "male"
-                                          ? "M"
-                                          : "O") + (res.marital_status ||
-                                            res.date_of_birth
-                                            ? `(${res.marital_status
-                                            }${((moment().diff(
-                                              res.date_of_birth,
-                                              "years"
-                                            )) === 0
-                                              ? ""
-                                              : (`,${(moment().diff(
-                                                res.date_of_birth,
-                                                "years"
-                                              ))}Y`))})`
-                                            : null)}>
+                                      <p
+                                        className="text-gray font-size-2 m-0 text-capitalize"
+                                        title={
+                                          (res.gender === "female"
+                                            ? "F"
+                                            : res.gender === "male"
+                                            ? "M"
+                                            : "O") +
+                                          (res.marital_status ||
+                                          res.date_of_birth
+                                            ? `(${res.marital_status}${
+                                                moment().diff(
+                                                  res.date_of_birth,
+                                                  "years"
+                                                ) === 0
+                                                  ? ""
+                                                  : `,${moment().diff(
+                                                      res.date_of_birth,
+                                                      "years"
+                                                    )}Y`
+                                              })`
+                                            : null)
+                                        }
+                                      >
                                         {res.is_featured === ("1" || 1) ? (
                                           <span className="bg-orange text-white featured_tag">
                                             Featured
@@ -742,17 +752,19 @@ function JobResponse(props) {
                                         {res.gender === "female"
                                           ? "F"
                                           : res.gender === "male"
-                                            ? "M"
-                                            : "O"}
+                                          ? "M"
+                                          : "O"}
                                         ({res.marital_status}
                                         {/*Calculation of age from date of birth*/}
-                                        {((moment().diff(
+                                        {moment().diff(
                                           res.date_of_birth,
                                           "years"
-                                        )) === 0 ? "" : (`,${(moment().diff(
-                                          res.date_of_birth,
-                                          "years"
-                                        ))}Y`))}
+                                        ) === 0
+                                          ? ""
+                                          : `,${moment().diff(
+                                              res.date_of_birth,
+                                              "years"
+                                            )}Y`}
                                         )
                                       </p>
                                       {res.created_by_admin === ("0" || 0) ? (
@@ -774,8 +786,7 @@ function JobResponse(props) {
                                       </div>
                                     </div>
                                     <div className=" mb-0" title=" N/A">
-                                      <p className="m-0 text-black-2 font-weight-bold text-capitalize"
-                                      >
+                                      <p className="m-0 text-black-2 font-weight-bold text-capitalize">
                                         N/A
                                       </p>
                                     </div>
@@ -794,22 +805,29 @@ function JobResponse(props) {
                             </th> */}
 
                             {props.heading === "Dashboard" ||
-                              user_type === "company" ? (
+                            user_type === "company" ? (
                               ""
                             ) : (
                               <th className=" py-5">
                                 <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                                   {res.contact_no || res.email ? (
                                     <>
-                                      <p className="font-size-3 font-weight-normal m-0" title={res.contact_no}>
+                                      <p
+                                        className="font-size-3 font-weight-normal m-0"
+                                        title={res.contact_no}
+                                      >
                                         <Link
                                           className="text-dark"
                                           to={`tel:${res.contact_no}`}
                                         >
-                                          {res.contact_no && `+${res.contact_no}`}
+                                          {res.contact_no &&
+                                            `+${res.contact_no}`}
                                         </Link>
                                       </p>
-                                      <p className="font-size-3 font-weight-normal m-0" title={res.email}>
+                                      <p
+                                        className="font-size-3 font-weight-normal m-0"
+                                        title={res.email}
+                                      >
                                         <Link
                                           className="text-dark"
                                           to={`mailto:${res.email}`}
@@ -830,10 +848,16 @@ function JobResponse(props) {
                               ""
                             ) : (
                               <th className="py-5 ">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0" title={res.current_location + " " +
-                                  res.currently_located_country}>
+                                <h3
+                                  className="font-size-3 font-weight-normal text-black-2 mb-0"
+                                  title={
+                                    res.current_location +
+                                    " " +
+                                    res.currently_located_country
+                                  }
+                                >
                                   {res.current_location ||
-                                    res.currently_located_country ? (
+                                  res.currently_located_country ? (
                                     <>
                                       <span>{res.current_location}</span>
                                       <span className="px-1">
@@ -852,27 +876,32 @@ function JobResponse(props) {
                               ""
                             ) : (
                               <th className=" py-5">
-                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0" title={res.experience + (
-                                  res.experience === "1-3 " ||
+                                <h3
+                                  className="font-size-3 font-weight-normal text-black-2 mb-0"
+                                  title={
+                                    res.experience +
+                                    (res.experience === "1-3 " ||
                                     res.experience === "1-2 " ||
                                     res.experience === "3-5 " ||
                                     res.experience === "5-7 " ||
                                     res.experience === "7+ "
-                                    ? "Years"
-                                    : res.experience === "0-1 "
+                                      ? "Years"
+                                      : res.experience === "0-1 "
                                       ? "Year"
-                                      : "")}>
+                                      : "")
+                                  }
+                                >
                                   {res.experience ? (
-                                    res.experience + (
-                                      res.experience === "1-3 " ||
-                                        res.experience === "1-2 " ||
-                                        res.experience === "3-5 " ||
-                                        res.experience === "5-7 " ||
-                                        res.experience === "7+ "
-                                        ? "Years"
-                                        : res.experience === "0-1 "
-                                          ? "Year"
-                                          : "")
+                                    res.experience +
+                                    (res.experience === "1-3 " ||
+                                    res.experience === "1-2 " ||
+                                    res.experience === "3-5 " ||
+                                    res.experience === "5-7 " ||
+                                    res.experience === "7+ "
+                                      ? "Years"
+                                      : res.experience === "0-1 "
+                                      ? "Year"
+                                      : "")
                                   ) : (
                                     <span className="font-size-3 font-weight-normal text-black-2 mb-0">
                                       N/A
@@ -882,7 +911,10 @@ function JobResponse(props) {
                               </th>
                             )}
                             <th className="text-center py-5 ">
-                              <div className="font-size-3 font-weight-normal text-black-2 mb-0 " title={res.lmia_status || "N/A"}>
+                              <div
+                                className="font-size-3 font-weight-normal text-black-2 mb-0 "
+                                title={res.lmia_status || "N/A"}
+                              >
                                 <Link to="/lmia" state={{ id: res.job_id }}>
                                   {res.lmia_status === "candidate placement" ? (
                                     <span className="px-3 py-2 badge badge-pill badge-warning">
@@ -894,16 +926,24 @@ function JobResponse(props) {
                                     </span>
                                   ) : res.lmia_status === "decision" ? (
                                     <span
-                                      className={`px-3 py-2 badge badge-pill text-capitalize ${lmiaSubStages.find(stage => stage.lmia_status === "decision")?.lmia_substage === "approved"
+                                      className={`px-3 py-2 badge badge-pill text-capitalize ${
+                                        lmiaSubStages.find(
+                                          (stage) =>
+                                            stage.lmia_status === "decision"
+                                        )?.lmia_substage === "approved"
                                           ? "badge-shamrock"
-                                          : lmiaSubStages.find(stage => stage.lmia_status === "decision")?.lmia_substage === "refused"
-                                            ? "badge-danger"
-                                            : "badge-warning"
-                                        }`}
+                                          : lmiaSubStages.find(
+                                              (stage) =>
+                                                stage.lmia_status === "decision"
+                                            )?.lmia_substage === "refused"
+                                          ? "badge-danger"
+                                          : "badge-warning"
+                                      }`}
                                     >
-                                      {
-                                        lmiaSubStages.find(stage => stage.lmia_status === "decision")?.lmia_substage || 'Awaiting decision'
-                                      }
+                                      {lmiaSubStages.find(
+                                        (stage) =>
+                                          stage.lmia_status === "decision"
+                                      )?.lmia_substage || "Awaiting decision"}
                                     </span>
                                   ) : (
                                     //
@@ -916,10 +956,15 @@ function JobResponse(props) {
                             </th>
                             <th
                               className={
-                                user_type === "company" ? "d-none" : " text-center py-5 "
+                                user_type === "company"
+                                  ? "d-none"
+                                  : " text-center py-5 "
                               }
                             >
-                              <p className="font-size-2 font-weight-normal text-black-2 mb-0" title={res.visa_status || "N/A"}>
+                              <p
+                                className="font-size-2 font-weight-normal text-black-2 mb-0"
+                                title={res.visa_status || "N/A"}
+                              >
                                 {res.visa_status === "onboard" ? (
                                   <span className="p-1 bg-coral-opacity-visible text-white text-center border rounded-pill">
                                     On Board
@@ -952,12 +997,16 @@ function JobResponse(props) {
                               </p>
                             </th>
                             <th className="  py-5 ">
-                              <p className="font-size-3 font-weight-normal mb-0"
-                                title={res.status === "complete"
-                                  ? "Complete"
-                                  : res.status === "pending"
+                              <p
+                                className="font-size-3 font-weight-normal mb-0"
+                                title={
+                                  res.status === "complete"
+                                    ? "Complete"
+                                    : res.status === "pending"
                                     ? "Scheduled"
-                                    : "Pending"}>
+                                    : "Pending"
+                                }
+                              >
                                 {res.status === "complete" ? (
                                   <span className="p-1 badge badge-pill bg-primary-opacity-8 text-white text-center w-100 border rounded-pill">
                                     Complete
@@ -974,8 +1023,8 @@ function JobResponse(props) {
                               </p>
                             </th>
                             {props.heading === "Dashboard" ||
-                              user_type === "company" ||
-                              props.self === "yes" ? (
+                            user_type === "company" ||
+                            props.self === "yes" ? (
                               ""
                             ) : (
                               <th className="py-5  min-width-px-100">
@@ -999,7 +1048,7 @@ function JobResponse(props) {
                                   <button
                                     className={
                                       props.response === "visa" ||
-                                        res.is_reserve === "0"
+                                      res.is_reserve === "0"
                                         ? "d-none"
                                         : "btn btn-outline-info action_btn text-gray"
                                     }
@@ -1011,7 +1060,7 @@ function JobResponse(props) {
                                   <button
                                     className={
                                       props.response === "visa" ||
-                                        res.is_reserve === "0"
+                                      res.is_reserve === "0"
                                         ? "d-none"
                                         : "btn btn-outline-info action_btn text-gray"
                                     }
@@ -1023,7 +1072,7 @@ function JobResponse(props) {
                                   <button
                                     className={
                                       props.response === "lmia" ||
-                                        res.is_reserve === "0"
+                                      res.is_reserve === "0"
                                         ? "d-none"
                                         : "btn btn-outline-info action_btn"
                                     }
@@ -1038,7 +1087,7 @@ function JobResponse(props) {
                                   <button
                                     className={
                                       res.is_reserve === "0" ||
-                                        props.response === "lmia"
+                                      props.response === "lmia"
                                         ? "d-none"
                                         : "btn btn-outline-info action_btn"
                                     }
@@ -1076,7 +1125,7 @@ function JobResponse(props) {
                                     className={
                                       (props.response === "visa" ||
                                         props.response === "lmia") &&
-                                        res.is_reserve === "1"
+                                      res.is_reserve === "1"
                                         ? "btn btn-outline-info action_btn d-none"
                                         : "d-none"
                                     }
@@ -1105,7 +1154,7 @@ function JobResponse(props) {
                                   <button
                                     className={
                                       props.response === "visa" ||
-                                        props.response === "lmia"
+                                      props.response === "lmia"
                                         ? "d-none"
                                         : "btn btn-outline-info action_btn"
                                     }
@@ -1122,19 +1171,19 @@ function JobResponse(props) {
                                   <button
                                     className={
                                       props.response === "visa" ||
-                                        props.response === "lmia"
+                                      props.response === "lmia"
                                         ? "d-none"
                                         : "btn btn-outline-info action_btn text-gray"
                                     }
                                     onClick={() => OpenChangeJob(res)}
                                     title="Change Job"
                                     disabled={res.interested_in === "pgwp"}
-                                  // disabled={
-                                  //   props.total_applicants >=
-                                  //   props.role_category
-                                  //     ? true
-                                  //     : false
-                                  // }
+                                    // disabled={
+                                    //   props.total_applicants >=
+                                    //   props.role_category
+                                    //     ? true
+                                    //     : false
+                                    // }
                                   >
                                     <PiBriefcaseLight />
                                   </button>

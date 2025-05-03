@@ -243,7 +243,6 @@ function Notes() {
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Manage Notes"} />
         <div>
-          
           {/* <!-- Modal- --> */}
           {/* {showAddCategoryModal ? (
             <AddCategory
@@ -264,7 +263,7 @@ function Notes() {
             />
           ) : null} */}
         </div>
-        <div className="dashboard-main-container mt-16" id="dashboard-body">
+        <div className="dashboard-main-container mt-14" id="dashboard-body">
           <div className="container-fluid ">
             {/* 
             <div className="row align-items-center m-0">
@@ -331,7 +330,7 @@ function Notes() {
                   <small className="text-danger">{searcherror}</small>
                 </div>
                 <h3 className="font-size-5 mb-0">Candidate's Notes</h3>
-                <EmployeeNotesTable search={search} userType={"employee"}/>
+                <EmployeeNotesTable search={search} userType={"employee"} />
               </div>
               <div className="col-6 mb-18">
                 <div className="col p-1 form_group mb-3">
@@ -351,7 +350,10 @@ function Notes() {
                   <small className="text-danger">{companySearcherror}</small>
                 </div>
                 <h3 className="font-size-5 mb-0">Client's Notes</h3>
-                <EmployeeNotesTable search={Companysearch} userType={"employer"}/>
+                <EmployeeNotesTable
+                  search={Companysearch}
+                  userType={"employer"}
+                />
 
                 {/* <EmployerNotesTable search={Companysearch} /> */}
               </div>

@@ -44,10 +44,10 @@ function Job(props) {
       console.log(err);
     }
     try {
-      let allJobData = await GetAllJobs()
-      setAllJob(allJobData.data.data)
+      let allJobData = await GetAllJobs();
+      setAllJob(allJobData.data.data);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
 
@@ -105,9 +105,9 @@ function Job(props) {
   const Skill =
     Json && Json.Skill
       ? Json.Skill.filter(
-        (thing, index, self) =>
-          index === self.findIndex((t) => t.value === thing.value)
-      )
+          (thing, index, self) =>
+            index === self.findIndex((t) => t.value === thing.value)
+        )
       : [];
   return (
     <>
@@ -119,13 +119,13 @@ function Job(props) {
         }
       >
         {props.skill === null ||
-          props.skill === undefined ||
-          Object.keys(props.skill).length === 0 ? (
+        props.skill === undefined ||
+        Object.keys(props.skill).length === 0 ? (
           <>
             {/* <!-- Header Area --> */}
-            <AdminHeader heading={"Manage Jobs"} />
+            {/* <AdminHeader heading={"Manage Jobs"} /> */}
             {/* <!-- navbar- --> */}
-            <AdminSidebar heading={"Manage Jobs"} />
+            {/* <AdminSidebar heading={"Manage Jobs"} /> */}
           </>
         ) : null}
 
@@ -135,7 +135,7 @@ function Job(props) {
               ? props.skill === null ||
                 props.skill === undefined ||
                 Object.keys(props.skill).length === 0
-                ? "dashboard-main-container mt-16"
+                ? "dashboard-main-container mt-14"
                 : ""
               : "d-none"
           }
@@ -317,9 +317,7 @@ function Job(props) {
                         Add Job
                       </CustomButton>
                       <div className="mt-4">
-                        <CommonThreeDots
-                          tableName={"job"}
-                          tableData={allJob} />
+                        <CommonThreeDots tableName={"job"} tableData={allJob} />
                       </div>
                       {/*<-- Add Job Modal -->*/}
                     </div>
@@ -356,7 +354,7 @@ function Job(props) {
               props.skill === null ||
               props.skill === undefined ||
               Object.keys(props.skill).length === 0
-                ? "dashboard-main-container mt-16 "
+                ? "dashboard-main-container mt-14 "
                 : ""
             }
           >

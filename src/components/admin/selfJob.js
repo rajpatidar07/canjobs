@@ -119,14 +119,14 @@ function SelfJob(props) {
             <AdminSidebar heading={"Manage Self Jobs"} />
           </>
         ) : null}
-        
+
         <div
           className={
             showJobDetails === false
               ? props.skill === null ||
                 props.skill === undefined ||
                 Object.keys(props.skill).length === 0
-                ? "dashboard-main-container mt-16"
+                ? "dashboard-main-container mt-14"
                 : ""
               : "d-none"
           }
@@ -340,7 +340,7 @@ function SelfJob(props) {
               props.skill === null ||
               props.skill === undefined ||
               Object.keys(props.skill).length === 0
-                ? "dashboard-main-container mt-16 "
+                ? "dashboard-main-container mt-14 "
                 : ""
             }
           >

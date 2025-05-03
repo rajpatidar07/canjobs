@@ -36,7 +36,8 @@ function AgentsEmployee(props) {
   /*show modal and data states assignedUser*/
   //   let [documentModal, setDocumentModal] = useState(false);
   //   let [showVisaModal, setVisaModal] = useState(false);
-  let [showChangeAssignedAdminModal, setShowChangeAssignedAdminModal] = useState(false);
+  let [showChangeAssignedAdminModal, setShowChangeAssignedAdminModal] =
+    useState(false);
   let [apiCall, setApiCall] = useState(props.apiCall);
   // let [followup, setFollowUp] = useState(false);
   //   let [interview, setInterview] = useState(false);
@@ -109,8 +110,7 @@ function AgentsEmployee(props) {
         "", //props.status,
         "", // props.employee_id,
         "",
-        localStorage.getItem("portal") === "study"
-          ? "study permit" : "", // props.response === "lmia" ? "1" : ""
+        localStorage.getItem("portal") === "study" ? "study permit" : "", // props.response === "lmia" ? "1" : ""
         "",
         props.Agentid,
         props.AdminId
@@ -332,19 +332,21 @@ function AgentsEmployee(props) {
           <ToastContainer />
         </>
       ) : null} */}
-      {showChangeAssignedAdminModal &&
+      {showChangeAssignedAdminModal && (
         <PersonalDetails
           user_of_page={props.user_of_page}
           employeeId={employeeId}
           show={showChangeAssignedAdminModal}
           apiCall={apiCall}
           setApiCall={setApiCall}
-          close={() => setShowChangeAssignedAdminModal(false)} />}
+          close={() => setShowChangeAssignedAdminModal(false)}
+        />
+      )}
       <div
         className={
           //   props.heading === "Response" ||
           //   (props.heading === undefined && user_type === "admin")
-          //     ? "dashboard-main-container mt-16"
+          //     ? "dashboard-main-container mt-14"
           //     : props.heading === "Dashboard"
           //     ? ""
           //     :
@@ -518,21 +520,23 @@ function AgentsEmployee(props) {
                             Name
                           </Link>
                         </th>
-                        {props.user_of_page === "agentAssigned" ? null : <th
-                          scope="col"
-                          className="border-0 font-size-3 font-weight-normal py-2"
-                        >
-                          <Link
-                            to={""}
-                            onClick={() => {
-                              handleSort("contact_no");
-                            }}
-                            className="text-gray"
-                            title="Sort by Contact"
+                        {props.user_of_page === "agentAssigned" ? null : (
+                          <th
+                            scope="col"
+                            className="border-0 font-size-3 font-weight-normal py-2"
                           >
-                            Contact
-                          </Link>
-                        </th>}
+                            <Link
+                              to={""}
+                              onClick={() => {
+                                handleSort("contact_no");
+                              }}
+                              className="text-gray"
+                              title="Sort by Contact"
+                            >
+                              Contact
+                            </Link>
+                          </th>
+                        )}
                         {props.heading === "Dashboard" ? (
                           ""
                         ) : (
@@ -609,12 +613,14 @@ function AgentsEmployee(props) {
                             </Link>
                           </th>
                         )}
-                        {<th
-                          scope="col"
-                          className="border-0 font-size-3 font-weight-normal py-2"
-                        >
-                          Profile
-                        </th>}
+                        {
+                          <th
+                            scope="col"
+                            className="border-0 font-size-3 font-weight-normal py-2"
+                          >
+                            Profile
+                          </th>
+                        }
                         {props.visa === "yes" ? null : (
                           <th
                             scope="col"
@@ -623,14 +629,18 @@ function AgentsEmployee(props) {
                             Status
                           </th>
                         )}
-                        {(
+                        {
                           <th
                             scope="col"
-                            className={props.userType === "agent" ? "d-none" : "border-0 font-size-3 font-weight-normal py-2"}
+                            className={
+                              props.userType === "agent"
+                                ? "d-none"
+                                : "border-0 font-size-3 font-weight-normal py-2"
+                            }
                           >
                             Action
                           </th>
-                        )}
+                        }
                       </tr>
                     </thead>
                     <tbody>
@@ -655,28 +665,34 @@ function AgentsEmployee(props) {
                             </td>
                             <td className=" py-2">
                               <Link
-                                to={localStorage.getItem("portal") === "study"
-                                  ? `/student_profile`
-                                  : `/${empdata.employee_id}`}
+                                to={
+                                  localStorage.getItem("portal") === "study"
+                                    ? `/student_profile`
+                                    : `/${empdata.employee_id}`
+                                }
                                 onClick={
                                   () =>
                                     localStorage.getItem("portal") === "study"
                                       ? localStorage.setItem(
-                                        "employee_id",
-                                        empdata.employee_id
-                                      )
+                                          "employee_id",
+                                          empdata.employee_id
+                                        )
                                       : null
                                   //   empdata.name !== null
                                   //     ? () => employeeDetails(empdata.employee_id)
                                   //     : null
                                 }
-                                title={localStorage.getItem("portal") === "study"
-                                  ? "Student Details" : "Candidate Details"}
+                                title={
+                                  localStorage.getItem("portal") === "study"
+                                    ? "Student Details"
+                                    : "Candidate Details"
+                                }
                               >
                                 <div className="d-flex profile_box gx-2">
                                   <div className="media  align-items-center">
                                     <div className="circle-30 mx-auto overflow-hidden">
-                                      {!empdata.profile_photo || empdata.profile_photo === null ? (
+                                      {!empdata.profile_photo ||
+                                      empdata.profile_photo === null ? (
                                         <img
                                           src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                           alt=""
@@ -694,9 +710,9 @@ function AgentsEmployee(props) {
 
                                   <div className=" mb-0">
                                     {empdata.name === null ||
-                                      empdata.name === undefined ||
-                                      empdata.name === "undefined" ||
-                                      empdata.name === "" ? (
+                                    empdata.name === undefined ||
+                                    empdata.name === "undefined" ||
+                                    empdata.name === "" ? (
                                       <p className="font-size-3  mb-0">N/A</p>
                                     ) : (
                                       <p className="m-0 text-black-2 font-weight-bold text-capitalize">
@@ -704,34 +720,35 @@ function AgentsEmployee(props) {
                                       </p>
                                     )}
                                     {empdata.gender ||
-                                      empdata.marital_status ? (
+                                    empdata.marital_status ? (
                                       <p className="text-gray font-size-2 m-0 text-capitalize">
                                         {empdata.gender === "female"
                                           ? "F"
                                           : empdata.gender === "male"
-                                            ? "M"
-                                            : "O"}
+                                          ? "M"
+                                          : "O"}
                                         {/*Calculation of age from date of birth*/}
                                         (
                                         {empdata.marital_status ||
-                                          empdata.date_of_birth
-                                          ? `${empdata.marital_status
-                                          },${moment().diff(
-                                            empdata.date_of_birth,
-                                            "years"
-                                          )} Y`
+                                        empdata.date_of_birth
+                                          ? `${
+                                              empdata.marital_status
+                                            },${moment().diff(
+                                              empdata.date_of_birth,
+                                              "years"
+                                            )} Y`
                                           : null}
                                         )
                                       </p>
                                     ) : null}
                                     {empdata.is_featured === "1" ||
-                                      empdata.is_featured === 1 ? (
+                                    empdata.is_featured === 1 ? (
                                       <span className="bg-orange text-white featured_tag">
                                         Featured
                                       </span>
                                     ) : null}
                                     {empdata.created_by_admin === "0" ||
-                                      empdata.created_by_admin === 0 ? (
+                                    empdata.created_by_admin === 0 ? (
                                       <span className="bg-info text-white web_tag">
                                         Web
                                       </span>
@@ -740,29 +757,31 @@ function AgentsEmployee(props) {
                                 </div>
                               </Link>
                             </td>
-                            {props.user_of_page === "agentAssigned" ? null : <td className="py-2 ">
-                              {empdata.contact_no === null ? null : (
-                                <p className="m-0">
-                                  +
-                                  <Link
-                                    className="text-dark font-size-3"
-                                    to={`tel:${empdata.contact_no}`}
-                                  >
-                                    {empdata.contact_no}
-                                  </Link>
-                                </p>
-                              )}
-                              <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
-                                <p className="text-gray font-size-2 m-0">
-                                  <Link
-                                    className="text-dark"
-                                    to={`mailto:${empdata.email}`}
-                                  >
-                                    {empdata.email}
-                                  </Link>
-                                </p>
-                              </h3>
-                            </td>}
+                            {props.user_of_page === "agentAssigned" ? null : (
+                              <td className="py-2 ">
+                                {empdata.contact_no === null ? null : (
+                                  <p className="m-0">
+                                    +
+                                    <Link
+                                      className="text-dark font-size-3"
+                                      to={`tel:${empdata.contact_no}`}
+                                    >
+                                      {empdata.contact_no}
+                                    </Link>
+                                  </p>
+                                )}
+                                <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
+                                  <p className="text-gray font-size-2 m-0">
+                                    <Link
+                                      className="text-dark"
+                                      to={`mailto:${empdata.email}`}
+                                    >
+                                      {empdata.email}
+                                    </Link>
+                                  </p>
+                                </h3>
+                              </td>
+                            )}
 
                             {props.heading === "Dashboard" ? (
                               ""
@@ -777,7 +796,10 @@ function AgentsEmployee(props) {
                                       empdata.created_at,
                                       "YYYY-MM-DD HH:mm:ss"
                                     ).fromNow()} */}
-                                    <ConvertTime _date={empdata.created_at} format={"DD MMMM, YYYY"} />
+                                    <ConvertTime
+                                      _date={empdata.created_at}
+                                      format={"DD MMMM, YYYY"}
+                                    />
                                     {/* {moment(empdata.created_at).format(
                                       "DD MMMM, YYYY"
                                     )} */}
@@ -837,38 +859,64 @@ function AgentsEmployee(props) {
                                     </span>
                                   )}
                                 </p>
-                              </td>}
+                              </td>
+                            }
                             {props.visa === "yes" ? null : (
                               <td className="py-2">
                                 <p className="font-size-2  text-black-2 mb-0">
                                   <span
-                                    className={`p-1 text-white text-center w-100 border rounded-pill ${empdata.status === "1" || empdata.status === "0" ? (
-                                      !isTimeWithin24Hours(empdata.created_at)
-                                        ? "bg-danger "
-                                        : "bg-info ") : empdata.status === "2" ?
-                                      "bg-warning" : empdata.status === "3" ?
-                                        "bg-coral-opacity-visible" : empdata.status === "4" ?
-                                          "bg-secondary" : empdata.status === "5" ?
-                                            "bg-spray" : empdata.status === "6" ?
-                                              "bg-dark" : empdata.status === "7" ?
-                                                "bg-primary-opacity-8" : empdata.status === "8" ?
-                                                  "bg-eastern" : ""
-                                      }`}
+                                    className={`p-1 text-white text-center w-100 border rounded-pill ${
+                                      empdata.status === "1" ||
+                                      empdata.status === "0"
+                                        ? !isTimeWithin24Hours(
+                                            empdata.created_at
+                                          )
+                                          ? "bg-danger "
+                                          : "bg-info "
+                                        : empdata.status === "2"
+                                        ? "bg-warning"
+                                        : empdata.status === "3"
+                                        ? "bg-coral-opacity-visible"
+                                        : empdata.status === "4"
+                                        ? "bg-secondary"
+                                        : empdata.status === "5"
+                                        ? "bg-spray"
+                                        : empdata.status === "6"
+                                        ? "bg-dark"
+                                        : empdata.status === "7"
+                                        ? "bg-primary-opacity-8"
+                                        : empdata.status === "8"
+                                        ? "bg-eastern"
+                                        : ""
+                                    }`}
                                   >
-                                    {empdata.status === "1" || empdata.status === "0" ?
-                                      "New" : empdata.status === "2" ?
-                                        "Prospect" : empdata.status === "3" ?
-                                          "Lead" : empdata.status === "4" ?
-                                            "Retained" : empdata.status === "5" ?
-                                              "Lost" : empdata.status === "6" ?
-                                                "Dead" : empdata.status === "7" ?
-                                                  "Working on" : empdata.status === "8" ?
-                                                    "Submitted" : ""}
+                                    {empdata.status === "1" ||
+                                    empdata.status === "0"
+                                      ? "New"
+                                      : empdata.status === "2"
+                                      ? "Prospect"
+                                      : empdata.status === "3"
+                                      ? "Lead"
+                                      : empdata.status === "4"
+                                      ? "Retained"
+                                      : empdata.status === "5"
+                                      ? "Lost"
+                                      : empdata.status === "6"
+                                      ? "Dead"
+                                      : empdata.status === "7"
+                                      ? "Working on"
+                                      : empdata.status === "8"
+                                      ? "Submitted"
+                                      : ""}
                                   </span>
                                 </p>
                               </td>
                             )}
-                            <td className={props.userType === "agent" ? "d-none" : ""}>
+                            <td
+                              className={
+                                props.userType === "agent" ? "d-none" : ""
+                              }
+                            >
                               <Link
                                 style={{
                                   padding: "0 5px",
@@ -879,8 +927,8 @@ function AgentsEmployee(props) {
                                 // to={`/${empdata.employee_id}`}
                                 title="Update Applicant"
                                 onClick={() => {
-                                  setShowChangeAssignedAdminModal(true)
-                                  setemployeeId(empdata.employee_id)
+                                  setShowChangeAssignedAdminModal(true);
+                                  setemployeeId(empdata.employee_id);
                                 }}
                               >
                                 <LiaUserEditSolid />

@@ -3,8 +3,10 @@ import { Outlet } from "react-router-dom";
 // import AdminSidebar from "./sidebar";
 import AdminHeader from "./headerNew";
 import AdminSidebar from "./sidebarNew";
+import { LiaGripLinesSolid } from "react-icons/lia";
 
 export default function AdminMain() {
+  const [pageHeading, setPageHeading] = useState("Dashboard");
   const [sidebarWidth, setSidebarWidth] = useState(200);
   const containerRef = useRef(null);
   const isDragging = useRef(false);
@@ -48,7 +50,7 @@ export default function AdminMain() {
           maxWidth: 400,
         }}
       >
-        <AdminSidebar heading={"LMIA status"} />
+        <AdminSidebar heading={pageHeading} setPageHeading={setPageHeading} />
       </div>
       <div
         onMouseDown={handleMouseDown}
@@ -58,8 +60,28 @@ export default function AdminMain() {
           cursor: "col-resize",
           userSelect: "none",
           position: "relative",
+          display: "flex",
+          justifyContent: "center",
+          // gap: 2,
         }}
-      />
+      >
+        <div
+          style={{
+            width: 1,
+            height: "100%",
+            backgroundColor: "#f5f5f5",
+            margin: 1,
+          }}
+        ></div>
+        <div
+          style={{
+            width: 1,
+            height: "100%",
+            backgroundColor: "#f5f5f5",
+            margin: 1,
+          }}
+        ></div>
+      </div>
       <div
         style={{
           flex: 1,
@@ -71,7 +93,7 @@ export default function AdminMain() {
           overflow: "hidden",
         }}
       >
-        <AdminHeader heading={"LMIA status"} />
+        <AdminHeader heading={pageHeading} />
         <Outlet />
       </div>
     </div>

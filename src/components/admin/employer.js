@@ -70,26 +70,26 @@ function Employer() {
   const Corporation =
     Json && Json.Corporation
       ? Json.Corporation.filter(
-        (thing, index, self) =>
-          index === self.findIndex((t) => t.value === thing.value)
-      )
+          (thing, index, self) =>
+            index === self.findIndex((t) => t.value === thing.value)
+        )
       : [];
   /*Industry Json for not having same data */
   const Industry =
     Json && Json.Industry
       ? Json.Industry.filter(
-        (thing, index, self) =>
-          index === self.findIndex((t) => t.value === thing.value)
-      )
+          (thing, index, self) =>
+            index === self.findIndex((t) => t.value === thing.value)
+        )
       : [];
 
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
         {/* <!-- Header Area --> */}
-        <AdminHeader heading={"Manage Employers"} />
+        {/* <AdminHeader heading={"Manage Employers"} /> */}
         {/* <!-- navbar- --> */}
-        <AdminSidebar heading={"Manage Employers"} />
+        {/* <AdminSidebar heading={"Manage Employers"} /> */}
 
         {/* <!-- Add Company Details Modal --> */}
         {showAddEmployerModal ? (
@@ -104,7 +104,7 @@ function Employer() {
         <div
           className={
             showEmployerDetails === false
-              ? "dashboard-main-container mt-16"
+              ? "dashboard-main-container mt-14"
               : "d-none"
           }
           id="dashboard-body"
@@ -145,10 +145,7 @@ function Employer() {
                       >
                         <option value={""}>Client Corporation</option>
                         {(Corporation || []).map((corporation, i) => (
-                          <option
-                            key={i}
-                            value={corporation.value}
-                          >
+                          <option key={i} value={corporation.value}>
                             {corporation.value}
                           </option>
                         ))}
@@ -188,8 +185,7 @@ function Employer() {
                       </CustomButton>
                     </div>
                     <div className=" mt-6 text-right">
-                      <CommonThreeDots
-                        tableName={"employer"} />
+                      <CommonThreeDots tableName={"employer"} />
                     </div>
                   </div>
                 </div>
@@ -213,7 +209,7 @@ function Employer() {
         </div>
         {/* <!-- Employer Details- --> */}
         {showEmployerDetails === true ? (
-          <div className="dashboard-main-container mt-16">
+          <div className="dashboard-main-container mt-14">
             <div className="container-fluid">
               <div className="row justify-content-center">
                 <div className="col-12 dark-mode-texts">

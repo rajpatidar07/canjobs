@@ -76,9 +76,9 @@ function SelfApplicat(props) {
         Object.keys(props.skill).length === 0 ? (
           <>
             {/* <!-- Header Area --> */}
-            <AdminHeader heading={"New Applicants"} />
+            {/* <AdminHeader heading={"New Applicants"} /> */}
             {/* <!-- navbar- --> */}
-            <AdminSidebar heading={"New Applicants"} />
+            {/* <AdminSidebar heading={"New Applicants"} /> */}
           </>
         ) : null}
 
@@ -180,7 +180,7 @@ function SelfApplicat(props) {
               props.skill === null ||
               props.skill === undefined ||
               Object.keys(props.skill).length === 0
-                ? "dashboard-main-container mt-16"
+                ? "dashboard-main-container mt-14"
                 : ""
             }
           >

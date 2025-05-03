@@ -231,7 +231,6 @@ function Category() {
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Manage Job Category"} />
         <div>
-          
           {/* <!-- Modal- --> */}
           {showAddCategoryModal ? (
             <AddCategory
@@ -252,7 +251,7 @@ function Category() {
             />
           ) : null} */}
         </div>
-        <div className="dashboard-main-container mt-16" id="dashboard-body">
+        <div className="dashboard-main-container mt-14" id="dashboard-body">
           <div className="container-fluid">
             <div className="row align-items-center m-0">
               <div className="col p-1 form_group mb-3">
@@ -375,20 +374,21 @@ function Category() {
                               </th>
                             </tr>
                           ) : (
-                            (categoryData || []).map((catdata,i) => (
-                              <tr
-                                className="text-capitalize"
-                                key={i}
-                              >
+                            (categoryData || []).map((catdata, i) => (
+                              <tr className="text-capitalize" key={i}>
                                 <th scope="row" className="py-5 ">
-                                  <div className="font-size-3 mb-0 font-weight-semibold text-black-2"
-                                  title={catdata.category_name}>
+                                  <div
+                                    className="font-size-3 mb-0 font-weight-semibold text-black-2"
+                                    title={catdata.category_name}
+                                  >
                                     {catdata.category_name}
                                   </div>
                                 </th>
                                 <th className=" py-5 d-none">
-                                  <h3 className="font-size-3 font-weight-normal text-black-2 mb-0"
-                                  title={catdata.parent_type}>
+                                  <h3
+                                    className="font-size-3 font-weight-normal text-black-2 mb-0"
+                                    title={catdata.parent_type}
+                                  >
                                     {catdata.parent_type}
                                   </h3>
                                 </th>

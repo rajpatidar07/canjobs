@@ -16,7 +16,7 @@ function EmailTemplate() {
       userData = await GetAllEmailTemplate();
       setEmailData(userData.Data.data);
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
   };
   useEffect(() => {
@@ -54,8 +54,8 @@ function EmailTemplate() {
         {/* <!-- Header Area --> */}
         <AdminHeader heading={"Manage Email Template"} />
         {/* <!-- navbar- --> */}
-        <AdminSidebar heading={"Manage Email Template"} />     
-        <div className="dashboard-main-container mt-16" id="dashboard-body">
+        <AdminSidebar heading={"Manage Email Template"} />
+        <div className="dashboard-main-container mt-14" id="dashboard-body">
           <div className="container-fluid">
             <div className="mb-18">
               <div className="mb-4 align-items-center">
@@ -111,7 +111,7 @@ function EmailTemplate() {
                       </tr>
                     </thead>
                     <tbody>
-                      {(emailData || []).map((email,i) => (
+                      {(emailData || []).map((email, i) => (
                         <tr className="text-capitalize" key={i}>
                           <td className=" py-5">
                             <div className="font-size-3 font-weight-normal text-black-2 mb-0 text-capitalize">

@@ -80,7 +80,7 @@ export default function PartnerDetails({ setLoginCondition }) {
       setTabActive("payment");
     }
     if (PartnerId) {
-      localStorage.setItem("agent_id", PartnerId)
+      localStorage.setItem("agent_id", PartnerId);
       if (PartnerId && notes) {
         setTabActive("notes");
       } else if (notes) {
@@ -111,7 +111,40 @@ export default function PartnerDetails({ setLoginCondition }) {
     <div>
       {user_type === "admin" || user_type === "agent" ? (
         <>
-          <AdminHeader
+          <Link
+            className="d-flex align-items-center"
+            style={{
+              position: "absolute",
+              top: 5,
+              left: 15,
+              zIndex: 1000,
+              backgroundColor: "#992b32",
+              minWidth: "50%",
+            }}
+            onClick={
+              user_type === "agent"
+                ? null
+                : () => {
+                    if (TabActive === "notes") {
+                      navigate(-1);
+                    } else {
+                      setAddNote(true);
+                    }
+                  }
+            }
+          >
+            <i
+              className={`icon icon-small-left bg-white circle-30 mr-5 font-size-7 text-black font-weight-bold shadow-8 ${
+                user_type === "agent" ? "d-none" : ""
+              }`}
+            ></i>
+            <span className="text-uppercase font-size-3 font-weight-bold text-white">
+              <h3 className="font-size-6 mb-0 text-capitalize text-white">
+                {data.name + " (Partner)"}
+              </h3>
+            </span>
+          </Link>
+          {/* <AdminHeader
             heading={
               <Link
                 className="d-flex align-items-center "
@@ -138,8 +171,8 @@ export default function PartnerDetails({ setLoginCondition }) {
                 </span>
               </Link>
             }
-          />
-          <AdminSidebar heading={"Partner Dashboard"} />
+          /> */}
+          {/* <AdminSidebar heading={"Partner Dashboard"} /> */}
         </>
       ) : null}
 
@@ -154,8 +187,9 @@ export default function PartnerDetails({ setLoginCondition }) {
         }
       >
         <div
-          className={`container${user_type === "admin" || user_type === "agent" ? "-fluid" : ""
-            }`}
+          className={`container${
+            user_type === "admin" || user_type === "agent" ? "-fluid" : ""
+          }`}
         >
           <div className="row text-left mt-5 pt-0">
             <div className="col-12 order-2 order-xl-1">
@@ -354,8 +388,8 @@ export default function PartnerDetails({ setLoginCondition }) {
                                     className="company_logo"
                                     src={
                                       data.profile_image === null ||
-                                        !data.profile_image ||
-                                        data.profile_image === undefined
+                                      !data.profile_image ||
+                                      data.profile_image === undefined
                                         ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
                                         : data.profile_image
                                     }
@@ -409,21 +443,23 @@ export default function PartnerDetails({ setLoginCondition }) {
                                     {(data.address ||
                                       data.city ||
                                       data.state) && (
-                                        <span
-                                          className="font-size-3 text-smoke  mr-7 text-capitalize"
-                                          title="Current Location"
-                                        >
-                                          <img
-                                            className="mr-1"
-                                            height={"16px"}
-                                            src="image/icons/marker.svg"
-                                            alt="Location"
-                                          />
-                                          {`${data.address} ${data.city ? " , " + data.city : ""
-                                            } ${data.state ? " , " + data.state : ""
-                                            }`}
-                                        </span>
-                                      )}
+                                      <span
+                                        className="font-size-3 text-smoke  mr-7 text-capitalize"
+                                        title="Current Location"
+                                      >
+                                        <img
+                                          className="mr-1"
+                                          height={"16px"}
+                                          src="image/icons/marker.svg"
+                                          alt="Location"
+                                        />
+                                        {`${data.address} ${
+                                          data.city ? " , " + data.city : ""
+                                        } ${
+                                          data.state ? " , " + data.state : ""
+                                        }`}
+                                      </span>
+                                    )}
                                   </div>
                                   <hr className="my-3" />
                                   {!data.email || user_type === "user" ? (

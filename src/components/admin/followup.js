@@ -142,11 +142,11 @@ function Followup() {
         <AdminHeader heading={"Manage Follow-ups"} />
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Manage Follow-ups"} />
-        
+
         <div
           className={
             showJobDetails === false
-              ? "dashboard-main-container mt-16"
+              ? "dashboard-main-container mt-14"
               : "d-none"
           }
           id="dashboard-body"
@@ -190,7 +190,7 @@ function Followup() {
                         className="text-capitalize form-control"
                       >
                         <option value="">Select Category</option>
-                        {(Json.Category || []).map((data,i) => {
+                        {(Json.Category || []).map((data, i) => {
                           return (
                             <option value={i} key={i}>
                               {data.value}
@@ -236,7 +236,7 @@ function Followup() {
                         className=" form-control"
                       >
                         <option value="">Select Skill</option>
-                        {(Json.Skill || []).map((data,i) => {
+                        {(Json.Skill || []).map((data, i) => {
                           return (
                             <option value={i} key={i}>
                               {data.value}
@@ -440,7 +440,7 @@ function Followup() {
                             <th className="bg-white"></th>
                           </tr>
                         ) : (
-                          (jobData || []).map((job,i) => (
+                          (jobData || []).map((job, i) => (
                             <React.Fragment key={i}>
                               <tr
                                 className="text-capitalize aos-init aos-animate"
@@ -577,7 +577,7 @@ function Followup() {
         </div>
         {/* <!-- Job Details --> */}
         {showJobDetails === true ? (
-          <div className="dashboard-main-container mt-16 ">
+          <div className="dashboard-main-container mt-14 ">
             <div className="container-fluid">
               <div className="row justify-content-center">
                 <div className="col-12 dark-mode-texts">

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import CustomButton from "../common/button";
 import "react-toastify/dist/ReactToastify.css";
 import AddAgent from "../forms/admin/addAgent";
-import {/*GetFilter*/DeleteAgent } from "../../api/api";
+import { /*GetFilter*/ DeleteAgent } from "../../api/api";
 // import AgentTable from "../common/agentTable";
 import AdminSidebar from "../admin/sidebar";
 import AdminHeader from "../admin/header";
@@ -71,7 +71,6 @@ function PartnerDashboard() {
     setDeleteAlert(false);
   };
 
-
   /*To call Api to delete employee */
   async function OnDeleteAgent(e) {
     try {
@@ -107,7 +106,7 @@ function PartnerDashboard() {
 
         {/* <!--Add Adgent Details Modal --> */}
 
-        <div className={"dashboard-main-container mt-16"} id="dashboard-body">
+        <div className={"dashboard-main-container mt-14"} id="dashboard-body">
           <div className="container-fluid">
             <div className="mb-18">
               <div
@@ -141,15 +140,14 @@ function PartnerDashboard() {
                       Add Partner
                     </CustomButton>
                   </div>
-                  <CommonThreeDots
-                    tableName={"agent"} />
+                  <CommonThreeDots tableName={"agent"} />
                 </div>
                 <small className="text-danger">{searcherror}</small>
               </div>
               <div className="row">
                 {/* <!-- Agent List Table- --> */}
                 <div className={"col-md-12"}>
-                  {user_type === "admin" ?
+                  {user_type === "admin" ? (
                     <PartnerTAble
                       search={search}
                       apiCall={apiCall}
@@ -158,9 +156,10 @@ function PartnerDashboard() {
                       setpageNo={setpageNo}
                       EditAgent={EditAgent}
                       user={user_type}
-                      ShowDeleteAlert={ShowDeleteAlert} />
-
-                    : <PartnerPage
+                      ShowDeleteAlert={ShowDeleteAlert}
+                    />
+                  ) : (
+                    <PartnerPage
                       // showEmployeeProfile={showEmployeeProfile}
                       // employeeDetails={employeeDetails}
                       search={search}
@@ -174,7 +173,8 @@ function PartnerDashboard() {
                       EditAgent={EditAgent}
                       user={user_type}
                       ShowDeleteAlert={ShowDeleteAlert}
-                    />}
+                    />
+                  )}
                 </div>
               </div>
               {showAddEAgentModal ? (

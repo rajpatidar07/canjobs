@@ -14,7 +14,7 @@ export default function ExpressEntry() {
   const [interestFilterValue, setinterestFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
-  let user_type = localStorage.getItem("userType")
+  let user_type = localStorage.getItem("userType");
   let [apiCall, setApiCall] = useState(false);
   /*Function to search the employee */
   const onSearch = (e) => {
@@ -40,7 +40,7 @@ export default function ExpressEntry() {
         <AdminHeader heading={"Express Entry"} />
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Express Entry"} />
-        <div className="dashboard-main-container mt-16" id="dashboard-body">
+        <div className="dashboard-main-container mt-14" id="dashboard-body">
           <div className="container-fluid">
             <div className="mb-18">
               <div className="mb-4 align-items-center">
@@ -51,7 +51,7 @@ export default function ExpressEntry() {
                 <div className="row m-0 align-items-center">
                   {/* Employees filter's */}
                   <ApplicantsFilter
-setSearch={setSearch}
+                    setSearch={setSearch}
                     applicantTypeId={"10"}
                     user_type={user_type}
                     search={search}

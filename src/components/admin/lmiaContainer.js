@@ -121,7 +121,7 @@ function LimaContainer(props) {
             showJobDetails === false
               ? userType === "company"
                 ? "mt-16"
-                : "dashboard-main-container mt-16"
+                : "dashboard-main-container mt-14"
               : "d-none"
           }
           id="dashboard-body"
@@ -295,7 +295,7 @@ function LimaContainer(props) {
             className={
               userType === "company"
                 ? "mt-16"
-                : "dashboard-main-container mt-16"
+                : "dashboard-main-container mt-14"
             }
           >
             <div className="container-fluid">

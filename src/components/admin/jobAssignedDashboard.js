@@ -78,8 +78,8 @@ export default function JobAssignedDashboard() {
         <AdminHeader heading={"Assigned Job's"} />
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"Assigned Job's"} />
-        
-        <div className={"dashboard-main-container mt-16"} id="dashboard-body">
+
+        <div className={"dashboard-main-container mt-14"} id="dashboard-body">
           <div className="container-fluid">
             <div className="mb-18">
               <div className="mb-4 align-items-center">

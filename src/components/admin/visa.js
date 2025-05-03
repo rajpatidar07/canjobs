@@ -139,16 +139,16 @@ export default function Visa() {
         ) : (
           <>
             {/* <!-- Header Area --> */}
-            <AdminHeader heading={"Visa"} />
+            {/* <AdminHeader heading={"Visa"} /> */}
             {/* <!-- navbar- --> */}
-            <AdminSidebar heading={"Visa"} />
+            {/* <AdminSidebar heading={"Visa"} /> */}
           </>
         )}
 
         <div
           className={
             // showJobDetails === false?
-            userType === "company" ? "mt-16" : "dashboard-main-container mt-16"
+            userType === "company" ? "mt-16" : "dashboard-main-container mt-14"
             // : "d-none"
           }
           id="dashboard-body"
@@ -415,7 +415,7 @@ export default function Visa() {
         </div>
         {/* <!-- Employee Details- --> */}
         {/* {showEmployeeProfile === true ? (
-        <div className="dashboard-main-container mt-16">
+        <div className="dashboard-main-container mt-14">
           <div className="container-fluid">
             <div className="row justify-content-center">
               <div className="col-12 dark-mode-texts">
@@ -442,7 +442,7 @@ export default function Visa() {
       </div>
       {/*<-- Job Detail -->*/}
       {/* {showJobDetails === true ? (
-          <div className={userType === "company" ?"mt-16":"dashboard-main-container mt-16"}>
+          <div className={userType === "company" ?"mt-16":"dashboard-main-container mt-14"}>
             <div className="container-fluid">
               <div className="row justify-content-center">
                 <div className="col-12 dark-mode-texts">

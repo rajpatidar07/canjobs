@@ -83,7 +83,7 @@ function Agent() {
           heading={user_type === "agent" ? "Profile" : "Manage Partner"}
         />
         {/* <!--Add Agent Details Modal --> */}
-        <div className={"dashboard-main-container mt-16"} id="dashboard-body">
+        <div className={"dashboard-main-container mt-14"} id="dashboard-body">
           <div className="container-fluid">
             <div className="mb-18">
               <div
@@ -208,7 +208,15 @@ function Agent() {
                     >
                       Add Partner
                     </CustomButton>
-                    <ExportExcelButton tableData={[]} tableName={"agent"} portal={""} applicantType={""} status={""} local={""} type={""} />
+                    <ExportExcelButton
+                      tableData={[]}
+                      tableName={"agent"}
+                      portal={""}
+                      applicantType={""}
+                      status={""}
+                      local={""}
+                      type={""}
+                    />
                   </div>
                 </div>
                 <small className="text-danger">{searcherror}</small>

@@ -60,6 +60,7 @@ const AdminHeader = (props) => {
           {/* /*Added logo To set sidebar menu to show and hide on all screens*/}
 
           {/* <!-- Page Heading--> */}
+
           <h3
             className="font-size-6 mb-0 mr-5 text-capitalize"
             style={{ marginLeft: 20 }}

@@ -3,7 +3,10 @@ import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
 import CustomButton from "../common/button";
 import Addadmin from "../forms/admin/addadmin";
-import { getallAdminData/*, DeleteAdmin*/, GetManagerTeam } from "../../api/api";
+import {
+  getallAdminData /*, DeleteAdmin*/,
+  GetManagerTeam,
+} from "../../api/api";
 // import { toast } from "react-toastify";
 // import SAlert from "../common/sweetAlert";
 import FilterJson from "../json/filterjson";
@@ -55,7 +58,7 @@ function ManageAdmin() {
         recordsPerPage,
         columnName,
         sortOrder,
-        2//to get both is_active 1 and 0
+        2 //to get both is_active 1 and 0
       );
       if (userData.data.length === 0) {
         setAdminData([]);
@@ -213,7 +216,7 @@ function ManageAdmin() {
         <div
           className={
             showAminDetails === false
-              ? "dashboard-main-container mt-16"
+              ? "dashboard-main-container mt-14"
               : "d-none"
           }
           id="dashboard-body"
@@ -273,8 +276,7 @@ function ManageAdmin() {
                       </CustomButton>
                     </div>
                     <div className="mt-4">
-                      <CommonThreeDots
-                        tableName={"admin"} />
+                      <CommonThreeDots tableName={"admin"} />
                     </div>
                   </div>
                   <small className="text-danger">{searcherror}</small>
@@ -327,9 +329,9 @@ function ManageAdmin() {
 
                           <div className=" mb-0">
                             {managerData.name === null ||
-                              managerData.name === undefined ||
-                              managerData.name === "undefined" ||
-                              managerData.name === "" ? (
+                            managerData.name === undefined ||
+                            managerData.name === "undefined" ||
+                            managerData.name === "" ? (
                               <p className="font-size-3  mb-0">N/A</p>
                             ) : (
                               <h5 className="m-0 text-black-3 font-weight-bold text-capitalize">
@@ -415,9 +417,9 @@ function ManageAdmin() {
                           onClick={
                             addTeamListShow === true
                               ? () => {
-                                setAddTeamListShow(false);
-                                setExecutiveApiCall(true);
-                              }
+                                  setAddTeamListShow(false);
+                                  setExecutiveApiCall(true);
+                                }
                               : () => setAddTeamListShow(true)
                           }
                           title={

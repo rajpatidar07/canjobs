@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
@@ -15,7 +14,7 @@ export default function LocalCandidate() {
   const [interestFilterValue, setinterestFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
-  let user_type = localStorage.getItem("userType")
+  let user_type = localStorage.getItem("userType");
   let [apiCall, setApiCall] = useState(false);
   /*Function to search the employee */
   const onSearch = (e) => {
@@ -39,10 +38,10 @@ export default function LocalCandidate() {
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
         {/* <!-- Header Area --> */}
-        <AdminHeader heading={"Local Candidate"} />
+        {/* <AdminHeader heading={"Local Candidate"} /> */}
         {/* <!-- navbar- --> */}
-        <AdminSidebar heading={"Local Candidate"} />
-        <div className="dashboard-main-container mt-16" id="dashboard-body">
+        {/* <AdminSidebar heading={"Local Candidate"} /> */}
+        <div className="dashboard-main-container mt-14" id="dashboard-body">
           <div className="container-fluid">
             <div className="mb-18">
               <div className="mb-4 align-items-center">
@@ -53,7 +52,7 @@ export default function LocalCandidate() {
                 <div className="row m-0 align-items-center">
                   {/* Employees filter's */}
                   <ApplicantsFilter
-setSearch={setSearch}
+                    setSearch={setSearch}
                     applicantTypeId={""}
                     user_type={user_type}
                     search={search}

@@ -178,7 +178,7 @@ function Employee(props) {
               props.skill === null ||
               props.skill === undefined ||
               Object.keys(props.skill).length === 0
-                ? "dashboard-main-container mt-16"
+                ? "dashboard-main-container mt-14"
                 : ""
             }
           >

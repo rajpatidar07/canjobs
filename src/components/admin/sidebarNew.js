@@ -91,8 +91,9 @@ const AdminSidebar = (props) => {
     localStorage.setItem("isMenuOpen", isMenuOpen);
   }
 
-  const clearPageNo = () => {
+  const clearPageNo = (title) => {
     localStorage.removeItem("PageNo");
+    props.setPageHeading(title);
   };
   const liRefs = useRef([]);
 
@@ -224,7 +225,7 @@ const AdminSidebar = (props) => {
         showCancelButton={true}
         onCancel={() => setDeleteAlertApplicant(false)}
       />
-      <Link
+      {/* <Link
         to={""}
         onClick={() => {
           sideBar();
@@ -241,7 +242,7 @@ const AdminSidebar = (props) => {
         ) : (
           <FaChevronRight style={{ paddingLeft: "0" }} />
         )}
-      </Link>
+      </Link> */}
       <div className="brand-logo px-2 py-4">
         <Link to={userType === "agent" ? "/partner_profile" : "/dashboard"}>
           <img src="image/logo-main-black.png" alt="" />
@@ -307,7 +308,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo()}
+            onClick={() => clearPageNo("Dashboard")}
             to="/dashboard"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -326,7 +327,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo()}
+            onClick={() => clearPageNo("Task Dashboard")}
             to="/managetasks"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -344,7 +345,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo()}
+            onClick={() => clearPageNo("New Applicants")}
             to="/selfemployee"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -361,7 +362,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo()}
+            onClick={() => clearPageNo("Manage Applicants")}
             to="/employee"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -378,7 +379,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo()}
+            onClick={() => clearPageNo("Manage Employers")}
             to="/adminclient"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -397,7 +398,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo()}
+            onClick={() => clearPageNo("Manage Jobs")}
             to="/job"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -417,7 +418,7 @@ const AdminSidebar = (props) => {
              }`}
         >
           <Link
-            onClick={() => clearPageNo()}
+            onClick={() => clearPageNo("Manage Self Jobs")}
             to="/selfjob"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -436,7 +437,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo()}
+            onClick={() => clearPageNo("Visa")}
             to="/visa"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -455,7 +456,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo()}
+            onClick={() => clearPageNo("LMIA status")}
             to="/lmia"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -474,7 +475,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo()}
+            onClick={() => clearPageNo("Local Candidate")}
             to="/localcandidates"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -512,7 +513,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo()}
+            onClick={() => clearPageNo("PGWP")}
             to="/pgwp"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -531,7 +532,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo()}
+            onClick={() => clearPageNo("WES")}
             to="/wes"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -569,7 +570,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo()}
+            onClick={() => clearPageNo("Visitors Visa")}
             to="/visitorsvisa"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -588,7 +589,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo()}
+            onClick={() => clearPageNo("Study Permit")}
             to="/studypermit"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -607,7 +608,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo()}
+            onClick={() => clearPageNo("Temporary Resident")}
             to="/temporaryresident"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -626,7 +627,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo()}
+            onClick={() => clearPageNo("Economic Immigration")}
             to="/economicimmigration"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -645,7 +646,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo()}
+            onClick={() => clearPageNo("Family Sponsorship")}
             to="/familysponsorship"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -665,7 +666,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo()}
+            onClick={() => clearPageNo("Express Entry")}
             to="/expressentry"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -684,7 +685,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo()}
+            onClick={() => clearPageNo("Business Visa")}
             to="/businessvisa
               "
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
@@ -704,7 +705,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo()}
+            onClick={() => clearPageNo("Federal PR")}
             to="/federal_pr
               "
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
@@ -724,7 +725,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo()}
+            onClick={() => clearPageNo("Humanitarian and Compassionate Cases")}
             to="/humanitarian_and_Compassionate
               "
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
@@ -746,7 +747,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo()}
+            onClick={() => clearPageNo("Passport")}
             to="/passport
               "
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
@@ -768,7 +769,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo()}
+            onClick={() => clearPageNo("Citizenship")}
             to="/citizenship
               "
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
@@ -790,7 +791,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo()}
+            onClick={() => clearPageNo("Permanent Resident Cards" )}
             to="/permanent_resident_cards
               "
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
@@ -817,7 +818,7 @@ const AdminSidebar = (props) => {
             >
               <Link
                 onClick={() => {
-                  clearPageNo();
+                  clearPageNo(item.title);
                 }}
                 to={`/slots`}
                 state={{ applicantType: item.id, folderId: item.doc_folder_id }}
@@ -863,7 +864,7 @@ const AdminSidebar = (props) => {
                     folderId: item.doc_folder_id,
                   }}
                   onClick={() => {
-                    clearPageNo();
+                    clearPageNo(item.title);
                     localStorage.setItem("applicantType", "");
                     localStorage.setItem("applicantTypeFolderId", "");
                     localStorage.setItem("applicantTypeChild", "");
@@ -999,7 +1000,7 @@ const AdminSidebar = (props) => {
         >
           <Link
             onClick={() => {
-              clearPageNo();
+              clearPageNo("Manage Applicant Type");
             }}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
             title={"Manage Applicant Type"}
@@ -1021,7 +1022,7 @@ const AdminSidebar = (props) => {
         >
           <Link
             onClick={() => {
-              clearPageNo();
+              clearPageNo("Manage Payment");
             }}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
             title={"Manage Payment"}
@@ -1043,7 +1044,7 @@ const AdminSidebar = (props) => {
         >
           <Link
             onClick={() => {
-              clearPageNo();
+              clearPageNo("Manage Daily Call Log");
             }}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
             title={"Manage Daily Call Log"}
@@ -1065,7 +1066,7 @@ const AdminSidebar = (props) => {
         >
           <Link
             onClick={() => {
-              clearPageNo();
+              clearPageNo("Manage Daily Hourly Log");
             }}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
             title={"Manage Daily Hourly Log"}
@@ -1086,7 +1087,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo()}
+            onClick={() => clearPageNo("Interview")}
             to="/interview"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -1105,7 +1106,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo()}
+            onClick={() => clearPageNo("Manage Notes")}
             to="/notes"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center d-none"
           >
@@ -1125,7 +1126,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo()}
+            onClick={() => clearPageNo("Manager's Dashboard")}
             to="/assignedjobs"
             className={
               "px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
@@ -1147,7 +1148,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo()}
+            onClick={() => clearPageNo("Manage Admin")}
             to="/adminprofile"
             className={
               "px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
@@ -1167,7 +1168,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo()}
+            onClick={() => clearPageNo("Manage Partner")}
             to="/partner_dashboard"
             className={
               "px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
@@ -1189,7 +1190,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo()}
+            onClick={() => clearPageNo("Job Category")}
             to="/category"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -1208,7 +1209,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo()}
+            onClick={() => clearPageNo("Filter List")}
             to="/filter"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >
@@ -1227,7 +1228,7 @@ const AdminSidebar = (props) => {
           }
         >
           <Link
-            onClick={() => clearPageNo()}
+            onClick={() => clearPageNo("Credentials")}
             to="/credentials"
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
           >

@@ -17,7 +17,7 @@ export default function PGWP() {
   const [filterByEmployeeId, setFilterByEmployeeId] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
-  let user_type = localStorage.getItem("userType")
+  let user_type = localStorage.getItem("userType");
   let [apiCall, setApiCall] = useState(false);
   /*Function to search the employee */
   const onSearch = (e) => {
@@ -44,7 +44,7 @@ export default function PGWP() {
         {/* <ToastContainer/> */}
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"PGWP"} />
-        <div className="dashboard-main-container mt-16" id="dashboard-body">
+        <div className="dashboard-main-container mt-14" id="dashboard-body">
           <div className="container-fluid">
             <div className="mb-18">
               <div className="mb-4 align-items-center">
@@ -55,7 +55,7 @@ export default function PGWP() {
                 <div className="row m-0 align-items-center">
                   {/* Employees filter's */}
                   <ApplicantsFilter
-setSearch={setSearch}
+                    setSearch={setSearch}
                     applicantTypeId={"12"}
                     user_type={user_type}
                     search={search}
@@ -106,7 +106,6 @@ setSearch={setSearch}
                 setpageNo={setpageNo}
                 ApplicantType={"12"}
                 categoryFilterValue={categoryFilterValue}
-
               />
             </div>
           </div>

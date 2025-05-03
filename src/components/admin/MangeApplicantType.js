@@ -21,8 +21,8 @@ export default function ManageApplicantType(props) {
     try {
       let response = await getApplicanTypeApi("");
       let Adminresponse = await getallAdminData();
-      setAllApplicantType((response.data.data).reverse());
-      setAllAdmin(Adminresponse.data)
+      setAllApplicantType(response.data.data.reverse());
+      setAllAdmin(Adminresponse.data);
     } catch (err) {
       console.log(err);
     }
@@ -62,30 +62,33 @@ export default function ManageApplicantType(props) {
       <AdminHeader heading={"Manage Applicant Type"} />
       {/* <!-- navbar- --> */}
       <AdminSidebar heading={"Manage Applicant Type"} />
-      <div className="dashboard-main-container mt-16" id="dashboard-body">
+      <div className="dashboard-main-container mt-14" id="dashboard-body">
         <div className="container-fluid">
           <div className="mb-18">
             <div className="mb-4 align-items-center">
               <div className="page___heading">
                 <h3 className="font-size-6 mb-0">Applicant Type</h3>
-              </div> </div>
-            {showApplicantTypeForm && <AddApplicantType
-              show={showApplicantTypeForm}
-              close={() => {
-                setShowApplicantTypeForm(false);
-                setUpdateApplicantTypeData()
-              }}
-              setApicall={setApiCall}
-              apicall={apiCall}
-              admins={allAdmin}
-              updateApplicantTypeData={updateApplicantTypeData}
-            />}
+              </div>{" "}
+            </div>
+            {showApplicantTypeForm && (
+              <AddApplicantType
+                show={showApplicantTypeForm}
+                close={() => {
+                  setShowApplicantTypeForm(false);
+                  setUpdateApplicantTypeData();
+                }}
+                setApicall={setApiCall}
+                apicall={apiCall}
+                admins={allAdmin}
+                updateApplicantTypeData={updateApplicantTypeData}
+              />
+            )}
             <div className="d-flex justify-content-end">
               <button
                 className="font-size-3 rounded-3 btn btn-primary border-0 mr-4"
                 onClick={() => {
-                  setShowApplicantTypeForm(true)
-                  setUpdateApplicantTypeData()
+                  setShowApplicantTypeForm(true);
+                  setUpdateApplicantTypeData();
                 }}
               >
                 Add Applicant Type

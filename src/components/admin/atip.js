@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import AdminHeader from "./header";
 import AdminSidebar from "./sidebar";
@@ -15,7 +14,7 @@ export default function Atip() {
   const [interestFilterValue, setinterestFilterValue] = useState("");
   const [search, setSearch] = useState("");
   const [searcherror, setSearchError] = useState("");
-  let user_type = localStorage.getItem("userType")
+  let user_type = localStorage.getItem("userType");
   let [apiCall, setApiCall] = useState(false);
   /*Function to search the employee */
   const onSearch = (e) => {
@@ -42,7 +41,7 @@ export default function Atip() {
         <AdminHeader heading={"ATIP"} />
         {/* <!-- navbar- --> */}
         <AdminSidebar heading={"ATIP"} />
-        <div className="dashboard-main-container mt-16" id="dashboard-body">
+        <div className="dashboard-main-container mt-14" id="dashboard-body">
           <div className="container-fluid">
             <div className="mb-18">
               <div className="mb-4 align-items-center">
