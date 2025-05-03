@@ -151,9 +151,9 @@ export default function CommonApplicatTypePage() {
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
         {/* <!-- Header Area --> */}
-        <AdminHeader heading={applicantTypeName} />
+        {/* <AdminHeader heading={applicantTypeName} /> */}
         {/* <!-- navbar- --> */}
-        <AdminSidebar heading={applicantTypeName} />
+        {/* <AdminSidebar heading={applicantTypeName} /> */}
         <div className="dashboard-main-container mt-14" id="dashboard-body">
           <div className="container-fluid">
             <div

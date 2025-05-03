@@ -47,7 +47,7 @@ export default function AdminMain() {
           color: "white",
           // padding: "16px",
           boxSizing: "border-box",
-          maxWidth: 400,
+          maxWidth: 500,
         }}
       >
         <AdminSidebar heading={pageHeading} setPageHeading={setPageHeading} />

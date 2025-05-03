@@ -409,14 +409,13 @@ function MainLayout() {
               <Route path="/student_profile" element={<StudentProfile />} />
               <Route path="/applied_programs" element={<AppliedPrograms />} />
               <Route path="*" element={<Loader load={"yes"} />} />
+              <Route path="/payment_invoice" element={<ManagePayment />} />
             </Route>
 
             {/* <Route path="/*" element={<AdminMain />} /> */}
           </>
         )}
         <Route path="/Newpdf" element={<Newpdf />} />
-
-        <Route path="/payment_invoice" element={<ManagePayment />} />
 
         {loginCondition === true ? null : (
           <Route path="*" element={<NotFound userType={userType} />} />
