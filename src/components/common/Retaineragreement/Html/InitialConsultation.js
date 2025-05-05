@@ -1,16 +1,19 @@
 // import moment from "moment";
 import moment from "moment";
 import { useEffect } from "react";
+import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
+import InitialFunction from "../CommonThings/InitialFunction";
+import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
 // import { Link } from "react-router-dom";
 const InitialConsultation = ({
-    page,
-    felidData,
-    userData,
-    emp_user_type,
-    addSign,
+  page,
+  felidData,
+  userData,
+  emp_user_type,
+  addSign,
 }) => {
-    const familyJsonArray = felidData?.family_json || []; //? JSON.parse(felidData?.family_json) : [];
-    const jsxContent = `<!DOCTYPE html>
+  const familyJsonArray = felidData?.family_json || []; //? JSON.parse(felidData?.family_json) : [];
+  const jsxContent = `<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
 <head>
@@ -41,7 +44,9 @@ const InitialConsultation = ({
     <img src="https://canpathwaysjobs.com/image/00logo-main-black.png" alt="Canpathways logo"
       style="max-width: 200px" />
     <div style="font-size: 14px;display:flex;flex-direction:column;text-align:center;">
-      <span style="border-bottom: solid 1px; margin-bottom: 9px;">55</span>
+      <span style="border-bottom: solid 1px; margin-bottom: 9px;"> <span class="${felidData?.client_file_no ? "para_gap" : ""
+    }" style="min-width: 200px">${felidData?.client_file_no || "_________"
+    }</span></span>
       <label style="">Client File Number</label>
     </div>
   </div>
@@ -59,9 +64,9 @@ const InitialConsultation = ({
       felidData?.agreement_date !== "0000-00-00"
       ? ` <span class="para_gap">${moment(
         new Date(felidData?.agreement_date)
-        ).format("DD MMMM YYYY")}`
-        : "____________"
-        }
+      ).format("DD MMMM YYYY")}`
+      : "____________"
+    }
     </p>
     <div>
       BY AND BETWEEN<br>
@@ -70,28 +75,28 @@ const InitialConsultation = ({
         after referred to as: <strong>"Legal Representative/RCIC"</strong><br>AND<br>The <strong>"Candidate"</strong> as
         his/her details provided as of this present agreement, collectively called the <strong>"Client."</strong><br>
         <span class="px-8"><strong>Name</strong>: <span><u>${felidData &&
-              (familyJsonArray[0]?.client_first_name ||
-              familyJsonArray[0]?.client_last_name)
-              ? familyJsonArray[0]?.client_first_name +
-              " " +
-              (familyJsonArray[0]?.client_last_name || "")
-              : emp_user_type === "employee"
-              ? userData?.name || "" || ""
-              : "" || ""
-              }</u></span><br> <strong>Address</strong>: <span><u>${felidData && felidData?.client_address
-              ? felidData?.client_address
-              : emp_user_type === "employer"
-              ? userData?.address || ""
-              : (userData?.current_location || "") +
-              " " +
-              (userData?.currently_located_country || "")
-              } </u></span><br> <strong>Phone Number</strong>: <span><u>${felidData && felidData?.client_contact
-              ? felidData?.client_contact
-              : userData?.contact_no || ""
-              }</u></span><br><strong>Email Address</strong>: <span><u>${felidData && felidData?.client_email
-              ? felidData?.client_email || ""
-              : userData?.email || ""
-              }</u></span>
+      (familyJsonArray[0]?.client_first_name ||
+        familyJsonArray[0]?.client_last_name)
+      ? familyJsonArray[0]?.client_first_name +
+      " " +
+      (familyJsonArray[0]?.client_last_name || "")
+      : emp_user_type === "employee"
+        ? userData?.name || "" || ""
+        : "" || ""
+    }</u></span><br> <strong>Address</strong>: <span><u>${felidData && felidData?.client_address
+      ? felidData?.client_address
+      : emp_user_type === "employer"
+        ? userData?.address || ""
+        : (userData?.current_location || "") +
+        " " +
+        (userData?.currently_located_country || "")
+    } </u></span><br> <strong>Phone Number</strong>: <span><u>${felidData && felidData?.client_contact
+      ? felidData?.client_contact
+      : userData?.contact_no || ""
+    }</u></span><br><strong>Email Address</strong>: <span><u>${felidData && felidData?.client_email
+      ? felidData?.client_email || ""
+      : userData?.email || ""
+    }</u></span>
           <span></p>
       <div>
         <h6><u>AGREEMENT</u></h6>
@@ -280,41 +285,16 @@ const InitialConsultation = ({
 
         <!-- Client Signature -->
         <div style="width: 48%;">
-          <div class="d-flex flex-column" style="gap: 5px;">
-            ${familyJsonArray[0]?.client_signature ? `
-              <div style="height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
-                <img src="${familyJsonArray[0].client_signature}" 
-                     alt="${(familyJsonArray[0]?.client_first_name || '') + ' ' + (familyJsonArray[0]?.client_last_name || '')}" 
-                     style="max-height: 100%;">
-              </div>
-               <p style="margin: 10px 0 0 0;">
-             ${(familyJsonArray[0]?.client_first_name || '') + ' ' + (familyJsonArray[0]?.client_last_name || '')}
-                ${moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}
-          </p>
-            ` : page === "admin" ? `
-          <span style="display: inline-block; width: 400px; height: 50px; border: 1px solid #ccc;"></span>
-            ` : `
-             <span>
-              <button  class="btn btn-light-outline"
-                      style="font-family:cursive;"max-width: 100%; max-height: 100%;"" 
-                      id="add-signature-button-0">
-                Add Signature
-              </button></span>
-            `}
-          </div>
+         ${ClientSignatureFunction({ page, familyJsonArray, felidData })} 
           <p>Signature of Client</p>
         </div>
       
         <!-- RCIC Signature -->
         <div style="width: 48%;">
-          <div style="height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
-            ${felidData.rcic_signature ? `
-              <img src="${felidData.rcic_signature}" alt="Signature" style="max-height: 100%;">
-            ` : `<span style="max-width: 100%; max-height: 100%;"></span>`}
-          </div>
+${RCICSignatureFunction({ isPdf: false, felidData })}
           <p style="margin: 10px 0 0 0;">Harpreet Kaur 
             ${felidData?.date_signature_rcic && felidData.date_signature_rcic !== "0000-00-00" && felidData.date_signature_rcic !== "0000-00-00 00:00:00" ?
-              `<span style="max-width: 200px;">${moment(felidData.date_signature_rcic).format("DD-MM-YYYY")}</span>` : ''}
+      `<span style="max-width: 200px;">${moment(felidData.date_signature_rcic).format("DD-MM-YYYY")}</span>` : ''}
           </p>
           <p>Signature of RCIC</p>
         </div>
@@ -322,12 +302,12 @@ const InitialConsultation = ({
         <!-- Client Signature Date -->
         <div style="width: 48%;">
           <p>
-            ${!familyJsonArray[0]?.date_signature_client || 
-              familyJsonArray[0]?.date_signature_client === "0000-00-00" || 
-              familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00" ?
-              "_____________________" :
-              `<span class="para_gap" style="max-width: 200px;">${moment(familyJsonArray[0].date_signature_client).format("DD-MM-YYYY")}</span>`
-            }
+            ${!familyJsonArray[0]?.date_signature_client ||
+      familyJsonArray[0]?.date_signature_client === "0000-00-00" ||
+      familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00" ?
+      "_____________________" :
+      `<span class="para_gap" style="max-width: 200px;">${moment(familyJsonArray[0].date_signature_client).format("DD-MM-YYYY")}</span>`
+    }
           </p>
           <p>Date</p>
         </div>
@@ -335,12 +315,12 @@ const InitialConsultation = ({
         <!-- RCIC Signature Date -->
         <div style="width: 48%;">
           <p>
-            ${!felidData?.date_signature_rcic || 
-              felidData.date_signature_rcic === "0000-00-00" || 
-              felidData.date_signature_rcic === "0000-00-00 00:00:00" ?
-              "_____________________" :
-              `<span class="para_gap" style="max-width: 200px;">${moment(felidData.date_signature_rcic).format("DD-MM-YYYY")}</span>`
-            }
+            ${!felidData?.date_signature_rcic ||
+      felidData.date_signature_rcic === "0000-00-00" ||
+      felidData.date_signature_rcic === "0000-00-00 00:00:00" ?
+      "_____________________" :
+      `<span class="para_gap" style="max-width: 200px;">${moment(felidData.date_signature_rcic).format("DD-MM-YYYY")}</span>`
+    }
           </p>
           <p>Date</p>
         </div>
@@ -353,23 +333,19 @@ const InitialConsultation = ({
       <h3 class="font-size-6 text-end">Initials :</h3>
       <div>
         <div
-          style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
-          ${felidData?.initial
-          ? `<span style="display: inline-block; max-width: 100%; max-height: 100%;"
-            class=" text-capitalize">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${felidData?.initial
-            ?.split(" ") // Split the string by spaces
-            ?.filter((word) => word) // Filter out empty strings (caused by multiple spaces)
-            ?.map((word) => word[0]) // Map each word to its first letter
-            ?.join(" ")}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`
-          : `<span style="display: inline-block; width: 100px; height: 50px; border: 1px solid #ccc;"></span>`
-          }
-           </div>
+                             style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
+                              <span style="display:inline-block;max-width:100%;max-height:100%;" class="text-capitalize">
+                                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          ${felidData?.initial ? InitialFunction({ isPdf: false, initial: felidData?.initial }) : ""}
+                                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                     </span>
+                              </div>
         <h4 class="font-size-6 text-end d-none">RCIC</h4>
       </div>
       <div class="d-none">
         <div
           style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
-          <img src=${felidData?.initial || "" } alt="Initial" style="max-width: 100%; max-height: 100%;">
+          <img src=${felidData?.initial || ""} alt="Initial" style="max-width: 100%; max-height: 100%;">
         </div>
         <h4 class="font-size-6 text-end">Clients</h4>
       </div>
@@ -384,45 +360,45 @@ const InitialConsultation = ({
 
 </html>`;
 
-    useEffect(
-        (e) => {
-            // Attach event listeners after HTML is injected
-            familyJsonArray.forEach((_, index) => {
-                const button = document.getElementById(`add-signature-button-${index}`);
-                if (button) {
-                    button.addEventListener("click", () => addSign(e, index));
-                }
-            });
+  useEffect(
+    (e) => {
+      // Attach event listeners after HTML is injected
+      familyJsonArray.forEach((_, index) => {
+        const button = document.getElementById(`add-signature-button-${index}`);
+        if (button) {
+          button.addEventListener("click", () => addSign(e, index));
+        }
+      });
 
-            // Clean up event listeners
-            return () => {
-                familyJsonArray.forEach((_, index) => {
-                    const button = document.getElementById(
-                        `add-signature-button-${index}`
-                    );
-                    if (button) {
-                        button.removeEventListener("click", () => addSign(e, index));
-                    }
-                });
-            };
-        },
-        // eslint-disable-next-line
-        [familyJsonArray]
-    );
-    return (
-        <div
-            className="agreement_content"
-            style={{
-                maxWidth: "1024px",
-                margin: "0 auto",
-                background: "#fff",
-                padding: "30px",
-                height: "calc(100vh - 100px)",
-                overflow: "auto",
-            }}
-        >
-            <div dangerouslySetInnerHTML={{ __html: jsxContent }} />
-        </div>
-    );
+      // Clean up event listeners
+      return () => {
+        familyJsonArray.forEach((_, index) => {
+          const button = document.getElementById(
+            `add-signature-button-${index}`
+          );
+          if (button) {
+            button.removeEventListener("click", () => addSign(e, index));
+          }
+        });
+      };
+    },
+    // eslint-disable-next-line
+    [familyJsonArray]
+  );
+  return (
+    <div
+      className="agreement_content"
+      style={{
+        maxWidth: "1024px",
+        margin: "0 auto",
+        background: "#fff",
+        padding: "30px",
+        height: "calc(100vh - 100px)",
+        overflow: "auto",
+      }}
+    >
+      <div dangerouslySetInnerHTML={{ __html: jsxContent }} />
+    </div>
+  );
 };
 export default InitialConsultation;

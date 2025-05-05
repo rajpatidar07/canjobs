@@ -165,7 +165,7 @@ The RCIC is obligated to provide professional, ethical, and competent services a
 3.9 Client has been explained by RCIC and is aware of high chances of application refusal due to weak case and other reasons as explaindas Client still agrees to go ahead with the application.
 
 <p>3.10 The client also allows the RCIC use of digital signatures for the purpose of this application on his/her behalf</p>
-<p>3.11 Mode of communication should be email provided by client in this retainer only, for all the correspondence between RCIC and client and RCIC should be given minimum 7 working days to revert to any queries from client. RCIC is not responsible for communication/consequences if client does not receive email sent by RCIC and did not communicate with RCIC in given timeline or within 15 days of sent email. Office: 2618 Hopewell PI NE #310 Calgary, AB TIY 7J7, Canada Tel: 403.888.5308 |
+<p>3.11 Mode of communication should be email provided by client in this retainer only, for all the correspondence between RCIC and client and RCIC should be given minimum 7 working days to revert to any queries from client. RCIC is not responsible for communication/consequences if client does not receive email sent by RCIC and did not communicate with RCIC in given timeline or within 15 days of sent email. Office: 2618 Hopewell Pl NE #310, Calgary, AB T1Y 7J7 Tel: 403.888.5308 |
 </p>
 <p>3.12 Once client provide all the documents required as per checklist, RCIC should be given minimum 3 weeks' time from the time all documents are reviewed by RCIC and deemed complete, to submit the file to IRCC.
 </p>
