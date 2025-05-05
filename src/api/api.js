@@ -3914,7 +3914,7 @@ export const AddUpdatePaymentInvoiceApi = async (data) => {
   const response = await axios.post(`${API_URL}common/addUpdatePaymentInvoice`,
     {
       ...data,
-      driveId: data.is_send_mail ? driveId : ""
+      driveId: driveId 
     }, {
     headers: {
       "Content-Type": "application/json",

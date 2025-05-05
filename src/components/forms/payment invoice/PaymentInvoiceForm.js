@@ -163,7 +163,7 @@ const PaymentInvoiceForm = (props) => {
         ...(prevState.product_json || []),
         {
           id: "", // Temporary, will be reassigned
-          service_date: "",
+          service_date: state.invoice_date,
           product: "",
           description: "",
           quantity: "",
@@ -418,7 +418,8 @@ const PaymentInvoiceForm = (props) => {
               <input
                 type="date"
                 className="form-control"
-                name="due_date" value={state.due_date} onChange={onInputChange} />
+                name="due_date" value={state.due_date} onChange={onInputChange}
+                min={state.invoice_date} />
             </div>
 
             {/* <div className="col-auto "></div> */}
@@ -469,103 +470,160 @@ const PaymentInvoiceForm = (props) => {
               </thead>
               <tbody>
                 {
-                  state?.product_json.length === 0 ? (
+                  (state?.product_json?.length ?? 0) === 0 ? (
                     <tr>
                       <th colSpan={9} className="bg-white text-center">
                         No products have been added yet.
                       </th>
                     </tr>
-                  ) : (state?.product_json || []).map((item, index) => (
-                    <tr key={index}>
-                      <td>
-                        {index + 1}
-                      </td>
-                      <td>
-                        <input
-                          type="date"
-                          className="border-0 bg-transparent"
-                          style={{ width: "100%" }}
-                          value={item.serviceDate}
-                          onChange={(e) =>
-                            handleProductChange(index, "service_date", e.target.value)
-                          }
-                        />
-                      </td>
-                      <td>
-                        <input
-                          type="text"
-                          className="border-0 bg-transparent"
-                          style={{ width: "100%" }}
-                          value={item.product}
-                          onChange={(e) =>
-                            handleProductChange(index, "product", e.target.value)
-                          }
-                        />
-                      </td>
-                      <td>
-                        <input
-                          type="text"
-                          className="border-0 bg-transparent"
-                          style={{ width: "100%" }}
-                          value={item.description}
-                          onChange={(e) =>
-                            handleProductChange(index, "description", e.target.value)
-                          }
-                        />
-                      </td>
-                      <td style={{ textAlign: "right" }}>
-                        <input
-                          type="number"
-                          className="border-0 bg-transparent"
-                          style={{ width: "100%", textAlign: "right" }}
-                          value={item.quantity}
-                          onChange={(e) =>
-                            handleProductChange(index, "quantity", e.target.value)
-                          }
-                        />
-                      </td>
-                      <td style={{ textAlign: "right" }}>
-                        <input
-                          type="number"
-                          className="border-0 bg-transparent mx-2"
-                          style={{ width: "100%", textAlign: "right" }}
-                          value={item.rate}
-                          onChange={(e) => handleProductChange(index, "rate", e.target.value)}
-                        />
-                      </td>
-                      <td style={{ textAlign: "right" }}>
-                        <input
-                          type="number"
-                          className="border-0 bg-transparent"
-                          style={{ width: "100%", textAlign: "right" }}
-                          value={item.amount}
-                          onChange={(e) =>
-                            handleProductChange(index, "amount", e.target.value)
-                          }
-                        />
-                      </td>
-                      <td>
-                        <input
-                          type="text"
-                          className="border-0 bg-transparent"
-                          style={{ width: "100%" }}
-                          value={item.serviceTax}
-                          onChange={(e) =>
-                            handleProductChange(index, "service_tax", e.target.value)
-                          }
-                        />
-                      </td>
-                      <td>
-                        <button
-                          className="border-0 bg-transparent"
-                          onClick={() => handleDeleteProduct(index)}
-                        >
-                          <CiTrash color="red" fontSize={20} />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+                  ) : (
+                    state.product_json.map((item, index) => {
+                      const quantity = parseFloat(item.quantity) || 0;
+                      const rate = parseFloat(item.rate) || 0;
+                      // const service_tax = parseFloat(item.service_tax) || 0;
+                      const amount = quantity * rate;
+
+
+                      return (
+                        <tr key={index}>
+                          <td>{index + 1}</td>
+                          <td>
+                            <input
+                              type="date"
+                              className="border-0 bg-transparent"
+                              style={{ width: "100%" }}
+                              value={state.invoice_date}
+                              disabled
+                            />
+                          </td>
+                          <td>
+                            <input
+                              type="text"
+                              className="border-0 bg-transparent"
+                              style={{ width: "100%" }}
+                              value={item.product}
+                              onChange={(e) =>
+                                handleProductChange(index, "product", e.target.value)
+                              }
+                            />
+                          </td>
+                          <td>
+                            <input
+                              type="text"
+                              className="border-0 bg-transparent"
+                              style={{ width: "100%" }}
+                              value={item.description}
+                              onChange={(e) =>
+                                handleProductChange(index, "description", e.target.value)
+                              }
+                            />
+                          </td>
+                          <td>
+                            <input
+                              type="number"
+                              className="border-0 bg-transparent"
+                              style={{ width: "100%", textAlign: "right" }}
+                              value={item.quantity}
+                              onChange={(e) =>
+                                handleProductChange(index, "quantity", e.target.value)
+                              }
+                            />
+                          </td>
+                          <td>
+                            <input
+                              type="number"
+                              className="border-0 bg-transparent"
+                              style={{ width: "100%", textAlign: "right" }}
+                              value={item.rate}
+                              onChange={(e) => {
+                                handleProductChange(index, "rate", e.target.value)
+                                const updatedItems = [...state.product_json];
+                                updatedItems[index].service_tax = 0;
+
+                                const newSubtotal = updatedItems.reduce(
+                                  (acc, curr) =>
+                                    acc + (parseFloat(curr.quantity) || 0) * (parseFloat(curr.rate) || 0),
+                                  0
+                                );
+
+                                const newGST = updatedItems.reduce(
+                                  (acc, curr) =>
+                                    acc +
+                                    ((parseFloat(curr.quantity) || 0) *
+                                      (parseFloat(curr.rate) || 0) *
+                                      (0)) /
+                                    100,
+                                  0
+                                );
+
+                                setState({
+                                  ...state,
+                                  product_json: updatedItems,
+                                  subtotal: newSubtotal,
+                                  gst_percentage: newGST,
+                                  total: newSubtotal + newGST
+                                });
+
+                              }
+                              }
+                            />
+                          </td>
+                          <td style={{ textAlign: "right" }}>
+                            {amount.toFixed(2)}
+                          </td>
+                          <td>
+                            <input
+                              type="number"
+                              className="border-0 bg-transparent"
+                              style={{ width: "100%" }}
+                              value={item.service_tax}
+                              onChange={(e) => {
+                                handleProductChange(index, "service_tax", e.target.value);
+
+                                const updatedItems = [...state.product_json];
+                                updatedItems[index].service_tax = e.target.value;
+
+                                const newSubtotal = updatedItems.reduce(
+                                  (acc, curr) =>
+                                    acc + (parseFloat(curr.quantity) || 0) * (parseFloat(curr.rate) || 0),
+                                  0
+                                );
+
+                                const newGST = updatedItems.reduce(
+                                  (acc, curr) =>
+                                    acc +
+                                    ((parseFloat(curr.quantity) || 0) *
+                                      (parseFloat(curr.rate) || 0) *
+                                      (parseFloat(curr.service_tax) || 0)) /
+                                    100,
+                                  0
+                                );
+
+                                setState({
+                                  ...state,
+                                  product_json: updatedItems,
+                                  subtotal: newSubtotal,
+                                  gst_percentage: newGST,
+                                  total: newSubtotal + newGST
+                                });
+                              }}
+                            />
+                          </td>
+                          <td>
+                            <button
+                              className="border-0 bg-transparent"
+                              onClick={() => handleDeleteProduct(index)}
+                            >
+                              <CiTrash color="red" fontSize={20} />
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })
+                  )
+                }
               </tbody>
+
             </table>
           </div>
           <div className="d-flex gap-2 justify-content-between align-items-start">
@@ -606,28 +664,39 @@ const PaymentInvoiceForm = (props) => {
             <div className="py-1" style={{ minWidth: "250px" }}>
               <ul className="d-flex justify-content-between">
                 <li className="list-unstyled ">Sub Total {" "}</li>
-                <li className="list-unstyled "><input
-                  type="number"
-                  className="form-control"
-                  name="subtotal" value={state.subtotal} onChange={onInputChange} /></li>
+                <li className="list-unstyled text-center" style={{
+                  display: "inline-block",
+                  width: 100,
+                  height: 50,
+                  border: "1px solid #ccc",
+                }}>{state.subtotal || ""}</li>
               </ul>
               <ul className="d-flex justify-content-between">
-                <li className="list-unstyled ">Gst@${state.gst_percentage}%</li>
-                <li className="list-unstyled "><input
-                  type="number"
-                  className="form-control"
-                  name="gst_percentage" value={state.gst_percentage} onChange={onInputChange} /></li>
+                <li className="list-unstyled ">Total GST</li>
+                <li className="list-unstyled text-center" style={{
+                  display: "inline-block",
+                  width: 100,
+                  height: 50,
+                  border: "1px solid #ccc",
+                }}>{state.gst_percentage || ""}</li>
               </ul>
               <ul className="d-flex justify-content-between">
                 <li className="list-unstyled ">Total</li>
-                <li className="list-unstyled "><input
-                  type="number"
-                  className="form-control"
-                  name="total" value={state.total} onChange={onInputChange} /></li>
+                <li className="list-unstyled text-center" style={{
+                  display: "inline-block",
+                  width: 100,
+                  height: 50,
+                  border: "1px solid #ccc",
+                }}>{state.total || ""}</li>
               </ul>
               <ul className="d-flex justify-content-between">
                 <li className="list-unstyled ">Balance Due</li>
-                <li className="list-unstyled ">{state.due_amount}</li>
+                <li className="list-unstyled text-center" style={{
+                  display: "inline-block",
+                  width: 100,
+                  height: 50,
+                  border: "1px solid #ccc",
+                }}>{state.due_amount || ""}</li>
               </ul>
             </div>
           </div>
