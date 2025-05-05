@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     },
     cell: {
         flex: 1,
-        padding: 10,
+        padding: 5,
         borderRight: "1px solid #333",
     },
     headerCell: {
@@ -158,12 +158,12 @@ const ThreeColumnRerainerAgreement = () => {
                         RCIC Membership Number: R533393
                     </Text>
                     <Text style={{ fontWeight: 600 }}>
-                        Client File Number: : {felidData?.client_file_no || "___________________"}
+                        Client File Number: : <Text style={styles.textunderline}> {felidData?.client_file_no || "___________________"}</Text>
                     </Text>
                 </View>
                 <View>
                     <Text>
-                        This Retainer Agreement is made this {felidData?.client_file_no}
+                        This Retainer Agreement is made this
                         <Text style={styles.textunderline}>
                             {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "_______" : " " + moment(new Date(felidData?.agreement_date)).format("Do") + " "}
                         </Text>
@@ -445,7 +445,7 @@ const ThreeColumnRerainerAgreement = () => {
                             payment by milestones]. Payment Terms and Conditions
                         </View>
                         <View
-                            style={[styles.table, { textAlign: "center", marginTop: 18, }]}
+                            style={[styles.table, { textAlign: "center", marginTop: 120, }]}
                         >
                             <View style={styles.row}>
                                 <View style={[styles.cell, styles.headerCell]}>
@@ -487,6 +487,20 @@ const ThreeColumnRerainerAgreement = () => {
                                                 },
                                             ]}
                                         >
+                                            <Text></Text>
+                                        </View>
+                                    </View>
+                                    <View style={styles.row}>
+                                        <View
+                                            style={[
+                                                {
+                                                    flex: 1,
+                                                    paddingBottom: 4,
+                                                    paddingTop: 4,
+                                                },
+                                            ]}
+                                        >
+
                                             <Text>{felidData?.courier_charges}</Text>
                                         </View>
                                     </View>
@@ -495,28 +509,13 @@ const ThreeColumnRerainerAgreement = () => {
                                             style={[
                                                 {
                                                     flex: 1,
-                                                    paddingBottom: 8,
-                                                    paddingTop: 8,
-                                                },
-                                            ]}
-                                        >
-
-                                            <Text>{felidData?.government_fees}</Text>
-                                        </View>
-                                    </View>
-                                    <View style={styles.row}>
-                                        <View
-                                            style={[
-                                                {
-                                                    flex: 1,
-                                                    paddingBottom: 8,
-                                                    paddingTop: 8,
+                                                    paddingBottom: 4,
+                                                    paddingTop: 4,
                                                 },
                                             ]}
                                         >
                                             <Text>
-                                                {(felidData?.courier_charges && felidData?.government_fee) ? parseInt(felidData?.courier_charges) +
-                                                    parseInt(felidData?.government_fees) : ""}
+                                                {felidData?.government_fees}
                                             </Text>
                                         </View>
                                     </View>
@@ -538,7 +537,7 @@ const ThreeColumnRerainerAgreement = () => {
                                 </View>
                                 <View style={styles.cell}>
 
-                                    <Text>{felidData?.applicable_taxes}</Text>
+                                    <Text>{felidData?.application_fees}</Text>
                                 </View>
                             </View>
                             <View style={styles.row}>

@@ -11,6 +11,9 @@ import {
 } from "@react-pdf/renderer";
 import moment from "moment";
 import { AddSharePointDOcument, AddUpdateAgreement } from "../../../../api/api";
+import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
+import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
+import InitialFunction from "../CommonThings/InitialFunction";
 // import { toast } from "react-toastify";
 
 const RecruitmentAgrement = () => {
@@ -97,8 +100,7 @@ const RecruitmentAgrement = () => {
           </Text>
           <Text style={styles.paragraph}>
             This Agreement ("the <Text style={styles.bold}>Agreement</Text>") is made on the date mentioned below.{"\n"}{"\n"}
-            "The <Text style={styles.bold}>Effective Date:</Text> {formattedDate || "____________"
-            }"{"\n"}{"\n"}BY AND BETWEEN{"\n"}{"\n"}
+            "The <Text style={styles.bold}>Effective Date:</Text> <Text style={styles.textunderline}>{formattedDate}</Text>"{"\n"}{"\n"}BY AND BETWEEN{"\n"}{"\n"}
             This <Text style={styles.bold}>RECRUITMENT AGREEMENT</Text> entered by and between{"\n"}
             <Text style={styles.bold}>CAN Pathways Immigration Consultancy Ltd.</Text> (the "Agency") with address at
             Unit #310, 2618 Hopewell PI. NE Calgary, AB. T1Y 717, Canada, represented by Registered Canadian Immigration
@@ -312,61 +314,23 @@ const RecruitmentAgrement = () => {
               </Text>
               <View style={styles.container}>
                 {/* Right Signature Box (Client) */}
-
                 <View style={styles.box}>
-                  <Text style={styles.label}><Text style={styles.required}>*</Text> Signature</Text>
-                  <View style={styles.signatureBox}>
-                    {familyJsonArray[0]?.client_signature ? (
-                      <Image src={familyJsonArray[0].client_signature} style={{
-                        display: "inline-block",
-                        maxWidth: "100%",
-                        maxHeight: "100%",
-                        textTransform: "capitalize",
-                      }} />
-                    ) : (
-                      <View
-                        style={{
-                          display: "inline-block",
-                          width: "100%",
-                          height: 50,
-                          border: "1px solid #ccc",
-                        }}
-                      />)}
-                  </View>
-                  <Text style={[styles.text, styles.textBold]}> {" " + (familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")}</Text>
-                  <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {familyJsonArray[0]?.date_signature_client ? moment(familyJsonArray[0].date_signature_client).format("DD/MM/YYYY") : "______________"}</Text>
-                  <Text style={styles.text}><Text style={styles.textBold}>Signed at:</Text>_______________________ <Text style={styles.dateLine}></Text></Text>
+                  <ClientSignatureFunction
+                    felidData={felidData}
+                    familyJsonArray={familyJsonArray}
+                    page={"user"}
+                    isPdf={true}
+                  />
+                  <Text style={[styles.text, styles.textBold]}>Signature of Client</Text>
                 </View>
-
                 {/* Left Signature Box (RCIC) */}
                 <View style={styles.box}>
-                  <Text style={styles.label}><Text style={styles.required}>*</Text> Signature</Text>
-                  <View style={styles.signatureBox}>
-                    {felidData?.rcic_signature ? (
-                      <Image src={felidData.rcic_signature} style={{
-                        display: "inline-block",
-                        maxWidth: "100%",
-                        maxHeight: "100%",
-                        textTransform: "capitalize",
-                      }} />
-                    ) : (
-                      <View
-                        style={{
-                          display: "inline-block",
-                          width: "100%",
-                          height: 50,
-                          border: "1px solid #ccc",
-                        }}
-                      />
-                    )}
-                  </View>
-                  <Text style={[styles.text, styles.textBold]}>Harpreet Kaur (RCIC)</Text>
-                  <Text style={styles.text}>RCIC # R533393 CAN Pathways Immigration Consultancy Ltd.</Text>
-                  <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {felidData?.date_signature_rcic !== "0000-00-00 00:00:00" && felidData?.date_signature_rcic ? moment(felidData.date_signature_rcic).format("DD/MM/YYYY") : "______________"}</Text>
-                  <Text style={styles.text}><Text style={styles.textBold}>Signed at:</Text> <Text style={styles.underline}>Calgary, Alberta, Canada</Text></Text>
+                  <RCICSignatureFunction isPdf={true} felidData={felidData} />
+                  <Text style={[styles.text, styles.textBold]}>Signature of RCIC</Text>
+
                 </View>
               </View>
-              <View style={{ marginTop: 120 }}>
+              <View style={{ marginTop: 225 }}>
                 <Text style={[{ textAlign: "center", }, styles.definition]}>
                   AUTHORIZATION
                 </Text>
@@ -444,25 +408,14 @@ const RecruitmentAgrement = () => {
                     <View style={[styles.clientFormChild, { alignSelf: "center" }]}>
                       <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
                         <View style={{ width: "100%" }}>
-                          <Text style={styles.label}><Text style={styles.required}>*</Text> Signature</Text>
-                          <View style={styles.signatureBox}>
-                            {familyJsonArray[0]?.client_signature ? (
-                              <Image src={familyJsonArray[0].client_signature} style={{
-                                display: "inline-block",
-                                maxWidth: "100%",
-                                maxHeight: "100%",
-                                textTransform: "capitalize",
-                              }} />
-                            ) : (
-                              <View
-                                style={{
-                                  display: "inline-block",
-                                  width: "100%",
-                                  height: 50,
-                                  border: "1px solid #ccc",
-                                }}
-                              />)}
-                          </View>
+                          <ClientSignatureFunction
+                            felidData={felidData}
+                            familyJsonArray={familyJsonArray}
+                            page={"user"}
+                            isPdf={true}
+                          />
+                          <Text style={[styles.text, styles.textBold]}>Signature of Client</Text>
+
                         </View>
                       </View>
                     </View>
@@ -497,25 +450,9 @@ const RecruitmentAgrement = () => {
                     <View style={[styles.clientFormChild, { alignSelf: "center" }]}>
                       <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
                         <View style={{ width: "100%" }}>
-                          <Text style={styles.label}><Text style={styles.required}>*</Text> Signature</Text>
-                          <View style={styles.signatureBox}>
-                            {felidData?.rcic_signature ? (
-                              <Image src={felidData?.rcic_signature} style={{
-                                display: "inline-block",
-                                maxWidth: "100%",
-                                maxHeight: "100%",
-                                textTransform: "capitalize",
-                              }} />
-                            ) : (
-                              <View
-                                style={{
-                                  display: "inline-block",
-                                  width: "100%",
-                                  height: 50,
-                                  border: "1px solid #ccc",
-                                }}
-                              />)}
-                          </View>
+                          <RCICSignatureFunction isPdf={true} felidData={felidData} />
+                          <Text style={[styles.text, styles.textBold]}>Signature of RCIC</Text>
+
                         </View>
                       </View>
 
@@ -568,8 +505,8 @@ const RecruitmentAgrement = () => {
                 <View>
                   <View
                     style={{
-                      width: "100%",
-                      height: 20,
+                      width: 100,
+                      height: 50,
                       border: "1px solid #ccc",
                       display: "flex",
                       alignItems: "center",
@@ -585,18 +522,14 @@ const RecruitmentAgrement = () => {
                           textTransform: "capitalize",
                         }}
                       >
-                        {felidData.initial
-                          .split(" ")
-                          .filter((word) => word)
-                          .map((word) => word[0])
-                          .join(" ")}
+                        <InitialFunction initial={felidData?.initial} />
                       </Text>
                     ) : (
                       <View
                         style={{
                           display: "inline-block",
                           width: 100,
-                          height: 20,
+                          height: 50,
                           border: "1px solid #ccc",
                         }}
                       />
@@ -637,7 +570,7 @@ const RecruitmentAgrement = () => {
                     <View>
                       <View
                         style={{
-                          width: "100%",
+                          width: 100,
                           height: 50,
                           border: "1px solid #ccc",
                           display: "flex",
@@ -654,11 +587,7 @@ const RecruitmentAgrement = () => {
                               textTransform: "capitalize",
                             }}
                           >
-                            {felidData.initial
-                              .split(" ")
-                              .filter((word) => word)
-                              .map((word) => word[0])
-                              .join(" ")}
+                            <InitialFunction initial={felidData?.initial} />
                           </Text>
                         ) : (
                           <View
@@ -671,7 +600,6 @@ const RecruitmentAgrement = () => {
                           />
                         )}
                       </View>
-
                     </View>
                   </View>
                 </View>

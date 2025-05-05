@@ -1,5 +1,8 @@
 import React, { useEffect } from 'react'
 import moment from 'moment/moment';
+import InitialFunction from '../CommonThings/InitialFunction';
+import { ClientSignatureFunction } from '../CommonThings/ClientSignatureFunctionHtml';
+import { RCICSignatureFunction } from '../CommonThings/RCICSignatureFunction';
 export default function EmployerRetainerAgreement({ page,
   felidData,
   userData,
@@ -40,8 +43,7 @@ export default function EmployerRetainerAgreement({ page,
         </div>
         <div class="content" style="padding: 10px 20px;text-align: justify;">
             <h2 class="font-weight-bold text-blue mb-4 mt-4 text-capitalize text-primary font-size-6">Can Pathways Immigration Consultancy Limited</h2>
-            <p class="m-0">2618 Hopewell PI NE #310 Calgary,</p>
-            <p class="m-0">AB TlY7J7, Canada</p>
+            <p class="m-0">2618 Hopewell Pl NE #310, Calgary, AB T1Y 7J7</p>
             <p class="m-0">Tel: +1. (403)888 5308 </p>
             <p class="m-0">Email: <a href="mailto:info@canpathwaysjobs.com">info@canpathwaysjobs.com</a></p>
             <p class="m-0"> <a href=www.canpathwaysjobs.com">https://canpathwaysjobs.com</a></p>
@@ -260,10 +262,7 @@ export default function EmployerRetainerAgreement({ page,
     <div style="display: flex; justify-content: space-between; margin-top: 30px;">
         <!-- Left Signature Box (RCIC) -->
         <div style="width: 45%;">
-            <div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
-               ${felidData.rcic_signature ? `<img src=${felidData.rcic_signature} alt="Signature" style="max-width: 100%; max-height: 100%;">` :
-      `<span style = "max-width: 100%; max-height: 100%;" ></span> `}
-            </div>
+           ${RCICSignatureFunction({ isPdf: false, felidData })}
             <p style="margin-top: 10px; font-weight: bold;">Harpreet Kaur (RCIC)</p>
             <p style="font-size: 12px;">RCIC # R533393</p>
             <p style="font-size: 12px;">CAN Pathways Immigration Consultancy Ltd.</p>
@@ -275,19 +274,7 @@ export default function EmployerRetainerAgreement({ page,
     
         <!-- Right Signature Box (Client) -->
         <div style="width: 45%;">
-            <div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
-            ${familyJsonArray[0]?.client_signature
-      ? `<img src="${familyJsonArray[0].client_signature}" alt="Signature" style="max-width: 100%; max-height: 100%;">`
-      : page === "admin"
-        ? `<span style="max-width: 100%; max-height: 100%;"></span>`
-        : `<span>
-              <button  class="btn btn-light-outline"
-                      style="font-family:cursive;"max-width: 100%; max-height: 100%;"" 
-                      id="add-signature-button-0">
-                Add Signature
-              </button></span>`
-    }
-       </div>
+            ${ClientSignatureFunction({ page, familyJsonArray, felidData })} 
             <p style="margin-top: 10px; font-weight: bold;"> ${familyJsonArray[0]?.client_first_name ||
               familyJsonArray[0]?.client_last_name
               ? ` <span class=" text-capitalize">${familyJsonArray[0]?.client_first_name
@@ -311,15 +298,14 @@ export default function EmployerRetainerAgreement({ page,
     <div class="d-flex justify-content-end gap-4" style="gap: 4rem;">
     <h3 class="font-size-6 text-end">Initials :</h3>
     <div>
-      <div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
-      ${felidData?.initial
-      ? `<span style="display: inline-block; max-width: 100%; max-height: 100%;" class=" text-capitalize">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${felidData?.initial
-        ?.split(" ") // Split the string by spaces
-        ?.filter((word) => word) // Filter out empty strings (caused by multiple spaces)
-        ?.map((word) => word[0]) // Map each word to its first letter
-        ?.join(" ")}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`
-      : `<span style="display: inline-block; width: 100px; height: 50px; border: 1px solid #ccc;"></span>`
-    }        </div>
+        <div
+                           style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
+                            <span style="display:inline-block;max-width:100%;max-height:100%;" class="text-capitalize">
+                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        ${felidData?.initial ? InitialFunction({ isPdf: false, initial: felidData?.initial }) : ""}
+                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                   </span>
+                            </div>
     <h4 class="font-size-6 text-end d-none">RCIC</h4></div>
     <div class="d-none">
       <div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">

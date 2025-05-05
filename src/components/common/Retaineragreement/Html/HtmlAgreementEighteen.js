@@ -1,5 +1,8 @@
 import moment from "moment";
 import { useEffect } from "react";
+import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
+import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
+import InitialFunction from "../CommonThings/InitialFunction";
 // import { Link } from "react-router-dom";
 const HtmlAgreementEighteen = ({
     page,
@@ -260,46 +263,16 @@ const HtmlAgreementEighteen = ({
                 <p class="col-6 text-capitalize">E-mail: <span class="para_gap"><a href="mailto:info@canpathways.ca">info@canpathways.ca</a></span></p>
          <p class="container-fluid"><b>IN WITNESS THEREOF this Agreement has been duly executed by the parties hereto on the date first above written</b></p>
                 <div class="col-6">
-                ${familyJsonArray[0]?.client_signature
-            ? `
-                                  <div class="d-flex flex-column">
-                                    <div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;"><img src=${familyJsonArray[0]?.client_signature} alt="Signature" style="max-width: 100%; max-height: 100%;">
-                        </div>
-                
-                                    <small class="row ">
-                                      <span class="col text-capitalize">
-                                        ${familyJsonArray[0]?.client_first_name +
-            " " +
-            (familyJsonArray[0]?.client_last_name || "") +
-            " "
-            }${moment(
-                familyJsonArray[0]?.date_signature_client
-            ).format("DD-MM-YYYY")}</span>
-                                    </small>
-                                  </div>`
-            : page === "admin"
-                ? ` <div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;"><span style = "max-width: 100%; max-height: 100%;" ></span></div>`
-                : `<span>
-              <button  class="btn btn-light-outline"
-                      style="font-family:cursive;"max-width: 100%; max-height: 100%;"" 
-                      id="add-signature-button-0">
-                Add Signature
-              </button></span>`
-        }
-                
+                ${ClientSignatureFunction({ page, familyJsonArray, felidData })} 
                 <p>Signature of Client</p>
                 </div>
                 <div class="col-6">
-<div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
-           ${felidData.rcic_signature ? `<img src=${felidData.rcic_signature} alt="Signature" style="max-width: 100%; max-height: 100%;">` :
-            `<span style = "max-width: 100%; max-height: 100%;" ></span> `}
-        </div>                <span>Harpreet Kaur</span></p>
-                <p>Signature of RCIC</p>
-                </li>
-            </ol>
-            </div>
-      </div>
+${RCICSignatureFunction({ isPdf: false, felidData })}
+<p>Signature of RCIC</p>
+      </div>    
+      <div>
       <h3 style="text-align: center">AUTHORIZATION</h3>
+      
             <p>I <span class="para_gap">${felidData &&
             (familyJsonArray[0]?.client_first_name ||
                 familyJsonArray[0]?.client_last_name)
@@ -338,24 +311,8 @@ const HtmlAgreementEighteen = ({
                 <p>Name of Client</p>
                 </div>
                     <div class="col-4">
-                <p>   ${familyJsonArray[0]?.client_signature
-            ? `
-                                  <div class="d-flex flex-column">
-                                    <div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;"><img src=${familyJsonArray[0]?.client_signature} alt="Signature" style="max-width: 100%; max-height: 100%;">
-                        </div>
-                                                    <small class="row ">
-                                      <span class="col text-capitalize">
-                                        ${familyJsonArray[0]?.client_first_name +
-            " " +
-            (familyJsonArray[0]?.client_last_name || "") +
-            " "
-            }${moment(
-                familyJsonArray[0]?.date_signature_client
-            ).format("DD-MM-YYYY")}</span>
-                                    </small>
-                                  </div>`
-            : ` <div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;"><span style = "max-width: 100%; max-height: 100%;" ></span></div>`
-        }
+                <p>    ${ClientSignatureFunction({ page: "admin", familyJsonArray, felidData })} 
+
                 </p><p>Signature of Client</p>
                 </div>
              <div  class="col-4">
@@ -398,18 +355,17 @@ const HtmlAgreementEighteen = ({
              <div class="d-flex justify-content-end gap-4" style="gap: 4rem;">
 <h3 class="font-size-6 text-end">Initials :</h3>
 <div>
-  <div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
-  ${felidData?.initial
-            ? `<span style="display: inline-block; max-width: 100%; max-height: 100%;" class=" text-capitalize">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${felidData?.initial
-                ?.split(" ") // Split the string by spaces
-                ?.filter((word) => word) // Filter out empty strings (caused by multiple spaces)
-                ?.map((word) => word[0]) // Map each word to its first letter
-                ?.join(" ")}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`
-            : `<span style="display: inline-block; width: 100px; height: 50px; border: 1px solid #ccc;"></span>`
-        }        
+  <div
+                      style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
+                       <span style="display:inline-block;max-width:100%;max-height:100%;" class="text-capitalize">
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   ${felidData?.initial ? InitialFunction({ isPdf: false, initial: felidData?.initial }) : ""}
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                              </span>
+                       </div>
   </div>
   </div>
-  </div>
+                  </div>
                   </div>
 
   <div class="d-flex justify-content-center w-100 mt-5">

@@ -141,8 +141,7 @@ const MoreThanOneApplicantAgreementPdf = () => {
           >
             Can Pathways Immigration Consultancy Limited
           </Text>
-          <Text style={styles.mb5}>2618 Hopewell PI NE #310 Calgary,</Text>
-          <Text style={styles.mb5}>AB T1Y7J7, Canada</Text>
+          <Text style={styles.mb5}>2618 Hopewell Pl NE #310, Calgary, AB T1Y 7J7</Text>
           <Text style={styles.mb5}>Tel: +1 (403) 888-5308</Text>
           <Text style={styles.mb5}>
             Email: <Text style={styles.link}>info@canpathwaysjobs.com</Text>

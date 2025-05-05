@@ -285,7 +285,6 @@ const SignaturePadComponent = ({ index, onSignature, setState, state, label, nam
             reader.readAsDataURL(file);
         }
     };
-
     useEffect(() => {
         const signatureData = state && (state?.[label] || (state.family_json && state.family_json[index]?.[label]));
         if (signatureData) {

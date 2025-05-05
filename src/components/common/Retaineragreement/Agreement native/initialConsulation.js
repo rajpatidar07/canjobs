@@ -13,6 +13,9 @@ import {
 import { TbArrowBadgeRight } from "react-icons/tb";
 import moment from "moment";
 import { AddSharePointDOcument, AddUpdateAgreement } from "../../../../api/api";
+import InitialFunction from "../CommonThings/InitialFunction";
+import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
+import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
 // import { toast } from "react-toastify";
 
 const InitialConsultationAgreement = () => {
@@ -252,7 +255,7 @@ const InitialConsultationAgreement = () => {
                   {"\n"} {"\n"}
                   {"\n"} {"\n"}
                   {"\n"}</Text >
-                <Text style={{marginTop:100}}>
+                <Text style={{ marginTop: 100 }}>
                   <Text style={[styles.bold, styles.textunderline,]}><TbArrowBadgeRight /> DISPUTE RESOLUTION</Text>: In the event of a dispute, both the Client and RCIC must strive to resolve the matter amicably. If a resolution cannot be achieved, the Client must submit the complaint in writing to the RCIC and allow a grace period of 5 business days for the RCIC's response. If the dispute persists, the Client can follow the complaint and discipline procedure delineated by ICCRC on their website:<Link src="http://www.iccrc-crcic.ca/public/complaintsDiscipline.cfm">ICCRC Complaints and Discipline
                   </Link>.ICCRC's Contact Information is as follows:
                   {"\n"}Immigration Consultants of Canada Regulatory Council (ICCRC)
@@ -277,25 +280,12 @@ const InitialConsultationAgreement = () => {
             <View style={styles.container}>
               {/* Left Signature Box (RCIC) */}
               <View style={styles.box}>
-                <Text style={styles.label}><Text style={styles.required}>*</Text> Signature</Text>
-                <View style={styles.signatureBox}>
-                  {familyJsonArray[0]?.client_signature ? (
-                    <Image src={familyJsonArray[0].client_signature} style={{
-                      display: "inline-block",
-                      maxWidth: "100%",
-                      maxHeight: "100%",
-                      textTransform: "capitalize",
-                    }} />
-                  ) : (
-                    <View
-                      style={{
-                        display: "inline-block",
-                        width: "100%",
-                        height: 50,
-                        border: "1px solid #ccc",
-                      }}
-                    />)}
-                </View>
+                <ClientSignatureFunction
+                  felidData={felidData}
+                  familyJsonArray={familyJsonArray}
+                  page={"user"}
+                  isPdf={true}
+                />
                 <Text style={[styles.text, styles.textBold]}> <Text style={{ textTransform: "capitalize" }}>
                   {familyJsonArray[0]?.client_first_name || ""}{" "}
                   {familyJsonArray[0]?.client_last_name || ""}{" "}
@@ -310,27 +300,7 @@ const InitialConsultationAgreement = () => {
               </View>
               {/* Right Signature Box (Client) */}
               <View style={styles.box}>
-                <Text style={styles.label}><Text style={styles.required}>*</Text> Signature</Text>
-                <View style={styles.signatureBox}>
-                  {console.log(felidData?.rcic_signature)}
-                  {felidData?.rcic_signature ? (
-                    <Image src={felidData.rcic_signature} style={{
-                      display: "inline-block",
-                      maxWidth: "100%",
-                      maxHeight: "100%",
-                      textTransform: "capitalize",
-                    }} />
-                  ) : (
-                    <View
-                      style={{
-                        display: "inline-block",
-                        width: "100%",
-                        height: 50,
-                        border: "1px solid #ccc",
-                      }}
-                    />
-                  )}
-                </View>
+                <RCICSignatureFunction isPdf={true} felidData={felidData} />
                 <Text style={[styles.text, styles.textBold]}>Harpreet Kaur (RCIC)</Text>
                 <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {felidData?.date_signature_rcic !== "0000-00-00 00:00:00" && felidData?.date_signature_rcic ? moment(felidData.date_signature_rcic).format("DD/MM/YYYY") : "______________"}</Text>
               </View>
@@ -368,11 +338,50 @@ const InitialConsultationAgreement = () => {
                   Email: info@canpathways.ca | Website: www.canpathways.ca
                 </Text>
               </View>
-              <View className="initial" fixed style={styles.initial}>
-                <Text>Initial:<Text style={[styles.textunderline, { textTransform: 'uppercase' }]}>{felidData?.initial ? felidData?.initial?.split(' ')               // Split the string by spaces
-                  ?.filter(word => word)      // Filter out empty strings (caused by multiple spaces)
-                  ?.map(word => word[0])      // Map each word to its first letter
-                  ?.join(' ') : "        "}</Text></Text>
+              <View
+                fixed
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "flex-end",
+                  gap: 20,
+                }}
+              >
+                <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
+                <View>
+                  <View
+                    style={{
+                      width: 100,
+                      height: 50,
+                      border: "1px solid #ccc",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {felidData?.initial ? (
+                      <Text
+                        style={{
+                          display: "inline-block",
+                          maxWidth: "100%",
+                          maxHeight: "100%",
+                          textTransform: "capitalize",
+                        }}
+                      >
+                        <InitialFunction initial={felidData?.initial} />
+                      </Text>
+                    ) : (
+                      <View
+                        style={{
+                          display: "inline-block",
+                          width: 100,
+                          height: 50,
+                          border: "1px solid #ccc",
+                        }}
+                      />
+                    )}
+                  </View>
+                </View>
               </View>
             </View>
           </Page>
@@ -397,7 +406,8 @@ const InitialConsultationAgreement = () => {
                       }
                     />
                     <View style={{ fontSize: 14, flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-                      <Text style={{ marginBottom: 2 }}>55</Text>
+                      <Text style={{ marginBottom: 2 }}>{felidData?.client_file_no || "_________"
+                      }</Text>
                       <View style={{ width: 30, height: 1, backgroundColor: '#000', marginBottom: 9 }} />
                       <Text>Client File Number</Text>
                     </View>
@@ -432,7 +442,7 @@ const InitialConsultationAgreement = () => {
                     <View>
                       <View
                         style={{
-                          width: "100%",
+                          width: 100,
                           height: 50,
                           border: "1px solid #ccc",
                           display: "flex",
@@ -449,11 +459,7 @@ const InitialConsultationAgreement = () => {
                               textTransform: "capitalize",
                             }}
                           >
-                            {felidData.initial
-                              .split(" ")
-                              .filter((word) => word)
-                              .map((word) => word[0])
-                              .join(" ")}
+                            <InitialFunction initial={felidData?.initial} />
                           </Text>
                         ) : (
                           <View
@@ -466,7 +472,6 @@ const InitialConsultationAgreement = () => {
                           />
                         )}
                       </View>
-
                     </View>
                   </View>
                 </View>

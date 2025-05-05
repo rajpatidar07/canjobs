@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Page, Text, View, Document, StyleSheet, BlobProvider, Image, PDFViewer } from '@react-pdf/renderer';
 import moment from 'moment';
 import { AddSharePointDOcument, AddUpdateAgreement } from '../../../../api/api';
+import InitialFunction from '../CommonThings/InitialFunction';
+import { ClientSignatureFunction } from '../CommonThings/ClientSignatureFunctionHtml';
+import { RCICSignatureFunction } from '../CommonThings/RCICSignatureFunction';
 const styles = StyleSheet.create({
   page: {
     padding: 30,
@@ -141,8 +144,7 @@ const RenewalApplicantionsPdf = () => {
           >
             Can Pathways Immigration Consultancy Limited
           </Text>
-          <Text style={styles.mb5}>2618 Hopewell PI NE #310 Calgary,</Text>
-          <Text style={styles.mb5}>AB T1Y7J7, Canada</Text>
+          <Text style={styles.mb5}>2618 Hopewell Pl NE #310, Calgary, AB T1Y 7J7</Text>
           <Text style={styles.mb5}>Tel: +1 (403) 888-5308</Text>
           <Text style={styles.mb5}>
             Email: <Text style={styles.link}>info@canpathwaysjobs.com</Text>
@@ -468,26 +470,8 @@ const RenewalApplicantionsPdf = () => {
           <View style={styles.container}>
             {/* Left Signature Box (RCIC) */}
             <View style={styles.box}>
-              <Text style={styles.label}><Text style={styles.required}>*</Text> Signature</Text>
-              <View style={styles.signatureBox}>
-                {felidData?.rcic_signature ? (
-                  <Image src={felidData.rcic_signature} style={{
-                    display: "inline-block",
-                    maxWidth: "100%",
-                    maxHeight: "100%",
-                    textTransform: "capitalize",
-                  }} />
-                ) : (
-                  <View
-                    style={{
-                      display: "inline-block",
-                      width: "100%",
-                      height: 50,
-                      border: "1px solid #ccc",
-                    }}
-                  />
-                )}
-              </View>
+              <RCICSignatureFunction isPdf={true} felidData={felidData} />
+
               <Text style={[styles.text, styles.textBold]}>Harpreet Kaur (RCIC)</Text>
               <Text style={styles.text}>RCIC # R533393</Text>
               <Text style={styles.text}>CAN Pathways Immigration Consultancy Ltd.</Text>
@@ -497,25 +481,12 @@ const RenewalApplicantionsPdf = () => {
 
             {/* Right Signature Box (Client) */}
             <View style={styles.box}>
-              <Text style={styles.label}><Text style={styles.required}>*</Text> Signature</Text>
-              <View style={styles.signatureBox}>
-                {familyJsonArray[0]?.client_signature ? (
-                  <Image src={familyJsonArray[0].client_signature} style={{
-                    display: "inline-block",
-                    maxWidth: "100%",
-                    maxHeight: "100%",
-                    textTransform: "capitalize",
-                  }} />
-                ) : (
-                  <View
-                    style={{
-                      display: "inline-block",
-                      width: "100%",
-                      height: 50,
-                      border: "1px solid #ccc",
-                    }}
-                  />)}
-              </View>
+              <ClientSignatureFunction
+                felidData={felidData}
+                familyJsonArray={familyJsonArray}
+                page={"user"}
+                isPdf={true}
+              />
               <Text style={[styles.text, styles.textBold]}> {familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name ? (
                 <Text style={[{ borderBottomWidth: 1, borderBottomColor: "black", textTransform: "capitalize" }, styles.underline]}>
                   {familyJsonArray[0]?.client_first_name} {familyJsonArray[0]?.client_last_name || ""}
@@ -524,7 +495,6 @@ const RenewalApplicantionsPdf = () => {
                 "_____________________"
               )}</Text>
               <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {familyJsonArray[0]?.date_signature_client ? moment(familyJsonArray[0].date_signature_client).format("DD/MM/YYYY") : "______________"}</Text>
-              <Text style={styles.text}><Text style={styles.textBold}>Signed at:</Text>_______________________ <Text style={styles.dateLine}></Text></Text>
             </View>
           </View>
         </View>
@@ -559,8 +529,8 @@ const RenewalApplicantionsPdf = () => {
                 <View>
                   <View
                     style={{
-                      width: "100%",
-                      height: 20,
+                      width: 100,
+                      height: 50,
                       border: "1px solid #ccc",
                       display: "flex",
                       alignItems: "center",
@@ -576,18 +546,14 @@ const RenewalApplicantionsPdf = () => {
                           textTransform: "capitalize",
                         }}
                       >
-                        {felidData.initial
-                          .split(" ")
-                          .filter((word) => word)
-                          .map((word) => word[0])
-                          .join(" ")}
+                        <InitialFunction initial={felidData?.initial} />
                       </Text>
                     ) : (
                       <View
                         style={{
                           display: "inline-block",
                           width: 100,
-                          height: 20,
+                          height: 50,
                           border: "1px solid #ccc",
                         }}
                       />
@@ -628,7 +594,7 @@ const RenewalApplicantionsPdf = () => {
                     <View>
                       <View
                         style={{
-                          width: "100%",
+                          width: 100,
                           height: 50,
                           border: "1px solid #ccc",
                           display: "flex",
@@ -645,11 +611,7 @@ const RenewalApplicantionsPdf = () => {
                               textTransform: "capitalize",
                             }}
                           >
-                            {felidData.initial
-                              .split(" ")
-                              .filter((word) => word)
-                              .map((word) => word[0])
-                              .join(" ")}
+                            <InitialFunction initial={felidData?.initial} />
                           </Text>
                         ) : (
                           <View
@@ -662,7 +624,6 @@ const RenewalApplicantionsPdf = () => {
                           />
                         )}
                       </View>
-
                     </View>
                   </View>
                 </View>

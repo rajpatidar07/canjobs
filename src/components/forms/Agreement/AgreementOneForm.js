@@ -279,7 +279,9 @@ const AgreementOneForm = ({
                       ? "/work_permit"
                       : state.type === "Alberta PNP and federal PR"
                         ? '/alberta_pnp'
-                        : `/agreeone`;
+                        : state.type === "three column"
+                          ? "/three_column"
+                          : `/agreeone`;
               localStorage.setItem(
                 "agreementStateData",
                 JSON.stringify(stateData)
@@ -529,7 +531,7 @@ const AgreementOneForm = ({
                   },
                   {
                     label: "Client File Number",
-                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
+                    display: state.type === "recruitment services agreement" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
                     name: "client_file_no",
                     type: "number",
                   },
@@ -829,7 +831,8 @@ const AgreementOneForm = ({
               <button
                 type="submit"
                 className="btn btn-primary btn-small w-25 mt-5 rounded-5 text-uppercase p-8"
-                disabled={loading || IsFamilyFelidsEmpty !== false || index === "final" ? (!state.initial || !state?.family_json[0]?.client_signature) : (openSignature === "yes" && index !== "final" && (!state?.family_json[0]?.client_signature || !state?.rcic_signature)) ? true : false}
+                disabled={(loading || IsFamilyFelidsEmpty !== false || index === "final" ? (!state.initial || !state?.family_json[0]?.client_signature) : (openSignature === "yes" && index !== "final" && (!state?.family_json[0]?.client_signature || (!state?.rcic_signature && index === "rcic_signature" &&
+                  SigningUserType === "admin")))) ? true : false}
               >
                 {loading
                   ? "Saving..."
