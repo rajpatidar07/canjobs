@@ -29,6 +29,7 @@ import {
   FaChevronDown,
   FaNotesMedical,
   FaTasks,
+  FaTrashAlt,
 } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
 import { SiStudyverse } from "react-icons/si";
@@ -41,6 +42,7 @@ import {
 } from "../../api/api";
 import TableInput from "../common/TableInput";
 import SAlert from "../common/sweetAlert";
+import { CiTrash } from "react-icons/ci";
 // import { CiUser } from "react-icons/ci";
 const AdminSidebar = (props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(
@@ -896,7 +898,12 @@ const AdminSidebar = (props) => {
                   </span>
                   {showDropDown === item.id && (
                     <ul className="list-group">
-                      <li className="list-group-item text-danger">
+                      <li
+                        className="list-group-item text-danger"
+                        // onClick={() => {
+                        //   clearPageNo(item.title);
+                        // }}
+                      >
                         <Link
                           onClick={() => {
                             setDeleteAlertApplicant(true);
@@ -904,7 +911,7 @@ const AdminSidebar = (props) => {
                           }}
                           className="text-danger"
                         >
-                          Delete
+                          <FaTrashAlt className="ml-2" />
                         </Link>
                       </li>
                     </ul>
@@ -926,13 +933,15 @@ const AdminSidebar = (props) => {
                   }}
                   onClick={() => toggleChildren(item.id, hasChildren)}
                 >
-                  {" "}
                   {hasChildren && <FaChevronDown />}
                 </div>
               </div>
 
               {openParent === item.id && hasChildren && (
-                <ul className="pl-0 list-unstyled">
+                <ul
+                  className="pl-0 list-unstyled"
+                  style={{ transition: "all 0.2s ease" }}
+                >
                   {children.map((child) => (
                     <li key={child.id} className="position-relative">
                       <Link
@@ -967,7 +976,10 @@ const AdminSidebar = (props) => {
                         </span>
                       </Link>
                       {showDropDown === item.id && (
-                        <ul className="list-group">
+                        <ul
+                          className="list-group"
+                          style={{ transition: "all 0.2s ease" }}
+                        >
                           <li className="list-group-item text-danger">
                             <Link
                               onClick={() => {
@@ -976,8 +988,7 @@ const AdminSidebar = (props) => {
                               }}
                               className="text-danger"
                             >
-                              {" "}
-                              Delete
+                              <FaTrashAlt className="ml-2" />
                             </Link>
                           </li>
                         </ul>
