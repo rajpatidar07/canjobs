@@ -1,7 +1,8 @@
 import moment from "moment";
 import { useEffect } from "react";
-import { InitialFunction } from "../CommonThings/InitialFunction";
+import  InitialFunction  from "../CommonThings/InitialFunction";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
+import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
 const WorkPermitHtml = ({
   page,
   felidData,
@@ -1041,16 +1042,13 @@ services that have been rendered or accounting for the time that has been spent 
 <div class="row align-items-start mb-4">
   <!-- Client Signature -->
   <div class="col-md-6 mb-4">
-  ${ClientSignatureFunction({ page, familyJsonArray, felidData })}
-  
+  ${ClientSignatureFunction({ page, familyJsonArray, felidData })} 
     <p class="mb-0">Signature of Client</p>
   </div>
 
   <!-- RCIC Signature -->
   <div class="col-md-6 mb-4">
-    <div class="border d-flex align-items-center justify-content-center" style="height: 50px;">
-      ${felidData.rcic_signature ? `<img src="${felidData.rcic_signature}" alt="Signature" style="max-height: 100%;">` : ''}
-    </div>
+${RCICSignatureFunction({ isPdf: false, felidData })}
     <p class="mb-0">Signature of RCIC</p>
   </div>
 </div>
@@ -1237,11 +1235,7 @@ services that have been rendered or accounting for the time that has been spent 
         </div>
         <div class="col" style="text-align: center;
    ">
-        
-                    ${familyJsonArray[0]?.client_signature
-      ? ClientSignatureFunction({ page, familyJsonArray, felidData })
-      : ""
-    }
+${ClientSignatureFunction({ page: "admin", familyJsonArray, felidData })}
           <p style="margin: 0">Signatures</p>
         </div>
         <div class="col" style="text-align: center">
@@ -1267,16 +1261,14 @@ services that have been rendered or accounting for the time that has been spent 
              <div class="d-flex justify-content-end gap-4" style="gap: 4rem;">
       <h3 class="font-size-6 text-end">Initials :</h3>
       <div>
-        <div
-          style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
-          ${felidData?.initial
-      ? `<span style="display: inline-block; max-width: 100%; max-height: 100%;" class="text-capitalize">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                ${InitialFunction(felidData?.initial)}
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>`
-      : `<span style="display: inline-block; width: 100px; height: 50px; border: 1px solid #ccc;"></span>`
-    }
-           </div>
+         <div
+                     style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
+                      <span style="display:inline-block;max-width:100%;max-height:100%;" class="text-capitalize">
+                               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  ${felidData?.initial ? InitialFunction({ isPdf: false, initial: felidData?.initial }) : ""}
+                               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             </span>
+                      </div>
         <h4 class="font-size-6 text-end d-none">RCIC</h4>
       </div>
 </p>

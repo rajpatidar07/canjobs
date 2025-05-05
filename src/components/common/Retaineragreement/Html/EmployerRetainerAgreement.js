@@ -260,9 +260,6 @@ export default function EmployerRetainerAgreement({ page,
     <div style="display: flex; justify-content: space-between; margin-top: 30px;">
         <!-- Left Signature Box (RCIC) -->
         <div style="width: 45%;">
-            <label style="display: block; font-size: 12px; font-weight: bold; margin-bottom: 5px;">
-                <span style="color: red;">*</span> Signature
-            </label>
             <div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
                ${felidData.rcic_signature ? `<img src=${felidData.rcic_signature} alt="Signature" style="max-width: 100%; max-height: 100%;">` :
       `<span style = "max-width: 100%; max-height: 100%;" ></span> `}
@@ -278,9 +275,6 @@ export default function EmployerRetainerAgreement({ page,
     
         <!-- Right Signature Box (Client) -->
         <div style="width: 45%;">
-            <label style="display: block; font-size: 12px; font-weight: bold; margin-bottom: 5px;">
-                <span style="color: red;">*</span> Signature
-            </label>
             <div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
             ${familyJsonArray[0]?.client_signature
       ? `<img src="${familyJsonArray[0].client_signature}" alt="Signature" style="max-width: 100%; max-height: 100%;">`
@@ -296,15 +290,14 @@ export default function EmployerRetainerAgreement({ page,
        </div>
             <p style="margin-top: 10px; font-weight: bold;"> ${familyJsonArray[0]?.client_first_name ||
               familyJsonArray[0]?.client_last_name
-              ? ` <span class="border-bottom border-dark text-capitalize">${familyJsonArray[0]?.client_first_name
+              ? ` <span class=" text-capitalize">${familyJsonArray[0]?.client_first_name
               } ${familyJsonArray[0]?.client_last_name || ""}</span>`
               : emp_user_type === "employee"
-                ? ` <span class="border-bottom border-dark text-capitalize "style="min-width: 300px">${userData?.name}</span>` ||
+                ? ` <span class=" text-capitalize "style="min-width: 300px">${userData?.name}</span>` ||
                 ""
                 : ""}</p>
    
             <p style="font-size: 12px; margin-top: 10px;"><strong>Date:</strong> ${familyJsonArray[0]?.date_signature_client ? `<span class="border-bottom border-dark" style="min-width: 80px;">${moment(familyJsonArray[0].date_signature_client).format("DD/MM/YYYY")}</span>` : "______________"}</p>
-            <p style="font-size: 12px; margin-top: -10px;"><strong>Signed at:</strong> <span style="display: inline-block; width: 120px; border-bottom: 1px solid black;"> </span></p>
         </div>
     </div>
     

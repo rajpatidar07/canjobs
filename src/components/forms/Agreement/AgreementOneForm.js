@@ -226,11 +226,17 @@ const AgreementOneForm = ({
         (index === "rcic_signature" || index === "final")) ||
       openSignature === "no"
     ) {
-      console.log(state)
+      let filteredState = { ...state };
+
+      // Conditionally include signature_status
+      if (!(index === "rcic_signature" || index === "final")) {
+        delete filteredState.signature_status;
+      }
+
       // if (index === "update details" ? validate() : "") {
       //    console.log("first")
       try {
-        let res = await AddUpdateAgreement(state);
+        let res = await AddUpdateAgreement(filteredState);
         if (
           res.data.status === 1 &&
           res.data.message === "Agreement updated successfully."
@@ -312,7 +318,7 @@ const AgreementOneForm = ({
   };
   useEffect(() => {
     if (state.initial) {
-      setState({ ...state, signature_status: index === "final" ? "1" : "0", pdf_genrated_status: "1" });
+      setState({ ...state, signature_status: index === "final" ? "1" : felidData?.signature_status || "0", pdf_genrated_status: "1" });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.initial]);
@@ -730,7 +736,6 @@ const AgreementOneForm = ({
             >
               <div
                 className={`form-group col-md-12`}
-                key={index}
               >
                 <label
                   htmlFor={"sign"}
@@ -743,7 +748,7 @@ const AgreementOneForm = ({
                   type="text"
                   className={`form-control`}
                   value={state?.family_json[index]?.client_signature.includes("data:image/png;base64") ? "" : state?.family_json[index]?.client_signature}
-                  onChange={(e)=>handleSignature(e.target.value, index, "client_signature")}
+                  onChange={(e) => handleSignature(e.target.value, index, "client_signature")}
                   placeholder={"Signature"}
                   id={"sign"}
                   name={"sign"}
@@ -773,6 +778,27 @@ const AgreementOneForm = ({
                   : "d-none"
               }
             >
+              <div
+                className={`form-group col-md-12`}
+              >
+                <label
+                  htmlFor={"rcic_sign"}
+                  className="font-size-4 text-black-2 line-height-reset"
+                >
+                  Add Text for signature
+                  {/* {required === true ? <span className="text-danger">*</span> : ""} */}
+                </label>
+                <input
+                  type="text"
+                  className={`form-control`}
+                  value={state?.rcic_signature.includes("data:image/png;base64") ? "" : state?.family_json[index]?.client_signature}
+                  onChange={(e) => handleSignature(e.target.value, "", "rcic_signature")}
+                  placeholder={"Signature"}
+                  id={"rcic_sign"}
+                  name={"rcic_sign"}
+                />
+              </div>
+              <h6 className="text-center">Or</h6>
               <SignaturePadComponent
                 onEnd={(signature) =>
                   handleSignature(signature, "", "rcic_signature")
@@ -803,7 +829,7 @@ const AgreementOneForm = ({
               <button
                 type="submit"
                 className="btn btn-primary btn-small w-25 mt-5 rounded-5 text-uppercase p-8"
-                disabled={loading || IsFamilyFelidsEmpty !== false || index === "final" ? (!state.initial || !state?.family_json[0]?.client_signature) : false}
+                disabled={loading || IsFamilyFelidsEmpty !== false || index === "final" ? (!state.initial || !state?.family_json[0]?.client_signature) : (openSignature === "yes" && index !== "final" && (!state?.family_json[0]?.client_signature || !state?.rcic_signature)) ? true : false}
               >
                 {loading
                   ? "Saving..."

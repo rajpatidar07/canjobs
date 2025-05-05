@@ -12,6 +12,9 @@ import {
 } from "@react-pdf/renderer";
 import moment from "moment";
 import { AddSharePointDOcument, AddUpdateAgreement } from "../../../../api/api";
+import InitialFunction from "../CommonThings/InitialFunction";
+import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
+import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
 // import { toast } from "react-toastify";
 
 const AlbertaPnpPdf = () => {
@@ -100,7 +103,7 @@ const AlbertaPnpPdf = () => {
                 </View>
                 <View>
                     <Text>
-                        This Retainer Agreement is made this {felidData?.client_file_no}
+                        This Retainer Agreement is made this 
                         <Text style={styles.textunderline}>
                             {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "_______" : " " + moment(new Date(felidData?.agreement_date)).format("Do") + " "}
                         </Text>
@@ -427,7 +430,7 @@ const AlbertaPnpPdf = () => {
                                                 },
                                             ]}
                                         >
-                                            <Text>{felidData?.courier_charges}</Text>
+                                            <Text></Text>
                                         </View>
                                     </View>
                                     <View style={styles.row}>
@@ -441,7 +444,7 @@ const AlbertaPnpPdf = () => {
                                             ]}
                                         >
 
-                                            <Text>{felidData?.government_fees}</Text>
+                                            <Text>{felidData?.courier_charges}</Text>
                                         </View>
                                     </View>
                                     <View style={styles.row}>
@@ -455,8 +458,7 @@ const AlbertaPnpPdf = () => {
                                             ]}
                                         >
                                             <Text>
-                                                {(felidData?.courier_charges && felidData?.government_fee) ? parseInt(felidData?.courier_charges) +
-                                                    parseInt(felidData?.government_fees) : ""}
+                                            {felidData?.government_fees}
                                             </Text>
                                         </View>
                                     </View>
@@ -478,7 +480,7 @@ const AlbertaPnpPdf = () => {
                                 </View>
                                 <View style={styles.cell}>
 
-                                    <Text>{felidData?.applicable_taxes}</Text>
+                                    <Text>{felidData?.application_fees}</Text>
                                 </View>
                             </View>
                             <View style={styles.row}>
@@ -1420,52 +1422,19 @@ const AlbertaPnpPdf = () => {
                             {/* Right Signature Box (Client) */}
 
                             <View style={styles.box}>
-                                <Text style={styles.label}><Text style={styles.required}>*</Text> Signature</Text>
-                                <View style={styles.signatureBox}>
-                                    {familyJsonArray[0]?.client_signature ? (
-                                        <Image src={familyJsonArray[0].client_signature} style={{
-                                            display: "inline-block",
-                                            maxWidth: "100%",
-                                            maxHeight: "100%",
-                                            textTransform: "capitalize",
-                                        }} />
-                                    ) : (
-                                        <View
-                                            style={{
-                                                display: "inline-block",
-                                                width: "100%",
-                                                height: 50,
-                                                border: "1px solid #ccc",
-                                            }}
-                                        />)}
-                                </View>
+                                <ClientSignatureFunction
+                                    felidData={felidData}
+                                    familyJsonArray={familyJsonArray}
+                                    page={"user"}
+                                    isPdf={true}
+                                />
                                 <Text style={[styles.text, styles.textBold]}> {" " + (familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")}</Text>
                                 <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {familyJsonArray[0]?.date_signature_client ? moment(familyJsonArray[0].date_signature_client).format("DD/MM/YYYY") : "______________"}</Text>
-                                <Text style={styles.text}><Text style={styles.textBold}>Signed at:</Text>_______________________ <Text style={styles.dateLine}></Text></Text>
                             </View>
 
                             {/* Left Signature Box (RCIC) */}
                             <View style={styles.box}>
-                                <Text style={styles.label}><Text style={styles.required}>*</Text> Signature</Text>
-                                <View style={styles.signatureBox}>
-                                    {felidData?.rcic_signature ? (
-                                        <Image src={felidData.rcic_signature} style={{
-                                            display: "inline-block",
-                                            maxWidth: "100%",
-                                            maxHeight: "100%",
-                                            textTransform: "capitalize",
-                                        }} />
-                                    ) : (
-                                        <View
-                                            style={{
-                                                display: "inline-block",
-                                                width: "100%",
-                                                height: 50,
-                                                border: "1px solid #ccc",
-                                            }}
-                                        />
-                                    )}
-                                </View>
+                                <RCICSignatureFunction isPdf={true} felidData={felidData} />
                                 <Text style={[styles.text, styles.textBold]}>Harpreet Kaur (RCIC)</Text>
                                 <Text style={styles.text}>RCIC # R533393 CAN Pathways Immigration Consultancy Ltd.</Text>
                                 <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {felidData?.date_signature_rcic !== "0000-00-00 00:00:00" && felidData?.date_signature_rcic ? moment(felidData.date_signature_rcic).format("DD/MM/YYYY") : "______________"}</Text>
@@ -1475,7 +1444,7 @@ const AlbertaPnpPdf = () => {
                     </View>
 
                 </View>
-                <View style={{ marginTop: 25 }}>
+                <View style={{ marginTop: 30 }}>
                     <Text style={[{ textAlign: "center", }, styles.definition]}>
                         AUTHORIZATION
                     </Text>
@@ -1615,25 +1584,12 @@ const AlbertaPnpPdf = () => {
                             <View style={[styles.clientFormChild, { alignSelf: "center" }]}>
                                 <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
                                     <View style={{ width: "100%" }}>
-                                        <Text style={styles.label}><Text style={styles.required}>*</Text> Signature</Text>
-                                        <View style={styles.signatureBox}>
-                                            {familyJsonArray[0]?.client_signature ? (
-                                                <Image src={familyJsonArray[0].client_signature} style={{
-                                                    display: "inline-block",
-                                                    maxWidth: "100%",
-                                                    maxHeight: "100%",
-                                                    textTransform: "capitalize",
-                                                }} />
-                                            ) : (
-                                                <View
-                                                    style={{
-                                                        display: "inline-block",
-                                                        width: "100%",
-                                                        height: 50,
-                                                        border: "1px solid #ccc",
-                                                    }}
-                                                />)}
-                                        </View>
+                                        <ClientSignatureFunction
+                                            felidData={felidData}
+                                            familyJsonArray={familyJsonArray}
+                                            page={"user"}
+                                            isPdf={true}
+                                        />
                                     </View>
                                 </View>
                                 )
@@ -1683,8 +1639,8 @@ const AlbertaPnpPdf = () => {
                                 <View>
                                     <View
                                         style={{
-                                            width: "100%",
-                                            height: 20,
+                                            width: 100,
+                                            height: 50,
                                             border: "1px solid #ccc",
                                             display: "flex",
                                             alignItems: "center",
@@ -1700,18 +1656,14 @@ const AlbertaPnpPdf = () => {
                                                     textTransform: "capitalize",
                                                 }}
                                             >
-                                                {felidData.initial
-                                                    .split(" ")
-                                                    .filter((word) => word)
-                                                    .map((word) => word[0])
-                                                    .join(" ")}
+                                                <InitialFunction initial={felidData?.initial} />
                                             </Text>
                                         ) : (
                                             <View
                                                 style={{
                                                     display: "inline-block",
                                                     width: 100,
-                                                    height: 20,
+                                                    height: 50,
                                                     border: "1px solid #ccc",
                                                 }}
                                             />
@@ -1752,7 +1704,7 @@ const AlbertaPnpPdf = () => {
                                         <View>
                                             <View
                                                 style={{
-                                                    width: "100%",
+                                                    width: 100,
                                                     height: 50,
                                                     border: "1px solid #ccc",
                                                     display: "flex",
@@ -1769,11 +1721,7 @@ const AlbertaPnpPdf = () => {
                                                             textTransform: "capitalize",
                                                         }}
                                                     >
-                                                        {felidData.initial
-                                                            .split(" ")
-                                                            .filter((word) => word)
-                                                            .map((word) => word[0])
-                                                            .join(" ")}
+                                                        <InitialFunction initial={felidData?.initial} />
                                                     </Text>
                                                 ) : (
                                                     <View
@@ -1786,7 +1734,6 @@ const AlbertaPnpPdf = () => {
                                                     />
                                                 )}
                                             </View>
-
                                         </View>
                                     </View>
                                 </View>
