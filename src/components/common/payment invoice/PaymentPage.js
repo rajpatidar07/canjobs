@@ -360,6 +360,7 @@ const Payment_Page = (props) => {
                         >
                           <span className="text-gray px-2"><AiOutlineFilePdf /></span>
                         </button>
+                        {console.log(item.document_id)}
                         <button
                           className="btn btn-outline-info action_btn "
                           disabled={!item.document_id}
@@ -368,7 +369,7 @@ const Payment_Page = (props) => {
                             setInvoiceData(item);
                             GetInvoicePdf(item);
                           }}
-                          title="View Retainer Invoice"
+                          title="View Invoice"
                         >
                           <span className="text-gray px-2">
                             <FaEye />

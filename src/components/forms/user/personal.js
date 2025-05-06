@@ -415,7 +415,23 @@ function PersonalDetails(props) {
     setLoading(false);
     props.close();
   };
+  const getHierarchy = (id) => {
+    const selected = applicantTypeList.find(item => item.id === id);
+    if (!selected) return { main: "", sub: "", subsub: "" };
 
+    if (selected.level === "0") {
+      return { main: selected.id, sub: "", subsub: "" };
+    } else if (selected.level === "1") {
+      return { main: selected.parent_id, sub: selected.id, subsub: "" };
+    } else if (selected.level === "2") {
+      const sub = applicantTypeList.find(item => item.id === selected.parent_id);
+      return { main: sub?.parent_id || "", sub: sub?.id || "", subsub: selected.id };
+    }
+
+    return { main: "", sub: "", subsub: "" };
+  };
+
+  const { main, sub, subsub } = getHierarchy(state.interested_in_id);
   // Calculate min and max dates dynamically
   // const currentYear = moment().year();
   // const minDate = moment().subtract(10, 'years').format("YYYY-MM-DD");
@@ -1009,33 +1025,34 @@ function PersonalDetails(props) {
                   </span>
                 )}
               </div> */}
-                  <div className={`form-group  ${props.user_of_page === "assignedUser" ||
+
+                  {/* <div className={`form-group  ${props.user_of_page === "assignedUser" ||
                     props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" || props.pageNameForForm === "Category" || portal === "study"
                     ? "d-none"
                     : `${props.pageNameForForm === "ApplicantType" ?
                       "col-md-12" : "col-md-4"}
-                      `}`
+                        `}`
                   }>
                     <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
-                      Applicant's Type /Sub Type : <span className="text-danger">*</span>
+                      Applicant's Type : <span className="text-danger">*</span>
                     </label>
                     <select
                       className={`${errors.interested_in_id
                         ? "form-control  border border-danger "
                         : "form-control "}
-                          ${state.interested_in_id === "pgwp" || state.interested_in_id === "wes" ||
+                            ${state.interested_in_id === "pgwp" || state.interested_in_id === "wes" ||
                           state.interested_in_id === "atip" ?
                           `text-uppercase` :
                           "text-capitalize"}`
                       }
-                      id="interested_in_id"
+                      // id="interested_in_id"
                       name="interested_in_id"
-                      value={state.interested_in_id || ""}
+                      value={applicantTypeList.filter((item) => item.id == state.interested_in_id).level == 1 ? applicantTypeList.filter((item) => item.id == state.interested_in_id).parent_id : state.interested_in_id || ""}
                       onChange={onInputChange}
                     >
                       <option value={""}>Select</option>
-                      {(applicantTypeList || []).map((interest, index) => {
-                        const parent = applicantTypeList.find((item) => item.id === interest.parent_id);
+                      {(applicantTypeList.filter((item) => item.level === "0") || []).map((interest, index) => {
+                        // const parent = applicantTypeList.find((item) => item.id === interest.parent_id);
 
                         return (
                           <option key={index} value={interest.id} className={
@@ -1053,9 +1070,9 @@ function PersonalDetails(props) {
                           }
                           >
                             {interest?.title}
-                            {interest.level !== "0" ? (
+                            {/* {interest.level !== "0" ? (
                               <small>( {parent?.title} sub type)</small>
-                            ) : null}
+                            ) : null} 
                           </option>
                         );
                       })}
@@ -1070,7 +1087,7 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
-                  {/* {[14, "14", 15, "15", 16, "16", 4, "4"].includes(state.interested_in_id) &&
+                  {applicantTypeList?.filter((item) => item.parent_id == state.interested_in_id).length > 0 &&
                     state.interested_in_id &&
                     <div className={`form-group ${props.user_of_page === "assignedUser" ||
                       props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned"
@@ -1078,23 +1095,23 @@ function PersonalDetails(props) {
                       ? "d-none"
                       : `${props.pageNameForForm === "Category" ?
                         "col-md-12" : "col-md-4"}`}
-  `}>
+    `}>
                       <label
-                        htmlFor="category_id"
+                        // htmlFor="category_id"
                         className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                       >
                         Sub Type:
                       </label>
                       <select
-                        name="category_id"
-                        value={state.category_id || ""}
+                        name="interested_in_id"
+                        value={state.interested_in_id || ""}
                         onChange={onInputChange}
                         className={`form-control 
-                          ${errors.category_id
+                            ${errors.interested_in_id
                             ? " border border-danger"
-                            : ""} ${state.category_id === "aos" || state.category_id === "rrs" ? "text-uppercase" : "text-capitalize"}`
+                            : ""} ${state.interested_in_id === "aos" || state.interested_in_id === "rrs" ? "text-uppercase" : "text-capitalize"}`
                         }
-                        id="category_id"
+                      // id="interested_in_id"
                       >
                         <option value={""}>Select Sub Type</option>
                         {(applicantTypeList.filter((item) => item.parent_id === state.interested_in_id) || []).map((subType, index) => (
@@ -1103,20 +1120,11 @@ function PersonalDetails(props) {
                           </option>
                         ))}
                       </select>
-                      {errors.category_id && (
-                        <span
-                          key={errors.category_id}
-                          className="text-danger font-size-3"
-                        >
-                          {errors.category_id}
-                        </span>
-                      )}
                     </div>
                   }
-                  {["15", 15].includes(state.interested_in_id) &&
-                    state.interested_in_id &&
-                    ["38", 38].includes(state?.category_id) &&
-                    state.category_id && (
+                 
+                  {(applicantTypeList.filter((item) => item.parent_id == state.interested_in_id).length > 0 &&
+                    applicantTypeList?.find((item) => item.parent_id == state.interested_in_id).level == 1) && (
                       <div className={`form-group ${props.user_of_page === "assignedUser" ||
                         props.user_of_page === "agentAssigned" ||
                         props.pageNameForForm === "agentAssigned" ||
@@ -1124,17 +1132,17 @@ function PersonalDetails(props) {
                         ? "d-none"
                         : `${props.pageNameForForm === "Category" ? "col-md-12" : "col-md-4"}`}`}>
                         <label
-                          htmlFor="sub_category_id"
+                          // htmlFor="sub_category_id"
                           className="font-size-4 text-black-2 font-weight-semibold text-capitalize line-height-reset"
                         >
-                          {applicantTypeList.find((item) => item.id === state.category_id)??.title} Sub Type:
+                          {applicantTypeList?.find((item) => item.id === state.interested_in_id)?.title} Sub Type:
                         </label>
                         <select
-                          name="sub_category_id"
-                          value={state.sub_category_id || ""}
+                          name="interested_in_id"
+                          value={applicantTypeList.filter((item) => item.id == state.interested_in_id).level == 1 ? applicantTypeList.filter((item) => item.id == state.interested_in_id).parent_id : state.interested_in_id || ""}
                           onChange={onInputChange}
                           className={`form-control text-capitalize ${errors.sub_category_id ? "border border-danger" : ""}`}
-                          id="sub_category_id"
+                        // id="sub_category_id"
                         >
                           <option value={""}>Select Sub Type</option>
                           {(applicantTypeList.filter((item) => item.parent_id === state.category_id) || []).map((subType, index) => (
@@ -1144,13 +1152,81 @@ function PersonalDetails(props) {
                           ))}
                         </select>
 
-                        {errors.sub_category_id && (
-                          <span key={errors.sub_category_id} className="text-danger font-size-3">
-                            {errors.sub_category_id}
-                          </span>
-                        )}
                       </div>
                     )} */}
+                  {/* MAIN TYPE */}
+                  <div className="form-group col-md-4">
+                    <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
+                      Applicant's Type: <span className="text-danger">*</span>
+                    </label>
+                    <select
+                      className={`form-control ${errors.interested_in_id ? "border border-danger" : ""}`}
+                      name="interested_in_id"
+                      value={main}
+                      onChange={onInputChange}
+                    >
+                      <option value="">Select Main Type</option>
+                      {applicantTypeList
+                        .filter(item => item.level === "0")
+                        .map(item => (
+                          <option key={item.id} value={item.id}>
+                            {item.title}
+                          </option>
+                        ))}
+                    </select>
+                    {errors.interested_in_id && (
+                      <span className="text-danger font-size-3">
+                        {errors.interested_in_id}
+                      </span>
+                    )}
+                  </div>
+
+                  {/* SUB TYPE */}
+                  {main && applicantTypeList.some(item => item.level === "1" && item.parent_id === main) && (
+                    <div className="form-group col-md-4">
+                      <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
+                        Sub Type:
+                      </label>
+                      <select
+                        className={`form-control ${errors.interested_in_id ? "border border-danger" : ""}`}
+                        name="interested_in_id"
+                        value={sub}
+                        onChange={onInputChange}
+                      >
+                        <option value="">Select Sub Type</option>
+                        {applicantTypeList
+                          .filter(item => item.level === "1" && item.parent_id === main)
+                          .map(item => (
+                            <option key={item.id} value={item.id}>
+                              {item.title}
+                            </option>
+                          ))}
+                      </select>
+                    </div>
+                  )}
+
+                  {/* SUB SUB TYPE */}
+                  {sub && applicantTypeList.some(item => item.level === "2" && item.parent_id === sub) && (
+                    <div className="form-group col-md-4">
+                      <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
+                        Sub Sub Type:
+                      </label>
+                      <select
+                        className={`form-control ${errors.interested_in_id ? "border border-danger" : ""}`}
+                        name="interested_in_id"
+                        value={subsub}
+                        onChange={onInputChange}
+                      >
+                        <option value="">Select Sub Sub Type</option>
+                        {applicantTypeList
+                          .filter(item => item.level === "2" && item.parent_id === sub)
+                          .map(item => (
+                            <option key={item.id} value={item.id}>
+                              {item.title}
+                            </option>
+                          ))}
+                      </select>
+                    </div>)}
 
                   <div className={`form-group col-md-4
                   ${props.user_of_page === "assignedUser" || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned"
