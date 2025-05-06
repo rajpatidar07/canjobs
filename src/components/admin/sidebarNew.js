@@ -42,7 +42,6 @@ import {
 } from "../../api/api";
 import TableInput from "../common/TableInput";
 import SAlert from "../common/sweetAlert";
-import { CiTrash } from "react-icons/ci";
 // import { CiUser } from "react-icons/ci";
 const AdminSidebar = (props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(

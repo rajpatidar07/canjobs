@@ -27,7 +27,7 @@ const AggrementOne = () => {
     folderId: folderID /*, code*/,
   } = JSON.parse(data) || {};
   // console.log(felidData?.family_json, "<=========== Testing data =======>", data)
-  const familyJsonArray = felidData?.family_json || [] //? JSON.parse(felidData?.family_json) : [];
+  const familyJsonArray = felidData?.family_json || []; //? JSON.parse(felidData?.family_json) : [];
   // console.log( JSON.parse(felidData?.family_json))
   // const latestCode = JSON.stringify(code)
   //   .replace('" <', "<")
@@ -162,7 +162,7 @@ const AggrementOne = () => {
               let addDocId = await AddUpdateAgreement(data);
               console.log(addDocId);
             } catch (err) {
-              console.log(err)
+              console.log(err);
             }
           }
           // console.log(res.data)
@@ -189,7 +189,13 @@ const AggrementOne = () => {
     <View style={{ height: "auto" }}>
       <View style={{ padding: "10px 20px" }}>
         <Text
-          style={{ textAlign: "center", fontSize: "24px", marginBottom: 15 }}
+          style={{
+            textAlign: "center",
+            fontSize: "20px",
+            marginBottom: 15,
+            fontWeight: "bold",
+            stroke: "1px",
+          }}
         >
           RETAINER AGREEMENT
         </Text>
@@ -201,71 +207,99 @@ const AggrementOne = () => {
             marginBottom: 10,
           }}
         >
-          <Text style={{ fontWeight: 600 }}>
+          <Text style={{ fontWeight: "bold" }}>
             RCIC Membership Number: R533393
           </Text>
-          <Text style={{ fontWeight: 600 }}>
-            Client File Number: : {felidData?.client_file_no || "________________"}
+          <Text style={{ fontWeight: "bold" }}>
+            Client File Number: :{" "}
+            {felidData?.client_file_no || "________________"}
           </Text>
         </View>
         <View>
           <Text>
-            This Retainer Agreement is made this<Text style={styles.textunderline}>
-              {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "_______" : " " + moment(new Date(felidData?.agreement_date)).format("Do") + " "}
+            This Retainer Agreement is made this
+            <Text style={styles.textunderline}>
+              {!felidData?.agreement_date ||
+              felidData?.agreement_date === "0000-00-00 00:00:00" ||
+              felidData?.agreement_date === "0000-00-00"
+                ? "_______"
+                : " " +
+                  moment(new Date(felidData?.agreement_date)).format("Do") +
+                  " "}
             </Text>
             day of
             <Text style={styles.textunderline}>
-              {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "_______" : " " + moment(new Date(felidData?.agreement_date)).format("MMMM") + " "}
+              {!felidData?.agreement_date ||
+              felidData?.agreement_date === "0000-00-00 00:00:00" ||
+              felidData?.agreement_date === "0000-00-00"
+                ? "_______"
+                : " " +
+                  moment(new Date(felidData?.agreement_date)).format("MMMM") +
+                  " "}
             </Text>
-            {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "_______" : " " + moment(new Date(felidData?.agreement_date)).format("YYYY")} between
-            Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur (the
-            “RCIC”), RCIC Membership Number
+            {!felidData?.agreement_date ||
+            felidData?.agreement_date === "0000-00-00 00:00:00" ||
+            felidData?.agreement_date === "0000-00-00"
+              ? "_______"
+              : " " +
+                moment(new Date(felidData?.agreement_date)).format("YYYY")}{" "}
+            between Regulated Canadian Immigration Consultant (RCIC) Harpreet
+            Kaur (the “RCIC”), RCIC Membership Number
             <Text style={styles.textunderline}> R533393</Text>, Phone number
             <Text style={styles.textunderline}> 4038885308 </Text> , Email
             <Link
               src="mailto:info@canpathways.ca"
               className="a"
               target="_blank"
-            >   info@canpathways.ca </Link> located at
+            >
+              {" "}
+              info@canpathways.ca{" "}
+            </Link>{" "}
+            located at
             <Text style={styles.textunderline}>
-              {" "}  2618 Hopewell Pl NE #310, Calgary, AB T1Y 7J7
+              {" "}
+              2618 Hopewell Pl NE #310, Calgary, AB T1Y 7J7
             </Text>
             <Text style={styles.textunderline}></Text> Canada and Client
-            <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
-
-              {" " + (familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")}
-            </Text>
-            {" "}(the “Client”)
+            <Text
+              style={[styles.textunderline, { textTransform: "capitalize" }]}
+              className="para_gap"
+            >
+              {" " +
+                (familyJsonArray[0]?.client_first_name || "") +
+                " " +
+                (familyJsonArray[0]?.client_last_name || " ")}
+            </Text>{" "}
+            (the “Client”)
             <Text className="p"> , located at </Text>
-            <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
-
+            <Text
+              style={[styles.textunderline, { textTransform: "capitalize" }]}
+              className="para_gap"
+            >
               {" " + (felidData?.client_address || "        ")}
             </Text>
-            ,{'\n'} Email
+            ,{"\n"}
             <Text style={styles.textunderline} className="para_gap">
-
-              {" " + (felidData?.client_email || "     ")}
-            </Text>
-            , Contact number
+              Email{" " + (felidData?.client_email || "     ")},
+            </Text>{" "}
             <Text style={styles.textunderline} className="para_gap">
-
-              {" " + (felidData?.client_contact || "     ")}
+              Contact number {" " + (felidData?.client_contact || "     ")}.
             </Text>
-            .
           </Text>
         </View>
         <View style={{ marginTop: 15 }}>
           {familyJsonArray.slice(1).length !== 0 ? (
             <Text style={{ marginBottom: 5 }}>
-              Details of Family members and dependents to be added in this application
+              Details of Family members and dependents to be added in this
+              application
             </Text>
           ) : null}
-          <View style={{ flexDirection: 'column' }}>
+          <View style={{ flexDirection: "column" }}>
             {(familyJsonArray.slice(1) || []).map((item, index) => (
               <View
                 style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
+                  flexDirection: "row",
+                  justifyContent: "space-between",
                   marginBottom: 5,
                 }}
                 key={index}
@@ -274,19 +308,21 @@ const AggrementOne = () => {
                   Name {index + 1}:
                   <Text
                     style={{
-                      textDecoration: 'underline',
-                      textTransform: 'capitalize',
+                      textDecoration: "underline",
+                      textTransform: "capitalize",
                     }}
                   >
-                    {(item.client_first_name || "") + ' ' + (item.client_last_name || "")}
+                    {(item.client_first_name || "") +
+                      " " +
+                      (item.client_last_name || "")}
                   </Text>
                 </Text>
                 <Text style={{ flex: 1 }}>
                   Date of birth:
-                  <Text style={{ textDecoration: 'underline' }}>
+                  <Text style={{ textDecoration: "underline" }}>
                     {item.client_date_of_birth
-                      ? moment(item.client_date_of_birth).format('DD-MM-YYYY')
-                      : '__________'}
+                      ? moment(item.client_date_of_birth).format("DD-MM-YYYY")
+                      : "__________"}
                   </Text>
                 </Text>
               </View>
@@ -332,14 +368,18 @@ const AggrementOne = () => {
             </Text>
             <View style={{ paddingLeft: 10 }}>
               <Text style={{ marginTop: 10 }}>
-                The Client asked the RCIC, and the RCIC has agreed, to act for the
-                Client in the matter of
+                The Client asked the RCIC, and the RCIC has agreed, to act for
+                the Client in the matter of
               </Text>
             </View>
             <View style={{ paddingLeft: 10 }}>
-              {felidData?.matter ? <Text style={styles.textunderline} >
-                {felidData?.matter}
-              </Text> : <Text>__________________________________________________________________</Text>}
+              {felidData?.matter ? (
+                <Text style={styles.textunderline}>{felidData?.matter}</Text>
+              ) : (
+                <Text>
+                  __________________________________________________________________
+                </Text>
+              )}
             </View>
             <Text style={{ paddingLeft: 10 }}>
               . In consideration of the fees paid and the matter stated above,
@@ -347,10 +387,12 @@ const AggrementOne = () => {
             </Text>
             <View style={{ paddingLeft: 10 }}>
               <Text>
-                (a) [Summary of preliminary advice given to the client
-                {felidData?.summary ? <Text style={styles.textunderline} >
-                  {felidData?.summary}
-                </Text> : <Text>_____________________________________</Text>}
+                (a) [Summary of preliminary advice given to the client{" "}
+                {felidData?.summary ? (
+                  <Text style={styles.textunderline}>{felidData?.summary}</Text>
+                ) : (
+                  <Text>_____________________________________</Text>
+                )}
                 ]
               </Text>
               <Text>
@@ -363,8 +405,10 @@ const AggrementOne = () => {
               <Text>
                 (f) [File maintenance and correspondence with client and IRCC]
               </Text>
-              <Text>  (g)[Application submission]</Text>
-              <Text> (h)[File maintenance and correspondence with client and IRCC]</Text>
+              <Text>(g) [Application submission]</Text>
+              <Text>
+                (h) [File maintenance and correspondence with client and IRCC]
+              </Text>
             </View>
             <Text style={{ marginTop: 15, paddingLeft: 10 }}>
               The RCIC shall provide the Client with a finalized, signed copy of
@@ -394,93 +438,149 @@ const AggrementOne = () => {
             </Text>
 
             <View style={{ paddingLeft: 10 }}>
-              <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                <Text style={{ width: 40, fontWeight: 'bold' }}>3.1</Text>
+              <View style={{ marginTop: 20, flexDirection: "row" }}>
+                <Text style={{ width: 40, fontWeight: "bold" }}>3.1</Text>
                 <Text style={{ flex: 1 }}>
                   The Client must provide, upon request from the RCIC:
                 </Text>
               </View>
               <View style={{ marginLeft: 50, marginTop: 5 }}>
-                <Text style={{ marginTop: 5 }}>• All necessary documentation</Text>
                 <Text style={{ marginTop: 5 }}>
-                  • All documentation in English or French, or with an English or French translation
+                  • All necessary documentation
+                </Text>
+                <Text style={{ marginTop: 5 }}>
+                  • All documentation in English or French, or with an English
+                  or French translation
                 </Text>
               </View>
 
-              <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                <Text style={{ width: 40, fontWeight: 'bold' }}>3.2</Text>
+              <View style={{ marginTop: 20, flexDirection: "row" }}>
+                <Text style={{ width: 40, fontWeight: "bold" }}>3.2</Text>
                 <Text style={{ flex: 1 }}>
-                  The Client understands that he/she must be accurate and honest in the information he/she provides and that any misrepresentations or omissions may void this Agreement, or seriously affect the outcome of the application or the retention of any immigration status he/she may obtain. The RCIC’s obligations under the Retainer Agreement are null and void if the Client knowingly provides any inaccurate, misleading, or false material information. The Client’s financial obligations remain.
+                  The Client understands that he/she must be accurate and honest
+                  in the information he/she provides and that any
+                  misrepresentations or omissions may void this Agreement, or
+                  seriously affect the outcome of the application or the
+                  retention of any immigration status he/she may obtain. The
+                  RCIC’s obligations under the Retainer Agreement are null and
+                  void if the Client knowingly provides any inaccurate,
+                  misleading, or false material information. The Client’s
+                  financial obligations remain.
                 </Text>
               </View>
 
-              <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                <Text style={{ width: 40, fontWeight: 'bold' }}>3.3</Text>
+              <View style={{ marginTop: 20, flexDirection: "row" }}>
+                <Text style={{ width: 40, fontWeight: "bold" }}>3.3</Text>
                 <Text style={{ flex: 1 }}>
-                  Client is informed that RCIC might obtain assistance from other professionals or services.
+                  Client is informed that RCIC might obtain assistance from
+                  other professionals or services.
                 </Text>
               </View>
 
-              <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                <Text style={{ width: 40, fontWeight: 'bold' }}>3.4</Text>
+              <View style={{ marginTop: 20, flexDirection: "row" }}>
+                <Text style={{ width: 40, fontWeight: "bold" }}>3.4</Text>
                 <Text style={{ flex: 1 }}>
-                  Client understands that RCIC should not be held responsible for visa outcome as RCIC cannot guarantee the decision of IRCC. If IRCC policy or rules change before/during or after the application submission and the client is deemed ineligible, RCIC should not be held responsible for that.
+                  Client understands that RCIC should not be held responsible
+                  for visa outcome as RCIC cannot guarantee the decision of
+                  IRCC. If IRCC policy or rules change before/during or after
+                  the application submission and the client is deemed
+                  ineligible, RCIC should not be held responsible for that.
                 </Text>
               </View>
 
-              <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                <Text style={{ width: 40, fontWeight: 'bold' }}>3.5</Text>
+              <View style={{ marginTop: 20, flexDirection: "row" }}>
+                <Text style={{ width: 40, fontWeight: "bold" }}>3.5</Text>
                 <Text style={{ flex: 1 }}>
-                  In the event Immigration, Refugees and Citizenship Canada (IRCC) or Employment and Social Development Canada (ESDC) or Provincial Government Administrator or processing Visa Office should contact the Client directly, the Client is instructed to notify the RCIC immediately.
+                  In the event Immigration, Refugees and Citizenship Canada
+                  (IRCC) or Employment and Social Development Canada (ESDC) or
+                  Provincial Government Administrator or processing Visa Office
+                  should contact the Client directly, the Client is instructed
+                  to notify the RCIC immediately.
                 </Text>
               </View>
 
-              <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                <Text style={{ width: 40, fontWeight: 'bold' }}>3.6</Text>
+              <View style={{ marginTop: 20, flexDirection: "row" }}>
+                <Text style={{ width: 40, fontWeight: "bold" }}>3.6</Text>
                 <Text style={{ flex: 1 }}>
-                  The Client is to immediately advise the RCIC of any change in the marital, family, or civil status or change of physical address or contact information for any person included in the application.
+                  The Client is to immediately advise the RCIC of any change in
+                  the marital, family, or civil status or change of physical
+                  address or contact information for any person included in the
+                  application.
                 </Text>
               </View>
 
-              <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                <Text style={{ width: 40, fontWeight: 'bold' }}>3.7</Text>
+              <View style={{ marginTop: 20, flexDirection: "row" }}>
+                <Text style={{ width: 40, fontWeight: "bold" }}>3.7</Text>
                 <Text style={{ flex: 1 }}>
-                  In the event of a Joint Retainer Agreement, the Clients agree that the RCIC must share information among all clients, as required. Furthermore, if a conflict develops that cannot be resolved, the RCIC cannot continue to act for both or all of the Clients and may have to withdraw completely from representation.
+                  In the event of a Joint Retainer Agreement, the Clients agree
+                  that the RCIC must share information among all clients, as
+                  required. Furthermore, if a conflict develops that cannot be
+                  resolved, the RCIC cannot continue to act for both or all of
+                  the Clients and may have to withdraw completely from
+                  representation.
                 </Text>
               </View>
 
-              <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                <Text style={{ width: 40, fontWeight: 'bold' }}>3.8</Text>
+              <View style={{ marginTop: 20, flexDirection: "row" }}>
+                <Text style={{ width: 40, fontWeight: "bold" }}>3.8</Text>
                 <Text style={{ flex: 1 }}>
-                  All necessary information and documentation in English or French, or with an English or French translation, if in any other language, with a certified English translation, according to the timeline recommended by RCIC. In the event documents are not provided or the client fails to contact the RCIC in spite of the request made by RCIC on the email provided by the client in the retainer agreement, before the due date mentioned (which is within 30 days from the retainer signed, or earlier also depending upon the requirements of the case) the RCIC can close the file after notifying the client in advance about the non-responsiveness. An administrative fee of CAD$ 300.00 plus taxes should be paid by the client to close the file. All pending fees are due and are to be paid by the client and if there is any unused money with RCIC, it should be refunded to the client if applicable.
+                  All necessary information and documentation in English or
+                  French, or with an English or French translation, if in any
+                  other language, with a certified English translation,
+                  according to the timeline recommended by RCIC. In the event
+                  documents are not provided or the client fails to contact the
+                  RCIC in spite of the request made by RCIC on the email
+                  provided by the client in the retainer agreement, before the
+                  due date mentioned (which is within 30 days from the retainer
+                  signed, or earlier also depending upon the requirements of the
+                  case) the RCIC can close the file after notifying the client
+                  in advance about the non-responsiveness. An administrative fee
+                  of CAD$ 300.00 plus taxes should be paid by the client to
+                  close the file. All pending fees are due and are to be paid by
+                  the client and if there is any unused money with RCIC, it
+                  should be refunded to the client if applicable.
                 </Text>
               </View>
 
-              <View style={{ marginTop: 35, flexDirection: 'row' }}>
-                <Text style={{ width: 40, fontWeight: 'bold' }}>3.9</Text>
+              <View style={{ marginTop: 35, flexDirection: "row" }}>
+                <Text style={{ width: 40, fontWeight: "bold" }}>3.9</Text>
                 <Text style={{ flex: 1 }}>
-                  The Client has been explained by RCIC and is aware of the high chances of application refusal due to a weak case and other reasons as explained. The Client still agrees to go ahead with the application.
+                  The Client has been explained by RCIC and is aware of the high
+                  chances of application refusal due to a weak case and other
+                  reasons as explained. The Client still agrees to go ahead with
+                  the application.
                 </Text>
               </View>
 
-              <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                <Text style={{ width: 40, fontWeight: 'bold' }}>3.10</Text>
+              <View style={{ marginTop: 20, flexDirection: "row" }}>
+                <Text style={{ width: 40, fontWeight: "bold" }}>3.10</Text>
                 <Text style={{ flex: 1 }}>
-                  The client also allows the RCIC to use digital signatures for the purpose of this application on his/her behalf.
+                  The client also allows the RCIC to use digital signatures for
+                  the purpose of this application on his/her behalf.
                 </Text>
               </View>
 
-              <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                <Text style={{ width: 40, fontWeight: 'bold' }}>3.11</Text>
+              <View style={{ marginTop: 20, flexDirection: "row" }}>
+                <Text style={{ width: 40, fontWeight: "bold" }}>3.11</Text>
                 <Text style={{ flex: 1 }}>
-                  Mode of communication should be the email provided by the client in this retainer only, for all the correspondence between RCIC and the client, and RCIC should be given a minimum of 7 working days to revert to any queries from the client. RCIC is not responsible for communication or consequences if the client does not receive an email sent by RCIC and did not communicate with RCIC in the given timeline or within 15 days of the sent email.
+                  Mode of communication should be the email provided by the
+                  client in this retainer only, for all the correspondence
+                  between RCIC and the client, and RCIC should be given a
+                  minimum of 7 working days to revert to any queries from the
+                  client. RCIC is not responsible for communication or
+                  consequences if the client does not receive an email sent by
+                  RCIC and did not communicate with RCIC in the given timeline
+                  or within 15 days of the sent email.
                 </Text>
               </View>
 
-              <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                <Text style={{ width: 40, fontWeight: 'bold' }}>3.12</Text>
+              <View style={{ marginTop: 20, flexDirection: "row" }}>
+                <Text style={{ width: 40, fontWeight: "bold" }}>3.12</Text>
                 <Text style={{ flex: 1 }}>
-                  Once the client provides all the documents required as per the checklist, RCIC should be given a minimum of 3 weeks from the time all documents are reviewed by RCIC and deemed complete, to submit the file to IRCC.
+                  Once the client provides all the documents required as per the
+                  checklist, RCIC should be given a minimum of 3 weeks from the
+                  time all documents are reviewed by RCIC and deemed complete,
+                  to submit the file to IRCC.
                 </Text>
               </View>
             </View>
@@ -490,11 +590,13 @@ const AggrementOne = () => {
               4. Payment Schedule
             </Text>
             <View style={{ marginTop: 15, paddingLeft: 10 }}>
-              <Text>Billing method: The Client will be billed by [flat fee with
-                payment by milestones]. Payment Terms and Conditions</Text>
+              <Text>
+                Billing method: The Client will be billed by [flat fee with
+                payment by milestones]. Payment Terms and Conditions
+              </Text>
             </View>
             <View
-              style={[styles.table, { textAlign: "center", marginTop: 88, }]}
+              style={[styles.table, { textAlign: "center", marginTop: 90 }]}
             >
               <View style={styles.row}>
                 <View style={[styles.cell, styles.headerCell]}>
@@ -509,7 +611,6 @@ const AggrementOne = () => {
                   <Text>Professional Fees</Text>
                 </View>
                 <View style={styles.cell}>
-
                   <Text>{felidData?.professional_fees}</Text>
                 </View>
               </View>
@@ -549,7 +650,6 @@ const AggrementOne = () => {
                         },
                       ]}
                     >
-
                       <Text>{felidData?.courier_charges}</Text>
                     </View>
                   </View>
@@ -563,20 +663,16 @@ const AggrementOne = () => {
                         },
                       ]}
                     >
-                      <Text>
-                        {felidData?.government_fees}
-                      </Text>
+                      <Text>{felidData?.government_fees}</Text>
                     </View>
                   </View>
                 </View>
               </View>
               <View style={styles.row}>
                 <View style={styles.cell}>
-
                   <Text>Administrative fee [as required]</Text>
                 </View>
                 <View style={styles.cell}>
-
                   <Text>{felidData?.administrative_fee}</Text>
                 </View>
               </View>
@@ -585,9 +681,7 @@ const AggrementOne = () => {
                   <Text>ApplicableTaxes: {felidData?.gst || "0"}%</Text>
                 </View>
                 <View style={styles.cell}>
-
-                  <Text>{felidData?.application_fees || ""
-                  }</Text>
+                  <Text>{felidData?.application_fees || ""}</Text>
                 </View>
               </View>
               <View style={styles.row}>
@@ -595,7 +689,6 @@ const AggrementOne = () => {
                   <Text>Balance (Paid at time of filing):</Text>
                 </View>
                 <View style={styles.cell}>
-
                   <Text>{felidData?.balance}</Text>
                 </View>
               </View>
@@ -604,21 +697,23 @@ const AggrementOne = () => {
                   <Text style={{ color: "red" }}>Total Cost</Text>
                 </View>
                 <View style={styles.cell}>
-
                   <Text>{felidData?.total_cost}</Text>
                 </View>
               </View>
             </View>
             <View>
               <Text style={{ marginTop: 15, paddingLeft: 10 }}>
-                Invoice Frequency: The RCIC must provide an Invoice to the Client
+                Invoice Frequency: The RCIC must provide an Invoice to the
+                Client
               </Text>
               <Text style={{ marginTop: 15, paddingLeft: 10 }}>
                 Note: The courier charges and Government fees based on current
                 rates and may change anytime on or before submission.
               </Text>
             </View>
-            <View style={{ height: 205 }}><Text></Text></View>
+            <View style={{ height: 205 }}>
+              <Text></Text>
+            </View>
             <View style={[styles.table, { marginTop: 57 }]}>
               <View style={styles.row}>
                 <View style={styles.cell}>
@@ -648,12 +743,18 @@ const AggrementOne = () => {
                 </View>
               </View>
               <View style={styles.row}>
-                <View style={[styles.cell, { height: "280px" }]}>
+                <View style={[styles.cell, { height: "auto" }]}>
                   <Text>
-                    <Text style={{ marginTop: 10, fontSize: "10px" }}>
+                    <Text
+                      style={{
+                        marginTop: 10,
+                        marginBottom: 10,
+                        fontSize: "10px",
+                      }}
+                    >
                       Step 1 Completes upon signing the retainer and sharing the
-                      checklists and intake sheet with client. Data gathering and
-                      Creating Express Entry Profile
+                      checklists and intake sheet with client. Data gathering
+                      and Creating Express Entry Profile
                     </Text>
                   </Text>
                 </View>
@@ -676,7 +777,13 @@ const AggrementOne = () => {
               </View>
               <View style={styles.row}>
                 <View style={styles.cell}>
-                  <Text style={{ marginTop: 10, marginBottom: 15, fontSize: "10px" }}>
+                  <Text
+                    style={{
+                      marginTop: 10,
+                      marginBottom: 15,
+                      fontSize: "10px",
+                    }}
+                  >
                     Step 2 Application preparation, filling out the forms,
                     information verification and completeness check, preparing
                     the application package Payment is due before final
@@ -708,7 +815,6 @@ const AggrementOne = () => {
             <View style={{ marginTop: 15, paddingLeft: 10 }}>
               <View>
                 <Text style={{ fontWeight: "bold" }}>
-
                   TotalAmount (Non-Refundable) (Paid at signing of contract and
                   sharing of checklist)
                 </Text>
@@ -730,52 +836,52 @@ const AggrementOne = () => {
             <View id="l5" style={{ paddingLeft: 10 }}>
               <Text style={{ marginTop: 15 }}>Note:</Text>
               <View style={{ marginTop: 10 }}>
-                <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                  <Text style={{ width: 20, fontWeight: 'bold' }}>•</Text>
+                <View style={{ marginTop: 20, flexDirection: "row" }}>
+                  <Text style={{ width: 20, fontWeight: "bold" }}>•</Text>
                   <Text style={{ flex: 1 }}>
                     There will be an additional fee, or a new fee arrangement
                     will be agreed upon for government’s any further request for
-                    additional information/documentation of up to $1000.00 such as
-                    updating the forms, asking for immigration status update,
+                    additional information/documentation of up to $1000.00 such
+                    as updating the forms, asking for immigration status update,
                     documents related to marital status change, procedural
                     fairness response or preparing and submitting statutory
                     declarations, affidavits etc.
                   </Text>
                 </View>
-                <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                  <Text style={{ width: 20, fontWeight: 'bold' }}>•</Text>
+                <View style={{ marginTop: 20, flexDirection: "row" }}>
+                  <Text style={{ width: 20, fontWeight: "bold" }}>•</Text>
                   <Text style={{ flex: 1 }}>
                     If a fee has been quoted in this Retainer, then, while the
                     RCIC expects that his fee will not exceed the
                   </Text>
                 </View>
-                <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                  <Text style={{ width: 20, fontWeight: 'bold' }}>•</Text>
+                <View style={{ marginTop: 20, flexDirection: "row" }}>
+                  <Text style={{ width: 20, fontWeight: "bold" }}>•</Text>
                   <Text style={{ flex: 1 }}>
                     The RCIC reserves the right to alter the amount of the final
-                    account to reflect the remaining balance of the fees owed plus
-                    any Disbursements and fees for additional services to which
-                    the parties previously agreed.
+                    account to reflect the remaining balance of the fees owed
+                    plus any Disbursements and fees for additional services to
+                    which the parties previously agreed.
                   </Text>
                 </View>
-                <View style={{ marginTop: 30, flexDirection: 'row' }}>
-                  <Text style={{ width: 20, fontWeight: 'bold' }}>•</Text>
+                <View style={{ marginTop: 30, flexDirection: "row" }}>
+                  <Text style={{ width: 20, fontWeight: "bold" }}>•</Text>
                   <Text style={{ flex: 1 }}>
                     For application delayed or abandoned beyond 90 days, client
                     is subjected to $350 fee plus applicable taxes to resume the
                     file.
                   </Text>
                 </View>
-                <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                  <Text style={{ width: 20, fontWeight: 'bold' }}>•</Text>
+                <View style={{ marginTop: 20, flexDirection: "row" }}>
+                  <Text style={{ width: 20, fontWeight: "bold" }}>•</Text>
                   <Text style={{ flex: 1 }}>
                     Full services charges to be paid by client if client decided
                     to withdraw/discharge representation at second/last stage of
                     application.
                   </Text>
                 </View>
-                <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                  <Text style={{ width: 20, fontWeight: 'bold' }}>•</Text>
+                <View style={{ marginTop: 20, flexDirection: "row" }}>
+                  <Text style={{ width: 20, fontWeight: "bold" }}>•</Text>
                   <Text style={{ flex: 1 }}>
                     Fees charges by Canadian government for application
                     processing has to be paid by client.
@@ -790,26 +896,34 @@ const AggrementOne = () => {
             >
               5. Methods of Payment: We DO NOT accept cheques.
             </Text>
-            <Text style={[styles.textunderline, { marginTop: 5, paddingLeft: 10 }]}>
+            <Text
+              style={[styles.textunderline, { marginTop: 5, paddingLeft: 10 }]}
+            >
               For Clients Located INSIDE Canada, we receive the following
               payment options:
             </Text>
 
             <View id="l6">
-              <View style={{ marginLeft: 30, marginTop: 15 }} data-list-text="o">
+              <View
+                style={{ marginLeft: 30, marginTop: 15 }}
+                data-list-text="o"
+              >
                 <Text>
                   <Text style={{ fontWeight: "bold" }}>
-                    o  In-person Cash Drop-Off
+                    o In-person Cash Drop-Off
                   </Text>
                   – Please contact us to arrange a time to drop off your payment
                   in cash. We will provide you with a receipt.
                 </Text>
               </View>
-              <View style={{ marginLeft: 30, marginTop: 15 }} data-list-text="o">
+              <View
+                style={{ marginLeft: 30, marginTop: 15 }}
+                data-list-text="o"
+              >
                 <Text>
-                  <Text style={{ fontWeight: "bold" }}> o  E-transfer</Text>
-                  – Please send the payment and the answer to the secret
-                  question to the following e-mail address:
+                  <Text style={{ fontWeight: "bold" }}> o E-transfer</Text>–
+                  Please send the payment and the answer to the secret question
+                  to the following e-mail address:
                   <Link
                     src="mailto:accounts@canpathways.com"
                     className="s15"
@@ -819,18 +933,19 @@ const AggrementOne = () => {
                   </Link>
                 </Text>
               </View>
-              <View style={{ marginLeft: 30, marginTop: 15 }} data-list-text="o">
+              <View
+                style={{ marginLeft: 30, marginTop: 15 }}
+                data-list-text="o"
+              >
                 <Text>
                   <Text style={{ fontWeight: "bold" }}>
-
-                    o  Credit Card/PayPal:
+                    o Credit Card/PayPal:
                   </Text>
                   Instructions will be shared, additional up to
                   <Text style={{ fontWeight: "bold" }}>3%</Text>
                   charges will be applicable if the client is willing to pay by
                   this method.
                 </Text>
-
               </View>
             </View>
             <Text style={{ marginTop: 15, paddingLeft: 10 }}>
@@ -840,29 +955,32 @@ const AggrementOne = () => {
               </Text>
             </Text>
             <View id="l7">
-              <View style={{ marginLeft: 30, marginTop: 15 }} data-list-text="o">
+              <View
+                style={{ marginLeft: 30, marginTop: 15 }}
+                data-list-text="o"
+              >
                 <Text>
-                  <Text style={{ fontWeight: "bold" }}>
-
-                    o Wire Transfer
-                  </Text>
+                  <Text style={{ fontWeight: "bold" }}>o Wire Transfer</Text>
                   <Text className="p">
-                    - Bank details will be provided once the contract is
-                    being signed. (*Banks usually charge a processing fee
-                    for wire transfer, so please add
+                    - Bank details will be provided once the contract is being
+                    signed. (*Banks usually charge a processing fee for wire
+                    transfer, so please add
                   </Text>
                   <Text style={{ fontWeight: "bold" }}>CAD $50</Text>
                   fee on top of your payment EVERY TIME you make a wire
                   transfer;
                 </Text>
               </View>
-              <View style={{ marginLeft: 30, marginTop: 15 }} data-list-text="o">
+              <View
+                style={{ marginLeft: 30, marginTop: 15 }}
+                data-list-text="o"
+              >
                 <Text style={{ marginTop: 10 }}>
-                  <Text style={{ fontWeight: "bold" }}>o  Paypal:</Text>
+                  <Text style={{ fontWeight: "bold" }}>o Paypal:</Text>
                   Instructions will be shared, additional up to
                   <Text style={{ fontWeight: "bold" }}> 5%</Text>
-                  charges will be applicable if the client is willing to pay
-                  by this method.
+                  charges will be applicable if the client is willing to pay by
+                  this method.
                 </Text>
               </View>
             </View>
@@ -890,9 +1008,7 @@ const AggrementOne = () => {
             </Text>
           </View>
           <View data-list-text="7." style={{ marginTop: 10 }}>
-            <Text
-              style={[{ fontWeight: 600 }, styles.definition]}
-            >
+            <Text style={[{ fontWeight: 600 }, styles.definition]}>
               7. Refund Policy
             </Text>
             <Text style={{ marginTop: 10, paddingLeft: 10 }}>
@@ -910,34 +1026,35 @@ const AggrementOne = () => {
               above, and any refund is strictly limited to the amount of
               professional fees paid.
             </Text>
-            <Text style={[styles.textunderline, { marginTop: 15, paddingLeft: 10 }]}>
+            <Text
+              style={[styles.textunderline, { marginTop: 15, paddingLeft: 10 }]}
+            >
               RCIC will not refund any fee paid by the client if
             </Text>
             <View id="l8">
               <View style={{ marginTop: 8, marginLeft: 30 }} data-list-text="">
                 <Text>
-                  •  Cancellation by the applicant of the immigration application
+                  • Cancellation by the applicant of the immigration application
                   for any reason whatsoever after the signature on the contract
                 </Text>
               </View>
               <View style={{ marginTop: 8, marginLeft: 30 }} data-list-text="">
                 <Text>
-                  •  Later modification in government regulations that is out of
+                  • Later modification in government regulations that is out of
                   control
                 </Text>
               </View>
               <View style={{ marginTop: 8, marginLeft: 30 }} data-list-text="">
                 <Text>
-
-                  •  Hiding information or submission of false documents
+                  • Hiding information or submission of false documents
                 </Text>
               </View>
               <View style={{ marginTop: 8, marginLeft: 30 }} data-list-text="">
-                <Text>•  Disregarding RCIC’s instructions</Text>
+                <Text>• Disregarding RCIC’s instructions</Text>
               </View>
               <View style={{ marginTop: 8, marginLeft: 30 }} data-list-text="">
                 <Text>
-                  •  Not providing required documents within given time frame
+                  • Not providing required documents within given time frame
                 </Text>
               </View>
             </View>
@@ -945,21 +1062,24 @@ const AggrementOne = () => {
             <Text style={{ marginTop: 15, paddingLeft: 10 }}>
               If application is refused because of an error or omission on the
               part of the RCIC or the professional staff, Unused and/or unearned
-              fees will be refunded in accordance with the {" "}
+              fees will be refunded in accordance with the{" "}
               <Text style={styles.textunderline}>
                 Client File Management Regulation
               </Text>
-              , the {" "}
+              , the{" "}
               <Text style={styles.textunderline}>
                 Client Account Regulation
               </Text>
-              and the {" "}
+              and the{" "}
               <Text style={styles.textunderline}>
                 Retainer Agreement Regulation
-              </Text> {" "}
+              </Text>{" "}
               and in the following manner:
             </Text>
-            <Text style={{ marginTop: 5, paddingLeft: 10 }}>Cheque ___________________________________________________________________________</Text>
+            <Text style={{ marginTop: 5, paddingLeft: 10 }}>
+              Cheque
+              ___________________________________________________________________________
+            </Text>
             <Text style={{ paddingLeft: 10 }}>
               [describe the manner of refund, including method and timeframe]
             </Text>
@@ -976,18 +1096,32 @@ const AggrementOne = () => {
             <Text style={[styles.definition, { fontWeight: 600 }]}>
               8. Invoicing
             </Text>
-            <Text style={{ paddingLeft: 10 }}>The RCIC will provide invoices, which include:</Text>
+            <Text style={{ paddingLeft: 10 }}>
+              The RCIC will provide invoices, which include:
+            </Text>
             <View id="l9">
-              <View style={{ marginTop: 10, marginLeft: 30 }} data-list-text="">
+              <View
+                style={{ marginTop: 10, marginLeft: 30 }}
+                data-list-text=""
+              >
                 <Text>• the name and address of the Client,</Text>
               </View>
-              <View style={{ marginTop: 10, marginLeft: 30 }} data-list-text="•">
+              <View
+                style={{ marginTop: 10, marginLeft: 30 }}
+                data-list-text="•"
+              >
                 <Text>• a list of services rendered,</Text>
               </View>
-              <View style={{ marginTop: 10, marginLeft: 30 }} data-list-text="•">
+              <View
+                style={{ marginTop: 10, marginLeft: 30 }}
+                data-list-text="•"
+              >
                 <Text>• the date(s) the services were rendered, and</Text>
               </View>
-              <View style={{ marginTop: 10, marginLeft: 30 }} data-list-text="•">
+              <View
+                style={{ marginTop: 10, marginLeft: 30 }}
+                data-list-text="•"
+              >
                 <Text>
                   • the total fees and applicable taxes payable to the Member
                   for the services rendered.
@@ -1020,18 +1154,18 @@ const AggrementOne = () => {
               the Client. In the event the dispute is still unresolved, the
               Client may follow the complaint and discipline procedure outlined
               by the Council on their
-              <Text className="s17" style={{ marginTop: 10, }}>
+              <Text className="s17" style={{ marginTop: 10 }}>
                 website:
               </Text>
-              <Link src="http://www.iccrc-crcic.ca/" target="_blank">
-
-              </Link>
+              <Link src="http://www.iccrc-crcic.ca/" target="_blank"></Link>
               <Link src="http://www.iccrc-crcic.ca/" target="_blank">
                 www.iccrc-crcic.ca.
               </Link>
             </Text>
             <View style={{ marginTop: 8, paddingLeft: 10 }}>
-              <Text style={[{ fontWeight: 600 }, styles.subHeader]}>ICCRC Contact Information:</Text>
+              <Text style={[{ fontWeight: 600 }, styles.subHeader]}>
+                ICCRC Contact Information:
+              </Text>
             </View>
             <View style={{ paddingLeft: 10 }}>
               <Text>
@@ -1039,19 +1173,13 @@ const AggrementOne = () => {
               </Text>
             </View>
             <View style={{ paddingLeft: 10 }}>
-              <Text> 5500
-                North Service Rd., Suite 1002
-              </Text>
+              <Text> 5500 North Service Rd., Suite 1002</Text>
             </View>
             <View style={{ paddingLeft: 10 }}>
-              <Text>
-                Burlington, ON, L7L 6W6
-              </Text>
+              <Text>Burlington, ON, L7L 6W6</Text>
             </View>
             <View style={{ paddingLeft: 10 }}>
-              <Text>
-                Toll-free: 1-877-836-7543
-              </Text>
+              <Text>Toll-free: 1-877-836-7543</Text>
             </View>
           </View>
           <View data-list-text="10.">
@@ -1131,21 +1259,21 @@ const AggrementOne = () => {
               14. Termination
             </Text>
             <View id="l10" style={{ paddingLeft: 10 }}>
-              <View style={{ marginTop: 15, flexDirection: 'row' }}>
-                <Text style={{ width: 40, fontWeight: 'bold' }}>14.1</Text>
+              <View style={{ marginTop: 15, flexDirection: "row" }}>
+                <Text style={{ width: 40, fontWeight: "bold" }}>14.1</Text>
                 <Text style={{ flex: 1 }}>
-                  This Agreement is considered terminated upon completion
-                  of tasks identified under section 2 of this agreement.
+                  This Agreement is considered terminated upon completion of
+                  tasks identified under section 2 of this agreement.
                 </Text>
               </View>
 
-              <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                <Text style={{ width: 40, fontWeight: 'bold' }}>14.2</Text>
+              <View style={{ marginTop: 20, flexDirection: "row" }}>
+                <Text style={{ width: 40, fontWeight: "bold" }}>14.2</Text>
                 <Text style={{ flex: 1 }}>
-                  This Agreement is considered terminated if material
-                  changes occur to the Client’s application or eligibility,
-                  which make it impossible to proceed with services detailed in
-                  section 2 of this Agreement.
+                  This Agreement is considered terminated if material changes
+                  occur to the Client’s application or eligibility, which make
+                  it impossible to proceed with services detailed in section 2
+                  of this Agreement.
                 </Text>
               </View>
             </View>
@@ -1155,19 +1283,19 @@ const AggrementOne = () => {
               15. Discharge or Withdrawal of Representation
             </Text>
             <View id="l11" style={{ paddingLeft: 10 }}>
-              <View style={{ marginTop: 15, flexDirection: 'row' }}>
-                <Text style={{ width: 40, fontWeight: 'bold' }}>15.1</Text>
+              <View style={{ marginTop: 15, flexDirection: "row" }}>
+                <Text style={{ width: 40, fontWeight: "bold" }}>15.1</Text>
                 <Text style={{ flex: 1 }}>
-                  The Client may discharge representation and terminate
-                  this Agreement, upon writing, at which time any outstanding or
+                  The Client may discharge representation and terminate this
+                  Agreement, upon writing, at which time any outstanding or
                   unearned fees or Disbursements will be refunded by the RCIC to
                   the Client and/or any outstanding fees or Disbursements will
                   be paid by the Client to the RCIC.
                 </Text>
               </View>
 
-              <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                <Text style={{ width: 40, fontWeight: 'bold' }}>15.2</Text>
+              <View style={{ marginTop: 20, flexDirection: "row" }}>
+                <Text style={{ width: 40, fontWeight: "bold" }}>15.2</Text>
                 <Text style={{ flex: 1 }}>
                   Pursuant to Article 11 of the{" "}
                   <Text style={styles.textunderline}>
@@ -1181,13 +1309,13 @@ const AggrementOne = () => {
                   be paid by the Client to the RCIC.
                 </Text>
               </View>
-              <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                <Text style={{ width: 40, fontWeight: 'bold' }}>15.3</Text>
+              <View style={{ marginTop: 20, flexDirection: "row" }}>
+                <Text style={{ width: 40, fontWeight: "bold" }}>15.3</Text>
                 <Text style={{ flex: 1 }}>
-                  At the time of withdrawal or discharge, the RCIC must
-                  provide the Client with an invoice detailing all services that
-                  have been rendered or accounting for the time that has been
-                  spent on the Client’sfile.
+                  At the time of withdrawal or discharge, the RCIC must provide
+                  the Client with an invoice detailing all services that have
+                  been rendered or accounting for the time that has been spent
+                  on the Client’sfile.
                 </Text>
               </View>
             </View>
@@ -1224,124 +1352,170 @@ const AggrementOne = () => {
               18. Miscellaneous
             </Text>
             <View id="l12" style={{ paddingLeft: 10 }}>
-              <View style={{ marginTop: 15, flexDirection: 'row' }}>
-                <Text style={{ width: 40, fontWeight: 'bold' }}>18.1</Text>
+              <View style={{ marginTop: 15, flexDirection: "row" }}>
+                <Text style={{ width: 40, fontWeight: "bold" }}>18.1</Text>
                 <Text style={{ flex: 1 }}>
-                  The Client expressly authorizes the RCIC to act on his/her behalf to the extent of the specific functions which the RCIC was retained to perform, as per Section 2 hereof.
+                  The Client expressly authorizes the RCIC to act on his/her
+                  behalf to the extent of the specific functions which the RCIC
+                  was retained to perform, as per Section 2 hereof.
                 </Text>
               </View>
 
-              <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                <Text style={{ width: 40, fontWeight: 'bold' }}>18.2</Text>
+              <View style={{ marginTop: 20, flexDirection: "row" }}>
+                <Text style={{ width: 40, fontWeight: "bold" }}>18.2</Text>
                 <Text style={{ flex: 1 }}>
-                  This Agreement constitutes the entire agreement between the parties with respect to the subject matter hereof and supersedes all prior agreements, understandings, warranties, representations, negotiations, and discussions, whether oral or written, of the parties except as specifically set forth herein.
+                  This Agreement constitutes the entire agreement between the
+                  parties with respect to the subject matter hereof and
+                  supersedes all prior agreements, understandings, warranties,
+                  representations, negotiations, and discussions, whether oral
+                  or written, of the parties except as specifically set forth
+                  herein.
                 </Text>
               </View>
 
-              <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                <Text style={{ width: 40, fontWeight: 'bold' }}>18.3</Text>
+              <View style={{ marginTop: 20, flexDirection: "row" }}>
+                <Text style={{ width: 40, fontWeight: "bold" }}>18.3</Text>
                 <Text style={{ flex: 1 }}>
-                  This Agreement shall be binding upon the parties hereto and their respective heirs, administrators, successors, and permitted assigns.
+                  This Agreement shall be binding upon the parties hereto and
+                  their respective heirs, administrators, successors, and
+                  permitted assigns.
                 </Text>
               </View>
 
-              <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                <Text style={{ width: 40, fontWeight: 'bold' }}>18.4</Text>
+              <View style={{ marginTop: 20, flexDirection: "row" }}>
+                <Text style={{ width: 40, fontWeight: "bold" }}>18.4</Text>
                 <Text style={{ flex: 1 }}>
-                  The Costs enumerated in this Agreement are to be paid by the Client.
+                  The Costs enumerated in this Agreement are to be paid by the
+                  Client.
                 </Text>
               </View>
 
-              <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                <Text style={{ width: 40, fontWeight: 'bold' }}>18.5</Text>
+              <View style={{ marginTop: 20, flexDirection: "row" }}>
+                <Text style={{ width: 40, fontWeight: "bold" }}>18.5</Text>
                 <Text style={{ flex: 1 }}>
-                  This Agreement may only be altered or amended when such changes are made in writing and executed by the parties hereto. All changes and/or edits must be initialed and dated by both the Member and the Client. Any substantial changes to this Agreement may require that the parties enter into a new Retainer Agreement.
+                  This Agreement may only be altered or amended when such
+                  changes are made in writing and executed by the parties
+                  hereto. All changes and/or edits must be initialed and dated
+                  by both the Member and the Client. Any substantial changes to
+                  this Agreement may require that the parties enter into a new
+                  Retainer Agreement.
                 </Text>
               </View>
 
-              <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                <Text style={{ width: 40, fontWeight: 'bold' }}>18.6</Text>
+              <View style={{ marginTop: 20, flexDirection: "row" }}>
+                <Text style={{ width: 40, fontWeight: "bold" }}>18.6</Text>
                 <Text style={{ flex: 1 }}>
-                  The Client may, after a Retainer Agreement is signed, appoint a Designate to act on their behalf when dealing with the RCIC. A Designate must not be compensated by the Client or the RCIC for acting in the capacity of a Designate.
+                  The Client may, after a Retainer Agreement is signed, appoint
+                  a Designate to act on their behalf when dealing with the RCIC.
+                  A Designate must not be compensated by the Client or the RCIC
+                  for acting in the capacity of a Designate.
                 </Text>
               </View>
 
-              <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                <Text style={{ width: 40, fontWeight: 'bold' }}>18.7</Text>
+              <View style={{ marginTop: 20, flexDirection: "row" }}>
+                <Text style={{ width: 40, fontWeight: "bold" }}>18.7</Text>
                 <Text style={{ flex: 1 }}>
-                  The provisions of this Agreement shall be deemed severable. If any provision of this Agreement shall be held unenforceable by any court of competent jurisdiction, such provision shall be severed from this Agreement, and the remaining provisions shall remain in full force and effect.
+                  The provisions of this Agreement shall be deemed severable. If
+                  any provision of this Agreement shall be held unenforceable by
+                  any court of competent jurisdiction, such provision shall be
+                  severed from this Agreement, and the remaining provisions
+                  shall remain in full force and effect.
                 </Text>
               </View>
 
-              <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                <Text style={{ width: 40, fontWeight: 'bold' }}>18.8</Text>
+              <View style={{ marginTop: 20, flexDirection: "row" }}>
+                <Text style={{ width: 40, fontWeight: "bold" }}>18.8</Text>
                 <Text style={{ flex: 1 }}>
-                  The headings utilized in this Agreement are for convenience only and are not to be construed in any way as additions to or limitations of the covenants and agreements contained in this Agreement.
+                  The headings utilized in this Agreement are for convenience
+                  only and are not to be construed in any way as additions to or
+                  limitations of the covenants and agreements contained in this
+                  Agreement.
                 </Text>
               </View>
 
-              <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                <Text style={{ width: 40, fontWeight: 'bold' }}>18.9</Text>
+              <View style={{ marginTop: 20, flexDirection: "row" }}>
+                <Text style={{ width: 40, fontWeight: "bold" }}>18.9</Text>
                 <Text style={{ flex: 1 }}>
-                  Each of the parties hereto must do and execute or cause to be done or executed all such further and other things, acts, deeds, documents, and assurances as may be necessary or reasonably required to carry out the intent and purpose of this Agreement fully and effectively.
+                  Each of the parties hereto must do and execute or cause to be
+                  done or executed all such further and other things, acts,
+                  deeds, documents, and assurances as may be necessary or
+                  reasonably required to carry out the intent and purpose of
+                  this Agreement fully and effectively.
                 </Text>
               </View>
 
-              <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                <Text style={{ width: 40, fontWeight: 'bold' }}>18.10</Text>
+              <View style={{ marginTop: 20, flexDirection: "row" }}>
+                <Text style={{ width: 40, fontWeight: "bold" }}>18.10</Text>
                 <Text style={{ flex: 1 }}>
-                  The Client acknowledges that he/she has had sufficient time to review this Agreement and has been given an opportunity to obtain independent legal advice and translation prior to the execution and delivery of this Agreement.
+                  The Client acknowledges that he/she has had sufficient time to
+                  review this Agreement and has been given an opportunity to
+                  obtain independent legal advice and translation prior to the
+                  execution and delivery of this Agreement.
                 </Text>
               </View>
 
-              <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                <Text style={{ width: 40, fontWeight: 'bold' }}>18.11</Text>
+              <View style={{ marginTop: 20, flexDirection: "row" }}>
+                <Text style={{ width: 40, fontWeight: "bold" }}>18.11</Text>
                 <Text style={{ flex: 1 }}>
-                  In the event the Client did not seek independent legal advice prior to signing this Agreement, he/she did so voluntarily without any undue pressure and agrees that the failure to obtain independent legal advice must not be used as a defense to the enforcement of obligations created by this Agreement.
+                  In the event the Client did not seek independent legal advice
+                  prior to signing this Agreement, he/she did so voluntarily
+                  without any undue pressure and agrees that the failure to
+                  obtain independent legal advice must not be used as a defense
+                  to the enforcement of obligations created by this Agreement.
                 </Text>
               </View>
 
-              <View style={{ marginTop: 40, flexDirection: 'row' }}>
-                <Text style={{ width: 40, fontWeight: 'bold' }}>18.12</Text>
+              <View style={{ marginTop: 40, flexDirection: "row" }}>
+                <Text style={{ width: 40, fontWeight: "bold" }}>18.12</Text>
                 <Text style={{ flex: 1 }}>
-                  Furthermore, the Client acknowledges that he/she has received a copy of this Agreement and agrees to be bound by its terms.
+                  Furthermore, the Client acknowledges that he/she has received
+                  a copy of this Agreement and agrees to be bound by its terms.
                 </Text>
               </View>
 
-              <View style={{ marginTop: 10, flexDirection: 'row' }}>
-                <Text style={{ width: 40, fontWeight: 'bold' }}>18.13</Text>
+              <View style={{ marginTop: 10, flexDirection: "row" }}>
+                <Text style={{ width: 40, fontWeight: "bold" }}>18.13</Text>
                 <Text style={{ flex: 1 }}>
-                  The Client acknowledges that RCIC is not responsible if the application was submitted on time as per IRCC before midnight UTC but submission confirmation from IRCC received the next day in UTC. RCIC must not be held accountable for any further implication including but not limited to missing deadline, status expiry due to this IRCC online system error.
+                  The Client acknowledges that RCIC is not responsible if the
+                  application was submitted on time as per IRCC before midnight
+                  UTC but submission confirmation from IRCC received the next
+                  day in UTC. RCIC must not be held accountable for any further
+                  implication including but not limited to missing deadline,
+                  status expiry due to this IRCC online system error.
                 </Text>
               </View>
 
-              <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                <Text style={{ width: 40, fontWeight: 'bold' }}>18.14</Text>
+              <View style={{ marginTop: 20, flexDirection: "row" }}>
+                <Text style={{ width: 40, fontWeight: "bold" }}>18.14</Text>
                 <Text style={{ flex: 1 }}>
-                  The client is aware that IRCC processing time and approvals are not in RCIC’s control and timeline frames provided to the client is according to IRCC’s website.
+                  The client is aware that IRCC processing time and approvals
+                  are not in RCIC’s control and timeline frames provided to the
+                  client is according to IRCC’s website.
                 </Text>
               </View>
 
-              <View style={{ marginTop: 20, flexDirection: 'row' }}>
-                <Text style={{ width: 40, fontWeight: 'bold' }}>18.15</Text>
+              <View style={{ marginTop: 20, flexDirection: "row" }}>
+                <Text style={{ width: 40, fontWeight: "bold" }}>18.15</Text>
                 <Text style={{ flex: 1 }}>
-                  The Client acknowledges that he/she has requested that the Agreement be written in the English language and that English is the binding language.
+                  The Client acknowledges that he/she has requested that the
+                  Agreement be written in the English language and that English
+                  is the binding language.
                 </Text>
               </View>
             </View>
-
           </View>
           <View
             data-list-text="19."
             style={{
               marginTop: 25,
               fontWeight: "300",
-              flexDirection: "row"
+              flexDirection: "row",
             }}
           >
             <Text style={{ flex: 1 }}>
-              <Text style={{ width: 20, fontWeight: 'bold' }}>19.</Text> The company and RCIC is not part of the hiring process and is
-              just acting as representative for filing the application from the
+              <Text style={{ width: 20, fontWeight: "bold" }}>19.</Text> The
+              company and RCIC is not part of the hiring process and is just
+              acting as representative for filing the application from the
               applicant side. The company and RCIC will not be responsible for
               authenticity or legitimacy of any documents submitted in support
               of application. The client is sole responsible for providing all
@@ -1353,10 +1527,10 @@ const AggrementOne = () => {
             style={{
               marginTop: 20,
               fontWeight: "300",
-              flexDirection: "row"
+              flexDirection: "row",
             }}
           >
-            <Text style={{ width: 20, fontWeight: 'bold' }}>20.</Text>
+            <Text style={{ width: 20, fontWeight: "bold" }}>20.</Text>
             <Text style={{ flex: 1 }}>
               CLIENT ACKNOWLEDGES THAT ALL THE 9 PAGES HAVE BEEN READ AND
               INITIALED AFTER ACCEPTING ALL THE TERMS AND CONDITIONS OF THIS
@@ -1382,7 +1556,9 @@ const AggrementOne = () => {
                         { textTransform: "capitalize", marginLeft: 5 },
                       ]}
                     >
-                      {familyJsonArray[0]?.client_first_name || "" || "_______________"}
+                      {familyJsonArray[0]?.client_first_name ||
+                        "" ||
+                        "_______________"}
                     </Text>
                   </Text>
                 </View>
@@ -1395,7 +1571,8 @@ const AggrementOne = () => {
                         { textTransform: "capitalize", marginLeft: 5 },
                       ]}
                     >
-                      {familyJsonArray[0]?.client_last_name || "_______________"}
+                      {familyJsonArray[0]?.client_last_name ||
+                        "_______________"}
                     </Text>
                   </Text>
                 </View>
@@ -1411,7 +1588,10 @@ const AggrementOne = () => {
                         { textTransform: "capitalize", marginLeft: 5 },
                       ]}
                     >
-                      {felidData?.client_address.trim() !== "" || felidData?.client_address !== " " ? felidData?.client_address : "_______________"}
+                      {felidData?.client_address.trim() !== "" ||
+                      felidData?.client_address !== " "
+                        ? felidData?.client_address
+                        : "_______________"}
                     </Text>
                   </Text>
                 </View>
@@ -1442,10 +1622,8 @@ const AggrementOne = () => {
                     </Text>
                   </Text>
                 </View>
-
               </View>
               <View style={styles.clientForm}>
-
                 <View style={styles.clientFormChild}>
                   <Text>
                     E-mail Address:{" "}
@@ -1468,14 +1646,18 @@ const AggrementOne = () => {
               <View style={styles.clientForm}>
                 <View style={styles.clientFormChild}>
                   <Text>
-                    Given Name: {" "}
-                    <Text style={[styles.textunderline, { marginLeft: 5 }]}>Harpreet</Text>
+                    Given Name:{" "}
+                    <Text style={[styles.textunderline, { marginLeft: 5 }]}>
+                      Harpreet
+                    </Text>
                   </Text>
                 </View>
                 <View style={styles.clientFormChild}>
                   <Text>
-                    Family Name: {" "}
-                    <Text style={[styles.textunderline, { marginLeft: 5 }]}>Kaur</Text>
+                    Family Name:{" "}
+                    <Text style={[styles.textunderline, { marginLeft: 5 }]}>
+                      Kaur
+                    </Text>
                   </Text>
                 </View>
               </View>
@@ -1483,7 +1665,7 @@ const AggrementOne = () => {
               <View style={styles.clientForm}>
                 <View style={styles.clientFormChild}>
                   <Text>
-                    Address: {" "}
+                    Address:{" "}
                     <Text style={[styles.textunderline, { marginLeft: 5 }]}>
                       2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7
                     </Text>
@@ -1497,13 +1679,13 @@ const AggrementOne = () => {
                     </Text>
                   </Text>
                 </View>
-
               </View>
 
               <View style={styles.clientForm}>
                 <View style={styles.clientFormChild}>
                   <Text>
-                    Fax Number:<Text style={[styles.textunderline, { marginLeft: 5 }]}>
+                    Fax Number:
+                    <Text style={[styles.textunderline, { marginLeft: 5 }]}>
                       __________________
                     </Text>
                   </Text>
@@ -1524,8 +1706,8 @@ const AggrementOne = () => {
 
             {/* Agreement Signature */}
             <Text style={{}}>
-              IN WITNESS WHEREOF this Agreement has been duly executed by the parties
-              hereto on the date first above written.
+              IN WITNESS WHEREOF this Agreement has been duly executed by the
+              parties hereto on the date first above written.
             </Text>
             <View style={styles.container}>
               {/* Right Signature Box (Client) */}
@@ -1537,32 +1719,62 @@ const AggrementOne = () => {
                   page={"user"}
                   isPdf={true}
                 />
-                <Text style={[styles.text, styles.textBold]}> {" " + (familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")}</Text>
-                <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {familyJsonArray[0]?.date_signature_client ? moment(familyJsonArray[0].date_signature_client).format("DD/MM/YYYY") : "______________"}</Text>
+                <Text style={[styles.text, styles.textBold]}>
+                  {" "}
+                  {" " +
+                    (familyJsonArray[0]?.client_first_name || "") +
+                    " " +
+                    (familyJsonArray[0]?.client_last_name || " ")}
+                </Text>
+                <Text style={styles.text}>
+                  <Text style={styles.textBold}>Date:</Text>{" "}
+                  {familyJsonArray[0]?.date_signature_client
+                    ? moment(familyJsonArray[0].date_signature_client).format(
+                        "DD/MM/YYYY"
+                      )
+                    : "______________"}
+                </Text>
               </View>
 
               {/* Left Signature Box (RCIC) */}
               <View style={styles.box}>
                 <RCICSignatureFunction isPdf={true} felidData={felidData} />
-                <Text style={[styles.text, styles.textBold]}>Harpreet Kaur (RCIC)</Text>
-                <Text style={styles.text}>RCIC # R533393 CAN Pathways Immigration Consultancy Ltd.</Text>
-                <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {felidData?.date_signature_rcic !== "0000-00-00 00:00:00" && felidData?.date_signature_rcic ? moment(felidData.date_signature_rcic).format("DD/MM/YYYY") : "______________"}</Text>
-                <Text style={styles.text}><Text style={styles.textBold}>Signed at:</Text> <Text style={styles.underline}>Calgary, Alberta, Canada</Text></Text>
+                <Text style={[styles.text, styles.textBold]}>
+                  Harpreet Kaur (RCIC)
+                </Text>
+                <Text style={styles.text}>
+                  RCIC # R533393 CAN Pathways Immigration Consultancy Ltd.
+                </Text>
+                <Text style={styles.text}>
+                  <Text style={styles.textBold}>Date:</Text>{" "}
+                  {felidData?.date_signature_rcic !== "0000-00-00 00:00:00" &&
+                  felidData?.date_signature_rcic
+                    ? moment(felidData.date_signature_rcic).format("DD/MM/YYYY")
+                    : "______________"}
+                </Text>
+                <Text style={styles.text}>
+                  <Text style={styles.textBold}>Signed at:</Text>{" "}
+                  <Text style={styles.underline}>Calgary, Alberta, Canada</Text>
+                </Text>
               </View>
             </View>
           </View>
-
         </View>
         <View style={{ marginTop: 30 }}>
-          <Text style={[{ textAlign: "center", }, styles.definition]}>
+          <Text style={[{ textAlign: "center" }, styles.definition]}>
             AUTHORIZATION
           </Text>
           <Text style={{ marginTop: 15 }}>
-            I {" "}
-            <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
-              {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")}
-            </Text>
-            {" "} ( hereinafter referred to as the “client”), hereby authorize and
+            I{" "}
+            <Text
+              style={[styles.textunderline, { textTransform: "capitalize" }]}
+              className="para_gap"
+            >
+              {(familyJsonArray[0]?.client_first_name || "") +
+                " " +
+                (familyJsonArray[0]?.client_last_name || " ")}
+            </Text>{" "}
+            ( hereinafter referred to as the “client”), hereby authorize and
             appoint Harpreet kaur (hereinafter referred to as the “RCIC” with a
             CICC# R533393), of CAN Pathways Immigration consultancy
             ltd.,(hereinafter referred to as the “firm”), to represent me in my
@@ -1590,10 +1802,12 @@ const AggrementOne = () => {
             including those from a third party for the purpose of obtaining a
             favorable and expeditious results.
           </Text>
-          <Text style={[{ marginTop: 20 }, styles.definition]}>Declaration</Text>
+          <Text style={[{ marginTop: 20 }, styles.definition]}>
+            Declaration
+          </Text>
           <View id="l13" style={{ paddingLeft: 10 }}>
-            <View style={{ marginTop: 17, flexDirection: 'row' }}>
-              <Text style={{ width: 20, fontWeight: 'bold' }}>1</Text>
+            <View style={{ marginTop: 17, flexDirection: "row" }}>
+              <Text style={{ width: 20, fontWeight: "bold" }}>1</Text>
               <Text style={{ flex: 1 }}>
                 I confirm that neither I nor any other family members included
                 in my application have presented or will present at any future
@@ -1601,74 +1815,86 @@ const AggrementOne = () => {
                 the firm or to the government of Canada.
               </Text>
             </View>
-            <View style={{ marginTop: 17, flexDirection: 'row' }}>
-              <Text style={{ width: 20, fontWeight: 'bold' }}>2</Text>
+            <View style={{ marginTop: 17, flexDirection: "row" }}>
+              <Text style={{ width: 20, fontWeight: "bold" }}>2</Text>
               <Text style={{ flex: 1 }}>
-                I confirm  that neither I nor any other family members included
+                I confirm that neither I nor any other family members included
                 in my application have presented or will present at any future
                 date, false and misleading information to either the consultant,
                 the firm or to the government of Canada.
               </Text>
             </View>
-            <View style={{ marginTop: 17, flexDirection: 'row' }}>
-              <Text style={{ width: 20, fontWeight: 'bold' }}>3</Text>
+            <View style={{ marginTop: 17, flexDirection: "row" }}>
+              <Text style={{ width: 20, fontWeight: "bold" }}>3</Text>
               <Text style={{ flex: 1 }}>
-                I confirm that it is my responsibility to ensure the co-operation of my relatives/employers/educational institutes as
+                I confirm that it is my responsibility to ensure the
+                co-operation of my relatives/employers/educational institutes as
                 needed
               </Text>
             </View>
-            <View style={{ marginTop: 17, flexDirection: 'row' }}>
+            <View style={{ marginTop: 17, flexDirection: "row" }}>
               <Text style={{ flex: 1 }}>
-                <Text style={{ width: 20, fontWeight: 'bold' }}>4</Text>
-                In the event the Immigration office responsible should contact the Client directly, the Clientis instructed to
-                notify the RCIC immediately
+                <Text style={{ width: 20, fontWeight: "bold" }}>4</Text>
+                In the event the Immigration office responsible should contact
+                the Client directly, the Clientis instructed to notify the RCIC
+                immediately
               </Text>
             </View>
-            <View style={{ marginTop: 17, flexDirection: 'row' }}>
-              <Text style={{ width: 20, fontWeight: 'bold' }}>5</Text>
+            <View style={{ marginTop: 17, flexDirection: "row" }}>
+              <Text style={{ width: 20, fontWeight: "bold" }}>5</Text>
               <Text style={{ flex: 1 }}>
-                If a refusal of my application is due to medical or criminal issues additional services will have to be agreed on in a
-                different retainer and new fees negotiated. The steps to resolve any medical or criminal inadmissibility will not form
-                part of this agreement
+                If a refusal of my application is due to medical or criminal
+                issues additional services will have to be agreed on in a
+                different retainer and new fees negotiated. The steps to resolve
+                any medical or criminal inadmissibility will not form part of
+                this agreement
               </Text>
             </View>
-            <View style={{ marginTop: 17, flexDirection: 'row' }}>
-              <Text style={{ width: 20, fontWeight: 'bold' }}>6</Text>
+            <View style={{ marginTop: 17, flexDirection: "row" }}>
+              <Text style={{ width: 20, fontWeight: "bold" }}>6</Text>
               <Text style={{ flex: 1 }}>
-                I undertake to inform the consultant, the firm or the Government of Canada of any change in marital or civic status
-                or change of my physical address and contact information for myself and all persons included in my application. If
-                such changes occur and it requires additional services not herein referred to, it will be agreed upon apart from this
-                commitment
+                I undertake to inform the consultant, the firm or the Government
+                of Canada of any change in marital or civic status or change of
+                my physical address and contact information for myself and all
+                persons included in my application. If such changes occur and it
+                requires additional services not herein referred to, it will be
+                agreed upon apart from this commitment
               </Text>
             </View>
-            <View style={{ marginTop: 17, flexDirection: 'row' }}>
-              <Text style={{ width: 20, fontWeight: 'bold' }}>7</Text>
+            <View style={{ marginTop: 17, flexDirection: "row" }}>
+              <Text style={{ width: 20, fontWeight: "bold" }}>7</Text>
               <Text style={{ flex: 1 }}>
-                I understand that The RCIC’s obligations under the Engagement are null and void if the Client knowingly provides
-                any inaccurate, misleading or false material information. The Client’s financial obligations remain
+                I understand that The RCIC’s obligations under the Engagement
+                are null and void if the Client knowingly provides any
+                inaccurate, misleading or false material information. The
+                Client’s financial obligations remain
               </Text>
             </View>
-            <View style={{ marginTop: 17, flexDirection: 'row' }}>
-              <Text style={{ width: 20, fontWeight: 'bold' }}>8</Text>
+            <View style={{ marginTop: 17, flexDirection: "row" }}>
+              <Text style={{ width: 20, fontWeight: "bold" }}>8</Text>
               <Text style={{ flex: 1 }}>
-                I understand that the processing times are only an estimate given by the Government and that I will not hold the
-                consultant, the firm or the Government of Canada responsible for any delays except where it is due to negligence
-                from the firm.
+                I understand that the processing times are only an estimate
+                given by the Government and that I will not hold the consultant,
+                the firm or the Government of Canada responsible for any delays
+                except where it is due to negligence from the firm.
               </Text>
             </View>
-            <View style={{ marginTop: 17, flexDirection: 'row' }}>
-              <Text style={{ width: 20, fontWeight: 'bold' }}>9</Text>
+            <View style={{ marginTop: 17, flexDirection: "row" }}>
+              <Text style={{ width: 20, fontWeight: "bold" }}>9</Text>
               <Text style={{ flex: 1 }}>
-                I agree that if my application is refused because I neglected to provide the required documents within the notified
-                time frame the consultant, the firm or the Government of Canada will not be held responsible.
+                I agree that if my application is refused because I neglected to
+                provide the required documents within the notified time frame
+                the consultant, the firm or the Government of Canada will not be
+                held responsible.
               </Text>
             </View>
-
           </View>
           <View style={{ marginTop: 20 }}>
             <Text style={{ flex: 1 }}>
-              I have read and understood all the terms and steps in the retainer letter above and I agree to all the terms mentioned
-              And for so doing, this document shall constitute good and sufficient authority and declaration
+              I have read and understood all the terms and steps in the retainer
+              letter above and I agree to all the terms mentioned And for so
+              doing, this document shall constitute good and sufficient
+              authority and declaration
             </Text>
           </View>
           <View
@@ -1679,13 +1905,27 @@ const AggrementOne = () => {
               marginTop: 15,
             }}
           >
-            <View style={[styles.clientForm, { textAlign: "center", marginTop: 30 }]}>
+            <View
+              style={[
+                styles.clientForm,
+                { textAlign: "center", marginTop: 30 },
+              ]}
+            >
               <View style={styles.clientFormChild}>
-                <Text className="para_gap" style={{ margin: 0, marginBottom: 15, textDecoration: "underline", textTransform: "capitalize" }}>
-                  {familyJsonArray[0]?.client_first_name || "" || familyJsonArray[0]?.client_last_name
-                    ? familyJsonArray[0]?.client_first_name || "" +
-                    " " +
-                    (familyJsonArray[0]?.client_last_name || " ")
+                <Text
+                  className="para_gap"
+                  style={{
+                    margin: 0,
+                    marginBottom: 15,
+                    textDecoration: "underline",
+                    textTransform: "capitalize",
+                  }}
+                >
+                  {familyJsonArray[0]?.client_first_name ||
+                  "" ||
+                  familyJsonArray[0]?.client_last_name
+                    ? familyJsonArray[0]?.client_first_name ||
+                      "" + " " + (familyJsonArray[0]?.client_last_name || " ")
                     : "_______________"}
                 </Text>
                 <Text style={{ margin: "0 0 30px 0" }}>Client’s full name</Text>
@@ -1700,12 +1940,17 @@ const AggrementOne = () => {
                 )
               </View>
               <View style={styles.clientFormChild}>
-                <Text className="para_gap" style={{ margin: 0, textDecoration: "underline" }}>
+                <Text
+                  className="para_gap"
+                  style={{ margin: 0, textDecoration: "underline" }}
+                >
                   {!familyJsonArray[0]?.date_signature_client ||
-                    familyJsonArray[0]?.date_signature_client ===
+                  familyJsonArray[0]?.date_signature_client ===
                     "0000-00-00 00:00:00"
                     ? "____________"
-                    : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}
+                    : moment(familyJsonArray[0]?.date_signature_client).format(
+                        "DD-MM-YYYY"
+                      )}
                 </Text>
                 <Text style={{ margin: "0 0 30px 0" }}>Date</Text>
               </View>
@@ -1724,10 +1969,8 @@ const AggrementOne = () => {
             <View>
               <Image
                 fixed
-                style={{ width: 100, height: 40 }}
-                src={
-                  "https://canpathwaysjobs.com/image/00logo-main-black.png"
-                }
+                style={{ width: 154, height: 30 }}
+                src={"https://canpathwaysjobs.com/image/00logo-main-black.png"}
               />
               {components}
 
@@ -1740,7 +1983,9 @@ const AggrementOne = () => {
                   gap: 20,
                 }}
               >
-                <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
+                <Text style={{ textAlign: "right", paddingTop: 18 }}>
+                  Initials :
+                </Text>
                 <View>
                   <View
                     style={{
@@ -1773,7 +2018,8 @@ const AggrementOne = () => {
                         }}
                       />
                     )}
-                  </View>               </View>
+                  </View>{" "}
+                </View>
               </View>
             </View>
           </Page>
@@ -1790,10 +2036,11 @@ const AggrementOne = () => {
                 <View>
                   <Image
                     fixed
-                    style={{ width: 100, height: 40 }}
+                    style={{ width: 154, height: 30 }}
                     src={
                       "https://canpathwaysjobs.com/image/00logo-main-black.png"
-                    } />
+                    }
+                  />
                   {components}
                   <View
                     fixed
@@ -1804,7 +2051,9 @@ const AggrementOne = () => {
                       gap: 20,
                     }}
                   >
-                    <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
+                    <Text style={{ textAlign: "right", paddingTop: 18 }}>
+                      Initials :
+                    </Text>
                     <View>
                       <View
                         style={{
@@ -1838,7 +2087,6 @@ const AggrementOne = () => {
                           />
                         )}
                       </View>
-
                     </View>
                   </View>
                 </View>
@@ -1847,7 +2095,7 @@ const AggrementOne = () => {
           </PDFViewer>
         );
       }}
-    </BlobProvider >
+    </BlobProvider>
   );
 };
 const styles = StyleSheet.create({
@@ -1873,7 +2121,7 @@ const styles = StyleSheet.create({
   text: {
     marginBottom: 5,
     padding: 2,
-    fontSize: 12
+    fontSize: 12,
   },
   image: {
     width: "140px",
@@ -1923,11 +2171,27 @@ const styles = StyleSheet.create({
   headerCell: {
     backgroundColor: "#f0f0f0",
   },
-  container: { display: "flex", flexDirection: "row", justifyContent: "space-between", marginTop: 30 },
+  container: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 30,
+  },
   box: { width: "45%" },
   required: { color: "red" },
-  signatureBox: { width: "100%", height: 50, border: "1px solid #ccc", display: "flex", alignItems: "center", justifyContent: "center" },
-  dateLine: { minWidth: 80, borderBottom: "1px solid black", display: "inline-block" },
+  signatureBox: {
+    width: "100%",
+    height: 50,
+    border: "1px solid #ccc",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  dateLine: {
+    minWidth: 80,
+    borderBottom: "1px solid black",
+    display: "inline-block",
+  },
   textBold: {
     fontFamily: "Times-Bold",
   },

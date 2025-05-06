@@ -317,7 +317,7 @@ const NewUserProfile = (props) => {
                 left: 15,
                 zIndex: 1000,
                 backgroundColor: "#992b32",
-                minWidth: "50%",
+                minWidth: 300,
               }}
               onClick={() => {
                 if (TabActive === "notes") {
