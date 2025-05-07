@@ -75,9 +75,9 @@ export default function JobAssignedDashboard() {
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
         {/* <!-- Header Area --> */}
-        <AdminHeader heading={"Assigned Job's"} />
+        <AdminHeader heading={"Manager's Dashboard"} />
         {/* <!-- navbar- --> */}
-        <AdminSidebar heading={"Assigned Job's"} />
+        <AdminSidebar heading={"Manager's Dashboard"} />
 
         <div className={"dashboard-main-container mt-14"} id="dashboard-body">
           <div className="container-fluid">

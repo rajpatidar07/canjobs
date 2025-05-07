@@ -268,7 +268,8 @@ export default function EmployerRetainerAgreement({ page,
             <p style="font-size: 12px;">CAN Pathways Immigration Consultancy Ltd.</p>
     
             <p style="font-size: 12px; margin-top: 10px;"><strong>Date:</strong>  ${felidData?.date_signature_rcic !==
-      "0000-00-00 00:00:00" && felidData?.date_signature_rcic ? `<span class="border-bottom border-dark" style="min-width: 80px;">${moment(felidData.date_signature_rcic).format("DD/MM/YYYY")}</span>` : "______________"}</p>
+      "0000-00-00 00:00:00" && felidData?.date_signature_rcic !==
+      "0000-00-00" && felidData?.date_signature_rcic ? `<span class="border-bottom border-dark" style="min-width: 80px;">${moment(felidData.date_signature_rcic).format("DD/MM/YYYY")}</span>` : "______________"}</p>
             <p style="font-size: 12px; margin-top: -10px;"><strong>Signed at:</strong> <u>Calgary, Alberta, Canada</u></p>
         </div>
     
@@ -276,13 +277,13 @@ export default function EmployerRetainerAgreement({ page,
         <div style="width: 45%;">
             ${ClientSignatureFunction({ page, familyJsonArray, felidData })} 
             <p style="margin-top: 10px; font-weight: bold;"> ${familyJsonArray[0]?.client_first_name ||
-              familyJsonArray[0]?.client_last_name
-              ? ` <span class=" text-capitalize">${familyJsonArray[0]?.client_first_name
-              } ${familyJsonArray[0]?.client_last_name || ""}</span>`
-              : emp_user_type === "employee"
-                ? ` <span class=" text-capitalize "style="min-width: 300px">${userData?.name}</span>` ||
-                ""
-                : ""}</p>
+      familyJsonArray[0]?.client_last_name
+      ? ` <span class=" text-capitalize">${familyJsonArray[0]?.client_first_name
+      } ${familyJsonArray[0]?.client_last_name || ""}</span>`
+      : emp_user_type === "employee"
+        ? ` <span class=" text-capitalize "style="min-width: 300px">${userData?.name}</span>` ||
+        ""
+        : ""}</p>
    
             <p style="font-size: 12px; margin-top: 10px;"><strong>Date:</strong> ${familyJsonArray[0]?.date_signature_client ? `<span class="border-bottom border-dark" style="min-width: 80px;">${moment(familyJsonArray[0].date_signature_client).format("DD/MM/YYYY")}</span>` : "______________"}</p>
         </div>

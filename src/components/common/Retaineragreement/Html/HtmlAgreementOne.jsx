@@ -125,7 +125,7 @@ const HtmlAgreementOne = ({
         }</span>`
     }
   </span>
-  , email
+  , <br>email
   <span class="${felidData?.client_email || userData?.email ? "para_gap" : ""}">
     ${felidData?.client_email || userData?.email || "     "}
   </span>
@@ -1283,8 +1283,8 @@ services that have been rendered or accounting for the time that has been spent 
     }</p>
           <p style="margin: 0">Client’s full name</p>
         </div>
-        <div class="col" style="text-align: center;
-   ">
+       
+    <div style="width: 33.33%; text-align: center">
        ${ClientSignatureFunction({ page:"admin", familyJsonArray, felidData })  }
           <p style="margin: 0">Signatures</p>
         </div>
@@ -1329,7 +1329,7 @@ services that have been rendered or accounting for the time that has been spent 
          ${felidData?.initial ? InitialFunction({ isPdf: false, initial: felidData?.initial }) : ""}
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     </span>
-             </div>bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        </span>        <h4 class="font-size-6 text-end d-none">RCIC</h4>
       </div>
 </p>

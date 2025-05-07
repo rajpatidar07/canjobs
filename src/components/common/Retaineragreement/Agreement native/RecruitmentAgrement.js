@@ -397,11 +397,7 @@ const RecruitmentAgrement = () => {
                   <View style={[styles.clientForm, { textAlign: "center", marginTop: 20 }]}>
                     <View style={styles.clientFormChild}>
                       <Text className="para_gap" style={{ margin: 0, marginBottom: 15, textDecoration: "underline", textTransform: "capitalize" }}>
-                        {familyJsonArray[0]?.client_first_name || "" || familyJsonArray[0]?.client_last_name
-                          ? familyJsonArray[0]?.client_first_name || "" +
-                          " " +
-                          (familyJsonArray[0]?.client_last_name || " ")
-                          : "_______________"}
+                         {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")||"_______________________"}
                       </Text>
                       <Text style={{ margin: "0 0 30px 0" }}>Client’s full name</Text>
                     </View>

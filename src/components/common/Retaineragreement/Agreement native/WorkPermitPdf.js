@@ -406,63 +406,24 @@ const WorkPermitPdf = () => {
                   <Text>{felidData?.professional_fees}</Text>
                 </View>
               </View>
-              <View style={styles.row}>
-                <View style={styles.cell}>
-                  <View>
-                    <Text>Disbursement:</Text>
-                  </View>
-                  <View>
-                    <Text>Discount</Text>
-                  </View>
-                  <View>
-                    <Text>Government fees</Text>
-                  </View>
-                </View>
-                <View style={styles.cell}>
-                  <View style={styles.row}>
-                    <View
-                      style={[
-                        {
-                          flex: 1,
-                          paddingBottom: 8,
-                          paddingTop: 4,
-                        },
-                      ]}
-                    >
-                      <Text>{ }</Text>
-                    </View>
-                  </View>
-                  <View style={styles.row}>
-                    <View
-                      style={[
-                        {
-                          flex: 1,
-                          paddingBottom: 8,
-                          paddingTop: 8,
-                        },
-                      ]}
-                    >
-
-                      <Text>{ }</Text>
-                    </View>
-                  </View>
-                  <View style={styles.row}>
-                    <View
-                      style={[
-                        {
-                          flex: 1,
-                          paddingBottom: 8,
-                          paddingTop: 8,
-                        },
-                      ]}
-                    >
-                      <Text>
-                        {felidData?.government_fees || ""}
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-              </View>
+                            <View style={styles.row}>
+                              <View style={styles.cell}><Text>Disbursement</Text>
+                              </View>
+                              <View style={styles.cell}><Text></Text>
+                              </View>
+                            </View>
+                            <View style={styles.row}>
+                              <View style={styles.cell}><Text>Courier charges</Text>
+                              </View>
+                              <View style={styles.cell}><Text>{felidData?.courier_charges}</Text>
+                              </View>
+                            </View>
+                            <View style={styles.row}>
+                              <View style={styles.cell}><Text>Government fees</Text>
+                              </View>
+                              <View style={styles.cell}><Text>{felidData?.government_fees}</Text>
+                              </View>
+                            </View>
               <View style={styles.row}>
                 <View style={styles.cell}>
 
@@ -1392,23 +1353,22 @@ const WorkPermitPdf = () => {
                   page={"user"}
                   isPdf={true}
                 />
-                <Text style={[styles.text, styles.textBold]}> {" " + (familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")}</Text>
+                <Text style={[styles.text, styles.textBold]}> Signature of CLient</Text>
                 <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {familyJsonArray[0]?.date_signature_client ? moment(familyJsonArray[0].date_signature_client).format("DD/MM/YYYY") : "______________"}</Text>
               </View>
 
               {/* Left Signature Box (RCIC) */}
               <View style={styles.box}>
                 <RCICSignatureFunction isPdf={true} felidData={felidData} />
-                <Text style={[styles.text, styles.textBold]}>Harpreet Kaur (RCIC)</Text>
-                <Text style={styles.text}>RCIC # R533393 CAN Pathways Immigration Consultancy Ltd.</Text>
-                <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {felidData?.date_signature_rcic !== "0000-00-00 00:00:00" && felidData?.date_signature_rcic ? moment(felidData.date_signature_rcic).format("DD/MM/YYYY") : "______________"}</Text>
-                <Text style={styles.text}><Text style={styles.textBold}>Signed at:</Text> <Text style={styles.underline}>Calgary, Alberta, Canada</Text></Text>
+                <Text style={[styles.text, styles.textBold]}>Signature of RCIC</Text>
+                
+                <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {felidData?.date_signature_rcic !== "0000-00-00 00:00:00" && felidData?.date_signature_rcic &&felidData?.date_signature_rcic !== "0000-00-00" ? moment(felidData.date_signature_rcic).format("DD/MM/YYYY") : "______________"}</Text>
               </View>
             </View>
           </View>
 
         </View>
-        <View style={{ marginTop: 30 }}>
+        <View style={{ marginTop: 80 }}>
           <Text style={[{ textAlign: "center", }, styles.definition]}>
             AUTHORIZATION
           </Text>
@@ -1473,9 +1433,9 @@ const WorkPermitPdf = () => {
               </Text>
             </View>
             <View style={{ marginTop: 17, flexDirection: 'row' }}>
-              <Text style={{ flex: 1 }}>
                 <Text style={{ width: 20, fontWeight: 'bold' }}>4</Text>
-                In the event the Immigration office responsible should contact the Client directly, the Clientis instructed to
+              <Text style={{ flex: 1 }}>
+                In the event the Immigration office responsible should contact the Client directly, the Client is instructed to
                 notify the RCIC immediately
               </Text>
             </View>
@@ -1537,11 +1497,7 @@ const WorkPermitPdf = () => {
             <View style={[styles.clientForm, { textAlign: "center", marginTop: 30 }]}>
               <View style={styles.clientFormChild}>
                 <Text className="para_gap" style={{ margin: 0, marginBottom: 15, textDecoration: "underline", textTransform: "capitalize" }}>
-                  {familyJsonArray[0]?.client_first_name || "" || familyJsonArray[0]?.client_last_name
-                    ? familyJsonArray[0]?.client_first_name || "" +
-                    " " +
-                    (familyJsonArray[0]?.client_last_name || " ")
-                    : "_______________"}
+                {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")||"_______________________"}
                 </Text>
                 <Text style={{ margin: "0 0 30px 0" }}>Client’s full name</Text>
               </View>
@@ -1554,6 +1510,7 @@ const WorkPermitPdf = () => {
                       page={"user"}
                       isPdf={true}
                     />
+                    <Text style={{ margin: "0 0 30px 0" }}>Signature</Text>
                   </View>
                 </View>
                 )

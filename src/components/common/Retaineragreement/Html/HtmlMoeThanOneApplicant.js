@@ -5,7 +5,7 @@ export default function HtmlMoeThanOneApplicant({ page,
     userData,
     emp_user_type,
     addSign, }) {
-    const familyJsonArray = felidData?.family_json || [];
+    // const familyJsonArray = felidData?.family_json || [];
     let htmlContent = `<!DOCTYPE html>
 <html lang="en">
 <head>

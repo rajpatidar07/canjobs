@@ -28,7 +28,6 @@ import {
   FaAddressCard,
   FaChevronDown,
   FaNotesMedical,
-  FaRegCreditCard,
   FaTasks,
 } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
@@ -42,7 +41,6 @@ import {
 } from "../../api/api";
 import TableInput from "../common/TableInput";
 import SAlert from "../common/sweetAlert";
-import { CiUser } from "react-icons/ci";
 const AdminSidebar = (props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(
     localStorage.getItem("isMenuOpen")
@@ -1119,16 +1117,24 @@ const AdminSidebar = (props) => {
             <span className="text-truncate">Manage Notes</span>
           </Link>
         </li>
-
+{console.log(props.heading ==="Manager's Dashboard",props.heading, user_type === "agent"
+              ? "d-none"
+              : props.heading === "Manager's Dashboard"
+              ? "active"
+              : "", user_type === "agent"
+              ? "d-none"
+              : props.heading === "Manage Job Category"
+              ? "active"
+              : "")}
         <li
-          ref={(el) => (liRefs.current["Assigned Job's"] = el)}
           className={
             user_type === "agent"
               ? "d-none"
-              : props.heading === "Assigned Job's"
+              : props.heading === "Manager's Dashboard"
               ? "active"
               : ""
           }
+          ref={(el) => (liRefs.current["Manager's Dashboard"] = el)}
         >
           <Link
             onClick={() => clearPageNo()}

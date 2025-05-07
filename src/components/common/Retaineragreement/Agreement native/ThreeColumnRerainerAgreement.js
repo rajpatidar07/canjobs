@@ -4,6 +4,9 @@ import {
 } from '@react-pdf/renderer';
 import moment from 'moment';
 import { AddSharePointDOcument, AddUpdateAgreement } from '../../../../api/api';
+import InitialFunction from '../CommonThings/InitialFunction';
+import { ClientSignatureFunction } from '../CommonThings/ClientSignatureFunctionHtml';
+import { RCICSignatureFunction } from '../CommonThings/RCICSignatureFunction';
 
 const styles = StyleSheet.create({
     page: {
@@ -436,7 +439,7 @@ const ThreeColumnRerainerAgreement = () => {
                             </View>
                         </View>
                     </View>
-                    <View data-list-text="4.">
+                    <View data-list-text="4." style={{ marginTop: 220, }}>
                         <Text style={[styles.definition, { fontWeight: 600 }]}>
                             4. Payment Schedule
                         </Text>
@@ -445,7 +448,7 @@ const ThreeColumnRerainerAgreement = () => {
                             payment by milestones]. Payment Terms and Conditions
                         </View>
                         <View
-                            style={[styles.table, { textAlign: "center", marginTop: 120, }]}
+                            style={[styles.table, { textAlign: "center", }]}
                         >
                             <View style={styles.row}>
                                 <View style={[styles.cell, styles.headerCell]}>
@@ -465,60 +468,21 @@ const ThreeColumnRerainerAgreement = () => {
                                 </View>
                             </View>
                             <View style={styles.row}>
-                                <View style={styles.cell}>
-                                    <View>
-                                        <Text>Disbursement:</Text>
-                                    </View>
-                                    <View>
-                                        <Text>Courier charges</Text>
-                                    </View>
-                                    <View>
-                                        <Text>Government fees</Text>
-                                    </View>
+                                <View style={styles.cell}><Text>Disbursement</Text>
                                 </View>
-                                <View style={styles.cell}>
-                                    <View style={styles.row}>
-                                        <View
-                                            style={[
-                                                {
-                                                    flex: 1,
-                                                    paddingBottom: 8,
-                                                    paddingTop: 4,
-                                                },
-                                            ]}
-                                        >
-                                            <Text></Text>
-                                        </View>
-                                    </View>
-                                    <View style={styles.row}>
-                                        <View
-                                            style={[
-                                                {
-                                                    flex: 1,
-                                                    paddingBottom: 4,
-                                                    paddingTop: 4,
-                                                },
-                                            ]}
-                                        >
-
-                                            <Text>{felidData?.courier_charges}</Text>
-                                        </View>
-                                    </View>
-                                    <View style={styles.row}>
-                                        <View
-                                            style={[
-                                                {
-                                                    flex: 1,
-                                                    paddingBottom: 4,
-                                                    paddingTop: 4,
-                                                },
-                                            ]}
-                                        >
-                                            <Text>
-                                                {felidData?.government_fees}
-                                            </Text>
-                                        </View>
-                                    </View>
+                                <View style={styles.cell}><Text></Text>
+                                </View>
+                            </View>
+                            <View style={styles.row}>
+                                <View style={styles.cell}><Text>Courier charges</Text>
+                                </View>
+                                <View style={styles.cell}><Text>{felidData?.courier_charges}</Text>
+                                </View>
+                            </View>
+                            <View style={styles.row}>
+                                <View style={styles.cell}><Text>Government fees</Text>
+                                </View>
+                                <View style={styles.cell}><Text>{felidData?.government_fees}</Text>
                                 </View>
                             </View>
                             <View style={styles.row}>
@@ -1332,7 +1296,7 @@ const ThreeColumnRerainerAgreement = () => {
                             RETAINER AGREEMENT
                         </Text>
                     </View>
-                    <View style={{ marginTop: 20 }}>
+                    <View style={{ marginTop: 50 }}>
                         {/* Contact Information Header */}
                         <Text style={[{ fontWeight: "600" }, styles.definition]}>
                             21. Contact Information
@@ -1488,24 +1452,12 @@ const ThreeColumnRerainerAgreement = () => {
                         <View style={{ flexDirection: "row", flexWrap: "wrap", marginBottom: 20 }}>
                             {/* Client Signature */}
                             <View style={{ width: "50%", padding: 10 }}>
-                                <View style={styles.signatureBox}>
-                                    {familyJsonArray[0]?.client_signature ? (
-                                        <Image src={familyJsonArray[0].client_signature} style={{
-                                            display: "inline-block",
-                                            maxWidth: "100%",
-                                            maxHeight: "100%",
-                                            textTransform: "capitalize",
-                                        }} />
-                                    ) : (
-                                        <View
-                                            style={{
-                                                display: "inline-block",
-                                                width: "100%",
-                                                height: 50,
-                                                border: "1px solid #ccc",
-                                            }}
-                                        />)}
-                                </View>
+                                <ClientSignatureFunction
+                                    felidData={felidData}
+                                    familyJsonArray={familyJsonArray}
+                                    page={"user"}
+                                    isPdf={true}
+                                />
                                 <Text>Signature of Client</Text>
                             </View>
 
@@ -1591,33 +1543,7 @@ const ThreeColumnRerainerAgreement = () => {
 
                             {/* RCIC Signature */}
                             <View style={{ width: "50%", padding: 10 }}>
-                                {felidData?.rcic_signature ? (
-                                    <View style={{ display: "flex", flexDirection: "column" }}>
-                                        <Image src={felidData?.rcic_signature} style={{
-                                            display: "inline-block",
-                                            maxWidth: "100%",
-                                            maxHeight: "100%",
-                                            textTransform: "capitalize",
-                                        }} />
-
-                                        <Text style={{ fontSize: 8, marginTop: 5, marginBottom: 7 }}>
-                                            <Text style={{ textTransform: "capitalize" }}>
-                                                Harpreet Kaur{" "}
-                                            </Text>
-                                            <Text> {(!felidData?.date_signature_rcic || felidData?.date_signature_rcic === "0000-00-00" || felidData?.date_signature_rcic === "0000-00-00 00:00:00")
-                                                ? "________________"
-                                                : moment(felidData?.date_signature_rcic).format("DD-MM-YYYY")}</Text>
-                                        </Text>
-                                    </View>
-                                ) : (
-                                    <View
-                                        style={{
-                                            display: "inline-block",
-                                            width: "100%",
-                                            height: 50,
-                                            border: "1px solid #ccc",
-                                        }}
-                                    />)}
+                                <RCICSignatureFunction isPdf={true} felidData={felidData} />
                                 <Text>Signature of RCIC</Text>
                             </View>
 
@@ -1640,7 +1566,7 @@ const ThreeColumnRerainerAgreement = () => {
 
 
             </View>
-            <View style={{ marginTop: 50 }}>
+            <View style={{ marginTop: 130 }}>
                 <Text style={[{ textAlign: "center", }, styles.definition]}>
                     AUTHORIZATION
                 </Text>
@@ -1769,33 +1695,17 @@ const ThreeColumnRerainerAgreement = () => {
                     <View style={[styles.clientForm, { textAlign: "center", marginTop: 30 }]}>
                         <View style={styles.clientFormChild}>
                             <Text className="para_gap" style={{ margin: 0, marginBottom: 15, textDecoration: "underline", textTransform: "capitalize" }}>
-                                {familyJsonArray[0]?.client_first_name || "" || familyJsonArray[0]?.client_last_name
-                                    ? familyJsonArray[0]?.client_first_name || "" +
-                                    " " +
-                                    (familyJsonArray[0]?.client_last_name || " ")
-                                    : "_______________"}
+                            {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")||"_______________________"}
                             </Text>
                             <Text style={{ margin: "0 0 30px 0" }}>Client’s full name</Text>
                         </View>
                         <View style={[styles.clientFormChild, { alignSelf: "center" }]}>
-                            <View style={styles.signatureBox}>
-                                {familyJsonArray[0]?.client_signature ? (
-                                    <Image src={familyJsonArray[0].client_signature} style={{
-                                        display: "inline-block",
-                                        maxWidth: "100%",
-                                        maxHeight: "100%",
-                                        textTransform: "capitalize",
-                                    }} />
-                                ) : (
-                                    <View
-                                        style={{
-                                            display: "inline-block",
-                                            width: "100%",
-                                            height: 50,
-                                            border: "1px solid #ccc",
-                                        }}
-                                    />)}
-                            </View>
+                            <ClientSignatureFunction
+                                felidData={felidData}
+                                familyJsonArray={familyJsonArray}
+                                page={"user"}
+                                isPdf={true}
+                            />
                             <Text style={{ margin: "0 0 50px 0" }}>Signatures</Text>
                         </View>
                         <View style={styles.clientFormChild}>
@@ -1841,8 +1751,8 @@ const ThreeColumnRerainerAgreement = () => {
                                 <View>
                                     <View
                                         style={{
-                                            width: "100%",
-                                            height: 20,
+                                            width: 100,
+                                            height: 50,
                                             border: "1px solid #ccc",
                                             display: "flex",
                                             alignItems: "center",
@@ -1858,18 +1768,14 @@ const ThreeColumnRerainerAgreement = () => {
                                                     textTransform: "capitalize",
                                                 }}
                                             >
-                                                {felidData.initial
-                                                    .split(" ")
-                                                    .filter((word) => word)
-                                                    .map((word) => word[0])
-                                                    .join(" ")}
+                                                <InitialFunction initial={felidData?.initial} />
                                             </Text>
                                         ) : (
                                             <View
                                                 style={{
                                                     display: "inline-block",
                                                     width: 100,
-                                                    height: 20,
+                                                    height: 50,
                                                     border: "1px solid #ccc",
                                                 }}
                                             />
@@ -1910,7 +1816,7 @@ const ThreeColumnRerainerAgreement = () => {
                                         <View>
                                             <View
                                                 style={{
-                                                    width: "100%",
+                                                    width: 100,
                                                     height: 50,
                                                     border: "1px solid #ccc",
                                                     display: "flex",
@@ -1927,11 +1833,7 @@ const ThreeColumnRerainerAgreement = () => {
                                                             textTransform: "capitalize",
                                                         }}
                                                     >
-                                                        {felidData.initial
-                                                            .split(" ")
-                                                            .filter((word) => word)
-                                                            .map((word) => word[0])
-                                                            .join(" ")}
+                                                        <InitialFunction initial={felidData?.initial} />
                                                     </Text>
                                                 ) : (
                                                     <View
@@ -1944,7 +1846,6 @@ const ThreeColumnRerainerAgreement = () => {
                                                     />
                                                 )}
                                             </View>
-
                                         </View>
                                     </View>
                                 </View>

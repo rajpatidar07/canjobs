@@ -549,7 +549,7 @@ const AgreementOneForm = ({
                   },
                   {
                     label: "Courier charges",
-                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "work permit" || state.type === "employers" ? "d-none" : "",
+                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream"  || state.type === "employers" ? "d-none" : "",
                     name: "courier_charges",
                     type: "text",
                   },

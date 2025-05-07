@@ -286,6 +286,16 @@ const InitialConsultation = ({
         <!-- Client Signature -->
         <div style="width: 48%;">
          ${ClientSignatureFunction({ page, familyJsonArray, felidData })} 
+         <p style="margin: 10px 0 0 0;"><u>${felidData &&
+      (familyJsonArray[0]?.client_first_name ||
+        familyJsonArray[0]?.client_last_name)
+      ? familyJsonArray[0]?.client_first_name +
+      " " +
+      (familyJsonArray[0]?.client_last_name || "")
+      : emp_user_type === "employee"
+        ? userData?.name || "" || ""
+        : "" || ""
+    }</u></p>
           <p>Signature of Client</p>
         </div>
       

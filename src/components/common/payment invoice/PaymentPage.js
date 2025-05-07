@@ -344,7 +344,7 @@ const Payment_Page = (props) => {
                           </span>
                         </button>
                         <button
-                          className="btn btn-outline-info action_btn"
+                          className="btn btn-outline-info action_btn d-none"
                           title="Update"
                           onClick={() => {
                             setOpenAddPaymentForm(true)

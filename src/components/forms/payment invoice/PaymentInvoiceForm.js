@@ -40,7 +40,7 @@ const PaymentInvoiceForm = (props) => {
     total: "",
     message_on_invoice: "",
     message_on_statement: "",
-    amounts_are: "",
+    amounts_are: "Inclusive of tax",
     gst_percentage: "",
     status: props.singleInvoiceData ? props.singleInvoiceData.status : 2
   }
@@ -120,8 +120,10 @@ const PaymentInvoiceForm = (props) => {
     try {
       let data = {
         ...state,
-        is_send_mail: send ? send : 0
+        is_send_mail: send ? send : 0,
+        due_amount: parseInt(state.due_amount) + parseInt(state.total)
       }
+      console.log(data, "ppp")
       setLoading(true)
       let res = await AddUpdatePaymentInvoiceApi(data)
       if (res.data.status === 1 || res.data.status === "1") {
@@ -178,15 +180,15 @@ const PaymentInvoiceForm = (props) => {
   };
 
   /*Function to delete the product */
-  const handleDeleteProduct = (index) => {
-    setState((prevState) => {
-      const updatedProducts = prevState.product_json
-        .filter((_, i) => i !== index) // Remove selected item
-        .map((item, index) => ({ ...item, id: index.toString() })); // Reassign IDs
+  // const handleDeleteProduct = (index) => {
+  //   setState((prevState) => {
+  //     const updatedProducts = prevState.product_json
+  //       .filter((_, i) => i !== index) // Remove selected item
+  //       .map((item, index) => ({ ...item, id: index.toString() })); // Reassign IDs
 
-      return { ...prevState, product_json: updatedProducts };
-    });
-  };
+  //     return { ...prevState, product_json: updatedProducts };
+  //   });
+  // };
 
   return (
     <Modal
@@ -476,151 +478,116 @@ const PaymentInvoiceForm = (props) => {
                         No products have been added yet.
                       </th>
                     </tr>
-                  ) : (
-                    state.product_json.map((item, index) => {
-                      const quantity = parseFloat(item.quantity) || 0;
-                      const rate = parseFloat(item.rate) || 0;
-                      // const service_tax = parseFloat(item.service_tax) || 0;
-                      const amount = quantity * rate;
+                  ) : state.product_json.map((item, index) => {
+                    // const quantity = parseFloat(item.quantity) || 0;
+                    // const rate = parseFloat(item.rate) || 0;
+                    // const amount = quantity * rate;
 
-
-                      return (
-                        <tr key={index}>
-                          <td>{index + 1}</td>
-                          <td>
-                            <input
-                              type="date"
-                              className="border-0 bg-transparent"
-                              style={{ width: "100%" }}
-                              value={state.invoice_date}
-                              disabled
-                            />
-                          </td>
-                          <td>
-                            <input
-                              type="text"
-                              className="border-0 bg-transparent"
-                              style={{ width: "100%" }}
-                              value={item.product}
-                              onChange={(e) =>
-                                handleProductChange(index, "product", e.target.value)
-                              }
-                            />
-                          </td>
-                          <td>
-                            <input
-                              type="text"
-                              className="border-0 bg-transparent"
-                              style={{ width: "100%" }}
-                              value={item.description}
-                              onChange={(e) =>
-                                handleProductChange(index, "description", e.target.value)
-                              }
-                            />
-                          </td>
-                          <td>
-                            <input
-                              type="number"
-                              className="border-0 bg-transparent"
-                              style={{ width: "100%", textAlign: "right" }}
-                              value={item.quantity}
-                              onChange={(e) =>
-                                handleProductChange(index, "quantity", e.target.value)
-                              }
-                            />
-                          </td>
-                          <td>
-                            <input
-                              type="number"
-                              className="border-0 bg-transparent"
-                              style={{ width: "100%", textAlign: "right" }}
-                              value={item.rate}
-                              onChange={(e) => {
-                                handleProductChange(index, "rate", e.target.value)
-                                const updatedItems = [...state.product_json];
-                                updatedItems[index].service_tax = 0;
-
-                                const newSubtotal = updatedItems.reduce(
-                                  (acc, curr) =>
-                                    acc + (parseFloat(curr.quantity) || 0) * (parseFloat(curr.rate) || 0),
-                                  0
-                                );
-
-                                const newGST = updatedItems.reduce(
-                                  (acc, curr) =>
-                                    acc +
-                                    ((parseFloat(curr.quantity) || 0) *
-                                      (parseFloat(curr.rate) || 0) *
-                                      (0)) /
-                                    100,
-                                  0
-                                );
-
-                                setState({
-                                  ...state,
-                                  product_json: updatedItems,
-                                  subtotal: newSubtotal,
-                                  gst_percentage: newGST,
-                                  total: newSubtotal + newGST
-                                });
-
-                              }
-                              }
-                            />
-                          </td>
-                          <td style={{ textAlign: "right" }}>
-                            {amount.toFixed(2)}
-                          </td>
-                          <td>
-                            <input
-                              type="number"
-                              className="border-0 bg-transparent"
-                              style={{ width: "100%" }}
-                              value={item.service_tax}
-                              onChange={(e) => {
-                                handleProductChange(index, "service_tax", e.target.value);
-
-                                const updatedItems = [...state.product_json];
-                                updatedItems[index].service_tax = e.target.value;
-
-                                const newSubtotal = updatedItems.reduce(
-                                  (acc, curr) =>
-                                    acc + (parseFloat(curr.quantity) || 0) * (parseFloat(curr.rate) || 0),
-                                  0
-                                );
-
-                                const newGST = updatedItems.reduce(
-                                  (acc, curr) =>
-                                    acc +
-                                    ((parseFloat(curr.quantity) || 0) *
-                                      (parseFloat(curr.rate) || 0) *
-                                      (parseFloat(curr.service_tax) || 0)) /
-                                    100,
-                                  0
-                                );
-
-                                setState({
-                                  ...state,
-                                  product_json: updatedItems,
-                                  subtotal: newSubtotal,
-                                  gst_percentage: newGST,
-                                  total: newSubtotal + newGST
-                                });
-                              }}
-                            />
-                          </td>
-                          <td>
-                            <button
-                              className="border-0 bg-transparent"
-                              onClick={() => handleDeleteProduct(index)}
-                            >
-                              <CiTrash color="red" fontSize={20} />
-                            </button>
-                          </td>
-                        </tr>
+                    const updateCalculations = (updatedItems) => {
+                      const newSubtotal = updatedItems.reduce(
+                        (acc, curr) => acc + (parseFloat(curr.quantity) || 0) * (parseFloat(curr.rate) || 0),
+                        0
                       );
-                    })
-                  )
+
+                      const newGST = state.amounts_are === "Inclusive of tax"
+                        ? updatedItems.reduce(
+                          (acc, curr) =>
+                            acc +
+                            ((parseFloat(curr.quantity) || 0) *
+                              (parseFloat(curr.rate) || 0) *
+                              (parseFloat(curr.service_tax) || 0)) / 100,
+                          0
+                        )
+                        : 0;
+
+                      setState((prev) => ({
+                        ...prev,
+                        product_json: updatedItems,
+                        subtotal: newSubtotal,
+                        gst_percentage: newGST,
+                        total: newSubtotal + newGST,
+                        // due_amount: new_balance,
+                      }));
+                    };
+
+                    const handleValueChange = (field, value) => {
+                      const updatedItems = [...state.product_json];
+                      updatedItems[index][field] = value;
+                    
+                      const quantity = parseFloat(updatedItems[index].quantity) || 0;
+                      const rate = parseFloat(updatedItems[index].rate) || 0;
+                      updatedItems[index].amount = quantity * rate; // Update amount
+                    
+                      if (field === "rate") {
+                        updatedItems[index].service_tax =
+                          state.amounts_are === "Inclusive of tax"
+                            ? updatedItems[index].service_tax || 0
+                            : 0;
+                      }
+                    
+                      updateCalculations(updatedItems);
+                    };
+                    
+                    return (
+                      <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>
+                          <input type="date" className="border-0 bg-transparent" style={{ width: "100%" }} value={state.invoice_date} disabled />
+                        </td>
+                        <td>
+                          <input type="text" className="border-0 bg-transparent" style={{ width: "100%" }} value={item.product}
+                            onChange={(e) => handleProductChange(index, "product", e.target.value)} />
+                        </td>
+                        <td>
+                          <input type="text" className="border-0 bg-transparent" style={{ width: "100%" }} value={item.description}
+                            onChange={(e) => handleProductChange(index, "description", e.target.value)} />
+                        </td>
+                        <td>
+                          <input type="number" className="border-0 bg-transparent" style={{ width: "100%", textAlign: "right" }} value={item.quantity}
+                            onChange={(e) => handleValueChange("quantity", e.target.value)} />
+                        </td>
+                        <td>
+                          <input type="number" className="border-0 bg-transparent" style={{ width: "100%", textAlign: "right" }} value={item.rate}
+                            onChange={(e) => handleValueChange("rate", e.target.value)} />
+                        </td>
+                        <td style={{ textAlign: "right" }}>{item?.amount}</td>
+                        <td>
+                          <input type="number" className="border-0 bg-transparent" style={{ width: "100%" }} value={item.service_tax}
+                            onChange={(e) => handleValueChange("service_tax", e.target.value)} />
+                        </td>
+                        <td>
+                          <button
+                            className="border-0 bg-transparent"
+                            onClick={() => {
+                              const updatedProducts = [...state.product_json];
+                              const deletedItem = updatedProducts.splice(index, 1)[0];
+
+                              const quantity = parseFloat(deletedItem.quantity) || 0;
+                              const rate = parseFloat(deletedItem.rate) || 0;
+                              const tax = parseFloat(deletedItem.service_tax) || 0;
+
+                              const itemAmount = quantity * rate;
+                              const itemGST = state.amounts_are === "Inclusive of tax" ? (itemAmount * tax) / 100 : 0;
+                              const totalDeduct = itemAmount + itemGST;
+
+                              setState({
+                                ...state,
+                                product_json: updatedProducts,
+                                subtotal: state.subtotal - itemAmount,
+                                gst_percentage: state.gst_percentage - itemGST,
+                                total: state.total - totalDeduct,
+                                due_amount: state.due_amount - totalDeduct,
+                              });
+                            }}
+                          >
+                            <CiTrash color="red" fontSize={20} />
+                          </button>
+
+                        </td>
+                      </tr>
+                    );
+                  })
+
                 }
               </tbody>
 
@@ -629,11 +596,11 @@ const PaymentInvoiceForm = (props) => {
           <div className="d-flex gap-2 justify-content-between align-items-start">
             <div>
               <button
-                className="btn btn-primary py-1 "
+                className="btn btn-primary "
                 onClick={(e) => handleAddNewProduct(e)}
                 type="button"
               >
-                Add New{" "}
+                Add New Product
               </button>
 
               <div className="form_group pt-4">
@@ -696,7 +663,7 @@ const PaymentInvoiceForm = (props) => {
                   width: 100,
                   height: 50,
                   border: "1px solid #ccc",
-                }}>{state.due_amount || ""}</li>
+                }}>{parseInt(state.due_amount) + parseInt(state.total) || ""}</li>
               </ul>
             </div>
           </div>

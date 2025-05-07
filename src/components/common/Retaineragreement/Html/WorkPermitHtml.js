@@ -106,7 +106,7 @@ const WorkPermitHtml = ({
         : `<span class="para_gap">${userData?.current_location !== null || userData?.current_location ? userData?.current_location : "   "} ${userData?.currently_located_country !== null || userData?.currently_located_country ? userData?.currently_located_country : "   "
         }</span>`
     }
-  </span>
+  </span><br>
   , email
   <span class="${felidData?.client_email || userData?.email ? "para_gap" : ""}">
     ${felidData?.client_email || userData?.email || "     "}

@@ -290,11 +290,6 @@ const InitialConsultationAgreement = () => {
                   {familyJsonArray[0]?.client_first_name || ""}{" "}
                   {familyJsonArray[0]?.client_last_name || ""}{" "}
                 </Text>
-                  <Text> {!familyJsonArray[0]?.date_signature_client ||
-                    familyJsonArray[0]?.date_signature_client ===
-                    "0000-00-00 00:00:00"
-                    ? "____________"
-                    : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</Text>
                 </Text>
                 <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {familyJsonArray[0]?.date_signature_client ? moment(familyJsonArray[0].date_signature_client).format("DD/MM/YYYY") : "______________"}</Text>
               </View>

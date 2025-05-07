@@ -494,6 +494,9 @@ const EmployerRetainerAgreementPdf = () => {
                 page={"user"}
                 isPdf={true}
               />
+              <Text style={[styles.text, styles.textBold]}> {familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name ? (
+                <Text style={[{ borderBottomWidth: 1, borderBottomColor: "black", textTransform: "capitalize" }, styles.underline]}>
+                  {familyJsonArray[0]?.client_first_name} {familyJsonArray[0]?.client_last_name || ""}</Text>) : ""}</Text>
               <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {familyJsonArray[0]?.date_signature_client ? moment(familyJsonArray[0].date_signature_client).format("DD/MM/YYYY") : "______________"}</Text>
             </View>
           </View>

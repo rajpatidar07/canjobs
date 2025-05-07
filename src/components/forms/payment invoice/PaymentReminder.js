@@ -8,8 +8,8 @@ const PaymentReminder = (props) => {
   let admin_id = localStorage.getItem("admin_id");
   let admin_type = localStorage.getItem("admin_type")
   const initialFormState = {
-    due_date: "",
-    due_amount: "",
+    due_date: props.invoiceData.due_date,
+    due_amount: props.invoiceData.due_amount,
     id: props.invoiceData.id,
     sender_id: admin_id,
     sender_type: admin_type,
@@ -75,7 +75,7 @@ const PaymentReminder = (props) => {
               type="date"
               className="form-control"
               name="due_date"
-              value={state.due_date}
+              value={state.due_date ? state.due_date.split(' ')[0] : ''}
               onChange={onInputChange}
               required
             />
@@ -112,7 +112,7 @@ const PaymentReminder = (props) => {
 
           {/* Submit & Cancel Buttons */}
           <div className="d-flex justify-content-center gap-2">
-            <button className="btn btn-primary" type="submit" disabled={loading}>{loading ? "Sending" : "Send"}</button>
+            <button className="btn btn-primary" type="submit" disabled={loading}>{loading ? "Sending..." : "Send"}</button>
           </div>
         </form>
       </div>

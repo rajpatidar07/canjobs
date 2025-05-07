@@ -1261,22 +1261,7 @@ export default function AlbertaPNPAndFederalPR({
             <p style="margin: 0">Client’s full name</p>
           </div>
           <div style="width: 33.33%; text-align: center;
-     ${familyJsonArray[0]?.client_signature
-      ? "position:relative; top: 10px;"
-      : ""
-    }">
-           ${familyJsonArray[0]?.client_signature ? `
-                    <div style="margin-right:15px;height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
-                      <img src="${familyJsonArray[0].client_signature}" 
-                           alt="${(familyJsonArray[0]?.client_first_name || '') + ' ' + (familyJsonArray[0]?.client_last_name || '')}" 
-                           style="max-height: 100%;">
-                    </div>
-                     <p style="margin: 10px 0 0 0;">
-                   ${(familyJsonArray[0]?.client_first_name || '') + ' ' + (familyJsonArray[0]?.client_last_name || '')}
-                      ${moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}
-                </p>`
-      :
-      `<span style="display: inline-block; width: 200px; height: 50px; border: 1px solid #ccc;"></span>`}
+      ${ClientSignatureFunction({ page:"admin", familyJsonArray, felidData })  }
             <p style="margin: 0">Signatures</p>
           </div>
           <div style="width: 33.33%; text-align: center">

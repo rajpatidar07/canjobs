@@ -26,7 +26,10 @@ import ViewAdminBox from "../../common/ViewAdminBox";
 import CommentReplyBox from "../../common/CommentReplyBox"
 import determineBackgroundColor from "../../common/Common function/DetermineBackgroundColour";
 import MarkReadTask from "../../common/Common function/MarkReadTask";
-
+import { EditorState } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { stateToHTML } from "draft-js-export-html";
 function Addfollowup(props) {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -354,7 +357,7 @@ function Addfollowup(props) {
   const validators = {
     subject: [
       (value) =>
-        value === "" || value === null || value.trim() === ""
+        value === "" || value === null
           ? "subject required"
           : value.length < 2
             ? "subject should have 2 or more letters."
@@ -362,10 +365,10 @@ function Addfollowup(props) {
     ],
     subject_description: [
       (value) =>
-        value === "" || value === null || value.trim() === ""
-          ? "Discription required"
+        value === "" || value === null
+          ? "Description required"
           : value.length < 2
-            ? "Discription should have 2 or more letters."
+            ? "Description should have 2 or more letters."
             : "",
     ],
   };
@@ -378,10 +381,12 @@ function Addfollowup(props) {
     setErrors,
     validate,
   } = useValidation(initialFormState, validators);
+  const [editorState, setEditorState] = useState(state.subject_description || EditorState.createEmpty() || "");
 
   /* Functionality to close the modal */
   const close = () => {
     setState(initialFormState);
+    setEditorState(EditorState.createEmpty() || "")
     setErrors("");
     setLoading(false);
     // setSelectedAdmin([])
@@ -567,6 +572,7 @@ function Addfollowup(props) {
   };
   // USER FOLLOW UP PROFILE UPDATE SUBMIT BUTTON
   const onAminFollowClick = async (event) => {
+    console.log("add,err", errors, state)
     event.preventDefault();
     if (validate()) {
       setLoading(true);
@@ -635,6 +641,7 @@ function Addfollowup(props) {
           setApiCall(true);
           setSelectedAdmin([]);
           setState(initialFormState);
+          setEditorState(EditorState.createEmpty() || "")
           return close();
         }
       } catch (err) {
@@ -646,6 +653,7 @@ function Addfollowup(props) {
 
   /*Function to update comment */
   const OnHandleUpdateCommentStatus = async (originalData, status) => {
+    console.log("update")
     const {
       assigned_to,
       subject_description,
@@ -719,7 +727,7 @@ function Addfollowup(props) {
     };
 
     // console.log("Updated Selected Admins:", filteredSelectedAdmins);
-    // console.log(updatedData);
+    console.log(updatedData);
 
     // Call API to update
     try {
@@ -735,6 +743,7 @@ function Addfollowup(props) {
         setSelectedAdmin([]);
         setState(initialFormState);
         setApiCall(true);
+        setEditorState(EditorState.createEmpty() || "")
       }
     } catch (err) {
       console.log(err);
@@ -765,6 +774,7 @@ function Addfollowup(props) {
         setState(initialFormState);
         setDeleteAlert(false);
         setApiCall(true);
+        setEditorState(EditorState.createEmpty() || "")
       }
     } catch (err) {
       console.log(err);
@@ -937,7 +947,17 @@ function Addfollowup(props) {
       console.log(err);
     }
   };
+  const handleEditorChange = (newEditorState) => {
+    setEditorState(newEditorState);
 
+    // ✅ Convert editor content to HTML using stateToHTML
+    const htmlContent = stateToHTML(newEditorState.getCurrentContent());
+
+    setState((prevState) => ({
+      ...prevState,
+      subject_description: htmlContent,
+    }));
+  };
   let content = (
     <>
       {/* <ModalSidebar
@@ -1355,7 +1375,7 @@ function Addfollowup(props) {
                         state={state}
                         page={"FollowUp"}
                       /> */}
-                      <textarea
+                      {/* <textarea
                         type="text"
                         value={state.subject_description || ""}
                         onChange={handleInputChange}
@@ -1366,7 +1386,15 @@ function Addfollowup(props) {
                           }`}
                         rows={4}
                         style={{ outline: 0 }}
-                      ></textarea>
+                      ></textarea> */}
+                      <Editor
+                        editorState={editorState || ""}
+                        onEditorStateChange={handleEditorChange}
+                        toolbarHidden={true}
+                        editorStyle={{ border: '1px solid #ddd', minHeight: '200px' }}
+                      />
+
+
                       {dropdownVisible && filteredEmails.length > 0 ? (
                         <ul
                           className="email-suggestions"
@@ -1465,6 +1493,7 @@ function Addfollowup(props) {
                         state.id
                           ? OnHandleUpdateCommentStatus(state)
                           : onAminFollowClick(e);
+                        console.log(state.id)
                       }}
                       className="btn btn-primary btn-small w-25 rounded-5 text-uppercase"
                       type="button"

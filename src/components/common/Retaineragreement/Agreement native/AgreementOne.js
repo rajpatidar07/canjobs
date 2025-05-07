@@ -220,29 +220,29 @@ const AggrementOne = () => {
             This Retainer Agreement is made this
             <Text style={styles.textunderline}>
               {!felidData?.agreement_date ||
-              felidData?.agreement_date === "0000-00-00 00:00:00" ||
-              felidData?.agreement_date === "0000-00-00"
+                felidData?.agreement_date === "0000-00-00 00:00:00" ||
+                felidData?.agreement_date === "0000-00-00"
                 ? "_______"
                 : " " +
-                  moment(new Date(felidData?.agreement_date)).format("Do") +
-                  " "}
+                moment(new Date(felidData?.agreement_date)).format("Do") +
+                " "}
             </Text>
             day of
             <Text style={styles.textunderline}>
               {!felidData?.agreement_date ||
-              felidData?.agreement_date === "0000-00-00 00:00:00" ||
-              felidData?.agreement_date === "0000-00-00"
+                felidData?.agreement_date === "0000-00-00 00:00:00" ||
+                felidData?.agreement_date === "0000-00-00"
                 ? "_______"
                 : " " +
-                  moment(new Date(felidData?.agreement_date)).format("MMMM") +
-                  " "}
+                moment(new Date(felidData?.agreement_date)).format("MMMM") +
+                " "}
             </Text>
             {!felidData?.agreement_date ||
-            felidData?.agreement_date === "0000-00-00 00:00:00" ||
-            felidData?.agreement_date === "0000-00-00"
+              felidData?.agreement_date === "0000-00-00 00:00:00" ||
+              felidData?.agreement_date === "0000-00-00"
               ? "_______"
               : " " +
-                moment(new Date(felidData?.agreement_date)).format("YYYY")}{" "}
+              moment(new Date(felidData?.agreement_date)).format("YYYY")}{" "}
             between Regulated Canadian Immigration Consultant (RCIC) Harpreet
             Kaur (the “RCIC”), RCIC Membership Number
             <Text style={styles.textunderline}> R533393</Text>, Phone number
@@ -596,7 +596,7 @@ const AggrementOne = () => {
               </Text>
             </View>
             <View
-              style={[styles.table, { textAlign: "center", marginTop: 90 }]}
+              style={[styles.table, { textAlign: "center", marginTop: 93 }]}
             >
               <View style={styles.row}>
                 <View style={[styles.cell, styles.headerCell]}>
@@ -615,57 +615,21 @@ const AggrementOne = () => {
                 </View>
               </View>
               <View style={styles.row}>
-                <View style={styles.cell}>
-                  <View>
-                    <Text>Disbursement:</Text>
-                  </View>
-                  <View>
-                    <Text>Courier charges</Text>
-                  </View>
-                  <View>
-                    <Text>Government fees</Text>
-                  </View>
+                <View style={styles.cell}><Text>Disbursement</Text>
                 </View>
-                <View style={styles.cell}>
-                  <View style={styles.row}>
-                    <View
-                      style={[
-                        {
-                          flex: 1,
-                          paddingBottom: 8,
-                          paddingTop: 4,
-                        },
-                      ]}
-                    >
-                      <Text></Text>
-                    </View>
-                  </View>
-                  <View style={styles.row}>
-                    <View
-                      style={[
-                        {
-                          flex: 1,
-                          paddingBottom: 8,
-                          paddingTop: 8,
-                        },
-                      ]}
-                    >
-                      <Text>{felidData?.courier_charges}</Text>
-                    </View>
-                  </View>
-                  <View style={styles.row}>
-                    <View
-                      style={[
-                        {
-                          flex: 1,
-                          paddingBottom: 8,
-                          paddingTop: 8,
-                        },
-                      ]}
-                    >
-                      <Text>{felidData?.government_fees}</Text>
-                    </View>
-                  </View>
+                <View style={styles.cell}><Text></Text>
+                </View>
+              </View>
+              <View style={styles.row}>
+                <View style={styles.cell}><Text>Courier charges</Text>
+                </View>
+                <View style={styles.cell}><Text>{felidData?.courier_charges}</Text>
+                </View>
+              </View>
+              <View style={styles.row}>
+                <View style={styles.cell}><Text>Government fees</Text>
+                </View>
+                <View style={styles.cell}><Text>{felidData?.government_fees}</Text>
                 </View>
               </View>
               <View style={styles.row}>
@@ -1589,7 +1553,7 @@ const AggrementOne = () => {
                       ]}
                     >
                       {felidData?.client_address.trim() !== "" ||
-                      felidData?.client_address !== " "
+                        felidData?.client_address !== " "
                         ? felidData?.client_address
                         : "_______________"}
                     </Text>
@@ -1719,19 +1683,13 @@ const AggrementOne = () => {
                   page={"user"}
                   isPdf={true}
                 />
-                <Text style={[styles.text, styles.textBold]}>
-                  {" "}
-                  {" " +
-                    (familyJsonArray[0]?.client_first_name || "") +
-                    " " +
-                    (familyJsonArray[0]?.client_last_name || " ")}
-                </Text>
+                <Text style={[styles.text, styles.textBold]}>Signature of Client</Text>
                 <Text style={styles.text}>
                   <Text style={styles.textBold}>Date:</Text>{" "}
                   {familyJsonArray[0]?.date_signature_client
                     ? moment(familyJsonArray[0].date_signature_client).format(
-                        "DD/MM/YYYY"
-                      )
+                      "DD/MM/YYYY"
+                    )
                     : "______________"}
                 </Text>
               </View>
@@ -1739,22 +1697,9 @@ const AggrementOne = () => {
               {/* Left Signature Box (RCIC) */}
               <View style={styles.box}>
                 <RCICSignatureFunction isPdf={true} felidData={felidData} />
-                <Text style={[styles.text, styles.textBold]}>
-                  Harpreet Kaur (RCIC)
-                </Text>
+                <Text style={[styles.text, styles.textBold]}>Signature of RCIC</Text>
                 <Text style={styles.text}>
-                  RCIC # R533393 CAN Pathways Immigration Consultancy Ltd.
-                </Text>
-                <Text style={styles.text}>
-                  <Text style={styles.textBold}>Date:</Text>{" "}
-                  {felidData?.date_signature_rcic !== "0000-00-00 00:00:00" &&
-                  felidData?.date_signature_rcic
-                    ? moment(felidData.date_signature_rcic).format("DD/MM/YYYY")
-                    : "______________"}
-                </Text>
-                <Text style={styles.text}>
-                  <Text style={styles.textBold}>Signed at:</Text>{" "}
-                  <Text style={styles.underline}>Calgary, Alberta, Canada</Text>
+                  <Text style={styles.textBold}>Date:</Text> {felidData?.date_signature_rcic !== "0000-00-00 00:00:00" && felidData?.date_signature_rcic && felidData?.date_signature_rcic !== "0000-00-00" ? moment(felidData.date_signature_rcic).format("DD/MM/YYYY") : "______________"}
                 </Text>
               </View>
             </View>
@@ -1773,7 +1718,7 @@ const AggrementOne = () => {
               {(familyJsonArray[0]?.client_first_name || "") +
                 " " +
                 (familyJsonArray[0]?.client_last_name || " ")}
-            </Text>{" "}
+            </Text>
             ( hereinafter referred to as the “client”), hereby authorize and
             appoint Harpreet kaur (hereinafter referred to as the “RCIC” with a
             CICC# R533393), of CAN Pathways Immigration consultancy
@@ -1833,10 +1778,10 @@ const AggrementOne = () => {
               </Text>
             </View>
             <View style={{ marginTop: 17, flexDirection: "row" }}>
+              <Text style={{ width: 20, fontWeight: "bold" }}>4</Text>
               <Text style={{ flex: 1 }}>
-                <Text style={{ width: 20, fontWeight: "bold" }}>4</Text>
                 In the event the Immigration office responsible should contact
-                the Client directly, the Clientis instructed to notify the RCIC
+                the Client directly, the Client is instructed to notify the RCIC
                 immediately
               </Text>
             </View>
@@ -1921,12 +1866,7 @@ const AggrementOne = () => {
                     textTransform: "capitalize",
                   }}
                 >
-                  {familyJsonArray[0]?.client_first_name ||
-                  "" ||
-                  familyJsonArray[0]?.client_last_name
-                    ? familyJsonArray[0]?.client_first_name ||
-                      "" + " " + (familyJsonArray[0]?.client_last_name || " ")
-                    : "_______________"}
+                   {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")||"_______________________"}
                 </Text>
                 <Text style={{ margin: "0 0 30px 0" }}>Client’s full name</Text>
               </View>
@@ -1937,7 +1877,7 @@ const AggrementOne = () => {
                   page={"user"}
                   isPdf={true}
                 />
-                )
+                <Text style={[styles.text, styles.textBold]}>Signature</Text>
               </View>
               <View style={styles.clientFormChild}>
                 <Text
@@ -1945,12 +1885,12 @@ const AggrementOne = () => {
                   style={{ margin: 0, textDecoration: "underline" }}
                 >
                   {!familyJsonArray[0]?.date_signature_client ||
-                  familyJsonArray[0]?.date_signature_client ===
+                    familyJsonArray[0]?.date_signature_client ===
                     "0000-00-00 00:00:00"
                     ? "____________"
                     : moment(familyJsonArray[0]?.date_signature_client).format(
-                        "DD-MM-YYYY"
-                      )}
+                      "DD-MM-YYYY"
+                    )}
                 </Text>
                 <Text style={{ margin: "0 0 30px 0" }}>Date</Text>
               </View>
