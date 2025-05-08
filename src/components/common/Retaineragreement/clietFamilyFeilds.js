@@ -37,47 +37,48 @@ function clietFamilyFeilds({
           </tr>
         </thead>
         <tbody>
-          {clients.slice(1).map((client, index) => (
-            <tr key={index}>
-              <td>{index + 1}</td>
-              <td className="text-capitalize">
-                {client.client_first_name || "N/A"}
-              </td>
-              <td className="text-capitalize">
-                {client.client_last_name || "N/A"}
-              </td>
-              <td className="text-capitalize">
-                {client.client_date_of_birth
-                  ? moment(client.client_date_of_birth).format("DD-MM-YYYY")
-                  : "N/A"}
-              </td>
-              <td className="text-capitalize">
-                {client.applicant_type || "N/A"}
-              </td>
-              <td>
-                <div className="btn-group button_group" role="group">
-                  <button
-                    type="button"
-                    className="btn btn-outline-info action_btn"
-                    onClick={() => editClient(index + 1)}
-                  >
-                    <span className="text-gray px-5">
-                      <FaEdit />
-                    </span>
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-outline-danger action_btn"
-                    onClick={() => removeClient(index + 1)}
-                  >
-                    <span className="text-danger px-5">
-                      <FaTrash />
-                    </span>
-                  </button>
-                </div>
-              </td>
+          {Array.isArray(clients) && clients.length > 1 ? (
+            clients.slice(1).map((client, index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td className="text-capitalize">{client.client_first_name || "N/A"}</td>
+                <td className="text-capitalize">{client.client_last_name || "N/A"}</td>
+                <td className="text-capitalize">
+                  {client.client_date_of_birth
+                    ? moment(client.client_date_of_birth).format("DD-MM-YYYY")
+                    : "N/A"}
+                </td>
+                <td className="text-capitalize">{client.applicant_type || "N/A"}</td>
+                <td>
+                  <div className="btn-group button_group" role="group">
+                    <button
+                      type="button"
+                      className="btn btn-outline-info action_btn"
+                      onClick={() => editClient(index + 1)}
+                    >
+                      <span className="text-gray px-5">
+                        <FaEdit />
+                      </span>
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-outline-danger action_btn"
+                      onClick={() => removeClient(index + 1)}
+                    >
+                      <span className="text-danger px-5">
+                        <FaTrash />
+                      </span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan={6} className="text-center">No family member found</td>
             </tr>
-          ))}
+          )}
+
         </tbody>
       </table>
       <div

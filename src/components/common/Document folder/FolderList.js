@@ -159,10 +159,10 @@ export default function FolderList({
                         localStorage.setItem("new_emp_user_type", "");
                         localStorage.setItem("new_user_id", "");
                       }}
-                      // onMouseOver={(e) => {
-                      //   e.preventDefault()
-                      //   setShowDropDown(item.id);
-                      // }}
+                    // onMouseOver={(e) => {
+                    //   e.preventDefault()
+                    //   setShowDropDown(item.id);
+                    // }}
 
                     >
                       <div className="file-background h-100">
@@ -317,13 +317,12 @@ export default function FolderList({
                         </li>
                         <li
                           className={
-                            (!item.folder || item.file.mimeType !== "text/plain" ||
+                            (item.file && (item.file.mimeType !== "text/plain" ||
                               (userType === "admin" || userType === "agent") ||
                               ["image/jpeg", "image/png", "image/jpg"].includes(item.file.mimeType) ||
                               item.file.mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
-                              item.file.mimeType === "application/pdf") &&
-                              (item.file.mimeType !== "application/vnd.openxmlformats-officedocument.presentationml.presentation" &&
-                                item.file.mimeType !== "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                              item.file.mimeType === "application/pdf" || item.file.mimeType === "application/vnd.openxmlformats-officedocument.presentationml.presentation" ||
+                              item.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
                               ? "list-group-item text-danger"
                               : "d-none"
                           }
@@ -338,14 +337,13 @@ export default function FolderList({
                           </Link>
                         </li>
                         <li
-                          className={`list-group-item text-danger ${(!item.folder || item.file.mimeType !== "text/plain" ||
+                          className={`list-group-item text-danger ${(item.file && (item.file.mimeType !== "text/plain" ||
                             (userType === "admin" || userType === "agent") ||
                             ["image/jpeg", "image/png", "image/jpg"].includes(item.file.mimeType) ||
                             item.file.mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
-                            item.file.mimeType === "application/pdf") &&
-                            (item.file.mimeType !== "application/vnd.openxmlformats-officedocument.presentationml.presentation" &&
-                              item.file.mimeType !== "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-                            ? ""
+                            item.file.mimeType === "application/pdf" || item.file.mimeType === "application/vnd.openxmlformats-officedocument.presentationml.presentation" ||
+                            item.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
+                            ? "list-group-item text-danger"
                             : "d-none"
                             }`}
                         >
@@ -437,94 +435,91 @@ export default function FolderList({
                 >
                   {/* Name and Dropdown */}
                   <div className="col-3">
-                    {showDropDown === item.id && (
-                      <ul className="list-group position-absolute z-index-1 bg-white shadow-sm" onMouseLeave={() => {
-                        setShowDropDown();
-                      }}>
-                        <li className="list-group-item">
-                          <Link
-                            className="text-decoration-none"
-                            onClick={() => {
-                              setEditNameForm(true);
-                              setDocSingleDate(item);
-                            }}
-                          >
-                            Rename
-                          </Link>
-                        </li>
-                        <li className="list-group-item text-danger">
-                          <Link
-                            className="text-decoration-none"
-                            onClick={() => ShowDeleteAlert(item)}
-                          >
-                            Delete {item.folder ? "Folder" : "File"}
-                          </Link>
-                        </li>
-                        {!item.folder && (
-                          <>
-                            <li className="list-group-item text-danger">
-                              <Link
-                                className="text-decoration-none" to={item["@microsoft.graph.downloadUrl"]} rel="noopener noreferrer" download>
+                    {showDropDown === item.id && (() => {
+                      const isFolder = item.folder;
+                      const isTextFile = item.file?.mimeType === "text/plain";
+                      const isDownloadable = !isFolder && !isTextFile;
+                      // const canEdit = !isFolder && !isTextFile;
+                      const canOpenInNewTab = !isFolder && (
+                        userType === "admin" ||
+                        userType === "agent" ||
+                        ["image/jpeg", "image/png", "image/jpg"].includes(item.file?.mimeType) ||
+                        item.file?.mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+                        item.file?.mimeType === "application/pdf" ||
+                        item.file?.mimeType === "application/vnd.openxmlformats-officedocument.presentationml.presentation" ||
+                        item.file?.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                      );
 
-                                Download
-                              </Link>
-                            </li>
-                            <li className="list-group-item text-danger">
-                              <Link
-                                className="text-decoration-none" to={item.webUrl} target="_blank" >
-
-                                Edit in sharepoint
-                              </Link>
-                            </li>
-                            <li
-                              className={
-                                (!item.folder || item.file.mimeType !== "text/plain" ||
-                                  (userType === "admin" || userType === "agent") ||
-                                  ["image/jpeg", "image/png", "image/jpg"].includes(item.file.mimeType) ||
-                                  item.file.mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
-                                  item.file.mimeType === "application/pdf") &&
-                                  (item.file.mimeType !== "application/vnd.openxmlformats-officedocument.presentationml.presentation" &&
-                                    item.file.mimeType !== "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-                                  ? "list-group-item text-danger"
-                                  : "d-none"
-                              }
+                      return (
+                        <ul className="list-group position-absolute z-index-1 bg-white shadow-sm" onMouseLeave={() => setShowDropDown()}>
+                          <li className="list-group-item">
+                            <Link
+                              className="text-decoration-none"
+                              onClick={() => {
+                                setEditNameForm(true);
+                                setDocSingleDate(item);
+                              }}
                             >
+                              Rename
+                            </Link>
+                          </li>
+                          <li className="list-group-item text-danger">
+                            <Link
+                              className="text-decoration-none"
+                              onClick={() => ShowDeleteAlert(item)}
+                            >
+                              Delete {isFolder ? "Folder" : "File"}
+                            </Link>
+                          </li>
+                          {isDownloadable && (
+                            <>
+                              <li className="list-group-item text-danger">
+                                <Link
+                                  className="text-decoration-none"
+                                  to={item["@microsoft.graph.downloadUrl"]}
+                                  rel="noopener noreferrer"
+                                  download
+                                >
+                                  Download
+                                </Link>
+                              </li>
+                              <li className="list-group-item text-danger">
+                                <Link
+                                  className="text-decoration-none"
+                                  to={item.webUrl}
+                                  target="_blank"
+                                >
+                                  Edit in sharepoint
+                                </Link>
+                              </li>
+                            </>
+                          )}
+                          {canOpenInNewTab && (
+                            <li className="list-group-item text-danger">
                               <Link
-                                className={"text-decoration-none"}
                                 to={`/view_pdf_Agreement?new_emp_user_type=${DocUserType}&new_user_id=${userId}&folderId=${item.parentReference.id}&document_id=${item.id}`}
                                 target="_blank"
                               >
                                 Open in New Tab
                               </Link>
                             </li>
-                            <li
-                              className={`list-group-item text-danger ${(!item.folder || item.file.mimeType !== "text/plain" ||
-                                (userType === "admin" || userType === "agent") ||
-                                ["image/jpeg", "image/png", "image/jpg"].includes(item.file.mimeType) ||
-                                item.file.mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
-                                item.file.mimeType === "application/pdf") &&
-                                (item.file.mimeType !== "application/vnd.openxmlformats-officedocument.presentationml.presentation" &&
-                                  item.file.mimeType !== "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-                                ? ""
-                                : "d-none"
-                                }`}
+                          )}
+                          <li className={`list-group-item text-danger`}>
+                            <Link
+                              to=""
+                              onClick={() => {
+                                getCommentsList(item);
+                                setOpenAnnotationBox(true);
+                                setDocData(item);
+                                AdminData();
+                              }}
                             >
-                              <Link
-                                className="text-decoration-none"
-                                onClick={() => {
-                                  getCommentsList(item);
-                                  setOpenAnnotationBox(true);
-                                  setDocData(item);
-                                  AdminData();
-                                }}
-                              >
-                                Comment's
-                              </Link>
-                            </li>
-                          </>
-                        )}
-                      </ul>
-                    )}
+                              Comment's
+                            </Link>
+                          </li>
+                        </ul>
+                      );
+                    })()}
                     <Link
                       to=""
                       className="text-dark text-decoration-none d-flex align-items-center"
@@ -546,10 +541,10 @@ export default function FolderList({
                         e.preventDefault();
                         setShowDropDown(item.id);
                       }}
-                      // onMouseOver={(e) => {
-                      //   e.preventDefault();
-                      //   setShowDropDown(item.id);
-                      // }}
+                    // onMouseOver={(e) => {
+                    //   e.preventDefault();
+                    //   setShowDropDown(item.id);
+                    // }}
                     >
                       {item.folder ? (
                         <FaFolder className="me-2 text-warning" />

@@ -20,13 +20,13 @@ import {
   BsQrCodeScan,
   // BsReverseLayoutTextSidebarReverse,
 } from "react-icons/bs";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import { PiApplePodcastsLogoThin } from "react-icons/pi";
 import { AiOutlineUserAdd } from "react-icons/ai";
-import { TbFilterPlus, TbUser, TbUsers } from "react-icons/tb";
+import { TbFilterPlus, TbUser } from "react-icons/tb";
 import {
   FaAddressCard,
-  FaChevronDown,
+  // FaChevronDown,
   FaNotesMedical,
   FaTasks,
 } from "react-icons/fa";
@@ -34,52 +34,52 @@ import { FaRegUser } from "react-icons/fa";
 import { SiStudyverse } from "react-icons/si";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 import { FaPersonShelter } from "react-icons/fa6";
-import {
-  AddApplicanTypeApi,
-  DeleteApplicanTypeApi,
-  getApplicanTypeApi,
-} from "../../api/api";
-import TableInput from "../common/TableInput";
-import SAlert from "../common/sweetAlert";
+// import {
+//   AddApplicanTypeApi,
+//   DeleteApplicanTypeApi,
+//   getApplicanTypeApi,
+// } from "../../api/api";
+// import TableInput from "../common/TableInput";
+// import SAlert from "../common/sweetAlert";
 const AdminSidebar = (props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(
     localStorage.getItem("isMenuOpen")
   );
-  let [applicanttypedata, setApplicanttypedata] = useState([]);
+  // let [applicanttypedata, setApplicanttypedata] = useState([]);
   let admin_type = localStorage.getItem("admin_type");
   let user_type = localStorage.getItem("userType");
-  const [openParent, setOpenParent] = useState(null);
+  // const [openParent, setOpenParent] = useState(null);
   const [apiCall, setApiCall] = useState(false);
-  const [items, setItems] = useState(
-    applicanttypedata.filter((item) => item.parent_id === "0")
-  );
-  let [showDropDown, setShowDropDown] = useState();
-  const [deleteAlertApplicantTypeData, setDeleteAlertApplicantTypeData] =
-    useState(false);
-  const [deleteAlertApplicant, setDeleteAlertApplicant] = useState(false);
-  const [draggedItemIndex, setDraggedItemIndex] = useState(null);
-  const admin_id = localStorage.getItem("admin_id");
+  // const [items, setItems] = useState(
+  //   applicanttypedata.filter((item) => item.parent_id === "0")
+  // );
+  // let [showDropDown, setShowDropDown] = useState();
+  // const [deleteAlertApplicantTypeData, setDeleteAlertApplicantTypeData] =
+  //   useState(false);
+  // const [deleteAlertApplicant, setDeleteAlertApplicant] = useState(false);
+  // const [draggedItemIndex, setDraggedItemIndex] = useState(null);
+  // const admin_id = localStorage.getItem("admin_id");
 
-  useEffect(() => {
-    // Keep parent open if a child is active
-    const activeChild = applicanttypedata.find(
-      (child) => child.title === props.heading
-    );
-    if (activeChild) {
-      setOpenParent(activeChild.parent_id);
-    }
-    if (apiCall === true) {
-      setApiCall(false);
-    }
-  }, [apiCall, props.heading, applicanttypedata]);
+  // useEffect(() => {
+  //   // Keep parent open if a child is active
+  //   const activeChild = applicanttypedata.find(
+  //     (child) => child.title === props.heading
+  //   );
+  //   if (activeChild) {
+  //     setOpenParent(activeChild.parent_id);
+  //   }
+  //   if (apiCall === true) {
+  //     setApiCall(false);
+  //   }
+  // }, [apiCall, props.heading, applicanttypedata]);
 
-  const toggleChildren = (parentId, hasChildren) => {
-    if (hasChildren) {
-      setOpenParent(openParent === parentId ? null : parentId);
-    } else {
-      clearPageNo();
-    }
-  };
+  // const toggleChildren = (parentId, hasChildren) => {
+  //   if (hasChildren) {
+  //     setOpenParent(openParent === parentId ? null : parentId);
+  //   } else {
+  //     clearPageNo();
+  //   }
+  // };
   if (admin_type === "" || admin_type === null || admin_type === undefined) {
     // Redirect to the login page
     window.location.href = "/adminlogin";
@@ -95,17 +95,17 @@ const AdminSidebar = (props) => {
   };
   const liRefs = useRef([]);
 
-  const getAllSlotsData = async () => {
-    try {
-      let response = await getApplicanTypeApi(
-        admin_type === "super-admin" ? "" : admin_id
-      );
-      setApplicanttypedata(response.data.data);
-      setItems(response.data.data.filter((item) => item.parent_id === "0"));
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const getAllSlotsData = async () => {
+  //   try {
+  //     let response = await getApplicanTypeApi(
+  //       admin_type === "super-admin" ? "" : admin_id
+  //     );
+  //     setApplicanttypedata(response.data.data);
+  //     setItems(response.data.data.filter((item) => item.parent_id === "0"));
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
   useEffect(() => {
     if (props.heading) {
       const activityLi = liRefs.current[props.heading];
@@ -115,103 +115,103 @@ const AdminSidebar = (props) => {
     }
   }, [props.heading]);
   useEffect(() => {
-    getAllSlotsData();
+    // getAllSlotsData();
     if (apiCall === true) {
       setApiCall(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiCall]);
 
-  const handleDragStart = (index) => {
-    setDraggedItemIndex(index);
-  };
+  // const handleDragStart = (index) => {
+  //   setDraggedItemIndex(index);
+  // };
 
-  const handleDragOver = (e, index) => {
-    e.preventDefault();
-    if (draggedItemIndex === index) return;
+  // const handleDragOver = (e, index) => {
+  //   e.preventDefault();
+  //   if (draggedItemIndex === index) return;
 
-    const updatedItems = [...items];
-    const draggedItem = updatedItems.splice(draggedItemIndex, 1)[0];
-    updatedItems.splice(index, 0, draggedItem);
+  //   const updatedItems = [...items];
+  //   const draggedItem = updatedItems.splice(draggedItemIndex, 1)[0];
+  //   updatedItems.splice(index, 0, draggedItem);
 
-    setDraggedItemIndex(index);
-    setItems(updatedItems);
-  };
+  //   setDraggedItemIndex(index);
+  //   setItems(updatedItems);
+  // };
 
-  const handleDragEnd = () => {
-    setDraggedItemIndex(null);
-  };
-  //  Handle Update Input Change
-  const handleUpdateChange = async (e, item, field) => {
-    if (e && e.preventDefault) {
-      e.preventDefault();
-    }
-    console.log(
-      e.target.value !==
-        applicanttypedata.find((data) => data.id === item.id).title
-    );
-    if (
-      e.target.value !==
-      applicanttypedata.find((data) => data.id === item.id).title
-    ) {
-      let data = {
-        id: item.id,
-        level: item.level,
-        parent_id: item.parent_id,
-        [field]: e.target.value,
-        admin_access_id: item.admin_access_id,
-      };
-      let res = await AddApplicanTypeApi(data);
-      if (res.status === 1 || res.status === "1") {
-        setApiCall(true);
-      }
-    }
-  };
+  // const handleDragEnd = () => {
+  //   setDraggedItemIndex(null);
+  // };
+  // //  Handle Update Input Change
+  // const handleUpdateChange = async (e, item, field) => {
+  //   if (e && e.preventDefault) {
+  //     e.preventDefault();
+  //   }
+  //   console.log(
+  //     e.target.value !==
+  //       applicanttypedata.find((data) => data.id === item.id).title
+  //   );
+  //   if (
+  //     e.target.value !==
+  //     applicanttypedata.find((data) => data.id === item.id).title
+  //   ) {
+  //     let data = {
+  //       id: item.id,
+  //       level: item.level,
+  //       parent_id: item.parent_id,
+  //       [field]: e.target.value,
+  //       admin_access_id: item.admin_access_id,
+  //     };
+  //     let res = await AddApplicanTypeApi(data);
+  //     if (res.status === 1 || res.status === "1") {
+  //       setApiCall(true);
+  //     }
+  //   }
+  // };
   /*To call Api to delete employee */
-  async function deleteApplicantType(id) {
-    let data = {
-      id: id,
-    };
-    try {
-      const response = await DeleteApplicanTypeApi(data);
-      if (response.status === 1 || response.status === "1") {
-        toast.error("Applicant Type deleted Successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        setDeleteAlertApplicant(false);
-        setDeleteAlertApplicantTypeData();
-        setApiCall(true);
-        setShowDropDown();
-      }
-      if (
-        response.message ===
-        "This applicant type cannot be deleted because it is used for applicant"
-      ) {
-        toast.error(response.message, {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        setDeleteAlertApplicant(false);
-        setDeleteAlertApplicantTypeData();
-        setShowDropDown();
-      }
-      if (
-        response.message ===
-        "This applicant type cannot be deleted because it has a sub-applicant type."
-      ) {
-        toast.error(response.message, {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        setDeleteAlertApplicant(false);
-        setDeleteAlertApplicantTypeData();
-        setShowDropDown();
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  // async function deleteApplicantType(id) {
+  //   let data = {
+  //     id: id,
+  //   };
+  //   try {
+  //     const response = await DeleteApplicanTypeApi(data);
+  //     if (response.status === 1 || response.status === "1") {
+  //       toast.error("Applicant Type deleted Successfully", {
+  //         position: toast.POSITION.TOP_RIGHT,
+  //         autoClose: 1000,
+  //       });
+  //       setDeleteAlertApplicant(false);
+  //       setDeleteAlertApplicantTypeData();
+  //       setApiCall(true);
+  //       setShowDropDown();
+  //     }
+  //     if (
+  //       response.message ===
+  //       "This applicant type cannot be deleted because it is used for applicant"
+  //     ) {
+  //       toast.error(response.message, {
+  //         position: toast.POSITION.TOP_RIGHT,
+  //         autoClose: 1000,
+  //       });
+  //       setDeleteAlertApplicant(false);
+  //       setDeleteAlertApplicantTypeData();
+  //       setShowDropDown();
+  //     }
+  //     if (
+  //       response.message ===
+  //       "This applicant type cannot be deleted because it has a sub-applicant type."
+  //     ) {
+  //       toast.error(response.message, {
+  //         position: toast.POSITION.TOP_RIGHT,
+  //         autoClose: 1000,
+  //       });
+  //       setDeleteAlertApplicant(false);
+  //       setDeleteAlertApplicantTypeData();
+  //       setShowDropDown();
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
 
   return (
     <div
@@ -220,14 +220,14 @@ const AdminSidebar = (props) => {
       }`}
       id="sidebar"
     >
-      <SAlert
+      {/* <SAlert
         show={deleteAlertApplicant}
         title={deleteAlertApplicantTypeData?.title}
         text="Are you Sure you want to delete !"
         onConfirm={() => deleteApplicantType(deleteAlertApplicantTypeData.id)}
         showCancelButton={true}
         onCancel={() => setDeleteAlertApplicant(false)}
-      />
+      /> */}
       <Link
         to={""}
         onClick={() => {
@@ -484,6 +484,25 @@ const AdminSidebar = (props) => {
           >
             <FaPersonShelter className="sidebar_icon" />
             <span className="text-truncate">Local Candidate</span>
+          </Link>
+        </li>
+        <li
+          ref={(el) => (liRefs.current["Slots"] = el)}
+          className={
+            user_type === "agent"
+              ? "d-none"
+              : props.heading === "Slots"
+              ? "active"
+              : ""
+          }
+        >
+          <Link
+            onClick={() => clearPageNo()}
+            to="/slots"
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+          >
+            <TbUser className="sidebar_icon" />
+            <span className="text-truncate">Slots</span>
           </Link>
         </li>
         {/* <li
@@ -832,7 +851,7 @@ const AdminSidebar = (props) => {
               </Link>
             </li>
           ))} */}
-        {items.map((item, index) => {
+        {/* {items.map((item, index) => {
           const children = applicanttypedata.filter(
             (child) => child.parent_id === item.id
           );
@@ -990,7 +1009,7 @@ const AdminSidebar = (props) => {
               )}
             </li>
           );
-        })}
+        })} */}
         <li
           ref={(el) => (liRefs.current["Manage Applicant Type"] = el)}
           className={

@@ -482,7 +482,7 @@ export default function ApplicantTypeDocuments(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.columnName, state.sortOrder, props.folderApiCall, state.apiCall, state.folderID, props.notification === "yes" ? location.key : null]);
   useEffect(() => {
-    if (props.folderId !== state.folderID && props?.notification === "yes") {
+    if (props.folderId !== state.folderID || props?.notification === "yes") {
       setState((prev) => ({
         ...prev,
         folderID: props.folderId,
@@ -728,30 +728,12 @@ export default function ApplicantTypeDocuments(props) {
                     />
                   )}
                   <div className="new_folder_create d-flex">
-                    {/* {state.docTypeName === "other" ? (
-                      <>
-                        <Form.Control type="text" value={state.newType} placeholder="Enter new type" height={34} className="px-2" onChange={handleNewTypeChange} />
-                        <button className="btn btn-sm btn-primary" type="button" style={{ maxHeight: 34 }} onClick={() => handleDocTypeChange(state.newType)}>Save</button>
-                        <button className="btn btn-sm btn-secondary" type="button" style={{ maxHeight: 34 }} onClick={() => setState((prev) => ({
-                          ...prev, newType: "", docTypeName: ""
-                        }))}>Cancel</button>
-                      </>
-                    ) : (
-                      <Dropdown>
-                        <Dropdown.Toggle variant="secondary" size="sm" style={{ maxHeight: 34 }} id="dropdown-basic">+ Add New Folder</Dropdown.Toggle>
-                        <Dropdown.Menu style={{ height: "400px", overflowY: "scroll" }}>
-                          <Dropdown.Item onClick={() => handleDocTypeChange("")}>Select Folder Name</Dropdown.Item>
-                          {DocTypeData.map((item, index) => <Dropdown.Item key={index} className="text-capitalize" onClick={() => handleDocTypeChange(item)}>{item.replaceAll("_", " ")}</Dropdown.Item>)}
-                          <Dropdown.Item onClick={() => handleDocTypeChange("other")}>Other</Dropdown.Item>
-                        </Dropdown.Menu>
-                      </Dropdown>
-                    )} */}
 
                     {openFolderModal && (
                       <AddFolderModal
                         emp_user_type={props.emp_user_type}
                         user_id={props.user_id}
-                        folderId={props.folderId}
+                        folderId={state.folderID}
                         close={() => setOPenFolderModal(false)}
                         show={openFolderModal}
                         setFolderApiCall={props.setFolderApiCall}

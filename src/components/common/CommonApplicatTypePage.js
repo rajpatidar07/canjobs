@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import AdminHeader from "../admin/header";
-import AdminSidebar from "../admin/sidebar";
+// import AdminHeader from "../admin/header";
+// import AdminSidebar from "../admin/sidebar";
 import ApplicantsFilter from "./applicantsFilter";
 import EmployeeTable from "./employeeTable";
 import { getApplicanTypeApi } from "../../api/api";
@@ -41,7 +41,9 @@ export default function CommonApplicatTypePage() {
   const [showGrpChatBox, setShowGrpChatBox] = useState(false);
   const [folderApiCall, setFolderApiCall] = useState(false);
   const [filterByEmployeeId, setFilterByEmployeeId] = useState("");
-
+  const [applicantTypeList, setApplicantTypeList] = useState([]);
+  const [main, setMain] = useState('');
+  const [sub, setSub] = useState('');
   const [applicantTypeId, setApplicantTypeId] = useState(
     sId || state.applicantType || localApplicantTypeId
   );
@@ -52,7 +54,7 @@ export default function CommonApplicatTypePage() {
     state.folderId || localApplicantTypeFolderId
   );
   const [applicantTypeIdForApi, setApplicantTypeIdForApi] = useState("");
-  const [applicantTypeName, setApplicantTypeName] = useState("");
+  // const [applicantTypeName, setApplicantTypeName] = useState("");
 
   const [pageNo, setPageNo] = useState(localStorage.getItem("PageNo") || 1);
   const [experienceFilterValue, setExperienceFilterValue] = useState("");
@@ -61,7 +63,22 @@ export default function CommonApplicatTypePage() {
   const [agentFilterValue, setAgentFilterValue] = useState("");
   const [adminFilterValue, setAdminFilterValue] = useState("");
   const [interestFilterValue, setInterestFilterValue] = useState("");
-
+  const onSearch = (e) => {
+    const inputValue = e.target.value;
+    setSearch(inputValue);
+    setPageNo(1);
+    if (inputValue.length > 0) {
+      if (/^\d/.test(inputValue)) {
+        setSearchError("Candidate Name cannot start with a number.");
+      } else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
+        setSearchError("Cannot use special characters.");
+      } else {
+        setSearchError("");
+      }
+    } else {
+      setSearchError("");
+    }
+  };
   // Handle tab switch and task assignment
   useEffect(() => {
     if (taskIdParam) {
@@ -78,12 +95,15 @@ export default function CommonApplicatTypePage() {
   useEffect(() => {
     if (["group", "candidate"].includes(notifiType) && sId) {
       setApplicantTypeId(sId);
+      setMain(sId)
       setApplicantTypeChildId(sCId);
+      setSub(sCId)
       localStorage.setItem("applicantType", sId);
       localStorage.setItem("applicantTypeChild", sCId);
     } else {
       if (state.applicantType && state.applicantType !== applicantTypeId) {
         setApplicantTypeId(state.applicantType);
+        setMain(state.applicantType)
         localStorage.setItem("applicantType", state.applicantType);
       }
       if (
@@ -91,6 +111,7 @@ export default function CommonApplicatTypePage() {
         state.applicantTypeChild !== applicantTypeChildId
       ) {
         setApplicantTypeChildId(state.applicantTypeChild);
+        setSub(state.applicantTypeChild)
         localStorage.setItem("applicantTypeChild", state.applicantTypeChild);
       }
       if (state.folderId && state.folderId !== applicantTypeFolderId) {
@@ -100,18 +121,24 @@ export default function CommonApplicatTypePage() {
     }
   }, [location.key]);
 
+
   // Fetch applicant type details
   useEffect(() => {
     const targetId = applicantTypeId || applicantTypeChildId;
-    if (!targetId) return;
+    // if (!targetId) return;
 
     getApplicanTypeApi("")
       .then((res) => {
+        setApplicantTypeList(res.data.data);
+        if (!applicantTypeIdForApi) {
+          setApplicantTypeIdForApi(res.data.data[0]?.id)
+          setMain(res.data.data[0]?.id)
+        }
         const found = (res.data?.data || []).find(
           (item) => item.id === targetId
         );
         if (found) {
-          setApplicantTypeName(found.title);
+          // setApplicantTypeName(found.title);
           setApplicantTypeFolderId(found.doc_folder_id);
           setApplicantTypeIdForApi(found.id);
 
@@ -130,23 +157,25 @@ export default function CommonApplicatTypePage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [applicantTypeId, applicantTypeChildId]);
 
-  const onSearch = (e) => {
-    const inputValue = e.target.value;
-    setSearch(inputValue);
-    setPageNo(1);
-    if (inputValue.length > 0) {
-      if (/^\d/.test(inputValue)) {
-        setSearchError("Candidate Name cannot start with a number.");
-      } else if (!/^[A-Za-z0-9 ]*$/.test(inputValue)) {
-        setSearchError("Cannot use special characters.");
-      } else {
-        setSearchError("");
-      }
-    } else {
-      setSearchError("");
-    }
-  };
 
+  // Handle changes in main or sub types
+  const onInputChange = (e) => {
+    const selectedValue = e.target.value;
+    setApplicantTypeIdForApi(selectedValue)
+    // eslint-disable-next-line eqeqeq
+    const selectedItem = applicantTypeList.find(item => item.id == selectedValue);
+
+    if (selectedItem) {
+      if (selectedItem.level === "0") {
+        setMain(selectedValue);
+        setSub(''); // Reset sub when main changes
+      } else if (selectedItem.level === "1") {
+        setSub(selectedValue);
+      }
+
+      setApplicantTypeFolderId(selectedItem.doc_folder_id);
+    }
+  }
   return (
     <>
       <div className="site-wrapper overflow-hidden bg-default-2">
@@ -156,6 +185,52 @@ export default function CommonApplicatTypePage() {
         {/* <AdminSidebar heading={applicantTypeName} /> */}
         <div className="dashboard-main-container mt-14" id="dashboard-body">
           <div className="container-fluid">
+            <div className="d-flex justify-content-between align-items-center mt-3 w-50">
+              {/* MAIN TYPE */}
+              <div className="form-group col">
+                <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
+                  Applicant's Type:
+                </label>
+                <select
+                  className={`form-control`}
+                  value={main}
+                  onChange={onInputChange}
+                >
+                  <option value="">Select Main Type</option>
+                  {applicantTypeList
+                    .filter(item => item.level === "0")
+                    .map(item => (
+                      <option key={item.id} value={item.id}>
+                        {item.title}
+                      </option>
+                    ))}
+                </select>
+              </div>
+              {console.log(main, "ppp")}
+              {/* SUB TYPE */}
+              {main && applicantTypeList.some(item => item.level === "1" && item.parent_id === main) && (
+                <div className="form-group col">
+                  <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
+                    Sub Type:
+                  </label>
+                  <select
+                    className={`form-control`}
+                    value={sub}
+                    onChange={onInputChange}
+                  >
+                    <option value="">Select Sub Type</option>
+                    {applicantTypeList
+                      .filter(item => item.level === "1" && item.parent_id === main)
+                      .map(item => (
+                        <option key={item.id} value={item.id}>
+                          {item.title}
+                        </option>
+                      ))}
+                  </select>
+                </div>
+              )}
+
+            </div>
             <div
               className="d-flex justify-content-between align-items-center mb-3"
               style={{ gap: "5px" }}
@@ -263,7 +338,7 @@ export default function CommonApplicatTypePage() {
                   setpageNo={setPageNo}
                   ApplicantType={applicantTypeIdForApi}
                   filterByEmployeeId={filterByEmployeeId}
-                  // categoryFilterValue={applicantTypeChildId ? applicantTypeChildId : categoryFilterValue}
+                // categoryFilterValue={applicantTypeChildId ? applicantTypeChildId : categoryFilterValue}
                 />
               </div>
             ) : (

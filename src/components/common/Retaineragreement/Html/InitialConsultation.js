@@ -373,7 +373,7 @@ ${RCICSignatureFunction({ isPdf: false, felidData })}
   useEffect(
     (e) => {
       // Attach event listeners after HTML is injected
-      familyJsonArray.forEach((_, index) => {
+      familyJsonArray?.forEach((_, index) => {
         const button = document.getElementById(`add-signature-button-${index}`);
         if (button) {
           button.addEventListener("click", () => addSign(e, index));
@@ -382,7 +382,7 @@ ${RCICSignatureFunction({ isPdf: false, felidData })}
 
       // Clean up event listeners
       return () => {
-        familyJsonArray.forEach((_, index) => {
+        familyJsonArray?.forEach((_, index) => {
           const button = document.getElementById(
             `add-signature-button-${index}`
           );

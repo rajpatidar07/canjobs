@@ -297,7 +297,7 @@ const InitialConsultationAgreement = () => {
               <View style={styles.box}>
                 <RCICSignatureFunction isPdf={true} felidData={felidData} />
                 <Text style={[styles.text, styles.textBold]}>Harpreet Kaur (RCIC)</Text>
-                <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {felidData?.date_signature_rcic !== "0000-00-00 00:00:00" && felidData?.date_signature_rcic ? moment(felidData.date_signature_rcic).format("DD/MM/YYYY") : "______________"}</Text>
+                <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {felidData?.date_signature_rcic !== "0000-00-00 00:00:00"&& felidData.date_signature_rcic !== "0000-00-00"  && felidData?.date_signature_rcic ? moment(felidData.date_signature_rcic).format("DD/MM/YYYY") : "______________"}</Text>
               </View>
 
             </View>
