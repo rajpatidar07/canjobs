@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 function Pagination(props) {
-  // console.log(props);
+  console.log(props);
   // Create state to manage visible page numbers
   const [visiblePageNumbers, setVisiblePageNumbers] = React.useState([]);
   useEffect(() => {
@@ -67,9 +67,8 @@ function Pagination(props) {
                 props.setCurrentPage(pgNumber);
                 localStorage.setItem("PageNo", pgNumber); // Store the current page number
               }}
-              className={`page-link  font-size-3 py-2 font-weight-semibold px-3 ${
-                parseInt(props.currentPage) === pgNumber ? "active " : ""
-              }`}
+              className={`page-link  font-size-3 py-2 font-weight-semibold px-3 ${parseInt(props.currentPage) === pgNumber ? "active " : ""
+                }`}
             >
               {pgNumber}
             </Link>

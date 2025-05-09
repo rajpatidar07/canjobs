@@ -36,7 +36,7 @@ function Hourlylogtable(props) {
     const [deleteAlertHourLog, setDeleteAlertHourLog] =
         useState(false);
     const [HourLogData, setHourLogData] = useState([]);
-    const [totalData, setTotalData] = useState();
+    const [totalData, setTotalData] = useState("");
     const [editRowId, setEditRowId] = useState(null);
     // const [currentPage, setCurrentPage] = useState(1);
     const [columnName, setcolumnName] = useState("updated_at");
@@ -73,6 +73,7 @@ function Hourlylogtable(props) {
             };
             let ResHourLog = await GetHourLogApi(data);
             setHourLogData(ResHourLog.data.data)
+            console.log(ResHourLog.data)
             setTotalData(ResHourLog.data.total_rows)
             if (taskId) {
                 setSingelHourLogData(ResHourLog.data.data[0])

@@ -14,7 +14,6 @@ const ManageHourlyLog = () => {
   const [FilterByHour, setFilterByHour] = useState("");
   const [selectedAdminId, setSelectedAdminId] = useState(null);
   const [selectedAdminType, setSelectedAdminType] = useState(null);
-
   const [showAddItemForm, setShowAddItemForm] = useState(false);
   const [dayFilterValue, setDayFilterValue] = useState("");
   const [filterData, setFilterData] = useState([]);
@@ -38,8 +37,8 @@ const ManageHourlyLog = () => {
   }, []);
   const filteredAdmins = adminList
     ? adminList?.filter((admin) =>
-        admin?.name?.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+      admin?.name?.toLowerCase().includes(searchQuery.toLowerCase())
+    )
     : [];
 
   useEffect(() => {
@@ -239,9 +238,8 @@ const ManageHourlyLog = () => {
                 </button>
 
                 <div
-                  className={`position-absolute bg-white z-index-4 p-8 shadow-lg right-25 ${
-                    showfilterdropdown ? "d-block" : "d-none"
-                  }`}
+                  className={`position-absolute bg-white z-index-4 p-8 shadow-lg right-25 ${showfilterdropdown ? "d-block" : "d-none"
+                    }`}
                   style={{ width: "800px" }}
                 >
                   <div className="d-flex justify-content-between align-items-center">
