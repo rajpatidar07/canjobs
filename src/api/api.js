@@ -1492,8 +1492,8 @@ export const GetAllJobs = async (
       job_id: id,
       // filter_company_name: company,
       filter_applied_by_self: selfValue,
-      // filter_applied_by_admin: adminValue,
-      // filter_reserved_employee: reserved,
+      // filter_applied_by_admin: adminValue,// limia ka data check krne ke liye comment kiya he
+      // filter_reserved_employee: reserved,// limia ka data check krne ke liye comment kiya he 
       // employee_skills: employeeSkill,
       filter_company_id: cid,
       manager_id: manager_id,
