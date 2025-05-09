@@ -23,6 +23,7 @@ import { MdFormatListBulletedAdd } from "react-icons/md";
 import { GrDocumentUpload } from "react-icons/gr";
 import ConvertTime from "./Common function/ConvertTime";
 import LmiaInfo from "../forms/admin/lmiaInfo";
+import MondayBadge from "./MondayBadge";
 export default function JobTable(props) {
   /*show Modal and props state */
   let [isLoading, setIsLoading] = useState(true);
@@ -659,37 +660,42 @@ export default function JobTable(props) {
                           }
                         >
                           <th scope="row" className="py-5 ">
-                            <div className="">
-                              <Link
-                                to={`/job_detail`}
-                                onClick={
-                                  () =>
-                                    localStorage.setItem("job_id", job.job_id)
-                                  // JobDetail(job.job_id)
-                                }
-                                className="font-size-3 mb-0 font-weight-semibold text-black-2 "
-                                title={job.job_title + (job.employement ? ` (${job.employement})` : "")}
-                              >
-                                <>
-                                  <p className="m-0 text-truncate text-black-2 font-weight-bold text-capitalize">
-                                    {job.job_title}{" "}
-                                    {job.employement
-                                      ? `(${job.employement})`
-                                      : ""}
-                                  </p>
-                                  <p className="text-gray font-size-2 m-0 text-capitalize"
-                                    title={job.company_name}>
-                                    {job.company_name}
-                                    {/* - {job.industry_type} */}
-                                    <br />
-                                    {job.is_featured === "1" ? (
-                                      <span className="bg-orange text-white featured_tag">
-                                        Featured
-                                      </span>
-                                    ) : null}
-                                  </p>
-                                </>
-                              </Link>
+                            <div className="d-flex align-items-center">
+                              {(job.is_monday_data === 1 || job.is_monday_data === "1") && (
+                                <MondayBadge />
+                              )}
+                              <div>
+                                <Link
+                                  to={`/job_detail`}
+                                  onClick={
+                                    () =>
+                                      localStorage.setItem("job_id", job.job_id)
+                                    // JobDetail(job.job_id)
+                                  }
+                                  className="font-size-3 mb-0 font-weight-semibold text-black-2 "
+                                  title={job.job_title + (job.employement ? ` (${job.employement})` : "")}
+                                >
+                                  <>
+                                    <p className="m-0 text-truncate text-black-2 font-weight-bold text-capitalize">
+                                      {job.job_title}{" "}
+                                      {job.employement
+                                        ? `(${job.employement})`
+                                        : ""}
+                                    </p>
+                                    <p className="text-gray font-size-2 m-0 text-capitalize"
+                                      title={job.company_name}>
+                                      {job.company_name}
+                                      {/* - {job.industry_type} */}
+                                      <br />
+                                      {job.is_featured === "1" ? (
+                                        <span className="bg-orange text-white featured_tag">
+                                          Featured
+                                        </span>
+                                      ) : null}
+                                    </p>
+                                  </>
+                                </Link>
+                              </div>
                             </div>
                           </th>
                           {props.heading === "Dashboard" ? null : (

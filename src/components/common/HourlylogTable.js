@@ -43,6 +43,26 @@ function Hourlylogtable(props) {
     const [sortOrder, setSortOrder] = useState("DESC");
     const recordsPerPage = 10;
     const nPages = Math.ceil(totalData / recordsPerPage);
+
+    // New state to track collapsed managers
+    const [collapsedManagers, setCollapsedManagers] = useState({});
+    
+    // Initialize collapsedManagers state to have all collapsed except first expanded
+    useEffect(() => {
+        if (HourLogData && HourLogData.length > 0) {
+            const grouped = HourLogData.reduce((acc, item) => {
+                const managerId = item.hour_log_of_admin;
+                if (!acc.includes(managerId)) acc.push(managerId);
+                return acc;
+            }, []);
+            const initialCollapsedState = {};
+            grouped.forEach((managerId, index) => {
+                initialCollapsedState[managerId] = index === 0 ? false : true;
+            });
+            setCollapsedManagers(initialCollapsedState);
+        }
+    }, [HourLogData]);
+
     const GetDailyHourLogList = async () => {
         try {
             setIsLoading(true)
@@ -417,46 +437,54 @@ function Hourlylogtable(props) {
                                                     return (
                                                         <React.Fragment key={`manager-${groupIndex}`} >
                                                             {/* Manager Row */}
-                                                            <tr key={`manager-${groupIndex}`} className="overflow-hidden">
-                                                                <td colSpan={11} className="text-left font-weight-bold text-capitalize"
-                                                                    style={{ color: randomColor }}>
-                                                                    {manager?.name || "N/A"}
-                                                                </td>
-                                                            </tr>
+                                                <tr key={`manager-${groupIndex}`} className="overflow-hidden" style={{ cursor: "pointer" }}
+                                                    onClick={() => {
+                                                        // Toggle collapse state for this manager
+                                                        setCollapsedManagers((prev) => ({
+                                                            ...prev,
+                                                            [managerId]: !prev[managerId],
+                                                        }));
+                                                    }}
+                                                >
+                                                    <td colSpan={11} className="text-left font-weight-bold text-capitalize"
+                                                        style={{ color: randomColor }}>
+                                                        {manager?.name || "N/A"}
+                                                    </td>
+                                                </tr>
 
-                                                            {/* Hour Log Rows */}
-                                                            {logs.map((item, index) => (
-                                                                <tr key={`log-${groupIndex}-${index}`}>
-                                                                    {/* Item (Date) with Chat Icon */}
-                                                                    <td
-                                                                        className="table_sticky_col sticky_col1"
-                                                                        style={{
-                                                                            minWidth: "150px",
-                                                                            maxWidth: "190px",
-                                                                            background: "white",
-                                                                            transition: "background 0.3s ease",
-                                                                        }}
-                                                                    >
-                                                                        <div className="d-flex">
-                                                                            <TableInput
-                                                                                value={item.item}
-                                                                                onChange={(newValue) => handleUpdateChange(newValue, item.id, "item")}
-                                                                                type="text"
-                                                                                id="item"
-                                                                                name="item"
-                                                                            />
-                                                                            <Link
-                                                                                onClick={() => {
-                                                                                    setSingelHourLogData(item);
-                                                                                    setShowHourLogModal(true);
-                                                                                }}
-                                                                            >
-                                                                                <span className="text-gray px-2">
-                                                                                    <BsChat />
-                                                                                </span>
-                                                                            </Link>
-                                                                        </div>
-                                                                    </td>
+                                                {/* Hour Log Rows */}
+                                                {!collapsedManagers[managerId] && logs.map((item, index) => (
+                                                    <tr key={`log-${groupIndex}-${index}`}>
+                                                        {/* Item (Date) with Chat Icon */}
+                                                        <td
+                                                            className="table_sticky_col sticky_col1"
+                                                            style={{
+                                                                minWidth: "150px",
+                                                                maxWidth: "190px",
+                                                                background: "white",
+                                                                transition: "background 0.3s ease",
+                                                            }}
+                                                        >
+                                                            <div className="d-flex">
+                                                                <TableInput
+                                                                    value={item.item}
+                                                                    onChange={(newValue) => handleUpdateChange(newValue, item.id, "item")}
+                                                                    type="text"
+                                                                    id="item"
+                                                                    name="item"
+                                                                />
+                                                                <Link
+                                                                    onClick={() => {
+                                                                        setSingelHourLogData(item);
+                                                                        setShowHourLogModal(true);
+                                                                    }}
+                                                                >
+                                                                    <span className="text-gray px-2">
+                                                                        <BsChat />
+                                                                    </span>
+                                                                </Link>
+                                                            </div>
+                                                        </td>
 
                                                                     {/* Hour Log of Admin (Manager) */}
                                                                     <td style={{ minWidth: "150px" }}>

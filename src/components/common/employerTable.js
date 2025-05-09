@@ -16,6 +16,7 @@ import { BsArrow90DegRight } from "react-icons/bs";
 import AddJobModal from "../forms/employer/job";
 import { LiaBriefcaseMedicalSolid } from "react-icons/lia";
 import { getInitials } from "./GetInitials";
+import MondayBadge from "./MondayBadge";
 export default function EmployerTable(props) {
   /*show modal and data , id state */
   let [apiCall, setApiCall] = useState(false);
@@ -297,6 +298,10 @@ export default function EmployerTable(props) {
                   (employerData || []).map((empdata) => (
                     <tr className="" key={empdata.company_id}>
                       <td className=" py-5">
+                        {console.log(empdata)}
+                        {(empdata.is_monday_data === 1 || empdata.is_monday_data === "1") && (
+                          <MondayBadge />
+                        )}
                         <p className="font-size-3 font-weight-normal text-black-2 mb-0" title={empdata.company_id}>
                           {empdata.company_id}
                         </p>
@@ -407,15 +412,16 @@ export default function EmployerTable(props) {
                                 empdata.country
                               }
                             >
-                              {empdata.address +
-                                ", " +
-                                empdata.city +
-                                " " +
-                                empdata.pin_code +
-                                ", " +
-                                empdata.state +
-                                " " +
-                                empdata.country}
+                              {[
+                                empdata.address,
+                                empdata.city,
+                                empdata.pin_code,
+                                empdata.state,
+                                empdata.country
+                              ]
+                                .filter(Boolean)
+                                .join(', ')||"N/A"}
+
                             </p>
                           )}
                         </td>
