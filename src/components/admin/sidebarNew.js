@@ -20,77 +20,77 @@ import {
   BsQrCodeScan,
   // BsReverseLayoutTextSidebarReverse,
 } from "react-icons/bs";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import { PiApplePodcastsLogoThin } from "react-icons/pi";
 import { AiOutlineUserAdd } from "react-icons/ai";
-import { TbFilterPlus, TbUser, TbUsers } from "react-icons/tb";
+import { TbFilterPlus, TbUser } from "react-icons/tb";
 import {
   FaAddressCard,
-  FaChevronDown,
+  // FaChevronDown,
   FaNotesMedical,
   FaTasks,
-  FaTrashAlt,
+  // FaTrashAlt,
 } from "react-icons/fa";
 import { FaRegUser } from "react-icons/fa";
 import { SiStudyverse } from "react-icons/si";
-import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
+// import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
 import { FaPersonShelter } from "react-icons/fa6";
-import {
-  AddApplicanTypeApi,
-  DeleteApplicanTypeApi,
-  getApplicanTypeApi,
-} from "../../api/api";
-import TableInput from "../common/TableInput";
-import SAlert from "../common/sweetAlert";
+// import {
+//   AddApplicanTypeApi,
+//   DeleteApplicanTypeApi,
+//   getApplicanTypeApi,
+// } from "../../api/api";
+// import TableInput from "../common/TableInput";
+// import SAlert from "../common/sweetAlert";
 // import { CiUser } from "react-icons/ci";
 const AdminSidebar = (props) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(
-    localStorage.getItem("isMenuOpen")
-  );
-  let [applicanttypedata, setApplicanttypedata] = useState([]);
+  // const [isMenuOpen, setIsMenuOpen] = useState(
+  //   localStorage.getItem("isMenuOpen")
+  // );
+  // let [applicanttypedata, setApplicanttypedata] = useState([]);
   let admin_type = localStorage.getItem("admin_type");
   let user_type = localStorage.getItem("userType");
-  const [openParent, setOpenParent] = useState(null);
+  // const [openParent, setOpenParent] = useState(null);
   const [apiCall, setApiCall] = useState(false);
-  const [items, setItems] = useState(
-    applicanttypedata.filter((item) => item.parent_id === "0")
-  );
-  let [showDropDown, setShowDropDown] = useState();
-  const [deleteAlertApplicantTypeData, setDeleteAlertApplicantTypeData] =
-    useState(false);
-  const [deleteAlertApplicant, setDeleteAlertApplicant] = useState(false);
-  const [draggedItemIndex, setDraggedItemIndex] = useState(null);
-  const admin_id = localStorage.getItem("admin_id");
+  // const [items, setItems] = useState(
+  //   applicanttypedata.filter((item) => item.parent_id === "0")
+  // );
+  // let [showDropDown, setShowDropDown] = useState();
+  // const [deleteAlertApplicantTypeData, setDeleteAlertApplicantTypeData] =
+  //   useState(false);
+  // const [deleteAlertApplicant, setDeleteAlertApplicant] = useState(false);
+  // const [draggedItemIndex, setDraggedItemIndex] = useState(null);
+  // const admin_id = localStorage.getItem("admin_id");
   let userType = localStorage.getItem("userType");
   useEffect(() => {
     // Keep parent open if a child is active
-    const activeChild = applicanttypedata.find(
-      (child) => child.title === props.heading
-    );
-    if (activeChild) {
-      setOpenParent(activeChild.parent_id);
-    }
+    // const activeChild = applicanttypedata.find(
+    //   (child) => child.title === props.heading
+    // );
+    // if (activeChild) {
+    //   setOpenParent(activeChild.parent_id);
+    // }
     if (apiCall === true) {
       setApiCall(false);
     }
-  }, [apiCall, props.heading, applicanttypedata]);
+  }, [apiCall, props.heading]);
 
-  const toggleChildren = (parentId, hasChildren) => {
-    if (hasChildren) {
-      setOpenParent(openParent === parentId ? null : parentId);
-    } else {
-      clearPageNo();
-    }
-  };
+  // const toggleChildren = (parentId, hasChildren) => {
+  //   if (hasChildren) {
+  //     setOpenParent(openParent === parentId ? null : parentId);
+  //   } else {
+  //     clearPageNo();
+  //   }
+  // };
   if (admin_type === "" || admin_type === null || admin_type === undefined) {
     // Redirect to the login page
     window.location.href = "/adminlogin";
   }
   /*-- Function to open sidebar --*/
-  function sideBar() {
-    setIsMenuOpen(!isMenuOpen);
-    localStorage.setItem("isMenuOpen", isMenuOpen);
-  }
+  // function sideBar() {
+  //   setIsMenuOpen(!isMenuOpen);
+  //   localStorage.setItem("isMenuOpen", isMenuOpen);
+  // }
 
   const clearPageNo = (title) => {
     localStorage.removeItem("PageNo");
@@ -99,17 +99,17 @@ const AdminSidebar = (props) => {
   };
   const liRefs = useRef([]);
 
-  const getAllSlotsData = async () => {
-    try {
-      let response = await getApplicanTypeApi(
-        admin_type === "super-admin" ? "" : admin_id
-      );
-      setApplicanttypedata(response.data.data);
-      setItems(response.data.data.filter((item) => item.parent_id === "0"));
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const getAllSlotsData = async () => {
+  //   try {
+  //     let response = await getApplicanTypeApi(
+  //       admin_type === "super-admin" ? "" : admin_id
+  //     );
+  //     setApplicanttypedata(response.data.data);
+  //     setItems(response.data.data.filter((item) => item.parent_id === "0"));
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
   useEffect(() => {
     if (props.heading) {
       const activityLi = liRefs.current[props.heading];
@@ -119,114 +119,114 @@ const AdminSidebar = (props) => {
     }
   }, [props.heading]);
   useEffect(() => {
-    getAllSlotsData();
+    // getAllSlotsData();
     if (apiCall === true) {
       setApiCall(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apiCall]);
 
-  const handleDragStart = (index) => {
-    setDraggedItemIndex(index);
-  };
+  // const handleDragStart = (index) => {
+  //   setDraggedItemIndex(index);
+  // };
 
-  const handleDragOver = (e, index) => {
-    e.preventDefault();
-    if (draggedItemIndex === index) return;
+  // const handleDragOver = (e, index) => {
+  //   e.preventDefault();
+  //   if (draggedItemIndex === index) return;
 
-    const updatedItems = [...items];
-    const draggedItem = updatedItems.splice(draggedItemIndex, 1)[0];
-    updatedItems.splice(index, 0, draggedItem);
+  //   const updatedItems = [...items];
+  //   const draggedItem = updatedItems.splice(draggedItemIndex, 1)[0];
+  //   updatedItems.splice(index, 0, draggedItem);
 
-    setDraggedItemIndex(index);
-    setItems(updatedItems);
-  };
+  //   setDraggedItemIndex(index);
+  //   setItems(updatedItems);
+  // };
 
-  const handleDragEnd = () => {
-    setDraggedItemIndex(null);
-  };
+  // const handleDragEnd = () => {
+  //   setDraggedItemIndex(null);
+  // };
   //  Handle Update Input Change
-  const handleUpdateChange = async (e, item, field) => {
-    if (e && e.preventDefault) {
-      e.preventDefault();
-    }
-    console.log(
-      e.target.value !==
-        applicanttypedata.find((data) => data.id === item.id).title
-    );
-    if (
-      e.target.value !==
-      applicanttypedata.find((data) => data.id === item.id).title
-    ) {
-      let data = {
-        id: item.id,
-        level: item.level,
-        parent_id: item.parent_id,
-        [field]: e.target.value,
-        admin_access_id: item.admin_access_id,
-      };
-      let res = await AddApplicanTypeApi(data);
-      if (res.status === 1 || res.status === "1") {
-        setApiCall(true);
-      }
-    }
-  };
-  /*To call Api to delete employee */
-  async function deleteApplicantType(id) {
-    let data = {
-      id: id,
-    };
-    try {
-      const response = await DeleteApplicanTypeApi(data);
-      if (response.status === 1 || response.status === "1") {
-        toast.error("Applicant Type deleted Successfully", {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        setDeleteAlertApplicant(false);
-        setDeleteAlertApplicantTypeData();
-        setApiCall(true);
-        setShowDropDown();
-      }
-      if (
-        response.message ===
-        "This applicant type cannot be deleted because it is used for applicant"
-      ) {
-        toast.error(response.message, {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        setDeleteAlertApplicant(false);
-        setDeleteAlertApplicantTypeData();
-        setShowDropDown();
-      }
-      if (
-        response.message ===
-        "This applicant type cannot be deleted because it has a sub-applicant type."
-      ) {
-        toast.error(response.message, {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        setDeleteAlertApplicant(false);
-        setDeleteAlertApplicantTypeData();
-        setShowDropDown();
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
+  // const handleUpdateChange = async (e, item, field) => {
+  //   if (e && e.preventDefault) {
+  //     e.preventDefault();
+  //   }
+  //   console.log(
+  //     e.target.value !==
+  //     applicanttypedata.find((data) => data.id === item.id).title
+  //   );
+  //   if (
+  //     e.target.value !==
+  //     applicanttypedata.find((data) => data.id === item.id).title
+  //   ) {
+  //     let data = {
+  //       id: item.id,
+  //       level: item.level,
+  //       parent_id: item.parent_id,
+  //       [field]: e.target.value,
+  //       admin_access_id: item.admin_access_id,
+  //     };
+  //     let res = await AddApplicanTypeApi(data);
+  //     if (res.status === 1 || res.status === "1") {
+  //       setApiCall(true);
+  //     }
+  //   }
+  // };
+  // /*To call Api to delete employee */
+  // async function deleteApplicantType(id) {
+  //   let data = {
+  //     id: id,
+  //   };
+  //   try {
+  //     const response = await DeleteApplicanTypeApi(data);
+  //     if (response.status === 1 || response.status === "1") {
+  //       toast.error("Applicant Type deleted Successfully", {
+  //         position: toast.POSITION.TOP_RIGHT,
+  //         autoClose: 1000,
+  //       });
+  //       setDeleteAlertApplicant(false);
+  //       setDeleteAlertApplicantTypeData();
+  //       setApiCall(true);
+  //       setShowDropDown();
+  //     }
+  //     if (
+  //       response.message ===
+  //       "This applicant type cannot be deleted because it is used for applicant"
+  //     ) {
+  //       toast.error(response.message, {
+  //         position: toast.POSITION.TOP_RIGHT,
+  //         autoClose: 1000,
+  //       });
+  //       setDeleteAlertApplicant(false);
+  //       setDeleteAlertApplicantTypeData();
+  //       setShowDropDown();
+  //     }
+  //     if (
+  //       response.message ===
+  //       "This applicant type cannot be deleted because it has a sub-applicant type."
+  //     ) {
+  //       toast.error(response.message, {
+  //         position: toast.POSITION.TOP_RIGHT,
+  //         autoClose: 1000,
+  //       });
+  //       setDeleteAlertApplicant(false);
+  //       setDeleteAlertApplicantTypeData();
+  //       setShowDropDown();
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
 
   return (
-    <div className={`sidebar_parent ${isMenuOpen ? "show" : ""}`} id="sidebar">
-      <SAlert
+    <div className={`sidebar_parent show`} id="sidebar">
+      {/* <SAlert
         show={deleteAlertApplicant}
         title={deleteAlertApplicantTypeData?.title}
         text="Are you Sure you want to delete !"
         onConfirm={() => deleteApplicantType(deleteAlertApplicantTypeData.id)}
         showCancelButton={true}
         onCancel={() => setDeleteAlertApplicant(false)}
-      />
+      /> */}
       {/* <Link
         to={""}
         onClick={() => {
@@ -252,12 +252,12 @@ const AdminSidebar = (props) => {
       </div>
       <ul
         className="list-unstyled dashboard-layout-sidebar"
-        // style={{
-        //   marginTop:
-        //     window.innerWidth === 320 || window.innerWidth === 425
-        //       ? "4.35rem"
-        //       : "2.25rem",
-        // }}
+      // style={{
+      //   marginTop:
+      //     window.innerWidth === 320 || window.innerWidth === 425
+      //       ? "4.35rem"
+      //       : "2.25rem",
+      // }}
       >
         {user_type === "agent" ? (
           <>
@@ -305,8 +305,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Dashboard"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -324,8 +324,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Task Dashboard"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -395,8 +395,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Manage Jobs"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -411,13 +411,12 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["Manage Self Jobs"] = el)}
           className={`d-none 
-             ${
-               user_type === "agent"
-                 ? "d-none"
-                 : props.heading === "Manage Self Jobs"
-                 ? "active"
-                 : ""
-             }`}
+             ${user_type === "agent"
+              ? "d-none"
+              : props.heading === "Manage Self Jobs"
+                ? "active"
+                : ""
+            }`}
         >
           <Link
             onClick={() => clearPageNo("Manage Self Jobs")}
@@ -434,8 +433,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Visa"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -453,8 +452,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "LMIA status"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -472,8 +471,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Local Candidate"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -831,7 +830,7 @@ const AdminSidebar = (props) => {
               </Link>
             </li>
           ))} */}
-        {items.map((item, index) => {
+        {/* {items.map((item, index) => {
           const children = applicanttypedata.filter(
             (child) => child.parent_id === item.id
           );
@@ -998,7 +997,29 @@ const AdminSidebar = (props) => {
               )}
             </li>
           );
-        })}
+        })} */}
+        <li
+          ref={(el) => (liRefs.current["Slots"] = el)}
+          className={
+            admin_type === "super-admin"
+              ? props.heading === "Slots"
+                ? "active"
+                : ""
+              : "d-none"
+          }
+        >
+          <Link
+            onClick={() => {
+              clearPageNo("Slots");
+            }}
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+            title={"Slots"}
+            to="/slots"
+          >
+            <TbUser className="sidebar_icon" />
+            <span className="text-truncate">Slots</span>
+          </Link>
+        </li>
         <li
           ref={(el) => (liRefs.current["Manage Applicant Type"] = el)}
           className={
@@ -1049,8 +1070,8 @@ const AdminSidebar = (props) => {
             admin_type === "agent"
               ? "d-none"
               : props.heading === "Manage Daily Call Log"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -1071,8 +1092,8 @@ const AdminSidebar = (props) => {
             admin_type === "agent"
               ? "d-none"
               : props.heading === "Manage Daily Hourly Log"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -1093,8 +1114,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Interview"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -1112,8 +1133,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Manage Notes"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -1127,13 +1148,13 @@ const AdminSidebar = (props) => {
         </li>
 
         <li
-          ref={(el) => (liRefs.current["Assigned Job's"] = el)}
+          ref={(el) => (liRefs.current["Manager's Dashboard"] = el)}
           className={
             user_type === "agent"
               ? "d-none"
-              : props.heading === "Assigned Job's"
-              ? "active"
-              : ""
+              : props.heading === "Manager's Dashboard"
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -1154,8 +1175,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Manage Admin"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -1191,13 +1212,13 @@ const AdminSidebar = (props) => {
         </li>
 
         <li
-          ref={(el) => (liRefs.current["Manage Job Category"] = el)}
+          ref={(el) => (liRefs.current["Job Category"] = el)}
           className={
             user_type === "agent"
               ? "d-none"
-              : props.heading === "Manage Job Category"
-              ? "active"
-              : ""
+              : props.heading === "Job Category"
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -1215,8 +1236,8 @@ const AdminSidebar = (props) => {
             user_type === "agent"
               ? "d-none"
               : props.heading === "Filter List"
-              ? "active"
-              : ""
+                ? "active"
+                : ""
           }
         >
           <Link

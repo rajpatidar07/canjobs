@@ -1,6 +1,6 @@
 import axios from "axios";
 const API_URL = window.location.origin === "https://canpathwaysjobs.com"
-  ? "https://api.canpathwaysjobs.com/canjobs/" : "https://apnaorganicstore.in/canjobs/";
+  ? "https://api.canpathwaysjobs.com/canjobs/" : "https://apnaorganicstore.in/canjobs/";//"https://api-dev.canpathwaysjobs.com/"
 //Local
 // const API_URL ="http://192.168.29.51/canjobs/"
 // New AWS backend
@@ -3914,7 +3914,7 @@ export const AddUpdatePaymentInvoiceApi = async (data) => {
   const response = await axios.post(`${API_URL}common/addUpdatePaymentInvoice`,
     {
       ...data,
-      driveId: driveId 
+      driveId: driveId
     }, {
     headers: {
       "Content-Type": "application/json",
