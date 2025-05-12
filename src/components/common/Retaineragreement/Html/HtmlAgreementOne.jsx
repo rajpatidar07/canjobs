@@ -1,8 +1,9 @@
 import moment from "moment";
 import { useEffect } from "react";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
-import  InitialFunction  from "../CommonThings/InitialFunction";
+import InitialFunction from "../CommonThings/InitialFunction";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
+import { SendHtmlForPdf } from "../../../../api/api";
 // import { Link } from "react-router-dom";
 const HtmlAgreementOne = ({
   page,
@@ -66,15 +67,15 @@ const HtmlAgreementOne = ({
       </div>
      <p> 
   This Retainer Agreement is made this
-  <span class="${felidData?.agreement_date? "para_gap" : ""}">
+  <span class="${felidData?.agreement_date ? "para_gap" : ""}">
   ${felidData?.agreement_date &&
-    felidData?.agreement_date !== "0000-00-00 00:00:00" &&
-    felidData?.agreement_date !== "0000-00-00"
-    ? `<span class="para_gap">${moment(
-      new Date(felidData?.agreement_date)
-    ).format("Do")}</span>`
-    : ""
-  }
+      felidData?.agreement_date !== "0000-00-00 00:00:00" &&
+      felidData?.agreement_date !== "0000-00-00"
+      ? `<span class="para_gap">${moment(
+        new Date(felidData?.agreement_date)
+      ).format("Do")}</span>`
+      : ""
+    }
   </span>
   day of
 
@@ -1108,14 +1109,14 @@ services that have been rendered or accounting for the time that has been spent 
           <div class="col-md-6">
             <p class="mb-1 text-capitalize">
             ${familyJsonArray[0]?.client_first_name ||
-              familyJsonArray[0]?.client_last_name
-              ? ` <span class="para_gap text-capitalize w-50">${familyJsonArray[0]?.client_first_name
-              } ${familyJsonArray[0]?.client_last_name || ""}</span>`
-              : emp_user_type === "employee"
-                ? ` <span class="para_gap text-capitalize w-50">${userData?.name}</span>` ||
-                ""
-                : "_____________________"
-            }    </p>
+      familyJsonArray[0]?.client_last_name
+      ? ` <span class="para_gap text-capitalize w-50">${familyJsonArray[0]?.client_first_name
+      } ${familyJsonArray[0]?.client_last_name || ""}</span>`
+      : emp_user_type === "employee"
+        ? ` <span class="para_gap text-capitalize w-50">${userData?.name}</span>` ||
+        ""
+        : "_____________________"
+    }    </p>
             <p class="mb-3">Name of Client</p>
           </div>
           <div class="col-md-6">
@@ -1129,16 +1130,16 @@ services that have been rendered or accounting for the time that has been spent 
           <div class="col-md-6">
             <p class="mb-1 w-50">
               ${!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client.startsWith("0000")
-              ? "_____________________________"
-              : `<span>${moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</span>`}
+      ? "_____________________________"
+      : `<span>${moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</span>`}
             </p>
             <p>Date</p>
           </div>
             <div class="col-md-6">
             <p class="mb-1 w-50">
               ${!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client.startsWith("0000")
-              ? "_____________________________"
-              : `<span>${moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</span>`}
+      ? "_____________________________"
+      : `<span>${moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</span>`}
             </p>
             <p>Date</p>
           </div>
@@ -1285,7 +1286,7 @@ services that have been rendered or accounting for the time that has been spent 
         </div>
        
     <div style="width: 33.33%; text-align: center">
-       ${ClientSignatureFunction({ page:"admin", familyJsonArray, felidData })  }
+       ${ClientSignatureFunction({ page: "admin", familyJsonArray, felidData })}
           <p style="margin: 0">Signatures</p>
         </div>
         <div style="width: 33.33%; text-align: center">
@@ -1393,6 +1394,13 @@ services that have been rendered or accounting for the time that has been spent 
         overflow: "auto",
       }}
     >
+      <button 
+      className="btn btn-info" onClick={() => {
+        try {
+          let res = SendHtmlForPdf(jsxContent)
+          console.log(res)
+        } catch (er) { console.log(er) }
+      }}>Send html</button>
       <div dangerouslySetInnerHTML={{ __html: jsxContent }} />
     </div>
   );

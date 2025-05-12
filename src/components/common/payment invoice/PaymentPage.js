@@ -12,6 +12,7 @@ import PaymentInvoiceForm from "../../forms/payment invoice/PaymentInvoiceForm";
 import { FiAlertCircle } from "react-icons/fi";
 import ViewPdf from "../Retaineragreement/viewPdf";
 import { Link } from "react-router-dom";
+import { HiOutlineInboxIn } from "react-icons/hi";
 const Payment_Page = (props) => {
   const [openAddPaymentForm, setOpenAddPaymentForm] = useState(false);
   const [openPaymentReminder, setOpenPaymentReminder] = useState(false);
@@ -237,12 +238,12 @@ const Payment_Page = (props) => {
                   <Link to="" className="text-dark" onClick={() => { handleSort("due_amount") }}>
                     Due amount</Link>
                 </th>
-                {/* <th
+                <th
                   scope="col"
                   className="border-0 font-size-4 font-weight-normal"
                 >
-                  status 
-                </th>*/}
+                  Receive amount
+                </th>
                 <th
                   scope="col"
                   className="border-0 font-size-4 font-weight-normal"
@@ -294,19 +295,19 @@ const Payment_Page = (props) => {
                     </td>
                     <td className=" py-5">
                       <p className="font-size-2 font-weight-normal text-black-2 mb-0">
-                        <span className="p-1 b">
-                          {item.due_amount || "N/A"}
+                        <span className="p-1 ">
+                          {item.due_amount || 0}
                         </span>
                       </p>
 
                     </td>
-                    {/* <td className=" py-5">
+                    <td className=" py-5">
                       <p className="font-size-2 font-weight-normal text-black-2 mb-0">
-                        <span className="p-1 bg-primary-opacity-8 text-white  border rounded-pill">
-                          completed
+                        <span className="p-1 ">
+                          {item.received_amount || 0}
                         </span>
                       </p>
-                    </td> */}
+                    </td>
                     <td className=" py-5">
                       <div className="btn-group button_group" role="group">
                         {/* <button
@@ -344,15 +345,16 @@ const Payment_Page = (props) => {
                           </span>
                         </button>
                         <button
-                          className="btn btn-outline-info action_btn d-none"
-                          title="Update"
+                          className="btn btn-outline-info action_btn "
+                          title="Receive amount"
                           onClick={() => {
                             setOpenAddPaymentForm(true)
                             GetAllUserData()
                             setSingleInvoiceData(item)
                           }}
+                          disabled={item.due_amount === 0 || item.due_amount === "0"}
                         >
-                          <span className=" px-2">Update</span>
+                          <span className=" px-2"><HiOutlineInboxIn /></span>
                         </button>
                         <button
                           className="btn btn-outline-info action_btn d-none"
@@ -360,7 +362,6 @@ const Payment_Page = (props) => {
                         >
                           <span className="text-gray px-2"><AiOutlineFilePdf /></span>
                         </button>
-                        {console.log(item.document_id)}
                         <button
                           className="btn btn-outline-info action_btn "
                           disabled={!item.document_id}

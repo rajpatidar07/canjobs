@@ -15,6 +15,7 @@ const PaymentInvoiceForm = (props) => {
   let [termsErrors, setTermsErrors] = useState("")
   let [addTermsloading, setAddTermsLoading] = useState(false)
   let [saveType, setSaveType] = useState("")
+  const [recAmt, setRecAmt] = useState(0);
 
   const initialFormState =
   {
@@ -30,19 +31,20 @@ const PaymentInvoiceForm = (props) => {
     duplicate_payment: "",
     due_date: "",
     payment_method: "",
-    due_amount: "",
+    due_amount: 0,
     product_json: [],
     billing_address: "",
     terms: "",
     invoice_date: "",
     tags: "",
-    subtotal: "",
-    total: "",
+    subtotal: 0,
+    total: 0,
     message_on_invoice: "",
     message_on_statement: "",
     amounts_are: "Inclusive of tax",
     gst_percentage: "",
-    status: props.singleInvoiceData ? props.singleInvoiceData.status : 2
+    status: props.singleInvoiceData ? props.singleInvoiceData.status : 2,
+    received_amount: ""
   }
     ;
   const { state, setState, onInputChange, /*errors, validate*/ } = useValidation(
@@ -121,7 +123,10 @@ const PaymentInvoiceForm = (props) => {
       let data = {
         ...state,
         is_send_mail: send ? send : 0,
-        due_amount: parseInt(state.due_amount) + parseInt(state.total)
+        due_amount: state.received_amount ?
+          parseInt(state.due_amount) - parseInt(recAmt)
+          : parseInt(state.due_amount) + parseInt(state.total),
+        received_amount: parseInt(state.received_amount) + parseInt(recAmt)
       }
       console.log(data, "ppp")
       setLoading(true)
@@ -193,7 +198,7 @@ const PaymentInvoiceForm = (props) => {
   return (
     <Modal
       show={props.show}
-      size="xl"
+      size={state.id ? "lg" : "xl"}
       aria-labelledby="contained-modal-title-vcenter"
       centered
       backdrop="static"
@@ -219,102 +224,118 @@ const PaymentInvoiceForm = (props) => {
           setSaveType("save")
 
         }}>
-          <div className="row ">
-            <div className="form-group col-md-3 p-1">
-              <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold">
-                Customer
-              </label>
-              <select
-                name="userId"
-                value={state.user_id + "," + state.user_type}
-                id="userId"
-                onChange={(e) => {
-                  // console.log(e.target.value.split(",")[1])
-                  setState({ ...state, user_id: (e.target.value.split(",")[0]) });
-                  setState({ ...state, user_type: (e.target.value.split(",")[1]) });
-                }}
-                disabled={state.user_id && state.user_type}
-                className="form-control mt-3"
-              >
-                <option value={""}>Select Applicant/Client</option>
-                {(props.employee_employer_list || []).map((item, index) => {
-                  return (
-                    <option
-                      className="text-capitalize"
-                      key={index}
-                      value={
-                        item.employee_id
-                          ? `${item.employee_id},employee`
-                          : item.company_id
-                            ? `${item.company_id},employer`
-                            : `${item.id},applicant_type`
-                      }
+          {
+
+            <>
+              <div className="row ">
+                <div className="form-group col-md-3">
+                  <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold">
+                    Customer
+                  </label>
+                  <select
+                    name="userId"
+                    value={state.user_id + "," + state.user_type}
+                    id="userId"
+                    onChange={(e) => {
+                      // console.log(e.target.value.split(",")[1])
+                      setState({ ...state, user_id: (e.target.value.split(",")[0]) });
+                      setState({ ...state, user_type: (e.target.value.split(",")[1]) });
+                    }}
+                    disabled={state.user_id && state.user_type}
+                    className="form-control mt-3"
+                  >
+                    <option value={""}>Select Applicant/Client</option>
+                    {(props.employee_employer_list || []).map((item, index) => {
+                      return (
+                        <option
+                          className="text-capitalize"
+                          key={index}
+                          value={
+                            item.employee_id
+                              ? `${item.employee_id},employee`
+                              : item.company_id
+                                ? `${item.company_id},employer`
+                                : `${item.id},applicant_type`
+                          }
+                        >
+                          {item.employee_id
+                            ? (item.name + " (Candidate)")
+                            : item.company_id
+                              ? item.company_name + " (Client)"
+                              : item.title + " (Applicant Type)" ||
+                              "unknown user"}
+                        </option>
+                      );
+                    })}{" "}
+                  </select>
+                </div>
+                <div className="form-group col-md-3">
+                  <div className="d-flex justify-content-end align-items-start">
+                    <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold">
+                      Customer Email
+                    </label>
+                    <button
+                      className="d-none position-absolute border-0 bg-transparent text-blue font-size"
+                      style={{ top: "-25px" }}
                     >
-                      {item.employee_id
-                        ? (item.name + " (Candidate)")
-                        : item.company_id
-                          ? item.company_name + " (Client)"
-                          : item.title + " (Applicant Type)" ||
-                          "unknown user"}
-                    </option>
-                  );
-                })}{" "}
-              </select>
-            </div>
-            <div className="form-group col-md-3">
-              <div className="d-flex justify-content-end align-items-start">
-                <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold">
-                  Customer Email
-                </label>
-                <button
-                  className="d-none position-absolute border-0 bg-transparent text-blue font-size"
-                  style={{ top: "-25px" }}
-                >
-                  Cc/Bcc
-                </button>
+                      Cc/Bcc
+                    </button>
+                  </div>
+
+                  <input type="email" disabled={state.user_email} className="form-control" value={state.user_email} name="user_email" onChange={onInputChange} />
+
+                  {/* <div className="d-flex justify-content-start g-2 mt-3">
+                    <input type="checkbox" className="pr-2 mr-2" />
+                    <label htmlFor="" className="form-check-label">
+                      {" "}
+                      Send Later
+                    </label>
+                  </div> */}
+                </div>
+
+                <div className="form-group col-md-3 d-none">
+                  <div className="d-flex justify-content-end align-items-start">
+                    <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold">
+                      {" "}
+                      Online Payment
+                    </label>
+                    <button className=" d-none position-absolute border-0 bg-transparent text-blue font-size-3 " style={{ top: "-15px" }}>
+                      Edit
+                    </button>
+                  </div>
+                  <div className="d-flex justify-content-between align-items-center p-2">
+                    <p>Cards</p>
+                  </div>
+                </div>
+                <div className="form-group col-md-3">
+                  <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold">Balance due</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    value={state.due_amount}
+                    onChange={onInputChange}
+                    name="due_amount"
+                    min={0}
+                    disabled={state.id}
+                  />
+                </div>
+                <div className="form-group col-md-3">
+                  <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold">Receive Payment</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    value={recAmt}
+                    onChange={(e) => setRecAmt(e.target.value)}
+                    name="recAmt"
+                    min={0}
+                  />
+                </div>
+                {state.received_amount && <small className="mx-5">Previous Receive Amount : {state.received_amount}</small>}
               </div>
-
-              <input type="email" disabled={state.user_email} className="form-control" value={state.user_email} name="user_email" onChange={onInputChange} />
-
-              {/* <div className="d-flex justify-content-start g-2 mt-3">
-                <input type="checkbox" className="pr-2 mr-2" />
-                <label htmlFor="" className="form-check-label">
-                  {" "}
-                  Send Later
-                </label>
-              </div> */}
-            </div>
-
-            <div className="form-group col-md-3 d-none">
-              <div className="d-flex justify-content-end align-items-start">
-                <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold">
-                  {" "}
-                  Online Payment
-                </label>
-                <button className=" d-none position-absolute border-0 bg-transparent text-blue font-size-3 " style={{ top: "-15px" }}>
-                  Edit
-                </button>
-              </div>
-              <div className="d-flex justify-content-between align-items-center p-2">
-                <p>Cards</p>
-              </div>
-            </div>
-            <div className="form-group col-md-3">
-              <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold">Balance due</label>
-              <input
-                type="number"
-                className="form-control"
-                value={state.due_amount}
-                onChange={onInputChange}
-                name="due_amount"
-                min={0}
-              />
-              <button className="btn btn-primary d-none">Receive Payment</button>
-            </div>
-          </div>
-
+            </>
+          }
           {/* second row */}
-          <div className=" row mt-8">
+          <div className={state.id ? "d-none" : " row mt-8"}>
             <div className="form-group col-md-3 p-1">
               <div className="d-flex flex-column">
                 <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold">
@@ -323,6 +344,7 @@ const PaymentInvoiceForm = (props) => {
                 <div className="d-flex  align-items-center mb-2">
                   <select
                     name="terms" id="terms"
+
                     className={`form-control text-capitalize ${showTermsInput ? "" : "flex-grow-1 me-2"
                       }`}
                     value={state.terms} onChange={onInputChange}
@@ -360,6 +382,7 @@ const PaymentInvoiceForm = (props) => {
                         className="form-control mb-2"
                         placeholder="Enter Terms"
                         value={newTerms}
+
                         onChange={(e) => setNewTerms(e.target.value)}
                       />
                       {termsErrors && (
@@ -401,7 +424,9 @@ const PaymentInvoiceForm = (props) => {
               <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold">
                 Billing Address
               </label>
-              <input type="text" className="form-control" name="billing_address" value={state.billing_address} onChange={onInputChange} />
+              <input type="text" className="form-control"
+
+                name="billing_address" value={state.billing_address} onChange={onInputChange} />
             </div>
 
             <div className="form-group col-md-3 p-1">
@@ -411,7 +436,8 @@ const PaymentInvoiceForm = (props) => {
               <input
                 type="date"
                 className="form-control"
-                name="invoice_date" value={state.invoice_date} onChange={onInputChange} />
+                name="invoice_date"
+                value={state.invoice_date} onChange={onInputChange} />
             </div>
             <div className="form-group col-md-3 p-1">
               <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold ">
@@ -421,14 +447,14 @@ const PaymentInvoiceForm = (props) => {
                 type="date"
                 className="form-control"
                 name="due_date" value={state.due_date} onChange={onInputChange}
-                min={state.invoice_date} />
+                min={state.invoice_date}
+              />
             </div>
 
             {/* <div className="col-auto "></div> */}
           </div>
-
           {/* third section */}
-          <div className=" row mt-8 ">
+          <div className={state.id ? "d-none" : " row mt-8"}>
             <div className="form-group col-sm-6 p-0 pr-10">
               <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold">
                 Tags{" "}
@@ -451,11 +477,8 @@ const PaymentInvoiceForm = (props) => {
               </select>
             </div>
           </div>
-
-
           {/* invoice table */}
-
-          <div className="table-responsive main_table_div">
+          <div className={state.id ? "d-none" : "table-responsive main_table_div"}>
             <table className="table table-striped main_data_table text-start align-middle">
               <thead>
                 <tr>
@@ -513,21 +536,21 @@ const PaymentInvoiceForm = (props) => {
                     const handleValueChange = (field, value) => {
                       const updatedItems = [...state.product_json];
                       updatedItems[index][field] = value;
-                    
+
                       const quantity = parseFloat(updatedItems[index].quantity) || 0;
                       const rate = parseFloat(updatedItems[index].rate) || 0;
                       updatedItems[index].amount = quantity * rate; // Update amount
-                    
+
                       if (field === "rate") {
                         updatedItems[index].service_tax =
                           state.amounts_are === "Inclusive of tax"
                             ? updatedItems[index].service_tax || 0
                             : 0;
                       }
-                    
+
                       updateCalculations(updatedItems);
                     };
-                    
+
                     return (
                       <tr key={index}>
                         <td>{index + 1}</td>
@@ -557,6 +580,7 @@ const PaymentInvoiceForm = (props) => {
                         </td>
                         <td>
                           <button
+
                             className="border-0 bg-transparent"
                             onClick={() => {
                               const updatedProducts = [...state.product_json];
@@ -593,12 +617,13 @@ const PaymentInvoiceForm = (props) => {
 
             </table>
           </div>
-          <div className="d-flex gap-2 justify-content-between align-items-start">
+          <div className={state.id ? "d-none" : "d-flex gap-2 justify-content-between align-items-start"}>
             <div>
               <button
                 className="btn btn-primary "
                 onClick={(e) => handleAddNewProduct(e)}
                 type="button"
+
               >
                 Add New Product
               </button>
@@ -612,6 +637,7 @@ const PaymentInvoiceForm = (props) => {
                     value={state.message_on_invoice}
                     name="message_on_invoice"
                     onChange={onInputChange}
+
                   />
                 </div>
               </div>
@@ -624,6 +650,7 @@ const PaymentInvoiceForm = (props) => {
                     value={state.message_on_statement}
                     name="message_on_statement"
                     onChange={onInputChange}
+
                   />
                 </div>
               </div>
@@ -667,7 +694,7 @@ const PaymentInvoiceForm = (props) => {
               </ul>
             </div>
           </div>
-          <div className="d-flex justify-content-space-between text-center mb-5 px-3">
+          <div className={`d-flex justify-content-${state.id ? "center" : "space-between"} text-center mb-5 px-3`}>
             <button
               type="button"
               className="btn btn-primary btn-small w-25 mt-5 rounded-5 text-uppercase p-8"
@@ -682,7 +709,7 @@ const PaymentInvoiceForm = (props) => {
             </button>
             <button
               type="button"
-              className="btn btn-primary btn-small w-25 mt-5 rounded-5 text-uppercase p-8"
+              className={state.id ? "d-none" : "btn btn-primary btn-small w-25 mt-5 rounded-5 text-uppercase p-8"}
               disabled={loading}
               onClick={(e) => {
                 handleSubmit(e, 1)

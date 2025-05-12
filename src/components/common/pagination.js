@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 function Pagination(props) {
-  console.log(props);
+  // console.log(props);
   // Create state to manage visible page numbers
   const [visiblePageNumbers, setVisiblePageNumbers] = React.useState([]);
   useEffect(() => {

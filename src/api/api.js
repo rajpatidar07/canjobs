@@ -4000,3 +4000,18 @@ export const DeleteUpdateHourLogApi = async (data) => {
   );
   return response;
 }
+
+/*Api to Delete  Hour log */
+export const SendHtmlForPdf = async (html) => {
+  const response = await axios.post(`${API_URL}/admin_api/createPdfUsingHtml` ,{
+    html:html
+  },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+}
