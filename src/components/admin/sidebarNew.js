@@ -999,10 +999,10 @@ const AdminSidebar = (props) => {
           );
         })} */}
         <li
-          ref={(el) => (liRefs.current["Slots"] = el)}
+          ref={(el) => (liRefs.current["Application types"] = el)}
           className={
             admin_type === "super-admin"
-              ? props.heading === "Slots"
+              ? props.heading === "Application types"
                 ? "active"
                 : ""
               : "d-none"
@@ -1010,14 +1010,14 @@ const AdminSidebar = (props) => {
         >
           <Link
             onClick={() => {
-              clearPageNo("Slots");
+              clearPageNo("Application types");
             }}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
-            title={"Slots"}
+            title={"Application types"}
             to="/slots"
           >
             <TbUser className="sidebar_icon" />
-            <span className="text-truncate">Slots</span>
+            <span className="text-truncate">Application types</span>
           </Link>
         </li>
         <li

@@ -187,7 +187,7 @@ export default function CommonApplicatTypePage() {
           <div className="container-fluid">
             <div className="d-flex justify-content-between align-items-center mt-3 w-50">
               {/* MAIN TYPE */}
-              <div className="form-group col">
+              <div className="form-group col-md-6">
                 <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
                   Applicant's Type:
                 </label>
@@ -206,10 +206,9 @@ export default function CommonApplicatTypePage() {
                     ))}
                 </select>
               </div>
-              {console.log(main, "ppp")}
               {/* SUB TYPE */}
               {main && applicantTypeList.some(item => item.level === "1" && item.parent_id === main) && (
-                <div className="form-group col">
+                <div className="form-group col-md-6">
                   <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
                     Sub Type:
                   </label>

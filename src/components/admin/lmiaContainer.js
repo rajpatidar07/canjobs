@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import JobDetailsBox from "../common/jobdetail";
-import AdminHeader from "./header";
-import AdminSidebar from "./sidebar";
+// import AdminHeader from "./header";
+// import AdminSidebar from "./sidebar";
 import AddJobModal from "../forms/employer/job";
 import { GetFilter } from "../../api/api";
 import FilterJson from "../json/filterjson";
