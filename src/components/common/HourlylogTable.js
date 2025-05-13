@@ -40,7 +40,7 @@ function Hourlylogtable(props) {
     const [editRowId, setEditRowId] = useState(null);
     const [columnName, setColumnName] = useState("updated_at");
     const [sortOrder, setSortOrder] = useState("DESC");
-    const [recordsPerPage] = useState(2);
+    const [recordsPerPage] = useState(14);
     // const nPages = Math.ceil(totalData / recordsPerPage);
     const [collapsedManagers, setCollapsedManagers] = useState({});
     // const [managerPage, setManagerPage] = useState({}); // Track page per manager for pagination
@@ -68,7 +68,7 @@ function Hourlylogtable(props) {
                 total_hour: props.totalHour,
                 hour_log_of_admin: props.selectedAdminId,
                 mention_person_type: props.selectedAdminType,
-                getAdmin: 1,
+                getAdmin: props.day || props.totalHour || props.selectedAdminId || props.selectedAdminType || HourLogId ? "" : 1,
             };
             const ResHourLog = await GetHourLogApi(data);
 
@@ -105,8 +105,11 @@ function Hourlylogtable(props) {
                     });
                     setCollapsedManagers(initialCollapsedState);
                 }
+            } else {
+                for (let i = 0; i < groupedManagers.length; i++) {
+                    handleManagerClick(groupedManagers[i]);
+                }
             }
-
             if (taskId) {
                 setSingelHourLogData(adminList[0]);
                 setShowHourLogModal(true);
@@ -171,7 +174,7 @@ function Hourlylogtable(props) {
             setIsLoading(true);
             const data = {
                 limit: recordsPerPage,
-                page: page,
+                page: page || 1,
                 hour_log_of_admin: managerId,
             };
             const response = await GetHourLogApi(data);
@@ -237,7 +240,6 @@ function Hourlylogtable(props) {
         const data = { id, [field]: e.target.value };
         return AddHourLog(e, data);
     };
-    console.log("total data :", totalData)
     const AddHourLog = async (newValue, data) => {
         if (newValue && newValue.preventDefault) newValue.preventDefault();
         if (validate() || data?.id) {
@@ -507,7 +509,6 @@ function Hourlylogtable(props) {
                                                                     {manager?.name || "N/A"} <FaChevronDown />
                                                                 </td>
                                                             </tr>
-
                                                             {/* Hour Log Rows */}
                                                             {!collapsedManagers[managerId] && logs.map((item, index) => (
                                                                 <tr key={`log-${groupIndex}-${index}`} className={item.id ? "" : "d-none"}>
@@ -719,16 +720,16 @@ function Hourlylogtable(props) {
                                                                 </tr>
 
                                                             ))}
-                                                            {console.log(!collapsedManagers[managerId] && (logs.length < totalCount && logs.length !== 0), managerId, "first", logs.length < totalCount)}
-
-                                                            {!collapsedManagers[managerId] && (logs.length < totalCount && logs.length !== 0) && (
+                                                            {!collapsedManagers[managerId] && (logs.filter((item) => item.id).length < totalCount) && (
                                                                 <tr>
                                                                     <td colSpan={11} style={{ textAlign: "center" }}>
                                                                         <button
-                                                                            className="btn btn-primary"
-                                                                            onClick={() => handleManagerClick(managerId, 2)}
+                                                                            className="btn btn-light"
+                                                                            onClick={() => {
+                                                                                handleManagerClick(managerId, Math.ceil(logs.length / recordsPerPage))
+                                                                            }}
                                                                         >
-                                                                            Load More
+                                                                            More
                                                                         </button>
                                                                     </td>
                                                                 </tr>

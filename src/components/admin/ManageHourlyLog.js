@@ -301,6 +301,9 @@ const ManageHourlyLog = () => {
                   setSelectedAdminId("");
                   setSelectedAdminType("");
                   setSearchQuery("");
+                  setFilterByHour("")
+                  setDayFilterValue("")
+                  setPageNo(1)
                 }}
               >
                 Reset

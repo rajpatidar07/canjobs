@@ -579,6 +579,7 @@ export default function ApplicantTypeDocuments(props) {
       console.log(err);
     }
   }
+  console.log(state.folderID,props)
   return (
     <div>
       <>

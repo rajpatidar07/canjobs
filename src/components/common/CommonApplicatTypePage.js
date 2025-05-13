@@ -15,6 +15,8 @@ export default function CommonApplicatTypePage() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const user_type = localStorage.getItem("userType");
+  const admin_id = localStorage.getItem("admin_id");
+  const admin_type = localStorage.getItem("admin_type")
   const taskIdParam = searchParams.get("taskId");
   const docId = searchParams.get("docId");
   const docParentId = searchParams.get("docParentId");
@@ -127,12 +129,13 @@ export default function CommonApplicatTypePage() {
     const targetId = applicantTypeId || applicantTypeChildId;
     // if (!targetId) return;
 
-    getApplicanTypeApi("")
+    getApplicanTypeApi(admin_type === "super-admin" ? "" : admin_id)
       .then((res) => {
         setApplicantTypeList(res.data.data);
         if (!applicantTypeIdForApi) {
           setApplicantTypeIdForApi(res.data.data[0]?.id)
           setMain(res.data.data[0]?.id)
+          setApplicantTypeFolderId(res.data.data[0]?.doc_folder_id);
         }
         const found = (res.data?.data || []).find(
           (item) => item.id === targetId
@@ -342,6 +345,7 @@ export default function CommonApplicatTypePage() {
               </div>
             ) : (
               <div>
+                {console.log(docId ? docParentId : applicantTypeFolderId,docId , docParentId , applicantTypeFolderId)}
                 <ApplicantTypeDocuments
                   emp_user_type={"applicant_type"}
                   user_id={applicantTypeIdForApi}
