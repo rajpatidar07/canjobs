@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import AdminHeader from "./header";
-import AdminSidebar from "./sidebar";
+// import AdminHeader from "./header";
+// import AdminSidebar from "./sidebar";
 // import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
 import PersonalDetails from "../forms/user/personal";
@@ -47,7 +47,7 @@ function SelfApplicat(props) {
   };
   /*Function to search the employee */
   const onSearch = (e) => {
-    const inputValue = e.target.value;
+    const inputValue = e//.target.value;
     setSearch(inputValue);
     setpageNo(1);
     if (inputValue.length > 0) {

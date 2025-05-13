@@ -137,7 +137,8 @@ export default function ApplicantsFilter({
               portal === "study" ? "Student" : "Candidate"
             }`}
             name="Employee_name"
-            onChange={(e) => setcandidateSearch(e)}
+            value={candidateSearch}
+            onChange={(e) => setcandidateSearch(e.target.value)}
             onKeyPress={handleKeyPress}
           />
           <div className="input-group-append">

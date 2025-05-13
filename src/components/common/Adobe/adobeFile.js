@@ -42,7 +42,6 @@ const AdobePDFViewer = ({
   const [currentIndex, setCurrentIndex] = useState(
     docTypeList?.findIndex((item) => item.id === fileId)
   );
-  console.log(url, data)
   // Handler for Previous button
   const handlePreviousClick = () => {
     if (currentIndex > 0) {
@@ -95,13 +94,6 @@ const AdobePDFViewer = ({
   // }, [currentIndex]);
   /*REnder document method */
   useEffect(() => {
-    console.log(window.location.origin === "http://localhost:3000"
-      ? "d9e8b7bcb61b42b6a387bfa9cf16a75b (Local)"
-      : window.location.origin === "https://canjobs.vercel.app"
-        ? "d9b36f468d7a4e4e8b275f13728f1132(vercel)"
-        : "713b22cf34e345c388e4490f9c9dc79b (Canpathways)", url &&
-        data &&
-    userType)
     if (url &&
       data &&
       userType) {
@@ -124,7 +116,6 @@ const AdobePDFViewer = ({
           data,
           userType
         );
-        console.log("previewFilePromise", previewFilePromise)
         const eventOptions = {
           listenOn: [
             "ANNOTATION_ADDED",
@@ -143,7 +134,6 @@ const AdobePDFViewer = ({
             adobeViewer
               .getAnnotationManager()
               .then((annotationManager) => {
-                console.log("annotationManager", annotationManager)
                 setAnnotationManager(annotationManager);
                 if (annotationData.length === 0) {
                 } else {
@@ -354,15 +344,11 @@ const AdobePDFViewer = ({
         >
           <GrNext />
         </button>}
-
         {url &&
           data &&
           userType ? <div
             id="pdf-div"
-            className={`${(userType === "admin" || userType === "agent") && openAnnotationBox
-              ? "w-100"
-              : "w-100"
-              } full-window-div`}
+            className={`w-100 full-window-div`}
             style={{
               height: docsection ? "100vh" : "calc(100vh - 130px)",
               // transition: "all .3s",

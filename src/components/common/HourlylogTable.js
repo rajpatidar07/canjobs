@@ -11,7 +11,7 @@ import { BsChat } from "react-icons/bs";
 import CommentTaskBox from "./commonTaskBox";
 import ModalSidebar from "./modalSidebar";
 import { Link, useLocation } from "react-router-dom";
-import { FaChevronDown, FaTrash } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
 import SAlert from "./sweetAlert";
 import UserAvatar from "./UserAvtar";
 
@@ -96,8 +96,8 @@ function Hourlylogtable(props) {
                     return acc;
                 }, {})
             );
-            if (firstAdminId[0][0] && HourLogData.length === 0) {
-                handleManagerClick(firstAdminId[0][0]); // loads first admin logs
+            if (firstAdminId[0] && firstAdminId[0][0] && HourLogData.length === 0) {
+                handleManagerClick(firstAdminId[0][0], 1, props.day, props.totalHour); // loads first admin logs
                 if (groupedManagers.length > 0) {
                     const initialCollapsedState = {};
                     groupedManagers.forEach((managerId, index) => {
@@ -107,7 +107,7 @@ function Hourlylogtable(props) {
                 }
             } else {
                 for (let i = 0; i < groupedManagers.length; i++) {
-                    handleManagerClick(groupedManagers[i]);
+                    handleManagerClick(groupedManagers[i], 1, props.day, props.totalHour);
                 }
             }
             if (taskId) {
@@ -158,7 +158,7 @@ function Hourlylogtable(props) {
         };
     }, [taskId, HourLogId, apiCall, props.searchCandidate, props.selectedAdminId, props.pageNo, columnName, sortOrder, props.totalHour, props.day]);
 
-    const handleManagerClick = async (managerId, page) => {
+    const handleManagerClick = async (managerId, page, day, hour) => {
         // If already loaded for this manager, just toggle collapse
         // const alreadyLoaded = HourLogData.some(
         //     d => d.hour_log_of_admin === managerId && d.loadedForManager
@@ -176,6 +176,8 @@ function Hourlylogtable(props) {
                 limit: recordsPerPage,
                 page: page || 1,
                 hour_log_of_admin: managerId,
+                day: day ? day : "",
+                total_hour: hour ? hour : "",
             };
             const response = await GetHourLogApi(data);
             const newLogs = response.data.data.map(d => ({
@@ -506,7 +508,7 @@ function Hourlylogtable(props) {
                                                             >
                                                                 <td colSpan={11} className="text-left font-weight-bold text-capitalize"
                                                                     style={{ color: randomColor }}>
-                                                                    {manager?.name || "N/A"} <FaChevronDown />
+                                                                    {manager?.name || "N/A"}
                                                                 </td>
                                                             </tr>
                                                             {/* Hour Log Rows */}

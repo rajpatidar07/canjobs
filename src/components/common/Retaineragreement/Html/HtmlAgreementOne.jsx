@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
 import InitialFunction from "../CommonThings/InitialFunction";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
-import { SendHtmlForPdf } from "../../../../api/api";
+// import { SendHtmlForPdf } from "../../../../api/api";
 // import { Link } from "react-router-dom";
 const HtmlAgreementOne = ({
   page,
@@ -1394,13 +1394,13 @@ services that have been rendered or accounting for the time that has been spent 
         overflow: "auto",
       }}
     >
-      <button 
+      {/* <button 
       className="btn btn-info" onClick={() => {
         try {
           let res = SendHtmlForPdf(jsxContent)
           console.log(res)
         } catch (er) { console.log(er) }
-      }}>Send html</button>
+      }}>Send html</button> */}
       <div dangerouslySetInnerHTML={{ __html: jsxContent }} />
     </div>
   );

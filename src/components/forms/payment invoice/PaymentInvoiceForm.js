@@ -123,12 +123,12 @@ const PaymentInvoiceForm = (props) => {
       let data = {
         ...state,
         is_send_mail: send ? send : 0,
-        due_amount: state.received_amount ?
+        due_amount: recAmt ?
           parseInt(state.due_amount) - parseInt(recAmt)
           : parseInt(state.due_amount) + parseInt(state.total),
-        received_amount: parseInt(state.received_amount) + parseInt(recAmt)
+        received_amount: parseInt(state.received_amount||0) + parseInt(recAmt)
       }
-      console.log(data, "ppp")
+      console.log(data,)
       setLoading(true)
       let res = await AddUpdatePaymentInvoiceApi(data)
       if (res.data.status === 1 || res.data.status === "1") {

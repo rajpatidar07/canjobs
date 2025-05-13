@@ -66,7 +66,7 @@ export default function CommonApplicatTypePage() {
   const [adminFilterValue, setAdminFilterValue] = useState("");
   const [interestFilterValue, setInterestFilterValue] = useState("");
   const onSearch = (e) => {
-    const inputValue = e.target.value;
+    const inputValue = e//.target.value;
     setSearch(inputValue);
     setPageNo(1);
     if (inputValue.length > 0) {

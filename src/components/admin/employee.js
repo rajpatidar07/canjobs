@@ -41,7 +41,7 @@ function Employee(props) {
   };
   /*Function to search the employee */
   const onSearch = (e) => {
-    const inputValue = e.target.value;
+    const inputValue = e//.target.value;
     setSearch(inputValue);
     setpageNo(1);
     if (inputValue.length > 0) {
