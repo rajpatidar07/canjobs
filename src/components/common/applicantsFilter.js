@@ -133,9 +133,8 @@ export default function ApplicantsFilter({
             required
             type="text"
             className="form-control"
-            placeholder={`Search ${
-              portal === "study" ? "Student" : "Candidate"
-            }`}
+            placeholder={`Search ${portal === "study" ? "Student" : "Candidate"
+              }`}
             name="Employee_name"
             value={candidateSearch}
             onChange={(e) => setcandidateSearch(e.target.value)}
@@ -295,8 +294,8 @@ export default function ApplicantsFilter({
       <div
         className={
           (skill === null || skill === undefined) &&
-          user_type === "admin" &&
-          portal === "study"
+            user_type === "admin" &&
+            portal === "study"
             ? "col form_group p-0"
             : "d-none"
         }
@@ -394,13 +393,13 @@ export default function ApplicantsFilter({
       <div
         className={
           (skill === null || skill === undefined) &&
-          (pageName === "4" ||
-            pageName === 4 ||
-            (pageName === "21" || pageName === 21) |
+            (pageName === "4" ||
+              pageName === 4 ||
+              (pageName === "21" || pageName === 21) |
               (pageName === "22" || pageName === 22) ||
-            pageName === "12" ||
-            pageName === 12 ||
-            pageName === "employee")
+              pageName === "12" ||
+              pageName === 12 ||
+              pageName === "employee")
             ? "col form_group p-0"
             : "d-none"
         }
@@ -424,9 +423,9 @@ export default function ApplicantsFilter({
       <div
         className={
           (skill === null || skill === undefined) &&
-          ([14, "14", 15, "15", 16, "16", 4, "4"].includes(pageName) ||
-            pageName === "employee") &&
-          !applicantTypeChildId
+            ([14, "14", 15, "15", 16, "16", 4, "4"].includes(pageName) ||
+              pageName === "employee") &&
+            !applicantTypeChildId
             ? "col form_group p-0"
             : "d-none"
         }
@@ -503,26 +502,36 @@ export default function ApplicantsFilter({
                 setSearch("");
                 if (portal === "study") {
                   setStatustFilterValue("");
+                  setSearch("");
+                  setcandidateSearch("");
                 }
               } else if (["4", "21", "22", "12"].includes(pageName)) {
                 setFilterByEmployeeId("");
+                setSearch("");
+                setcandidateSearch("");
               } else if (
                 ["14", "15", "16"].includes(pageName) &&
                 !applicantTypeChildId
               ) {
                 setCategoryFilterValue("");
+                setSearch("");
+                setcandidateSearch("");
               } else {
                 // Default clear all filters if pageName does not match above
-                setCategoryFilterValue("");
-                setinterestFilterValue("");
+                if (pageName !== "local_candidate") {
+                  setCategoryFilterValue("");
+                  setcandidateSearch("");
+                } setinterestFilterValue("");
                 setAdminFilterValue("");
                 setAgentFilterValue("");
                 setcandidateSearch("");
                 setSearch("");
                 if (portal === "study") {
                   setStatustFilterValue("");
+                  setcandidateSearch("");
                 }
               }
+              setSearch("");
               setpageNo(1);
             };
             clearFiltersByPageName();

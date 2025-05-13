@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import AdminHeader from "./header";
-import AdminSidebar from "./sidebar";
+// import AdminHeader from "./header";
+// import AdminSidebar from "./sidebar";
 import EmployeeTable from "../common/employeeTable";
 import ApplicantsFilter from "../common/applicantsFilter";
 export default function LocalCandidate() {
@@ -18,7 +18,7 @@ export default function LocalCandidate() {
   let [apiCall, setApiCall] = useState(false);
   /*Function to search the employee */
   const onSearch = (e) => {
-    const inputValue = e.target.value;
+    const inputValue = e//.target.value;
     setSearch(inputValue);
     setpageNo(1);
     if (inputValue.length > 0) {
