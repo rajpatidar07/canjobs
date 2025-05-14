@@ -5,27 +5,27 @@ import {
   MdOutlinePhotoFilter,
   MdAssignmentAdd,
   MdRealEstateAgent,
-  MdOutlineAddIcCall,
+  // MdOutlineAddIcCall,
   MdOutlinePayments,
 } from "react-icons/md";
-import { LuFileKey } from "react-icons/lu";
+// import { LuFileKey } from "react-icons/lu";
 import {
   LiaUsersSolid,
   LiaAddressCardSolid,
   LiaCcVisa,
-  LiaHourglassHalfSolid,
+  // LiaHourglassHalfSolid,
 } from "react-icons/lia";
 import {
   BsBuildings,
-  BsQrCodeScan,
+  // BsQrCodeScan,
   // BsReverseLayoutTextSidebarReverse,
 } from "react-icons/bs";
 // import { toast } from "react-toastify";
 import { PiApplePodcastsLogoThin } from "react-icons/pi";
 import { AiOutlineUserAdd } from "react-icons/ai";
-import { TbFilterPlus, TbUser } from "react-icons/tb";
+import { TbUser } from "react-icons/tb";
 import {
-  FaAddressCard,
+  // FaAddressCard,
   // FaChevronDown,
   FaNotesMedical,
   FaTasks,
@@ -34,7 +34,7 @@ import {
 import { FaRegUser } from "react-icons/fa";
 import { SiStudyverse } from "react-icons/si";
 // import { FaChevronRight, FaChevronLeft } from "react-icons/fa";
-import { FaPersonShelter } from "react-icons/fa6";
+import { FaGear, FaPersonShelter } from "react-icons/fa6";
 // import {
 //   AddApplicanTypeApi,
 //   DeleteApplicanTypeApi,
@@ -1021,28 +1021,6 @@ const AdminSidebar = (props) => {
           </Link>
         </li>
         <li
-          ref={(el) => (liRefs.current["Manage Applicant Type"] = el)}
-          className={
-            admin_type === "super-admin"
-              ? props.heading === "Manage Applicant Type"
-                ? "active"
-                : ""
-              : "d-none"
-          }
-        >
-          <Link
-            onClick={() => {
-              clearPageNo("Manage Applicant Type");
-            }}
-            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
-            title={"Manage Applicant Type"}
-            to="/manage_applicant_type"
-          >
-            <FaAddressCard className="sidebar_icon" />
-            <span className="text-truncate">Manage Applicant Type</span>
-          </Link>
-        </li>
-        <li
           ref={(el) => (liRefs.current["Manage Payment"] = el)}
           className={
             admin_type !== "agent"
@@ -1064,7 +1042,7 @@ const AdminSidebar = (props) => {
             <span className="text-truncate">Manage Payment</span>
           </Link>
         </li>
-        <li
+        {/* <li
           ref={(el) => (liRefs.current["Manage Daily Call Log"] = el)}
           className={
             admin_type === "agent"
@@ -1085,8 +1063,8 @@ const AdminSidebar = (props) => {
             <MdOutlineAddIcCall className="sidebar_icon" />
             <span className="text-truncate">Manage Daily Call Log</span>
           </Link>
-        </li>
-        <li
+        </li> */}
+        {/* <li
           ref={(el) => (liRefs.current["Manage Daily Hourly Log"] = el)}
           className={
             admin_type === "agent"
@@ -1107,7 +1085,7 @@ const AdminSidebar = (props) => {
             <LiaHourglassHalfSolid className="sidebar_icon" />
             <span className="text-truncate">Manage Daily Hour Log</span>
           </Link>
-        </li>
+        </li> */}
         <li
           ref={(el) => (liRefs.current["Interview"] = el)}
           className={
@@ -1211,7 +1189,7 @@ const AdminSidebar = (props) => {
           </Link>
         </li>
 
-        <li
+        {/* <li
           ref={(el) => (liRefs.current["Job Category"] = el)}
           className={
             user_type === "agent"
@@ -1229,8 +1207,8 @@ const AdminSidebar = (props) => {
             <BsQrCodeScan className="sidebar_icon" />
             <span className="text-truncate">Job Category</span>
           </Link>
-        </li>
-        <li
+        </li> */}
+        {/* <li
           ref={(el) => (liRefs.current["Filter List"] = el)}
           className={
             user_type === "agent"
@@ -1248,8 +1226,8 @@ const AdminSidebar = (props) => {
             <TbFilterPlus className="sidebar_icon" />
             <span className="text-truncate">Filter List</span>
           </Link>
-        </li>
-        <li
+        </li> */}
+        {/* <li
           ref={(el) => (liRefs.current["Credentials"] = el)}
           className={
             admin_type === "super-admin"
@@ -1266,6 +1244,28 @@ const AdminSidebar = (props) => {
           >
             <LuFileKey className="sidebar_icon" />
             <span className="text-truncate">Credentials</span>
+          </Link>
+        </li> */}
+         <li
+          ref={(el) => (liRefs.current["Setting"] = el)}
+          className={
+            admin_type === "super-admin"
+              ? props.heading === "Setting"
+                ? "active"
+                : ""
+              : "d-none"
+          }
+        >
+          <Link
+            onClick={() => {
+              clearPageNo("Setting");
+            }}
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+            title={"Setting"}
+            to="/setting"
+          >
+            <FaGear className="sidebar_icon" />
+            <span className="text-truncate">Setting</span>
           </Link>
         </li>
       </ul>

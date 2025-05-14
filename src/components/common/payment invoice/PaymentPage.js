@@ -13,8 +13,10 @@ import { FiAlertCircle } from "react-icons/fi";
 import ViewPdf from "../Retaineragreement/viewPdf";
 import { Link } from "react-router-dom";
 import { HiOutlineInboxIn } from "react-icons/hi";
+import ReceiveAmountModal from "../../forms/admin/ReceiveAmountModal";
 const Payment_Page = (props) => {
   const [openAddPaymentForm, setOpenAddPaymentForm] = useState(false);
+  const [openRecPaymentForm, setOpenRecPaymentForm] = useState(false);
   const [openPaymentReminder, setOpenPaymentReminder] = useState(false);
   const [apiCall, setApiCall] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -185,7 +187,14 @@ const Payment_Page = (props) => {
             lastInvoiceNo={lastInvoiceNo}
           />
         )}
-
+        {openRecPaymentForm ? (
+          <ReceiveAmountModal
+            close={() => setOpenRecPaymentForm(false)}
+            show={openRecPaymentForm}
+            employee_employer_list={employeeEmployerlist}
+            setApiCall={setApiCall}
+            singleInvoiceData={singleInvoiceData} />
+        ) : null}
         <div className="table-responsive main_table_div">
           {isLoading ? (
             <Loader />
@@ -348,9 +357,8 @@ const Payment_Page = (props) => {
                           className="btn btn-outline-info action_btn "
                           title="Receive amount"
                           onClick={() => {
-                            setOpenAddPaymentForm(true)
-                            GetAllUserData()
-                            setSingleInvoiceData(item)
+                            setOpenRecPaymentForm(true);
+                            setSingleInvoiceData(item);
                           }}
                           disabled={item.due_amount === 0 || item.due_amount === "0"}
                         >

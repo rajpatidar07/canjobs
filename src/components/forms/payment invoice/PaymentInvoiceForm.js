@@ -15,7 +15,7 @@ const PaymentInvoiceForm = (props) => {
   let [termsErrors, setTermsErrors] = useState("")
   let [addTermsloading, setAddTermsLoading] = useState(false)
   let [saveType, setSaveType] = useState("")
-  const [recAmt, setRecAmt] = useState(0);
+  // const [recAmt, setRecAmt] = useState(0);
 
   const initialFormState =
   {
@@ -44,7 +44,7 @@ const PaymentInvoiceForm = (props) => {
     amounts_are: "Inclusive of tax",
     gst_percentage: "",
     status: props.singleInvoiceData ? props.singleInvoiceData.status : 2,
-    received_amount: ""
+    // received_amount: ""
   }
     ;
   const { state, setState, onInputChange, /*errors, validate*/ } = useValidation(
@@ -123,10 +123,12 @@ const PaymentInvoiceForm = (props) => {
       let data = {
         ...state,
         is_send_mail: send ? send : 0,
-        due_amount: recAmt ?
-          parseInt(state.due_amount) - parseInt(recAmt)
-          : parseInt(state.due_amount) + parseInt(state.total),
-        received_amount: parseInt(state.received_amount||0) + parseInt(recAmt)
+        due_amount: 
+        // recAmt ?
+        //   parseInt(state.due_amount) - parseInt(recAmt)
+        //   :
+           parseInt(state.due_amount) + parseInt(state.total),
+        // received_amount: parseInt(state.received_amount||0) + parseInt(recAmt)
       }
       console.log(data,)
       setLoading(true)
@@ -319,7 +321,7 @@ const PaymentInvoiceForm = (props) => {
                     disabled={state.id}
                   />
                 </div>
-                <div className="form-group col-md-3">
+                {/*<div className="form-group col-md-3">
                   <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold">Receive Payment</label>
                   <input
                     type="number"
@@ -329,8 +331,8 @@ const PaymentInvoiceForm = (props) => {
                     name="recAmt"
                     min={0}
                   />
-                </div>
-                {state.received_amount && <small className="mx-5">Previous Receive Amount : {state.received_amount}</small>}
+                </div>*/}
+                {/*state.received_amount && <small className="mx-5">Previous Receive Amount : {state.received_amount}</small>*/}
               </div>
             </>
           }

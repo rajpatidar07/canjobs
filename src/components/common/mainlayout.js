@@ -116,6 +116,7 @@ import ConvertAnyFileToPdf from "./Common function/ConvertAnyFileTopdf";
 import WorkPermitPdf from "./Retaineragreement/Agreement native/WorkPermitPdf";
 import AlbertaPnpPdf from "./Retaineragreement/Agreement native/AlbertaPnpPdf";
 import AdminMain from "../admin/AdminMain";
+import CommonAdminExtraLinkSetting from "../admin/CommonAdminExtraLinkSetting";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -365,6 +366,7 @@ function MainLayout() {
               <Route path="/googledrive" element={<GoogleDrive />} />
               <Route path="/anotation" element={<Anotation />} />
               <Route path="/slots" element={<CommonApplicatTypePage />} />
+              <Route path="/setting" element={<CommonAdminExtraLinkSetting />} />
               <Route
                 path="/manage_applicant_type"
                 element={<MangeApplicantType />}

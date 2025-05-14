@@ -251,7 +251,8 @@ function Category() {
             />
           ) : null} */}
         </div>
-        <div className="dashboard-main-container mt-14" id="dashboard-body">
+        <div className="dashboard-main-container " id="dashboard-body">
+           {/*removing class for now mt-14 */}
           <div className="container-fluid">
             <div className="row align-items-center m-0">
               <div className="col p-1 form_group mb-3">
