@@ -81,7 +81,7 @@ const WorkPermitPdf = () => {
     <View style={{ height: "auto" }}>
       <View style={{ padding: "10px 20px" }}>
         <Text
-          style={{ textAlign: "center", fontSize: "24px", marginBottom: 15 }}
+          style={{ textAlign: "center", fontSize: "24px", marginBottom: 15, color: '#000' }}
         >
           RETAINER AGREEMENT
         </Text>
@@ -390,11 +390,12 @@ const WorkPermitPdf = () => {
               style={[styles.table, { textAlign: "center", }]}
             >
               <View style={styles.row}>
-                <View style={[styles.cell, styles.headerCell]}>
-                  <Text style={{ color: "##0c5fa6" }}>Fees details</Text>
+                <View style={[styles.cell]}>
+                  <Text style={styles.headerCell}>Fees details</Text>
                 </View>
-                <View style={[styles.cell, styles.headerCell]}>
-                  <Text style={{ color: "##0c5fa6" }}>Amount (CAD)</Text>
+                <View style={[styles.cell]}>
+                  <Text style={styles.headerCell}>Amount (CAD)</Text>
+
                 </View>
               </View>
               <View style={styles.row}>
@@ -406,24 +407,24 @@ const WorkPermitPdf = () => {
                   <Text>{felidData?.professional_fees}</Text>
                 </View>
               </View>
-                            <View style={styles.row}>
-                              <View style={styles.cell}><Text>Disbursement</Text>
-                              </View>
-                              <View style={styles.cell}><Text></Text>
-                              </View>
-                            </View>
-                            <View style={styles.row}>
-                              <View style={styles.cell}><Text>Courier charges</Text>
-                              </View>
-                              <View style={styles.cell}><Text>{felidData?.courier_charges}</Text>
-                              </View>
-                            </View>
-                            <View style={styles.row}>
-                              <View style={styles.cell}><Text>Government fees</Text>
-                              </View>
-                              <View style={styles.cell}><Text>{felidData?.government_fees}</Text>
-                              </View>
-                            </View>
+              <View style={styles.row}>
+                <View style={styles.cell}><Text>Disbursement</Text>
+                </View>
+                <View style={styles.cell}><Text></Text>
+                </View>
+              </View>
+              <View style={styles.row}>
+                <View style={styles.cell}><Text>Courier charges</Text>
+                </View>
+                <View style={styles.cell}><Text>{felidData?.courier_charges}</Text>
+                </View>
+              </View>
+              <View style={styles.row}>
+                <View style={styles.cell}><Text>Government fees</Text>
+                </View>
+                <View style={styles.cell}><Text>{felidData?.government_fees}</Text>
+                </View>
+              </View>
               <View style={styles.row}>
                 <View style={styles.cell}>
 
@@ -475,27 +476,27 @@ const WorkPermitPdf = () => {
             <View style={[styles.table, { marginTop: 57 }]}>
               <View style={styles.row}>
                 <View style={styles.cell}>
-                  <Text style={{ color: "##0c5fa6" }}>
+                  <Text style={styles.headerCell}>
                     RCIC Service Milestone
                   </Text>
                 </View>
                 <View style={styles.cell}>
-                  <Text style={{ color: "##0c5fa6" }}>
+                  <Text style={styles.headerCell}>
                     Estimated date of Completion
                   </Text>
                 </View>
                 <View style={styles.cell}>
-                  <Text style={{ color: "##0c5fa6" }}>
+                  <Text style={styles.headerCell}>
                     Professional Fees (Non-Refundable)
                   </Text>
                 </View>
                 <View style={styles.cell}>
-                  <Text style={{ color: "##0c5fa6" }}>
+                  <Text style={styles.headerCell}>
                     Applicable Retainer Fee for this stage (Non- Refundable)
                   </Text>
                 </View>
                 <View style={styles.cell}>
-                  <Text style={{ color: "##0c5fa6" }}>
+                  <Text style={styles.headerCell}>
                     Applicable Government Processing Fee
                   </Text>
                 </View>
@@ -546,9 +547,9 @@ const WorkPermitPdf = () => {
               </View>
             </View>
             <View id="l5" style={{ paddingLeft: 10 }}>
-              <Text style={{ marginTop: 15 }}>Note:</Text>
-              <View style={{ marginTop: 10 }}>
-                <View style={{ marginTop: 20, flexDirection: 'row' }}>
+              <Text style={{ marginTop: 20 }}>Note:</Text>
+              <View >
+                <View style={{  flexDirection: 'row' }}>
                   <Text style={{ width: 20, fontWeight: 'bold' }}>•</Text>
                   <Text style={{ flex: 1 }}>
                     There will be an additional fee, or a new fee arrangement
@@ -1183,157 +1184,174 @@ const WorkPermitPdf = () => {
           </View>
           <View style={{}}>
             {/* Contact Information Header */}
-            <Text style={[{ fontWeight: "600" }, styles.definition]}>
-              21. Contact Information
-            </Text>
+            <View>
+              {/* Contact Information Header */}
+              <Text style={[{ fontWeight: "600" }, styles.definition]}>
+                21. Contact Information
+              </Text>
+              {/* Client Information */}
+              <Text style={[styles.textBold, { marginLeft: 12 }]}>Client Name</Text>
+              <View style={{ width: "100%", padding: 5 }}>
+                <View style={styles.clientForm}>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}>Given Name: </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          {familyJsonArray[0]?.client_first_name || ''}
+                        </Text>
+                      </View>
+                    </View>
 
-            {/* Client Information */}
-            <Text>Client Name</Text>
-            <View style={{ width: "100%", padding: 5 }}>
-              <View style={styles.clientForm}>
-                <View style={styles.clientFormChild}>
-                  <Text>
-                    Given Name:{" "}
-                    <Text
-                      style={[
-                        styles.textunderline,
-                        { textTransform: "capitalize", marginLeft: 5 },
-                      ]}
-                    >
-                      {familyJsonArray[0]?.client_first_name || "" || "_______________"}
-                    </Text>
-                  </Text>
+                  </View>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}>Family Name:{" "}: </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          {familyJsonArray[0]?.client_last_name || ''}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
                 </View>
-                <View style={styles.clientFormChild}>
-                  <Text>
-                    Family Name:{" "}
-                    <Text
-                      style={[
-                        styles.textunderline,
-                        { textTransform: "capitalize", marginLeft: 5 },
-                      ]}
-                    >
-                      {familyJsonArray[0]?.client_last_name || "_______________"}
-                    </Text>
-                  </Text>
+
+                <View style={styles.clientForm}>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}>Address{" "}: </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          {felidData?.client_address.trim() !== "" ||
+                            felidData?.client_address !== " "
+                            ? felidData?.client_address
+                            : ""}
+                        </Text>
+                      </View>
+                    </View>
+
+                  </View>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}>Telephone Number{" "}: </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          {felidData?.client_telephone || ""}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+
+                <View style={styles.clientForm}>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}> Cellphone Number{" "}: </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          {felidData?.client_cellphone || ""}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}> Fax Number{" "}: </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          {felidData?.client_fax || ""}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+                <View style={styles.clientForm}>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}>  E-mail Address:{" "} </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          {felidData?.client_email || ""}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
                 </View>
               </View>
 
-              <View style={styles.clientForm}>
-                <View style={styles.clientFormChild}>
-                  <Text>
-                    Address:{" "}
-                    <Text
-                      style={[
-                        styles.textunderline,
-                        { textTransform: "capitalize", marginLeft: 5 },
-                      ]}
-                    >
-                      {felidData?.client_address.trim() !== "" || felidData?.client_address !== " " ? felidData?.client_address : "_______________"}
-                    </Text>
-                  </Text>
-                </View>
-                <View style={styles.clientFormChild}>
-                  <Text>
-                    Telephone Number:{" "}
-                    <Text style={[styles.textunderline, { marginLeft: 5 }]}>
-                      {felidData?.client_telephone || "_______________"}
-                    </Text>
-                  </Text>
-                </View>
-              </View>
-
-              <View style={styles.clientForm}>
-                <View style={styles.clientFormChild}>
-                  <Text>
-                    Cellphone Number:{" "}
-                    <Text style={[styles.textunderline, { marginLeft: 5 }]}>
-                      {felidData?.client_cellphone || "_______________"}
-                    </Text>
-                  </Text>
-                </View>
-                <View style={styles.clientFormChild}>
-                  <Text>
-                    E-mail Address:{" "}
-                    <Text
-                      style={[
-                        styles.textunderline,
-                        { textTransform: "capitalize", marginLeft: 5 },
-                      ]}
-                    >
-                      {felidData?.client_email || "_______________"}
-                    </Text>
-                  </Text>
+              {/* RCIC Information */}
+              <Text style={[styles.textBold, { marginLeft: 12 }]}>RCIC</Text>
+              <View style={{ width: "100%" }}>
+                <View style={styles.clientForm}>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}>  Given Name:{" "} </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          Harpreet
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}>  Family Name:{" "} </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          Kaur
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
                 </View>
 
-              </View>
-              <View style={styles.clientForm}>
-                <View style={styles.clientFormChild}>
-                  <Text>
-                    Fax Number:{" "}
-                    <Text style={[styles.textunderline, { marginLeft: 5 }]}>
-                      {felidData?.client_fax || "_______________"}
-                    </Text>
-                  </Text>
-                </View></View>
-            </View>
-
-            {/* RCIC Information */}
-            <Text>RCIC</Text>
-            <View style={{ width: "100%" }}>
-              <View style={styles.clientForm}>
-                <View style={styles.clientFormChild}>
-                  <Text>
-                    Given Name: {" "}
-                    <Text style={[styles.textunderline, { marginLeft: 5 }]}>Harpreet</Text>
-                  </Text>
-                </View>
-                <View style={styles.clientFormChild}>
-                  <Text>
-                    Family Name: {" "}
-                    <Text style={[styles.textunderline, { marginLeft: 5 }]}>Kaur</Text>
-                  </Text>
-                </View>
-              </View>
-
-              <View style={styles.clientForm}>
-                <View style={styles.clientFormChild}>
-                  <Text>
-                    Address: {" "}
-                    <Text style={[styles.textunderline, { marginLeft: 5 }]}>
-                      2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7
-                    </Text>
-                  </Text>
-                </View>
-                <View style={styles.clientFormChild}>
-                  <Text>
-                    Telephone Number:{" "}
-                    <Text style={[styles.textunderline, { marginLeft: 5 }]}>
-                      403-888-5308
-                    </Text>
-                  </Text>
+                <View style={styles.clientForm}>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}> Address:{" "} </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}> Telephone Number:{" "} </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          403-888-5308
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
                 </View>
 
-              </View>
-
-              <View style={styles.clientForm}>
-                <View style={styles.clientFormChild}>
-                  <Text>
-                    Fax Number:<Text style={[styles.textunderline, { marginLeft: 5 }]}>
-                      __________________
-                    </Text>
-                  </Text>
-                </View>
-                <View style={styles.clientFormChild}>
-                  <Text>
-                    E-mail Address:{" "}
-                    <Link
-                      href="mailto:info@canpathways.ca"
-                      style={[styles.textunderline, { marginLeft: 5 }]}
-                    >
-                      info@canpathways.ca
-                    </Link>
-                  </Text>
+                <View style={styles.clientForm}>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}> Fax Number:{" "} </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}></Text>
+                      </View>
+                    </View>
+                  </View>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}> E-mail Address:{" "} </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          <Link
+                            href="mailto:info@canpathways.ca"
+                            style={[{ marginLeft: 5 }]}
+                          >
+                            info@canpathways.ca
+                          </Link>
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
                 </View>
               </View>
             </View>
@@ -1361,14 +1379,14 @@ const WorkPermitPdf = () => {
               <View style={styles.box}>
                 <RCICSignatureFunction isPdf={true} felidData={felidData} />
                 <Text style={[styles.text, styles.textBold]}>Signature of RCIC</Text>
-                
-                <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {felidData?.date_signature_rcic !== "0000-00-00 00:00:00" && felidData?.date_signature_rcic &&felidData?.date_signature_rcic !== "0000-00-00" ? moment(felidData.date_signature_rcic).format("DD/MM/YYYY") : "______________"}</Text>
+
+                <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {felidData?.date_signature_rcic !== "0000-00-00 00:00:00" && felidData?.date_signature_rcic && felidData?.date_signature_rcic !== "0000-00-00" ? moment(felidData.date_signature_rcic).format("DD/MM/YYYY") : "______________"}</Text>
               </View>
             </View>
           </View>
 
         </View>
-        <View style={{ marginTop: 80 }}>
+        <View style={{ marginTop: 115 }}>
           <Text style={[{ textAlign: "center", }, styles.definition]}>
             AUTHORIZATION
           </Text>
@@ -1377,10 +1395,10 @@ const WorkPermitPdf = () => {
             <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
               {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")}
             </Text>
-            {" "} ( hereinafter referred to as the “client”), hereby authorize and
-            appoint Harpreet kaur (hereinafter referred to as the “RCIC” with a
+            {" "} ( here in after referred to as the “client”), here by authorize and
+            appoint Harpreet kaur (here in after referred to as the “RCIC” with a
             CICC# R533393), of CAN Pathways Immigration consultancy
-            ltd.,(hereinafter referred to as the “firm”), to represent me in my
+            ltd.,(here in after referred to as the “firm”), to represent me in my
             application to IRCC.
           </Text>
           <Text style={{ marginTop: 15 }}>
@@ -1433,7 +1451,7 @@ const WorkPermitPdf = () => {
               </Text>
             </View>
             <View style={{ marginTop: 17, flexDirection: 'row' }}>
-                <Text style={{ width: 20, fontWeight: 'bold' }}>4</Text>
+              <Text style={{ width: 20, fontWeight: 'bold' }}>4</Text>
               <Text style={{ flex: 1 }}>
                 In the event the Immigration office responsible should contact the Client directly, the Client is instructed to
                 notify the RCIC immediately
@@ -1497,7 +1515,7 @@ const WorkPermitPdf = () => {
             <View style={[styles.clientForm, { textAlign: "center", marginTop: 30 }]}>
               <View style={styles.clientFormChild}>
                 <Text className="para_gap" style={{ margin: 0, marginBottom: 15, textDecoration: "underline", textTransform: "capitalize" }}>
-                {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")||"_______________________"}
+                  {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ") || "_______________________"}
                 </Text>
                 <Text style={{ margin: "0 0 30px 0" }}>Client’s full name</Text>
               </View>
@@ -1672,6 +1690,7 @@ const styles = StyleSheet.create({
     fontFamily: "Times-Roman",
     fontSize: 12,
     lineHeight: 1.5,
+    color: "#323232"
   },
   section: {
     // marginBottom: 10
@@ -1680,11 +1699,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginBottom: 10,
     fontWeight: "bold",
+    color: "#000"
   },
   subHeader: {
     fontSize: 12,
     marginBottom: 5,
     fontWeight: "bold",
+    color: "#000"
   },
   text: {
     marginBottom: 5,
@@ -1707,6 +1728,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 15,
     fontWeight: "bold",
+    color: "#000"
   },
   clientForm: {
     display: "flex",
@@ -1737,7 +1759,8 @@ const styles = StyleSheet.create({
     borderRight: "1px solid #333",
   },
   headerCell: {
-    backgroundColor: "#f0f0f0",
+    // backgroundColor: "#f0f0f0",
+    color: "blue"
   },
   container: { display: "flex", flexDirection: "row", justifyContent: "space-between", marginTop: 30 },
   box: { width: "45%" },
@@ -1746,6 +1769,7 @@ const styles = StyleSheet.create({
   dateLine: { minWidth: 80, borderBottom: "1px solid black", display: "inline-block" },
   textBold: {
     fontFamily: "Times-Bold",
+    color: "#000"
   },
   title: {
     fontSize: 14,

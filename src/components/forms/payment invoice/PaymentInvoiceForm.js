@@ -123,11 +123,11 @@ const PaymentInvoiceForm = (props) => {
       let data = {
         ...state,
         is_send_mail: send ? send : 0,
-        due_amount: 
-        // recAmt ?
-        //   parseInt(state.due_amount) - parseInt(recAmt)
-        //   :
-           parseInt(state.due_amount) + parseInt(state.total),
+        due_amount:
+          // recAmt ?
+          //   parseInt(state.due_amount) - parseInt(recAmt)
+          //   :
+          parseInt(state.due_amount) + parseInt(state.total),
         // received_amount: parseInt(state.received_amount||0) + parseInt(recAmt)
       }
       console.log(data,)
@@ -175,10 +175,10 @@ const PaymentInvoiceForm = (props) => {
           service_date: state.invoice_date,
           product: "",
           description: "",
-          quantity: "",
-          rate: "",
-          amount: "",
-          service_tax: "",
+          quantity: 0,
+          rate: 0,
+          amount: 0,
+          service_tax: 0,
         },
       ].map((item, index) => ({ ...item, id: index.toString() })); // Assign index as ID
 

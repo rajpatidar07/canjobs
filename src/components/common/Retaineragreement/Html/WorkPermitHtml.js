@@ -1,6 +1,6 @@
 import moment from "moment";
 import { useEffect } from "react";
-import  InitialFunction  from "../CommonThings/InitialFunction";
+import InitialFunction from "../CommonThings/InitialFunction";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
 const WorkPermitHtml = ({
@@ -958,7 +958,8 @@ services that have been rendered or accounting for the time that has been spent 
     <h5 style="font-weight: 600;">Contact Information</h5>
   </li>
 </ol>
-       <h6 class="mb-2">Client Information</h6>
+<div class="mx-5">
+       <h6 class="mb-2">Client</h5>
 <div class="row mb-4">
   <div class="w-50 text-capitalize">
     <strong>Given Name:</strong>
@@ -968,7 +969,7 @@ services that have been rendered or accounting for the time that has been spent 
   </div>
   <div class="w-50 text-capitalize">
     <strong>Family Name:</strong>
-    <div class="border-bottom pb-1 d-inline-block px-2 w-75">
+    <div class="border-bottom pb-1 d-inline-block px-2 w-50">
       ${familyJsonArray[0]?.client_last_name || (emp_user_type === "employee" ? userData?.name?.split(" ")[1] || "" : "")}
     </div>
   </div>
@@ -1005,7 +1006,7 @@ services that have been rendered or accounting for the time that has been spent 
 </div>
 
 <!-- RCIC Information -->
-<h6 class="mb-2">RCIC Information</h6>
+<h6 class="mb-2">RCIC</h5>
 <div class="row mb-4">
   <div class=" w-50 text-capitalize">
     <strong>Given Name:</strong>
@@ -1015,7 +1016,7 @@ services that have been rendered or accounting for the time that has been spent 
     <strong>Family Name:</strong>
     <div class="border-bottom pb-1 d-inline-block px-2 w-75">Kaur</div>
   </div>
-  <div class="w-50">
+  <div class="w-100">
     <strong>Address:</strong>
     <div class="border-bottom pb-1 d-inline-block px-2 w-75">
       2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7
@@ -1027,14 +1028,15 @@ services that have been rendered or accounting for the time that has been spent 
   </div>
   <div class="w-50">
     <strong>Fax Number:</strong>
-    <div class="border-bottom pb-1 d-inline-block px-2 w-75"></div>
+    <div class="border-bottom pb-1 d-inline-block px-2 w-50"></div>
   </div>
   <div class="w-50">
     <strong>Email Address:</strong>
-    <div class="border-bottom pb-1 d-inline-block px-2 w-75">
+    <div class="border-bottom pb-1 d-inline-block px-2 w-50">
       <a href="mailto:info@canpathways.ca" class="text-decoration-none">info@canpathways.ca</a>
     </div>
   </div>
+</div>
 </div>
 
 <!-- Signatures -->
@@ -1106,9 +1108,9 @@ ${RCICSignatureFunction({ isPdf: false, felidData })}
         ? userData?.name || "" || ""
         : "" || ""
     }</span>( here in after referred to as the “client”),
-        hereby authorize and appoint Harpreet kaur (here in after referred to as
+        here by authorize and appoint Harpreet kaur (here in after referred to as
         the “RCIC” with a CICC# R533393), of CAN Pathways Immigration
-        consultancy ltd.,(hereinafter referred to as the “firm”), to represent
+        consultancy ltd.,(here in after referred to as the “firm”), to represent
         me in my application to IRCC.
       </p>  
       <p>

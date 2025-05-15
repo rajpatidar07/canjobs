@@ -111,7 +111,7 @@ export default function AlbertaPNPAndFederalPR({
     <span class="${felidData?.client_email || userData?.email ? "para_gap" : ""}">
       ${felidData?.client_email || userData?.email || "     "}
     </span>
-    , contact number
+    , <br>contact number
     <span class="${felidData?.client_contact || userData?.contact_no ? "para_gap" : ""
     }">
       ${felidData?.client_contact || userData?.contact_no || "      "}
@@ -175,8 +175,8 @@ export default function AlbertaPNPAndFederalPR({
               Client in the matter of
             
             ${felidData?.matter
-      ? `<span class="para_gap" style="min-width: 100%">${felidData?.matter} </span>`
-      : "_______________________________________________________________________________________________________________"
+      ? `<span class="para_gap" style="min-width: 80%">${felidData?.matter} </span>`
+      : "_____________________________________________________________________________________________"
     }.
             </p> 
             <p>In consideration of the fees paid and the
@@ -984,7 +984,8 @@ export default function AlbertaPNPAndFederalPR({
               <h5 style="font-weight: 600;">Contact Information</h5>
             </li>
           </ol>
-                 <h6 class="mb-2">Client Information</h6>
+          <div class="mx-8">
+                 <h6 class="mb-2">Client </h6>
           <div class="row mb-4">
             <div class="w-50 text-capitalize">
               <strong>Given Name:</strong>
@@ -994,7 +995,7 @@ export default function AlbertaPNPAndFederalPR({
             </div>
             <div class="w-50 text-capitalize">
               <strong>Family Name:</strong>
-              <div class="border-bottom pb-1 d-inline-block px-2 w-75">
+              <div class="border-bottom pb-1 d-inline-block px-2 w-55">
                 ${familyJsonArray[0]?.client_last_name || (emp_user_type === "employee" ? userData?.name?.split(" ")[1] || "" : "")}
               </div>
             </div>
@@ -1031,7 +1032,7 @@ export default function AlbertaPNPAndFederalPR({
           </div>
           
           <!-- RCIC Information -->
-          <h6 class="mb-2">RCIC Information</h6>
+          <h6 class="mb-2">RCIC </h5>
           <div class="row mb-4">
             <div class=" w-50 text-capitalize">
               <strong>Given Name:</strong>
@@ -1039,7 +1040,7 @@ export default function AlbertaPNPAndFederalPR({
             </div>
             <div class="w-50 text-capitalize">
               <strong>Family Name:</strong>
-              <div class="border-bottom pb-1 d-inline-block px-2 w-75">Kaur</div>
+              <div class="border-bottom pb-1 d-inline-block px-2 w-50">Kaur</div>
             </div>
             <div class="w-50">
               <strong>Address:</strong>
@@ -1061,6 +1062,7 @@ export default function AlbertaPNPAndFederalPR({
                 <a href="mailto:info@canpathways.ca" class="text-decoration-none">info@canpathways.ca</a>
               </div>
             </div>
+          </div>
           </div>
           
           <!-- Signatures -->
@@ -1133,9 +1135,9 @@ export default function AlbertaPNPAndFederalPR({
         ? userData?.name || "" || ""
         : "" || ""
     }</span>( here in after referred to as the “client”),
-          hereby authorize and appoint Harpreet kaur (here in after referred to as
+          here by authorize and appoint Harpreet kaur (here in after referred to as
           the “RCIC” with a CICC# R533393), of CAN Pathways Immigration
-          consultancy ltd.,(hereinafter referred to as the “firm”), to represent
+          consultancy ltd.,(here in after referred to as the “firm”), to represent
           me in my application to IRCC.
         </p>  
         <p>
@@ -1241,45 +1243,56 @@ export default function AlbertaPNPAndFederalPR({
           declaration.
         </p>
         <br /><br />
-        <div style="display: flex; flex-wrap: wrap; align-items: center">
-          <div style="width: 33.33%; text-align: center">
-            <p class="${felidData &&
-      (familyJsonArray[0]?.client_first_name ||
-        familyJsonArray[0]?.client_last_name)
-      ? "para_gap"
-      : ""
-    } text-capitalize" style="margin: 0">${felidData &&
-      (familyJsonArray[0]?.client_first_name ||
-        familyJsonArray[0]?.client_last_name)
-      ? familyJsonArray[0]?.client_first_name +
-      " " +
-      (familyJsonArray[0]?.client_last_name || "")
-      : emp_user_type === "employee"
-        ? userData?.name || "________________" || ""
-        : "_______________"
-    }</p>
-            <p style="margin: 0">Client’s full name</p>
-          </div>
-          <div style="width: 33.33%; text-align: center;
-      ${ClientSignatureFunction({ page:"admin", familyJsonArray, felidData })  }
-            <p style="margin: 0">Signatures</p>
-          </div>
-          <div style="width: 33.33%; text-align: center">
-            <p class=${!familyJsonArray[0]?.date_signature_client ||
-      familyJsonArray[0]?.date_signature_client ===
-      "0000-00-00 00:00:00" ||
-      familyJsonArray[0]?.date_signature_client === "0000-00-00"
-      ? ""
-      : "para_gap"
-    } style="margin: 0">${!familyJsonArray[0]?.date_signature_client ||
-      familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00" ||
-      familyJsonArray[0]?.date_signature_client === "0000-00-00"
-      ? "_______________"
-      : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")
-    }</p>
-            <p style="margin:0">Date</p>
-          </div>
-        </div>
+       <div style="display: flex; flex-wrap: wrap; align-items: center;">
+  <!-- Client Full Name -->
+  <div style="width: 33.33%; text-align: center;">
+    <p
+      class="${felidData &&
+      (familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name)
+      ? 'para_gap'
+      : ''
+    } text-capitalize"
+      style="margin: 0;"
+    >
+      ${felidData &&
+      (familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name)
+      ? `${familyJsonArray[0]?.client_first_name || ''} ${familyJsonArray[0]?.client_last_name || ''}`
+      : emp_user_type === 'employee'
+        ? userData?.name || '________________'
+        : '_______________'
+    }
+    </p>
+    <p style="margin: 0;">Client’s full name</p>
+  </div>
+
+  <!-- Signature Section -->
+  <div style="width: 33.33%; text-align: center;">
+    ${ClientSignatureFunction({ page: "admin", familyJsonArray, felidData })}
+    <p style="margin: 0;">Signatures</p>
+  </div>
+
+  <!-- Date Section -->
+  <div style="width: 33.33%; text-align: center;">
+    <p
+      class="${!familyJsonArray[0]?.date_signature_client ||
+      familyJsonArray[0]?.date_signature_client === '0000-00-00 00:00:00' ||
+      familyJsonArray[0]?.date_signature_client === '0000-00-00'
+      ? ''
+      : 'para_gap'
+    }"
+      style="margin: 0;"
+    >
+      ${!familyJsonArray[0]?.date_signature_client ||
+      familyJsonArray[0]?.date_signature_client === '0000-00-00 00:00:00' ||
+      familyJsonArray[0]?.date_signature_client === '0000-00-00'
+      ? '_______________'
+      : moment(familyJsonArray[0]?.date_signature_client).format('DD-MM-YYYY')
+    }
+    </p>
+    <p style="margin: 0;">Date</p>
+  </div>
+</div>
+
       </div>
   
       

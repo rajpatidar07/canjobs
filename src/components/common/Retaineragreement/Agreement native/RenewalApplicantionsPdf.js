@@ -187,7 +187,7 @@ const RenewalApplicantionsPdf = () => {
               ) : (
                 "_____________________"
               )}{" "}
-              (hereinafter called the "Client")
+              (here in after called the "Client")
             </Text>
             <Text>
               • Business Address:{" "}
@@ -213,7 +213,7 @@ const RenewalApplicantionsPdf = () => {
               Regulated Canadian Immigration Consultant (RCIC):
             </Text>
             <Text style={styles.mb5}>
-              <Text style={styles.textBold}>Harpreet Kaur</Text> (hereinafter called "The RCIC")
+              <Text style={styles.textBold}>Harpreet Kaur</Text> (here in after called "The RCIC")
             </Text>
             <Text style={styles.mb8}>2618 Hopewell PI NE #310</Text>
             <Text style={styles.mb8}>Calgary, AB T1Y7J7, Canada</Text>
@@ -463,7 +463,7 @@ const RenewalApplicantionsPdf = () => {
               The Client acknowledges that they have read this Agreement, understand it, have obtained such independent legal advice as they deem appropriate, have sought translation, and agree to be bound by its terms.
             </Text>
             <Text styles={[styles.mb8]}>
-              The parties hereto have signed on the date and place hereinafter set forth.
+              The parties hereto have signed on the date and place here in after set forth.
             </Text>
           </View>
           {/* signature */}

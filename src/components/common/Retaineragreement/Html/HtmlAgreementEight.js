@@ -1297,9 +1297,9 @@ services that have been rendered or accounting for the time that has been spent 
         ? userData?.name || "" || ""
         : "" || ""
     }</span>( here in after referred to as the “client”),
-        hereby authorize and appoint Harpreet kaur (hereinafter referred to as
+        here by authorize and appoint Harpreet kaur (here in after referred to as
         the “RCIC” with a CICC# R533393), of CAN Pathways Immigration
-        consultancy ltd.,(hereinafter referred to as the “firm”), to represent
+        consultancy ltd.,(here in after referred to as the “firm”), to represent
         me in my application to IRCC.
       </p>
       <p>

@@ -64,8 +64,8 @@ const HtmlRenewalApplication = ({
       : emp_user_type === "employee"
         ? ` <span class="border-bottom border-dark text-capitalize "style="min-width: 300px">${userData?.name}</span>` ||
         ""
-        : "_____________________"}(hereinafter called the "Client")</span></li>
-            <li>Name of Business: <span class="text-dark" style="min-width: 300px;">___________________________________(hereinafter called the "Client")</span></li>
+        : "_____________________"}(here in after called the "Client")</span></li>
+            <li>Name of Business: <span class="text-dark" style="min-width: 300px;">___________________________________(here in after called the "Client")</span></li>
             <li>Business Address: <span class="text-dark" >${felidData?.client_address
       ? ` <span class="border-bottom border-dark" style="min-width: 300px;">${felidData?.client_address}</span>`
       : emp_user_type === "employer"
@@ -81,7 +81,7 @@ const HtmlRenewalApplication = ({
             <h4 class="mt-4 font-size-5">And</h4>
             <div>
            <h4>Regulated Canadian Immigration Consultant (RCIC):</h4>
-           <p><b>Harpreet Kaur</b> ( hereinafter called 'The RCIC')</p>
+           <p><b>Harpreet Kaur</b> ( here in after called 'The RCIC')</p>
            <p>2618 Hopewell PI NE #310</p>
               <p>Calgary, AB T1Y7J7, Canada</p>
                 <p>Tel: +1. (403)888 5308</p>
@@ -253,7 +253,7 @@ Toll-free: 1-877-836-7543<br>
 </p>
 
 <p style="font-size: 14px; line-height: 1.5;">
-    The parties hereto have signed on the date and place hereinafter set forth.
+    The parties hereto have signed on the date and place here in after set forth.
 </p>
 
 <div style="display: flex; justify-content: space-between; margin-top: 30px;">

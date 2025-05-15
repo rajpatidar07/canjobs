@@ -4,7 +4,7 @@ import { GetAgreement/*, getSharePointParticularFolders*/ } from '../../../api/a
 import { useLocation } from 'react-router-dom'
 import AgreementOneForm from '../../forms/Agreement/AgreementOneForm'
 import Loader from '../loader'
-import HtmlAgreementOne from './Html/HtmlAgreementOne'
+import ExpressEntryHtml from './Html/ExpressEntryHtml'
 import HtmlAgreementTwo from './Html/HtmlAgreementTwo'
 import HtmlAgreementThree from './Html/HtmlAgreementThree'
 import HtmlAGreementFour from './Html/HtmlAGreementFour'
@@ -20,7 +20,7 @@ import HtmlAgreementThirteen from './Html/HtmlAgreementThirteen'
 import HtmlAgreementFourTeen from './Html/HtmlAgreementFourTeen'
 import EmployerRetainerAgreement from './Html/EmployerRetainerAgreement'
 import HtmlAgreementsixteen from './Html/HtmlAgreementsixteen'
-import HtmlAgreementEighteen from './Html/HtmlAgreementEighteen'
+import RecruitmentServiceHtml from './Html/RecruitmentServiceHtml'
 import InitialConsultation from './Html/InitialConsultation'
 import HtmlRenewalApplication from './Html/HtmlRenewalApplication';
 import HtmlMoeThanOneApplicant from './Html/HtmlMoeThanOneApplicant';
@@ -123,7 +123,7 @@ export default function UserSigningPage() {
                         userType={""}
                     /> */}
                     {type === "temporary resident visa"
-                        ? <HtmlAgreementOne page={"user"}
+                        ? <ExpressEntryHtml page={"user"}
                             felidData={felidData}
                             emp_user_type={emp_user_type}
                             addSign={addSign} />
@@ -144,7 +144,7 @@ export default function UserSigningPage() {
                                             : type === "prospective workers"
                                                 ? <HtmlAgreementSeven />
                                                 : type === "express entry"
-                                                    ? <HtmlAgreementOne
+                                                    ? <ExpressEntryHtml
                                                         page={"user"}
                                                         felidData={felidData}
                                                         emp_user_type={emp_user_type}
@@ -184,7 +184,7 @@ export default function UserSigningPage() {
                                                                                                 addSign={addSign} />
                                                                                         ) : type === "recruitment services agreement" ?
                                                                                             (
-                                                                                                <HtmlAgreementEighteen
+                                                                                                <RecruitmentServiceHtml
                                                                                                     page={"user"}
                                                                                                     felidData={felidData}
                                                                                                     emp_user_type={emp_user_type}

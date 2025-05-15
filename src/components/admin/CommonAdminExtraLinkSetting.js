@@ -5,15 +5,15 @@ import {
   FaBriefcase,
   FaUserFriends,
   FaKey,
-  FaClock,
-  FaPhone,
+  // FaClock,
+  // FaPhone,
 } from 'react-icons/fa';
 import FilterList from './filterList';
 import Category from './category';
 import ManageApplicantType from './MangeApplicantType';
 import Credentional from './Credentional';
-import ManageHourlyLog from './ManageHourlyLog';
-import ManageDailyCallLog from './ManageDailyCallLog';
+// import ManageHourlyLog from './ManageHourlyLog';
+// import ManageDailyCallLog from './ManageDailyCallLog';
 
 const CommonAdminExtraLinkSetting = () => {
   const admin_type = localStorage.getItem('admin_type');
@@ -26,8 +26,8 @@ const CommonAdminExtraLinkSetting = () => {
       icon: <FaUserFriends />,
       visible: admin_type === 'super-admin',
     },
-    { name: 'Daily Hour Log', component: <ManageHourlyLog />, icon: <FaClock /> },
-    { name: 'Daily Call Log', component: <ManageDailyCallLog />, icon: <FaPhone /> },
+    // { name: 'Daily Hour Log', component: <ManageHourlyLog />, icon: <FaClock /> },
+    // { name: 'Daily Call Log', component: <ManageDailyCallLog />, icon: <FaPhone /> },
     { name: 'Filter List', component: <FilterList />, icon: <FaFilter /> },
     { name: 'Job Category', component: <Category />, icon: <FaBriefcase /> },
     {

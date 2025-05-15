@@ -161,7 +161,7 @@ const ThreeColumnRerainerAgreement = () => {
                         RCIC Membership Number: R533393
                     </Text>
                     <Text style={{ fontWeight: 600 }}>
-                        Client File Number: : <Text style={styles.textunderline}> {felidData?.client_file_no || "___________________"}</Text>
+                        Client File Number: <Text style={styles.textunderline}> {felidData?.client_file_no || "___________________"}</Text>
                     </Text>
                 </View>
                 <View>
@@ -1575,10 +1575,10 @@ const ThreeColumnRerainerAgreement = () => {
                     <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
                         {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")}
                     </Text>
-                    {" "} ( hereinafter referred to as the “client”), hereby authorize and
-                    appoint Harpreet kaur (hereinafter referred to as the “RCIC” with a
+                    {" "} ( here in after referred to as the “client”), here by authorize and
+                    appoint Harpreet kaur (here in after referred to as the “RCIC” with a
                     CICC# R533393), of CAN Pathways Immigration consultancy
-                    ltd.,(hereinafter referred to as the “firm”), to represent me in my
+                    ltd.,(here in after referred to as the “firm”), to represent me in my
                     application to IRCC.
                 </Text>
                 <Text style={{ marginTop: 15 }}>

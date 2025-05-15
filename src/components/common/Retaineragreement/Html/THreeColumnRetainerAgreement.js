@@ -1187,7 +1187,7 @@ export default function EmployerRetainerAgreement({ page,
                   <h5 style="font-weight: 600;">Contact Information</h5>
                 </li>
               </ol>
-                     <h6 class="mb-2">Client Information</h6>
+                     <h6 class="mb-2">Client</h6>
               <div class="row mb-4">
                 <div class="w-50 text-capitalize">
                   <b>Given Name:</b>
@@ -1234,7 +1234,7 @@ export default function EmployerRetainerAgreement({ page,
               </div>
               
               <!-- RCIC Information -->
-              <h6 class="mb-2">RCIC Information</h6>
+              <h6 class="mb-2">RCIC</h6>
               <div class="row mb-4">
                 <div class=" w-50 text-capitalize">
                   <b>Given Name:</b>
@@ -1336,10 +1336,10 @@ export default function EmployerRetainerAgreement({ page,
         ? userData?.name || "" || ""
         : "" || ""
     }</span>( here in after referred to as the “client”),
-                hereby authorize and appoint Harpreet kaur (here in after
+                here by authorize and appoint Harpreet kaur (here in after
                 referred to as
                 the “RCIC” with a CICC# R533393), of CAN Pathways Immigration
-                consultancy ltd.,(hereinafter referred to as the “firm”), to
+                consultancy ltd.,(here in after referred to as the “firm”), to
                 represent
                 me in my application to IRCC.
               </p>

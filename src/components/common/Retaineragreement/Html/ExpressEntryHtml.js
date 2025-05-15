@@ -5,7 +5,7 @@ import InitialFunction from "../CommonThings/InitialFunction";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
 // import { SendHtmlForPdf } from "../../../../api/api";
 // import { Link } from "react-router-dom";
-const HtmlAgreementOne = ({
+const ExpressEntryHtml = ({
   page,
   felidData,
   userData,
@@ -1008,7 +1008,8 @@ services that have been rendered or accounting for the time that has been spent 
             <h5 style="font-weight: 600;">Contact Information</h5>
           </li>
         </ol>
-               <h6 class="mb-2">Client Information</h6>
+        <div class="mx-8">
+               <h6 class="mb-2">Client</h5>
         <div class="row mb-4">
           <div class="w-50 text-capitalize">
             <strong>Given Name:</strong>
@@ -1018,7 +1019,7 @@ services that have been rendered or accounting for the time that has been spent 
           </div>
           <div class="w-50 text-capitalize">
             <strong>Family Name:</strong>
-            <div class="border-bottom pb-1 d-inline-block px-2 w-75">
+            <div class="border-bottom pb-1 d-inline-block px-2 w-50">
               ${familyJsonArray[0]?.client_last_name || (emp_user_type === "employee" ? userData?.name?.split(" ")[1] || "" : "")}
             </div>
           </div>
@@ -1055,7 +1056,7 @@ services that have been rendered or accounting for the time that has been spent 
         </div>
         
         <!-- RCIC Information -->
-        <h6 class="mb-2">RCIC Information</h6>
+        <h6 class="mb-2">RCIC</h5>
         <div class="row mb-4">
           <div class=" w-50 text-capitalize">
             <strong>Given Name:</strong>
@@ -1063,7 +1064,7 @@ services that have been rendered or accounting for the time that has been spent 
           </div>
           <div class="w-50 text-capitalize">
             <strong>Family Name:</strong>
-            <div class="border-bottom pb-1 d-inline-block px-2 w-75">Kaur</div>
+            <div class="border-bottom pb-1 d-inline-block px-2 w-50">Kaur</div>
           </div>
           <div class="w-50">
             <strong>Address:</strong>
@@ -1144,6 +1145,8 @@ services that have been rendered or accounting for the time that has been spent 
             <p>Date</p>
           </div>
         </div>
+        </div>
+        </div>
 
       <h3 style="text-align: center">AUTHORIZATION</h3>
       <p>
@@ -1157,9 +1160,9 @@ services that have been rendered or accounting for the time that has been spent 
         ? userData?.name || "" || ""
         : "" || ""
     }</span>( here in after referred to as the “client”),
-        hereby authorize and appoint Harpreet kaur (here in after referred to as
+        here by authorize and appoint Harpreet kaur (here in after referred to as
         the “RCIC” with a CICC# R533393), of CAN Pathways Immigration
-        consultancy ltd.,(hereinafter referred to as the “firm”), to represent
+        consultancy ltd.,(here in after referred to as the “firm”), to represent
         me in my application to IRCC.
       </p>  
       <p>
@@ -1405,4 +1408,4 @@ services that have been rendered or accounting for the time that has been spent 
     </div>
   );
 };
-export default HtmlAgreementOne;
+export default ExpressEntryHtml;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import AdminHeader from "./header";
-import AdminSidebar from "./sidebar";
+// import AdminHeader from "./header";
+// import AdminSidebar from "./sidebar";
 import { Link, useNavigate } from "react-router-dom";
 // import { ToastContainer /*,toast */ } from "react-toastify";
 import Interview from "../common/interviewTable";
