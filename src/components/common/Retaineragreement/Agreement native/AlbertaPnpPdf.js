@@ -1086,7 +1086,7 @@ const AlbertaPnpPdf = () => {
                             <View style={{ marginTop: 20, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>18.2</Text>
                                 <Text style={{ flex: 1 }}>
-                                    This Agreement constitutes the entire agreement between the parties with respect to the subject matter hereof and supersedes all prior agreements, understandings, warranties, representations, negotiations, and discussions, whether oral or written, of the parties except as specifically set forth herein.
+                                    This Agreement constitutes the entire agreement between the parties with respect to the subject matter here of and supersedes all prior agreements, understandings, warranties, representations, negotiations, and discussions, whether oral or written, of the parties except as specifically set forth herein.
                                 </Text>
                             </View>
 
@@ -1391,7 +1391,7 @@ const AlbertaPnpPdf = () => {
 
                         {/* Agreement Signature */}
                         <Text style={{}}>
-                            IN WITNESS WHEREOF this Agreement has been duly executed by the parties
+                            IN WITNESS Where of this Agreement has been duly executed by the parties
                             hereto on the date first above written.
                         </Text>
                         <View style={styles.container}>
@@ -1621,38 +1621,39 @@ const AlbertaPnpPdf = () => {
                             >
                                 <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
                                 <View>
-                                    <View
-                                        style={{
-                                            width: 100,
-                                            height: 50,
-                                            border: "1px solid #ccc",
-                                            display: "flex",
-                                            alignItems: "center",
-                                            justifyContent: "center",
-                                        }}
-                                    >
-                                        {felidData?.initial ? (
-                                            <Text
-                                                style={{
-                                                    display: "inline-block",
-                                                    maxWidth: "100%",
-                                                    maxHeight: "100%",
-                                                    textTransform: "capitalize",
-                                                }}
-                                            >
-                                                <InitialFunction initial={felidData?.initial} />
-                                            </Text>
-                                        ) : (
-                                            <View
-                                                style={{
-                                                    display: "inline-block",
-                                                    width: 100,
-                                                    height: 50,
-                                                    border: "1px solid #ccc",
-                                                }}
-                                            />
-                                        )}
-                                    </View>
+                                   {felidData?.initial ? (
+                        <View
+                          style={{
+                            width: 100,
+                            height: 50,
+                            border: "1px solid #ccc",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <Text
+                            style={{
+                              display: "inline-block",
+                              maxWidth: "100%",
+                              maxHeight: "100%",
+                              textTransform: "capitalize",
+                            }}
+                          >
+                            <InitialFunction initial={felidData?.initial} />
+                          </Text>
+                        </View>
+
+                      ) : (
+                        <View
+                          style={{
+                            display: "inline-block",
+                            width: 100,
+                            height: 50,
+                            border: "1px solid #ccc",
+                          }}
+                        />
+                      )}
                                 </View>
                             </View>
                         </View>
@@ -1686,38 +1687,39 @@ const AlbertaPnpPdf = () => {
                                     >
                                         <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
                                         <View>
-                                            <View
-                                                style={{
-                                                    width: 100,
-                                                    height: 50,
-                                                    border: "1px solid #ccc",
-                                                    display: "flex",
-                                                    alignItems: "center",
-                                                    justifyContent: "center",
-                                                }}
-                                            >
-                                                {felidData?.initial ? (
-                                                    <Text
-                                                        style={{
-                                                            display: "inline-block",
-                                                            maxWidth: "100%",
-                                                            maxHeight: "100%",
-                                                            textTransform: "capitalize",
-                                                        }}
-                                                    >
-                                                        <InitialFunction initial={felidData?.initial} />
-                                                    </Text>
-                                                ) : (
-                                                    <View
-                                                        style={{
-                                                            display: "inline-block",
-                                                            width: 100,
-                                                            height: 50,
-                                                            border: "1px solid #ccc",
-                                                        }}
-                                                    />
-                                                )}
-                                            </View>
+                                            {felidData?.initial ? (
+                        <View
+                          style={{
+                            width: 100,
+                            height: 50,
+                            border: "1px solid #ccc",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <Text
+                            style={{
+                              display: "inline-block",
+                              maxWidth: "100%",
+                              maxHeight: "100%",
+                              textTransform: "capitalize",
+                            }}
+                          >
+                            <InitialFunction initial={felidData?.initial} />
+                          </Text>
+                        </View>
+
+                      ) : (
+                        <View
+                          style={{
+                            display: "inline-block",
+                            width: 100,
+                            height: 50,
+                            border: "1px solid #ccc",
+                          }}
+                        />
+                      )}
                                         </View>
                                     </View>
                                 </View>

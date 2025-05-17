@@ -19,6 +19,7 @@ const AgreementOneForm = ({
   setFelidData,
 }) => {
   const [loading, setLoading] = useState(false);
+  const [agreementType, setAgreementType] = useState(felidData.type);
   let SigningUserType = localStorage.getItem("userType");
 
   const initialClientState = {
@@ -149,6 +150,7 @@ const AgreementOneForm = ({
       }
 
       setState(updatedState);
+      setAgreementType(updatedState.type)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [felidData]);
@@ -270,16 +272,16 @@ const AgreementOneForm = ({
                 family_json: res.data.data[0].family_json,
               };
               // console.log(stateData);
-              const newPageUrl = state.type === "initial consultation" ? `/initial_consultation ` : state.type === "recruitment services agreement" || state.type === "initial consultation" ? `/recruitment_service` : state.type === "employer renewal stream"
-                ? `/renewal_application` : state.type === "more than one applicant"
+              const newPageUrl = agreementType === "initial consultation" ? `/initial_consultation ` : agreementType === "recruitment services agreement" || agreementType === "initial consultation" ? `/recruitment_service` : agreementType === "employer renewal stream"
+                ? `/renewal_application` : agreementType === "more than one applicant"
                   ? "/more_than_one_applicant" :
-                  state.type === "employers"
+                  agreementType === "employers"
                     ? "/employers_agreement"
-                    : state.type === "work permit"
+                    : agreementType === "work permit"
                       ? "/work_permit"
-                      : state.type === "Alberta PNP and federal PR"
+                      : agreementType === "Alberta PNP and federal PR"
                         ? '/alberta_pnp'
-                        : state.type === "three column"
+                        : agreementType === "three column"
                           ? "/three_column"
                           : `/agreeone`;
               localStorage.setItem(
@@ -364,7 +366,7 @@ const AgreementOneForm = ({
     <Modal
       show={show}
       size={
-        openSignature === "yes" ? "md" : state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "lg" : "xl"}
+        openSignature === "yes" ? "md" : agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "lg" : "xl"}
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
@@ -452,27 +454,27 @@ const AgreementOneForm = ({
                   {
                     label: "Client Contact No",
                     name: "client_contact",
-                    display: state.type === "recruitment services agreement" ? "d-none" : "",
+                    display: agreementType === "recruitment services agreement" ? "d-none" : "",
                     type: "number",
-                    required: state.type === "recruitment services agreement" ? false : true,
+                    required: agreementType === "recruitment services agreement" ? false : true,
                   },
                   {
                     label: "Client's Telephone Number",
-                    display: state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
+                    display: agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "client_telephone",
                     type: "number",
-                    // required: state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? false : true,
+                    // required: agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? false : true,
                   },
                   {
                     label: "Client's Cellphone Number",
-                    display: state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
+                    display: agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "client_cellphone",
                     type: "number",
-                    // required: state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? false : true,
+                    // required: agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? false : true,
                   },
                   {
                     label: "Client's Fax Number",
-                    display: state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
+                    display: agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "client_fax",
                     type: "number",
                     required: false,
@@ -487,9 +489,9 @@ const AgreementOneForm = ({
                     label:
                       "Summary of preliminary advice given to the client",
                     name: "summary",
-                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
+                    display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     type: "text",
-                    required: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? false : true,
+                    required: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? false : true,
                   },
                 ]
                 : [
@@ -507,31 +509,31 @@ const AgreementOneForm = ({
                   },
                   {
                     label: "Client Contact No",
-                    display: state.type === "recruitment services agreement" ? "d-none" : "",
+                    display: agreementType === "recruitment services agreement" ? "d-none" : "",
                     name: "client_contact",
                     type: "number",
                   },
                   {
                     label: "Client's Telephone Number",
-                    display: state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
+                    display: agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "client_telephone",
                     type: "number",
                   },
                   {
                     label: "Client's Cellphone Number",
-                    display: state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
+                    display: agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "client_cellphone",
                     type: "number",
                   },
                   {
                     label: "Client's Fax Number",
-                    display: state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
+                    display: agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "client_fax",
                     type: "number",
                   },
                   {
                     label: "Client File Number",
-                    display: state.type === "recruitment services agreement" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
+                    display: agreementType === "recruitment services agreement" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "client_file_no",
                     type: "number",
                   },
@@ -543,127 +545,127 @@ const AgreementOneForm = ({
                   },
                   {
                     label: "Professional Fees",
-                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
+                    display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "professional_fees",
                     type: "text",
                   },
                   {
                     label: "Courier charges",
-                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream"  || state.type === "employers" ? "d-none" : "",
+                    display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream"  || agreementType === "employers" ? "d-none" : "",
                     name: "courier_charges",
                     type: "text",
                   },
                   {
                     label: "Administrative Fee",
-                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
+                    display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "administrative_fee",
                     type: "text",
                   },
                   {
                     label: "Government fees",
-                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
+                    display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "government_fees",
                     type: "text",
                   },
                   {
                     label: "Applicable Taxes",
-                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
+                    display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "application_fees",
                     type: "text",
                   },
                   {
                     label: "Balance (Paid at time of filing)",
-                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
+                    display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "balance",
                     type: "text",
                   },
                   {
                     label: "Total Cost",
-                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
+                    display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "total_cost",
                     type: "text",
                   },
                   {
                     label:
                       "The Client asked the RCIC, and the RCIC has agreed, to act for the Client in the matter of",
-                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
+                    display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "matter",
                     type: "text",
                   },
                   {
                     label:
                       "Summary of preliminary advice given to the client",
-                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
+                    display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "summary",
                     type: "text",
                   },
                   {
                     label:
                       "Applicable Retainer Fee for this stage (Non-Refundable) for Step 1",
-                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
+                    display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "applicable_retainer_fee_stape_1",
                     type: "text",
                   },
                   {
                     label:
                       "Applicable Government Processing Fee for Step 1",
-                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
+                    display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "applicable_government_processing_fee_stape_1",
                     type: "text",
                   },
                   {
                     label:
                       "Applicable Government Processing Fee for Step 2",
-                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" || state.type === "work permit" ? "d-none" : "",
+                    display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" || agreementType === "work permit" ? "d-none" : "",
                     name: "applicable_government_processing_fee_stape_2",
                     type: "text",
                   },
                   {
                     label:
                       "Applicable Government Processing Fee for Step 3",
-                    display: state.type === "three column" ? "" : "d-none",
+                    display: agreementType === "three column" ? "" : "d-none",
                     name: "applicable_government_processing_fee_stape_3",
                     type: "text",
                   },
                   {
                     label:
                       "Applicable Retainer Fee for this stage (Non-Refundable) for Step 2",
-                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" || state.type === "work permit" ? "d-none" : "",
+                    display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" || agreementType === "work permit" ? "d-none" : "",
                     name: "applicable_retainer_fee_stape_2",
                     type: "text",
                   },
                   {
                     label:
                       "Applicable Retainer Fee for this stage (Non-Refundable) for Step 3",
-                    display: state.type === "three column" ? "" : "d-none",
+                    display: agreementType === "three column" ? "" : "d-none",
                     name: "applicable_retainer_fee_stape_3",
                     type: "text",
                   },
                   {
                     label:
                       "Total Amount: (Non-Refundable) (Paid at signing of contract and sharing of checklist)",
-                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
+                    display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "total_amount_signing_of_contract",
                     type: "text",
                   },
                   {
                     label:
                       "Balance (Non-Refundable) (Paid at time of filing)",
-                    display: state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" ? "d-none" : "",
+                    display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "balance_paid_at_time_of_filing",
                     type: "text",
                   },
                   {
                     label:
                       "Other Professional Advice Initial Consultation",
-                    display: state.type === "initial consultation" ? "" : "d-none",
+                    display: agreementType === "initial consultation" ? "" : "d-none",
                     name: "other_professional_advice_initial_consultation",
                     type: "text",
                   },
                   {
                     label:
                       "Additional Relevant Information",
-                    display: state.type === "initial consultation" ? "" : "d-none",
+                    display: agreementType === "initial consultation" ? "" : "d-none",
                     name: "additional_relevant_information",
                     type: "text",
                   },
@@ -710,7 +712,7 @@ const AgreementOneForm = ({
               ))}
             <div
               className={
-                openSignature === "yes" || state.type === "recruitment services agreement" || state.type === "initial consultation" || state.type === "employer renewal stream" || state.type === "employers" || state.type === "three column" || state.type === "Alberta PNP and federal PR" || state.type === "express entry" || state.type === "work permit" || SigningUserType === "employee" || SigningUserType === "company" ? "d-none" : "form-group col-md-12 "
+                openSignature === "yes" || agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" || agreementType === "three column" || agreementType === "Alberta PNP and federal PR" || agreementType === "express entry" || agreementType === "work permit" || SigningUserType === "employee" || SigningUserType === "company" ? "d-none" : "form-group col-md-12 "
               }
             >
               <h3 className="font-size-4 text-black-2 line-height-reset">

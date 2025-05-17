@@ -158,7 +158,7 @@ const RecruitmentServiceHtml = ({
                        
                     <p>15.1 The Client expressly authorizes the Recruiter to act on his/her behalf to the extent of the specific functions which the Recruiter was retained to perform, as per Section 2 hereof.
                         </p>
-                        <p>15.2 This Agreement constitutes the entire agreement between the parties with respect to the subject matter hereof and supersedes all prior agreements, understandings, warranties, representations, negotiations, and discussions, whether oral or written, of the parties except as specifically set forth herein.
+                        <p>15.2 This Agreement constitutes the entire agreement between the parties with respect to the subject matter here of and supersedes all prior agreements, understandings, warranties, representations, negotiations, and discussions, whether oral or written, of the parties except as specifically set forth herein.
                         </p>
                         <p>15.3 This Agreement shall be binding upon the parties hereto and their respective heirs, administrators, successors, and permitted assigns.
                         </p>
@@ -260,7 +260,7 @@ const RecruitmentServiceHtml = ({
   </div>
 </div>
 </div>
-         <p class="container-fluid"><b>IN WITNESS THEREOF this Agreement has been duly executed by the parties hereto on the date first above written</b></p>
+         <p class="container-fluid"><b>IN WITNESS There of this Agreement has been duly executed by the parties hereto on the date first above written</b></p>
                
          <div class="row"><div class="col-6">
                 ${ClientSignatureFunction({ page, familyJsonArray, felidData })} 

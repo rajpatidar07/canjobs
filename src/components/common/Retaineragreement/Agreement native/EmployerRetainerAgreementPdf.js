@@ -447,7 +447,7 @@ const EmployerRetainerAgreementPdf = () => {
 
                 "The Client expressly authorizes the RCIC to act on his/her behalf to the extent of the specific functions which the RCIC was retained to perform, as per Section 2 hereof.",
                 "The RCIC and the firm are authorized to collect information and communicate with ESDC related to my LMIA applications. In case of Online applications, I authorize RCIC Harpreet Kaur to electronically sign any required document related to the LMIA file and recruitment (if applicable) and submit the application on my behalf",
-                "This Agreement constitutes the entire agreement between the parties concerning the subject matter hereof and supersedes all prior agreements, understandings, warranties, representations, negotiations, and discussions, whether oral or written, except as specifically set forth herein.",
+                "This Agreement constitutes the entire agreement between the parties concerning the subject matter here of and supersedes all prior agreements, understandings, warranties, representations, negotiations, and discussions, whether oral or written, except as specifically set forth herein.",
                 "This Agreement shall be binding upon the parties hereto and their respective heirs, administrators, successors, and permitted assigns.",
                 "This Agreement may only be altered or amended when such changes are made in writing and executed by the parties hereto.",
                 "The provisions of this Agreement shall be deemed severable. If any provision of this Agreement shall be held unenforceable by any court of competent jurisdiction, such provision shall be severed from this Agreement, and the remaining provisions shall remain in full force and effect.",
@@ -598,17 +598,17 @@ const EmployerRetainerAgreementPdf = () => {
                   >
                     <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
                     <View>
-                      <View
-                        style={{
-                          width: 100,
-                          height: 50,
-                          border: "1px solid #ccc",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {felidData?.initial ? (
+                      {felidData?.initial ? (
+                        <View
+                          style={{
+                            width: 100,
+                            height: 50,
+                            border: "1px solid #ccc",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
                           <Text
                             style={{
                               display: "inline-block",
@@ -619,17 +619,18 @@ const EmployerRetainerAgreementPdf = () => {
                           >
                             <InitialFunction initial={felidData?.initial} />
                           </Text>
-                        ) : (
-                          <View
-                            style={{
-                              display: "inline-block",
-                              width: 100,
-                              height: 50,
-                              border: "1px solid #ccc",
-                            }}
-                          />
-                        )}
-                      </View>
+                        </View>
+
+                      ) : (
+                        <View
+                          style={{
+                            display: "inline-block",
+                            width: 100,
+                            height: 50,
+                            border: "1px solid #ccc",
+                          }}
+                        />
+                      )}
                     </View>
                   </View>
                 </View>

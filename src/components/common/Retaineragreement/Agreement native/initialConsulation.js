@@ -447,17 +447,17 @@ const InitialConsultationAgreement = () => {
                   >
                     <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
                     <View>
-                      <View
-                        style={{
-                          width: 100,
-                          height: 50,
-                          border: "1px solid #ccc",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {felidData?.initial ? (
+                      {felidData?.initial ? (
+                        <View
+                          style={{
+                            width: 100,
+                            height: 50,
+                            border: "1px solid #ccc",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
                           <Text
                             style={{
                               display: "inline-block",
@@ -468,17 +468,18 @@ const InitialConsultationAgreement = () => {
                           >
                             <InitialFunction initial={felidData?.initial} />
                           </Text>
-                        ) : (
-                          <View
-                            style={{
-                              display: "inline-block",
-                              width: 100,
-                              height: 50,
-                              border: "1px solid #ccc",
-                            }}
-                          />
-                        )}
-                      </View>
+                        </View>
+
+                      ) : (
+                        <View
+                          style={{
+                            display: "inline-block",
+                            width: 100,
+                            height: 50,
+                            border: "1px solid #ccc",
+                          }}
+                        />
+                      )}
                     </View>
                   </View>
                 </View>

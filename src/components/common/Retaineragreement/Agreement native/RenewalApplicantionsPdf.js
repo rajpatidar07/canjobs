@@ -8,12 +8,15 @@ import { RCICSignatureFunction } from '../CommonThings/RCICSignatureFunction';
 const styles = StyleSheet.create({
   page: {
     padding: 30,
-    fontSize: 10,
-    fontFamily: 'Times-Roman',
+    fontFamily: "Times-Roman",
+    fontSize: 12,
+    lineHeight: 1.5,
+    color: "#323232"
   },
   header: {
     textAlign: 'center',
     marginBottom: 10,
+    color: "#000"
   },
   section: {
     marginBottom: 10,
@@ -56,20 +59,24 @@ const styles = StyleSheet.create({
   dateLine: { minWidth: 80, borderBottom: "1px solid black", display: "inline-block" },
   textBold: {
     fontFamily: "Times-Bold",
+    color: "#000"
   },
   title: {
     fontSize: 14,
     fontFamily: "Times-Bold",
+    color: "#000"
   },
   subtitle: {
     fontSize: 12,
     fontFamily: "Times-Bold",
     marginBottom: 5,
+    color: "#000"
   },
   label: {
     fontSize: 12,
     fontFamily: "Times-Bold",
     marginBottom: 5,
+    color: "#000"
   },
 });
 
@@ -438,7 +445,7 @@ const RenewalApplicantionsPdf = () => {
 
                 "The Client expressly authorizes the RCIC to act on his/her behalf to the extent of the specific functions which the RCIC was retained to perform, as per Section 2 hereof.",
                 "The RCIC and the firm are authorized to collect information and communicate related to my Rural Renewal Stream Application and Endorsement Letter. In case of online applications, I authorize RCIC Harpreet Kaur to electronically sign any required document related to the Application for Rural Renewal Stream and Endorsement Letter (if applicable) and submit the application on my behalf.",
-                "This Agreement constitutes the entire agreement between the parties concerning the subject matter hereof and supersedes all prior agreements, understandings, warranties, representations, negotiations, and discussions, whether oral or written, except as specifically set forth herein.",
+                "This Agreement constitutes the entire agreement between the parties concerning the subject matter here of and supersedes all prior agreements, understandings, warranties, representations, negotiations, and discussions, whether oral or written, except as specifically set forth herein.",
                 "This Agreement shall be binding upon the parties hereto and their respective heirs, administrators, successors, and permitted assigns.",
                 "This Agreement may only be altered or amended when such changes are made in writing and executed by the parties hereto.",
                 "The provisions of this Agreement shall be deemed severable. If any provision of this Agreement shall be held unenforceable by any court of competent jurisdiction, such provision shall be severed from this Agreement, and the remaining provisions shall remain in full force and effect.",
@@ -527,38 +534,39 @@ const RenewalApplicantionsPdf = () => {
               >
                 <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
                 <View>
-                  <View
-                    style={{
-                      width: 100,
-                      height: 50,
-                      border: "1px solid #ccc",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
                     {felidData?.initial ? (
-                      <Text
-                        style={{
-                          display: "inline-block",
-                          maxWidth: "100%",
-                          maxHeight: "100%",
-                          textTransform: "capitalize",
-                        }}
-                      >
-                        <InitialFunction initial={felidData?.initial} />
-                      </Text>
-                    ) : (
-                      <View
-                        style={{
-                          display: "inline-block",
-                          width: 100,
-                          height: 50,
-                          border: "1px solid #ccc",
-                        }}
-                      />
-                    )}
-                  </View>
+                        <View
+                          style={{
+                            width: 100,
+                            height: 50,
+                            border: "1px solid #ccc",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <Text
+                            style={{
+                              display: "inline-block",
+                              maxWidth: "100%",
+                              maxHeight: "100%",
+                              textTransform: "capitalize",
+                            }}
+                          >
+                            <InitialFunction initial={felidData?.initial} />
+                          </Text>
+                        </View>
+
+                      ) : (
+                        <View
+                          style={{
+                            display: "inline-block",
+                            width: 100,
+                            height: 50,
+                            border: "1px solid #ccc",
+                          }}
+                        />
+                      )}
                 </View>
               </View>
             </View>
@@ -592,17 +600,17 @@ const RenewalApplicantionsPdf = () => {
                   >
                     <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
                     <View>
-                      <View
-                        style={{
-                          width: 100,
-                          height: 50,
-                          border: "1px solid #ccc",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {felidData?.initial ? (
+                      {felidData?.initial ? (
+                        <View
+                          style={{
+                            width: 100,
+                            height: 50,
+                            border: "1px solid #ccc",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
                           <Text
                             style={{
                               display: "inline-block",
@@ -613,17 +621,18 @@ const RenewalApplicantionsPdf = () => {
                           >
                             <InitialFunction initial={felidData?.initial} />
                           </Text>
-                        ) : (
-                          <View
-                            style={{
-                              display: "inline-block",
-                              width: 100,
-                              height: 50,
-                              border: "1px solid #ccc",
-                            }}
-                          />
-                        )}
-                      </View>
+                        </View>
+
+                      ) : (
+                        <View
+                          style={{
+                            display: "inline-block",
+                            width: 100,
+                            height: 50,
+                            border: "1px solid #ccc",
+                          }}
+                        />
+                      )}
                     </View>
                   </View>
                 </View>

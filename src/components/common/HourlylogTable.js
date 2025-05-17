@@ -279,7 +279,6 @@ function Hourlylogtable(props) {
                 setDeleteAlertHourLog(false);
                 setDeleteAlertHourLogData();
                 setApiCall(true);
-                props.setApiCall(true);
             }
         } catch (err) {
             console.log(err);
@@ -490,11 +489,10 @@ function Hourlylogtable(props) {
                                                     }, {})
                                                 ).map(([managerId, logs], groupIndex) => {
                                                     // Sort logs for each manager by date or any other sorting criteria
-                                                    logs.sort((a, b) => new Date(a.created_at) - new Date(b.created_at)); // Sorting by date
+                                                    logs.sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); // Sorting by date descending to show latest on top
                                                     const totalCount = totalData.map(item => item[managerId]).find(val => val !== undefined)
                                                     const manager = (props.adminList || []).find((admin) => admin.admin_id === managerId);
                                                     const randomColor = "#" + Math.floor(Math.random() * 16777215).toString(16); // generates hex color
-
                                                     return (
                                                         <React.Fragment key={`manager-${groupIndex}`} >
                                                             {/* Manager Row */}
@@ -711,8 +709,8 @@ function Hourlylogtable(props) {
                                                                             style={{ fontSize: "10px", color: "red" }}
                                                                             type="button"
                                                                             onClick={() => {
-                                                                                setDeleteAlertHourLogData(item);
                                                                                 setDeleteAlertHourLog(true);
+                                                                                setDeleteAlertHourLogData(item);
                                                                             }}
                                                                             title="Delete Hour Log"
                                                                         >
@@ -773,16 +771,21 @@ function Hourlylogtable(props) {
 
                             )}
                         </form>
-                        {deleteAlertHourLog && <SAlert
-                            show={deleteAlertHourLog === true}
+                        {console.log(deleteAlertHourLog === true ? "dfsdfsd" : "pppp", deleteAlertHourLog)}
+                        {/* {deleteAlertHourLog && ( */}
+                        <SAlert
+                            show={deleteAlertHourLog}
                             title={deleteAlertHourLogData?.item}
-                            text="Are you Sure you want to delete !"
+                            text="Are you sure you want to delete!"
                             onConfirm={() => deleteHourLog(deleteAlertHourLogData.id)}
                             showCancelButton={true}
-                            onCancel={() =>
-                                setDeleteAlertHourLog(false)
-                            }
-                        />}
+                            onCancel={() => {
+                                console.log("Cancel Clicked");
+                                setDeleteAlertHourLog(false);
+                            }}
+                        />
+                        {/* )} */}
+
                     </div>
 
                     {/* Pagination Controls */}

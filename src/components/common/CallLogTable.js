@@ -274,112 +274,123 @@ function Calllogtable(props) {
 
                                     <tbody>
                                         {props.showAddForm && (
-                                            <tr>
-                                                {/* Sticky First Column for New Row */}
-                                                <td
-                                                    className="table_sticky_col sticky_col1 "
-                                                    style={{
-                                                        minWidth: "150px",
-                                                        maxWidth: "150px",
-                                                        background: "white",
-                                                        transition: "background 0.3s ease",
-                                                    }}
-                                                >
-                                                    <TableInput
-                                                        value={state.name}
-                                                        onChange={onInputChange}
-                                                        type="text"
-                                                        id="name"
-                                                        name="name"
-                                                    />
-                                                    {errors.name && (
-                                                        <span key={errors.name} className="text-danger font-size-3">
-                                                            {errors.name}
-                                                        </span>
-                                                    )}
-                                                </td>
-
-                                                {/* Other Columns */}
-                                                <td style={{ minWidth: "150px" }}>
-                                                    <StyledDropdown options={jsonList.status_type} status_name={"Status"} value={state.status} onChange={onInputChange} width={"600"} id="status" name="status"
-                                                        setFilterListApiCall={setFilterListApiCall}
-                                                        filterItemID={"36"} />
-                                                </td>
-
-                                                <td style={{ minWidth: "150px" }}>
-                                                    <StyledDropdown options={jsonList.caller} value={state.caller} onChange={onInputChange} width={"400"} id="caller" name="caller" status_name={"Caller"}
-                                                        setFilterListApiCall={setFilterListApiCall}
-                                                        filterItemID={"39"} />
-                                                </td>
-
-                                                <td style={{ minWidth: "150px" }}>
-                                                    <TableInput value={state.received_call_date} onChange={onInputChange} type="datetime-local" id="received_call_date" name="received_call_date" />
-                                                </td>
-
-                                                <td style={{ minWidth: "150px" }}>
-                                                    <select className="form-control" value={state.call_ans_by} onChange={onInputChange} id="call_ans_by" name="call_ans_by">
-                                                        <option>Select Admin</option>
-                                                        {(props.adminList || []).map((item, index) => (
-                                                            <option value={item.admin_id} key={index}>{item.name}</option>
-                                                        ))}
-                                                    </select>
-                                                </td>
-
-                                                <td style={{ minWidth: "150px" }}>
-                                                    <TableInput value={state.phone} onChange={onInputChange} type="number" id="phone" name="phone" />
-                                                    {errors.phone && (
-                                                        <span key={errors.phone} className="text-danger font-size-3">
-                                                            {errors.phone}
-                                                        </span>
-                                                    )}
-                                                </td>
-
-                                                <td style={{ minWidth: "150px" }}>
-                                                    <TableInput value={state.purpose} onChange={onInputChange} type="text" id="purpose" name="purpose" />
-                                                </td>
-
-                                                <td style={{ minWidth: "150px" }}>
-                                                    <TableInput value={state.email} onChange={onInputChange} type="email" id="email" name="email" />
-                                                </td>
-
-                                                {/* Button Column */}
-                                                <td style={{ minWidth: "50px", textAlign: "center" }}>
-                                                    {loading === true ? (
-                                                        <button
-                                                            className="btn-sm btn-primary"
-                                                            type="button"
-                                                            disabled
-                                                        >
-                                                            <span
-                                                                className="spinner-border spinner-border-sm "
-                                                                role="status"
-                                                                aria-hidden="true"
-                                                            ></span>
-                                                            <span className="sr-only">Loading...</span>
-                                                        </button>
-                                                    ) :
-                                                        <> <button
-                                                            title="Submit"
-                                                            type="button"
-                                                            className="btn-sm btn-primary"
-                                                            onClick={(e) => AddCallLog(e)}
-                                                            onKeyDown={(e) => {
-                                                                if (e.key === "Enter") {
-                                                                    e.preventDefault();  // Prevents form submission
-                                                                    AddCallLog();
-                                                                }
-                                                            }}
-                                                        >
-                                                            +
-                                                        </button>
-                                                        </>
+                                            < >
+                                                <tr onKeyDown={(e) => {
+                                                    if (e.key === "Enter") {
+                                                        e.preventDefault();
+                                                        if (!state.call_ans_by || state.call_ans_by === "Select Admin" || state.call_ans_by === "") {
+                                                            toast.error("Please select a valid admin before submitting.");
+                                                            return;
+                                                        }
+                                                        AddCallLog(e);
                                                     }
-                                                    <button type="button" title="Cancel" onClick={() => {
-                                                        props.setShowAddForm(false)
-                                                        setState(initialFormState)
-                                                    }} className="btn-sm btn-dark mx-2">x</button>
-                                                </td>
-                                            </tr>
+                                                }}>
+                                                    {/* Sticky First Column for New Row */}
+                                                    <td
+                                                        className="table_sticky_col sticky_col1 "
+                                                        style={{
+                                                            minWidth: "150px",
+                                                            maxWidth: "150px",
+                                                            background: "white",
+                                                            transition: "background 0.3s ease",
+                                                        }}
+                                                    >
+                                                        <TableInput
+                                                            value={state.name}
+                                                            onChange={onInputChange}
+                                                            type="text"
+                                                            id="name"
+                                                            name="name"
+                                                        />
+                                                        {errors.name && (
+                                                            <span key={errors.name} className="text-danger font-size-3">
+                                                                {errors.name}
+                                                            </span>
+                                                        )}
+                                                    </td>
+
+                                                    {/* Other Columns */}
+                                                    <td style={{ minWidth: "150px" }}>
+                                                        <StyledDropdown options={jsonList.status_type} status_name={"Status"} value={state.status} onChange={onInputChange} width={"600"} id="status" name="status"
+                                                            setFilterListApiCall={setFilterListApiCall}
+                                                            filterItemID={"36"} />
+                                                    </td>
+
+                                                    <td style={{ minWidth: "150px" }}>
+                                                        <StyledDropdown options={jsonList.caller} value={state.caller} onChange={onInputChange} width={"400"} id="caller" name="caller" status_name={"Caller"}
+                                                            setFilterListApiCall={setFilterListApiCall}
+                                                            filterItemID={"39"} />
+                                                    </td>
+
+                                                    <td style={{ minWidth: "150px" }}>
+                                                        <TableInput value={state.received_call_date} onChange={onInputChange} type="datetime-local" id="received_call_date" name="received_call_date" />
+                                                    </td>
+
+                                                    <td style={{ minWidth: "150px" }}>
+                                                        <select className="form-control" value={state.call_ans_by} onChange={onInputChange} id="call_ans_by" name="call_ans_by">
+                                                            <option>Select Admin</option>
+                                                            {(props.adminList || []).map((item, index) => (
+                                                                <option value={item.admin_id} key={index}>{item.name}</option>
+                                                            ))}
+                                                        </select>
+                                                    </td>
+
+                                                    <td style={{ minWidth: "150px" }}>
+                                                        <TableInput value={state.phone} onChange={onInputChange} type="number" id="phone" name="phone" />
+                                                        {errors.phone && (
+                                                            <span key={errors.phone} className="text-danger font-size-3">
+                                                                {errors.phone}
+                                                            </span>
+                                                        )}
+                                                    </td>
+
+                                                    <td style={{ minWidth: "150px" }}>
+                                                        <TableInput value={state.purpose} onChange={onInputChange} type="text" id="purpose" name="purpose" />
+                                                    </td>
+
+                                                    <td style={{ minWidth: "150px" }}>
+                                                        <TableInput value={state.email} onChange={onInputChange} type="email" id="email" name="email" />
+                                                    </td>
+
+                                                    {/* Button Column */}
+                                                    <td style={{ minWidth: "50px", textAlign: "center" }}>
+                                                        {loading === true ? (
+                                                            <button
+                                                                className="btn-sm btn-primary"
+                                                                type="button"
+                                                                disabled
+                                                            >
+                                                                <span
+                                                                    className="spinner-border spinner-border-sm "
+                                                                    role="status"
+                                                                    aria-hidden="true"
+                                                                ></span>
+                                                                <span className="sr-only">Loading...</span>
+                                                            </button>
+                                                        ) :
+                                                            <> <button
+                                                                title="Submit"
+                                                                type="button"
+                                                                className="btn-sm btn-primary"
+                                                                onClick={(e) => AddCallLog(e)}
+                                                                onKeyDown={(e) => {
+                                                                    if (e.key === "Enter") {
+                                                                        e.preventDefault();  // Prevents form submission
+                                                                        AddCallLog(e);
+                                                                    }
+                                                                }}
+                                                            >
+                                                                +
+                                                            </button>
+                                                            </>
+                                                        }
+                                                        <button type="button" title="Cancel" onClick={() => {
+                                                            props.setShowAddForm(false)
+                                                            setState(initialFormState)
+                                                        }} className="btn-sm btn-dark mx-2">x</button>
+                                                    </td>
+                                                </tr>
+                                            </>
 
                                         )}
                                         {callLogData.length === 0 ?

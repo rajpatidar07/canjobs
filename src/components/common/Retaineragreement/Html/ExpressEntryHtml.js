@@ -900,7 +900,7 @@ services that have been rendered or accounting for the time that has been spent 
   <li data-list-text="18.2">
     <p style="position:relative;">
       <span style="position:absolute; left:0;">18.2</span>
-      <span style="margin-left:40px;">This Agreement constitutes the entire agreement between the parties with respect to the subject matter hereof and supersedes all prior agreements, understandings, warranties, representations, negotiations and discussions, whether oral or written, of the parties except as specifically set forth herein.</span>
+      <span style="margin-left:40px;">This Agreement constitutes the entire agreement between the parties with respect to the subject matter here of and supersedes all prior agreements, understandings, warranties, representations, negotiations and discussions, whether oral or written, of the parties except as specifically set forth herein.</span>
     </p>
   </li>
   <li data-list-text="18.3">
