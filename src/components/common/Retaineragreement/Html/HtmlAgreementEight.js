@@ -883,7 +883,7 @@ services that have been rendered or accounting for the time that has been spent 
   <li data-list-text="18.2">
     <p style="position:relative;">
       <span style="position:absolute; left:0;">18.2</span>
-      <span style="margin-left:40px;">This Agreement constitutes the entire agreement between the parties with respect to the subject matter hereof and supersedes all prior agreements, understandings, warranties, representations, negotiations and discussions, whether oral or written, of the parties except as specifically set forth herein.</span>
+      <span style="margin-left:40px;">This Agreement constitutes the entire agreement between the parties with respect to the subject matter here of and supersedes all prior agreements, understandings, warranties, representations, negotiations and discussions, whether oral or written, of the parties except as specifically set forth herein.</span>
     </p>
   </li>
   <li data-list-text="18.3">
@@ -1297,9 +1297,9 @@ services that have been rendered or accounting for the time that has been spent 
         ? userData?.name || "" || ""
         : "" || ""
     }</span>( here in after referred to as the “client”),
-        hereby authorize and appoint Harpreet kaur (hereinafter referred to as
+        here by authorize and appoint Harpreet kaur (here in after referred to as
         the “RCIC” with a CICC# R533393), of CAN Pathways Immigration
-        consultancy ltd.,(hereinafter referred to as the “firm”), to represent
+        consultancy ltd.,(here in after referred to as the “firm”), to represent
         me in my application to IRCC.
       </p>
       <p>

@@ -10,14 +10,14 @@ import {
   BlobProvider,
   Link,
 } from "@react-pdf/renderer";
-import moment from "moment";
 import { AddSharePointDOcument, AddUpdateAgreement } from "../../../../api/api";
 import InitialFunction from "../CommonThings/InitialFunction";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
+import ConvertTime from "../../Common function/ConvertTime";
 // import { toast } from "react-toastify";
 
-const AggrementOne = () => {
+const ExpressEntryPdf = () => {
   const [blobData, setBlobData] = useState();
   const data = localStorage.getItem("agreementStateData");
   const {
@@ -211,38 +211,23 @@ const AggrementOne = () => {
             RCIC Membership Number: R533393
           </Text>
           <Text style={{ fontWeight: "bold" }}>
-            Client File Number: :{" "}
-            {felidData?.client_file_no || "________________"}
+            Client File Number:{" "}
+            {felidData?.client_file_no ? <Text style={styles.textunderline}>{felidData?.client_file_no}</Text> : "________________"}
           </Text>
         </View>
         <View>
           <Text>
             This Retainer Agreement is made this
-            <Text style={styles.textunderline}>
-              {!felidData?.agreement_date ||
-                felidData?.agreement_date === "0000-00-00 00:00:00" ||
-                felidData?.agreement_date === "0000-00-00"
-                ? "_______"
-                : " " +
-                moment(new Date(felidData?.agreement_date)).format("Do") +
-                " "}
+            <Text style={[{ Width: 50, borderBottom: "1px solid black", }, styles.textunderline]}>
+              {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <ConvertTime _date={felidData?.agreement_date} format={"Do"} />}
+              {"  "}
             </Text>
-            day of
-            <Text style={styles.textunderline}>
-              {!felidData?.agreement_date ||
-                felidData?.agreement_date === "0000-00-00 00:00:00" ||
-                felidData?.agreement_date === "0000-00-00"
-                ? "_______"
-                : " " +
-                moment(new Date(felidData?.agreement_date)).format("MMMM") +
-                " "}
+            day of{"  "}
+            <Text style={[{ borderBottom: "1px solid black", minWidth: "50px", }, styles.textunderline]}> {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <ConvertTime _date={felidData?.agreement_date} format={"MMMM"} />}
+              {"  "}
             </Text>
-            {!felidData?.agreement_date ||
-              felidData?.agreement_date === "0000-00-00 00:00:00" ||
-              felidData?.agreement_date === "0000-00-00"
-              ? "_______"
-              : " " +
-              moment(new Date(felidData?.agreement_date)).format("YYYY")}{" "}
+            {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <ConvertTime _date={felidData?.agreement_date} format={"YYYY"} />}
+
             between Regulated Canadian Immigration Consultant (RCIC) Harpreet
             Kaur (the “RCIC”), RCIC Membership Number
             <Text style={styles.textunderline}> R533393</Text>, Phone number
@@ -279,11 +264,11 @@ const AggrementOne = () => {
               {" " + (felidData?.client_address || "        ")}
             </Text>
             ,{"\n"}
-            <Text style={styles.textunderline} className="para_gap">
-              Email{" " + (felidData?.client_email || "     ")},
-            </Text>{" "}
-            <Text style={styles.textunderline} className="para_gap">
-              Contact number {" " + (felidData?.client_contact || "     ")}.
+            <Text >
+              Email<Text style={styles.textunderline} className="para_gap">{" " + (felidData?.client_email || "     ")},
+              </Text></Text>{" "}
+            <Text >
+              Contact number   <Text style={styles.textunderline} className="para_gap">{" " + (felidData?.client_contact || "     ")}</Text>.
             </Text>
           </Text>
         </View>
@@ -319,11 +304,9 @@ const AggrementOne = () => {
                 </Text>
                 <Text style={{ flex: 1 }}>
                   Date of birth:
-                  <Text style={{ textDecoration: "underline" }}>
-                    {item.client_date_of_birth
-                      ? moment(item.client_date_of_birth).format("DD-MM-YYYY")
-                      : "__________"}
-                  </Text>
+                  {item.client_date_of_birth
+                    ? <Text style={{ textDecoration: 'underline' }}><ConvertTime _date={item.client_date_of_birth} format={"DD-MM-YYYY"} /></Text>
+                    : '_________________'}
                 </Text>
               </View>
             ))}
@@ -585,7 +568,7 @@ const AggrementOne = () => {
               </View>
             </View>
           </View>
-          <View data-list-text="4.">
+          <View data-list-text="4." style={{ marginTop: 160 }}>
             <Text style={[styles.definition, { fontWeight: 600 }]}>
               4. Payment Schedule
             </Text>
@@ -596,14 +579,14 @@ const AggrementOne = () => {
               </Text>
             </View>
             <View
-              style={[styles.table, { textAlign: "center", marginTop: 93 }]}
+              style={[styles.table, { textAlign: "center", marginTop: 10 }]}
             >
               <View style={styles.row}>
                 <View style={[styles.cell, styles.headerCell]}>
-                  <Text style={{ color: "##0c5fa6" }}>Fees details</Text>
+                  <Text style={{ color: "blue" }}>Fees details</Text>
                 </View>
                 <View style={[styles.cell, styles.headerCell]}>
-                  <Text style={{ color: "##0c5fa6" }}>Amount (CAD)</Text>
+                  <Text style={{ color: "blue" }}>Amount (CAD)</Text>
                 </View>
               </View>
               <View style={styles.row}>
@@ -681,27 +664,27 @@ const AggrementOne = () => {
             <View style={[styles.table, { marginTop: 57 }]}>
               <View style={styles.row}>
                 <View style={styles.cell}>
-                  <Text style={{ color: "##0c5fa6" }}>
+                  <Text style={{ color: "blue" }}>
                     RCIC Service Milestone
                   </Text>
                 </View>
                 <View style={styles.cell}>
-                  <Text style={{ color: "##0c5fa6" }}>
+                  <Text style={{ color: "blue" }}>
                     Estimated date of Completion
                   </Text>
                 </View>
                 <View style={styles.cell}>
-                  <Text style={{ color: "##0c5fa6" }}>
+                  <Text style={{ color: "blue" }}>
                     Professional Fees (Non-Refundable)
                   </Text>
                 </View>
                 <View style={styles.cell}>
-                  <Text style={{ color: "##0c5fa6" }}>
+                  <Text style={{ color: "blue" }}>
                     Applicable Retainer Fee for this stage (Non- Refundable)
                   </Text>
                 </View>
                 <View style={styles.cell}>
-                  <Text style={{ color: "##0c5fa6" }}>
+                  <Text style={{ color: "blue" }}>
                     Applicable Government Processing Fee
                   </Text>
                 </View>
@@ -798,9 +781,9 @@ const AggrementOne = () => {
               </View>
             </View>
             <View id="l5" style={{ paddingLeft: 10 }}>
-              <Text style={{ marginTop: 15 }}>Note:</Text>
-              <View style={{ marginTop: 10 }}>
-                <View style={{ marginTop: 20, flexDirection: "row" }}>
+              <Text style={{ marginTop: 50 }}>Note:</Text>
+              <View >
+                <View style={{ flexDirection: "row" }}>
                   <Text style={{ width: 20, fontWeight: "bold" }}>•</Text>
                   <Text style={{ flex: 1 }}>
                     There will be an additional fee, or a new fee arrangement
@@ -1329,7 +1312,7 @@ const AggrementOne = () => {
                 <Text style={{ width: 40, fontWeight: "bold" }}>18.2</Text>
                 <Text style={{ flex: 1 }}>
                   This Agreement constitutes the entire agreement between the
-                  parties with respect to the subject matter hereof and
+                  parties with respect to the subject matter here of and
                   supersedes all prior agreements, understandings, warranties,
                   representations, negotiations, and discussions, whether oral
                   or written, of the parties except as specifically set forth
@@ -1387,7 +1370,7 @@ const AggrementOne = () => {
                 </Text>
               </View>
 
-              <View style={{ marginTop: 20, flexDirection: "row" }}>
+              <View style={{ marginTop: 35, flexDirection: "row" }}>
                 <Text style={{ width: 40, fontWeight: "bold" }}>18.8</Text>
                 <Text style={{ flex: 1 }}>
                   The headings utilized in this Agreement are for convenience
@@ -1501,181 +1484,186 @@ const AggrementOne = () => {
               RETAINER AGREEMENT
             </Text>
           </View>
-          <View style={{}}>
-            {/* Contact Information Header */}
-            <Text style={[{ fontWeight: "600" }, styles.definition]}>
-              21. Contact Information
-            </Text>
+          <View style={{ marginTop: 15 }}>
+            <View>
+              {/* Contact Information Header */}
+              <Text style={[{ fontWeight: "600" }, styles.definition]}>
+                21. Contact Information
+              </Text>
+              {/* Client Information */}
+              <Text style={[styles.textBold, { marginLeft: 12 }]}>Client Name</Text>
+              <View style={{ width: "100%", padding: 5 }}>
+                <View style={styles.clientForm}>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}>Given Name: </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          {familyJsonArray[0]?.client_first_name || ''}
+                        </Text>
+                      </View>
+                    </View>
 
-            {/* Client Information */}
-            <Text>Client Name</Text>
-            <View style={{ width: "100%", padding: 5 }}>
-              <View style={styles.clientForm}>
-                <View style={styles.clientFormChild}>
-                  <Text>
-                    Given Name:{" "}
-                    <Text
-                      style={[
-                        styles.textunderline,
-                        { textTransform: "capitalize", marginLeft: 5 },
-                      ]}
-                    >
-                      {familyJsonArray[0]?.client_first_name ||
-                        "" ||
-                        "_______________"}
-                    </Text>
-                  </Text>
+                  </View>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}>Family Name:{" "}: </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          {familyJsonArray[0]?.client_last_name || ''}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
                 </View>
-                <View style={styles.clientFormChild}>
-                  <Text>
-                    Family Name:{" "}
-                    <Text
-                      style={[
-                        styles.textunderline,
-                        { textTransform: "capitalize", marginLeft: 5 },
-                      ]}
-                    >
-                      {familyJsonArray[0]?.client_last_name ||
-                        "_______________"}
-                    </Text>
-                  </Text>
+
+                <View style={styles.clientForm}>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}>Address{" "}: </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          {felidData?.client_address.trim() !== "" ||
+                            felidData?.client_address !== " "
+                            ? felidData?.client_address
+                            : ""}
+                        </Text>
+                      </View>
+                    </View>
+
+                  </View>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}>Telephone Number{" "}: </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          {felidData?.client_telephone || ""}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+
+                <View style={styles.clientForm}>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}> Cellphone Number{" "}: </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          {felidData?.client_cellphone || ""}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}> Fax Number{" "}: </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          {felidData?.client_fax || ""}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+                <View style={styles.clientForm}>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}>  E-mail Address:{" "} </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          {felidData?.client_email || ""}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
                 </View>
               </View>
 
-              <View style={styles.clientForm}>
-                <View style={styles.clientFormChild}>
-                  <Text>
-                    Address:{" "}
-                    <Text
-                      style={[
-                        styles.textunderline,
-                        { textTransform: "capitalize", marginLeft: 5 },
-                      ]}
-                    >
-                      {felidData?.client_address.trim() !== "" ||
-                        felidData?.client_address !== " "
-                        ? felidData?.client_address
-                        : "_______________"}
-                    </Text>
-                  </Text>
+              {/* RCIC Information */}
+              <Text style={[styles.textBold, { marginLeft: 12 }]}>RCIC</Text>
+              <View style={{ width: "100%" }}>
+                <View style={styles.clientForm}>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}>  Given Name:{" "} </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          Harpreet
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}>  Family Name:{" "} </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          Kaur
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
                 </View>
-                <View style={styles.clientFormChild}>
-                  <Text>
-                    Telephone Number:{" "}
-                    <Text style={[styles.textunderline, { marginLeft: 5 }]}>
-                      {felidData?.client_telephone || "_______________"}
-                    </Text>
-                  </Text>
-                </View>
-              </View>
 
-              <View style={styles.clientForm}>
-                <View style={styles.clientFormChild}>
-                  <Text>
-                    Cellphone Number:{" "}
-                    <Text style={[styles.textunderline, { marginLeft: 5 }]}>
-                      {felidData?.client_cellphone || "_______________"}
-                    </Text>
-                  </Text>
+                <View style={styles.clientForm}>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}> Address:{" "} </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}> Telephone Number:{" "} </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          403-888-5308
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
                 </View>
-                <View style={styles.clientFormChild}>
-                  <Text>
-                    Fax Number:{" "}
-                    <Text style={[styles.textunderline, { marginLeft: 5 }]}>
-                      {felidData?.client_fax || "_______________"}
-                    </Text>
-                  </Text>
-                </View>
-              </View>
-              <View style={styles.clientForm}>
-                <View style={styles.clientFormChild}>
-                  <Text>
-                    E-mail Address:{" "}
-                    <Text
-                      style={[
-                        styles.textunderline,
-                        { textTransform: "capitalize", marginLeft: 5 },
-                      ]}
-                    >
-                      {felidData?.client_email || "_______________"}
-                    </Text>
-                  </Text>
-                </View>
-              </View>
-            </View>
 
-            {/* RCIC Information */}
-            <Text>RCIC</Text>
-            <View style={{ width: "100%" }}>
-              <View style={styles.clientForm}>
-                <View style={styles.clientFormChild}>
-                  <Text>
-                    Given Name:{" "}
-                    <Text style={[styles.textunderline, { marginLeft: 5 }]}>
-                      Harpreet
-                    </Text>
-                  </Text>
-                </View>
-                <View style={styles.clientFormChild}>
-                  <Text>
-                    Family Name:{" "}
-                    <Text style={[styles.textunderline, { marginLeft: 5 }]}>
-                      Kaur
-                    </Text>
-                  </Text>
-                </View>
-              </View>
-
-              <View style={styles.clientForm}>
-                <View style={styles.clientFormChild}>
-                  <Text>
-                    Address:{" "}
-                    <Text style={[styles.textunderline, { marginLeft: 5 }]}>
-                      2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7
-                    </Text>
-                  </Text>
-                </View>
-                <View style={styles.clientFormChild}>
-                  <Text>
-                    Telephone Number:{" "}
-                    <Text style={[styles.textunderline, { marginLeft: 5 }]}>
-                      403-888-5308
-                    </Text>
-                  </Text>
-                </View>
-              </View>
-
-              <View style={styles.clientForm}>
-                <View style={styles.clientFormChild}>
-                  <Text>
-                    Fax Number:
-                    <Text style={[styles.textunderline, { marginLeft: 5 }]}>
-                      __________________
-                    </Text>
-                  </Text>
-                </View>
-                <View style={styles.clientFormChild}>
-                  <Text>
-                    E-mail Address:{" "}
-                    <Link
-                      href="mailto:info@canpathways.ca"
-                      style={[styles.textunderline, { marginLeft: 5 }]}
-                    >
-                      info@canpathways.ca
-                    </Link>
-                  </Text>
+                <View style={styles.clientForm}>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}> Fax Number:{" "} </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}></Text>
+                      </View>
+                    </View>
+                  </View>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}> E-mail Address:{" "} </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          <Link
+                            href="mailto:info@canpathways.ca"
+                            style={[{ marginLeft: 5 }]}
+                          >
+                            info@canpathways.ca
+                          </Link>
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
                 </View>
               </View>
             </View>
 
             {/* Agreement Signature */}
             <Text style={{}}>
-              IN WITNESS WHEREOF this Agreement has been duly executed by the
+              IN WITNESS Where of this Agreement has been duly executed by the
               parties hereto on the date first above written.
             </Text>
             <View style={styles.container}>
               {/* Right Signature Box (Client) */}
-
               <View style={styles.box}>
                 <ClientSignatureFunction
                   felidData={felidData}
@@ -1683,29 +1671,93 @@ const AggrementOne = () => {
                   page={"user"}
                   isPdf={true}
                 />
-                <Text style={[styles.text, styles.textBold]}>Signature of Client</Text>
-                <Text style={styles.text}>
-                  <Text style={styles.textBold}>Date:</Text>{" "}
-                  {familyJsonArray[0]?.date_signature_client
-                    ? moment(familyJsonArray[0].date_signature_client).format(
-                      "DD/MM/YYYY"
-                    )
-                    : "______________"}
+                <Text style={[styles.text, styles.textBoldm, { textAlign: "center", marginTop: 10 }]}>
+                  Signature of Client
                 </Text>
+
+                <View style={{ marginTop: 10 }}>
+                  <Text
+                    style={{
+                      borderBottom: "1px solid black",
+                      textAlign: "center",
+                      textTransform: "capitalize",
+                      paddingBottom: 5,
+                      marginBottom: 5,
+                      width: "100%",
+                    }}
+                  >
+                    {(familyJsonArray[0]?.client_first_name || "") +
+                      " " +
+                      (familyJsonArray[0]?.client_last_name || "")}
+                  </Text>
+                  <Text style={{ textAlign: "center", marginBottom: 10 }}>Client’s full name</Text>
+                </View>
+
+                <View style={{ marginTop: 5 }}>
+                  <Text
+                    style={{
+                      borderBottom: "1px solid black",
+                      textAlign: "center",
+                      paddingBottom: 5,
+                      marginBottom: 5,
+                      width: "100%",
+                    }}
+                  >
+                    {familyJsonArray[0]?.date_signature_client
+                      ? <ConvertTime _date={familyJsonArray[0].date_signature_client} format={"DD/MM/YYYY"} />
+                      : ""}
+                  </Text>
+                  <Text style={{ textAlign: "center", marginBottom: 10 }}>Date</Text>
+                </View>
               </View>
 
               {/* Left Signature Box (RCIC) */}
               <View style={styles.box}>
                 <RCICSignatureFunction isPdf={true} felidData={felidData} />
-                <Text style={[styles.text, styles.textBold]}>Signature of RCIC</Text>
-                <Text style={styles.text}>
-                  <Text style={styles.textBold}>Date:</Text> {felidData?.date_signature_rcic !== "0000-00-00 00:00:00" && felidData?.date_signature_rcic && felidData?.date_signature_rcic !== "0000-00-00" ? moment(felidData.date_signature_rcic).format("DD/MM/YYYY") : "______________"}
+                <Text style={[styles.text, { textAlign: "center", marginTop: 10 }]}>
+                  Signature of RCIC
                 </Text>
+
+                <View style={{ marginTop: 10 }}>
+                  <Text
+                    style={{
+                      borderBottom: "1px solid black",
+                      textAlign: "center",
+                      textTransform: "capitalize",
+                      paddingBottom: 5,
+                      marginBottom: 5,
+                      width: "100%",
+                    }}
+                  >
+                    Harpreet Kaur
+                  </Text>
+                  <Text style={{ textAlign: "center", marginBottom: 10 }}>RCIC full name</Text>
+                </View>
+
+                <View style={{ marginTop: 5 }}>
+                  <Text
+                    style={{
+                      borderBottom: "1px solid black",
+                      textAlign: "center",
+                      paddingBottom: 5,
+                      marginBottom: 5,
+                      width: "100%",
+                    }}
+                  >
+                    {felidData?.date_signature_rcic &&
+                      felidData?.date_signature_rcic !== "0000-00-00 00:00:00" &&
+                      felidData?.date_signature_rcic !== "0000-00-00"
+                      ? <ConvertTime _date={felidData.date_signature_rcic} format={"DD/MM/YYYY"} />
+                      : ""}
+                  </Text>
+                  <Text style={{ textAlign: "center", marginBottom: 10 }}>Date</Text>
+                </View>
               </View>
             </View>
+
           </View>
         </View>
-        <View style={{ marginTop: 30 }}>
+        <View style={{ marginTop: 120 }}>
           <Text style={[{ textAlign: "center" }, styles.definition]}>
             AUTHORIZATION
           </Text>
@@ -1719,10 +1771,10 @@ const AggrementOne = () => {
                 " " +
                 (familyJsonArray[0]?.client_last_name || " ")}
             </Text>
-            ( hereinafter referred to as the “client”), hereby authorize and
-            appoint Harpreet kaur (hereinafter referred to as the “RCIC” with a
+            ( here in after referred to as the “client”), here by authorize and
+            appoint Harpreet kaur (here in after referred to as the “RCIC” with a
             CICC# R533393), of CAN Pathways Immigration consultancy
-            ltd.,(hereinafter referred to as the “firm”), to represent me in my
+            ltd.,(here in after referred to as the “firm”), to represent me in my
             application to IRCC.
           </Text>
           <Text style={{ marginTop: 15 }}>
@@ -1850,47 +1902,34 @@ const AggrementOne = () => {
               marginTop: 15,
             }}
           >
-            <View
-              style={[
-                styles.clientForm,
-                { textAlign: "center", marginTop: 30 },
-              ]}
-            >
+            <View style={[styles.clientForm, { textAlign: "center", marginTop: 30 }]}>
               <View style={styles.clientFormChild}>
-                <Text
-                  className="para_gap"
-                  style={{
-                    margin: 0,
-                    marginBottom: 15,
-                    textDecoration: "underline",
-                    textTransform: "capitalize",
-                  }}
-                >
-                   {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")||"_______________________"}
+                <Text style={{ margin: 0, marginBottom: 15, width: "100%", borderBottom: "1px solid black", textTransform: "capitalize" }}>
+                  {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ") || ""}
                 </Text>
                 <Text style={{ margin: "0 0 30px 0" }}>Client’s full name</Text>
               </View>
               <View style={[styles.clientFormChild, { alignSelf: "center" }]}>
-                <ClientSignatureFunction
-                  felidData={felidData}
-                  familyJsonArray={familyJsonArray}
-                  page={"user"}
-                  isPdf={true}
-                />
-                <Text style={[styles.text, styles.textBold]}>Signature</Text>
+                <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+                  <View style={{ width: "100%" }}>
+                    <ClientSignatureFunction
+                      felidData={felidData}
+                      familyJsonArray={familyJsonArray}
+                      page={"user"}
+                      isPdf={true}
+                    />
+                    <Text style={{ margin: "0 0 30px 0" }}>Signature</Text>
+                  </View>
+                </View>
+                )
               </View>
               <View style={styles.clientFormChild}>
-                <Text
-                  className="para_gap"
-                  style={{ margin: 0, textDecoration: "underline" }}
-                >
+                <Text style={{ margin: 0, marginBottom: 15, width: "100%", borderBottom: "1px solid black" }}>
                   {!familyJsonArray[0]?.date_signature_client ||
                     familyJsonArray[0]?.date_signature_client ===
                     "0000-00-00 00:00:00"
-                    ? "____________"
-                    : moment(familyJsonArray[0]?.date_signature_client).format(
-                      "DD-MM-YYYY"
-                    )}
+                    ? " "
+                    : <ConvertTime _date={familyJsonArray[0]?.date_signature_client} format={"DD-MM-YYYY"} />}
                 </Text>
                 <Text style={{ margin: "0 0 30px 0" }}>Date</Text>
               </View>
@@ -1898,7 +1937,7 @@ const AggrementOne = () => {
           </View>
         </View>
       </View>
-    </View>
+    </View >
   );
 
   return (
@@ -1995,17 +2034,17 @@ const AggrementOne = () => {
                       Initials :
                     </Text>
                     <View>
-                      <View
-                        style={{
-                          width: 100,
-                          height: 50,
-                          border: "1px solid #ccc",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {felidData?.initial ? (
+                      {felidData?.initial ? (
+                        <View
+                          style={{
+                            width: 100,
+                            height: 50,
+                            border: "1px solid #ccc",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
                           <Text
                             style={{
                               display: "inline-block",
@@ -2016,17 +2055,18 @@ const AggrementOne = () => {
                           >
                             <InitialFunction initial={felidData?.initial} />
                           </Text>
-                        ) : (
-                          <View
-                            style={{
-                              display: "inline-block",
-                              width: 100,
-                              height: 50,
-                              border: "1px solid #ccc",
-                            }}
-                          />
-                        )}
-                      </View>
+                        </View>
+
+                      ) : (
+                        <View
+                          style={{
+                            display: "inline-block",
+                            width: 100,
+                            height: 50,
+                            border: "1px solid #ccc",
+                          }}
+                        />
+                      )}
                     </View>
                   </View>
                 </View>
@@ -2044,6 +2084,7 @@ const styles = StyleSheet.create({
     fontFamily: "Times-Roman",
     fontSize: 12,
     lineHeight: 1.5,
+    color: "#323232"
   },
   section: {
     // marginBottom: 10
@@ -2052,16 +2093,18 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginBottom: 10,
     fontWeight: "bold",
+    color: "#000"
   },
   subHeader: {
     fontSize: 12,
     marginBottom: 5,
     fontWeight: "bold",
+    color: "#000"
   },
   text: {
     marginBottom: 5,
     padding: 2,
-    fontSize: 12,
+    fontSize: 12
   },
   image: {
     width: "140px",
@@ -2079,6 +2122,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 15,
     fontWeight: "bold",
+    color: "#000"
   },
   clientForm: {
     display: "flex",
@@ -2109,31 +2153,17 @@ const styles = StyleSheet.create({
     borderRight: "1px solid #333",
   },
   headerCell: {
-    backgroundColor: "#f0f0f0",
+    // backgroundColor: "#f0f0f0",
+    color: "blue"
   },
-  container: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 30,
-  },
+  container: { display: "flex", flexDirection: "row", justifyContent: "space-between", marginTop: 30 },
   box: { width: "45%" },
   required: { color: "red" },
-  signatureBox: {
-    width: "100%",
-    height: 50,
-    border: "1px solid #ccc",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  dateLine: {
-    minWidth: 80,
-    borderBottom: "1px solid black",
-    display: "inline-block",
-  },
+  signatureBox: { width: "100%", height: 50, border: "1px solid #ccc", display: "flex", alignItems: "center", justifyContent: "center" },
+  dateLine: { minWidth: 80, borderBottom: "1px solid black", display: "inline-block" },
   textBold: {
     fontFamily: "Times-Bold",
+    color: "#000"
   },
   title: {
     fontSize: 14,
@@ -2151,4 +2181,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AggrementOne;
+export default ExpressEntryPdf;

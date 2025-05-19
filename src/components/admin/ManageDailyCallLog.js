@@ -55,7 +55,7 @@ const ManageDailyCallLog = () => {
       <AdminHeader heading={"Manage Daily Call Log"} />
       <AdminSidebar heading={"Manage Daily Call Log"} />
 
-      <div className="dashboard-main-container " id="dashboard-body">
+      <div className="dashboard-main-container mt-14" id="dashboard-body">
          {/*removing class for now mt-14 */}
         <div className="container-fluid">
           <div className="mb-18">

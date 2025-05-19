@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { Page, Text, View, Document, StyleSheet, BlobProvider, Image, PDFViewer } from '@react-pdf/renderer';
-import moment from 'moment';
 import { AddSharePointDOcument, AddUpdateAgreement } from '../../../../api/api';
 import InitialFunction from '../CommonThings/InitialFunction';
 import { ClientSignatureFunction } from '../CommonThings/ClientSignatureFunctionHtml';
 import { RCICSignatureFunction } from '../CommonThings/RCICSignatureFunction';
+import ConvertTime from '../../Common function/ConvertTime';
 const styles = StyleSheet.create({
   page: {
     padding: 30,
-    fontSize: 10,
-    fontFamily: 'Times-Roman',
+    fontFamily: "Times-Roman",
+    fontSize: 12,
+    lineHeight: 1.5,
+    color: "#323232"
   },
   header: {
     textAlign: 'center',
     marginBottom: 10,
+    color: "#000"
   },
   section: {
     marginBottom: 10,
@@ -56,20 +59,24 @@ const styles = StyleSheet.create({
   dateLine: { minWidth: 80, borderBottom: "1px solid black", display: "inline-block" },
   textBold: {
     fontFamily: "Times-Bold",
+    color: "#000"
   },
   title: {
     fontSize: 14,
     fontFamily: "Times-Bold",
+    color: "#000"
   },
   subtitle: {
     fontSize: 12,
     fontFamily: "Times-Bold",
     marginBottom: 5,
+    color: "#000"
   },
   label: {
     fontSize: 12,
     fontFamily: "Times-Bold",
     marginBottom: 5,
+    color: "#000"
   },
 });
 
@@ -159,9 +166,9 @@ const RenewalApplicantionsPdf = () => {
           </Text>
           <Text style={[styles.mb8]}>
             THIS RETAINER AGREEMENT is made on{" "}
-            {felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" ? (
+            {felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00" ? (
               <Text style={[{ borderBottomWidth: 1, borderBottomColor: "black" }, styles.underline]}>
-                {moment(felidData?.agreement_date).format("llll")}
+                <ConvertTime _date={felidData?.agreement_date} format={"llll"} />
               </Text>
             ) : (
               "_______________________"
@@ -187,7 +194,7 @@ const RenewalApplicantionsPdf = () => {
               ) : (
                 "_____________________"
               )}{" "}
-              (hereinafter called the "Client")
+              (here in after called the "Client")
             </Text>
             <Text>
               • Business Address:{" "}
@@ -213,7 +220,7 @@ const RenewalApplicantionsPdf = () => {
               Regulated Canadian Immigration Consultant (RCIC):
             </Text>
             <Text style={styles.mb5}>
-              <Text style={styles.textBold}>Harpreet Kaur</Text> (hereinafter called "The RCIC")
+              <Text style={styles.textBold}>Harpreet Kaur</Text> (here in after called "The RCIC")
             </Text>
             <Text style={styles.mb8}>2618 Hopewell PI NE #310</Text>
             <Text style={styles.mb8}>Calgary, AB T1Y7J7, Canada</Text>
@@ -438,7 +445,7 @@ const RenewalApplicantionsPdf = () => {
 
                 "The Client expressly authorizes the RCIC to act on his/her behalf to the extent of the specific functions which the RCIC was retained to perform, as per Section 2 hereof.",
                 "The RCIC and the firm are authorized to collect information and communicate related to my Rural Renewal Stream Application and Endorsement Letter. In case of online applications, I authorize RCIC Harpreet Kaur to electronically sign any required document related to the Application for Rural Renewal Stream and Endorsement Letter (if applicable) and submit the application on my behalf.",
-                "This Agreement constitutes the entire agreement between the parties concerning the subject matter hereof and supersedes all prior agreements, understandings, warranties, representations, negotiations, and discussions, whether oral or written, except as specifically set forth herein.",
+                "This Agreement constitutes the entire agreement between the parties concerning the subject matter here of and supersedes all prior agreements, understandings, warranties, representations, negotiations, and discussions, whether oral or written, except as specifically set forth herein.",
                 "This Agreement shall be binding upon the parties hereto and their respective heirs, administrators, successors, and permitted assigns.",
                 "This Agreement may only be altered or amended when such changes are made in writing and executed by the parties hereto.",
                 "The provisions of this Agreement shall be deemed severable. If any provision of this Agreement shall be held unenforceable by any court of competent jurisdiction, such provision shall be severed from this Agreement, and the remaining provisions shall remain in full force and effect.",
@@ -463,19 +470,19 @@ const RenewalApplicantionsPdf = () => {
               The Client acknowledges that they have read this Agreement, understand it, have obtained such independent legal advice as they deem appropriate, have sought translation, and agree to be bound by its terms.
             </Text>
             <Text styles={[styles.mb8]}>
-              The parties hereto have signed on the date and place hereinafter set forth.
+              The parties hereto have signed on the date and place here in after set forth.
             </Text>
           </View>
+          {/* signature */}
           {/* signature */}
           <View style={styles.container}>
             {/* Left Signature Box (RCIC) */}
             <View style={styles.box}>
               <RCICSignatureFunction isPdf={true} felidData={felidData} />
-
               <Text style={[styles.text, styles.textBold]}>Harpreet Kaur (RCIC)</Text>
               <Text style={styles.text}>RCIC # R533393</Text>
               <Text style={styles.text}>CAN Pathways Immigration Consultancy Ltd.</Text>
-              <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {felidData?.date_signature_rcic !== "0000-00-00 00:00:00" && felidData?.date_signature_rcic ? moment(felidData.date_signature_rcic).format("DD/MM/YYYY") : "______________"}</Text>
+              <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {felidData?.date_signature_rcic !== "0000-00-00 00:00:00" && felidData.date_signature_rcic === "0000-00-00" && felidData?.date_signature_rcic ? <ConvertTime _date={felidData?.date_signature_rcic} format={"DD-MM-YYYY"} /> : "________________"}</Text>
               <Text style={styles.text}><Text style={styles.textBold}>Signed at:</Text> <Text style={styles.underline}>Calgary, Alberta, Canada</Text></Text>
             </View>
 
@@ -488,13 +495,13 @@ const RenewalApplicantionsPdf = () => {
                 isPdf={true}
               />
               <Text style={[styles.text, styles.textBold]}> {familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name ? (
-                <Text style={[{ borderBottomWidth: 1, borderBottomColor: "black", textTransform: "capitalize" }, styles.underline]}>
-                  {familyJsonArray[0]?.client_first_name} {familyJsonArray[0]?.client_last_name || ""}
-                </Text>
-              ) : (
-                "_____________________"
-              )}</Text>
-              <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {familyJsonArray[0]?.date_signature_client ? moment(familyJsonArray[0].date_signature_client).format("DD/MM/YYYY") : "______________"}</Text>
+                <Text style={[{ textTransform: "capitalize" },]}>
+                  {familyJsonArray[0]?.client_first_name} {familyJsonArray[0]?.client_last_name || ""}</Text>) : ""}</Text>
+              <Text style={styles.text}><Text style={styles.textBold}>Date:</Text>  {!familyJsonArray[0]?.date_signature_client ||
+                familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00" ||
+                familyJsonArray[0]?.date_signature_client === "0000-00-00"
+                ? "________________"
+                : <ConvertTime _date={familyJsonArray[0]?.date_signature_client} format={"DD-MM-YYYY"} />}</Text>
             </View>
           </View>
         </View>
@@ -527,17 +534,17 @@ const RenewalApplicantionsPdf = () => {
               >
                 <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
                 <View>
-                  <View
-                    style={{
-                      width: 100,
-                      height: 50,
-                      border: "1px solid #ccc",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    {felidData?.initial ? (
+                  {felidData?.initial ? (
+                    <View
+                      style={{
+                        width: 100,
+                        height: 50,
+                        border: "1px solid #ccc",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
                       <Text
                         style={{
                           display: "inline-block",
@@ -548,17 +555,18 @@ const RenewalApplicantionsPdf = () => {
                       >
                         <InitialFunction initial={felidData?.initial} />
                       </Text>
-                    ) : (
-                      <View
-                        style={{
-                          display: "inline-block",
-                          width: 100,
-                          height: 50,
-                          border: "1px solid #ccc",
-                        }}
-                      />
-                    )}
-                  </View>
+                    </View>
+
+                  ) : (
+                    <View
+                      style={{
+                        display: "inline-block",
+                        width: 100,
+                        height: 50,
+                        border: "1px solid #ccc",
+                      }}
+                    />
+                  )}
                 </View>
               </View>
             </View>
@@ -592,17 +600,17 @@ const RenewalApplicantionsPdf = () => {
                   >
                     <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
                     <View>
-                      <View
-                        style={{
-                          width: 100,
-                          height: 50,
-                          border: "1px solid #ccc",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {felidData?.initial ? (
+                      {felidData?.initial ? (
+                        <View
+                          style={{
+                            width: 100,
+                            height: 50,
+                            border: "1px solid #ccc",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
                           <Text
                             style={{
                               display: "inline-block",
@@ -613,17 +621,18 @@ const RenewalApplicantionsPdf = () => {
                           >
                             <InitialFunction initial={felidData?.initial} />
                           </Text>
-                        ) : (
-                          <View
-                            style={{
-                              display: "inline-block",
-                              width: 100,
-                              height: 50,
-                              border: "1px solid #ccc",
-                            }}
-                          />
-                        )}
-                      </View>
+                        </View>
+
+                      ) : (
+                        <View
+                          style={{
+                            display: "inline-block",
+                            width: 100,
+                            height: 50,
+                            border: "1px solid #ccc",
+                          }}
+                        />
+                      )}
                     </View>
                   </View>
                 </View>

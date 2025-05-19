@@ -8,12 +8,13 @@ import {
   Image,
   PDFViewer,
   BlobProvider,
+  Link,
 } from "@react-pdf/renderer";
-import moment from "moment";
 import { AddSharePointDOcument, AddUpdateAgreement } from "../../../../api/api";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
 import InitialFunction from "../CommonThings/InitialFunction";
+import ConvertTime from "../../Common function/ConvertTime";
 // import { toast } from "react-toastify";
 
 const RecruitmentAgrement = () => {
@@ -86,7 +87,7 @@ const RecruitmentAgrement = () => {
 
   const agreementDate = parseDate(felidData?.agreement_date);
   const formattedDate = agreementDate
-    ? moment(agreementDate).format("DD MMMM YYYY")
+    ? <ConvertTime _date={agreementDate} format={"DD MMMM YYYY"} />
     : "____________";
   let components = (
     <View style={{ height: "auto" }}>
@@ -115,8 +116,8 @@ const RecruitmentAgrement = () => {
             recruitment activities, potentially related to employment or staffing.{"\n"}
             <Text style={styles.bold}>{"\n"}AND WHEREAS</Text> the recruiter is a member of the College of Immigration and Citizenship Consultants (the "Council") (RCIC), the regulator in Canada for immigration consultants;{"\n"}
             {"\n"} IN CONSIDERATION of the mutual promises and covenants herein contained and for other good and valuable
-            consideration, the receipt and sufficiency of which are hereby acknowledged, the parties hereto willing to be
-            legally bound agree as follows:{"\n"}{"\n"}{"\n"}{"\n"}{"\n"}
+            consideration, the receipt and sufficiency of which are here by acknowledged, the parties hereto willing to be
+            legally bound agree as follows:{"\n"}{"\n"}{"\n"}
           </Text>
         </View>
         <View style={styles.section}>
@@ -128,8 +129,9 @@ const RecruitmentAgrement = () => {
               the services of the Agency for tasks such as candidate sourcing, resume
               screening, interview coordination, reference checks, and assistance with
               contract negotiations.
-            </Text>
-            <Text style={styles.text}>
+            </Text>{"\n"}{"\n"}
+            <Text style={[styles.text]}>
+              {"\n"}
               2. The Candidate, seeking employment or job placement, agrees to sign the retainer specifically for the recruitment services being offered. This indicates that the Candidate acknowledges the separate nature of these services and understands that they are unrelated to any immigration or citizenship matters they may be pursuing with the Recruiter.
               {"\n"}{"\n"}
             </Text>
@@ -153,7 +155,7 @@ const RecruitmentAgrement = () => {
               or required under law.{"\n"}{"\n"}
             </Text>
           </View>
-          <View >
+          <View style={{ marginTop: 10 }}>
             <Text style={styles.subHeader}>11. Change Policy:</Text>
             <Text style={styles.text}>
               The Client acknowledges that if the Recruiter is asked to act on the Client's behalf on matters other than those outlined above in the scope of this Agreement, or because of a matter other than those outlined above in the scope of this Agreement, or because of a material change in the Client's circumstances, or because of material facts not disclosed at the outset of the application, the Agreement can be modified accordingly. This Agreement may only be altered or amended when such changes are made in writing and executed by the parties hereto. All changes and/or edits must be initialed and dated by both the Member and the Client. Any substantial changes to this agreement may require that the parties enter into a new Retainer Agreement.{"\n"}{"\n"}
@@ -179,7 +181,7 @@ const RecruitmentAgrement = () => {
             <Text style={styles.subHeader}>14. Governing Law:</Text>
             <Text style={styles.text}>
               This Agreement shall be governed by the laws in effect in the Province/Territory of Alberta, and the federal laws of Canada applicable therein and except for disputes pursuant to Section 9 hereof, any dispute with respect to the terms of this Agreement shall be decided by a court of competent jurisdiction within the Province/Territory of Alberta.
-              {"\n"}{"\n"}{"\n"}{"\n"}
+              {"\n"}{"\n"}
             </Text>
           </View>
           <View >
@@ -189,7 +191,7 @@ const RecruitmentAgrement = () => {
 
               15.1 The Client expressly authorizes the Recruiter to act on his/her behalf to the extent of the specific functions which the Recruiter was retained to perform, as per Section 2 hereof.
               {"\n"}{"\n"}
-              15.2 This Agreement constitutes the entire agreement between the parties with respect to the subject matter hereof and supersedes all prior agreements, understandings, warranties, representations, negotiations, and discussions, whether oral or written, of the parties except as specifically set forth herein.
+              15.2 This Agreement constitutes the entire agreement between the parties with respect to the subject matter here of and supersedes all prior agreements, understandings, warranties, representations, negotiations, and discussions, whether oral or written, of the parties except as specifically set forth herein.
               {"\n"}{"\n"}
               15.3 This Agreement shall be binding upon the parties hereto and their respective heirs, administrators, successors, and permitted assigns.
               {"\n"}{"\n"}
@@ -206,264 +208,368 @@ const RecruitmentAgrement = () => {
               15.9 Each of the parties hereto must do and execute or cause to be done or executed all such further and other things, acts, deeds, documents, and assurances as may be necessary or reasonably required to carry out the intent and purpose of this Agreement fully and effectively.
               {"\n"}{"\n"}
               15.10 The Client acknowledges that he/she has had sufficient time to review this Agreement and has been given an opportunity to obtain independent legal advice and translation prior to the execution and delivery of this Agreement.
-              {"\n"}{"\n"}{"\n"}{"\n"}
+              {"\n"}{"\n"}
             </Text>
           </View>
-          <View >
-            <View>
-              <Text style={styles.subHeader}>16. Contact Information:</Text>
-              <Text style={[styles.header, styles.textunderline]}>Client</Text>
-
-              <View style={styles.clientForm}>
-                <View style={styles.clientFormChild}>
-                  <Text style={styles.text}>
-                    Given Name: <Text style={styles.textunderline}>{felidData && familyJsonArray[0]?.client_first_name
-                      ? familyJsonArray[0]?.client_first_name
-                      : "_____________"
-                    } </Text>
-                  </Text>
-                </View>
-                <View style={styles.clientFormChild}>
-                  <Text style={styles.text}>
-                    Family Name: <Text style={styles.textunderline}>{felidData && familyJsonArray[0]?.client_last_name
-                      ? familyJsonArray[0]?.client_last_name
-                      : "_____________________ "
-                    }</Text>
-                  </Text>
-                </View>
-              </View>
-
-              <View style={styles.clientForm}>
-                <View style={styles.clientFormChild}>
-                  <Text style={styles.text}>
-                    Address: <Text style={styles.textunderline}>{" " + (felidData?.client_address || "        ")}</Text>
-                  </Text>
-                </View>
-                <View style={styles.clientFormChild}>
-                  <Text style={styles.text}>
-                    Telephone Number: <Text style={styles.textunderline}>{" " + (felidData?.client_telephone || "_______________")}</Text>
-                  </Text>
-                </View>
-              </View>
-
-              <View style={styles.clientForm}>
-                <View style={styles.clientFormChild}>
-                  <Text style={styles.text}>
-                    Cellphone Number: <Text style={styles.textunderline}>{" " + (felidData?.client_cellphone || "_______________")}</Text>
-                  </Text>
-                </View>
-                <View style={styles.clientFormChild}>
-                  <Text style={styles.text}>
-                    Fax Number: <Text style={styles.textunderline}>{" " + (felidData?.client_fax || "____________")}</Text>
-                  </Text>
-                </View>
-              </View>
-
-              <View style={styles.clientForm}>
-                <View style={styles.clientFormChild}>
-                  <Text style={styles.text}>
-                    E-mail Address: <Text style={styles.textunderline}>{" " + (felidData?.client_email || "           ")}</Text>
-                  </Text>
-                </View>
-              </View>
-
-              <Text style={[styles.header, styles.textunderline]}>Recruiter</Text>
-
-              <View style={styles.clientForm}>
-                <View style={styles.clientFormChild}>
-                  <Text style={styles.text}>
-                    Given Name: <Text style={styles.textunderline}>Harpreet</Text>
-                  </Text>
-                </View>
-                <View style={styles.clientFormChild}>
-                  <Text style={styles.text}>
-                    Family Name: <Text style={styles.textunderline}>Kaur</Text>
-                  </Text>
-                </View>
-              </View>
-
-              <View style={styles.clientForm}>
-                <View style={styles.clientFormChild}>
-                  <Text style={styles.text}>
-                    Address: <Text style={styles.textunderline}>2618 Hopewell</Text>
-                  </Text>
-                </View>
-                <View style={styles.clientFormChild}>
-                  <Text style={styles.text}>
-                    Telephone Number: <Text style={styles.textunderline}>403-888-5308</Text>
-                  </Text>
-                </View>
-              </View>
-
-              <View style={styles.clientForm}>
-                <View style={styles.clientFormChild}>
-                  <Text style={styles.text}>
-                    Fax: <Text style={styles.textunderline}>_____________</Text>
-                  </Text>
-                </View>
-                <View style={styles.clientFormChild}>
-                  <Text style={styles.text}>
-                    E-mail: <Text style={styles.textunderline}>info@canpathways.ca</Text>
-                  </Text>
-                </View>
-              </View>
-              {/* Agreement Signature */}
-              <Text style={{}}>
-                IN WITNESS WHEREOF this Agreement has been duly executed by the parties
-                hereto on the date first above written.
+          <View style={{ marginTop: 120 }}>
+            <View>{"\n"}{"\n"}
+              {/* Contact Information Header */}
+              <Text style={[{ fontWeight: "600" }, styles.definition]}>
+                16. Contact Information
               </Text>
-              <View style={styles.container}>
-                {/* Right Signature Box (Client) */}
-                <View style={styles.box}>
-                  <ClientSignatureFunction
-                    felidData={felidData}
-                    familyJsonArray={familyJsonArray}
-                    page={"user"}
-                    isPdf={true}
-                  />
-                  <Text style={[styles.text, styles.textBold]}>Signature of Client</Text>
-                </View>
-                {/* Left Signature Box (RCIC) */}
-                <View style={styles.box}>
-                  <RCICSignatureFunction isPdf={true} felidData={felidData} />
-                  <Text style={[styles.text, styles.textBold]}>Signature of RCIC</Text>
-
-                </View>
-              </View>
-              <View style={{ marginTop: 225 }}>
-                <Text style={[{ textAlign: "center", }, styles.definition]}>
-                  AUTHORIZATION
-                </Text>
-                <Text style={{ marginTop: 5 }}>
-                  I {" "}
-                  <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
-                    {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")}
-                  </Text>
-                  {" "} ( hereinafter referred to as the “client”), hereby authorize and
-                  appoint Harpreet kaur (hereinafter referred to as the “RCIC” with a
-                  CICC# R533393), of CAN Pathways Immigration consultancy
-                  ltd.,(hereinafter referred to as the “firm”), to represent me in my
-                  application to IRCC.
-                </Text>
-                <Text style={{ marginTop: 15 }}>
-                  The Recruiter and the firm are authorized to assign any of its staff members, associates, affiliates, lawyers or the agents to process any matters in whole or part related to above-mentioned subject as they deem appropriate.
-                </Text>
-                <Text style={{ marginTop: 15 }}>
-
-                  The Recruiter and the firm are authorized to collect Information and communicate with The Employer related to my profile. In case of Online application and documentation. I authorized Recruiter Harpreet Kaur to electronically sign and submit the application on my behalf.
-                </Text>
-                <Text style={{ marginTop: 15 }}>I also give permission to the Recruiter and the firm to post photos on social media ensuring that my private information is redacted</Text>
-                <Text style={{ marginTop: 15 }}>
-                  In doing so, they my each receive or pay each other any pecuniary remuneration/benefits that may be acquired directly or indirectly including those from a third party for the purpose of obtaining a favorable and expeditious results.
-                </Text>
-                <Text style={{ marginTop: 15 }}>
-                  The RCIC and the firm are authorized to act on my behalf.{'/n'}{'/n'}
-                  I also agree to provide all necessary documentation as required.
-                </Text>
-                <Text style={[{ marginTop: 20 }, styles.definition]}>Declaration</Text>
-                <View id="l13" style={{ paddingLeft: 10 }}>
-                  <View style={{ marginTop: 17, flexDirection: 'row' }}>
-                    <Text style={{ width: 20, fontWeight: 'bold' }}>1</Text>
-                    <Text style={{ flex: 1 }}>
-                      I confirm that neither I nor any other representatives included in my application have presented or will present at any future date, false and misleading information to either the Recruiter, the firm or to the government of Canada.
-                    </Text>
-                  </View>
-                  <View style={{ marginTop: 17, flexDirection: 'row' }}>
-                    <Text style={{ width: 20, fontWeight: 'bold' }}>2</Text>
-                    <Text style={{ flex: 1 }}>
-                      I understand that The Recruiter's obligations under the Engagement are null and void if the Client knowingly provides any inaccurate, misleading or false material information.
-                    </Text>
-                  </View>
-                  <View style={{ marginTop: 17, flexDirection: 'row' }}>
-                    <Text style={{ width: 20, fontWeight: 'bold' }}>3</Text>
-                    <Text style={{ flex: 1 }}>
-                      I agree that if my application is refused hecause I neglected to provide the required documents or information within the notified time frame or fail to show up at the time of interview, selection or training period the Recruiter, the firm or the Employer will not be held responsible.
-                    </Text>
-                  </View>
-                </View>
-                <View style={{ marginTop: 20 }}>
-                  <Text style={{ flex: 1 }}>
-                    I have read and understood all the terms and steps in the retainer letter above and I agree to all the terms mentioned And for so doing, this document shall constitute good and sufficient authority and declaration
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    width: "100%",
-                    marginTop: 65,
-                  }}
-                >
-                  <View style={[styles.clientForm, { textAlign: "center", marginTop: 20 }]}>
-                    <View style={styles.clientFormChild}>
-                      <Text className="para_gap" style={{ margin: 0, marginBottom: 15, textDecoration: "underline", textTransform: "capitalize" }}>
-                         {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")||"_______________________"}
-                      </Text>
-                      <Text style={{ margin: "0 0 30px 0" }}>Client’s full name</Text>
-                    </View>
-                    <View style={[styles.clientFormChild, { alignSelf: "center" }]}>
-                      <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-                        <View style={{ width: "100%" }}>
-                          <ClientSignatureFunction
-                            felidData={felidData}
-                            familyJsonArray={familyJsonArray}
-                            page={"user"}
-                            isPdf={true}
-                          />
-                          <Text style={[styles.text, styles.textBold]}>Signature of Client</Text>
-
-                        </View>
+              {/* Client Information */}
+              <Text style={[styles.bold, { marginLeft: 12 }]}>Client </Text>
+              <View style={{ width: "100%", padding: 5 }}>
+                <View style={styles.clientForm}>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}>Given Name: </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          {familyJsonArray[0]?.client_first_name || ''}
+                        </Text>
                       </View>
                     </View>
-                    <View style={styles.clientFormChild}>
-                      <Text className="para_gap" style={{ margin: 0, textDecoration: "underline" }}>
-                        {!familyJsonArray[0]?.date_signature_client ||
-                          familyJsonArray[0]?.date_signature_client ===
-                          "0000-00-00 00:00:00"
-                          ? "____________"
-                          : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}
-                      </Text>
-                      <Text style={{ margin: "0 0 30px 0" }}>Date</Text>
+
+                  </View>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}>Family Name:{" "}: </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          {familyJsonArray[0]?.client_last_name || ''}
+                        </Text>
+                      </View>
                     </View>
                   </View>
                 </View>
-                <View
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    width: "100%",
-                    marginTop: 15,
-                  }}
-                >
-                  <View style={[styles.clientForm, { textAlign: "center", marginTop: 20 }]}>
-                    <View style={styles.clientFormChild}>
-                      <Text className="para_gap" style={{ margin: 0, marginBottom: 15, textDecoration: "underline", textTransform: "capitalize" }}>
+
+                <View style={styles.clientForm}>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}>Address{" "}: </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          {felidData?.client_address.trim() !== "" ||
+                            felidData?.client_address !== " "
+                            ? felidData?.client_address
+                            : ""}
+                        </Text>
+                      </View>
+                    </View>
+
+                  </View>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}>Telephone Number{" "}: </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          {felidData?.client_telephone || ""}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+
+                <View style={styles.clientForm}>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}> Cellphone Number{" "}: </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          {felidData?.client_cellphone || ""}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}> Fax Number{" "}: </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          {felidData?.client_fax || ""}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+                <View style={styles.clientForm}>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}>  E-mail Address:{" "} </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          {felidData?.client_email || ""}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+
+              {/* RCIC Information */}
+              <Text style={[styles.bold, { marginLeft: 12 }]}>RCIC</Text>
+              <View style={{ width: "100%" }}>
+                <View style={styles.clientForm}>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}>  Given Name:{" "} </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          Harpreet
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}>  Family Name:{" "} </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          Kaur
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+
+                <View style={styles.clientForm}>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}> Address:{" "} </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}> Telephone Number:{" "} </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          403-888-5308
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+
+                <View style={styles.clientForm}>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}> Fax Number:{" "} </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}></Text>
+                      </View>
+                    </View>
+                  </View>
+                  <View style={styles.clientFormChild}>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                      <Text style={{ fontWeight: 'bold' }}> E-mail Address:{" "} </Text>
+                      <View style={{ flex: 1, borderBottomWidth: 1, borderBottomColor: 'black', marginLeft: 5 }}>
+                        <Text style={{ textTransform: 'capitalize' }}>
+                          <Link
+                            href="mailto:info@canpathways.ca"
+                            style={[{ marginLeft: 5 }]}
+                          >
+                            info@canpathways.ca
+                          </Link>
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+            {/* Agreement Signature */}
+            <Text style={{}}>
+              IN WITNESS Where of this Agreement has been duly executed by the parties
+              hereto on the date first above written.
+            </Text>
+            <View style={styles.container}>
+              {/* Right Signature Box (Client) */}
+              <View style={styles.box}>
+                <ClientSignatureFunction
+                  felidData={felidData}
+                  familyJsonArray={familyJsonArray}
+                  page={"user"}
+                  isPdf={true}
+                />
+                <Text style={[styles.text, styles.bold, { textAlign: "center" }]}>Signature of Client</Text>
+              </View>
+              {/* Left Signature Box (RCIC) */}
+              <View style={styles.box}>
+                <RCICSignatureFunction isPdf={true} felidData={felidData} />
+                <Text style={[styles.text, styles.bold, { textAlign: "center" }]}>Signature of RCIC</Text>
+
+              </View>
+            </View>
+            <View style={{ marginTop: 225 }}>
+              <Text style={[{ textAlign: "center", }, styles.definition]}>
+                AUTHORIZATION
+              </Text>
+              <Text style={{ marginTop: 5 }}>
+                I {" "}
+                <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
+                  {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")}
+                </Text>
+                {" "} ( here in after referred to as the “client”), here by authorize and
+                appoint Harpreet kaur (here in after referred to as the “RCIC” with a
+                CICC# R533393), of CAN Pathways Immigration consultancy
+                ltd.,(here in after referred to as the “firm”), to represent me in my
+                application to IRCC.
+              </Text>
+              <Text style={{ marginTop: 15 }}>
+                The Recruiter and the firm are authorized to assign any of its staff members, associates, affiliates, lawyers or the agents to process any matters in whole or part related to above-mentioned subject as they deem appropriate.
+              </Text>
+              <Text style={{ marginTop: 15 }}>
+
+                The Recruiter and the firm are authorized to collect Information and communicate with The Employer related to my profile. In case of Online application and documentation. I authorized Recruiter Harpreet Kaur to electronically sign and submit the application on my behalf.
+              </Text>
+              <Text style={{ marginTop: 15 }}>I also give permission to the Recruiter and the firm to post photos on social media ensuring that my private information is redacted</Text>
+              <Text style={{ marginTop: 15 }}>
+                In doing so, they my each receive or pay each other any pecuniary remuneration/benefits that may be acquired directly or indirectly including those from a third party for the purpose of obtaining a favorable and expeditious results.
+              </Text>
+              <Text style={{ marginTop: 15 }}>
+                The RCIC and the firm are authorized to act on my behalf.{'/n'}{'/n'}
+                I also agree to provide all necessary documentation as required.
+              </Text>
+              <Text style={[{ marginTop: 20 }, styles.definition]}>Declaration</Text>
+              <View id="l13" style={{ paddingLeft: 10 }}>
+                <View style={{ marginTop: 17, flexDirection: 'row' }}>
+                  <Text style={{ width: 20, fontWeight: 'bold' }}>1</Text>
+                  <Text style={{ flex: 1 }}>
+                    I confirm that neither I nor any other representatives included in my application have presented or will present at any future date, false and misleading information to either the Recruiter, the firm or to the government of Canada.
+                  </Text>
+                </View>
+                <View style={{ marginTop: 17, flexDirection: 'row' }}>
+                  <Text style={{ width: 20, fontWeight: 'bold' }}>2</Text>
+                  <Text style={{ flex: 1 }}>
+                    I understand that The Recruiter's obligations under the Engagement are null and void if the Client knowingly provides any inaccurate, misleading or false material information.
+                  </Text>
+                </View>
+                <View style={{ marginTop: 17, flexDirection: 'row' }}>
+                  <Text style={{ width: 20, fontWeight: 'bold' }}>3</Text>
+                  <Text style={{ flex: 1 }}>
+                    I agree that if my application is refused hecause I neglected to provide the required documents or information within the notified time frame or fail to show up at the time of interview, selection or training period the Recruiter, the firm or the Employer will not be held responsible.
+                  </Text>
+                </View>
+              </View>
+              <View style={{ marginTop: 20 }}>
+                <Text style={{ flex: 1 }}>
+                  I have read and understood all the terms and steps in the retainer letter above and I agree to all the terms mentioned And for so doing, this document shall constitute good and sufficient authority and declaration
+                </Text>
+              </View>
+              <View style={{ width: "100%", marginTop: 117 }}>
+                { }
+                {/* Client Section */}
+                <View style={[styles.clientForm, { alignItems: "center",  paddingHorizontal: 10 }]}>
+
+                  {/* Client Name */}
+                  <View style={[styles.clientFormChild, {  marginBottom: 20, marginTop: 2 }]}>
+                    <Text
+                      style={{
+                        marginBottom: 5,
+                        textTransform: "capitalize",
+                        fontWeight: "bold",
+                        minWidth: "100%",
+                        borderBottom: "1px solid black",
+                        textAlign: "center"
+                      }}
+                    >
+                      {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || "") || ""}
+                    </Text>
+                    <Text style={{ marginBottom: 30, textAlign: "center" }}>Client’s full name</Text>
+                  </View>
+
+                  {/* Client Signature */}
+                  <View style={[styles.clientFormChild, { alignSelf: "center", width: "100%", marginTop: 5 }]}>
+                    <ClientSignatureFunction
+                      felidData={felidData}
+                      familyJsonArray={familyJsonArray}
+                      page={"user"}
+                      isPdf={true}
+                    />
+                    <Text style={[styles.text, styles.bold, { textAlign: "center", marginTop: 8 }]}>
+                      Signature of Client
+                    </Text>
+                  </View>
+
+                  {/* Client Date */}
+                   <View style={[styles.clientFormChild, { alignItems: "center", marginTop: 2 }]}>
+                      <Text
+                        style={{
+                          fontWeight: "bold",
+                          marginBottom: 5,
+                          minWidth: "100%",
+                          borderBottom: "1px solid black"
+                        }}
+                      >
+                      {
+                        !familyJsonArray[0]?.date_signature_client ||
+                          familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00"
+                          ? ""
+                          : <ConvertTime _date={familyJsonArray[0]?.date_signature_client} format={"DD-MM-YYYY"} />
+                      }
+                    </Text>
+                    <Text style={{ marginBottom: 30 }}>Date</Text>
+                  </View>
+                </View>
+
+                {/* RCIC Section */}
+                <View style={{ width: "100%", marginTop: 15 }}>
+                  <View style={[styles.clientForm, {  marginTop: 20, paddingHorizontal: 10 }]}>
+
+                    {/* RCIC Name */}
+                    <View style={[styles.clientFormChild, { marginBottom: 20, marginTop: 2 }]}>
+                      <Text
+                        style={{
+                          marginBottom: 5,
+                          textTransform: "capitalize",
+                          fontWeight: "bold",
+                          minWidth: "100%",
+                          borderBottom: "1px solid black",
+                          textAlign: "center"
+                        }}
+                      >
                         Harpreet Kaur
                       </Text>
-                      <Text style={{ margin: "0 0 30px 0" }}>                  Name of RCIC
-                      </Text>
+                      <Text style={{ textAlign: "center" }}>Name of RCIC</Text>
                     </View>
-                    <View style={[styles.clientFormChild, { alignSelf: "center" }]}>
-                      <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-                        <View style={{ width: "100%" }}>
-                          <RCICSignatureFunction isPdf={true} felidData={felidData} />
-                          <Text style={[styles.text, styles.textBold]}>Signature of RCIC</Text>
 
-                        </View>
-                      </View>
-
+                    {/* RCIC Signature */}
+                    <View style={[styles.clientFormChild, { width: "100%", alignItems: "center", marginBottom: 20, marginTop: 2 }]}>
+                      <RCICSignatureFunction isPdf={true} felidData={felidData} />
+                      <Text style={[styles.text, styles.bold, { marginTop: 8, textAlign: "center" }]}>Signature of RCIC</Text>
                     </View>
-                    <View style={styles.clientFormChild}>
-                      <Text className="para_gap" style={{ margin: 0, textDecoration: "underline" }}>
-                        {(!felidData?.date_signature_rcic || felidData?.date_signature_rcic === "0000-00-00" || felidData?.date_signature_rcic === "0000-00-00 00:00:00")
-                          ? "____________"
-                          : moment(felidData?.date_signature_rcic).format("DD-MM-YYYY")}
+
+                    {/* RCIC Date */}
+                    <View style={[styles.clientFormChild, { alignItems: "center", marginTop: 2 }]}>
+                      <Text
+                        style={{
+                          fontWeight: "bold",
+                          marginBottom: 5,
+                          minWidth: "100%",
+                          borderBottom: "1px solid black"
+                        }}
+                      >
+                        {
+                          !felidData?.date_signature_rcic ||
+                            felidData?.date_signature_rcic === "0000-00-00" ||
+                            felidData?.date_signature_rcic === "0000-00-00 00:00:00"
+                            ? ""
+                            : <ConvertTime _date={felidData?.date_signature_rcic} format={"DD-MM-YYYY"} />
+                        }
                       </Text>
-                      <Text style={{ margin: "0 0 30px 0" }}>Date</Text>
+                      <Text>Date</Text>
                     </View>
                   </View>
                 </View>
               </View>
+
+
             </View>
 
           </View>
@@ -564,17 +670,17 @@ const RecruitmentAgrement = () => {
                   >
                     <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
                     <View>
-                      <View
-                        style={{
-                          width: 100,
-                          height: 50,
-                          border: "1px solid #ccc",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {felidData?.initial ? (
+                      {felidData?.initial ? (
+                        <View
+                          style={{
+                            width: 100,
+                            height: 50,
+                            border: "1px solid #ccc",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
                           <Text
                             style={{
                               display: "inline-block",
@@ -585,17 +691,18 @@ const RecruitmentAgrement = () => {
                           >
                             <InitialFunction initial={felidData?.initial} />
                           </Text>
-                        ) : (
-                          <View
-                            style={{
-                              display: "inline-block",
-                              width: 100,
-                              height: 50,
-                              border: "1px solid #ccc",
-                            }}
-                          />
-                        )}
-                      </View>
+                        </View>
+
+                      ) : (
+                        <View
+                          style={{
+                            display: "inline-block",
+                            width: 100,
+                            height: 50,
+                            border: "1px solid #ccc",
+                          }}
+                        />
+                      )}
                     </View>
                   </View>
                 </View>
@@ -614,6 +721,7 @@ const styles = StyleSheet.create({
     fontFamily: "Times-Roman",
     fontSize: 12,
     lineHeight: 1.5,
+    color: "#323232"
   },
   section: {
     // marginBottom: 10
@@ -622,13 +730,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginBottom: 10,
     fontWeight: "bold",
-    marginTop: 20
+    marginTop: 20,
+    color: "#000"
   },
   subHeader: {
     fontSize: 12,
     marginBottom: 5,
     marginTop: 10,
     fontWeight: "bold",
+    color: "#000"
   },
   text: {
     marginBottom: 5,
@@ -650,6 +760,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 15,
     fontWeight: "bold",
+    color: "#000"
   },
   clientForm: {
     display: "flex",
@@ -683,7 +794,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#f0f0f0",
   },
   bold: {
-    fontWeight: "bold"
+    fontWeight: "bold",
+    color: "#000"
   },
   container: { display: "flex", flexDirection: "row", justifyContent: "space-between", marginTop: 30 },
   box: { width: "45%" },

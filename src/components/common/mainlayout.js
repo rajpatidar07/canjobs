@@ -66,9 +66,9 @@ import Federalpr from "../admin/federalpr";
 import PartnerDetails from "../agent/partnerDetails";
 import SharePointDocument from "./Document folder/SharePointDocument";
 import Newpdf from "./Adobe/newpdf";
-import AgreementOne from "../common/Retaineragreement/Agreement native/AgreementOne";
+import ExpressEntryPdf from "./Retaineragreement/Agreement native/ExpressEntryPdf";
 import SignaturePadComponent from "./Retaineragreement/SignaturePadComponent";
-import HtmlAgreementOne from "./Retaineragreement/Html/HtmlAgreementOne";
+import ExpressEntryHtml from "./Retaineragreement/Html/ExpressEntryHtml";
 import WebhookComponent from "./webHook";
 import { ToastContainer } from "react-toastify";
 import UserSigningPage from "./Retaineragreement/UserSigningPage";
@@ -171,7 +171,7 @@ function MainLayout() {
         <Route path="/resetpassword/:id" element={<ResetPassword />} />
         <Route exact path="/linkedin" component={LinkedInCallback} />
         <Route exact path="/signagreement" element={<UserSigningPage />} />
-        <Route path="/agreeone" element={<AgreementOne />} />
+        <Route path="/agreeone" element={<ExpressEntryPdf />} />
         <Route
           path="/initial_consultation"
           element={<InitialConsultationAgreement />}
@@ -272,7 +272,7 @@ function MainLayout() {
             <StudyAdminLoginFrom setLoginCondition={setLoginCondition} />
           }
         />
-        <Route path="/agreepreivew" element={<HtmlAgreementOne />} />
+        <Route path="/agreepreivew" element={<ExpressEntryHtml />} />
         <Route
           path="/more_than_one_applicant"
           element={<MoreThanOneApplicantAgreementPdf />}

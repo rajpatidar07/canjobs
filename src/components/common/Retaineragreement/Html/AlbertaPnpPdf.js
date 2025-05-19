@@ -1,92 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
-    Page, Text, View, Document, StyleSheet, BlobProvider, Image, PDFViewer, Link,
-} from '@react-pdf/renderer';
-import { AddSharePointDOcument, AddUpdateAgreement } from '../../../../api/api';
-import InitialFunction from '../CommonThings/InitialFunction';
-import { ClientSignatureFunction } from '../CommonThings/ClientSignatureFunctionHtml';
-import { RCICSignatureFunction } from '../CommonThings/RCICSignatureFunction';
-import ConvertTime from '../../Common function/ConvertTime';
+    Document,
+    Page,
+    Text,
+    View,
+    StyleSheet,
+    Image,
+    PDFViewer,
+    BlobProvider,
+    Link,
+} from "@react-pdf/renderer";
+import moment from "moment";
+import { AddSharePointDOcument, AddUpdateAgreement } from "../../../../api/api";
+import InitialFunction from "../CommonThings/InitialFunction";
+import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
+import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
+import ConvertTime from "../../Common function/ConvertTime";
+// import { toast } from "react-toastify";
 
-const styles = StyleSheet.create({
-    page: {
-        padding: 30,
-        fontFamily: "Times-Roman",
-        fontSize: 12,
-        lineHeight: 1.5,
-        color: "#323232"
-    },
-    section: {
-        // marginBottom: 10
-    },
-    header: {
-        fontSize: 14,
-        marginBottom: 10,
-        fontWeight: "bold",
-        color: "#000000"
-    },
-    subHeader: {
-        fontSize: 12,
-        marginBottom: 5,
-        fontWeight: "bold",
-        color: "#000000"
-    },
-    text: {
-        marginBottom: 5,
-        padding: 2,
-    },
-    image: {
-        width: "140px",
-        padding: 5,
-        // marginBottom: 10
-    },
-    initial: {
-        // marginTop: 10,
-        textAlign: "right",
-    },
-    textunderline: {
-        textDecoration: "underline",
-    },
-    definition: {
-        marginTop: 10,
-        fontSize: 15,
-        fontWeight: "bold",
-    },
-    clientForm: {
-        display: "flex",
-        flexDirection: "row",
-    },
-    clientFormChild: {
-        flex: 1,
-        padding: 10,
-    },
-    miscellaneous: {
-        margin: 10,
-        fontSize: 16,
-    },
-    table: {
-        display: "flex",
-        flexDirection: "column",
-        width: "100%",
-        border: "1px solid black",
-    },
-    row: {
-        display: "flex",
-        flexDirection: "row",
-        borderBottom: "1px solid black",
-    },
-    cell: {
-        flex: 1,
-        padding: 5,
-        borderRight: "1px solid #333",
-    },
-    headerCell: {
-        backgroundColor: "#f0f0f0",
-    },
-    signatureBox: { width: "100%", height: 50, border: "1px solid #ccc", display: "flex", alignItems: "center", justifyContent: "center" },
-
-});
-const ThreeColumnRerainerAgreement = () => {
+const AlbertaPnpPdf = () => {
     const [blobData, setBlobData] = useState();
     const data = localStorage.getItem("agreementStateData");
     const {
@@ -96,6 +28,7 @@ const ThreeColumnRerainerAgreement = () => {
         folderId: folderID /*, code*/,
     } = JSON.parse(data) || {};
     const familyJsonArray = felidData?.family_json || []
+    /*COnvert blob to file  */
     useEffect(() => {
         const convertBlob = async () => {
             try {
@@ -113,7 +46,9 @@ const ThreeColumnRerainerAgreement = () => {
                     [newBlob],
                     `${felidData?.type.replace(" ", "_")}.pdf`,
                     { type: "application/pdf" }
-                ); try {
+                );
+                // console.log('file = >', file)
+                try {
                     let res = await AddSharePointDOcument(
                         user_id,
                         emp_user_type,
@@ -145,8 +80,8 @@ const ThreeColumnRerainerAgreement = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [blobData]);
     let components = (
-        <View>
-            <View style={{ padding: 10 }}>
+        <View style={{ height: "auto" }}>
+            <View style={{ padding: "10px 20px" }}>
                 <Text
                     style={{ textAlign: "center", fontSize: "24px", marginBottom: 15 }}
                 >
@@ -164,21 +99,20 @@ const ThreeColumnRerainerAgreement = () => {
                         RCIC Membership Number: R533393
                     </Text>
                     <Text style={{ fontWeight: 600 }}>
-                        Client File Number: <Text style={styles.textunderline}> {felidData?.client_file_no || "___________________"}</Text>
+                        Client File Number: {felidData?.client_file_no || "________________"}
                     </Text>
                 </View>
                 <View>
                     <Text>
                         This Retainer Agreement is made this
-                        <Text style={[{ Width: 50, borderBottom: "1px solid black", }, styles.textunderline]}>
-                            {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <ConvertTime _date={felidData?.agreement_date} format={"Do"} />}
-                            {"  "}
+                        <Text style={styles.textunderline}>
+                            {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "_______" : " " + moment(new Date(felidData?.agreement_date)).format("Do") + " "}
                         </Text>
-                        day of{"  "}
-                        <Text style={[{ borderBottom: "1px solid black", minWidth: "50px", }, styles.textunderline]}> {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <ConvertTime _date={felidData?.agreement_date} format={"MMMM"} />}
-                            {"  "}
+                        day of
+                        <Text style={styles.textunderline}>
+                            {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "_______" : " " + moment(new Date(felidData?.agreement_date)).format("MMMM") + " "}
                         </Text>
-                        {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <ConvertTime _date={felidData?.agreement_date} format={"YYYY"} />} between
+                        {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "_______" : " " + moment(new Date(felidData?.agreement_date)).format("YYYY")} between
                         Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur (the
                         “RCIC”), RCIC Membership Number
                         <Text style={styles.textunderline}> R533393</Text>, Phone number
@@ -196,20 +130,21 @@ const ThreeColumnRerainerAgreement = () => {
 
                             {" " + (familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")}
                         </Text>
-                        {" "}(the “Client”), located at
+                        {" "}(the “Client”)
+                        <Text className="p"> , located at </Text>
                         <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
 
-                            {console.log(felidData?.client_address !== "" && felidData.client_address ? ("fgfgfgfg" + felidData.client_address) : "___gfgfggfhgffd_____________", felidData?.client_address)}
+                            {" " + (felidData?.client_address || "        ")}
                         </Text>
-                        , Email
+                        ,{'\n'} Email
                         <Text style={styles.textunderline} className="para_gap">
 
-                            {" " + (felidData?.client_email || "_________________")}
+                            {" " + (felidData?.client_email || "     ")}
                         </Text>
-                        , {'\n'}Contact number
+                        , Contact number
                         <Text style={styles.textunderline} className="para_gap">
 
-                            {" " + (felidData?.client_contact || "_______________")}
+                            {" " + (felidData?.client_contact || "     ")}
                         </Text>
                         .
                     </Text>
@@ -243,9 +178,11 @@ const ThreeColumnRerainerAgreement = () => {
                                 </Text>
                                 <Text style={{ flex: 1 }}>
                                     Date of birth:
-                                    {item.client_date_of_birth
-                                        ? <Text style={{ textDecoration: 'underline' }}><ConvertTime _date={item.client_date_of_birth} format={"DD-MM-YYYY"} /></Text>
-                                        : '_________________'}
+                                    <Text style={{ textDecoration: 'underline' }}>
+                                        {item.client_date_of_birth
+                                            ? moment(item.client_date_of_birth).format('DD-MM-YYYY')
+                                            : '__________'}
+                                    </Text>
                                 </Text>
                             </View>
                         ))}
@@ -321,6 +258,8 @@ const ThreeColumnRerainerAgreement = () => {
                             <Text>
                                 (f) [File maintenance and correspondence with client and IRCC]
                             </Text>
+                            <Text>  (g)[Application submission]</Text>
+                            <Text> (h)[File maintenance and correspondence with client and IRCC]</Text>
                         </View>
                         <Text style={{ marginTop: 15, paddingLeft: 10 }}>
                             The RCIC shall provide the Client with a finalized, signed copy of
@@ -344,7 +283,7 @@ const ThreeColumnRerainerAgreement = () => {
                             https://laws.justice.gc.ca/eng/regulations/SOR-2022-128/index.html
                         </Text>
                     </View>
-                    <View data-list-text="3.">
+                    <View>
                         <Text style={[styles.definition, { fontWeight: 600 }]}>
                             3. Client Responsibilities and Commitments
                         </Text>
@@ -441,193 +380,235 @@ const ThreeColumnRerainerAgreement = () => {
                             </View>
                         </View>
                     </View>
-                    <View data-list-text="4." style={{ marginTop: 220, }}>
+                    <View data-list-text="4." style={{ marginTop: 150 }}>
                         <Text style={[styles.definition, { fontWeight: 600 }]}>
                             4. Payment Schedule
                         </Text>
-                        <View style={{ marginTop: 15, paddingLeft: 10 }}>
-                            Billing method: The Client will be billed by [flat fee with
-                            payment by milestones]. Payment Terms and Conditions
+                        <View style={{ paddingLeft: 10 }}>
+                            <Text>Billing method: The Client will be billed by [flat fee with
+                                payment by milestones]. Payment Terms and Conditions</Text>
                         </View>
-                        <View style={{ borderWidth: 1, borderColor: "#ccc", textAlign: "center" }}>
-                            {[["Fees details", "Amount (CAD)"]].map((row, i) => (
-                                <View key={i} style={{ flexDirection: "row", borderBottomWidth: 1, borderColor: "#ccc" }}>
-                                    {row.map((col, j) => (
-                                        <View key={j} style={{ flex: 1, padding: 1, backgroundColor: "#f0f0f0", borderRightWidth: j === 0 ? 1 : 0, borderColor: "#ccc" }}>
-                                            <Text style={{ color: "blue", fontWeight: "bold" }}>{col}</Text>
-                                        </View>
-                                    ))}
+                        <View
+                            style={[styles.table, { textAlign: "center", marginTop: 5, }]}
+                        >
+                            <View style={styles.row}>
+                                <View style={[styles.cell, styles.headerCell]}>
+                                    <Text style={{ color: "##0c5fa6" }}>Fees details</Text>
                                 </View>
-                            ))}
+                                <View style={[styles.cell, styles.headerCell]}>
+                                    <Text style={{ color: "##0c5fa6" }}>Amount (CAD)</Text>
+                                </View>
+                            </View>
+                            <View style={styles.row}>
+                                <View style={styles.cell}>
+                                    <Text>Professional Fees</Text>
+                                </View>
+                                <View style={styles.cell}>
 
-                            {[
-                                ["Professional Fees", felidData ? felidData?.professional_fees : ""],
-                                ["Disbursement", ""],
-                                ["Courier charges", felidData ? felidData?.courier_charges : ""],
-                                ["Government fees", felidData ? felidData?.government_fees : ""],
-                                ["Administrative fee [as required]", felidData ? felidData?.administrative_fee : ""],
-                                [`Applicable Taxes: `, felidData ? felidData?.application_fees : "0"],
-                                ["Balance (Paid at time of filing):", felidData ? felidData?.balance : ""],
-                                ["Total Cost", felidData ? felidData?.total_cost : "", "red"]
-                            ].map(([label, value, color], i) => (
-                                <View key={i} style={{ flexDirection: "row", borderBottomWidth: 1, borderColor: "#ccc" }}>
-                                    <View style={{ flex: 1, padding: 1, borderRightWidth: 1, borderColor: "#ccc" }}>
-                                        <Text style={color ? { color, fontWeight: "bold" } : {}}>{label}</Text>
-                                    </View>
-                                    <View style={{ flex: 1, padding: 1 }}>
-                                        <Text>{value}</Text>
-                                    </View>
+                                    <Text>{felidData?.professional_fees}</Text>
                                 </View>
-                            ))}
+                            </View>
+                            <View style={styles.row}>
+                                <View style={styles.cell}><Text>Disbursement</Text>
+                                </View>
+                                <View style={styles.cell}><Text></Text>
+                                </View>
+                            </View>
+                            <View style={styles.row}>
+                                <View style={styles.cell}><Text>Courier charges</Text>
+                                </View>
+                                <View style={styles.cell}><Text>{felidData?.courier_charges}</Text>
+                                </View>
+                            </View>
+                            <View style={styles.row}>
+                                <View style={styles.cell}><Text>Government fees</Text>
+                                </View>
+                                <View style={styles.cell}><Text>{felidData?.government_fees}</Text>
+                                </View>
+                            </View>
+                            <View style={styles.row}>
+                                <View style={styles.cell}>
+
+                                    <Text>Administrative fee [as required]</Text>
+                                </View>
+                                <View style={styles.cell}>
+
+                                    <Text>{felidData?.administrative_fee}</Text>
+                                </View>
+                            </View>
+                            <View style={styles.row}>
+                                <View style={styles.cell}>
+                                    <Text>ApplicableTaxes: {felidData?.gst || "0"}%</Text>
+                                </View>
+                                <View style={styles.cell}>
+
+                                    <Text>{felidData?.application_fees}</Text>
+                                </View>
+                            </View>
+                            <View style={styles.row}>
+                                <View style={styles.cell}>
+                                    <Text>Balance (Paid at time of filing):</Text>
+                                </View>
+                                <View style={styles.cell}>
+
+                                    <Text>{felidData?.balance}</Text>
+                                </View>
+                            </View>
+                            <View style={styles.row}>
+                                <View style={styles.cell}>
+                                    <Text style={{ color: "red" }}>Total Cost</Text>
+                                </View>
+                                <View style={styles.cell}>
+
+                                    <Text>{felidData?.total_cost}</Text>
+                                </View>
+                            </View>
                         </View>
-
-
-                        <Text style={{ marginTop: 15, paddingLeft: 10 }}>
-                            Invoice Frequency: The RCIC must provide an Invoice to the Client
-                        </Text>
-                        <Text style={{ marginTop: 15, paddingLeft: 10 }}>
-                            Note: The courier charges and Government fees based on current
-                            rates and may change anytime on or before submission.
-                        </Text>
-
-                        <View style={{ marginTop: 10, backgroundColor: '#fff', padding: 8 }}>
-                            {/* Table Header */}
-                            <View style={{ flexDirection: 'row', borderWidth: 1, borderColor: '#000000', borderBottom: "none", orderLeft: "none", }}>
-                                {[
-                                    'RCIC Service Milestone',
-                                    'Estimated Date Completion',
-                                    'Professional Fees (Non-Refundable)',
-                                    'Applicable Retainer Fee for this stage (Non- Refundable)',
-                                    'Applicable Government Processing Fee',
-                                ].map((title, i, arr) => (
-                                    <View
-                                        key={i}
-                                        style={{
-                                            flex: 1,
-                                            padding: 4,
-                                            borderRightWidth: i === arr.length - 1 ? 0 : 1,
-                                            borderColor: '#000000',
-                                        }}
-                                    >
-                                        <Text style={{ fontSize: 6, fontWeight: 'bold', color: 'blue' }}>
-                                            {title}
+                        <View>
+                            <Text style={{ marginTop: 15, paddingLeft: 10 }}>
+                                Invoice Frequency: The RCIC must provide an Invoice to the Client
+                            </Text>
+                            <Text style={{ marginTop: 15, paddingLeft: 10 }}>
+                                Note: The courier charges and Government fees based on current
+                                rates and may change anytime on or before submission.
+                            </Text>
+                        </View>
+                        <View style={{ height: 185 }}></View>
+                        <View style={[styles.table, { marginTop: 50 }]}>
+                            <View style={styles.row}>
+                                <View style={styles.cell}>
+                                    <Text style={{ color: "##0c5fa6" }}>
+                                        RCIC Service Milestone
+                                    </Text>
+                                </View>
+                                <View style={styles.cell}>
+                                    <Text style={{ color: "##0c5fa6" }}>
+                                        Estimated date of Completion
+                                    </Text>
+                                </View>
+                                <View style={styles.cell}>
+                                    <Text style={{ color: "##0c5fa6" }}>
+                                        Professional Fees (Non-Refundable)
+                                    </Text>
+                                </View>
+                                <View style={styles.cell}>
+                                    <Text style={{ color: "##0c5fa6" }}>
+                                        Applicable Retainer Fee for this stage (Non- Refundable)
+                                    </Text>
+                                </View>
+                                <View style={styles.cell}>
+                                    <Text style={{ color: "##0c5fa6" }}>
+                                        Applicable Government Processing Fee
+                                    </Text>
+                                </View>
+                            </View>
+                            <View style={styles.row}>
+                                <View style={[styles.cell, { height: "280px" }]}>
+                                    <Text>
+                                        <Text style={{ marginTop: 10, fontSize: "10px" }}>
+                                            Step 1 (PNP) Completes upon signing the retainer and sharing the checklists and intake sheet with client and data gathering
                                         </Text>
-                                    </View>
-                                ))}
-                            </View>
-
-                            {/* Stage 1 */}
-                            <View style={{ flexDirection: 'row', borderWidth: 1, borderColor: '#000000', borderBottom: "none" }}>
-                                <View style={{ flex: 1, padding: 4, borderRightWidth: 1, borderColor: '#000000' }}>
-                                    <Text style={{ fontSize: 6 }}>
-                                        Stage 1: Work Permit Completes upon signing the retainer and sharing the checklists and intake sheet with client and data gathering Filling out the forms, information verification and completeness check, preparing the application package and payment is due before final submission of application. Provide proof of submission to the client
                                     </Text>
                                 </View>
-                                <View style={{ flex: 1, padding: 4, borderRightWidth: 1, borderColor: '#000000' }}>
-                                    <Text style={{ fontSize: 6 }}></Text>
-                                </View>
-                                <View style={{ flex: 1, padding: 4, borderRightWidth: 1, borderColor: '#000000' }}>
-                                    <Text style={{ fontSize: 6 }}>Non-refundable</Text>
-                                </View>
-                                <View style={{ flex: 1, padding: 4, borderRightWidth: 1, borderColor: '#000000' }}>
-                                    <Text style={{ fontSize: 6 }}>
-                                        ${felidData?.applicable_retainer_fee_stape_1 || '2500'} (Service Charges for Work Permit Application for Principal Applicant and Dependent Spouse)
+                                <View style={styles.cell}>
+                                    <Text>
+                                        <br />
                                     </Text>
                                 </View>
-                                <View style={{ flex: 1, padding: 4 }}>
-                                    <Text style={{ fontSize: 6 }}>
-                                        ${felidData?.applicable_government_processing_fee_stape_1 || '580'} (GovernmentApplication Fees and biometrics fee for Work Permit Application for Principal Applicant and Dependent Spouse)
+                                <View style={styles.cell}>
+                                    <Text>Non-refundable</Text>
+                                </View>
+                                <View style={[styles.cell, { fontSize: "10px" }]}>
+                                    <Text>{felidData?.applicable_retainer_fee_stape_1}</Text>
+                                </View>
+                                <View style={[styles.cell, { fontSize: "10px" }]}>
+                                    <Text>
+                                        {felidData?.applicable_government_processing_fee_stape_1}
                                     </Text>
                                 </View>
                             </View>
-
-                            {/* Stage 2 */}
-                            <View style={{ flexDirection: 'row', borderWidth: 1, borderColor: '#000000', borderBottom: "none" }}>
-                                <View style={{ flex: 1, padding: 4, borderRightWidth: 1, borderColor: '#000000' }}>
-                                    <Text style={{ fontSize: 6 }}>
-                                        Stage2 (PNP) - completes upon signing the retainer and sharing the checklists and intake sheet with client Data gathering, filling out the forms, information verification and completeness check, preparing the application package and payment is due before final submission of application. Provide proof of submission to the client
+                            <View style={styles.row}>
+                                <View style={styles.cell}>
+                                    <Text style={{ marginTop: 10, marginBottom: 15, fontSize: "10px" }}>
+                                        Step 2 (PR) Filling out the forms, information verification and completeness check, preparing the application package
+                                        {'/n'}{'/n'}
+                                        Payment is due before final submission of application.
+                                        {'/n'}{'/n'}
+                                        Provide proof of submission to the client
                                     </Text>
                                 </View>
-                                <View style={{ flex: 1, padding: 4, borderRightWidth: 1, borderColor: '#000000' }}>
-                                    <Text style={{ fontSize: 6 }}></Text>
-                                </View>
-                                <View style={{ flex: 1, padding: 4, borderRightWidth: 1, borderColor: '#000000' }}>
-                                    <Text style={{ fontSize: 6 }}>
-                                        Non-refundable All payments made are nonrefundable and total service charges to be collected regardless, whether the client/s withdraw from the file at this stage. The government fee and courier charges must be paid apart from professional fees payment scheduled at this stage
+                                <View style={styles.cell}></View>
+                                <View style={[styles.cell, { fontSize: "10px" }]}>
+                                    <Text>Non-refundable</Text>
+                                    <Text style={{ marginTop: 10, marginBottom: 28 }}>
+                                        All payments made are non- refundable and total service
+                                        charges to be collected regardless, whether the client/ s
+                                        withdraw from the file at this stage. The government fee and
+                                        courier charges must be paid apart from professional fees
+                                        payment scheduled at this stage
                                     </Text>
                                 </View>
-                                <View style={{ flex: 1, padding: 4, borderRightWidth: 1, borderColor: '#000000' }}>
-                                    <Text style={{ fontSize: 6 }}>
-                                        ${felidData?.applicable_retainer_fee_stape_2 || '2000'}(Service Charges for PNP application for Work Permit Application for Principal Applicant and Dependent Spouse)
-                                    </Text>
+                                <View style={[styles.cell, { fontSize: "10px" }]}>
+                                    <Text>{felidData?.applicable_retainer_fee_stape_2}</Text>
                                 </View>
-                                <View style={{ flex: 1, padding: 4 }}>
-                                    <Text style={{ fontSize: 6 }}>
-                                        ${felidData?.applicable_government_processing_fee_stape_2 || '480'}(Government application fees for PNP Application es forWork Permit Application for Principal Applicant and Dependent Spouse)
-                                    </Text>
-                                </View>
-                            </View>
-
-                            {/* Stage 3 */}
-                            <View style={{ flexDirection: 'row', borderWidth: 1, borderColor: '#000000' }}>
-                                <View style={{ flex: 1, padding: 4, borderRightWidth: 1, borderColor: '#000000' }}>
-                                    <Text style={{ fontSize: 6 }}>
-                                        Stage3 (Federal PR) - sharing the checklists and intake sheet with client Data gathering, filling out the forms, information verification and completeness check, preparing the application package and payment is due before final submission of application. Provide proof of submission to the client
-                                    </Text>
-                                </View>
-                                <View style={{ flex: 1, padding: 4, borderRightWidth: 1, borderColor: '#000000' }}>
-                                    <Text style={{ fontSize: 6 }}></Text>
-                                </View>
-                                <View style={{ flex: 1, padding: 4, borderRightWidth: 1, borderColor: '#000000' }}>
-                                    <Text style={{ fontSize: 6 }}>
-                                        Non-refundable All payments made are nonrefundable and total service charges to be collected regardless, whether the client/ s withdraw from the file at this stage. The government fee and courier charges must be paid apart from professional fees payment scheduled at this stage
-                                    </Text>
-                                </View>
-                                <View style={{ flex: 1, padding: 4, borderRightWidth: 1, borderColor: '#000000' }}>
-                                    <Text style={{ fontSize: 6 }}>
-                                        ${felidData?.applicable_retainer_fee_stape_3 || '2000'}(Service Charges for Federal PR Application es for Work Permit Application for Principal Applicant and Dependent Spouse)
-                                    </Text>
-                                </View>
-                                <View style={{ flex: 1, padding: 4 }}>
-                                    <Text style={{ fontSize: 6 }}>
-                                        ${felidData?.applicable_government_processing_fee_stape_3 || '3220'} (Government application fees and Biometrics fees for es for Work Permit Application for Principal Applicant and Dependent Spouse)
+                                <View style={[styles.cell, { fontSize: "10px" }]}>
+                                    <Text>
+                                        {felidData?.applicable_government_processing_fee_stape_2}
                                     </Text>
                                 </View>
                             </View>
                         </View>
-
                         <View style={{ marginTop: 15, paddingLeft: 10 }}>
                             <View>
                                 <Text style={{ fontWeight: "bold" }}>
 
-                                    Initial Amount: (Non-Refundable): $3,080{`\n`}
-                                    Balance (Non-Refundable): $2840{`\n`}
-                                    Balance (Non-Refundable): $5220{`\n`}
-
+                                    TotalAmount (Non-Refundable) (Paid at signing of contract and
+                                    sharing of checklist)
+                                </Text>
+                                :
+                                <Text style={styles.textunderline}>
+                                    {felidData?.total_amount_signing_of_contract} $
+                                </Text>
+                            </View>
+                            <View>
+                                <Text style={{ fontWeight: "bold" }}>
+                                    Balance (Non-Refundable) (Paid at time of filing)
+                                </Text>
+                                :
+                                <Text style={styles.textunderline}>
+                                    {felidData?.balance_paid_at_time_of_filing} $
                                 </Text>
                             </View>
                         </View>
-
                         <View id="l5" style={{ paddingLeft: 10 }}>
-                            <Text style={{ marginTop: 15 }}>Note:
-                                There will be an additional fee, or a new fee arrangement will be agreed upon for government's any further request for additional information/documentation of up to $1000.00 such as updating the forms, asking for immigration status update, documents related to marital status change, procedural fairness response or preparing and submitting statutory declarations, affidavits etc.</Text>
-                            <View style={{ marginTop: 10 }}>
-                                <View style={{ marginTop: 20, flexDirection: 'row' }}>
+                            <Text style={{ marginTop: 15 }}>Note:</Text>
+                            <View >
+                                <View style={{ flexDirection: 'row' }}>
                                     <Text style={{ width: 20, fontWeight: 'bold' }}>•</Text>
                                     <Text style={{ flex: 1 }}>
-                                        If a fee has been quoted in this Retainer, then, while the RCIC expects that his fee will not exceed the
+                                        There will be an additional fee, or a new fee arrangement
+                                        will be agreed upon for government’s any further request for
+                                        additional information/documentation of up to $1000.00 such as
+                                        updating the forms, asking for immigration status update,
+                                        documents related to marital status change, procedural
+                                        fairness response or preparing and submitting statutory
+                                        declarations, affidavits etc.
                                     </Text>
                                 </View>
                                 <View style={{ marginTop: 20, flexDirection: 'row' }}>
                                     <Text style={{ width: 20, fontWeight: 'bold' }}>•</Text>
                                     <Text style={{ flex: 1 }}>
-                                        Amount quoted, the RCIC reserves the right to charge more in appropriate cases, such as immediate and pressing circumstances, the requirement for work outside normal business hours, or other special demands made by the client.
+                                        If a fee has been quoted in this Retainer, then, while the
+                                        RCIC expects that his fee will not exceed the
                                     </Text>
                                 </View>
                                 <View style={{ marginTop: 20, flexDirection: 'row' }}>
                                     <Text style={{ width: 20, fontWeight: 'bold' }}>•</Text>
                                     <Text style={{ flex: 1 }}>
-                                        The RCIC reserves the right to alter the amount of the final account to reflect the remaining balance of the fees owed plus any Disbursements and fees for additional services to which the parties previously agreed.
+                                        The RCIC reserves the right to alter the amount of the final
+                                        account to reflect the remaining balance of the fees owed plus
+                                        any Disbursements and fees for additional services to which
+                                        the parties previously agreed.
                                     </Text>
                                 </View>
                                 <View style={{ marginTop: 30, flexDirection: 'row' }}>
@@ -1206,14 +1187,13 @@ const ThreeColumnRerainerAgreement = () => {
                     <View
                         data-list-text="19."
                         style={{
-                            marginTop: 20,
+                            marginTop: 25,
                             fontWeight: "300",
                             flexDirection: "row"
                         }}
                     >
-                        <Text style={{ width: 20, fontWeight: 'bold' }}>19.</Text>
                         <Text style={{ flex: 1 }}>
-                            The company and RCIC is not part of the hiring process and is
+                            <Text style={{ width: 20, fontWeight: 'bold' }}>19.</Text> The company and RCIC is not part of the hiring process and is
                             just acting as representative for filing the application from the
                             applicant side. The company and RCIC will not be responsible for
                             authenticity or legitimacy of any documents submitted in support
@@ -1236,7 +1216,7 @@ const ThreeColumnRerainerAgreement = () => {
                             RETAINER AGREEMENT
                         </Text>
                     </View>
-                    <View style={{ marginTop: 50 }}>
+                    <View style={{}}>
                         {/* Contact Information Header */}
                         <View>
                             {/* Contact Information Header */}
@@ -1411,220 +1391,211 @@ const ThreeColumnRerainerAgreement = () => {
                         </View>
 
                         {/* Agreement Signature */}
-                        <Text style={{ marginTop: 30 }}>
+                        <Text style={{}}>
                             IN WITNESS Where of this Agreement has been duly executed by the parties
                             hereto on the date first above written.
                         </Text>
+                        <View style={styles.container}>
+                            {/* Right Signature Box (Client) */}
 
-                        <View style={{ flexDirection: "row", justifyContent: "space-between", marginBottom: 20 }}>
-                            {/* Signature of Client */}
-                            <View style={{ width: "50%", padding: 10 }}>
+                            <View style={styles.box}>
                                 <ClientSignatureFunction
                                     felidData={felidData}
                                     familyJsonArray={familyJsonArray}
                                     page={"user"}
                                     isPdf={true}
                                 />
-                                <Text style={{ textAlign: "center", marginTop: 5 }}>Signature of Client</Text>
-
-                                <Text style={[{ textAlign: "center", textTransform: "capitalize", marginTop: 10, borderBottom: "1px solid black", width: "100%" }]}>
-                                    {familyJsonArray[0]?.client_first_name || ""} {familyJsonArray[0]?.client_last_name || ""}
-                                </Text>
-                                <Text style={{ textAlign: "center" }}>Name of Client</Text>
-
-                                <Text style={[{ textAlign: "center", marginTop: 10, borderBottom: "1px solid black", }]}>
-                                    {familyJsonArray[0]?.date_signature_client &&
-                                        familyJsonArray[0]?.date_signature_client !== "0000-00-00 00:00:00" &&
-                                        familyJsonArray[0]?.date_signature_client !== "0000-00-00"
-                                        ? <ConvertTime _date={felidData.date_signature_rcic} format={"DD/MM/YYYY"} />
-                                        : " "}
-                                </Text>
-                                <Text style={{ textAlign: "center" }}>Date</Text>
+                                <Text style={[styles.text, styles.textBold]}> Signature of Client</Text>
+                                <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> <ConvertTime _date={felidData.ConvertTime({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" })} format={"DD-MM-YYYY"}/></Text>
                             </View>
 
-                            {/* Signature of RCIC */}
-                            <View style={{ width: "50%", padding: 10 }}>
+                            {/* Left Signature Box (RCIC) */}
+                            <View style={styles.box}>
                                 <RCICSignatureFunction isPdf={true} felidData={felidData} />
-                                <Text style={{ textAlign: "center", marginTop: 5 }}>Signature of RCIC</Text>
-
-                                <Text style={[{ borderBottom: "1px solid black", textAlign: "center", textTransform: "capitalize", marginTop: 10, width: "100%" }]}>
-                                    Harpreet Kaur
-                                </Text>
-                                <Text style={{ textAlign: "center" }}>Name of RCIC</Text>
-
-                                <Text style={[{ borderBottom: "1px solid black", textAlign: "center", marginTop: 10, width: "100%" }]}>
-                                    {felidData?.date_signature_rcic &&
-                                        felidData?.date_signature_rcic !== "0000-00-00 00:00:00" &&
-                                        felidData?.date_signature_rcic !== "0000-00-00"
-                                        ? <ConvertTime _date={felidData.date_signature_rcic} format={"DD/MM/YYYY"} />
-                                        : " "}
-                                </Text>
-                                <Text style={{ textAlign: "center" }}>Date</Text>
+                                <Text style={[styles.text, styles.textBold]}>Signature of RCIC</Text>
+                                <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {felidData?.ConvertTime({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" })  !== "0000-00-00 00:00:00" && felidData?.ConvertTime({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" })  !== "0000-00-00" && felidData?.ConvertTime({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" })  ? moment(felidData.ConvertTime({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" }) ).format("DD/MM/YYYY") : "______________"}</Text>
                             </View>
                         </View>
+                    </View>
+
+                </View>
+                <View style={{ marginTop: 70 }}>
+                    <Text style={[{ textAlign: "center", }, styles.definition]}>
+                        AUTHORIZATION
+                    </Text>
+                    <Text style={{ marginTop: 15 }}>
+                        I {" "}
+                        <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
+                            {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")}
+                        </Text>
+                        {" "} ( here in after referred to as the “client”), here by authorize and
+                        appoint Harpreet kaur (here in after referred to as the “RCIC” with a
+                        CICC# R533393), of CAN Pathways Immigration consultancy
+                        ltd.,(here in after referred to as the “firm”), to represent me in my
+                        application to IRCC.
+                    </Text>
+                    <Text style={{ marginTop: 15 }}>
+                        The RCIC and the firm are authorized to assign any of its staff
+                        members, associates, affiliates, lawyers or the agents to process
+                        any matters in whole or part related to above- mentioned subject as
+                        they deem appropriate.
+                    </Text>
+                    <Text style={{ marginTop: 15 }}>
+                        The RCIC and the firm are authorized to collect information and
+                        communicate with IRCC related to my immigration file. In case of
+                        Online application, I authorize RCIC Harpreet kaur to electronically
+                        sign and submit the application on my behalf.
+                    </Text>
+                    <Text style={{ marginTop: 15 }}>
+                        I also give permission to the RCIC and the firm to post photos on
+                        social media ensuring that my private information is redacted.
+                    </Text>
+                    <Text style={{ marginTop: 15 }}>
+                        In doing so, they my each receive or pay each other any pecuniary
+                        remuneration/benefits that may be acquired directly or indirectly
+                        including those from a third party for the purpose of obtaining a
+                        favorable and expeditious results.
+                    </Text>
+                    <Text style={[{ marginTop: 20 }, styles.definition]}>Declaration</Text>
+                    <View id="l13" style={{ paddingLeft: 10 }}>
+                        <View style={{ marginTop: 17, flexDirection: 'row' }}>
+                            <Text style={{ width: 20, fontWeight: 'bold' }}>1</Text>
+                            <Text style={{ flex: 1 }}>
+                                I confirm that neither I nor any other family members included
+                                in my application have presented or will present at any future
+                                date, false and misleading information to either the consultant,
+                                the firm or to the government of Canada.
+                            </Text>
+                        </View>
+                        <View style={{ marginTop: 17, flexDirection: 'row' }}>
+                            <Text style={{ width: 20, fontWeight: 'bold' }}>2</Text>
+                            <Text style={{ flex: 1 }}>
+                                I confirm  that neither I nor any other family members included
+                                in my application have presented or will present at any future
+                                date, false and misleading information to either the consultant,
+                                the firm or to the government of Canada.
+                            </Text>
+                        </View>
+                        <View style={{ marginTop: 17, flexDirection: 'row' }}>
+                            <Text style={{ width: 20, fontWeight: 'bold' }}>3</Text>
+                            <Text style={{ flex: 1 }}>
+                                I confirm that it is my responsibility to ensure the co-operation of my relatives/employers/educational institutes as
+                                needed
+                            </Text>
+                        </View>
+                        <View style={{ marginTop: 17, flexDirection: 'row' }}>
+                            <Text style={{ width: 20, fontWeight: 'bold' }}>4</Text>
+                            <Text style={{ flex: 1 }}>
+                                In the event the Immigration office responsible should contact the Client directly, the Clientis instructed to
+                                notify the RCIC immediately
+                            </Text>
+                        </View>
+                        <View style={{ marginTop: 17, flexDirection: 'row' }}>
+                            <Text style={{ width: 20, fontWeight: 'bold' }}>5</Text>
+                            <Text style={{ flex: 1 }}>
+                                If a refusal of my application is due to medical or criminal issues additional services will have to be agreed on in a
+                                different retainer and new fees negotiated. The steps to resolve any medical or criminal inadmissibility will not form
+                                part of this agreement
+                            </Text>
+                        </View>
+                        <View style={{ marginTop: 17, flexDirection: 'row' }}>
+                            <Text style={{ width: 20, fontWeight: 'bold' }}>6</Text>
+                            <Text style={{ flex: 1 }}>
+                                I undertake to inform the consultant, the firm or the Government of Canada of any change in marital or civic status
+                                or change of my physical address and contact information for myself and all persons included in my application. If
+                                such changes occur and it requires additional services not herein referred to, it will be agreed upon apart from this
+                                commitment
+                            </Text>
+                        </View>
+                        <View style={{ marginTop: 17, flexDirection: 'row' }}>
+                            <Text style={{ width: 20, fontWeight: 'bold' }}>7</Text>
+                            <Text style={{ flex: 1 }}>
+                                I understand that The RCIC’s obligations under the Engagement are null and void if the Client knowingly provides
+                                any inaccurate, misleading or false material information. The Client’s financial obligations remain
+                            </Text>
+                        </View>
+                        <View style={{ marginTop: 17, flexDirection: 'row' }}>
+                            <Text style={{ width: 20, fontWeight: 'bold' }}>8</Text>
+                            <Text style={{ flex: 1 }}>
+                                I understand that the processing times are only an estimate given by the Government and that I will not hold the
+                                consultant, the firm or the Government of Canada responsible for any delays except where it is due to negligence
+                                from the firm.
+                            </Text>
+                        </View>
+                        <View style={{ marginTop: 17, flexDirection: 'row' }}>
+                            <Text style={{ width: 20, fontWeight: 'bold' }}>9</Text>
+                            <Text style={{ flex: 1 }}>
+                                I agree that if my application is refused because I neglected to provide the required documents within the notified
+                                time frame the consultant, the firm or the Government of Canada will not be held responsible.
+                            </Text>
+                        </View>
 
                     </View>
+                    <View style={{ marginTop: 20 }}>
+                        <Text style={{ flex: 1 }}>
+                            I have read and understood all the terms and steps in the retainer letter above and I agree to all the terms mentioned
+                            And for so doing, this document shall constitute good and sufficient authority and declaration
+                        </Text>
+                    </View>
+                     <View
+                                style={{
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  width: "100%",
+                                  marginTop: 15,
+                                }}
+                              >
+                                <View
+                                  style={[
+                                    styles.clientForm,
+                                    { textAlign: "center", marginTop: 30 },
+                                  ]}
+                                >
+                                  <View style={styles.clientFormChild}>
+                                    <Text
+                                      className="para_gap"
+                                      style={{
+                                        margin: 0,
+                                        marginBottom: 15,
+                                        textDecoration: "underline",
+                                        textTransform: "capitalize",
+                                      }}
+                                    >
+                                      {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ") || "_______________________"}
+                                    </Text>
+                                    <Text style={{ margin: "0 0 30px 0" }}>Client’s full name</Text>
+                                  </View>
+                                  <View style={[styles.clientFormChild, { alignSelf: "center" }]}>
+                                    <ClientSignatureFunction
+                                      felidData={felidData}
+                                      familyJsonArray={familyJsonArray}
+                                      page={"user"}
+                                      isPdf={true}
+                                    />
+                                    <Text style={[styles.text, styles.textBold]}>Signature</Text>
+                                  </View>
+                                  <View style={styles.clientFormChild}>
+                                    <Text
+                                      className="para_gap"
+                                      style={{ margin: 0, textDecoration: "underline" }}
+                                    >
+                                      {!familyJsonArray[0]?.date_signature_client ||
+                                        familyJsonArray[0]?.date_signature_client ===
+                                        "0000-00-00 00:00:00"
+                                        ? "____________"
+                                        : moment(familyJsonArray[0]?.date_signature_client).format(
+                                          "DD-MM-YYYY"
+                                        )}
+                                    </Text>
+                                    <Text style={{ margin: "0 0 30px 0" }}>Date</Text>
+                                  </View>
+                                </View>
+                              </View>
                 </View>
-
-
             </View>
-            <View style={{}}>
-                <Text style={[{ textAlign: "center", }, styles.definition]}>
-                    AUTHORIZATION
-                </Text>
-                <Text style={{ marginTop: 15 }}>
-                    I {" "}
-                    <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
-                        {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")}
-                    </Text>
-                    {" "} ( here in after referred to as the “client”), here by authorize and
-                    appoint Harpreet kaur (here in after referred to as the “RCIC” with a
-                    CICC# R533393), of CAN Pathways Immigration consultancy
-                    ltd.,(here in after referred to as the “firm”), to represent me in my
-                    application to IRCC.
-                </Text>
-                <Text style={{ marginTop: 15 }}>
-                    The RCIC and the firm are authorized to assign any of its staff
-                    members, associates, affiliates, lawyers or the agents to process
-                    any matters in whole or part related to above- mentioned subject as
-                    they deem appropriate.
-                </Text>
-                <Text style={{ marginTop: 15 }}>
-                    The RCIC and the firm are authorized to collect information and
-                    communicate with IRCC related to my immigration file. In case of
-                    Online application, I authorize RCIC Harpreet kaur to electronically
-                    sign and submit the application on my behalf.
-                </Text>
-                <Text style={{ marginTop: 15 }}>
-                    I also give permission to the RCIC and the firm to post photos on
-                    social media ensuring that my private information is redacted.
-                </Text>
-                <Text style={{ marginTop: 15 }}>
-                    In doing so, they my each receive or pay each other any pecuniary
-                    remuneration/benefits that may be acquired directly or indirectly
-                    including those from a third party for the purpose of obtaining a
-                    favorable and expeditious results.
-                </Text>
-                <Text style={[{ marginTop: 20 }, styles.definition]}>Declaration</Text>
-                <View id="l13" style={{ paddingLeft: 10 }}>
-                    <View style={{ marginTop: 17, flexDirection: 'row' }}>
-                        <Text style={{ width: 20, fontWeight: 'bold' }}>1</Text>
-                        <Text style={{ flex: 1 }}>
-                            I confirm that neither I nor any other family members included
-                            in my application have presented or will present at any future
-                            date, false and misleading information to either the consultant,
-                            the firm or to the government of Canada.
-                        </Text>
-                    </View>
-                    <View style={{ marginTop: 17, flexDirection: 'row' }}>
-                        <Text style={{ width: 20, fontWeight: 'bold' }}>2</Text>
-                        <Text style={{ flex: 1 }}>
-                            I confirm  that neither I nor any other family members included
-                            in my application have presented or will present at any future
-                            date, false and misleading information to either the consultant,
-                            the firm or to the government of Canada.
-                        </Text>
-                    </View>
-                    <View style={{ marginTop: 17, flexDirection: 'row' }}>
-                        <Text style={{ width: 20, fontWeight: 'bold' }}>3</Text>
-                        <Text style={{ flex: 1 }}>
-                            I confirm that it is my responsibility to ensure the co-operation of my relatives/employers/educational institutes as
-                            needed
-                        </Text>
-                    </View>
-                    <View style={{ marginTop: 17, flexDirection: 'row' }}>
-                        <Text style={{ width: 20, fontWeight: 'bold' }}>4</Text>
-                        <Text style={{ flex: 1 }}>
-                            In the event the Immigration office responsible should contact the Client directly, the Clientis instructed to
-                            notify the RCIC immediately
-                        </Text>
-                    </View>
-                    <View style={{ marginTop: 17, flexDirection: 'row' }}>
-                        <Text style={{ width: 20, fontWeight: 'bold' }}>5</Text>
-                        <Text style={{ flex: 1 }}>
-                            If a refusal of my application is due to medical or criminal issues additional services will have to be agreed on in a
-                            different retainer and new fees negotiated. The steps to resolve any medical or criminal inadmissibility will not form
-                            part of this agreement
-                        </Text>
-                    </View>
-                    <View style={{  flexDirection: 'row' }}>
-                        <Text style={{ width: 20, fontWeight: 'bold' }}>6</Text>
-                        <Text style={{ flex: 1 }}>
-                            I undertake to inform the consultant, the firm or the Government of Canada of any change in marital or civic status
-                            or change of my physical address and contact information for myself and all persons included in my application. If
-                            such changes occur and it requires additional services not herein referred to, it will be agreed upon apart from this
-                            commitment
-                        </Text>
-                    </View>
-                    <View style={{ marginTop: 17, flexDirection: 'row' }}>
-                        <Text style={{ width: 20, fontWeight: 'bold' }}>7</Text>
-                        <Text style={{ flex: 1 }}>
-                            I understand that The RCIC’s obligations under the Engagement are null and void if the Client knowingly provides
-                            any inaccurate, misleading or false material information. The Client’s financial obligations remain
-                        </Text>
-                    </View>
-                    <View style={{ marginTop: 17, flexDirection: 'row' }}>
-                        <Text style={{ width: 20, fontWeight: 'bold' }}>8</Text>
-                        <Text style={{ flex: 1 }}>
-                            I understand that the processing times are only an estimate given by the Government and that I will not hold the
-                            consultant, the firm or the Government of Canada responsible for any delays except where it is due to negligence
-                            from the firm.
-                        </Text>
-                    </View>
-                    <View style={{ marginTop: 17, flexDirection: 'row' }}>
-                        <Text style={{ width: 20, fontWeight: 'bold' }}>9</Text>
-                        <Text style={{ flex: 1 }}>
-                            I agree that if my application is refused because I neglected to provide the required documents within the notified
-                            time frame the consultant, the firm or the Government of Canada will not be held responsible.
-                        </Text>
-                    </View>
+        </View>
+    );
 
-                </View>
-                <View style={{ marginTop: 20 }}>
-                    <Text style={{ flex: 1 }}>
-                        I have read and understood all the terms and steps in the retainer letter above and I agree to all the terms mentioned
-                        And for so doing, this document shall constitute good and sufficient authority and declaration
-                    </Text>
-                </View>
-                <View
-                    style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        width: "100%",
-                        marginTop: 15,
-                    }}
-                >
-                    <View style={[styles.clientForm, { textAlign: "center", marginTop: 30 }]}>
-                        <View style={styles.clientFormChild}>
-                            <Text style={{ margin: 0, marginTop: 15, borderBottom: "1px solid black", width: "100%", textTransform: "capitalize" }}>
-                                {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ") || ""}
-                            </Text>
-                            <Text style={{ margin: "0 0 30px 0" }}>Client’s full name</Text>
-                        </View>
-                        <View style={[styles.clientFormChild, { alignSelf: "center" }]}>
-                            <ClientSignatureFunction
-                                felidData={felidData}
-                                familyJsonArray={familyJsonArray}
-                                page={"user"}
-                                isPdf={true}
-                            />
-                            <Text style={{ margin: "0 0 50px 0" }}>Signatures</Text>
-                        </View>
-                        <View style={styles.clientFormChild}>
-                            <Text style={{ margin: 0, marginTop: 15, borderBottom: "1px solid black", width: "100%" }}>
-                                {familyJsonArray[0]?.date_signature_client &&
-                                    familyJsonArray[0]?.date_signature_client !== "0000-00-00 00:00:00" &&
-                                    familyJsonArray[0]?.date_signature_client !== "0000-00-00"
-                                    ? <ConvertTime _date={felidData.date_signature_rcic} format={"DD/MM/YYYY"} />
-                                    : " "}
-                            </Text>
-                            <Text style={{ margin: "0 0 30px 0" }}>Date</Text>
-                        </View>
-                    </View>
-                </View>
-            </View >
-        </View >
-    )
     return (
         <BlobProvider
             document={
@@ -1651,39 +1622,39 @@ const ThreeColumnRerainerAgreement = () => {
                             >
                                 <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
                                 <View>
-                                    {felidData?.initial ? (
-                                        <View
-                                            style={{
-                                                width: 100,
-                                                height: 50,
-                                                border: "1px solid #ccc",
-                                                display: "flex",
-                                                alignItems: "center",
-                                                justifyContent: "center",
-                                            }}
-                                        >
-                                            <Text
-                                                style={{
-                                                    display: "inline-block",
-                                                    maxWidth: "100%",
-                                                    maxHeight: "100%",
-                                                    textTransform: "capitalize",
-                                                }}
-                                            >
-                                                <InitialFunction initial={felidData?.initial} />
-                                            </Text>
-                                        </View>
+                                   {felidData?.initial ? (
+                        <View
+                          style={{
+                            width: 100,
+                            height: 50,
+                            border: "1px solid #ccc",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <Text
+                            style={{
+                              display: "inline-block",
+                              maxWidth: "100%",
+                              maxHeight: "100%",
+                              textTransform: "capitalize",
+                            }}
+                          >
+                            <InitialFunction initial={felidData?.initial} />
+                          </Text>
+                        </View>
 
-                                    ) : (
-                                        <View
-                                            style={{
-                                                display: "inline-block",
-                                                width: 100,
-                                                height: 50,
-                                                border: "1px solid #ccc",
-                                            }}
-                                        />
-                                    )}
+                      ) : (
+                        <View
+                          style={{
+                            display: "inline-block",
+                            width: 100,
+                            height: 50,
+                            border: "1px solid #ccc",
+                          }}
+                        />
+                      )}
                                 </View>
                             </View>
                         </View>
@@ -1718,38 +1689,38 @@ const ThreeColumnRerainerAgreement = () => {
                                         <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
                                         <View>
                                             {felidData?.initial ? (
-                                                <View
-                                                    style={{
-                                                        width: 100,
-                                                        height: 50,
-                                                        border: "1px solid #ccc",
-                                                        display: "flex",
-                                                        alignItems: "center",
-                                                        justifyContent: "center",
-                                                    }}
-                                                >
-                                                    <Text
-                                                        style={{
-                                                            display: "inline-block",
-                                                            maxWidth: "100%",
-                                                            maxHeight: "100%",
-                                                            textTransform: "capitalize",
-                                                        }}
-                                                    >
-                                                        <InitialFunction initial={felidData?.initial} />
-                                                    </Text>
-                                                </View>
+                        <View
+                          style={{
+                            width: 100,
+                            height: 50,
+                            border: "1px solid #ccc",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <Text
+                            style={{
+                              display: "inline-block",
+                              maxWidth: "100%",
+                              maxHeight: "100%",
+                              textTransform: "capitalize",
+                            }}
+                          >
+                            <InitialFunction initial={felidData?.initial} />
+                          </Text>
+                        </View>
 
-                                            ) : (
-                                                <View
-                                                    style={{
-                                                        display: "inline-block",
-                                                        width: 100,
-                                                        height: 50,
-                                                        border: "1px solid #ccc",
-                                                    }}
-                                                />
-                                            )}
+                      ) : (
+                        <View
+                          style={{
+                            display: "inline-block",
+                            width: 100,
+                            height: 50,
+                            border: "1px solid #ccc",
+                          }}
+                        />
+                      )}
                                         </View>
                                     </View>
                                 </View>
@@ -1762,4 +1733,108 @@ const ThreeColumnRerainerAgreement = () => {
     );
 };
 
-export default ThreeColumnRerainerAgreement;
+const styles = StyleSheet.create({
+    page: {
+        padding: 30,
+        fontFamily: "Times-Roman",
+        fontSize: 12,
+        lineHeight: 1.5,
+        color: "#323232"
+    },
+    section: {
+        // marginBottom: 10
+    },
+    header: {
+        fontSize: 14,
+        marginBottom: 10,
+        fontWeight: "bold",
+        color: "#000"
+    },
+    subHeader: {
+        fontSize: 12,
+        marginBottom: 5,
+        fontWeight: "bold",
+        color: "#000"
+    },
+    text: {
+        marginBottom: 5,
+        padding: 2,
+        fontSize: 12
+    },
+    image: {
+        width: "140px",
+        padding: 5,
+        // marginBottom: 10
+    },
+    initial: {
+        // marginTop: 10,
+        textAlign: "right",
+    },
+    textunderline: {
+        textDecoration: "underline",
+    },
+    definition: {
+        marginTop: 10,
+        fontSize: 15,
+        fontWeight: "bold",
+        color: "#000"
+    },
+    clientForm: {
+        display: "flex",
+        flexDirection: "row",
+    },
+    clientFormChild: {
+        flex: 1,
+        padding: 10,
+    },
+    miscellaneous: {
+        margin: 10,
+        fontSize: 16,
+    },
+    table: {
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
+        border: "1px solid black",
+    },
+    row: {
+        display: "flex",
+        flexDirection: "row",
+        borderBottom: "1px solid black",
+    },
+    cell: {
+        flex: 1,
+        padding: 10,
+        borderRight: "1px solid #333",
+    },
+    headerCell: {
+        // backgroundColor: "#f0f0f0",
+        color: "blue"
+    },
+    container: { display: "flex", flexDirection: "row", justifyContent: "space-between", marginTop: 30 },
+    box: { width: "45%" },
+    required: { color: "red" },
+    signatureBox: { width: "100%", height: 50, border: "1px solid #ccc", display: "flex", alignItems: "center", justifyContent: "center" },
+    dateLine: { minWidth: 80, borderBottom: "1px solid black", display: "inline-block" },
+    textBold: {
+        fontFamily: "Times-Bold",
+        color: "#000"
+    },
+    title: {
+        fontSize: 14,
+        fontFamily: "Times-Bold",
+    },
+    subtitle: {
+        fontSize: 12,
+        fontFamily: "Times-Bold",
+        marginBottom: 5,
+    },
+    label: {
+        fontSize: 12,
+        fontFamily: "Times-Bold",
+        marginBottom: 5,
+    },
+});
+
+
+export default AlbertaPnpPdf;

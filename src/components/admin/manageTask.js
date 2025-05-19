@@ -43,7 +43,7 @@ export default function ManageTask() {
   const [allTaskList, setAllTaskList] = useState([]);
   const [taskId, setTaskId] = useState(NotifiTaskId)
   const [replyId, setReplyId] = useState(NotifiReplyId)
-  const [searchError, setSearchError] = useState(false);
+  const [searchError, setSearchError] = useState("");
   const [search, setSearch] = useState("");
 
   /*Function to get all user data */
@@ -356,6 +356,7 @@ export default function ManageTask() {
                     setReplyId("")
                     setTaskId("")
                     setSearch("")
+                    setSearchError("")
                   }}
                 >
                   Reset

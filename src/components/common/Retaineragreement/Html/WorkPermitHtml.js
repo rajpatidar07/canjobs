@@ -1,8 +1,8 @@
-import moment from "moment";
 import { useEffect } from "react";
-import  InitialFunction  from "../CommonThings/InitialFunction";
+import InitialFunction from "../CommonThings/InitialFunction";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
+import ConvertTime from "../../Common function/ConvertTime"
 const WorkPermitHtml = ({
   page,
   felidData,
@@ -49,36 +49,13 @@ const WorkPermitHtml = ({
       </div>
      <p> 
   This Retainer Agreement is made this
-  <span class="${felidData?.agreement_date ? "para_gap" : ""}">
-
-  ${felidData?.agreement_date &&
-      felidData?.agreement_date !== "0000-00-00 00:00:00" &&
-      felidData?.agreement_date !== "0000-00-00"
-      ? `<span class="para_gap">${moment(
-        new Date(felidData?.agreement_date)
-      ).format("Do")}</span>`
-      : ""
-    }  </span>
-  day of
-
-    ${felidData?.agreement_date &&
-      felidData?.agreement_date !== "0000-00-00 00:00:00" &&
-      felidData?.agreement_date !== "0000-00-00"
-      ? ` <span class="para_gap">${moment(
-        new Date(felidData?.agreement_date)
-      ).format("MMMM")}</span>`
-      : ""
-    }
+ <span class="para_gap" style="min-Width:50px">
  
-    ${felidData?.agreement_date &&
-      felidData?.agreement_date !== "0000-00-00 00:00:00" &&
-      felidData?.agreement_date !== "0000-00-00"
-      ? ` <span class="para_gap">${moment(
-        new Date(felidData?.agreement_date)
-      ).format("YYYY")}`
-      : "____________"
-    }
-  </span>
+   ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00"?  ConvertTime({ _date: felidData?.agreement_date, format: "Do" }) : ""}  </span>
+   day of
+
+    <span class="para_gap" style="min-Width:50px">${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00"?  ConvertTime({ _date: felidData?.agreement_date, format: "MMMM" }) : ""}</span>
+   ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00"?  ConvertTime({ _date: felidData?.agreement_date, format: "YYYY" }) : " "}
   between Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur (the
   “RCIC”), RCIC Membership Number
   <span>R533393</span>, phone number
@@ -131,12 +108,8 @@ const WorkPermitHtml = ({
         } </span>
         </span>
         <span class="col-6">
-         Date of birth : ${item.client_date_of_birth
-          ? ` <span class="para_gap"> ${moment(
-            item.client_date_of_birth
-          ).format("DD-MM-YYYY")}  </span>`
-          : "___________"
-        } </span>
+         Date of birth : 
+       <span class="para_gap" style="min-width:"50px">${item.client_date_of_birth ? ConvertTime({ _date: item.client_date_of_birth, format: "DD-MM-YYYY" }) : ""} </span>
          </span>`
     )}
       </div>
@@ -850,7 +823,7 @@ services that have been rendered or accounting for the time that has been spent 
   <li data-list-text="18.2">
     <p style="position:relative;">
       <span style="position:absolute; left:0;">18.2</span>
-      <span style="margin-left:40px;">This Agreement constitutes the entire agreement between the parties with respect to the subject matter hereof and supersedes all prior agreements, understandings, warranties, representations, negotiations and discussions, whether oral or written, of the parties except as specifically set forth herein.</span>
+      <span style="margin-left:40px;">This Agreement constitutes the entire agreement between the parties with respect to the subject matter here of and supersedes all prior agreements, understandings, warranties, representations, negotiations and discussions, whether oral or written, of the parties except as specifically set forth herein.</span>
     </p>
   </li>
   <li data-list-text="18.3">
@@ -958,7 +931,8 @@ services that have been rendered or accounting for the time that has been spent 
     <h5 style="font-weight: 600;">Contact Information</h5>
   </li>
 </ol>
-       <h6 class="mb-2">Client Information</h6>
+<div class="mx-5">
+       <h6 class="mb-2">Client</h5>
 <div class="row mb-4">
   <div class="w-50 text-capitalize">
     <strong>Given Name:</strong>
@@ -968,7 +942,7 @@ services that have been rendered or accounting for the time that has been spent 
   </div>
   <div class="w-50 text-capitalize">
     <strong>Family Name:</strong>
-    <div class="border-bottom pb-1 d-inline-block px-2 w-75">
+    <div class="border-bottom pb-1 d-inline-block px-2 w-50">
       ${familyJsonArray[0]?.client_last_name || (emp_user_type === "employee" ? userData?.name?.split(" ")[1] || "" : "")}
     </div>
   </div>
@@ -1005,7 +979,7 @@ services that have been rendered or accounting for the time that has been spent 
 </div>
 
 <!-- RCIC Information -->
-<h6 class="mb-2">RCIC Information</h6>
+<h6 class="mb-2">RCIC</h5>
 <div class="row mb-4">
   <div class=" w-50 text-capitalize">
     <strong>Given Name:</strong>
@@ -1015,7 +989,7 @@ services that have been rendered or accounting for the time that has been spent 
     <strong>Family Name:</strong>
     <div class="border-bottom pb-1 d-inline-block px-2 w-75">Kaur</div>
   </div>
-  <div class="w-50">
+  <div class="w-100">
     <strong>Address:</strong>
     <div class="border-bottom pb-1 d-inline-block px-2 w-75">
       2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7
@@ -1027,14 +1001,15 @@ services that have been rendered or accounting for the time that has been spent 
   </div>
   <div class="w-50">
     <strong>Fax Number:</strong>
-    <div class="border-bottom pb-1 d-inline-block px-2 w-75"></div>
+    <div class="border-bottom pb-1 d-inline-block px-2 w-50"></div>
   </div>
   <div class="w-50">
     <strong>Email Address:</strong>
-    <div class="border-bottom pb-1 d-inline-block px-2 w-75">
+    <div class="border-bottom pb-1 d-inline-block px-2 w-50">
       <a href="mailto:info@canpathways.ca" class="text-decoration-none">info@canpathways.ca</a>
     </div>
   </div>
+</div>
 </div>
 
 <!-- Signatures -->
@@ -1043,54 +1018,54 @@ services that have been rendered or accounting for the time that has been spent 
   <!-- Client Signature -->
   <div class="col-md-6 mb-4">
   ${ClientSignatureFunction({ page, familyJsonArray, felidData })} 
-    <p class="mb-0">Signature of Client</p>
+    <p class="mb-0 text-center">Signature of Client</p>
   </div>
 
   <!-- RCIC Signature -->
   <div class="col-md-6 mb-4">
 ${RCICSignatureFunction({ isPdf: false, felidData })}
-    <p class="mb-0">Signature of RCIC</p>
+    <p class="mb-0 text-center">Signature of RCIC</p>
   </div>
 </div>
 
 <!-- Name Fields -->
 <div class="row mb-4">
-  <div class="col-md-6">
-    <p class="mb-1 text-capitalize">
+  <div class="col-md-6 ">
+    <p class="mb-1 text-capitalize w-100 border-bottom border-dark text-center">
     ${familyJsonArray[0]?.client_first_name ||
       familyJsonArray[0]?.client_last_name
-      ? ` <span class="para_gap text-capitalize w-50">${familyJsonArray[0]?.client_first_name
+      ? ` <span class="text-capitalize">${familyJsonArray[0]?.client_first_name
       } ${familyJsonArray[0]?.client_last_name || ""}</span>`
       : emp_user_type === "employee"
-        ? ` <span class="para_gap text-capitalize w-50">${userData?.name}</span>` ||
+        ? ` <span class="text-capitalize">${userData?.name}</span>` ||
         ""
-        : "_____________________"
+        : " "
     }    </p>
-    <p class="mb-3">Name of Client</p>
+    <p class="mb-3 text-center">Name of Client</p>
   </div>
   <div class="col-md-6">
-    <p class="mb-1 para_gap w-50">Harpreet Kaur</p>
-    <p class="mb-3">Name of RCIC</p>
+    <p class="mb-1 w-100 border-bottom border-dark text-center">Harpreet Kaur</p>
+    <p class="mb-3 text-center">Name of RCIC</p>
   </div>
 </div>
 
 <!-- Signature Date -->
 <div class="row">
   <div class="col-md-6">
-    <p class="mb-1 w-50">
+    <p class="mb-1 w-100 border-bottom border-dark pt-8 text-center">
       ${!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client.startsWith("0000")
-      ? "_____________________________"
-      : `<span>${moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</span>`}
+      ? " "
+      : `<span> ${ConvertTime({ _date: familyJsonArray[0]?.date_signature_client, format: "DD-MM-YYYY" })}</span>`}
     </p>
-    <p>Date</p>
+    <p class="text-center ">Date</p>
   </div>
     <div class="col-md-6">
-    <p class="mb-1 w-50">
-      ${!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client.startsWith("0000")
-      ? "_____________________________"
-      : `<span>${moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</span>`}
+    <p class="mb-1 w-100 border-bottom border-dark pt-8 text-center">
+      ${!felidData.date_signature_rcic || felidData.date_signature_rcic.startsWith("0000")
+      ? " "
+      : `<span> ${ConvertTime({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" })}</span>`}
     </p>
-    <p>Date</p>
+    <p class="text-center ">Date</p>
   </div>
 </div>
 
@@ -1106,9 +1081,9 @@ ${RCICSignatureFunction({ isPdf: false, felidData })}
         ? userData?.name || "" || ""
         : "" || ""
     }</span>( here in after referred to as the “client”),
-        hereby authorize and appoint Harpreet kaur (here in after referred to as
+        here by authorize and appoint Harpreet kaur (here in after referred to as
         the “RCIC” with a CICC# R533393), of CAN Pathways Immigration
-        consultancy ltd.,(hereinafter referred to as the “firm”), to represent
+        consultancy ltd.,(here in after referred to as the “firm”), to represent
         me in my application to IRCC.
       </p>  
       <p>
@@ -1215,32 +1190,28 @@ ${RCICSignatureFunction({ isPdf: false, felidData })}
       </p>
       <br /><br />
       <div style="display: flex; flex-wrap: wrap; align-items: center" class="row">
-        <div class="col" style="text-align: center">
-          <p class="${felidData &&
-      (familyJsonArray[0]?.client_first_name ||
-        familyJsonArray[0]?.client_last_name)
-      ? "para_gap w-50"
-      : ""
-    } text-capitalize" style="margin: 0">${felidData &&
+        <div class="col mt-5" style="text-align: center">
+          <p class="text-capitalize w-100 border-bottom border-dark text-center" style="margin: 0">${felidData &&
       (familyJsonArray[0]?.client_first_name ||
         familyJsonArray[0]?.client_last_name)
       ? familyJsonArray[0]?.client_first_name +
       " " +
       (familyJsonArray[0]?.client_last_name || "")
       : emp_user_type === "employee"
-        ? userData?.name || "_______________________" || ""
-        : "_______________________"
+        ? userData?.name || " " || ""
+        : " "
     }</p>
-          <p style="margin: 0">Client’s full name</p>
+          <p style="margin: 0 " class="text-center">Client’s full name</p>
         </div>
         <div class="col" style="text-align: center;
    ">
 ${ClientSignatureFunction({ page: "admin", familyJsonArray, felidData })}
           <p style="margin: 0">Signatures</p>
         </div>
-        <div class="col" style="text-align: center">
-          <p class="para_gap w-50" style="margin: 0"> ${felidData?.date_signature_rcic && felidData.date_signature_rcic !== "0000-00-00" && felidData.date_signature_rcic !== "0000-00-00 00:00:00" ? moment(felidData.date_signature_rcic).format("DD-MM-YYYY") : ''}</p>
-          <p style="margin:0">Date</p>
+        <div class="col mt-9" style="text-align: center">
+          <p class="w-100 border-bottom border-dark text-center" style="margin: 0"> ${felidData?.date_signature_rcic && felidData.date_signature_rcic !== "0000-00-00" && felidData.date_signature_rcic !== "0000-00-00 00:00:00" ?
+      ConvertTime({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" }) : ' '}</p>
+          <p style="margin:0"class="text-center">Date</p>
         </div>
       </div>
     </div>

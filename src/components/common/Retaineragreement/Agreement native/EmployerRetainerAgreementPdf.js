@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { Page, Text, View, Document, StyleSheet, BlobProvider, Image, PDFViewer } from '@react-pdf/renderer';
-import moment from 'moment';
 import { AddSharePointDOcument, AddUpdateAgreement } from '../../../../api/api';
 import { ClientSignatureFunction } from '../CommonThings/ClientSignatureFunctionHtml';
 import { RCICSignatureFunction } from '../CommonThings/RCICSignatureFunction';
 import InitialFunction from '../CommonThings/InitialFunction';
+import ConvertTime from '../../Common function/ConvertTime';
 const styles = StyleSheet.create({
   page: {
     padding: 30,
-    fontSize: 10,
-    fontFamily: 'Times-Roman',
+    fontFamily: "Times-Roman",
+    fontSize: 12,
+    lineHeight: 1.5,
+    color: "#323232"
   },
   header: {
     textAlign: 'center',
     marginBottom: 10,
+    color: "#000"
   },
   section: {
     marginBottom: 10,
@@ -37,6 +40,9 @@ const styles = StyleSheet.create({
   mb4: {
     marginBottom: 4,
   },
+  mt4: {
+    marginTop: 4
+  },
   link: {
     color: 'red',
   },
@@ -46,7 +52,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   footer: {
-    marginTop: 20,
+    marginTop: 40,
     textAlign: 'center',
     padding: 10,
     backgroundColor: '#E4E4E4',
@@ -59,6 +65,7 @@ const styles = StyleSheet.create({
   dateLine: { minWidth: 80, borderBottom: "1px solid black", display: "inline-block" },
   textBold: {
     fontFamily: "Times-Bold",
+    color: "#000"
   },
   title: {
     fontSize: 14,
@@ -141,7 +148,7 @@ const EmployerRetainerAgreementPdf = () => {
         <View style={{}}>
           <Text
             style={[
-              { fontSize: 12, color: "blue", marginBottom: 10, marginTop: 10, textTransform: "capitalize" },
+              { fontSize: 12, color: "blue", marginBottom: 10, marginTop: 40, textTransform: "capitalize" },
               styles.textBold
             ]}
           >
@@ -164,7 +171,7 @@ const EmployerRetainerAgreementPdf = () => {
             THIS RETAINER AGREEMENT is made on{" "}
             {felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" ? (
               <Text style={[{ borderBottomWidth: 1, borderBottomColor: "black" }, styles.underline]}>
-                {moment(felidData?.agreement_date).format("llll")}
+                {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <ConvertTime _date={felidData?.agreement_date} format={"llll"} />}as
               </Text>
             ) : (
               "_______________________"
@@ -190,7 +197,7 @@ const EmployerRetainerAgreementPdf = () => {
               ) : (
                 "_____________________"
               )}{" "}
-              (hereinafter called the "Client")
+              (here in after called the "Client")
             </Text>
             <Text>
               • Business Address:{" "}
@@ -216,7 +223,7 @@ const EmployerRetainerAgreementPdf = () => {
               Regulated Canadian Immigration Consultant (RCIC):
             </Text>
             <Text style={styles.mb5}>
-              <Text style={styles.textBold}>Harpreet Kaur</Text> (hereinafter called "The RCIC")
+              <Text style={styles.textBold}>Harpreet Kaur</Text> (here in after called "The RCIC")
             </Text>
             <Text style={styles.mb8}>2618 Hopewell PI NE #310</Text>
             <Text style={styles.mb8}>Calgary, AB T1Y7J7, Canada</Text>
@@ -231,13 +238,12 @@ const EmployerRetainerAgreementPdf = () => {
 
           {/* RCIC Responsibilities */}
           <View style={styles.section}>
-            <Text style={[styles.subtitle, styles.mb8]}>
+            <Text style={[styles.subtitle, styles.mb5]}>
               2. RCIC Responsibilities and Commitments
             </Text>
             <Text style={styles.mb8}>
-              The Client asked the RCIC, and the RCIC has agreed, to act for the Client in the matter of the Client's applications for Labour Market Impact Assessment Applications from Employment and Social Development Canada (hereinafter "ESDC") + Recruitment (if applicable)
-            </Text>
-            <Text style={styles.mb8}>
+              The Client asked the RCIC, and the RCIC has agreed, to act for the Client in the matter of the Client's applications for Labour Market Impact Assessment Applications from Employment and Social Development Canada (here in after "ESDC") + Recruitment (if applicable)
+              {'\n'}{'\n'}
               The RCIC agrees to perform the following duties, with assistance from the RCIC’s employees, as required:
             </Text>
             <View>
@@ -252,8 +258,8 @@ const EmployerRetainerAgreementPdf = () => {
                 "Prepare the Client for an interview if requested.",
                 "Perform all duties professionally and competently."
               ].map((item, index) => (
-                <Text key={index} style={styles.mb8}>
-                  • {item}
+                <Text key={index} style={styles.mt4}>
+                  • {item}{'\n'}
                 </Text>
               ))}
             </View>
@@ -261,7 +267,7 @@ const EmployerRetainerAgreementPdf = () => {
 
           {/* Client Responsibilities */}
           <View style={styles.section}>
-            <Text style={[styles.subtitle, { marginTop: 15 }]}>3. Client Responsibilities and Commitment</Text>
+            <Text style={[styles.subtitle, styles.mb5, { marginTop: 15 }]}>3. Client Responsibilities and Commitment</Text>
             <Text>The Client agrees to:</Text>
             <View>
               {[
@@ -278,8 +284,8 @@ const EmployerRetainerAgreementPdf = () => {
                 "Comply with the above otherwise can seriously affect the outcome of the results or in delaying or RCIC withdrawing the representation on the client's behalf without refund.",
                 "Failure to comply with the above can result in the RCIC withdrawing from the representation of the Client and not giving a refund."
               ].map((item, index) => (
-                <Text key={index} style={styles.mb8}>
-                  • {item}
+                <Text key={index} style={styles.mt4}>
+                  • {item}{'\n'}
                 </Text>
               ))}
             </View>
@@ -290,27 +296,27 @@ const EmployerRetainerAgreementPdf = () => {
           </View>
           {/* 4th point */}
           <View style={styles.section}>
-            <Text style={[styles.subtitle, styles.mb8]}>4. Billing Method and Payment Terms and Conditions</Text>
+            <Text style={[styles.subtitle, styles.mb5]}>4. Billing Method and Payment Terms and Conditions</Text>
             <Text style={[styles.mb8]}>The Client will be billed bya flat fee with payment bymilestones. The details of this billing method are as follows:</Text>
             <Text style={[styles.mb8]}>
               The Client agrees to pay to the RCIC a Professional Fee of<Text style={[styles.textBold]}> CAD $3000 for each application</Text>, for the services rendered to the Client in applying to <Text style={[styles.textBold]}>ESDC for Labour Market Impact Assessments + Recruitment (if applicable).</Text>
             </Text>
             <Text style={[styles.mb8]}>
-              The Professional Fee is solely for the services performed by the RCIC and does not include govemment fees or any other fees. Additional charges may be applied if the Client delays in providing necessary information and/or documentationto the RCIC, resulting in the RCIC having to change or modify the application.
+              The Professional Fee is solely for the services performed by the RCIC and does not include government fees or any other fees. Additional charges may be applied if the Client delays in providing necessary information and/or documentation to the RCIC, resulting in the RCIC having to change or modify the application.
             </Text>
             <Text style={[styles.mb8]}>The Client agrees to pay for additional courier fees.</Text>
             <Text style={[styles.mb8]}>Potential costs will apply for additional or new work requested such as additional documentation, applications; redo ESDC forms after being completed if ESDC changes forms before submitting; additional follow-up work created by delayed, incomplete, or no response from the Client; additional 'rush' work created by submitting documents requested by ESDC with less than 5 days left to the ESDC deadline given; responses to ESDC requests or challenges that require more than one hour for any single request; requests for unnecessary meetings and frequent updates on the application.</Text>
           </View>
           {/* 5th point */}
           <View style={styles.section}>
-            <Text style={[styles.subtitle, styles.mb8]}>5. Payment Schedule</Text>
+            <Text style={[styles.subtitle, styles.mb5]}>5. Payment Schedule</Text>
             <ul>
               <Text style={[styles.mb8]}><Text style={[styles.textBold]}>Total service charges PER LMIA position</Text> $3000+ 5%GST</Text>
               <Text style={[styles.mb8]}><Text style={[styles.textBold]}>The first payment will be paid by the Client to the RCIC on the day this Agreement is executed by the Client: CAD $1000 + 5% GST</Text></Text>
               <Text style={[styles.mb8]}><Text style={[styles.textBold]}>Second and final payment, will be paid by client before submitting final LMIA application to ESDC: CAD $2000+5% GST</Text></Text>
             </ul>
             <Text style={[styles.mb8]}>
-              *Taxes are payable wherever applicable. The above fee does not include any fees payable to the govemment of Canada. While the above fees are non-refundable — if for any reason agreement is terminated any un-used part of fees with be refunded after deduction of any costs. The client may specify the method of refund.
+              *Taxes are payable wherever applicable. The above fee does not include any fees payable to the government of Canada. While the above fees are non-refundable — if for any reason agreement is terminated any un-used part of fees with be refunded after deduction of any costs. The client may specify the method of refund.
             </Text>
             <Text style={[styles.mb8]}>
               Additional fees that is involved in this process are as follows.
@@ -322,7 +328,7 @@ const EmployerRetainerAgreementPdf = () => {
           </View>
           {/* 6th section */}
           <View style={styles.section}>
-            <Text style={[styles.subtitle, styles.mb8]}>6. Methods of Payment: We DO NOT accept cheques. </Text>
+            <Text style={[styles.subtitle, styles.mb5]}>6. Methods of Payment: We DO NOT accept cheques. </Text>
             <Text>For Clients Located <Text style={[styles.textBold, styles.mb8]}>INSIDE</Text> Canada, we receive the following methods:</Text>
             <View style={styles.mb8}>
               {[
@@ -330,8 +336,8 @@ const EmployerRetainerAgreementPdf = () => {
                 "E-transfer — Please send the payment and the answer to the secret question to the following e-mail address: info@canpathwavs.ca",
                 "Credit CardlPayPal: Instructions will be shared, additional up to 3% charges will be applicable if the client is willing to pay by this method.",
               ].map((item, index) => (
-                <Text key={index} style={styles.mb8}>
-                  • {item}
+                <Text key={index} style={styles.mt4}>
+                  • {item}{'\n'}
                 </Text>
               ))}
             </View>
@@ -343,37 +349,36 @@ const EmployerRetainerAgreementPdf = () => {
                 "Wire Transfer- Bank details will be provided once the contract is being signed. ('Banks usually charge a processing fee for wire transfer, so please add CAD $50 fee on top of your payment EVERY TIME you make a wire transfer.",
                 "   Credit Card/PayPal: Instructions will be shared, additional up to 5% charges will be applicable if the client is willing to pay by this method."
               ].map((item, index) => (
-                <Text key={index} style={styles.mb8}>
-                  • {item}
+                <Text key={index} style={styles.mt4}>
+                  • {item}{'\n'}
                 </Text>
               ))}
             </View>
           </View>
           {/* 7th section */}
           <View style={styles.section}>
-            <Text style={[styles.subtitle, styles.mb8]}>7. Interest</Text>
+            <Text style={[styles.subtitle, styles.mb5]}>7. Interest</Text>
             <View>
               {[
                 " Payment is due on all of the consultant's accounts when rendered. If any account is not paid within 30 days, interest will be charged on outstanding balance at the rate of 20% per annum from the date of the account, until paid",
                 "If the account requires recovery/collection action, in order to recover any fees, a surcharge equivalent to the recovery/collection fee incurred will be applied on the Total Cost and is to be paid by the Client. ",
               ].map((item, index) => (
-                <Text key={index} style={styles.mb8}>
-                  • {item}
+                <Text key={index} style={styles.mt4}>
+                  • {item}{'\n'}
                 </Text>
               ))}
             </View>
           </View>
           {/* 8th Section */}
           <View style={styles.section}>
-            <Text style={[styles.subtitle, styles.mb8]}>8. Refund Policy</Text>
-            <Text style={[styles.mb8]}>The Client acknowledges that the approval of the LMIA application and the time required for processing this application is at the sole discretion of the government and not the RCIC. Furthermore, the Client acknowledges that fees are not refundable in the event of an application refusal</Text>
-            <Text style={[styles.mb8]}>
+            <Text style={[styles.subtitle, styles.mb5]}>8. Refund Policy</Text>
+            <Text style={[styles.mb8]}>The Client acknowledges that the approval of the LMIA application and the time required for processing this application is at the sole discretion of the government and not the RCIC. Furthermore, the Client acknowledges that fees are not refundable in the event of an application refusal{'\n'}{'\n'}
               If, however, the application is denied because of an error or omission on the part of the RCIC or professional staff, the RCIC will refund part, or all professional fees collected. The Client agrees that the fees paid are for services indicated above, and any refund is strictly limited to the amount of fees paid. if for any reason agreement is terminated any un-used part of fees with be refunded after deduction of any costs. An applicant may specify the method of refund.
             </Text>
           </View>
           {/* 9th section */}
           <View style={styles.section}>
-            <Text style={[styles.subtitle, styles.mb8]}>9. Dispute Resolution</Text>
+            <Text style={[styles.subtitle, styles.mb5]}>9. Dispute Resolution</Text>
             <Text styles={[{ marginBottom: 10 }, styles.mb8]}>
               Please be advised that Harpreet Kaur is a member in good standing of the Immigration Consultants of Canada Regulatory Council (ICCRC), and as such, is bound by its By-laws, Code of Professional Ethics, and associated Regulations. In the event of a dispute related to the Code of Professional Ethics, the Client and RCIC are to make every effort to resolve the matter between the two parties. In the event a resolution cannot be reached, the Client is to present the complaint in writing to the RCIC and allow the RCIC 30 days to respond to the Client. In the event the dispute is still unresolved, the Client may follow the complaint and discipline procedure outlined by the Council on their website under the heading "File a Complaint". NOTE: All complaint forms must be signed.
             </Text>
@@ -394,32 +399,30 @@ const EmployerRetainerAgreementPdf = () => {
           </View>
           {/* 10th section */}
           <View style={styles.section}>
-            <Text style={[styles.subtitle, styles.mb10]}>10. Confidentiality</Text>
-            <Text style={[styles.mb8]}>All information and documentation reviewed by the RCIC, required by Service Canada and CIC and all other governing bodies, and used for the preparation of the application will not be divulged to any third party, other than agents and employees, without prior consent, except as demanded by law. The Client agrees to let the RCIC publish facts about the case as a case study without mentioning names. The RCIC, and all agents and employees of the RCIC, are also bound by the confidentiality requirements of Article 8.1 and 8.5 of the Code of Professional Ethics.
-            </Text>
-            <Text style={[styles.mb8]}>
+            <Text style={[styles.subtitle, styles.mb5]}>10. Confidentiality</Text>
+            <Text style={[styles.mb5]}>All information and documentation reviewed by the RCIC, required by Service Canada and CIC and all other governing bodies, and used for the preparation of the application will not be divulged to any third party, other than agents and employees, without prior consent, except as demanded by law. The Client agrees to let the RCIC publish facts about the case as a case study without mentioning names. The RCIC, and all agents and employees of the RCIC, are also bound by the confidentiality requirements of Article 8.1 and 8.5 of the Code of Professional Ethics.
+              {'\n'}{'\n'}
               The Client agrees to these of electronic communication and storage of confidential information. The RCIC will use his/her best efforts to maintain a high degree of security for electronic communication and information storage.
             </Text>
           </View>
           {/* 11th section */}
           <View style={styles.section}>
-            <Text style={[styles.subtitle, styles.mb8]}>11. Force Majeure </Text>
-            <Text styles={[styles.mb8]}>
+            <Text style={[styles.subtitle, styles.mb5]}>11. Force Majeure </Text>
+            <Text styles={[styles.mb5]}>
               The RCIC's failure to perform any term of this Retainer Agreement, as a result of conditions beyond his/her control such as, but not limited to, governmental restrictions or subsequent legislation, war, strikes, or acts of God, shall not be deemed a breach of this Agreement.
             </Text>
           </View>
           {/* 12th section */}
           <View style={styles.section}>
-            <Text style={[styles.subtitle, styles.mb8]}>12. Change Policy</Text>
-            <Text style={[styles.mb8]}>The Client acknowledges that if the RCIC is asked to act on the Client's behalf on matters other than those outlined above in this Agreement, or because of a material change in the Client's circumstances, or because of material facts.
-            </Text>
-            <Text style={[styles.mb8]}>
+            <Text style={[styles.subtitle]}>12. Change Policy</Text>
+            <Text style={[styles.mb5]}>The Client acknowledges that if the RCIC is asked to act on the Client's behalf on matters other than those outlined above in this Agreement, or because of a material change in the Client's circumstances, or because of material facts.
+              {'\n'}{'\n'}
               The Client acknowledges that if the RCIC is asked to act on the Client's behalf on matters other than those outlined above in this Agreement, or because of a material change in the Client's circumstances, or because of material facts not disclosed at the outset of the application, or because of a change in government legislation regarding the processing of immigration-related applications, the Agreement can be modified accordingly upon mutual agreement.
             </Text>
           </View>
           {/* 13th section */}
           <View style={styles.section}>
-            <Text style={[styles.subtitle, styles.mb8]}>13. Termination </Text>
+            <Text style={[styles.subtitle]}>13. Termination </Text>
             <View>
               {[
                 "This Agreement is considered terminated upon completion of tasks identified under section 2 of this agreement.",
@@ -430,21 +433,21 @@ const EmployerRetainerAgreementPdf = () => {
                 "This Agreement is subject to the laws in effect in the Province of Alberta, Canada."
                 ,
               ].map((item, index) => (
-                <Text key={index} style={styles.mb8}>
-                  • {item}
+                <Text key={index} style={styles.mt4}>
+                  • {item}{'\n'}
                 </Text>
               ))}
             </View>
           </View>
           {/* 14th section */}
           <View style={styles.section}>
-            <Text style={[styles.subtitle, styles.mb8]}>14. Miscellaneous </Text>
+            <Text style={[styles.subtitle, styles.mb5]}>14. Miscellaneous </Text>
             <View>
               {[
 
                 "The Client expressly authorizes the RCIC to act on his/her behalf to the extent of the specific functions which the RCIC was retained to perform, as per Section 2 hereof.",
                 "The RCIC and the firm are authorized to collect information and communicate with ESDC related to my LMIA applications. In case of Online applications, I authorize RCIC Harpreet Kaur to electronically sign any required document related to the LMIA file and recruitment (if applicable) and submit the application on my behalf",
-                "This Agreement constitutes the entire agreement between the parties concerning the subject matter hereof and supersedes all prior agreements, understandings, warranties, representations, negotiations, and discussions, whether oral or written, except as specifically set forth herein.",
+                "This Agreement constitutes the entire agreement between the parties concerning the subject matter here of and supersedes all prior agreements, understandings, warranties, representations, negotiations, and discussions, whether oral or written, except as specifically set forth herein.",
                 "This Agreement shall be binding upon the parties hereto and their respective heirs, administrators, successors, and permitted assigns.",
                 "This Agreement may only be altered or amended when such changes are made in writing and executed by the parties hereto.",
                 "The provisions of this Agreement shall be deemed severable. If any provision of this Agreement shall be held unenforceable by any court of competent jurisdiction, such provision shall be severed from this Agreement, and the remaining provisions shall remain in full force and effect.",
@@ -457,21 +460,21 @@ const EmployerRetainerAgreementPdf = () => {
                 ,
               ].map((item, index) => (
                 index === 1 ?
-                  <Text style={[styles.textBold, styles.mb8]} key={index}>• {item}</Text> :
-                  <Text key={index} style={styles.mb8}>
-                    • {item}
+                  <Text style={[styles.textBold, { marginTop: 2 }]} key={index}>• {item}{'\n'}</Text> :
+                  <Text key={index} style={styles.mt4}>
+                    • {item}{'\n'}
                   </Text>
               ))}
             </View>
           </View>
           {/* 15th section */}
           <View style={styles.section}>
-            <Text style={[styles.subtitle, styles.mb8]}>15. Validation</Text>
+            <Text style={[styles.subtitle, styles.mb5]}>15. Validation</Text>
             <Text styles={[styles.mb8]}>
               The Client acknowledges that they have read this Agreement, understand it, have obtained such independent legal advice as they deem appropriate, have sought translation, and agree to be bound by its terms.
             </Text>
             <Text styles={[styles.mb8]}>
-              The parties hereto have signed on the date and place hereinafter set forth.
+              The parties hereto have signed on the date and place here in after set forth.
             </Text>
           </View>
           {/* signature */}
@@ -482,7 +485,7 @@ const EmployerRetainerAgreementPdf = () => {
               <Text style={[styles.text, styles.textBold]}>Harpreet Kaur (RCIC)</Text>
               <Text style={styles.text}>RCIC # R533393</Text>
               <Text style={styles.text}>CAN Pathways Immigration Consultancy Ltd.</Text>
-              <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {felidData?.date_signature_rcic !== "0000-00-00 00:00:00" && felidData?.date_signature_rcic ? moment(felidData.date_signature_rcic).format("DD/MM/YYYY") : "______________"}</Text>
+              <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {felidData?.date_signature_rcic !== "0000-00-00 00:00:00" && felidData.date_signature_rcic === "0000-00-00" && felidData?.date_signature_rcic ? <ConvertTime _date={felidData?.date_signature_rcic} format={"DD-MM-YYYY"} /> : "________________"}</Text>
               <Text style={styles.text}><Text style={styles.textBold}>Signed at:</Text> <Text style={styles.underline}>Calgary, Alberta, Canada</Text></Text>
             </View>
 
@@ -495,9 +498,13 @@ const EmployerRetainerAgreementPdf = () => {
                 isPdf={true}
               />
               <Text style={[styles.text, styles.textBold]}> {familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name ? (
-                <Text style={[{ borderBottomWidth: 1, borderBottomColor: "black", textTransform: "capitalize" }, styles.underline]}>
+                <Text style={[{ textTransform: "capitalize" }, ]}>
                   {familyJsonArray[0]?.client_first_name} {familyJsonArray[0]?.client_last_name || ""}</Text>) : ""}</Text>
-              <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {familyJsonArray[0]?.date_signature_client ? moment(familyJsonArray[0].date_signature_client).format("DD/MM/YYYY") : "______________"}</Text>
+              <Text style={styles.text}><Text style={styles.textBold}>Date:</Text>  {!familyJsonArray[0]?.date_signature_client ||
+                familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00" ||
+                familyJsonArray[0]?.date_signature_client === "0000-00-00"
+                ? "________________"
+                : <ConvertTime _date={familyJsonArray[0]?.date_signature_client} format={"DD-MM-YYYY"} />}</Text>
             </View>
           </View>
         </View>
@@ -595,17 +602,17 @@ const EmployerRetainerAgreementPdf = () => {
                   >
                     <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
                     <View>
-                      <View
-                        style={{
-                          width: 100,
-                          height: 50,
-                          border: "1px solid #ccc",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        {felidData?.initial ? (
+                      {felidData?.initial ? (
+                        <View
+                          style={{
+                            width: 100,
+                            height: 50,
+                            border: "1px solid #ccc",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
                           <Text
                             style={{
                               display: "inline-block",
@@ -616,17 +623,18 @@ const EmployerRetainerAgreementPdf = () => {
                           >
                             <InitialFunction initial={felidData?.initial} />
                           </Text>
-                        ) : (
-                          <View
-                            style={{
-                              display: "inline-block",
-                              width: 100,
-                              height: 50,
-                              border: "1px solid #ccc",
-                            }}
-                          />
-                        )}
-                      </View>
+                        </View>
+
+                      ) : (
+                        <View
+                          style={{
+                            display: "inline-block",
+                            width: 100,
+                            height: 50,
+                            border: "1px solid #ccc",
+                          }}
+                        />
+                      )}
                     </View>
                   </View>
                 </View>

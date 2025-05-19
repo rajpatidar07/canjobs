@@ -1,8 +1,8 @@
-import moment from "moment";
 import React, { useEffect } from "react";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
 import InitialFunction from "../CommonThings/InitialFunction";
+import ConvertTime from "../../Common function/ConvertTime";
 
 const HtmlRenewalApplication = ({
   page,
@@ -52,7 +52,7 @@ const HtmlRenewalApplication = ({
     </div>
     <div class="content" style="padding: 10px 20px;text-align: justify;">
         <h2 class="font-weight-bold text-black text-center mb-4 mt-4 text-capitalize text-primary font-size-6">Retainer Agreement</h2>
-        <p class="m-0">THIS RETAINER AGREEMENT is made on ${felidData?.agreement_date ? `<span class="border-bottom border-dark">${moment(felidData?.agreement_date).format("llll")}</span>` : "_______________________"}</p>
+        <p class="m-0">THIS RETAINER AGREEMENT is made on <span class="border-bottom border-dark" style="min-width:100px">${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00"?  ConvertTime({ _date: felidData.agreement_date, format: "llll" }) : ""}</span></p>
         <p class="m-0">Program : <b>: Application for Rural Renewal Stream (Innisfail) and Endorsement Letter</b></p>
         <h3 class="font-weight-bold font-size-6 ">1. Contact Information</h3>
         <h4 class="font-weight-bold font-size-5">Between Client</h4>
@@ -64,8 +64,8 @@ const HtmlRenewalApplication = ({
       : emp_user_type === "employee"
         ? ` <span class="border-bottom border-dark text-capitalize "style="min-width: 300px">${userData?.name}</span>` ||
         ""
-        : "_____________________"}(hereinafter called the "Client")</span></li>
-            <li>Name of Business: <span class="text-dark" style="min-width: 300px;">___________________________________(hereinafter called the "Client")</span></li>
+        : "_____________________"}(here in after called the "Client")</span></li>
+            <li>Name of Business: <span class="text-dark" style="min-width: 300px;">___________________________________(here in after called the "Client")</span></li>
             <li>Business Address: <span class="text-dark" >${felidData?.client_address
       ? ` <span class="border-bottom border-dark" style="min-width: 300px;">${felidData?.client_address}</span>`
       : emp_user_type === "employer"
@@ -81,7 +81,7 @@ const HtmlRenewalApplication = ({
             <h4 class="mt-4 font-size-5">And</h4>
             <div>
            <h4>Regulated Canadian Immigration Consultant (RCIC):</h4>
-           <p><b>Harpreet Kaur</b> ( hereinafter called 'The RCIC')</p>
+           <p><b>Harpreet Kaur</b> ( here in after called 'The RCIC')</p>
            <p>2618 Hopewell PI NE #310</p>
               <p>Calgary, AB T1Y7J7, Canada</p>
                 <p>Tel: +1. (403)888 5308</p>
@@ -233,7 +233,7 @@ Toll-free: 1-877-836-7543<br>
 <ul>
     <li>The Client expressly authorizes the RCIC to act on his/her behalf to the extent of the specific functions which the RCIC was retained to perform, as per Section 2 hereof.</li>
     <li>The RCIC and the firm are authorized to collect information and communicate related to my Rural Renewal Stream Application and Endorsement Letter. In case of online applications, I authorize RCIC Harpreet Kaur to electronically sign any required document related to the Application for Rural Renewal Stream and Endorsement Letter (if applicable) and submit the application on my behalf.</li>
-    <li>This Agreement constitutes the entire agreement between the parties concerning the subject matter hereof and supersedes all prior agreements, understandings, warranties, representations, negotiations, and discussions, whether oral or written, except as specifically set forth herein.</li>
+    <li>This Agreement constitutes the entire agreement between the parties concerning the subject matter here of and supersedes all prior agreements, understandings, warranties, representations, negotiations, and discussions, whether oral or written, except as specifically set forth herein.</li>
     <li>This Agreement shall be binding upon the parties hereto and their respective heirs, administrators, successors, and permitted assigns.</li>
     <li>This Agreement may only be altered or amended when such changes are made in writing and executed by the parties hereto.</li>
     <li>The provisions of this Agreement shall be deemed severable. If any provision of this Agreement shall be held unenforceable by any court of competent jurisdiction, such provision shall be severed from this Agreement, and the remaining provisions shall remain in full force and effect.</li>
@@ -253,7 +253,7 @@ Toll-free: 1-877-836-7543<br>
 </p>
 
 <p style="font-size: 14px; line-height: 1.5;">
-    The parties hereto have signed on the date and place hereinafter set forth.
+    The parties hereto have signed on the date and place here in after set forth.
 </p>
 
 <div style="display: flex; justify-content: space-between; margin-top: 30px;">
@@ -264,8 +264,8 @@ ${RCICSignatureFunction({ isPdf: false, felidData })}
         <p style="font-size: 12px;">RCIC # R533393</p>
         <p style="font-size: 12px;">CAN Pathways Immigration Consultancy Ltd.</p>
 
-        <p style="font-size: 12px; margin-top: 10px;"><strong>Date:</strong>  ${felidData?.date_signature_rcic !==
-      "0000-00-00 00:00:00" && felidData?.date_signature_rcic ? `<span class="border-bottom border-dark" style="min-width: 80px;">${moment(felidData.date_signature_rcic).format("DD/MM/YYYY")}</span>` : "______________"}</p>
+        <p style="font-size: 12px; margin-top: 10px;"><strong>Date:</strong><span class="border-bottom border-dark" style="min-width: 80px;">  ${felidData?.date_signature_rcic !==
+      "0000-00-00 00:00:00" && felidData?.date_signature_rcic ? ConvertTime({ _date: felidData.date_signature_rcic, format: "DD/MM/YYYY" }) : ""}</span></p>
         <p style="font-size: 12px; margin-top: -10px;"><strong>Signed at:</strong> <u>Calgary, Alberta, Canada</u></p>
     </div>
 
@@ -280,7 +280,8 @@ ${RCICSignatureFunction({ isPdf: false, felidData })}
         ? ` <span class="text-capitalize "style="min-width: 300px">${userData?.name}</span>` ||
         "" : ""}</p><br>
 
-        <p style="font-size: 12px; margin-top: 10px;"><strong>Date:</strong> ${familyJsonArray[0]?.date_signature_client ? `<span class="border-bottom border-dark" style="min-width: 80px;">${moment(familyJsonArray[0].date_signature_client).format("DD/MM/YYYY")}</span>` : "______________"}</p>
+        <p style="font-size: 12px; margin-top: 10px;"><strong>Date:</strong> <span class="border-bottom border-dark" style="min-width: 80px;">  ${familyJsonArray[0]?.date_signature_client !==
+      "0000-00-00 00:00:00" && familyJsonArray[0]?.date_signature_client ? ConvertTime({ _date: familyJsonArray[0]?.date_signature_client, format: "DD/MM/YYYY" }) : ""}</span></p>
     </div>
 </div>
 

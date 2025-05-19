@@ -238,19 +238,51 @@
 // };
 
 // export default SignaturePadComponent;
+/*New code at 07/05/25 */
 import React, { useEffect, useRef, useState } from 'react';
 import SignatureCanvas from 'react-signature-canvas';
 
 const SignaturePadComponent = ({ index, onSignature, setState, state, label, name, signature }) => {
     const sigPad = useRef(null);
-    const [isSign, setIsSign] = useState(false)
+    const [isSign, setIsSign] = useState(false);
+
+    const getCurrentSignatureData = () => {
+        return state?.[label] || state?.family_json?.[index]?.[label] || "";
+    };
+
+    const saveSignature = () => {
+        if (sigPad.current && !sigPad.current.isEmpty()) {
+            const signatureDataUrl = sigPad.current.getTrimmedCanvas().toDataURL('image/png');
+
+            setState((prevState) => {
+                if (Array.isArray(prevState.family_json) && label === "client_signature") {
+                    const updatedFamily = [...prevState.family_json];
+                    updatedFamily[index] = {
+                        ...updatedFamily[index],
+                        [label]: signatureDataUrl
+                    };
+                    return { ...prevState, family_json: updatedFamily };
+                } else {
+                    return { ...prevState, [label]: signatureDataUrl };
+                }
+            });
+
+            if (onSignature) onSignature(signatureDataUrl, index, label);
+        }
+    };
+
     const clear = () => {
-        sigPad.current.clear();
+        sigPad.current?.clear();
+        setIsSign(false);
+
         setState((prevState) => {
             if (Array.isArray(prevState.family_json) && label === "client_signature") {
-                const family_json = [...prevState.family_json];
-                family_json[index] = { ...family_json[index], [label]: "" };
-                return { ...prevState, family_json };
+                const updatedFamily = [...prevState.family_json];
+                updatedFamily[index] = {
+                    ...updatedFamily[index],
+                    [label]: ""
+                };
+                return { ...prevState, family_json: updatedFamily };
             } else {
                 return { ...prevState, [label]: "" };
             }
@@ -259,96 +291,101 @@ const SignaturePadComponent = ({ index, onSignature, setState, state, label, nam
 
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                const img = new Image();
-                img.onload = () => {
-                    sigPad.current.clear();
-                    const ctx = sigPad.current.getCanvas().getContext("2d");
-                    ctx.drawImage(img, 0, 0, sigPad.current.getCanvas().width, sigPad.current.getCanvas().height);
-                    const signature = sigPad.current.getTrimmedCanvas().toDataURL('image/png');
-                    setState((prevState) => {
-                        if (Array.isArray(prevState.family_json) && label === "client_signature") {
-                            const family_json = [...prevState.family_json];
-                            family_json[index] = { ...family_json[index], [label]: signature };
-                            return { ...prevState, family_json };
-                        } else {
-                            return { ...prevState, [label]: signature };
-                        }
-                    });
-                    if (onSignature) onSignature(signature, index, label);
-                };
-                img.src = e.target.result;
-                setIsSign(true)
-            };
-            reader.readAsDataURL(file);
-        }
-    };
-    useEffect(() => {
-        const signatureData = state && (state?.[label] || (state.family_json && state.family_json[index]?.[label]));
-        if (signatureData) {
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
             const img = new Image();
             img.onload = () => {
-                sigPad?.current?.clear();
-                const ctx = sigPad?.current?.getCanvas()?.getContext("2d");
-                ctx?.drawImage(img, 0, 0, sigPad.current.getCanvas().width, sigPad.current.getCanvas().height);
-            };
-            img.src = signatureData;
-            setIsSign(true)
-        }
+                const canvas = sigPad.current.getCanvas();
+                const ctx = canvas.getContext("2d");
+                sigPad.current.clear();
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-        const saveSignature = () => {
-            if (sigPad.current && !sigPad.current.isEmpty()) {
-                const signature = sigPad.current.getTrimmedCanvas().toDataURL('image/png');
+                const imageDataUrl = sigPad.current.getTrimmedCanvas().toDataURL('image/png');
+
                 setState((prevState) => {
                     if (Array.isArray(prevState.family_json) && label === "client_signature") {
-                        const family_json = [...prevState.family_json];
-                        family_json[index] = { ...family_json[index], client_signature: signature };
-                        return { ...prevState, family_json };
+                        const updatedFamily = [...prevState.family_json];
+                        updatedFamily[index] = {
+                            ...updatedFamily[index],
+                            [label]: imageDataUrl
+                        };
+                        return { ...prevState, family_json: updatedFamily };
                     } else {
-                        return { ...prevState, [label]: signature };
+                        return { ...prevState, [label]: imageDataUrl };
                     }
                 });
-                if (onSignature) onSignature(signature, index, label);
-            }
+
+                if (onSignature) onSignature(imageDataUrl, index, label);
+                setIsSign(true);
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    };
+
+    useEffect(() => {
+        const existingSignature = getCurrentSignatureData();
+        if (existingSignature) {
+            const img = new Image();
+            img.onload = () => {
+                const canvas = sigPad.current.getCanvas();
+                const ctx = canvas.getContext("2d");
+                sigPad.current.clear();
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                setIsSign(true);
+            };
+            img.src = existingSignature;
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [index, state, label]);
+
+    useEffect(() => {
+        const canvas = sigPad.current?.getCanvas();
+
+        const handleSave = () => {
+            saveSignature();
+            setIsSign(!sigPad.current.isEmpty());
         };
 
-        const canvas = sigPad.current?.getCanvas();
-        canvas?.addEventListener('mouseup', saveSignature);
-        canvas?.addEventListener('touchend', saveSignature);
+        canvas?.addEventListener('mouseup', handleSave);
+        canvas?.addEventListener('touchend', handleSave);
 
         return () => {
-            canvas?.removeEventListener('mouseup', saveSignature);
-            canvas?.removeEventListener('touchend', saveSignature);
+            canvas?.removeEventListener('mouseup', handleSave);
+            canvas?.removeEventListener('touchend', handleSave);
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [index, setState, state, onSignature]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [sigPad, index, label]);
+
+    const getLabelText = () => {
+        if (label === "rcic_signature") return "RCIC Signature";
+        if (label === "client_signature" && index === 0) return "Client Signature";
+        return "Family Member Signature";
+    };
+
     return (
         <div className="form-group">
-            <label className={`font-size-4 text-black-2 line-height-reset mb-3 ${isSign ? "" : "position-relative"}`}>{index === 0 ? "Client signature" : index === "rcic_signature" ? "RCIC Signature" : "Family memeber signature"}</label>
-            {
-                // isSign ?
-                <div className="border border-dark mb-3 w-100 " >
-                    <SignatureCanvas
-                        ref={sigPad}
-                        penColor="black"
-                        canvasProps={{
-                            width: 385, height: 100, className: 'sigCanvas', style: { pointerEvents: 'auto' }
-                        }}
-                    />
-                    {/* {sigPad && (
-                    <div className="mb-3 d-flex justify-content-center">
-                        <div className="rounded overflow-hidden" style={{ width: '200px', height: '200px' }}>
-                            <img src={sigPad} alt="Selected" className="img-fluid" style={{ objectFit: 'cover' }} />
-                        </div>
-                    </div>
-                )} */}
-                </div> //: null
-            }
+            <label className={`font-size-4 text-black-2 line-height-reset mb-3 ${isSign ? "" : "position-relative"}`}>
+                {getLabelText()}
+            </label>
+
+            <div className="border border-dark mb-3 w-100">
+                <SignatureCanvas
+                    ref={sigPad}
+                    penColor="black"
+                    canvasProps={{
+                        width: 385,
+                        height: 100,
+                        className: 'sigCanvas',
+                        style: { pointerEvents: 'auto' }
+                    }}
+                />
+            </div>
 
             <div className="d-flex flex-row">
-                <label className="col btn btn-light mx-3 mt-3 d-flex flex-column justify-content-center rounded "
+                <label className="col btn btn-light mx-3 mt-3 d-flex flex-column justify-content-center rounded"
                     style={{
                         position: "relative",
                         color: "grey",
@@ -362,22 +399,162 @@ const SignaturePadComponent = ({ index, onSignature, setState, state, label, nam
                         type="file"
                         accept="image/*"
                         style={{ display: 'none' }}
-                        onChange={(e) => handleImageUpload(e)}
+                        onChange={handleImageUpload}
                     />
                     <span style={{ fontSize: '24px' }}>+</span>
                     <p className="mb-0" style={{ fontWeight: 400, fontSize: 12 }}>Add Sign</p>
                 </label>
-                <button onClick={() => clear()} type='button' className="d-none btn btn-secondary btn-sm  d-flex flex-column justify-content-center rounded"
-                    style={{
-                        position: "relative",
-                        minHeight: 50,
-                        flexDirection: "row",
-                        lineHeight: 1,
-                        left: "auto"
-                    }}>Clear</button>
+                <button onClick={clear} type='button' className="btn btn-secondary btn-sm mt-3 rounded">
+                    Clear
+                </button>
             </div>
         </div>
     );
 };
 
 export default SignaturePadComponent;
+
+/*Working code but sometime doesnot work  */
+// import React, { useEffect, useRef, useState } from 'react';
+// import SignatureCanvas from 'react-signature-canvas';
+
+// const SignaturePadComponent = ({ index, onSignature, setState, state, label, name, signature }) => {
+//     const sigPad = useRef(null);
+//     const [isSign, setIsSign] = useState(false)
+//     const clear = () => {
+//         sigPad.current.clear();
+//         setState((prevState) => {
+//             if (Array.isArray(prevState.family_json) && label === "client_signature") {
+//                 const family_json = [...prevState.family_json];
+//                 family_json[index] = { ...family_json[index], [label]: "" };
+//                 return { ...prevState, family_json };
+//             } else {
+//                 return { ...prevState, [label]: "" };
+//             }
+//         });
+//     };
+
+//     const handleImageUpload = (event) => {
+//         const file = event.target.files[0];
+//         if (file) {
+//             const reader = new FileReader();
+//             reader.onload = (e) => {
+//                 const img = new Image();
+//                 img.onload = () => {
+//                     sigPad.current.clear();
+//                     const ctx = sigPad.current.getCanvas().getContext("2d");
+//                     ctx.drawImage(img, 0, 0, sigPad.current.getCanvas().width, sigPad.current.getCanvas().height);
+//                     const signature = sigPad.current.getTrimmedCanvas().toDataURL('image/png');
+//                     setState((prevState) => {
+//                         if (Array.isArray(prevState.family_json) && label === "client_signature") {
+//                             const family_json = [...prevState.family_json];
+//                             family_json[index] = { ...family_json[index], [label]: signature };
+//                             return { ...prevState, family_json };
+//                         } else {
+//                             return { ...prevState, [label]: signature };
+//                         }
+//                     });
+//                     if (onSignature) onSignature(signature, index, label);
+//                 };
+//                 img.src = e.target.result;
+//                 setIsSign(true)
+//             };
+//             reader.readAsDataURL(file);
+//         }
+//     };
+//     useEffect(() => {
+//         const signatureData = state && (state?.[label] || (state.family_json && state.family_json[index]?.[label]));
+//         if (signatureData) {
+//             const img = new Image();
+//             img.onload = () => {
+//                 sigPad?.current?.clear();
+//                 const ctx = sigPad?.current?.getCanvas()?.getContext("2d");
+//                 ctx?.drawImage(img, 0, 0, sigPad.current.getCanvas().width, sigPad.current.getCanvas().height);
+//             };
+//             img.src = signatureData;
+//             setIsSign(true)
+//         }
+
+//         const saveSignature = () => {
+//             if (sigPad.current && !sigPad.current.isEmpty()) {
+//                 const signature = sigPad.current.getTrimmedCanvas().toDataURL('image/png');
+//                 setState((prevState) => {
+//                     if (Array.isArray(prevState.family_json) && label === "client_signature") {
+//                         const family_json = [...prevState.family_json];
+//                         family_json[index] = { ...family_json[index], client_signature: signature };
+//                         return { ...prevState, family_json };
+//                     } else {
+//                         return { ...prevState, [label]: signature };
+//                     }
+//                 });
+//                 if (onSignature) onSignature(signature, index, label);
+//             }
+//         };
+
+//         const canvas = sigPad.current?.getCanvas();
+//         canvas?.addEventListener('mouseup', saveSignature);
+//         canvas?.addEventListener('touchend', saveSignature);
+
+//         return () => {
+//             canvas?.removeEventListener('mouseup', saveSignature);
+//             canvas?.removeEventListener('touchend', saveSignature);
+//         };
+//         // eslint-disable-next-line react-hooks/exhaustive-deps
+//     }, [index, setState, state, onSignature]);
+//     return (
+//         <div className="form-group">
+//             <label className={`font-size-4 text-black-2 line-height-reset mb-3 ${isSign ? "" : "position-relative"}`}>{index === 0 ? "Client signature" : index === "rcic_signature" ? "RCIC Signature" : "Family memeber signature"}</label>
+//             {
+//                 // isSign ?
+//                 <div className="border border-dark mb-3 w-100 " >
+//                     <SignatureCanvas
+//                         ref={sigPad}
+//                         penColor="black"
+//                         canvasProps={{
+//                             width: 385, height: 100, className: 'sigCanvas', style: { pointerEvents: 'auto' }
+//                         }}
+//                     />
+//                     {/* {sigPad && (
+//                     <div className="mb-3 d-flex justify-content-center">
+//                         <div className="rounded overflow-hidden" style={{ width: '200px', height: '200px' }}>
+//                             <img src={sigPad} alt="Selected" className="img-fluid" style={{ objectFit: 'cover' }} />
+//                         </div>
+//                     </div>
+//                 )} */}
+//                 </div> //: null
+//             }
+
+//             <div className="d-flex flex-row">
+//                 <label className="col btn btn-light mx-3 mt-3 d-flex flex-column justify-content-center rounded "
+//                     style={{
+//                         position: "relative",
+//                         color: "grey",
+//                         minHeight: 50,
+//                         fontSize: 40,
+//                         flexDirection: "row",
+//                         lineHeight: 1,
+//                         left: 0
+//                     }}>
+//                     <input
+//                         type="file"
+//                         accept="image/*"
+//                         style={{ display: 'none' }}
+//                         onChange={(e) => handleImageUpload(e)}
+//                     />
+//                     <span style={{ fontSize: '24px' }}>+</span>
+//                     <p className="mb-0" style={{ fontWeight: 400, fontSize: 12 }}>Add Sign</p>
+//                 </label>
+//                 <button onClick={() => clear()} type='button' className="d-none btn btn-secondary btn-sm  d-flex flex-column justify-content-center rounded"
+//                     style={{
+//                         position: "relative",
+//                         minHeight: 50,
+//                         flexDirection: "row",
+//                         lineHeight: 1,
+//                         left: "auto"
+//                     }}>Clear</button>
+//             </div>
+//         </div>
+//     );
+// };
+
+// export default SignaturePadComponent;

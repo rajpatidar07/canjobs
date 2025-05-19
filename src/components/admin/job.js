@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 // import { useLocation } from "react-router-dom";
 import CustomButton from "../common/button";
 // import JobDetailsBox from "../common/jobdetail";
-import AdminHeader from "./header";
-import AdminSidebar from "./sidebar";
+// import AdminHeader from "./header";
+// import AdminSidebar from "./sidebar";
 import AddJobModal from "../forms/employer/job";
 import { GetAllJobs, GetFilter } from "../../api/api";
 import FilterJson from "../json/filterjson";
@@ -105,9 +105,9 @@ function Job(props) {
   const Skill =
     Json && Json.Skill
       ? Json.Skill.filter(
-          (thing, index, self) =>
-            index === self.findIndex((t) => t.value === thing.value)
-        )
+        (thing, index, self) =>
+          index === self.findIndex((t) => t.value === thing.value)
+      )
       : [];
   return (
     <>
@@ -119,8 +119,8 @@ function Job(props) {
         }
       >
         {props.skill === null ||
-        props.skill === undefined ||
-        Object.keys(props.skill).length === 0 ? (
+          props.skill === undefined ||
+          Object.keys(props.skill).length === 0 ? (
           <>
             {/* <!-- Header Area --> */}
             {/* <AdminHeader heading={"Manage Jobs"} /> */}
@@ -277,6 +277,7 @@ function Job(props) {
                       </select>
                     </div>
                   </div>
+                  {console.log()}
                   <div
                     className={
                       props.skill === null || props.skill === undefined
@@ -307,7 +308,7 @@ function Job(props) {
                       </select>
                     </div>
                   </div>
-                  <div className="text-end col-xl-12">
+                  <div className={props.employee_id ? "d-none" : "text-end col-xl-12"}>
                     <div className="float-md-right d-flex">
                       <CustomButton
                         className="font-size-3 rounded-3 btn btn-primary border-0"

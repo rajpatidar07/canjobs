@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
-import moment from 'moment/moment';
 import { RCICSignatureFunction } from '../CommonThings/RCICSignatureFunction';
 import { ClientSignatureFunction } from '../CommonThings/ClientSignatureFunctionHtml';
 import InitialFunction from '../CommonThings/InitialFunction';
+import ConvertTime from '../../Common function/ConvertTime';
 export default function EmployerRetainerAgreement({ page,
   felidData,
   userData,
@@ -62,8 +62,13 @@ export default function EmployerRetainerAgreement({ page,
     }</span></p>
 
         <p>
-          This Retainer Agreement is made this <b>19</b> day of
-          <b>August 2024</b> between
+          This Retainer Agreement is made this <b><span class="para_gap" style="min-Width:50px">
+           
+             ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00" ? ConvertTime({ _date: felidData?.agreement_date, format: "Do" }) : ""}  </span></b>
+             day of
+          
+             <b> <span class="para_gap" style="min-Width:50px">${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00" ? ConvertTime({ _date: felidData?.agreement_date, format: "MMMM" }) : ""}</span>
+             ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00" ? ConvertTime({ _date: felidData?.agreement_date, format: "YYYY" }) : " "}</b> between
           Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur (the
           “RCIC”), RCIC Membership Number
           <span class="highlight">R533393</span>, phone number
@@ -71,29 +76,28 @@ export default function EmployerRetainerAgreement({ page,
           <b>info@canpathways.ca</b>, located at <b>2618 Hopewell
             Pl NE #310 Calgary, AB T1Y 7J7,
             Canada</b> and Client
-          <span class="highlight">
-            ${familyJsonArray[0]?.client_first_name ||
-      familyJsonArray[0]?.client_last_name
-      ? `<span class="para_gap">${familyJsonArray[0]?.client_first_name}
-              ${familyJsonArray[0]?.client_last_name || ""}</span>`
+         <span class="highlight">
+  ${
+    familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name
+      ? `<span class="para_gap">${familyJsonArray[0]?.client_first_name || ""} ${familyJsonArray[0]?.client_last_name || ""}</span>`
       : emp_user_type === "employee"
-        ? `<span class="para_gap">${userData?.name}</span>` || ""
-        : "_____________________"}
-          </span>
-          (the “Client”), located at
-          <span class="client-info">
-            ${felidData?.client_address
-      ? `<span class="para_gap">${felidData?.client_address}</span>`
+        ? `<span class="para_gap">${userData?.name || ""}</span>`
+        : "_____________________"
+  }
+</span>
+(the “Client”), <br> located at
+<span class="client-info para_gap">
+  ${
+    felidData?.client_address
+      ? `<span class="">${felidData?.client_address}</span>`
       : emp_user_type === "employer"
-        ? userData?.address || ""
-        : `<span class>${userData?.current_location || ""},
-              ${userData?.currently_located_country ||
-        "________________"}</span>`}
-            , email <span class="para_gap">${felidData?.client_email || userData?.email ||
-    "_________________"}</span>, contact number
-            <span class="client-info">${felidData?.client_contact ||
-    userData?.contact_no || "_________________"}</span>.
-          </span>
+        ? `<span class="">${userData?.address || ""}</span>`
+        : `<span class="">${userData?.current_location || ""}, ${userData?.currently_located_country || ""}</span>`
+  },
+  </span>
+  email <span class="para_gap">${felidData?.client_email || userData?.email || ""}</span>,
+  contact number <span class="client-info para_gap">${felidData?.client_contact || userData?.contact_no || ""}</span>.
+
         </p>
 
         <p>WHEREAS the RCIC and the Client wish to enter into a written
@@ -416,13 +420,13 @@ export default function EmployerRetainerAgreement({ page,
                                   style="border: 1px solid black; text-align: center;">Non-refundable</td>
                                 <td
                                   style="border: 1px solid black; text-align: center;">$${felidData?.applicable_retainer_fee_stape_1
-    || "2500"}<br>(Service Charges for Work Permit
+    || ""}<br>(Service Charges for Work Permit
                                   Application for Principal Applicant
                                   and Dependent Spouse)
                                 </td>
                                 <td
                                   style="border: 1px solid black; text-align: center;">${felidData?.applicable_government_processing_fee_stape_1
-    || "580"}<br>(GovernmentApplication Fees and
+    || ""}<br>(GovernmentApplication Fees and
                                   biometrics fee for Work Permit Application for
                                   Principal Applicant and Dependent Spouse)
                                 </td>
@@ -458,13 +462,13 @@ export default function EmployerRetainerAgreement({ page,
                                   scheduled at this stage</td>
                                 <td
                                   style="border: 1px solid black; text-align: center;">$${felidData?.applicable_retainer_fee_stape_2
-    || "2000"}<br>(Service Charges for PNP
+    || ""}<br>(Service Charges for PNP
                                   application for Work Permit
                                   Application for Principal Applicant and
                                   Dependent Spouse)</td>
                                 <td
                                   style="border: 1px solid black; text-align: center;">${felidData?.applicable_government_processing_fee_stape_2
-    || "480"}<br>(Government application
+    || ""}<br>(Government application
                                   fees for PNP Application
                                   es forWork Permit
                                   Application for Principal Applicant
@@ -501,14 +505,14 @@ export default function EmployerRetainerAgreement({ page,
                                 </td>
                                 <td
                                   style="border: 1px solid black; text-align: center;">$${felidData?.applicable_retainer_fee_stape_3
-    || "2000"}<br>(Service Charges for Federal
+    || ""}<br>(Service Charges for Federal
                                   PR Application es for Work Permit
                                   Application for Principal Applicant and
                                   Dependent Spouse)
                                 </td>
                                 <td
                                   style="border: 1px solid black; text-align: center;">${felidData?.applicable_government_processing_fee_stape_3
-    || "3220"}<br>(Government application fees and
+    || ""}<br>(Government application fees and
                                   Biometrics fees for es for Work Permit
                                   Application for Principal Applicant
                                   and Dependent Spouse)
@@ -1015,7 +1019,7 @@ export default function EmployerRetainerAgreement({ page,
                         <span style="position:absolute; left:0;">18.2</span>
                         <span style="margin-left:40px;">This Agreement
                           constitutes the entire agreement between the parties
-                          with respect to the subject matter hereof and
+                          with respect to the subject matter here of and
                           supersedes all prior agreements, understandings,
                           warranties, representations, negotiations and
                           discussions, whether oral or written, of the parties
@@ -1187,139 +1191,140 @@ export default function EmployerRetainerAgreement({ page,
                   <h5 style="font-weight: 600;">Contact Information</h5>
                 </li>
               </ol>
-                     <h6 class="mb-2">Client Information</h6>
-              <div class="row mb-4">
-                <div class="w-50 text-capitalize">
-                  <b>Given Name:</b>
-                  <div class="border-bottom pb-1 d-inline-block px-2 w-75">
-                    ${familyJsonArray[0]?.client_first_name || (emp_user_type === "employee" ? userData?.name?.split(" ")[0] || "" : "")}
-                  </div>
-                </div>
-                <div class="w-50 text-capitalize">
-                  <b>Family Name:</b>
-                  <div class="border-bottom pb-1 d-inline-block px-2 w-75">
-                    ${familyJsonArray[0]?.client_last_name || (emp_user_type === "employee" ? userData?.name?.split(" ")[1] || "" : "")}
-                  </div>
-                </div>
-                <div class="w-50 text-capitalize">
-                  <b>Address:</b>
-                  <div class="border-bottom pb-1 d-inline-block px-2 w-75">
-                    ${felidData?.client_address || (emp_user_type === "employer" ? userData?.address : (userData?.current_location || "") + " " + (userData?.currently_located_country || ""))}
-                  </div>
-                </div>
-                <div class="w-50">
-                  <b>Telephone Number:</b>
-                  <div class="border-bottom pb-1 d-inline-block px-2 w-50">
-                    ${felidData?.client_contact || userData?.contact_no || ""}
-                  </div>
-                </div>
-                <div class="w-50">
-                  <b>Cellphone Number:</b>
-                  <div class="border-bottom pb-1 d-inline-block px-2 w-50">
-                    ${felidData?.client_cellphone || ""}
-                  </div>
-                </div>
-                <div class="w-50">
-                  <b>Fax Number:</b>
-                  <div class="border-bottom pb-1 d-inline-block px-2 w-75">
-                    ${felidData?.client_fax || ""}
-                  </div>
-                </div>
-                <div class="w-100">
-                  <b>Email Address:</b>
-                  <div class="border-bottom pb-1 d-inline-block px-2 w-75">
-                    ${felidData?.client_email || userData?.email || ""}
-                  </div>
-                </div>
-              </div>
-              
-              <!-- RCIC Information -->
-              <h6 class="mb-2">RCIC Information</h6>
-              <div class="row mb-4">
-                <div class=" w-50 text-capitalize">
-                  <b>Given Name:</b>
-                  <div class="border-bottom pb-1 d-inline-block px-2 w-75">Harpreet</div>
-                </div>
-                <div class="w-50 text-capitalize">
-                  <b>Family Name:</b>
-                  <div class="border-bottom pb-1 d-inline-block px-2 w-75">Kaur</div>
-                </div>
-                <div class="w-50">
-                  <b>Address:</b>
-                  <div class="border-bottom pb-1 d-inline-block px-2 w-75">
-                    2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7
-                  </div>
-                </div>
-                <div class="w-50">
-                  <b>Telephone Number:</b>
-                  <div class="border-bottom pb-1 d-inline-block px-2 w-50">403-888-5308</div>
-                </div>
-                <div class="w-50">
-                  <b>Fax Number:</b>
-                  <div class="border-bottom pb-1 d-inline-block px-2 w-75"></div>
-                </div>
-                <div class="w-50">
-                  <b>Email Address:</b>
-                  <div class="border-bottom pb-1 d-inline-block px-2 w-75">
-                    <a href="mailto:info@canpathways.ca" class="text-decoration-none">info@canpathways.ca</a>
-                  </div>
-                </div>
-              </div>
-              
+                 <div class="mx-5">
+       <h6 class="mb-2">Client</h5>
+<div class="row mb-4">
+  <div class="w-50 text-capitalize">
+    <strong>Given Name:</strong>
+    <div class="border-bottom pb-1 d-inline-block px-2 w-50">
+      ${familyJsonArray[0]?.client_first_name || (emp_user_type === "employee" ? userData?.name?.split(" ")[0] || "" : "")}
+    </div>
+  </div>
+  <div class="w-50 text-capitalize">
+    <strong>Family Name:</strong>
+    <div class="border-bottom pb-1 d-inline-block px-2 w-50">
+      ${familyJsonArray[0]?.client_last_name || (emp_user_type === "employee" ? userData?.name?.split(" ")[1] || "" : "")}
+    </div>
+  </div>
+  <div class="w-50 text-capitalize">
+    <strong>Address:</strong>
+    <div class="border-bottom pb-1 d-inline-block px-2 w-75">
+      ${felidData?.client_address || (emp_user_type === "employer" ? userData?.address : (userData?.current_location || "") + " " + (userData?.currently_located_country || ""))}
+    </div>
+  </div>
+  <div class="w-50">
+    <strong>Telephone Number:</strong>
+    <div class="border-bottom pb-1 d-inline-block px-2 w-50">
+      ${felidData?.client_contact || userData?.contact_no || ""}
+    </div>
+  </div>
+  <div class="w-50">
+    <strong>Cellphone Number:</strong>
+    <div class="border-bottom pb-1 d-inline-block px-2 w-50">
+      ${felidData?.client_cellphone || ""}
+    </div>
+  </div>
+  <div class="w-50">
+    <strong>Fax Number:</strong>
+    <div class="border-bottom pb-1 d-inline-block px-2 w-50">
+      ${felidData?.client_fax || ""}
+    </div>
+  </div>
+  <div class="w-100">
+    <strong>Email Address:</strong>
+    <div class="border-bottom pb-1 d-inline-block px-2 w-75">
+      ${felidData?.client_email || userData?.email || ""}
+    </div>
+  </div>
+</div>
+
+<!-- RCIC Information -->
+<h6 class="mb-2">RCIC</h5>
+<div class="row mb-4">
+  <div class=" w-50 text-capitalize">
+    <strong>Given Name:</strong>
+    <div class="border-bottom pb-1 d-inline-block px-2 w-50">Harpreet</div>
+  </div>
+  <div class="w-50 text-capitalize">
+    <strong>Family Name:</strong>
+    <div class="border-bottom pb-1 d-inline-block px-2 w-50">Kaur</div>
+  </div>
+  <div class="w-100">
+    <strong>Address:</strong>
+    <div class="border-bottom pb-1 d-inline-block px-2 w-75">
+      2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7
+    </div>
+  </div>
+  <div class="w-50">
+    <strong>Telephone Number:</strong>
+    <div class="border-bottom pb-1 d-inline-block px-2 w-50">403-888-5308</div>
+  </div>
+  <div class="w-50">
+    <strong>Fax Number:</strong>
+    <div class="border-bottom pb-1 d-inline-block px-2 w-50"></div>
+  </div>
+  <div class="w-50">
+    <strong>Email Address:</strong>
+    <div class="border-bottom pb-1 d-inline-block px-2 w-50">
+      <a href="mailto:info@canpathways.ca" class="text-decoration-none">info@canpathways.ca</a>
+    </div>
+  </div>
+</div>
+</div>
               <!-- Signatures -->
               <h6 class="mb-2">Signatures</h6>
               <div class="row align-items-start mb-4">
                 <!-- Client Signature -->
                 <div class="col-md-6 mb-4">
                 ${ClientSignatureFunction({ page, familyJsonArray, felidData })} 
-                  <p class="mb-0">Signature of Client</p>
+                  <p class="mb-0 text-center">Signature of Client</p>
                 </div>
               
                 <!-- RCIC Signature -->
                 <div class="col-md-6 mb-4">
               ${RCICSignatureFunction({ isPdf: false, felidData })}
-                  <p class="mb-0">Signature of RCIC</p>
+                  <p class="mb-0 text-center">Signature of RCIC</p>
                 </div>
               </div>
               
               <!-- Name Fields -->
               <div class="row mb-4">
                 <div class="col-md-6">
-                  <p class="mb-1 text-capitalize">
+                  <p class="mb-1 text-capitalize text-center">
                   ${familyJsonArray[0]?.client_first_name ||
       familyJsonArray[0]?.client_last_name
-      ? ` <span class="para_gap text-capitalize w-50">${familyJsonArray[0]?.client_first_name
+      ? ` <span class="para_gap text-capitalize w-100">${familyJsonArray[0]?.client_first_name
       } ${familyJsonArray[0]?.client_last_name || ""}</span>`
       : emp_user_type === "employee"
-        ? ` <span class="para_gap text-capitalize w-50">${userData?.name}</span>` ||
+        ? ` <span class="para_gap text-capitalize w-100">${userData?.name}</span>` ||
         ""
         : "_____________________"
     }    </p>
-                  <p class="mb-3">Name of Client</p>
+                  <p class="mb-3 text-center">Name of Client</p>
                 </div>
                 <div class="col-md-6">
-                  <p class="mb-1 para_gap w-50">Harpreet Kaur</p>
-                  <p class="mb-3">Name of RCIC</p>
+                  <p class="mb-1 para_gap w-100 text-center">Harpreet Kaur</p>
+                  <p class="mb-3 text-center">Name of RCIC</p>
                 </div>
               </div>
               
               <!-- Signature Date -->
               <div class="row">
                 <div class="col-md-6">
-                  <p class="mb-1 w-50">
-                    ${!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client.startsWith("0000")
-      ? "_____________________________"
-      : `<span>${moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</span>`}
-                  </p>
-                  <p>Date</p>
+                <p class="mb-1 w-100 border-bottom border-dark pt-8 text-center">
+                      ${!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client.startsWith("0000")
+      ? " "
+      : `<span> ${ConvertTime({ _date: familyJsonArray[0]?.date_signature_client, format: "DD-MM-YYYY" })}</span>`}
+                    </p>
+                  <p class="text-center">Date</p>
                 </div>
                   <div class="col-md-6">
-                  <p class="mb-1 w-50">
-                    ${!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client.startsWith("0000")
-      ? "_____________________________"
-      : `<span>${moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}</span>`}
-                  </p>
-                  <p>Date</p>
+                   <p class="mb-1 w-100 border-bottom border-dark pt-8 text-center">
+                      ${!felidData.date_signature_rcic || felidData.date_signature_rcic.startsWith("0000")
+      ? " "
+      : `<span> ${ConvertTime({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" })}</span>`}
+                    </p>
+                  <p class="text-center">Date</p>
                 </div>
               </div>
 
@@ -1336,10 +1341,10 @@ export default function EmployerRetainerAgreement({ page,
         ? userData?.name || "" || ""
         : "" || ""
     }</span>( here in after referred to as the “client”),
-                hereby authorize and appoint Harpreet kaur (here in after
+                here by authorize and appoint Harpreet kaur (here in after
                 referred to as
                 the “RCIC” with a CICC# R533393), of CAN Pathways Immigration
-                consultancy ltd.,(hereinafter referred to as the “firm”), to
+                consultancy ltd.,(here in after referred to as the “firm”), to
                 represent
                 me in my application to IRCC.
               </p>
@@ -1480,51 +1485,32 @@ export default function EmployerRetainerAgreement({ page,
                 declaration.
               </p>
               <br /><br />
-             <div style="display: flex; flex-wrap: wrap; align-items: center;">
-  <!-- Client's Full Name -->
-  <div style="width: 33.33%; text-align: center;">
-    <p class="${felidData &&
-      (familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name)
-        ? 'para_gap'
-        : ''
-    } text-capitalize" style="margin: 0;">
-      ${felidData &&
-        (familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name)
-        ? familyJsonArray[0]?.client_first_name + ' ' + (familyJsonArray[0]?.client_last_name || '')
-        : emp_user_type === 'employee'
-          ? userData?.name || '________________'
-          : '_______________'
-      }
-    </p>
-    <p style="margin: 0;">Client’s full name</p>
-  </div>
-
-  <!-- Signature -->
-  <div style="width: 33.33%; text-align: center;">
-    ${ClientSignatureFunction({ page: 'admin', familyJsonArray, felidData })}
-    <p style="margin: 0;">Signatures</p>
-  </div>
-
-  <!-- Date -->
-  <div style="width: 33.33%; text-align: center;">
-    <p class="${
-      !familyJsonArray[0]?.date_signature_client ||
-      familyJsonArray[0]?.date_signature_client === '0000-00-00 00:00:00' ||
-      familyJsonArray[0]?.date_signature_client === '0000-00-00'
-        ? ''
-        : 'para_gap'
-    }" style="margin: 0;">
-      ${
-        !familyJsonArray[0]?.date_signature_client ||
-        familyJsonArray[0]?.date_signature_client === '0000-00-00 00:00:00' ||
-        familyJsonArray[0]?.date_signature_client === '0000-00-00'
-          ? '_______________'
-          : moment(familyJsonArray[0]?.date_signature_client).format('DD-MM-YYYY')
-      }
-    </p>
-    <p style="margin: 0;">Date</p>
-  </div>
-</div>
+                   <div style="display: flex; flex-wrap: wrap; align-items: center" class="row">
+                     <div class="col mt-5" style="text-align: center">
+                       <p class="text-capitalize w-100 border-bottom border-dark text-center" style="margin: 0">${felidData &&
+      (familyJsonArray[0]?.client_first_name ||
+        familyJsonArray[0]?.client_last_name)
+      ? familyJsonArray[0]?.client_first_name +
+      " " +
+      (familyJsonArray[0]?.client_last_name || "")
+      : emp_user_type === "employee"
+        ? userData?.name || " " || ""
+        : " "
+    }</p>
+                       <p style="margin: 0 " class="text-center">Client’s full name</p>
+                     </div>
+                     <div class="col" style="text-align: center;
+                ">
+             ${ClientSignatureFunction({ page: "admin", familyJsonArray, felidData })}
+                       <p style="margin: 0">Signatures</p>
+                     </div>
+                     <div class="col mt-9" style="text-align: center">
+                       <p class="w-100 border-bottom border-dark text-center" style="margin: 0"> ${felidData?.date_signature_rcic && felidData.date_signature_rcic !== "0000-00-00" && felidData.date_signature_rcic !== "0000-00-00 00:00:00" ?
+      ConvertTime({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" }) : ' '}</p>
+                       <p style="margin:0"class="text-center">Date</p>
+                     </div>
+                   </div>
+                 </div>
 
 
             <div class="d-flex justify-content-end gap-4" style="gap: 4rem;">

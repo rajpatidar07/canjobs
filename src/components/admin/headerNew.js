@@ -78,7 +78,6 @@ const AdminHeader = (props) => {
             <div>
               <div className="dropdown show-gr-dropdown py-5">
                 <Link
-                  to=""
                   className="profile media flex-y-center"
                   role="button"
                   id="dropdownMenuLink"
@@ -110,7 +109,6 @@ const AdminHeader = (props) => {
 
                   {(AdminType === "super-admin" || AdminType === "admin") && (
                     <Link
-                      to=""
                       onClick={() => setShowGenerateToken(true)}
                       className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
                     >
@@ -120,7 +118,6 @@ const AdminHeader = (props) => {
 
                   {userType !== "agent" && (
                     <Link
-                      to=""
                       onClick={() => setSettings(true)}
                       className="dropdown-item py-2 font-size-3 font-weight-semibold line-height-1p2 text-capitalize"
                     >

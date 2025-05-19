@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AgreementOneForm from "../../forms/Agreement/AgreementOneForm";
 import { AddUpdateAgreement, GetAgreement } from "../../../api/api";
-import HtmlAgreementOne from "./Html/HtmlAgreementOne";
+import ExpressEntryHtml from "./Html/ExpressEntryHtml";
 import HtmlAgreementTwo from "./Html/HtmlAgreementTwo";
 import { Link } from "react-router-dom";
 // import HtmlAgreementThree from "./Html/HtmlAgreementThree";
@@ -19,7 +19,7 @@ import HtmlAgreementFourTeen from "./Html/HtmlAgreementFourTeen";
 import HtmlAgreementsixteen from "./Html/HtmlAgreementsixteen";
 import { IoMdArrowBack } from "react-icons/io";
 import InitialConsultation from "./Html/InitialConsultation";
-import HtmlAgreementEighteen from "./Html/HtmlAgreementEighteen";
+import RecruitmentServiceHtml from "./Html/RecruitmentServiceHtml";
 import HtmlRenewalApplication from "./Html/HtmlRenewalApplication";
 import HtmlMoeThanOneApplicant from "./Html/HtmlMoeThanOneApplicant";
 import EmployerRetainerAgreement from "./Html/EmployerRetainerAgreement";
@@ -181,7 +181,7 @@ export default function MainRetainerAggHtml({
           </button>
           <button
             className={
-              felidData.agreement_date ? "btn btn-primary m-2 w-100" : "d-none"
+              felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00"?  "btn btn-primary m-2 w-100" : "d-none"
             }
             onClick={() => GeneratePdf()}
           >
@@ -191,7 +191,7 @@ export default function MainRetainerAggHtml({
       </div>
       <div className={`col-md-10 mt-0 bg-gray`}>
         {agreementData.type === "temporary resident visa" ? (
-          <HtmlAgreementOne
+          <ExpressEntryHtml
             page={"admin"}
             userData={userData}
             felidData={felidData}
@@ -235,7 +235,7 @@ export default function MainRetainerAggHtml({
             ) : agreementData.type === "prospective workers" ? (
               <HtmlAgreementSeven />
             ) : agreementData.type === "express entry" ? (
-              <HtmlAgreementOne
+              <ExpressEntryHtml
                 page={"admin"}
                 userData={userData}
                 felidData={felidData}
@@ -283,7 +283,7 @@ export default function MainRetainerAggHtml({
                   addSign={""}
                 />
               ) : agreementData.type === "recruitment services agreement" ? (
-                <HtmlAgreementEighteen
+                <RecruitmentServiceHtml
                   page={"admin"}
                   userData={userData}
                   felidData={felidData}
@@ -301,7 +301,7 @@ export default function MainRetainerAggHtml({
                   : null}
         {/* <button
           className={
-            felidData.agreement_date ? "btn btn-primary my-2" : "d-none"
+            felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00"?  "btn btn-primary my-2" : "d-none"
           }
           onClick={() => GeneratePdf()}
         >

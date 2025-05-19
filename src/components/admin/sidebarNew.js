@@ -7,12 +7,14 @@ import {
   MdRealEstateAgent,
   // MdOutlineAddIcCall,
   MdOutlinePayments,
+  MdOutlineAddIcCall,
 } from "react-icons/md";
 // import { LuFileKey } from "react-icons/lu";
 import {
   LiaUsersSolid,
   LiaAddressCardSolid,
   LiaCcVisa,
+  LiaHourglassHalfSolid,
   // LiaHourglassHalfSolid,
 } from "react-icons/lia";
 import {
@@ -50,6 +52,7 @@ const AdminSidebar = (props) => {
   // let [applicanttypedata, setApplicanttypedata] = useState([]);
   let admin_type = localStorage.getItem("admin_type");
   let user_type = localStorage.getItem("userType");
+  let portal = localStorage.getItem("portal")
   // const [openParent, setOpenParent] = useState(null);
   const [apiCall, setApiCall] = useState(false);
   // const [items, setItems] = useState(
@@ -259,14 +262,16 @@ const AdminSidebar = (props) => {
       //       : "2.25rem",
       // }}
       >
-        {user_type === "agent" ? (
+        {user_type === "agent" || portal === "study" ? (
           <>
             <li
               ref={(el) => (liRefs.current["Partner Dashboard"] = el)}
               className={
-                user_type === "agent" && props.heading === "Partner Dashboard"
-                  ? "active"
-                  : ""
+                user_type === "agent" ?
+                  props.heading === "Partner Dashboard"
+                    ? "active"
+                    : ""
+                  : "d-none"
               }
             >
               <Link
@@ -283,7 +288,7 @@ const AdminSidebar = (props) => {
             <li
               ref={(el) => (liRefs.current["Students"] = el)}
               className={
-                localStorage.getItem("portal") === "study"
+                portal === "study"
                   ? `${props.heading === "Students" ? "active" : ""}`
                   : "d-none"
               }
@@ -302,7 +307,7 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["Dashboard"] = el)}
           className={
-            user_type === "agent"
+            user_type === "agent" || portal === "study"
               ? "d-none"
               : props.heading === "Dashboard"
                 ? "active"
@@ -321,7 +326,7 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["Task Dashboard"] = el)}
           className={
-            user_type === "agent"
+            user_type === "agent" || portal === "study"
               ? "d-none"
               : props.heading === "Task Dashboard"
                 ? "active"
@@ -375,7 +380,7 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["Manage Employers"] = el)}
           className={
-            user_type === "agent"
+            user_type === "agent" || portal === "study"
               ? "d-none"
               : `${props.heading === "Manage Employers" ? "active" : ""}`
           }
@@ -392,7 +397,7 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["Manage Jobs"] = el)}
           className={
-            user_type === "agent"
+            user_type === "agent" || portal === "study"
               ? "d-none"
               : props.heading === "Manage Jobs"
                 ? "active"
@@ -411,7 +416,7 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["Manage Self Jobs"] = el)}
           className={`d-none 
-             ${user_type === "agent"
+             ${user_type === "agent" || portal === "study"
               ? "d-none"
               : props.heading === "Manage Self Jobs"
                 ? "active"
@@ -430,7 +435,7 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["Visa"] = el)}
           className={
-            user_type === "agent"
+            user_type === "agent" || portal === "study"
               ? "d-none"
               : props.heading === "Visa"
                 ? "active"
@@ -449,7 +454,7 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["LMIA status"] = el)}
           className={
-            user_type === "agent"
+            user_type === "agent" || portal === "study"
               ? "d-none"
               : props.heading === "LMIA status"
                 ? "active"
@@ -468,7 +473,7 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["Local Candidate"] = el)}
           className={
-            user_type === "agent"
+            user_type === "agent" || portal === "study"
               ? "d-none"
               : props.heading === "Local Candidate"
                 ? "active"
@@ -487,7 +492,7 @@ const AdminSidebar = (props) => {
         {/* <li
           ref={(el) => (liRefs.current["PNP"] = el)}
           className={
-            user_type === "agent"
+            user_type === "agent" ||portal === "study"
               ? "d-none"
               : props.heading === "PNP"
                 ? "active"
@@ -506,7 +511,7 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["PGWP"] = el)}
           className={
-            user_type === "agent"
+            user_type === "agent" ||portal === "study"
               ? "d-none"
               : props.heading === "PGWP"
                 ? "active"
@@ -525,7 +530,7 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["WES"] = el)}
           className={
-            user_type === "agent"
+            user_type === "agent" ||portal === "study"
               ? "d-none"
               : props.heading === "WES"
                 ? "active"
@@ -544,7 +549,7 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["ATIP"] = el)}
           className={
-            user_type === "agent"
+            user_type === "agent" ||portal === "study"
               ? "d-none"
               : props.heading === "ATIP"
                 ? "active"
@@ -563,7 +568,7 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["Visitors Visa"] = el)}
           className={
-            user_type === "agent"
+            user_type === "agent" ||portal === "study"
               ? "d-none"
               : props.heading === "Visitors Visa"
                 ? "active"
@@ -582,7 +587,7 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["Study Permit"] = el)}
           className={
-            user_type === "agent"
+            user_type === "agent" ||portal === "study"
               ? "d-none"
               : props.heading === "Study Permit"
                 ? "active"
@@ -601,7 +606,7 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["Temporary Resident (Visiting , Studying , Working)"] = el)}
           className={
-            user_type === "agent"
+            user_type === "agent" ||portal === "study"
               ? "d-none"
               : props.heading === "Temporary Resident (Visiting , Studying , Working)"
                 ? "active"
@@ -620,7 +625,7 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["Economic Immigration"] = el)}
           className={
-            user_type === "agent"
+            user_type === "agent" ||portal === "study"
               ? "d-none"
               : props.heading === "Economic Immigration"
                 ? "active"
@@ -639,7 +644,7 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["Family Sponsorship"] = el)}
           className={
-            user_type === "agent"
+            user_type === "agent" ||portal === "study"
               ? "d-none"
               : props.heading === "Family Sponsorship"
                 ? "active"
@@ -659,7 +664,7 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["Express Entry"] = el)}
           className={
-            user_type === "agent"
+            user_type === "agent" ||portal === "study"
               ? "d-none"
               : props.heading === "Express Entry"
                 ? "active"
@@ -678,7 +683,7 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["Business VIsa"] = el)}
           className={
-            user_type === "agent"
+            user_type === "agent" ||portal === "study"
               ? "d-none"
               : props.heading === "Business VIsa"
                 ? "active"
@@ -698,7 +703,7 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["Federal PR"] = el)}
           className={
-            user_type === "agent"
+            user_type === "agent" ||portal === "study"
               ? "d-none"
               : props.heading === "Federal PR"
                 ? "active"
@@ -718,7 +723,7 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["Humanitarian and Compassionate Cases"] = el)}
           className={
-            user_type === "agent"
+            user_type === "agent" ||portal === "study"
               ? "d-none"
               : props.heading === "Humanitarian and Compassionate Cases"
                 ? "active"
@@ -740,7 +745,7 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["Passport"] = el)}
           className={
-            user_type === "agent"
+            user_type === "agent" ||portal === "study"
               ? "d-none"
               : props.heading === "Passport"
                 ? "active"
@@ -762,7 +767,7 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["Citizenship"] = el)}
           className={
-            user_type === "agent"
+            user_type === "agent" ||portal === "study"
               ? "d-none"
               : props.heading === "Citizenship"
                 ? "active"
@@ -784,7 +789,7 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["Permanent Resident Cards"] = el)}
           className={
-            user_type === "agent"
+            user_type === "agent" ||portal === "study"
               ? "d-none"
               : props.heading === "Permanent Resident Cards"
                 ? "active"
@@ -808,7 +813,7 @@ const AdminSidebar = (props) => {
           .map((item) => (
             <li
               key={item.id}
-              className={`position-relative ${user_type === "agent"
+              className={`position-relative ${user_type === "agent" ||portal === "study"
                   ? "d-none"
                   : props.heading === item.title
                     ? "active"
@@ -844,7 +849,7 @@ const AdminSidebar = (props) => {
               onDragOver={(e) => handleDragOver(e, index)}
               onDragEnd={handleDragEnd}
               className={`position-relative ${
-                user_type === "agent"
+                user_type === "agent" ||portal === "study"
                   ? "d-none"
                   : props.heading === item.title
                   ? "active"
@@ -1001,11 +1006,11 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["Application types"] = el)}
           className={
-            admin_type === "super-admin"
-              ? props.heading === "Application types"
+            admin_type === "agent" || portal === "study"
+              ? "d-none"
+              : props.heading === "Application types"
                 ? "active"
                 : ""
-              : "d-none"
           }
         >
           <Link
@@ -1023,11 +1028,11 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["Manage Payment"] = el)}
           className={
-            admin_type !== "agent"
-              ? props.heading === "Manage Payment"
+            admin_type === "agent" || portal === "study"
+              ? "d-none"
+              : props.heading === "Manage Payment"
                 ? "active"
                 : ""
-              : "d-none"
           }
         >
           <Link
@@ -1042,54 +1047,10 @@ const AdminSidebar = (props) => {
             <span className="text-truncate">Manage Payment</span>
           </Link>
         </li>
-        {/* <li
-          ref={(el) => (liRefs.current["Manage Daily Call Log"] = el)}
-          className={
-            admin_type === "agent"
-              ? "d-none"
-              : props.heading === "Manage Daily Call Log"
-                ? "active"
-                : ""
-          }
-        >
-          <Link
-            onClick={() => {
-              clearPageNo("Manage Daily Call Log");
-            }}
-            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
-            title={"Manage Daily Call Log"}
-            to="/daily_call_log"
-          >
-            <MdOutlineAddIcCall className="sidebar_icon" />
-            <span className="text-truncate">Manage Daily Call Log</span>
-          </Link>
-        </li> */}
-        {/* <li
-          ref={(el) => (liRefs.current["Manage Daily Hourly Log"] = el)}
-          className={
-            admin_type === "agent"
-              ? "d-none"
-              : props.heading === "Manage Daily Hourly Log"
-                ? "active"
-                : ""
-          }
-        >
-          <Link
-            onClick={() => {
-              clearPageNo("Manage Daily Hourly Log");
-            }}
-            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
-            title={"Manage Daily Hourly Log"}
-            to="/daily_hours_log"
-          >
-            <LiaHourglassHalfSolid className="sidebar_icon" />
-            <span className="text-truncate">Manage Daily Hour Log</span>
-          </Link>
-        </li> */}
         <li
           ref={(el) => (liRefs.current["Interview"] = el)}
           className={
-            user_type === "agent"
+            user_type === "agent" || portal === "study"
               ? "d-none"
               : props.heading === "Interview"
                 ? "active"
@@ -1108,7 +1069,7 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["Manage Notes"] = el)}
           className={
-            user_type === "agent"
+            user_type === "agent" || portal === "study"
               ? "d-none"
               : props.heading === "Manage Notes"
                 ? "active"
@@ -1128,7 +1089,7 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["Manager's Dashboard"] = el)}
           className={
-            user_type === "agent"
+            user_type === "agent" || portal === "study"
               ? "d-none"
               : props.heading === "Manager's Dashboard"
                 ? "active"
@@ -1150,7 +1111,7 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["Manage Admin"] = el)}
           className={
-            user_type === "agent"
+            user_type === "agent" || portal === "study"
               ? "d-none"
               : props.heading === "Manage Admin"
                 ? "active"
@@ -1171,10 +1132,11 @@ const AdminSidebar = (props) => {
         <li
           ref={(el) => (liRefs.current["Manage Partner"] = el)}
           className={
-            user_type === "admin"
-              ? `
-               ${props.heading === "Manage Partner" ? "active" : ""}`
-              : "d-none"
+            admin_type === "agent" || portal === "study"
+              ? "d-none"
+              : props.heading === "Manage Partner"
+                ? "active"
+                : ""
           }
         >
           <Link
@@ -1192,7 +1154,7 @@ const AdminSidebar = (props) => {
         {/* <li
           ref={(el) => (liRefs.current["Job Category"] = el)}
           className={
-            user_type === "agent"
+            user_type === "agent" ||portal === "study"
               ? "d-none"
               : props.heading === "Job Category"
                 ? "active"
@@ -1211,7 +1173,7 @@ const AdminSidebar = (props) => {
         {/* <li
           ref={(el) => (liRefs.current["Filter List"] = el)}
           className={
-            user_type === "agent"
+            user_type === "agent" ||portal === "study"
               ? "d-none"
               : props.heading === "Filter List"
                 ? "active"
@@ -1246,14 +1208,58 @@ const AdminSidebar = (props) => {
             <span className="text-truncate">Credentials</span>
           </Link>
         </li> */}
-         <li
-          ref={(el) => (liRefs.current["Setting"] = el)}
+        <li
+          ref={(el) => (liRefs.current["Manage Daily Call Log"] = el)}
           className={
-            admin_type === "super-admin"
-              ? props.heading === "Setting"
+            admin_type === "agent" || portal === "study"
+              ? "d-none"
+              : props.heading === "Manage Daily Call Log"
                 ? "active"
                 : ""
-              : "d-none"
+          }
+        >
+          <Link
+            onClick={() => {
+              clearPageNo("Manage Daily Call Log");
+            }}
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+            title={"Manage Daily Call Log"}
+            to="/daily_call_log"
+          >
+            <MdOutlineAddIcCall className="sidebar_icon" />
+            <span className="text-truncate">Manage Daily Call Log</span>
+          </Link>
+        </li>
+        <li
+          ref={(el) => (liRefs.current["Manage Daily Hourly Log"] = el)}
+          className={
+            admin_type === "agent" || portal === "study"
+              ? "d-none"
+              : props.heading === "Manage Daily Hourly Log"
+                ? "active"
+                : ""
+          }
+        >
+          <Link
+            onClick={() => {
+              clearPageNo("Manage Daily Hourly Log");
+            }}
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+            title={"Manage Daily Hourly Log"}
+            to="/daily_hours_log"
+          >
+            <LiaHourglassHalfSolid className="sidebar_icon" />
+            <span className="text-truncate">Manage Daily Hour Log</span>
+          </Link>
+        </li>
+        <li
+          ref={(el) => (liRefs.current["Setting"] = el)}
+          className={
+            admin_type === "agent" || portal === "study"
+              ? "d-none"
+              : props.heading === "Setting"
+                ? "active"
+                : ""
           }
         >
           <Link
