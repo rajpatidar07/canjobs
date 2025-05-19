@@ -11,11 +11,11 @@ import {
   Link,
 } from "@react-pdf/renderer";
 import { TbArrowBadgeRight } from "react-icons/tb";
-import moment from "moment";
 import { AddSharePointDOcument, AddUpdateAgreement } from "../../../../api/api";
 import InitialFunction from "../CommonThings/InitialFunction";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
+import ConvertTime from "../../Common function/ConvertTime";
 // import { toast } from "react-toastify";
 
 const InitialConsultationAgreement = () => {
@@ -87,9 +87,7 @@ const InitialConsultationAgreement = () => {
   };
 
   const agreementDate = parseDate(felidData?.agreement_date);
-  const formattedDate = agreementDate
-    ? moment(agreementDate).format("DD MMMM YYYY")
-    : "____________";
+  const formattedDate = !agreementDate || agreementDate === "0000-00-00 00:00:00" || agreementDate === "0000-00-00" ? "" : <ConvertTime _date={agreementDate} format={"DD MMMM YYYY"} />
   let components = (
     <View style={{ height: "auto" }}>
       <View style={{ padding: "10px 20px" }}>
@@ -277,42 +275,98 @@ const InitialConsultationAgreement = () => {
             <Text style={[styles.header, styles.textunderline]}>
               SIGNED BY THE CLIENT AND THE RCIC IN ACCEPTANCE OF AGREEMENT
             </Text>
-            <View style={styles.container}>
-              {/* Left Signature Box (RCIC) */}
-              <View style={styles.box}>
-                <ClientSignatureFunction
-                  felidData={felidData}
-                  familyJsonArray={familyJsonArray}
-                  page={"user"}
-                  isPdf={true}
-                />
-                <Text style={[styles.text, styles.textBold]}><Text style={{ textTransform: "capitalize" }}>
-                  {familyJsonArray[0]?.client_first_name || ""}{" "}
-                  {familyJsonArray[0]?.client_last_name || ""}{" "}
-                </Text>
-                  {"\n"}
-                  <Text>Signature of CLient</Text>
-                </Text>
-                <View style={{ width: "100%" }}>
-                  <Text style={styles.text}> {familyJsonArray[0]?.date_signature_client ? moment(familyJsonArray[0].date_signature_client).format("DD/MM/YYYY") : "___________________________________"}</Text>
-                  {'\n'}
-                  <Text style={[styles.textBold, { textAlign: "center" }]}>Date</Text>
-                </View>
-              </View>
-              {/* Right Signature Box (Client) */}
-              <View style={styles.box}>
-                <RCICSignatureFunction isPdf={true} felidData={felidData} />
-                <Text style={[styles.text, styles.textBold]}>Harpreet Kaur
-                  {"\n"}
-                  <Text>Signature of RCIC</Text>
-                </Text>
-                <View style={{ width: "100%" }}>
-                  <Text style={styles.text}> {felidData?.date_signature_rcic !== "0000-00-00 00:00:00" && felidData.date_signature_rcic !== "0000-00-00" && felidData?.date_signature_rcic ? moment(felidData.date_signature_rcic).format("DD/MM/YYYY") : "___________________________________"}</Text>{'\n'}
-                  <Text style={[styles.textBold, { textAlign: "center" }]}>Date</Text>
-                </View>
-              </View>
-
-            </View>
+           <View style={styles.container}>
+                        {/* Right Signature Box (Client) */}
+                        <View style={styles.box}>
+                          <ClientSignatureFunction
+                            felidData={felidData}
+                            familyJsonArray={familyJsonArray}
+                            page={"user"}
+                            isPdf={true}
+                          />
+                          <Text style={[styles.text, styles.textBoldm, { textAlign: "center", marginTop: 10 }]}>
+                            Signature of Client
+                          </Text>
+          
+                          <View style={{ marginTop: 10 }}>
+                            <Text
+                              style={{
+                                borderBottom: "1px solid black",
+                                textAlign: "center",
+                                textTransform: "capitalize",
+                                paddingBottom: 5,
+                                marginBottom: 5,
+                                width: "100%",
+                              }}
+                            >
+                              {(familyJsonArray[0]?.client_first_name || "") +
+                                " " +
+                                (familyJsonArray[0]?.client_last_name || "")}
+                            </Text>
+                            <Text style={{ textAlign: "center", marginBottom: 10 }}>Client’s full name</Text>
+                          </View>
+          
+                          <View style={{ marginTop: 5 }}>
+                            <Text
+                              style={{
+                                borderBottom: "1px solid black",
+                                textAlign: "center",
+                                paddingBottom: 5,
+                                marginBottom: 5,
+                                width: "100%",
+                              }}
+                            >
+                              {familyJsonArray[0]?.date_signature_client
+                                ? <ConvertTime _date={familyJsonArray[0].date_signature_client} format={"DD/MM/YYYY"} />
+                                : ""}
+                            </Text>
+                            <Text style={{ textAlign: "center", marginBottom: 10 }}>Date</Text>
+                          </View>
+                        </View>
+          
+                        {/* Left Signature Box (RCIC) */}
+                        <View style={styles.box}>
+                          <RCICSignatureFunction isPdf={true} felidData={felidData} />
+                          <Text style={[styles.text, { textAlign: "center", marginTop: 10 }]}>
+                            Signature of RCIC
+                          </Text>
+          
+                          <View style={{ marginTop: 10 }}>
+                            <Text
+                              style={{
+                                borderBottom: "1px solid black",
+                                textAlign: "center",
+                                textTransform: "capitalize",
+                                paddingBottom: 5,
+                                marginBottom: 5,
+                                width: "100%",
+                              }}
+                            >
+                              Harpreet Kaur
+                            </Text>
+                            <Text style={{ textAlign: "center", marginBottom: 10 }}>RCIC full name</Text>
+                          </View>
+          
+                          <View style={{ marginTop: 5 }}>
+                            <Text
+                              style={{
+                                borderBottom: "1px solid black",
+                                textAlign: "center",
+                                paddingBottom: 5,
+                                marginBottom: 5,
+                                width: "100%",
+                              }}
+                            >
+                              {felidData?.date_signature_rcic &&
+                                felidData?.date_signature_rcic !== "0000-00-00 00:00:00" &&
+                                felidData?.date_signature_rcic !== "0000-00-00"
+                                ? <ConvertTime _date={felidData.date_signature_rcic} format={"DD/MM/YYYY"} />
+                                : ""}
+                            </Text>
+                            <Text style={{ textAlign: "center", marginBottom: 10 }}>Date</Text>
+                          </View>
+                        </View>
+                      </View>
           </View>
         </View>
       </View>
@@ -413,7 +467,7 @@ const InitialConsultationAgreement = () => {
                       }
                     />
                     <View style={{ fontSize: 14, flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-                      <Text style={{ marginBottom: 2 }}>{felidData?.client_file_no || "_________"
+                      <Text style={{ marginBottom: 2 }}>{felidData?.client_file_no || ""
                       }</Text>
                       <View style={{ width: 30, height: 1, backgroundColor: '#000', marginBottom: 9 }} />
                       <Text>Client File Number</Text>

@@ -10,7 +10,7 @@ import {
   BlobProvider,
   Link,
 } from "@react-pdf/renderer";
-import moment from "moment";
+import ConvertTime from "../../Common function/ConvertTime";
 import { AddSharePointDOcument, AddUpdateAgreement } from "../../../../api/api";
 import InitialFunction from "../CommonThings/InitialFunction";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
@@ -103,14 +103,15 @@ const WorkPermitPdf = () => {
         <View>
           <Text>
             This Retainer Agreement is made this
-            <Text style={styles.textunderline}>
-              {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "_______" : " " + moment(new Date(felidData?.agreement_date)).format("Do") + " "}
+            <Text style={[{ Width: 50, borderBottom: "1px solid black", }, styles.textunderline]}>
+              {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <ConvertTime _date={felidData?.agreement_date} format={"Do"} />}
+              {"  "}
             </Text>
-            day of
-            <Text style={styles.textunderline}>
-              {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "_______" : " " + moment(new Date(felidData?.agreement_date)).format("MMMM") + " "}
+            day of{"  "}
+            <Text style={[{ borderBottom: "1px solid black", minWidth: "50px", }, styles.textunderline]}> {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <ConvertTime _date={felidData?.agreement_date} format={"MMMM"} />}
+              {"  "}
             </Text>
-            {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "_______" : " " + moment(new Date(felidData?.agreement_date)).format("YYYY")} between
+            {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <ConvertTime _date={felidData?.agreement_date} format={"YYYY"} />} between
             Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur (the
             “RCIC”), RCIC Membership Number
             <Text style={styles.textunderline}> R533393</Text>, Phone number
@@ -176,11 +177,11 @@ const WorkPermitPdf = () => {
                 </Text>
                 <Text style={{ flex: 1 }}>
                   Date of birth:
-                  <Text style={{ textDecoration: 'underline' }}>
-                    {item.client_date_of_birth
-                      ? moment(item.client_date_of_birth).format('DD-MM-YYYY')
-                      : '__________'}
-                  </Text>
+
+                  {item.client_date_of_birth
+                    ? <Text style={{ textDecoration: 'underline' }}><ConvertTime _date={item.client_date_of_birth} format={"DD-MM-YYYY"} /></Text>
+                    : '_________________'}
+
                 </Text>
               </View>
             ))}
@@ -549,7 +550,7 @@ const WorkPermitPdf = () => {
             <View id="l5" style={{ paddingLeft: 10 }}>
               <Text style={{ marginTop: 20 }}>Note:</Text>
               <View >
-                <View style={{  flexDirection: 'row' }}>
+                <View style={{ flexDirection: 'row' }}>
                   <Text style={{ width: 20, fontWeight: 'bold' }}>•</Text>
                   <Text style={{ flex: 1 }}>
                     There will be an additional fee, or a new fee arrangement
@@ -1363,7 +1364,6 @@ const WorkPermitPdf = () => {
             </Text>
             <View style={styles.container}>
               {/* Right Signature Box (Client) */}
-
               <View style={styles.box}>
                 <ClientSignatureFunction
                   felidData={felidData}
@@ -1371,22 +1371,94 @@ const WorkPermitPdf = () => {
                   page={"user"}
                   isPdf={true}
                 />
-                <Text style={[styles.text, styles.textBold]}> Signature of CLient</Text>
-                <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {familyJsonArray[0]?.date_signature_client ? moment(familyJsonArray[0].date_signature_client).format("DD/MM/YYYY") : "______________"}</Text>
+                <Text style={[styles.text, styles.textBoldm, { textAlign: "center", marginTop: 10 }]}>
+                  Signature of Client
+                </Text>
+
+                <View style={{ marginTop: 10 }}>
+                  <Text
+                    style={{
+                      borderBottom: "1px solid black",
+                      textAlign: "center",
+                      textTransform: "capitalize",
+                      paddingBottom: 5,
+                      marginBottom: 5,
+                      width: "100%",
+                    }}
+                  >
+                    {(familyJsonArray[0]?.client_first_name || "") +
+                      " " +
+                      (familyJsonArray[0]?.client_last_name || "")}
+                  </Text>
+                  <Text style={{ textAlign: "center", marginBottom: 10 }}>Client’s full name</Text>
+                </View>
+
+                <View style={{ marginTop: 5 }}>
+                  <Text
+                    style={{
+                      borderBottom: "1px solid black",
+                      textAlign: "center",
+                      paddingBottom: 5,
+                      marginBottom: 5,
+                      width: "100%",
+                    }}
+                  >
+                    {familyJsonArray[0]?.date_signature_client
+                      ? <ConvertTime _date={familyJsonArray[0].date_signature_client} format={"DD/MM/YYYY"} />
+                      : ""}
+                  </Text>
+                  <Text style={{ textAlign: "center", marginBottom: 10 }}>Date</Text>
+                </View>
               </View>
 
               {/* Left Signature Box (RCIC) */}
               <View style={styles.box}>
                 <RCICSignatureFunction isPdf={true} felidData={felidData} />
-                <Text style={[styles.text, styles.textBold]}>Signature of RCIC</Text>
+                <Text style={[styles.text, { textAlign: "center", marginTop: 10 }]}>
+                  Signature of RCIC
+                </Text>
 
-                <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {felidData?.date_signature_rcic !== "0000-00-00 00:00:00" && felidData?.date_signature_rcic && felidData?.date_signature_rcic !== "0000-00-00" ? moment(felidData.date_signature_rcic).format("DD/MM/YYYY") : "______________"}</Text>
+                <View style={{ marginTop: 10 }}>
+                  <Text
+                    style={{
+                      borderBottom: "1px solid black",
+                      textAlign: "center",
+                      textTransform: "capitalize",
+                      paddingBottom: 5,
+                      marginBottom: 5,
+                      width: "100%",
+                    }}
+                  >
+                    Harpreet Kaur
+                  </Text>
+                  <Text style={{ textAlign: "center", marginBottom: 10 }}>RCIC full name</Text>
+                </View>
+
+                <View style={{ marginTop: 5 }}>
+                  <Text
+                    style={{
+                      borderBottom: "1px solid black",
+                      textAlign: "center",
+                      paddingBottom: 5,
+                      marginBottom: 5,
+                      width: "100%",
+                    }}
+                  >
+                    {felidData?.date_signature_rcic &&
+                      felidData?.date_signature_rcic !== "0000-00-00 00:00:00" &&
+                      felidData?.date_signature_rcic !== "0000-00-00"
+                      ? <ConvertTime _date={felidData.date_signature_rcic} format={"DD/MM/YYYY"} />
+                      : ""}
+                  </Text>
+                  <Text style={{ textAlign: "center", marginBottom: 10 }}>Date</Text>
+                </View>
               </View>
             </View>
+
           </View>
 
         </View>
-        <View style={{ marginTop: 115 }}>
+        <View style={{ marginTop: 10 }}>
           <Text style={[{ textAlign: "center", }, styles.definition]}>
             AUTHORIZATION
           </Text>
@@ -1514,8 +1586,8 @@ const WorkPermitPdf = () => {
           >
             <View style={[styles.clientForm, { textAlign: "center", marginTop: 30 }]}>
               <View style={styles.clientFormChild}>
-                <Text className="para_gap" style={{ margin: 0, marginBottom: 15, textDecoration: "underline", textTransform: "capitalize" }}>
-                  {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ") || "_______________________"}
+                <Text style={{ margin: 0, marginBottom: 15, width: "100%", borderBottom: "1px solid black", textTransform: "capitalize" }}>
+                  {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ") || ""}
                 </Text>
                 <Text style={{ margin: "0 0 30px 0" }}>Client’s full name</Text>
               </View>
@@ -1534,12 +1606,12 @@ const WorkPermitPdf = () => {
                 )
               </View>
               <View style={styles.clientFormChild}>
-                <Text className="para_gap" style={{ margin: 0, textDecoration: "underline" }}>
+                <Text style={{ margin: 0, marginBottom: 15, width: "100%", borderBottom: "1px solid black" }}>
                   {!familyJsonArray[0]?.date_signature_client ||
-                    familyJsonArray[0]?.date_signature_client ===
-                    "0000-00-00 00:00:00"
-                    ? "____________"
-                    : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}
+                      familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00" ||
+                      familyJsonArray[0]?.date_signature_client === "0000-00-00"
+                    ? " "
+                    : <ConvertTime _date={familyJsonArray[0]?.date_signature_client} format={"DD-MM-YYYY"} />}
                 </Text>
                 <Text style={{ margin: "0 0 30px 0" }}>Date</Text>
               </View>

@@ -1406,14 +1406,14 @@ const AlbertaPnpPdf = () => {
                                     isPdf={true}
                                 />
                                 <Text style={[styles.text, styles.textBold]}> Signature of Client</Text>
-                                <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> <ConvertTime _date={felidData.ConvertTime({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" }) : ' '}} format={"DD-MM-YYYY"}/></Text>
+                                <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> <ConvertTime _date={felidData.ConvertTime({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" })} format={"DD-MM-YYYY"}/></Text>
                             </View>
 
                             {/* Left Signature Box (RCIC) */}
                             <View style={styles.box}>
                                 <RCICSignatureFunction isPdf={true} felidData={felidData} />
                                 <Text style={[styles.text, styles.textBold]}>Signature of RCIC</Text>
-                                <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {felidData?.ConvertTime({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" }) : ' '} !== "0000-00-00 00:00:00" && felidData?.ConvertTime({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" }) : ' '} !== "0000-00-00" && felidData?.ConvertTime({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" }) : ' '} ? moment(felidData.ConvertTime({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" }) : ' '}).format("DD/MM/YYYY") : "______________"}</Text>
+                                <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {felidData?.ConvertTime({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" })  !== "0000-00-00 00:00:00" && felidData?.ConvertTime({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" })  !== "0000-00-00" && felidData?.ConvertTime({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" })  ? moment(felidData.ConvertTime({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" }) ).format("DD/MM/YYYY") : "______________"}</Text>
                             </View>
                         </View>
                     </View>

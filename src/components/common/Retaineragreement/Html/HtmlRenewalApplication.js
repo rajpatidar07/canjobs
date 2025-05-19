@@ -1,8 +1,8 @@
-import moment from "moment";
 import React, { useEffect } from "react";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
 import InitialFunction from "../CommonThings/InitialFunction";
+import ConvertTime from "../../Common function/ConvertTime";
 
 const HtmlRenewalApplication = ({
   page,
@@ -52,7 +52,7 @@ const HtmlRenewalApplication = ({
     </div>
     <div class="content" style="padding: 10px 20px;text-align: justify;">
         <h2 class="font-weight-bold text-black text-center mb-4 mt-4 text-capitalize text-primary font-size-6">Retainer Agreement</h2>
-        <p class="m-0">THIS RETAINER AGREEMENT is made on ${felidData?.agreement_date ? `<span class="border-bottom border-dark">${moment(felidData?.agreement_date).format("llll")}</span>` : "_______________________"}</p>
+        <p class="m-0">THIS RETAINER AGREEMENT is made on <span class="border-bottom border-dark" style="min-width:100px">${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00"?  ConvertTime({ _date: felidData.agreement_date, format: "llll" }) : ""}</span></p>
         <p class="m-0">Program : <b>: Application for Rural Renewal Stream (Innisfail) and Endorsement Letter</b></p>
         <h3 class="font-weight-bold font-size-6 ">1. Contact Information</h3>
         <h4 class="font-weight-bold font-size-5">Between Client</h4>
@@ -264,8 +264,8 @@ ${RCICSignatureFunction({ isPdf: false, felidData })}
         <p style="font-size: 12px;">RCIC # R533393</p>
         <p style="font-size: 12px;">CAN Pathways Immigration Consultancy Ltd.</p>
 
-        <p style="font-size: 12px; margin-top: 10px;"><strong>Date:</strong>  ${felidData?.date_signature_rcic !==
-      "0000-00-00 00:00:00" && felidData?.date_signature_rcic ? `<span class="border-bottom border-dark" style="min-width: 80px;">${moment(felidData.date_signature_rcic).format("DD/MM/YYYY")}</span>` : "______________"}</p>
+        <p style="font-size: 12px; margin-top: 10px;"><strong>Date:</strong><span class="border-bottom border-dark" style="min-width: 80px;">  ${felidData?.date_signature_rcic !==
+      "0000-00-00 00:00:00" && felidData?.date_signature_rcic ? ConvertTime({ _date: felidData.date_signature_rcic, format: "DD/MM/YYYY" }) : ""}</span></p>
         <p style="font-size: 12px; margin-top: -10px;"><strong>Signed at:</strong> <u>Calgary, Alberta, Canada</u></p>
     </div>
 
@@ -280,7 +280,8 @@ ${RCICSignatureFunction({ isPdf: false, felidData })}
         ? ` <span class="text-capitalize "style="min-width: 300px">${userData?.name}</span>` ||
         "" : ""}</p><br>
 
-        <p style="font-size: 12px; margin-top: 10px;"><strong>Date:</strong> ${familyJsonArray[0]?.date_signature_client ? `<span class="border-bottom border-dark" style="min-width: 80px;">${moment(familyJsonArray[0].date_signature_client).format("DD/MM/YYYY")}</span>` : "______________"}</p>
+        <p style="font-size: 12px; margin-top: 10px;"><strong>Date:</strong> <span class="border-bottom border-dark" style="min-width: 80px;">  ${familyJsonArray[0]?.date_signature_client !==
+      "0000-00-00 00:00:00" && familyJsonArray[0]?.date_signature_client ? ConvertTime({ _date: familyJsonArray[0]?.date_signature_client, format: "DD/MM/YYYY" }) : ""}</span></p>
     </div>
 </div>
 

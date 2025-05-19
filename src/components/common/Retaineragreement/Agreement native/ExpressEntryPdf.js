@@ -10,11 +10,11 @@ import {
   BlobProvider,
   Link,
 } from "@react-pdf/renderer";
-import moment from "moment";
 import { AddSharePointDOcument, AddUpdateAgreement } from "../../../../api/api";
 import InitialFunction from "../CommonThings/InitialFunction";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
+import ConvertTime from "../../Common function/ConvertTime";
 // import { toast } from "react-toastify";
 
 const ExpressEntryPdf = () => {
@@ -218,31 +218,16 @@ const ExpressEntryPdf = () => {
         <View>
           <Text>
             This Retainer Agreement is made this
-            <Text style={styles.textunderline}>
-              {!felidData?.agreement_date ||
-                felidData?.agreement_date === "0000-00-00 00:00:00" ||
-                felidData?.agreement_date === "0000-00-00"
-                ? "_______"
-                : " " +
-                moment(new Date(felidData?.agreement_date)).format("Do") +
-                " "}
+            <Text style={[{ Width: 50, borderBottom: "1px solid black", }, styles.textunderline]}>
+              {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <ConvertTime _date={felidData?.agreement_date} format={"Do"} />}
+              {"  "}
             </Text>
-            day of
-            <Text style={styles.textunderline}>
-              {!felidData?.agreement_date ||
-                felidData?.agreement_date === "0000-00-00 00:00:00" ||
-                felidData?.agreement_date === "0000-00-00"
-                ? "_______"
-                : " " +
-                moment(new Date(felidData?.agreement_date)).format("MMMM") +
-                " "}
+            day of{"  "}
+            <Text style={[{ borderBottom: "1px solid black", minWidth: "50px", }, styles.textunderline]}> {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <ConvertTime _date={felidData?.agreement_date} format={"MMMM"} />}
+              {"  "}
             </Text>
-            {!felidData?.agreement_date ||
-              felidData?.agreement_date === "0000-00-00 00:00:00" ||
-              felidData?.agreement_date === "0000-00-00"
-              ? "_______"
-              : " " +
-              moment(new Date(felidData?.agreement_date)).format("YYYY")}{" "}
+            {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <ConvertTime _date={felidData?.agreement_date} format={"YYYY"} />}
+
             between Regulated Canadian Immigration Consultant (RCIC) Harpreet
             Kaur (the “RCIC”), RCIC Membership Number
             <Text style={styles.textunderline}> R533393</Text>, Phone number
@@ -319,11 +304,9 @@ const ExpressEntryPdf = () => {
                 </Text>
                 <Text style={{ flex: 1 }}>
                   Date of birth:
-                  <Text style={{ textDecoration: "underline" }}>
-                    {item.client_date_of_birth
-                      ? moment(item.client_date_of_birth).format("DD-MM-YYYY")
-                      : "__________"}
-                  </Text>
+                  {item.client_date_of_birth
+                    ? <Text style={{ textDecoration: 'underline' }}><ConvertTime _date={item.client_date_of_birth} format={"DD-MM-YYYY"} /></Text>
+                    : '_________________'}
                 </Text>
               </View>
             ))}
@@ -600,10 +583,10 @@ const ExpressEntryPdf = () => {
             >
               <View style={styles.row}>
                 <View style={[styles.cell, styles.headerCell]}>
-                  <Text style={{ color: "##0c5fa6" }}>Fees details</Text>
+                  <Text style={{ color: "blue" }}>Fees details</Text>
                 </View>
                 <View style={[styles.cell, styles.headerCell]}>
-                  <Text style={{ color: "##0c5fa6" }}>Amount (CAD)</Text>
+                  <Text style={{ color: "blue" }}>Amount (CAD)</Text>
                 </View>
               </View>
               <View style={styles.row}>
@@ -681,27 +664,27 @@ const ExpressEntryPdf = () => {
             <View style={[styles.table, { marginTop: 57 }]}>
               <View style={styles.row}>
                 <View style={styles.cell}>
-                  <Text style={{ color: "##0c5fa6" }}>
+                  <Text style={{ color: "blue" }}>
                     RCIC Service Milestone
                   </Text>
                 </View>
                 <View style={styles.cell}>
-                  <Text style={{ color: "##0c5fa6" }}>
+                  <Text style={{ color: "blue" }}>
                     Estimated date of Completion
                   </Text>
                 </View>
                 <View style={styles.cell}>
-                  <Text style={{ color: "##0c5fa6" }}>
+                  <Text style={{ color: "blue" }}>
                     Professional Fees (Non-Refundable)
                   </Text>
                 </View>
                 <View style={styles.cell}>
-                  <Text style={{ color: "##0c5fa6" }}>
+                  <Text style={{ color: "blue" }}>
                     Applicable Retainer Fee for this stage (Non- Refundable)
                   </Text>
                 </View>
                 <View style={styles.cell}>
-                  <Text style={{ color: "##0c5fa6" }}>
+                  <Text style={{ color: "blue" }}>
                     Applicable Government Processing Fee
                   </Text>
                 </View>
@@ -1681,7 +1664,6 @@ const ExpressEntryPdf = () => {
             </Text>
             <View style={styles.container}>
               {/* Right Signature Box (Client) */}
-
               <View style={styles.box}>
                 <ClientSignatureFunction
                   felidData={felidData}
@@ -1689,29 +1671,93 @@ const ExpressEntryPdf = () => {
                   page={"user"}
                   isPdf={true}
                 />
-                <Text style={[styles.text, styles.textBold]}>Signature of Client</Text>
-                <Text style={styles.text}>
-                  <Text style={styles.textBold}>Date:</Text>{" "}
-                  {familyJsonArray[0]?.date_signature_client
-                    ? moment(familyJsonArray[0].date_signature_client).format(
-                      "DD/MM/YYYY"
-                    )
-                    : "______________"}
+                <Text style={[styles.text, styles.textBoldm, { textAlign: "center", marginTop: 10 }]}>
+                  Signature of Client
                 </Text>
+
+                <View style={{ marginTop: 10 }}>
+                  <Text
+                    style={{
+                      borderBottom: "1px solid black",
+                      textAlign: "center",
+                      textTransform: "capitalize",
+                      paddingBottom: 5,
+                      marginBottom: 5,
+                      width: "100%",
+                    }}
+                  >
+                    {(familyJsonArray[0]?.client_first_name || "") +
+                      " " +
+                      (familyJsonArray[0]?.client_last_name || "")}
+                  </Text>
+                  <Text style={{ textAlign: "center", marginBottom: 10 }}>Client’s full name</Text>
+                </View>
+
+                <View style={{ marginTop: 5 }}>
+                  <Text
+                    style={{
+                      borderBottom: "1px solid black",
+                      textAlign: "center",
+                      paddingBottom: 5,
+                      marginBottom: 5,
+                      width: "100%",
+                    }}
+                  >
+                    {familyJsonArray[0]?.date_signature_client
+                      ? <ConvertTime _date={familyJsonArray[0].date_signature_client} format={"DD/MM/YYYY"} />
+                      : ""}
+                  </Text>
+                  <Text style={{ textAlign: "center", marginBottom: 10 }}>Date</Text>
+                </View>
               </View>
 
               {/* Left Signature Box (RCIC) */}
               <View style={styles.box}>
                 <RCICSignatureFunction isPdf={true} felidData={felidData} />
-                <Text style={[styles.text, styles.textBold]}>Signature of RCIC</Text>
-                <Text style={styles.text}>
-                  <Text style={styles.textBold}>Date:</Text> {felidData?.date_signature_rcic !== "0000-00-00 00:00:00" && felidData?.date_signature_rcic && felidData?.date_signature_rcic !== "0000-00-00" ? moment(felidData.date_signature_rcic).format("DD/MM/YYYY") : "______________"}
+                <Text style={[styles.text, { textAlign: "center", marginTop: 10 }]}>
+                  Signature of RCIC
                 </Text>
+
+                <View style={{ marginTop: 10 }}>
+                  <Text
+                    style={{
+                      borderBottom: "1px solid black",
+                      textAlign: "center",
+                      textTransform: "capitalize",
+                      paddingBottom: 5,
+                      marginBottom: 5,
+                      width: "100%",
+                    }}
+                  >
+                    Harpreet Kaur
+                  </Text>
+                  <Text style={{ textAlign: "center", marginBottom: 10 }}>RCIC full name</Text>
+                </View>
+
+                <View style={{ marginTop: 5 }}>
+                  <Text
+                    style={{
+                      borderBottom: "1px solid black",
+                      textAlign: "center",
+                      paddingBottom: 5,
+                      marginBottom: 5,
+                      width: "100%",
+                    }}
+                  >
+                    {felidData?.date_signature_rcic &&
+                      felidData?.date_signature_rcic !== "0000-00-00 00:00:00" &&
+                      felidData?.date_signature_rcic !== "0000-00-00"
+                      ? <ConvertTime _date={felidData.date_signature_rcic} format={"DD/MM/YYYY"} />
+                      : ""}
+                  </Text>
+                  <Text style={{ textAlign: "center", marginBottom: 10 }}>Date</Text>
+                </View>
               </View>
             </View>
+
           </View>
         </View>
-        <View style={{ marginTop: 220 }}>
+        <View style={{ marginTop: 120 }}>
           <Text style={[{ textAlign: "center" }, styles.definition]}>
             AUTHORIZATION
           </Text>
@@ -1856,47 +1902,34 @@ const ExpressEntryPdf = () => {
               marginTop: 15,
             }}
           >
-            <View
-              style={[
-                styles.clientForm,
-                { textAlign: "center", marginTop: 30 },
-              ]}
-            >
+            <View style={[styles.clientForm, { textAlign: "center", marginTop: 30 }]}>
               <View style={styles.clientFormChild}>
-                <Text
-                  className="para_gap"
-                  style={{
-                    margin: 0,
-                    marginBottom: 15,
-                    textDecoration: "underline",
-                    textTransform: "capitalize",
-                  }}
-                >
-                  {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ") || "_______________________"}
+                <Text style={{ margin: 0, marginBottom: 15, width: "100%", borderBottom: "1px solid black", textTransform: "capitalize" }}>
+                  {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ") || ""}
                 </Text>
                 <Text style={{ margin: "0 0 30px 0" }}>Client’s full name</Text>
               </View>
               <View style={[styles.clientFormChild, { alignSelf: "center" }]}>
-                <ClientSignatureFunction
-                  felidData={felidData}
-                  familyJsonArray={familyJsonArray}
-                  page={"user"}
-                  isPdf={true}
-                />
-                <Text style={[styles.text, styles.textBold]}>Signature</Text>
+                <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
+                  <View style={{ width: "100%" }}>
+                    <ClientSignatureFunction
+                      felidData={felidData}
+                      familyJsonArray={familyJsonArray}
+                      page={"user"}
+                      isPdf={true}
+                    />
+                    <Text style={{ margin: "0 0 30px 0" }}>Signature</Text>
+                  </View>
+                </View>
+                )
               </View>
               <View style={styles.clientFormChild}>
-                <Text
-                  className="para_gap"
-                  style={{ margin: 0, textDecoration: "underline" }}
-                >
+                <Text style={{ margin: 0, marginBottom: 15, width: "100%", borderBottom: "1px solid black" }}>
                   {!familyJsonArray[0]?.date_signature_client ||
                     familyJsonArray[0]?.date_signature_client ===
                     "0000-00-00 00:00:00"
-                    ? "____________"
-                    : moment(familyJsonArray[0]?.date_signature_client).format(
-                      "DD-MM-YYYY"
-                    )}
+                    ? " "
+                    : <ConvertTime _date={familyJsonArray[0]?.date_signature_client} format={"DD-MM-YYYY"} />}
                 </Text>
                 <Text style={{ margin: "0 0 30px 0" }}>Date</Text>
               </View>
@@ -1904,7 +1937,7 @@ const ExpressEntryPdf = () => {
           </View>
         </View>
       </View>
-    </View>
+    </View >
   );
 
   return (

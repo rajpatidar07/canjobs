@@ -1,18 +1,18 @@
-import moment from "moment";
 import { useEffect } from "react";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
 import InitialFunction from "../CommonThings/InitialFunction";
+import ConvertTime from "../../Common function/ConvertTime";
 // import { Link } from "react-router-dom";
 const RecruitmentServiceHtml = ({
-    page,
-    felidData,
-    userData,
-    emp_user_type,
-    addSign,
+  page,
+  felidData,
+  userData,
+  emp_user_type,
+  addSign,
 }) => {
-    const familyJsonArray = felidData?.family_json || []; //? JSON.parse(felidData?.family_json) : [];
-    const jsxContent = `<!DOCTYPE html>
+  const familyJsonArray = felidData?.family_json || []; //? JSON.parse(felidData?.family_json) : [];
+  const jsxContent = `<!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -71,26 +71,25 @@ const RecruitmentServiceHtml = ({
             <h4 style="text-align: center">CAN Pathways Immigration Consultancy Ltd.</h4>
             <h4 style="text-align: center">
                 <strong>Client:</strong> <span class="para_gap">${felidData &&
-            (familyJsonArray[0]?.client_first_name ||
-                familyJsonArray[0]?.client_last_name)
-            ? familyJsonArray[0]?.client_first_name +
-            " " +
-            (familyJsonArray[0]?.client_last_name || "")
-            : emp_user_type === "employee"
-                ? userData?.name || "" || ""
-                : "" || ""
-        }</span>
+      (familyJsonArray[0]?.client_first_name ||
+        familyJsonArray[0]?.client_last_name)
+      ? familyJsonArray[0]?.client_first_name +
+      " " +
+      (familyJsonArray[0]?.client_last_name || "")
+      : emp_user_type === "employee"
+        ? userData?.name || "" || ""
+        : "" || ""
+    }</span>
             </h4>
             <p>This Agreement ("the <b>Agreement</b>") is made on the date mentioned below.</p>
             <p>"The <b>Effective Date:</b>
-    ${felidData?.agreement_date &&
-            felidData?.agreement_date !== "0000-00-00 00:00:00" &&
-            felidData?.agreement_date !== "0000-00-00"
-            ? ` <span class="para_gap">${moment(
-                new Date(felidData?.agreement_date)
-            ).format("DD MMMM YYYY")}`
-            : "____________"
-        }"</p>
+   <span class="para_gap"> ${felidData?.agreement_date &&
+      felidData?.agreement_date !== "0000-00-00 00:00:00" &&
+      felidData?.agreement_date !== "0000-00-00"
+      ? ` ${ConvertTime({ _date: felidData?.agreement_date, format: "DD MM YYYY" })}`
+      : ""
+    }</span>
+        </p>
             <p>BY AND BETWEEN</p>
             <p>This <b>RECRUITMENT AGREEMENT</b> entered by and between <br>
                 <b>CAN Pathways Immigration Consultancy Ltd.</b> (the "Agency")   with address at Unit #310, 2618 Hopewell PI. NE Calgary, AB. T1Y 717, Canada, represented by Registered Canadian Immigration Consultant referred to as (RCIC) Harpreet Kaur, herein "<b>Legal Representative / Agent / Recruiter</b>".</p>
@@ -275,14 +274,14 @@ ${RCICSignatureFunction({ isPdf: false, felidData })}
       <h3 style="text-align: center">AUTHORIZATION</h3>
       
             <p>I <span class="para_gap">${felidData &&
-            (familyJsonArray[0]?.client_first_name ||
-                familyJsonArray[0]?.client_last_name)
-            ? familyJsonArray[0]?.client_first_name +
-            " " +
-            (familyJsonArray[0]?.client_last_name || "")
-            : emp_user_type === "employee"
-                ? userData?.name || "" || ""
-                : "" || ""}</span> here in after referred to as the "client"), here by authorize and appoint Harpreet kaur (here in after referred to as the "Recruiter" with an ICCRC# RS33393), of CAN Pathways Immigration Consultancy Ltd. (here in after referred to as the "firm"), to represent me in the recruitment process.<br><br>
+      (familyJsonArray[0]?.client_first_name ||
+        familyJsonArray[0]?.client_last_name)
+      ? familyJsonArray[0]?.client_first_name +
+      " " +
+      (familyJsonArray[0]?.client_last_name || "")
+      : emp_user_type === "employee"
+        ? userData?.name || "" || ""
+        : "" || ""}</span> here in after referred to as the "client"), here by authorize and appoint Harpreet kaur (here in after referred to as the "Recruiter" with an ICCRC# RS33393), of CAN Pathways Immigration Consultancy Ltd. (here in after referred to as the "firm"), to represent me in the recruitment process.<br><br>
             The Recruiter and the firm are authorized to assign any of its staff members, associates, affiliates, lawyers or the agents to process any matters in whole or part related to above-mentioned subject as they deem appropriate.<br><br>
             The Recruiter and the firm are authorized to collect Information and communicate with The Employer related to my profile. In case of Online application and documentation.  I authorized Recruiter Harpreet Kaur to electronically sign and submit the application on my behalf.<br><br>
             I also give permission to the Recruiter and the firm to post photos on social media ensuring that my private information is redacted. In doing so, they my each receive or pay each other any pecuniary remuneration/benefits that may be acquired directly or indirectly including those from a third party for the purpose of obtaining a favorable and expeditious results.</p>
@@ -300,15 +299,15 @@ ${RCICSignatureFunction({ isPdf: false, felidData })}
    <div class="row">
 
   <!-- Client Name -->
-  <div class="col-4 text-center">
+  <div class="col-4 text-center mt-5">
     <p>
       <span class="para_gap">
         ${felidData &&
-            (familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name)
-            ? `${familyJsonArray[0]?.client_first_name || ''} ${familyJsonArray[0]?.client_last_name || ''}`
-            : emp_user_type === "employee"
-                ? userData?.name || ""
-                : ""}
+      (familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name)
+      ? `${familyJsonArray[0]?.client_first_name || ''} ${familyJsonArray[0]?.client_last_name || ''}`
+      : emp_user_type === "employee"
+        ? userData?.name || ""
+        : ""}
       </span>
     </p>
     <p>Name of Client</p>
@@ -321,22 +320,22 @@ ${RCICSignatureFunction({ isPdf: false, felidData })}
   </div>
 
   <!-- Client Date -->
-  <div class="col-4 text-center">
+  <div class="col-4 text-center mt-5">
     <p>
+    <span class="para_gap" style="max-width: 200px;">
       ${!familyJsonArray[0]?.date_signature_client ||
-            familyJsonArray[0]?.date_signature_client === "0000-00-00" ||
-            familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00"
-            ? "_____________________"
-            : `<span class="para_gap" style="max-width: 200px;">
-              ${moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}
-            </span>`
-        }
+      familyJsonArray[0]?.date_signature_client === "0000-00-00" ||
+      familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00"
+      ? ""
+      : ConvertTime({ _date: familyJsonArray[0]?.date_signature_client, format: "DD-MM-YYYY" })
+    }
+    </span>
     </p>
     <p>Date</p>
   </div>
 
   <!-- RCIC Name -->
-  <div class="col-4 text-center">
+  <div class="col-4 text-center mt-5">
     <p><span class="para_gap">Harpreet Kaur</span></p>
     <p>Name of RCIC</p>
   </div>
@@ -348,16 +347,16 @@ ${RCICSignatureFunction({ isPdf: false, felidData })}
   </div>
 
   <!-- RCIC Date -->
-  <div class="col-4 text-center">
+  <div class="col-4 text-center mt-5">
     <p>
+    <span class="para_gap" style="max-width: 200px;">
       ${!felidData?.date_signature_rcic ||
-            felidData?.date_signature_rcic === "0000-00-00" ||
-            felidData?.date_signature_rcic === "0000-00-00 00:00:00"
-            ? "_____________________"
-            : `<span class="para_gap" style="max-width: 200px;">
-              ${moment(felidData?.date_signature_rcic).format("DD-MM-YYYY")}
-            </span>`
-        }
+      felidData?.date_signature_rcic === "0000-00-00" ||
+      felidData?.date_signature_rcic === "0000-00-00 00:00:00"
+      ? ""
+      : ConvertTime({ _date: familyJsonArray[0]?.date_signature_client, format: "DD-MM-YYYY" })
+
+    } </span>
     </p>
     <p>Date</p>
   </div>
@@ -396,45 +395,45 @@ ${RCICSignatureFunction({ isPdf: false, felidData })}
 </div>
     </body>
     </html>`;
-    useEffect(
-        (e) => {
-            // Attach event listeners after HTML is injected
-            familyJsonArray.forEach((_, index) => {
-                const button = document.getElementById(`add-signature-button-${index}`);
-                if (button) {
-                    button.addEventListener("click", () => addSign(e, index));
-                }
-            });
+  useEffect(
+    (e) => {
+      // Attach event listeners after HTML is injected
+      familyJsonArray.forEach((_, index) => {
+        const button = document.getElementById(`add-signature-button-${index}`);
+        if (button) {
+          button.addEventListener("click", () => addSign(e, index));
+        }
+      });
 
-            // Clean up event listeners
-            return () => {
-                familyJsonArray.forEach((_, index) => {
-                    const button = document.getElementById(
-                        `add-signature-button-${index}`
-                    );
-                    if (button) {
-                        button.removeEventListener("click", () => addSign(e, index));
-                    }
-                });
-            };
-        },
-        // eslint-disable-next-line
-        [familyJsonArray]
-    );
-    return (
-        <div
-            className="agreement_content"
-            style={{
-                maxWidth: "1024px",
-                margin: "0 auto",
-                background: "#fff",
-                padding: "30px",
-                height: "calc(100vh - 100px)",
-                overflow: "auto",
-            }}
-        >
-            <div dangerouslySetInnerHTML={{ __html: jsxContent }} />
-        </div>
-    );
+      // Clean up event listeners
+      return () => {
+        familyJsonArray.forEach((_, index) => {
+          const button = document.getElementById(
+            `add-signature-button-${index}`
+          );
+          if (button) {
+            button.removeEventListener("click", () => addSign(e, index));
+          }
+        });
+      };
+    },
+    // eslint-disable-next-line
+    [familyJsonArray]
+  );
+  return (
+    <div
+      className="agreement_content"
+      style={{
+        maxWidth: "1024px",
+        margin: "0 auto",
+        background: "#fff",
+        padding: "30px",
+        height: "calc(100vh - 100px)",
+        overflow: "auto",
+      }}
+    >
+      <div dangerouslySetInnerHTML={{ __html: jsxContent }} />
+    </div>
+  );
 };
 export default RecruitmentServiceHtml;

@@ -10,11 +10,11 @@ import {
   BlobProvider,
   Link,
 } from "@react-pdf/renderer";
-import moment from "moment";
 import { AddSharePointDOcument, AddUpdateAgreement } from "../../../../api/api";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
 import InitialFunction from "../CommonThings/InitialFunction";
+import ConvertTime from "../../Common function/ConvertTime";
 // import { toast } from "react-toastify";
 
 const RecruitmentAgrement = () => {
@@ -87,7 +87,7 @@ const RecruitmentAgrement = () => {
 
   const agreementDate = parseDate(felidData?.agreement_date);
   const formattedDate = agreementDate
-    ? moment(agreementDate).format("DD MMMM YYYY")
+    ? <ConvertTime _date={agreementDate} format={"DD MMMM YYYY"} />
     : "____________";
   let components = (
     <View style={{ height: "auto" }}>
@@ -462,113 +462,113 @@ const RecruitmentAgrement = () => {
                   I have read and understood all the terms and steps in the retainer letter above and I agree to all the terms mentioned And for so doing, this document shall constitute good and sufficient authority and declaration
                 </Text>
               </View>
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "100%",
-                  marginTop: 102 ,
-                }}
-              >
-                <View style={[styles.clientForm, { textAlign: "center", marginTop: 15 }]}>
-                  <View style={[styles.clientFormChild]}>
-                    <Text className="para_gap" style={{ margin: 0, marginBottom: 15, textDecoration: "underline", textTransform: "capitalize" }}>
-                      {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ") || "_______________________"}
-                    </Text>
-                    <Text style={{ margin: "0 0 30px 0" }}>Client’s full name</Text>
-                  </View>
-                  <View style={[styles.clientFormChild, { alignSelf: "center" }]}>
-                    <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-                      <View style={{ width: "100%",marginTop:2 }}>
-                        <ClientSignatureFunction
-                          felidData={felidData}
-                          familyJsonArray={familyJsonArray}
-                          page={"user"}
-                          isPdf={true}
-                        />
-                        <Text style={[styles.text, styles.bold, { textAlign: "center" }]}>Signature of Client</Text>
+              <View style={{ width: "100%", marginTop: 117 }}>
+                { }
+                {/* Client Section */}
+                <View style={[styles.clientForm, { alignItems: "center",  paddingHorizontal: 10 }]}>
 
-                      </View>
-                    </View>
-                  </View>
-                  <View style={styles.clientFormChild}>
-                    <Text  className="para_gap"
-                      style={{
-                        textDecorationLine: "underline",
-                        fontWeight: "bold",
-                        marginBottom: 5,marginTop:2 
-                      }}>
-                      {!familyJsonArray[0]?.date_signature_client ||
-                        familyJsonArray[0]?.date_signature_client ===
-                        "0000-00-00 00:00:00"
-                        ? "____________"
-                        : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}
-                    </Text>{"\n"}
-                    <Text style={{ margin: "0 0 30px 0" }}>Date</Text>
-                  </View>
-                </View>
-              </View>
-              <View
-                style={{
-                  flexDirection: "column",
-                  width: "100%",
-                  marginTop: 15,
-                }}
-              >
-                <View
-                  style={[
-                    styles.clientForm,
-                    {
-                      alignItems: "center",
-                      marginTop: 20,
-                      paddingHorizontal: 10,
-                    },
-                  ]}
-                >
-                  {/* Name of RCIC */}
-                  <View style={[styles.clientFormChild, { alignItems: "center", marginBottom: 20 ,marginTop:2 }]}>
+                  {/* Client Name */}
+                  <View style={[styles.clientFormChild, {  marginBottom: 20, marginTop: 2 }]}>
                     <Text
-                      className="para_gap"
                       style={{
                         marginBottom: 5,
-                        textDecorationLine: "underline",
                         textTransform: "capitalize",
                         fontWeight: "bold",
+                        minWidth: "100%",
+                        borderBottom: "1px solid black",
+                        textAlign: "center"
                       }}
                     >
-                      Harpreet Kaur
+                      {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || "") || ""}
                     </Text>
-                    <Text style={{ marginBottom: 0 }}>Name of RCIC</Text>
+                    <Text style={{ marginBottom: 30, textAlign: "center" }}>Client’s full name</Text>
                   </View>
 
-                  {/* Signature */}
-                  <View style={[styles.clientFormChild, { width: "100%", alignItems: "center", marginBottom: 20 ,marginTop:2 }]}>
-                    <RCICSignatureFunction isPdf={true} felidData={felidData} />
-                    <Text style={[styles.text, styles.bold, { marginTop: 8, textAlign: "center" }]}>Signature of RCIC</Text>
+                  {/* Client Signature */}
+                  <View style={[styles.clientFormChild, { alignSelf: "center", width: "100%", marginTop: 5 }]}>
+                    <ClientSignatureFunction
+                      felidData={felidData}
+                      familyJsonArray={familyJsonArray}
+                      page={"user"}
+                      isPdf={true}
+                    />
+                    <Text style={[styles.text, styles.bold, { textAlign: "center", marginTop: 8 }]}>
+                      Signature of Client
+                    </Text>
                   </View>
 
-                  {/* Date */}
-                  <View style={[styles.clientFormChild, { alignItems: "center" ,marginTop:2 }]}>
-                    <Text
-                      className="para_gap"
-                      style={{
-                        textDecorationLine: "underline",
-                        fontWeight: "bold",
-                        marginBottom: 5,
-                      }}
-                    >
+                  {/* Client Date */}
+                   <View style={[styles.clientFormChild, { alignItems: "center", marginTop: 2 }]}>
+                      <Text
+                        style={{
+                          fontWeight: "bold",
+                          marginBottom: 5,
+                          minWidth: "100%",
+                          borderBottom: "1px solid black"
+                        }}
+                      >
                       {
-                        !felidData?.date_signature_rcic ||
-                          felidData?.date_signature_rcic === "0000-00-00" ||
-                          felidData?.date_signature_rcic === "0000-00-00 00:00:00"
-                          ? "____________"
-                          : moment(felidData?.date_signature_rcic).format("DD-MM-YYYY")
+                        !familyJsonArray[0]?.date_signature_client ||
+                          familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00"
+                          ? ""
+                          : <ConvertTime _date={familyJsonArray[0]?.date_signature_client} format={"DD-MM-YYYY"} />
                       }
-                    </Text>{"\n"}
-                    <Text>Date</Text>
+                    </Text>
+                    <Text style={{ marginBottom: 30 }}>Date</Text>
+                  </View>
+                </View>
+
+                {/* RCIC Section */}
+                <View style={{ width: "100%", marginTop: 15 }}>
+                  <View style={[styles.clientForm, {  marginTop: 20, paddingHorizontal: 10 }]}>
+
+                    {/* RCIC Name */}
+                    <View style={[styles.clientFormChild, { marginBottom: 20, marginTop: 2 }]}>
+                      <Text
+                        style={{
+                          marginBottom: 5,
+                          textTransform: "capitalize",
+                          fontWeight: "bold",
+                          minWidth: "100%",
+                          borderBottom: "1px solid black",
+                          textAlign: "center"
+                        }}
+                      >
+                        Harpreet Kaur
+                      </Text>
+                      <Text style={{ textAlign: "center" }}>Name of RCIC</Text>
+                    </View>
+
+                    {/* RCIC Signature */}
+                    <View style={[styles.clientFormChild, { width: "100%", alignItems: "center", marginBottom: 20, marginTop: 2 }]}>
+                      <RCICSignatureFunction isPdf={true} felidData={felidData} />
+                      <Text style={[styles.text, styles.bold, { marginTop: 8, textAlign: "center" }]}>Signature of RCIC</Text>
+                    </View>
+
+                    {/* RCIC Date */}
+                    <View style={[styles.clientFormChild, { alignItems: "center", marginTop: 2 }]}>
+                      <Text
+                        style={{
+                          fontWeight: "bold",
+                          marginBottom: 5,
+                          minWidth: "100%",
+                          borderBottom: "1px solid black"
+                        }}
+                      >
+                        {
+                          !felidData?.date_signature_rcic ||
+                            felidData?.date_signature_rcic === "0000-00-00" ||
+                            felidData?.date_signature_rcic === "0000-00-00 00:00:00"
+                            ? ""
+                            : <ConvertTime _date={felidData?.date_signature_rcic} format={"DD-MM-YYYY"} />
+                        }
+                      </Text>
+                      <Text>Date</Text>
+                    </View>
                   </View>
                 </View>
               </View>
+
 
             </View>
 

@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import {
     Page, Text, View, Document, StyleSheet, BlobProvider, Image, PDFViewer, Link,
 } from '@react-pdf/renderer';
-import moment from 'moment';
 import { AddSharePointDOcument, AddUpdateAgreement } from '../../../../api/api';
 import InitialFunction from '../CommonThings/InitialFunction';
 import { ClientSignatureFunction } from '../CommonThings/ClientSignatureFunctionHtml';
 import { RCICSignatureFunction } from '../CommonThings/RCICSignatureFunction';
+import ConvertTime from '../../Common function/ConvertTime';
 
 const styles = StyleSheet.create({
     page: {
@@ -170,14 +170,15 @@ const ThreeColumnRerainerAgreement = () => {
                 <View>
                     <Text>
                         This Retainer Agreement is made this
-                        <Text style={styles.textunderline}>
-                            {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "_______" : " " + moment(new Date(felidData?.agreement_date)).format("Do") + " "}
+                        <Text style={[{ Width: 50, borderBottom: "1px solid black", }, styles.textunderline]}>
+                            {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <ConvertTime _date={felidData?.agreement_date} format={"Do"} />}
+                            {"  "}
                         </Text>
-                        day of
-                        <Text style={styles.textunderline}>
-                            {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "_______" : " " + moment(new Date(felidData?.agreement_date)).format("MMMM") + " "}
+                        day of{"  "}
+                        <Text style={[{ borderBottom: "1px solid black", minWidth: "50px", }, styles.textunderline]}> {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <ConvertTime _date={felidData?.agreement_date} format={"MMMM"} />}
+                            {"  "}
                         </Text>
-                        {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "_______" : " " + moment(new Date(felidData?.agreement_date)).format("YYYY")} between
+                        {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <ConvertTime _date={felidData?.agreement_date} format={"YYYY"} />} between
                         Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur (the
                         “RCIC”), RCIC Membership Number
                         <Text style={styles.textunderline}> R533393</Text>, Phone number
@@ -242,11 +243,9 @@ const ThreeColumnRerainerAgreement = () => {
                                 </Text>
                                 <Text style={{ flex: 1 }}>
                                     Date of birth:
-                                    <Text style={{ textDecoration: 'underline' }}>
-                                        {item.client_date_of_birth
-                                            ? moment(item.client_date_of_birth).format('DD-MM-YYYY')
-                                            : '__________'}
-                                    </Text>
+                                    {item.client_date_of_birth
+                                        ? <Text style={{ textDecoration: 'underline' }}><ConvertTime _date={item.client_date_of_birth} format={"DD-MM-YYYY"} /></Text>
+                                        : '_________________'}
                                 </Text>
                             </View>
                         ))}
@@ -1434,9 +1433,11 @@ const ThreeColumnRerainerAgreement = () => {
                                 <Text style={{ textAlign: "center" }}>Name of Client</Text>
 
                                 <Text style={[{ textAlign: "center", marginTop: 10, borderBottom: "1px solid black", }]}>
-                                    {(!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00")
-                                        ? " "
-                                        : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}
+                                    {familyJsonArray[0]?.date_signature_client &&
+                                        familyJsonArray[0]?.date_signature_client !== "0000-00-00 00:00:00" &&
+                                        familyJsonArray[0]?.date_signature_client !== "0000-00-00"
+                                        ? <ConvertTime _date={felidData.date_signature_rcic} format={"DD/MM/YYYY"} />
+                                        : " "}
                                 </Text>
                                 <Text style={{ textAlign: "center" }}>Date</Text>
                             </View>
@@ -1452,9 +1453,11 @@ const ThreeColumnRerainerAgreement = () => {
                                 <Text style={{ textAlign: "center" }}>Name of RCIC</Text>
 
                                 <Text style={[{ borderBottom: "1px solid black", textAlign: "center", marginTop: 10, width: "100%" }]}>
-                                    {(!felidData?.date_signature_rcic || felidData?.date_signature_rcic === "0000-00-00" || felidData?.date_signature_rcic === "0000-00-00 00:00:00")
-                                        ? " "
-                                        : moment(felidData?.date_signature_rcic).format("DD-MM-YYYY")}
+                                    {felidData?.date_signature_rcic &&
+                                        felidData?.date_signature_rcic !== "0000-00-00 00:00:00" &&
+                                        felidData?.date_signature_rcic !== "0000-00-00"
+                                        ? <ConvertTime _date={felidData.date_signature_rcic} format={"DD/MM/YYYY"} />
+                                        : " "}
                                 </Text>
                                 <Text style={{ textAlign: "center" }}>Date</Text>
                             </View>
@@ -1544,7 +1547,7 @@ const ThreeColumnRerainerAgreement = () => {
                             part of this agreement
                         </Text>
                     </View>
-                    <View style={{ marginTop: 20, flexDirection: 'row' }}>
+                    <View style={{  flexDirection: 'row' }}>
                         <Text style={{ width: 20, fontWeight: 'bold' }}>6</Text>
                         <Text style={{ flex: 1 }}>
                             I undertake to inform the consultant, the firm or the Government of Canada of any change in marital or civic status
@@ -1593,7 +1596,7 @@ const ThreeColumnRerainerAgreement = () => {
                 >
                     <View style={[styles.clientForm, { textAlign: "center", marginTop: 30 }]}>
                         <View style={styles.clientFormChild}>
-                            <Text style={{ margin: 0,marginTop:15, borderBottom: "1px solid black", width: "100%", textTransform: "capitalize" }}>
+                            <Text style={{ margin: 0, marginTop: 15, borderBottom: "1px solid black", width: "100%", textTransform: "capitalize" }}>
                                 {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ") || ""}
                             </Text>
                             <Text style={{ margin: "0 0 30px 0" }}>Client’s full name</Text>
@@ -1608,12 +1611,12 @@ const ThreeColumnRerainerAgreement = () => {
                             <Text style={{ margin: "0 0 50px 0" }}>Signatures</Text>
                         </View>
                         <View style={styles.clientFormChild}>
-                            <Text style={{ margin: 0,marginTop:15, borderBottom: "1px solid black", width: "100%" }}>
-                                {!familyJsonArray[0]?.date_signature_client ||
-                                    familyJsonArray[0]?.date_signature_client ===
-                                    "0000-00-00 00:00:00"
-                                    ? " "
-                                    : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")}
+                            <Text style={{ margin: 0, marginTop: 15, borderBottom: "1px solid black", width: "100%" }}>
+                                {familyJsonArray[0]?.date_signature_client &&
+                                    familyJsonArray[0]?.date_signature_client !== "0000-00-00 00:00:00" &&
+                                    familyJsonArray[0]?.date_signature_client !== "0000-00-00"
+                                    ? <ConvertTime _date={felidData.date_signature_rcic} format={"DD/MM/YYYY"} />
+                                    : " "}
                             </Text>
                             <Text style={{ margin: "0 0 30px 0" }}>Date</Text>
                         </View>

@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react'
-import moment from 'moment/moment';
 import InitialFunction from '../CommonThings/InitialFunction';
 import { ClientSignatureFunction } from '../CommonThings/ClientSignatureFunctionHtml';
 import { RCICSignatureFunction } from '../CommonThings/RCICSignatureFunction';
+import ConvertTime from "../../Common function/ConvertTime"
 export default function EmployerRetainerAgreement({ page,
   felidData,
   userData,
   emp_user_type,
   addSign,
 }) {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const familyJsonArray = felidData?.family_json || [];
 
   // console.log(felidData, "userData", familyJsonArray, page);
@@ -33,7 +34,7 @@ export default function EmployerRetainerAgreement({ page,
           }
         </style>
       </head>
-       <body style="margin: 0 auto; max-width: 1024px;color:"black;">
+       <body style="margin: 0 auto; max-width: 1024px; color: black;">
         <div class="header" style="padding: 10px 20px;text-align: justify;">
           <img
             src="https://canpathwaysjobs.com/image/00logo-main-black.png"
@@ -46,11 +47,11 @@ export default function EmployerRetainerAgreement({ page,
             <p class="m-0">2618 Hopewell Pl NE #310, Calgary, AB T1Y 7J7</p>
             <p class="m-0">Tel: +1. (403)888 5308 </p>
             <p class="m-0">Email: <a href="mailto:info@canpathwaysjobs.com">info@canpathwaysjobs.com</a></p>
-            <p class="m-0"> <a href=www.canpathwaysjobs.com">https://canpathwaysjobs.com</a></p>
+            <p class="m-0"> <a href="https://www.canpathwaysjobs.com">https://canpathwaysjobs.com</a></p>
         </div>
         <div class="content" style="padding: 10px 20px;text-align: justify;">
             <h2 class="font-weight-bold text-black text-center mb-4 mt-4 text-capitalize text-primary font-size-6">Retainer Agreement</h2>
-            <p class="m-0">THIS RETAINER AGREEMENT is made on ${felidData?.agreement_date ? `<span class="border-bottom border-dark">${moment(felidData?.agreement_date).format("llll")}</span>` : "_______________________"}</p>
+            <p class="m-0">THIS RETAINER AGREEMENT is made on <span class="border-bottom border-dark">${ felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00"?  ConvertTime({ _date: felidData?.agreement_date, format: "llll" }) : ""}</span> </p>
             <p class="m-0">Program : <b>Application for Labour Market Impact Assessment (LMIA)+ Recruitment (if applicable)</b></p>
             <h3 class="font-weight-bold font-size-6 ">1. Contact Information</h3>
             <h4 class="font-weight-bold font-size-5">Between Client</h4>
@@ -128,8 +129,8 @@ export default function EmployerRetainerAgreement({ page,
       <p>The Client will be billed bya flat fee with payment by milestones. The details of this billing method are as follows:</p>
      <p>The Client agrees to pay to the RCIC a Professional Fee of<b> CAD $3000 for each application</b>, for the services rendered to the Client in applying to <b>ESDC for Labour Market Impact Assessments + Recruitment (if applicable).</b></p>
     <p>The Professional Fee is solely for the services performed by the RCIC and does not include government fees or any other fees. Additional charges may be applied if the Client delays in providing necessary information and/or documentation to the RCIC, resulting in the RCIC having to change or modify the application.</p>
-    <p>The Client agrees to pay for additional courier fees.<p/>
-    <p>Potential costs will apply for additional or new work requested such as additional documentation, applications; redo ESDC forms after being completed if ESDC changes forms before submitting; additional follow-up work created by delayed, incomplete, or no response from the Client; additional 'rush' work created by submitting documents requested by ESDC with less than 5 days left to the ESDC deadline given; responses to ESDC requests or challenges that require more than one hour for any single request; requests for unnecessary meetings and frequent updates on the application.<p/>
+    <p>The Client agrees to pay for additional courier fees.</p>
+    <p>Potential costs will apply for additional or new work requested such as additional documentation, applications; redo ESDC forms after being completed if ESDC changes forms before submitting; additional follow-up work created by delayed, incomplete, or no response from the Client; additional 'rush' work created by submitting documents requested by ESDC with less than 5 days left to the ESDC deadline given; responses to ESDC requests or challenges that require more than one hour for any single request; requests for unnecessary meetings and frequent updates on the application.</p>
     <div>
     <h3 class="font-weight-bold font-size-6 ">5. Payment Schedule</h3>
     <ul>
@@ -269,7 +270,7 @@ export default function EmployerRetainerAgreement({ page,
     
             <p style="font-size: 12px; margin-top: 10px;"><strong>Date:</strong>  ${felidData?.date_signature_rcic !==
       "0000-00-00 00:00:00" && felidData?.date_signature_rcic !==
-      "0000-00-00" && felidData?.date_signature_rcic ? `<span class="border-bottom border-dark" style="min-width: 80px;">${moment(felidData.date_signature_rcic).format("DD/MM/YYYY")}</span>` : "______________"}</p>
+      "0000-00-00" && felidData?.date_signature_rcic ? `<span class="border-bottom border-dark text-underline" style="min-width: 80px;">${ConvertTime({ _date: felidData?.date_signature_rcic, format: "DD-MM-YYYY" })}s</span>` : "__________"}</p>
             <p style="font-size: 12px; margin-top: -10px;"><strong>Signed at:</strong> <u>Calgary, Alberta, Canada</u></p>
         </div>
     
@@ -285,7 +286,7 @@ export default function EmployerRetainerAgreement({ page,
         ""
         : ""}</p>
    
-            <p style="font-size: 12px; margin-top: 10px;"><strong>Date:</strong> ${familyJsonArray[0]?.date_signature_client ? `<span class="border-bottom border-dark" style="min-width: 80px;">${moment(familyJsonArray[0].date_signature_client).format("DD/MM/YYYY")}</span>` : "______________"}</p>
+            <p style="font-size: 12px; margin-top: 10px;"><strong>Date:</strong> ${familyJsonArray[0]?.date_signature_client ? `<span class="border-bottom border-dark" style="min-width: 80px;">${ConvertTime({ _date: familyJsonArray[0]?.date_signature_client, format: "DD-MM-YYYY" })}</span>` : "______________"}</p>
         </div>
     </div>
     
@@ -333,31 +334,26 @@ export default function EmployerRetainerAgreement({ page,
         </body>
                     </html> `;
 
-  useEffect(
-    (e) => {
-      // Attach event listeners after HTML is injected
-      familyJsonArray.forEach((_, index) => {
-        const button = document.getElementById(`add-signature-button-${index}`);
-        if (button) {
-          button.addEventListener("click", () => addSign(e, index));
-        }
-      });
+  useEffect(() => {
+    // Define handler function to be used for add and remove event listener
+    const handlers = [];
 
-      // Clean up event listeners
-      return () => {
-        familyJsonArray.forEach((_, index) => {
-          const button = document.getElementById(
-            `add-signature-button-${index}`
-          );
-          if (button) {
-            button.removeEventListener("click", () => addSign(e, index));
-          }
-        });
-      };
-    },
-    // eslint-disable-next-line
-    [familyJsonArray]
-  );
+    familyJsonArray.forEach((_, index) => {
+      const button = document.getElementById(`add-signature-button-${index}`);
+      if (button) {
+        const handler = (event) => addSign(event, index);
+        handlers.push({ button, handler });
+        button.addEventListener("click", handler);
+      }
+    });
+
+    // Clean up event listeners
+    return () => {
+      handlers.forEach(({ button, handler }) => {
+        button.removeEventListener("click", handler);
+      });
+    };
+  }, [familyJsonArray, addSign]);
 
   return (
     <div

@@ -1,9 +1,9 @@
 // import moment from "moment";
-import moment from "moment";
 import { useEffect } from "react";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
 import InitialFunction from "../CommonThings/InitialFunction";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
+import ConvertTime from "../../Common function/ConvertTime";
 // import { Link } from "react-router-dom";
 const InitialConsultation = ({
   page,
@@ -45,7 +45,7 @@ const InitialConsultation = ({
       style="max-width: 200px" />
     <div style="font-size: 14px;display:flex;flex-direction:column;text-align:center;">
       <span style="border-bottom: solid 1px; margin-bottom: 9px;"> <span class="${felidData?.client_file_no ? "para_gap" : ""
-    }" style="min-width: 200px">${felidData?.client_file_no || "_________"
+    }" style="min-width: 200px">${felidData?.client_file_no || ""
     }</span></span>
       <label style="">Client File Number</label>
     </div>
@@ -59,14 +59,12 @@ const InitialConsultation = ({
   <div class="section">
     <p>
       This Initial Consultation AGREEMENT ("the Agreement") is made on the date mentioned below.<br>
-      "The Effective Date": ${felidData?.agreement_date &&
+      "The Effective Date": <span class="para_gap" style="min-width:100px">${felidData?.agreement_date &&
       felidData?.agreement_date !== "0000-00-00 00:00:00" &&
       felidData?.agreement_date !== "0000-00-00"
-      ? ` <span class="para_gap">${moment(
-        new Date(felidData?.agreement_date)
-      ).format("DD MMMM YYYY")}`
-      : "____________"
-    }
+      ? ` ${ConvertTime({ _date: familyJsonArray[0]?.agreement_date, format: "DD MMMM YYYY" })}`
+      : ""
+    }</span>
     </p>
     <div>
       BY AND BETWEEN<br>
@@ -74,7 +72,7 @@ const InitialConsultation = ({
           Ltd.</strong>Address: <strong>Unit #310, 2618 Hopewell Pl. NE, Calgary, AB, T1Y 717, Canada </strong> Here in
         after referred to as: <strong>"Legal Representative/RCIC"</strong><br>AND<br>The <strong>"Candidate"</strong> as
         his/her details provided as of this present agreement, collectively called the <strong>"Client."</strong><br>
-        <span class="px-8"><strong>Name</strong>: <span><u>${felidData &&
+        <span class="px-8"><strong>Name</strong>: <span class="border-bottom border-dark" style="min-width: 300px;">${felidData &&
       (familyJsonArray[0]?.client_first_name ||
         familyJsonArray[0]?.client_last_name)
       ? familyJsonArray[0]?.client_first_name +
@@ -83,17 +81,17 @@ const InitialConsultation = ({
       : emp_user_type === "employee"
         ? userData?.name || "" || ""
         : "" || ""
-    }</u></span><br> <strong>Address</strong>: <span><u>${felidData && felidData?.client_address
+    }</span><br> <strong>Address</strong>: <span class="border-bottom border-dark" style="min-width: 300px;">${felidData && felidData?.client_address
       ? felidData?.client_address
       : emp_user_type === "employer"
         ? userData?.address || ""
         : (userData?.current_location || "") +
         " " +
         (userData?.currently_located_country || "")
-    } </u></span><br> <strong>Phone Number</strong>: <span><u>${felidData && felidData?.client_contact
+    } </span><br> <strong>Phone Number</strong>: <span class="border-bottom border-dark" style="min-width: 300px;">${felidData && felidData?.client_contact
       ? felidData?.client_contact
       : userData?.contact_no || ""
-    }</u></span><br><strong>Email Address</strong>: <span><u>${felidData && felidData?.client_email
+    }</span><br><strong>Email Address</strong>: <span class="border-bottom border-dark" style="min-width: 300px;">${felidData && felidData?.client_email
       ? felidData?.client_email || ""
       : userData?.email || ""
     }</u></span>
@@ -281,62 +279,62 @@ const InitialConsultation = ({
     </div>
     <div>
       <p class="text-center"><u>SIGNED BY THE CLIENT AND THE RCIC IN ACCEPTANCE OF AGREEMENT</u></p>
-      <div style="display: flex; flex-wrap: wrap; gap: 20px;">
-
-        <!-- Client Signature -->
-        <div style="width: 48%;">
-         ${ClientSignatureFunction({ page, familyJsonArray, felidData })} 
-         <p style="margin: 10px 0 0 0;"><u>${felidData &&
-      (familyJsonArray[0]?.client_first_name ||
-        familyJsonArray[0]?.client_last_name)
-      ? familyJsonArray[0]?.client_first_name +
-      " " +
-      (familyJsonArray[0]?.client_last_name || "")
-      : emp_user_type === "employee"
-        ? userData?.name || "" || ""
-        : "" || ""
-    }</u></p>
-          <p>Signature of Client</p>
-        </div>
-      
-        <!-- RCIC Signature -->
-        <div style="width: 48%;">
-${RCICSignatureFunction({ isPdf: false, felidData })}
-          <p style="margin: 10px 0 0 0;">Harpreet Kaur 
-            ${felidData?.date_signature_rcic && felidData.date_signature_rcic !== "0000-00-00" && felidData.date_signature_rcic !== "0000-00-00 00:00:00" ?
-      `<span style="max-width: 200px;">${moment(felidData.date_signature_rcic).format("DD-MM-YYYY")}</span>` : ''}
-          </p>
-          <p>Signature of RCIC</p>
-        </div>
-      
-        <!-- Client Signature Date -->
-        <div style="width: 48%;">
-          <p>
-            ${!familyJsonArray[0]?.date_signature_client ||
-      familyJsonArray[0]?.date_signature_client === "0000-00-00" ||
-      familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00" ?
-      "_____________________" :
-      `<span class="para_gap" style="max-width: 200px;">${moment(familyJsonArray[0].date_signature_client).format("DD-MM-YYYY")}</span>`
-    }
-          </p>
-          <p>Date</p>
-        </div>
-      
-        <!-- RCIC Signature Date -->
-        <div style="width: 48%;">
-          <p>
-            ${!felidData?.date_signature_rcic ||
-      felidData.date_signature_rcic === "0000-00-00" ||
-      felidData.date_signature_rcic === "0000-00-00 00:00:00" ?
-      "_____________________" :
-      `<span class="para_gap" style="max-width: 200px;">${moment(felidData.date_signature_rcic).format("DD-MM-YYYY")}</span>`
-    }
-          </p>
-          <p>Date</p>
-        </div>
-      
-      </div>
-      
+     <!-- Signatures -->
+     <div class="row align-items-start mb-4">
+       <!-- Client Signature -->
+       <div class="col-md-6 mb-4">
+       ${ClientSignatureFunction({ page, familyJsonArray, felidData })} 
+         <p class="mb-0 text-center">Signature of Client</p>
+       </div>
+     
+       <!-- RCIC Signature -->
+       <div class="col-md-6 mb-4">
+     ${RCICSignatureFunction({ isPdf: false, felidData })}
+         <p class="mb-0 text-center">Signature of RCIC</p>
+       </div>
+     </div>
+     
+     <!-- Name Fields -->
+     <div class="row mb-4">
+       <div class="col-md-6 ">
+         <p class="mb-1 text-capitalize w-100 border-bottom border-dark text-center">
+         ${familyJsonArray[0]?.client_first_name ||
+           familyJsonArray[0]?.client_last_name
+           ? ` <span class="text-capitalize">${familyJsonArray[0]?.client_first_name
+           } ${familyJsonArray[0]?.client_last_name || ""}</span>`
+           : emp_user_type === "employee"
+             ? ` <span class="text-capitalize">${userData?.name}</span>` ||
+             ""
+             : " "
+         }    </p>
+         <p class="mb-3 text-center">Name of Client</p>
+       </div>
+       <div class="col-md-6">
+         <p class="mb-1 w-100 border-bottom border-dark text-center">Harpreet Kaur</p>
+         <p class="mb-3 text-center">Name of RCIC</p>
+       </div>
+     </div>
+     
+     <!-- Signature Date -->
+     <div class="row">
+       <div class="col-md-6">
+         <p class="mb-1 w-100 border-bottom border-dark pt-8 text-center">
+           ${!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client.startsWith("0000")
+           ? " "
+           : `<span> ${ConvertTime({ _date: familyJsonArray[0]?.date_signature_client, format: "DD-MM-YYYY" })}</span>`}
+         </p>
+         <p class="text-center ">Date</p>
+       </div>
+         <div class="col-md-6">
+         <p class="mb-1 w-100 border-bottom border-dark pt-8 text-center">
+           ${!felidData.date_signature_rcic || felidData.date_signature_rcic.startsWith("0000")
+           ? " "
+           : `<span> ${ConvertTime({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" })}</span>`}
+         </p>
+         <p class="text-center ">Date</p>
+       </div>
+     </div>
+     
 
     </div>
     <div class="d-flex justify-content-end gap-4" style="gap: 4rem;">

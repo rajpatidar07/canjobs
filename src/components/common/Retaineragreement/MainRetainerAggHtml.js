@@ -181,7 +181,7 @@ export default function MainRetainerAggHtml({
           </button>
           <button
             className={
-              felidData.agreement_date ? "btn btn-primary m-2 w-100" : "d-none"
+              felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00"?  "btn btn-primary m-2 w-100" : "d-none"
             }
             onClick={() => GeneratePdf()}
           >
@@ -301,7 +301,7 @@ export default function MainRetainerAggHtml({
                   : null}
         {/* <button
           className={
-            felidData.agreement_date ? "btn btn-primary my-2" : "d-none"
+            felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00"?  "btn btn-primary my-2" : "d-none"
           }
           onClick={() => GeneratePdf()}
         >
