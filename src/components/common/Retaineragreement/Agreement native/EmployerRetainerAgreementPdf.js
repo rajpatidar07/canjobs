@@ -4,7 +4,7 @@ import { AddSharePointDOcument, AddUpdateAgreement } from '../../../../api/api';
 import { ClientSignatureFunction } from '../CommonThings/ClientSignatureFunctionHtml';
 import { RCICSignatureFunction } from '../CommonThings/RCICSignatureFunction';
 import InitialFunction from '../CommonThings/InitialFunction';
-import ConvertTime from '../../Common function/ConvertTime';
+import CommonRetainerAgreementDate from '../CommonRetainerAgreementDate';
 const styles = StyleSheet.create({
   page: {
     padding: 30,
@@ -108,7 +108,7 @@ const EmployerRetainerAgreementPdf = () => {
         }
         const file = new File(
           [newBlob],
-          `${felidData?.type.replace(" ", "_")}.pdf`,
+          `${felidData?.type.replaceAll(" ", "_") + `_${felidData?.id}`}.pdf`,
           { type: "application/pdf" }
         ); try {
           let res = await AddSharePointDOcument(
@@ -171,7 +171,7 @@ const EmployerRetainerAgreementPdf = () => {
             THIS RETAINER AGREEMENT is made on{" "}
             {felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" ? (
               <Text style={[{ borderBottomWidth: 1, borderBottomColor: "black" }, styles.underline]}>
-                {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <ConvertTime _date={felidData?.agreement_date} format={"llll"} />}as
+                {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <CommonRetainerAgreementDate _date={felidData?.agreement_date} format={"llll"} />}as
               </Text>
             ) : (
               "_______________________"
@@ -485,7 +485,7 @@ const EmployerRetainerAgreementPdf = () => {
               <Text style={[styles.text, styles.textBold]}>Harpreet Kaur (RCIC)</Text>
               <Text style={styles.text}>RCIC # R533393</Text>
               <Text style={styles.text}>CAN Pathways Immigration Consultancy Ltd.</Text>
-              <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {felidData?.date_signature_rcic !== "0000-00-00 00:00:00" && felidData.date_signature_rcic === "0000-00-00" && felidData?.date_signature_rcic ? <ConvertTime _date={felidData?.date_signature_rcic} format={"DD-MM-YYYY"} /> : "________________"}</Text>
+              <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {felidData?.date_signature_rcic && felidData?.date_signature_rcic !== "0000-00-00 00:00:00" && felidData.date_signature_rcic !== "0000-00-00"  ? <CommonRetainerAgreementDate _date={felidData?.date_signature_rcic} format={"DD-MM-YYYY"} /> : "________________"}</Text>
               <Text style={styles.text}><Text style={styles.textBold}>Signed at:</Text> <Text style={styles.underline}>Calgary, Alberta, Canada</Text></Text>
             </View>
 
@@ -498,13 +498,13 @@ const EmployerRetainerAgreementPdf = () => {
                 isPdf={true}
               />
               <Text style={[styles.text, styles.textBold]}> {familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name ? (
-                <Text style={[{ textTransform: "capitalize" }, ]}>
+                <Text style={[{ textTransform: "capitalize" },]}>
                   {familyJsonArray[0]?.client_first_name} {familyJsonArray[0]?.client_last_name || ""}</Text>) : ""}</Text>
               <Text style={styles.text}><Text style={styles.textBold}>Date:</Text>  {!familyJsonArray[0]?.date_signature_client ||
                 familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00" ||
                 familyJsonArray[0]?.date_signature_client === "0000-00-00"
                 ? "________________"
-                : <ConvertTime _date={familyJsonArray[0]?.date_signature_client} format={"DD-MM-YYYY"} />}</Text>
+                : <CommonRetainerAgreementDate _date={familyJsonArray[0]?.date_signature_client} format={"DD-MM-YYYY"} />}</Text>
             </View>
           </View>
         </View>
@@ -521,7 +521,7 @@ const EmployerRetainerAgreementPdf = () => {
                 fixed
                 style={{ width: 100, height: 40 }}
                 src={
-                  "https://canpathwaysjobs.com/image/00logo-main-black.png"
+                  "https://canpathwaysjobs.com/image/Retainer_agreement_logo.png"
                 }
               />
               {components}
@@ -588,7 +588,7 @@ const EmployerRetainerAgreementPdf = () => {
                     fixed
                     style={{ width: 100, height: 40 }}
                     src={
-                      "https://canpathwaysjobs.com/image/00logo-main-black.png"
+                      "https://canpathwaysjobs.com/image/Retainer_agreement_logo.png"
                     } />
                   {components}
                   <View

@@ -3490,8 +3490,19 @@ export const AddSharePointDOcument = async (
     // console.log(data[i])
     formData.append(`file[${i}]`, data[i]);
   }
+  const allowedPaths = [
+    "/initial_consultation",
+    "/recruitment_service",
+    "/renewal_application",
+    "/more_than_one_applicant",
+    "/employers_agreement",
+    "/work_permit",
+    "/alberta_pnp",
+    "/three_column",
+    "/agreeone"
+  ];
   // console.log(formData)
-  if (Token) {
+  if (Token || allowedPaths.includes(window.location.pathname)) {
     const response = await axios.post(
       `${API_URL}admin/sharpointSiteDriveDocumentUpload_new`,
       formData,
@@ -3656,7 +3667,7 @@ export const GetAgreement = async (Id, receiver, receiver_type, type) => {
   const response = await axios.post(
     `${API_URL}api/Agreement_api/get_agreement`,
     {
-      // id: Id,
+      id: Id,
       receiver: receiver,
       receiver_type: receiver_type,
       type: type
@@ -4003,8 +4014,8 @@ export const DeleteUpdateHourLogApi = async (data) => {
 
 /*Api to Delete  Hour log */
 export const SendHtmlForPdf = async (html) => {
-  const response = await axios.post(`${API_URL}/admin_api/createPdfUsingHtml` ,{
-    html:html
+  const response = await axios.post(`${API_URL}/admin_api/createPdfUsingHtml`, {
+    html: html
   },
     {
       headers: {

@@ -252,7 +252,7 @@ const AgreementOneForm = ({
           // if (openSignature === "yes") {
           try {
             let res = await GetAgreement(
-              "",
+              felidData.id,
               user_id,
               emp_user_type,
               felidData.type

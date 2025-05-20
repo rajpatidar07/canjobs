@@ -14,7 +14,7 @@ import { AddSharePointDOcument, AddUpdateAgreement } from "../../../../api/api";
 import InitialFunction from "../CommonThings/InitialFunction";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
-import ConvertTime from "../../Common function/ConvertTime";
+import CommonRetainerAgreementDate from "../CommonRetainerAgreementDate";
 // import { toast } from "react-toastify";
 
 const ExpressEntryPdf = () => {
@@ -135,10 +135,10 @@ const ExpressEntryPdf = () => {
         }
         const file = new File(
           [newBlob],
-          `${felidData?.type.replace(" ", "_")}.pdf`,
+          `${felidData?.type.replaceAll(" ", "_")+`_${felidData?.id}`}.pdf`,
           { type: "application/pdf" }
         );
-        // console.log('file = >', file)
+        console.log('file = >', file)
         try {
           let res = await AddSharePointDOcument(
             user_id,
@@ -219,18 +219,18 @@ const ExpressEntryPdf = () => {
           <Text>
             This Retainer Agreement is made this
             <Text style={[{ Width: 50, borderBottom: "1px solid black", }, styles.textunderline]}>
-              {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <ConvertTime _date={felidData?.agreement_date} format={"Do"} />}
+              {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <CommonRetainerAgreementDate _date={felidData?.agreement_date} format={"Do"} />}
               {"  "}
             </Text>
             day of{"  "}
-            <Text style={[{ borderBottom: "1px solid black", minWidth: "50px", }, styles.textunderline]}> {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <ConvertTime _date={felidData?.agreement_date} format={"MMMM"} />}
+            <Text style={[{ borderBottom: "1px solid black", minWidth: "50px", }, styles.textunderline]}> {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <CommonRetainerAgreementDate _date={felidData?.agreement_date} format={"MMMM"} />}
               {"  "}
             </Text>
-            {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <ConvertTime _date={felidData?.agreement_date} format={"YYYY"} />}
+            {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <CommonRetainerAgreementDate _date={felidData?.agreement_date} format={"YYYY"} />}
 
             between Regulated Canadian Immigration Consultant (RCIC) Harpreet
             Kaur (the “RCIC”), RCIC Membership Number
-            <Text style={styles.textunderline}> R533393</Text>, Phone number
+            <Text style={styles.textunderline}> R533393</Text>,{"\n"} Phone number
             <Text style={styles.textunderline}> 4038885308 </Text> , Email
             <Link
               src="mailto:info@canpathways.ca"
@@ -239,7 +239,7 @@ const ExpressEntryPdf = () => {
             >
               {" "}
               info@canpathways.ca{" "}
-            </Link>{" "}
+            </Link>
             located at
             <Text style={styles.textunderline}>
               {" "}
@@ -305,7 +305,7 @@ const ExpressEntryPdf = () => {
                 <Text style={{ flex: 1 }}>
                   Date of birth:
                   {item.client_date_of_birth
-                    ? <Text style={{ textDecoration: 'underline' }}><ConvertTime _date={item.client_date_of_birth} format={"DD-MM-YYYY"} /></Text>
+                    ? <Text style={{ textDecoration: 'underline' }}><CommonRetainerAgreementDate _date={item.client_date_of_birth} format={"DD-MM-YYYY"} /></Text>
                     : '_________________'}
                 </Text>
               </View>
@@ -1704,7 +1704,7 @@ const ExpressEntryPdf = () => {
                     }}
                   >
                     {familyJsonArray[0]?.date_signature_client
-                      ? <ConvertTime _date={familyJsonArray[0].date_signature_client} format={"DD/MM/YYYY"} />
+                      ? <CommonRetainerAgreementDate _date={familyJsonArray[0].date_signature_client} format={"DD/MM/YYYY"} />
                       : ""}
                   </Text>
                   <Text style={{ textAlign: "center", marginBottom: 10 }}>Date</Text>
@@ -1747,7 +1747,7 @@ const ExpressEntryPdf = () => {
                     {felidData?.date_signature_rcic &&
                       felidData?.date_signature_rcic !== "0000-00-00 00:00:00" &&
                       felidData?.date_signature_rcic !== "0000-00-00"
-                      ? <ConvertTime _date={felidData.date_signature_rcic} format={"DD/MM/YYYY"} />
+                      ? <CommonRetainerAgreementDate _date={felidData.date_signature_rcic} format={"DD/MM/YYYY"} />
                       : ""}
                   </Text>
                   <Text style={{ textAlign: "center", marginBottom: 10 }}>Date</Text>
@@ -1929,7 +1929,7 @@ const ExpressEntryPdf = () => {
                     familyJsonArray[0]?.date_signature_client ===
                     "0000-00-00 00:00:00"
                     ? " "
-                    : <ConvertTime _date={familyJsonArray[0]?.date_signature_client} format={"DD-MM-YYYY"} />}
+                    : <CommonRetainerAgreementDate _date={familyJsonArray[0]?.date_signature_client} format={"DD-MM-YYYY"} />}
                 </Text>
                 <Text style={{ margin: "0 0 30px 0" }}>Date</Text>
               </View>
@@ -1949,7 +1949,7 @@ const ExpressEntryPdf = () => {
               <Image
                 fixed
                 style={{ width: 154, height: 30 }}
-                src={"https://canpathwaysjobs.com/image/00logo-main-black.png"}
+                src={"https://canpathwaysjobs.com/image/Retainer_agreement_logo.png"}
               />
               {components}
 
@@ -2017,7 +2017,7 @@ const ExpressEntryPdf = () => {
                     fixed
                     style={{ width: 154, height: 30 }}
                     src={
-                      "https://canpathwaysjobs.com/image/00logo-main-black.png"
+                      "https://canpathwaysjobs.com/image/Retainer_agreement_logo.png"
                     }
                   />
                   {components}

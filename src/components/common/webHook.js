@@ -83,6 +83,7 @@ const WebhookComponent = () => {
                     },
                     // No body is specified since you want to make a POST request without a body
                 });
+                console.log(response)
                 // if (!response.ok) {
                 //     throw new Error('Network response was not ok');
                 // }

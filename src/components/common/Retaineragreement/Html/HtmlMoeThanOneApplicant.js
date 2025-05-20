@@ -68,7 +68,7 @@ export default function HtmlMoeThanOneApplicant({ page,
  <body style="margin: 0 auto; max-width: 1024px;color:"black;">
     <div class="header" style="padding: 10px 20px;text-align: justify;">
       <img
-        src="https://canpathwaysjobs.com/image/00logo-main-black.png"
+        src="https://canpathwaysjobs.com/image/Retainer_agreement_logo.png"
         alt="Canpathways logo"
         style="max-width: 200px"
       />

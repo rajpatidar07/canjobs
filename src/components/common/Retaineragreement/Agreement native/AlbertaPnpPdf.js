@@ -10,7 +10,7 @@ import {
     BlobProvider,
     Link,
 } from "@react-pdf/renderer";
-import ConvertTime from "../../Common function/ConvertTime";
+import CommonRetainerAgreementDate from "../CommonRetainerAgreementDate";
 import { AddSharePointDOcument, AddUpdateAgreement } from "../../../../api/api";
 import InitialFunction from "../CommonThings/InitialFunction";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
@@ -43,10 +43,10 @@ const AlbertaPnpPdf = () => {
                 }
                 const file = new File(
                     [newBlob],
-                    `${felidData?.type.replace(" ", "_")}.pdf`,
+                    `${felidData?.type.replaceAll(" ", "_")+`_${felidData?.id}`}.pdf`,
                     { type: "application/pdf" }
                 );
-                // console.log('file = >', file)
+                console.log('file = >', file)
                 try {
                     let res = await AddSharePointDOcument(
                         user_id,
@@ -105,17 +105,17 @@ const AlbertaPnpPdf = () => {
                     <Text>
                         This Retainer Agreement is made this
                         <Text style={[{ Width: 50, borderBottom: "1px solid black", }, styles.textunderline]}>
-                                     {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <ConvertTime _date={felidData?.agreement_date} format={"Do"} />}
+                                     {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <CommonRetainerAgreementDate _date={felidData?.agreement_date} format={"Do"} />}
                                      {"  "}
                                    </Text>
                                    day of{"  "}
-                                   <Text style={[{ borderBottom: "1px solid black", minWidth: "50px", }, styles.textunderline]}> {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <ConvertTime _date={felidData?.agreement_date} format={"MMMM"} />}
+                                   <Text style={[{ borderBottom: "1px solid black", minWidth: "50px", }, styles.textunderline]}> {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <CommonRetainerAgreementDate _date={felidData?.agreement_date} format={"MMMM"} />}
                                      {"  "}
                                    </Text>
-                                   {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <ConvertTime _date={felidData?.agreement_date} format={"YYYY"} />}between
+                                   {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <CommonRetainerAgreementDate _date={felidData?.agreement_date} format={"YYYY"} />}between
                         Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur (the
                         “RCIC”), RCIC Membership Number
-                        <Text style={styles.textunderline}> R533393</Text>, Phone number
+                        <Text style={styles.textunderline}> R533393</Text>,{"\n"} Phone number
                         <Text style={styles.textunderline}> 4038885308 </Text> , Email
                         <Link
                             src="mailto:info@canpathways.ca"
@@ -179,7 +179,7 @@ const AlbertaPnpPdf = () => {
                                 <Text style={{ flex: 1 }}>
                                     Date of birth:
                                      {item.client_date_of_birth
-                                                        ? <Text style={{ textDecoration: 'underline' }}><ConvertTime _date={item.client_date_of_birth} format={"DD-MM-YYYY"} /></Text>
+                                                        ? <Text style={{ textDecoration: 'underline' }}><CommonRetainerAgreementDate _date={item.client_date_of_birth} format={"DD-MM-YYYY"} /></Text>
                                                         : '_________________'}
                                 </Text>
                             </View>
@@ -206,7 +206,7 @@ const AlbertaPnpPdf = () => {
                         Agreement, the parties agree as follows:
                     </Text>
                 </View>
-                <View id="l1">
+                <View id="l1" style={{marginBottom:15}}>
                     <View data-list-text="1.">
                         <Text style={[styles.definition, { fontWeight: 600 }]}>
                             1. Definitions
@@ -472,7 +472,7 @@ const AlbertaPnpPdf = () => {
                             </Text>
                         </View>
                         <View style={{ height: 185 }}></View>
-                        <View style={[styles.table, { marginTop: 50 }]}>
+                        <View style={[styles.table, { marginTop: 48 }]}>
                             <View style={styles.row}>
                                 <View style={styles.cell}>
                                     <Text style={{ color: "blue" }}>
@@ -529,9 +529,9 @@ const AlbertaPnpPdf = () => {
                                 <View style={styles.cell}>
                                     <Text style={{ marginTop: 10, marginBottom: 15, fontSize: "10px" }}>
                                         Step 2 (PR) Filling out the forms, information verification and completeness check, preparing the application package
-                                        {'/n'}{'/n'}
+                                        {'\n'}
                                         Payment is due before final submission of application.
-                                        {'/n'}{'/n'}
+                                        {'\n'}
                                         Provide proof of submission to the client
                                     </Text>
                                 </View>
@@ -1006,7 +1006,7 @@ const AlbertaPnpPdf = () => {
                             15. Discharge or Withdrawal of Representation
                         </Text>
                         <View id="l11" style={{ paddingLeft: 10 }}>
-                            <View style={{ marginTop: 15, flexDirection: 'row' }}>
+                            <View style={{ marginTop: 10, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>15.1</Text>
                                 <Text style={{ flex: 1 }}>
                                     The Client may discharge representation and terminate
@@ -1017,7 +1017,7 @@ const AlbertaPnpPdf = () => {
                                 </Text>
                             </View>
 
-                            <View style={{ marginTop: 20, flexDirection: 'row' }}>
+                            <View style={{ marginTop: 10, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>15.2</Text>
                                 <Text style={{ flex: 1 }}>
                                     Pursuant to Article 11 of the{" "}
@@ -1032,7 +1032,7 @@ const AlbertaPnpPdf = () => {
                                     be paid by the Client to the RCIC.
                                 </Text>
                             </View>
-                            <View style={{ marginTop: 20, flexDirection: 'row' }}>
+                            <View style={{ marginTop: 10, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>15.3</Text>
                                 <Text style={{ flex: 1 }}>
                                     At the time of withdrawal or discharge, the RCIC must
@@ -1082,35 +1082,35 @@ const AlbertaPnpPdf = () => {
                                 </Text>
                             </View>
 
-                            <View style={{ marginTop: 20, flexDirection: 'row' }}>
+                            <View style={{ marginTop: 10, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>18.2</Text>
                                 <Text style={{ flex: 1 }}>
                                     This Agreement constitutes the entire agreement between the parties with respect to the subject matter here of and supersedes all prior agreements, understandings, warranties, representations, negotiations, and discussions, whether oral or written, of the parties except as specifically set forth herein.
                                 </Text>
                             </View>
 
-                            <View style={{ marginTop: 20, flexDirection: 'row' }}>
+                            <View style={{ marginTop: 10, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>18.3</Text>
                                 <Text style={{ flex: 1 }}>
                                     This Agreement shall be binding upon the parties hereto and their respective heirs, administrators, successors, and permitted assigns.
                                 </Text>
                             </View>
 
-                            <View style={{ marginTop: 20, flexDirection: 'row' }}>
+                            <View style={{ marginTop: 10, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>18.4</Text>
                                 <Text style={{ flex: 1 }}>
                                     The Costs enumerated in this Agreement are to be paid by the Client.
                                 </Text>
                             </View>
 
-                            <View style={{ marginTop: 20, flexDirection: 'row' }}>
+                            <View style={{ marginTop: 10, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>18.5</Text>
                                 <Text style={{ flex: 1 }}>
                                     This Agreement may only be altered or amended when such changes are made in writing and executed by the parties hereto. All changes and/or edits must be initialed and dated by both the Member and the Client. Any substantial changes to this Agreement may require that the parties enter into a new Retainer Agreement.
                                 </Text>
                             </View>
 
-                            <View style={{ marginTop: 20, flexDirection: 'row' }}>
+                            <View style={{ marginTop: 10, flexDirection: 'row' }}>
                                 <Text style={{ width: 40, fontWeight: 'bold' }}>18.6</Text>
                                 <Text style={{ flex: 1 }}>
                                     The Client may, after a Retainer Agreement is signed, appoint a Designate to act on their behalf when dealing with the RCIC. A Designate must not be compensated by the Client or the RCIC for acting in the capacity of a Designate.
@@ -1185,7 +1185,7 @@ const AlbertaPnpPdf = () => {
                     <View
                         data-list-text="19."
                         style={{
-                            marginTop: 25,
+                            marginTop: 10,
                             fontWeight: "300",
                             flexDirection: "row"
                         }}
@@ -1202,7 +1202,7 @@ const AlbertaPnpPdf = () => {
                     <View
                         data-list-text="20."
                         style={{
-                            marginTop: 20,
+                            marginTop: 15,
                             fontWeight: "300",
                             flexDirection: "row"
                         }}
@@ -1435,7 +1435,7 @@ const AlbertaPnpPdf = () => {
                                            }}
                                          >
                                            {familyJsonArray[0]?.date_signature_client
-                                             ? <ConvertTime _date={familyJsonArray[0].date_signature_client} format={"DD/MM/YYYY"} />
+                                             ? <CommonRetainerAgreementDate _date={familyJsonArray[0].date_signature_client} format={"DD/MM/YYYY"} />
                                              : ""}
                                          </Text>
                                          <Text style={{ textAlign: "center", marginBottom: 10 }}>Date</Text>
@@ -1478,7 +1478,7 @@ const AlbertaPnpPdf = () => {
                                            {felidData?.date_signature_rcic &&
                                              felidData?.date_signature_rcic !== "0000-00-00 00:00:00" &&
                                              felidData?.date_signature_rcic !== "0000-00-00"
-                                             ? <ConvertTime _date={felidData.date_signature_rcic} format={"DD/MM/YYYY"} />
+                                             ? <CommonRetainerAgreementDate _date={felidData.date_signature_rcic} format={"DD/MM/YYYY"} />
                                              : ""}
                                          </Text>
                                          <Text style={{ textAlign: "center", marginBottom: 10 }}>Date</Text>
@@ -1488,7 +1488,7 @@ const AlbertaPnpPdf = () => {
                     </View>
 
                 </View>
-                <View style={{ marginTop: 2 }}>
+                <View style={{ marginTop: 50 }}>
                     <Text style={[{ textAlign: "center", }, styles.definition]}>
                         AUTHORIZATION
                     </Text>
@@ -1641,7 +1641,7 @@ const AlbertaPnpPdf = () => {
                                          familyJsonArray[0]?.date_signature_client ===
                                          "0000-00-00 00:00:00"
                                          ? " "
-                                         : <ConvertTime _date={familyJsonArray[0]?.date_signature_client} format={"DD-MM-YYYY"} />}
+                                         : <CommonRetainerAgreementDate _date={familyJsonArray[0]?.date_signature_client} format={"DD-MM-YYYY"} />}
                                      </Text>
                                      <Text style={{ margin: "0 0 30px 0" }}>Date</Text>
                                    </View>
@@ -1662,7 +1662,7 @@ const AlbertaPnpPdf = () => {
                                 fixed
                                 style={{ width: 100, height: 40 }}
                                 src={
-                                    "https://canpathwaysjobs.com/image/00logo-main-black.png"
+                                    "https://canpathwaysjobs.com/image/Retainer_agreement_logo.png"
                                 }
                             />
                             {components}
@@ -1730,7 +1730,7 @@ const AlbertaPnpPdf = () => {
                                         fixed
                                         style={{ width: 100, height: 40 }}
                                         src={
-                                            "https://canpathwaysjobs.com/image/00logo-main-black.png"
+                                            "https://canpathwaysjobs.com/image/Retainer_agreement_logo.png"
                                         } />
                                     {components}
                                     <View

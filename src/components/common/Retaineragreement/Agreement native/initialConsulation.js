@@ -15,7 +15,7 @@ import { AddSharePointDOcument, AddUpdateAgreement } from "../../../../api/api";
 import InitialFunction from "../CommonThings/InitialFunction";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
-import ConvertTime from "../../Common function/ConvertTime";
+import CommonRetainerAgreementDate from "../CommonRetainerAgreementDate";
 // import { toast } from "react-toastify";
 
 const InitialConsultationAgreement = () => {
@@ -45,10 +45,10 @@ const InitialConsultationAgreement = () => {
         }
         const file = new File(
           [newBlob],
-          `${felidData?.type.replace(" ", "_")}.pdf`,
+          `${felidData?.type.replaceAll(" ", "_")+`_${felidData?.id}`}.pdf`,
           { type: "application/pdf" }
         );
-        // console.log('file = >', file)
+        console.log('file = >', file)
         try {
           let res = await AddSharePointDOcument(
             user_id,
@@ -87,7 +87,7 @@ const InitialConsultationAgreement = () => {
   };
 
   const agreementDate = parseDate(felidData?.agreement_date);
-  const formattedDate = !agreementDate || agreementDate === "0000-00-00 00:00:00" || agreementDate === "0000-00-00" ? "" : <ConvertTime _date={agreementDate} format={"DD MMMM YYYY"} />
+  const formattedDate = !agreementDate || agreementDate === "0000-00-00 00:00:00" || agreementDate === "0000-00-00" ? "" : <CommonRetainerAgreementDate _date={agreementDate} format={"DD MMMM YYYY"} />
   let components = (
     <View style={{ height: "auto" }}>
       <View style={{ padding: "10px 20px" }}>
@@ -127,7 +127,7 @@ const InitialConsultationAgreement = () => {
           </Text>
           <Text>
             <Text style={styles.bold}>Name:</Text> <Text style={[styles.textunderline]}>{familyJsonArray[0]?.client_first_name || ""}   {familyJsonArray[0]?.client_last_name || "" || "_______________"}</Text>{"\n"}
-            <Text style={styles.bold}>Address:</Text> <Text style={[styles.textunderline]}>{felidData?.client_address || "_______________"}{"\n"}</Text>
+            <Text style={styles.bold}>Address:</Text> <Text style={[styles.textunderline, { textTransform: "capitalize" }]}>{felidData?.client_address || "_______________"}{"\n"}</Text>
             <Text style={styles.bold}>Phone Number:</Text> <Text style={[styles.textunderline]}>{felidData?.client_contact || "_______________"}{"\n"}</Text>
             <Text style={styles.bold}>Email Address:</Text><Text style={[styles.textunderline]}> {felidData?.client_email || "_______________"}</Text>{"\n"}{"\n"}
           </Text>
@@ -235,11 +235,11 @@ const InitialConsultationAgreement = () => {
           <View style={styles.section}>
             <Text style={styles.header}>7. <Text style={[styles.textunderline]}>OTHER CONDITIONS</Text></Text>
 
-            <View style={{ marginLeft: 20 }}>
+            <View style={{ marginLeft: 10 }}>
               <Text style={styles.text}>
                 <Text>
                   <Text style={[styles.bold, styles.textunderline]}><TbArrowBadgeRight /> CLIENT RESPONSIBILITIES</Text>: The Client is obligated to provide the RCIC with accurate factual information and documentation necessary for the consultation process. Honesty and precision are essential. The Client must disclose all pertinent information, even if it is negative or adverse. Any failure to fully disclose relevant details may impact the advice provided by the RCIC, potentially voiding this Agreement or significantly influencing the Client's application outcome or status retention.
-                  {"\n"} {"\n"}
+                  {"\n"}
                 </Text >
                 <Text>
                   <Text style={[styles.bold, styles.textunderline]}><TbArrowBadgeRight /> ADVICE APPLICABLE TO PRESENT DATE</Text>: The consultation given by the RCIC to the Client is founded on the Canadian immigration law and policy as of the date of appointment, where applicable. The RCIC bears no responsibility for any alterations in government legislation or policy that might affect subsequent application processing by the Client.
@@ -249,9 +249,7 @@ const InitialConsultationAgreement = () => {
                   {"\n"} {"\n"}</Text >
                 <Text>
                   <Text style={[styles.bold, styles.textunderline]}><TbArrowBadgeRight /> CONFIDENTIALITY</Text>: The RCIC is obliged to maintain the Client's confidence and information. This professional commitment exists to foster candid and comprehensive communication between the Client and the RCIC. All information and documentation submitted by the Client and reviewed by the RCIC will remain confidential and will not be shared with any third party, apart from RCIC's agents and employees, unless explicit consent is given or as required by law.
-                  {"\n"} {"\n"}
-                  {"\n"} {"\n"}
-                  {"\n"} {"\n"}
+                  {"\n"}
                   {"\n"}</Text >
                 <Text style={{ marginTop: 100 }}>
                   <Text style={[styles.bold, styles.textunderline,]}><TbArrowBadgeRight /> DISPUTE RESOLUTION</Text>: In the event of a dispute, both the Client and RCIC must strive to resolve the matter amicably. If a resolution cannot be achieved, the Client must submit the complaint in writing to the RCIC and allow a grace period of 5 business days for the RCIC's response. If the dispute persists, the Client can follow the complaint and discipline procedure delineated by ICCRC on their website:<Link src="http://www.iccrc-crcic.ca/public/complaintsDiscipline.cfm">ICCRC Complaints and Discipline
@@ -275,98 +273,98 @@ const InitialConsultationAgreement = () => {
             <Text style={[styles.header, styles.textunderline]}>
               SIGNED BY THE CLIENT AND THE RCIC IN ACCEPTANCE OF AGREEMENT
             </Text>
-           <View style={styles.container}>
-                        {/* Right Signature Box (Client) */}
-                        <View style={styles.box}>
-                          <ClientSignatureFunction
-                            felidData={felidData}
-                            familyJsonArray={familyJsonArray}
-                            page={"user"}
-                            isPdf={true}
-                          />
-                          <Text style={[styles.text, styles.textBoldm, { textAlign: "center", marginTop: 10 }]}>
-                            Signature of Client
-                          </Text>
-          
-                          <View style={{ marginTop: 10 }}>
-                            <Text
-                              style={{
-                                borderBottom: "1px solid black",
-                                textAlign: "center",
-                                textTransform: "capitalize",
-                                paddingBottom: 5,
-                                marginBottom: 5,
-                                width: "100%",
-                              }}
-                            >
-                              {(familyJsonArray[0]?.client_first_name || "") +
-                                " " +
-                                (familyJsonArray[0]?.client_last_name || "")}
-                            </Text>
-                            <Text style={{ textAlign: "center", marginBottom: 10 }}>Client’s full name</Text>
-                          </View>
-          
-                          <View style={{ marginTop: 5 }}>
-                            <Text
-                              style={{
-                                borderBottom: "1px solid black",
-                                textAlign: "center",
-                                paddingBottom: 5,
-                                marginBottom: 5,
-                                width: "100%",
-                              }}
-                            >
-                              {familyJsonArray[0]?.date_signature_client
-                                ? <ConvertTime _date={familyJsonArray[0].date_signature_client} format={"DD/MM/YYYY"} />
-                                : ""}
-                            </Text>
-                            <Text style={{ textAlign: "center", marginBottom: 10 }}>Date</Text>
-                          </View>
-                        </View>
-          
-                        {/* Left Signature Box (RCIC) */}
-                        <View style={styles.box}>
-                          <RCICSignatureFunction isPdf={true} felidData={felidData} />
-                          <Text style={[styles.text, { textAlign: "center", marginTop: 10 }]}>
-                            Signature of RCIC
-                          </Text>
-          
-                          <View style={{ marginTop: 10 }}>
-                            <Text
-                              style={{
-                                borderBottom: "1px solid black",
-                                textAlign: "center",
-                                textTransform: "capitalize",
-                                paddingBottom: 5,
-                                marginBottom: 5,
-                                width: "100%",
-                              }}
-                            >
-                              Harpreet Kaur
-                            </Text>
-                            <Text style={{ textAlign: "center", marginBottom: 10 }}>RCIC full name</Text>
-                          </View>
-          
-                          <View style={{ marginTop: 5 }}>
-                            <Text
-                              style={{
-                                borderBottom: "1px solid black",
-                                textAlign: "center",
-                                paddingBottom: 5,
-                                marginBottom: 5,
-                                width: "100%",
-                              }}
-                            >
-                              {felidData?.date_signature_rcic &&
-                                felidData?.date_signature_rcic !== "0000-00-00 00:00:00" &&
-                                felidData?.date_signature_rcic !== "0000-00-00"
-                                ? <ConvertTime _date={felidData.date_signature_rcic} format={"DD/MM/YYYY"} />
-                                : ""}
-                            </Text>
-                            <Text style={{ textAlign: "center", marginBottom: 10 }}>Date</Text>
-                          </View>
-                        </View>
-                      </View>
+            <View style={styles.container}>
+              {/* Right Signature Box (Client) */}
+              <View style={styles.box}>
+                <ClientSignatureFunction
+                  felidData={felidData}
+                  familyJsonArray={familyJsonArray}
+                  page={"user"}
+                  isPdf={true}
+                />
+                <Text style={[styles.text, styles.textBoldm, { textAlign: "center", marginTop: 10 }]}>
+                  Signature of Client
+                </Text>
+
+                <View style={{ marginTop: 10 }}>
+                  <Text
+                    style={{
+                      borderBottom: "1px solid black",
+                      textAlign: "center",
+                      textTransform: "capitalize",
+                      paddingBottom: 5,
+                      marginBottom: 5,
+                      width: "100%",
+                    }}
+                  >
+                    {(familyJsonArray[0]?.client_first_name || "") +
+                      " " +
+                      (familyJsonArray[0]?.client_last_name || "")}
+                  </Text>
+                  <Text style={{ textAlign: "center", marginBottom: 10 }}>Client’s full name</Text>
+                </View>
+
+                <View style={{ marginTop: 5 }}>
+                  <Text
+                    style={{
+                      borderBottom: "1px solid black",
+                      textAlign: "center",
+                      paddingBottom: 5,
+                      marginBottom: 5,
+                      width: "100%",
+                    }}
+                  >
+                    {familyJsonArray[0]?.date_signature_client
+                      ? <CommonRetainerAgreementDate _date={familyJsonArray[0].date_signature_client} format={"DD/MM/YYYY"} />
+                      : ""}
+                  </Text>
+                  <Text style={{ textAlign: "center", marginBottom: 10 }}>Date</Text>
+                </View>
+              </View>
+
+              {/* Left Signature Box (RCIC) */}
+              <View style={styles.box}>
+                <RCICSignatureFunction isPdf={true} felidData={felidData} />
+                <Text style={[styles.text, { textAlign: "center", marginTop: 10 }]}>
+                  Signature of RCIC
+                </Text>
+
+                <View style={{ marginTop: 10 }}>
+                  <Text
+                    style={{
+                      borderBottom: "1px solid black",
+                      textAlign: "center",
+                      textTransform: "capitalize",
+                      paddingBottom: 5,
+                      marginBottom: 5,
+                      width: "100%",
+                    }}
+                  >
+                    Harpreet Kaur
+                  </Text>
+                  <Text style={{ textAlign: "center", marginBottom: 10 }}>RCIC full name</Text>
+                </View>
+
+                <View style={{ marginTop: 5 }}>
+                  <Text
+                    style={{
+                      borderBottom: "1px solid black",
+                      textAlign: "center",
+                      paddingBottom: 5,
+                      marginBottom: 5,
+                      width: "100%",
+                    }}
+                  >
+                    {felidData?.date_signature_rcic &&
+                      felidData?.date_signature_rcic !== "0000-00-00 00:00:00" &&
+                      felidData?.date_signature_rcic !== "0000-00-00"
+                      ? <CommonRetainerAgreementDate _date={felidData.date_signature_rcic} format={"DD/MM/YYYY"} />
+                      : ""}
+                  </Text>
+                  <Text style={{ textAlign: "center", marginBottom: 10 }}>Date</Text>
+                </View>
+              </View>
+            </View>
           </View>
         </View>
       </View>
@@ -374,175 +372,138 @@ const InitialConsultationAgreement = () => {
   );
 
   return (
-    <BlobProvider
-      document={
-        <Document>
-          <Page size="A4" style={styles.page}>
-            <View>
-              <Image
-                fixed
-                style={styles.image}
-                src={"https://canpathwaysjobs.com/image/00logo-main-black.png"}
-              />
-
-              <View style={styles.section}>{components}</View>
-              <View
-                className="footer"
-                fixed
-                style={{ color: "red", textAlign: "center", marginTop: 25 }}
-              >
-                <Text>
-                  Office: 2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7, Canada |
-                  Tel.: 403.888.5308 |
-                </Text>
-                <Text style={{ color: "blue", textDecoration: "underline" }}>
-                  Email: info@canpathways.ca | Website: www.canpathways.ca
-                </Text>
-              </View>
-              <View
-                fixed
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "flex-end",
-                  gap: 20,
-                }}
-              >
-                <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
-                <View>
-                  <View
-                    style={{
-                      width: 100,
-                      height: 50,
-                      border: "1px solid #ccc",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    {felidData?.initial ? (
-                      <Text
-                        style={{
-                          display: "inline-block",
-                          maxWidth: "100%",
-                          maxHeight: "100%",
-                          textTransform: "capitalize",
-                        }}
-                      >
-                        <InitialFunction initial={felidData?.initial} />
-                      </Text>
-                    ) : (
-                      <View
-                        style={{
-                          display: "inline-block",
-                          width: 100,
-                          height: 50,
-                          border: "1px solid #ccc",
-                        }}
-                      />
-                    )}
-                  </View>
-                </View>
-              </View>
-            </View>
-          </Page>
-        </Document>
-      }
-    >
-      {({ blob, url, loading, error }) => {
-        setBlobData(blob);
-        // Do whatever you need with blob here
-        return (
-          <PDFViewer width="100%" height="850">
-            <Document>
-              <Page size="A4" style={styles.page}>
-                <View>
-
-                  <View style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
-                    <Image
-                      fixed
-                      style={styles.image}
-                      src={
-                        "https://canpathwaysjobs.com/image/00logo-main-black.png"
-                      }
-                    />
-                    <View style={{ fontSize: 14, flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-                      <Text style={{ marginBottom: 2 }}>{felidData?.client_file_no || ""
-                      }</Text>
-                      <View style={{ width: 30, height: 1, backgroundColor: '#000', marginBottom: 9 }} />
-                      <Text>Client File Number</Text>
-                    </View>
-                  </View>
-                  {components}
-
-                  <View
-                    className="footer"
-                    fixed
-                    style={{ color: "red", textAlign: "center", marginTop: 25 }}
-                  >
-                    <Text>
-                      Office: 2618 Hopewell Pl NE #310 Calgary, AB T1Y 7J7,
-                      Canada | Tel.: 403.888.5308 |
-                    </Text>
-                    <Text
-                      style={{ color: "blue", textDecoration: "underline" }}
-                    >
-                      Email: info@canpathways.ca | Website: www.canpathways.ca
-                    </Text>
-                  </View>
-                  <View
-                    fixed
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "flex-end",
-                      gap: 20,
-                    }}
-                  >
-                    <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
-                    <View>
-                      {felidData?.initial ? (
-                        <View
-                          style={{
-                            width: 100,
-                            height: 50,
-                            border: "1px solid #ccc",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <Text
-                            style={{
-                              display: "inline-block",
-                              maxWidth: "100%",
-                              maxHeight: "100%",
-                              textTransform: "capitalize",
-                            }}
-                          >
-                            <InitialFunction initial={felidData?.initial} />
-                          </Text>
-                        </View>
-
-                      ) : (
-                        <View
-                          style={{
-                            display: "inline-block",
-                            width: 100,
-                            height: 50,
-                            border: "1px solid #ccc",
-                          }}
-                        />
-                      )}
-                    </View>
-                  </View>
-                </View>
-              </Page>
-            </Document>
-          </PDFViewer>
-        );
-      }}
-    </BlobProvider>
+   <BlobProvider
+         document={
+           <Document>
+             <Page size="A4" style={styles.page}>
+               <View>
+                 <Image
+                   fixed
+                   style={{ width: 100, height: 40 }}
+                   src={
+                     "https://canpathwaysjobs.com/image/Retainer_agreement_logo.png"
+                   }
+                 />
+                 {components}
+   
+                 <View
+                   fixed
+                   style={{
+                     display: "flex",
+                     flexDirection: "row",
+                     justifyContent: "flex-end",
+                     gap: 20,
+                   }}
+                 >
+                   <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
+                   <View>
+                     <View
+                       style={{
+                         width: 100,
+                         height: 50,
+                         border: "1px solid #ccc",
+                         display: "flex",
+                         alignItems: "center",
+                         justifyContent: "center",
+                       }}
+                     >
+                       {felidData?.initial ? (
+                         <Text
+                           style={{
+                             display: "inline-block",
+                             maxWidth: "100%",
+                             maxHeight: "100%",
+                             textTransform: "capitalize",
+                           }}
+                         >
+                           <InitialFunction initial={felidData?.initial} />
+                         </Text>
+                       ) : (
+                         <View
+                           style={{
+                             display: "inline-block",
+                             width: 100,
+                             height: 50,
+                             border: "1px solid #ccc",
+                           }}
+                         />
+                       )}
+                     </View>
+                   </View>
+                 </View>
+               </View>
+             </Page>
+           </Document>
+         }
+       >
+         {({ blob, url, loading, error }) => {
+           setBlobData(blob);
+           // Do whatever you need with blob here
+           return (
+             <PDFViewer width="100%" height="850">
+               <Document>
+                 <Page size="A4" style={styles.page}>
+                   <View>
+                     <Image
+                       fixed
+                       style={{ width: 100, height: 40 }}
+                       src={
+                         "https://canpathwaysjobs.com/image/Retainer_agreement_logo.png"
+                       } />
+                     {components}
+                     <View
+                       fixed
+                       style={{
+                         display: "flex",
+                         flexDirection: "row",
+                         justifyContent: "flex-end",
+                         gap: 20,
+                       }}
+                     >
+                       <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
+                       <View>
+                         {felidData?.initial ? (
+                           <View
+                             style={{
+                               width: 100,
+                               height: 50,
+                               border: "1px solid #ccc",
+                               display: "flex",
+                               alignItems: "center",
+                               justifyContent: "center",
+                             }}
+                           >
+                             <Text
+                               style={{
+                                 display: "inline-block",
+                                 maxWidth: "100%",
+                                 maxHeight: "100%",
+                                 textTransform: "capitalize",
+                               }}
+                             >
+                               <InitialFunction initial={felidData?.initial} />
+                             </Text>
+                           </View>
+   
+                         ) : (
+                           <View
+                             style={{
+                               display: "inline-block",
+                               width: 100,
+                               height: 50,
+                               border: "1px solid #ccc",
+                             }}
+                           />
+                         )}
+                       </View>
+                     </View>
+                   </View>
+                 </Page>
+               </Document>
+             </PDFViewer>
+           );
+         }}
+       </BlobProvider >
   );
 };
 const styles = StyleSheet.create({

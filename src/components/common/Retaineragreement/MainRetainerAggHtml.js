@@ -43,7 +43,7 @@ export default function MainRetainerAggHtml({
   const getAgreeFelidData = async () => {
     try {
       let res = await GetAgreement(
-        "",
+        agreementData.id,
         user_id,
         emp_user_type,
         agreementData.type

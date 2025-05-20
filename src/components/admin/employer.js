@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import AdminHeader from "./header";
-import AdminSidebar from "./sidebar";
+// import AdminHeader from "./header";
+// import AdminSidebar from "./sidebar";
 import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
 import EmployerProfile from "../company/profile";

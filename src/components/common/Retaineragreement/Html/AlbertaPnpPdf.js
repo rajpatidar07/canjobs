@@ -15,7 +15,7 @@ import { AddSharePointDOcument, AddUpdateAgreement } from "../../../../api/api";
 import InitialFunction from "../CommonThings/InitialFunction";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
-import ConvertTime from "../../Common function/ConvertTime";
+import CommonRetainerAgreementDate from "../CommonRetainerAgreementDate";
 // import { toast } from "react-toastify";
 
 const AlbertaPnpPdf = () => {
@@ -44,10 +44,10 @@ const AlbertaPnpPdf = () => {
                 }
                 const file = new File(
                     [newBlob],
-                    `${felidData?.type.replace(" ", "_")}.pdf`,
+                    `${felidData?.type.replace(" ", "_")+`_${felidData?.id}`}.pdf`,
                     { type: "application/pdf" }
                 );
-                // console.log('file = >', file)
+                console.log('file = >', file)
                 try {
                     let res = await AddSharePointDOcument(
                         user_id,
@@ -1406,14 +1406,14 @@ const AlbertaPnpPdf = () => {
                                     isPdf={true}
                                 />
                                 <Text style={[styles.text, styles.textBold]}> Signature of Client</Text>
-                                <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> <ConvertTime _date={felidData.ConvertTime({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" })} format={"DD-MM-YYYY"}/></Text>
+                                <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> <CommonRetainerAgreementDate _date={felidData.CommonRetainerAgreementDate({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" })} format={"DD-MM-YYYY"}/></Text>
                             </View>
 
                             {/* Left Signature Box (RCIC) */}
                             <View style={styles.box}>
                                 <RCICSignatureFunction isPdf={true} felidData={felidData} />
                                 <Text style={[styles.text, styles.textBold]}>Signature of RCIC</Text>
-                                <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {felidData?.ConvertTime({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" })  !== "0000-00-00 00:00:00" && felidData?.ConvertTime({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" })  !== "0000-00-00" && felidData?.ConvertTime({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" })  ? moment(felidData.ConvertTime({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" }) ).format("DD/MM/YYYY") : "______________"}</Text>
+                                <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {felidData?.CommonRetainerAgreementDate({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" })  !== "0000-00-00 00:00:00" && felidData?.CommonRetainerAgreementDate({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" })  !== "0000-00-00" && felidData?.CommonRetainerAgreementDate({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" })  ? moment(felidData.CommonRetainerAgreementDate({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" }) ).format("DD/MM/YYYY") : "______________"}</Text>
                             </View>
                         </View>
                     </View>
@@ -1606,7 +1606,7 @@ const AlbertaPnpPdf = () => {
                                 fixed
                                 style={{ width: 100, height: 40 }}
                                 src={
-                                    "https://canpathwaysjobs.com/image/00logo-main-black.png"
+                                    "https://canpathwaysjobs.com/image/Retainer_agreement_logo.png"
                                 }
                             />
                             {components}
@@ -1674,7 +1674,7 @@ const AlbertaPnpPdf = () => {
                                         fixed
                                         style={{ width: 100, height: 40 }}
                                         src={
-                                            "https://canpathwaysjobs.com/image/00logo-main-black.png"
+                                            "https://canpathwaysjobs.com/image/Retainer_agreement_logo.png"
                                         } />
                                     {components}
                                     <View

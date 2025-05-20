@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
 import InitialFunction from "../CommonThings/InitialFunction";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
-import ConvertTime from "../../Common function/ConvertTime";
+import CommonRetainerAgreementDate from "../CommonRetainerAgreementDate";
 // import { Link } from "react-router-dom";
 const InitialConsultation = ({
   page,
@@ -41,7 +41,7 @@ const InitialConsultation = ({
 <body style="margin: 0 auto; margin-bottom: 60px; max-width: 1024px; color:black;">
   <div class="header"
     style="margin-top: 22px;padding: 10px 20px; text-align: justify;display: flex; justify-content: space-between; align-items: center;">
-    <img src="https://canpathwaysjobs.com/image/00logo-main-black.png" alt="Canpathways logo"
+    <img src="https://canpathwaysjobs.com/image/Retainer_agreement_logo.png" alt="Canpathways logo"
       style="max-width: 200px" />
     <div style="font-size: 14px;display:flex;flex-direction:column;text-align:center;">
       <span style="border-bottom: solid 1px; margin-bottom: 9px;"> <span class="${felidData?.client_file_no ? "para_gap" : ""
@@ -62,7 +62,7 @@ const InitialConsultation = ({
       "The Effective Date": <span class="para_gap" style="min-width:100px">${felidData?.agreement_date &&
       felidData?.agreement_date !== "0000-00-00 00:00:00" &&
       felidData?.agreement_date !== "0000-00-00"
-      ? ` ${ConvertTime({ _date: familyJsonArray[0]?.agreement_date, format: "DD MMMM YYYY" })}`
+      ? ` ${CommonRetainerAgreementDate({ _date: felidData?.agreement_date, format: "DD MMMM YYYY" })}`
       : ""
     }</span>
     </p>
@@ -81,7 +81,7 @@ const InitialConsultation = ({
       : emp_user_type === "employee"
         ? userData?.name || "" || ""
         : "" || ""
-    }</span><br> <strong>Address</strong>: <span class="border-bottom border-dark" style="min-width: 300px;">${felidData && felidData?.client_address
+    }</span><br> <strong>Address</strong>: <span class="border-bottom border-dark text-capitalize" style="min-width: 300px;">${felidData && felidData?.client_address
       ? felidData?.client_address
       : emp_user_type === "employer"
         ? userData?.address || ""
@@ -299,14 +299,14 @@ const InitialConsultation = ({
        <div class="col-md-6 ">
          <p class="mb-1 text-capitalize w-100 border-bottom border-dark text-center">
          ${familyJsonArray[0]?.client_first_name ||
-           familyJsonArray[0]?.client_last_name
-           ? ` <span class="text-capitalize">${familyJsonArray[0]?.client_first_name
-           } ${familyJsonArray[0]?.client_last_name || ""}</span>`
-           : emp_user_type === "employee"
-             ? ` <span class="text-capitalize">${userData?.name}</span>` ||
-             ""
-             : " "
-         }    </p>
+      familyJsonArray[0]?.client_last_name
+      ? ` <span class="text-capitalize">${familyJsonArray[0]?.client_first_name
+      } ${familyJsonArray[0]?.client_last_name || ""}</span>`
+      : emp_user_type === "employee"
+        ? ` <span class="text-capitalize">${userData?.name}</span>` ||
+        ""
+        : " "
+    }    </p>
          <p class="mb-3 text-center">Name of Client</p>
        </div>
        <div class="col-md-6">
@@ -320,17 +320,14 @@ const InitialConsultation = ({
        <div class="col-md-6">
          <p class="mb-1 w-100 border-bottom border-dark pt-8 text-center">
            ${!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client.startsWith("0000")
-           ? " "
-           : `<span> ${ConvertTime({ _date: familyJsonArray[0]?.date_signature_client, format: "DD-MM-YYYY" })}</span>`}
+      ? " "
+      : `<span> ${CommonRetainerAgreementDate({ _date: familyJsonArray[0]?.date_signature_client, format: "DD-MM-YYYY" })}</span>`}
          </p>
          <p class="text-center ">Date</p>
        </div>
          <div class="col-md-6">
-         <p class="mb-1 w-100 border-bottom border-dark pt-8 text-center">
-           ${!felidData.date_signature_rcic || felidData.date_signature_rcic.startsWith("0000")
-           ? " "
-           : `<span> ${ConvertTime({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" })}</span>`}
-         </p>
+        <p class="mb-1 w-100 border-bottom border-dark pt-8 text-center"> ${felidData.date_signature_rcic && felidData.date_signature_rcic !== "0000-00-00" && felidData.date_signature_rcic !== "0000-00-00 00:00:00" ?
+      CommonRetainerAgreementDate({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" }) : ' '}</p>
          <p class="text-center ">Date</p>
        </div>
      </div>

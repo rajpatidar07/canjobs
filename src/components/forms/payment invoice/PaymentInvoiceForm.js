@@ -19,7 +19,7 @@ const PaymentInvoiceForm = (props) => {
 
   const initialFormState =
   {
-    invoice_no: parseInt(props.lastInvoiceNo) + 1,
+    invoice_no: parseFloat(props.lastInvoiceNo) + 1,
     user_id: props.userId,//Employee /employer id
     user_type: props.userType,//Employee /employer type
     user_email: props.userEmail,//Employee /employer email
@@ -42,7 +42,7 @@ const PaymentInvoiceForm = (props) => {
     message_on_invoice: "",
     message_on_statement: "",
     amounts_are: "Inclusive of tax",
-    gst_percentage: "",
+    gst_percentage: 0,
     status: props.singleInvoiceData ? props.singleInvoiceData.status : 2,
     // received_amount: ""
   }
@@ -125,10 +125,10 @@ const PaymentInvoiceForm = (props) => {
         is_send_mail: send ? send : 0,
         due_amount:
           // recAmt ?
-          //   parseInt(state.due_amount) - parseInt(recAmt)
+          //   parseFloat(state.due_amount) - parseFloat(recAmt)
           //   :
-          parseInt(state.due_amount) + parseInt(state.total),
-        // received_amount: parseInt(state.received_amount||0) + parseInt(recAmt)
+          Number(parseFloat(state.due_amount) + parseFloat(state.total)).toFixed(2),
+        // received_amount: parseFloat(state.received_amount||0) + parseFloat(recAmt)
       }
       console.log(data,)
       setLoading(true)
@@ -314,7 +314,7 @@ const PaymentInvoiceForm = (props) => {
                   <input
                     type="number"
                     className="form-control"
-                    value={state.due_amount}
+                    value={Number(state?.due_amount || 0).toFixed(2)}
                     onChange={onInputChange}
                     name="due_amount"
                     min={0}
@@ -528,16 +528,22 @@ const PaymentInvoiceForm = (props) => {
                       setState((prev) => ({
                         ...prev,
                         product_json: updatedItems,
-                        subtotal: newSubtotal,
-                        gst_percentage: newGST,
-                        total: newSubtotal + newGST,
+                        subtotal: Number(newSubtotal).toFixed(2),
+                        gst_percentage: Number(newGST).toFixed(2),
+                        total: Number(newSubtotal + newGST).toFixed(2),
                         // due_amount: new_balance,
                       }));
                     };
 
                     const handleValueChange = (field, value) => {
                       const updatedItems = [...state.product_json];
-                      updatedItems[index][field] = value;
+                      if (field === "rate" || field === "service_tax") {
+                        // Parse and fix to 2 decimals before storing
+                        const fixedValue = Number(parseFloat(value).toFixed(2));
+                        updatedItems[index][field] = isNaN(fixedValue) ? 0 : fixedValue;
+                      } else {
+                        updatedItems[index][field] = value;
+                      }
 
                       const quantity = parseFloat(updatedItems[index].quantity) || 0;
                       const rate = parseFloat(updatedItems[index].rate) || 0;
@@ -572,12 +578,12 @@ const PaymentInvoiceForm = (props) => {
                             onChange={(e) => handleValueChange("quantity", e.target.value)} />
                         </td>
                         <td>
-                          <input type="number" className="border-0 bg-transparent" style={{ width: "100%", textAlign: "right" }} value={item.rate}
+                          <input type="number" className="border-0 bg-transparent" style={{ width: "100%", textAlign: "right" }} value={Number(item.rate || 0).toFixed(2)}
                             onChange={(e) => handleValueChange("rate", e.target.value)} />
                         </td>
-                        <td style={{ textAlign: "right" }}>{item?.amount}</td>
+                    <td style={{ textAlign: "right" }}>{Number(item?.amount || 0).toFixed(2)}</td>
                         <td>
-                          <input type="number" className="border-0 bg-transparent" style={{ width: "100%" }} value={item.service_tax}
+                          <input type="number" className="border-0 bg-transparent" style={{ width: "100%" }} value={Number(item.service_tax || 0).toFixed(2)}
                             onChange={(e) => handleValueChange("service_tax", e.target.value)} />
                         </td>
                         <td>
@@ -599,10 +605,10 @@ const PaymentInvoiceForm = (props) => {
                               setState({
                                 ...state,
                                 product_json: updatedProducts,
-                                subtotal: state.subtotal - itemAmount,
-                                gst_percentage: state.gst_percentage - itemGST,
-                                total: state.total - totalDeduct,
-                                due_amount: state.due_amount - totalDeduct,
+                                subtotal: Number(state.subtotal - itemAmount).toFixed(2),
+                                gst_percentage: Number(state.gst_percentage - itemGST).toFixed(2),
+                                total: Number(state.total - totalDeduct).toFixed(2),
+                                due_amount: Number(state.due_amount - totalDeduct).toFixed(2),
                               });
                             }}
                           >
@@ -665,7 +671,7 @@ const PaymentInvoiceForm = (props) => {
                   width: 100,
                   height: 50,
                   border: "1px solid #ccc",
-                }}>{state.subtotal || ""}</li>
+                }}>{Number(state.subtotal || 0)?.toFixed(2) || ""}</li>
               </ul>
               <ul className="d-flex justify-content-between">
                 <li className="list-unstyled ">Total GST</li>
@@ -674,7 +680,8 @@ const PaymentInvoiceForm = (props) => {
                   width: 100,
                   height: 50,
                   border: "1px solid #ccc",
-                }}>{state.gst_percentage || ""}</li>
+                }}>{Number(state?.gst_percentage || 0).toFixed(2)
+                  || ""}</li>
               </ul>
               <ul className="d-flex justify-content-between">
                 <li className="list-unstyled ">Total</li>
@@ -683,7 +690,7 @@ const PaymentInvoiceForm = (props) => {
                   width: 100,
                   height: 50,
                   border: "1px solid #ccc",
-                }}>{state.total || ""}</li>
+                }}>{Number(state?.total || 0)?.toFixed(2) || ""}</li>
               </ul>
               <ul className="d-flex justify-content-between">
                 <li className="list-unstyled ">Balance Due</li>
@@ -692,7 +699,7 @@ const PaymentInvoiceForm = (props) => {
                   width: 100,
                   height: 50,
                   border: "1px solid #ccc",
-                }}>{parseInt(state.due_amount) + parseInt(state.total) || ""}</li>
+                }}>{Number((parseFloat(state.due_amount) + parseFloat(state.total)) || 0).toFixed(2) || ""}</li>
               </ul>
             </div>
           </div>

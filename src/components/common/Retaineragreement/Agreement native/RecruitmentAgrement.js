@@ -14,7 +14,7 @@ import { AddSharePointDOcument, AddUpdateAgreement } from "../../../../api/api";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
 import InitialFunction from "../CommonThings/InitialFunction";
-import ConvertTime from "../../Common function/ConvertTime";
+import CommonRetainerAgreementDate from "../CommonRetainerAgreementDate";
 // import { toast } from "react-toastify";
 
 const RecruitmentAgrement = () => {
@@ -44,10 +44,10 @@ const RecruitmentAgrement = () => {
         }
         const file = new File(
           [newBlob],
-          `${felidData?.type.replace(" ", "_")}.pdf`,
+          `${felidData?.type.replaceAll(" ", "_")+`_${felidData?.id}`}.pdf`,
           { type: "application/pdf" }
         );
-        // console.log('file = >', file)
+        console.log('file = >', file)
         try {
           let res = await AddSharePointDOcument(
             user_id,
@@ -87,7 +87,7 @@ const RecruitmentAgrement = () => {
 
   const agreementDate = parseDate(felidData?.agreement_date);
   const formattedDate = agreementDate
-    ? <ConvertTime _date={agreementDate} format={"DD MMMM YYYY"} />
+    ? <CommonRetainerAgreementDate _date={agreementDate} format={"DD MMMM YYYY"} />
     : "____________";
   let components = (
     <View style={{ height: "auto" }}>
@@ -498,23 +498,24 @@ const RecruitmentAgrement = () => {
                   </View>
 
                   {/* Client Date */}
-                   <View style={[styles.clientFormChild, { alignItems: "center", marginTop: 2 }]}>
+                   <View style={[styles.clientFormChild, { marginTop: 2 }]}>
                       <Text
                         style={{
                           fontWeight: "bold",
                           marginBottom: 5,
                           minWidth: "100%",
-                          borderBottom: "1px solid black"
+                          borderBottom: "1px solid black",
+                          textAlign:"center"
                         }}
                       >
                       {
                         !familyJsonArray[0]?.date_signature_client ||
                           familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00"
                           ? ""
-                          : <ConvertTime _date={familyJsonArray[0]?.date_signature_client} format={"DD-MM-YYYY"} />
+                          : <CommonRetainerAgreementDate _date={familyJsonArray[0]?.date_signature_client} format={"DD-MM-YYYY"} />
                       }
                     </Text>
-                    <Text style={{ marginBottom: 30 }}>Date</Text>
+                    <Text style={{ marginBottom: 30,  textAlign:"center" }}>Date</Text>
                   </View>
                 </View>
 
@@ -546,13 +547,14 @@ const RecruitmentAgrement = () => {
                     </View>
 
                     {/* RCIC Date */}
-                    <View style={[styles.clientFormChild, { alignItems: "center", marginTop: 2 }]}>
+                    <View style={[styles.clientFormChild, { marginTop: 2 }]}>
                       <Text
                         style={{
                           fontWeight: "bold",
                           marginBottom: 5,
                           minWidth: "100%",
-                          borderBottom: "1px solid black"
+                          borderBottom: "1px solid black",
+                          textAlign:"center"
                         }}
                       >
                         {
@@ -560,10 +562,10 @@ const RecruitmentAgrement = () => {
                             felidData?.date_signature_rcic === "0000-00-00" ||
                             felidData?.date_signature_rcic === "0000-00-00 00:00:00"
                             ? ""
-                            : <ConvertTime _date={felidData?.date_signature_rcic} format={"DD-MM-YYYY"} />
+                            : <CommonRetainerAgreementDate _date={felidData?.date_signature_rcic} format={"DD-MM-YYYY"} />
                         }
                       </Text>
-                      <Text>Date</Text>
+                      <Text style={{  textAlign:"center"}}>Date</Text>
                     </View>
                   </View>
                 </View>
@@ -589,7 +591,7 @@ const RecruitmentAgrement = () => {
                 fixed
                 style={{ width: 100, height: 40 }}
                 src={
-                  "https://canpathwaysjobs.com/image/00logo-main-black.png"
+                  "https://canpathwaysjobs.com/image/Retainer_agreement_logo.png"
                 }
               />
               {components}
@@ -656,7 +658,7 @@ const RecruitmentAgrement = () => {
                     fixed
                     style={{ width: 100, height: 40 }}
                     src={
-                      "https://canpathwaysjobs.com/image/00logo-main-black.png"
+                      "https://canpathwaysjobs.com/image/Retainer_agreement_logo.png"
                     } />
                   {components}
                   <View

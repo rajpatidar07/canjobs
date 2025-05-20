@@ -3,7 +3,7 @@ import SweetAlert from "sweetalert-react";
 import "../common/sweetalert.css";
 
 const SAlert = (props) => {
-  console.log("first",props?.show)
+  // console.log("first",props?.show)
   return (
     <div>
       <SweetAlert
