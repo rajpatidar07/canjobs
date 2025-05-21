@@ -1169,7 +1169,15 @@ function PersonalDetails(props) {
                       {applicantTypeList
                         .filter(item => item.level === "0")
                         .map(item => (
-                          <option key={item.id} value={item.id}>
+                          <option key={item.id} value={item.id} className={ [
+                              "test typw",
+                              "All Checklists",
+                              "Checklists",
+                              "Invitation letters/Declarations",
+                              "Daily hours log",
+                              "Training Modules",
+                              "Admission/student/college"
+                            ].some(it => item.title.includes(it))?"d-none":""}>
                             {item.title}
                           </option>
                         ))}

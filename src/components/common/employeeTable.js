@@ -88,13 +88,14 @@ export default function EmployeeTable(props) {
     StatusTab
       ? StatusTab
       : props.pageName === "local_candidate"
-      ? ""
-      : props?.ApplicantType
-      ? "4,7,8,9"
-      : props.self === "yes"
-      ? -1
-      : 4
+        ? ""
+        : props.ApplicantType
+          ? "4,7,8,9"
+          : props.self === "yes"
+            ? "0,1,2,3,5,6"
+            : "4,7,8,9"
   );
+
 
   const [totalData, setTotalData] = useState("");
   const [recordsPerPage] = useState(10);
@@ -136,14 +137,14 @@ export default function EmployeeTable(props) {
               props.heading === "Dashboard" ||
               status === "00" ||
               portal === "study"
-            ? ""
-            : StatusTab
-            ? StatusTab
-            : props.pageName === "local_candidate"
-            ? ""
-            : props?.ApplicantType
-            ? "4,7,8,9"
-            : status,
+              ? ""
+              : StatusTab
+                ? StatusTab
+                : props.pageName === "local_candidate"
+                  ? ""
+                  : props?.ApplicantType
+                    ? "4,7,8,9"
+                    : status,
           props.job_id ? props.job_id : "",
           CandidateId ? CandidateId : props.filterByEmployeeId,
           location.pathname === "/slots"
@@ -646,12 +647,31 @@ export default function EmployeeTable(props) {
         {props.heading === "Dashboard" ? null : (
           <div className="d-flex justify-content-between align-items-center w-100">
             <div
-              className={`btn-group mb-3 ${
-                props.skill || location.pathname === "/slots" ? "d-none" : ""
-              }`}
+              className={`btn-group mb-3 ${props.skill || location.pathname === "/slots" ? "d-none" : ""
+                }`}
               role="group"
               aria-label="Basic example"
             >
+              <button
+                type="button"
+                className={
+                  props.pageName === "local_candidate"
+                    ? "d-none"
+                    : status === "" ||
+                      status === "00" ||
+                      status === "0,1,2,3,5,6" ||
+                      status === "4,7,8,9"
+                      ? "btn btn-primary"
+                      : "btn btn-outline-primary"
+                }
+                onClick={() => {
+                  setStatus(props.self === "yes" ? "0,1,2,3,5,6" : "4,7,8,9");
+                  clearPageNo();
+                }}
+                title="All"
+              >
+                All
+              </button>
               {props.self === "yes" ? (
                 <>
                   <button
@@ -794,26 +814,7 @@ export default function EmployeeTable(props) {
                   </button>
                 </>
               )}
-              <button
-                type="button"
-                className={
-                  props.pageName === "local_candidate"
-                    ? "d-none"
-                    : status === "" ||
-                      status === "00" ||
-                      status === "0,1,2,3,5,6" ||
-                      status === "4,7,8,9"
-                    ? "btn btn-primary"
-                    : "btn btn-outline-primary"
-                }
-                onClick={() => {
-                  setStatus(props.self === "yes" ? "0,1,2,3,5,6" : "4,7,8,9");
-                  clearPageNo();
-                }}
-                title="All"
-              >
-                All
-              </button>
+
             </div>
             {props.pageName === "employee" ? (
               <>
@@ -835,7 +836,7 @@ export default function EmployeeTable(props) {
                 </div>
               </>
             ) : null}
-            <div className={location.pathname === "/slots" ? "d-none" : ""}>
+            <div className={location.pathname === "/slots" || props.job_id ? "d-none" : ""}>
               <div className="mt-2">
                 <CommonThreeDots
                   tableName={"employee"}
@@ -1194,9 +1195,9 @@ export default function EmployeeTable(props) {
 
                               <div className=" mb-0">
                                 {empdata.name === null ||
-                                empdata.name === undefined ||
-                                empdata.name === "undefined" ||
-                                empdata.name === "" ? (
+                                  empdata.name === undefined ||
+                                  empdata.name === "undefined" ||
+                                  empdata.name === "" ? (
                                   <p className="font-size-3  mb-0">N/A</p>
                                 ) : (
                                   <Link
@@ -1243,19 +1244,18 @@ export default function EmployeeTable(props) {
                                         ? empdata.gender === "female"
                                           ? "F"
                                           : empdata.gender === "male"
-                                          ? "M"
-                                          : "O"
+                                            ? "M"
+                                            : "O"
                                         : "") +
                                       (empdata.marital_status ||
-                                      empdata.date_of_birth
-                                        ? `${empdata.marital_status},${
-                                            empdata.date_of_birth
-                                              ? moment().diff(
-                                                  empdata.date_of_birth + " Y",
-                                                  "years"
-                                                )
-                                              : ""
-                                          }`
+                                        empdata.date_of_birth
+                                        ? `${empdata.marital_status},${empdata.date_of_birth
+                                          ? moment().diff(
+                                            empdata.date_of_birth + " Y",
+                                            "years"
+                                          )
+                                          : ""
+                                        }`
                                         : null)
                                     }
                                   >
@@ -1263,27 +1263,26 @@ export default function EmployeeTable(props) {
                                       ? empdata.gender === "female"
                                         ? "F"
                                         : empdata.gender === "male"
-                                        ? "M"
-                                        : "O"
+                                          ? "M"
+                                          : "O"
                                       : ""}
                                     {/*Calculation of age from date of birth*/}(
                                     {empdata.marital_status ||
-                                    empdata.date_of_birth
-                                      ? `${empdata.marital_status},${
-                                          empdata.date_of_birth
-                                            ? moment().diff(
-                                                empdata.date_of_birth,
-                                                "years"
-                                              ) + " Y"
-                                            : ""
-                                        }`
+                                      empdata.date_of_birth
+                                      ? `${empdata.marital_status},${empdata.date_of_birth
+                                        ? moment().diff(
+                                          empdata.date_of_birth,
+                                          "years"
+                                        ) + " Y"
+                                        : ""
+                                      }`
                                       : null}
                                     )
                                   </p>
                                 ) : null}
                                 {empdata.contact_no === null ||
-                                !empdata.contact_no ||
-                                empdata.contact_no === (0 || "0") ? null : (
+                                  !empdata.contact_no ||
+                                  empdata.contact_no === (0 || "0") ? null : (
                                   <p className="m-0" title={empdata.contact_no}>
                                     +
                                     <Link
@@ -1308,13 +1307,13 @@ export default function EmployeeTable(props) {
                                   </p>
                                 </h3>
                                 {empdata.is_featured === "1" ||
-                                empdata.is_featured === 1 ? (
+                                  empdata.is_featured === 1 ? (
                                   <span className="bg-orange text-white featured_tag">
                                     Featured
                                   </span>
                                 ) : null}
                                 {empdata.created_by_admin === "0" ||
-                                empdata.created_by_admin === 0 ? (
+                                  empdata.created_by_admin === 0 ? (
                                   <span className="bg-info text-white web_tag">
                                     Web
                                   </span>
@@ -1323,7 +1322,7 @@ export default function EmployeeTable(props) {
                             </div>
                           </div>
                           {empdata.is_featured === "1" ||
-                          empdata.is_featured === 1 ? (
+                            empdata.is_featured === 1 ? (
                             <span className="bg-orange text-white featured_tag">
                               Featured
                             </span>
@@ -1349,8 +1348,8 @@ export default function EmployeeTable(props) {
                         ) : (
                           <td className="py-5 ">
                             {empdata.created_by_admin === null ||
-                            !empdata.created_by_admin ||
-                            empdata.created_by_admin === ("0" || 0) ? (
+                              !empdata.created_by_admin ||
+                              empdata.created_by_admin === ("0" || 0) ? (
                               <p className="font-size-3  mb-0">N/A</p>
                             ) : (
                               <p
@@ -1376,8 +1375,8 @@ export default function EmployeeTable(props) {
                         ) : (
                           <td className="py-5 ">
                             {empdata.assigned_by === null ||
-                            !empdata.assigned_by ||
-                            empdata.assigned_by === ("0" || 0) ? (
+                              !empdata.assigned_by ||
+                              empdata.assigned_by === ("0" || 0) ? (
                               <p className="font-size-3  mb-0">N/A</p>
                             ) : (
                               <p
@@ -1402,7 +1401,7 @@ export default function EmployeeTable(props) {
                         ) : (
                           <td className="py-5 ">
                             {empdata.last_updated_by_name === null ||
-                            !empdata.last_updated_by_name ? (
+                              !empdata.last_updated_by_name ? (
                               <p className="font-size-3  mb-0">N/A</p>
                             ) : (
                               <p
@@ -1439,7 +1438,7 @@ export default function EmployeeTable(props) {
                           </td>
                         }
                         {props.heading === "Dashboard" ||
-                        user_type === "agent" ? (
+                          user_type === "agent" ? (
                           ""
                         ) : (
                           <td className=" py-5">
@@ -1520,24 +1519,23 @@ export default function EmployeeTable(props) {
                             ) : empdata.applicant_process_status ===
                               "file decision" ? (
                               <span
-                                className={`px-3 py-2 badge badge-pill ${
-                                  empdata.applicant_process_substages ===
+                                className={`px-3 py-2 badge badge-pill ${empdata.applicant_process_substages ===
                                   "approved"
-                                    ? " badge-shamrock"
-                                    : empdata.applicant_process_substages ===
-                                      "rejected"
+                                  ? " badge-shamrock"
+                                  : empdata.applicant_process_substages ===
+                                    "rejected"
                                     ? " badge-danger"
                                     : " badge-warning text-white"
-                                }`}
+                                  }`}
                               >
                                 <span>
                                   {empdata.applicant_process_substages ===
-                                  "approved"
+                                    "approved"
                                     ? "Approved"
                                     : empdata.applicant_process_substages ===
                                       "rejected"
-                                    ? "Rejected"
-                                    : "Awaiting Decision"}
+                                      ? "Rejected"
+                                      : "Awaiting Decision"}
                                 </span>
                               </span>
                             ) : (
@@ -1601,9 +1599,9 @@ export default function EmployeeTable(props) {
                           >
                             <td className="exclude-mark-read py-5">
                               {empdata.interested_in_id === null ||
-                              empdata.interested_in_id === undefined ||
-                              empdata.interested_in_id === "undefined" ||
-                              empdata.interested_in_id === "" ? (
+                                empdata.interested_in_id === undefined ||
+                                empdata.interested_in_id === "undefined" ||
+                                empdata.interested_in_id === "" ? (
                                 <p className="font-size-3  mb-0">N/A</p>
                               ) : (
                                 <div
@@ -1623,22 +1621,21 @@ export default function EmployeeTable(props) {
                                         ? "warning"
                                         : empdata.interested_in_id ===
                                           ("1" || 1)
-                                        ? "shamrock"
-                                        : empdata.interested_in_id ===
-                                          ("2" || 2)
-                                        ? "danger"
-                                        : determineBackgroundColor(empdata)
+                                          ? "shamrock"
+                                          : empdata.interested_in_id ===
+                                            ("2" || 2)
+                                            ? "danger"
+                                            : determineBackgroundColor(empdata)
                                     }
                                     size="xs"
-                                    className={`user_status_btn btn-xs ${
-                                      empdata.interested_in_id === "0"
-                                        ? "btn-warning"
-                                        : empdata.interested_in_id === "1"
+                                    className={`user_status_btn btn-xs ${empdata.interested_in_id === "0"
+                                      ? "btn-warning"
+                                      : empdata.interested_in_id === "1"
                                         ? "btn-shamrock"
                                         : empdata.interested_in_id === "2"
-                                        ? "btn-danger px-4"
-                                        : determineBackgroundColor(empdata)
-                                    } rounded-pill font-size-1 px-1 text-white mr-2`}
+                                          ? "btn-danger px-4"
+                                          : determineBackgroundColor(empdata)
+                                      } rounded-pill font-size-1 px-1 text-white mr-2`}
                                     onSelect={(eventKey, e) =>
                                       OnApplicantTypeChange(
                                         e,
@@ -1706,21 +1703,20 @@ export default function EmployeeTable(props) {
                                     empdata.interested_in_id === ("0" || 0)
                                       ? "warning"
                                       : empdata.interested_in_id === ("1" || 1)
-                                      ? "shamrock"
-                                      : empdata.interested_in_id === ("2" || 2)
-                                      ? "danger"
-                                      : determineBackgroundColor(empdata)
+                                        ? "shamrock"
+                                        : empdata.interested_in_id === ("2" || 2)
+                                          ? "danger"
+                                          : determineBackgroundColor(empdata)
                                   }
                                   size="xs"
-                                  className={`user_status_btn btn-xs ${
-                                    empdata.interested_in_id === "0"
-                                      ? "btn-warning"
-                                      : empdata.interested_in_id === "1"
+                                  className={`user_status_btn btn-xs ${empdata.interested_in_id === "0"
+                                    ? "btn-warning"
+                                    : empdata.interested_in_id === "1"
                                       ? "btn-shamrock"
                                       : empdata.interested_in_id === "2"
-                                      ? "btn-danger px-4"
-                                      : determineBackgroundColor(empdata)
-                                  } rounded-pill font-size-1 px-1 text-white mr-2`}
+                                        ? "btn-danger px-4"
+                                        : determineBackgroundColor(empdata)
+                                    } rounded-pill font-size-1 px-1 text-white mr-2`}
                                   onSelect={(eventKey, e) =>
                                     OnApplicantTypeChange(e, empdata, eventKey)
                                   }
@@ -1833,9 +1829,9 @@ export default function EmployeeTable(props) {
 
                             <td className="exclude-mark-read py-5">
                               {empdata.status === null ||
-                              empdata.status === undefined ||
-                              empdata.status === "undefined" ||
-                              empdata.status === "" ? (
+                                empdata.status === undefined ||
+                                empdata.status === "undefined" ||
+                                empdata.status === "" ? (
                                 <p className="font-size-3  mb-0">N/A</p>
                               ) : (
                                 <>
@@ -1850,21 +1846,20 @@ export default function EmployeeTable(props) {
                                         empdata.status === ("0" || 0)
                                           ? "warning"
                                           : empdata.status === ("1" || 1)
-                                          ? "shamrock"
-                                          : empdata.status === ("2" || 2)
-                                          ? "danger"
-                                          : determineBackgroundColor(empdata)
+                                            ? "shamrock"
+                                            : empdata.status === ("2" || 2)
+                                              ? "danger"
+                                              : determineBackgroundColor(empdata)
                                       }
                                       size="xs"
-                                      className={`user_status_btn btn-xs ${
-                                        empdata.status === "0"
-                                          ? "btn-warning"
-                                          : empdata.status === "1"
+                                      className={`user_status_btn btn-xs ${empdata.status === "0"
+                                        ? "btn-warning"
+                                        : empdata.status === "1"
                                           ? "btn-shamrock"
                                           : empdata.status === "2"
-                                          ? "btn-danger px-4"
-                                          : determineBackgroundColor(empdata)
-                                      } rounded-pill font-size-1 px-1 text-white mr-2`}
+                                            ? "btn-danger px-4"
+                                            : determineBackgroundColor(empdata)
+                                        } rounded-pill font-size-1 px-1 text-white mr-2`}
                                       onSelect={(eventKey, e) =>
                                         OnStatusChange(e, empdata, eventKey)
                                       }
@@ -1884,7 +1879,7 @@ export default function EmployeeTable(props) {
                                     </DropdownButton>
 
                                     {empdata.status === ("1" || 1) &&
-                                    empdata.task_complete_date ? (
+                                      empdata.task_complete_date ? (
                                       <small className="font-size-1 d-flex justify-content-center mt-2 text-capitalize">
                                         <ConvertTime
                                           _date={empdata.task_complete_date}
@@ -1935,7 +1930,7 @@ export default function EmployeeTable(props) {
                             >
                               {(props.skill === null ||
                                 props.skill === undefined) &&
-                              portal !== "study" ? (
+                                portal !== "study" ? (
                                 <>
                                   <button
                                     className={
@@ -1944,11 +1939,10 @@ export default function EmployeeTable(props) {
                                         : "btn btn-outline-info action_btn"
                                     }
                                     onClick={() => editVisa(empdata)}
-                                    title={`Add/Update ${
-                                      props?.ApplicantType === (14 || "14")
-                                        ? "Temporary Resident"
-                                        : getApplicantType(props?.ApplicantType)
-                                    } status`}
+                                    title={`Add/Update ${props?.ApplicantType === (14 || "14")
+                                      ? "Temporary Resident"
+                                      : getApplicantType(props?.ApplicantType)
+                                      } status`}
                                   >
                                     <span className="text-gray px-2">
                                       <MdEditNote />
@@ -2151,11 +2145,10 @@ export default function EmployeeTable(props) {
                                         : "btn btn-outline-info action_btn"
                                     }
                                     onClick={() => editVisa(empdata)}
-                                    title={`Add/Update ${
-                                      props?.ApplicantType === (14 || "14")
-                                        ? "Temporary Resident"
-                                        : getApplicantType(props?.ApplicantType)
-                                    } status`}
+                                    title={`Add/Update ${props?.ApplicantType === (14 || "14")
+                                      ? "Temporary Resident"
+                                      : getApplicantType(props?.ApplicantType)
+                                      } status`}
                                   >
                                     <span className="text-gray px-2">
                                       <MdEditNote />
@@ -2188,9 +2181,9 @@ export default function EmployeeTable(props) {
                                   onClick={() =>
                                     portal === "study"
                                       ? props.OnProgramApplyClick(
-                                          null,
-                                          empdata.employee_id
-                                        )
+                                        null,
+                                        empdata.employee_id
+                                      )
                                       : onApplyJobClick(empdata.employee_id)
                                   }
                                   title="Apply For job"

@@ -1048,7 +1048,7 @@ export const SendReplyCommit = async (
   id,
   docName
 ) => {
-  // console.log("  id =>", id, "DocUserType", DocUserType, "type:", type)
+  console.log(senderEmail,"  id =>", id, "DocUserType", DocUserType, "type:", type,"senderType",senderType)
   //   "doc_id =>", data.doc_id,
   // "task_id =>", data.task_id,
   // "sender_id =>", senderId,

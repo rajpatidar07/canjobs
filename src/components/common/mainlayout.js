@@ -212,6 +212,7 @@ function MainLayout() {
             <Route path="/job_detail" element={<JobDetailpageAdmim />} />
             <Route path="/client_detail" element={<CompanyProfileDetail />} />
             <Route path="/userpdf" element={<PDFViewer />} />
+             <Route path="/view_pdf_Agreement" element={<ViewPdf />} />
           </>
         ) : (
           <>
@@ -244,6 +245,8 @@ function MainLayout() {
             <Route path="*" element={<NotFound userType={userType} />} />
             <Route path="/job_detail" element={<JobDetailpageAdmim />} />
             <Route path="/userpdf" element={<PDFViewer />} />
+            <Route path="/client_detail" element={<CompanyProfileDetail />} />
+             <Route path="/view_pdf_Agreement" element={<ViewPdf />} />
           </>
         ) : (
           <>

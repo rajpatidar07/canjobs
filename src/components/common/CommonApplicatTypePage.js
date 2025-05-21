@@ -56,7 +56,7 @@ export default function CommonApplicatTypePage() {
     state.folderId || localApplicantTypeFolderId
   );
   const [applicantTypeIdForApi, setApplicantTypeIdForApi] = useState("");
-  // const [applicantTypeName, setApplicantTypeName] = useState("");
+  const [applicantTypeName, setApplicantTypeName] = useState("");
 
   const [pageNo, setPageNo] = useState(localStorage.getItem("PageNo") || 1);
   const [experienceFilterValue, setExperienceFilterValue] = useState("");
@@ -136,14 +136,16 @@ export default function CommonApplicatTypePage() {
           setApplicantTypeIdForApi(res.data.data[0]?.id)
           setMain(res.data.data[0]?.id)
           setApplicantTypeFolderId(res.data.data[0]?.doc_folder_id);
+          setApplicantTypeName(res.data.data[0]?.title)
         }
         const found = (res.data?.data || []).find(
           (item) => item.id === targetId
         );
         if (found) {
-          // setApplicantTypeName(found.title);
+          setApplicantTypeName(found.title);
           setApplicantTypeFolderId(found.doc_folder_id);
           setApplicantTypeIdForApi(found.id);
+
 
           if (taskId && notifiType === "group") {
             setShowGrpChatBox(true);
@@ -177,6 +179,16 @@ export default function CommonApplicatTypePage() {
       }
 
       setApplicantTypeFolderId(selectedItem.doc_folder_id);
+      setApplicantTypeName(selectedItem.title)
+      if ([
+        "test typw",
+        "All Checklists",
+        "Checklists",
+        "Invitation letters/Declarations",
+        "Daily hours log",
+        "Training Modules",
+        "Admission/student/college"
+      ].some(it => selectedItem.title?.includes(it))) { setSelectedTab("documents") }
     }
   }
   return (
@@ -245,9 +257,17 @@ export default function CommonApplicatTypePage() {
                 <button
                   type="button"
                   className={
-                    selectedTab === "candidate"
+                    `${[
+                      "test typw",
+                      "All Checklists",
+                      "Checklists",
+                      "Invitation letters/Declarations",
+                      "Daily hours log",
+                      "Training Modules",
+                      "Admission/student/college"
+                    ].some(it => applicantTypeName?.includes(it)) ? "d-none" : ""} ${selectedTab === "candidate"
                       ? "btn btn-primary"
-                      : "btn btn-outline-primary"
+                      : "btn btn-outline-primary"}`
                   }
                   onClick={() => {
                     setSelectedTab("candidate");
@@ -259,9 +279,9 @@ export default function CommonApplicatTypePage() {
                 <button
                   type="button"
                   className={
-                    selectedTab === "documents"
+                    `${selectedTab === "documents"
                       ? "btn btn-primary"
-                      : "btn btn-outline-primary"
+                      : "btn btn-outline-primary"} `
                   }
                   onClick={() => {
                     setSelectedTab("documents");
@@ -345,7 +365,7 @@ export default function CommonApplicatTypePage() {
               </div>
             ) : (
               <div>
-                {console.log(docId ? docParentId : applicantTypeFolderId,docId , docParentId , applicantTypeFolderId)}
+                {console.log(docId ? docParentId : applicantTypeFolderId, docId, docParentId, applicantTypeFolderId)}
                 <ApplicantTypeDocuments
                   emp_user_type={"applicant_type"}
                   user_id={applicantTypeIdForApi}

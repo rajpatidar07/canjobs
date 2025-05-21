@@ -29,6 +29,7 @@ export default function CommentReplyBox({
   allAdmin,
   isApiCall
 }) {
+  let user_type = localStorage.getItem("userType")
   // console.log("first",replyCommentClick)
   return (
     <div className="reply_box_container mx-2 fade show">
@@ -38,7 +39,7 @@ export default function CommentReplyBox({
           // Only render the reply if task_id matches the comment's id
           replyItem.task_id === commentItem.id && (
             <div key={replyIndex}
-              onMouseEnter={() => (MarkReadTask(replyItem, "thread"))}>
+              onMouseEnter={() => (user_type === "user" || user_type === "company" ? null : MarkReadTask(replyItem, "thread"))}>
               {/* Display reply message */}
               {
                 <div
@@ -76,7 +77,7 @@ export default function CommentReplyBox({
                         className={`text-gray pr-1`}
 
                       >
-                        <ViewAdminBox data={replyItem} type="thread" adminList={allAdmin} />
+                        {user_type === "user" || user_type === "company" ? null : <ViewAdminBox data={replyItem} type="thread" adminList={allAdmin} />}
                       </span>
                       <Link
                         className="text-danger pr-2"

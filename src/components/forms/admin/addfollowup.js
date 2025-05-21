@@ -26,7 +26,7 @@ import ViewAdminBox from "../../common/ViewAdminBox";
 import CommentReplyBox from "../../common/CommentReplyBox"
 import determineBackgroundColor from "../../common/Common function/DetermineBackgroundColour";
 import MarkReadTask from "../../common/Common function/MarkReadTask";
-import { EditorState } from 'draft-js';
+import { ContentState, convertFromHTML, EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { stateToHTML } from "draft-js-export-html";
@@ -273,6 +273,7 @@ function Addfollowup(props) {
     const updatedUserTypes = newUserTypeArray.join(",");
 
     // Call the API to update the document
+    console.log(assigned_by_type,"pppp")
     try {
       setIsApiCall(true)
       let res = await SendReplyCommit(
@@ -899,7 +900,7 @@ function Addfollowup(props) {
           "note",
           senderId,
           senderEmail,
-          adminType,//sender type
+          adminType||assigned_by_type,//sender type
           props.userId, //props.userId
           "",//docData.parentReference.id,
           props.userType,
@@ -1058,7 +1059,7 @@ function Addfollowup(props) {
                             setReplyComment("");
                           }
                         }}
-                        onMouseEnter={() => (MarkReadTask(res, "task"))}
+                        onMouseEnter={() => (user_type === "user" || user_type === "company" ? null : MarkReadTask(res, "task"))}
 
                         key={index}
                         ref={(el) => (NoteRef.current[res.id] = el)}>
@@ -1129,6 +1130,8 @@ function Addfollowup(props) {
                                     onClick={() => {
                                       // Merge current state with res and admin_id
                                       setState(res);
+                                      setEditorState(EditorState.createWithContent(ContentState.createFromBlockArray(
+                                        convertFromHTML(res.subject_description))))
                                       setFilteredEmails([]);
                                       setSelectedAdmin(
                                         res?.assined_to_user_id
@@ -1147,7 +1150,7 @@ function Addfollowup(props) {
                                     <CiEdit />
                                   </Link>
 
-                                  <ViewAdminBox data={res} type="task" adminList={AdminList} />
+                                  {user_type === "user" || user_type === "company" ? null : <ViewAdminBox data={res} type="task" adminList={AdminList} />}
 
                                   <Link
                                     className={
@@ -1508,6 +1511,7 @@ function Addfollowup(props) {
                           props.skip();
                         } else {
                           setState(initialFormState);
+                          setEditorState(EditorState.createEmpty() || "")
                           setSelectedAdmin([]);
                           setLoading(false);
                         }

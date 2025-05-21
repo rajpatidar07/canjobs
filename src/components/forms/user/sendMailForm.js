@@ -11,6 +11,7 @@ function SendMailForm({ email, setApiCall }) {
   let adminSignature = localStorage.getItem("admin_signature")
 
   let AdminEmail = localStorage.getItem("admin_email");
+  let userrType = localStorage.getItem("userType");
   /*Render function to get the Response*/
   // useEffect(() => {
   // }, []);
@@ -268,10 +269,15 @@ function SendMailForm({ email, setApiCall }) {
     const value = e.target.value;
     const emailArray = value.split(",").map((email) => email.trim()); // Split emails and trim whitespace
 
-    setState((prevState) => ({
+   if(userrType==="admin"){ setState((prevState) => ({
       ...prevState,
       adminemail: [AdminEmail, ...emailArray.filter((email) => email !== AdminEmail)], // Ensure AdminEmail is always first
-    }));
+    }));}else{
+      setState((prevState) => ({
+      ...prevState,
+      adminemail: emailArray, // Ensure AdminEmail is always first
+    }))
+    }
   };
   // Update adminemail state to ensure multiple emails are comma-separated
   const handleAdminBBEmailChange = (e) => {

@@ -2,7 +2,6 @@ import React from "react";
 import SendMailForm from "../forms/user/sendMailForm";
 export default function ContactPage(props) {
   const user_type = localStorage.getItem("userType");
-
   return (
     <div className="activity_container profile_id_card">
       <div className="row m-0">
