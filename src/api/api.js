@@ -2663,6 +2663,7 @@ export const GetPreviewAttchmentEmail = async (emailType, id) => {
 /*Api to read email */
 
 export const ReadEmail = async (page, limit, search, email) => {
+  console.log(email)
   const response = await axios.post(
     // `http://192.168.29.92/canjobs_latest/common/readEmail`,
     // `${API_URL}canjobs_latest/common/readEmail`,
@@ -2685,6 +2686,7 @@ export const ReadEmail = async (page, limit, search, email) => {
 };
 /*Api to read Sent email */
 export const ReadSentEmail = async (page, limit, search, email) => {
+  console.log(email,"lll")
   const response = await axios.post(
     // `http://192.168.29.92/canjobs_latest/common/readSentEmail`,
     // `${API_URL}canjobs_latest/common/readSentEmail`,

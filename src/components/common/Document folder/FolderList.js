@@ -540,7 +540,6 @@ export default function FolderList({
                             {canOpenInNewTab && (
                               <li className={item.file &&
                             item.file.mimeType !== "text/plain" &&
-                            (userType === "admin" || userType === "agent") &&
                             [
                               "image/jpeg",
                               "image/png",
