@@ -117,6 +117,7 @@ import WorkPermitPdf from "./Retaineragreement/Agreement native/WorkPermitPdf";
 import AlbertaPnpPdf from "./Retaineragreement/Agreement native/AlbertaPnpPdf";
 import AdminMain from "../admin/AdminMain";
 import CommonAdminExtraLinkSetting from "../admin/CommonAdminExtraLinkSetting";
+import ManageConsultation from "../admin/ManageConsultation";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -352,6 +353,7 @@ function MainLayout() {
               <Route path="/partner_dashboard" element={<PartnerDashboard />} />
               <Route path="/daily_call_log" element={<ManageDailyCallLog />} />
               <Route path="/daily_hours_log" element={<ManageHourlyLog />} />
+              <Route path="/consultation" element={<ManageConsultation />} />
               <Route path="/assigned_admin" element={<AsiignedAdmin />} />
               <Route path="/activity_log" element={<ActivityLog />} />
               <Route path="/filter" element={<FilterList />} />

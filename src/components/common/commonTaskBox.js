@@ -13,6 +13,7 @@ import Laoder from "../common/loader"
 import MarkReadTask from "./Common function/MarkReadTask";
 import ViewAdminBox from "./ViewAdminBox";
 export default function CommentTaskBox(props) {
+    console.log(props.userId)
     const [commentsLoading, setCommentsLoading] = useState(false);
     const [comments, setComments] = useState("");
     const [commntData, setCommentData] = useState();

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ConvertTime from "./Common function/ConvertTime";
 
 const TableInput = ({ value, onChange, name, type, className = "" }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -43,6 +44,7 @@ const TableInput = ({ value, onChange, name, type, className = "" }) => {
         cursor: "pointer",
         minWidth: "150px",
         position: "relative",
+        overflow:"hidden"
       }}
     >
       <div
@@ -76,7 +78,7 @@ const TableInput = ({ value, onChange, name, type, className = "" }) => {
               animation: "textFadeIn 150ms ease-in-out",
             }}
           >
-            {inputValue || "Click to Add"}
+            {type === "date" ? <ConvertTime _date={inputValue} format={"DD/MM/YYYY"} /> : inputValue || "Click to Add"}
           </span>
         )}
       </div>

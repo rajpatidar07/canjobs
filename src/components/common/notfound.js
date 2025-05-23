@@ -10,10 +10,13 @@ const NotFound = (props) => {
   const docId = searchParams.get("docId");
   const notes = searchParams.get("note");
   const taskId = searchParams.get("taskId");
-  const portal = localStorage.getItem("portal")
+  const CallLogId = searchParams.get("call_logId");
+  const HourLogId = searchParams.get("hour_logId");
+  const ConsultationId = searchParams.get("taskId");
+  const portal = localStorage.getItem("consultation_id")
   let navigate = useNavigate()
   useEffect(() => {
-    if (docId || notes || taskId) {
+    if (docId || notes || taskId||CallLogId||HourLogId||ConsultationId) {
       localStorage.setItem("navigation_url", location.pathname + location.search)
       if (!token) {
         navigate("/adminlogin")
