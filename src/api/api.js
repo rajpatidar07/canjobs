@@ -1048,7 +1048,7 @@ export const SendReplyCommit = async (
   id,
   docName
 ) => {
-  console.log(senderEmail,"  id =>", id, "DocUserType", DocUserType, "type:", type,"senderType",senderType)
+  console.log(senderEmail, "  id =>", id, "DocUserType", DocUserType, "type:", type, "senderType", senderType)
   //   "doc_id =>", data.doc_id,
   // "task_id =>", data.task_id,
   // "sender_id =>", senderId,
@@ -2686,7 +2686,7 @@ export const ReadEmail = async (page, limit, search, email) => {
 };
 /*Api to read Sent email */
 export const ReadSentEmail = async (page, limit, search, email) => {
-  console.log(email,"lll")
+  console.log(email, "lll")
   const response = await axios.post(
     // `http://192.168.29.92/canjobs_latest/common/readSentEmail`,
     // `${API_URL}canjobs_latest/common/readSentEmail`,
@@ -4019,6 +4019,41 @@ export const SendHtmlForPdf = async (html) => {
   const response = await axios.post(`${API_URL}/admin_api/createPdfUsingHtml`, {
     html: html
   },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+}
+/*Add Update Consultation */
+export const AddUpdateConsultation = async (data) => {
+  const response = await axios.post(`${API_URL}common/addUpdateConsultation`, data,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+}
+
+export const GetConsultation = async (data) => {
+  const response = await axios.post(`${API_URL}common/getConsultation`, data,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
+}
+export const DeleteConsultation = async (data) => {
+  const response = await axios.post(`${API_URL}common/deleteConsultation`, data,
     {
       headers: {
         "Content-Type": "application/json",
