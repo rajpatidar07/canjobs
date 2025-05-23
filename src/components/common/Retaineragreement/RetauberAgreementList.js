@@ -191,7 +191,7 @@ export default function RetauberAgreementList({
               setApicall={setApicall}
             />
           ) : (
-           
+
             <table className="table table-striped main_data_table">
               <thead>
                 <tr>
@@ -240,9 +240,9 @@ export default function RetauberAgreementList({
                 </tr>
               </thead>
               <tbody>
-                { isLoading ? (
-                <Loader />
-            ) :agreementList.length === 0 ? (
+                {isLoading ? (
+                  <Loader />
+                ) : agreementList.length === 0 ? (
                   <tr>
                     <td colSpan={7} className="bg-white text-center">
                       No data found
@@ -261,10 +261,10 @@ export default function RetauberAgreementList({
                       </td>
                       <td className="text-capitalize ">{data.type || "N/A"}</td>
                       <td className="text-capitalize ">
-                        {data.send_date?moment(data.send_date).format("DD-MM-YYYY") : "N/A"}
+                        {data.send_date ? moment(data.send_date).format("DD-MM-YYYY") : "N/A"}
                       </td>
                       <td className="text-capitalize ">
-                        {data.received_date?moment(data.received_date).format("DD-MM-YYYY") : "N/A"}
+                        {data.received_date ? moment(data.received_date).format("DD-MM-YYYY") : "N/A"}
                       </td>
                       <td className="text-center py-5">
                         <p className="font-size-2 font-weight-normal text-black-2 mb-0">
@@ -322,7 +322,7 @@ export default function RetauberAgreementList({
                               setOpenAddAgreementFelids(true);
                               setAgreementData(data);
                             }}
-                            title="Add Felids"
+                            title="Add fields"
                           // disabled={data.initial}
                           >
                             <span className="text-gray px-2">

@@ -132,9 +132,9 @@ export default function MainRetainerAggHtml({
                     ? "/three_column"
                     : agreementData.type === "work permit"
                       ? "/work_permit"
-                      :agreementData.type === "Alberta PNP and federal PR"
-                      ?'/alberta_pnp'
-                      : `/agreeone`;
+                      : agreementData.type === "Alberta PNP and federal PR"
+                        ? '/alberta_pnp'
+                        : `/agreeone`;
       localStorage.setItem("agreementStateData", JSON.stringify(stateData));
       // Open the new page in a new tab
       window.open(newPageUrl, "_blank");
@@ -177,11 +177,11 @@ export default function MainRetainerAggHtml({
             className="btn btn-primary text-end m-2 w-100"
             onClick={() => setOpenAddFeildsModal(true)}
           >
-            {openSignature === "yes" ? "Add Signature" : "Add Felids"}
+            {openSignature === "yes" ? "Add Signature" : "Add fields"}
           </button>
           <button
             className={
-              felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00"?  "btn btn-primary m-2 w-100" : "d-none"
+              felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00" ? "btn btn-primary m-2 w-100" : "d-none"
             }
             onClick={() => GeneratePdf()}
           >
