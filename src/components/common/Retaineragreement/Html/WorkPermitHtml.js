@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import InitialFunction from "../CommonThings/InitialFunction";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
-import ConvertTime from "../../Common function/ConvertTime"
+import CommonRetainerAgreementDate from "../CommonRetainerAgreementDate"
 const WorkPermitHtml = ({
   page,
   felidData,
@@ -34,7 +34,7 @@ const WorkPermitHtml = ({
   <body style="margin: 0 auto; max-width: 1024px;color:"black;">
     <div class="header" style="padding: 10px 20px;text-align: justify;">
       <img
-        src="https://canpathwaysjobs.com/image/00logo-main-black.png"
+        src="https://canpathwaysjobs.com/image/Retainer_agreement_logo.png"
         alt="Canpathways logo"
         style="max-width: 200px"
       />
@@ -49,13 +49,13 @@ const WorkPermitHtml = ({
       </div>
      <p> 
   This Retainer Agreement is made this
- <span class="para_gap" style="min-Width:50px">
+ <span class="para_gap text-capitalize" style="min-Width:50px">
  
-   ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00"?  ConvertTime({ _date: felidData?.agreement_date, format: "Do" }) : ""}  </span>
+   ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00"?  CommonRetainerAgreementDate({ _date: felidData?.agreement_date, format: "Do" }) : ""}  </span>
    day of
 
-    <span class="para_gap" style="min-Width:50px">${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00"?  ConvertTime({ _date: felidData?.agreement_date, format: "MMMM" }) : ""}</span>
-   ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00"?  ConvertTime({ _date: felidData?.agreement_date, format: "YYYY" }) : " "}
+    <span class="para_gap text-capitalize" style="min-Width:50px">${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00"?  CommonRetainerAgreementDate({ _date: felidData?.agreement_date, format: "MMMM" }) : ""}</span>
+   ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00"?  CommonRetainerAgreementDate({ _date: felidData?.agreement_date, format: "YYYY" }) : " "}
   between Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur (the
   “RCIC”), RCIC Membership Number
   <span>R533393</span>, phone number
@@ -77,10 +77,10 @@ const WorkPermitHtml = ({
   located at 
  
     ${felidData?.client_address
-      ? ` <span class="para_gap">${felidData?.client_address}</span>`
+      ? ` <span class="para_gap text-capitalize">${felidData?.client_address}</span>`
       : emp_user_type === "employer"
         ? userData?.address || userData?.address !== null ? userData?.address : " "
-        : `<span class="para_gap">${userData?.current_location !== null || userData?.current_location ? userData?.current_location : "   "} ${userData?.currently_located_country !== null || userData?.currently_located_country ? userData?.currently_located_country : "   "
+        : `<span class="para_gap text-capitalize">${userData?.current_location !== null || userData?.current_location ? userData?.current_location : "   "} ${userData?.currently_located_country !== null || userData?.currently_located_country ? userData?.currently_located_country : "   "
         }</span>`
     }
   </span><br>
@@ -109,7 +109,7 @@ const WorkPermitHtml = ({
         </span>
         <span class="col-6">
          Date of birth : 
-       <span class="para_gap" style="min-width:"50px">${item.client_date_of_birth ? ConvertTime({ _date: item.client_date_of_birth, format: "DD-MM-YYYY" }) : ""} </span>
+       <span class="para_gap text-capitalize" style="min-width:"50px">${item.client_date_of_birth ? CommonRetainerAgreementDate({ _date: item.client_date_of_birth, format: "DD-MM-YYYY" }) : ""} </span>
          </span>`
     )}
       </div>
@@ -148,7 +148,7 @@ const WorkPermitHtml = ({
             Client in the matter of
           
           ${felidData?.matter
-      ? `<span class="para_gap" style="min-width: 100%">${felidData?.matter} </span>`
+      ? `<span class="para_gap text-capitalize" style="min-width: 100%">${felidData?.matter} </span>`
       : "_______________________________________________________________________________________________________________"
     }.
           </p> 
@@ -160,7 +160,7 @@ const WorkPermitHtml = ({
             <li data-list-text="a)">
                 [Summary of preliminary advice given to the client
                  ${felidData?.summary
-      ? `<span class="para_gap">${felidData?.summary || ""
+      ? `<span class="para_gap text-capitalize">${felidData?.summary || ""
       }</span>`
       : "_____________________________"
     }]
@@ -1055,7 +1055,7 @@ ${RCICSignatureFunction({ isPdf: false, felidData })}
     <p class="mb-1 w-100 border-bottom border-dark pt-8 text-center">
       ${!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client.startsWith("0000")
       ? " "
-      : `<span> ${ConvertTime({ _date: familyJsonArray[0]?.date_signature_client, format: "DD-MM-YYYY" })}</span>`}
+      : `<span> ${CommonRetainerAgreementDate({ _date: familyJsonArray[0]?.date_signature_client, format: "DD-MM-YYYY" })}</span>`}
     </p>
     <p class="text-center ">Date</p>
   </div>
@@ -1063,7 +1063,7 @@ ${RCICSignatureFunction({ isPdf: false, felidData })}
     <p class="mb-1 w-100 border-bottom border-dark pt-8 text-center">
       ${!felidData.date_signature_rcic || felidData.date_signature_rcic.startsWith("0000")
       ? " "
-      : `<span> ${ConvertTime({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" })}</span>`}
+      : `<span> ${CommonRetainerAgreementDate({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" })}</span>`}
     </p>
     <p class="text-center ">Date</p>
   </div>
@@ -1209,8 +1209,8 @@ ${ClientSignatureFunction({ page: "admin", familyJsonArray, felidData })}
           <p style="margin: 0">Signatures</p>
         </div>
         <div class="col mt-9" style="text-align: center">
-          <p class="w-100 border-bottom border-dark text-center" style="margin: 0"> ${felidData?.date_signature_rcic && felidData.date_signature_rcic !== "0000-00-00" && felidData.date_signature_rcic !== "0000-00-00 00:00:00" ?
-      ConvertTime({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" }) : ' '}</p>
+          <p class="w-100 border-bottom border-dark text-center" style="margin: 0"> ${familyJsonArray[0]?.date_signature_client && familyJsonArray[0]?.date_signature_client !== "0000-00-00" && familyJsonArray[0]?.date_signature_client !== "0000-00-00 00:00:00" ?
+      CommonRetainerAgreementDate({ _date: familyJsonArray[0]?.date_signature_client, format: "DD-MM-YYYY" }) : ' '}</p>
           <p style="margin:0"class="text-center">Date</p>
         </div>
       </div>

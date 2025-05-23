@@ -116,7 +116,7 @@ export default function AddNotesConversation({
               aria-hidden="true"
             ></span>
             <span className="sr-only">Loading...</span>
-          </button> : <button type="submit" className="send-button btn btn-primary">
+          </button> : <button type="button" onClick={(e) => { if (!isApiLoading) { handleMessageSubmit(e) } }} className="send-button btn btn-primary">
             <i className="fas fa-angle-double-right"></i>
           </button>}
       </form>

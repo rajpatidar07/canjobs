@@ -36,7 +36,8 @@ export default function UserSigningPage() {
     let [showDetailsOption, setShowDetailsOption] = useState(false)
     let location = useLocation()
     let data = new URLSearchParams(location.search)
-    let user_id = data.get("id")
+    let id = data.get("id")
+    let user_id = data.get("user_id")
     let emp_user_type = data.get("user")
     let folderId = data.get("folderId")
     // let document_id = data.get("documentId")
@@ -54,7 +55,7 @@ export default function UserSigningPage() {
             //     emp_user_type,
             //     folderId
             // );
-            let Agreeres = await GetAgreement("", user_id, emp_user_type, type === "PNP   express entry/federal PR" ? "Alberta PNP and federal PR" : type)
+            let Agreeres = await GetAgreement(id, user_id, emp_user_type, type === "PNP   express entry/federal PR" ? "Alberta PNP and federal PR" : type)
             if (Agreeres.data.data) {
                 setFelidData(Agreeres.data.data[0])
                 setLoader(false);
@@ -103,7 +104,6 @@ export default function UserSigningPage() {
         setShowDetailsOption(false)
     }
     // const familyJsonArray = felidData?.family_json //? JSON.parse(felidData.family_json) : [];
-    console.log(felidData.signature_status, felidData?.signature_status === "1" || felidData?.signature_status === 1 ? "p" : "o")
     return (
         felidData?.signature_status === "0" || felidData?.signature_status === 0 ? <div className='d-flex p-5' style={{ backgroundColor: "#423f3f" }}>
 

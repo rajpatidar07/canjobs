@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { RCICSignatureFunction } from '../CommonThings/RCICSignatureFunction';
 import { ClientSignatureFunction } from '../CommonThings/ClientSignatureFunctionHtml';
 import InitialFunction from '../CommonThings/InitialFunction';
-import ConvertTime from '../../Common function/ConvertTime';
+import CommonRetainerAgreementDate from '../CommonRetainerAgreementDate';
 export default function EmployerRetainerAgreement({ page,
   felidData,
   userData,
@@ -49,7 +49,7 @@ export default function EmployerRetainerAgreement({ page,
 
   <body style="margin: 0 auto; max-width: 1024px;color:"black;">
     <div class="header">
-      <img src="https://canpathwaysjobs.com/image/00logo-main-black.png"
+      <img src="https://canpathwaysjobs.com/image/Retainer_agreement_logo.png"
         alt="Canpathways logo" style="max-width: 200px;" />
     </div>
     <div class="content" style="padding: 10px 20px; text-align: justify;">
@@ -64,14 +64,14 @@ export default function EmployerRetainerAgreement({ page,
         <p>
           This Retainer Agreement is made this <b><span class="para_gap" style="min-Width:50px">
            
-             ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00" ? ConvertTime({ _date: felidData?.agreement_date, format: "Do" }) : ""}  </span></b>
+             ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00" ? CommonRetainerAgreementDate({ _date: felidData?.agreement_date, format: "Do" }) : ""}  </span></b>
              day of
           
-             <b> <span class="para_gap" style="min-Width:50px">${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00" ? ConvertTime({ _date: felidData?.agreement_date, format: "MMMM" }) : ""}</span>
-             ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00" ? ConvertTime({ _date: felidData?.agreement_date, format: "YYYY" }) : " "}</b> between
+             <b> <span class="para_gap" style="min-Width:50px">${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00" ? CommonRetainerAgreementDate({ _date: felidData?.agreement_date, format: "MMMM" }) : ""}</span>
+             ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00" ? CommonRetainerAgreementDate({ _date: felidData?.agreement_date, format: "YYYY" }) : " "}</b> between
           Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur (the
           “RCIC”), RCIC Membership Number
-          <span class="highlight">R533393</span>, phone number
+          <span class="highlight">R533393</span>, <br>phone number
           <b>4038885308</b>, email
           <b>info@canpathways.ca</b>, located at <b>2618 Hopewell
             Pl NE #310 Calgary, AB T1Y 7J7,
@@ -86,7 +86,7 @@ export default function EmployerRetainerAgreement({ page,
   }
 </span>
 (the “Client”), <br> located at
-<span class="client-info para_gap">
+<span class="client-info para_gap text-capitalize">
   ${
     felidData?.client_address
       ? `<span class="">${felidData?.client_address}</span>`
@@ -1314,7 +1314,7 @@ export default function EmployerRetainerAgreement({ page,
                 <p class="mb-1 w-100 border-bottom border-dark pt-8 text-center">
                       ${!familyJsonArray[0]?.date_signature_client || familyJsonArray[0]?.date_signature_client.startsWith("0000")
       ? " "
-      : `<span> ${ConvertTime({ _date: familyJsonArray[0]?.date_signature_client, format: "DD-MM-YYYY" })}</span>`}
+      : `<span> ${CommonRetainerAgreementDate({ _date: familyJsonArray[0]?.date_signature_client, format: "DD-MM-YYYY" })}</span>`}
                     </p>
                   <p class="text-center">Date</p>
                 </div>
@@ -1322,7 +1322,7 @@ export default function EmployerRetainerAgreement({ page,
                    <p class="mb-1 w-100 border-bottom border-dark pt-8 text-center">
                       ${!felidData.date_signature_rcic || felidData.date_signature_rcic.startsWith("0000")
       ? " "
-      : `<span> ${ConvertTime({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" })}</span>`}
+      : `<span> ${CommonRetainerAgreementDate({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" })}</span>`}
                     </p>
                   <p class="text-center">Date</p>
                 </div>
@@ -1506,7 +1506,7 @@ export default function EmployerRetainerAgreement({ page,
                      </div>
                      <div class="col mt-9" style="text-align: center">
                        <p class="w-100 border-bottom border-dark text-center" style="margin: 0"> ${felidData?.date_signature_rcic && felidData.date_signature_rcic !== "0000-00-00" && felidData.date_signature_rcic !== "0000-00-00 00:00:00" ?
-      ConvertTime({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" }) : ' '}</p>
+      CommonRetainerAgreementDate({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" }) : ' '}</p>
                        <p style="margin:0"class="text-center">Date</p>
                      </div>
                    </div>

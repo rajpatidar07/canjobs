@@ -62,6 +62,8 @@ const MessageList = ({ data, loginuser, loginusertype, recordsPerPage, setRecord
                 "https://icons.iconarchive.com/icons/thehoth/seo/256/seo-web-code-icon.png";
             }
           }
+          console.log(message.task_creator_user_id === loginuser &&
+                message.task_creator_user_type === loginusertype)
           return (
             <div
               key={message.id}

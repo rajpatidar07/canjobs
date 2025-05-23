@@ -344,7 +344,7 @@ export default function SendEmailAgreement({
                             </p>
                             <p style="text-align:center;">
                                 <a href=${`${window.location.origin
-      }/signagreement?id=${user_id}&user=${emp_user_type}&folderId=${folderId}&documentId=${felidData.document_id
+      }/signagreement?id=${felidData?.id}&user_id=${user_id}&user=${emp_user_type}&folderId=${folderId}&documentId=${felidData.document_id
       }&type=${felidData.type.replaceAll(
         " ",
         "%20"
@@ -459,7 +459,7 @@ export default function SendEmailAgreement({
           id: felidData.id
         }
         let res = await AddUpdateAgreement(data);
-        if(res){
+        if (res) {
           setApicall(true)
         }
         close();

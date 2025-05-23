@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
 import InitialFunction from "../CommonThings/InitialFunction";
-import ConvertTime from "../../Common function/ConvertTime";
+import CommonRetainerAgreementDate from "../CommonRetainerAgreementDate";
 // import { Link } from "react-router-dom";
 const RecruitmentServiceHtml = ({
   page,
@@ -63,7 +63,7 @@ const RecruitmentServiceHtml = ({
     </head>
     <body>
         <div class="header">
-            <img src="https://canpathwaysjobs.com/image/00logo-main-black.png" alt="Canpathways logo" style="max-width: 200px;">
+            <img src="https://canpathwaysjobs.com/image/Retainer_agreement_logo.png" alt="Canpathways logo" style="max-width: 200px;">
         </div>
         <div class="main_div">
             <h2>RETAINER AGREEMENT</h2>
@@ -86,7 +86,7 @@ const RecruitmentServiceHtml = ({
    <span class="para_gap"> ${felidData?.agreement_date &&
       felidData?.agreement_date !== "0000-00-00 00:00:00" &&
       felidData?.agreement_date !== "0000-00-00"
-      ? ` ${ConvertTime({ _date: felidData?.agreement_date, format: "DD MM YYYY" })}`
+      ? ` ${CommonRetainerAgreementDate({ _date: felidData?.agreement_date, format: "DD MM YYYY" })}`
       : ""
     }</span>
         </p>
@@ -327,7 +327,7 @@ ${RCICSignatureFunction({ isPdf: false, felidData })}
       familyJsonArray[0]?.date_signature_client === "0000-00-00" ||
       familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00"
       ? ""
-      : ConvertTime({ _date: familyJsonArray[0]?.date_signature_client, format: "DD-MM-YYYY" })
+      : CommonRetainerAgreementDate({ _date: familyJsonArray[0]?.date_signature_client, format: "DD-MM-YYYY" })
     }
     </span>
     </p>
@@ -354,7 +354,7 @@ ${RCICSignatureFunction({ isPdf: false, felidData })}
       felidData?.date_signature_rcic === "0000-00-00" ||
       felidData?.date_signature_rcic === "0000-00-00 00:00:00"
       ? ""
-      : ConvertTime({ _date: familyJsonArray[0]?.date_signature_client, format: "DD-MM-YYYY" })
+      : CommonRetainerAgreementDate({ _date: felidData?.date_signature_rcic, format: "DD-MM-YYYY" })
 
     } </span>
     </p>

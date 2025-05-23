@@ -6,7 +6,7 @@ import { AddSharePointDOcument, AddUpdateAgreement } from '../../../../api/api';
 import InitialFunction from '../CommonThings/InitialFunction';
 import { ClientSignatureFunction } from '../CommonThings/ClientSignatureFunctionHtml';
 import { RCICSignatureFunction } from '../CommonThings/RCICSignatureFunction';
-import ConvertTime from '../../Common function/ConvertTime';
+import CommonRetainerAgreementDate from '../CommonRetainerAgreementDate';
 
 const styles = StyleSheet.create({
     page: {
@@ -111,7 +111,7 @@ const ThreeColumnRerainerAgreement = () => {
                 }
                 const file = new File(
                     [newBlob],
-                    `${felidData?.type.replace(" ", "_")}.pdf`,
+                    `${felidData?.type.replaceAll(" ", "_")+`_${felidData?.id}`}.pdf`,
                     { type: "application/pdf" }
                 ); try {
                     let res = await AddSharePointDOcument(
@@ -171,17 +171,17 @@ const ThreeColumnRerainerAgreement = () => {
                     <Text>
                         This Retainer Agreement is made this
                         <Text style={[{ Width: 50, borderBottom: "1px solid black", }, styles.textunderline]}>
-                            {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <ConvertTime _date={felidData?.agreement_date} format={"Do"} />}
+                            {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <CommonRetainerAgreementDate _date={felidData?.agreement_date} format={"Do"} />}
                             {"  "}
                         </Text>
                         day of{"  "}
-                        <Text style={[{ borderBottom: "1px solid black", minWidth: "50px", }, styles.textunderline]}> {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <ConvertTime _date={felidData?.agreement_date} format={"MMMM"} />}
+                        <Text style={[{ borderBottom: "1px solid black", minWidth: "50px", }, styles.textunderline]}> {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <CommonRetainerAgreementDate _date={felidData?.agreement_date} format={"MMMM"} />}
                             {"  "}
                         </Text>
-                        {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <ConvertTime _date={felidData?.agreement_date} format={"YYYY"} />} between
+                        {!felidData?.agreement_date || felidData?.agreement_date === "0000-00-00 00:00:00" || felidData?.agreement_date === "0000-00-00" ? "" : <CommonRetainerAgreementDate _date={felidData?.agreement_date} format={"YYYY"} />} between
                         Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur (the
                         “RCIC”), RCIC Membership Number
-                        <Text style={styles.textunderline}> R533393</Text>, Phone number
+                        <Text style={styles.textunderline}> R533393</Text>,{"\n"} Phone number
                         <Text style={styles.textunderline}> 4038885308 </Text> , Email
                         <Link
                             src="mailto:info@canpathways.ca"
@@ -192,22 +192,21 @@ const ThreeColumnRerainerAgreement = () => {
                             {" "}   Hopewell Pl NE #310 Calgary, AB T1Y 7J7,
                         </Text>
                         <Text style={styles.textunderline}></Text> Canada and Client
-                        <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
+                        <Text style={[styles.textunderline, { textTransform: "capitalize" }]} >
 
                             {" " + (familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")}
                         </Text>
                         {" "}(the “Client”), located at
-                        <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
 
-                            {console.log(felidData?.client_address !== "" && felidData.client_address ? ("fgfgfgfg" + felidData.client_address) : "___gfgfggfhgffd_____________", felidData?.client_address)}
-                        </Text>
-                        , Email
-                        <Text style={styles.textunderline} className="para_gap">
+                        {felidData&&felidData?.client_address !== "" && <Text style={[styles.textunderline, { textTransform: "capitalize" }]} > {felidData.client_address ? (felidData.client_address) : "________________"} </Text>}
+
+                        ,{"\n"} Email
+                        <Text style={styles.textunderline} >
 
                             {" " + (felidData?.client_email || "_________________")}
                         </Text>
-                        , {'\n'}Contact number
-                        <Text style={styles.textunderline} className="para_gap">
+                        , Contact number
+                        <Text style={styles.textunderline} >
 
                             {" " + (felidData?.client_contact || "_______________")}
                         </Text>
@@ -244,7 +243,7 @@ const ThreeColumnRerainerAgreement = () => {
                                 <Text style={{ flex: 1 }}>
                                     Date of birth:
                                     {item.client_date_of_birth
-                                        ? <Text style={{ textDecoration: 'underline' }}><ConvertTime _date={item.client_date_of_birth} format={"DD-MM-YYYY"} /></Text>
+                                        ? <Text style={{ textDecoration: 'underline' }}><CommonRetainerAgreementDate _date={item.client_date_of_birth} format={"DD-MM-YYYY"} /></Text>
                                         : '_________________'}
                                 </Text>
                             </View>
@@ -1436,7 +1435,7 @@ const ThreeColumnRerainerAgreement = () => {
                                     {familyJsonArray[0]?.date_signature_client &&
                                         familyJsonArray[0]?.date_signature_client !== "0000-00-00 00:00:00" &&
                                         familyJsonArray[0]?.date_signature_client !== "0000-00-00"
-                                        ? <ConvertTime _date={felidData.date_signature_rcic} format={"DD/MM/YYYY"} />
+                                        ? <CommonRetainerAgreementDate _date={familyJsonArray[0]?.date_signature_clien} format={"DD/MM/YYYY"} />
                                         : " "}
                                 </Text>
                                 <Text style={{ textAlign: "center" }}>Date</Text>
@@ -1456,7 +1455,7 @@ const ThreeColumnRerainerAgreement = () => {
                                     {felidData?.date_signature_rcic &&
                                         felidData?.date_signature_rcic !== "0000-00-00 00:00:00" &&
                                         felidData?.date_signature_rcic !== "0000-00-00"
-                                        ? <ConvertTime _date={felidData.date_signature_rcic} format={"DD/MM/YYYY"} />
+                                        ? <CommonRetainerAgreementDate _date={felidData.date_signature_rcic} format={"DD/MM/YYYY"} />
                                         : " "}
                                 </Text>
                                 <Text style={{ textAlign: "center" }}>Date</Text>
@@ -1474,7 +1473,7 @@ const ThreeColumnRerainerAgreement = () => {
                 </Text>
                 <Text style={{ marginTop: 15 }}>
                     I {" "}
-                    <Text style={[styles.textunderline, { textTransform: "capitalize" }]} className="para_gap">
+                    <Text style={[styles.textunderline, { textTransform: "capitalize" }]} >
                         {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ")}
                     </Text>
                     {" "} ( here in after referred to as the “client”), here by authorize and
@@ -1547,7 +1546,7 @@ const ThreeColumnRerainerAgreement = () => {
                             part of this agreement
                         </Text>
                     </View>
-                    <View style={{  flexDirection: 'row' }}>
+                    <View style={{ flexDirection: 'row' }}>
                         <Text style={{ width: 20, fontWeight: 'bold' }}>6</Text>
                         <Text style={{ flex: 1 }}>
                             I undertake to inform the consultant, the firm or the Government of Canada of any change in marital or civic status
@@ -1615,7 +1614,7 @@ const ThreeColumnRerainerAgreement = () => {
                                 {familyJsonArray[0]?.date_signature_client &&
                                     familyJsonArray[0]?.date_signature_client !== "0000-00-00 00:00:00" &&
                                     familyJsonArray[0]?.date_signature_client !== "0000-00-00"
-                                    ? <ConvertTime _date={felidData.date_signature_rcic} format={"DD/MM/YYYY"} />
+                                    ? <CommonRetainerAgreementDate _date={familyJsonArray[0]?.date_signature_clien} format={"DD/MM/YYYY"} />
                                     : " "}
                             </Text>
                             <Text style={{ margin: "0 0 30px 0" }}>Date</Text>
@@ -1635,7 +1634,7 @@ const ThreeColumnRerainerAgreement = () => {
                                 fixed
                                 style={{ width: 100, height: 40 }}
                                 src={
-                                    "https://canpathwaysjobs.com/image/00logo-main-black.png"
+                                    "https://canpathwaysjobs.com/image/Retainer_agreement_logo.png"
                                 }
                             />
                             {components}
@@ -1703,7 +1702,7 @@ const ThreeColumnRerainerAgreement = () => {
                                         fixed
                                         style={{ width: 100, height: 40 }}
                                         src={
-                                            "https://canpathwaysjobs.com/image/00logo-main-black.png"
+                                            "https://canpathwaysjobs.com/image/Retainer_agreement_logo.png"
                                         } />
                                     {components}
                                     <View

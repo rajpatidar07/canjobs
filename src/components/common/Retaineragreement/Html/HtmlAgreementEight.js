@@ -1,5 +1,5 @@
 import React from 'react'
-import moment from 'moment'
+import CommonRetainerAgreementDate from '../CommonRetainerAgreementDate';
 export default function HtmlAgreementEight({
   page,
   felidData,
@@ -7,7 +7,7 @@ export default function HtmlAgreementEight({
   emp_user_type,
   addSign,
 }) {
-  const familyJsonArray = felidData?.family_json || []; 
+  const familyJsonArray = felidData?.family_json || [];
   let htmlCOntent = `<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
@@ -31,7 +31,7 @@ export default function HtmlAgreementEight({
   <body style="margin: 0 auto; max-width: 1024px;color:"black;">
     <div class="header" style="padding: 10px 20px;text-align: justify;">
       <img
-        src="https://canpathwaysjobs.com/image/00logo-main-black.png"
+        src="https://canpathwaysjobs.com/image/Retainer_agreement_logo.png"
         alt="Canpathways logo"
         style="max-width: 200px"
       />
@@ -48,34 +48,11 @@ export default function HtmlAgreementEight({
   <span class="${felidData?.client_file_no ? "para_gap" : ""}">
     ${felidData?.client_file_no || "_________"}
   </span>
-  day of
-
-    ${felidData?.agreement_date &&
-      felidData?.agreement_date !== "0000-00-00 00:00:00" &&
-      felidData?.agreement_date !== "0000-00-00"
-      ? `<span class="para_gap">${moment(
-        new Date(felidData?.agreement_date)
-      ).format("Do")}</span>`
-      : ""
-    }
-    ${felidData?.agreement_date &&
-      felidData?.agreement_date !== "0000-00-00 00:00:00" &&
-      felidData?.agreement_date !== "0000-00-00"
-      ? ` <span class="para_gap">${moment(
-        new Date(felidData?.agreement_date)
-      ).format("MMMM")}</span>`
-      : ""
-    }
- 
-    ${felidData?.agreement_date &&
-      felidData?.agreement_date !== "0000-00-00 00:00:00" &&
-      felidData?.agreement_date !== "0000-00-00"
-      ? ` <span class="para_gap">${moment(
-        new Date(felidData?.agreement_date)
-      ).format("YYYY")}`
-      : "____________"
-    }
-  </span>
+  day of<span class="para_gap text-capitalize" style="min-Width:50px">
+      ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00" ? CommonRetainerAgreementDate({ _date: felidData?.agreement_date, format: "Do" }) : ""}  </span>
+      day of
+       <span class="para_gap text-capitalize" style="min-Width:50px">${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00" ? CommonRetainerAgreementDate({ _date: felidData?.agreement_date, format: "MMMM" }) : ""}</span>
+      ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00" ? CommonRetainerAgreementDate({ _date: felidData?.agreement_date, format: "YYYY" }) : " "}
   between Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur (the
   “RCIC”), RCIC Membership Number
   <span>R533393</span>, phone number
@@ -130,12 +107,7 @@ export default function HtmlAgreementEight({
         } </span>
         </span>
         <span class="col-6">
-         Date of birth : ${item.client_date_of_birth
-          ? ` <span class="para_gap"> ${moment(
-            item.client_date_of_birth
-          ).format("DD-MM-YYYY")}  </span>`
-          : "___________"
-        } </span>
+         Date of birth :<span class="para_gap text-capitalize" style="min-width:"50px">${item.client_date_of_birth ? CommonRetainerAgreementDate({ _date: item.client_date_of_birth, format: "DD-MM-YYYY" }) : ""} </span>
          </span>`
     )}
       </div>
@@ -1464,7 +1436,7 @@ services that have been rendered or accounting for the time that has been spent 
       familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00" ||
       familyJsonArray[0]?.date_signature_client === "0000-00-00"
       ? "_______________"
-      : moment(familyJsonArray[0]?.date_signature_client).format("DD-MM-YYYY")
+      : <CommonRetainerAgreementDate _date={familyJsonArray[0]?.date_signature_client} format={"DD-MM-YYYY"} />
     }</p>
           <p style="margin: 0 0 30px 0">Date</p>
         </div>
@@ -1508,15 +1480,15 @@ services that have been rendered or accounting for the time that has been spent 
   </body>
   </html>`
   return (
-    <div   className="agreement_content"
-    style={{
-      maxWidth: "1024px",
-      margin: "0 auto",
-      background: "#fff",
-      padding: "30px",
-      height: "calc(100vh - 100px)",
-      overflow: "auto",
-    }}>
+    <div className="agreement_content"
+      style={{
+        maxWidth: "1024px",
+        margin: "0 auto",
+        background: "#fff",
+        padding: "30px",
+        height: "calc(100vh - 100px)",
+        overflow: "auto",
+      }}>
       <div dangerouslySetInnerHTML={{ __html: htmlCOntent }} />
     </div>
   )

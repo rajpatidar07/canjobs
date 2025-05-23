@@ -35,17 +35,17 @@ const MainEmailPage = ({ email }) => {
         currentPage,
         recordsPerPage,
         search,
-        email
+        email?.trim("")
       );
      }else if (emailType === "SENT") {
         userData = await ReadSentEmail(
           currentPage,
           recordsPerPage,
           search,
-          email
+          email?.trim("")
         );
       } else
-        userData = await ReadEmail(currentPage, recordsPerPage, search, email);
+        userData = await ReadEmail(currentPage, recordsPerPage, search, email?.trim(""));
       if (
         // userData.messsage === "No data found" ||
         userData.status === "0" ||

@@ -105,356 +105,181 @@ export default function FolderList({
           className={` justify-content-center ${openAnnotationBox === true ? "col-9" : "col-12"
             }`}
         >
-          {view === "block" ? (
-            <div className="d-flex flex-wrap justify-content-center">
-              {(docTypeList || []).map((item, index) => (
-                <React.Fragment key={index}>
-                  <div
-                    className="position-relative bg-white rounded overflow-hidden"
-                    style={{ maxWidth: 150, margin: 10 }}
-                  >
-                    <Link
-                      className="file-item h-100"
-                      to=""
-                      onClick={() => {
-                        if (item.folder) {
-                          setFolderID(item.id);
-                          setDocTypeName(item.name);
-                        } else {
-                          // const userAgent = navigator.userAgent;
-                          // // const vendor = navigator.vendor;
-                          // if (item?.name.includes(1295) && userAgent.includes("Firefox")) {
-                          //   console.log(item["@microsoft.graph.downloadUrl"])
-                          //   window.open(item.webUrl, '_blank');
-
-                          //   // if (userAgent.includes("Chrome") && vendor.includes("Google")) {
-                          //   //   console.log("Browser: Google Chrome");
-                          //   // } else if (userAgent.includes("Firefox")) {
-                          //   //   console.log("Browser: Mozilla Firefox");
-                          //   // } else if (userAgent.includes("Safari") && vendor.includes("Apple")) {
-                          //   //   console.log("Browser: Safari");
-                          //   // } else if (userAgent.includes("Edg")) {
-                          //   //   console.log("Browser: Microsoft Edge");
-                          //   // } else if (userAgent.includes("Trident") || userAgent.includes("MSIE")) {
-                          //   //   console.log("Browser: Internet Explorer");
-                          //   // } else {
-                          //   //   console.log("Browser: Unknown");
-                          //   // }
-                          // } else {
-                          setDocPreview(true);
-                          setDocSingleDate(item);
-                          setFileID(item.id);
-                          SetPdfDocUrl(item);
-                          getCommentsList(item);
-                          // }
-                        }
-                        setOpenNoteForm(false);
-                        setPageNo(1);
-                      }}
-                      onContextMenu={(e) => {
-                        e.preventDefault(); // prevent the default behaviour when right clicked
-                        setShowDropDown(item.id);
-                        localStorage.setItem("new_pdf_url", "");
-                        localStorage.setItem("new_pdf", "");
-                        localStorage.setItem("new_emp_user_type", "");
-                        localStorage.setItem("new_user_id", "");
-                      }}
-                    // onMouseOver={(e) => {
-                    //   e.preventDefault()
-                    //   setShowDropDown(item.id);
-                    // }}
-
+          {view === "block" ?
+            (
+              <div className="d-flex flex-wrap justify-content-center">
+                {(docTypeList || []).map((item, index) => (
+                  <React.Fragment key={index}>
+                    <div
+                      className="position-relative bg-white rounded overflow-hidden"
+                      style={{ maxWidth: 150, margin: 10 }}
                     >
-                      <div className="file-background h-100">
-                        {item.folder && (
-                          <FaFolder
-                            style={{
-                              width: "90px",
-                              marginBottom: 5,
-                              height: "90px",
-                              color: "#f5b317b0",
-                            }}
-                          />
-                        )}
-                        {item.file &&
-                          item.file.mimeType.startsWith("image/") && (
-                            <div
-                              className="d-flex justify-content-center align-items-center"
+                      <Link
+                        className="file-item h-100"
+                        to=""
+                        onClick={() => {
+                          if (item.folder) {
+                            setFolderID(item.id);
+                            setDocTypeName(item.name);
+                          } else {
+                            // const userAgent = navigator.userAgent;
+                            // // const vendor = navigator.vendor;
+                            // if (item?.name.includes(1295) && userAgent.includes("Firefox")) {
+                            //   console.log(item["@microsoft.graph.downloadUrl"])
+                            //   window.open(item.webUrl, '_blank');
+
+                            //   // if (userAgent.includes("Chrome") && vendor.includes("Google")) {
+                            //   //   console.log("Browser: Google Chrome");
+                            //   // } else if (userAgent.includes("Firefox")) {
+                            //   //   console.log("Browser: Mozilla Firefox");
+                            //   // } else if (userAgent.includes("Safari") && vendor.includes("Apple")) {
+                            //   //   console.log("Browser: Safari");
+                            //   // } else if (userAgent.includes("Edg")) {
+                            //   //   console.log("Browser: Microsoft Edge");
+                            //   // } else if (userAgent.includes("Trident") || userAgent.includes("MSIE")) {
+                            //   //   console.log("Browser: Internet Explorer");
+                            //   // } else {
+                            //   //   console.log("Browser: Unknown");
+                            //   // }
+                            // } else {
+                            setDocPreview(true);
+                            setDocSingleDate(item);
+                            setFileID(item.id);
+                            SetPdfDocUrl(item);
+                            getCommentsList(item);
+                            // }
+                          }
+                          setOpenNoteForm(false);
+                          setPageNo(1);
+                        }}
+                        onContextMenu={(e) => {
+                          e.preventDefault(); // prevent the default behaviour when right clicked
+                          setShowDropDown(item.id);
+                          localStorage.setItem("new_pdf_url", "");
+                          localStorage.setItem("new_pdf", "");
+                          localStorage.setItem("new_emp_user_type", "");
+                          localStorage.setItem("new_user_id", "");
+                        }}
+                      // onMouseOver={(e) => {
+                      //   e.preventDefault()
+                      //   setShowDropDown(item.id);
+                      // }}
+
+                      >
+                        <div className="file-background h-100">
+                          {item.folder && (
+                            <FaFolder
                               style={{
                                 width: "90px",
                                 marginBottom: 5,
                                 height: "90px",
                                 color: "#f5b317b0",
                               }}
-                            >
-                              <img
-                                src={item["@microsoft.graph.downloadUrl"]}
-                                alt={item.name}
-                                className="file-icon"
+                            />
+                          )}
+                          {item.file &&
+                            item.file.mimeType.startsWith("image/") && (
+                              <div
+                                className="d-flex justify-content-center align-items-center"
+                                style={{
+                                  width: "90px",
+                                  marginBottom: 5,
+                                  height: "90px",
+                                  color: "#f5b317b0",
+                                }}
+                              >
+                                <img
+                                  src={item["@microsoft.graph.downloadUrl"]}
+                                  alt={item.name}
+                                  className="file-icon"
+                                />
+                              </div>
+                            )}
+                          {item.file && item.file.mimeType === "text/plain" && (
+                            <MdNoteAdd
+                              style={{
+                                width: "90px",
+                                marginBottom: 5,
+                                height: "90px",
+                                color: "#rgb(251, 199, 45)",
+                              }}
+                            />
+                          )}
+
+                          {item.file &&
+                            item.file.mimeType === "application/pdf" && (
+                              <FaRegFilePdf
+                                style={{
+                                  width: "90px",
+                                  marginBottom: 5,
+                                  height: "90px",
+                                  color: "red",
+                                }}
                               />
-                            </div>
-                          )}
-                        {item.file && item.file.mimeType === "text/plain" && (
-                          <MdNoteAdd
-                            style={{
-                              width: "90px",
-                              marginBottom: 5,
-                              height: "90px",
-                              color: "#rgb(251, 199, 45)",
-                            }}
-                          />
-                        )}
-
-                        {item.file &&
-                          item.file.mimeType === "application/pdf" && (
-                            <FaRegFilePdf
-                              style={{
-                                width: "90px",
-                                marginBottom: 5,
-                                height: "90px",
-                                color: "red",
-                              }}
-                            />
-                          )}
-                        {item.file &&
-                          (item.file.mimeType === "application/msword" ||
-                            item.file.mimeType ===
-                            "application/vnd.openxmlformats-officedocument.wordprocessingml.document") && (
-                            <BsFiletypeDocx
-                              // className="file-icon"
-                              style={{
-                                width: "90px",
-                                marginBottom: 5,
-                                height: "90px",
-                                color: "#2B579A",
-                              }}
-                            />
-                          )}
-                        {item.file &&
-                          (item.file.mimeType ===
-                            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet") && (
-                            <RiFileExcel2Line
-                              // className="file-icon"
-                              style={{
-                                width: "90px",
-                                marginBottom: 5,
-                                height: "90px",
-                                color: "green",
-                              }}
-                            />
-                          )}
-                        {item.file &&
-                          (item.file.mimeType ===
-                            "application/vnd.openxmlformats-officedocument.presentationml.presentation") && (
-                            <AiOutlineFilePpt
-                              // className="file-icon"
-                              style={{
-                                width: "90px",
-                                marginBottom: 5,
-                                height: "90px",
-                                color: "#2B579A"
-                              }}
-                            />
-                          )}
-                        <div className="file-content">
-                          <p
-                            className="file-name text-capitalize m-0"
-                            style={{ wordBreak: "break-word" }}
-                          >
-                            {item.name.replace("_", " ")}
-                          </p>
-                          <p className="modified-time m-0">
-                            <ConvertTime
-                              _date={item.lastModifiedDateTime}
-                              format={".fromNow()"}
-                            />
-                            {/* {moment(item.lastModifiedDateTime).fromNow()} */}
-                          </p>
+                            )}
+                          {item.file &&
+                            (item.file.mimeType === "application/msword" ||
+                              item.file.mimeType ===
+                              "application/vnd.openxmlformats-officedocument.wordprocessingml.document") && (
+                              <BsFiletypeDocx
+                                // className="file-icon"
+                                style={{
+                                  width: "90px",
+                                  marginBottom: 5,
+                                  height: "90px",
+                                  color: "#2B579A",
+                                }}
+                              />
+                            )}
+                          {item.file &&
+                            (item.file.mimeType ===
+                              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" || item.file.mimeType === "application/vnd.ms-excel") && (
+                              <RiFileExcel2Line
+                                // className="file-icon"
+                                style={{
+                                  width: "90px",
+                                  marginBottom: 5,
+                                  height: "90px",
+                                  color: "green",
+                                }}
+                              />
+                            )}
+                          {item.file &&
+                            (item.file.mimeType ===
+                              "application/vnd.openxmlformats-officedocument.presentationml.presentation" || item.file.mimeType === "application/vnd.ms-powerpoint") && (
+                              <AiOutlineFilePpt
+                                // className="file-icon"
+                                style={{
+                                  width: "90px",
+                                  marginBottom: 5,
+                                  height: "90px",
+                                  color: "#2B579A"
+                                }}
+                              />
+                            )}
+                          <div className="file-content">
+                            <p
+                              className="file-name text-capitalize m-0"
+                              style={{ wordBreak: "break-word" }}
+                            >
+                              {item.name.replace("_", " ")}
+                            </p>
+                            <p className="modified-time m-0">
+                              <ConvertTime
+                                _date={item.lastModifiedDateTime}
+                                format={".fromNow()"}
+                              />
+                              {/* {moment(item.lastModifiedDateTime).fromNow()} */}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    </Link>
-                    {showDropDown === item.id && (
-                      <ul className="list-group" onMouseLeave={() => {
-                        setShowDropDown();
-                      }}>
-                        <li className="list-group-item">
-                          <Link
-                            onClick={() => {
-                              setEditNameForm(true);
-                              setDocSingleDate(item);
-                            }}
-                          >
-                            Rename
-                          </Link>
-                        </li>
-                        <li className="list-group-item text-danger">
-                          <Link onClick={() => ShowDeleteAlert(item)}>
-                            {" "}
-                            Delete {item.folder ? "Folder" : "File"}
-                          </Link>
-                        </li>
-                        <li className={
-                          item.folder || item.file.mimeType === "text/plain"
-                            ? "d-none"
-                            : "list-group-item text-danger"
-                        }>
-                          <Link
-                            className="text-decoration-none" to={item["@microsoft.graph.downloadUrl"]} rel="noopener noreferrer" download>
-
-                            Download
-                          </Link>
-                        </li>
-                        <li className={
-                          item.folder || item.file.mimeType === "text/plain"
-                            ? "d-none"
-                            : "list-group-item text-danger"
-                        }>
-                          <Link
-                            className="text-decoration-none" to={item.webUrl} target="_blank" >
-
-                            Edit in sharepoint
-                          </Link>
-                        </li>
-                        <li
-                          className={
-                            (item.file && (item.file.mimeType !== "text/plain" ||
-                              (userType === "admin" || userType === "agent") ||
-                              ["image/jpeg", "image/png", "image/jpg"].includes(item.file.mimeType) ||
-                              item.file.mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
-                              item.file.mimeType === "application/pdf" || item.file.mimeType === "application/vnd.openxmlformats-officedocument.presentationml.presentation" ||
-                              item.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
-                              ? "list-group-item text-danger"
-                              : "d-none"
-                          }
-                        >
-                          <Link
-                            // state={{ id: res.job_id }}
-                            to={`/view_pdf_Agreement?new_emp_user_type=${DocUserType}&new_user_id=${userId}&folderId=${item.parentReference.id}&document_id=${item.id}&partner_id=${partnerId}`}
-                            target="_blank"
-                          >
-                            {" "}
-                            Open in new tab {item.folder ? "Folder" : "File"}
-                          </Link>
-                        </li>
-                        <li
-                          className={`list-group-item text-danger ${(item.file && (item.file.mimeType !== "text/plain" ||
-                            (userType === "admin" || userType === "agent") ||
-                            ["image/jpeg", "image/png", "image/jpg"].includes(item.file.mimeType) ||
-                            item.file.mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
-                            item.file.mimeType === "application/pdf" || item.file.mimeType === "application/vnd.openxmlformats-officedocument.presentationml.presentation" ||
-                            item.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
-                            ? "list-group-item text-danger"
-                            : "d-none"
-                            }`}
-                        >
-                          <Link
-                            to=""
-                            onClick={() => {
-                              getCommentsList(item);
-                              setOpenAnnotationBox(true);
-                              setDocData(item);
-                              AdminData();
-                            }}
-                          >
-                            Comment's
-                          </Link>
-                        </li>
-                      </ul>
-                    )}
-                  </div>
-                </React.Fragment>
-              ))}
-              {/* Upload Document Form */}
-              <DocSaveForm
-                docFileBase={docFileBase}
-                view={view}
-                handleBulkFileChange={handleBulkFileChange}
-                saveBtn={saveBtn}
-                loadingBtn={loadingBtn}
-                SaveBulkDocument={SaveBulkDocument}
-                setSaveBtn={setSaveBtn}
-                setDocFileBase={setDocFileBase}
-              />
-            </div>
-          ) : (
-            <div className=" rounded shadow-sm col-12">
-              {/* Table Header */}
-              <div className="d-flex bg-light py-2 px-3 border-bottom fw-bold">
-                <div className="col-3 ">
-                  <Link
-                    onClick={() => {
-                      handleSort("name");
-                      setPageNo(1);
-                    }}
-                    className="text-decoration-none  text-gray"
-                  >
-                    Name
-                  </Link>
-                </div>
-                <div className="col-3 ">
-                  <Link
-                    onClick={() => {
-                      handleSort("createdDateTime");
-                      setPageNo(1);
-                    }}
-                    className="text-decoration-none  text-gray"
-                  >
-                    Created At
-                  </Link>
-                </div>
-                <div className="col-3 ">
-                  <Link
-                    onClick={() => {
-                      handleSort("lastModifiedDateTime");
-                      setPageNo(1);
-                    }}
-                    className="text-decoration-none  text-gray"
-                  >
-                    Last Modified
-                  </Link>
-                </div>
-                <div className="col-3 ">
-                  <Link
-                    onClick={() => {
-                      handleSort("mimeType");
-                      setPageNo(1);
-                    }}
-                    className="text-decoration-none  text-gray"
-                  >
-                    Type
-                  </Link>
-                </div>
-              </div>
-
-              {/* List Items */}
-              {(docTypeList || []).map((item, index) => (
-                <div
-                  key={index}
-                  className="d-flex align-items-center bg-white py-2 px-3 border-bottom"
-                  style={{ fontSize: "14px" }}
-                >
-                  {/* Name and Dropdown */}
-                  <div className="col-3">
-                    {showDropDown === item.id && (() => {
-                      const isFolder = item.folder;
-                      const isTextFile = item.file?.mimeType === "text/plain";
-                      const isDownloadable = !isFolder && !isTextFile;
-                      // const canEdit = !isFolder && !isTextFile;
-                      const canOpenInNewTab = !isFolder && (
-                        userType === "admin" ||
-                        userType === "agent" ||
-                        ["image/jpeg", "image/png", "image/jpg"].includes(item.file?.mimeType) ||
-                        item.file?.mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
-                        item.file?.mimeType === "application/pdf" ||
-                        item.file?.mimeType === "application/vnd.openxmlformats-officedocument.presentationml.presentation" ||
-                        item.file?.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                      );
-
-                      return (
-                        <ul className="list-group position-absolute z-index-1 bg-white shadow-sm" onMouseLeave={() => setShowDropDown()}>
+                      </Link>
+                      {showDropDown === item.id && (
+                        <ul className="list-group" onMouseLeave={() => {
+                          setShowDropDown();
+                        }}>
                           <li className="list-group-item">
                             <Link
-                              className="text-decoration-none"
                               onClick={() => {
                                 setEditNameForm(true);
                                 setDocSingleDate(item);
@@ -464,47 +289,93 @@ export default function FolderList({
                             </Link>
                           </li>
                           <li className="list-group-item text-danger">
-                            <Link
-                              className="text-decoration-none"
-                              onClick={() => ShowDeleteAlert(item)}
-                            >
-                              Delete {isFolder ? "Folder" : "File"}
+                            <Link onClick={() => ShowDeleteAlert(item)}>
+                              {" "}
+                              Delete {item.folder ? "Folder" : "File"}
                             </Link>
                           </li>
-                          {isDownloadable && (
-                            <>
-                              <li className="list-group-item text-danger">
-                                <Link
-                                  className="text-decoration-none"
-                                  to={item["@microsoft.graph.downloadUrl"]}
-                                  rel="noopener noreferrer"
-                                  download
-                                >
-                                  Download
-                                </Link>
-                              </li>
-                              <li className="list-group-item text-danger">
-                                <Link
-                                  className="text-decoration-none"
-                                  to={item.webUrl}
-                                  target="_blank"
-                                >
-                                  Edit in sharepoint
-                                </Link>
-                              </li>
-                            </>
-                          )}
-                          {canOpenInNewTab && (
-                            <li className="list-group-item text-danger">
-                              <Link
-                                to={`/view_pdf_Agreement?new_emp_user_type=${DocUserType}&new_user_id=${userId}&folderId=${item.parentReference.id}&document_id=${item.id}`}
-                                target="_blank"
-                              >
-                                Open in New Tab
-                              </Link>
-                            </li>
-                          )}
-                          <li className={`list-group-item text-danger`}>
+                          <li className={
+                            item.folder || item.file.mimeType === "text/plain"
+                              ? "d-none"
+                              : "list-group-item text-danger"
+                          }>
+                            <Link
+                              className="text-decoration-none" to={item["@microsoft.graph.downloadUrl"]} rel="noopener noreferrer" download>
+
+                              Download
+                            </Link>
+                          </li>
+                          <li className={
+                            item.file &&
+                              item.file.mimeType !== "text/plain" &&
+                              (userType === "admin" || userType === "agent") &&
+                              [
+                                "image/jpeg",
+                                "image/png",
+                                "image/jpg",
+                                "application/pdf",
+                                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                                "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                                "application/vnd.ms-powerpoint",
+                                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                                "application/vnd.ms-excel"
+                              ].includes(item.file.mimeType)
+                              ? "list-group-item text-danger"
+                              : "d-none"
+                          }>
+                            <Link
+                              className="text-decoration-none" to={item.webUrl} target="_blank" >
+
+                              Edit in sharepoint
+                            </Link>
+                          </li>
+                          <li
+                            className={
+                              item.file &&
+                                item.file.mimeType !== "text/plain" &&
+                                [
+                                  "image/jpeg",
+                                  "image/png",
+                                  "image/jpg",
+                                  "application/pdf",
+                                  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                                  "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                                  "application/vnd.ms-powerpoint",
+                                  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                                  "application/vnd.ms-excel"
+                                ].includes(item.file.mimeType)
+                                ? "list-group-item text-danger"
+                                : "d-none"
+                            }
+                          >
+                            <Link
+                              // state={{ id: res.job_id }}
+                              to={`/view_pdf_Agreement?new_emp_user_type=${DocUserType}&new_user_id=${userId}&folderId=${item.parentReference.id}&document_id=${item.id}&partner_id=${partnerId}`}
+                              target="_blank"
+                            >
+                              {" "}
+                              Open in new tab {item.folder ? "Folder" : "File"}
+                            </Link>
+                          </li>
+                          <li
+                            className={`list-group-item text-danger ${item.file &&
+                              item.file.mimeType !== "text/plain" &&
+                              (userType === "admin" || userType === "agent") &&
+                              [
+                                "image/jpeg",
+                                "image/png",
+                                "image/jpg",
+                                "application/pdf",
+                                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                                "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                                "application/vnd.ms-powerpoint",
+                                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                                "application/vnd.ms-excel"
+                              ].includes(item.file.mimeType)
+                              ? "list-group-item text-danger"
+                              : "d-none"
+                              }`}
+                          >
                             <Link
                               to=""
                               onClick={() => {
@@ -518,113 +389,310 @@ export default function FolderList({
                             </Link>
                           </li>
                         </ul>
-                      );
-                    })()}
+                      )}
+                    </div>
+                  </React.Fragment>
+                ))}
+                {/* Upload Document Form */}
+                <DocSaveForm
+                  docFileBase={docFileBase}
+                  view={view}
+                  handleBulkFileChange={handleBulkFileChange}
+                  saveBtn={saveBtn}
+                  loadingBtn={loadingBtn}
+                  SaveBulkDocument={SaveBulkDocument}
+                  setSaveBtn={setSaveBtn}
+                  setDocFileBase={setDocFileBase}
+                />
+              </div>
+            ) : (
+              <div className=" rounded shadow-sm col-12">
+                {/* Table Header */}
+                <div className="d-flex bg-light py-2 px-3 border-bottom fw-bold">
+                  <div className="col-3 ">
                     <Link
-                      to=""
-                      className="text-dark text-decoration-none d-flex align-items-center"
                       onClick={() => {
-                        if (item.folder) {
-                          setFolderID(item.id);
-                          setDocTypeName(item.name);
-                        } else {
-                          setDocPreview(true);
-                          setDocSingleDate(item);
-                          setFileID(item.id);
-                          SetPdfDocUrl(item);
-                          getCommentsList(item);
-                        }
-                        setOpenNoteForm(false);
+                        handleSort("name");
                         setPageNo(1);
                       }}
-                      onContextMenu={(e) => {
-                        e.preventDefault();
-                        setShowDropDown(item.id);
-                      }}
-                    // onMouseOver={(e) => {
-                    //   e.preventDefault();
-                    //   setShowDropDown(item.id);
-                    // }}
+                      className="text-decoration-none  text-gray"
                     >
-                      {item.folder ? (
-                        <FaFolder className="me-2 text-warning" />
-                      ) : item.file?.mimeType === "application/pdf" ? (
-                        <FaRegFilePdf className="me-2 text-danger" />
-                      ) : item.file?.mimeType?.startsWith("image/") ? (
-                        <img
-                          src={item["@microsoft.graph.downloadUrl"]}
-                          alt={item.name}
-                          className="me-2"
-                          style={{
-                            width: "24px",
-                            height: "24px",
-                            objectFit: "cover",
-                          }}
-                        />
-                      ) : item.file && item.file.mimeType === "text/plain" ? (
-                        <MdNoteAdd
-                          className="me-2"
-                          style={{ color: "rgb(251, 199, 45)" }}
-                        />
-                      ) : item.file && item.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                        ? (<RiFileExcel2Line className="me-2"
-                          style={{ color: "green" }} />)
-                        : item.file && item.file.mineType === "application/vnd.openxmlformats-officedocument.presentationml.presentation"
-                          ? <AiOutlineFilePpt className="me-2"
-                            style={{ color: "#2B579A" }} />
-                          : (
-                            <BsFiletypeDocx
-                              className="me-2"
-                              style={{ color: "#2B579A" }}
-                            />
-                          )}
-                      <span className="mx-2 text-break">
-                        {item.name.replaceAll("_", " ")}
-                      </span>
+                      Name
                     </Link>
                   </div>
-                  {/* Created At */}
-                  <div className="col-3">
-                    <ConvertTime
-                      _date={item.createdDateTime}
-                      format={".fromNow()"}
-                    />
+                  <div className="col-3 ">
+                    <Link
+                      onClick={() => {
+                        handleSort("createdDateTime");
+                        setPageNo(1);
+                      }}
+                      className="text-decoration-none  text-gray"
+                    >
+                      Created At
+                    </Link>
                   </div>
-
-                  {/* Last Modified */}
-                  <div className="col-3">
-                    <ConvertTime
-                      _date={item.lastModifiedDateTime}
-                      format={".fromNow()"}
-                    />
+                  <div className="col-3 ">
+                    <Link
+                      onClick={() => {
+                        handleSort("lastModifiedDateTime");
+                        setPageNo(1);
+                      }}
+                      className="text-decoration-none  text-gray"
+                    >
+                      Last Modified
+                    </Link>
                   </div>
-                  {/* Type */}
-                  <div className="col-3">
-                    {item.folder
-                      ? "Folder"
-                      : item.file.mimeType.includes("pdf")
-                        ? "PDF"
-                        : item.file.mimeType.includes("image")
-                          ? "Image"
-                          : item.file.mimeType === "text/plain"
-                            ? "Note"
-                            : "Document"}
+                  <div className="col-3 ">
+                    <Link
+                      onClick={() => {
+                        handleSort("mimeType");
+                        setPageNo(1);
+                      }}
+                      className="text-decoration-none  text-gray"
+                    >
+                      Type
+                    </Link>
                   </div>
                 </div>
-              ))}
-              {/* Upload Document Form */}
-              <DocSaveForm
-                docFileBase={docFileBase}
-                view={view}
-                handleBulkFileChange={handleBulkFileChange}
-                saveBtn={saveBtn}
-                loadingBtn={loadingBtn}
-                SaveBulkDocument={SaveBulkDocument}
-                setSaveBtn={setSaveBtn}
-                setDocFileBase={setDocFileBase}
-              />
-            </div>
-          )}
+
+                {/* List Items */}
+                {(docTypeList || []).map((item, index) => (
+                  <div
+                    key={index}
+                    className="d-flex align-items-center bg-white py-2 px-3 border-bottom"
+                    style={{ fontSize: "14px" }}
+                  >
+                    {/* Name and Dropdown */}
+                    <div className="col-3">
+                      {showDropDown === item.id && (() => {
+                        const isFolder = item.folder;
+                        const isTextFile = item.file?.mimeType === "text/plain";
+                        const isDownloadable = !isFolder && !isTextFile;
+                        // const canEdit = !isFolder && !isTextFile;
+                        const canOpenInNewTab = !isFolder && (
+                          userType === "admin" ||
+                          userType === "agent" ||
+                          ["image/jpeg", "image/png", "image/jpg"].includes(item.file?.mimeType) ||
+                          item.file?.mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
+                          item.file?.mimeType === "application/pdf" ||
+                          item.file?.mimeType === "application/vnd.openxmlformats-officedocument.presentationml.presentation" ||
+                          item.file.mimeType === "application/vnd.ms-powerpoint" ||
+                          item.file?.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" || item.file.mineType === "application/vnd.ms-excel"
+                        );
+
+                        return (
+                          <ul className="list-group position-absolute z-index-1 bg-white shadow-sm" onMouseLeave={() => setShowDropDown()}>
+                            <li className="list-group-item">
+                              <Link
+                                className="text-decoration-none"
+                                onClick={() => {
+                                  setEditNameForm(true);
+                                  setDocSingleDate(item);
+                                }}
+                              >
+                                Rename
+                              </Link>
+                            </li>
+                            <li className="list-group-item text-danger">
+                              <Link
+                                className="text-decoration-none"
+                                onClick={() => ShowDeleteAlert(item)}
+                              >
+                                Delete {isFolder ? "Folder" : "File"}
+                              </Link>
+                            </li>
+                            {isDownloadable && (
+                              <>
+                                <li className="list-group-item text-danger">
+                                  <Link
+                                    className="text-decoration-none"
+                                    to={item["@microsoft.graph.downloadUrl"]}
+                                    rel="noopener noreferrer"
+                                    download
+                                  >
+                                    Download
+                                  </Link>
+                                </li>
+                                <li className={item.file &&
+                                  item.file.mimeType !== "text/plain" &&
+                                  (userType === "admin" || userType === "agent") &&
+                                  [
+                                    "image/jpeg",
+                                    "image/png",
+                                    "image/jpg",
+                                    "application/pdf",
+                                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                                    "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                                    "application/vnd.ms-powerpoint",
+                                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                                    "application/vnd.ms-excel"
+                                  ].includes(item.file.mimeType) ? "list-group-item text-danger" : "d-none"}>
+                                  <Link
+                                    className="text-decoration-none"
+                                    to={item.webUrl}
+                                    target="_blank"
+                                  >
+                                    Edit in sharepoint
+                                  </Link>
+                                </li>
+                              </>
+                            )}
+                            {canOpenInNewTab && (
+                              <li className={item.file &&
+                            item.file.mimeType !== "text/plain" &&
+                            [
+                              "image/jpeg",
+                              "image/png",
+                              "image/jpg",
+                              "application/pdf",
+                              "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                              "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                              "application/vnd.ms-powerpoint",
+                              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                              "application/vnd.ms-excel"
+                            ].includes(item.file.mimeType)?"list-group-item text-danger":"d-none"}>
+                                <Link
+                                  to={`/view_pdf_Agreement?new_emp_user_type=${DocUserType}&new_user_id=${userId}&folderId=${item.parentReference.id}&document_id=${item.id}`}
+                                  target="_blank"
+                                >
+                                  Open in New Tab
+                                </Link>
+                              </li>
+                            )}
+                            <li className={item.file &&
+                              item.file.mimeType !== "text/plain" &&
+                              (userType === "admin" || userType === "agent") &&
+                              [
+                                "image/jpeg",
+                                "image/png",
+                                "image/jpg",
+                                "application/pdf",
+                                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                                "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                                "application/vnd.ms-powerpoint",
+                                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                                "application/vnd.ms-excel"
+                              ].includes(item.file.mimeType) ? `list-group-item text-danger` : "d-none"}>
+                              <Link
+                                to=""
+                                onClick={() => {
+                                  getCommentsList(item);
+                                  setOpenAnnotationBox(true);
+                                  setDocData(item);
+                                  AdminData();
+                                }}
+                              >
+                                Comment's
+                              </Link>
+                            </li>
+                          </ul>
+                        );
+                      })()}
+                      <Link
+                        to=""
+                        className="text-dark text-decoration-none d-flex align-items-center"
+                        onClick={() => {
+                          if (item.folder) {
+                            setFolderID(item.id);
+                            setDocTypeName(item.name);
+                          } else {
+                            setDocPreview(true);
+                            setDocSingleDate(item);
+                            setFileID(item.id);
+                            SetPdfDocUrl(item);
+                            getCommentsList(item);
+                          }
+                          setOpenNoteForm(false);
+                          setPageNo(1);
+                        }}
+                        onContextMenu={(e) => {
+                          e.preventDefault();
+                          setShowDropDown(item.id);
+                        }}
+                      // onMouseOver={(e) => {
+                      //   e.preventDefault();
+                      //   setShowDropDown(item.id);
+                      // }}
+                      >
+                        {item.folder ? (
+                          <FaFolder className="me-2 text-warning" />
+                        ) : item.file?.mimeType === "application/pdf" ? (
+                          <FaRegFilePdf className="me-2 text-danger" />
+                        ) : item.file?.mimeType?.startsWith("image/") ? (
+                          <img
+                            src={item["@microsoft.graph.downloadUrl"]}
+                            alt={item.name}
+                            className="me-2"
+                            style={{
+                              width: "24px",
+                              height: "24px",
+                              objectFit: "cover",
+                            }}
+                          />
+                        ) : item.file && item.file.mimeType === "text/plain" ? (
+                          <MdNoteAdd
+                            className="me-2"
+                            style={{ color: "rgb(251, 199, 45)" }}
+                          />
+                        ) : item.file && (item.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" || item.file.mineType === "application/vnd.ms-excel")
+                          ? (<RiFileExcel2Line className="me-2"
+                            style={{ color: "green" }} />)
+                          : item.file && (item.file.mineType === "application/vnd.openxmlformats-officedocument.presentationml.presentation" || item.file.mineType === "application/vnd.ms-powerpoint")
+                            ? <AiOutlineFilePpt className="me-2"
+                              style={{ color: "#2B579A" }} />
+                            : (
+                              <BsFiletypeDocx
+                                className="me-2"
+                                style={{ color: "#2B579A" }}
+                              />
+                            )}
+                        <span className="mx-2 text-break">
+                          {item.name.replaceAll("_", " ")}
+                        </span>
+                      </Link>
+                    </div>
+                    {/* Created At */}
+                    <div className="col-3">
+                      <ConvertTime
+                        _date={item.createdDateTime}
+                        format={".fromNow()"}
+                      />
+                    </div>
+
+                    {/* Last Modified */}
+                    <div className="col-3">
+                      <ConvertTime
+                        _date={item.lastModifiedDateTime}
+                        format={".fromNow()"}
+                      />
+                    </div>
+                    {/* Type */}
+                    <div className="col-3">
+                      {item.folder
+                        ? "Folder"
+                        : item.file.mimeType.includes("pdf")
+                          ? "PDF"
+                          : item.file.mimeType.includes("image")
+                            ? "Image"
+                            : item.file.mimeType === "text/plain"
+                              ? "Note"
+                              : "Document"}
+                    </div>
+                  </div>
+                ))}
+                {/* Upload Document Form */}
+                <DocSaveForm
+                  docFileBase={docFileBase}
+                  view={view}
+                  handleBulkFileChange={handleBulkFileChange}
+                  saveBtn={saveBtn}
+                  loadingBtn={loadingBtn}
+                  SaveBulkDocument={SaveBulkDocument}
+                  setSaveBtn={setSaveBtn}
+                  setDocFileBase={setDocFileBase}
+                />
+              </div>
+            )}
           <Pagination
             setCurrentPage={setPageNo}
             nPages={nPages}
