@@ -12,7 +12,7 @@ import {
 } from "@react-pdf/renderer";
 import { TbArrowBadgeRight } from "react-icons/tb";
 import { AddSharePointDOcument, AddUpdateAgreement } from "../../../../api/api";
-import InitialFunction from "../CommonThings/InitialFunction";
+import {InitialFunction} from "../CommonThings/InitialFunction";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
 import CommonRetainerAgreementDate from "../CommonRetainerAgreementDate";
@@ -45,7 +45,7 @@ const InitialConsultationAgreement = () => {
         }
         const file = new File(
           [newBlob],
-          `${felidData?.type.replaceAll(" ", "_")+`_${felidData?.id}`}.pdf`,
+          `${felidData?.type.replaceAll(" ", "_") + `_${felidData?.id}`}.pdf`,
           { type: "application/pdf" }
         );
         console.log('file = >', file)
@@ -372,138 +372,101 @@ const InitialConsultationAgreement = () => {
   );
 
   return (
-   <BlobProvider
-         document={
-           <Document>
-             <Page size="A4" style={styles.page}>
-               <View>
-                 <Image
-                   fixed
-                   style={{ width: 100, height: 40 }}
-                   src={
-                     "https://canpathwaysjobs.com/image/Retainer_agreement_logo.png"
-                   }
-                 />
-                 {components}
-   
-                 <View
-                   fixed
-                   style={{
-                     display: "flex",
-                     flexDirection: "row",
-                     justifyContent: "flex-end",
-                     gap: 20,
-                   }}
-                 >
-                   <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
-                   <View>
-                     <View
-                       style={{
-                         width: 100,
-                         height: 50,
-                         border: "1px solid #ccc",
-                         display: "flex",
-                         alignItems: "center",
-                         justifyContent: "center",
-                       }}
-                     >
-                       {felidData?.initial ? (
-                         <Text
-                           style={{
-                             display: "inline-block",
-                             maxWidth: "100%",
-                             maxHeight: "100%",
-                             textTransform: "capitalize",
-                           }}
-                         >
-                           <InitialFunction initial={felidData?.initial} />
-                         </Text>
-                       ) : (
-                         <View
-                           style={{
-                             display: "inline-block",
-                             width: 100,
-                             height: 50,
-                             border: "1px solid #ccc",
-                           }}
-                         />
-                       )}
-                     </View>
-                   </View>
-                 </View>
-               </View>
-             </Page>
-           </Document>
-         }
-       >
-         {({ blob, url, loading, error }) => {
-           setBlobData(blob);
-           // Do whatever you need with blob here
-           return (
-             <PDFViewer width="100%" height="850">
-               <Document>
-                 <Page size="A4" style={styles.page}>
-                   <View>
-                     <Image
-                       fixed
-                       style={{ width: 100, height: 40 }}
-                       src={
-                         "https://canpathwaysjobs.com/image/Retainer_agreement_logo.png"
-                       } />
-                     {components}
-                     <View
-                       fixed
-                       style={{
-                         display: "flex",
-                         flexDirection: "row",
-                         justifyContent: "flex-end",
-                         gap: 20,
-                       }}
-                     >
-                       <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
-                       <View>
-                         {felidData?.initial ? (
-                           <View
-                             style={{
-                               width: 100,
-                               height: 50,
-                               border: "1px solid #ccc",
-                               display: "flex",
-                               alignItems: "center",
-                               justifyContent: "center",
-                             }}
-                           >
-                             <Text
-                               style={{
-                                 display: "inline-block",
-                                 maxWidth: "100%",
-                                 maxHeight: "100%",
-                                 textTransform: "capitalize",
-                               }}
-                             >
-                               <InitialFunction initial={felidData?.initial} />
-                             </Text>
-                           </View>
-   
-                         ) : (
-                           <View
-                             style={{
-                               display: "inline-block",
-                               width: 100,
-                               height: 50,
-                               border: "1px solid #ccc",
-                             }}
-                           />
-                         )}
-                       </View>
-                     </View>
-                   </View>
-                 </Page>
-               </Document>
-             </PDFViewer>
-           );
-         }}
-       </BlobProvider >
+    <BlobProvider
+      document={
+        <Document>
+          <Page size="A4" style={styles.page}>
+            <View>
+              <Image
+                fixed
+                style={{ width: 100, height: 40 }}
+                src={
+                  "https://canpathwaysjobs.com/image/Retainer_agreement_logo.png"
+                }
+              />
+              {components}
+
+              <View
+                fixed
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "flex-end",
+                  gap: 20,
+                }}
+              >
+                <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
+                <View>
+                  <View
+
+                  >
+                    {felidData?.initial ? (
+                      <InitialFunction felidData={felidData} isPdf={true} />
+                    ) : (
+                      <View
+                        style={{
+                          display: "inline-block",
+                          width: 100,
+                          height: 50,
+                          border: "1px solid #ccc",
+                        }}
+                      />
+                    )}
+                  </View>
+                </View>
+              </View>
+            </View>
+          </Page>
+        </Document>
+      }
+    >
+      {({ blob, url, loading, error }) => {
+        setBlobData(blob);
+        // Do whatever you need with blob here
+        return (
+          <PDFViewer width="100%" height="850">
+            <Document>
+              <Page size="A4" style={styles.page}>
+                <View>
+                  <Image
+                    fixed
+                    style={{ width: 100, height: 40 }}
+                    src={
+                      "https://canpathwaysjobs.com/image/Retainer_agreement_logo.png"
+                    } />
+                  {components}
+                  <View
+                    fixed
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-end",
+                      gap: 20,
+                    }}
+                  >
+                    <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
+                    <View>
+                      {felidData?.initial ? (
+                        <InitialFunction felidData={felidData} isPdf={true} />
+                      ) : (
+                        <View
+                          style={{
+                            display: "inline-block",
+                            width: 100,
+                            height: 50,
+                            border: "1px solid #ccc",
+                          }}
+                        />
+                      )}
+                    </View>
+                  </View>
+                </View>
+              </Page>
+            </Document>
+          </PDFViewer>
+        );
+      }}
+    </BlobProvider >
   );
 };
 const styles = StyleSheet.create({

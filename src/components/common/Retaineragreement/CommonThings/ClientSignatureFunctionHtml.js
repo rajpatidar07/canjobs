@@ -11,16 +11,23 @@ export function ClientSignatureFunction({ felidData, familyJsonArray, page, isPd
   if (isPdf) {
     return signature ? (
       isBase64Image ? (
-        <View style={{ width: "100%", height: 50, border: "1px solid #ccc", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <Image
-            src={signature}
-            style={{
-              display: "inline-block",
-              maxWidth: "100%",
-              maxHeight: "100%",
-              textTransform: "capitalize",
-            }}
-          /></View>
+         <View style={{
+                  width: "100%",
+                  height: 50,
+                  border: "1px solid #ccc",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}>
+                  <Image
+                    src={signature}
+                    style={{
+                      display: "inline-block",
+                      maxWidth: "50%",
+                      maxHeight: "100%",
+                    }}
+                  />
+                </View>
       ) : (
         <Text
           style={{
@@ -50,15 +57,15 @@ export function ClientSignatureFunction({ felidData, familyJsonArray, page, isPd
   console.log(signature)
   // HTML (React DOM) Version
   const signatureContent = isBase64Image
-    ? `<img src="${signature}" alt="${clientName}" style="max-height: 100%;">`
-    : `<span style="display: inline-block; max-width: 100%; max-height: 100%; text-transform: capitalize;">
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    ? `<img src="${signature}" alt="${clientName}" style="max-height: 100%;width:auto">`
+    : `<span style="display: inline-block; max-width: 100%; max-height: 100%; text-transform: capitalize;font-family: Imperial Script, cursive;color:black;font-weight: bold;font-size:35px">
+        &nbsp;&nbsp;&nbsp;
         ${signature === undefined || signature === "undefined" ? "" : signature}
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp
       </span>`;
 
   const signatureBox = `
-    <div class="border d-flex align-items-center justify-content-center" style="height: 50px;">
+    <div class="border d-flex align-items-center justify-content-center" >
       ${signatureContent}
     </div>`;
 

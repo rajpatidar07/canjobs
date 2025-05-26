@@ -10,6 +10,7 @@ import {
   MdOutlineAddIcCall,
 } from "react-icons/md";
 // import { LuFileKey } from "react-icons/lu";
+import { LuMessagesSquare } from "react-icons/lu";
 import {
   LiaUsersSolid,
   LiaAddressCardSolid,
@@ -1250,6 +1251,28 @@ const AdminSidebar = (props) => {
           >
             <LiaHourglassHalfSolid className="sidebar_icon" />
             <span className="text-truncate">Manage Daily Hour Log</span>
+          </Link>
+        </li>
+         <li
+          ref={(el) => (liRefs.current["Manage Consultation"] = el)}
+          className={
+            admin_type === "agent" || portal === "study"
+              ? "d-none"
+              : props.heading === "Manage Consultation"
+                ? "active"
+                : ""
+          }
+        >
+          <Link
+            onClick={() => {
+              clearPageNo("Manage Consultation");
+            }}
+            className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
+            title={"Manage Consultation"}
+            to="/consultation"
+          >
+            <LuMessagesSquare className="sidebar_icon" />
+            <span className="text-truncate">Manage Consultation</span>
           </Link>
         </li>
         <li

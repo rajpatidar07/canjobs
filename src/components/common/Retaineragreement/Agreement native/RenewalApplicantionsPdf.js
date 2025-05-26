@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Page, Text, View, Document, StyleSheet, BlobProvider, Image, PDFViewer } from '@react-pdf/renderer';
 import { AddSharePointDOcument, AddUpdateAgreement } from '../../../../api/api';
-import InitialFunction from '../CommonThings/InitialFunction';
+import {InitialFunction} from '../CommonThings/InitialFunction';
 import { ClientSignatureFunction } from '../CommonThings/ClientSignatureFunctionHtml';
 import { RCICSignatureFunction } from '../CommonThings/RCICSignatureFunction';
 import CommonRetainerAgreementDate from '../CommonRetainerAgreementDate';
@@ -482,7 +482,7 @@ const RenewalApplicantionsPdf = () => {
               <Text style={[styles.text, styles.textBold]}>Harpreet Kaur (RCIC)</Text>
               <Text style={styles.text}>RCIC # R533393</Text>
               <Text style={styles.text}>CAN Pathways Immigration Consultancy Ltd.</Text>
-              <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {felidData?.date_signature_rcic && felidData?.date_signature_rcic !== "0000-00-00 00:00:00" && felidData.date_signature_rcic !== "0000-00-00"  ? <Text style={[styles.underline]}><CommonRetainerAgreementDate _date={felidData?.date_signature_rcic} format={"DD-MM-YYYY"} /></Text> : "__________"}</Text>
+              <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {felidData?.date_signature_rcic && felidData?.date_signature_rcic !== "0000-00-00 00:00:00" && felidData.date_signature_rcic !== "0000-00-00" ? <Text style={[styles.underline]}><CommonRetainerAgreementDate _date={felidData?.date_signature_rcic} format={"DD-MM-YYYY"} /></Text> : "__________"}</Text>
               <Text style={styles.text}><Text style={styles.textBold}>Signed at:</Text> <Text style={styles.underline}>Calgary, Alberta, Canada</Text></Text>
             </View>
 
@@ -535,27 +535,7 @@ const RenewalApplicantionsPdf = () => {
                 <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
                 <View>
                   {felidData?.initial ? (
-                    <View
-                      style={{
-                        width: 100,
-                        height: 50,
-                        border: "1px solid #ccc",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <Text
-                        style={{
-                          display: "inline-block",
-                          maxWidth: "100%",
-                          maxHeight: "100%",
-                          textTransform: "capitalize",
-                        }}
-                      >
-                        <InitialFunction initial={felidData?.initial} />
-                      </Text>
-                    </View>
+                    <InitialFunction felidData={felidData} isPdf={true} />
 
                   ) : (
                     <View
@@ -601,28 +581,7 @@ const RenewalApplicantionsPdf = () => {
                     <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
                     <View>
                       {felidData?.initial ? (
-                        <View
-                          style={{
-                            width: 100,
-                            height: 50,
-                            border: "1px solid #ccc",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <Text
-                            style={{
-                              display: "inline-block",
-                              maxWidth: "100%",
-                              maxHeight: "100%",
-                              textTransform: "capitalize",
-                            }}
-                          >
-                            <InitialFunction initial={felidData?.initial} />
-                          </Text>
-                        </View>
-
+                        <InitialFunction felidData={felidData} isPdf={true} />
                       ) : (
                         <View
                           style={{

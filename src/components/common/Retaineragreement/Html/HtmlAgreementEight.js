@@ -349,7 +349,7 @@ export default function HtmlAgreementEight({
               </tr>
               <tr>
                 <td style="text-align: center; border: 1px solid black">
-                  Applicable Taxes: ${felidData?.gst || "0"}%
+                  Applicable Taxes: %
                 </td>
                 <td style="border: 1px solid black">${felidData?.applicable_taxes || ""
     }</td>

@@ -11,7 +11,7 @@ import {
   Link,
 } from "@react-pdf/renderer";
 import { AddSharePointDOcument, AddUpdateAgreement } from "../../../../api/api";
-import InitialFunction from "../CommonThings/InitialFunction";
+import {InitialFunction} from "../CommonThings/InitialFunction";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
 import CommonRetainerAgreementDate from "../CommonRetainerAgreementDate";
@@ -625,7 +625,7 @@ const ExpressEntryPdf = () => {
               </View>
               <View style={styles.row}>
                 <View style={styles.cell}>
-                  <Text>ApplicableTaxes: {felidData?.gst || "0"}%</Text>
+                  <Text>ApplicableTaxes: %</Text>
                 </View>
                 <View style={styles.cell}>
                   <Text>{felidData?.application_fees || ""}</Text>
@@ -1757,7 +1757,7 @@ const ExpressEntryPdf = () => {
 
           </View>
         </View>
-        <View style={{ marginTop: 120 }}>
+        <View style={{ marginTop: 100 }}>
           <Text style={[{ textAlign: "center" }, styles.definition]}>
             AUTHORIZATION
           </Text>
@@ -1967,26 +1967,9 @@ const ExpressEntryPdf = () => {
                 </Text>
                 <View>
                   <View
-                    style={{
-                      width: 100,
-                      height: 50,
-                      border: "1px solid #ccc",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
                   >
                     {felidData?.initial ? (
-                      <Text
-                        style={{
-                          display: "inline-block",
-                          maxWidth: "100%",
-                          maxHeight: "100%",
-                          textTransform: "capitalize",
-                        }}
-                      >
-                        <InitialFunction initial={felidData?.initial} />
-                      </Text>
+                      <InitialFunction felidData={felidData} isPdf={true} />
                     ) : (
                       <View
                         style={{
@@ -2035,27 +2018,7 @@ const ExpressEntryPdf = () => {
                     </Text>
                     <View>
                       {felidData?.initial ? (
-                        <View
-                          style={{
-                            width: 100,
-                            height: 50,
-                            border: "1px solid #ccc",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <Text
-                            style={{
-                              display: "inline-block",
-                              maxWidth: "100%",
-                              maxHeight: "100%",
-                              textTransform: "capitalize",
-                            }}
-                          >
-                            <InitialFunction initial={felidData?.initial} />
-                          </Text>
-                        </View>
+                        <InitialFunction felidData={felidData} isPdf={true} />
 
                       ) : (
                         <View

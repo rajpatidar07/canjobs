@@ -1,7 +1,7 @@
 import moment from "moment";
 import { useEffect } from "react";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
-import InitialFunction from "../CommonThings/InitialFunction";
+import { InitialFunction } from "../CommonThings/InitialFunction";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
 import CommonRetainerAgreementDate from "../CommonRetainerAgreementDate"
 export default function AlbertaPNPAndFederalPR({
@@ -51,9 +51,9 @@ export default function AlbertaPNPAndFederalPR({
        <p> 
     This Retainer Agreement is made this
      <span class="para_gap text-capitalize" style="min-Width:50px">
-    ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00"?  CommonRetainerAgreementDate({ _date: felidData?.agreement_date, format: "Do" }) : ""}  </span>
+    ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00" ? CommonRetainerAgreementDate({ _date: felidData?.agreement_date, format: "Do" }) : ""}  </span>
     day of
-     <span class="para_gap text-capitalize" style="min-Width:50px">${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00"?  CommonRetainerAgreementDate({ _date: felidData?.agreement_date, format: "MMMM" }) : ""}</span>
+     <span class="para_gap text-capitalize" style="min-Width:50px">${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00" ? CommonRetainerAgreementDate({ _date: felidData?.agreement_date, format: "MMMM" }) : ""}</span>
     between Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur (the
     “RCIC”), RCIC Membership Number
     <span>R533393</span>, phone number
@@ -344,7 +344,7 @@ export default function AlbertaPNPAndFederalPR({
                 </tr>
                 <tr>
                   <td style="text-align: center; border: 1px solid black">
-                    Applicable Taxes: ${felidData?.gst || "0"}%
+                    Applicable Taxes:%
                   </td>
                   <td style="border: 1px solid black;text-align: center">${felidData?.application_fees || ""
     }</td>
@@ -1220,25 +1220,24 @@ export default function AlbertaPNPAndFederalPR({
              <div style="display: flex; flex-wrap: wrap; align-items: center" class="row">
                <div class="col mt-5" style="text-align: center">
                  <p class="text-capitalize w-100 border-bottom border-dark text-center" style="margin: 0">${felidData &&
-             (familyJsonArray[0]?.client_first_name ||
-               familyJsonArray[0]?.client_last_name)
-             ? familyJsonArray[0]?.client_first_name +
-             " " +
-             (familyJsonArray[0]?.client_last_name || "")
-             : emp_user_type === "employee"
-               ? userData?.name || " " || ""
-               : " "
-           }</p>
+      (familyJsonArray[0]?.client_first_name ||
+        familyJsonArray[0]?.client_last_name)
+      ? familyJsonArray[0]?.client_first_name +
+      " " +
+      (familyJsonArray[0]?.client_last_name || "")
+      : emp_user_type === "employee"
+        ? userData?.name || " " || ""
+        : " "
+    }</p>
                  <p style="margin: 0 " class="text-center">Client’s full name</p>
                </div>
-               <div class="col" style="text-align: center;
-          ">
+               <div class="col text-center" >
        ${ClientSignatureFunction({ page: "admin", familyJsonArray, felidData })}
                  <p style="margin: 0">Signatures</p>
                </div>
                <div class="col mt-9" style="text-align: center">
                  <p class="w-100 border-bottom border-dark text-center" style="margin: 0"> ${familyJsonArray[0]?.date_signature_client && familyJsonArray[0]?.date_signature_client !== "0000-00-00" && familyJsonArray[0]?.date_signature_client !== "0000-00-00 00:00:00" ?
-                       CommonRetainerAgreementDate({ _date: familyJsonArray[0]?.date_signature_client, format: "DD-MM-YYYY" }) : ' '}</p>
+      CommonRetainerAgreementDate({ _date: familyJsonArray[0]?.date_signature_client, format: "DD-MM-YYYY" }) : ' '}</p>
                  <p style="margin:0"class="text-center">Date</p>
                </div>
              </div>
@@ -1262,11 +1261,7 @@ export default function AlbertaPNPAndFederalPR({
         <div>
           <div
             style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
-             <span style="display:inline-block;max-width:100%;max-height:100%;" class="text-capitalize">
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-         ${felidData?.initial ? InitialFunction({ isPdf: false, initial: felidData?.initial }) : ""}
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    </span>
+         ${felidData?.initial ? InitialFunction({ isPdf: false, felidData: felidData }) : ""}
              </div>
           <h4 class="font-size-6 text-end d-none">RCIC</h4>
         </div>

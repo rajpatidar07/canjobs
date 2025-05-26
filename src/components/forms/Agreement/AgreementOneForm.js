@@ -70,6 +70,7 @@ const AgreementOneForm = ({
     assigned_by_type: "",
     signature_status: "",
     id: "",
+    note: "",
     client_file_no: "",
     agreement_date: "",
     client_email: userData?.email || "",
@@ -235,8 +236,54 @@ const AgreementOneForm = ({
         delete filteredState.signature_status;
       }
 
-      // if (index === "update details" ? validate() : "") {
-         console.log("first",state)
+      // ✅ Convert signature text to image only if it's plain text (not already an image)
+      const textToImage = (text) => {
+        const canvas = document.createElement("canvas");
+        const context = canvas.getContext("2d");
+
+        const fontSize = 20;
+        context.font = `bold ${fontSize}px 'Imperial Script', cursive`;
+        const textWidth = context.measureText(text).width;
+
+        canvas.width = textWidth + 20;
+        canvas.height = fontSize + 20;
+
+        context.fillStyle = "black";
+        context.font = `bold ${fontSize}px 'Imperial Script', cursive`;
+        context.fillText(text, 10, fontSize);
+
+        return canvas.toDataURL("image/png");
+      };
+
+      // Convert rcic_signature if it's plain text
+      if (
+        state.rcic_signature &&
+        !state.rcic_signature.startsWith("data:image/")
+      ) {
+        filteredState.rcic_signature = textToImage(state.rcic_signature);
+      }
+      if (
+        state.initial &&
+        !state.initial.startsWith("data:image/")
+      ) {
+        filteredState.initial = textToImage(state.initial);
+      }
+
+
+      // Convert only text-based client_signature to image
+      filteredState.family_json = state.family_json.map((client) => {
+        if (
+          client.client_signature &&
+          !client.client_signature.startsWith("data:image/")
+        ) {
+          return {
+            ...client,
+            client_signature: textToImage(client.client_signature),
+          };
+        }
+        return client;
+      });
+      console.log("first", state)
       try {
         let res = await AddUpdateAgreement(filteredState);
         if (
@@ -410,6 +457,7 @@ const AgreementOneForm = ({
                       id={`client_first_name_0`}
                       name="client_first_name"
                       placeholder="Client's first name"
+                      disabled={!SigningUserType}
                     />
                   </div>
                   <div className="form-group col-lg-3 col-md-4 col-sm-6">
@@ -429,11 +477,11 @@ const AgreementOneForm = ({
                       required
                       name="client_last_name"
                       placeholder="Client's last name"
+                      disabled={!SigningUserType}
                     />
                   </div>
                 </React.Fragment>
               )}
-
             {openSignature === "yes"
               ? null
               : (index === "update details"
@@ -444,12 +492,14 @@ const AgreementOneForm = ({
                     name: "client_address",
                     type: "text",
                     required: true,
+                    disabled: !SigningUserType
                   },
                   {
                     label: "Client Email",
                     name: "client_email",
                     type: "email",
                     required: true,
+                    disabled: !SigningUserType
                   },
                   {
                     label: "Client Contact No",
@@ -457,12 +507,14 @@ const AgreementOneForm = ({
                     display: agreementType === "recruitment services agreement" ? "d-none" : "",
                     type: "number",
                     required: agreementType === "recruitment services agreement" ? false : true,
+                    disabled: !SigningUserType
                   },
                   {
                     label: "Client's Telephone Number",
                     display: agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "client_telephone",
                     type: "number",
+                    disabled: !SigningUserType
                     // required: agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? false : true,
                   },
                   {
@@ -470,6 +522,7 @@ const AgreementOneForm = ({
                     display: agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "client_cellphone",
                     type: "number",
+                    disabled: !SigningUserType
                     // required: agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? false : true,
                   },
                   {
@@ -478,12 +531,14 @@ const AgreementOneForm = ({
                     name: "client_fax",
                     type: "number",
                     required: false,
+                    disabled: !SigningUserType
                   },
                   {
                     label: "Initial",
                     name: "initial",
                     type: "text",
                     required: true,
+                    disabled: false
                   },
                   {
                     label:
@@ -492,6 +547,7 @@ const AgreementOneForm = ({
                     display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     type: "text",
                     required: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? false : true,
+                    disabled: false
                   },
                 ]
                 : [
@@ -500,90 +556,105 @@ const AgreementOneForm = ({
                     display: "",
                     name: "client_address",
                     type: "text",
+                    disabled: false
                   },
                   {
                     label: "Client Email",
                     display: "",
                     name: "client_email",
                     type: "email",
+                    disabled: false
                   },
                   {
                     label: "Client Contact No",
                     display: agreementType === "recruitment services agreement" ? "d-none" : "",
                     name: "client_contact",
                     type: "number",
+                    disabled: false
                   },
                   {
                     label: "Client's Telephone Number",
                     display: agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "client_telephone",
                     type: "number",
+                    disabled: false
                   },
                   {
                     label: "Client's Cellphone Number",
                     display: agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "client_cellphone",
                     type: "number",
+                    disabled: false
                   },
                   {
                     label: "Client's Fax Number",
                     display: agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "client_fax",
                     type: "number",
+                    disabled: false
                   },
                   {
                     label: "Client File Number",
                     display: agreementType === "recruitment services agreement" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "client_file_no",
                     type: "number",
+                    disabled: false
                   },
                   {
                     label: "Agreement Creation Date",
                     display: "",
                     name: "agreement_date",
                     type: "date",
+                    disabled: false
                   },
                   {
                     label: "Professional Fees",
                     display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "professional_fees",
                     type: "text",
+                    disabled: false
                   },
                   {
                     label: "Courier charges",
-                    display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream"  || agreementType === "employers" ? "d-none" : "",
+                    display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "courier_charges",
                     type: "text",
+                    disabled: false
                   },
                   {
                     label: "Administrative Fee",
                     display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "administrative_fee",
                     type: "text",
+                    disabled: false
                   },
                   {
                     label: "Government fees",
                     display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "government_fees",
                     type: "text",
+                    disabled: false
                   },
                   {
                     label: "Applicable Taxes",
                     display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "application_fees",
                     type: "text",
+                    disabled: false
                   },
                   {
                     label: "Balance (Paid at time of filing)",
                     display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "balance",
                     type: "text",
+                    disabled: false
                   },
                   {
                     label: "Total Cost",
                     display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "total_cost",
                     type: "text",
+                    disabled: false
                   },
                   {
                     label:
@@ -591,6 +662,7 @@ const AgreementOneForm = ({
                     display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "matter",
                     type: "text",
+                    disabled: false
                   },
                   {
                     label:
@@ -598,6 +670,7 @@ const AgreementOneForm = ({
                     display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "summary",
                     type: "text",
+                    disabled: false
                   },
                   {
                     label:
@@ -605,6 +678,7 @@ const AgreementOneForm = ({
                     display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "applicable_retainer_fee_stape_1",
                     type: "text",
+                    disabled: false
                   },
                   {
                     label:
@@ -612,6 +686,7 @@ const AgreementOneForm = ({
                     display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "applicable_government_processing_fee_stape_1",
                     type: "text",
+                    disabled: false
                   },
                   {
                     label:
@@ -619,6 +694,7 @@ const AgreementOneForm = ({
                     display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" || agreementType === "work permit" ? "d-none" : "",
                     name: "applicable_government_processing_fee_stape_2",
                     type: "text",
+                    disabled: false
                   },
                   {
                     label:
@@ -626,6 +702,7 @@ const AgreementOneForm = ({
                     display: agreementType === "three column" ? "" : "d-none",
                     name: "applicable_government_processing_fee_stape_3",
                     type: "text",
+                    disabled: false
                   },
                   {
                     label:
@@ -633,6 +710,7 @@ const AgreementOneForm = ({
                     display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" || agreementType === "work permit" ? "d-none" : "",
                     name: "applicable_retainer_fee_stape_2",
                     type: "text",
+                    disabled: false
                   },
                   {
                     label:
@@ -640,6 +718,7 @@ const AgreementOneForm = ({
                     display: agreementType === "three column" ? "" : "d-none",
                     name: "applicable_retainer_fee_stape_3",
                     type: "text",
+                    disabled: false
                   },
                   {
                     label:
@@ -647,6 +726,7 @@ const AgreementOneForm = ({
                     display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "total_amount_signing_of_contract",
                     type: "text",
+                    disabled: false
                   },
                   {
                     label:
@@ -654,6 +734,16 @@ const AgreementOneForm = ({
                     display: agreementType === "recruitment services agreement" || agreementType === "initial consultation" || agreementType === "employer renewal stream" || agreementType === "employers" ? "d-none" : "",
                     name: "balance_paid_at_time_of_filing",
                     type: "text",
+                    disabled: false
+                  },
+                  
+                  {
+                    label:
+                      "Note",
+                    display: "",
+                    name: "note",
+                    type: "text",
+                    disabled: false
                   },
                   {
                     label:
@@ -661,6 +751,7 @@ const AgreementOneForm = ({
                     display: agreementType === "initial consultation" ? "" : "d-none",
                     name: "other_professional_advice_initial_consultation",
                     type: "text",
+                    disabled: false
                   },
                   {
                     label:
@@ -668,11 +759,11 @@ const AgreementOneForm = ({
                     display: agreementType === "initial consultation" ? "" : "d-none",
                     name: "additional_relevant_information",
                     type: "text",
+                    disabled: false
                   },
 
-
                 ]
-              ).map(({ label, name, type, required, display, index }) => (
+              ).map(({ label, name, type, required, display, disabled, index }) => (
                 <div
                   className={`form-group ${label.split(" ").length > 6
                     ? "col-lg-6 col-md-12"
@@ -701,6 +792,7 @@ const AgreementOneForm = ({
                     id={name}
                     name={name}
                     required={required}
+                    disabled={disabled}
                   />
                   <small className="text-warning">{name === "initial" ? "Note : At least two letters required." : ""}</small>
                   {errors[name] && (

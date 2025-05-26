@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
-import InitialFunction from "../CommonThings/InitialFunction";
+import { InitialFunction } from "../CommonThings/InitialFunction";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
 import CommonRetainerAgreementDate from "../CommonRetainerAgreementDate"
 // import { SendHtmlForPdf } from "../../../../api/api";
@@ -68,10 +68,10 @@ const ExpressEntryHtml = ({
      <p> 
   This Retainer Agreement is made this
   <span class="para_gap text-capitalize" style="min-Width:50px">
-    ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00"?  CommonRetainerAgreementDate({ _date: felidData?.agreement_date, format: "Do" }) : ""}  </span>
+    ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00" ? CommonRetainerAgreementDate({ _date: felidData?.agreement_date, format: "Do" }) : ""}  </span>
     day of
-     <span class="para_gap text-capitalize" style="min-Width:50px">${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00"?  CommonRetainerAgreementDate({ _date: felidData?.agreement_date, format: "MMMM" }) : ""}</span>
-    ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00"?  CommonRetainerAgreementDate({ _date: felidData?.agreement_date, format: "YYYY" }) : " "}
+     <span class="para_gap text-capitalize" style="min-Width:50px">${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00" ? CommonRetainerAgreementDate({ _date: felidData?.agreement_date, format: "MMMM" }) : ""}</span>
+    ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00" ? CommonRetainerAgreementDate({ _date: felidData?.agreement_date, format: "YYYY" }) : " "}
   between Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur (the
   “RCIC”), RCIC Membership Number
   <span>R533393</span>, phone number
@@ -124,7 +124,7 @@ const ExpressEntryHtml = ({
         } </span>
         </span>
         <span class="col-6">
-         Date of birth : <span class="para_gap text-capitalize" style="min-width:"50px">${item.client_date_of_birth?CommonRetainerAgreementDate({ _date: item.client_date_of_birth, format: "DD-MM-YYYY" }):""} </span> </span>
+         Date of birth : <span class="para_gap text-capitalize" style="min-width:"50px">${item.client_date_of_birth ? CommonRetainerAgreementDate({ _date: item.client_date_of_birth, format: "DD-MM-YYYY" }) : ""} </span> </span>
          </span>`
     )}
       </div>
@@ -358,7 +358,7 @@ const ExpressEntryHtml = ({
               </tr>
               <tr>
                 <td style="text-align: center; border: 1px solid black">
-                  Applicable Taxes: ${felidData?.gst || "0"}%
+                  Applicable Taxes: %
                 </td>
                 <td style="border: 1px solid black; text-align: center">${felidData?.application_fees || ""
     }</td>
@@ -1248,14 +1248,13 @@ ${RCICSignatureFunction({ isPdf: false, felidData })}
     }</p>
                <p style="margin: 0 " class="text-center">Client’s full name</p>
              </div>
-             <div class="col" style="text-align: center;
-        ">
+             <div class="col text-center" >
      ${ClientSignatureFunction({ page: "admin", familyJsonArray, felidData })}
                <p style="margin: 0">Signatures</p>
              </div>
              <div class="col mt-9" style="text-align: center">
                <p class="w-100 border-bottom border-dark text-center" style="margin: 0"> ${familyJsonArray[0]?.date_signature_client && familyJsonArray[0]?.date_signature_client !== "0000-00-00" && familyJsonArray[0]?.date_signature_client !== "0000-00-00 00:00:00" ?
-                     CommonRetainerAgreementDate({ _date: familyJsonArray[0]?.date_signature_client, format: "DD-MM-YYYY" }) : ' '}</p>
+      CommonRetainerAgreementDate({ _date: familyJsonArray[0]?.date_signature_client, format: "DD-MM-YYYY" }) : ' '}</p>
                <p style="margin:0"class="text-center">Date</p>
              </div>
            </div>
@@ -1279,11 +1278,8 @@ ${RCICSignatureFunction({ isPdf: false, felidData })}
       <div>
 <div
             style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
-             <span style="display:inline-block;max-width:100%;max-height:100%;" class="text-capitalize">
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-         ${felidData?.initial ? InitialFunction({ isPdf: false, initial: felidData?.initial }) : ""}
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    </span>
+         ${felidData?.initial ? InitialFunction({ isPdf: false, felidData: felidData }) : ""}
+
              </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        </span>        <h4 class="font-size-6 text-end d-none">RCIC</h4>
       </div>

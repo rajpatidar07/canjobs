@@ -1,7 +1,7 @@
 // import moment from "moment";
 import { useEffect } from "react";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
-import InitialFunction from "../CommonThings/InitialFunction";
+import {InitialFunction} from "../CommonThings/InitialFunction";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
 import CommonRetainerAgreementDate from "../CommonRetainerAgreementDate";
 // import { Link } from "react-router-dom";
@@ -339,11 +339,7 @@ const InitialConsultation = ({
       <div>
         <div
                              style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
-                              <span style="display:inline-block;max-width:100%;max-height:100%;" class="text-capitalize">
-                                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                          ${felidData?.initial ? InitialFunction({ isPdf: false, initial: felidData?.initial }) : ""}
-                                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                     </span>
+                          ${felidData?.initial ? InitialFunction({ isPdf: false, felidData: felidData }) : ""}
                               </div>
         <h4 class="font-size-6 text-end d-none">RCIC</h4>
       </div>

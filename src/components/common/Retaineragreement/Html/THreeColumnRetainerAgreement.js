@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { RCICSignatureFunction } from '../CommonThings/RCICSignatureFunction';
 import { ClientSignatureFunction } from '../CommonThings/ClientSignatureFunctionHtml';
-import InitialFunction from '../CommonThings/InitialFunction';
+import { InitialFunction } from '../CommonThings/InitialFunction';
 import CommonRetainerAgreementDate from '../CommonRetainerAgreementDate';
 export default function EmployerRetainerAgreement({ page,
   felidData,
@@ -77,23 +77,21 @@ export default function EmployerRetainerAgreement({ page,
             Pl NE #310 Calgary, AB T1Y 7J7,
             Canada</b> and Client
          <span class="highlight">
-  ${
-    familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name
+  ${familyJsonArray[0]?.client_first_name || familyJsonArray[0]?.client_last_name
       ? `<span class="para_gap">${familyJsonArray[0]?.client_first_name || ""} ${familyJsonArray[0]?.client_last_name || ""}</span>`
       : emp_user_type === "employee"
         ? `<span class="para_gap">${userData?.name || ""}</span>`
         : "_____________________"
-  }
+    }
 </span>
 (the “Client”), <br> located at
 <span class="client-info para_gap text-capitalize">
-  ${
-    felidData?.client_address
+  ${felidData?.client_address
       ? `<span class="">${felidData?.client_address}</span>`
       : emp_user_type === "employer"
         ? `<span class="">${userData?.address || ""}</span>`
         : `<span class="">${userData?.current_location || ""}, ${userData?.currently_located_country || ""}</span>`
-  },
+    },
   </span>
   email <span class="para_gap">${felidData?.client_email || userData?.email || ""}</span>,
   contact number <span class="client-info para_gap">${felidData?.client_contact || userData?.contact_no || ""}</span>.
@@ -336,7 +334,7 @@ export default function EmployerRetainerAgreement({ page,
                             <tr>
                               <td
                                 style="text-align: center; border: 1px solid black">
-                                Applicable Taxes: ${felidData?.gst || "0"}%
+                                Applicable Taxes:%
                               </td>
                               <td
                                 style="border: 1px solid black;text-align: center">${felidData?.application_fees
@@ -1518,11 +1516,8 @@ export default function EmployerRetainerAgreement({ page,
 <div>
   <div
                       style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
-                       <span style="display:inline-block;max-width:100%;max-height:100%;" class="text-capitalize">
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                   ${felidData?.initial ? InitialFunction({ isPdf: false, initial: felidData?.initial }) : ""}
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                              </span>
+                   ${felidData?.initial ? InitialFunction({ isPdf: false, felidData: felidData }) : ""}
+                               
                        </div>
   </div>
   </div>

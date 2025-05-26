@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
-import InitialFunction from "../CommonThings/InitialFunction";
+import {InitialFunction} from "../CommonThings/InitialFunction";
 import CommonRetainerAgreementDate from "../CommonRetainerAgreementDate";
 // import { Link } from "react-router-dom";
 const RecruitmentServiceHtml = ({
@@ -365,10 +365,7 @@ ${RCICSignatureFunction({ isPdf: false, felidData })}
   <div class="col-12 mt-4">
     <div class="d-flex justify-content-end align-items-center gap-4">
       <h3 class="font-size-6 text-end mb-0">Initials :</h3>
-      <div style="width: 150px; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
-        <span class="text-capitalize" style="display: inline-block; max-width: 100%; max-height: 100%;">
-          ${felidData?.initial ? InitialFunction({ isPdf: false, initial: felidData?.initial }) : ""}
-        </span>
+          ${felidData?.initial ? InitialFunction({ isPdf: false, felidData: felidData }) : ""}
       </div>
     </div>
   </div>

@@ -12,7 +12,7 @@ import {
 } from "@react-pdf/renderer";
 import CommonRetainerAgreementDate from "../CommonRetainerAgreementDate";
 import { AddSharePointDOcument, AddUpdateAgreement } from "../../../../api/api";
-import InitialFunction from "../CommonThings/InitialFunction";
+import { InitialFunction } from "../CommonThings/InitialFunction";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
 // import { toast } from "react-toastify";
@@ -43,7 +43,7 @@ const WorkPermitPdf = () => {
         }
         const file = new File(
           [newBlob],
-          `${felidData?.type.replaceAll(" ", "_")+`_${felidData?.id}`}.pdf`,
+          `${felidData?.type.replaceAll(" ", "_") + `_${felidData?.id}`}.pdf`,
           { type: "application/pdf" }
         );
         try {
@@ -438,7 +438,7 @@ const WorkPermitPdf = () => {
               </View>
               <View style={styles.row}>
                 <View style={styles.cell}>
-                  <Text>ApplicableTaxes: {felidData?.gst || "0"}%</Text>
+                  <Text>ApplicableTaxes: %</Text>
                 </View>
                 <View style={styles.cell}>
 
@@ -1608,8 +1608,8 @@ const WorkPermitPdf = () => {
               <View style={styles.clientFormChild}>
                 <Text style={{ margin: 0, marginBottom: 15, width: "100%", borderBottom: "1px solid black" }}>
                   {!familyJsonArray[0]?.date_signature_client ||
-                      familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00" ||
-                      familyJsonArray[0]?.date_signature_client === "0000-00-00"
+                    familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00" ||
+                    familyJsonArray[0]?.date_signature_client === "0000-00-00"
                     ? " "
                     : <CommonRetainerAgreementDate _date={familyJsonArray[0]?.date_signature_client} format={"DD-MM-YYYY"} />}
                 </Text>
@@ -1649,26 +1649,10 @@ const WorkPermitPdf = () => {
                 <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
                 <View>
                   <View
-                    style={{
-                      width: 100,
-                      height: 50,
-                      border: "1px solid #ccc",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
+
                   >
                     {felidData?.initial ? (
-                      <Text
-                        style={{
-                          display: "inline-block",
-                          maxWidth: "100%",
-                          maxHeight: "100%",
-                          textTransform: "capitalize",
-                        }}
-                      >
-                        <InitialFunction initial={felidData?.initial} />
-                      </Text>
+                      <InitialFunction felidData={felidData} isPdf={true} />
                     ) : (
                       <View
                         style={{
@@ -1714,27 +1698,7 @@ const WorkPermitPdf = () => {
                     <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
                     <View>
                       {felidData?.initial ? (
-                        <View
-                          style={{
-                            width: 100,
-                            height: 50,
-                            border: "1px solid #ccc",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <Text
-                            style={{
-                              display: "inline-block",
-                              maxWidth: "100%",
-                              maxHeight: "100%",
-                              textTransform: "capitalize",
-                            }}
-                          >
-                            <InitialFunction initial={felidData?.initial} />
-                          </Text>
-                        </View>
+                        <InitialFunction felidData={felidData} isPdf={true} />
 
                       ) : (
                         <View

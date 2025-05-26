@@ -438,7 +438,7 @@ const AlbertaPnpPdf = () => {
                             </View>
                             <View style={styles.row}>
                                 <View style={styles.cell}>
-                                    <Text>ApplicableTaxes: {felidData?.gst || "0"}%</Text>
+                                    <Text>Taxes: %</Text>
                                 </View>
                                 <View style={styles.cell}>
 

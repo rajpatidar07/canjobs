@@ -3,7 +3,7 @@ import { Page, Text, View, Document, StyleSheet, BlobProvider, Image, PDFViewer 
 import { AddSharePointDOcument, AddUpdateAgreement } from '../../../../api/api';
 import { ClientSignatureFunction } from '../CommonThings/ClientSignatureFunctionHtml';
 import { RCICSignatureFunction } from '../CommonThings/RCICSignatureFunction';
-import InitialFunction from '../CommonThings/InitialFunction';
+import {InitialFunction} from '../CommonThings/InitialFunction';
 import CommonRetainerAgreementDate from '../CommonRetainerAgreementDate';
 const styles = StyleSheet.create({
   page: {
@@ -538,26 +538,9 @@ const EmployerRetainerAgreementPdf = () => {
                 <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
                 <View>
                   <View
-                    style={{
-                      width: 100,
-                      height: 50,
-                      border: "1px solid #ccc",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
                   >
                     {felidData?.initial ? (
-                      <Text
-                        style={{
-                          display: "inline-block",
-                          maxWidth: "100%",
-                          maxHeight: "100%",
-                          textTransform: "capitalize",
-                        }}
-                      >
-                        <InitialFunction initial={felidData?.initial} />
-                      </Text>
+                      <InitialFunction felidData={felidData} isPdf={true} />
                     ) : (
                       <View
                         style={{
@@ -603,27 +586,7 @@ const EmployerRetainerAgreementPdf = () => {
                     <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
                     <View>
                       {felidData?.initial ? (
-                        <View
-                          style={{
-                            width: 100,
-                            height: 50,
-                            border: "1px solid #ccc",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <Text
-                            style={{
-                              display: "inline-block",
-                              maxWidth: "100%",
-                              maxHeight: "100%",
-                              textTransform: "capitalize",
-                            }}
-                          >
-                            <InitialFunction initial={felidData?.initial} />
-                          </Text>
-                        </View>
+                       <InitialFunction felidData={felidData} isPdf={true} />
 
                       ) : (
                         <View

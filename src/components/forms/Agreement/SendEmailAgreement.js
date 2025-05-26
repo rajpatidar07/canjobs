@@ -301,7 +301,7 @@ export default function SendEmailAgreement({
   const [fileBase, setFileBase] = useState("");
   const [loading, setLoading] = useState(false);
   const initialFormState = {
-    subject: felidData.type,
+    subject: `Retainer Agreement of ${felidData.type.replace(/\b\w/g, char => char.toUpperCase())}`,
     email: felidData.client_email,
     adminemail: emails,
     description: `<!DOCTYPE html>
