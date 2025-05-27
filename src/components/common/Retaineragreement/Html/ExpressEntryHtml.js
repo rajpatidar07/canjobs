@@ -465,7 +465,7 @@ const ExpressEntryHtml = ({
             filing): ${felidData?.balance_paid_at_time_of_filing || ""} $
            </b>       
             </p>
-          <p>Note:</p>
+          <p>Note: <u>${felidData.note||"               "}</u></p>
           <ul id="l5"  style="list-style-type:disc;">
             <li data-list-text="•">
               <p>
@@ -1276,11 +1276,8 @@ ${RCICSignatureFunction({ isPdf: false, felidData })}
              <div class="d-flex justify-content-end gap-4" style="gap: 4rem;">
       <h3 class="font-size-6 text-end">Initials :</h3>
       <div>
-<div
-            style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
          ${felidData?.initial ? InitialFunction({ isPdf: false, felidData: felidData }) : ""}
 
-             </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        </span>        <h4 class="font-size-6 text-end d-none">RCIC</h4>
       </div>
 </p>

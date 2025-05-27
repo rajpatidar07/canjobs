@@ -531,9 +531,13 @@ const AlbertaPnpPdf = () => {
                                 <View style={styles.cell}>
                                     <Text style={{ marginTop: 10, marginBottom: 15, fontSize: "10px" }}>
                                         Step 2 (PR) Filling out the forms, information verification and completeness check, preparing the application package
-                                        {'/n'}{'/n'}
+                                        {'
+'}{'
+'}
                                         Payment is due before final submission of application.
-                                        {'/n'}{'/n'}
+                                        {'
+'}{'
+'}
                                         Provide proof of submission to the client
                                     </Text>
                                 </View>
@@ -1748,13 +1752,13 @@ const styles = StyleSheet.create({
         fontSize: 14,
         marginBottom: 10,
         fontWeight: "bold",
-        color: "#000"
+        color: "#000000"
     },
     subHeader: {
         fontSize: 12,
         marginBottom: 5,
         fontWeight: "bold",
-        color: "#000"
+        color: "#000000"
     },
     text: {
         marginBottom: 5,
@@ -1777,7 +1781,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         fontSize: 15,
         fontWeight: "bold",
-        color: "#000"
+        color: "#000000"
     },
     clientForm: {
         display: "flex",
@@ -1818,7 +1822,7 @@ const styles = StyleSheet.create({
     dateLine: { minWidth: 80, borderBottom: "1px solid black", display: "inline-block" },
     textBold: {
         fontFamily: "Times-Bold",
-        color: "#000"
+        color: "#000000"
     },
     title: {
         fontSize: 14,

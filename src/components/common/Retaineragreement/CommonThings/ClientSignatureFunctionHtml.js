@@ -57,7 +57,7 @@ export function ClientSignatureFunction({ felidData, familyJsonArray, page, isPd
   console.log(signature)
   // HTML (React DOM) Version
   const signatureContent = isBase64Image
-    ? `<img src="${signature}" alt="${clientName}" style="max-height: 100%;width:auto">`
+    ? `<img src="${signature}" alt="${clientName}" style="max-height: 50px;">`
     : `<span style="display: inline-block; max-width: 100%; max-height: 100%; text-transform: capitalize;font-family: Imperial Script, cursive;color:black;font-weight: bold;font-size:35px">
         &nbsp;&nbsp;&nbsp;
         ${signature === undefined || signature === "undefined" ? "" : signature}
@@ -65,7 +65,7 @@ export function ClientSignatureFunction({ felidData, familyJsonArray, page, isPd
       </span>`;
 
   const signatureBox = `
-    <div class="border d-flex align-items-center justify-content-center" >
+    <div class="border d-flex align-items-center justify-content-center "style="height: 50px;" >
       ${signatureContent}
     </div>`;
 

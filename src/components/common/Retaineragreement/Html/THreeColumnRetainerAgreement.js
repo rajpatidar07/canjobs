@@ -525,15 +525,7 @@ export default function EmployerRetainerAgreement({ page,
                           Balance (Non-Refundable): $2840<br>
                           Balance (Non-Refundable): $5220<br>
                         </p>
-                        <p>Note:There will be an additional fee, or a new fee
-                          arrangement will be agreed upon for government's any
-                          further request for additional
-                          information/documentation
-                          of up to $1000.00 such as updating the forms, asking
-                          for immigration status update, documents related to
-                          marital status change, procedural fairness response or
-                          preparing and submitting statutory declarations,
-                          affidavits etc.
+                        <p>Note:<u>${felidData.note || "There will be an additional fee, or a new fee  arrangement will be agreed upon for government's any further request for additional information/documentation of up to $1000.00 such as updating the forms, asking for immigration status update, documents related to marital status change, procedural fairness response or preparing and submitting statutory declarations, affidavits etc."}</u>
                           <ul>
                             <li>If a fee has been quoted in this Retainer, then,
                               while the RCIC expects that his fee will not
@@ -1514,12 +1506,9 @@ export default function EmployerRetainerAgreement({ page,
             <div class="d-flex justify-content-end gap-4" style="gap: 4rem;">
 <h3 class="font-size-6 text-end">Initials :</h3>
 <div>
-  <div
-                      style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
+
                    ${felidData?.initial ? InitialFunction({ isPdf: false, felidData: felidData }) : ""}
-                               
-                       </div>
-  </div>
+                                 </div>
   </div>
             <p><p
                 style="color: #800000; text-align: center; font-family: 'Times New Roman', serif;">

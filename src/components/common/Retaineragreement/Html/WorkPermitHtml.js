@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import {InitialFunction} from "../CommonThings/InitialFunction";
+import { InitialFunction } from "../CommonThings/InitialFunction";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
 import CommonRetainerAgreementDate from "../CommonRetainerAgreementDate"
@@ -51,11 +51,11 @@ const WorkPermitHtml = ({
   This Retainer Agreement is made this
  <span class="para_gap text-capitalize" style="min-Width:50px">
  
-   ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00"?  CommonRetainerAgreementDate({ _date: felidData?.agreement_date, format: "Do" }) : ""}  </span>
+   ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00" ? CommonRetainerAgreementDate({ _date: felidData?.agreement_date, format: "Do" }) : ""}  </span>
    day of
 
-    <span class="para_gap text-capitalize" style="min-Width:50px">${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00"?  CommonRetainerAgreementDate({ _date: felidData?.agreement_date, format: "MMMM" }) : ""}</span>
-   ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00"?  CommonRetainerAgreementDate({ _date: felidData?.agreement_date, format: "YYYY" }) : " "}
+    <span class="para_gap text-capitalize" style="min-Width:50px">${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00" ? CommonRetainerAgreementDate({ _date: felidData?.agreement_date, format: "MMMM" }) : ""}</span>
+   ${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00" ? CommonRetainerAgreementDate({ _date: felidData?.agreement_date, format: "YYYY" }) : " "}
   between Regulated Canadian Immigration Consultant (RCIC) Harpreet Kaur (the
   “RCIC”), RCIC Membership Number
   <span>R533393</span>, phone number
@@ -419,7 +419,7 @@ const WorkPermitHtml = ({
             filing): ${felidData?.balance_paid_at_time_of_filing || ""} $
            </b>       
             </p>
-          <p>Note:</p>
+          <p>Note:<u>${felidData.note||"               "}</u></p>
           <ul id="l5"  style="list-style-type:disc;">
             <li data-list-text="•">
               <p>
@@ -1232,13 +1232,8 @@ ${ClientSignatureFunction({ page: "admin", familyJsonArray, felidData })}
              <div class="d-flex justify-content-end gap-4" style="gap: 4rem;">
       <h3 class="font-size-6 text-end">Initials :</h3>
       <div>
-         <div
-                     style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
-                      
                   ${felidData?.initial ? InitialFunction({ isPdf: false, felidData: felidData }) : ""}
-                              
-                      </div>
-        <h4 class="font-size-6 text-end d-none">RCIC</h4>
+                                      <h4 class="font-size-6 text-end d-none">RCIC</h4>
       </div>
 </p>
 

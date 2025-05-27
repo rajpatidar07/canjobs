@@ -424,22 +424,22 @@ function JobProfileResponse(props) {
               >
                 <thead>
                   <tr>
-                    {/* <th
+                    <th
                       scope="col"
                       className="pl-0 border-0 font-size-4 font-weight-normal"
                     >
                       <Link
                         to={""}
                         onClick={() => {
-                          handleSort("name");
+                          handleSort("job_id");
                           props.setpageNo(1);
                         }}
                         className="text-gray"
-                        title="Sort by Name"
+                        title="Sort by Job Id"
                       >
-                        Name
+                        Job ID
                       </Link>
-                    </th> */}
+                    </th>
 
                     <th
                       scope="col"
@@ -595,7 +595,7 @@ function JobProfileResponse(props) {
                       // ((props.response === "response") || (props.response === "self") ||
                       //   ((props.response === "visa" || props.response === "lmia") && res.job_status === "1")) ?
                       <tr className="text-capitalize position-relative" key={i}>
-                        {/* <th className="py-5 ">{res.employee_id}</th> */}
+                        <th className="py-5 ">{res.job_id}</th>
                         <th className=" py-5">
                           <h3 className="font-size-3 font-weight-normal text-black-2 mb-0">
                             <div className="d-flex profile_box gx-2">

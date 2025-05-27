@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import {InitialFunction} from '../CommonThings/InitialFunction';
+import { InitialFunction } from '../CommonThings/InitialFunction';
 import { ClientSignatureFunction } from '../CommonThings/ClientSignatureFunctionHtml';
 import { RCICSignatureFunction } from '../CommonThings/RCICSignatureFunction';
 import CommonRetainerAgreementDate from "../CommonRetainerAgreementDate"
@@ -51,7 +51,7 @@ export default function EmployerRetainerAgreement({ page,
         </div>
         <div class="content" style="padding: 10px 20px;text-align: justify;">
             <h2 class="font-weight-bold text-black text-center mb-4 mt-4 text-capitalize text-primary font-size-6">Retainer Agreement</h2>
-            <p class="m-0">THIS RETAINER AGREEMENT is made on <span class="border-bottom border-dark">${ felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00"?  CommonRetainerAgreementDate({ _date: felidData?.agreement_date, format: "llll" }) : ""}</span> </p>
+            <p class="m-0">THIS RETAINER AGREEMENT is made on <span class="border-bottom border-dark">${felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00" ? CommonRetainerAgreementDate({ _date: felidData?.agreement_date, format: "llll" }) : ""}</span> </p>
             <p class="m-0">Program : <b>Application for Labour Market Impact Assessment (LMIA)+ Recruitment (if applicable)</b></p>
             <h3 class="font-weight-bold font-size-6 ">1. Contact Information</h3>
             <h4 class="font-weight-bold font-size-5">Between Client</h4>
@@ -145,6 +145,7 @@ export default function EmployerRetainerAgreement({ page,
     <p><span class="font-weight-bold pr-2 ">✓</span>Job Advertisement fee for each occupation (2 paid Job Ads)	     <b>CAD 300.00</b></p>
     <p><span class="font-weight-bold pr-2 ">✓</span>Chartered Professional Accountant's (CPA) Attestation Letter	     <b>CAD 1000.00</b></p>
     <p><span class="font-weight-bold pr-2 ">✓</span>Recruitment charges per applicant (if applicable)	<b>CAD 1000.00</b></p>
+    <br>NOTE:<u> ${felidData.note || "All complaint forms must be signed."}</u><br><br>
     </div>
     
     <div> 
@@ -186,7 +187,7 @@ export default function EmployerRetainerAgreement({ page,
     <div>
     <h3 class="font-weight-bold font-size-6 ">9. Dispute Resolution</h3>
     <p>
-        Please be advised that Harpreet Kaur is a member in good standing of the Immigration Consultants of Canada Regulatory Council (ICCRC), and as such, is bound by its By-laws, Code of Professional Ethics, and associated Regulations. In the event of a dispute related to the Code of Professional Ethics, the Client and RCIC are to make every effort to resolve the matter between the two parties. In the event a resolution cannot be reached, the Client is to present the complaint in writing to the RCIC and allow the RCIC 30 days to respond to the Client. In the event the dispute is still unresolved, the Client may follow the complaint and discipline procedure outlined by the Council on their website under the heading "File a Complaint". NOTE: All complaint forms must be signed.<br><br>
+        Please be advised that Harpreet Kaur is a member in good standing of the Immigration Consultants of Canada Regulatory Council (ICCRC), and as such, is bound by its By-laws, Code of Professional Ethics, and associated Regulations. In the event of a dispute related to the Code of Professional Ethics, the Client and RCIC are to make every effort to resolve the matter between the two parties. In the event a resolution cannot be reached, the Client is to present the complaint in writing to the RCIC and allow the RCIC 30 days to respond to the Client. In the event the dispute is still unresolved, the Client may follow the complaint and discipline procedure outlined by the Council on their website under the heading "File a Complaint". <br><br>
         ICCRC Contact Information:<br>
     Immigration Consultants of Canada Regulatory Council (ICCRC)<br>
     5500 North Service Rd., Suite 1002 Burlington, ON, L7L 6W6<br>
@@ -307,9 +308,7 @@ export default function EmployerRetainerAgreement({ page,
                             </div>
     <h4 class="font-size-6 text-end d-none">RCIC</h4></div>
     <div class="d-none">
-      <div style="width: 100%; height: 50px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center;">
                 <img src=${felidData?.initial || ""} alt="Initial" style="max-width: 100%; max-height: 100%;">
-            </div>
     <h4 class="font-size-6 text-end">Clients</h4></div>
     </div> 
     

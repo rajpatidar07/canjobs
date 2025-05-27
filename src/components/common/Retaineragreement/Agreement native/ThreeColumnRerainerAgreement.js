@@ -3,7 +3,7 @@ import {
     Page, Text, View, Document, StyleSheet, BlobProvider, Image, PDFViewer, Link,
 } from '@react-pdf/renderer';
 import { AddSharePointDOcument, AddUpdateAgreement } from '../../../../api/api';
-import {InitialFunction} from '../CommonThings/InitialFunction';
+import { InitialFunction } from '../CommonThings/InitialFunction';
 import { ClientSignatureFunction } from '../CommonThings/ClientSignatureFunctionHtml';
 import { RCICSignatureFunction } from '../CommonThings/RCICSignatureFunction';
 import CommonRetainerAgreementDate from '../CommonRetainerAgreementDate';
@@ -111,7 +111,7 @@ const ThreeColumnRerainerAgreement = () => {
                 }
                 const file = new File(
                     [newBlob],
-                    `${felidData?.type.replaceAll(" ", "_")+`_${felidData?.id}`}.pdf`,
+                    `${felidData?.type.replaceAll(" ", "_") + `_${felidData?.id}`}.pdf`,
                     { type: "application/pdf" }
                 ); try {
                     let res = await AddSharePointDOcument(
@@ -198,7 +198,7 @@ const ThreeColumnRerainerAgreement = () => {
                         </Text>
                         {" "}(the “Client”), located at
 
-                        {felidData&&felidData?.client_address !== "" && <Text style={[styles.textunderline, { textTransform: "capitalize" }]} > {felidData.client_address ? (felidData.client_address) : "________________"} </Text>}
+                        {felidData && felidData?.client_address !== "" && <Text style={[styles.textunderline, { textTransform: "capitalize" }]} > {felidData.client_address ? (felidData.client_address) : "________________"} </Text>}
 
                         ,{"\n"} Email
                         <Text style={styles.textunderline} >
@@ -608,8 +608,10 @@ const ThreeColumnRerainerAgreement = () => {
                         </View>
 
                         <View id="l5" style={{ paddingLeft: 10 }}>
-                            <Text style={{ marginTop: 15 }}>Note:
-                                There will be an additional fee, or a new fee arrangement will be agreed upon for government's any further request for additional information/documentation of up to $1000.00 such as updating the forms, asking for immigration status update, documents related to marital status change, procedural fairness response or preparing and submitting statutory declarations, affidavits etc.</Text>
+                            <Text style={{ marginTop: 15 }}>Note:<Text style={styles.textunderline}>
+                                {felidData?.note || "There will be an additional fee, or a new fee arrangement will be agreed upon for government's any further request for additional information/documentation of up to $1000.00 such as updating the forms, asking for immigration status update, documents related to marital status change, procedural fairness response or preparing and submitting statutory declarations, affidavits etc."}
+                            </Text>
+                            </Text>
                             <View style={{ marginTop: 10 }}>
                                 <View style={{ marginTop: 20, flexDirection: 'row' }}>
                                     <Text style={{ width: 20, fontWeight: 'bold' }}>•</Text>
@@ -1435,7 +1437,7 @@ const ThreeColumnRerainerAgreement = () => {
                                     {familyJsonArray[0]?.date_signature_client &&
                                         familyJsonArray[0]?.date_signature_client !== "0000-00-00 00:00:00" &&
                                         familyJsonArray[0]?.date_signature_client !== "0000-00-00"
-                                        ? <CommonRetainerAgreementDate _date={familyJsonArray[0]?.date_signature_clien} format={"DD/MM/YYYY"} />
+                                        ? <CommonRetainerAgreementDate _date={familyJsonArray[0]?.date_signature_client} format={"DD/MM/YYYY"} />
                                         : " "}
                                 </Text>
                                 <Text style={{ textAlign: "center" }}>Date</Text>
@@ -1467,7 +1469,7 @@ const ThreeColumnRerainerAgreement = () => {
 
 
             </View>
-            <View style={{}}>
+            <View style={{ marginTop: 70}}>
                 <Text style={[{ textAlign: "center", }, styles.definition]}>
                     AUTHORIZATION
                 </Text>
@@ -1614,7 +1616,7 @@ const ThreeColumnRerainerAgreement = () => {
                                 {familyJsonArray[0]?.date_signature_client &&
                                     familyJsonArray[0]?.date_signature_client !== "0000-00-00 00:00:00" &&
                                     familyJsonArray[0]?.date_signature_client !== "0000-00-00"
-                                    ? <CommonRetainerAgreementDate _date={familyJsonArray[0]?.date_signature_clien} format={"DD/MM/YYYY"} />
+                                    ? <CommonRetainerAgreementDate _date={familyJsonArray[0]?.date_signature_client} format={"DD/MM/YYYY"} />
                                     : " "}
                             </Text>
                             <Text style={{ margin: "0 0 30px 0" }}>Date</Text>
@@ -1651,7 +1653,7 @@ const ThreeColumnRerainerAgreement = () => {
                                 <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
                                 <View>
                                     {felidData?.initial ? (
-                                       <InitialFunction felidData={felidData} isPdf={true} />
+                                        <InitialFunction felidData={felidData} isPdf={true} />
 
                                     ) : (
                                         <View
@@ -1698,9 +1700,9 @@ const ThreeColumnRerainerAgreement = () => {
                                         <View>
                                             {felidData?.initial ? (
                                                 <View
-                                                   
+
                                                 >
-                                                   <InitialFunction felidData={felidData} isPdf={true} />
+                                                    <InitialFunction felidData={felidData} isPdf={true} />
                                                 </View>
 
                                             ) : (

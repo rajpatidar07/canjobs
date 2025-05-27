@@ -202,13 +202,13 @@ function PersonalDetails(props) {
     //       ? "Other permit sholud have 2 or more letters"
     //       : "",
     // ],
-    // reffer_by:
-    //   props.employeeId !== "0" || user_type === "user"
-    //     ? null
-    //     : [
-    //       (value) =>
-    //         value === "" || value === null ? "Refferer is required" : null,
-    //     ],
+    reffer_by:
+      props.employeeId !== "0" || user_type === "user"
+        ? null
+        : [
+          (value) =>
+            value === "" || value === null ? "Refferer is required" : null,
+        ],
     // assigned_by: props.employeeId !== "0" || user_type === "user" || user_type === "agent"
     //   ? null
     //   : [
@@ -1353,6 +1353,7 @@ function PersonalDetails(props) {
                       </span>
                     )}
                   </div>
+                  <div className={`w-100 ${props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ? " col-md-12" : " col-md-4 "}`}>
                   <div
                     className={
                       `form-group  ${user_type === "user" ||
@@ -1360,7 +1361,7 @@ function PersonalDetails(props) {
                         || props.pageNameForForm === "ApplicantType"
                         || props.user_of_page === "assignedUser"
                         ? " d-none"
-                        : ` d-flex ${props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ? " col-md-12" : " col-md-4 "}`}
+                        : ` d-flex`}
                     `}
                     style={{ position: "relative" }}
                   >
@@ -1368,7 +1369,7 @@ function PersonalDetails(props) {
                       htmlFor="reffer_by"
                       className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                     >
-                      Referred By:
+                      Referred By<span className="text-danger">*</span>:
                     </label>
                     {/* <Select
                       options={agentList || []} 
@@ -1406,16 +1407,17 @@ function PersonalDetails(props) {
                       +
                     </span>
 
+                  </div>
                     {/* ERROR MSG FOR REFFER BY */}
                     {errors.reffer_by && (
                       <span
                         key={errors.reffer_by}
-                        className="text-danger font-size-3"
+                        className="text-danger font-size-3 mb-3"
                       >
                         {errors.reffer_by}
                       </span>
                     )}
-                  </div>
+                    </div>
                   <div
                     className={`form-group
                     ${user_type === "agent"

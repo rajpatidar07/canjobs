@@ -81,7 +81,7 @@ const WorkPermitPdf = () => {
     <View style={{ height: "auto" }}>
       <View style={{ padding: "10px 20px" }}>
         <Text
-          style={{ textAlign: "center", fontSize: "24px", marginBottom: 15, color: '#000' }}
+          style={{ textAlign: "center", fontSize: "24px", marginBottom: 15, color: '#000000' }}
         >
           RETAINER AGREEMENT
         </Text>
@@ -473,7 +473,7 @@ const WorkPermitPdf = () => {
                 rates and may change anytime on or before submission.
               </Text>
             </View>
-            <View style={{ height: 205 }}><Text></Text></View>
+            <View style={{ height: 190 }}><Text></Text></View>
             <View style={[styles.table, { marginTop: 57 }]}>
               <View style={styles.row}>
                 <View style={styles.cell}>
@@ -548,7 +548,9 @@ const WorkPermitPdf = () => {
               </View>
             </View>
             <View id="l5" style={{ paddingLeft: 10 }}>
-              <Text style={{ marginTop: 20 }}>Note:</Text>
+              <Text style={{ marginTop: 5 }}>Note:<Text style={styles.textunderline}>
+                {felidData?.note||"               "}
+              </Text></Text>
               <View >
                 <View style={{ flexDirection: 'row' }}>
                   <Text style={{ width: 20, fontWeight: 'bold' }}>•</Text>
@@ -1171,7 +1173,7 @@ const WorkPermitPdf = () => {
           <View
             data-list-text="20."
             style={{
-              marginTop: 20,
+              marginTop: 30,
               fontWeight: "300",
               flexDirection: "row"
             }}
@@ -1458,7 +1460,7 @@ const WorkPermitPdf = () => {
           </View>
 
         </View>
-        <View style={{ marginTop: 10 }}>
+        <View style={{ marginTop: 30 }}>
           <Text style={[{ textAlign: "center", }, styles.definition]}>
             AUTHORIZATION
           </Text>
@@ -1736,13 +1738,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginBottom: 10,
     fontWeight: "bold",
-    color: "#000"
+    color: "#000000"
   },
   subHeader: {
     fontSize: 12,
     marginBottom: 5,
     fontWeight: "bold",
-    color: "#000"
+    color: "#000000"
   },
   text: {
     marginBottom: 5,
@@ -1765,7 +1767,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 15,
     fontWeight: "bold",
-    color: "#000"
+    color: "#000000"
   },
   clientForm: {
     display: "flex",
@@ -1806,7 +1808,7 @@ const styles = StyleSheet.create({
   dateLine: { minWidth: 80, borderBottom: "1px solid black", display: "inline-block" },
   textBold: {
     fontFamily: "Times-Bold",
-    color: "#000"
+    color: "#000000"
   },
   title: {
     fontSize: 14,

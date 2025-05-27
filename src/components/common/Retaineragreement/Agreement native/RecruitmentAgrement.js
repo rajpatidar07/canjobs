@@ -13,7 +13,7 @@ import {
 import { AddSharePointDOcument, AddUpdateAgreement } from "../../../../api/api";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
-import {InitialFunction} from "../CommonThings/InitialFunction";
+import { InitialFunction } from "../CommonThings/InitialFunction";
 import CommonRetainerAgreementDate from "../CommonRetainerAgreementDate";
 // import { toast } from "react-toastify";
 
@@ -44,7 +44,7 @@ const RecruitmentAgrement = () => {
         }
         const file = new File(
           [newBlob],
-          `${felidData?.type.replaceAll(" ", "_")+`_${felidData?.id}`}.pdf`,
+          `${felidData?.type.replaceAll(" ", "_") + `_${felidData?.id}`}.pdf`,
           { type: "application/pdf" }
         );
         console.log('file = >', file)
@@ -80,7 +80,7 @@ const RecruitmentAgrement = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [blobData]);
   const parseDate = (date) => {
-    if (!date || date === "0000-00-00" || date === "0000-00-00 00:00:00") return null;
+    if (!date || date === "0000000-00-00" || date === "0000000-00-00 00:00:00") return null;
     const parsedDate = new Date(date);
     return !isNaN(parsedDate.getTime()) ? parsedDate : null;
   };
@@ -149,27 +149,27 @@ const RecruitmentAgrement = () => {
             <Text style={styles.text}>9. This agreement does not provide a guarantee of securing employment.{"\n"} </Text>
           </View>
           <View >
-            <Text style={styles.subHeader}>10. Confidentiality:</Text>
+            <Text style={[styles.subHeader, styles.bold]}>10. Confidentiality:</Text>
             <Text style={styles.text}>
               All information and documentation reviewed by The Recruiter, required by the employer, and used for the placement and recruitment services, will not be divulged to any third party, other than agents or employees of the Recruiter, without prior consent, except as demanded by the Council
               or required under law.{"\n"}{"\n"}
             </Text>
           </View>
           <View style={{ marginTop: 10 }}>
-            <Text style={styles.subHeader}>11. Change Policy:</Text>
+            <Text style={[styles.subHeader, styles.bold]}>11. Change Policy:</Text>
             <Text style={styles.text}>
               The Client acknowledges that if the Recruiter is asked to act on the Client's behalf on matters other than those outlined above in the scope of this Agreement, or because of a matter other than those outlined above in the scope of this Agreement, or because of a material change in the Client's circumstances, or because of material facts not disclosed at the outset of the application, the Agreement can be modified accordingly. This Agreement may only be altered or amended when such changes are made in writing and executed by the parties hereto. All changes and/or edits must be initialed and dated by both the Member and the Client. Any substantial changes to this agreement may require that the parties enter into a new Retainer Agreement.{"\n"}{"\n"}
             </Text>
           </View>
           <View >
-            <Text style={styles.subHeader}>12. Termination:</Text>
+            <Text style={[styles.subHeader, styles.bold]}>12. Termination:</Text>
             <Text style={styles.text}>
               This Agreement is considered terminated upon completion of tasks identified under this agreement.{"\n"}
               This Agreement is considered terminated if material changes occur to the Client's application or eligibility, which make it impossible to proceed with services detailed in this Agreement.{"\n"}{"\n"}
             </Text>
           </View>
           <View >
-            <Text style={styles.subHeader}>13. Discharge or Withdrawal of Representation:</Text>
+            <Text style={[styles.subHeader, styles.bold]}>13. Discharge or Withdrawal of Representation:</Text>
             <Text style={styles.text}>
               The Client may discharge representation and terminate this Agreement, upon writing, at which time any outstanding or unearned fees or disbursements will be refunded by the RCIC to the Employer and/or any outstanding fees or disbursements will be paid by the Employer to the Recruiter.
               {"\n"}
@@ -178,14 +178,14 @@ const RecruitmentAgrement = () => {
             </Text>
           </View>
           <View >
-            <Text style={styles.subHeader}>14. Governing Law:</Text>
+            <Text style={[styles.subHeader, styles.bold]}>14. Governing Law:</Text>
             <Text style={styles.text}>
               This Agreement shall be governed by the laws in effect in the Province/Territory of Alberta, and the federal laws of Canada applicable therein and except for disputes pursuant to Section 9 hereof, any dispute with respect to the terms of this Agreement shall be decided by a court of competent jurisdiction within the Province/Territory of Alberta.
               {"\n"}{"\n"}
             </Text>
           </View>
           <View >
-            <Text style={styles.subHeader}>15. Miscellaneous:</Text>
+            <Text style={[styles.subHeader, styles.bold]}>15. Miscellaneous:</Text>
             <Text style={styles.text}>
 
 
@@ -209,9 +209,12 @@ const RecruitmentAgrement = () => {
               {"\n"}{"\n"}
               15.10 The Client acknowledges that he/she has had sufficient time to review this Agreement and has been given an opportunity to obtain independent legal advice and translation prior to the execution and delivery of this Agreement.
               {"\n"}{"\n"}
+              Note:<Text style={styles.textunderline}>
+                {felidData?.note || "               "}
+              </Text>
             </Text>
           </View>
-          <View style={{ marginTop: 120 }}>
+          <View style={{ marginTop: 100 }}>
             <View>{"\n"}{"\n"}
               {/* Contact Information Header */}
               <Text style={[{ fontWeight: "600" }, styles.definition]}>
@@ -433,7 +436,7 @@ const RecruitmentAgrement = () => {
                 In doing so, they my each receive or pay each other any pecuniary remuneration/benefits that may be acquired directly or indirectly including those from a third party for the purpose of obtaining a favorable and expeditious results.
               </Text>
               <Text style={{ marginTop: 15 }}>
-                The RCIC and the firm are authorized to act on my behalf.{'/n'}{'/n'}
+                The RCIC and the firm are authorized to act on my behalf.{'\n'}{'\n'}
                 I also agree to provide all necessary documentation as required.
               </Text>
               <Text style={[{ marginTop: 20 }, styles.definition]}>Declaration</Text>
@@ -462,13 +465,13 @@ const RecruitmentAgrement = () => {
                   I have read and understood all the terms and steps in the retainer letter above and I agree to all the terms mentioned And for so doing, this document shall constitute good and sufficient authority and declaration
                 </Text>
               </View>
-              <View style={{ width: "100%", marginTop: 117 }}>
+              <View style={{ width: "100%", marginTop: 100 }}>
                 { }
                 {/* Client Section */}
-                <View style={[styles.clientForm, { alignItems: "center",  paddingHorizontal: 10 }]}>
+                <View style={[styles.clientForm, { alignItems: "center", paddingHorizontal: 10 }]}>
 
                   {/* Client Name */}
-                  <View style={[styles.clientFormChild, {  marginBottom: 20, marginTop: 2 }]}>
+                  <View style={[styles.clientFormChild, { marginBottom: 20, marginTop: 2 }]}>
                     <Text
                       style={{
                         marginBottom: 5,
@@ -498,30 +501,30 @@ const RecruitmentAgrement = () => {
                   </View>
 
                   {/* Client Date */}
-                   <View style={[styles.clientFormChild, { marginTop: 2 }]}>
-                      <Text
-                        style={{
-                          fontWeight: "bold",
-                          marginBottom: 5,
-                          minWidth: "100%",
-                          borderBottom: "1px solid black",
-                          textAlign:"center"
-                        }}
-                      >
+                  <View style={[styles.clientFormChild, { marginTop: 2 }]}>
+                    <Text
+                      style={{
+                        fontWeight: "bold",
+                        marginBottom: 5,
+                        minWidth: "100%",
+                        borderBottom: "1px solid black",
+                        textAlign: "center"
+                      }}
+                    >
                       {
                         !familyJsonArray[0]?.date_signature_client ||
-                          familyJsonArray[0]?.date_signature_client === "0000-00-00 00:00:00"
+                          familyJsonArray[0]?.date_signature_client === "0000000-00-00 00:00:00"
                           ? ""
                           : <CommonRetainerAgreementDate _date={familyJsonArray[0]?.date_signature_client} format={"DD-MM-YYYY"} />
                       }
                     </Text>
-                    <Text style={{ marginBottom: 30,  textAlign:"center" }}>Date</Text>
+                    <Text style={{ marginBottom: 30, textAlign: "center" }}>Date</Text>
                   </View>
                 </View>
 
                 {/* RCIC Section */}
                 <View style={{ width: "100%", marginTop: 15 }}>
-                  <View style={[styles.clientForm, {  marginTop: 20, paddingHorizontal: 10 }]}>
+                  <View style={[styles.clientForm, { marginTop: 20, paddingHorizontal: 10 }]}>
 
                     {/* RCIC Name */}
                     <View style={[styles.clientFormChild, { marginBottom: 20, marginTop: 2 }]}>
@@ -554,18 +557,18 @@ const RecruitmentAgrement = () => {
                           marginBottom: 5,
                           minWidth: "100%",
                           borderBottom: "1px solid black",
-                          textAlign:"center"
+                          textAlign: "center"
                         }}
                       >
                         {
                           !felidData?.date_signature_rcic ||
-                            felidData?.date_signature_rcic === "0000-00-00" ||
-                            felidData?.date_signature_rcic === "0000-00-00 00:00:00"
+                            felidData?.date_signature_rcic === "0000000-00-00" ||
+                            felidData?.date_signature_rcic === "0000000-00-00 00:00:00"
                             ? ""
                             : <CommonRetainerAgreementDate _date={felidData?.date_signature_rcic} format={"DD-MM-YYYY"} />
                         }
                       </Text>
-                      <Text style={{  textAlign:"center"}}>Date</Text>
+                      <Text style={{ textAlign: "center" }}>Date</Text>
                     </View>
                   </View>
                 </View>
@@ -655,7 +658,7 @@ const RecruitmentAgrement = () => {
                     <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
                     <View>
                       {felidData?.initial ? (
-                       <InitialFunction felidData={felidData} isPdf={true} />
+                        <InitialFunction felidData={felidData} isPdf={true} />
 
                       ) : (
                         <View
@@ -695,14 +698,14 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontWeight: "bold",
     marginTop: 20,
-    color: "#000"
+    color: "#000000"
   },
   subHeader: {
     fontSize: 12,
     marginBottom: 5,
     marginTop: 10,
     fontWeight: "bold",
-    color: "#000"
+    color: "#000000",
   },
   text: {
     marginBottom: 5,
@@ -724,7 +727,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 15,
     fontWeight: "bold",
-    color: "#000"
+    color: "#000000",
+    fontFamily: "Times-Bold",
   },
   clientForm: {
     display: "flex",
@@ -759,7 +763,7 @@ const styles = StyleSheet.create({
   },
   bold: {
     fontWeight: "bold",
-    color: "#000"
+    color: "#000000"
   },
   container: { display: "flex", flexDirection: "row", justifyContent: "space-between", marginTop: 30 },
   box: { width: "45%" },

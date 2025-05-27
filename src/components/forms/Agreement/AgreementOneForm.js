@@ -232,7 +232,7 @@ const AgreementOneForm = ({
       let filteredState = { ...state };
 
       // Conditionally include signature_status
-      if (!(index === "rcic_signature" || index === "final")) {
+      if (!(index === "rcic_signature" || index === "final" || state.initial)) {
         delete filteredState.signature_status;
       }
 
@@ -266,7 +266,10 @@ const AgreementOneForm = ({
         state.initial &&
         !state.initial.startsWith("data:image/")
       ) {
-        filteredState.initial = textToImage(state.initial);
+        filteredState.initial = textToImage(state.initial.split(" ")
+          .filter((word) => word)
+          .map((word) => word[0])
+          .join(" ") || "");
       }
 
 
@@ -409,6 +412,7 @@ const AgreementOneForm = ({
     "date_signature_client": "",
     "client_date_of_birth": ""
   });
+  console.log(SigningUserType)
   return (
     <Modal
       show={show}
@@ -736,7 +740,7 @@ const AgreementOneForm = ({
                     type: "text",
                     disabled: false
                   },
-                  
+
                   {
                     label:
                       "Note",

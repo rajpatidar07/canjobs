@@ -55,7 +55,7 @@ export function RCICSignatureFunction({ felidData, isPdf }) {
 
   // HTML Version
   const signatureContent = isBase64Image
-    ? `<img src="${signature}" alt="RCIC Signature" style="max-height: 100%;">`
+    ? `<img src="${signature}" alt="RCIC Signature" style="max-height: 50px;">`
     : `<span style="display: inline-block; max-width: 100%; max-height: 100%; text-transform: capitalize;font-family: Imperial Script, cursive;color:black;font-weight: bold;font-size:35px">
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         ${signature || ""}

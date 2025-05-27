@@ -16,7 +16,7 @@ import { Pagination } from "react-bootstrap";
 
 const initialFormState = {
   applicant_name: "",
-  phone: 0,
+  phone: "",
   email: "",
   manager_id: "",
   manager_type: "",

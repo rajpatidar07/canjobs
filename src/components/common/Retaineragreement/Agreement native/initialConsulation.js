@@ -12,7 +12,7 @@ import {
 } from "@react-pdf/renderer";
 import { TbArrowBadgeRight } from "react-icons/tb";
 import { AddSharePointDOcument, AddUpdateAgreement } from "../../../../api/api";
-import {InitialFunction} from "../CommonThings/InitialFunction";
+import { InitialFunction } from "../CommonThings/InitialFunction";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
 import CommonRetainerAgreementDate from "../CommonRetainerAgreementDate";
@@ -216,6 +216,10 @@ const InitialConsultationAgreement = () => {
                 executing a Retainer Agreement and submitting an initial deposit
                 fee, the cost of the Initial Consultation will be applied as a
                 credit toward the overall fee specified in the Retainer Agreement.
+                {"\n"}
+                Note: <Text style={styles.textunderline}>
+                  {felidData?.note || "               "}
+                </Text>
               </Text>
             </View>
           </View>
@@ -485,13 +489,13 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontWeight: "bold",
     marginTop: 20,
-    color: "#000"
+    color: "#000000"
   },
   subHeader: {
     fontSize: 12,
     marginBottom: 5,
     fontWeight: "bold",
-    color: "#000"
+    color: "#000000"
   },
   text: {
     marginBottom: 5,
@@ -547,7 +551,7 @@ const styles = StyleSheet.create({
   },
   bold: {
     fontWeight: "bold",
-    color: "#000"
+    color: "#000000"
   },
   container: { display: "flex", flexDirection: "row", justifyContent: "space-between", marginTop: 30 },
   box: { width: "45%" },

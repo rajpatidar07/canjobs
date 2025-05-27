@@ -309,6 +309,20 @@ export default function JobTable(props) {
             <table className="table table-striped main_data_table">
               <thead>
                 <tr>
+                    <th
+                    scope="col"
+                    className=" border-0 font-size-4 font-weight-normal"
+                  >
+                    <Link
+                      onClick={() => {
+                        handleSort("job_id	");
+                      }}
+                      title="Sort by Job Id"
+                      className="text-gray"
+                    >
+                      Job Id
+                    </Link>
+                  </th>
                   <th
                     scope="col"
                     className=" border-0 font-size-4 font-weight-normal"
@@ -503,6 +517,7 @@ export default function JobTable(props) {
                             }
                             style={{ border: "0" }}
                           >
+                            
                             <td
                               style={{ paddingBottom: "0!important" }}
                               colSpan="11"
@@ -659,7 +674,8 @@ export default function JobTable(props) {
                             /*job.is_applied === "1" ? "d-none" : */ "col-12 text-capitalize job_row"
                           }
                         >
-                          <th scope="row" className="py-5 ">
+                          <th scope="row" className="py-5 ">{job.job_id	}</th>
+                          <th  className="py-5 ">
                             <div className="d-flex align-items-center">
                               {(job.is_monday_data === 1 || job.is_monday_data === "1") && (
                                 <MondayBadge />

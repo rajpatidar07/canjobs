@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
-import {InitialFunction} from "../CommonThings/InitialFunction";
+import { InitialFunction } from "../CommonThings/InitialFunction";
 import CommonRetainerAgreementDate from "../CommonRetainerAgreementDate";
 // import { Link } from "react-router-dom";
 const RecruitmentServiceHtml = ({
@@ -175,6 +175,7 @@ const RecruitmentServiceHtml = ({
                         </p>
                         <p>15.10 The Client acknowledges that he/she has had sufficient time to review this Agreement and has been given an opportunity to obtain independent legal advice and translation prior to the execution and delivery of this Agreement.
                         </p> 
+                        Note:<u>${felidData.note||"               "}</u>
                     </div>
                 </li>
                 <li>

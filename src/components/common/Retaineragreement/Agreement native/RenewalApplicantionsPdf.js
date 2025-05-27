@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Page, Text, View, Document, StyleSheet, BlobProvider, Image, PDFViewer } from '@react-pdf/renderer';
 import { AddSharePointDOcument, AddUpdateAgreement } from '../../../../api/api';
-import {InitialFunction} from '../CommonThings/InitialFunction';
+import { InitialFunction } from '../CommonThings/InitialFunction';
 import { ClientSignatureFunction } from '../CommonThings/ClientSignatureFunctionHtml';
 import { RCICSignatureFunction } from '../CommonThings/RCICSignatureFunction';
 import CommonRetainerAgreementDate from '../CommonRetainerAgreementDate';
 const styles = StyleSheet.create({
   page: {
-    padding: 30,
+    paddingBottom:2,
+    padding: 40,
     fontFamily: "Times-Roman",
     fontSize: 12,
     lineHeight: 1.5,
@@ -16,7 +17,7 @@ const styles = StyleSheet.create({
   header: {
     textAlign: 'center',
     marginBottom: 10,
-    color: "#000"
+    color: "#000000"
   },
   section: {
     marginBottom: 10,
@@ -59,24 +60,24 @@ const styles = StyleSheet.create({
   dateLine: { minWidth: 80, borderBottom: "1px solid black", display: "inline-block" },
   textBold: {
     fontFamily: "Times-Bold",
-    color: "#000"
+    color: "#000000"
   },
   title: {
     fontSize: 14,
     fontFamily: "Times-Bold",
-    color: "#000"
+    color: "#000000"
   },
   subtitle: {
     fontSize: 12,
     fontFamily: "Times-Bold",
     marginBottom: 5,
-    color: "#000"
+    color: "#000000"
   },
   label: {
     fontSize: 12,
     fontFamily: "Times-Bold",
     marginBottom: 5,
-    color: "#000"
+    color: "#000000"
   },
 });
 
@@ -164,7 +165,7 @@ const RenewalApplicantionsPdf = () => {
           <Text style={[styles.textBold, styles.title, styles.mb5, { textAlign: "center" }]}>
             Retainer Agreement
           </Text>
-          <Text style={[styles.mb8]}>
+          <Text style={[styles.mb5]}>
             THIS RETAINER AGREEMENT is made on{" "}
             {felidData?.agreement_date && felidData?.agreement_date !== "0000-00-00" && felidData?.agreement_date !== "0000-00-00 00:00:00" ? (
               <Text style={[{ borderBottomWidth: 1, borderBottomColor: "black" }, styles.underline]}>
@@ -176,7 +177,7 @@ const RenewalApplicantionsPdf = () => {
           </Text>
           <Text>
             Program:{" "}
-            <Text style={[styles.textBold, styles.mb8, styles.underline]}>
+            <Text style={[styles.textBold, styles.mb5, styles.underline]}>
               Application for Rural Renewal Stream (Innisfail) and Endorsement Letter
             </Text>
           </Text>
@@ -215,34 +216,34 @@ const RenewalApplicantionsPdf = () => {
             </Text>
 
             {/* RCIC Information */}
-            <Text style={[styles.mb5, { marginTop: 10 }]}>And</Text>
+            <Text style={[styles.mb3, { marginTop: 5 }]}>And</Text>
             <Text style={[styles.textBold, { fontSize: 12 }, styles.mb5]}>
               Regulated Canadian Immigration Consultant (RCIC):
             </Text>
-            <Text style={styles.mb5}>
+            <Text style={styles.mb3}>
               <Text style={styles.textBold}>Harpreet Kaur</Text> (here in after called "The RCIC")
             </Text>
-            <Text style={styles.mb8}>2618 Hopewell PI NE #310</Text>
-            <Text style={styles.mb8}>Calgary, AB T1Y7J7, Canada</Text>
-            <Text style={styles.mb8}>Tel: +1 (403) 888-5308</Text>
-            <Text style={styles.mb8}>
+            <Text style={styles.mb3}>2618 Hopewell PI NE #310</Text>
+            <Text style={styles.mb3}>Calgary, AB T1Y7J7, Canada</Text>
+            <Text style={styles.mb3}>Tel: +1 (403) 888-5308</Text>
+            <Text style={styles.mb3}>
               Email: <Text style={[styles.link, styles.underline]}>info@canpathways.ca</Text>
             </Text>
-            <Text style={styles.mb8}>
+            <Text style={styles.mb3}>
               Website: <Text style={[styles.link, styles.underline]}>www.canpathways.ca</Text>
             </Text>
           </View>
 
           {/* RCIC Responsibilities */}
           <View style={styles.section}>
-            <Text style={[styles.subtitle, styles.mb8]}>
+            <Text style={[styles.subtitle, styles.mb5]}>
               2. RCIC Responsibilities and Commitments
             </Text>
-            <Text style={styles.mb8}>
+            <Text style={styles.mb3}>
               The Client has asked the RCIC, and the RCIC has agreed, to act on behalf of the Client in matters related to their
               application for the Rural Renewal Stream and Endorsement Letter from the Rural Community of business location.
             </Text>
-            <Text style={styles.mb8}>
+            <Text style={styles.mb3}>
               The RCIC agrees to perform the following duties, with assistance from the RCIC’s employees, as required:
             </Text>
             <View>
@@ -257,7 +258,7 @@ const RenewalApplicantionsPdf = () => {
                 "Prepare the Client for an interview if requested.",
                 "Perform all duties professionally and competently."
               ].map((item, index) => (
-                <Text key={index} style={styles.mb8}>
+                <Text key={index} style={styles.mb3}>
                   • {item}
                 </Text>
               ))}
@@ -283,7 +284,7 @@ const RenewalApplicantionsPdf = () => {
                 "Comply with the above otherwise can seriously affect the outcome of the results or in delaying or RCIC withdrawing the representation on the client's behalf without refund.",
                 "Failure to comply with the above can result in the RCIC withdrawing from the representation of the Client and not giving a refund."
               ].map((item, index) => (
-                <Text key={index} style={styles.mb8}>
+                <Text key={index} style={styles.mb3}>
                   • {item}
                 </Text>
               ))}
@@ -295,56 +296,60 @@ const RenewalApplicantionsPdf = () => {
           </View>
           {/* 4th point */}
           <View style={styles.section}>
-            <Text style={[styles.subtitle, styles.mb8]}>4. Billing Method and Payment Terms and Conditions</Text>
-            <Text style={[styles.mb8]}>The Client will be billed bya flat fee with payment bymilestones. The details of this billing method are as follows:</Text>
-            <Text style={[styles.mb8]}>
+            <Text style={[styles.subtitle, styles.mb5]}>4. Billing Method and Payment Terms and Conditions</Text>
+            <Text style={[styles.mb5]}>The Client will be billed bya flat fee with payment bilestone. The details of this billing method are as follows:</Text>
+            <Text style={[styles.mb5]}>
               The Client agrees to pay to the RClC a Professional Fee of<Text style={[styles.textBold]}>CAD $5500</Text>b, for the services rendered to the Client in applying to
-              <Text style={[styles.mb8]}>Rural Community of business location for Application for Rural Renewal Stream and Endorsement Letter.
+              <Text style={[styles.mb5]}>Rural Community of business location for Application for Rural Renewal Stream and Endorsement Letter.
               </Text>
             </Text>
-            <Text style={[styles.mb8]}>
-              The Professional Fee is solely for the services performed by the RCIC and does not include govemment fees or any other fees. Additional charges may be applied if the Client delays in providing necessary information and/or documentationto the RCIC, resulting in the RCIC having to change or modify the application.
+            <Text style={[styles.mb5]}>
+              The Professional Fee is solely for the services performed by the RCIC and does not include government fees or any other fees. Additional charges may be applied if the Client delays in providing necessary information and/or documentation to the RCIC, resulting in the RCIC having to change or modify the application.
             </Text>
-            <Text style={[styles.mb8]}>The Client agrees to pay for additional courier fees.</Text>
-            <Text style={[styles.mb8]}>Potential costs will apply for additional or new work requested such as additional documentation, applications; redo Rural Community of business location forms after being completed if Rural Community of business location changes forms before submitting; additional follow-up work created by delayed, incomplete, or no response from the Client; additional 'rush' work created by submitting documents requested by Rural Community of business location with less than 5 days left to the Rural Community of business location deadline given; responses to Rural Community of business location requests or challenges that require more than one hour for any single request; requests for unnecessary meetings and frequent updates on the application.</Text>
+            <Text style={[styles.mb5]}>The Client agrees to pay for additional courier fees.</Text>
+            <Text style={[styles.mb5]}>Potential costs will apply for additional or new work requested such as additional documentation, applications; redo Rural Community of business location forms after being completed if Rural Community of business location changes forms before submitting; additional follow-up work created by delayed, incomplete, or no response from the Client; additional 'rush' work created by submitting documents requested by Rural Community of business location with less than 5 days left to the Rural Community of business location deadline given; responses to Rural Community of business location requests or challenges that require more than one hour for any single request; requests for unnecessary meetings and frequent updates on the application.</Text>
           </View>
           {/* 5th point */}
           <View style={styles.section}>
-            <Text style={[styles.subtitle, styles.mb8]}>5. Payment Schedule</Text>
-            <Text style={[styles.mb8]}><Text style={[styles.textBold]}>Total service charges</Text> $5500+ 5%GST</Text>
-            <Text style={[styles.mb8]}>
-              *Taxes are payable wherever applicable. The above fee does not include any fees payable to the govemment of Canada. While the above fees are non-refundable — if for any reason agreement is terminated any un-used part of fees with be refunded after deduction of any costs. The client may specify the method of refund.
+            <Text style={[styles.subtitle]}>5. Payment Schedule</Text>
+            <Text style={[styles.mb5]}><Text style={[styles.textBold]}>Total service charges</Text> $5500+ 5%GST</Text>
+            <Text style={[styles.mb5]}>
+              *Taxes are payable wherever applicable. The above fee does not include any fees payable to the government of Canada. While the above fees are non-refundable — if for any reason agreement is terminated any un-used part of fees with be refunded after deduction of any costs. The client may specify the method of refund.
             </Text>
-            <Text style={[styles.mb8]}>
+            <Text style={[styles.mb5]}>
               Additional fees that is involved in this process are as follows.
             </Text>
-            <Text style={[styles.mb8]}>✓ Job Advertisement fee for each occupation (2 paid Job Ads)<Text style={[styles.textBold]}> CAD 300.00</Text></Text>
-            <Text style={[styles.mb8]}>✓ Recruitment charges per applicant (if applicable) <Text style={[styles.textBold]}>CAD 1000.00</Text>.</Text>
+            <Text style={[styles.mb5]}>✓ Job Advertisement fee for each occupation (2 paid Job Ads)<Text style={[styles.textBold]}> CAD 300.00</Text></Text>
+            <Text style={[styles.mb5]}>✓ Recruitment charges per applicant (if applicable) <Text style={[styles.textBold]}>CAD 1000.00</Text>.</Text>
+            {"\n"}<Text>NOTE:  <Text style={styles.underline}>
+              {felidData?.note || "All complaint forms must be signed."}
+            </Text>
+            </Text>
           </View>
           {/* 6th section */}
           <View style={styles.section}>
-            <Text style={[styles.subtitle, styles.mb8]}>6. Methods of Payment: We DO NOT accept cheques. </Text>
-            <Text>For Clients Located <Text style={[styles.textBold, styles.mb8]}>INSIDE</Text> Canada, we receive the following methods:</Text>
-            <View style={styles.mb8}>
+            <Text style={[styles.subtitle, styles.mb5]}>6. Methods of Payment: We DO NOT accept cheques. </Text>
+            <Text>For Clients Located <Text style={[styles.textBold, styles.mb5]}>INSIDE</Text> Canada, we receive the following methods:</Text>
+            <View style={styles.mb5}>
               {[
                 "In-person Cash Drop-Off — Please contact us to arrange a time to drop off your payment in cash. We will provide you with a receipt.",
                 "E-transfer — Please send the payment and the answer to the secret question to the following e-mail address: info@canpathwavs.ca",
                 "Credit CardlPayPal: Instructions will be shared, additional up to 3% charges will be applicable if the client is willing to pay by this method.",
               ].map((item, index) => (
-                <Text key={index} style={styles.mb8}>
+                <Text key={index} style={styles.mb3}>
                   • {item}
                 </Text>
               ))}
             </View>
-            <Text style={styles.mb8}>
-              For Clients Located <Text style={[styles.textBold, styles.mb8]}>OUTSIDE</Text> Canada, we receive the following methods:
+            <Text style={styles.mb3}>
+              For Clients Located <Text style={[styles.textBold, styles.mb5]}>OUTSIDE</Text> Canada, we receive the following methods:
             </Text>
             <View>
               {[
                 "Wire Transfer- Bank details will be provided once the contract is being signed. ('Banks usually charge a processing fee for wire transfer, so please add CAD $50 fee on top of your payment EVERY TIME you make a wire transfer.",
                 "   Credit Card/PayPal: Instructions will be shared, additional up to 5% charges will be applicable if the client is willing to pay by this method."
               ].map((item, index) => (
-                <Text key={index} style={styles.mb8}>
+                <Text key={index} style={styles.mb3}>
                   • {item}
                 </Text>
               ))}
@@ -352,75 +357,76 @@ const RenewalApplicantionsPdf = () => {
           </View>
           {/* 7th section */}
           <View style={styles.section}>
-            <Text style={[styles.subtitle, styles.mb8]}>7. Interest</Text>
+            <Text style={[styles.subtitle, ]}>7. Interest</Text>
             <View>
               {[
                 " Payment is due on all of the consultant's accounts when rendered. If any account is not paid within 30 days, interest will be charged on outstanding balance at the rate of 20% per annum from the date of the account, until paid",
                 "If the account requires recovery/collection action, in order to recover any fees, a surcharge equivalent to the recovery/collection fee incurred will be applied on the Total Cost and is to be paid by the Client. ",
               ].map((item, index) => (
-                <Text key={index} style={styles.mb8}>
+                <Text key={index} style={styles.mb3}>
                   • {item}
                 </Text>
               ))}
             </View>
           </View>
           {/* 8th Section */}
-          <View style={styles.section}>
-            <Text style={[styles.subtitle, styles.mb8]}>8. Refund Policy</Text>
-            <Text style={[styles.mb8]}>The Client acknowledges that the approval of the Rural Renewal Stream Application and Endorsement Letter, and the time required for processing this application is at the sole discretion of the government and not the RCIC. Furthermore, the Client acknowledges that fees are not refundable in the event of an application refusal</Text>
-            <Text style={[styles.mb8]}>
+          <View style={[styles.section]}>
+            <Text style={[styles.subtitle, ]}>8. Refund Policy</Text>
+            <Text style={[styles.mb3]}>The Client acknowledges that the approval of the Rural Renewal Stream Application and Endorsement Letter, and the time required for processing this application is at the sole discretion of the government and not the RCIC. Furthermore, the Client acknowledges that fees are not refundable in the event of an application refusal</Text>
+            <Text style={[]}>
               If, however, the application is denied because of an error or omission on the part of the RCIC or professional staff, the RCIC will refund part, or all professional fees collected. The Client agrees that the fees paid are for services indicated above, and any refund is strictly limited to the amount of fees paid. if for any reason agreement is terminated any un-used part of fees with be refunded after deduction of any costs. An applicant may specify the method of refund.
             </Text>
           </View>
           {/* 9th section */}
-          <View style={styles.section}>
-            <Text style={[styles.subtitle, styles.mb8]}>9. Dispute Resolution</Text>
-            <Text styles={[{ marginBottom: 10 }, styles.mb8]}>
-              Please be advised that Harpreet Kaur is a member in good standing of the Immigration Consultants of Canada Regulatory Council (ICCRC), and as such, is bound by its By-laws, Code of Professional Ethics, and associated Regulations. In the event of a dispute related to the Code of Professional Ethics, the Client and RCIC are to make every effort to resolve the matter between the two parties. In the event a resolution cannot be reached, the Client is to present the complaint in writing to the RCIC and allow the RCIC 30 days to respond to the Client. In the event the dispute is still unresolved, the Client may follow the complaint and discipline procedure outlined by the Council on their website under the heading "File a Complaint". NOTE: All complaint forms must be signed.
+          <View style={[styles.section,]}>
+            <Text style={[styles.subtitle, ]}>9. Dispute Resolution</Text>
+            <Text styles={[]}>
+              Please be advised that Harpreet Kaur is a member in good standing of the Immigration Consultants of Canada Regulatory Council (ICCRC), and as such, is bound by its By-laws, Code of Professional Ethics, and associated Regulations. In the event of a dispute related to the Code of Professional Ethics, the Client and RCIC are to make every effort to resolve the matter between the two parties. In the event a resolution cannot be reached, the Client is to present the complaint in writing to the RCIC and allow the RCIC 30 days to respond to the Client. In the event the dispute is still unresolved, the Client may follow the complaint and discipline procedure outlined by the Council on their website under the heading "File a Complaint".
+
             </Text>
-            <View style={[{ marginBottom: 5, marginTop: 5 }]}>
-              <Text styles={[styles.mb8]}>
+            <View style={[{ marginBottom: 2, marginTop: 5 }]}>
+              <Text styles={[styles.mb5]}>
                 ICCRC Contact Information:
               </Text>
-              <Text styles={[styles.mb8]}>
+              <Text styles={[styles.mb5]}>
                 Immigration Consultants of Canada Regulatory Council (ICCRC)
               </Text>
-              <Text styles={[styles.mb8]}>
+              <Text styles={[styles.mb5]}>
                 5500 North Service Rd., Suite 1002 Burlington, ON, L7L 6W6
               </Text>
-              <Text styles={[styles.mb8]}>
+              <Text styles={[styles.mb5]}>
                 Toll-free: 1-877-836-7543
               </Text>
             </View>
           </View>
           {/* 10th section */}
           <View style={styles.section}>
-            <Text style={[styles.subtitle, styles.mb8]}>10. Confidentiality</Text>
-            <Text style={[styles.mb8]}>All information and documentation reviewed by the RCIC, required by Service Canada and CIC and all other governing bodies, and used for the preparation of the application will not be divulged to any third party, other than agents and employees, without prior consent, except as demanded by law. The Client agrees to let the RCIC publish facts about the case as a case study without mentioning names. The RCIC, and all agents and employees of the RCIC, are also bound by the confidentiality requirements of Article 8.1 and 8.5 of the Code of Professional Ethics.
+            <Text style={[styles.subtitle, styles.mb3]}>10. Confidentiality</Text>
+            <Text style={[styles.mb5]}>All information and documentation reviewed by the RCIC, required by Service Canada and CIC and all other governing bodies, and used for the preparation of the application will not be divulged to any third party, other than agents and employees, without prior consent, except as demanded by law. The Client agrees to let the RCIC publish facts about the case as a case study without mentioning names. The RCIC, and all agents and employees of the RCIC, are also bound by the confidentiality requirements of Article 8.1 and 8.5 of the Code of Professional Ethics.
             </Text>
-            <Text style={[styles.mb8]}>
+            <Text style={[styles.mb5]}>
               The Client agrees to these of electronic communication and storage of confidential information. The RCIC will use his/her best efforts to maintain a high degree of security for electronic communication and information storage.
             </Text>
           </View>
           {/* 11th section */}
           <View style={styles.section}>
-            <Text style={[styles.subtitle, styles.mb8]}>11. Force Majeure </Text>
-            <Text styles={[styles.mb8]}>
+            <Text style={[styles.subtitle, ]}>11. Force Majeure </Text>
+            <Text styles={[styles.mb5]}>
               The RCIC's failure to perform any term of this Retainer Agreement, as a result of conditions beyond his/her control such as, but not limited to, governmental restrictions or subsequent legislation, war, strikes, or acts of God, shall not be deemed a breach of this Agreement.
             </Text>
           </View>
           {/* 12th section */}
           <View style={styles.section}>
-            <Text style={[styles.subtitle, styles.mb8]}>12. Change Policy</Text>
-            <Text style={[styles.mb8]}>The Client acknowledges that if the RCIC is asked to act on the Client's behalf on matters other than those outlined above in this Agreement, or because of a material change in the Client's circumstances, or because of material facts.
+            <Text style={[styles.subtitle,]}>12. Change Policy</Text>
+            <Text style={[styles.mb5]}>The Client acknowledges that if the RCIC is asked to act on the Client's behalf on matters other than those outlined above in this Agreement, or because of a material change in the Client's circumstances, or because of material facts.
             </Text>
-            <Text style={[styles.mb8]}>
+            <Text style={[styles.mb5]}>
               The Client acknowledges that if the RCIC is asked to act on the Client's behalf on matters other than those outlined above in this Agreement, or because of a material change in the Client's circumstances, or because of material facts not disclosed at the outset of the application, or because of a change in government legislation regarding the processing of immigration-related applications, the Agreement can be modified accordingly upon mutual agreement.
             </Text>
           </View>
           {/* 13th section */}
           <View style={styles.section}>
-            <Text style={[styles.subtitle, styles.mb8]}>13. Termination </Text>
+            <Text style={[styles.subtitle, styles.mb5]}>13. Termination </Text>
             <View>
               {[
                 "This Agreement is considered terminated upon completion of tasks identified under section 2 of this agreement.",
@@ -431,7 +437,7 @@ const RenewalApplicantionsPdf = () => {
                 "This Agreement is subject to the laws in effect in the Province of Alberta, Canada."
                 ,
               ].map((item, index) => (
-                <Text key={index} style={styles.mb8}>
+                <Text key={index} style={styles.mb3}>
                   • {item}
                 </Text>
               ))}
@@ -439,7 +445,7 @@ const RenewalApplicantionsPdf = () => {
           </View>
           {/* 14th section */}
           <View style={styles.section}>
-            <Text style={[styles.subtitle, styles.mb8]}>14. Miscellaneous </Text>
+            <Text style={[styles.subtitle, styles.mb5]}>14. Miscellaneous </Text>
             <View>
               {[
 
@@ -457,7 +463,7 @@ const RenewalApplicantionsPdf = () => {
                 "The Client acknowledges that he/she has requested that the Agreement be written in the English language."
                 ,
               ].map((item, index) => (
-                <Text key={index} style={styles.mb8}>
+                <Text key={index} style={styles.mb5}>
                   • {item}
                 </Text>
               ))}
@@ -465,17 +471,16 @@ const RenewalApplicantionsPdf = () => {
           </View>
           {/* 15th section */}
           <View style={styles.section}>
-            <Text style={[styles.subtitle, styles.mb8]}>15. Validation</Text>
-            <Text styles={[styles.mb8]}>
+            <Text style={[styles.subtitle, styles.mb3]}>15. Validation</Text>
+            <Text styles={[styles.mb5]}>
               The Client acknowledges that they have read this Agreement, understand it, have obtained such independent legal advice as they deem appropriate, have sought translation, and agree to be bound by its terms.
             </Text>
-            <Text styles={[styles.mb8]}>
+            <Text styles={[styles.mb5]}>
               The parties hereto have signed on the date and place here in after set forth.
             </Text>
           </View>
           {/* signature */}
-          {/* signature */}
-          <View style={styles.container}>
+          <View style={[styles.container,{paddingBottom:10}]}>
             {/* Left Signature Box (RCIC) */}
             <View style={styles.box}>
               <RCICSignatureFunction isPdf={true} felidData={felidData} />

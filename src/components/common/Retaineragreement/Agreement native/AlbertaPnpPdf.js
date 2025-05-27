@@ -579,7 +579,9 @@ const AlbertaPnpPdf = () => {
                             </View>
                         </View>
                         <View id="l5" style={{ paddingLeft: 10 }}>
-                            <Text style={{ marginTop: 15 }}>Note:</Text>
+                            <Text style={{ marginTop: 15 }}>Note: <Text style={styles.textunderline}>
+                                {felidData?.note}
+                            </Text></Text>
                             <View >
                                 <View style={{ flexDirection: 'row' }}>
                                     <Text style={{ width: 20, fontWeight: 'bold' }}>•</Text>
@@ -1764,13 +1766,13 @@ const styles = StyleSheet.create({
         fontSize: 14,
         marginBottom: 10,
         fontWeight: "bold",
-        color: "#000"
+        color: "#000000"
     },
     subHeader: {
         fontSize: 12,
         marginBottom: 5,
         fontWeight: "bold",
-        color: "#000"
+        color: "#000000"
     },
     text: {
         marginBottom: 5,
@@ -1793,7 +1795,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         fontSize: 15,
         fontWeight: "bold",
-        color: "#000"
+        color: "#000000"
     },
     clientForm: {
         display: "flex",
@@ -1834,7 +1836,7 @@ const styles = StyleSheet.create({
     dateLine: { minWidth: 80, borderBottom: "1px solid black", display: "inline-block" },
     textBold: {
         fontFamily: "Times-Bold",
-        color: "#000"
+        color: "#000000"
     },
     title: {
         fontSize: 14,
