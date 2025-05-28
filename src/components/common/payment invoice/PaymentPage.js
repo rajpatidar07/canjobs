@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"; import { FaAmazonPay, FaEye } from "react-icons/fa";
-import { CiTrash } from "react-icons/ci";
+import { CiEdit, CiTrash } from "react-icons/ci";
 import { AiOutlineFilePdf } from "react-icons/ai";
 import PaymentReminder from "../../forms/payment invoice/PaymentReminder";
 import { getallEmployeeData, getAllEmployer, getAllInvioce, DeletePaymentInvoiceApi, GetLastPaymentInvoiceApi, GetSharePointData, getSharePointParticularFolders, GetFilter } from "../../../api/api";
@@ -319,16 +319,19 @@ const Payment_Page = (props) => {
                     </td>
                     <td className=" py-5">
                       <div className="btn-group button_group" role="group">
-                        {/* <button
-                          className="btn btn-outline-info action_btn"
-                          onClick={() => { }}
-                          title="Generate Invoice"
-                          v
+
+                        <button
+                          className={item.is_send_mail === 1 || item.is_send_mail === "1" ? "d-none" : "btn btn-outline-info action_btn"}
+                          onClick={() => {
+                            setOpenAddPaymentForm(true)
+                            setSingleInvoiceData(item)
+                          }}
+                          title="Edit pdf"
                         >
                           <span className="text-gray px-2">
-                            <IoCreateOutline />
+                            <CiEdit />
                           </span>
-                        </button> */}
+                        </button>
                         {/* <button
                           className="btn btn-outline-info action_btn"
                           onClick={() => {
@@ -529,7 +532,7 @@ const Payment_Page = (props) => {
           onCancel={CancelDelete}
         />
       </div>
-    </div>
+    </div >
   );
 };
 

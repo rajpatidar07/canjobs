@@ -63,6 +63,7 @@ const PaymentInvoiceForm = (props) => {
     if (props.singleInvoiceData) {
       const updatedData = {
         ...props.singleInvoiceData,
+        due_amount: parseFloat(props.singleInvoiceData?.due_amount) - parseFloat(props.singleInvoiceData?.total),
         product_json: props.singleInvoiceData?.product_json ? JSON.parse(props.singleInvoiceData.product_json) : [], // Convert string to array
       };
 
@@ -200,7 +201,7 @@ const PaymentInvoiceForm = (props) => {
   return (
     <Modal
       show={props.show}
-      size={state.id ? "lg" : "xl"}
+      size={"xl"}
       aria-labelledby="contained-modal-title-vcenter"
       centered
       backdrop="static"
@@ -318,7 +319,6 @@ const PaymentInvoiceForm = (props) => {
                     onChange={onInputChange}
                     name="due_amount"
                     min={0}
-                    disabled={state.id}
                   />
                 </div>
                 {/*<div className="form-group col-md-3">
@@ -337,7 +337,7 @@ const PaymentInvoiceForm = (props) => {
             </>
           }
           {/* second row */}
-          <div className={state.id ? "d-none" : " row mt-8"}>
+          <div className={" row mt-8"}>
             <div className="form-group col-md-3 p-1">
               <div className="d-flex flex-column">
                 <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold">
@@ -439,7 +439,7 @@ const PaymentInvoiceForm = (props) => {
                 type="date"
                 className="form-control"
                 name="invoice_date"
-                value={state.invoice_date} onChange={onInputChange} />
+                value={state.invoice_date ? state.invoice_date.slice(0, 10) : ''} onChange={onInputChange} />
             </div>
             <div className="form-group col-md-3 p-1">
               <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold ">
@@ -448,7 +448,7 @@ const PaymentInvoiceForm = (props) => {
               <input
                 type="date"
                 className="form-control"
-                name="due_date" value={state.due_date} onChange={onInputChange}
+                name="due_date" value={state.due_date ? state.due_date.slice(0, 10) : ''} onChange={onInputChange}
                 min={state.invoice_date}
               />
             </div>
@@ -456,7 +456,7 @@ const PaymentInvoiceForm = (props) => {
             {/* <div className="col-auto "></div> */}
           </div>
           {/* third section */}
-          <div className={state.id ? "d-none" : " row mt-8"}>
+          <div className={" row mt-8"}>
             <div className="form-group col-sm-6 p-0 pr-10">
               <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold">
                 Tags{" "}
@@ -480,18 +480,18 @@ const PaymentInvoiceForm = (props) => {
             </div>
           </div>
           {/* invoice table */}
-          <div className={state.id ? "d-none" : "table-responsive main_table_div"}>
+          <div className={"table-responsive main_table_div"}>
             <table className="table table-striped main_data_table text-start align-middle">
               <thead>
                 <tr>
-                  <th style={{ width: "5%" }}>#</th>
-                  <th style={{ width: "10%" }}>Service Date</th>
+                  <th style={{ width: "2%" }}>#</th>
+                  <th style={{ width: "5%" }}>Service Date</th>
                   <th style={{ width: "20%" }}>Product/Service</th>
                   <th style={{ width: "20%" }}>Description</th>
-                  <th style={{ width: "5%", textAlign: "right" }}>Quantity</th>
-                  <th style={{ width: "5%", textAlign: "right" }}>Rate</th>
-                  <th style={{ width: "10%", textAlign: "right" }}>Amount</th>
-                  <th style={{ width: "10%" }}>Service Tax</th>
+                  <th style={{ width: "12%", textAlign: "right" }}>Quantity</th>
+                  <th style={{ width: "12%", textAlign: "right" }}>Rate</th>
+                  <th style={{ width: "12%", textAlign: "right" }}>Amount</th>
+                  <th style={{ width: "12%" }}>Service Tax</th>
                   <th style={{ width: "5%" }}>Action</th>
                 </tr>
               </thead>
@@ -563,7 +563,7 @@ const PaymentInvoiceForm = (props) => {
                       <tr key={index}>
                         <td>{index + 1}</td>
                         <td>
-                          <input type="date" className="border-0 bg-transparent" style={{ width: "100%" }} value={state.invoice_date} disabled />
+                          <input type="date" className="border-0 bg-transparent" style={{ width: "100%" }} value={item.service_date ? item.service_date.slice(0, 10) : ''} disabled />
                         </td>
                         <td>
                           <input type="text" className="border-0 bg-transparent" style={{ width: "100%" }} value={item.product}
@@ -581,7 +581,7 @@ const PaymentInvoiceForm = (props) => {
                           <input type="number" className="border-0 bg-transparent" style={{ width: "100%", textAlign: "right" }} value={Number(item.rate || 0).toFixed(2)}
                             onChange={(e) => handleValueChange("rate", e.target.value)} />
                         </td>
-                    <td style={{ textAlign: "right" }}>{Number(item?.amount || 0).toFixed(2)}</td>
+                        <td style={{ textAlign: "right" }}>{Number(item?.amount || 0).toFixed(2)}</td>
                         <td>
                           <input type="number" className="border-0 bg-transparent" style={{ width: "100%" }} value={Number(item.service_tax || 0).toFixed(2)}
                             onChange={(e) => handleValueChange("service_tax", e.target.value)} />
@@ -625,7 +625,7 @@ const PaymentInvoiceForm = (props) => {
 
             </table>
           </div>
-          <div className={state.id ? "d-none" : "d-flex gap-2 justify-content-between align-items-start"}>
+          <div className={"d-flex gap-2 justify-content-between align-items-start"}>
             <div>
               <button
                 className="btn btn-primary "
@@ -703,7 +703,7 @@ const PaymentInvoiceForm = (props) => {
               </ul>
             </div>
           </div>
-          <div className={`d-flex justify-content-${state.id ? "center" : "space-between"} text-center mb-5 px-3`}>
+          <div className={`d-flex justify-content-space-between text-center mb-5 px-3`}>
             <button
               type="button"
               className="btn btn-primary btn-small w-25 mt-5 rounded-5 text-uppercase p-8"
@@ -718,7 +718,7 @@ const PaymentInvoiceForm = (props) => {
             </button>
             <button
               type="button"
-              className={state.id ? "d-none" : "btn btn-primary btn-small w-25 mt-5 rounded-5 text-uppercase p-8"}
+              className={"btn btn-primary btn-small w-25 mt-5 rounded-5 text-uppercase p-8"}
               disabled={loading}
               onClick={(e) => {
                 handleSubmit(e, 1)

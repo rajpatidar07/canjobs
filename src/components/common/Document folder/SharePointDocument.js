@@ -69,6 +69,8 @@ export default function SharePointDocument({
   const [docPreview, setDocPreview] = useState(false);
   const [docLoder, setDocLoder] = useState(false);
   const [docBreadCrumbLoder, setBreadCrumbLoder] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+
   /*delete state */
   const [deleteAlert, setDeleteAlert] = useState(false);
   const [deleteData, setDeleteData] = useState();
@@ -623,46 +625,65 @@ export default function SharePointDocument({
   // };
 
   //Document Save Function
-  const SaveBulkDocument = async () => {
-    setLoadingBtn(true);
-    setShowDropDown(false);
-    // console.log(docFileBase, "pppppppppppppp")
-    try {
-      let res = await AddSharePointDOcument(
-        user_id,
-        emp_user_type,
-        folderID,
-        docTypeName,
-        docFileBase
-      );
-      if (res.data.message === "Document Upload") {
-        toast.success(`Document Uploaded successfully`, {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        setApiCall(true);
-        setLoadingBtn(false);
-        setSaveBtn(false);
-        setShowDropDown(false);
-        setTaggedAdmin([]);
-        setDocFileBase([]);
-      } else {
-        toast.error(`Something went wrong`, {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-        setLoadingBtn(false);
-        setSaveBtn(false);
-        setShowDropDown(false);
-        setTaggedAdmin([]);
+const SaveBulkDocument = async () => {
+  setLoadingBtn(true);
+  setShowDropDown(false);
+  setUploadProgress(0);
+
+  // Simulate loading progress
+  const simulateProgress = () => {
+    let progress = 0;
+    const interval = setInterval(() => {
+      progress += 10;
+      if (progress >= 90) {
+        clearInterval(interval);
       }
-    } catch (err) {
-      console.log(err);
-      setLoadingBtn(false);
-      setSaveBtn(false);
-      setShowDropDown(false);
-    }
+      setUploadProgress(progress);
+    }, 100);
+    return interval;
   };
+
+  const intervalId = simulateProgress();
+
+  try {
+    let res = await AddSharePointDOcument(
+      user_id,
+      emp_user_type,
+      folderID,
+      docTypeName,
+      docFileBase
+    );
+
+    clearInterval(intervalId);
+    setUploadProgress(100);
+
+    if (res.data.message === "Document Upload") {
+      toast.success(`Document Uploaded successfully`, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+      setApiCall(true);
+    } else {
+      toast.error(`Something went wrong`, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    toast.error(`Upload failed`, {
+      position: toast.POSITION.TOP_RIGHT,
+      autoClose: 1000,
+    });
+  } finally {
+    setLoadingBtn(false);
+    setSaveBtn(false);
+    setShowDropDown(false);
+    setTaggedAdmin([]);
+    setDocFileBase([]);
+  }
+};
+
   /*Had folder function */
   const handleDocTypeChange = async (selectedType) => {
     setDocTypeName(selectedType);
@@ -1143,6 +1164,7 @@ export default function SharePointDocument({
                     handleBulkFileChange={handleBulkFileChange}
                     saveBtn={saveBtn}
                     loadingBtn={loadingBtn}
+                    uploadProgress={uploadProgress}
                     SaveBulkDocument={SaveBulkDocument}
                     setSaveBtn={setSaveBtn}
                     setDocFileBase={setDocFileBase}

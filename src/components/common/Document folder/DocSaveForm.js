@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
 export default function DocSaveForm({
   handleBulkFileChange,
@@ -10,7 +12,8 @@ export default function DocSaveForm({
   setSaveBtn,
   setDocFileBase,
   view,
-  docFileBase
+  docFileBase,
+  uploadProgress
 }) {
   /*Function to remove the file from the selected file list */
   const removeFile = (fileName) => {
@@ -18,10 +21,57 @@ export default function DocSaveForm({
       prevFiles.filter((file) => file.name !== fileName)
     ); // Remove file by name
   };
+  const fileInputRef = useRef(null);
+  const [isDragging, setIsDragging] = useState(false);
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      const fakeEvent = { target: { files: e.dataTransfer.files } };
+      handleBulkFileChange(fakeEvent);
+    }
+  };
+  // const handlePaste = (e) => {
+  //   const clipboardFiles = e.clipboardData?.files;
+
+  //   if (clipboardFiles && clipboardFiles.length > 0) {
+  //     const filesArray = Array.from(clipboardFiles);
+
+  //     // Optional: Filter out non-image/file types if needed
+  //     const validFiles = filesArray.filter(file => file.name && file.size > 0);
+
+  //     if (validFiles.length > 0) {
+  //       const fakeEvent = { target: { files: validFiles } };
+  //       handleBulkFileChange(fakeEvent);
+  //     } else {
+  //       console.warn("No valid files found in clipboard.");
+  //     }
+  //   } else {
+  //     console.warn("Clipboard does not contain files.");
+  //   }
+  // };
+
   return (
     <div className={`d-flex align-items-center ${view === "list" ? "flex-column" : ""}`}>
       <form>
-        <div className={`${view === "list" ? "d-flex align-items-center mb-3" : ""}`}>
+        <div
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+          // onPaste={handlePaste}
+          onClick={() => fileInputRef.current.click()}
+          className={`${view === "list" ? "d-flex align-items-center mb-3" : ""}`}>
           <label
             className={`btn btn-white rounded ${view === "list" ? "d-flex align-items-center justify-content-start" : ""
               }`}
@@ -33,11 +83,12 @@ export default function DocSaveForm({
               flexDirection: view === "list" ? "row" : "column",
               lineHeight: 1,
               padding: view === "list" ? "10px 15px" : "",
+              border: isDragging ? "2px dashed #007bff" : "",
             }}
           >
             <input
+              ref={fileInputRef}
               type="file"
-              // accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
               style={{ display: "none" }}
               onChange={(e) => {
                 handleBulkFileChange(e);
@@ -73,27 +124,20 @@ export default function DocSaveForm({
         )}
         {saveBtn === true && docFileBase.length > 0 ? (
           <div
-            className={`doc_upload_col ${view === "list" ? "d-flex justify-content-between align-items-center" : ""
-              }`}
+            className={`doc_upload_col d-flex justify-content-center align-items-center`}
           >
             {loadingBtn ? (
-              <button
-                className="btn btn-primary doc_btn"
-                style={{
-                  fontSize: 14,
-                  marginRight: view === "list" ? "0" : "auto",
-                  marginLeft: view === "list" ? "0" : "auto",
-                }}
-                type="button"
-                disabled
-              >Saving Documents
-                <span
-                  className="spinner-border spinner-border-sm"
-                  role="status"
-                  aria-hidden="true"
-                ></span>
-                <span className="sr-only">Loading...</span>
-              </button>
+              <div style={{ width: 50, height: 50 }} className="text-center">
+                <CircularProgressbar
+                  value={uploadProgress}
+                  text={`${uploadProgress}%`}
+                  styles={buildStyles({
+                    textSize: '24px',
+                    pathColor: `rgb(153, 43, 50)`,
+                    textColor: '#000',
+                  })}
+                />
+              </div>
             ) : (
               <>
                 <button

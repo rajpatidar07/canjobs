@@ -48,6 +48,7 @@ export default function FolderList({
   AdminData,
   setRecordsPerPage,
   recordsPerPage,
+  uploadProgress
 }) {
   const [view, setView] = useState(localStorage.getItem("docView") || "list"); // Default to block view
   let [openAnnotationBox, setOpenAnnotationBox] = useState();
@@ -400,6 +401,7 @@ export default function FolderList({
                   handleBulkFileChange={handleBulkFileChange}
                   saveBtn={saveBtn}
                   loadingBtn={loadingBtn}
+                  uploadProgress={uploadProgress}
                   SaveBulkDocument={SaveBulkDocument}
                   setSaveBtn={setSaveBtn}
                   setDocFileBase={setDocFileBase}
@@ -687,6 +689,7 @@ export default function FolderList({
                   handleBulkFileChange={handleBulkFileChange}
                   saveBtn={saveBtn}
                   loadingBtn={loadingBtn}
+                  uploadProgress={uploadProgress}
                   SaveBulkDocument={SaveBulkDocument}
                   setSaveBtn={setSaveBtn}
                   setDocFileBase={setDocFileBase}

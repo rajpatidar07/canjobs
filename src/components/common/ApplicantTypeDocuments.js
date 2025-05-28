@@ -66,6 +66,7 @@ export default function ApplicantTypeDocuments(props) {
     recordsPerPage: 10,
     columnName: "id",
     sortOrder: "DESC",
+    uploadProgress: 0
   });
 
   /*On change fnction to upload bulk document in 1 array*/
@@ -498,15 +499,38 @@ export default function ApplicantTypeDocuments(props) {
       ...prev,
       loadingBtn: true,
       showDropDown: false,
+      uploadProgress: 0
     }));
+
+    // Simulate loading progress up to 90%
+    const simulateProgress = () => {
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += 10;
+        if (progress >= 90) {
+          clearInterval(interval);
+        }
+        setState((prev) => ({
+          ...prev,
+          uploadProgress: progress
+        }));
+      }, 100);
+      return interval;
+    };
+
+    const intervalId = simulateProgress();
+
     try {
-      let res = await AddSharePointDOcument(
+      const res = await AddSharePointDOcument(
         props?.user_id || "",
         props?.emp_user_type || "",
         state?.folderID,
         state?.docTypeName || "",
         docFileBase || []
       );
+
+      clearInterval(intervalId);
+
       if (res.data.message === "Document Upload") {
         toast.success(`Document Uploaded successfully`, {
           position: toast.POSITION.TOP_RIGHT,
@@ -519,12 +543,11 @@ export default function ApplicantTypeDocuments(props) {
           saveBtn: false,
           showDropDown: false,
           taggedAdmin: false,
+          uploadProgress: 100
         }));
         setDocFileBase([]);
-      }
-      // console.log(res.data)
-      if (res.data.message === "Failed" && res.data.data === "No Token Found") {
-        toast.success(`Document Uploaded successfully`, {
+      } else if (res.data.message === "Failed" && res.data.data === "No Token Found") {
+        toast.warning(`No token found, but handled gracefully.`, {
           position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
@@ -535,21 +558,38 @@ export default function ApplicantTypeDocuments(props) {
           saveBtn: false,
           showDropDown: false,
           taggedAdmin: false,
+          uploadProgress: 100
         }));
         setDocFileBase([]);
+      } else {
+        toast.error(`Something went wrong`, {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setState((prev) => ({
+          ...prev,
+          loadingBtn: false,
+          saveBtn: false,
+          showDropDown: false,
+          taggedAdmin: false
+        }));
       }
     } catch (err) {
       console.log(err);
+      toast.error(`Upload failed`, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
       setState((prev) => ({
         ...prev,
-        apiCall: true,
         loadingBtn: false,
         saveBtn: false,
         showDropDown: false,
-        taggedAdmin: false,
+        taggedAdmin: false
       }));
     }
   };
+
 
 
   /*To call Api to delete Folder or document */
@@ -579,7 +619,7 @@ export default function ApplicantTypeDocuments(props) {
       console.log(err);
     }
   }
-  console.log(state.folderID,props)
+  console.log(state.folderID, props)
   return (
     <div>
       <>
@@ -885,6 +925,7 @@ export default function ApplicantTypeDocuments(props) {
                           recordsPerPage,
                         }))
                       }
+                      uploadProgress={state.uploadProgress}
                     />
                   )}
                 </div>
