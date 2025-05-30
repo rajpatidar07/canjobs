@@ -11,6 +11,7 @@ import { PiGridFourFill } from "react-icons/pi";
 import { MdNoteAdd } from "react-icons/md";
 import { RiFileExcel2Line } from "react-icons/ri";
 import { AiOutlineFilePpt } from "react-icons/ai";
+import { UpdateDocFolderIsPrivate } from "../../../api/api";
 export default function FolderList({
   setDocPreview,
   ShowDeleteAlert,
@@ -48,7 +49,10 @@ export default function FolderList({
   AdminData,
   setRecordsPerPage,
   recordsPerPage,
-  uploadProgress
+  uploadProgress,
+  setIsDocPrivate,
+  isDocPrivate,
+  setApiCall
 }) {
   const [view, setView] = useState(localStorage.getItem("docView") || "list"); // Default to block view
   let [openAnnotationBox, setOpenAnnotationBox] = useState();
@@ -295,6 +299,44 @@ export default function FolderList({
                               Delete {item.folder ? "Folder" : "File"}
                             </Link>
                           </li>
+                          <li
+                            className={
+                              item.file &&
+                                item.file.mimeType !== "text/plain" &&
+                                (userType === "admin" || userType === "agent") &&
+                                window.location.pathname !== "/slots" &&
+                                [
+                                  "image/jpeg",
+                                  "image/png",
+                                  "image/jpg",
+                                  "application/pdf",
+                                  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                                  "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                                  "application/vnd.ms-powerpoint",
+                                  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                                  "application/vnd.ms-excel"
+                                ].includes(item.file.mimeType)
+                                ? "list-group-item text-danger"
+                                : "d-none"
+                            }
+                          >
+                            <label>
+                              Private {item.folder ? "Folder" : "File"} <input
+                                type="checkbox"
+                                checked={item.is_private === 1 || item.is_private === "1"}
+                                onChange={() => {
+                                  try {
+                                    let res = UpdateDocFolderIsPrivate(item.id, item.is_private === 1 || item.is_private === "1" ? 0 : 1)
+                                    if (res) {
+                                      setApiCall(true)
+                                    }
+                                  } catch (err) {
+                                    console.log(err)
+                                  }
+                                }}
+                              />
+                            </label>
+                          </li>
                           <li className={
                             item.folder || item.file.mimeType === "text/plain"
                               ? "d-none"
@@ -305,6 +347,44 @@ export default function FolderList({
 
                               Download
                             </Link>
+                          </li>
+                          <li
+                            className={
+                              item.file &&
+                                item.file.mimeType !== "text/plain" &&
+                                (userType === "admin" || userType === "agent") &&
+                                window.location.pathname !== "/slots" &&
+                                [
+                                  "image/jpeg",
+                                  "image/png",
+                                  "image/jpg",
+                                  "application/pdf",
+                                  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                                  "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                                  "application/vnd.ms-powerpoint",
+                                  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                                  "application/vnd.ms-excel"
+                                ].includes(item.file.mimeType)
+                                ? "list-group-item text-danger"
+                                : "d-none"
+                            }
+                          >
+                            <label>
+                              Private {item.folder ? "Folder" : "File"} <input
+                                type="checkbox"
+                                checked={item.is_private === 1 || item.is_private === "1"}
+                                onChange={() => {
+                                  try {
+                                    let res = UpdateDocFolderIsPrivate(item.id, item.is_private === 1 || item.is_private === "1" ? 0 : 1)
+                                    if (res) {
+                                      setApiCall(true)
+                                    }
+                                  } catch (err) {
+                                    console.log(err)
+                                  }
+                                }}
+                              />
+                            </label>
                           </li>
                           <li className={
                             item.file &&
@@ -394,6 +474,7 @@ export default function FolderList({
                     </div>
                   </React.Fragment>
                 ))}
+
                 {/* Upload Document Form */}
                 <DocSaveForm
                   docFileBase={docFileBase}
@@ -405,6 +486,8 @@ export default function FolderList({
                   SaveBulkDocument={SaveBulkDocument}
                   setSaveBtn={setSaveBtn}
                   setDocFileBase={setDocFileBase}
+                  setIsDocPrivate={setIsDocPrivate}
+                  isDocPrivate={isDocPrivate}
                 />
               </div>
             ) : (
@@ -503,6 +586,43 @@ export default function FolderList({
                                 Delete {isFolder ? "Folder" : "File"}
                               </Link>
                             </li>
+                            <li
+                              className={
+                                item.file &&
+                                  item.file.mimeType !== "text/plain" &&
+                                  (userType === "admin" || userType === "agent") &&
+                                  window.location.pathname !== "/slots" &&
+                                  [
+                                    "image/jpeg",
+                                    "image/png",
+                                    "image/jpg",
+                                    "application/pdf",
+                                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                                    "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                                    "application/vnd.ms-powerpoint",
+                                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                                    "application/vnd.ms-excel"
+                                  ].includes(item.file.mimeType)
+                                  ? "list-group-item text-danger"
+                                  : "d-none"
+                              }
+                            >
+                              <label>
+                                Private {item.folder ? "Folder" : "File"} <input
+                                  type="checkbox"
+                                  checked={item.is_private === 1 || item.is_private === "1"}
+                                  onChange={() => {
+                                    try {
+                                      let res = UpdateDocFolderIsPrivate(item.id, item.is_private === 1 || item.is_private === "1" ? 0 : 1)
+                                      if (res) {
+                                        setApiCall(true)
+                                      }
+                                    } catch (err) {
+                                      console.log(err)
+                                    }
+                                  }}
+                                />
+                              </label></li>
                             {isDownloadable && (
                               <>
                                 <li className="list-group-item text-danger">
@@ -515,6 +635,7 @@ export default function FolderList({
                                     Download
                                   </Link>
                                 </li>
+
                                 <li className={item.file &&
                                   item.file.mimeType !== "text/plain" &&
                                   (userType === "admin" || userType === "agent") &&
@@ -541,18 +662,18 @@ export default function FolderList({
                             )}
                             {canOpenInNewTab && (
                               <li className={item.file &&
-                            item.file.mimeType !== "text/plain" &&
-                            [
-                              "image/jpeg",
-                              "image/png",
-                              "image/jpg",
-                              "application/pdf",
-                              "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                              "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-                              "application/vnd.ms-powerpoint",
-                              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                              "application/vnd.ms-excel"
-                            ].includes(item.file.mimeType)?"list-group-item text-danger":"d-none"}>
+                                item.file.mimeType !== "text/plain" &&
+                                [
+                                  "image/jpeg",
+                                  "image/png",
+                                  "image/jpg",
+                                  "application/pdf",
+                                  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                                  "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                                  "application/vnd.ms-powerpoint",
+                                  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                                  "application/vnd.ms-excel"
+                                ].includes(item.file.mimeType) ? "list-group-item text-danger" : "d-none"}>
                                 <Link
                                   to={`/view_pdf_Agreement?new_emp_user_type=${DocUserType}&new_user_id=${userId}&folderId=${item.parentReference.id}&document_id=${item.id}`}
                                   target="_blank"
@@ -693,6 +814,8 @@ export default function FolderList({
                   SaveBulkDocument={SaveBulkDocument}
                   setSaveBtn={setSaveBtn}
                   setDocFileBase={setDocFileBase}
+                  setIsDocPrivate={setIsDocPrivate}
+                  isDocPrivate={isDocPrivate}
                 />
               </div>
             )}

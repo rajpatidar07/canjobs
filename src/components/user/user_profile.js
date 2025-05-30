@@ -593,9 +593,8 @@ const NewUserProfile = (props) => {
                     </li>
                     <li
                       className={
-                        user_type === "company"
-                          ? //|| user_type === "user"
-                            "d-none"
+                        user_type === "company"     || user_type === "user"
+                          ?  "d-none"
                           : "tab-menu-items nav-item"
                       }
                     >
@@ -719,7 +718,7 @@ const NewUserProfile = (props) => {
                     <li
                       className={
                         user_type === "company" ||
-                        // user_type === "user" ||
+                        user_type === "user" ||
                         user_type === "agent"
                           ? "d-none"
                           : "tab-menu-items nav-item"

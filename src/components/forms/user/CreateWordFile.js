@@ -10,7 +10,8 @@ import { convertToRaw } from "draft-js";
 const CreateWordFile = (props) => {
     const [editorState, setEditorState] = useState('');
     const [loading, setLoading] = useState(false)
-
+    const [isDocPrivate, setIsDocPrivate] = useState(1)
+    let userType = localStorage.getItem("userType")
     const handleWordClose = () => {
         props.close()
         setEditorState("")
@@ -134,7 +135,8 @@ const CreateWordFile = (props) => {
                 props.emp_user_type,
                 props.folderID,
                 props.docTypeName,
-                [wordFile]
+                [wordFile],
+                userType === "admin" ? isDocPrivate : 0
             );
 
             if (res.data.message === "Document Upload") {
@@ -231,6 +233,15 @@ const CreateWordFile = (props) => {
                             editorStyle={{ border: '1px solid #ddd', minHeight: '200px' }}
                         />
                     </div>
+                    {userType === "admin" && (
+                        <label>
+                            <input
+                                type="checkbox"
+                                checked={isDocPrivate === 1}
+                                onChange={() => setIsDocPrivate(isDocPrivate === 1 ? 0 : 1)}
+                            /> Private
+                        </label>
+                    )}
                     <div className="d-flex justify-content-center">
                         {loading === true ? (
                             <button

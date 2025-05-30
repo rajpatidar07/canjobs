@@ -15,7 +15,7 @@ const admin_id = localStorage.getItem("admin_id");
 // const agent_id = localStorage.getItem("agent_id");
 const user_type = localStorage.getItem("userType");
 let portal = localStorage.getItem("portal")
-// const admin_type = localStorage.getItem("admin_type");
+const admin_type = localStorage.getItem("admin_type");
 if (view_as_token) {
   Token = view_as_token;
 }
@@ -3420,7 +3420,10 @@ export const getSharePointFoldersList = async (Id, User, columnName, sort, limit
   return response;
 };
 //Api function to GET emolyee  peticular document folder data
-export const getSharePointParticularFolders = async (Id, User, folderId, columnName, sort, limit, page, fileId) => {
+export const getSharePointParticularFolders = async (Id, User, folderId, columnName, sort, limit, page, fileId,) => {
+  let create_by_type = user_type === "user" ? "employee" : user_type === "company" ? "employer" : admin_type;
+  let create_by_id = user_type === "user" ? user_id : user_type === "company" ? employer_id : admin_id;
+
   const response = await axios.post(
     `${API_URL}admin/getSharpointSiteDriveFolderToFolderData_new`,
     {
@@ -3432,7 +3435,10 @@ export const getSharePointParticularFolders = async (Id, User, folderId, columnN
       sort_order: sort,
       limit: limit,
       page: page,
-      itemId: fileId
+      itemId: fileId,
+      created_by: create_by_id,
+      created_type: create_by_type,
+      is_private: user_type === "admin" ? 1 : 0
     },
     {
       headers: {
@@ -3444,13 +3450,21 @@ export const getSharePointParticularFolders = async (Id, User, folderId, columnN
   return response;
 };
 //Api function to Add document folder or type
-export const AddSharePointFolders = async (folder, parentId) => {
+export const AddSharePointFolders = async (folder, parentId, isPrivate, userId, userType) => {
+  let create_by_type = user_type === "user" ? "employee" : user_type === "company" ? "employer" : admin_type;
+  let create_by_id = user_type === "user" ? user_id : user_type === "company" ? employer_id : admin_id;
+
   const response = await axios.post(
     `${API_URL}admin/createSharepointFolder_new`,
     {
       driveId: driveId,
       newFolderName: folder,
       parentFolderId: parentId,
+      userId: userId,
+      userType: userType,
+      created_by: create_by_id,
+      created_type: create_by_type,
+      is_private: isPrivate
     },
     {
       headers: {
@@ -3467,7 +3481,8 @@ export const AddSharePointDOcument = async (
   user,
   folderId,
   docType,
-  data
+  data,
+  is_private
 ) => {
   // console.log(
   //   "employee_id =>",
@@ -3481,12 +3496,18 @@ export const AddSharePointDOcument = async (
   //   "file =>",
   //   data
   // );
+  let create_by_type = user_type === "user" ? "employee" : user_type === "company" ? "employer" : admin_type;
+  let create_by_id = user_type === "user" ? user_id : user_type === "company" ? employer_id : admin_id;
   const formData = new FormData();
   formData.append("docType", docType);
   formData.append("userType", user);
   formData.append("driveId", driveId);
   formData.append("employee_id", id);
   formData.append("folder_Id", folderId);
+  formData.append("created_by", create_by_id);
+  formData.append("created_type", create_by_type);
+  formData.append("is_private", is_private);
+
   // Loop through the array of files and append each file to formData
   for (let i = 0; i < data.length; i++) {
     // console.log(data[i])
@@ -3519,6 +3540,23 @@ export const AddSharePointDOcument = async (
   } else {
     return { error: 'Token is not available' }
   }
+};
+/*Update private document apis for documents and folder */
+export const UpdateDocFolderIsPrivate = async (document_id,is_private) => {
+  const response = await axios.post(
+    `${API_URL}admin/updateDocument`,
+    {
+      document_id: document_id,
+      is_private:is_private
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: Token,
+      },
+    }
+  );
+  return response;
 };
 //Api function to get folder or type breadcrumb
 export const getFolderBreadcrumb = async (folderid) => {

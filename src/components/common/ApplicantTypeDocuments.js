@@ -526,7 +526,8 @@ export default function ApplicantTypeDocuments(props) {
         props?.emp_user_type || "",
         state?.folderID,
         state?.docTypeName || "",
-        docFileBase || []
+        docFileBase || [],
+        0//is_private 0 will visible to all
       );
 
       clearInterval(intervalId);

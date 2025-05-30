@@ -70,7 +70,7 @@ export default function ContactPage(props) {
           </div>
         </div>
         {user_type === "agent" || user_type === "" ? null : (
-          <div className="p-10 col">
+          <div className="p-10 col d-none">
             <h5>Send Email to Us</h5>
             <SendMailForm email={props.email} />
             {/* <form>

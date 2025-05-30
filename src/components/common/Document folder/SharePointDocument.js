@@ -50,6 +50,7 @@ export default function SharePointDocument({
   const [docTypeName, setDocTypeName] = useState("");
   const [openNoteForm, setOpenNoteForm] = useState(false);
   const [openExcelSheet, setOpenExcelSheet] = useState(false);
+  const [isDocPrivate, setIsDocPrivate] = useState(1);
   const [openWordForm, setOpenWordForm] = useState(false);
   const [newType, setNewType] = useState("");
   const [docFileBase, setDocFileBase] = useState("");
@@ -85,7 +86,7 @@ export default function SharePointDocument({
   // const [imgConRes, setImgConRes] = useState();
   const [convertedDoc, setConvertedDoc] = useState("");
   const [noteText, setNoteText] = useState("");
-  const [docNoteData, setDocNoteData] = useState([]);
+  // const [docNoteData, setDocNoteData] = useState([]);
   /*Pagination states */
   const [totalData, setTotalData] = useState("");
   const [pageNo, setPageNo] = useState(1);
@@ -93,6 +94,7 @@ export default function SharePointDocument({
   /*Shorting states */
   const [columnName, setcolumnName] = useState("id");
   const [sortOrder, setSortOrder] = useState("DESC");
+  let userType = localStorage.getItem("userType")
   // /*Sorting Function */
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
@@ -202,8 +204,8 @@ export default function SharePointDocument({
       data.file.mimeType === "application/msword"
     ) {
       //    console.log("first")
-    convertWordToPDF(data);
-    } 
+      convertWordToPDF(data);
+    }
     else if (data.file.mimeType === "text/plain") {
       GetNoteText(data, true);
     } else if (data.file.mimeType === "application/pdf") {
@@ -363,12 +365,12 @@ export default function SharePointDocument({
         setDocLoder(false);
         // console.log(res.data.data.find((item) => item.id == "01PMN6UKSLPU7GEEOZYRHKRHGNYGHU47J2"),"1295 Gurdeep Singh PDF Format.pdf")
         // console.log(res.data.data.find((item) => item.id == "01PMN6UKVMY4ZY7L2XLBGJI3PLMFV3IS55"), "name: Police Clearance Certificate Akshay Kumar.pdf")
-        if (res?.data?.notes.length !== 0) {
-          GetNoteText(res.data.notes, false)
-          setDocNoteData(res.data.notes)
-        } else {
-          setDocNoteData([]);
-        }
+        // if (res?.data?.notes.length !== 0) {
+        //   GetNoteText(res.data.notes, false)
+        //   setDocNoteData(res.data.notes)
+        // } else {
+        //   setDocNoteData([]);
+        // }
         if (notification === "yes") {
           if (res.data.data.find((item) => item.id === newdocId)) {
             setDocPreview(true);
@@ -625,64 +627,65 @@ export default function SharePointDocument({
   // };
 
   //Document Save Function
-const SaveBulkDocument = async () => {
-  setLoadingBtn(true);
-  setShowDropDown(false);
-  setUploadProgress(0);
-
-  // Simulate loading progress
-  const simulateProgress = () => {
-    let progress = 0;
-    const interval = setInterval(() => {
-      progress += 10;
-      if (progress >= 90) {
-        clearInterval(interval);
-      }
-      setUploadProgress(progress);
-    }, 100);
-    return interval;
-  };
-
-  const intervalId = simulateProgress();
-
-  try {
-    let res = await AddSharePointDOcument(
-      user_id,
-      emp_user_type,
-      folderID,
-      docTypeName,
-      docFileBase
-    );
-
-    clearInterval(intervalId);
-    setUploadProgress(100);
-
-    if (res.data.message === "Document Upload") {
-      toast.success(`Document Uploaded successfully`, {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
-      setApiCall(true);
-    } else {
-      toast.error(`Something went wrong`, {
-        position: toast.POSITION.TOP_RIGHT,
-        autoClose: 1000,
-      });
-    }
-  } catch (err) {
-    console.log(err);
-    toast.error(`Upload failed`, {
-      position: toast.POSITION.TOP_RIGHT,
-      autoClose: 1000,
-    });
-  } finally {
-    setLoadingBtn(false);
-    setSaveBtn(false);
+  const SaveBulkDocument = async () => {
+    setLoadingBtn(true);
     setShowDropDown(false);
-    setTaggedAdmin([]);
-    setDocFileBase([]);
-  }
-};
+    setUploadProgress(0);
+
+    // Simulate loading progress
+    const simulateProgress = () => {
+      let progress = 0;
+      const interval = setInterval(() => {
+        progress += 10;
+        if (progress >= 90) {
+          clearInterval(interval);
+        }
+        setUploadProgress(progress);
+      }, 100);
+      return interval;
+    };
+
+    const intervalId = simulateProgress();
+
+    try {
+      let res = await AddSharePointDOcument(
+        user_id,
+        emp_user_type,
+        folderID,
+        docTypeName,
+        docFileBase,
+        userType === "admin" ? isDocPrivate : 0
+      );
+
+      clearInterval(intervalId);
+      setUploadProgress(100);
+
+      if (res.data.message === "Document Upload") {
+        toast.success(`Document Uploaded successfully`, {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setApiCall(true);
+      } else {
+        toast.error(`Something went wrong`, {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error(`Upload failed`, {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+    } finally {
+      setLoadingBtn(false);
+      setSaveBtn(false);
+      setShowDropDown(false);
+      setTaggedAdmin([]);
+      setDocFileBase([]);
+    }
+  };
 
   /*Had folder function */
   const handleDocTypeChange = async (selectedType) => {
@@ -693,7 +696,12 @@ const SaveBulkDocument = async () => {
       setNewType("");
     } else {
       try {
-        let res = await AddSharePointFolders(selectedType, folderID);
+        let res = await AddSharePointFolders(selectedType,
+          folderID,
+          userType === "admin" ? 1 : 0,//set private while adding from admin else not 
+          user_id,
+          emp_user_type
+        );
         if (
           res.data.data.name &&
           res.data.message === "Folder created successfully!"
@@ -1089,7 +1097,7 @@ const SaveBulkDocument = async () => {
                       </Dropdown>
                     </>
                   )}
-
+                  {console.log(docSingleDate)}
                   <>
                     {openNoteForm
                       ? <DocumentsNotes
@@ -1101,7 +1109,7 @@ const SaveBulkDocument = async () => {
                         setOpenNoteForm={setOpenNoteForm}
                         show={openNoteForm}
                         convertedDoc={noteText}
-                        docSingleDate={docNoteData}
+                        docSingleDate={docSingleDate}
                         setConvertedDoc={setNoteText}
                       />
                       : null}
@@ -1128,7 +1136,8 @@ const SaveBulkDocument = async () => {
                       onClick={() => {
                         setOpenNoteForm(true)
                         setNoteText("")
-                        setDocNoteData([])
+                        // setDocNoteData([])
+                        setDocSingleDate("")
                       }}>{"Add Note"}</button>
                     <button className="btn btn-dark mx-2  " style={{ maxHeight: 34 }}
                       onClick={() => {
@@ -1191,6 +1200,9 @@ const SaveBulkDocument = async () => {
                     AdminData={AdminData}
                     setRecordsPerPage={setRecordsPerPage}
                     recordsPerPage={recordsPerPage}
+                    setIsDocPrivate={setIsDocPrivate}
+                    isDocPrivate={isDocPrivate}
+                    setApiCall={setApiCall}
                   />
                 )}
               </div>

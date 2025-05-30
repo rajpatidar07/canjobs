@@ -57,7 +57,7 @@ const ManageConsultation = () => {
       <AdminHeader heading={"Manage Consultation Log"} />
       <AdminSidebar heading={"Manage Consultation Log"} />
 
-      <div className="dashboard-main-container mt-14" id="dashboard-body">
+      <div className="dashboard-main-container" id="dashboard-body">
         <div className="container-fluid">
           <div className="mb-18">
             <div className="mb-4 align-items-center">

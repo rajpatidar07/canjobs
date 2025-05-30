@@ -2315,3 +2315,33 @@ ul.css-8tnble li {
   position: relative;
   z-index: 1;
 }
+
+.daily-page-card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.daily-page-selected {
+  border-width: 2px;
+  background-color: #e7f1ff;
+}
+
+.daily-page-animated {
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
+}
+
+.daily-page-fadeIn {
+  animation-name: fadeIn;
+}
+
+@keyframes daily-page-fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

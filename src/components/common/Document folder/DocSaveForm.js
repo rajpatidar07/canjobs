@@ -13,8 +13,12 @@ export default function DocSaveForm({
   setDocFileBase,
   view,
   docFileBase,
-  uploadProgress
+  uploadProgress,
+  isDocPrivate,
+  setIsDocPrivate
 }) {
+  console.log()
+  let userType = localStorage.getItem("userType")
   /*Function to remove the file from the selected file list */
   const removeFile = (fileName) => {
     setDocFileBase((prevFiles) =>
@@ -122,6 +126,16 @@ export default function DocSaveForm({
             </ul>
           </div>
         )}
+        {(userType === "admin" && saveBtn && docFileBase.length > 0 && window.location.pathname !== "/slots") && (
+          <label>
+            <input
+              type="checkbox"
+              checked={isDocPrivate === 1}
+              onChange={() => setIsDocPrivate(isDocPrivate === 1 ? 0 : 1)}
+            /> Private
+          </label>
+        )}
+
         {saveBtn === true && docFileBase.length > 0 ? (
           <div
             className={`doc_upload_col d-flex justify-content-center align-items-center`}

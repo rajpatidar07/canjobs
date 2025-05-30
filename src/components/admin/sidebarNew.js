@@ -7,8 +7,9 @@ import {
   MdRealEstateAgent,
   // MdOutlineAddIcCall,
   MdOutlinePayments,
-  MdOutlineAddIcCall,
+  // MdOutlineAddIcCall,
 } from "react-icons/md";
+import { BiLogoDailymotion } from "react-icons/bi";
 // import { LuFileKey } from "react-icons/lu";
 import { LuMessagesSquare } from "react-icons/lu";
 import {
@@ -1210,35 +1211,35 @@ const AdminSidebar = (props) => {
           </Link>
         </li> */}
         <li
-          ref={(el) => (liRefs.current["Manage Daily Call Log"] = el)}
+          ref={(el) => (liRefs.current["Manage Daily Pages"] = el)}
           className={
             admin_type === "agent" || portal === "study"
               ? "d-none"
-              : props.heading === "Manage Daily Call Log"
+              : props.heading === "Manage Daily Pages"
                 ? "active"
                 : ""
           }
         >
           <Link
             onClick={() => {
-              clearPageNo("Manage Daily Call Log");
+              clearPageNo("Manage Daily Pages");
             }}
             className="px-2 py-3 border-top font-size-4 font-weight-light flex-y-center"
-            title={"Manage Daily Call Log"}
-            to="/daily_call_log"
+            title={"Manage Daily Pages"}
+            to="/daily_pages"
           >
-            <MdOutlineAddIcCall className="sidebar_icon" />
-            <span className="text-truncate">Manage Daily Call Log</span>
+            <BiLogoDailymotion className="sidebar_icon" />
+            <span className="text-truncate">Manage Daily Pages</span>
           </Link>
         </li>
         <li
           ref={(el) => (liRefs.current["Manage Daily Hourly Log"] = el)}
-          className={
+          className={`d-none ${
             admin_type === "agent" || portal === "study"
               ? "d-none"
               : props.heading === "Manage Daily Hourly Log"
                 ? "active"
-                : ""
+                : ""}`
           }
         >
           <Link
@@ -1256,11 +1257,11 @@ const AdminSidebar = (props) => {
          <li
           ref={(el) => (liRefs.current["Manage Consultation"] = el)}
           className={
-            admin_type === "agent" || portal === "study"
+           `d-none ${ admin_type === "agent" || portal === "study"
               ? "d-none"
               : props.heading === "Manage Consultation"
                 ? "active"
-                : ""
+                : ""}`
           }
         >
           <Link

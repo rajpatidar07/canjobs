@@ -199,6 +199,8 @@ import { Modal } from "react-bootstrap";
 
 const DocumentsNotes = (props) => {
     const [loading, setLoading] = useState(false)
+    const [isDocPrivate, setIsDocPrivate] = useState(props?.docSingleDate?.is_private ? props?.docSingleDate?.is_private : 1)
+    let userType = localStorage.getItem("userType")
     const initialHTML = props.convertedDoc ? props.convertedDoc?.replace(/You need to enable JavaScript to run this app\./gi, "") || ""
         : "";
     const contentState = ContentState.createFromBlockArray(
@@ -207,6 +209,7 @@ const DocumentsNotes = (props) => {
     const [editorState, setEditorState] = useState(
         EditorState.createWithContent(contentState)
     );
+    console.log(props?.docSingleDate, "hjgd")
     /*Function to Add note to the api */
     const exportToTextFile = async (e) => {
         e.preventDefault()
@@ -237,7 +240,8 @@ const DocumentsNotes = (props) => {
                     props.emp_user_type,
                     props.folderID,
                     props.docTypeName,
-                    [wordFile]
+                    [wordFile],
+                    userType === "admin" ? isDocPrivate : 0
                 );
 
                 if (res.data.message === "Document Upload") {
@@ -249,7 +253,7 @@ const DocumentsNotes = (props) => {
                     setLoading(false)
                     handleNoteFormClose()
                     localStorage.removeItem('writerContent'); // Clear saved content from localStorage
-                }else{
+                } else {
                     setLoading(false)
 
                 }
@@ -272,7 +276,7 @@ const DocumentsNotes = (props) => {
         minHeight: "10rem",
         padding: "1rem",
         borderRadius: "5px",
-        
+
     };
     return (
         <>
@@ -308,6 +312,15 @@ const DocumentsNotes = (props) => {
                                 editorStyle={editorStyle}
                             />
                         </div>
+                        {userType === "admin" && (
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    checked={isDocPrivate === 1 || isDocPrivate === "1"}
+                                    onChange={() => setIsDocPrivate(isDocPrivate === 1 || isDocPrivate === "1" ? 0 : 1)}
+                                /> Private
+                            </label>
+                        )}
                         <div className="d-flex justify-content-center">
                             {loading === true ? (
                                 <button

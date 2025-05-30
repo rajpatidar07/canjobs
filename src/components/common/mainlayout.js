@@ -118,6 +118,7 @@ import AlbertaPnpPdf from "./Retaineragreement/Agreement native/AlbertaPnpPdf";
 import AdminMain from "../admin/AdminMain";
 import CommonAdminExtraLinkSetting from "../admin/CommonAdminExtraLinkSetting";
 import ManageConsultation from "../admin/ManageConsultation";
+import CommonDailyPage from "./CommonDailyPage";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
 //   const location = useLocation();
@@ -365,7 +366,7 @@ function MainLayout() {
               <Route path="/credentials" element={<Credentional />} />
               <Route path="/testpdfurl" element={<ConvertAnyFileToPdf />} />
               <Route path="/resume/:id" element={<ResumeGrerator />} />
-              {/* <Route path="/emailpreview" element={<PreviewEmail />} /> */}
+              <Route path="/daily_pages" element={<CommonDailyPage />} />
               <Route path="/email" element={<MainEmailPage />} />
               <Route path="*" element={<NotFound userType={userType} />} />
               <Route path="/googledrive" element={<GoogleDrive />} />

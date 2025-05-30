@@ -1597,7 +1597,7 @@ export default function EmployeeTable(props) {
                             className="text-center"
                             style={{ width: "15%", zIndex: 9999 }}
                           >
-                            <td className="exclude-mark-read py-5">
+                            <p className="exclude-mark-read py-5">
                               {empdata.interested_in_id === null ||
                                 empdata.interested_in_id === undefined ||
                                 empdata.interested_in_id === "undefined" ||
@@ -1667,7 +1667,7 @@ export default function EmployeeTable(props) {
                                   </DropdownButton>
                                 </div>
                               )}
-                            </td>
+                            </p>
                           </td>
                         )}
 
