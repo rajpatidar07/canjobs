@@ -92,7 +92,7 @@ export default function SharePointDocument({
   const [pageNo, setPageNo] = useState(1);
   const [recordsPerPage, setRecordsPerPage] = useState(10);
   /*Shorting states */
-  const [columnName, setcolumnName] = useState("id");
+  const [columnName, setcolumnName] = useState("lastModifiedDateTime");
   const [sortOrder, setSortOrder] = useState("DESC");
   let userType = localStorage.getItem("userType")
   // /*Sorting Function */

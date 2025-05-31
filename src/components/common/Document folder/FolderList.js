@@ -301,21 +301,20 @@ export default function FolderList({
                           </li>
                           <li
                             className={
-                              item.file &&
-                                item.file.mimeType !== "text/plain" &&
-                                (userType === "admin" || userType === "agent") &&
-                                window.location.pathname !== "/slots" &&
-                                [
-                                  "image/jpeg",
-                                  "image/png",
-                                  "image/jpg",
-                                  "application/pdf",
-                                  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                                  "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-                                  "application/vnd.ms-powerpoint",
-                                  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                                  "application/vnd.ms-excel"
-                                ].includes(item.file.mimeType)
+                              ((item.folder && userType === "admin") ||
+                                (userType === "admin" &&
+                                  window.location.pathname !== "/slots" &&
+                                  [
+                                    "image/jpeg",
+                                    "image/png",
+                                    "image/jpg",
+                                    "application/pdf",
+                                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                                    "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                                    "application/vnd.ms-powerpoint",
+                                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                                    "application/vnd.ms-excel"
+                                  ].includes(item.file.mimeType)))
                                 ? "list-group-item text-danger"
                                 : "d-none"
                             }
@@ -347,44 +346,6 @@ export default function FolderList({
 
                               Download
                             </Link>
-                          </li>
-                          <li
-                            className={
-                              item.file &&
-                                item.file.mimeType !== "text/plain" &&
-                                (userType === "admin" || userType === "agent") &&
-                                window.location.pathname !== "/slots" &&
-                                [
-                                  "image/jpeg",
-                                  "image/png",
-                                  "image/jpg",
-                                  "application/pdf",
-                                  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                                  "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-                                  "application/vnd.ms-powerpoint",
-                                  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                                  "application/vnd.ms-excel"
-                                ].includes(item.file.mimeType)
-                                ? "list-group-item text-danger"
-                                : "d-none"
-                            }
-                          >
-                            <label>
-                              Private {item.folder ? "Folder" : "File"} <input
-                                type="checkbox"
-                                checked={item.is_private === 1 || item.is_private === "1"}
-                                onChange={() => {
-                                  try {
-                                    let res = UpdateDocFolderIsPrivate(item.id, item.is_private === 1 || item.is_private === "1" ? 0 : 1)
-                                    if (res) {
-                                      setApiCall(true)
-                                    }
-                                  } catch (err) {
-                                    console.log(err)
-                                  }
-                                }}
-                              />
-                            </label>
                           </li>
                           <li className={
                             item.file &&
@@ -586,23 +547,23 @@ export default function FolderList({
                                 Delete {isFolder ? "Folder" : "File"}
                               </Link>
                             </li>
+                            {console.log(item)}
                             <li
                               className={
-                                item.file &&
-                                  item.file.mimeType !== "text/plain" &&
-                                  (userType === "admin" || userType === "agent") &&
-                                  window.location.pathname !== "/slots" &&
-                                  [
-                                    "image/jpeg",
-                                    "image/png",
-                                    "image/jpg",
-                                    "application/pdf",
-                                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-                                    "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-                                    "application/vnd.ms-powerpoint",
-                                    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                                    "application/vnd.ms-excel"
-                                  ].includes(item.file.mimeType)
+                                ((item.folder && userType === "admin") ||
+                                  (userType === "admin" &&
+                                    window.location.pathname !== "/slots" &&
+                                    [
+                                      "image/jpeg",
+                                      "image/png",
+                                      "image/jpg",
+                                      "application/pdf",
+                                      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                                      "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                                      "application/vnd.ms-powerpoint",
+                                      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                                      "application/vnd.ms-excel"
+                                    ].includes(item.file.mimeType)))
                                   ? "list-group-item text-danger"
                                   : "d-none"
                               }
@@ -622,7 +583,8 @@ export default function FolderList({
                                     }
                                   }}
                                 />
-                              </label></li>
+                              </label>
+                            </li>
                             {isDownloadable && (
                               <>
                                 <li className="list-group-item text-danger">

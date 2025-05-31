@@ -445,7 +445,7 @@ function EmployeeHeader() {
                         autoClose: 1000,
                       });
                       // navigate("/");
-                      // window.reload();
+                      window.reload();
                     }}
                   >
                     Log Out

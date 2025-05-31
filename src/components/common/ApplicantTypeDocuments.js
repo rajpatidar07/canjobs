@@ -64,7 +64,7 @@ export default function ApplicantTypeDocuments(props) {
     totalData: "",
     pageNo: 1,
     recordsPerPage: 10,
-    columnName: "id",
+    columnName: "lastModifiedDateTime",
     sortOrder: "DESC",
     uploadProgress: 0
   });
