@@ -95,7 +95,8 @@ export default function SharePointDocument({
   const [columnName, setcolumnName] = useState("lastModifiedDateTime");
   const [sortOrder, setSortOrder] = useState("DESC");
   let userType = localStorage.getItem("userType")
-  // /*Sorting Function */
+
+ /*Sorting Function */
   const handleSort = (columnName) => {
     setSortOrder(sortOrder === "DESC" ? "ASC" : "DESC");
     setcolumnName(columnName);

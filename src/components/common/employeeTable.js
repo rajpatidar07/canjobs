@@ -45,6 +45,7 @@ import { BsChat } from "react-icons/bs";
 import CommonThreeDots from "./commonThreeDots";
 import { ButtonGroup, Dropdown, DropdownButton } from "react-bootstrap";
 import filterjson from "../json/filterjson";
+import ApplicantTypeTimeLine from "./ApplicantTypeTimeLine";
 export default function EmployeeTable(props) {
   let agentId = localStorage.getItem("agent_id");
   let user_type = localStorage.getItem("userType");
@@ -1126,6 +1127,19 @@ export default function EmployeeTable(props) {
                           </td>
                         </tr>
                       ) : null}
+                      <tr style={{ border: "0" }}>
+                        <td
+                          style={{ paddingBottom: "0!important" }}
+                          colSpan="14"
+                          className={user_type === "admin" ? "bg-white text-center m-0"
+                            : "d-none"}
+                        >
+                          <ApplicantTypeTimeLine
+                            All_types={empdata.all_interested_in_id}
+                            ApplicantTypeList={applicantTypeList}
+                          />
+                        </td>
+                      </tr>
                       <tr
                         className={
                           empdata.applicant_process_status
