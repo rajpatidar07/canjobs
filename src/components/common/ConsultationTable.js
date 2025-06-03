@@ -4,15 +4,16 @@ import Loader from "./loader";
 import TableInput from "./TableInput";
 import useValidation from "./useValidation";
 import { toast } from "react-toastify";
-import { FaTrash } from "react-icons/fa";
+import { FaEye, FaTrash } from "react-icons/fa";
 import SAlert from "./sweetAlert";
 import UserAvatar from "./UserAvtar";
-import { AddUpdateConsultation, GetConsultation, DeleteConsultation } from "../../api/api";
+import { AddUpdateConsultation, GetConsultation, DeleteConsultation, GetSharePointData, getSharePointParticularFolders } from "../../api/api";
 import { Link, useLocation } from "react-router-dom";
 import CommentTaskBox from "./commonTaskBox";
 import ModalSidebar from "./modalSidebar";
 import { BsChat } from "react-icons/bs";
 import { Pagination } from "react-bootstrap";
+import ViewPdf from "./Retaineragreement/viewPdf";
 
 const initialFormState = {
   applicant_name: "",
@@ -30,6 +31,7 @@ const initialFormState = {
   payment_date: "",
   mode_of_meeting: "",
   notes: "",
+  document: null,
 };
 
 const validators = {
@@ -74,6 +76,11 @@ function ConsultationTable(props) {
   const tableContainerRef = useRef(null);
   const [totalData, setTotalData] = useState();
   const [currentPage, setCurrentPage] = useState(1);
+  const [documentPdf, setDocumentPdf] = useState("");
+  const [openViewDocument, setOpenViewDocument] = useState("");
+  const [documentData, setDocumentData] = useState("");
+  const [docLoader, setDocLoder] = useState(false);
+
   const recordsPerPage = 10;
   const nPages = Math.ceil(totalData / recordsPerPage);
   const GetConsultationList = async () => {
@@ -110,26 +117,120 @@ function ConsultationTable(props) {
       setIsLoading(false);
     }
   };
+  const GetDocumentPdf = async (data) => {
+    setDocLoder(true);
+    try {
+      let res = await getSharePointParticularFolders(
+        data.id,//id of who's document is
+        "consultation",//Type of who's document is
+        props.doc_folder_id
+      );
+      if (res.data.data === "Lifetime validation failed, the token is expired.") {
+        try {
+          let response = await GetSharePointData()
+          if (response.status === 1 || "1") {
+            GetDocumentPdf(data);
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
+      if (res.data.status === 1) {
+        setDocLoder(false);
+        if (res.data.data.find((item) => item.id === data.doc_folder_id)) {
+          setDocumentPdf(res.data.data.find((item) => item.id === data.doc_folder_id));
+          // console.log(res.data.data.find((item) => item.id === agreementData.doc_folder_id))
+        } else if (res.data.data === "No Documents Found") {
+          setDocLoder(false);
+        } else {
+          setDocLoder(false);
+        }
+      }
+    } catch (Err) {
+      console.log(Err);
+      setDocLoder(false);
+    }
+  };
   const { state, setState, setErrors, onInputChange, errors, validate } = useValidation(initialFormState, validators);
+  /*On change function to upload bulk document in 1 array*/
+  const handleDocumentChange = async (event, id) => {
+    const files = event.target.files;
 
+    // Check the number of files selected
+    if (files.length > 30) {
+      toast.error("You can only upload a maximum of 30 files at a time", {
+        position: toast.POSITION.TOP_RIGHT,
+        autoClose: 1000,
+      });
+      return;
+    }
+
+    // const allowedTypes = [".pdf", ".doc", ".docx", ".jpg", ".jpeg", ".png"];
+    const maxSize = 1024 * 8000; // 8 MB
+
+    const filebseList = [];
+    for (let i = 0; i < files.length; i++) {
+      let file = files[i];
+
+      // Extract the filename and extension
+      const lastDotIndex = file.name.lastIndexOf(".");
+      let fileName = file.name.substring(0, lastDotIndex); // Get the name part before the last dot
+      const fileExtension = file.name.substring(lastDotIndex + 1); // Get the extension part after the last dot
+
+      // Remove all extra dots in the fileName part
+      fileName = fileName.replace(/\.+/g, ""); // Remove any extra dots
+
+      const finalFileName = `${fileName}.${fileExtension}`; // Form the new file name
+
+      // Create a new File object with the updated name, preserving the file's content and metadata
+      const updatedFile = new File([file], finalFileName, {
+        type: file.type,
+        lastModified: file.lastModified,
+      });
+      // Check file size
+      if (updatedFile.size > maxSize) {
+        toast.error(
+          `Document size can't be more than 8 MB for file '${updatedFile.name}'`,
+          {
+            position: toast.POSITION.TOP_RIGHT,
+            autoClose: 1000,
+          }
+        );
+        return;
+      }
+
+      // Read file as data URL
+      const reader = new FileReader();
+      reader.readAsDataURL(updatedFile);
+
+      // Add the updated file to the file list
+      filebseList.push(updatedFile);
+    }
+
+    setState(prevState => ({
+      ...prevState,
+      document: filebseList
+    }));
+
+  };
   const handleAdd = async (e, data) => {
     if (e && e.preventDefault) {
       e.preventDefault();
     }
-    if (validate() || data.id) {
+    if (validate() || data?.id) {
+      console.log(state)
       try {
-        console.log(state)
-        let res = await AddUpdateConsultation(data ? data : state)
+        let res = await AddUpdateConsultation(data ? data : state);
         if (res.data.status === 1 || res.data.status === "1") {
           toast.success(`Consultation ${ConsultationId ? "updated" : "added"} successfully`, {
             position: toast.POSITION.TOP_RIGHT,
             autoClose: 1000,
           });
-          setApiCall(true)
+          setApiCall(true);
           setState(initialFormState);
           setConsultationId(null);
           props.setShowAddForm(false);
-          setErrors("")
+          setErrors("");
         }
       } catch (error) {
         console.error(error);
@@ -192,7 +293,6 @@ function ConsultationTable(props) {
             <h3 className="font-size-6 mb-0">{props.heading || "Consultation"}</h3>
           </div>
         </div>
-
         <div
           className={
             props.heading === "Dashboard"
@@ -202,7 +302,7 @@ function ConsultationTable(props) {
         >
           <div
             className="datatable_div  pt-7 rounded pb-8 px-2"
-            style={{ overflowX: "auto", overflowY: "hidden" }}
+            style={{ overflowX: "auto", overflowY: "scroll", height: "60vh" }}
             ref={tableContainerRef}
           >
             <form className="table-responsive main_table_div" onSubmit={handleAdd}>
@@ -226,6 +326,7 @@ function ConsultationTable(props) {
                         "Date of Payment",
                         "Mode of meeting",
                         "Notes",
+                        "Documents",
                         "Action",
                       ].map((heading, index) => (
                         <th
@@ -245,7 +346,7 @@ function ConsultationTable(props) {
                             className="text-dark"
                             onClick={() => {
                               console.log(heading, sortOrder)
-                              if (heading !== "Action") {
+                              if (heading !== "Action" && heading !== "Documents") {
                                 handleSort(
                                   heading === "RA sent/Signed"
                                     ? "ra_sent_signed"
@@ -334,7 +435,6 @@ function ConsultationTable(props) {
                               ))}
                           </select>
                         </td>
-
                         <td style={{ minWidth: "150px" }}>
                           <select
                             className="form-control"
@@ -359,7 +459,6 @@ function ConsultationTable(props) {
                               ))}
                           </select>
                         </td>
-
                         <td>
                           <TableInput
                             type="date"
@@ -434,6 +533,22 @@ function ConsultationTable(props) {
                             onChange={onInputChange}
                             className="form-control"
                           />
+                        </td>
+                        <td>
+                          <input
+                            type="file"
+                            name="document"
+                            id="document"
+                            onChange={(e) => handleDocumentChange(e)}
+                            className="form-control d-none"
+                            accept=".pdf,.doc,.docx,.jpg,.png"
+                          />
+                          <label
+                            className="mt-5"
+                            htmlFor="document"
+                          >
+                            <span className="fas fa-upload text-gray"></span>
+                          </label>
                         </td>
                         <td style={{ minWidth: "50px", textAlign: "center" }}>
                           {isLoading ? (
@@ -701,6 +816,22 @@ function ConsultationTable(props) {
                               } className="form-control"
                             />
                           </td>
+                          <td>
+                            <button
+                              className="btn btn-outline-info action_btn "
+                              disabled={!item.doc_folder_id}
+                              onClick={() => {
+                                setOpenViewDocument(true);
+                                setDocumentData(item);
+                                GetDocumentPdf(item);
+                              }}
+                              title="View Document"
+                            >
+                              <span className="text-gray px-2">
+                                <FaEye />
+                              </span>
+                            </button>
+                          </td>
                           <td className={""} style={{ minWidth: "150px" }}>  <button
                             className="btn btn-outline-info action_btn "
                             style={{
@@ -747,6 +878,24 @@ function ConsultationTable(props) {
           </div>
         </div>
       </div>
+      {openViewDocument ? (
+        <ViewPdf
+          show={openViewDocument}
+          close={() => setOpenViewDocument(false)}
+          agreementData={documentData}
+          emp_user_type={props.user_type}
+          userData={props.userData}
+          setApicall={setApiCall}
+          folderId={props.folderId}
+          user_id={props.userId}
+          setOpenAddAgreementFelids={""}
+          setOpenViewAgreementSign={""}
+          docLoader={docLoader}
+          pdf={documentPdf}
+          type={"modal"}
+          page={"consultation"}
+        />
+      ) : null}
       <ModalSidebar
         show={showConsultationModal}
         onClose={() => {

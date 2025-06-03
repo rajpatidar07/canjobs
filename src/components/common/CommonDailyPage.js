@@ -1,11 +1,29 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ManageDailyCallLog from '../admin/ManageDailyCallLog';
 import ManageHourlyLog from '../admin/ManageHourlyLog';
 import ManageConsultation from '../admin/ManageConsultation'; 
+import { useLocation } from 'react-router-dom';
 
 const CommonDailyPage = () => {
+  const location = useLocation();
     const [selectedCard, setSelectedCard] = useState(1);
 
+    // Utility to parse query params
+    const getQueryParams = (search) => {
+        return Object.fromEntries(new URLSearchParams(search));
+    };
+
+    useEffect(() => {
+        const queryParams = getQueryParams(location.search);
+
+        if (queryParams.call_logId) {
+            setSelectedCard(1);
+        } else if (queryParams.hour_logId) {
+            setSelectedCard(2);
+        } else if (queryParams.consultation_id) {
+            setSelectedCard(3);
+        }
+    }, [location.search]);
     const cardData = [
         {
             id: 1,

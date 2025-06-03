@@ -34,8 +34,8 @@ const ManageDailyCallLog = () => {
   }, []);
   const filteredAdmins = adminList
     ? adminList?.filter((admin) =>
-        admin?.name?.toLowerCase().includes(searchQuery.toLowerCase())
-      )
+      admin?.name?.toLowerCase().includes(searchQuery.toLowerCase())
+    )
     : [];
 
   useEffect(() => {
@@ -56,8 +56,8 @@ const ManageDailyCallLog = () => {
       <AdminSidebar heading={"Manage Daily Call Log"} />
 
       <div className="dashboard-main-container " id="dashboard-body">
-         {/*removing class for now mt-14 */}
-        <div className="container-fluid">
+        {/*removing class for now mt-14 */}
+        <div className="container-fluid" >
           <div className="mb-18">
             <div className="mb-4 align-items-center">
               <div className="page___heading">
@@ -285,9 +285,8 @@ const ManageDailyCallLog = () => {
                 </button>
 
                 <div
-                  className={`position-absolute bg-white z-index-4 p-8 shadow-lg right-25 ${
-                    showfilterdropdown ? "d-block" : "d-none"
-                  }`}
+                  className={`position-absolute bg-white z-index-4 p-8 shadow-lg right-25 ${showfilterdropdown ? "d-block" : "d-none"
+                    }`}
                   style={{ width: "800px" }}
                 >
                   <div className="d-flex justify-content-between align-items-center">
@@ -354,16 +353,17 @@ const ManageDailyCallLog = () => {
                 Reset
               </button>
             </div>
-
-            {/* Call Log Table */}
-            <Calllogtable
-              heading={"Daily Call log"}
-              showAddForm={showAddItemForm}
-              adminList={adminList}
-              searchCandidate={searchCandidate}
-              setShowAddForm={setShowAddItemForm}
-              selectedAdminId={selectedAdminId}
-            />
+            <div >
+              {/* Call Log Table */}
+              <Calllogtable
+                heading={"Daily Call log"}
+                showAddForm={showAddItemForm}
+                adminList={adminList}
+                searchCandidate={searchCandidate}
+                setShowAddForm={setShowAddItemForm}
+                selectedAdminId={selectedAdminId}
+              />
+            </div>
           </div>
         </div>
       </div>

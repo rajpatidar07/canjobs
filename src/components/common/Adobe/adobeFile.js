@@ -6,31 +6,7 @@ import { Link } from "react-router-dom";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import Loader from "../loader.js"
 // import $ from 'jquery';
-const AdobePDFViewer = ({
-  url,
-  data,
-  userId,
-  commentsList,
-  selectedMentionAdmin,
-  DocUserType,
-  adminList,
-  setCommentsList,
-  partnerList,
-  userType,
-  docsection,
-  docTypeList,
-  fileId,
-  setDocSingleDate,
-  setFileID,
-  setConvertedDoc,
-  getCommentsList,
-  SetPdfDocUrl,
-  openCommentBox,
-  AnnoteId,
-  docTaskId,
-  AdminData,
-  page
-}) => {
+const AdobePDFViewer = ({ url, data, userId, commentsList, selectedMentionAdmin, DocUserType, adminList, setCommentsList, partnerList, userType, docsection, docTypeList, fileId, setDocSingleDate, setFileID, setConvertedDoc, getCommentsList, SetPdfDocUrl, openCommentBox, AnnoteId, docTaskId, AdminData, page }) => {
   let [openAnnotationBox, setOpenAnnotationBox] = useState(openCommentBox ? true : false);
   let [annotationDrawBox, setAnnotationDrawBox] = useState("");
   let [annotationId, setAnnotationId] = useState(AnnoteId || "");
@@ -94,10 +70,7 @@ const AdobePDFViewer = ({
   // }, [currentIndex]);
   /*REnder document method */
   useEffect(() => {
-    if (url &&
-      data &&
-      userType) {
-
+    if (url && data && userType) {
       // if (!data?.name?.includes(1295)) {
       const viewSDKClient = new ViewSDKClient();
       viewSDKClient.ready().then(() => {
@@ -367,7 +340,7 @@ const AdobePDFViewer = ({
         }}
 
         className={
-          page === "agreement" || page === "invoice" || userType === "company" || userType === "user"
+          page === "consultation" || page === "agreement" || page === "invoice" || userType === "company" || userType === "user"
             ? "d-none"
             : "annotation-mobile-button"
         }

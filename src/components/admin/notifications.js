@@ -324,11 +324,11 @@ function Notifications({
                                                     ? `/slots?sId=${data.interested_in}&notifiType=group&taskId=${parseJsonSafely(data?.notif_json).task_id || ""
                                                     }&replyId=${parseJsonSafely(data?.notif_json).reply_id || ""}`
                                                     : data.subject === "mention_call_log_chat"
-                                                      ? `/daily_call_log?call_logId=${data.employee_id}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}`
+                                                      ? `/daily_pages?call_logId=${data.employee_id}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}`
                                                       : data.subject === "mention_hour_log_chat"
-                                                        ? `/daily_hours_log?hour_logId=${data.employee_id}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}`
+                                                        ? `/daily_pages?hour_logId=${data.employee_id}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}`
                                                         : data.subject === "mention_consultation_chat"
-                                                          ? `/consultation?consultation_id=${data.employee_id}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}`
+                                                          ? `/daily_pages?consultation_id=${data.employee_id}&taskId=${parseJsonSafely(data?.notif_json).task_id || ""}`
                                                           : ""
                       }
                       onClick={() => {

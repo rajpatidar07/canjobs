@@ -22,7 +22,7 @@ function Hourlylogtable(props) {
     const NotifiTaskId = searchParams.get("taskId") || "";
 
     const [isLoading, setIsLoading] = useState(false);
-    const [setIsScrolled] = useState(false);
+    // const [setIsScrolled] = useState(false);
     const [taskId, setTaskId] = useState(NotifiTaskId);
     const [HourLogId, setHourLogId] = useState(NotifiHourLogId);
     const [filterListApiCall, setFilterListApiCall] = useState(false);
@@ -143,19 +143,19 @@ function Hourlylogtable(props) {
         if (apiCall === true) {
             setApiCall(false);
         }
-        const handleScroll = () => {
-            if (tableContainerRef.current) {
-                setIsScrolled(tableContainerRef.current.scrollLeft > 0);
-            }
-        };
-        if (tableContainerRef.current) {
-            tableContainerRef.current.addEventListener("scroll", handleScroll);
-        }
-        return () => {
-            if (tableContainerRef.current) {
-                tableContainerRef.current.removeEventListener("scroll", handleScroll);
-            }
-        };
+        // const handleScroll = () => {
+        //     if (tableContainerRef.current) {
+        //         setIsScrolled(tableContainerRef.current.scrollLeft > 0);
+        //     }
+        // };
+        // if (tableContainerRef.current) {
+        //     tableContainerRef.current.addEventListener("scroll", handleScroll);
+        // }
+        // return () => {
+        //     if (tableContainerRef.current) {
+        //         tableContainerRef.current.removeEventListener("scroll", handleScroll);
+        //     }
+        // };
     }, [taskId, HourLogId, apiCall, props.searchCandidate, props.selectedAdminId, props.pageNo, columnName, sortOrder, props.totalHour, props.day]);
 
     const handleManagerClick = async (managerId, page, day, hour) => {
@@ -307,7 +307,7 @@ function Hourlylogtable(props) {
                 >
                     <div
                         className="datatable_div  pt-7 rounded pb-8 px-2"
-                        style={{ overflowX: "auto", overflowY: "hidden" }}
+                        style={{ overflowX: "auto", overflowY: "scroll", height: "60vh" }}
                         ref={tableContainerRef}
                     >
                         <form className="table-responsive main_table_div">

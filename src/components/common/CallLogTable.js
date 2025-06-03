@@ -20,7 +20,7 @@ function Calllogtable(props) {
     let NotificallLogId = searchParams.get("call_logId") || ""
     let NotifiTaskId = searchParams.get("taskId") || ""
     const [isLoading, setIsLoading] = useState(false);
-    const [/*isScrolled,*/ setIsScrolled] = useState(false);
+    // const [isScrolled, setIsScrolled] = useState(false);
     let [taskId, setTaskId] = useState(NotifiTaskId ? NotifiTaskId : "");
     let [callLogId, setCallLogId] = useState(NotificallLogId ? NotificallLogId : "");
     let [filterListapiCall, setFilterListApiCall] = useState(false);
@@ -137,21 +137,21 @@ function Calllogtable(props) {
 
         GetDailyCallLogList()
         if (apiCall === true) { setApiCall(false) }
-        const handleScroll = () => {
-            if (tableContainerRef.current) {
-                setIsScrolled(tableContainerRef.current.scrollLeft > 0);
-            }
-        };
+        // const handleScroll = () => {
+        //     if (tableContainerRef.current) {
+        //         setIsScrolled(tableContainerRef.current.scrollLeft > 0);
+        //     }
+        // };
 
-        if (tableContainerRef.current) {
-            tableContainerRef.current.addEventListener("scroll", handleScroll);
-        }
+        // if (tableContainerRef.current) {
+        //     tableContainerRef.current.addEventListener("scroll", handleScroll);
+        // }
 
-        return () => {
-            if (tableContainerRef.current) {
-                tableContainerRef.current.removeEventListener("scroll", handleScroll);
-            }
-        };
+        // return () => {
+        //     if (tableContainerRef.current) {
+        //         tableContainerRef.current.removeEventListener("scroll", handleScroll);
+        //     }
+        // };
     }, [taskId, callLogId, apiCall, props.searchCandidate, props.selectedAdminId, currentPage, sortOrder, columnName]);
     /*Function to add New Daily call log item */
     const AddCallLog = async (newValue, data) => {
@@ -210,7 +210,7 @@ function Calllogtable(props) {
     };
     return (
         <>
-            <div className="mb-18 height-100">
+            <div className="mb-18 ">
                 <div className="mb-4 align-items-center">
                     <div className="page___heading">
                         <h3 className="font-size-6 mb-0">Call Log</h3>
@@ -226,7 +226,7 @@ function Calllogtable(props) {
                 >
                     <div
                         className="datatable_div  pt-7 rounded pb-8 px-2"
-                        style={{ overflowX: "auto", overflowY: "hidden" }}
+                        style={{ overflowX: "auto", overflowY: "scroll",height:"60vh" }}
                         ref={tableContainerRef}
                     >
                         <form className="table-responsive main_table_div">
