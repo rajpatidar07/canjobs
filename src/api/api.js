@@ -6,8 +6,7 @@ const API_URL = window.location.origin === "https://canpathwaysjobs.com"
 // New AWS backend
 // const API_URL = "https://api.canpathwaysjobs.com/canjobs/";
 let Token = localStorage.getItem("token");
-let driveId =
-  "b!iUiBybFGWEWfqWdSYuUqrWrIPVmZDQxPmwO4Bzj6nJp5ByboftxMSY6hfWPT-m8F";
+let driveId = "b!iUiBybFGWEWfqWdSYuUqrWrIPVmZDQxPmwO4Bzj6nJp5ByboftxMSY6hfWPT-m8F";
 const view_as_token = localStorage.getItem("view_as_token");
 const user_id = localStorage.getItem("employee_id");
 const employer_id = localStorage.getItem("company_id");
@@ -4071,7 +4070,7 @@ export const AddUpdateConsultation = async (data) => {
   const formData = new FormData();
   // Append regular fields
   formData.append("applicant_name", data.applicant_name);
-  formData.append("driveId", data.driveId);
+  formData.append("driveId", driveId);
   formData.append("phone", data.phone);
   formData.append("email", data.email);
   formData.append("manager_id", data.manager_id);
@@ -4096,8 +4095,10 @@ export const AddUpdateConsultation = async (data) => {
   //   });
   // }
   console.log(data.document,)
+  if (data.document) {
     for (let i = 0; i < data.document.length; i++) {
-    formData.append(`document[${i}]`, data.document[i]);
+      formData.append(`document[${i}]`, data.document[i]);
+    }
   }
   console.log(formData)
   const response = await axios.post(`${API_URL}common/addUpdateConsultation`, formData,

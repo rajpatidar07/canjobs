@@ -119,11 +119,12 @@ function ConsultationTable(props) {
   };
   const GetDocumentPdf = async (data) => {
     setDocLoder(true);
+    console.log(data.doc_folder_id)
     try {
       let res = await getSharePointParticularFolders(
         data.id,//id of who's document is
         "consultation",//Type of who's document is
-        props.doc_folder_id
+        data.doc_folder_id
       );
       if (res.data.data === "Lifetime validation failed, the token is expired.") {
         try {
@@ -139,7 +140,7 @@ function ConsultationTable(props) {
         setDocLoder(false);
         if (res.data.data.find((item) => item.id === data.doc_folder_id)) {
           setDocumentPdf(res.data.data.find((item) => item.id === data.doc_folder_id));
-          // console.log(res.data.data.find((item) => item.id === agreementData.doc_folder_id))
+          console.log(res.data.data.find((item) => item.id === data.doc_folder_id))
         } else if (res.data.data === "No Documents Found") {
           setDocLoder(false);
         } else {
@@ -883,11 +884,11 @@ function ConsultationTable(props) {
           show={openViewDocument}
           close={() => setOpenViewDocument(false)}
           agreementData={documentData}
-          emp_user_type={props.user_type}
-          userData={props.userData}
+          emp_user_type={"consultation"}
+          userData={documentData}
           setApicall={setApiCall}
-          folderId={props.folderId}
-          user_id={props.userId}
+          folderId={documentData.doc_folder_id}
+          user_id={documentData.id}
           setOpenAddAgreementFelids={""}
           setOpenViewAgreementSign={""}
           docLoader={docLoader}
