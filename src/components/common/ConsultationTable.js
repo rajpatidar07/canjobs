@@ -31,7 +31,7 @@ const initialFormState = {
   payment_date: "",
   mode_of_meeting: "",
   notes: "",
-  document: null,
+  // document: null,
 };
 
 const validators = {
@@ -327,7 +327,7 @@ function ConsultationTable(props) {
                         "Date of Payment",
                         "Mode of meeting",
                         "Notes",
-                        "Documents",
+                        // "Documents",
                         "Action",
                       ].map((heading, index) => (
                         <th
@@ -535,7 +535,7 @@ function ConsultationTable(props) {
                             className="form-control"
                           />
                         </td>
-                        <td>
+                        <td class="d-none">
                           <input
                             type="file"
                             name="document"
@@ -817,7 +817,7 @@ function ConsultationTable(props) {
                               } className="form-control"
                             />
                           </td>
-                          <td>
+                          <td class="d-none">
                             <button
                               className="btn btn-outline-info action_btn "
                               disabled={!item.doc_folder_id}

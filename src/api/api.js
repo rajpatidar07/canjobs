@@ -4067,41 +4067,41 @@ export const SendHtmlForPdf = async (html) => {
 }
 /*Add Update Consultation */
 export const AddUpdateConsultation = async (data) => {
-  const formData = new FormData();
+  // const formData = new FormData();
   // Append regular fields
-  formData.append("applicant_name", data.applicant_name);
-  formData.append("driveId", driveId);
-  formData.append("phone", data.phone);
-  formData.append("email", data.email);
-  formData.append("manager_id", data.manager_id);
-  formData.append("manager_type", data.manager_type);
-  formData.append("person_admin_id", data.person_admin_id);
-  formData.append("person_admin_type", data.person_admin_type);
-  formData.append("date", data.date);
-  formData.append("ra_sent_signed", data.ra_sent_signed);
-  formData.append("payment_status", data.payment_status);
-  formData.append("email_secondary", data.email_secondary);
-  formData.append("payment_method", data.payment_method);
-  formData.append("payment_date", data.payment_date);
-  formData.append("mode_of_meeting", data.mode_of_meeting);
-  formData.append("notes", data.notes);
+  // formData.append("applicant_name", data.applicant_name);
+  // formData.append("driveId", driveId);
+  // formData.append("phone", data.phone);
+  // formData.append("email", data.email);
+  // formData.append("manager_id", data.manager_id);
+  // formData.append("manager_type", data.manager_type);
+  // formData.append("person_admin_id", data.person_admin_id);
+  // formData.append("person_admin_type", data.person_admin_type);
+  // formData.append("date", data.date);
+  // formData.append("ra_sent_signed", data.ra_sent_signed);
+  // formData.append("payment_status", data.payment_status);
+  // formData.append("email_secondary", data.email_secondary);
+  // formData.append("payment_method", data.payment_method);
+  // formData.append("payment_date", data.payment_date);
+  // formData.append("mode_of_meeting", data.mode_of_meeting);
+  // formData.append("notes", data.notes);
 
-  // // Append documents (files)
-  // if (Array.isArray(data.documents)) {
-  //   data.documents.forEach((doc, index) => {
-  //     if (doc.file) {
-  //       formData.append(`documents[${index}]`, doc.file, doc.name || `file_${index}`);
-  //     }
-  //   });
+  // // // Append documents (files)
+  // // if (Array.isArray(data.documents)) {
+  // //   data.documents.forEach((doc, index) => {
+  // //     if (doc.file) {
+  // //       formData.append(`documents[${index}]`, doc.file, doc.name || `file_${index}`);
+  // //     }
+  // //   });
+  // // }
+  // console.log(data.document,)
+  // if (data.document) {
+  //   for (let i = 0; i < data.document.length; i++) {
+  //     formData.append(`document[${i}]`, data.document[i]);
+  //   }
   // }
-  console.log(data.document,)
-  if (data.document) {
-    for (let i = 0; i < data.document.length; i++) {
-      formData.append(`document[${i}]`, data.document[i]);
-    }
-  }
-  console.log(formData)
-  const response = await axios.post(`${API_URL}common/addUpdateConsultation`, formData,
+  console.log(data)
+  const response = await axios.post(`${API_URL}common/addUpdateConsultation`, data,
     {
       headers: {
         "Content-Type": "multipart/form-data",

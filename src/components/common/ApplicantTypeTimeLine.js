@@ -3,7 +3,7 @@ import React from "react";
 export default function ApplicantTypeTimeLine(props) {
     const numberArray = props?.All_types?.split(',').map(Number);
     /*function to get the stage of Applicant type */
-    const currentIndex = numberArray[numberArray.length - 1];
+    const currentIndex = numberArray ? numberArray[numberArray?.length - 1] : 0;
 
     return (
         <div
