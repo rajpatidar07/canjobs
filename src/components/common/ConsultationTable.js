@@ -31,7 +31,8 @@ const initialFormState = {
   payment_date: "",
   mode_of_meeting: "",
   notes: "",
-  // document: null,
+  id: "",
+  document: null,
 };
 
 const validators = {
@@ -102,7 +103,6 @@ function ConsultationTable(props) {
       setDataList(adminList);
       setTotalData(Res.data.total_row)
       if (taskId) {
-        console.log(adminList[0])
         setSingleData(adminList[0]);
         if (adminList[0]) {
           setShowConsultationModal(true);
@@ -119,7 +119,6 @@ function ConsultationTable(props) {
   };
   const GetDocumentPdf = async (data) => {
     setDocLoder(true);
-    console.log(data.doc_folder_id)
     try {
       let res = await getSharePointParticularFolders(
         data.id,//id of who's document is
@@ -138,17 +137,18 @@ function ConsultationTable(props) {
       }
       if (res.data.status === 1) {
         setDocLoder(false);
-        if (res.data.data.find((item) => item.id === data.doc_folder_id)) {
-          setDocumentPdf(res.data.data.find((item) => item.id === data.doc_folder_id));
-          console.log(res.data.data.find((item) => item.id === data.doc_folder_id))
+        if (res.data.data.find((item) => item?.id === data.document_id)) {
+          setDocumentPdf(res.data.data.find((item) => item?.id === data.document_id));
         } else if (res.data.data === "No Documents Found") {
           setDocLoder(false);
+          setOpenViewDocument(true);
         } else {
           setDocLoder(false);
+          setOpenViewDocument(true);
         }
       }
-    } catch (Err) {
-      console.log(Err);
+    } catch (err) {
+      console.log(err);
       setDocLoder(false);
     }
   };
@@ -218,10 +218,9 @@ function ConsultationTable(props) {
     if (e && e.preventDefault) {
       e.preventDefault();
     }
-    if (validate() || data?.id) {
-      console.log(state)
+    if (validate()) {
       try {
-        let res = await AddUpdateConsultation(data ? data : state);
+        let res = await AddUpdateConsultation(state);
         if (res.data.status === 1 || res.data.status === "1") {
           toast.success(`Consultation ${ConsultationId ? "updated" : "added"} successfully`, {
             position: toast.POSITION.TOP_RIGHT,
@@ -236,18 +235,40 @@ function ConsultationTable(props) {
       } catch (error) {
         console.error(error);
         toast.error("Error saving Consultation");
+        setErrors("")
       }
     } else {
       setIsLoading(false);
+
     }
   };
-  const handleUpdate = (e, id, field) => {
+  const handleUpdate = async (e, item, field) => {
     if (e && e.preventDefault) {
       e.preventDefault();
     }
-    const data = { id, [field]: e.target.value };
-    console.log(data)
-    return handleAdd(e, data);
+    let data;
+    if (field === "person" || field === "manager") {
+      data = item
+    } else { data = { ...item, [field]: e.target.value }; }
+
+    try {
+      let res = await AddUpdateConsultation(data);
+      if (res.data.status === 1 || res.data.status === "1") {
+        toast.success(`Consultation updated successfully`, {
+          position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
+        });
+        setApiCall(true);
+        setState(initialFormState);
+        setConsultationId(null);
+        props.setShowAddForm(false);
+        setErrors("");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Error saving Consultation");
+      setErrors("")
+    }
   };
   const handleDelete = async (id) => {
     try {
@@ -327,7 +348,7 @@ function ConsultationTable(props) {
                         "Date of Payment",
                         "Mode of meeting",
                         "Notes",
-                        // "Documents",
+                        "Documents",
                         "Action",
                       ].map((heading, index) => (
                         <th
@@ -346,7 +367,6 @@ function ConsultationTable(props) {
                           <Link to=""
                             className="text-dark"
                             onClick={() => {
-                              console.log(heading, sortOrder)
                               if (heading !== "Action" && heading !== "Documents") {
                                 handleSort(
                                   heading === "RA sent/Signed"
@@ -535,7 +555,7 @@ function ConsultationTable(props) {
                             className="form-control"
                           />
                         </td>
-                        <td class="d-none">
+                        <td>
                           <input
                             type="file"
                             name="document"
@@ -547,6 +567,7 @@ function ConsultationTable(props) {
                           <label
                             className="mt-5"
                             htmlFor="document"
+                             style={{ cursor: "pointer" }}
                           >
                             <span className="fas fa-upload text-gray"></span>
                           </label>
@@ -568,6 +589,7 @@ function ConsultationTable(props) {
                                 onClick={() => {
                                   props.setShowAddForm(false);
                                   setState(initialFormState);
+                                  setErrors("")
                                 }}
                                 className="btn-sm btn-dark mx-2"
                               >
@@ -602,7 +624,7 @@ function ConsultationTable(props) {
                               <TableInput
                                 value={item.applicant_name}
                                 onChange={(newValue) =>
-                                  handleUpdate(newValue, item.id, "applicant_name")
+                                  handleUpdate(newValue, item, "applicant_name")
                                 }
                                 type="text"
                                 name="applicant_name"
@@ -628,7 +650,7 @@ function ConsultationTable(props) {
                               id="phone"
                               value={item.phone}
                               onChange={(newValue) =>
-                                handleUpdate(newValue, item.id, "phone")
+                                handleUpdate(newValue, item, "phone")
                               } className="form-control"
                               required
                             />
@@ -640,7 +662,7 @@ function ConsultationTable(props) {
                               id="email"
                               value={item.email}
                               onChange={(newValue) =>
-                                handleUpdate(newValue, item.id, "email")
+                                handleUpdate(newValue, item, "email")
                               } className="form-control"
                               required
                             />
@@ -655,11 +677,12 @@ function ConsultationTable(props) {
                                 onChange={(e) => {
                                   const [id, type] = e.target.value.split(",");
                                   const data = {
-                                    id: item.id,
+                                    ...item,
                                     manager_id: id,
                                     manager_type: type,
+
                                   };
-                                  handleAdd(e, data);
+                                  handleUpdate(e, data, "manager")
                                 }}
                                 onBlur={() => setEditField({ rowId: null, field: null })}
                                 autoFocus
@@ -699,11 +722,12 @@ function ConsultationTable(props) {
                                 onChange={(e) => {
                                   const [id, type] = e.target.value.split(",");
                                   const data = {
-                                    id: item.id,
+                                    ...item,
                                     person_admin_id: id,
                                     person_admin_type: type,
+
                                   };
-                                  handleAdd(e, data);
+                                  handleUpdate(e, data, "person")
                                 }}
                                 onBlur={() => setEditField({ rowId: null, field: null })}
                                 autoFocus
@@ -740,7 +764,7 @@ function ConsultationTable(props) {
                               name="date"
                               value={item.date}
                               onChange={(newValue) =>
-                                handleUpdate(newValue, item.id, "date")
+                                handleUpdate(newValue, item, "date")
                               } className="form-control"
                             />
                           </td>
@@ -750,7 +774,7 @@ function ConsultationTable(props) {
                               name="ra_sent_signed"
                               value={item.ra_sent_signed}
                               onChange={(newValue) =>
-                                handleUpdate(newValue, item.id, "ra_sent_signed")
+                                handleUpdate(newValue, item, "ra_sent_signed")
                               } className="form-control"
                             />
                           </td>
@@ -759,7 +783,7 @@ function ConsultationTable(props) {
                               name="payment_status"
                               value={item.payment_status}
                               onChange={(newValue) =>
-                                handleUpdate(newValue, item.id, "payment_status")
+                                handleUpdate(newValue, item, "payment_status")
                               } className="form-control"
                             >
                               <option value="">Select</option>
@@ -773,7 +797,7 @@ function ConsultationTable(props) {
                               name="email_secondary"
                               value={item.email_secondary}
                               onChange={(newValue) =>
-                                handleUpdate(newValue, item.id, "email_secondary")
+                                handleUpdate(newValue, item, "email_secondary")
                               } className="form-control"
                             />
                           </td>
@@ -783,7 +807,7 @@ function ConsultationTable(props) {
                               name="payment_method"
                               value={item.payment_method}
                               onChange={(newValue) =>
-                                handleUpdate(newValue, item.id, "payment_method")
+                                handleUpdate(newValue, item, "payment_method")
                               } className="form-control"
                             />
                           </td>
@@ -793,7 +817,7 @@ function ConsultationTable(props) {
                               name="payment_date"
                               value={item.payment_date}
                               onChange={(newValue) =>
-                                handleUpdate(newValue, item.id, "payment_date")
+                                handleUpdate(newValue, item, "payment_date")
                               } className="form-control"
                             />
                           </td>
@@ -803,7 +827,7 @@ function ConsultationTable(props) {
                               name="mode_of_meeting"
                               value={item.mode_of_meeting}
                               onChange={(newValue) =>
-                                handleUpdate(newValue, item.id, "mode_of_meeting")
+                                handleUpdate(newValue, item, "mode_of_meeting")
                               } className="form-control"
                             />
                           </td>
@@ -813,14 +837,14 @@ function ConsultationTable(props) {
                               name="notes"
                               value={item.notes}
                               onChange={(newValue) =>
-                                handleUpdate(newValue, item.id, "notes")
+                                handleUpdate(newValue, item, "notes")
                               } className="form-control"
                             />
                           </td>
-                          <td class="d-none">
+                          <td >
                             <button
                               className="btn btn-outline-info action_btn "
-                              disabled={!item.doc_folder_id}
+                              disabled={!item.document_id}
                               onClick={() => {
                                 setOpenViewDocument(true);
                                 setDocumentData(item);
@@ -879,15 +903,18 @@ function ConsultationTable(props) {
           </div>
         </div>
       </div>
-      {openViewDocument ? (
+      {openViewDocument && documentPdf ? (
         <ViewPdf
           show={openViewDocument}
-          close={() => setOpenViewDocument(false)}
+          close={() => {
+            setOpenViewDocument(false)
+            setDocumentPdf("")
+          }}
           agreementData={documentData}
           emp_user_type={"consultation"}
           userData={documentData}
           setApicall={setApiCall}
-          folderId={documentData.doc_folder_id}
+          folderId={documentData.document_id}
           user_id={documentData.id}
           setOpenAddAgreementFelids={""}
           setOpenViewAgreementSign={""}

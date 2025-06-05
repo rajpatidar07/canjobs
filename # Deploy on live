@@ -1,0 +1,291 @@
+# Deploy on live
+Date:05/06/25
+1. Make the reply input flexible based on text length.
+2. Fix the text on the Common Daily page.
+3. Add upload and view document options for Consultation.
+4. Remove "$" from the total cost of the Work Permit RA.
+Date: 02/06/25
+1. Set conditions for private access to admin-created folders.
+2. Add the timeline based on the previous and latest applicant types.
+Date: 30/05/25
+1. Add an edit option for the payment invoice. If there are any changes, you can view them using the view option and update them using the edit option. However, once the invoice is sent, it cannot be updated.
+2. Add a progress loader during document upload.
+3.Add drag-and-drop option for document upload.
+4. Add new common page for the daily call log, daily hour log and consultation.
+5. Add a condition to show or hide the tab based on the user and client's requirements, as per Satvir.
+Date=>27/05/25.
+1. Created a new consultation page(Manger consultation tab of sidebar).
+2.  Save client signature, RCIC signature, and initials as images in separate forms, and display them in both HTML and PDF views.
+3. Update the subject to camel case and add more context for the retainer agreement signing email and add required text too.
+4. Remove the "0" from "Applicable Tax" in all HTML and PDF versions of the RA.
+5. When an admin is assigned to a user and then deleted, the option to reassign the user to another admin (Working). 
+7. Job ID added to all job view tables.
+8. Partner (Referred By) field made mandatory in the Add Candidate form.
+9. Removed reminder when sending invoice directly.
+10. Added filter for both previous and latest applicant types (as required).
+22/05/25
+1. Resolve the issue of cleint login and add docuemnts and notes by the client and use.
+2. Resolve the issue of getting ssatvir's email on the portal.
+20/05/25
+19/05/25Only frontend
+1. Add the Latest agreements updating and set the canadine date time changes.
+15/05/25 
+1. Fix the payment invoice change and retainer agreements
+13/05/25
+1. Fix pagination on the Daily Hour Log page.
+2. Add "Receive Payment" option for payment invoices in User Details.
+3. Create a common page for applicant type and fix Excel file upload issue.
+4. Also update the things from the shared document .
+5. Add LMIA for the job's employer and link the LMIA page from Monday.
+07/05/25
+01/05/25 Only frontend
+30/04/25 
+1. Remove the hover for documents options.
+2. Add option to create Word documents.
+3. Convert Excel and PowerPoint files to PDF to view in adobe acrobat reader
+4. Remove the manager and info fields, change the item type, and ensure newly added items appear below existing manager-listed items.   
+5. Remove the "Add/Update Type Details" section from the User Sign Agreement form.  
+6. Add a "Reset Filters" option on all applicant pages.  
+7. Fix the pagination issue on the Applicant Types page.
+8. Fixed username issue in signature email and updated Can Pathways bookmark.
+9. Added updated retainer agreements.
+10. Resolve other issues in Retainer Agreements and Applicant Type page.
+18/04/25 
+1.  Show the latest applicant type at the top.
+2.  Add an option to upload any file to SharePoint and allow all files to be edited in SharePoint.
+3. Create page for daily hour log.
+4. Grant access to the child applicant type when access is given to the parent applicant.
+5. Correct the contact number condition when there copy paste teh number and it contains the space then after the space all number will goes in get api.
+6. Update the call log table according to the newly added .
+7. Resolved the issue of the submit button reloading in the Add Call Log due to an existing contact number.
+8. Add condition to remove the sub types that satvir mentioned to remove.
+9. Add an option to create, view, and edit a custom Excel file in SharePoint.
+10. Add search filter to find tasks by Applicant, Client, Assigned By, and Assigned To Admins.
+17/03/25  
+1. Add an option to add a folder from the options list.  
+2. Add an option to add a file from the options list for files.  
+3. Resolve the issue of the blank page on the applicant form.
+4. Add a feature to drag and drop applicant types in the sidebar list on the frontend.
+5. Add an option to grant access to the admin for applicant types and add a condition based on the logged-in admin to view only accessible applicant types. Only the super-admin can view all applicant types; other admins can view them only if they have access.
+6. Rename Applicant Type and remove the 'Delete' feature from the sidebar list.
+7. Add a feature to add multiple notes for the applicant's and employer's documents.
+8. Add a subject to the view in the notes on the user detail page.
+04/03/25
+1. Add a status and caller button to add a new one.  
+2. Enable reply functionality for every admin.  
+3. Add a condition to allow replies and other functionalities for not
+03/03/25
+1. Created a daily log page.  
+2. Added the ability to read tasks and reply.
+3. Resolve the issue of "created on" in notes.
+4. Add a reply option for replies to the notes of candidates, clients, and partners. 
+5. Added the slot options based on the applicant type and subtype.
+21/02/25  (only frontend)
+18/02/25  (only frontend)
+17/02/25  
+1. Added slots page dynamic and its document and candidate and group discussion.
+2. Add an option to download the document without annotations.
+3. Disable the interview option from the response table if it is completed.
+4.  Add an option to include the applicant, applicant type, and client when adding a task in the task dashboard.
+Date:07/02/25(only frontend)
+Date:06/02/25
+1. Correct the spelling of "critical.
+2. Update the notification style as per Simran's requirements.
+3. Fix the issue with adding/updating notes in the document.
+4. Display all comment replies and ensure adding, updating, and deleting replies work properly.
+5. Set counts based on task dashboard data.
+6. Restrict task deletion and updates to the creator only.
+7. Fix task navigation from notifications.
+8. Add filters for "Assigned To" and "Assigned By Admin" on the task dashboard.
+ Date:04/02/25
+1. Add an email template for the Job Portal Client Survey to be sent when a new client or candidate is added to the portal.
+2. Add an option for the admin to reset the password.
+3. Implemented comment tasks and functionalities for the user's note.
+4. Add an option to download a document by right-clicking on the document name in the user profile.  
+5. Add an option to display documents on the user's profile, such as showing 50, 100, or 200 documents per page.
+6. Add an option to dynamically add applicant type, subtype, and sub-subtype, and make changes everywhere related to it in filters and add/update functionalities.
+7. Show all tasks that are not completed, but when filtered by "Completed," only show completed tasks in the task table on the task dashboard.   
+8. Add a feature to assign another admin when deleting any admin.
+ Date:21/01/25
+1. Add an option to reply to tasks on the task dashboard.
+2. Add an option to update tasks.
+3. Added an option to show all documents in the document tab of the user.
+Date:10/01/25
+10. Resolve the issue of not showing the Word file from the document.
+11. Add a highlight to the task table on the task dashboard.
+12. Add an "Assigned By" column to the applicants table.
+13. Add show/hide password icons and functionality to all password inputs.
+14. Add a confirmation alert box on the job details page before applying for a job.
+15. Add the company name's initials to the company logo on the job and company detail pages.
+16. Resolve the issue with commenting and assigning the admin, where the name is still displayed.
+17. Set view all button at task task dashboard and also add pagination.
+   Date:04/01/24
+18. Add an option to forward mail .
+19. Created a new WES applicant type along with its dashboard.
+20. Created a new ATIP applicant type along with its dashboard.
+21. Change the design of the document note by adding a modal.
+22. Resolve the issue of replacing the name of the task creator.
+23. Resolve the issue of not getting the latest notes on the dashboard
+24. Remove the table from the "Manage Table" sidebar on the dashboard.
+25. Add all applicant types to the group by options for adding a task.
+26. Add a filter to show only the tasks added from the task dashboard.
+27. Correct the spelling of "mange" to "manage" in the "Manage Table" section of the dashboard.
+28. Resolve the issue of email notifications not being sent for completed tasks from assigned tasks.
+29. Remove pagination from the task table on the task dashboard.
+30. Display all notifications for documents as per Satvir's instructions.
+   Date: 20/12/24(just frontend)
+31. Created a note for the document, made it open for updates, and updated the same document.
+32. Resolve the issue of retrieving applicants' documents.
+Date: 20/12/24
+1. Add a manual status for the task and added a button to open and close the task form.
+2. Add filters, pagination, and a file structure for the document.
+3. Fix the issue where changing the document view to List view doesn't persist the setting. Each time a document is opened and navigated back, the view defaults to Tiles view.
+4. Show the names of the selected documents before uploading and add functionality to allow the user to remove any document before uploading.
+5. Resolve the issue of receiving the message "Update the user profile to get a folder" when navigating to the document module.
+6. Add an option to add and update the admin while adding notes for applicants and clients profile.
+7. Resolve the issue of the user navigating from the email to the document.
+8. Add a feature to open the document reply if there is a comment in the comments reply from the email or notification for the admin.
+9. Remove the login admin email from the CC mail for the applicant and client, and manage the height accordingly.
+Date:09/12/24
+1. Change the background color for notifications that have not been opened and added name of the document.
+2. Resolve the issue of the highlighted document not appearing on the portal.
+3. Resolve the issue where adding a comment with highlighted text causes the highlight or mark to disappear after opening the comment box.
+4. Highlight the text area when the user wants to update the document.
+5. Check the document upload issue for Aviman Kakkar (140) reported by Simran; it's working fine.
+6. Created a design for the task form fields and made other major changes related to the form.
+7. Add a candidate (employee & employer) for a task from the task dashboard and display their tasks in the notes tab on their profile.
+8. Create the option to display files and folders in both list and block formats, and implement several conditions related to them.
+9. Add comments to the file using right-click, and also implement update functionality for the comments.
+10. Add functionality to add comments and assign an admin from the document opened in a new tab.
+11. Added "Common Law" under Marital Status in the applicant's form.
+12. Set the manual date of birth entry for the applicant.
+Date:29/11/24
+1. Added bcc and cc to the email at user profile.
+2. Change 'Manage Clients' to 'Manage Employers'.
+3. Add an option to hide/unhide the table on the dashboard as needed and make other major changes to the API.
+4. Remove the requirement input box from the job form.
+5. Resolve the issue with the global search.
+6. Add a preview of the comment in the email notification when the admin adds comments and tags users in the comments section of the document. The tagged person also receives an email notification.
+7. Resolve the issue of notes and documents not opening when the admin is tagged.
+Date:26/11/24
+8. Reset the placing of dashboard first, followed by the task dashboard, new applicants, and then manage applicants.
+9. Add a CC email option to the user's email in the user profile.
+10. Add four agreements based on the new agreements provided by Khushboo.
+Date:04/11/24
+11. Change the PNP applicant type name to Alberta PNP.
+12. Add 4 more applicant types to the applicant type list:
+    - Humanitarian and Compassionate Cases
+    - Passport
+    - Citizenship
+    - Permanent Resident Cards
+13. Add "tourism and hospitality" to sub type for the pnn.
+14. Created four dashboards for the following applicant types:
+    - Humanitarian and Compassionate Cases
+    - Passport
+    - Citizenship
+    - Permanent Resident Cards
+15. Change all instances of 'signup' and 'create a free account' with 'create an account' throughout the project.
+16. Study portal
+Date:15/10/24
+Date:14/10/24
+1. Change the 'Working Visa' text to just 'Visa' on the admin side of the Visa Dashboard.
+2. Created a button and its functionality for navigating to the previous and next document for both the employee and employer.
+3. Create a new dashboard for document tasks, filtered by candidate, client, status, and admin.
+Date:04/10/24
+1. Add an edit option for the document's comments to update them.
+2. Made changes in the all applicant type dashboards retained,working on and submitted filter on them and all button on manage applicant and new applicant tab for the required filters.
+3. Hide the company name on the job details page for the homepage.
+4. Add an option to edit notes on the user's profile.
+5. Add an option to open the user's document in a new tab.
+6. Added the functionality to display the person's name next to 'created on 19th September, 2024', making it easier to identify who is commenting or adding notes.
+7. Made 'Application Type' a mandatory field. When creating a candidate's profile, the 'Application Type' must be selected.
+8. Added the option to delete document comments and their replies.
+9. Created 3 dashboards for Economic immigration,family sponsorship and temporary resident applicant type add condition for its sub type and sub-sub type for economic immigration.
+10. Increase the document size to make it easier to read.
+11. Add Alternate mobile number in the applicant's profile.
+12. Added an activity table to the dashboard.
+13. Set the first letter of both the first name and last name as initials.
+14. Adjusted the button and alignment of the sidebar.
+Date:25/09/24:
+1. Add "Study Permit" in the "Application Type" dropdown and create a separate dashboard.
+2. Some design changes .
+Date:24/09/24:
+3. Complete the design and dynamic details and functionalities for the job list and detail box similar to the one shown in the link: https://ca.indeed.com/viewjob?jk=faf095d0fec97520&tk=1i70o4lv8ge6k820&from=serp&vjs=3.
+4. Add export buttons to export Excel data for both employees and employers.
+5. Add the candidate's name along with the signup and registration time on the signup page.
+6. Add the admin's name and the last modified date and time to the manage applicant page.
+7. Fix the issue with deleting candidates in the global search.
+8. Add the candidate ID to the candidate's profile page, right after their name.
+9. Add the comment section at the beginning, whether there is any highlight or mark in the document or not.
+10. Keep the pagination on the same page when using the back button to return to the applicant from their profile for candidate management.
+11. Removed the applicant status tabs from the dashboards for the different applicant types.
+12. Made changes to the timeline for the LMIA, visa, and applicant process arrows.
+13. Removed the text limit from the subject field of notes for both employees and employers.
+14. after the clients signature it will not update agreement data and enable button top sign by rcic.
+15. Enable signature pad for signing.
+16. show all applicant types dashboard aft6er candidates status is retained.
+Date:05/09/24
+1. Add an option to send mail regarding agreements.
+2. Resolve issues related to receiving invalid dates and other data in HTML and react-pdf/renderer for agreements.
+3. Integrated API and its functionality to delete agreements.
+4. Change the eye icon to a PDF icon for viewing the agreement PDF.
+5. "Keep only 4 fields mandatory in Add Candidate form. Remove rest options from mandatory field.
+   Mandatory fields-  
+   Full Name
+   Email id
+   Phone Number
+   Applicant’s type
+6. Set a 'no data found' condition with options to add clients and applicants while searching from the header sharing box.
+7. Display 'No results found' if the candidate is not present in the portal. by using HTML for the error message.
+8. Add option to search candidate,client,partner and admin with phone number also.
+9. Create a user signing link for users to sign, RCIC to sign, and add a client form to add or update clients in the agreement. Also, add and update agreements from the admin side.
+10. Recently added 10 jobs have been added to the homepage
+11. Added all filters for job on home page .
+12. Add featured job and all job inside the recommended jobs.
+13. Minimize the description for the job box on the homepage and the job page on the user side.
+14. Added local job type and its filter to the add job form and job search sections.
+15. Added a checkbox to mark local candidates and also added an option to filter local candidates in the search section.
+16. Add an 'About Us' link to the user's home page.
+17. Set first client's signature as the initial signature in retainer agreement.
+18. Add the required fields to allow the user to add and update client details with a signature.
+19. Change the design of the job box to match the job box in this link https://www.randstad.ca/jobs/permanent/.
+20. Create a new page for local candidates in the admin module.
+21. Send a notification and mail for the admin when a client signs the agreement.
+22. Blur the company name in the job box on the job page.
+23. Divide the jobs into 6 per section on the homepage, and set up a "load more jobs" option in increments of 6.
+Date:07/07/24
+1. Add option to mention single partner to mention partner in document for employee.
+2. Resolve the issue of clients not being able to add comments to documents.
+3. Updated the label to "Company" instead of "Client" on the Company Detail page.
+4. Hide the sidebar by default in the admin and partner module, and made it visible only when clicked.
+5. Removed the header list after candidate login.
+6. Change "LMIA Additional Info" to "LMIA Info" and
+   On hover, "Additional LMIA Info" to Edit "LMIA Info" in Manage LMIA page's
+7. Added a reload window when clicking the home button in the header for the client and user modules.
+8. Added the retainer agreement tab, its API, and all related functionalities.
+Date:06/06/24
+1. Remove City or State, just keep Full Address section only.(remove felids from mandatory)
+2. Job Type should be Full Time/Permanent
+   set, Job type- Full Time/Permanent
+   Job type- Part Time/Temporary
+3. Remove Category type form here it should only have Category and make sure it's also visible on job posting
+4. Remove skills and education from here. But it should be visible in Job Table and change submission date to the posting date.
+5. Integrated forms and APIs to add additional LMIA information for employees and any jobs.
+6. Remove other jobs tab from admin sidebar.
+7. Add "Send Retainer Agreement" and remove "Contact Number" from the sub-stage of onboarding for LMIA.
+8. Rename "advertise on Job bank and 3 Portals" to "advertise on Job bank." Also add the following to sub-stage of Advertise for LMIA:
+   a. Advertise on Newcomer Hire
+   b. Advertise on Aboriginal Hire
+   c. Advertise on All-star jobs
+   d. Advertise on Career Owl
+   e. Advertise on Job Spider
+   f. Advertise on Refugee Job Board
+9. Rename "Once ads are matured" to "Request Document" and "Follow Up" to "follow-up (Not Received) to .
+10. Changed to the sub-stages of submission for LMIA:
+    a.Start preparing Application
+    b.Request Harpreet’s Review
+    c.Initiate LMIA Application On Portal
+    d.Application Submitted
+    e.Payment Request
+    f.Payment Made
+11. Remove the "New" and "Submitted" options from the decision LMIA sub-stages.

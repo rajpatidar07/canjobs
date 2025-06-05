@@ -534,7 +534,7 @@ const WorkPermitPdf = () => {
                 </Text>
                 :
                 <Text style={styles.textunderline}>
-                  {felidData?.total_amount_signing_of_contract} $
+                  {felidData?.total_amount_signing_of_contract} 
                 </Text>
               </View>
               <View>

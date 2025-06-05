@@ -144,8 +144,6 @@ export default function ViewPdf({
   let [adminList, setAdminList] = useState([])
   let [partnerList, setPartnerist] = useState([])
   let [apicall, setApiCall] = useState(false)
-
-
   let GetPdfDocument = async () => {
     try {
       let res = await getSharePointParticularFolders(
@@ -153,6 +151,7 @@ export default function ViewPdf({
         new_emp_user_type,
         new_folderId
       );
+      console.log("first")
       if (res.data.data === "Lifetime validation failed, the token is expired.") {
         try {
           let response = await GetSharePointData()
@@ -170,56 +169,7 @@ export default function ViewPdf({
           let data = res.data.data.find((item) => item.id === new_document_id)
           setNewPdf(data);
           getCommentsList(data)
-          if (
-            data.file.mimeType === "image/jpeg" ||
-            data.file.mimeType === "image/png" ||
-            data.file.mimeType === "image/jpg"
-          ) {
-            // Await the conversion if convertUrlToPDF is asynchronous
-            convertUrlToPDF(data["@microsoft.graph.downloadUrl"]);
-          } else if (
-            data.file.mimeType === "application/vnd.openxmlformats-officedocument.presentationml.presentation" || data.file.mimeType === "application/vnd.ms-powerpoint" ||
-            data.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
-            data.file.mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-          ) {
-            console.log(data)
-            let res = await ConvertPPT(data)
-            console.log(res)
-            if (res) {
-              setNewPdfUrl(res);
-            } else {
-              setNewDocLoder(false);
-              setNewPdfUrl("");
-            }
-          } else if (data.file.mimeType === "application/pdf") {
-            setNewPdfUrl(data["@microsoft.graph.downloadUrl"]);
-          } else if (
-            data.file.mimeType ===
-            "application/vnd.ms-excel"
-          ) {
-            if (data["@microsoft.graph.downloadUrl"]) {
-              try {
-                let res = await ConvertAnyFileToPdf(data);
-                console.log(res);
-                if (res) {
-                  setNewPdfUrl(`data:application/pdf;base64,${res}`);
-                } else {
-                  setNewDocLoder(false);
-                  setNewPdfUrl("");
-                }
-              } catch (error) {
-                console.error("Error converting Excel to PDF:", error);
-                setNewDocLoder(false);
-                setNewPdfUrl("");
-              }
-            }
-          }
-          else {
-            console.log(data.file.mimeType)
-            setNewDocLoder(false);
-            setNewPdfUrl("");
-            window.open(data.webUrl);
-          }
+          ConvertionFUnctionForAllDoc(data)
         } else if (res.data.data === "No Documents Found") {
           setNewDocLoder(false);
         } else {
@@ -229,6 +179,55 @@ export default function ViewPdf({
     } catch (Err) {
       console.log(Err);
       setNewDocLoder(false);
+    }
+  }
+  let ConvertionFUnctionForAllDoc = async (data) => {
+    // console.log(data,"pppp",data.file)
+    if (
+      data.file.mimeType === "image/jpeg" ||
+      data.file.mimeType === "image/png" ||
+      data.file.mimeType === "image/jpg"
+    ) {
+      // Await the conversion if convertUrlToPDF is asynchronous
+      convertUrlToPDF(data["@microsoft.graph.downloadUrl"]);
+    } else if (
+      data.file.mimeType === "application/vnd.openxmlformats-officedocument.presentationml.presentation" || data.file.mimeType === "application/vnd.ms-powerpoint" ||
+      data.file.mimeType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
+      data.file.mimeType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    ) {
+      let res = await ConvertPPT(data)
+      if (res) {
+        setNewPdfUrl(res);
+      } else {
+        setNewDocLoder(false);
+        setNewPdfUrl("");
+      }
+    } else if (data.file.mimeType === "application/pdf") {
+      setNewPdfUrl(data["@microsoft.graph.downloadUrl"]);
+    } else if (
+      data.file.mimeType ===
+      "application/vnd.ms-excel"
+    ) {
+      if (data["@microsoft.graph.downloadUrl"]) {
+        try {
+          let res = await ConvertAnyFileToPdf(data);
+          if (res) {
+            setNewPdfUrl(`data:application/pdf;base64,${res}`);
+          } else {
+            setNewDocLoder(false);
+            setNewPdfUrl("");
+          }
+        } catch (error) {
+          console.error("Error converting Excel to PDF:", error);
+          setNewDocLoder(false);
+          setNewPdfUrl("");
+        }
+      }
+    }
+    else {
+      setNewDocLoder(false);
+      setNewPdfUrl("");
+      window.open(data.webUrl);
     }
   }
   /*Function to convert the Image into pdf */
@@ -317,11 +316,15 @@ export default function ViewPdf({
   useEffect(() => {
     GetPdfDocument()
     AdminData()
+    if (page === "consultation") {
+      ConvertionFUnctionForAllDoc(pdf)
+    }
     if (apicall === true) {
       setApicall(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [apicall])
+
   if (type === "modal") {
     return (
       <Modal
@@ -340,7 +343,7 @@ export default function ViewPdf({
           <i className="fas fa-times"></i>
         </button>
         <div className="bg-white rounded p-5">
-          <h5 className="text-center">View {page} Pdf</h5>
+          <h5 className="text-center text-capitalize">View {page} Pdf</h5>
           <div>
             {docLoader ? (
               <div className="table-responsive main_table_div">
@@ -348,7 +351,7 @@ export default function ViewPdf({
               </div>
             ) : (
               <AdobePDFViewer
-                url={pdf["@microsoft.graph.downloadUrl"]}
+                url={page === "consultation" ? newPdfUrl : pdf["@microsoft.graph.downloadUrl"]}
                 data={pdf}
                 userId={user_id}
                 commentsList={commentsList}

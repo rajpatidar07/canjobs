@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 // import { Link } from "react-router-dom";
 import { CiPaperplane } from "react-icons/ci";
 import ConvertTime from "./Common function/ConvertTime";
@@ -30,6 +30,7 @@ export default function CommentReplyBox({
   isApiCall
 }) {
   let user_type = localStorage.getItem("userType")
+  const textareaRef = useRef(null);
   // console.log("first",replyCommentClick)
   return (
     <div className="reply_box_container mx-2 fade show">
@@ -165,26 +166,52 @@ export default function CommentReplyBox({
       >
         <div className="comment-input-container">
           <div className="reply_box position-relative d-flex rounded">
-            <input
-              type="text"
+            <textarea
+              ref={textareaRef}
               value={replyCommentClick === commentItem.id ? replyComment : ""}
               onChange={(e) => handleInputChange(e, "reply")}
-              placeholder={`Add reply or add others with @`}
+              placeholder="Add reply or add others with @"
               className="comment-input border-0 bg-light"
-              style={{ outline: 0, fontSize: 14, height: "auto" }}
-              onSubmit={() => {
-                ReplyAnnotation(commentItem);
+              style={{
+                outline: 0,
+                fontSize: 14,
+                resize: "none",
+                overflow: "hidden",
+                height: "auto"
+              }}
+              rows={1}
+              onInput={(e) => {
+                e.target.style.height = "auto";
+                e.target.style.height = `${e.target.scrollHeight}px`;
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  ReplyAnnotation(commentItem);
+
+                  // Reset after submit
+                  setTimeout(() => {
+                    if (textareaRef.current) {
+                      textareaRef.current.style.height = "auto";
+                    }
+                  }, 0);
+                }
               }}
             />
+
             <button
               type="button"
               onClick={() => {
                 if (!isApiCall && type === "reply") {
                   if (replyCommentData) {
                     OnHandleUpdateCommentReply(replyCommentData);
-                    // ReplyAnnotation(replyCommentData)
                   } else {
                     ReplyAnnotation(commentItem);
+                  }
+
+                  // Reset after submit
+                  if (textareaRef.current) {
+                    textareaRef.current.style.height = "auto";
                   }
                 }
               }}
@@ -193,14 +220,14 @@ export default function CommentReplyBox({
             >
               <CiPaperplane />
             </button>
-            {/* <a
+          </div>
+          {/* <a
                 className="border-0 bg-white rounded cancel-btn text-dark"
                 onClick={() => setReplyCommentClick()}
                 type="button"
               >
                 cancel
               </a> */}
-          </div>
           {(replyCommentClick === commentItem.id) && dropdownVisible && filteredEmails.length > 0 && type === "reply" ? (
             <ul
               className="email-suggestions overflow-scroll"

@@ -27,17 +27,17 @@ const CommonDailyPage = () => {
     const cardData = [
         {
             id: 1,
-            title: 'Mange Daily Call Log',
+            title: 'Manage Daily Call Log',
             content: <ManageDailyCallLog/>
         },
         {
             id: 2,
-            title: 'Mange Daily Hour Log',
+            title: 'Manage Daily Hour Log',
             content: <ManageHourlyLog/>
         },
         {
             id: 3,
-            title: 'Mange Consultation',
+            title: 'Manage Consultation',
             content: <ManageConsultation/>
         }
     ];
