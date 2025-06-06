@@ -531,13 +531,9 @@ const AlbertaPnpPdf = () => {
                                 <View style={styles.cell}>
                                     <Text style={{ marginTop: 10, marginBottom: 15, fontSize: "10px" }}>
                                         Step 2 (PR) Filling out the forms, information verification and completeness check, preparing the application package
-                                        {'
-'}{'
-'}
+                                        {'\n'}{'\n'}
                                         Payment is due before final submission of application.
-                                        {'
-'}{'
-'}
+                                        {'\n'}{'\n'}
                                         Provide proof of submission to the client
                                     </Text>
                                 </View>

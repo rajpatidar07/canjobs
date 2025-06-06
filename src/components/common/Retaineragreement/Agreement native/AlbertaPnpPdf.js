@@ -565,7 +565,7 @@ const AlbertaPnpPdf = () => {
                                 </Text>
                                 :
                                 <Text style={styles.textunderline}>
-                                    {felidData?.total_amount_signing_of_contract} $
+                                    {felidData?.total_amount_signing_of_contract} 
                                 </Text>
                             </View>
                             <View>
@@ -574,7 +574,7 @@ const AlbertaPnpPdf = () => {
                                 </Text>
                                 :
                                 <Text style={styles.textunderline}>
-                                    {felidData?.balance_paid_at_time_of_filing} $
+                                    {felidData?.balance_paid_at_time_of_filing} 
                                 </Text>
                             </View>
                         </View>

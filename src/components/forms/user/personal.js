@@ -178,9 +178,10 @@ function PersonalDetails(props) {
     //       ? "Religion can not have a number."
     //       : "",
     // ],
-    interested_in_id: [
-      (value) => (value === "" ? "Interested in is required" : null),
-    ],
+    interested_in_id: user_type === "user"
+      ? null
+      : [(value) => (value === "" ? "Applicant Type is required" : null),
+      ],
     // experience: [
     //   (value) =>
     //     value === "" || value === null ? "Experience is required" : null,
@@ -295,7 +296,7 @@ function PersonalDetails(props) {
 
   // USER PERSONAL DETAIL SUBMIT BUTTON
   async function onUserPersonalDetailClick(event) {
-    // console.log(errors,validate(),imgError)
+    console.log(errors, validate(), imgError)
     event.preventDefault();
     if (validate() && imgError === "") {
       setLoading(true);
@@ -1155,7 +1156,7 @@ function PersonalDetails(props) {
                       </div>
                     )} */}
                   {/* MAIN TYPE */}
-                  <div className="form-group col-md-4">
+                  <div className={user_type === "user" ? "d-none" : "form-group col-md-4"}>
                     <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
                       Applicant's Type: <span className="text-danger">*</span>
                     </label>
@@ -1169,15 +1170,15 @@ function PersonalDetails(props) {
                       {applicantTypeList
                         .filter(item => item.level === "0")
                         .map(item => (
-                          <option key={item.id} value={item.id} className={ [
-                              "test typw",
-                              "All Checklists",
-                              "Checklists",
-                              "Invitation letters/Declarations",
-                              "Daily hours log",
-                              "Training Modules",
-                              "Admission/student/college"
-                            ].some(it => item.title.includes(it))?"d-none":""}>
+                          <option key={item.id} value={item.id} className={[
+                            "test typw",
+                            "All Checklists",
+                            "Checklists",
+                            "Invitation letters/Declarations",
+                            "Daily hours log",
+                            "Training Modules",
+                            "Admission/student/college"
+                          ].some(it => item.title.includes(it)) ? "d-none" : ""}>
                             {item.title}
                           </option>
                         ))}
@@ -1354,24 +1355,24 @@ function PersonalDetails(props) {
                     )}
                   </div>
                   <div className={`w-100 ${props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" ? " col-md-12" : " col-md-4 "}`}>
-                  <div
-                    className={
-                      `form-group  ${user_type === "user" ||
-                        props.pageNameForForm === "Category"
-                        || props.pageNameForForm === "ApplicantType"
-                        || props.user_of_page === "assignedUser"
-                        ? " d-none"
-                        : ` d-flex`}
+                    <div
+                      className={
+                        `form-group  ${user_type === "user" ||
+                          props.pageNameForForm === "Category"
+                          || props.pageNameForForm === "ApplicantType"
+                          || props.user_of_page === "assignedUser"
+                          ? " d-none"
+                          : ` d-flex`}
                     `}
-                    style={{ position: "relative" }}
-                  >
-                    <label
-                      htmlFor="reffer_by"
-                      className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                      style={{ position: "relative" }}
                     >
-                      Referred By<span className="text-danger">*</span>:
-                    </label>
-                    {/* <Select
+                      <label
+                        htmlFor="reffer_by"
+                        className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+                      >
+                        Referred By<span className="text-danger">*</span>:
+                      </label>
+                      {/* <Select
                       options={agentList || []} 
                       name="reffer_by"
                       defaultValue={agentList && agentList.find(item => item.value === state.reffer_by) ? agentList.find(item => item.value === state.reffer_by).label : ""}
@@ -1379,35 +1380,35 @@ function PersonalDetails(props) {
                       onChange={onSelectChange}
                       className={errors.reffer_by ? "form-control border border-danger px-0 pt-4" : "form-control px-0 pt-4 border-0"}
                     /> */}
-                    <select
-                      name="reffer_by"
-                      value={state.reffer_by || ""}
-                      onChange={onInputChange}
-                      className={
-                        errors.reffer_by
-                          ? "form-control text-capitalize border border-danger"
-                          : "form-control text-capitalize"
-                      }
-                      id="reffer_by"
-                      disabled={user_type === "agent"}
-                    >
-                      <option value={""}>Select partner </option>
-                      {agentList.map((item, index) => <option value={item.id} key={index}>{item.u_id} </option>)}
-                    </select>
-                    <span
-                      className={user_type === "agent" ? "d-none" : "btn btn-sm btn-secondary"}
-                      onClick={() => setShowAgentMOdal(true)}
-                      style={{
-                        width: "auto",
-                        minWidth: "auto",
-                        height: "44px",
-                      }}
-                      title="Add New Partner"
-                    >
-                      +
-                    </span>
+                      <select
+                        name="reffer_by"
+                        value={state.reffer_by || ""}
+                        onChange={onInputChange}
+                        className={
+                          errors.reffer_by
+                            ? "form-control text-capitalize border border-danger"
+                            : "form-control text-capitalize"
+                        }
+                        id="reffer_by"
+                        disabled={user_type === "agent"}
+                      >
+                        <option value={""}>Select partner </option>
+                        {agentList.map((item, index) => <option value={item.id} key={index}>{item.u_id} </option>)}
+                      </select>
+                      <span
+                        className={user_type === "agent" ? "d-none" : "btn btn-sm btn-secondary"}
+                        onClick={() => setShowAgentMOdal(true)}
+                        style={{
+                          width: "auto",
+                          minWidth: "auto",
+                          height: "44px",
+                        }}
+                        title="Add New Partner"
+                      >
+                        +
+                      </span>
 
-                  </div>
+                    </div>
                     {/* ERROR MSG FOR REFFER BY */}
                     {errors.reffer_by && (
                       <span
@@ -1417,7 +1418,7 @@ function PersonalDetails(props) {
                         {errors.reffer_by}
                       </span>
                     )}
-                    </div>
+                  </div>
                   <div
                     className={`form-group
                     ${user_type === "agent"

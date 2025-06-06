@@ -441,9 +441,9 @@ export default function AlbertaPNPAndFederalPR({
             <p class="mt-8">
              <b> Total Amount: (Non-Refundable) (Paid at signing of contract and
               sharing of checklist): ${felidData?.total_amount_signing_of_contract || ""
-    } $<br> 
+    } <br> 
               Balance (Non-Refundable) (Paid at time of
-              filing): ${felidData?.balance_paid_at_time_of_filing || ""} $
+              filing): ${felidData?.balance_paid_at_time_of_filing || ""} 
              </b>       
               </p>
             <p>Note: <u>${felidData.note || "      "}</u></p>

@@ -21,11 +21,11 @@ const StyledDropdown = ({
     const [updateStatusData, setUpdateStatusData] = useState();
     const [newStatus, setNewStatus] = useState("");
     const [statusErrors, setStatusErrors] = useState("");
-
     // We'll store either top or bottom positioning
     const [dropdownPosition, setDropdownPosition] = useState({ left: 0 });
     const buttonRef = useRef(null);
     const dropdownRef = useRef(null);
+
     let closeStatusFieldStates = () => {
         setNewStatus("");
         setStatusErrors("");
@@ -33,6 +33,7 @@ const StyledDropdown = ({
         setUpdateStatusData()
         setShowUpdateDropDown("")
     }
+
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (
@@ -48,7 +49,7 @@ const StyledDropdown = ({
 
         const handleScroll = () => {
             if (isOpen) {
-                setIsOpen(false);
+                // setIsOpen(false);
                 closeStatusFieldStates()
             }
         };
@@ -57,12 +58,10 @@ const StyledDropdown = ({
             if (isOpen) {
                 updateDropdownPosition();
             }
-        };
-
+        }
         document.addEventListener("mousedown", handleClickOutside);
         document.addEventListener("scroll", handleScroll, true);
         window.addEventListener("resize", handleResize);
-
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
             document.removeEventListener("scroll", handleScroll, true);
@@ -72,20 +71,15 @@ const StyledDropdown = ({
 
     const updateDropdownPosition = () => {
         if (!buttonRef.current) return;
-
         const buttonRect = buttonRef.current.getBoundingClientRect();
         const viewportHeight = window.innerHeight;
         const viewportWidth = window.innerWidth;
-
         const dropdownWidth = Math.min(width || buttonRect.width, viewportWidth - 20);
         const dropdownHeight = Math.min(options.length * 45 + 16, 400);
-
         let left = buttonRect.left;
         let top = buttonRect.bottom + 5;
-
         const spaceBelow = viewportHeight - buttonRect.bottom - 5;
         if (spaceBelow < dropdownHeight) {
-
             const bottom = viewportHeight - buttonRect.top + 5;
             setDropdownPosition({
                 left: left,
@@ -93,7 +87,6 @@ const StyledDropdown = ({
                 width: dropdownWidth,
             });
         } else {
-
             if (left + dropdownWidth > viewportWidth) {
                 left = viewportWidth - dropdownWidth - 10;
             }
@@ -115,6 +108,7 @@ const StyledDropdown = ({
         setStatusErrors("")
         setNewStatus("")
     };
+
     const highlightColors = [
         "#ff5733", "#33ff57", "#5733ff", "#ff33a8", "#33a8ff",
         "#ffd700", "#ff8c00", "#00ced1", "#dc143c", "#32cd32"
@@ -126,6 +120,7 @@ const StyledDropdown = ({
         setNewStatus(option.value); // Prefill input with existing status value
         setAddStatusFieldOpen(true);
     };
+
     const getColor = (option) => {
         let hash = 0;
         for (let i = 0; i < option.length; i++) {
@@ -133,9 +128,9 @@ const StyledDropdown = ({
         }
         return highlightColors[hash] || "gray";
     };
+
     const onAddStatusBlur = async (event) => {
         event.preventDefault();
-
         if (newStatus) {
             let data = {
                 json_item: newStatus,
@@ -164,14 +159,13 @@ const StyledDropdown = ({
             closeStatusFieldStates()
         }
     };
+
     const renderDropdown = () => {
         if (!isOpen) return null;
-
         // Determine whether we are using top or bottom positioning
         const positionStyle = dropdownPosition.top !== undefined
             ? { top: dropdownPosition.top }
             : { bottom: dropdownPosition.bottom };
-
         return createPortal(
             <div
                 ref={dropdownRef}
@@ -297,7 +291,6 @@ const StyledDropdown = ({
                             onBlur={(e) => onAddStatusBlur(e)}
                             onKeyDown={(e) => e.key === "Enter" && onAddStatusBlur(e)}
                         />
-
                             <button className=" btn-sm btn-primary mt-4 mx-2" onClick={(e) => onAddStatusBlur(e)}>
                                 +
                             </button>

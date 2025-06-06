@@ -543,7 +543,7 @@ const WorkPermitPdf = () => {
                 </Text>
                 :
                 <Text style={styles.textunderline}>
-                  {felidData?.balance_paid_at_time_of_filing} $
+                  {felidData?.balance_paid_at_time_of_filing} 
                 </Text>
               </View>
             </View>
