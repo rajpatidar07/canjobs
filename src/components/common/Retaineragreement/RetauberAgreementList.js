@@ -404,6 +404,12 @@ export default function RetauberAgreementList({
                             }
                             title="RCIC Sign"
                           >
+                            {console.log(data?.signature_status === "2"
+                                ? false
+                                : data?.rcic_signature
+                                  ? true
+                                  : true,data?.signature_status
+                                  ,index+1)}
                             <span className="text-gray px-2">
                               <FaFileSignature />
                             </span>

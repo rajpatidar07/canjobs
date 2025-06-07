@@ -390,6 +390,8 @@ const AgreementOneForm = ({
       if (label === "rcic_signature") {
         updatedState.rcic_signature = signature;
         updatedState.date_signature_rcic = dateTime;
+        updatedState.folderId = folderId;
+        updatedState.itemId = state.document_id
       } else if (label === "initial") {
         updatedState.initial = signature;
       } else {

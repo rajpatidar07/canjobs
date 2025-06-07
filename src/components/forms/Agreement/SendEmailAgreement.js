@@ -499,6 +499,22 @@ export default function SendEmailAgreement({
           <h5 className="text-center mb-7">Send Mail</h5>
           <div className="form-group d-flex mb-3 p-0">
             <label
+              htmlFor="subject"
+              className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
+            >
+              Subject :
+            </label>
+            <input
+              type="test"
+              value={state.subject}
+              onChange={(e) => setState({ ...state, subject: e.target.value })}
+              placeholder="Enter Subject"
+              id="subject"
+              className="form-control w-100"
+            />
+          </div>
+          <div className="form-group d-flex mb-3 p-0">
+            <label
               htmlFor="addmail"
               className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
             >

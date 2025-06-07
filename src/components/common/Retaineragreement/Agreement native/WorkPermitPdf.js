@@ -1185,7 +1185,7 @@ const WorkPermitPdf = () => {
               RETAINER AGREEMENT
             </Text>
           </View>
-          <View style={{}}>
+          <View style={{marginTop:60}}>
             {/* Contact Information Header */}
             <View>
               {/* Contact Information Header */}
