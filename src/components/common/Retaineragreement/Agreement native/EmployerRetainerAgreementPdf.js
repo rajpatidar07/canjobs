@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Page, Text, View, Document, StyleSheet, BlobProvider, Image, PDFViewer } from '@react-pdf/renderer';
-import { AddSharePointDOcument, AddUpdateAgreement } from '../../../../api/api';
+import { AddSharePointDOcument } from '../../../../api/api';
 import { ClientSignatureFunction } from '../CommonThings/ClientSignatureFunctionHtml';
 import { RCICSignatureFunction } from '../CommonThings/RCICSignatureFunction';
 import { InitialFunction } from '../CommonThings/InitialFunction';
 import CommonRetainerAgreementDate from '../CommonRetainerAgreementDate';
+import { AddDocIdToAGreementApiFun } from '../CommonThings/AddDocIdToAGreementApiFun';
 const styles = StyleSheet.create({
   page: {
     padding: 30,
@@ -91,6 +92,7 @@ const EmployerRetainerAgreementPdf = () => {
     user_id,
     emp_user_type,
     folderId: folderID /*, code*/,
+    email_for
   } = JSON.parse(data) || {};
   const familyJsonArray = felidData?.family_json || []
   useEffect(() => {
@@ -120,13 +122,15 @@ const EmployerRetainerAgreementPdf = () => {
           );
           if (res.data.message === "Document Upload") {
             try {
-              let data = {
-                id: felidData?.id,
-                type: felidData?.type,
+              let resApi = await AddDocIdToAGreementApiFun({
+                felidData,
+                user_id,
+                emp_user_type,
+                folderID,
                 document_id: res.data.data[0][0].document_id,
-              };
-              let addDocId = await AddUpdateAgreement(data);
-              console.log(addDocId);
+                email_for
+              })
+              console.log(resApi);
             } catch (err) {
               console.log(err)
             }
@@ -326,10 +330,10 @@ const EmployerRetainerAgreementPdf = () => {
             <Text style={[styles.mb5]}>✓ Chartered Professional Accountant's (CPA) Attestation Letter	     <Text style={[styles.textBold]}>CAD 1000.00</Text></Text>
             <Text style={[styles.mb5]}>✓ Recruitment charges per applicant (if applicable)	<Text style={[styles.textBold]}>CAD 1000.00</Text></Text>
             {"/n"}
-              <Text>NOTE:<Text style={styles.underline}>
-                {felidData?.note || " All complaint forms must be signed."}
-              </Text>
-              </Text>
+            <Text>NOTE:<Text style={styles.underline}>
+              {felidData?.note || " All complaint forms must be signed."}
+            </Text>
+            </Text>
           </View>
           {/* 6th section */}
           <View style={styles.section}>

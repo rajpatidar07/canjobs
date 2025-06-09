@@ -1136,15 +1136,6 @@ const AdminSidebar = (props) => {
             <span className="text-truncate">Manage Notes</span>
           </Link>
         </li>
-{console.log(props.heading ==="Manager's Dashboard",props.heading, user_type === "agent"
-              ? "d-none"
-              : props.heading === "Manager's Dashboard"
-              ? "active"
-              : "", user_type === "agent"
-              ? "d-none"
-              : props.heading === "Manage Job Category"
-              ? "active"
-              : "")}
         <li
           className={
             user_type === "agent"

@@ -229,8 +229,8 @@ const AgreementOneForm = ({
         (index === "rcic_signature" || index === "final")) ||
       openSignature === "no"
     ) {
-      let filteredState = { ...state };
-
+      let filteredState = { ...state, email_for: index === "final" ? "admin" : "" };
+console.log(!(index === "rcic_signature" || index === "final" || state.initial),index === "final")
       // Conditionally include signature_status
       if (!(index === "rcic_signature" || index === "final" || state.initial)) {
         delete filteredState.signature_status;
@@ -286,7 +286,7 @@ const AgreementOneForm = ({
         }
         return client;
       });
-      console.log("first", state)
+      console.log("first", filteredState)
       try {
         let res = await AddUpdateAgreement(filteredState);
         if (
@@ -320,6 +320,7 @@ const AgreementOneForm = ({
                 folderId: folderId,
                 felidData: res.data.data[0],
                 family_json: res.data.data[0].family_json,
+                email_for:"client"
               };
               // console.log(stateData);
               const newPageUrl = agreementType === "initial consultation" ? `/initial_consultation ` : agreementType === "recruitment services agreement" || agreementType === "initial consultation" ? `/recruitment_service` : agreementType === "employer renewal stream"
@@ -390,8 +391,8 @@ const AgreementOneForm = ({
       if (label === "rcic_signature") {
         updatedState.rcic_signature = signature;
         updatedState.date_signature_rcic = dateTime;
-        updatedState.folderId = folderId;
-        updatedState.itemId = state.document_id
+        // updatedState.folderId = folderId;
+        // updatedState.itemId = state.document_id
       } else if (label === "initial") {
         updatedState.initial = signature;
       } else {

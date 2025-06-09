@@ -11,10 +11,11 @@ import {
     Link,
 } from "@react-pdf/renderer";
 import CommonRetainerAgreementDate from "../CommonRetainerAgreementDate";
-import { AddSharePointDOcument, AddUpdateAgreement } from "../../../../api/api";
+import { AddSharePointDOcument } from "../../../../api/api";
 import { InitialFunction } from "../CommonThings/InitialFunction";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
+import { AddDocIdToAGreementApiFun } from "../CommonThings/AddDocIdToAGreementApiFun";
 // import { toast } from "react-toastify";
 
 const AlbertaPnpPdf = () => {
@@ -25,6 +26,7 @@ const AlbertaPnpPdf = () => {
         user_id,
         emp_user_type,
         folderId: folderID /*, code*/,
+        email_for
     } = JSON.parse(data) || {};
     const familyJsonArray = felidData?.family_json || []
     /*COnvert blob to file  */
@@ -57,13 +59,15 @@ const AlbertaPnpPdf = () => {
                     );
                     if (res.data.message === "Document Upload") {
                         try {
-                            let data = {
-                                id: felidData?.id,
-                                type: felidData?.type,
+                            let resApi = await AddDocIdToAGreementApiFun({
+                                felidData,
+                                user_id,
+                                emp_user_type,
+                                folderID,
                                 document_id: res.data.data[0][0].document_id,
-                            };
-                            let addDocId = await AddUpdateAgreement(data);
-                            console.log(addDocId);
+                                email_for
+                            })
+                            console.log(resApi);
                         } catch (err) {
                             console.log(err)
                         }
@@ -472,7 +476,7 @@ const AlbertaPnpPdf = () => {
                             </Text>
                         </View>
                         <View style={{ height: 185 }}></View>
-                        <View style={[styles.table, { marginTop: 48 }]}>
+                        <View style={[styles.table, { marginTop: 60 }]}>
                             <View style={styles.row}>
                                 <View style={styles.cell}>
                                     <Text style={{ color: "blue" }}>
@@ -504,7 +508,11 @@ const AlbertaPnpPdf = () => {
                                 <View style={[styles.cell, { height: "280px" }]}>
                                     <Text>
                                         <Text style={{ marginTop: 10, fontSize: "10px" }}>
-                                            Step 1 (PNP) Completes upon signing the retainer and sharing the checklists and intake sheet with client and data gathering
+                                            Stage 1 (Worker Expression of Interest)
+                                            Completes upon signing the retainer
+                                            and sharing the checklists and intake
+                                            sheet with client and data gathering and
+                                            submitting EOI
                                         </Text>
                                     </Text>
                                 </View>
@@ -528,7 +536,10 @@ const AlbertaPnpPdf = () => {
                             <View style={styles.row}>
                                 <View style={styles.cell}>
                                     <Text style={{ marginTop: 10, marginBottom: 15, fontSize: "10px" }}>
-                                        Step 2 (PR) Filling out the forms, information verification and completeness check, preparing the application package
+                                        Stage 2 (Invitation To Apply) Filling out
+                                        the forms, information verification and
+                                        completeness check, preparing the
+                                        application package
                                         {'\n'}
                                         Payment is due before final submission of application.
                                         {'\n'}
@@ -539,11 +550,15 @@ const AlbertaPnpPdf = () => {
                                 <View style={[styles.cell, { fontSize: "10px" }]}>
                                     <Text>Non-refundable</Text>
                                     <Text style={{ marginTop: 10, marginBottom: 28 }}>
-                                        All payments made are non- refundable and total service
-                                        charges to be collected regardless, whether the client/ s
-                                        withdraw from the file at this stage. The government fee and
-                                        courier charges must be paid apart from professional fees
-                                        payment scheduled at this stage
+                                        All payments made are nonrefundable
+                                        and total service
+                                        charges to be collected
+                                        regardless, whether the client/
+                                        s withdraw from the file at
+                                        this stage. The government
+                                        fee and courier charges
+                                        must be paid apart from
+                                        professional fees payment scheduled at this stage
                                     </Text>
                                 </View>
                                 <View style={[styles.cell, { fontSize: "10px" }]}>
@@ -560,22 +575,23 @@ const AlbertaPnpPdf = () => {
                             <View>
                                 <Text style={{ fontWeight: "bold" }}>
 
-                                    TotalAmount (Non-Refundable) (Paid at signing of contract and
-                                    sharing of checklist)
+                                    Total Amount: (Non-Refundable) (Paid at signing of contract and sharing of checklist for Worker Expression of Interest):
                                 </Text>
                                 :
                                 <Text style={styles.textunderline}>
-                                    {felidData?.total_amount_signing_of_contract} 
+                                    {felidData?.total_amount_signing_of_contract}
                                 </Text>
                             </View>
                             <View>
                                 <Text style={{ fontWeight: "bold" }}>
-                                    Balance (Non-Refundable) (Paid at time of filing)
+                                    Balance (Non-Refundable) (Paid at time of filing for Invitation To Apply):
                                 </Text>
                                 :
                                 <Text style={styles.textunderline}>
-                                    {felidData?.balance_paid_at_time_of_filing} 
+                                    {felidData?.balance_paid_at_time_of_filing}
                                 </Text>
+                                {"\n"}
+                                <Text >(Government Application Fees to be paid separately at the time of application and is not included in Service Charges)</Text>
                             </View>
                         </View>
                         <View id="l5" style={{ paddingLeft: 10 }}>

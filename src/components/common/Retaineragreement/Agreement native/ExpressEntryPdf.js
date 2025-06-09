@@ -10,11 +10,12 @@ import {
   BlobProvider,
   Link,
 } from "@react-pdf/renderer";
-import { AddSharePointDOcument, AddUpdateAgreement } from "../../../../api/api";
+import { AddSharePointDOcument, } from "../../../../api/api";
 import { InitialFunction } from "../CommonThings/InitialFunction";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
 import CommonRetainerAgreementDate from "../CommonRetainerAgreementDate";
+import { AddDocIdToAGreementApiFun } from "../CommonThings/AddDocIdToAGreementApiFun";
 // import { toast } from "react-toastify";
 
 const ExpressEntryPdf = () => {
@@ -25,6 +26,7 @@ const ExpressEntryPdf = () => {
     user_id,
     emp_user_type,
     folderId: folderID /*, code*/,
+    email_for
   } = JSON.parse(data) || {};
   // console.log(felidData?.family_json, "<=========== Testing data =======>", data)
   const familyJsonArray = felidData?.family_json || []; //? JSON.parse(felidData?.family_json) : [];
@@ -154,13 +156,15 @@ const ExpressEntryPdf = () => {
             // });
             // console.log(res.data.data[0][0].document_id)
             try {
-              let data = {
-                id: felidData?.id,
-                type: felidData?.type,
+              let resApi = await AddDocIdToAGreementApiFun({
+                felidData,
+                user_id,
+                emp_user_type,
+                folderID,
                 document_id: res.data.data[0][0].document_id,
-              };
-              let addDocId = await AddUpdateAgreement(data);
-              console.log(addDocId);
+                email_for
+              })
+              console.log(resApi);
             } catch (err) {
               console.log(err);
             }
@@ -699,9 +703,11 @@ const ExpressEntryPdf = () => {
                         fontSize: "10px",
                       }}
                     >
-                      Step 1 Completes upon signing the retainer and sharing the
-                      checklists and intake sheet with client. Data gathering
-                      and Creating Express Entry Profile
+                      Stage 1 (Worker Expression of Interest
+                      and creating of EE Profile) Completes
+                      upon signing the retainer and sharing
+                      the checklists and intake sheet with client
+                      and data gathering and submitting EOI
                     </Text>
                   </Text>
                 </View>
@@ -731,22 +737,29 @@ const ExpressEntryPdf = () => {
                       fontSize: "10px",
                     }}
                   >
-                    Step 2 Application preparation, filling out the forms,
-                    information verification and completeness check, preparing
-                    the application package Payment is due before final
-                    submission of application. Provide proof of submission to
-                    the client
+                    Stage 2 (Invitation To Apply) Filling out
+                    the forms, information verification and
+                    completeness check, preparing the
+                    application package. Either EE or PNP charges will be for one stream
+                    {"\n"}
+                    Payment is due before final submission of
+                    application.Provide proof of submission to
+                    the client.
+
                   </Text>
                 </View>
                 <View style={styles.cell}></View>
                 <View style={[styles.cell, { fontSize: "10px" }]}>
                   <Text>Non-refundable</Text>
                   <Text style={{ marginTop: 10, marginBottom: 28 }}>
-                    All payments made are non- refundable and total service
-                    charges to be collected regardless, whether the client/ s
-                    withdraw from the file at this stage. The government fee and
-                    courier charges must be paid apart from professional fees
-                    payment scheduled at this stage
+                    All payments made are nonrefundable and total service
+                    charges to be collected
+                    regardless, whether the client/
+                    s withdraw from the file at
+                    this stage. The government
+                    fee and courier charges
+                    must be paid apart from
+                    professional fees payment
                   </Text>
                 </View>
                 <View style={[styles.cell, { fontSize: "10px" }]}>
@@ -762,27 +775,28 @@ const ExpressEntryPdf = () => {
             <View style={{ marginTop: 15, paddingLeft: 10 }}>
               <View>
                 <Text style={{ fontWeight: "bold" }}>
-                  TotalAmount (Non-Refundable) (Paid at signing of contract and
-                  sharing of checklist)
+                 TotalAmount:(Non-Refundable) (Paid at signing of contract and sharing of checklist):
                 </Text>
                 :
                 <Text style={styles.textunderline}>
-                  {felidData?.total_amount_signing_of_contract} 
+                  {felidData?.total_amount_signing_of_contract}
                 </Text>
               </View>
               <View>
                 <Text style={{ fontWeight: "bold" }}>
-                  Balance (Non-Refundable) (Paid at time of filing)
+                 Balance (Non-Refundable) (Paid at time of filing for Invitation To Apply)
                 </Text>
                 :
                 <Text style={styles.textunderline}>
-                  {felidData?.balance_paid_at_time_of_filing} 
+                  {felidData?.balance_paid_at_time_of_filing}
                 </Text>
+                {"\n"}
+                <Text>(Government Application Fees to be paid separately at the time of application and is not included in Service Charges)</Text>
               </View>
             </View>
             <View id="l5" style={{ paddingLeft: 10 }}>
               <Text style={{ marginTop: 50 }}>Note: <Text style={styles.textunderline}>
-                {felidData?.note||"               "}
+                {felidData?.note || "               "}
               </Text></Text>
               <View >
                 <View style={{ flexDirection: "row" }}>

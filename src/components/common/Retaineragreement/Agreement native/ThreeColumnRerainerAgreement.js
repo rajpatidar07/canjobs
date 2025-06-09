@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import {
     Page, Text, View, Document, StyleSheet, BlobProvider, Image, PDFViewer, Link,
 } from '@react-pdf/renderer';
-import { AddSharePointDOcument, AddUpdateAgreement } from '../../../../api/api';
+import { AddSharePointDOcument } from '../../../../api/api';
 import { InitialFunction } from '../CommonThings/InitialFunction';
 import { ClientSignatureFunction } from '../CommonThings/ClientSignatureFunctionHtml';
 import { RCICSignatureFunction } from '../CommonThings/RCICSignatureFunction';
 import CommonRetainerAgreementDate from '../CommonRetainerAgreementDate';
+import { AddDocIdToAGreementApiFun } from '../CommonThings/AddDocIdToAGreementApiFun';
 
 const styles = StyleSheet.create({
     page: {
@@ -94,6 +95,7 @@ const ThreeColumnRerainerAgreement = () => {
         user_id,
         emp_user_type,
         folderId: folderID /*, code*/,
+        email_for
     } = JSON.parse(data) || {};
     const familyJsonArray = felidData?.family_json || []
     useEffect(() => {
@@ -123,13 +125,15 @@ const ThreeColumnRerainerAgreement = () => {
                     );
                     if (res.data.message === "Document Upload") {
                         try {
-                            let data = {
-                                id: felidData?.id,
-                                type: felidData?.type,
+                            let resApi = await AddDocIdToAGreementApiFun({
+                                felidData,
+                                user_id,
+                                emp_user_type,
+                                folderID,
                                 document_id: res.data.data[0][0].document_id,
-                            };
-                            let addDocId = await AddUpdateAgreement(data);
-                            console.log(addDocId);
+                                email_for
+                            })
+                            console.log(resApi);
                         } catch (err) {
                             console.log(err)
                         }
@@ -1469,7 +1473,7 @@ const ThreeColumnRerainerAgreement = () => {
 
 
             </View>
-            <View style={{ marginTop: 70}}>
+            <View style={{ marginTop: 70 }}>
                 <Text style={[{ textAlign: "center", }, styles.definition]}>
                     AUTHORIZATION
                 </Text>

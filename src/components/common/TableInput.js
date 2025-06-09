@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import ConvertTime from "./Common function/ConvertTime";
+// import ConvertTime from "./Common function/ConvertTime";
+import CommonRetainerAgreementDate from "./Retaineragreement/CommonRetainerAgreementDate";
 
 const TableInput = ({ value, onChange, name, type, className = "" }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -78,7 +79,7 @@ const TableInput = ({ value, onChange, name, type, className = "" }) => {
               animation: "textFadeIn 150ms ease-in-out",
             }}
           >
-            {type === "date" ? <ConvertTime _date={inputValue} format={"DD/MM/YYYY"} /> : inputValue || "Click to Add"}
+            {type === "date" ? <CommonRetainerAgreementDate _date={inputValue} format={"DD/MM/YYYY"} /> : inputValue || "Click to Add"}
           </span>
         )}
       </div>

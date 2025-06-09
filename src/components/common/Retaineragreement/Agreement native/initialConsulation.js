@@ -11,11 +11,12 @@ import {
   Link,
 } from "@react-pdf/renderer";
 import { TbArrowBadgeRight } from "react-icons/tb";
-import { AddSharePointDOcument, AddUpdateAgreement } from "../../../../api/api";
+import { AddSharePointDOcument } from "../../../../api/api";
 import { InitialFunction } from "../CommonThings/InitialFunction";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
 import CommonRetainerAgreementDate from "../CommonRetainerAgreementDate";
+import { AddDocIdToAGreementApiFun } from "../CommonThings/AddDocIdToAGreementApiFun";
 // import { toast } from "react-toastify";
 
 const InitialConsultationAgreement = () => {
@@ -26,6 +27,7 @@ const InitialConsultationAgreement = () => {
     user_id,
     emp_user_type,
     folderId: folderID /*, code*/,
+    email_for
   } = JSON.parse(data) || {};
   const familyJsonArray = felidData?.family_json || [] //? JSON.parse(felidData?.family_json) : [];
 
@@ -59,13 +61,15 @@ const InitialConsultationAgreement = () => {
           );
           if (res.data.message === "Document Upload") {
             try {
-              let data = {
-                id: felidData?.id,
-                type: felidData?.type,
+              let resApi = await AddDocIdToAGreementApiFun({
+                felidData,
+                user_id,
+                emp_user_type,
+                folderID,
                 document_id: res.data.data[0][0].document_id,
-              };
-              let addDocId = await AddUpdateAgreement(data);
-              console.log(addDocId);
+                email_for
+              })
+              console.log(resApi);
             } catch (err) {
               console.log(err)
             }

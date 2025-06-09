@@ -353,7 +353,7 @@ const ManageDailyCallLog = () => {
                 Reset
               </button>
             </div>
-            <div >
+            <div>
               {/* Call Log Table */}
               <Calllogtable
                 heading={"Daily Call log"}

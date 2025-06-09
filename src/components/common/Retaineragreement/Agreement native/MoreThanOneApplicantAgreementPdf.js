@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Page, Text, View, Document, StyleSheet, BlobProvider, Image, PDFViewer } from '@react-pdf/renderer';
-import { AddSharePointDOcument, AddUpdateAgreement } from '../../../../api/api';
+import { AddSharePointDOcument } from '../../../../api/api';
 import CommonRetainerAgreementDate from "../CommonRetainerAgreementDate"
+import { AddDocIdToAGreementApiFun } from '../CommonThings/AddDocIdToAGreementApiFun';
 const styles = StyleSheet.create({
   page: {
     padding: 30,
@@ -78,6 +79,7 @@ const MoreThanOneApplicantAgreementPdf = () => {
     user_id,
     emp_user_type,
     folderId: folderID /*, code*/,
+    email_for
   } = JSON.parse(data) || {};
   const familyJsonArray = felidData?.family_json || []
   useEffect(() => {
@@ -95,7 +97,7 @@ const MoreThanOneApplicantAgreementPdf = () => {
         }
         const file = new File(
           [newBlob],
-          `${felidData?.type.replaceAll(" ", "_")+`_${felidData?.id}`}.pdf`,
+          `${felidData?.type.replaceAll(" ", "_") + `_${felidData?.id}`}.pdf`,
           { type: "application/pdf" }
         ); try {
           let res = await AddSharePointDOcument(
@@ -107,13 +109,15 @@ const MoreThanOneApplicantAgreementPdf = () => {
           );
           if (res.data.message === "Document Upload") {
             try {
-              let data = {
-                id: felidData?.id,
-                type: felidData?.type,
+              let resApi = await AddDocIdToAGreementApiFun({
+                felidData,
+                user_id,
+                emp_user_type,
+                folderID,
                 document_id: res.data.data[0][0].document_id,
-              };
-              let addDocId = await AddUpdateAgreement(data);
-              console.log(addDocId);
+                email_for
+              })
+              console.log(resApi);
             } catch (err) {
               console.log(err)
             }

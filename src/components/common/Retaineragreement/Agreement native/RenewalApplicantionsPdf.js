@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Page, Text, View, Document, StyleSheet, BlobProvider, Image, PDFViewer } from '@react-pdf/renderer';
-import { AddSharePointDOcument, AddUpdateAgreement } from '../../../../api/api';
+import { AddSharePointDOcument } from '../../../../api/api';
 import { InitialFunction } from '../CommonThings/InitialFunction';
 import { ClientSignatureFunction } from '../CommonThings/ClientSignatureFunctionHtml';
 import { RCICSignatureFunction } from '../CommonThings/RCICSignatureFunction';
 import CommonRetainerAgreementDate from '../CommonRetainerAgreementDate';
+import { AddDocIdToAGreementApiFun } from '../CommonThings/AddDocIdToAGreementApiFun';
 const styles = StyleSheet.create({
   page: {
-    paddingBottom:2,
+    paddingBottom: 2,
     padding: 40,
     fontFamily: "Times-Roman",
     fontSize: 12,
@@ -89,6 +90,7 @@ const RenewalApplicantionsPdf = () => {
     user_id,
     emp_user_type,
     folderId: folderID /*, code*/,
+    email_for
   } = JSON.parse(data) || {};
   const familyJsonArray = felidData?.family_json || []
   useEffect(() => {
@@ -118,13 +120,15 @@ const RenewalApplicantionsPdf = () => {
           );
           if (res.data.message === "Document Upload") {
             try {
-              let data = {
-                id: felidData?.id,
-                type: felidData?.type,
+              let resApi = await AddDocIdToAGreementApiFun({
+                felidData,
+                user_id,
+                emp_user_type,
+                folderID,
                 document_id: res.data.data[0][0].document_id,
-              };
-              let addDocId = await AddUpdateAgreement(data);
-              console.log(addDocId);
+                email_for
+              })
+              console.log(resApi);
             } catch (err) {
               console.log(err)
             }
@@ -357,7 +361,7 @@ const RenewalApplicantionsPdf = () => {
           </View>
           {/* 7th section */}
           <View style={styles.section}>
-            <Text style={[styles.subtitle, ]}>7. Interest</Text>
+            <Text style={[styles.subtitle,]}>7. Interest</Text>
             <View>
               {[
                 " Payment is due on all of the consultant's accounts when rendered. If any account is not paid within 30 days, interest will be charged on outstanding balance at the rate of 20% per annum from the date of the account, until paid",
@@ -371,7 +375,7 @@ const RenewalApplicantionsPdf = () => {
           </View>
           {/* 8th Section */}
           <View style={[styles.section]}>
-            <Text style={[styles.subtitle, ]}>8. Refund Policy</Text>
+            <Text style={[styles.subtitle,]}>8. Refund Policy</Text>
             <Text style={[styles.mb3]}>The Client acknowledges that the approval of the Rural Renewal Stream Application and Endorsement Letter, and the time required for processing this application is at the sole discretion of the government and not the RCIC. Furthermore, the Client acknowledges that fees are not refundable in the event of an application refusal</Text>
             <Text style={[]}>
               If, however, the application is denied because of an error or omission on the part of the RCIC or professional staff, the RCIC will refund part, or all professional fees collected. The Client agrees that the fees paid are for services indicated above, and any refund is strictly limited to the amount of fees paid. if for any reason agreement is terminated any un-used part of fees with be refunded after deduction of any costs. An applicant may specify the method of refund.
@@ -379,7 +383,7 @@ const RenewalApplicantionsPdf = () => {
           </View>
           {/* 9th section */}
           <View style={[styles.section,]}>
-            <Text style={[styles.subtitle, ]}>9. Dispute Resolution</Text>
+            <Text style={[styles.subtitle,]}>9. Dispute Resolution</Text>
             <Text styles={[]}>
               Please be advised that Harpreet Kaur is a member in good standing of the Immigration Consultants of Canada Regulatory Council (ICCRC), and as such, is bound by its By-laws, Code of Professional Ethics, and associated Regulations. In the event of a dispute related to the Code of Professional Ethics, the Client and RCIC are to make every effort to resolve the matter between the two parties. In the event a resolution cannot be reached, the Client is to present the complaint in writing to the RCIC and allow the RCIC 30 days to respond to the Client. In the event the dispute is still unresolved, the Client may follow the complaint and discipline procedure outlined by the Council on their website under the heading "File a Complaint".
 
@@ -410,7 +414,7 @@ const RenewalApplicantionsPdf = () => {
           </View>
           {/* 11th section */}
           <View style={styles.section}>
-            <Text style={[styles.subtitle, ]}>11. Force Majeure </Text>
+            <Text style={[styles.subtitle,]}>11. Force Majeure </Text>
             <Text styles={[styles.mb5]}>
               The RCIC's failure to perform any term of this Retainer Agreement, as a result of conditions beyond his/her control such as, but not limited to, governmental restrictions or subsequent legislation, war, strikes, or acts of God, shall not be deemed a breach of this Agreement.
             </Text>
@@ -480,7 +484,7 @@ const RenewalApplicantionsPdf = () => {
             </Text>
           </View>
           {/* signature */}
-          <View style={[styles.container,{paddingBottom:10}]}>
+          <View style={[styles.container, { paddingBottom: 10 }]}>
             {/* Left Signature Box (RCIC) */}
             <View style={styles.box}>
               <RCICSignatureFunction isPdf={true} felidData={felidData} />

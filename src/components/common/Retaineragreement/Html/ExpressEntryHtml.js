@@ -411,9 +411,11 @@ const ExpressEntryHtml = ({
               <td>
                 <p>
                 <small>
-                  Step 1 Completes upon signing the retainer and sharing the
-                  checklists and intake sheet with client. Data gathering and
-                  Creating Express Entry Profile
+                   Stage 1 (Worker Expression of Interest
+                      and creating of EE Profile) Completes
+                      upon signing the retainer and sharing
+                      the checklists and intake sheet with client
+                      and data gathering and submitting EOI
                 </small>
                 </p>
               </td>
@@ -431,24 +433,30 @@ const ExpressEntryHtml = ({
               <td>
                 <p>
                 <small>
-                  Step 2 Application preparation, filling out the forms,
-                  information verification and completeness check, preparing the
-                  application package
+                  Stage 2 (Invitation To Apply) Filling out
+                    the forms, information verification and
+                    completeness check, preparing the
+                    application package. Either EE or PNP charges will be for one stream
+                   
                   </small>
                 </p>
-                <p><small>Payment is due before final submission of application.</small></p>
-                <p><small>Provide proof of submission to the client</small></p>
+                <p><small> Payment is due before final submission of
+                    application.Provide proof of submission to
+                    the client.</small></p>
               </td>
               <td></td>
               <td>
                 <p><small>Non-refundable<small></p>
                 <p>
                 <small>
-                  All payments made are non- refundable and total service
-                  charges to be collected regardless, whether the client/ s
-                  withdraw from the file at this stage. The government fee and
-                  courier charges must be paid apart from professional fees
-                  payment scheduled at this stage
+                 All payments made are nonrefundable and total service
+                    charges to be collected
+                    regardless, whether the client/
+                    s withdraw from the file at
+                    this stage. The government
+                    fee and courier charges
+                    must be paid apart from
+                    professional fees payment
                   </small>
                 </p>
               </td>
@@ -458,14 +466,14 @@ const ExpressEntryHtml = ({
             </tr>
           </table>
           <p class="mt-8">
-           <b> Total Amount: (Non-Refundable) (Paid at signing of contract and
-            sharing of checklist): ${felidData?.total_amount_signing_of_contract || ""
+           <b> TotalAmount:(Non-Refundable) (Paid at signing of contract and sharing of checklist): ${felidData?.total_amount_signing_of_contract || ""
     } <br> 
-            Balance (Non-Refundable) (Paid at time of
-            filing): ${felidData?.balance_paid_at_time_of_filing || ""} 
-           </b>       
+             Balance (Non-Refundable) (Paid at time of filing for Invitation To Apply):${felidData?.balance_paid_at_time_of_filing || ""} 
+           </b>   
+           <br>
+           (Government Application Fees to be paid separately at the time of application and is not included in Service Charges)    
             </p>
-          <p>Note: <u>${felidData.note||"               "}</u></p>
+          <p>Note: <u>${felidData.note || "               "}</u></p>
           <ul id="l5"  style="list-style-type:disc;">
             <li data-list-text="•">
               <p>

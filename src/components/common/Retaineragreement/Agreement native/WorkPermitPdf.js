@@ -11,10 +11,11 @@ import {
   Link,
 } from "@react-pdf/renderer";
 import CommonRetainerAgreementDate from "../CommonRetainerAgreementDate";
-import { AddSharePointDOcument, AddUpdateAgreement } from "../../../../api/api";
+import { AddSharePointDOcument } from "../../../../api/api";
 import { InitialFunction } from "../CommonThings/InitialFunction";
 import { ClientSignatureFunction } from "../CommonThings/ClientSignatureFunctionHtml";
 import { RCICSignatureFunction } from "../CommonThings/RCICSignatureFunction";
+import { AddDocIdToAGreementApiFun } from "../CommonThings/AddDocIdToAGreementApiFun";
 // import { toast } from "react-toastify";
 
 const WorkPermitPdf = () => {
@@ -25,6 +26,7 @@ const WorkPermitPdf = () => {
     user_id,
     emp_user_type,
     folderId: folderID,
+    email_for
   } = JSON.parse(data) || {};
   const familyJsonArray = felidData?.family_json || []
   /*COnvert blob to file  */
@@ -56,13 +58,15 @@ const WorkPermitPdf = () => {
           );
           if (res.data.message === "Document Upload") {
             try {
-              let data = {
-                id: felidData?.id,
-                type: felidData?.type,
+              let resApi = await AddDocIdToAGreementApiFun({
+                felidData,
+                user_id,
+                emp_user_type,
+                folderID,
                 document_id: res.data.data[0][0].document_id,
-              };
-              let addDocId = await AddUpdateAgreement(data);
-              console.log(addDocId);
+                email_for
+              })
+              console.log(resApi);
             } catch (err) {
               console.log(err)
             }
@@ -534,7 +538,7 @@ const WorkPermitPdf = () => {
                 </Text>
                 :
                 <Text style={styles.textunderline}>
-                  {felidData?.total_amount_signing_of_contract} 
+                  {felidData?.total_amount_signing_of_contract}
                 </Text>
               </View>
               <View>
@@ -543,13 +547,13 @@ const WorkPermitPdf = () => {
                 </Text>
                 :
                 <Text style={styles.textunderline}>
-                  {felidData?.balance_paid_at_time_of_filing} 
+                  {felidData?.balance_paid_at_time_of_filing}
                 </Text>
               </View>
             </View>
             <View id="l5" style={{ paddingLeft: 10 }}>
               <Text style={{ marginTop: 5 }}>Note:<Text style={styles.textunderline}>
-                {felidData?.note||"               "}
+                {felidData?.note || "               "}
               </Text></Text>
               <View >
                 <View style={{ flexDirection: 'row' }}>
@@ -1185,7 +1189,7 @@ const WorkPermitPdf = () => {
               RETAINER AGREEMENT
             </Text>
           </View>
-          <View style={{marginTop:60}}>
+          <View style={{ marginTop: 60 }}>
             {/* Contact Information Header */}
             <View>
               {/* Contact Information Header */}
