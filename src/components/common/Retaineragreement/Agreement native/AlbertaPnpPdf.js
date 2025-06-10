@@ -542,7 +542,6 @@ const AlbertaPnpPdf = () => {
                                         application package
                                         {'\n'}
                                         Payment is due before final submission of application.
-                                        {'\n'}
                                         Provide proof of submission to the client
                                     </Text>
                                 </View>

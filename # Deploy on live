@@ -1,4 +1,12 @@
 # Deploy on live
+Date:10-06-25
+1. Set the Canadian time zone for consultations.2. Updated Alberta PNP RA payment text as per the new RA PDF.
+3. Updated Express Entry RA payment text as per the new RA PDF.
+4. Updated the RCIC signature email.
+5.  Resolved white space issue on Mac in the admin module.
+6. Added subject option when sending RA email to the client.
+7. Remove all "\$" symbols from the total amount and balance in the RA.
+
 Date:05/06/25
 1. Make the reply input flexible based on text length.
 2. Fix the text on the Common Daily page.

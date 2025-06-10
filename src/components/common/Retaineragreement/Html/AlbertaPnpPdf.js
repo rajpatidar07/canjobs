@@ -44,7 +44,7 @@ const AlbertaPnpPdf = () => {
                 }
                 const file = new File(
                     [newBlob],
-                    `${felidData?.type.replace(" ", "_")+`_${felidData?.id}`}.pdf`,
+                    `${felidData?.type.replace(" ", "_") + `_${felidData?.id}`}.pdf`,
                     { type: "application/pdf" }
                 );
                 console.log('file = >', file)
@@ -506,7 +506,7 @@ const AlbertaPnpPdf = () => {
                                 <View style={[styles.cell, { height: "280px" }]}>
                                     <Text>
                                         <Text style={{ marginTop: 10, fontSize: "10px" }}>
-                                            Step 1 (PNP) Completes upon signing the retainer and sharing the checklists and intake sheet with client and data gathering
+                                           Stage 1 (Worker Expression of Interest and creating of EE Profile) Completes upon signing the retainer and sharing the checklists and intake sheet with client and data gathering and submitting EOΙ
                                         </Text>
                                     </Text>
                                 </View>
@@ -530,11 +530,11 @@ const AlbertaPnpPdf = () => {
                             <View style={styles.row}>
                                 <View style={styles.cell}>
                                     <Text style={{ marginTop: 10, marginBottom: 15, fontSize: "10px" }}>
-                                        Step 2 (PR) Filling out the forms, information verification and completeness check, preparing the application package
+
+                                        Stage 2 (Invitation To Apply) Filling out the forms, information verification and completeness check, preparing the application package. Either EE or PNP-charges will be for one stream
+
                                         {'\n'}{'\n'}
-                                        Payment is due before final submission of application.
-                                        {'\n'}{'\n'}
-                                        Provide proof of submission to the client
+                                        Payment is due before final submission of application.Provide proof of submission to the client
                                     </Text>
                                 </View>
                                 <View style={styles.cell}></View>
@@ -1406,14 +1406,14 @@ const AlbertaPnpPdf = () => {
                                     isPdf={true}
                                 />
                                 <Text style={[styles.text, styles.textBold]}> Signature of Client</Text>
-                                <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> <CommonRetainerAgreementDate _date={felidData.CommonRetainerAgreementDate({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" })} format={"DD-MM-YYYY"}/></Text>
+                                <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> <CommonRetainerAgreementDate _date={felidData.CommonRetainerAgreementDate({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" })} format={"DD-MM-YYYY"} /></Text>
                             </View>
 
                             {/* Left Signature Box (RCIC) */}
                             <View style={styles.box}>
                                 <RCICSignatureFunction isPdf={true} felidData={felidData} />
                                 <Text style={[styles.text, styles.textBold]}>Signature of RCIC</Text>
-                                <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {felidData?.CommonRetainerAgreementDate({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" })  !== "0000-00-00 00:00:00" && felidData?.CommonRetainerAgreementDate({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" })  !== "0000-00-00" && felidData?.CommonRetainerAgreementDate({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" })  ? moment(felidData.CommonRetainerAgreementDate({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" }) ).format("DD/MM/YYYY") : "______________"}</Text>
+                                <Text style={styles.text}><Text style={styles.textBold}>Date:</Text> {felidData?.CommonRetainerAgreementDate({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" }) !== "0000-00-00 00:00:00" && felidData?.CommonRetainerAgreementDate({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" }) !== "0000-00-00" && felidData?.CommonRetainerAgreementDate({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" }) ? moment(felidData.CommonRetainerAgreementDate({ _date: felidData.date_signature_rcic, format: "DD-MM-YYYY" })).format("DD/MM/YYYY") : "______________"}</Text>
                             </View>
                         </View>
                     </View>
@@ -1537,60 +1537,60 @@ const AlbertaPnpPdf = () => {
                             And for so doing, this document shall constitute good and sufficient authority and declaration
                         </Text>
                     </View>
-                     <View
-                                style={{
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  width: "100%",
-                                  marginTop: 15,
-                                }}
-                              >
-                                <View
-                                  style={[
-                                    styles.clientForm,
-                                    { textAlign: "center", marginTop: 30 },
-                                  ]}
-                                >
-                                  <View style={styles.clientFormChild}>
-                                    <Text
-                                      className="para_gap"
-                                      style={{
+                    <View
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            width: "100%",
+                            marginTop: 15,
+                        }}
+                    >
+                        <View
+                            style={[
+                                styles.clientForm,
+                                { textAlign: "center", marginTop: 30 },
+                            ]}
+                        >
+                            <View style={styles.clientFormChild}>
+                                <Text
+                                    className="para_gap"
+                                    style={{
                                         margin: 0,
                                         marginBottom: 15,
                                         textDecoration: "underline",
                                         textTransform: "capitalize",
-                                      }}
-                                    >
-                                      {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ") || "_______________________"}
-                                    </Text>
-                                    <Text style={{ margin: "0 0 30px 0" }}>Client’s full name</Text>
-                                  </View>
-                                  <View style={[styles.clientFormChild, { alignSelf: "center" }]}>
-                                    <ClientSignatureFunction
-                                      felidData={felidData}
-                                      familyJsonArray={familyJsonArray}
-                                      page={"user"}
-                                      isPdf={true}
-                                    />
-                                    <Text style={[styles.text, styles.textBold]}>Signature</Text>
-                                  </View>
-                                  <View style={styles.clientFormChild}>
-                                    <Text
-                                      className="para_gap"
-                                      style={{ margin: 0, textDecoration: "underline" }}
-                                    >
-                                      {!familyJsonArray[0]?.date_signature_client ||
+                                    }}
+                                >
+                                    {(familyJsonArray[0]?.client_first_name || "") + " " + (familyJsonArray[0]?.client_last_name || " ") || "_______________________"}
+                                </Text>
+                                <Text style={{ margin: "0 0 30px 0" }}>Client’s full name</Text>
+                            </View>
+                            <View style={[styles.clientFormChild, { alignSelf: "center" }]}>
+                                <ClientSignatureFunction
+                                    felidData={felidData}
+                                    familyJsonArray={familyJsonArray}
+                                    page={"user"}
+                                    isPdf={true}
+                                />
+                                <Text style={[styles.text, styles.textBold]}>Signature</Text>
+                            </View>
+                            <View style={styles.clientFormChild}>
+                                <Text
+                                    className="para_gap"
+                                    style={{ margin: 0, textDecoration: "underline" }}
+                                >
+                                    {!familyJsonArray[0]?.date_signature_client ||
                                         familyJsonArray[0]?.date_signature_client ===
                                         "0000-00-00 00:00:00"
                                         ? "____________"
                                         : moment(familyJsonArray[0]?.date_signature_client).format(
-                                          "DD-MM-YYYY"
+                                            "DD-MM-YYYY"
                                         )}
-                                    </Text>
-                                    <Text style={{ margin: "0 0 30px 0" }}>Date</Text>
-                                  </View>
-                                </View>
-                              </View>
+                                </Text>
+                                <Text style={{ margin: "0 0 30px 0" }}>Date</Text>
+                            </View>
+                        </View>
+                    </View>
                 </View>
             </View>
         </View>
@@ -1622,39 +1622,39 @@ const AlbertaPnpPdf = () => {
                             >
                                 <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
                                 <View>
-                                   {felidData?.initial ? (
-                        <View
-                          style={{
-                            width: 100,
-                            height: 50,
-                            border: "1px solid #ccc",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <Text
-                            style={{
-                              display: "inline-block",
-                              maxWidth: "100%",
-                              maxHeight: "100%",
-                              textTransform: "capitalize",
-                            }}
-                          >
-                            <InitialFunction initial={felidData?.initial} />
-                          </Text>
-                        </View>
+                                    {felidData?.initial ? (
+                                        <View
+                                            style={{
+                                                width: 100,
+                                                height: 50,
+                                                border: "1px solid #ccc",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                            }}
+                                        >
+                                            <Text
+                                                style={{
+                                                    display: "inline-block",
+                                                    maxWidth: "100%",
+                                                    maxHeight: "100%",
+                                                    textTransform: "capitalize",
+                                                }}
+                                            >
+                                                <InitialFunction initial={felidData?.initial} />
+                                            </Text>
+                                        </View>
 
-                      ) : (
-                        <View
-                          style={{
-                            display: "inline-block",
-                            width: 100,
-                            height: 50,
-                            border: "1px solid #ccc",
-                          }}
-                        />
-                      )}
+                                    ) : (
+                                        <View
+                                            style={{
+                                                display: "inline-block",
+                                                width: 100,
+                                                height: 50,
+                                                border: "1px solid #ccc",
+                                            }}
+                                        />
+                                    )}
                                 </View>
                             </View>
                         </View>
@@ -1689,38 +1689,38 @@ const AlbertaPnpPdf = () => {
                                         <Text style={{ textAlign: "right", paddingTop: 18 }}>Initials :</Text>
                                         <View>
                                             {felidData?.initial ? (
-                        <View
-                          style={{
-                            width: 100,
-                            height: 50,
-                            border: "1px solid #ccc",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <Text
-                            style={{
-                              display: "inline-block",
-                              maxWidth: "100%",
-                              maxHeight: "100%",
-                              textTransform: "capitalize",
-                            }}
-                          >
-                            <InitialFunction initial={felidData?.initial} />
-                          </Text>
-                        </View>
+                                                <View
+                                                    style={{
+                                                        width: 100,
+                                                        height: 50,
+                                                        border: "1px solid #ccc",
+                                                        display: "flex",
+                                                        alignItems: "center",
+                                                        justifyContent: "center",
+                                                    }}
+                                                >
+                                                    <Text
+                                                        style={{
+                                                            display: "inline-block",
+                                                            maxWidth: "100%",
+                                                            maxHeight: "100%",
+                                                            textTransform: "capitalize",
+                                                        }}
+                                                    >
+                                                        <InitialFunction initial={felidData?.initial} />
+                                                    </Text>
+                                                </View>
 
-                      ) : (
-                        <View
-                          style={{
-                            display: "inline-block",
-                            width: 100,
-                            height: 50,
-                            border: "1px solid #ccc",
-                          }}
-                        />
-                      )}
+                                            ) : (
+                                                <View
+                                                    style={{
+                                                        display: "inline-block",
+                                                        width: 100,
+                                                        height: 50,
+                                                        border: "1px solid #ccc",
+                                                    }}
+                                                />
+                                            )}
                                         </View>
                                     </View>
                                 </View>

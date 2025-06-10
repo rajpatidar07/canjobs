@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Route,
   BrowserRouter,
   Routes,
-  useParams /*, useLocation */,
+  useParams,
+  useNavigate,
+  matchPath,
 } from "react-router-dom";
 import EmployerHome from "../company/home";
 import CompanyProfile from "../company/profile";
@@ -121,22 +123,21 @@ import ManageConsultation from "../admin/ManageConsultation";
 import CommonDailyPage from "./CommonDailyPage";
 // import PreviewEmail from "../email/emailPreview";
 // function CurrentRoute() {
-//   const location = useLocation();
 //   const path = location.pathname;
 //   // Use the path variable in your component
 //   return path;
 // }
+// const location = useLocation();
 function MainLayout() {
   const [loginCondition, setLoginCondition] = useState(false);
   const token = localStorage.getItem("token");
   const userType = localStorage.getItem("userType");
-  // let adminType = localStorage.getItem("admin_type");
+  const employeeId = localStorage.getItem("employee_id"); // Assuming employee_id is stored in localStorage
+
   /*Function to check the employee profile with just its id  */
   const ValidateRoute = () => {
     const { eid } = useParams();
     const isValidEid = /^\d+$/.test(eid); // Check if eid is a number
-    const userType = localStorage.getItem("userType"); // Assuming userType is stored in localStorage
-    const employeeId = localStorage.getItem("employee_id"); // Assuming employee_id is stored in localStorage
 
     if (userType === "user" && eid === employeeId && isValidEid) {
       return <NewUserProfile setLoginCondition={setLoginCondition} />;
@@ -146,10 +147,71 @@ function MainLayout() {
       return <NotFound userType={userType} />;
     }
   };
-  return (
+
+  function RouterHandler({ token, userType, employeeId }) {
+    const navigate = useNavigate();
+    const path = window.location.pathname;
+
+    const allowedPaths = {
+      admin: [
+        "/dashboard", "/job", "/selfjob", "/category", "/lmia", "/visa", "/document", "/employee", "/selfemployee",
+        "/adminclient", "/adminprofile", "/assignedjobs", "/:eid", "/userpdf", "/managetasks", "/sharepoint_document",
+        "/client_detail", "/job_detail", "/partner_profile", "/followup", "/partner", "/partner_dashboard", "/daily_call_log",
+        "/daily_hours_log", "/consultation", "/assigned_admin", "/activity_log", "/filter", "/interview", "/responses",
+        "/lmia_dashboard", "/emailtemplate", "/notes", "/credentials", "/testpdfurl", "/resume/:id", "/daily_pages", "/email",
+        "/googledrive", "/anotation", "/slots", "/setting", "/manage_applicant_type", "/businessvisa", "/expressentry",
+        "/visitorsvisa", "/studypermit", "/temporaryresident", "/economicimmigration", "/familysponsorship", "/pnp", "/passport",
+        "/citizenship", "/humanitarian_and_Compassionate", "/permanent_resident_cards", "/pgwp", "/wes", "/atip", "/localcandidates",
+        "/federal_pr", "/view_pdf_Agreement", "/study_dashboard", "/programs", "/students", "/student_profile", "/applied_programs",
+        "/payment_invoice"
+      ],
+      user: [
+        `/${employeeId}`, "/student_profile", "/student_document", "/programs", "/education_loan", "/personal_loan", "/accommodation",
+        "/jobs", "/jobdetail", "/profile", "/:eid", "/job_detail", "/client_detail", "/userpdf", "/view_pdf_Agreement"
+      ],
+      company: [
+        "/client_detail", "/clientprofile", "/managejobs", "/response", "/empsearch", "/profile", "/lmia", "/resume",
+        "/job_detail", "/view_pdf_Agreement"
+      ],
+      agent: [ // same as admin list, assuming they share same paths
+        "/partner_dashboard", "/job", "/selfjob", "/category", "/lmia", "/visa", "/document", "/employee", "/selfemployee",
+        "/adminclient", "/adminprofile", "/assignedjobs", "/:eid", "/userpdf", "/managetasks", "/sharepoint_document",
+        "/client_detail", "/job_detail", "/partner_profile", "/followup", "/partner", "/partner_dashboard", "/daily_call_log",
+        "/daily_hours_log", "/consultation", "/assigned_admin", "/activity_log", "/filter", "/interview", "/responses",
+        "/lmia_dashboard", "/emailtemplate", "/notes", "/credentials", "/testpdfurl", "/resume/:id", "/daily_pages", "/email",
+        "/googledrive", "/anotation", "/slots", "/setting", "/manage_applicant_type", "/businessvisa", "/expressentry",
+        "/visitorsvisa", "/studypermit", "/temporaryresident", "/economicimmigration", "/familysponsorship", "/pnp", "/passport",
+        "/citizenship", "/humanitarian_and_Compassionate", "/permanent_resident_cards", "/pgwp", "/wes", "/atip", "/localcandidates",
+        "/federal_pr", "/view_pdf_Agreement", "/study_dashboard", "/programs", "/students", "/student_profile", "/applied_programs",
+        "/payment_invoice"
+      ]
+    };
+
+    const redirectPath = {
+      admin: "/dashboard",
+      user: `/${employeeId}`,
+      company: "/client_detail",
+      agent: "/partner_dashboard"
+    };
+
+    useEffect(() => {
+      if (!token || token === "null" || token === "undefined") return;
+      const allowed = allowedPaths[userType] || [];
+      const isAllowed = allowed.some((allowedPath) => matchPath(allowedPath, path));
+      if (!isAllowed) {
+        navigate(redirectPath[userType]);
+      }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [token, userType, path, navigate]);
+
+    return null;
+  }
+
+   return (
     <BrowserRouter>
       <ToastContainer />
       {/* <CurrentRoute /> */}
+      <RouterHandler token={token} userType={userType} employeeId={employeeId} />
       <Routes>
         {/* Employee */}
         <Route path="/" element={<EmployeeHomePage />} />
@@ -184,11 +246,11 @@ function MainLayout() {
 
         {/* <Route path="*" element={<NotFound userType={userType}/>} /> */}
         {userType === "user" &&
-        (token !== "" ||
-          token !== null ||
-          token !== undefined ||
-          token !== "null" ||
-          token !== "undefined") ? (
+          (token !== "" ||
+            token !== null ||
+            token !== undefined ||
+            token !== "null" ||
+            token !== "undefined") ? (
           <>
             <Route
               path="/student_profile"
@@ -214,7 +276,7 @@ function MainLayout() {
             <Route path="/job_detail" element={<JobDetailpageAdmim />} />
             <Route path="/client_detail" element={<CompanyProfileDetail />} />
             <Route path="/userpdf" element={<PDFViewer />} />
-             <Route path="/view_pdf_Agreement" element={<ViewPdf />} />
+            <Route path="/view_pdf_Agreement" element={<ViewPdf />} />
           </>
         ) : (
           <>
@@ -226,11 +288,11 @@ function MainLayout() {
         )}
         {/* Employer */}
         {userType === "company" &&
-        (token !== "" ||
-          token !== null ||
-          token !== undefined ||
-          token !== "null" ||
-          token !== "undefined") ? (
+          (token !== "" ||
+            token !== null ||
+            token !== undefined ||
+            token !== "null" ||
+            token !== "undefined") ? (
           <>
             <Route
               path="/client"
@@ -248,7 +310,7 @@ function MainLayout() {
             <Route path="/job_detail" element={<JobDetailpageAdmim />} />
             <Route path="/userpdf" element={<PDFViewer />} />
             <Route path="/client_detail" element={<CompanyProfileDetail />} />
-             <Route path="/view_pdf_Agreement" element={<ViewPdf />} />
+            <Route path="/view_pdf_Agreement" element={<ViewPdf />} />
           </>
         ) : (
           <>
@@ -303,10 +365,10 @@ function MainLayout() {
           userType === "" ||
           userType === null ||
           userType === "null") &&
-        (token === "" ||
-          token === null ||
-          token === undefined ||
-          token === "null") ? (
+          (token === "" ||
+            token === null ||
+            token === undefined ||
+            token === "null") ? (
           <>
             <Route path="/" element={<EmployeeHomePage />} />
             {/* <Route path="*" element={<NotFound userType={userType}/>} /> */}
@@ -333,7 +395,6 @@ function MainLayout() {
               <Route path="/adminclient" element={<Employer />} />
               <Route path="/adminprofile" element={<ManageAdmin />} />
               <Route path="/assignedjobs" element={<JobAssignedDashboard />} />
-              {/* <Route path="/:eid" element={<NewUserProfile />} /> */}
               <Route path="/:eid" element={<ValidateRoute />} />
               <Route path="/userpdf" element={<PDFViewer />} />
               <Route path="/managetasks" element={<ManageTask />} />
@@ -418,6 +479,7 @@ function MainLayout() {
               <Route path="/applied_programs" element={<AppliedPrograms />} />
               <Route path="*" element={<Loader load={"yes"} />} />
               <Route path="/payment_invoice" element={<ManagePayment />} />
+              {/* <Route path="/:eid" element={<NewUserProfile />} /> */}
             </Route>
 
             {/* <Route path="/*" element={<AdminMain />} /> */}

@@ -230,7 +230,6 @@ const AgreementOneForm = ({
       openSignature === "no"
     ) {
       let filteredState = { ...state, email_for: index === "final" ? "admin" : "" };
-console.log(!(index === "rcic_signature" || index === "final" || state.initial),index === "final")
       // Conditionally include signature_status
       if (!(index === "rcic_signature" || index === "final" || state.initial)) {
         delete filteredState.signature_status;
@@ -320,7 +319,7 @@ console.log(!(index === "rcic_signature" || index === "final" || state.initial),
                 folderId: folderId,
                 felidData: res.data.data[0],
                 family_json: res.data.data[0].family_json,
-                email_for:"client"
+                email_for: state.rcic_signature ? "client" : ""
               };
               // console.log(stateData);
               const newPageUrl = agreementType === "initial consultation" ? `/initial_consultation ` : agreementType === "recruitment services agreement" || agreementType === "initial consultation" ? `/recruitment_service` : agreementType === "employer renewal stream"

@@ -418,7 +418,7 @@ submitting EOI
                 <td>
                   <p>
                   <small>
-                   SStage 2 (Invitation To Apply) Filling out
+                   Stage 2 (Invitation To Apply) Filling out
 the forms, information verification and
 completeness check, preparing the
 application package

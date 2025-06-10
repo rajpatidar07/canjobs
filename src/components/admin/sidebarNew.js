@@ -221,6 +221,43 @@ const AdminSidebar = (props) => {
   //     console.log(err);
   //   }
   // }
+  useEffect(() => {
+    const pathToHeadingMap = {
+      "/partner_profile": "Partner Dashboard",
+      "/students": "Students",
+      "/dashboard": "Dashboard",
+      "/managetasks": "Task Dashboard",
+      "/selfemployee": "New Applicants",
+      "/employee": "Manage Applicants",
+      "/adminclient": "Manage Employers",
+      "/job": "Manage Jobs",
+      "/selfjob": "Manage Self Jobs",
+      "/visa": "Visa",
+      "/lmia": "LMIA status",
+      "/localcandidates": "Local Candidate",
+      "/slots": "Application types",
+      "/payment_invoice": "Manage Payment",
+      "/interview": "Interview",
+      "/notes": "Manage Notes",
+      "/assignedjobs": "Manager's Dashboard",
+      "/adminprofile": "Manage Admin",
+      "/partner_dashboard": "Manage Partner",
+      "/daily_pages": "Manage Daily Pages",
+      "/daily_hours_log": "Manage Daily Hourly Log",
+      "/consultation": "Manage Consultation",
+      "/setting": "Setting",
+    };
+
+    const currentPath = window.location.pathname;
+    const matchedHeading = pathToHeadingMap[currentPath];
+    if (matchedHeading && props.heading !== matchedHeading) {
+      // If your parent component controls `props.heading`, call a function to update it
+      localStorage.removeItem("PageNo");
+      localStorage.setItem("admin_heading", matchedHeading);
+      props.setPageHeading(matchedHeading);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className={`sidebar_parent show`} id="sidebar">
@@ -1234,8 +1271,7 @@ const AdminSidebar = (props) => {
         </li>
         <li
           ref={(el) => (liRefs.current["Manage Daily Hourly Log"] = el)}
-          className={`d-none ${
-            admin_type === "agent" || portal === "study"
+          className={`d-none ${admin_type === "agent" || portal === "study"
               ? "d-none"
               : props.heading === "Manage Daily Hourly Log"
                 ? "active"
@@ -1254,10 +1290,10 @@ const AdminSidebar = (props) => {
             <span className="text-truncate">Manage Daily Hour Log</span>
           </Link>
         </li>
-         <li
+        <li
           ref={(el) => (liRefs.current["Manage Consultation"] = el)}
           className={
-           `d-none ${ admin_type === "agent" || portal === "study"
+            `d-none ${admin_type === "agent" || portal === "study"
               ? "d-none"
               : props.heading === "Manage Consultation"
                 ? "active"
