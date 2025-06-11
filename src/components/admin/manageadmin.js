@@ -7,6 +7,7 @@ import {
   getallAdminData /*, DeleteAdmin*/,
   GetManagerTeam,
 } from "../../api/api";
+import SelectBox from "../common/Common function/SelectBox";
 // import { toast } from "react-toastify";
 // import SAlert from "../common/sweetAlert";
 import FilterJson from "../json/filterjson";
@@ -247,23 +248,18 @@ function ManageAdmin() {
                     <div className="col p-1 form_group mb-3">
                       <p className="input_label">Filter by Admin:</p>
                       <div className="select_div">
-                        <select
-                          name="type"
-                          value={typeFilterValue}
-                          id="type"
+                        <SelectBox options={(FilterJson.admintype.map((option) => ({
+                          value: option,
+                          label: option,
+                        })) || [])}
+                          selectedValue={typeFilterValue}
                           onChange={(e) => {
-                            setTypeFilterValue(e.target.value);
+                            console.log(e)
+                            setTypeFilterValue(e ? e.value : null);
                             setCurrentPage(1);
                           }}
-                          className="text-capitalize form-control"
-                        >
-                          <option value="">Admin type</option>
-                          {(FilterJson.admintype || []).map((type, i) => (
-                            <option value={type} key={i}>
-                              {type}
-                            </option>
-                          ))}
-                        </select>
+                          type={"type"}
+                        />
                       </div>
                     </div>
                     <div className="col px-1 form_group mt-4 text-right">

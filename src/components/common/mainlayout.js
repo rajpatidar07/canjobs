@@ -167,10 +167,10 @@ function MainLayout() {
       ],
       user: [
         `/${employeeId}`, "/student_profile", "/student_document", "/programs", "/education_loan", "/personal_loan", "/accommodation",
-        "/jobs", "/jobdetail", "/profile", "/:eid", "/job_detail", "/client_detail", "/userpdf", "/view_pdf_Agreement"
+        "/jobs", "/jobdetail", "/profile", "/:eid", "/job_detail", "/client_detail", "/userpdf", "/view_pdf_Agreement", "/resume/:id"
       ],
       company: [
-        "/client_detail", "/clientprofile", "/managejobs", "/response", "/empsearch", "/profile", "/lmia", "/resume",
+        "/client_detail", "/clientprofile", "/managejobs", "/response", "/empsearch", "/profile", "/lmia", "/resume/:id",
         "/job_detail", "/view_pdf_Agreement"
       ],
       agent: [ // same as admin list, assuming they share same paths
@@ -201,13 +201,13 @@ function MainLayout() {
       if (!isAllowed) {
         navigate(redirectPath[userType]);
       }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [token, userType, path, navigate]);
 
     return null;
   }
 
-   return (
+  return (
     <BrowserRouter>
       <ToastContainer />
       {/* <CurrentRoute /> */}
@@ -277,6 +277,7 @@ function MainLayout() {
             <Route path="/client_detail" element={<CompanyProfileDetail />} />
             <Route path="/userpdf" element={<PDFViewer />} />
             <Route path="/view_pdf_Agreement" element={<ViewPdf />} />
+            <Route path="/resume/:id" element={<ResumeGrerator />} />
           </>
         ) : (
           <>
@@ -377,6 +378,7 @@ function MainLayout() {
           <>
             {userType !== "admin" || userType === ""}
             {/* Layout Route */}
+            <Route path="/resume/:id" element={<ResumeGrerator />} />
             <Route element={<AdminMain />}>
               <Route
                 path="/dashboard"
@@ -426,7 +428,6 @@ function MainLayout() {
               <Route path="/notes" element={<Notes />} />
               <Route path="/credentials" element={<Credentional />} />
               <Route path="/testpdfurl" element={<ConvertAnyFileToPdf />} />
-              <Route path="/resume/:id" element={<ResumeGrerator />} />
               <Route path="/daily_pages" element={<CommonDailyPage />} />
               <Route path="/email" element={<MainEmailPage />} />
               <Route path="*" element={<NotFound userType={userType} />} />

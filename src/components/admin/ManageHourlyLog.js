@@ -7,6 +7,7 @@ import { FaAngleDown } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { getallAdminData } from "../../api/api";
 import Hourlylogtable from "../common/HourlylogTable";
+import SelectBox from "../common/Common function/SelectBox";
 
 const ManageHourlyLog = () => {
   const [showdropdown, setShowdropdown] = useState(false);
@@ -59,7 +60,7 @@ const ManageHourlyLog = () => {
       <AdminSidebar heading={"Manage Daily Hourly Log"} />
 
       <div className="dashboard-main-container " id="dashboard-body">
-         {/*removing class for now mt-14 */}
+        {/*removing class for now mt-14 */}
         <div className="container-fluid">
           <div className="mb-18">
             <div className="mb-4 align-items-center">
@@ -186,27 +187,17 @@ const ManageHourlyLog = () => {
                 <div className={"col  form_group "}>
                   <p className="input_label">Filter by Day</p>
                   <div className="select_div">
-                    <select
-                      name="day"
-                      value={dayFilterValue}
-                      id="day"
+                    <SelectBox options={filterData && filterData.days ? filterData.days.map((option) => ({
+                      value: option.value,
+                      label: option.value,
+                    })) : []}
+                      selectedValue={dayFilterValue}
                       onChange={(e) => {
-                        setDayFilterValue(e.target.value);
+                        setDayFilterValue(e ? e.value : null);
                         setPageNo(1);
                       }}
-                      className="text-capitalize form-control"
-                    >
-                      <option value="" data-display="Product Designer">
-                        Select day{" "}
-                      </option>
-                      {(filterData.days || []).map((data, index) => {
-                        return (
-                          <option value={data.id} key={index}>
-                            {data.value}
-                          </option>
-                        );
-                      })}
-                    </select>
+                      type={"day"}
+                    />
                   </div>
                 </div>
                 <div className={"col  form_group "}>

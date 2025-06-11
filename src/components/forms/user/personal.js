@@ -1156,7 +1156,7 @@ function PersonalDetails(props) {
                       </div>
                     )} */}
                   {/* MAIN TYPE */}
-                  <div className={user_type === "user" ? "d-none" : "form-group col-md-4"}>
+                  <div className={user_type === "user"||props.user_of_page === "assignedUser" || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" || props.pageNameForForm === "Category" ? "d-none" : "form-group col-md-4"}>
                     <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
                       Applicant's Type: <span className="text-danger">*</span>
                     </label>

@@ -17,6 +17,7 @@ import AddTaskForm from "../forms/admin/addTaskForm";
 import { Link, useLocation } from "react-router-dom";
 import CommonThreeDots from "../common/commonThreeDots";
 import { CiSearch } from "react-icons/ci";
+import SelectBox from "../common/Common function/SelectBox";
 
 export default function ManageTask() {
   const location = useLocation();
@@ -181,163 +182,100 @@ export default function ManageTask() {
               </div>
               <div className="col px-1 form_group mb-3">
                 <p className="input_label">Filter by Assign to admin:</p>
-                <select
-                  name="adminId"
-                  value={adminId + "," + adminType}
-                  id="adminId"
+                <SelectBox options={adminList ? adminList.map((option) => ({
+                  value: option.admin_id + "," + option.admin_type,
+                  label: option.name,
+                })) : []}
+                  selectedValue={adminId + "," + adminType}
                   onChange={(e) => {
-                    setAdminId(e.target.value.split(",")[0]);
-                    setAdminType(e.target.value.split(",")[1]);
+                    setAdminId(e ? e.value.split(",")[0] : null);
+                    setAdminType(e ? e.value.split(",")[1] : null);
                     setAdminPage(1);
                     setTaskPage(1);
                     setReplyId("")
                     setTaskId("")
                   }}
-                  className="form-control bg-white dashboard_select rounded-3"
-                >
-                  <option value={""}>Select Admin</option>
-                  {(adminList || []).map((item, index) => {
-                    return (
-                      <option
-                        key={index}
-                        value={item.admin_id + "," + item.admin_type}
-                      >
-                        {item.name}
-                      </option>
-                    );
-                  })}
-                </select>
+                  type={"adminId"}
+                />
               </div>
               <div className="col px-1 form_group mb-3">
                 <p className="input_label">Filter by Assign by admin:</p>
-                <select
-                  name="adminId"
-                  value={byAdminId + "," + byAdminType}
-                  id="adminId"
+                <SelectBox options={adminList ? adminList.map((option) => ({
+                  value: option.admin_id + "," + option.admin_type,
+                  label: option.name,
+                })) : []}
+                  selectedValue={byAdminId + "," + byAdminType}
                   onChange={(e) => {
-                    setByAdminId(e.target.value.split(",")[0]);
-                    setByAdminType(e.target.value.split(",")[1]);
+                    setByAdminId(e ? e.value.split(",")[0] : null);
+                    setByAdminType(e ? e.value.split(",")[1] : null);
                     setAdminPage(1);
                     setTaskPage(1);
                     setReplyId("")
                     setTaskId("")
                   }}
-                  className="form-control bg-white dashboard_select rounded-3"
-                >
-                  <option value={""}>Select Admin</option>
-                  {(adminList || []).map((item, index) => {
-                    return (
-                      <option
-                        key={index}
-                        value={item.admin_id + "," + item.admin_type}
-                      >
-                        {item.name}
-                      </option>
-                    );
-                  })}
-                </select>
+                  type={"by_admin_id"}
+                />
               </div>
               <div className="col px-1 form_group mb-3">
                 <p className="input_label">Filter by Applicant/Client:</p>
-                <select
-                  name="userId"
-                  value={userId + "," + userType}
-                  id="userId"
+                <SelectBox options={employeeList ? employeeList.map((option) => ({
+                  value: option.employee_id
+                    ? `${option.employee_id},employee`
+                    : option.company_id
+                      ? `${option.company_id},employer`
+                      : `${option.id},applicant_type`,
+                  label: option.employee_id
+                    ? (option.name + " (Candidate)")
+                    : option.company_id
+                      ? option.company_name + " (Client)"
+                      : option.title + " (Applicant Type)" ||
+                      "unknown user",
+                })) : []}
+                  selectedValue={userId + "," + userType}
                   onChange={(e) => {
-                    // console.log(e.target.value.split(",")[0])
-                    setUserId(e.target.value.split(",")[0]);
-                    setUserType(e.target.value.split(",")[1]);
+                    setUserId(e ? e.value.split(",")[0] : null);
+                    setUserType(e ? e.value.split(",")[1] : null);
                     setAdminPage(1);
                     setTaskPage(1);
                     setReplyId("")
                     setTaskId("")
                   }}
-                  disabled={userType === "applicant_type"}
-                  className="form-control bg-white dashboard_select rounded-3"
-                >
-                  <option value={""}>Select Applicant/Client</option>
-                  {(employeeList || []).map((item, index) => {
-                    return (
-                      <option
-                        className="text-capitalize"
-                        key={index}
-                        value={
-                          item.employee_id
-                            ? `${item.employee_id},employee`
-                            : item.company_id
-                              ? `${item.company_id},employer`
-                              : `${item.id},applicant_type`
-                        }
-                      >
-                        {item.employee_id
-                          ? (item.name + " (Candidate)")
-                          : item.company_id
-                            ? item.company_name + " (Client)"
-                            : item.title + " (Applicant Type)" ||
-                            "unknown user"}
-                      </option>
-                    );
-                  })}{" "}
-                </select>
-                {/* <small className="text-danger">{searcherror}</small> */}
+                  type={"user"}
+                />
               </div>
               <div className="col px-1 form_group mb-3">
                 <p className="input_label">Filter by Applicant Type:</p>
-                <select
-                  name="applicantType"
-                  value={userId + "," + userType}
-                  id="applicantType"
+                <SelectBox options={applicantTypeList ? applicantTypeList.map((option) => ({
+                  value: `${option.id},applicant_type`,
+                  label: option.title,
+                })) : []}
+                  selectedValue={userId + "," + userType}
                   onChange={(e) => {
-                    setUserId(e.target.value.split(",")[0]);
-                    setUserType(e.target.value.split(",")[1]);
+                    setUserId(e ? e.value.split(",")[0] : null);
+                    setUserType(e ? e.value.split(",")[1] : null);
                     setAdminPage(1);
                     setTaskPage(1);
                     setReplyId("")
                     setTaskId("")
                   }}
-                  disabled={userType === "employee" || userType === "employer"}
-                  className="form-control bg-white dashboard_select rounded-3"
-                >
-                  <option value={""}>Select Applicant type</option>
-                  {(applicantTypeList || []).map((item, index) => {
-                    return (
-                      <option
-                        className="text-capitalize"
-                        key={index}
-                        value={
-                          `${item.id},applicant_type`
-                        }
-                      >
-                        {item.title}
-                      </option>
-                    );
-                  })}{" "}
-                </select>              </div>
+                  type={"applicantType"}
+                />  </div>
               <div className="col px-1 form_group mb-3">
                 <p className="input_label">Filter by Status:</p>
-                <select
-                  name="status"
-                  value={status}
-                  id="status"
+                <SelectBox options={statusList ? statusList.map((option) => ({
+                  value: `${option.id}`,
+                  label: option.value,
+                })) : []}
+                  selectedValue={status}
                   onChange={(e) => {
-                    // console.log(e.target.value.split(",")[0])
-                    setStatus(e.target.value.split(",")[0]);
+                    setStatus(e ? e.value.split(",")[0] : null);
                     setAdminPage(1);
                     setTaskPage(1);
                     setReplyId("")
                     setTaskId("")
                   }}
-                  className="form-control bg-white dashboard_select rounded-3"
-                >
-                  <option value={"-1"}>Select status</option>
-                  {(statusList || []).map((item, index) => {
-                    return (
-                      <option value={item.id} key={index}>
-                        {item.value}</option>
-                    )
-                  })}
-
-                </select>
+                  type={"status"}
+                />
               </div>
               <div className="col px-1 form_group mt-7 ">
                 <CustomButton

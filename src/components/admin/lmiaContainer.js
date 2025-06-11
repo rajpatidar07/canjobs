@@ -9,6 +9,7 @@ import FilterJson from "../json/filterjson";
 import JobTable from "../common/jobTable";
 import EmployeeHeader from "../common/header";
 import EmployeeFooter from "../common/footer";
+import SelectBox from "../common/Common function/SelectBox";
 function LimaContainer(props) {
   /*show Modal and props state */
   let [apiCall, setApiCall] = useState(false);
@@ -92,9 +93,9 @@ function LimaContainer(props) {
   const Skill =
     Json && Json.Skill
       ? Json.Skill.filter(
-          (thing, index, self) =>
-            index === self.findIndex((t) => t.value === thing.value)
-        )
+        (thing, index, self) =>
+          index === self.findIndex((t) => t.value === thing.value)
+      )
       : [];
   return (
     <>
@@ -173,96 +174,67 @@ function LimaContainer(props) {
                     <div className="col p-1 form_group mb-3">
                       <p className="input_label">Filter by Job Category:</p>
                       <div className="select_div">
-                        <select
-                          name="country"
-                          id="country"
-                          value={categoryFilterValue}
+                        <SelectBox options={Json && Json?.Category ? Json?.Category.map((option) => ({
+                          value: option.value,
+                          label: option.value,
+                        })) : []}
+                          selectedValue={categoryFilterValue}
                           onChange={(e) => {
-                            setCategoryFilterValue(e.target.value);
+                            setCategoryFilterValue(e ? e.value : null);
                             setpageNo(1);
                           }}
-                          className="text-capitalize form-control"
-                        >
-                          <option value="">Job Category</option>
-                          {Json &&
-                            (Json.Category || []).map((data, i) => {
-                              return (
-                                <option value={data.id} key={i}>
-                                  {data.value}
-                                </option>
-                              );
-                            })}
-                        </select>
+                          type={"category"}
+                        />
                       </div>
                     </div>
                     <div className="col p-1 form_group mb-3">
                       <p className="input_label">Filter by Job Type:</p>
                       <div className="select_div">
-                        <select
-                          name="country"
-                          id="country"
-                          value={jobSwapFilterValue}
+                        <SelectBox options={(FilterJson.job_type.map((option) => ({
+                          value: option,
+                          label: option,
+                        })) || [])}
+                          selectedValue={jobSwapFilterValue}
                           onChange={(e) => {
-                            setJobSwapFilterValue(e.target.value);
+                            console.log(e)
+                            setJobSwapFilterValue(e ? e.value : null);
                             setpageNo(1);
                           }}
-                          className="text-capitalize form-control"
-                        >
-                          <option value="">Job Type</option>
-                          {(FilterJson.job_type || []).map((job, i) => (
-                            <option key={i} value={job}>
-                              {job}
-                            </option>
-                          ))}
-                        </select>
+                          type={"job_type"}
+                        />
+
                       </div>
                     </div>
                     <div className="col p-1 form_group mb-3">
                       <p className="input_label">Filter by Job Skill:</p>
                       <div className="select_div">
-                        <select
-                          name="country"
-                          id="country"
-                          value={SkillFilterValue}
+                        <SelectBox options={(Skill.map((option) => ({
+                          value: option.value,
+                          label: option.value,
+                        })) || [])}
+                          selectedValue={SkillFilterValue}
                           onChange={(e) => {
-                            setSkillFilterValue(e.target.value);
+                            setSkillFilterValue(e ? e.value : null);
                             setpageNo(1);
                           }}
-                          className="text-capitalize form-control"
-                        >
-                          <option value="">Job Skill</option>
-                          {(Skill || []).map((data, i) => {
-                            return (
-                              <option value={data.value} key={i}>
-                                {data.value}
-                              </option>
-                            );
-                          })}
-                        </select>
+                          type={"skill"}
+                        />
                       </div>
                     </div>
                     <div className="col p-1 form_group mb-3">
                       <p className="input_label">Filter by Job Location:</p>
                       <div className="select_div">
-                        <select
-                          name="country"
-                          id="country"
-                          value={locationFilterValue}
+                        <SelectBox options={(FilterJson.location.map((option) => ({
+                          value: option.country,
+                          label: option.country,
+                        })) || [])}
+                          selectedValue={locationFilterValue}
                           onChange={(e) => {
-                            setLocationFilterValue(e.target.value);
+                            setLocationFilterValue(e ? e.value : null);
                             setpageNo(1);
                           }}
-                          className="text-capitalize form-control"
-                        >
-                          <option value="">Job Location</option>
-                          {(FilterJson.location || []).map((data, i) => {
-                            return (
-                              <option value={data.country} key={i}>
-                                {data.country}
-                              </option>
-                            );
-                          })}
-                        </select>
+                          type={"location"}
+                        />
                       </div>
                     </div>
                   </div>

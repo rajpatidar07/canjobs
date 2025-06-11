@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import AdminHeader from "./header";
-// import AdminSidebar from "./sidebar";
 import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
 import EmployerProfile from "../company/profile";
@@ -8,6 +6,8 @@ import CompanyDetails from "../forms/employer/companyDetail";
 import EmployerTable from "../common/employerTable";
 import { GetFilter } from "../../api/api";
 import CommonThreeDots from "../common/commonThreeDots";
+import SelectBox from "../common/Common function/SelectBox";
+
 function Employer() {
   /*show modal and data, id state */
   let [apiCall, setApiCall] = useState(false);
@@ -69,18 +69,25 @@ function Employer() {
   /*Corporation Json for not having same data */
   const Corporation =
     Json && Json.Corporation
-      ? Json.Corporation.filter(
-          (thing, index, self) =>
-            index === self.findIndex((t) => t.value === thing.value)
-        )
+      ?
+      Json.Corporation.filter(
+        (thing, index, self) =>
+          index === self.findIndex((t) => t.value === thing.value)
+      ).map((option) => ({
+        value: option.value,
+        label: option.value,
+      }))
       : [];
   /*Industry Json for not having same data */
   const Industry =
     Json && Json.Industry
       ? Json.Industry.filter(
-          (thing, index, self) =>
-            index === self.findIndex((t) => t.value === thing.value)
-        )
+        (thing, index, self) =>
+          index === self.findIndex((t) => t.value === thing.value)
+      ).map((option) => ({
+        value: option.value,
+        label: option.value,
+      }))
       : [];
 
   return (
@@ -133,45 +140,43 @@ function Employer() {
                   <div className="col p-1 form_group mb-3">
                     <p className="input_label">Filter by Corporation:</p>
                     <div className="select_div">
-                      <select
-                        name="corporation"
-                        value={corporationFilterValue}
-                        id="corporation"
+                      <SelectBox options={Corporation}
+                        selectedValue={corporationFilterValue}
                         onChange={(e) => {
-                          setcorporationFilterValue(e.target.value);
-                          setpageNo(1);
+                          setcorporationFilterValue(e ? e.value : null)
+                          setpageNo(1)
                         }}
-                        className="text-capitalize nice-select pl-7 h-100 arrow-3 arrow-3-black form-control text-black-2 w-100"
-                      >
-                        <option value={""}>Client Corporation</option>
-                        {(Corporation || []).map((corporation, i) => (
-                          <option key={i} value={corporation.value}>
-                            {corporation.value}
-                          </option>
-                        ))}
-                      </select>
+                        type={"corporation"}
+                      />
                     </div>
                   </div>
                   <div className="col p-1 form_group mb-3">
                     <p className="input_label">Filter by Industry:</p>
                     <div className="select_div">
-                      <select
-                        name="industry"
-                        value={industryFilterValue}
-                        id="industry"
+                      <SelectBox options={Industry}
+                        selectedValue={industryFilterValue}
                         onChange={(e) => {
-                          setIndutryFilterValue(e.target.value);
-                          setpageNo(1);
+                          setIndutryFilterValue(e ? e.value : null)
+                          setpageNo(1)
                         }}
-                        className="text-capitalize nice-select pl-7 h-100 arrow-3 arrow-3-black form-control text-black-2 w-100"
+                        type={"industry"}
+                      />
+                    </div>
+                  </div>
+                  <div className="col p-1 d-flex justify-content-evenly ">
+                    <div className=" w-100 form_group mt-3 text-right">
+                      <CustomButton
+                        style={{ height: "32px" }}
+                        className="font-size-3 btn-block rounded-3 btn btn-primary border-0"
+                        onClick={() => {
+                          setpageNo(1)
+                          setIndutryFilterValue(null)
+                          setcorporationFilterValue(null)
+                          setSearch("")
+                        }}
                       >
-                        <option value={""}>Client Industry</option>
-                        {(Industry || []).map((industry, i) => (
-                          <option key={i} value={industry.value}>
-                            {industry.value}
-                          </option>
-                        ))}
-                      </select>
+                        Reset
+                      </CustomButton>
                     </div>
                   </div>
                   <div className="col p-1 d-flex justify-content-evenly ">

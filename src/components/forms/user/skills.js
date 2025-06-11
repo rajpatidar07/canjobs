@@ -8,7 +8,6 @@ import {
   GetFilter,
 } from "../../../api/api";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 import SAlert from "../../common/sweetAlert";
 import Select from "react-select";
