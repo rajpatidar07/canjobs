@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { IoMdClose } from "react-icons/io";
 import { ADocAnnotation, UpdateDocuentcommentAssign } from "../../../api/api";
 import { toast } from "react-toastify";
+import SelectBox from "../Common function/SelectBox";
 const MentionAdminInDoc = ({
   adminList,
   commentsList,
@@ -258,7 +259,7 @@ const MentionAdminInDoc = ({
               ))}
             </div>
           </div>
-          <select
+          {/* <select
             multiple
             className="form-control"
             onChange={(e) => handleUserSelect(e.target.value)}
@@ -277,7 +278,16 @@ const MentionAdminInDoc = ({
                 {user.name}
               </option>
             ))}
-          </select>
+          </select> */}
+           <SelectBox
+                            options={adminList.map((option) => ({
+                              value: option.admin_id,
+                              label: option.name
+                            }))}
+                            type={"admin"}
+                            selectedValue={""}
+                            onChange={(e) => handleUserSelect( e ? e.value : "")}
+                          />
           <div className="d-flex justify-content-center p-1">
             <button
               onClick={() => OnMentionAdmin()}

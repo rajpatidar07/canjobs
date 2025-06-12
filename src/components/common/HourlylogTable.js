@@ -14,6 +14,7 @@ import { Link, useLocation } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
 import SAlert from "./sweetAlert";
 import UserAvatar from "./UserAvtar";
+import SelectBox from "./Common function/SelectBox";
 
 function Hourlylogtable(props) {
     const location = useLocation();
@@ -239,7 +240,7 @@ function Hourlylogtable(props) {
         if (e && e.preventDefault) {
             e.preventDefault();
         }
-        const data = { id, [field]: e.target.value };
+        const data = { id, [field]: field === "hour_log_of_admin" ? (e ? e.value : null) : e.target.value };
         return AddHourLog(e, data);
     };
     const AddHourLog = async (newValue, data) => {
@@ -380,12 +381,19 @@ function Hourlylogtable(props) {
                                                     )}
                                                 </td>
                                                 <td style={{ minWidth: "150px" }}>
-                                                    <select className="form-control" value={state.hour_log_of_admin} onChange={onInputChange} id="hour_log_of_admin" name="hour_log_of_admin">
-                                                        <option>Select person</option>
-                                                        {(props.adminList || []).map((item, index) => (
-                                                            <option value={item.admin_id} key={index}>{item.name}</option>
-                                                        ))}
-                                                    </select>
+                                                    <SelectBox options={(props.adminList.map((option) => ({
+                                                        value: option.admin_id,
+                                                        label: option.name,
+                                                    })) || [])}
+                                                        selectedValue={state.hour_log_of_admin}
+                                                        onChange={(e) => {
+                                                            setState((prev) => ({
+                                                                ...prev,
+                                                                hour_log_of_admin: e ? e.value : null
+                                                            }));
+                                                        }}
+                                                        type={"hour_log_of_admin"}
+                                                    />
                                                     {errors.hour_log_of_admin && (
                                                         <span key={errors.hour_log_of_admin} className="text-danger font-size-3">
                                                             {errors.hour_log_of_admin}
@@ -546,21 +554,16 @@ function Hourlylogtable(props) {
                                                                     {/* Hour Log of Admin (Manager) */}
                                                                     <td style={{ minWidth: "150px" }}>
                                                                         {editRowId === item.hour_log_of_admin ? (
-                                                                            <select
-                                                                                className="form-control"
-                                                                                value={item.hour_log_of_admin}
-                                                                                onChange={(e) =>
-                                                                                    handleUpdateChange(e, item.id, "hour_log_of_admin")}
-                                                                                onBlur={() => setEditRowId(null)}
-                                                                                autoFocus
-                                                                            >
-                                                                                <option value="">Select person</option>
-                                                                                {(props.adminList || []).map((admin, idx) => (
-                                                                                    <option value={admin.admin_id} key={idx}>
-                                                                                        {admin.name}
-                                                                                    </option>
-                                                                                ))}
-                                                                            </select>
+                                                                            <SelectBox options={(props.adminList.map((option) => ({
+                                                                                value: option.admin_id,
+                                                                                label: option.name,
+                                                                            })) || [])}
+                                                                                selectedValue={item.hour_log_of_admin}
+                                                                                onChange={(e) => {
+                                                                                    handleUpdateChange(e, item.id, "hour_log_of_admin")
+                                                                                }}
+                                                                                type={"hour_log_of_admin"}
+                                                                            />
                                                                         ) : (
                                                                             item.hour_log_of_admin ? (
                                                                                 <div onClick={() => setEditRowId(item.hour_log_of_admin)} style={{ cursor: "pointer" }}>

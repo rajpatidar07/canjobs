@@ -4,6 +4,7 @@ import useValidation from "../../common/useValidation";
 import { AddJobCategory, getAllJobsCategory } from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import SelectBox from "../../common/Common function/SelectBox";
 
 function AddCategory(props) {
   const [catType, setCatType] = useState([]);
@@ -31,12 +32,12 @@ function AddCategory(props) {
         value === "" || value.trim() === ""
           ? "Category Name  is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Category Name can not have a number."
-          : value.length < 2
-          ? "Category Name should have 2 or more letters"
-          : "",
+            ? "Cannot use special character "
+            : /[-]?\d+(\.\d+)?/.test(value)
+              ? "Category Name can not have a number."
+              : value.length < 2
+                ? "Category Name should have 2 or more letters"
+                : "",
     ],
     // category_type: [
     //   (value) =>
@@ -56,7 +57,7 @@ function AddCategory(props) {
       (data) => data.job_category_id === value
     )
       ? CategoryType.find((data) => data.job_category_id === value)
-          .category_type
+        .category_type
       : "";
     setState({
       category_type: category_type,
@@ -82,7 +83,7 @@ function AddCategory(props) {
   };
   useEffect(() => {
     CatData();
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [props]);
 
   // USER CATEGORY SUBMIT BUTTON
@@ -158,29 +159,25 @@ function AddCategory(props) {
               >
                 Category Type <span className="text-danger">*</span> :
               </label>
-              <select
-                name="category_type"
-                className={
-                  errors.category_type
-                    ? "form-control mx-6 border border-danger"
-                    : "form-control mx-6"
-                }
-                value={state.parent_id}
-                onChange={onSelectChange}
-                id="category_type"
-              >
-                <option>Select category</option>
-                {(catType || []).map((data) => {
-                  return data.parent_id === "0" ? (
-                    <option
-                      value={data.job_category_id}
-                      key={data.job_category_id}
-                    >
-                      {data.category_type}
-                    </option>
-                  ) : null;
-                })}
-              </select>
+              <SelectBox
+                options={(catType || [])
+                  .filter((data) => data.parent_id === "0")
+                  .map((data) => ({
+                    value: data.job_category_id,
+                    label: data.category_type,
+                  }))}
+                type="category_type"
+                selectedValue={state.parent_id}
+                onChange={(e) => {
+                  onSelectChange({
+                    target: {
+                      name: "category_type",
+                      value: e ? e.value : "",
+                    },
+                  });
+                }}
+              />
+
             </div>
             {/*----ERROR MESSAGE FOR CATEGORY TYPE----*/}
             {errors.category_type && (

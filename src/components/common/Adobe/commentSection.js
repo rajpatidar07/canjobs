@@ -18,6 +18,7 @@ import { IoIosCheckmarkCircle } from "react-icons/io";
 import determineBackgroundColor from "../Common function/DetermineBackgroundColour";
 import ViewAdminBox from "../ViewAdminBox";
 import MarkReadTask from "../Common function/MarkReadTask";
+import SelectBox from "../Common function/SelectBox";
 export default function CommentSection({
   commentsList,
   docData,
@@ -996,7 +997,7 @@ export default function CommentSection({
             <div className="col mr-2 p-0 form_group">
               {/* <p className="input_label ">Filter by Admin:</p> */}
               <div className="select_div">
-                <select
+                {/* <select
                   name="admin"
                   id="admin"
                   // value={adminid}
@@ -1015,7 +1016,16 @@ export default function CommentSection({
                       </option>
                     );
                   })}
-                </select>
+                </select> */}
+                <SelectBox
+                  options={allAdmin.map((option) => ({
+                    value: option.admin_id,
+                    label: option.name
+                  }))}
+                  type={"country"}
+                  selectedValue={""}
+                  onChange={(e) => Getcomments("", e ? e.value : "")}
+                />
               </div>
             </div>
             <div className="col ml-2 p-0 form_group">

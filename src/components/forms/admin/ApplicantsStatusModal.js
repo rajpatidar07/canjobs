@@ -3,6 +3,7 @@ import { Modal } from "react-bootstrap";
 import FilterJson from "../../json/filterjson";
 import { AddEmployeeDetails, AddUpdateVisa } from "../../../api/api";
 import { toast } from "react-toastify";
+import SelectBox from "../../common/Common function/SelectBox";
 export default function ApplicantsStatusModal(props) {
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
@@ -92,31 +93,16 @@ export default function ApplicantsStatusModal(props) {
             >
               Status <span className="text-danger">*</span> :
             </label>
-            <select
-              value={status || props.data.status}
-              onChange={(e) => {
-                setStatus(e.target.value);
-              }}
-              className={
-                // !isTimeWithin24Hours(empdata.created_at) && empdata.status === "1" ? "bg-danger form-control text-white" :
-                "text-capitalize form-control"
-              }
-            >
-              {/* <option value={""}>Select Applicants status</option>
-              {
-              props.self === "yes" ? (
-                <option value={1}>Approve</option>
-              ) : (
-                
-              )} */}
-              {(FilterJson.employee_status || []).map((item, index) => {
-                return (
-                  <option value={index + 1} key={index}>
-                    {item}
-                  </option>
-                );
-              })}
-            </select>
+            <SelectBox
+              options={(FilterJson.employee_status || []).map((item, index) => ({
+                value: String(index + 1),
+                label: item,
+              }))}
+              type="status"
+              selectedValue={status || props.data.status}
+              onChange={(e) => setStatus(e ? e.value : "")}
+            />
+
           </div>
           <div className="form-group text-center d-flex justify-content-center">
             {loading === true ? (

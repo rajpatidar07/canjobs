@@ -10,6 +10,7 @@ import ApplicantTypeDocuments from "./ApplicantTypeDocuments";
 import ModalSidebar from "./modalSidebar";
 import CommentTaskBox from "./commonTaskBox";
 import CommonThreeDots from "./commonThreeDots";
+import SelectBox from "./Common function/SelectBox";
 
 export default function CommonApplicatTypePage() {
   const location = useLocation();
@@ -165,7 +166,7 @@ export default function CommonApplicatTypePage() {
 
   // Handle changes in main or sub types
   const onInputChange = (e) => {
-    const selectedValue = e.target.value;
+    const selectedValue = e ? e.value : null;
     setApplicantTypeIdForApi(selectedValue)
     // eslint-disable-next-line eqeqeq
     const selectedItem = applicantTypeList.find(item => item.id == selectedValue);
@@ -206,20 +207,16 @@ export default function CommonApplicatTypePage() {
                 <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
                   Applicant's Type:
                 </label>
-                <select
-                  className={`form-control`}
-                  value={main}
-                  onChange={onInputChange}
-                >
-                  <option value="">Select Main Type</option>
-                  {applicantTypeList
-                    .filter(item => item.level === "0")
-                    .map(item => (
-                      <option key={item.id} value={item.id}>
-                        {item.title}
-                      </option>
-                    ))}
-                </select>
+                <SelectBox options={(applicantTypeList.map((option) => ({
+                  value: option.id,
+                  label: option.title,
+                })) || [])}
+                  selectedValue={main}
+                  onChange={(e) => {
+                    onInputChange(e) 
+                  }}
+                  type={"main"}
+                />
               </div>
               {/* SUB TYPE */}
               {main && applicantTypeList.some(item => item.level === "1" && item.parent_id === main) && (
@@ -227,20 +224,18 @@ export default function CommonApplicatTypePage() {
                   <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
                     Sub Type:
                   </label>
-                  <select
-                    className={`form-control`}
-                    value={sub}
-                    onChange={onInputChange}
-                  >
-                    <option value="">Select Sub Type</option>
-                    {applicantTypeList
-                      .filter(item => item.level === "1" && item.parent_id === main)
-                      .map(item => (
-                        <option key={item.id} value={item.id}>
-                          {item.title}
-                        </option>
-                      ))}
-                  </select>
+                  <SelectBox options={(applicantTypeList
+                    .filter(item => item.level === "1" && item.parent_id === main)
+                    .map((option) => ({
+                      value: option.id,
+                      label: option.title,
+                    })) || [])}
+                    selectedValue={sub}
+                    onChange={(e) => {
+                      onInputChange(e)
+                    }}
+                    type={"sub"}
+                  />
                 </div>
               )}
 

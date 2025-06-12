@@ -5,6 +5,7 @@ import CommentReplyBox from "./CommentReplyBox";
 import ConvertTime from "./Common function/ConvertTime";
 import determineBackgroundColor from "./Common function/DetermineBackgroundColour";
 import MarkReadTask from "./Common function/MarkReadTask";
+import SelectBox from "./Common function/SelectBox";
 export default function CommentBox({
   commentsReplyList,
   setAddCommentFlag,
@@ -42,26 +43,18 @@ export default function CommentBox({
           <div className={"col mr-2 p-0 form_group"}>
             <p className="input_label">Filter by Admin:</p>
             <div className="select_div">
-              <select
-                name="admin"
-                value={adminid}
-                id="admin"
+              <SelectBox options={(allAdmin.map((option) => ({
+                value: option.admin_id,
+                label: option.name,
+              })) || [])}
+                selectedValue={adminid}
                 onChange={(e) => {
-                  setAdminId(e.target.value);
+                  setAdminId(e ? e.value : null);
                   setAddCommentFlag(false);
                   setFilteredEmails([]);
                 }}
-                className="text-capitalize form-control"
-              >
-                <option value={""}>Select Admin</option>
-                {(allAdmin || []).map((data, index) => {
-                  return (
-                    <option value={data.admin_id} key={index}>
-                      {data.name}
-                    </option>
-                  );
-                })}
-              </select>
+                type={"admin_id"}
+              />
             </div>
           </div>
           <div className={"col ml-2 p-0 form_group"}>
@@ -96,15 +89,15 @@ export default function CommentBox({
                 className={`card col-12 mb-3 p-0 comment_box_card ${
                   //Condition fot imm pdf doc file
                   docTypData &&
-                  docTypData.document_name &&
-                  docTypData.document_name.toLowerCase().includes("imm")
+                    docTypData.document_name &&
+                    docTypData.document_name.toLowerCase().includes("imm")
                     ? null
                     : selectedAnnotation &&
                       selectedAnnotation.x_axis === commentItem.x_axis &&
                       selectedAnnotation.y_axis === commentItem.y_axis
-                    ? "highlighted-comment"
-                    : ""
-                }`}
+                      ? "highlighted-comment"
+                      : ""
+                  }`}
                 style={{
                   backgroundColor: "#fafafa",
                   color: "white",
@@ -118,9 +111,9 @@ export default function CommentBox({
                       docTypData.document_name.toLowerCase().includes("imm")
                       ? null
                       : {
-                          x_axis: commentItem.x_axis,
-                          y_axis: commentItem.y_axis,
-                        }
+                        x_axis: commentItem.x_axis,
+                        y_axis: commentItem.y_axis,
+                      }
                   );
                   setAddCommentFlag();
                   setFilteredEmails([]);
@@ -156,17 +149,17 @@ export default function CommentBox({
                         >
                           {commentItem.task_creator_user_id
                             ? allAdmin.find(
-                                (item) =>
-                                  item.admin_id ===
-                                  commentItem.task_creator_user_id
-                              )
+                              (item) =>
+                                item.admin_id ===
+                                commentItem.task_creator_user_id
+                            )
                               ? allAdmin
-                                  .find(
-                                    (item) =>
-                                      item.admin_id ===
-                                      commentItem.task_creator_user_id
-                                  )
-                                  .name.charAt(0)
+                                .find(
+                                  (item) =>
+                                    item.admin_id ===
+                                    commentItem.task_creator_user_id
+                                )
+                                .name.charAt(0)
                               : ""
                             : ""}
                         </div>
@@ -175,20 +168,20 @@ export default function CommentBox({
                         <div className="font-size-3 font-weight-bold text-capitalize">
                           {commentItem.task_creator_user_id
                             ? allAdmin.find(
+                              (item) =>
+                                item.admin_id ===
+                                commentItem.task_creator_user_id
+                            )
+                              ? allAdmin.find(
                                 (item) =>
                                   item.admin_id ===
                                   commentItem.task_creator_user_id
-                              )
-                              ? allAdmin.find(
-                                  (item) =>
-                                    item.admin_id ===
-                                    commentItem.task_creator_user_id
-                                ).name
+                              ).name
                               : ""
                             : ""}
                         </div>
                         <div className="text-gray font-size-2 font-weight-normal m-0 text-capitalize">
-                        <ConvertTime _date={commentItem.created_on} format={"HH:mm D MMM"} />
+                          <ConvertTime _date={commentItem.created_on} format={"HH:mm D MMM"} />
                           {/* {moment(commentItem.created_on).format("HH:mm D MMM")} */}
                         </div>
                       </div>

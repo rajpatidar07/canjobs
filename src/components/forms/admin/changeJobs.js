@@ -7,6 +7,7 @@ import { GetAllJobs, ApplyJob } from "../../../api/api";
 // import SelectBox from "../../common/select";
 // import { Select, Button } from "antd"; // "3.26.7" worked
 import Select from "react-select";
+import SelectBox from "../../common/Common function/SelectBox";
 function ChangeJob(props) {
   let [apiCall, setApiCall] = useState(props.apiCall);
   let [loading, setLoading] = useState(false);
@@ -135,6 +136,13 @@ function ChangeJob(props) {
                   }),
                 }}
               />
+              <SelectBox
+                options={state || []}
+                selectedValue={""}
+                onChange={onSelectChange}
+                type="job_id"
+              />
+
               <small className="text-danger">{alredyApplied}</small>
             </div>
             <div className="form-group text-center">

@@ -13,6 +13,7 @@ import ModalSidebar from "./modalSidebar";
 import { Link, useLocation } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
 import SAlert from "./sweetAlert";
+import SelectBox from "./Common function/SelectBox";
 
 function Calllogtable(props) {
     const location = useLocation();
@@ -105,7 +106,9 @@ function Calllogtable(props) {
         }
         let data = {
             id: id,
-            [field]: e.target.value,
+            [field]: field === "call_ans_by"
+                ? (e ? e.value : null)
+                : e.target.value,
         };
         return AddCallLog(e, data);
     };
@@ -226,7 +229,7 @@ function Calllogtable(props) {
                 >
                     <div
                         className="datatable_div  pt-7 rounded pb-8 px-2"
-                        style={{ overflowX: "auto", overflowY: "scroll",height:"60vh" }}
+                        style={{ overflowX: "auto", overflowY: "scroll", height: "60vh" }}
                         ref={tableContainerRef}
                     >
                         <form className="table-responsive main_table_div">
@@ -327,12 +330,16 @@ function Calllogtable(props) {
                                                     </td>
 
                                                     <td style={{ minWidth: "150px" }}>
-                                                        <select className="form-control" value={state.call_ans_by} onChange={onInputChange} id="call_ans_by" name="call_ans_by">
-                                                            <option>Select Admin</option>
-                                                            {(props.adminList || []).map((item, index) => (
-                                                                <option value={item.admin_id} key={index}>{item.name}</option>
-                                                            ))}
-                                                        </select>
+                                                        <SelectBox options={(props.adminList.map((option) => ({
+                                                            value: option.admin_id,
+                                                            label: option.name,
+                                                        })) || [])}
+                                                            selectedValue={state.call_ans_by}
+                                                            onChange={(e) => {
+                                                                setState({ ...state, call_ans_by: e ? e.value : null });
+                                                            }}
+                                                            type={"call_ans_by"}
+                                                        />
                                                     </td>
 
                                                     <td style={{ minWidth: "150px" }}>
@@ -492,20 +499,16 @@ function Calllogtable(props) {
 
                                                         {/* Call Answered By */}
                                                         <td style={{ minWidth: "150px" }}>
-                                                            <select
-                                                                className="form-control"
-                                                                value={item.call_ans_by}
-                                                                onChange={(e) => handleUpdateChange(e, item.id, "call_ans_by")}
-                                                                name="call_ans_by"
-                                                                id="call_ans_by"
-                                                            >
-                                                                <option value="">Select Admin</option>
-                                                                {(props.adminList || []).map((admin, index) => (
-                                                                    <option value={admin.admin_id} key={index}>
-                                                                        {admin.name}
-                                                                    </option>
-                                                                ))}
-                                                            </select>
+                                                            <SelectBox options={(props.adminList.map((option) => ({
+                                                                value: option.admin_id,
+                                                                label: option.name,
+                                                            })) || [])}
+                                                                selectedValue={item.call_ans_by}
+                                                                onChange={(e) => {
+                                                                    handleUpdateChange(e, item.id, "call_ans_by")
+                                                                }}
+                                                                type={"call_ans_by"}
+                                                            />
                                                         </td>
 
                                                         {/* Phone Number */}

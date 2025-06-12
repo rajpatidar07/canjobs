@@ -18,6 +18,7 @@ import VisaTable from "../common/visaTable";
 import { useLocation } from "react-router-dom";
 import { getApplicanTypeApi, GetEmployeeVisaList } from "../../api/api";
 import CommonThreeDots from "../common/commonThreeDots";
+import SelectBox from "../common/Common function/SelectBox";
 export default function Visa() {
   let location = useLocation();
   /*Show modal states */
@@ -182,49 +183,35 @@ export default function Visa() {
                   <div className="col p-1 form_group mb-3">
                     <p className="input_label">Filter by Visa Country:</p>
                     <div className="select_div">
-                      <select
-                        name="experience"
-                        value={VisaCountryFilter}
-                        id="experience"
+                      <SelectBox options={(FilterJson.location.map((option) => ({
+                        value: option.country,
+                        label: option.country,
+                      })) || [])}
+                        selectedValue={VisaCountryFilter}
                         onChange={(e) => {
-                          setVisaCountryFilter(e.target.value);
-                          setEmpId("");
+                          setVisaCountryFilter(e ? e.value : null);
                           setpageNo(1);
+                          setEmpId("");
                         }}
-                        className="text-capitalize form-control"
-                      >
-                        <option value={""}>Candidate's Country</option>
-                        {(FilterJson.location || []).map((item, i) => (
-                          <option value={item.country} key={i}>
-                            {item.country}
-                          </option>
-                        ))}
-                      </select>
+                        type={"location"}
+                      />
                     </div>
                   </div>
                   <div className="col p-1 form_group mb-3">
                     <p className="input_label">Filter by Visa Status:</p>
                     <div className="select_div">
-                      <select
-                        name="status"
-                        value={VisStatusFilterValue}
-                        id="status"
+                      <SelectBox options={(FilterJson.visa_status.map((option) => ({
+                        value: option,
+                        label: option,
+                      })) || [])}
+                        selectedValue={VisStatusFilterValue}
                         onChange={(e) => {
-                          setVisStatusFilterValue(e.target.value);
-                          setEmpId("");
+                          setVisStatusFilterValue(e ? e.value : null);
                           setpageNo(1);
+                          setEmpId("");
                         }}
-                        className="text-capitalize form-control"
-                      >
-                        <option value={""}>Candidate's visa status </option>
-                        {(FilterJson.visa_status || []).map((item, index) => {
-                          return (
-                            <option value={item} key={index}>
-                              {item}
-                            </option>
-                          );
-                        })}
-                      </select>
+                        type={"status"}
+                      />
                     </div>
                   </div>
                   <div className="col p-1 form_group mb-3">
@@ -252,6 +239,18 @@ export default function Visa() {
                           );
                         })}
                       </select>
+                      <SelectBox options={(applicantTypeList.map((option) => ({
+                        value: option.id,
+                        label: option.title,
+                      })) || [])}
+                        selectedValue={IntrestedFilterValue}
+                        onChange={(e) => {
+                          setIntrestedFilterValue(e ? e.value : null);
+                          setpageNo(1);
+                          setEmpId("");
+                        }}
+                        type={"intrested_in"}
+                      />
                     </div>
                   </div>
                   <div className="mt-4">

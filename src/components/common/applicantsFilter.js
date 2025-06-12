@@ -6,6 +6,7 @@ import {
 } from "../../api/api";
 import { CiSearch } from "react-icons/ci";
 import filterjson from "../json/filterjson";
+import SelectBox from "./Common function/SelectBox";
 
 export default function ApplicantsFilter({
   search,
@@ -268,27 +269,17 @@ export default function ApplicantsFilter({
       >
         <p className="input_label">Filter by Partner</p>
         <div className="select_div">
-          <select
-            name="agent"
-            value={agentFilterValue}
-            id="agent"
+          <SelectBox options={(AgentList.map((option) => ({
+            value: option.id,
+            label: option.name,
+          })) || [])}
+            selectedValue={agentFilterValue}
             onChange={(e) => {
-              setAgentFilterValue(e.target.value);
+              setAgentFilterValue(e ? e.value : null);
               setpageNo(1);
             }}
-            className="text-capitalize form-control"
-          >
-            <option value="" data-display="Product Designer">
-              {portal === "study" ? "Student" : "Candidate"}'s partner
-            </option>
-            {(AgentList || []).map((data) => {
-              return (
-                <option value={data.id} key={data.id}>
-                  {data.name}
-                </option>
-              );
-            })}
-          </select>
+            type={"agent"}
+          />
         </div>
       </div>
       <div
@@ -302,27 +293,17 @@ export default function ApplicantsFilter({
       >
         <p className="input_label">Filter by status</p>
         <div className="select_div">
-          <select
-            name="status"
-            value={statustFilterValue}
-            id="status"
+          <SelectBox options={(filterjson.employee_status.map((option, index) => ({
+            value: index + 1,
+            label: option,
+          })) || [])}
+            selectedValue={statustFilterValue}
             onChange={(e) => {
-              setStatustFilterValue(e.target.value);
+              setStatustFilterValue(e ? e.value : null);
               setpageNo(1);
             }}
-            className="text-capitalize form-control"
-          >
-            <option value="" data-display="Product Designer">
-              Select status{" "}
-            </option>
-            {(filterjson.employee_status || []).map((data, index) => {
-              return (
-                <option value={index + 1} key={index}>
-                  {data}
-                </option>
-              );
-            })}
-          </select>
+            type={"status"}
+          />
         </div>
       </div>
       <div
@@ -334,27 +315,17 @@ export default function ApplicantsFilter({
       >
         <p className="input_label">Filter by Admin:</p>
         <div className="select_div">
-          <select
-            name="admin"
-            value={adminFilterValue}
-            id="admin"
+          <SelectBox options={(AdminList.map((option, index) => ({
+            value: option.admin_id,
+            label: option.name,
+          })) || [])}
+            selectedValue={adminFilterValue}
             onChange={(e) => {
-              setAdminFilterValue(e.target.value);
+              setAdminFilterValue(e ? e.value : null);
               setpageNo(1);
             }}
-            className="text-capitalize form-control"
-          >
-            <option value="" data-display="Product Designer">
-              Admin's {portal === "study" ? "Students" : "Candidates"}
-            </option>
-            {(AdminList || []).map((data) => {
-              return (
-                <option value={data.admin_id} key={data.admin_id}>
-                  {data.name}
-                </option>
-              );
-            })}
-          </select>
+            type={"admin"}
+          />
         </div>
       </div>
       <div
@@ -366,28 +337,17 @@ export default function ApplicantsFilter({
       >
         <p className="input_label">Filter by type:</p>
         <div className="select_div">
-          <select
-            name="interest"
-            value={interestFilterValue}
-            id="interest"
+          <SelectBox options={(applicantTypeList.map((option) => ({
+            value: option.id,
+            label: option.title,
+          })) || [])}
+            selectedValue={interestFilterValue}
             onChange={(e) => {
-              setinterestFilterValue(e.target.value);
+              setinterestFilterValue(e ? e.value : null);
               setpageNo(1);
             }}
-            className={` form-control`}
-          >
-            <option value="" data-display="Product Designer">
-              Candidate's Application type
-            </option>
-            {(
-              applicantTypeList.filter((item) => item.level === (0 || "0")) ||
-              []
-            ).map((interest, index) => (
-              <option key={index} value={interest.id}>
-                {interest.title}
-              </option>
-            ))}
-          </select>
+            type={"interest"}
+          />
         </div>
       </div>
       <div
@@ -432,33 +392,22 @@ export default function ApplicantsFilter({
       >
         <p className="input_label">Filter by Sub Type:</p>
         <div className="select_div">
-          <select
-            name="sub type"
-            value={categoryFilterValue}
-            id="sub type"
+          <SelectBox options={(applicantTypeList
+            .filter((item) =>
+              pageName === "employee"
+                ? item.level === "1"
+                : item.level === "1" && item.parent_id === applicantTypeId
+            ).map((option) => ({
+              value: option.id,
+              label: option.title,
+            })) || [])}
+            selectedValue={categoryFilterValue}
             onChange={(e) => {
-              setCategoryFilterValue(e.target.value);
+              setCategoryFilterValue(e ? e.value : null);
               setpageNo(1);
             }}
-            className="text-capitalize form-control"
-          >
-            <option value={""}>Candidate's sub type</option>
-            {applicantTypeList
-              .filter((item) =>
-                pageName === "employee"
-                  ? item.level === "1"
-                  : item.level === "1" && item.parent_id === applicantTypeId
-              )
-              .map((subType, index) => (
-                <option
-                  key={index}
-                  value={subType.id}
-                  className={`text-capitalize`}
-                >
-                  {subType.title}
-                </option>
-              ))}
-          </select>
+            type={"sub_type"}
+          />
         </div>
       </div>
 

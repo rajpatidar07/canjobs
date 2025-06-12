@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 // import filterjson from "../../json/filterjson";
 import { AddUpdateAgent, GetAgent, getallAdminData } from "../../../api/api";
 import PasswordInput from "../../common/Common function/PasswordInput";
+import SelectBox from "../../common/Common function/SelectBox";
 
 function AddAgent(props) {
   let encoded;
@@ -618,32 +619,17 @@ function AddAgent(props) {
                 >
                   Assigned To: {/* <span className="text-danger">*</span> */}
                 </label>
-                {/* <Select
-                      options={"" || admiinList}
-                      name="assigned_by"
-                      value={state.assigned_by}
-                      id="assigned_by"
-                      onChange={onAdminSelectChange}
-                      className={
-                        errors.assigned_by
-                          ? "form-control border border-danger px-0 pt-4 "
-                          : "form-control px-0 pt-4 border-0"
-                      }
-                    /> */}
-                <select
-                  name="assigned_by"
-                  value={state.assigned_by || ""}
-                  onChange={onInputChange}
-                  className={
-                    errors.assigned_by
-                      ? "form-control text-capitalize border border-danger"
-                      : "form-control text-capitalize"
-                  }
-                  id="assigned_by"
-                >
-                  <option value={""}>Select Admin </option>
-                  {admiinList.map((item, index) => <option value={item.admin_id} key={index}>{item.name} </option>)}
-                </select>
+                <SelectBox
+                                options={admiinList ?
+                                  admiinList.map((option) => ({
+                                    value: option.admin_id,
+                                    label: option.name,
+                                  }))
+                                  : []}
+                                type={"assigned_by"}
+                                selectedValue={state.assigned_by}
+                                onChange={(e) => { setState({ ...state, assigned_by: e ? e.value : "" }) }}
+                              />
                 {/* <span
                       className="btn btn-sm btn-secondary"
                       onClick={() => setShowAdminMOdal(true)}

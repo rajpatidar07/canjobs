@@ -5,6 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Filterbox from "./filterbox";
 import states from "../json/states";
 import { getJson } from "../../api/api";
+import SelectBox from "./Common function/SelectBox";
 function SearchForm({ setSearch, setJobLocation, setCategoryFilterValue }) {
   const location = useLocation();
   const path = location.pathname;
@@ -15,7 +16,7 @@ function SearchForm({ setSearch, setJobLocation, setCategoryFilterValue }) {
   let [Json, setJson] = useState([]);
   let [state, setState] = useState({
     search: search ? search : "",
-    country: "",
+    country: [],
     country_value: country ? country : "",
   });
   /*Function to get the jSon */
@@ -32,7 +33,7 @@ function SearchForm({ setSearch, setJobLocation, setCategoryFilterValue }) {
   const onSelectChange = (option) => {
     setState({
       ...state,
-      country_value: option.target.value,
+      country_value: option.value,
     });
   };
 
@@ -47,7 +48,7 @@ function SearchForm({ setSearch, setJobLocation, setCategoryFilterValue }) {
       ...state,
       country: options,
     });
-   // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [states]);
 
   /*Onclick Function to search */
@@ -115,7 +116,7 @@ function SearchForm({ setSearch, setJobLocation, setCategoryFilterValue }) {
                 <span className="h-100 w-px-50 pos-abs-tl d-flex align-items-center justify-content-center font-size-6">
                   <i className="icon icon-pin-3 text-primary font-weight-bold"></i>
                 </span> */}
-                <select className="form-control" onChange={onSelectChange}>
+                {/* <select className="form-control" onChange={onSelectChange}>
                   <option value="">Select location</option>
                   {(state.country || []).map((item, index) => {
                     return (
@@ -124,7 +125,13 @@ function SearchForm({ setSearch, setJobLocation, setCategoryFilterValue }) {
                       </option>
                     );
                   })}{" "}
-                </select>
+                </select> */}
+                <SelectBox
+                  options={state ? state?.country : []}
+                  type={"country"}
+                  selectedValue={state.country_value}
+                  onChange={onSelectChange}
+                />
               </div>
             )}{" "}
           </div>

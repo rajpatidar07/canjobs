@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { AddSharePointFolders } from "../../../api/api";
 import { Form, Modal, Button } from "react-bootstrap";
+import SelectBox from "../Common function/SelectBox";
 
 export default function AddFolderModal(props) {
   const [state, setState] = useState({
@@ -15,48 +16,48 @@ export default function AddFolderModal(props) {
   const DocTypeData =
     props?.emp_user_type === "employer"
       ? [
-          "Business T2",
-          "Recent PD7A",
-          "Business T4",
-          "Business Incorporation Certificate",
-          "Employment Contract",
-          "Schedule A",
-          "Signed Job Offer",
-          "PD7A of year",
-          "T2 Schedule 100 and 125",
-          "Certificate of incorporation",
-          "Business license",
-          "T4 summary of year",
-          "Request for Exception from English Language Requirement for LMIA Application",
-          "CPA Attestation Letter",
-          "Representative Submission Letter",
-        ]
+        "Business T2",
+        "Recent PD7A",
+        "Business T4",
+        "Business Incorporation Certificate",
+        "Employment Contract",
+        "Schedule A",
+        "Signed Job Offer",
+        "PD7A of year",
+        "T2 Schedule 100 and 125",
+        "Certificate of incorporation",
+        "Business license",
+        "T4 summary of year",
+        "Request for Exception from English Language Requirement for LMIA Application",
+        "CPA Attestation Letter",
+        "Representative Submission Letter",
+      ]
       : [
-          "passport",
-          "drivers_license",
-          "photograph",
-          "immigration_status",
-          "lmia",
-          "job_offer_letter",
-          "provincial_nominee_letter",
-          "proof_of_funds",
-          "proof_of_employment",
-          "marriage_certificate",
-          "education_metric",
-          "education_higher_secondary",
-          "education_graduation",
-          "education_post_graduation",
-          "resume_or_cv",
-          "ielts",
-          "medical",
-          "police_clearance",
-          "refusal_letter",
-          "Employment Contract",
-          "Reference Letters",
-          "Client Info",
-          "Representative Submission Letter",
-          "Bank Statement",
-        ];
+        "passport",
+        "drivers_license",
+        "photograph",
+        "immigration_status",
+        "lmia",
+        "job_offer_letter",
+        "provincial_nominee_letter",
+        "proof_of_funds",
+        "proof_of_employment",
+        "marriage_certificate",
+        "education_metric",
+        "education_higher_secondary",
+        "education_graduation",
+        "education_post_graduation",
+        "resume_or_cv",
+        "ielts",
+        "medical",
+        "police_clearance",
+        "refusal_letter",
+        "Employment Contract",
+        "Reference Letters",
+        "Client Info",
+        "Representative Submission Letter",
+        "Bank Statement",
+      ];
 
   const handleNewTypeChange = (e) => {
     setState((prev) => ({
@@ -112,7 +113,7 @@ export default function AddFolderModal(props) {
           <div className="form-group text-center">
             {state.docTypeName === "other" ? (
               <>
-              <h5 className="text-center mb-7">Create a Folder</h5>
+                <h5 className="text-center mb-7">Create a Folder</h5>
                 <div className="form-group " width="100%">
                   <label className="text-center">
                     Name<span className="text-danger">*</span>
@@ -180,23 +181,22 @@ export default function AddFolderModal(props) {
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown> */}
-                <select
-                  className="form-control"
-                  onChange={(e) => handleDocTypeChange(e.target.value)}
-                >
-                  <option value="">Select Folder Name</option>
-                  {DocTypeData.map((item, index) => (
-                    <option key={index} value={item}>
-                      {item.replaceAll("_", " ")}
-                    </option>
-                  ))}
-                  <option
-                    value="other"
-                    onClick={() => handleDocTypeChange("other")}
-                  >
-                    Other
-                  </option>
-                </select>
+                <SelectBox
+                  options={[
+                    ...DocTypeData.map((option) => ({
+                      value: option,
+                      label: option.replaceAll("_", " ")
+                    })),
+                    {
+                      value: "other",
+                      label: "Other"
+                    }
+                  ]
+                  }
+                  type={"folder"}
+                  selectedValue={""}
+                  onChange={(e) => { handleDocTypeChange(e ? e.value : "") }}
+                />
               </div>
             )}
           </div>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { AddFIlter, ADocAnnotation, getallAdminData, GetFilter, UpdateDocuentcommentAssign } from "../../../api/api";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import SelectBox from "../../common/Common function/SelectBox";
 export default function AddTaskForm(props) {
   const [taskTitle, setTaskTitle] = useState("");
   const [stardivate, setStardivate] = useState(new Date().toISOString().split("T")[0]);
@@ -371,57 +372,51 @@ export default function AddTaskForm(props) {
           >
             Priority
           </label>
-          <select
-            id="Priority"
-            className="form-control"
-            value={selectedPriority}
-            onChange={(e) => setSelectedPriority(e.target.value)}
-          >
-            {(priority || []).map((user) => (
-              <option key={user.id} value={user.id}>
-                {user.value}
-              </option>
-            ))}
-          </select>
+          <SelectBox
+            options={priority ?
+              priority.map((option) => ({
+                value: option.id,
+                label: option.value,
+              }))
+              : []}
+            type={"selectedPriority"}
+            selectedValue={selectedPriority}
+            onChange={(e) => { setSelectedPriority(e ? e.value : "") }}
+          />
         </div>
         <div className="mb-3 form-group col">
           <label
             htmlFor="userId" className="font-size-3 text-black-2  line-height-reset ">Applicant/Applicant Type/Client:</label>
-          <select
-            name="userId"
-            value={userid + "," + selectUserType}
-            id="userId"
+          <SelectBox
+            options={(props.employee_employer_applicantType_list || []).map((item) => {
+              const value = item.employee_id
+                ? `${item.employee_id},employee`
+                : item.company_id
+                  ? `${item.company_id},employer`
+                  : `${item.id},applicant_type`;
+
+              const label = item.employee_id
+                ? `${item.name} (Candidate)`
+                : item.company_id
+                  ? `${item.company_name} (Client)`
+                  : `${item.title} (Applicant Type)` || "Unknown User";
+
+              return { value, label };
+            })}
+            type="userId"
+            selectedValue={`${userid},${selectUserType}`}
             onChange={(e) => {
-              // console.log(e.target.value.split(",")[1])
-              setUserId(e.target.value.split(",")[0]);
-              setSelectUserType(e.target.value.split(",")[1]);
+              if (e) {
+                const [id, type] = e.value.split(",");
+                setUserId(id);
+                setSelectUserType(type);
+              } else {
+                setUserId("");
+                setSelectUserType("");
+              }
             }}
-            className="form-control mt-3"
-          >
-            <option value={""}>Select Applicant/Client</option>
-            {(props.employee_employer_applicantType_list || []).map((item, index) => {
-              return (
-                <option
-                  className="text-capitalize"
-                  key={index}
-                  value={
-                    item.employee_id
-                      ? `${item.employee_id},employee`
-                      : item.company_id
-                        ? `${item.company_id},employer`
-                        : `${item.id},applicant_type`
-                  }
-                >
-                  {item.employee_id
-                    ? (item.name + " (Candidate)")
-                    : item.company_id
-                      ? item.company_name + " (Client)"
-                      : item.title + " (Applicant Type)" ||
-                      "unknown user"}
-                </option>
-              );
-            })}{" "}
-          </select>
+          />
+
         </div>
         <div className="mb-3 form-group col">
           <div className="d-flex flex-column">
@@ -433,20 +428,15 @@ export default function AddTaskForm(props) {
             </label>
             {/* Status Dropdown and Add Button */}
             <div className="d-flex  align-items-center mb-2">
-              <select
-                id="status"
-                className={`form-control text-capitalize ${showStatusInput ? "" : "flex-grow-1 me-2"
-                  }`}
-                value={selectedStatus}
-                onChange={(e) => setSelectedStatus(e.target.value)}
-              >
-                <option value="">Select Status</option>
-                {(status || []).map((user) => (
-                  <option key={user.id} value={user.id}>
-                    {user.value}
-                  </option>
-                ))}
-              </select>
+              <SelectBox
+                options={(status || []).map((user) => ({
+                  value: user.id,
+                  label: user.value,
+                }))}
+                type="status"
+                selectedValue={selectedStatus}
+                onChange={(e) => setSelectedStatus(e ? e.value : "")}
+              />
               {showStatusInput ? (
                 <Link
                   className="btn-sm btn-light rounded-3 p-2"
@@ -513,28 +503,21 @@ export default function AddTaskForm(props) {
           >
             Group by
           </label>
-          <select
-            className={`form-control mb-2 text-capitalize`}
-            onChange={handleGroupSelect}
-            id="group"
-          >
-            <option value="">Select Group</option>
-            {(groupBy || []).map((user) => (
-              <option
-                key={user.id}
-                value={user.id}
-                className={
-                  user.value === "pgwp" ||
-                    user.value === "wes" ||
-                    user.value === "atip"
-                    ? `text-uppercase`
-                    : "text-capitalize"
-                }
-              >
-                {user.value === "pnp" ? "Alberta PNP" : user.value}
-              </option>
-            ))}
-          </select>
+          <SelectBox
+            options={(groupBy || []).map((user) => ({
+              value: user.id,
+              label:
+                user.value === "pnp"
+                  ? "Alberta PNP"
+                  : ["pgwp", "wes", "atip"].includes(user.value)
+                    ? user.value.toUpperCase()
+                    : user.value.charAt(0).toUpperCase() + user.value.slice(1),
+            }))}
+            type="group"
+            selectedValue={""} // Or bind to state if needed
+            onChange={(e) => handleGroupSelect({ target: { value: e ? e.value : "" } })}
+          />
+
           <div className="row m-0 p-0">
             {selectedGroupBy.length === 0
               ? null
@@ -570,20 +553,15 @@ export default function AddTaskForm(props) {
           >
             Admin
           </label>
-          <select
-            id="admin"
-            className="form-control mb-2 text-capitalize"
-            onChange={handleAdminSelect}
-            value=""
-          >
-            <option value="">Select Admin</option>
-            {(AdminList || []).map((user) => (
-              <option key={user.admin_id} value={user.admin_id}>
-                {user.name}
-              </option>
-            ))}
-          </select>
-
+          <SelectBox
+            options={(AdminList || []).map((user) => ({
+              value: user.admin_id,
+              label: user.name,
+            }))}
+            type="admin"
+            selectedValue={""} // Replace with state if needed, e.g. selectedAdmin
+            onChange={(e) => handleAdminSelect({ target: { value: e ? e.value : "" } })}
+          />
           <div className="row m-0 p-0">
             {selectedAdmin.length === 0
               ? null

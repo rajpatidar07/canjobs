@@ -12,6 +12,7 @@ import { getallAdminData } from "../../api/api";
 import Laoder from "../common/loader"
 import MarkReadTask from "./Common function/MarkReadTask";
 import ViewAdminBox from "./ViewAdminBox";
+import SelectBox from "./Common function/SelectBox"
 export default function CommentTaskBox(props) {
     const [commentsLoading, setCommentsLoading] = useState(false);
     const [comments, setComments] = useState("");
@@ -946,24 +947,16 @@ export default function CommentTaskBox(props) {
                     <div className="row m-0 p-0">
                         <div className={props.taskType === "document" ? "col ml-2 p-0 form_group" : "d-none"}>
                             <div className="select_div">
-                                <select
-                                    name="admin"
-                                    id="admin"
+                                <SelectBox options={(adminList.map((option) => ({
+                                    value: option.admin_id,
+                                    label: option.name,
+                                })) || [])}
+                                    selectedValue={""}
                                     onChange={(e) => {
-                                        Getcomments("", e.target.value);
+                                        Getcomments("", e ? e.value : null)
                                     }}
-                                    className="text-capitalize form-control"
-                                    style={{ fontSize: 13 }}
-                                >
-                                    <option value={""}>Filter by Admin</option>
-                                    {(adminList || []).map((data, index) => {
-                                        return (
-                                            <option value={data.admin_id} key={index}>
-                                                {data.name}
-                                            </option>
-                                        );
-                                    })}
-                                </select>
+                                    type={"admin_id"}
+                                />
                             </div>
                         </div>
                         <div className={props.taskType === "document" ? "col ml-2 p-0 form_group" : "d-none"}>

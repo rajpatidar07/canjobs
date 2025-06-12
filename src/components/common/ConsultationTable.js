@@ -14,6 +14,7 @@ import ModalSidebar from "./modalSidebar";
 import { BsChat } from "react-icons/bs";
 import { Pagination } from "react-bootstrap";
 import ViewPdf from "./Retaineragreement/viewPdf";
+import SelectBox from "./Common function/SelectBox";
 
 const initialFormState = {
   applicant_name: "",
@@ -432,53 +433,40 @@ function ConsultationTable(props) {
                           {errors.email && <span className="text-danger font-size-3">{errors.email}</span>}
                         </td>
                         <td style={{ minWidth: "150px" }}>
-                          <select
-                            className="form-control"
-                            value={`${state.manager_id},${state.manager_type}`}
+                          <SelectBox options={(props.adminList
+                            .filter((i) => i.admin_type === "super-admin").map((option) => ({
+                              value: `${option.admin_id},${option.admin_type}`,
+                              label: option.name,
+                            })) || [])}
+                            selectedValue={`${state.manager_id},${state.manager_type}`}
                             onChange={(e) => {
-                              const [id, type] = e.target.value.split(",");
+                              const [id, type] = e ? e.value.split(",") : null;
                               setState((prev) => ({
                                 ...prev,
-                                manager_id: id,
-                                manager_type: type,
+                                manager_id: id || "",
+                                manager_type: type || "",
                               }));
                             }}
-                            id="manager_id"
-                            name="manager_id"
-                          >
-                            <option value="">Select Manger</option>
-                            {props.adminList
-                              .filter((i) => i.admin_type === "super-admin")
-                              .map((item) => (
-                                <option value={`${item.admin_id},${item.admin_type}`} key={item.admin_id}>
-                                  {item.name}
-                                </option>
-                              ))}
-                          </select>
+                            type={"manager_id"}
+                          />
                         </td>
                         <td style={{ minWidth: "150px" }}>
-                          <select
-                            className="form-control"
-                            value={`${state.person_admin_id},${state.person_admin_type}`}
+                          <SelectBox options={(props.adminList
+                            .filter((i) => i.admin_type === "super-admin").map((option) => ({
+                              value: `${option.admin_id},${option.admin_type}`,
+                              label: option.name,
+                            })) || [])}
+                            selectedValue={`${state.person_admin_id},${state.person_admin_type}`}
                             onChange={(e) => {
-                              const [id, type] = e.target.value.split(",");
+                              const [id, type] = e ? e.value.split(",") : null;
                               setState((prev) => ({
                                 ...prev,
-                                person_admin_id: id,
-                                person_admin_type: type,
+                                person_admin_id: id || "",
+                                person_admin_type: type || "",
                               }));
                             }}
-                            id="person_admin_id"
-                            name="person_admin_id"
-                          >
-                            <option value="">Select person</option>
-                            {props.adminList
-                              .map((item) => (
-                                <option value={`${item.admin_id},${item.admin_type}`} key={item.admin_id}>
-                                  {item.name}
-                                </option>
-                              ))}
-                          </select>
+                            type={"person_admin_id"}
+                          />
                         </td>
                         <td>
                           <TableInput
@@ -567,7 +555,7 @@ function ConsultationTable(props) {
                           <label
                             className="mt-5"
                             htmlFor="document"
-                             style={{ cursor: "pointer" }}
+                            style={{ cursor: "pointer" }}
                           >
                             <span className="fas fa-upload text-gray"></span>
                           </label>
@@ -669,33 +657,26 @@ function ConsultationTable(props) {
                           </td>
                           <td style={{ minWidth: "150px" }}>
                             {editField.rowId === item.id && editField.field === "manager" ? (
-                              <select
-                                className="form-control"
-                                value={item.manager_id && item.manager_type
+                              <SelectBox options={(props.adminList
+                                .filter((i) => i.admin_type === "super-admin").map((option) => ({
+                                  value: `${option.admin_id},${option.admin_type}`,
+                                  label: option.name,
+                                })) || [])}
+                                selectedValue={item.manager_id && item.manager_type
                                   ? `${item.manager_id},${item.manager_type}`
                                   : ""}
                                 onChange={(e) => {
-                                  const [id, type] = e.target.value.split(",");
+                                  const [id, type] = e ? e.value.split(",") : null;
                                   const data = {
                                     ...item,
-                                    manager_id: id,
-                                    manager_type: type,
+                                    manager_id: id || "",
+                                    manager_type: type || "",
 
                                   };
                                   handleUpdate(e, data, "manager")
                                 }}
-                                onBlur={() => setEditField({ rowId: null, field: null })}
-                                autoFocus
-                                id="admin_id"
-                                name="admin_id"
-                              >
-                                <option value="">Select Manager</option>
-                                {(props.adminList.filter((i) => i.admin_type === "super-admin") || []).map((admin) => (
-                                  <option value={`${admin.admin_id},${admin.admin_type}`} key={admin.admin_id}>
-                                    {admin.name}
-                                  </option>
-                                ))}
-                              </select>
+                                type={"manager_id"}
+                              />
                             ) : item.manager_id ? (
                               <div
                                 onClick={() => setEditField({ rowId: item.id, field: "manager" })}
@@ -714,33 +695,26 @@ function ConsultationTable(props) {
 
                           <td style={{ minWidth: "150px" }}>
                             {editField.rowId === item.id && editField.field === "person" ? (
-                              <select
-                                className="form-control"
-                                value={item.person_admin_id && item.person_admin_type
+                              <SelectBox options={(props.adminList
+                                .filter((i) => i.admin_type === "super-admin").map((option) => ({
+                                  value: `${option.admin_id},${option.admin_type}`,
+                                  label: option.name,
+                                })) || [])}
+                                selectedValue={item.person_admin_id && item.person_admin_type
                                   ? `${item.person_admin_id},${item.person_admin_type}`
                                   : ""}
                                 onChange={(e) => {
-                                  const [id, type] = e.target.value.split(",");
+                                  const [id, type] = e ? e.value.split(",") : null;
                                   const data = {
                                     ...item,
-                                    person_admin_id: id,
-                                    person_admin_type: type,
+                                    person_admin_id: id || "",
+                                    person_admin_type: type || "",
 
                                   };
                                   handleUpdate(e, data, "person")
                                 }}
-                                onBlur={() => setEditField({ rowId: null, field: null })}
-                                autoFocus
-                                id="person_admin_id"
-                                name="person_admin_id"
-                              >
-                                <option value="">Select person</option>
-                                {(props.adminList || []).map((admin) => (
-                                  <option value={`${admin.admin_id},${admin.admin_type}`} key={admin.admin_id}>
-                                    {admin.name}
-                                  </option>
-                                ))}
-                              </select>
+                                type={"person_admin_id"}
+                              />
                             ) : item.person_admin_id ? (
                               <div
                                 onClick={() => setEditField({ rowId: item.id, field: "person" })}

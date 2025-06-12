@@ -3,6 +3,7 @@ import { AddApplicanTypeApi, getApplicanTypeApi } from "../../../api/api";
 import useValidation from "../../common/useValidation"; // Adjust path if needed
 import { Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
+import SelectBox from "../../common/Common function/SelectBox";
 
 export default function AddApplicantType(props) {
     const [loading, setLoading] = useState(false)
@@ -203,12 +204,17 @@ export default function AddApplicantType(props) {
                             >
                                 Select Applicant Type :
                             </label>
-                            <select name="selectedParent" className="form-control" onChange={handleChange} value={state.selectedParent}>
-                                <option value="">Select Parent</option>
-                                {applicantTypeList?.filter((item) => item.level === (0 || "0")).map((parent) => (
-                                    <option key={parent.id} value={parent.id}>{parent.title}</option>
-                                ))}
-                            </select>
+                            <SelectBox
+                                                            options={applicantTypeList ?
+                                                              applicantTypeList?.filter((item) => item.level === (0 || "0")).map((option) => ({
+                                                                value: option.id,
+                                                                label: option.title,
+                                                              }))
+                                                              : []}
+                                                            type={"selectedParent"}
+                                                            selectedValue={state.selectedParent}
+                                                            onChange={(e) => { setState({ ...state, selectedParent: e ? e.value : "" }) }}
+                                                          />
                         </div>
                         <div classNme="form-group col-12">
                             <label
@@ -244,12 +250,17 @@ export default function AddApplicantType(props) {
                             >
                                 Select Sub Type :
                             </label>
-                            <select name="selectedChild" className="form-control" onChange={handleChange} value={state.selectedChild}>
-                                <option value="">Select Child</option>
-                                {applicantTypeList?.filter((item) => item.parent_id === state.selectedParent).map((child) => (
-                                    <option key={child.id} value={child.id}>{child.title}</option>
-                                ))}
-                            </select>
+                             <SelectBox
+                                                            options={applicantTypeList ?
+                                                              applicantTypeList?.filter((item) => item.parent_id === state.selectedParent).map((option) => ({
+                                                                value: option.id,
+                                                                label: option.title,
+                                                              }))
+                                                              : []}
+                                                            type={"selectedChild"}
+                                                            selectedValue={state.selectedChild}
+                                                            onChange={(e) => { setState({ ...state, selectedChild: e ? e.value : "" }) }}
+                                                          />
                         </div>
                     </div>
                     <div className="form-group text-center">

@@ -7,6 +7,7 @@ import { getJson } from "../../api/api";
 import FilterJson from "../json/filterjson";
 import CustomButton from "../common/button";
 import { Link } from "react-router-dom";
+import SelectBox from "../common/Common function/SelectBox";
 function EmployeeSearch() {
   /*Filter states */
   const [SkillFilterValue, setSkillFilterValue] = useState("");
@@ -56,57 +57,43 @@ function EmployeeSearch() {
             <form className="mb-8" action="/">
               <div className="search-filter from-group row job_search_filter">
                 <div className="col-md-3 col-lg-3 mb-5">
-                  <select
-                    name="skill"
-                    id="skill"
-                    value={SkillFilterValue}
-                    /*Skill Onchange function to filter the data */
-                    onChange={(e) => setSkillFilterValue(e.target.value)}
-                    className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
-                  >
-                    <option value="">Select Skill</option>
-                    {(Json.Skill || []).map((data) => {
-                      return (
-                        <option value={data.value} key={data.id}>
-                          {data.value}
-                        </option>
-                      );
-                    })}
-                  </select>
+                   <SelectBox
+                  options={Json?
+                    Json.Skill.map((option) => ({
+                      value: option.value,
+                      label: option.value,
+                    })):[]
+                  }
+                  type={"skill"}
+                  selectedValue={SkillFilterValue}
+                  onChange={(e) => { setSkillFilterValue(e ? e.value : "") }}
+                />
                 </div>
                 <div className="col-md-3 col-lg-3 mb-5">
-                  <select
-                    name="job_location"
-                    id="job_location"
-                    value={jobExp}
-                    /*Job Onchange function to filter the data */
-                    onChange={(e) => setJobExp(e.target.value)}
-                    className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
-                  >
-                    <option value="">Select Experience</option>
-                    {(FilterJson.experience || []).map((job) => (
-                      <option key={job} value={job}>
-                        {job}
-                      </option>
-                    ))}
-                  </select>
+                     <SelectBox
+                  options={
+                    FilterJson.experience.map((option) => ({
+                      value: option,
+                      label: option,
+                    }))
+                  }
+                  type={"experience"}
+                  selectedValue={jobExp}
+                  onChange={(e) => { setJobExp(e ? e.value : "") }}
+                />
                 </div>
                 <div className="col-md-3 col-lg-3 mb-5">
-                  <select
-                    name="job_type"
-                    id="job_type"
-                    value={jobSwapFilterValue}
-                    /*Job Onchange function to filter the data */
-                    onChange={(e) => setJobSwapFilterValue(e.target.value)}
-                    className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
-                  >
-                    <option value="">Select Interest</option>
-                    {(FilterJson.interested || []).map((interest) => (
-                      <option key={interest} value={interest}>
-                        {interest}
-                      </option>
-                    ))}
-                  </select>
+                  <SelectBox
+                  options={
+                    FilterJson.interested.map((option) => ({
+                      value: option,
+                      label: option,
+                    }))
+                  }
+                  type={"interested"}
+                  selectedValue={jobSwapFilterValue}
+                  onChange={(e) => { setJobSwapFilterValue(e ? e.value : "") }}
+                />
                 </div>
                 <div className="col-md-3 col-lg-3 mb-5">
                   <select

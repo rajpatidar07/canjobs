@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import filterjson from "../../json/filterjson";
 import PasswordInput from "../../common/Common function/PasswordInput";
+import SelectBox from "../../common/Common function/SelectBox";
 // import Permissions from "../../json/emailPermisionJson";
 
 function Addadmin(props) {
@@ -146,7 +147,7 @@ function Addadmin(props) {
     } else {
       AdminData();
     }
-   // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [props]);
 
   // USER ADMIN PROFILE UPDATE SUBMIT BUTTON
@@ -327,70 +328,55 @@ function Addadmin(props) {
                 </span>
               )}
             </div>
-              <div className={state.admin_id ? "form-group d-none" : "form-group "}>
-                <label
-                  htmlFor="password"
-                  className="font-size-4 text-black-2  line-height-reset"
-                >
-                  Password <span className="text-danger">*</span> :
-                </label>
-                <div className="position-relative">
-                  <PasswordInput
-                      name="password"
-                      value={state.password}
-                      onChange={onInputChange}
-                      className={
-                        errors.password
-                          ? "form-control border border-danger"
-                          : "form-control"
-                      }
-                      placeholder="Enter password"
-                      id="password"
-                    />
-                </div>
-                {/*----ERROR MESSAGE FOR ADMIN PASSWORD----*/}
-                {errors.password && (
-                  <span
-                    key={errors.password}
-                    className="text-danger font-size-3"
-                  >
-                    {errors.password}
-                  </span>
-                )}
+            <div className={state.admin_id ? "form-group d-none" : "form-group "}>
+              <label
+                htmlFor="password"
+                className="font-size-4 text-black-2  line-height-reset"
+              >
+                Password <span className="text-danger">*</span> :
+              </label>
+              <div className="position-relative">
+                <PasswordInput
+                  name="password"
+                  value={state.password}
+                  onChange={onInputChange}
+                  className={
+                    errors.password
+                      ? "form-control border border-danger"
+                      : "form-control"
+                  }
+                  placeholder="Enter password"
+                  id="password"
+                />
               </div>
+              {/*----ERROR MESSAGE FOR ADMIN PASSWORD----*/}
+              {errors.password && (
+                <span
+                  key={errors.password}
+                  className="text-danger font-size-3"
+                >
+                  {errors.password}
+                </span>
+              )}
+            </div>
             <div className="form-group ">
               <label
                 htmlFor="admin_type"
                 className="font-size-4 text-black-2  line-height-reset"
               >
                 Admin Type <span className="text-danger">*</span> :
-              </label>
-              <select
-                type={"text"}
-                className={
-                  errors.admin_type
-                    ? "form-control border border-danger text-capitalize"
-                    : "form-control"
-                }
-                value={state.admin_type}
-                onChange={onInputChange}
-                id="admin_type"
-                name="admin_type"
-                multiple={false}
-              >
-                <option value={""}>Select</option>
-                {(filterjson.admintype || []).map((item, index) => {
-                  return (
-                    <option
-                      value={item}
-                      key={index}
-                      className=" text-capitalize"
-                    >
-                      {item}
-                    </option>
-                  );
-                })}
-              </select>
+              </label> 
+              <SelectBox
+                options={filterjson ?
+                  filterjson.admintype.map((option) => ({
+                    value: option,
+                    label: option,
+                  }))
+                  : []}
+                type={"admin_type"}
+                selectedValue={state.admin_type}
+                onChange={(e) => { setState({ ...state, admin_type: e ? e.value : "" }) }}
+              />
               {/*----ERROR MESSAGE FOR ADMIN TYPE----*/}
               {errors.admin_type && (
                 <span

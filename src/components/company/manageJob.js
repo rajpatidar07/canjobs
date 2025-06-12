@@ -9,6 +9,7 @@ import FilterJson from "../json/filterjson";
 import { Link } from "react-router-dom";
 import Loader from "../common/loader";
 import States from "../json/states";
+import SelectBox from "../common/Common function/SelectBox";
 
 function ManageJobs() {
   /*Data and modal states */
@@ -58,7 +59,7 @@ function ManageJobs() {
   return (
     <>
       <div>
-        
+
         <Header />
         {/* <!-- Main Content Start --> */}
         <div className="bg-black-2 mt-15 mt-lg-18 pt-18 pt-lg-13 pb-13">
@@ -83,84 +84,56 @@ function ManageJobs() {
                   <div className="d-flex align-items-center justify-content-space-between">
                     <div className=" search-filter from-group row">
                       <div className="col-md-3 col-6 mb-5 filter_input_div">
-                        <select
-                          name="category"
-                          id="category"
-                          value={categoryFilterValue}
-                          /*Category Onchange function to filter the data */
-                          onChange={(e) =>
-                            setCategoryFilterValue(e.target.value)
-                          }
-                          className="text-capitalize form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
-                        >
-                          <option value="">Select Job Category</option>
-                          {(filter.Category || []).map((cat) => (
-                            <option key={cat.id} value={cat.id}>
-                              {cat.value}
-                            </option>
-                          ))}
-                        </select>
+                        <SelectBox
+                          options={filter ?
+                            filter.Category.map((option) => ({
+                              value: option.id,
+                              label: option.value,
+                            }))
+                            : []}
+                          type={"category"}
+                          selectedValue={categoryFilterValue}
+                          onChange={(e) => { setCategoryFilterValue(e ? e.value : "") }}
+                        />
                       </div>
                       <div className="col-md-3 col-6 mb-5 filter_input_div">
-                        <select
-                          name="skill"
-                          id="skill"
-                          value={SkillFilterValue}
-                          /*Skill Onchange function to filter the data */
-                          onChange={(e) => setSkillFilterValue(e.target.value)}
-                          className="text-capitalize form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
-                        >
-                          <option data-display="Salary Range" value={""}>
-                            Select Job Skills
-                          </option>
-                          {(FilterJson.keyskill || []).map((data, i) => {
-                            return (
-                              <option value={data} key={i}>
-                                {data}
-                              </option>
-                            );
-                          })}
-                        </select>
+                         <SelectBox
+                          options={FilterJson ?
+                            FilterJson.keyskill.map((option) => ({
+                              value: option,
+                              label: option,
+                            }))
+                            : []}
+                          type={"skill"}
+                          selectedValue={SkillFilterValue}
+                          onChange={(e) => { setSkillFilterValue(e ? e.value : "") }}
+                        />
                       </div>
                       <div className="col-md-3 col-6 mb-5 filter_input_div">
-                        <select
-                          name="job_type"
-                          id="job_type"
-                          value={jobSwapFilterValue}
-                          /*Job Onchange function to filter the data */
-                          onChange={(e) =>
-                            setJobSwapFilterValue(e.target.value)
-                          }
-                          className="text-capitalize form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
-                        >
-                          <option data-display="Experience Level " value={""}>
-                            Select Job type
-                          </option>
-                          {(FilterJson.job_type || []).map((job_type) => (
-                            <option key={job_type} value={job_type}>
-                              {job_type}
-                            </option>
-                          ))}
-                        </select>
+                        <SelectBox
+                          options={FilterJson ?
+                            FilterJson.job_type.map((option) => ({
+                              value: option,
+                              label: option,
+                            }))
+                            : []}
+                          type={"job_type"}
+                          selectedValue={jobSwapFilterValue}
+                          onChange={(e) => { setJobSwapFilterValue(e ? e.value : "") }}
+                        />
                       </div>
                       <div className="col-md-3 col-6 mb-5 filter_input_div">
-                        <select
-                          name="job_location"
-                          id="job_location"
-                          value={jobLocation}
-                          /*Job Onchange function to filter the data */
-                          onChange={(e) => setJobLocation(e.target.value)}
-                          className="form-control font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
-                        >
-                          <option data-display="Experience Level " value={""}>
-                            Select job Location
-                          </option>
-                          {(Object.keys(States) || []).map((job) => (
-                            <option key={job} value={job}>
-                              {job}
-                            </option>
-                          ))}
-                        </select>
+                        <SelectBox
+                          options={States ?
+                            Object.keys(States).map((option) => ({
+                              value: option,
+                              label: option,
+                            }))
+                            : []}
+                          type={"location"}
+                          selectedValue={jobLocation}
+                          onChange={(e) => { setJobLocation(e ? e.value : "") }}
+                        />
                       </div>
                       <div className="col-12 mb-5 filter_input_div text-right">
                         <button

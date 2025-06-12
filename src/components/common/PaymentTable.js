@@ -9,6 +9,7 @@ import SAlert from "../common/sweetAlert";
 import { toast } from "react-toastify";
 import Loader from "../common/loader";
 import { Link } from "react-router-dom";
+import SelectBox from "./Common function/SelectBox";
 const PaymentTable = (props) => {
   let [filterListapiCall, setFilterListApiCall] = useState(false);
   let [isLoading, setIsLoading] = useState(false);
@@ -96,7 +97,7 @@ const PaymentTable = (props) => {
     let data = { id };
 
     if (["user_id", "referred_by_id", "manager_id"].includes(field)) {
-      const [idValue, typeValue] = e.target.value.split(",");
+      const [idValue, typeValue] = (field === "user_id" || field === "manager_id" || field === "referred_by_id" ? (e ? e.value : null) : e.target.value).split(",");
       data = { ...data, [field]: idValue, [`${field.replace("_id", "_type")}`]: typeValue };
     } else {
       data[field] = e.target.value;
@@ -211,44 +212,29 @@ const PaymentTable = (props) => {
                   {props.showAddForm && (
                     <tr>
                       <td>
-                        <select
-                          name="user_id"
-                          value={state.user_id + "," + state.user_type}
-                          id="user_id"
+                        <SelectBox options={(props.employeeEmployerlist.map((option) => ({
+                          value: option.employee_id
+                            ? `${option.employee_id},employee`
+                            : option.company_id
+                              ? `${option.company_id},employer`
+                              : `${option.id},applicant_type`,
+                          label: option.employee_id
+                            ? option.name + " (Candidate)"
+                            : option.company_id
+                              ? option.company_name + " (Client)"
+                              : option.title + " (Applicant Type)" || "unknown user",
+                        })) || [])}
+                          selectedValue={state.user_id + "," + state.user_type}
                           onChange={(e) => {
-                            const [user_id, user_type] = e.target.value.split(",");
+                            const [user_id, user_type] = e ? e.value.split(",") : "";
                             setState((prevState) => ({
                               ...prevState,
                               user_id,
                               user_type,
-                            }));
+                            }))
                           }}
-                          className="form-control mt-3"
-                        >
-                          <option value="">Select Applicant/Client</option>
-                          {(props.employeeEmployerlist || []).map((item, index) => {
-                            return (
-                              <option
-                                className="text-capitalize"
-                                key={index}
-                                value={
-                                  item.employee_id
-                                    ? `${item.employee_id},employee`
-                                    : item.company_id
-                                      ? `${item.company_id},employer`
-                                      : `${item.id},applicant_type`
-                                }
-                              >
-                                {item.employee_id
-                                  ? item.name + " (Candidate)"
-                                  : item.company_id
-                                    ? item.company_name + " (Client)"
-                                    : item.title + " (Applicant Type)" || "unknown user"}
-                              </option>
-                            );
-                          })}
-                        </select>
-
+                          type={"user_id"}
+                        />
                         {errors.user_id && (
                           <span key={errors.user_id} className="text-danger font-size-3">
                             {errors.user_id}
@@ -258,35 +244,39 @@ const PaymentTable = (props) => {
                       <td>
                         {" "}
                         <td style={{ minWidth: "150px" }}>
-                          <select className="form-control" value={state.referred_by_id + "," + state.referred_by_type} id="referred_by_id" onChange={(e) => {
-                            const [referred_by_id, referred_by_type] = e.target.value.split(",");
-                            setState((prevState) => ({
-                              ...prevState,
-                              referred_by_id,
-                              referred_by_type,
-                            }));
-                          }} name="referred_by_id">
-                            <option>Select Refer by</option>
-                            {(props.adminList || []).map((item, index) => (
-                              <option value={`${item.admin_id},${item.admin_type}`} key={index}>{`${item.name} (${item.admin_type})`}</option>
-                            ))}
-                          </select>
+                          <SelectBox options={(props.adminList.map((option) => ({
+                            value: `${option.admin_id},${option.admin_type}`,
+                            label: `${option.name} (${option.admin_type})`,
+                          })) || [])}
+                            selectedValue={state.referred_by_id + "," + state.referred_by_type}
+                            onChange={(e) => {
+                              const [referred_by_id, referred_by_type] = e ? e.value.split(",") : "";
+                              setState((prevState) => ({
+                                ...prevState,
+                                referred_by_id,
+                                referred_by_type,
+                              }));
+                            }}
+                            type={"referred_by_id"}
+                          />
                         </td>
                       </td>
                       <td>
-                        <select className="form-control" value={state.manager_id + "," + state.manager_type} onChange={(e) => {
-                          const [manager_id, manager_type] = e.target.value.split(",");
-                          setState((prevState) => ({
-                            ...prevState,
-                            manager_id,
-                            manager_type,
-                          }));
-                        }} id="manager_id" name="manager_id">
-                          <option>Select Manager</option>
-                          {(props.adminList || []).map((item, index) => (
-                            <option value={`${item.admin_id},${item.admin_type}`} key={index}>{`${item.name} (${item.admin_type})`}</option>
-                          ))}
-                        </select>
+                        <SelectBox options={(props.adminList.map((option) => ({
+                          value: `${option.admin_id},${option.admin_type}`,
+                          label: `${option.name} (${option.admin_type})`,
+                        })) || [])}
+                          selectedValue={state.manager_id + "," + state.manager_type}
+                          onChange={(e) => {
+                            const [manager_id, manager_type] = e ? e.value.split(",") : "";
+                            setState((prevState) => ({
+                              ...prevState,
+                              manager_id,
+                              manager_type,
+                            }));
+                          }}
+                          type={"manager_id"}
+                        />
                       </td>
                       <td>
                         <StyledDropdown
@@ -377,54 +367,48 @@ const PaymentTable = (props) => {
                     (paymentRecordsList || []).map((record, index) => (
                       <tr key={index}>
                         <td>
-                          <select
-                            name="user_id"
-                            value={record.user_id + "," + record.user_type}
-                            id="user_id"
-                            onChange={(e) => handleUpdateChange(e, record.id, "user_id")}
-                            className="form-control mt-3"
-                          >
-                            <option value="">Select Applicant/Client</option>
-                            {(props.employeeEmployerlist || []).map((item, index) => {
-                              return (
-                                <option
-                                  className="text-capitalize"
-                                  key={index}
-                                  value={
-                                    item.employee_id
-                                      ? `${item.employee_id},employee`
-                                      : item.company_id
-                                        ? `${item.company_id},employer`
-                                        : `${item.id},applicant_type`
-                                  }
-                                >
-                                  {item.employee_id
-                                    ? item.name + " (Candidate)"
-                                    : item.company_id
-                                      ? item.company_name + " (Client)"
-                                      : item.title + " (Applicant Type)" || "unknown user"}
-                                </option>
-                              );
-                            })}
-                          </select>
+                          <SelectBox options={(props.employeeEmployerlist.map((option) => ({
+                            value: option.employee_id
+                              ? `${option.employee_id},employee`
+                              : option.company_id
+                                ? `${option.company_id},employer`
+                                : `${option.id},applicant_type`,
+                            label: option.employee_id
+                              ? option.name + " (Candidate)"
+                              : option.company_id
+                                ? option.company_name + " (Client)"
+                                : option.title + " (Applicant Type)" || "unknown user",
+                          })) || [])}
+                            selectedValue={record.user_id + "," + record.user_type}
+                            onChange={(e) => {
+                              handleUpdateChange(e, record.id, "user_id")
+                            }}
+                            type={"user_id"}
+                          />
                         </td>
                         <td>
-                          <select className="form-control" value={record.referred_by_id + "," + record.referred_by_type} id="referred_by_id" onChange={(e) => handleUpdateChange(e, record.id, "referred_by_id")}
-                            name="referred_by_id">
-                            <option>Select Refer by</option>
-                            {(props.adminList || []).map((item, index) => (
-                              <option value={`${item.admin_id},${item.admin_type}`} key={index}>{`${item.name} (${item.admin_type})`}</option>
-                            ))}
-                          </select>
+                          <SelectBox options={(props.adminList.map((option) => ({
+                            value: `${option.admin_id},${option.admin_type}`,
+                            label: `${option.name} (${option.admin_type})`,
+                          })) || [])}
+                            selectedValue={record.referred_by_id + "," + record.referred_by_type}
+                            onChange={(e) => {
+                              handleUpdateChange(e, record.id, "referred_by_id")
+                            }}
+                            type={"referred_by_id"}
+                          />
                         </td>
                         <td>
-                          <select className="form-control" value={record.manager_id + "," + record.manager_type} id="manager_id" onChange={(e) => handleUpdateChange(e, record.id, "manager_id")}
-                            name="manager_id">
-                            <option>Select Refer by</option>
-                            {(props.adminList || []).map((item, index) => (
-                              <option value={`${item.admin_id},${item.admin_type}`} key={index}>{`${item.name} (${item.admin_type})`}</option>
-                            ))}
-                          </select>
+                          <SelectBox options={(props.adminList.map((option) => ({
+                            value: `${option.admin_id},${option.admin_type}`,
+                            label: `${option.name} (${option.admin_type})`,
+                          })) || [])}
+                            selectedValue={record.manager_id + "," + record.manager_type}
+                            onChange={(e) => {
+                              handleUpdateChange(e, record.id, "manager_id")
+                            }}
+                            type={"manager_id"}
+                          />
                         </td>
                         <td>
                           <StyledDropdown

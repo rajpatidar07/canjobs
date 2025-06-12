@@ -8,6 +8,7 @@ import AddJobModal from "../forms/employer/job";
 import { GetFilter } from "../../api/api";
 import FilterJson from "../json/filterjson";
 import JobTable from "../common/jobTable";
+import SelectBox from "../common/Common function/SelectBox";
 
 function SelfJob(props) {
   /*show Modal and props state */
@@ -96,9 +97,9 @@ function SelfJob(props) {
   const Skill =
     Json && Json.Skill
       ? Json.Skill.filter(
-          (thing, index, self) =>
-            index === self.findIndex((t) => t.value === thing.value)
-        )
+        (thing, index, self) =>
+          index === self.findIndex((t) => t.value === thing.value)
+      )
       : [];
   return (
     <>
@@ -110,8 +111,8 @@ function SelfJob(props) {
         }
       >
         {props.skill === null ||
-        props.skill === undefined ||
-        Object.keys(props.skill).length === 0 ? (
+          props.skill === undefined ||
+          Object.keys(props.skill).length === 0 ? (
           <>
             {/* <!-- Header Area --> */}
             <AdminHeader heading={"Manage Self Jobs"} />
@@ -188,25 +189,17 @@ function SelfJob(props) {
                   >
                     <p className="input_label">Filter by Job Category:</p>
                     <div className="select_div">
-                      <select
-                        name="country"
-                        id="country"
-                        value={categoryFilterValue}
+                      <SelectBox options={Json && Json?.Category ? Json?.Category.map((option) => ({
+                        value: option.value,
+                        label: option.value,
+                      })) : []}
+                        selectedValue={categoryFilterValue}
                         onChange={(e) => {
-                          setCategoryFilterValue(e.target.value);
+                          setCategoryFilterValue(e ? e.value : null);
                           setpageNo(1);
                         }}
-                        className="text-capitalize form-control"
-                      >
-                        <option value="">Job Category</option>
-                        {(Json.Category || []).map((data) => {
-                          return (
-                            <option value={data.id} key={data.id}>
-                              {data.value}
-                            </option>
-                          );
-                        })}
-                      </select>
+                        type={"category"}
+                      />
                     </div>
                   </div>
                   <div
@@ -218,23 +211,18 @@ function SelfJob(props) {
                   >
                     <p className="input_label">Filter by Job Type:</p>
                     <div className="select_div">
-                      <select
-                        name="country"
-                        id="country"
-                        value={jobSwapFilterValue}
+                      <SelectBox options={(FilterJson.job_type.map((option) => ({
+                        value: option,
+                        label: option,
+                      })) || [])}
+                        selectedValue={jobSwapFilterValue}
                         onChange={(e) => {
-                          setJobSwapFilterValue(e.target.value);
+                          console.log(e)
+                          setJobSwapFilterValue(e ? e.value : null);
                           setpageNo(1);
                         }}
-                        className="text-capitalize form-control"
-                      >
-                        <option value="">Job Type</option>
-                        {(FilterJson.job_type || []).map((job, i) => (
-                          <option key={i} value={job}>
-                            {job}
-                          </option>
-                        ))}
-                      </select>
+                        type={"job_type"}
+                      />
                     </div>
                   </div>
                   <div
@@ -246,25 +234,17 @@ function SelfJob(props) {
                   >
                     <p className="input_label">Filter by Job Skill:</p>
                     <div className="select_div">
-                      <select
-                        name="country"
-                        id="country"
-                        value={SkillFilterValue}
+                      <SelectBox options={(Skill.map((option) => ({
+                        value: option.value,
+                        label: option.value,
+                      })) || [])}
+                        selectedValue={SkillFilterValue}
                         onChange={(e) => {
-                          setSkillFilterValue(e.target.value);
+                          setSkillFilterValue(e ? e.value : null);
                           setpageNo(1);
                         }}
-                        className="text-capitalize form-control"
-                      >
-                        <option value="">Job Skill</option>
-                        {(Skill || []).map((data) => {
-                          return (
-                            <option value={data.value} key={data.id}>
-                              {data.value}
-                            </option>
-                          );
-                        })}
-                      </select>
+                        type={"skill"}
+                      />
                     </div>
                   </div>
                   <div
@@ -276,25 +256,17 @@ function SelfJob(props) {
                   >
                     <p className="input_label">Filter by Job Location:</p>
                     <div className="select_div">
-                      <select
-                        name="country"
-                        id="country"
-                        value={locationFilterValue}
+                      <SelectBox options={(FilterJson.location.map((option) => ({
+                        value: option.country,
+                        label: option.country,
+                      })) || [])}
+                        selectedValue={locationFilterValue}
                         onChange={(e) => {
-                          setLocationFilterValue(e.target.value);
+                          setLocationFilterValue(e ? e.value : null);
                           setpageNo(1);
                         }}
-                        className="text-capitalize form-control"
-                      >
-                        <option value="">Job Location</option>
-                        {(FilterJson.location || []).map((data) => {
-                          return (
-                            <option value={data.country} key={data.code}>
-                              {data.country}
-                            </option>
-                          );
-                        })}
-                      </select>
+                        type={"location"}
+                      />
                     </div>
                   </div>
                   <div className="text-end col-xl-12">
@@ -338,8 +310,8 @@ function SelfJob(props) {
           <div
             className={
               props.skill === null ||
-              props.skill === undefined ||
-              Object.keys(props.skill).length === 0
+                props.skill === undefined ||
+                Object.keys(props.skill).length === 0
                 ? "dashboard-main-container mt-14 "
                 : ""
             }
