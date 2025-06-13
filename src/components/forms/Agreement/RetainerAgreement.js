@@ -4,6 +4,7 @@ import useValidation from '../../common/useValidation';
 import filterjson from '../../json/filterjson';
 import { AddUpdateAgreement } from '../../../api/api';
 import { toast } from 'react-toastify';
+import SelectBox from '../../common/Common function/SelectBox';
 export default function RetainerAgreement(props) {
   const [loading, setLoading] = useState(false)
 
@@ -32,7 +33,7 @@ export default function RetainerAgreement(props) {
   // CUSTOM VALIDATIONS IMPORT
   const { state, setState, onInputChange, errors,/* validate,*/ setErrors } =
     useValidation(initialFormStateuser, validators);
-    
+
   /* Functionality to close the modal */
   const close = () => {
     setState(initialFormStateuser);
@@ -42,7 +43,7 @@ export default function RetainerAgreement(props) {
   };
 
   /*Function to add update retainer agreement */
-  const onAddUpdateRetaine =async (e) => {
+  const onAddUpdateRetaine = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
@@ -91,24 +92,23 @@ export default function RetainerAgreement(props) {
               >
                 Sub categories  : <span className="text-danger">*</span>
               </label>
-              <select
-                name="type"
-                value={state.type || ""}
-                onChange={onInputChange}
-                multiple={false}
-                className={
-                  errors.status
-                    ? "form-control text-capitalize border border-danger"
-                    : "form-control text-capitalize"
-                }
-                id="type"
-              >
-                <option value={""}>Select Sub Categories  </option>
-                {(filterjson.Rerainer_Agreement_subCategories || []).map((item, index) =>
-                  <option value={item}
-                    key={index}>{item}  </option>
-                )}
-              </select>
+              <SelectBox
+                options={(filterjson.Rerainer_Agreement_subCategories || []).map((item, index) => ({
+                  value: item,
+                  label: item,
+                }))}
+                type="type"
+                selectedValue={state.type || ""}
+                onChange={(e) => {
+                  onInputChange({
+                    target: {
+                      name: "type",
+                      value: e ? e.value : "",
+                    },
+                  });
+                }}
+              />
+
               {/*----ERROR MESSAGE FOR WORK PERMIT----*/}
               {errors.type && (
                 <span key={errors.type} className="text-danger font-size-3">

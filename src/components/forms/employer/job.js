@@ -9,6 +9,7 @@ import { GetJob, AddJob, getAllEmployer, GetFilter } from "../../../api/api";
 import { useLocation } from "react-router-dom";
 import states from "../../json/states";
 import TextEditor from "../../common/TextEditor";
+import SelectBox from "../../common/Common function/SelectBox";
 // import FroalaEditor from "react-froala-wysiwyg";
 // import "froala-editor/css/froala_editor.pkgd.min.css";
 // import "froala-editor/css/froala_style.min.css";
@@ -333,27 +334,27 @@ function AddJobModal(props) {
                     Client:<span className="text-danger">*</span>
                   </label>
                   <div className="position-relative">
-                    <select
-                      name="company_id"
-                      value={state.company_id || ""}
-                      onChange={onInputChange}
-                      className={
-                        errors.company_id
-                          ? "text-capitalize form-control border border-danger position-relative overflow-hidden"
-                          : "text-capitalize form-control position-relative overflow-hidden"
-                      }
-                      placeholder="Client's name"
-                      id="company_id"
-                    >
-                      <option value={""}>Select Client</option>
-                      {(Company || []).map((com) =>
-                        com.company_name === null ? null : (
-                          <option key={com.company_id} value={com.company_id}>
-                            {com.company_name}
-                          </option>
-                        )
-                      )}
-                    </select>
+                    <div className={errors.company_id ? "border border-danger rounded" : ""}>
+                      <SelectBox
+                        options={(Company || [])
+                          .filter((com) => com.company_name !== null)
+                          .map((com) => ({
+                            value: com.company_id,
+                            label: com.company_name,
+                          }))}
+                        type="company_id"
+                        selectedValue={state.company_id || ""}
+                        onChange={(e) => {
+                          onInputChange({
+                            target: {
+                              name: "company_id",
+                              value: e ? e.value : "",
+                            },
+                          });
+                        }}
+                      />
+                    </div>
+
                   </div>
                   {/*----ERROR MESSAGE FOR COMPANY----*/}
                   {errors.company_id && (
@@ -434,27 +435,27 @@ function AddJobModal(props) {
                   Job Category :<span className="text-danger"> *</span>
                 </label>
                 <div className="position-relative">
-                  <select
-                    name="job_category_id"
-                    value={state.job_category_id || ""}
-                    onChange={onInputChange}
-                    className={
-                      errors.job_category_id
-                        ? "text-capitalize form-control border border-danger position-relative overflow-hidden"
-                        : "text-capitalize form-control position-relative overflow-hidden"
-                    }
-                    placeholder="Job category"
-                    id="job_category_id"
-                  >
-                    <option value={""}>Select Category</option>
-                    {(Json.Category || []).map((cat) =>
-                      cat.value === null ? null : (
-                        <option key={cat.id} value={cat.id}>
-                          {cat.value}
-                        </option>
-                      )
-                    )}
-                  </select>
+                  <div className={errors.job_category_id ? "border border-danger rounded" : ""}>
+                    <SelectBox
+                      options={(Json.Category || [])
+                        .filter((cat) => cat.value !== null)
+                        .map((cat) => ({
+                          value: cat.id,
+                          label: cat.value,
+                        }))}
+                      type="job_category_id"
+                      selectedValue={state.job_category_id || ""}
+                      onChange={(e) => {
+                        onInputChange({
+                          target: {
+                            name: "job_category_id",
+                            value: e ? e.value : "",
+                          },
+                        });
+                      }}
+                    />
+                  </div>
+
                 </div>
                 {/*----ERROR MESSAGE FOR job_category_id----*/}
                 {errors.job_category_id && (
@@ -508,26 +509,25 @@ function AddJobModal(props) {
                   Experience Required:<span className="text-danger"> *</span>
                 </label>
                 <div className="position-relative">
-                  <select
-                    name="experience_required"
-                    value={state.experience_required || ""}
-                    onChange={onInputChange}
-                    className={
-                      errors.experience_required
-                        ? "form-control text-capitalize border border-danger"
-                        : "form-control text-capitalize"
-                    }
-                    placeholder="Experience"
-                    id="experience_required"
-                  >
-                    <option value={""}>Select Experience</option>
-                    {(FilterJson.experience || []).map((exp, i) => (
-                      <option key={i} value={exp}>
-                        {exp}
-                        {exp === "fresher" || exp === "Other" ? "" : "Years"}
-                      </option>
-                    ))}
-                  </select>
+                  <div className={errors.experience_required ? "border border-danger rounded" : ""}>
+                    <SelectBox
+                      options={(FilterJson.experience || []).map((exp, i) => ({
+                        value: exp,
+                        label: exp === "fresher" || exp === "Other" ? exp : `${exp} Years`,
+                      }))}
+                      type="experience_required"
+                      selectedValue={state.experience_required || ""}
+                      onChange={(e) => {
+                        onInputChange({
+                          target: {
+                            name: "experience_required",
+                            value: e ? e.value : "",
+                          },
+                        });
+                      }}
+                    />
+                  </div>
+
                   {/*----ERROR MESSAGE FOR experience_required----*/}
                   {errors.experience_required && (
                     <span
@@ -575,26 +575,25 @@ function AddJobModal(props) {
                 >
                   State:
                 </label>
-                <select
-                  name="location"
-                  value={state.location || ""}
-                  onChange={onInputChange}
-                  type="text"
-                  className={
-                    errors.location
-                      ? "form-control text-capitalize border border-danger"
-                      : "form-control text-capitalize"
-                  }
-                  placeholder="Location"
-                  id="location"
-                >
-                  <option value={""}>Select State</option>
-                  {(Object.keys(states) || []).map((state, i) => (
-                    <option key={i} value={state}>
-                      {state}
-                    </option>
-                  ))}
-                </select>
+                <div className={errors.location ? "border border-danger rounded" : ""}>
+                  <SelectBox
+                    options={(Object.keys(states) || []).map((state) => ({
+                      value: state,
+                      label: state,
+                    }))}
+                    type="location"
+                    selectedValue={state.location || ""}
+                    onChange={(e) => {
+                      onInputChange({
+                        target: {
+                          name: "location",
+                          value: e ? e.value : "",
+                        },
+                      });
+                    }}
+                  />
+                </div>
+
                 {/* // *----ERROR MESSAGE FOR location---- */}
                 {errors.location && (
                   <span
@@ -614,22 +613,23 @@ function AddJobModal(props) {
                   >
                     City:
                   </label>
-                  <select
-                    name="industry_type"
-                    value={state.industry_type}
-                    onChange={onInputChange}
-                    type="text"
-                    className="form-control text-capitalize"
-                    placeholder="City"
-                    id="industry_type"
-                  >
-                    <option value={""}>Select City</option>
-                    {(states[state.location] || []).map((city, i) => (
-                      <option key={i} value={city}>
-                        {city}
-                      </option>
-                    ))}
-                  </select>
+                  <SelectBox
+                    options={(states[state.location] || []).map((city) => ({
+                      value: city,
+                      label: city,
+                    }))}
+                    type="industry_type"
+                    selectedValue={state.industry_type || ""}
+                    onChange={(e) => {
+                      onInputChange({
+                        target: {
+                          name: "industry_type",
+                          value: e ? e.value : "",
+                        },
+                      });
+                    }}
+                  />
+
                 </div>
               )}
               <div className="form-group col-md-4 px-0 pr-3">
@@ -950,25 +950,26 @@ function AddJobModal(props) {
                   Job Type:<span className="text-danger"> *</span>
                 </label>
                 <div className={" position-relative"}>
-                  <select
-                    placeholder="Apply job_type"
-                    id="job_type"
-                    name="job_type"
-                    value={state.job_type || ""}
-                    onChange={onInputChange}
-                    className={
-                      errors.job_type
-                        ? "text-capitalize form-control border border-danger position-relative overflow-hidden"
-                        : "text-capitalize form-control position-relative overflow-hidden"
-                    }
-                  >
-                    <option value={""}>Select Job Type</option>
-                    {(FilterJson.job_type || []).map((job_type) => (
-                      <option key={job_type} value={job_type}>
-                        {job_type}
-                      </option>
-                    ))}
-                  </select>
+                  <div className={errors.job_type ? "border border-danger rounded" : ""}>
+                    <SelectBox
+                      options={(FilterJson.job_type || []).map((job_type) => ({
+                        value: job_type,
+                        label: job_type,
+                      }))}
+                      type="job_type"
+                      selectedValue={state.job_type || ""}
+                      onChange={(e) => {
+                        onInputChange({
+                          target: {
+                            name: "job_type",
+                            value: e ? e.value : "",
+                          },
+                        });
+                      }}
+                      placeholder="Select Job Type"
+                    />
+                  </div>
+
                 </div>
                 {/*----ERROR MESSAGE FOR job_type----*/}
                 {errors.job_type && (
@@ -988,25 +989,26 @@ function AddJobModal(props) {
                   Education:
                 </label>
                 <div className="position-relative">
-                  <select
-                    name="education"
-                    value={state.education || ""}
-                    onChange={onInputChange}
-                    className={
-                      errors.education
-                        ? "text-capitalize form-control border border-danger position-relative overflow-hidden"
-                        : "text-capitalize form-control position-relative overflow-hidden"
-                    }
-                    placeholder="Apply education"
-                    id="education"
-                  >
-                    <option value={""}>Select Education</option>
-                    {(Json.Education || []).map((education) => (
-                      <option key={education.id} value={education.value}>
-                        {education.value}
-                      </option>
-                    ))}
-                  </select>
+                  <div className={errors.education ? "border border-danger rounded" : ""}>
+                    <SelectBox
+                      options={(Json.Education || []).map((education) => ({
+                        value: education.value,
+                        label: education.value,
+                      }))}
+                      type="education"
+                      selectedValue={state.education || ""}
+                      onChange={(e) => {
+                        onInputChange({
+                          target: {
+                            name: "education",
+                            value: e ? e.value : "",
+                          },
+                        });
+                      }}
+                      placeholder="Select Education"
+                    />
+                  </div>
+
                 </div>
                 {/*----ERROR MESSAGE FOR job_type----*/}
                 {errors.Education && (
@@ -1026,25 +1028,26 @@ function AddJobModal(props) {
                   Language:
                 </label>
                 <div className="position-relative">
-                  <select
-                    name="language"
-                    value={state.language || ""}
-                    onChange={onInputChange}
-                    className={
-                      errors.language
-                        ? "text-capitalize form-control border border-danger position-relative overflow-hidden"
-                        : "text-capitalize form-control position-relative overflow-hidden"
-                    }
-                    placeholder="Language"
-                    id="language"
-                  >
-                    <option value={""}>Select Language</option>
-                    {(Json.Language || []).map((Language) => (
-                      <option key={Language.id} value={Language.value}>
-                        {Language.value}
-                      </option>
-                    ))}
-                  </select>
+                  <div className={errors.language ? "border border-danger rounded" : ""}>
+                    <SelectBox
+                      options={(Json.Language || []).map((lang) => ({
+                        value: lang.value,
+                        label: lang.value,
+                      }))}
+                      type="language"
+                      selectedValue={state.language || ""}
+                      onChange={(e) => {
+                        onInputChange({
+                          target: {
+                            name: "language",
+                            value: e ? e.value : "",
+                          },
+                        });
+                      }}
+                      placeholder="Select Language"
+                    />
+                  </div>
+
                   {/*----ERROR MESSAGE FOR language----*/}
                   {errors.language && (
                     <span
@@ -1064,24 +1067,26 @@ function AddJobModal(props) {
                   Key Skill:
                 </label>
                 <div className="position-relative">
-                  <select
-                    name="keyskill"
-                    value={state.keyskill || ""}
-                    onChange={onInputChange}
-                    className={
-                      errors.keyskill
-                        ? "text-capitalize form-control border border-danger"
-                        : "text-capitalize form-control"
-                    }
-                    id="keyskill"
-                  >
-                    <option value={""}>Select Skill</option>
-                    {(Json.Skill || []).map((data) => (
-                      <option key={data.id} value={data.value}>
-                        {data.value}
-                      </option>
-                    ))}
-                  </select>
+                  <div className={errors.keyskill ? "border border-danger rounded" : ""}>
+                    <SelectBox
+                      options={(Json.Skill || []).map((data) => ({
+                        value: data.value,
+                        label: data.value,
+                      }))}
+                      type="keyskill"
+                      selectedValue={state.keyskill || ""}
+                      onChange={(e) => {
+                        onInputChange({
+                          target: {
+                            name: "keyskill",
+                            value: e ? e.value : "",
+                          },
+                        });
+                      }}
+                      placeholder="Select Skill"
+                    />
+                  </div>
+
                   {/*----ERROR MESSAGE FOR keyskill----*/}
                   {errors.keyskill && (
                     <span

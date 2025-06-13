@@ -12,6 +12,7 @@ import useValidation from "../common/useValidation";
 import { toast } from "react-toastify";
 import Permission from "../json/emailPermisionJson";
 import PasswordInput from "../common/Common function/PasswordInput";
+import SelectBox from "../common/Common function/SelectBox";
 // import { useGoogleLogin } from '@react-oauth/google';
 // import axios from "axios";
 // import { useLinkedIn , LinkedIn} from "react-linkedin-login-oauth2";
@@ -527,20 +528,26 @@ export default function CandidateSignup(props) {
                 >
                   Reffered by:{/*<span className="text-danger">*</span>*/}
                 </label>
-                <select
-                  name="reffer_by"
-                  value={state.reffer_by || ""}
-                  onChange={onInputChange}
-                  className={
-                    errors.reffer_by
-                      ? "form-control text-capitalize border border-danger"
-                      : "form-control text-capitalize"
-                  }
-                  id="reffer_by"
-                >
-                  <option value={""}>Selct Partner </option>
-                  {agentList.map((item) => <option value={item.id}>{item.u_id + " " + item.name} </option>)}
-                </select>
+                <div className={
+                  errors.reffer_by
+                    ? "border border-danger text-capitalize"
+                    : "text-capitalize"
+                }>
+                  <SelectBox
+                    type="reffer_by"
+                    onChange={(selected) => {
+                      onInputChange({ target: { name: "reffer_by", value: selected?.value } });
+                    }}
+                    options={agentList.map((item) => ({
+                      value: item.id,
+                      label: `${item.u_id} ${item.name}`,
+                    }))}
+                    selectedValue={state.reffer_by || ""}
+                    placeholder="Select Partner"
+                    classNamePrefix="select"
+
+                  />
+                </div>
                 {/* <Select
                           options={"" || agentList}
                           name="reffer_by"

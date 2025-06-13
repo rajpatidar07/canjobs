@@ -26,6 +26,7 @@ import FilterJson from "../../json/filterjson";
 import AddNewAgent from "../admin/add_agent";
 import Permissions from "../../json/emailPermisionJson";
 import TextEditor from "../../common/TextEditor";
+import SelectBox from "../../common/Common function/SelectBox";
 // import ContactNoWithCountryCode from "../../common/ContactNoWithCountryCode";
 
 function PersonalDetails(props) {
@@ -922,27 +923,26 @@ function PersonalDetails(props) {
                     >
                       Country Of Residence:
                     </label>
-                    <select
-                      maxLength={60}
-                      type="text"
-                      className={
-                        errors.currently_located_country
-                          ? "form-control text-capitalize border border-danger"
-                          : "form-control text-capitalize"
-                      }
-                      placeholder="Currently Located Country"
-                      id="currently_located_country"
-                      name="currently_located_country"
-                      value={state.currently_located_country || ""}
-                      onChange={onInputChange}
-                    >
-                      <option value={""}>Select Country</option>
-                      {(FilterJson.location || []).map((item, i) => (
-                        <option value={item.country} key={i}>
-                          {item.country}
-                        </option>
-                      ))}
-                    </select>
+                    <div className={errors.currently_located_country ? "border border-danger rounded" : ""}>
+                      <SelectBox
+                        options={(FilterJson.location || []).map((item) => ({
+                          value: item.country,
+                          label: item.country,
+                        }))}
+                        type="currently_located_country"
+                        selectedValue={state.currently_located_country || ""}
+                        onChange={(e) => {
+                          onInputChange({
+                            target: {
+                              name: "currently_located_country",
+                              value: e ? e.value : "",
+                            },
+                          });
+                        }}
+                        placeholder="Select Country"
+                      />
+                    </div>
+
                     {/*----ERROR MESSAGE FOR COUNTRY----*/}
                     {errors.currently_located_country && (
                       <span
@@ -1156,21 +1156,14 @@ function PersonalDetails(props) {
                       </div>
                     )} */}
                   {/* MAIN TYPE */}
-                  <div className={user_type === "user"||props.user_of_page === "assignedUser" || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" || props.pageNameForForm === "Category" ? "d-none" : "form-group col-md-4"}>
+                  <div className={user_type === "user" || props.user_of_page === "assignedUser" || props.user_of_page === "agentAssigned" || props.pageNameForForm === "agentAssigned" || props.pageNameForForm === "Category" ? "d-none" : "form-group col-md-4"}>
                     <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
                       Applicant's Type: <span className="text-danger">*</span>
                     </label>
-                    <select
-                      className={`form-control ${errors.interested_in_id ? "border border-danger" : ""}`}
-                      name="interested_in_id"
-                      value={main}
-                      onChange={onInputChange}
-                    >
-                      <option value="">Select Main Type</option>
-                      {applicantTypeList
-                        .filter(item => item.level === "0")
-                        .map(item => (
-                          <option key={item.id} value={item.id} className={[
+                    <div className={errors.interested_in_id ? "border border-danger rounded" : ""}>
+                      <SelectBox
+                        options={applicantTypeList
+                          .filter(item => item.level === "0" && ![
                             "test typw",
                             "All Checklists",
                             "Checklists",
@@ -1178,11 +1171,26 @@ function PersonalDetails(props) {
                             "Daily hours log",
                             "Training Modules",
                             "Admission/student/college"
-                          ].some(it => item.title.includes(it)) ? "d-none" : ""}>
-                            {item.title}
-                          </option>
-                        ))}
-                    </select>
+                          ].some(it => item.title.includes(it)))
+                          .map(item => ({
+                            value: item.id,
+                            label: item.title,
+                          }))
+                        }
+                        type="interested_in_id"
+                        selectedValue={main}
+                        onChange={(e) =>
+                          onInputChange({
+                            target: {
+                              name: "interested_in_id",
+                              value: e ? e.value : "",
+                            },
+                          })
+                        }
+                        placeholder="Select Main Type"
+                      />
+                    </div>
+
                     {errors.interested_in_id && (
                       <span className="text-danger font-size-3">
                         {errors.interested_in_id}
@@ -1196,21 +1204,29 @@ function PersonalDetails(props) {
                       <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
                         Sub Type:
                       </label>
-                      <select
-                        className={`form-control ${errors.interested_in_id ? "border border-danger" : ""}`}
-                        name="interested_in_id"
-                        value={sub}
-                        onChange={onInputChange}
-                      >
-                        <option value="">Select Sub Type</option>
-                        {applicantTypeList
-                          .filter(item => item.level === "1" && item.parent_id === main)
-                          .map(item => (
-                            <option key={item.id} value={item.id}>
-                              {item.title}
-                            </option>
-                          ))}
-                      </select>
+                      <div className={errors.interested_in_id ? "border border-danger rounded" : ""}>
+                        <SelectBox
+                          options={(applicantTypeList || [])
+                            .filter(item => item.level === "1" && item.parent_id === main)
+                            .map(item => ({
+                              value: item.id,
+                              label: item.title,
+                            }))
+                          }
+                          type="interested_in_id"
+                          selectedValue={sub}
+                          onChange={(e) => {
+                            onInputChange({
+                              target: {
+                                name: "interested_in_id",
+                                value: e ? e.value : "",
+                              },
+                            });
+                          }}
+                          placeholder="Select Sub Type"
+                        />
+                      </div>
+
                     </div>
                   )}
 
@@ -1220,21 +1236,29 @@ function PersonalDetails(props) {
                       <label className="font-size-4 text-black-2 font-weight-semibold line-height-reset">
                         Sub Sub Type:
                       </label>
-                      <select
-                        className={`form-control ${errors.interested_in_id ? "border border-danger" : ""}`}
-                        name="interested_in_id"
-                        value={subsub}
-                        onChange={onInputChange}
-                      >
-                        <option value="">Select Sub Sub Type</option>
-                        {applicantTypeList
-                          .filter(item => item.level === "2" && item.parent_id === sub)
-                          .map(item => (
-                            <option key={item.id} value={item.id}>
-                              {item.title}
-                            </option>
-                          ))}
-                      </select>
+                      <div className={errors.interested_in_id ? "border border-danger rounded" : ""}>
+                        <SelectBox
+                          options={(applicantTypeList || [])
+                            .filter(item => item.level === "2" && item.parent_id === sub)
+                            .map(item => ({
+                              value: item.id,
+                              label: item.title,
+                            }))
+                          }
+                          type="interested_in_id"
+                          selectedValue={subsub}
+                          onChange={(e) =>
+                            onInputChange({
+                              target: {
+                                name: "interested_in_id",
+                                value: e ? e.value : "",
+                              },
+                            })
+                          }
+                          placeholder="Select Sub Sub Type"
+                        />
+                      </div>
+
                     </div>)}
 
                   <div className={`form-group col-md-4
@@ -1246,25 +1270,23 @@ function PersonalDetails(props) {
                     >
                       Experience:
                     </label>
-                    <select
-                      name="experience"
-                      value={state.experience || ""}
-                      onChange={onInputChange}
-                      className={
-                        errors.experience
-                          ? "form-control text-capitalize border border-danger"
-                          : "form-control text-capitalize"
+                    <SelectBox
+                      options={(FilterJson.experience || []).map((ex) => ({
+                        value: ex,
+                        label: `${ex}${ex.toLowerCase() === "fresher" || ex.toLowerCase() === "other" ? "" : " Years"}`
+                      }))}
+                      type="experience"
+                      selectedValue={state.experience || ""}
+                      onChange={(e) =>
+                        onInputChange({
+                          target: {
+                            name: "experience",
+                            value: e ? e.value : "",
+                          },
+                        })
                       }
-                      id="experience"
-                    >
-                      <option value={""}>User Experience</option>
-                      {(FilterJson.experience || []).map((ex, i) => (
-                        <option value={ex} key={i}>
-                          {ex}
-                          {ex === "fresher" || ex === "Other" || ex === "other" ? "" : "Years"}
-                        </option>
-                      ))}
-                    </select>
+                    />
+
                     {/*----ERROR MESSAGE FOR experience----*/}
                     {errors.experience && (
                       <span
@@ -1321,29 +1343,23 @@ function PersonalDetails(props) {
                     >
                       Candidate Status:
                     </label>
-                    <select
-                      maxLength={60}
-                      type="text"
-                      className={
-                        errors.work_permit_other_country
-                          ? "form-control text-capitalize border border-danger"
-                          : "form-control text-capitalize"
+                    <SelectBox
+                      options={(FilterJson.canadian_candidate_work_status || []).map((item) => ({
+                        value: item,
+                        label: item,
+                      }))}
+                      type="work_permit_other_country"
+                      selectedValue={state.work_permit_other_country || ""}
+                      onChange={(e) =>
+                        onInputChange({
+                          target: {
+                            name: "work_permit_other_country",
+                            value: e ? e.value : "",
+                          },
+                        })
                       }
-                      placeholder="Permit of Other Country"
-                      id="work_permit_other_country"
-                      name="work_permit_other_country"
-                      value={state.work_permit_other_country || ""}
-                      onChange={onInputChange}
-                    >
-                      <option value={""}>Select status</option>
-                      {(FilterJson.canadian_candidate_work_status || []).map(
-                        (item, i) => (
-                          <option value={item} key={i}>
-                            {item}
-                          </option>
-                        )
-                      )}
-                    </select>
+                    />
+
                     {/*----ERROR MESSAGE FOR OTHER COUNTRY PERMIT----*/}
                     {errors.work_permit_other_country && (
                       <span
@@ -1380,21 +1396,27 @@ function PersonalDetails(props) {
                       onChange={onSelectChange}
                       className={errors.reffer_by ? "form-control border border-danger px-0 pt-4" : "form-control px-0 pt-4 border-0"}
                     /> */}
-                      <select
-                        name="reffer_by"
-                        value={state.reffer_by || ""}
-                        onChange={onInputChange}
-                        className={
-                          errors.reffer_by
-                            ? "form-control text-capitalize border border-danger"
-                            : "form-control text-capitalize"
-                        }
-                        id="reffer_by"
-                        disabled={user_type === "agent"}
-                      >
-                        <option value={""}>Select partner </option>
-                        {agentList.map((item, index) => <option value={item.id} key={index}>{item.u_id} </option>)}
-                      </select>
+                      <div className={errors.reffer_by ? "border border-danger rounded" : ""}>
+
+                        <SelectBox
+                          options={agentList.map((item) => ({
+                            value: item.id,
+                            label: item.u_id,
+                          }))}
+                          type="reffer_by"
+                          selectedValue={state.reffer_by || ""}
+                          onChange={(e) =>
+                            onInputChange({
+                              target: {
+                                name: "reffer_by",
+                                value: e ? e.value : "",
+                              },
+                            })
+                          }
+                          isDisabled={user_type === "agent"}
+                          placeholder="Select Partner"
+                        />
+                      </div>
                       <span
                         className={user_type === "agent" ? "d-none" : "btn btn-sm btn-secondary"}
                         onClick={() => setShowAgentMOdal(true)}
@@ -1451,23 +1473,29 @@ function PersonalDetails(props) {
                           : "form-control px-0 pt-4 border-0"
                       }
                     /> */}
-                    <select
-                      name="assigned_by"
-                      value={state.assigned_by || ""}
-                      onChange={onInputChange}
+                    <SelectBox
+                      options={(admiinList || []).map((item) => ({
+                        value: item.admin_id,
+                        label: item.name,
+                      }))}
+                      type="assigned_by"
+                      selectedValue={state.assigned_by || ""}
+                      onChange={(e) =>
+                        onInputChange({
+                          target: {
+                            name: "assigned_by",
+                            value: e ? e.value : "",
+                          },
+                        })
+                      }
+                      placeholder="Select Admin"
                       className={
                         errors.assigned_by
-                          ? "form-control text-capitalize border border-danger"
-                          : "form-control text-capitalize"
+                          ? "border border-danger text-capitalize"
+                          : "text-capitalize"
                       }
-                      id="assigned_by"
-                    >
-                      <option value={""}>Select Admin </option>
-                      {(admiinList || []).map((item, index) =>
-                        <option value={item.admin_id} key={index}>
-                          {item.name}
-                        </option>)}
-                    </select>
+                    />
+
                     {/* <span
                       className="btn btn-sm btn-secondary"
                       onClick={() => setShowAdminMOdal(true)}

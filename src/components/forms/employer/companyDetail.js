@@ -17,6 +17,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Permissions from "../../json/emailPermisionJson";
 import TextEditor from "../../common/TextEditor";
+import SelectBox from "../../common/Common function/SelectBox";
 function CompanyDetails(props) {
   const [loading, setLoading] = useState(false);
   const [imgError, setImgError] = useState("");
@@ -62,7 +63,7 @@ function CompanyDetails(props) {
     franchise: "",
     logo: "",
     permission: props.employerId === "0" ? JSON.stringify(Permissions) : null,
-    company_size_partTime:""
+    company_size_partTime: ""
   };
   // VALIDATION CONDITIONS
   const validators = {
@@ -269,7 +270,7 @@ function CompanyDetails(props) {
                   htmlFor="company_name"
                   className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                 >
-                   Business Legal Name
+                  Business Legal Name
                   <span className="text-danger">*</span>:
                 </label>
                 <input
@@ -336,24 +337,25 @@ function CompanyDetails(props) {
                 >
                   Industry<span className="text-danger">*</span>:
                 </label>
-                <select
-                  name="industry"
-                  value={state.industry || ""}
-                  onChange={onInputChange}
-                  className={
-                    errors.industry
-                      ? "text-capitalize form-control px-5 border border-danger"
-                      : "text-capitalize form-control px-5"
-                  }
-                  id="industry"
-                >
-                  <option value={""}>Industry Client belongs to</option>
-                  {(Industry || []).map((industry) => (
-                    <option key={industry.id} value={industry.value}>
-                      {industry.value}
-                    </option>
-                  ))}
-                </select>
+                <div className={errors.industry ? "border border-danger rounded" : ""}>
+                  <SelectBox
+                    options={(Industry || []).map((industry) => ({
+                      value: industry.value,
+                      label: industry.value,
+                    }))}
+                    type="industry"
+                    selectedValue={state.industry || ""}
+                    onChange={(e) => {
+                      onInputChange({
+                        target: {
+                          name: "industry",
+                          value: e ? e.value : "",
+                        },
+                      });
+                    }}
+                  />
+                </div>
+
                 {/*----ERROR MESSAGE FOR INDUSTRY ----*/}
                 {errors.industry && (
                   <span

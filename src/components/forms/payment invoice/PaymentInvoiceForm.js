@@ -6,6 +6,7 @@ import { CiTrash } from "react-icons/ci";
 import { AddFIlter, AddUpdatePaymentInvoiceApi, GetFilter } from "../../../api/api";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import SelectBox from "../../common/Common function/SelectBox";
 
 const PaymentInvoiceForm = (props) => {
   let [loading, setLoading] = useState(false)
@@ -235,42 +236,44 @@ const PaymentInvoiceForm = (props) => {
                   <label className="font-size-4 text-black-2 line-height-reset font-weight-semibold">
                     Customer
                   </label>
-                  <select
-                    name="userId"
-                    value={state.user_id + "," + state.user_type}
-                    id="userId"
+                  <SelectBox
+                    options={(props.employee_employer_list || []).map((item) => {
+                      const value = item.employee_id
+                        ? `${item.employee_id},employee`
+                        : item.company_id
+                          ? `${item.company_id},employer`
+                          : `${item.id},applicant_type`;
+
+                      const label = item.employee_id
+                        ? `${item.name} (Candidate)`
+                        : item.company_id
+                          ? `${item.company_name} (Client)`
+                          : item.title
+                            ? `${item.title} (Applicant Type)`
+                            : "Unknown User";
+
+                      return {
+                        value,
+                        label,
+                      };
+                    })}
+                    type="userId"
+                    selectedValue={
+                      state.user_id && state.user_type
+                        ? `${state.user_id},${state.user_type}`
+                        : ""
+                    }
                     onChange={(e) => {
-                      // console.log(e.target.value.split(",")[1])
-                      setState({ ...state, user_id: (e.target.value.split(",")[0]) });
-                      setState({ ...state, user_type: (e.target.value.split(",")[1]) });
+                      const val = e ? e.value.split(",") : ["", ""];
+                      setState((prev) => ({
+                        ...prev,
+                        user_id: val[0],
+                        user_type: val[1],
+                      }));
                     }}
-                    disabled={state.user_id && state.user_type}
-                    className="form-control mt-3"
-                  >
-                    <option value={""}>Select Applicant/Client</option>
-                    {(props.employee_employer_list || []).map((item, index) => {
-                      return (
-                        <option
-                          className="text-capitalize"
-                          key={index}
-                          value={
-                            item.employee_id
-                              ? `${item.employee_id},employee`
-                              : item.company_id
-                                ? `${item.company_id},employer`
-                                : `${item.id},applicant_type`
-                          }
-                        >
-                          {item.employee_id
-                            ? (item.name + " (Candidate)")
-                            : item.company_id
-                              ? item.company_name + " (Client)"
-                              : item.title + " (Applicant Type)" ||
-                              "unknown user"}
-                        </option>
-                      );
-                    })}{" "}
-                  </select>
+                    isDisabled={!!(state.user_id && state.user_type)}
+                  />
+
                 </div>
                 <div className="form-group col-md-3">
                   <div className="d-flex justify-content-end align-items-start">
@@ -344,20 +347,28 @@ const PaymentInvoiceForm = (props) => {
                   Terms
                 </label>
                 <div className="d-flex  align-items-center mb-2">
-                  <select
-                    name="terms" id="terms"
-
-                    className={`form-control text-capitalize ${showTermsInput ? "" : "flex-grow-1 me-2"
-                      }`}
-                    value={state.terms} onChange={onInputChange}
+                  <div
+                    className={`text-capitalize ${showTermsInput ? "" : "flex-grow-1 me-2"}`}
                   >
-                    <option value="">Select Terms</option>
-                    {(json?.payment_invoice_terms || []).map((item) => (
-                      <option key={item.id} value={item.id}>
-                        {item.value}
-                      </option>
-                    ))}
-                  </select>
+                    <SelectBox
+                      options={(json?.payment_invoice_terms || []).map((item) => ({
+                        value: item.id,
+                        label: item.value,
+                      }))}
+                      type="terms"
+                      selectedValue={state.terms || ""}
+                      onChange={(e) => {
+                        onInputChange({
+                          target: {
+                            name: "terms",
+                            value: e ? e.value : "",
+                          },
+                        });
+                      }}
+                      placeholder="Select Terms"
+                    />
+                  </div>
+
                   {showTermsInput ? (
                     <Link
                       className="btn-sm btn-light rounded-3 p-2"

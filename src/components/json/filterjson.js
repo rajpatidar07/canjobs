@@ -7,7 +7,7 @@ const filterjson = {
     { value: "5", label: "business visa" },
   ],
   location: [
-    { "country": "afghanistan", "code": "+93" },
+    { "country": "afghanistan", "code": "+93" }, 
     { "country": "aland islands", "code": "+358" },
     { "country": "albania", "code": "+355" },
     { "country": "algeria", "code": "+213" },

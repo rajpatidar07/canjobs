@@ -7,12 +7,14 @@ import {
 } from "../../../api/api";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Select from "react-select";
+import SelectBox from "../../common/Common function/SelectBox";
 
 function ReassignAdmin(props) {
     const [loading, setLoading] = useState(false);
     let [AdminList, setAdminList] = useState([]);
-    let [AdminOption, setAdminOption] = useState([]);
+    let [AdminOption, setAdminOption] = useState({
+        Admin: []
+    });
     /* Functionality to close the modal */
     const close = () => {
         setState(initialFormState);
@@ -89,7 +91,7 @@ function ReassignAdmin(props) {
                         autoClose: 1000,
                     });
                     setState({ ...state, Admin: "" });
-                    setAdminOption({ ...state, Admin: "" });
+                    setAdminOption({ ...state, Admin: [] });
                     setErrors("");
                     setLoading(false);
                     props.setApiCall(true);
@@ -123,27 +125,20 @@ function ReassignAdmin(props) {
                 <div className="bg-white rounded h-100 p-7">
                     <form onSubmit={onUserReassignAdminClick}>
                         <h5 className="text-center mb-7 lead">Please assign the admin in place of deleting <b className="text-dark">{props?.adminData?.name}</b> as the admin. </h5>
-                        <div className="form-group d-flex mb-3 p-0">
+                        <div className="form-group d-flex mb-3 p-0 " >
                             <label
                                 htmlFor="Admin"
                                 className="font-size-4 text-black-2 font-weight-semibold line-height-reset"
                             >
                                 Assign Admin<span className="text-danger">*</span> :
                             </label>
-
-                            <Select
-                                options={"" || AdminOption.Admin}
-                                name="Admin"
-                                id="Admin"
+                            {console.log(AdminOption, AdminOption?.Admin)}
+                            <SelectBox
+                                options={AdminOption ? AdminOption?.Admin : []} // Remove null entries
+                                type="admin"
+                                selectedValue={state.replace_admin_id || ""}
                                 onChange={onSelectChange}
-                                className={
-                                    errors.replace_admin_id
-                                        ? "border border-danger w-100 text-capitalize"
-                                        : "text-capitalize w-100"
-                                }
-                                isClearable={""}
                             />
-
                         </div>
                         {/*----ERROR MESSAGE FOR ReassignAdmin----*/}
                         {errors.replace_admin_id && (

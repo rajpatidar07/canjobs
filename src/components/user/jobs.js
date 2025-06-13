@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import Loader from "../common/loader";
 import CustomButton from "../common/button";
 import states from "../json/states";
+import SelectBox from "../common/Common function/SelectBox";
 function JobSearch() {
   /*Filter states */
   const [categoryFilterValue, setCategoryFilterValue] = useState("");
@@ -46,7 +47,7 @@ function JobSearch() {
     <>
       <div className="site-wrapper overflow-hidden ">
         <EmployeeHeader />
-        
+
         {/* <!-- Main Content Start --> */}
         <div className="bg-black-2 mt-15 mt-lg-18 pt-18 pt-lg-13 pb-13">
           <div className="container">
@@ -65,74 +66,56 @@ function JobSearch() {
                 <form className="mb-8" action="/">
                   <div className="search-filter from-group d-flex align-items-center justify-content-center job_search_filter">
                     <div className="col-md-2 col-lg-2 mb-5">
-                      <select
-                        name="category"
-                        id="category"
-                        value={categoryFilterValue}
-                        /*Category Onchange function to filter the data */
-                        onChange={(e) => setCategoryFilterValue(e.target.value)}
+                      <SelectBox
+                        options={(Json.Category || []).map((cat) => ({
+                          value: cat.id,
+                          label: cat.value,
+                        }))}
+                        selectedValue={categoryFilterValue}
+                        onChange={(e) => setCategoryFilterValue(e ? e.value : "")}
+                        placeholder="Select Category"
                         className="form-control text-capitalize font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
-                      >
-                        <option value="">Select Category</option>
-                        {(Json.Category || []).map((cat) => (
-                          <option key={cat.id} value={cat.id}>
-                            {cat.value}
-                          </option>
-                        ))}
-                      </select>
+                      />
+
                     </div>
                     <div className="col-md-2 col-lg-2 mb-5">
-                      <select
-                        name="skill"
-                        id="skill"
-                        value={SkillFilterValue}
-                        /*Skill Onchange function to filter the data */
-                        onChange={(e) => setSkillFilterValue(e.target.value)}
+                      <SelectBox
+                        options={(Json.Skill || []).map((data) => ({
+                          value: data.value,
+                          label: data.value,
+                        }))}
+                        selectedValue={SkillFilterValue}
+                        onChange={(e) => setSkillFilterValue(e ? e.value : "")}
+                        placeholder="Select Skill"
                         className="form-control text-capitalize font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
-                      >
-                        <option value="">Select Skill</option>
-                        {(Json.Skill || []).map((data) => {
-                          return (
-                            <option value={data.value} key={data.id}>
-                              {data.value}
-                            </option>
-                          );
-                        })}
-                      </select>
+                      />
+
                     </div>
                     <div className="col-md-2 col-lg-2 mb-5">
-                      <select
-                        name="job_location"
-                        id="job_location"
-                        value={jobLocation}
-                        /*Job Onchange function to filter the data */
-                        onChange={(e) => setJobLocation(e.target.value)}
+                      <SelectBox
+                        options={(Object.keys(states) || []).map((job) => ({
+                          value: job,
+                          label: job,
+                        }))}
+                        selectedValue={jobLocation}
+                        onChange={(e) => setJobLocation(e ? e.value : "")}
+                        placeholder="Select Job Location"
                         className="form-control text-capitalize font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
-                      >
-                        <option value="">Select Job Location</option>
-                        {(Object.keys(states) || []).map((job) => (
-                          <option key={job} value={job}>
-                            {job}
-                          </option>
-                        ))}
-                      </select>
+                      />
+
                     </div>
                     <div className="col-md-2 col-lg-2 mb-5">
-                      <select
-                        name="job_type"
-                        id="job_type"
-                        value={jobSwapFilterValue}
-                        /*Job Onchange function to filter the data */
-                        onChange={(e) => setJobSwapFilterValue(e.target.value)}
+                      <SelectBox
+                        options={(FilterJson.job_type || []).map((job_type) => ({
+                          value: job_type,
+                          label: job_type,
+                        }))}
+                        selectedValue={jobSwapFilterValue}
+                        onChange={(e) => setJobSwapFilterValue(e ? e.value : "")}
+                        placeholder="Select Job type"
                         className="form-control text-capitalize font-size-4 text-black-2 arrow-4-black mr-5 rounded-0"
-                      >
-                        <option value="">Select Job type</option>
-                        {(FilterJson.job_type || []).map((job_type) => (
-                          <option key={job_type} value={job_type}>
-                            {job_type}
-                          </option>
-                        ))}
-                      </select>
+                      />
+
                     </div>
                     <div className="col-md-2 col-lg-2 mb-5">
                       <CustomButton

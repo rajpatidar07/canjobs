@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import FilterJson from "../../json/filterjson";
 import VisaTimeLine from "../../common/visaTimeLine";
 import VisaSubStageSelector from "../../common/visaSubsStage";
+import SelectBox from "../../common/Common function/SelectBox";
 export default function VisaStatus(props) {
   const [loading, setLoading] = useState(false);
   const [apiCall, setApiCall] = useState(false);
@@ -222,31 +223,26 @@ export default function VisaStatus(props) {
               >
                 {props.type === "visa" ? "Work Permit" : `${props.typeName} status`}  : <span className="text-danger">*</span>
               </label>
-              <select
-                name="status"
-                value={state.status || ""}
-                onChange={(e) => {
-                  setState({ ...state, status: e.target.value });
-                  setExpandedStatus(e.target.value);
-                }}
-                multiple={false}
-                className={
-                  errors.status
-                    ? "form-control text-capitalize border border-danger"
-                    : "form-control text-capitalize"
-                }
-                id="status"
-              >
-                <option value={""} className="text-capitalize">Select {props.typeName} Status </option>
-                {(FilterJson.visa_status || []).map((item, index) => {
-                  isExpanded = expandedStatus === item;
-                  return (
-                    <option value={item} key={index}>
-                      {item}
-                    </option>
-                  );
-                })}
-              </select>
+              <div className={
+                errors.status
+                  ? "text-capitalize border border-danger"
+                  : "text-capitalize"
+              }>
+                <SelectBox
+                  options={(FilterJson.visa_status || []).map((item) => ({
+                    value: item,
+                    label: item,
+                  }))}
+                  type="status"
+                  selectedValue={state.status || ""}
+                  onChange={(e) => {
+                    const selectedValue = e ? e.value : "";
+                    setState({ ...state, status: selectedValue });
+                    setExpandedStatus(selectedValue);
+                  }}
+                  placeholder={`Select ${props.typeName} Status`}
+                />
+              </div>
               {/*----ERROR MESSAGE FOR WORK PERMIT----*/}
               {errors.status && (
                 <span key={errors.status} className="text-danger font-size-3">
@@ -261,21 +257,26 @@ export default function VisaStatus(props) {
               >
                 Country :
               </label>
-              <select
-                name="country"
-                value={state.country || ""}
-                onChange={onInputChange}
-                className={"form-control text-capitalize"}
-                // disabled={props.employeeData?.visa_country}
-                id="country"
-              >
-                <option value={""}>Select visa Country </option>
-                {(FilterJson.location || []).map((item, index) => (
-                  <option value={item.country} key={index}>
-                    {item.country}
-                  </option>
-                ))}
-              </select>
+              <div className="text-capitalize">
+                <SelectBox
+                  options={(FilterJson.location || []).map((item) => ({
+                    value: item.country,
+                    label: item.country,
+                  }))}
+                  type="country"
+                  selectedValue={state.country || ""}
+                  onChange={(e) =>
+                    onInputChange({
+                      target: {
+                        name: "country",
+                        value: e ? e.value : "",
+                      },
+                    })
+                  }
+                  placeholder="Select visa Country"
+
+                />
+              </div>
             </div>
             {expandedStatus && (
               <VisaSubStageSelector

@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SAlert from "../../common/sweetAlert";
 import FilterJson from "../../json/filterjson";
+import SelectBox from "../../common/Common function/SelectBox";
 
 function Education(props) {
   /*Data states */
@@ -265,8 +266,8 @@ function Education(props) {
                           </span>
                           <span
                             className={`${education.institute_location === null
-                                ? "d-none"
-                                : ""
+                              ? "d-none"
+                              : ""
                               } font-size-3 text-gray w-100`}
                           >
                             <span className="mr-2">
@@ -307,26 +308,30 @@ function Education(props) {
                 >
                   Qualification: <span className="text-danger">*</span>
                 </label>
-                <select
+                <div
                   className={
-                    errors.qualification
-                      ? "form-control text-capitalize border border-danger"
-                      : "form-control text-capitalize"
+                    errors.qualification ? "border border-danger rounded" : ""
                   }
-                  name="qualification"
-                  id="qualification"
-                  value={state.qualification || ""}
-                  onChange={onInputChange}
                 >
-                  <option value={""}>Select</option>
-                  {(FilterJson.qualification || []).map((data, i) => {
-                    return (
-                      <option value={data} key={i}>
-                        {data}
-                      </option>
-                    );
-                  })}
-                </select>
+                  <SelectBox
+                    options={(FilterJson.qualification || []).map((data) => ({
+                      value: data,
+                      label: data,
+                    }))}
+                    type="qualification"
+                    selectedValue={state.qualification || ""}
+                    onChange={(e) => {
+                      onInputChange({
+                        target: {
+                          name: "qualification",
+                          value: e ? e.value : null,
+                        },
+                      });
+                    }}
+                    placeholder="Select"
+                  />
+                </div>
+
                 {/*----ERROR MESSAGE FOR QUALIFICATION----*/}
                 {errors.qualification && (
                   <span
@@ -344,24 +349,30 @@ function Education(props) {
                 >
                   Course: <span className="text-danger">*</span>
                 </label>
-                <select
+                <div
                   className={
-                    errors.course
-                      ? "text-capitalize form-control border border-danger"
-                      : "text-capitalize form-control"
+                    errors.course ? "border border-danger rounded" : ""
                   }
-                  name="course"
-                  id="course"
-                  value={state.course || ""}
-                  onChange={onInputChange}
                 >
-                  <option value={""}>Select</option>
-                  {(EducationList || []).map((course) => (
-                    <option value={course.value} key={course.id}>
-                      {course.value}
-                    </option>
-                  ))}
-                </select>
+                  <SelectBox
+                    options={(EducationList || []).map((course) => ({
+                      value: course.value,
+                      label: course.value,
+                    }))}
+                    type="course"
+                    selectedValue={state.course || ""}
+                    onChange={(e) => {
+                      onInputChange({
+                        target: {
+                          name: "course",
+                          value: e ? e.value : null,
+                        },
+                      });
+                    }}
+                    placeholder="Select"
+                  />
+                </div>
+
                 {/*----ERROR MESSAGE FOR course----*/}
                 {errors.course && (
                   <span key={errors.course} className="text-danger font-size-3">
@@ -408,26 +419,30 @@ function Education(props) {
                   Institute Location:
                 </label>
                 <div className="position-relative">
-                  <select
+                  <div
                     className={
-                      errors.institute_location
-                        ? "form-control text-capitalize border border-danger"
-                        : "form-control text-capitalize"
+                      errors.institute_location ? "border border-danger rounded" : ""
                     }
-                    name="institute_location"
-                    id="institute_location"
-                    value={state.institute_location || ""}
-                    onChange={onInputChange}
                   >
-                    <option value={""}>Institute location</option>
-                    {(FilterJson.location || []).map((data, i) => {
-                      return (
-                        <option value={data.country} key={i}>
-                          {data.country}
-                        </option>
-                      );
-                    })}
-                  </select>
+                    <SelectBox
+                      options={(FilterJson.location || []).map((data) => ({
+                        value: data.country,
+                        label: data.country,
+                      }))}
+                      type="institute_location"
+                      selectedValue={state.institute_location || ""}
+                      onChange={(e) =>
+                        onInputChange({
+                          target: {
+                            name: "institute_location",
+                            value: e ? e.value : null,
+                          },
+                        })
+                      }
+                      placeholder="Institute location"
+                    />
+                  </div>
+
                   {/*----ERROR MESSAGE FOR institute_location----*/}
                   {errors.institute_location && (
                     <span

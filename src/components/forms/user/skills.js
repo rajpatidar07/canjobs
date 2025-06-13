@@ -10,7 +10,7 @@ import {
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import SAlert from "../../common/sweetAlert";
-import Select from "react-select";
+import SelectBox from "../../common/Common function/SelectBox";
 
 function Skills(props) {
   let [skillData, SetSkillData] = useState([]);
@@ -210,25 +210,16 @@ function Skills(props) {
                 value={state.skill}
                 onChange={onInputChange}
               /> */}
-              <Select
-                options={"" || SkillOption.skill}
-                name="skill"
-                id="skill"
-                onChange={onSelectChange}
-                className={
-                  errors.skill
-                    ? "border border-danger w-100 text-capitalize"
-                    : "text-capitalize w-100"
-                }
-                isClearable={""}
-                styles={{
-                  control: (base) => ({
-                    ...base,
-                    margin: 0,
-                    padding: 0,
-                  }),
-                }}
-              />
+              <div className={`w-100 text-capitalize ${errors.skill ? "border border-danger" : ""}`}
+              >
+                <SelectBox
+                  options={(SkillOption && SkillOption.skill) || []}
+                  type="skill"
+                  id="skill"
+                  selectedValue={state.skill}
+                  onChange={onSelectChange}
+                /></div>
+
               {loading === true ? (
                 <button
                   className=" btn-primary btn-small mx-2 rounded-5 text-uppercase"

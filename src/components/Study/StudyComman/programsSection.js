@@ -4,6 +4,7 @@ import Pagination from '../../common/pagination';
 import { ApplyProgram } from "../../../api/api"
 import { toast } from 'react-toastify';
 import EmployeeModal from '../../admin/Modal/employeeModal';
+import SelectBox from '../../common/Common function/SelectBox';
 function ProgramListSection() {
     // State variables
     const [state, setState] = useState('');
@@ -271,43 +272,49 @@ function ProgramListSection() {
                                 {/* State Filter */}
                                 <div className="form-group mb-2 mt-5">
                                     <label className="input_label">State/Province</label>
-                                    <select
-                                        className="form-control form-control-sm"
-                                        onChange={e => setState(e.target.value)}
-                                    >
-                                        <option value="">Select</option>
-                                        {uniqueStates.map((item, index) => (
-                                            <option key={index} value={item} >{item}</option>
-                                        ))}
-                                    </select>
+                                    <SelectBox
+                                        options={(uniqueStates || []).map((item) => ({
+                                            value: item,
+                                            label: item,
+                                        }))}
+                                        selectedValue={state}
+                                        onChange={(e) => setState(e ? e.value : "")}
+                                        placeholder="Select"
+                                        className="form-control-sm"
+                                    />
+
                                 </div>
 
                                 {/* City Filter */}
                                 <div className="form-group mb-2 mt-5">
                                     <label className="input_label">City</label>
-                                    <select
-                                        className="form-control form-control-sm"
-                                        onChange={changeCity}
-                                    >
-                                        <option value="">Select</option>
-                                        {uniqueCities.map((item, index) => (
-                                            <option key={index} value={item} >{item}</option>
-                                        ))}
-                                    </select>
+                                    <SelectBox
+                                        options={(uniqueCities || []).map((item) => ({
+                                            value: item,
+                                            label: item,
+                                        }))}
+                                        selectedValue={city}
+                                        onChange={(e) => changeCity({ target: { value: e ? e.value : "" } })}
+                                        placeholder="Select"
+                                        className="form-control-sm"
+                                    />
+
                                 </div>
 
                                 {/* College Filter */}
                                 <div className="form-group mb-2 mt-5">
                                     <label className="input_label">College Name</label>
-                                    <select
-                                        className="form-control form-control-sm"
-                                        onChange={changeCollege}
-                                    >
-                                        <option value="">Select</option>
-                                        {uniqueColleges.map((item, index) => (
-                                            <option key={index} value={item} >{item}</option>
-                                        ))}
-                                    </select>
+                                    <SelectBox
+                                        options={(uniqueColleges || []).map((item) => ({
+                                            value: item,
+                                            label: item,
+                                        }))}
+                                        selectedValue={college}
+                                        onChange={(e) => changeCollege({ target: { value: e ? e.value : "" } })}
+                                        placeholder="Select"
+                                        className="form-control-sm"
+                                    />
+
                                 </div>
 
                                 {/* Program Search */}
@@ -322,35 +329,34 @@ function ProgramListSection() {
 
                                 <div className="form-group mb-2 mt-5">
                                     <label className="input_label">Program Discipline Category</label>
-                                    <select
-                                        id="disciplineFilter"
-                                        className="form-control selectpicker"
-                                        data-live-search="true"
-                                        onChange={e => setDiscipline(e.target.value)}
-                                    >
-                                        <option value="">Filter program discipline category</option>
-                                        {(filterjson.program_discipline_category || []).map((item, index) =>
+                                    <SelectBox
+                                        options={(filterjson.program_discipline_category || []).map((item) => ({
+                                            value: item,
+                                            label: item,
+                                        }))}
+                                        onChange={(e) => setDiscipline(e ? e.value : "")}
+                                        selectedValue={discipline}
+                                        placeholder="Filter program discipline category"
+                                        isSearchable={true}
+                                        className="selectpicker"
+                                    />
 
-                                            <option value={item} key={index}>{item}</option>
-                                        )}
-
-                                    </select>
                                 </div>
 
                                 <div className="form-group mb-2 mt-5">
                                     <label className="input_label">Program Sub Category</label>
-                                    <select
-                                        id="subcatFilter"
-                                        className="form-control selectpicker"
-                                        data-live-search="true"
-                                        onChange={e => setSubCategory(e.target.value)}                                >
-                                        <option value="">Filter program sub category</option>
-                                        {(filterjson.program_discipline_sub_category || []).map((item, index) =>
+                                    <SelectBox
+                                        options={(filterjson.program_discipline_sub_category || []).map((item) => ({
+                                            value: item,
+                                            label: item,
+                                        }))}
+                                        selectedValue={subCategory}
+                                        onChange={(e) => setSubCategory(e ? e.value : "")}
+                                        placeholder="Filter program sub category"
+                                        isSearchable={true}
+                                        className="selectpicker"
+                                    />
 
-                                            <option value={item} key={index}>{item}</option>
-                                        )}
-
-                                    </select>
                                 </div>
                                 <div className="form-group mb-2 mt-5">
                                     <label className="input_label">Course Duration (Year)</label>
@@ -364,63 +370,95 @@ function ProgramListSection() {
                                 </div>
                                 <div className="form-group mb-2 mt-5">
                                     <label className="input_label">Intake Month Season</label>
-                                    <select id="monthFilter" className="form-control selectpicker" data-live-search="true" onChange={e => setIntakeMonth(e.target.value)}>
-                                        <option value="">Filter intake month</option>
-                                        {(filterjson.programs_intake_month || []).map((item, index) =>
+                                    <SelectBox
+                                        options={(filterjson.programs_intake_month || []).map((item) => ({
+                                            value: item,
+                                            label: item,
+                                        }))}
+                                        onChange={(e) => setIntakeMonth(e ? e.value : "")}
+                                        selectedValue={intakeMonth}
+                                        placeholder="Filter intake month"
+                                        isSearchable={true}
+                                        className="selectpicker"
+                                    />
 
-                                            <option value={item} key={index}>{item}</option>
-                                        )}
-                                    </select>
                                 </div>
                                 <div className="form-group mb-2 mt-5">
                                     <label className="input_label">Ilets Entry Criteria</label>
-                                    <select id="iletsFilter" className="form-control selectpicker" data-live-search="true" onChange={e => setIletsCriteria(e.target.value)}>
-                                        <option value="">Filter Ilets entry criteria</option>
-                                        {(filterjson.programs_ilets_entry_criteria || []).map((item, index) =>
+                                    <SelectBox
+                                        options={(filterjson.programs_ilets_entry_criteria || []).map((item) => ({
+                                            value: item,
+                                            label: item,
+                                        }))}
+                                        onChange={(e) => setIletsCriteria(e ? e.value : "")}
+                                        selectedValue={iletsCriteria}
+                                        placeholder="Filter Ilets entry criteria"
+                                        isSearchable={true}
+                                        className="selectpicker"
+                                    />
 
-                                            <option value={item} key={index}>{item}</option>
-                                        )}
-                                    </select>
                                 </div>
                                 <div className="form-group mb-2 mt-5">
                                     <label className="input_label">GPA Entry criteria(%)</label>
-                                    <select id="gpaFilter" className="form-control selectpicker" data-live-search="true" onChange={e => setGpaCriteria(e.target.value)}>
-                                        <option value="">Filter GPA entry criteria</option>
-                                        {(filterjson.programs_gpa_entry_criteria || []).map((item, index) =>
+                                    <SelectBox
+                                        options={(filterjson.programs_gpa_entry_criteria || []).map((item) => ({
+                                            value: item,
+                                            label: item,
+                                        }))}
+                                        onChange={(e) => setGpaCriteria(e ? e.value : "")}
+                                        selectedValue={gpaCriteria}
+                                        placeholder="Filter GPA entry criteria"
+                                        isSearchable={true}
+                                        className="selectpicker"
+                                    />
 
-                                            <option value={item} key={index}>{item}</option>
-                                        )}
-                                    </select>
                                 </div>
                                 <div className="form-group mb-2 mt-5">
                                     <label className="input_label">Education Entry Criteria</label>
-                                    <select id="educationFilter" className="form-control selectpicker" data-live-search="true" onChange={e => setEducationCriteria(e.target.value)}>
-                                        <option value="">Filter education entry criteria</option>
-                                        {(filterjson.programs_education_entry_criteria || []).map((item, index) =>
+                                    <SelectBox
+                                        options={(filterjson.programs_education_entry_criteria || []).map((item) => ({
+                                            value: item,
+                                            label: item,
+                                        }))}
+                                        selectedValue={educationCriteria}
+                                        onChange={(e) => setEducationCriteria(e ? e.value : "")}
+                                        placeholder="Filter education entry criteria"
+                                        isSearchable={true}
+                                        className="selectpicker"
+                                    />
 
-                                            <option value={item} key={index}>{item}</option>
-                                        )}
-                                    </select>
                                 </div>
                                 <div className="form-group mb-2 mt-5">
                                     <label className="input_label">Math Requirement</label>
-                                    <select id="mathFilter" className="form-control selectpicker" data-live-search="true" onChange={e => setMathRequirement(e.target.value)}>
-                                        <option value="">Filter math requirement</option>
-                                        {(filterjson.programs_math_requirement || []).map((item, index) =>
+                                    <SelectBox
+                                        id="mathFilter"
+                                        options={(filterjson.programs_math_requirement || []).map((item) => ({
+                                            value: item,
+                                            label: item,
+                                        }))}
+                                        selectedValue={mathRequirement}
+                                        onChange={(e) => setMathRequirement(e ? e.value : "")}
+                                        placeholder="Filter math requirement"
+                                        isSearchable={true}
+                                        className="selectpicker"
+                                    />
 
-                                            <option value={item} key={index}>{item}</option>
-                                        )}
-                                    </select>
                                 </div>
                                 <div className="form-group mb-2 mt-5">
                                     <label className="input_label">English Requirement</label>
-                                    <select id="englishFilter" className="form-control selectpicker" data-live-search="true" onChange={e => setEnglishRequirement(e.target.value)}>
-                                        <option value="">Filter english requirement</option>
-                                        {(filterjson.programs_english_requirement || []).map((item, index) =>
+                                    <SelectBox
+                                        id="englishFilter"
+                                        options={(filterjson.programs_english_requirement || []).map((item) => ({
+                                            value: item,
+                                            label: item,
+                                        }))}
+                                        selectedValue={englishRequirement}
+                                        onChange={(e) => setEnglishRequirement(e ? e.value : "")}
+                                        placeholder="Filter english requirement"
+                                        isSearchable={true}
+                                        className="selectpicker"
+                                    />
 
-                                            <option value={item} key={index}>{item}</option>
-                                        )}
-                                    </select>
                                 </div>
                             </div>
                             {/* Program List Display */}
@@ -545,7 +583,7 @@ function ProgramListSection() {
                                                 </div>
                                             </div>
                                         )) : (
-                                            <h4>No Programs Found</h4>
+                                            <h4 className='text-dark'>No Programs Found</h4>
                                         )}
                                     </div>
                                 </div>

@@ -20,6 +20,8 @@ const AgreementOneForm = ({
 }) => {
   const [loading, setLoading] = useState(false);
   const [agreementType, setAgreementType] = useState(felidData.type);
+  const [showTextInput, setShowTextInput] = useState(false);
+
   let SigningUserType = localStorage.getItem("userType");
 
   const initialClientState = {
@@ -782,29 +784,50 @@ const AgreementOneForm = ({
                     className="font-size-4 text-black-2 line-height-reset"
                   >
                     {label}
-                    {/* {required === true ? <span className="text-danger">*</span> : ""} */}
                   </label>
-                  <input
-                    type={type}
-                    className={`${errors[name] ? "border border-danger" : ""
-                      } form-control col ${type === "date" ? "coustam_datepicker" : ""
-                      }`}
-                    value={state?.[name] || ""}
-                    onKeyDownCapture={
-                      type === "date" ? (e) => e.preventDefault() : null
-                    }
-                    onChange={onInputChange}
-                    placeholder={label}
-                    id={name}
-                    name={name}
-                    required={required}
-                    disabled={disabled}
-                  />
-                  <small className="text-warning">{name === "initial" ? "Note : At least two letters required." : ""}</small>
-                  {errors[name] && (
-                    <span className="text-danger font-size-3 mx-5">
-                      {errors[name]}
-                    </span>
+
+                  {/* Check if base64 and editable state */}
+                  {state?.initial?.startsWith("data:image") && !showTextInput && name === "initial" ? (
+                    <img
+                      src={state.initial}
+                      alt="Initial"
+                      style={{ width: "100%", height: "38px", objectFit: "contain", cursor: "pointer", border: '1px solid #ced4da', borderRadius: '0.25rem' }}
+                      onClick={() => {
+                        setState((prev) => ({
+                          ...prev,
+                          initial: "" // Clear image when switching to input
+                        }))
+                        setShowTextInput(true)
+                      }
+                      }
+                    />
+                  ) : (
+                    <>
+                      <input
+                        type={type}
+                        className={`${errors[name] ? "border border-danger" : ""
+                          } form-control col ${type === "date" ? "coustam_datepicker" : ""
+                          }`}
+                        value={state?.[name] || ""}
+                        onKeyDownCapture={
+                          type === "date" ? (e) => e.preventDefault() : null
+                        }
+                        onChange={onInputChange}
+                        placeholder={label}
+                        id={name}
+                        name={name}
+                        required={required}
+                        disabled={disabled}
+                      />
+                      <small className="text-warning">
+                        {name === "initial" ? "Note : At least two letters required." : ""}
+                      </small>
+                      {errors[name] && (
+                        <span className="text-danger font-size-3 mx-5">
+                          {errors[name]}
+                        </span>
+                      )}
+                    </>
                   )}
                 </div>
               ))}

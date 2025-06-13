@@ -6,6 +6,7 @@ import AdminSidebar from "../../admin/sidebar";
 import AppliedProgramTable from "../StudyComman/appliedProgramTable";
 import { CiSearch } from "react-icons/ci";
 import { getallAdminData, getallEmployeeData } from "../../../api/api";
+import SelectBox from "../../common/Common function/SelectBox";
 export default function AppliedPrograms(props) {
   /*Filter and search state */
   const [pageNo, setpageNo] = useState(
@@ -92,8 +93,8 @@ export default function AppliedPrograms(props) {
       >
         {/* <!-- Header Area --> */}
         {props.skill === null ||
-        props.skill === undefined ||
-        Object.keys(props.skill).length === 0 ? (
+          props.skill === undefined ||
+          Object.keys(props.skill).length === 0 ? (
           <>
             {/* <!-- Header Area --> */}
             {user_type === "agent" ? (
@@ -113,8 +114,8 @@ export default function AppliedPrograms(props) {
         <div
           className={
             props.skill === null ||
-            props.skill === undefined ||
-            Object.keys(props.skill).length === 0
+              props.skill === undefined ||
+              Object.keys(props.skill).length === 0
               ? "dashboard-main-container mt-14"
               : ""
           }
@@ -160,64 +161,45 @@ export default function AppliedPrograms(props) {
                   </div>
                   <div className="col p-1 form_group mb-3">
                     <p className="input_label">Search by admin:</p>
-                    <select
-                      name="appliedUserIdFilterValue"
-                      value={
-                        appliedUserIdFilterValue +
-                        "," +
-                        appliedUserTypeFilterValue
+                    <SelectBox
+                      options={(adminList || []).map((item) => ({
+                        value: item.admin_id + "," + item.admin_type,
+                        label: item.name,
+                      }))}
+                      type="appliedUserIdFilterValue"
+                      selectedValue={
+                        appliedUserIdFilterValue && appliedUserTypeFilterValue
+                          ? `${appliedUserIdFilterValue},${appliedUserTypeFilterValue}`
+                          : ""
                       }
-                      id="appliedUserIdFilterValue"
                       onChange={(e) => {
-                        setAppliedUserIdFilterValue(
-                          e.target.value.split(",")[0]
-                        );
-                        setAppliedUserTypeFilterValue(
-                          e.target.value.split(",")[1]
-                        );
+                        const value = e ? e.value.split(",") : ["", ""];
+                        setAppliedUserIdFilterValue(value[0]);
+                        setAppliedUserTypeFilterValue(value[1]);
                         setpageNo(1);
                       }}
-                      className="form-control bg-white dashboard_select rounded-3"
-                    >
-                      <option value={""}>Select Admin</option>
-                      {(adminList || []).map((item, index) => {
-                        return (
-                          <option
-                            key={index}
-                            value={item.admin_id + "," + item.admin_type}
-                          >
-                            {item.name}
-                          </option>
-                        );
-                      })}
-                    </select>
+                      placeholder="Select Admin"
+                      className="dashboard_select rounded-3 bg-white"
+                    />
+
                   </div>
                   <div className="col p-1 form_group mb-3">
                     <p className="input_label">Filter by Student:</p>
-                    <select
-                      name="employeeId"
-                      value={employeeId}
-                      id="employeeId"
+                    <SelectBox
+                      options={(employeeList || []).map((item) => ({
+                        value: item.employee_id,
+                        label: item.name || "unknown user",
+                      }))}
+                      type="employeeId"
+                      selectedValue={employeeId}
                       onChange={(e) => {
-                        // console.log(e.target.value.split(",")[0])
-                        setemployeeId(e.target.value.split(",")[0]);
+                        setemployeeId(e ? e.value : "");
                         setpageNo(1);
                       }}
-                      className="form-control bg-white dashboard_select rounded-3"
-                    >
-                      <option value={""}>Select Student</option>
-                      {(employeeList || []).map((item, index) => {
-                        return (
-                          <option
-                            className="text-capitalize"
-                            key={index}
-                            value={item.employee_id}
-                          >
-                            {item.name || "unknown user"}
-                          </option>
-                        );
-                      })}{" "}
-                    </select>
+                      placeholder="Select Student"
+                      className="dashboard_select rounded-3 bg-white"
+                    />
+
                     {/* <small className="text-danger">{searcherror}</small> */}
                   </div>
                 </div>

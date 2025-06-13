@@ -539,8 +539,8 @@ const AlbertaPnpPdf = () => {
                                         Stage 2 (Invitation To Apply) Filling out
                                         the forms, information verification and
                                         completeness check, preparing the
-                                        application package
-                                        {'\n'}
+                                        application package. Either EE or PNP charges will be for one stream
+                                        {'\n'}{'\n'}
                                         Payment is due before final submission of application.
                                         Provide proof of submission to the client
                                     </Text>

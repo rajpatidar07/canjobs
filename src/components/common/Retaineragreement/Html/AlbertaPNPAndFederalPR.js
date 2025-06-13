@@ -421,7 +421,7 @@ submitting EOI
                    Stage 2 (Invitation To Apply) Filling out
 the forms, information verification and
 completeness check, preparing the
-application package
+application package.Either EE or PNP charges will be for one stream
                     </small>
                   </p>
                   <p><small>Payment is due before final submission of

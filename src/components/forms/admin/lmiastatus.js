@@ -17,6 +17,7 @@ import "react-toastify/dist/ReactToastify.css";
 import FilterJson from "../../json/filterjson";
 import LmiaTime from "../../common/lmiaTime";
 import LmiaSubStageSelector from "../../common/lmiaSubStage";
+import SelectBox from "../../common/Common function/SelectBox";
 function LmiaStatus(props) {
   let [loading, setLoading] = useState(false);
   let [apiCall, setApiCall] = useState(false);
@@ -42,7 +43,7 @@ function LmiaStatus(props) {
       } else {
         Response = await GetLimaSubStages(props.resData.id);
       }
-      if (Response.data.data) {                                                                                                                          
+      if (Response.data.data) {
         setSelectedStatus(Response.data.data);
       } else setSelectedStatus([]);
     } catch (err) {
@@ -155,7 +156,7 @@ function LmiaStatus(props) {
     if (apiCall === true) {
       setApiCall(false);
     }
-  // eslint-disable-next-line
+    // eslint-disable-next-line
   }, [apiCall, lmia_status]);
 
   useEffect(() => { }, []);
@@ -321,38 +322,27 @@ function LmiaStatus(props) {
               >
                 Lmia Status <span className="text-danger">*</span>:
               </label>
-              <select
-                type={"text"}
-                className={
-                  errors.lmia_status
-                    ? "form-control text-capitalize border border-danger"
-                    : "form-control text-capitalize"
-                }
-                value={state.lmia_status || ""}
+              <SelectBox
+                options={(FilterJson.lmia_status || [])
+                  .map((status, i) => {
+                    const shouldInclude = props.job === "yes" || i > 2;
+                    return shouldInclude
+                      ? {
+                        value: status,
+                        label: status,
+                      }
+                      : null;
+                  })
+                  .filter(Boolean)} // Remove null entries
+                type="lmia_status"
+                selectedValue={state.lmia_status || ""}
                 onChange={(e) => {
-                  setState({ ...state, lmia_status: e.target.value });
-                  setExpandedStatus(e.target.value);
+                  const selected = e ? e.value : "";
+                  setState({ ...state, lmia_status: selected });
+                  setExpandedStatus(selected);
                 }}
-                id="lmia_status"
-                name="lmia_status"
-                multiple={false}
-              >
-                <option value={""}>Select Lmia Status</option>
-                {(FilterJson.lmia_status || []).map((status, i) => {
-                  isExpanded = expandedStatus === status;
-                  return props.job === "yes" ? (
-                    <option value={status} key={i}>
-                      {status}
-                    </option>
-                  ) : (
-                    i > 2 && (
-                      <option value={status} key={i}>
-                        {status}
-                      </option>
-                    )
-                  );
-                })}
-              </select>
+              />
+
               {/*----ERROR MESSAGE FOR LIMA STATUS----*/}
               {errors.lmia_status && (
                 <span

@@ -217,28 +217,6 @@ export default function Visa() {
                   <div className="col p-1 form_group mb-3">
                     <p className="input_label">Filter by Application type:</p>
                     <div className="select_div">
-                      <select
-                        name="intrested_in"
-                        value={IntrestedFilterValue}
-                        id="intrested_in"
-                        onChange={(e) => {
-                          setIntrestedFilterValue(e.target.value);
-                          setEmpId("");
-                          setpageNo(1);
-                        }}
-                        className="text-capitalize form-control"
-                      >
-                        <option value="" data-display="Product Designer">
-                          Candidate's Application type
-                        </option>
-                        {(applicantTypeList || []).map((data, i) => {
-                          return (
-                            <option value={data.id} key={i}>
-                              {data.title}
-                            </option>
-                          );
-                        })}
-                      </select>
                       <SelectBox options={(applicantTypeList.map((option) => ({
                         value: option.id,
                         label: option.title,

@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import SAlert from "../../common/sweetAlert";
 import ConvertTime from "../../common/Common function/ConvertTime";
+import SelectBox from "../../common/Common function/SelectBox";
 
 function EmployementDetails(props) {
   /*Data state */
@@ -70,20 +71,20 @@ function EmployementDetails(props) {
           // : /[-]?\d+(\.\d+)?/.test(value)
           // ? "Client's name can not have a number."
           value.length < 2
-          ? "Client's name should have 2 or more letters"
-          : "",
+            ? "Client's name should have 2 or more letters"
+            : "",
     ],
     designation: [
       (value) =>
         value === "" || value.trim() === ""
           ? "Designation is required"
           : /[^A-Za-z 0-9]/g.test(value)
-          ? "Cannot use special character "
-          : /[-]?\d+(\.\d+)?/.test(value)
-          ? "Designation can not have a number."
-          : value.length < 2
-          ? "Designation should have 2 or more letters"
-          : "",
+            ? "Cannot use special character "
+            : /[-]?\d+(\.\d+)?/.test(value)
+              ? "Designation can not have a number."
+              : value.length < 2
+                ? "Designation should have 2 or more letters"
+                : "",
     ],
     // company_location: [
     //   (value) =>
@@ -108,14 +109,14 @@ function EmployementDetails(props) {
         state.currently_work_here === 1 || state.currently_work_here === "1"
           ? null
           : (state.currently_work_here === 0 &&
-              (value === "" || value === null)) ||
+            (value === "" || value === null)) ||
             (state.currently_work_here === "0" &&
               (value === "" || value === null)) ||
             value === "" ||
             value === null ||
             value === undefined
-          ? "End Date is required"
-          : null,
+            ? "End Date is required"
+            : null,
     ],
     // work_level: [
     //   (value) =>
@@ -206,7 +207,7 @@ function EmployementDetails(props) {
   /*To call Api to delete Skill */
   async function deleteEducation(e) {
     try {
-      const responseData = await DeleteEmployeeCareer(e,props.employeeId);
+      const responseData = await DeleteEmployeeCareer(e, props.employeeId);
       if (responseData.message === "career details has been deleted") {
         toast.error("Career deleted Successfully", {
           position: toast.POSITION.TOP_RIGHT,
@@ -242,7 +243,7 @@ function EmployementDetails(props) {
           <form onSubmit={onCarrerProfileClick}>
             <h5 className="text-center pt-2 mb-7">Add Employment</h5>
             <div className="row mb-5 bg-light py-5 pr-10 pl-4 rounded">
-              {(employementData || []).map((CareerDetails,index) => (
+              {(employementData || []).map((CareerDetails, index) => (
                 <div className="col-12 text-capitalize p-0" key={index}>
                   <div
                     className="w-100 card px-6 py-3 shadow-8 border-0 mb-2" //"w-100 border mb-3 rounded-5 text-capitalize"
@@ -272,23 +273,22 @@ function EmployementDetails(props) {
                             {/* {moment(CareerDetails.start_date).format(
                               "DD MMMM, YYYY"
                             )}{" "} */}
-                            <ConvertTime _date={CareerDetails.start_date} format={"DD MMMM, YYYY"}/>
+                            <ConvertTime _date={CareerDetails.start_date} format={"DD MMMM, YYYY"} />
                             -
                             {CareerDetails.currently_work_here === ("1" || 1)
                               ? "Currently working"
-                              :<ConvertTime _date={CareerDetails.end_date} format={"DD MMMM, YYYY"}/>
+                              : <ConvertTime _date={CareerDetails.end_date} format={"DD MMMM, YYYY"} />
                               //  moment(CareerDetails.end_date).format(
                               //     "DD MMMM, YYYY"
-                                // )
-                                }
+                              // )
+                            }
                           </span>
                           <span className="d-none font-size-3 text-gray w-100">
                             <span
-                              className={`${
-                                CareerDetails.company_location === null
-                                  ? "d-none"
-                                  : "mr-2"
-                              } `}
+                              className={`${CareerDetails.company_location === null
+                                ? "d-none"
+                                : "mr-2"
+                                } `}
                             >
                               <img
                                 src="image/svg/icon-loaction-pin-black.svg"
@@ -429,24 +429,25 @@ function EmployementDetails(props) {
                   Industry:
                 </label>
                 <div className="position-relative">
-                  <select
-                    name="industry"
-                    value={state.industry || ""}
-                    onChange={onInputChange}
-                    className={
-                      errors.industry
-                        ? "text-capitalize form-control border border-danger"
-                        : "form-control text-capitalize"
-                    }
-                    id="industry"
-                  >
-                    <option value={""}>Industry user Client belongs to</option>
-                    {(IndustryList || []).map((course) => (
-                      <option value={course.value} key={course.id}>
-                        {course.value}
-                      </option>
-                    ))}
-                  </select>
+                  <div className={errors.industry ? "border border-danger rounded" : ""}>
+                    <SelectBox options={(IndustryList || []).map((course) => ({
+                      value: course.value,
+                      label: course.value,
+                    }))}
+                      type="industry"
+                      selectedValue={state.industry || ""}
+                      onChange={(e) => {
+                        onInputChange({
+                          target: {
+                            name: "industry",
+                            value: e ? e.value : "",
+                          },
+                        });
+                      }}
+                      placeholder="Industry user Client belongs to"
+                    />
+                  </div>
+
                   {/*----ERROR MESSAGE FOR INDUSTRY----*/}
                   {errors.industry && (
                     <span
@@ -606,7 +607,7 @@ function EmployementDetails(props) {
                       ...state,
                       currently_work_here:
                         state.currently_work_here === "" ||
-                        state.currently_work_here === "0"
+                          state.currently_work_here === "0"
                           ? "1"
                           : "0",
                     })
